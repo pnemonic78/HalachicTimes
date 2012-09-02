@@ -1,8 +1,45 @@
 <resources>
 
     <string name="app_name">Halachic Times</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_zmanim">Halachic Times</string>
+
+    <string name="time_progress">Loading location and times.\n\nGPS or wireless networks should be enabled.</string>
+    <string name="location_unknown">Address unknown</string>
+    <string name="location_coords">Lat. %1$s, Lng. %2$s</string>
+    <string name="time_dawn_16deg">Dawn</string>
+    <string name="time_dawn_72min">Dawn</string>
+    <string name="time_earliest">Earliest tallis and tefillin</string>
+    <string name="time_sunrise">Sunrise</string>
+    <string name="time_shema_mga">Latest shema</string>
+    <string name="time_shema_gra">Latest shema</string>
+    <string name="time_prayers_mga">Latest morning prayers</string>
+    <string name="time_prayers_gra">Latest morning prayers</string>
+    <string name="time_midday">Midday</string>
+    <string name="time_earliest_mincha">Earliest afternoon prayers</string>
+    <string name="time_mincha">Afternoon prayers</string>
+    <string name="time_plug_hamincha">Plug hamincha</string>
+    <string name="time_candles">Candle lighting</string>
+    <string name="time_sunset">Sunset</string>
+    <string name="time_nightfall_3stars">Nightfall</string>
+    <string name="time_nightfall_72min">Nightfall</string>
+    <string name="time_midnight">Midnight</string>
+    <string name="time_summary_dawn_16deg">16.1° below the eastern horizon</string>
+    <string name="time_summary_dawn_72min">72 minutes before sea level sunrise</string>
+    <string name="time_summary_earliest">Sun is 11.5° below horizon</string>
+    <string name="time_summary_sunrise">In a level region</string>
+    <string name="time_summary_shema_mga">Latest shema according to Magen Avraham</string>
+    <string name="time_summary_shema_gra">Latest shema according to Gra &amp; Baal Tanya</string>
+    <string name="time_summary_prayers_mga">Latest shacharis according to Magen Avraham</string>
+    <string name="time_summary_prayers_gra">Latest shacharis according to Gra &amp; Baal Tanya</string>
+    <string name="time_summary_midday">Noon</string>
+    <string name="time_summary_earliest_mincha">Earliest mincha (mincha gedola)</string>
+    <string name="time_summary_mincha">Mincha ketana</string>
+    <string name="time_summary_plug_hamincha">Plug hamincha according to Gra &amp; Baal Tanya</string>
+    <string name="time_summary_candles">18 minutes before sunset</string>
+    <string name="time_summary_sunset">In a level region</string>
+    <string name="time_summary_nightfall_3stars">3 stars visible</string>
+    <string name="time_summary_nightfall_72min">72 minutes</string>
+    <string name="time_summary_midnight">Midnight (chatzos)</string>
 
 </resources>
