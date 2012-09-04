@@ -45,12 +45,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 */
 	public static class ZmanimItem {
 
-		/** The  title. */
+		/** The title. */
 		public CharSequence title;
 		/** The summary. */
 		public CharSequence summary;
 		/** The time. */
 		public CharSequence time;
+		/** Is the time past? */
+		public boolean past;
 
 		public ZmanimItem() {
 			super();
@@ -85,9 +87,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 */
 	private View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
 		View view = convertView;
-		if (convertView == null) {
+		if (convertView == null)
 			view = mInflater.inflate(resource, parent, false);
-		}
 		ZmanimItem item = getItem(position);
 
 		TextView title = (TextView) view.findViewById(R.id.title);
@@ -96,6 +97,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		summary.setText(item.summary);
 		TextView time = (TextView) view.findViewById(R.id.time);
 		time.setText(item.time);
+		boolean enabled = !item.past;
+		title.setEnabled(enabled);
+		summary.setEnabled(enabled);
+		time.setEnabled(enabled);
 
 		return view;
 	}
@@ -118,6 +123,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		item.title = mContext.getText(labelId);
 		item.summary = mContext.getText(summaryId);
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
+		item.past = time < System.currentTimeMillis();
 
 		add(item);
 	}
