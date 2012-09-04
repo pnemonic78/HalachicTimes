@@ -7,10 +7,12 @@
     android:paddingRight="?android:attr/scrollbarSize" >
 
     <TextView
-        android:id="@+id/label"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -26,7 +28,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/label"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_below="@+id/title"
+        android:maxLines="4"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary" />
 
 </RelativeLayout>

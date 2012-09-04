@@ -41,15 +41,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private final LayoutInflater mInflater;
 
 	/**
-	 * List item.
+	 * Time row item.
 	 */
 	public static class ZmanimItem {
 
-		/** The time's label. */
-		public CharSequence label;
-		/** The time's summary. */
+		/** The  title. */
+		public CharSequence title;
+		/** The summary. */
 		public CharSequence summary;
-		/** The time's value. */
+		/** The time. */
 		public CharSequence time;
 
 		public ZmanimItem() {
@@ -90,8 +90,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		}
 		ZmanimItem item = getItem(position);
 
-		TextView label = (TextView) view.findViewById(R.id.label);
-		label.setText(item.label);
+		TextView title = (TextView) view.findViewById(R.id.title);
+		title.setText(item.title);
 		TextView summary = (TextView) view.findViewById(R.id.summary);
 		summary.setText(item.summary);
 		TextView time = (TextView) view.findViewById(R.id.time);
@@ -115,7 +115,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			return;
 
 		ZmanimItem item = new ZmanimItem();
-		item.label = mContext.getText(labelId);
+		item.title = mContext.getText(labelId);
 		item.summary = mContext.getText(summaryId);
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
 
