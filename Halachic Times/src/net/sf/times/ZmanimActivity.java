@@ -64,7 +64,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private static final long TWELVE_HOURS = 12 * ONE_HOUR;
 
 	/** 11.5&deg; before sunrise. */
-	private static final double ZENITH_TALLIS = 90.0 + 11.5;
+	private static final double ZENITH_TALLIS = 101.5;
 
 	/** 1 kilometre. */
 	private static final int ONE_KM = 1000;
@@ -72,7 +72,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	/** Holiday id for Shabbath. */
 	private static final int SHABBATH = -1;
 
-	/** Number of candles to light on Friday for Shabbath. */
+	/** Number of candles to light for Shabbath. */
 	private static final int CANDLES_SHABBATH = 2;
 	/** Number of candles to light for a festival. */
 	private static final int CANDLES_FESTIVAL = 2;
@@ -105,12 +105,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private ZmanimAdapter mAdapter;
 	/** Service provider for locations. */
 	private LocationManager mLocationManager;
-	/**
-	 * The location.
-	 * <p>
-	 * Is static member so as not to fetch same location again, and avoid
-	 * fetching I/O-heavy addresses (e.g. if we simply rotated the screen).
-	 */
+	/** The location. */
 	private Location mLocation;
 
 	/**
@@ -124,6 +119,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
+		initLocation();
 
 		Intent intent = getIntent();
 		long date = intent.getLongExtra(DATE, 0L);
@@ -142,8 +138,15 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	protected void onResume() {
 		super.onResume();
 
-		populateHeader();
-		populateTimes();
+		if (mLocation == null) {
+			Location loc = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			if (loc == null)
+				loc = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+			onLocationChanged(loc);
+		} else {
+			populateHeader();
+			populateTimes();
+		}
 	}
 
 	@Override
@@ -163,8 +166,6 @@ public class ZmanimActivity extends Activity implements LocationListener {
 
 	/** Initialise. */
 	private void init() {
-		initLocation();
-
 		LayoutInflater inflater = LayoutInflater.from(this);
 		mList = (ViewGroup) inflater.inflate(R.layout.times, null);
 		mHeader = mList.findViewById(R.id.header);
@@ -174,11 +175,12 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		// TODO for ICS: getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-	/** Initialise the location. */
+	/** Initialise the location providers. */
 	private void initLocation() {
 		if (mLocationManager == null) {
 			mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, FIVE_MINUTES, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, FIVE_MINUTES, ONE_KM, this);
 		}
 	}
 
@@ -310,10 +312,10 @@ public class ZmanimActivity extends Activity implements LocationListener {
 			locationName = getString(R.string.location_unknown);
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
-		// final double altitude = loc.getAltitude();
 
-		final String latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
-		final String longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
+		// TODO check if user prefers to display as "number" or as "deg:min:sec"
+		final String latitudeText = String.valueOf(latitude);
+		final String longitudeText = String.valueOf(longitude);
 		final String coordsFormat = getString(R.string.location_coords);
 		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
 
