@@ -48,9 +48,9 @@ import android.widget.TextView;
 public class ZmanimActivity extends Activity implements LocationListener {
 
 	/** The date parameter. */
-	public static final String DATE = "date";
+	public static final String PARAMETER_DATE = "date";
 	/** The time parameter. */
-	public static final String TIME = "time";
+	public static final String PARAMETER_TIME = "time";
 
 	/** 1 second. */
 	private static final long ONE_SECOND = 1000;
@@ -72,6 +72,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	/** Holiday id for Shabbath. */
 	private static final int SHABBATH = -1;
 
+	/** No candles to light. */
+	private static final int CANDLES_NONE = 0;
 	/** Number of candles to light for Shabbath. */
 	private static final int CANDLES_SHABBATH = 2;
 	/** Number of candles to light for a festival. */
@@ -107,6 +109,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private LocationManager mLocationManager;
 	/** The location. */
 	private Location mLocation;
+	/** The list of cities. */
+	private Cities mCities;
 
 	/**
 	 * Creates a new activity.
@@ -122,8 +126,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		initLocation();
 
 		Intent intent = getIntent();
-		long date = intent.getLongExtra(DATE, 0L);
-		long time = intent.getLongExtra(TIME, 0L);
+		long date = intent.getLongExtra(PARAMETER_DATE, 0L);
+		long time = intent.getLongExtra(PARAMETER_TIME, 0L);
 		if (date == 0L) {
 			if (time == 0L) {
 				date = System.currentTimeMillis();
@@ -139,9 +143,11 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		super.onResume();
 
 		if (mLocation == null) {
-			Location loc = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			Location loc = getLocationGPS();
 			if (loc == null)
-				loc = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+				loc = getLocationNetwork();
+			if (loc == null)
+				loc = getLocationTZ();
 			onLocationChanged(loc);
 		} else {
 			populateHeader();
@@ -182,6 +188,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, FIVE_MINUTES, ONE_KM, this);
 			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, FIVE_MINUTES, ONE_KM, this);
 		}
+		mCities = new Cities(this);
 	}
 
 	/**
@@ -307,15 +314,17 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		Location loc = mLocation;
 		if (loc == null)
 			return;
-		String locationName = mTimeZone.getDisplayName();
+		String cityName = mCities.findCity(loc);
+		String locationName = (cityName == null) ? mTimeZone.getDisplayName() : cityName;
 		if (locationName == null)
 			locationName = getString(R.string.location_unknown);
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
 
-		// TODO check if user prefers to display as "number" or as "deg:min:sec"
-		final String latitudeText = String.valueOf(latitude);
-		final String longitudeText = String.valueOf(longitude);
+		// TODO check if user prefers to display as "decimal" or as
+		// "sexagesimal"
+		final String latitudeText = String.format("%1$.7f", latitude);
+		final String longitudeText = String.format("%1$.7f", longitude);
 		final String coordsFormat = getString(R.string.location_coords);
 		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
 
@@ -342,7 +351,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	 */
 	private int getCandles(Calendar date) {
 		final int dayOfWeek = date.get(Calendar.DAY_OF_WEEK);
-		final boolean isShabbat = (dayOfWeek == Calendar.SATURDAY);
+		final boolean isShabbath = (dayOfWeek == Calendar.SATURDAY);
 		final boolean inIsrael = isIsrael(mLocation, mTimeZone);
 
 		// Check if the following day is special, because we can't check
@@ -353,7 +362,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		date.add(Calendar.DAY_OF_MONTH, -1);
 		int holiday = jcal.getYomTovIndex();
 
-		int candles = 0;
+		int candles = CANDLES_NONE;
 
 		switch (holiday) {
 		case JewishCalendar.ROSH_HASHANA:
@@ -378,7 +387,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 			break;
 		}
 
-		candles = isShabbat ? -candles : candles;
+		// Forbidden to light candles during Shabbath.
+		candles = isShabbath ? -candles : candles;
 
 		return candles;
 	}
@@ -406,6 +416,39 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		double latitude = loc.getLatitude();
 		double longitude = loc.getLongitude();
 		return (latitude <= ISRAEL_NORTH) && (latitude >= ISRAEL_SOUTH) && (longitude >= ISRAEL_WEST) && (longitude <= ISRAEL_EAST);
+	}
+
+	/**
+	 * Get a location from GPS.
+	 * 
+	 * @return the location - {@code null} otherwise.
+	 */
+	private Location getLocationGPS() {
+		if (mLocationManager == null)
+			return null;
+		return mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	}
+
+	/**
+	 * Get a location from the GSM network.
+	 * 
+	 * @return the location - {@code null} otherwise.
+	 */
+	private Location getLocationNetwork() {
+		if (mLocationManager == null)
+			return null;
+		return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	}
+
+	/**
+	 * Get a location from the time zone.
+	 * 
+	 * @return the location - {@code null} otherwise.
+	 */
+	private Location getLocationTZ() {
+		if (mCities == null)
+			return null;
+		return mCities.findLocation(mTimeZone);
 	}
 
 	// TODO for menu:
