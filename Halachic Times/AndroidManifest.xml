@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.sf.times"
-    android:versionCode="4"
+    android:versionCode="5"
     android:versionName="1.3" >
 
     <uses-sdk
