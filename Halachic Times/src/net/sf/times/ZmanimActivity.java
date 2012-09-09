@@ -267,7 +267,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		final String locationName = loc.getProvider();
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
-		final double altitude = loc.getAltitude();
+		final double altitude = Math.max(0, loc.getAltitude());
 
 		GeoLocation gloc = new GeoLocation(locationName, latitude, longitude, altitude, TimeZone.getDefault());
 		ZmanimCalendar cal = new ZmanimCalendar(gloc);
