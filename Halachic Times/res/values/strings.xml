@@ -6,7 +6,7 @@
 
     <string name="time_progress">Loading location and times.\n\nGPS or wireless networks should be enabled.</string>
     <string name="location_unknown">Address unknown</string>
-    <string name="location_coords">Lat. %1$s, Lng. %2$s</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="time_dawn_16deg">Dawn</string>
     <string name="time_dawn_72min">Dawn</string>
     <string name="time_earliest">Earliest tallis and tefillin</string>

@@ -56,8 +56,6 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private static final long ONE_SECOND = 1000;
 	/** 1 minute. */
 	private static final long ONE_MINUTE = 60 * ONE_SECOND;
-	/** 5 minutes. */
-	private static final long FIVE_MINUTES = 5 * ONE_MINUTE;
 	/** 1 hour. */
 	private static final long ONE_HOUR = 60 * ONE_MINUTE;
 	/** 12 hours. */
@@ -111,6 +109,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private Location mLocation;
 	/** The list of cities. */
 	private Cities mCities;
+	/** The preferences. */
+	private ZmanimPreferences mPreferences;
 
 	/**
 	 * Creates a new activity.
@@ -147,6 +147,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 			if (loc == null)
 				loc = getLocationNetwork();
 			if (loc == null)
+				loc = getLocationSaved();
+			if (loc == null)
 				loc = getLocationTZ();
 			onLocationChanged(loc);
 		} else {
@@ -176,6 +178,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		mList = (ViewGroup) inflater.inflate(R.layout.times, null);
 		mHeader = mList.findViewById(R.id.header);
 		mAdapter = new ZmanimAdapter(this);
+		mPreferences = new ZmanimPreferences(this);
 
 		setContentView(mList);
 		// TODO for ICS: getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -185,8 +188,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private void initLocation() {
 		if (mLocationManager == null) {
 			mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, FIVE_MINUTES, ONE_KM, this);
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, FIVE_MINUTES, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
 		}
 		mCities = new Cities(this);
 	}
@@ -222,12 +225,15 @@ public class ZmanimActivity extends Activity implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
+		if (location == null)
+			return;
 		// Ignore old locations.
 		if (mLocation != null) {
 			if (mLocation.getTime() >= location.getTime())
 				return;
 		}
 		mLocation = location;
+		mPreferences.putLocation(location);
 		populateHeader();
 		populateTimes();
 	}
@@ -449,6 +455,15 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		if (mCities == null)
 			return null;
 		return mCities.findLocation(mTimeZone);
+	}
+
+	/**
+	 * Get a location from the saved preferences.
+	 * 
+	 * @return the location - {@code null} otherwise.
+	 */
+	private Location getLocationSaved() {
+		return mPreferences.getLocation();
 	}
 
 	// TODO for menu:
