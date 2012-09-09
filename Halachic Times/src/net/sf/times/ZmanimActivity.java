@@ -188,8 +188,16 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private void initLocation() {
 		if (mLocationManager == null) {
 			mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
+			try {
+				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
+			} catch (IllegalArgumentException iae) {
+				iae.printStackTrace();
+			}
+			try {
+				mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
+			} catch (IllegalArgumentException iae) {
+				iae.printStackTrace();
+			}
 		}
 		mCities = new Cities(this);
 	}
