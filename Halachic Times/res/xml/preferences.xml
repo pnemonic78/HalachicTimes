@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="decimal"
+        android:entries="@array/coords_format_entries"
+        android:entryValues="@array/coords_format_values"
+        android:key="coords.format"
+        android:summary="@string/coords_format_summary"
+        android:title="@string/coords_format_title" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="summaries.hide"
+        android:summaryOff="@string/summaries_visible"
+        android:summaryOn="@string/summaries_hidden"
+        android:title="@string/summaries_title" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="past"
+        android:summaryOff="@string/past_disabled"
+        android:summaryOn="@string/past_enabled"
+        android:title="@string/past_title" />
+
+    <!--ListPreference
+        android:defaultValue="gra"
+        android:entries="@array/opinion_entries"
+        android:entryValues="@array/opinion_values"
+        android:key="opinion"
+        android:summary="@string/opinion_summary"
+        android:title="@string/opinion_title" /-->
+
+</PreferenceScreen>

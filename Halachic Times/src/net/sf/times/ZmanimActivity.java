@@ -36,6 +36,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -109,8 +111,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private Location mLocation;
 	/** The list of cities. */
 	private Cities mCities;
-	/** The preferences. */
-	private ZmanimPreferences mPreferences;
+	/** The settings and preferences. */
+	private ZmanimSettings mSettings;
 
 	/**
 	 * Creates a new activity.
@@ -178,7 +180,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		mList = (ViewGroup) inflater.inflate(R.layout.times, null);
 		mHeader = mList.findViewById(R.id.header);
 		mAdapter = new ZmanimAdapter(this);
-		mPreferences = new ZmanimPreferences(this);
+		mSettings = new ZmanimSettings(this);
 
 		setContentView(mList);
 		// TODO for ICS: getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -241,7 +243,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 				return;
 		}
 		mLocation = location;
-		mPreferences.putLocation(location);
+		mSettings.putLocation(location);
 		populateHeader();
 		populateTimes();
 	}
@@ -335,10 +337,16 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
 
-		// TODO check if user prefers to display as "decimal" or as
-		// "sexagesimal"
-		final String latitudeText = String.format("%1$.7f", latitude);
-		final String longitudeText = String.format("%1$.7f", longitude);
+		final String notation = mSettings.getCoordinatesFormat();
+		final String latitudeText;
+		final String longitudeText;
+		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+			latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
+			longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
+		} else {
+			latitudeText = String.format("%1$.7f", latitude);
+			longitudeText = String.format("%1$.7f", longitude);
+		}
 		final String coordsFormat = getString(R.string.location_coords);
 		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
 
@@ -471,24 +479,26 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	private Location getLocationSaved() {
-		return mPreferences.getLocation();
+		return mSettings.getLocation();
 	}
 
-	// TODO for menu:
-	// @Override
-	// public boolean onCreateOptionsMenu(Menu menu) {
-	// getMenuInflater().inflate(R.menu.activity_zmanim, menu);
-	// return true;
-	// }
-	//
-	// @Override
-	// public boolean onOptionsItemSelected(MenuItem item) {
-	// switch (item.getItemId()) {
-	// case android.R.id.home:
-	// NavUtils.navigateUpFromSameTask(this);
-	// return true;
-	// }
-	// return super.onOptionsItemSelected(item);
-	// }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.zmanim, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		// TODO case android.R.id.home:
+		// NavUtils.navigateUpFromSameTask(this);
+		// return true;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, ZmanimPreferences.class));
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 }

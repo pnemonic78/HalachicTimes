@@ -39,6 +39,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	private final Context mContext;
 	private final LayoutInflater mInflater;
+	/** The settings and preferences. */
+	private ZmanimSettings mSettings;
 
 	/**
 	 * Time row item.
@@ -66,6 +68,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		super(context, R.layout.times_item, 0);
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
+		mSettings = new ZmanimSettings(context);
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -95,6 +98,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		title.setText(item.title);
 		TextView summary = (TextView) view.findViewById(R.id.summary);
 		summary.setText(item.summary);
+		if (item.summary == null)
+			summary.setVisibility(View.GONE);
 		TextView time = (TextView) view.findViewById(R.id.time);
 		time.setText(item.time);
 		boolean enabled = !item.past;
@@ -119,11 +124,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (time == 0)
 			return;
 
+		final boolean summaryHidden = mSettings.isSummariesHidden();
+		final boolean pastEnabled = mSettings.isPast();
+
 		ZmanimItem item = new ZmanimItem();
 		item.title = mContext.getText(labelId);
-		item.summary = mContext.getText(summaryId);
+		item.summary = summaryHidden ? null : mContext.getText(summaryId);
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
-		item.past = time < System.currentTimeMillis();
+		item.past = pastEnabled ? false : (time < System.currentTimeMillis());
 
 		add(item);
 	}
