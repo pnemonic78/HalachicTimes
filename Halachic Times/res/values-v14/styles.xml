@@ -1,9 +1,9 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Light" />
+    <style name="AppTheme" parent="android:Theme.Holo" />
 
     <style name="ListDivider">
-        <item name="android:src">@drawable/divider_horizontal_light</item>
+        <item name="android:src">@drawable/divider_horizontal_dark</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1px</item>
     </style>
