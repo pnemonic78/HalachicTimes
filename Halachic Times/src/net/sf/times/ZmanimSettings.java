@@ -50,6 +50,8 @@ public class ZmanimSettings {
 	public static final String KEY_SUMMARIES = "summaries.hide";
 	/** Preference name for enabling past times. */
 	public static final String KEY_PAST = "past";
+	/** Preference name for candle lighting minutes offset. */
+	public static final String KEY_CANDLES = "candles";
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -157,5 +159,15 @@ public class ZmanimSettings {
 	 */
 	public boolean isPast() {
 		return mData.getBoolean(KEY_PAST, false);
+	}
+
+	/**
+	 * Get the offset in minutes before sunset which is used in calculating
+	 * candle lighting time.
+	 * 
+	 * @return the number of minutes.
+	 */
+	public int getCandleLightingOffset() {
+		return mData.getInt(KEY_CANDLES, 18);
 	}
 }

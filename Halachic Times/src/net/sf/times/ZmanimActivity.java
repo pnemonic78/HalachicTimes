@@ -270,9 +270,11 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
 		final double altitude = Math.max(0, loc.getAltitude());
+		final int candlesOffset = mSettings.getCandleLightingOffset();
 
 		GeoLocation gloc = new GeoLocation(locationName, latitude, longitude, altitude, TimeZone.getDefault());
 		ZmanimCalendar cal = new ZmanimCalendar(gloc);
+		cal.setCandleLightingOffset(candlesOffset);
 		cal.setCalendar(mDate);
 
 		int candlesCount = 0;
@@ -301,7 +303,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 			adapter.add(R.string.time_mincha, R.string.time_summary_mincha, cal.getMinchaKetana());
 			adapter.add(R.string.time_plug_hamincha, R.string.time_summary_plug_hamincha, cal.getPlagHamincha());
 			if (candlesCount > 0) {
-				adapter.add(R.string.time_candles, R.string.time_summary_candles, cal.getCandleLighting());
+				String summary = getString(R.string.time_summary_candles, candlesOffset);
+				adapter.add(R.string.time_candles, summary, cal.getCandleLighting());
 			}
 			adapter.add(R.string.time_sunset, R.string.time_summary_sunset, cal.getSunset());
 			if (candlesCount < 0) {
@@ -364,24 +367,24 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	/**
 	 * Get the number of candles to light.
 	 * 
-	 * @param date
+	 * @param cal
 	 *            the Gregorian date.
 	 * @return the candles to light. Upper bits are the day type. The lower bits
 	 *         art the number of candles. Positive values indicate lighting
 	 *         times before sunset. Negative values indicate lighting times
 	 *         after nightfall.
 	 */
-	private int getCandles(Calendar date) {
-		final int dayOfWeek = date.get(Calendar.DAY_OF_WEEK);
+	private int getCandles(Calendar cal) {
+		final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 		final boolean isShabbath = (dayOfWeek == Calendar.SATURDAY);
 		final boolean inIsrael = isIsrael(mLocation, mTimeZone);
 
 		// Check if the following day is special, because we can't check
 		// EREV_CHANUKAH.
-		date.add(Calendar.DAY_OF_MONTH, 1);
-		JewishCalendar jcal = new JewishCalendar(date);
+		cal.add(Calendar.DAY_OF_MONTH, 1);
+		JewishCalendar jcal = new JewishCalendar(cal);
 		jcal.setInIsrael(inIsrael);
-		date.add(Calendar.DAY_OF_MONTH, -1);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
 		int holiday = jcal.getYomTovIndex();
 
 		int candles = CANDLES_NONE;

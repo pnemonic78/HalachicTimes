@@ -45,7 +45,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/**
 	 * Time row item.
 	 */
-	public static class ZmanimItem {
+	static class ZmanimItem {
 
 		/** The title. */
 		public CharSequence title;
@@ -63,6 +63,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Creates a new adapter.
+	 * 
+	 * @param context
+	 *            the context.
 	 */
 	public ZmanimAdapter(Context context) {
 		super(context, R.layout.times_item, 0);
@@ -71,6 +74,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		mSettings = new ZmanimSettings(context);
 	}
 
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		return createViewFromResource(position, convertView, parent, R.layout.times_item);
 	}
@@ -121,6 +125,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the time in milliseconds.
 	 */
 	public void add(int labelId, int summaryId, long time) {
+		final boolean summaryHidden = mSettings.isSummariesHidden();
+		add(labelId, summaryHidden ? (CharSequence) null : mContext.getText(summaryId), time);
+	}
+
+	/**
+	 * Adds the item to the array for a valid time.
+	 * 
+	 * @param labelId
+	 *            the label text id.
+	 * @param summaryId
+	 *            the summary text id.
+	 * @param time
+	 *            the time in milliseconds.
+	 */
+	public void add(int labelId, CharSequence summary, long time) {
 		if (time == 0)
 			return;
 
@@ -129,7 +148,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		ZmanimItem item = new ZmanimItem();
 		item.title = mContext.getText(labelId);
-		item.summary = summaryHidden ? null : mContext.getText(summaryId);
+		item.summary = summaryHidden ? null : summary;
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
 		item.past = pastEnabled ? false : (time < System.currentTimeMillis());
 
@@ -150,5 +169,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (date == null)
 			return;
 		add(labelId, summaryId, date.getTime());
+	}
+
+	/**
+	 * Adds the item to the array for a valid date.
+	 * 
+	 * @param labelId
+	 *            the label text id.
+	 * @param summary
+	 *            the summary text.
+	 * @param date
+	 *            the date.
+	 */
+	public void add(int labelId, CharSequence summary, Date date) {
+		if (date == null)
+			return;
+		add(labelId, summary, date.getTime());
 	}
 }

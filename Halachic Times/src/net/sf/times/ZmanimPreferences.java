@@ -19,7 +19,10 @@
  */
 package net.sf.times;
 
+import net.sf.times.preference.SeekBarPreference;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 
 /**
@@ -27,7 +30,9 @@ import android.preference.PreferenceActivity;
  * 
  * @author Moshe
  */
-public class ZmanimPreferences extends PreferenceActivity {
+public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener {
+
+	private SeekBarPreference mCandles;
 
 	/**
 	 * Constructs a new preferences.
@@ -40,5 +45,22 @@ public class ZmanimPreferences extends PreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+
+		mCandles = (SeekBarPreference) findPreference(ZmanimSettings.KEY_CANDLES);
+		mCandles.setOnPreferenceChangeListener(this);
+		onPreferenceChange(mCandles, null);
+	}
+
+	@Override
+	public boolean onPreferenceChange(Preference preference, Object newValue) {
+		if (preference == mCandles) {
+			if (newValue == null)
+				newValue = mCandles.getProgress();
+			String format = getString(R.string.candles_summary);
+			CharSequence summary = String.format(format, newValue);
+			mCandles.setSummary(summary);
+			return true;
+		}
+		return false;
 	}
 }
