@@ -27,7 +27,7 @@
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"
             android:key="candles"
-            android:max="60"
+            android:max="40"
             android:summary="@string/candles_summary"
             android:title="@string/candles_title" />
     </PreferenceCategory>
