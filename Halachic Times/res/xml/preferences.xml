@@ -11,10 +11,10 @@
             android:title="@string/coords_format_title" />
 
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="summaries.hide"
-            android:summaryOff="@string/summaries_visible"
-            android:summaryOn="@string/summaries_hidden"
+            android:defaultValue="true"
+            android:key="summaries.visible"
+            android:summaryOff="@string/summaries_hidden"
+            android:summaryOn="@string/summaries_visible"
             android:title="@string/summaries_title" />
         <CheckBoxPreference
             android:defaultValue="false"

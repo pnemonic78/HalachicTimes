@@ -54,11 +54,17 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (preference == mCandles) {
-			if (newValue == null)
-				newValue = mCandles.getProgress();
-			String format = getString(R.string.candles_summary);
-			CharSequence summary = String.format(format, newValue);
-			mCandles.setSummary(summary);
+			// On ICS, setSummary always calls onCreateView, so postpone until
+			// after preference is persisted.
+			runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					String format = getString(R.string.candles_summary);
+					CharSequence summary = String.format(format, mCandles.getProgress());
+					mCandles.setSummary(summary);
+				}
+			});
 			return true;
 		}
 		return false;

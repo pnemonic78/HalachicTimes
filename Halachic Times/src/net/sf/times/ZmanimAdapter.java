@@ -125,8 +125,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the time in milliseconds.
 	 */
 	public void add(int labelId, int summaryId, long time) {
-		final boolean summaryHidden = mSettings.isSummariesHidden();
-		add(labelId, summaryHidden ? (CharSequence) null : mContext.getText(summaryId), time);
+		final boolean summaryVisible = mSettings.isSummaries();
+		add(labelId, summaryVisible ? mContext.getText(summaryId) : (CharSequence) null, time);
 	}
 
 	/**
@@ -143,12 +143,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (time == 0)
 			return;
 
-		final boolean summaryHidden = mSettings.isSummariesHidden();
+		final boolean summaryVisible = mSettings.isSummaries();
 		final boolean pastEnabled = mSettings.isPast();
 
 		ZmanimItem item = new ZmanimItem();
 		item.title = mContext.getText(labelId);
-		item.summary = summaryHidden ? null : summary;
+		item.summary = summaryVisible ? summary : null;
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
 		item.past = pastEnabled ? false : (time < System.currentTimeMillis());
 

@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * SeekBar preference.
@@ -47,11 +48,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	/** Delay in milliseconds to wait for user to finish changing the seek bar. */
 	private static final long PERSIST_DELAY = 650;
 
+	private final Context mContext;
 	private SeekBar mSeekBar;
 	private int mProgress;
 	private int mMax = 100;
 	private Timer mTimer;
 	private PersistTask mTask;
+	private Toast mToast;
 
 	/**
 	 * Creates a new seek bar preference.
@@ -61,6 +64,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 */
 	public SeekBarPreference(Context context) {
 		super(context);
+		mContext = context;
 	}
 
 	/**
@@ -73,7 +77,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 */
 	public SeekBarPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
-
+		mContext = context;
 		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
 	}
 
@@ -89,7 +93,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 */
 	public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-
+		mContext = context;
 		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
 	}
 
@@ -114,8 +118,12 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	protected void onBindView(View view) {
 		super.onBindView(view);
 
-		mSeekBar.setMax(mMax);
-		mSeekBar.setProgress(mProgress);
+		final int max = mMax;
+		final int progress = mProgress;
+		if (max != mSeekBar.getMax())
+			mSeekBar.setMax(max);
+		if (progress != mSeekBar.getProgress())
+			mSeekBar.setProgress(progress);
 	}
 
 	@Override
@@ -135,7 +143,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 *            the progress.
 	 */
 	public void setProgress(int progress) {
-		setProgress(progress, true);
+		if (mSeekBar == null) {
+			// Save this for when the seek bar is created.
+			mProgress = progress;
+		} else {
+			// Calls onProgressChanged -> persistProgress
+			mSeekBar.setProgress(progress);
+		}
 	}
 
 	public int getProgress() {
@@ -163,31 +177,31 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 * 
 	 * @param progress
 	 *            the progress.
-	 * @param update
-	 *            update the seek bar?
 	 */
-	protected void setProgress(int progress, boolean update) {
-		if (mProgress != progress) {
-			mProgress = progress;
-			if (update && (mSeekBar != null))
-				mSeekBar.setProgress(progress);
-			if (callChangeListener(progress)) {
-				// Postpone persisting until user finished dragging.
-				if (mTask != null)
-					mTask.cancel();
-				mTask = new PersistTask(progress);
-				if (mTimer == null)
-					mTimer = new Timer();
-				mTimer.schedule(mTask, PERSIST_DELAY);
-				// notifyChanged();
-			}
-		}
+	protected void persistProgress(int progress) {
+		mProgress = progress;
+		// Postpone persisting until user finished dragging.
+		if (mTask != null)
+			mTask.cancel();
+		mTask = new PersistTask(progress);
+		if (mTimer == null)
+			mTimer = new Timer();
+		mTimer.schedule(mTask, PERSIST_DELAY);
 	}
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		if (mSeekBar == seekBar)
-			setProgress(progress, false);
+		if (mSeekBar == seekBar) {
+			if (mProgress != progress) {
+				// FIXME print the progress on the bar instead of toasting.
+				if (mToast == null)
+					mToast = Toast.makeText(mContext, String.valueOf(progress), Toast.LENGTH_SHORT);
+				else
+					mToast.setText(String.valueOf(progress));
+				mToast.show();
+				persistProgress(progress);
+			}
+		}
 	}
 
 	@Override
@@ -220,7 +234,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 		@Override
 		public void run() {
-			persistInt(mProgress);
+			if (callChangeListener(mProgress)) {
+				persistInt(mProgress);
+			}
 		}
 	}
 }

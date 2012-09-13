@@ -56,10 +56,10 @@
     </string-array>
     <string name="category_general">General</string>
     <string name="category_opinion">Opinions</string>
-    <string name="past_title">Enable times that have past</string>
+    <string name="past_title">Times that have past</string>
     <string name="past_enabled">Older times are enabled</string>
     <string name="past_disabled">Older times are disabled</string>
-    <string name="summaries_title">Hide summaries</string>
+    <string name="summaries_title">Summaries</string>
     <string name="summaries_hidden">Summaries are hidden</string>
     <string name="summaries_visible">Summaries are visible</string>
     <string name="candles_title">Candle lighting</string>

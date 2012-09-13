@@ -47,7 +47,7 @@ public class ZmanimSettings {
 	/** Preference name for the co-ordinates format. */
 	public static final String KEY_COORDS_FORMAT = "coords.format";
 	/** Preference name for showing summaries. */
-	public static final String KEY_SUMMARIES = "summaries.hide";
+	public static final String KEY_SUMMARIES = "summaries.visible";
 	/** Preference name for enabling past times. */
 	public static final String KEY_PAST = "past";
 	/** Preference name for candle lighting minutes offset. */
@@ -144,12 +144,12 @@ public class ZmanimSettings {
 	}
 
 	/**
-	 * Are summaries hidden?
+	 * Are summaries visible?
 	 * 
-	 * @return {@code true} to hide summaries.
+	 * @return {@code true} to show summaries.
 	 */
-	public boolean isSummariesHidden() {
-		return mData.getBoolean(KEY_SUMMARIES, false);
+	public boolean isSummaries() {
+		return mData.getBoolean(KEY_SUMMARIES, true);
 	}
 
 	/**
