@@ -29,6 +29,8 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -40,6 +42,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 /**
@@ -47,7 +50,7 @@ import android.widget.TextView;
  * 
  * @author Moshe
  */
-public class ZmanimActivity extends Activity implements LocationListener {
+public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -113,6 +116,8 @@ public class ZmanimActivity extends Activity implements LocationListener {
 	private Cities mCities;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
+	/** The date picker. */
+	private DatePickerDialog mDatePicker;
 
 	/**
 	 * Creates a new activity.
@@ -142,6 +147,7 @@ public class ZmanimActivity extends Activity implements LocationListener {
 
 	@Override
 	protected void onResume() {
+		System.out.println("onResume");
 		super.onResume();
 
 		if (mLocation == null) {
@@ -497,11 +503,26 @@ public class ZmanimActivity extends Activity implements LocationListener {
 		// TODO case android.R.id.home:
 		// NavUtils.navigateUpFromSameTask(this);
 		// return true;
+		case R.id.menu_goto:
+			mDatePicker = new DatePickerDialog(this, this, mDate.get(Calendar.YEAR), mDate.get(Calendar.MONTH), mDate.get(Calendar.DAY_OF_MONTH));
+			mDatePicker.show();
+			return true;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, ZmanimPreferences.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		Calendar date = Calendar.getInstance();
+		date.set(Calendar.YEAR, year);
+		date.set(Calendar.MONTH, monthOfYear);
+		date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+		setDate(date.getTimeInMillis());
+		populateHeader();
+		populateTimes();
 	}
 
 }
