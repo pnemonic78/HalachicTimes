@@ -5,7 +5,7 @@
     <style name="ListDivider">
         <item name="android:src">@drawable/divider_horizontal_light</item>
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">1px</item>
+        <item name="android:layout_height">1dp</item>
     </style>
 
 </resources>
