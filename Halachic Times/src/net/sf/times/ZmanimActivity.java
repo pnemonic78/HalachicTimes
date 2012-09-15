@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import net.sf.times.location.AddressProvider;
 import net.sourceforge.zmanim.ZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -32,6 +33,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -118,6 +120,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ZmanimSettings mSettings;
 	/** The date picker. */
 	private DatePickerDialog mDatePicker;
+	/** The address. */
+	private Address mAddress;
+	/** The address fetcher. */
+	private FindAddress mFindAddress;
 
 	/**
 	 * Creates a new activity.
@@ -147,7 +153,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	protected void onResume() {
-		System.out.println("onResume");
 		super.onResume();
 
 		if (mLocation == null) {
@@ -249,6 +254,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				return;
 		}
 		mLocation = location;
+		if (mFindAddress != null)
+			mFindAddress.interrupt();
+		mFindAddress = new FindAddress(location);
+		mFindAddress.start();
 		mSettings.putLocation(location);
 		populateHeader();
 		populateTimes();
@@ -343,12 +352,13 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		Location loc = mLocation;
 		if (loc == null)
 			return;
-		String cityName = mCities.findCity(loc);
-		String locationName = (cityName == null) ? mTimeZone.getDisplayName() : cityName;
-		if (locationName == null)
-			locationName = getString(R.string.location_unknown);
+		View header = mHeader;
+		if (header == null)
+			return;
+
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
+		String locationName = formatAddress();
 
 		final String notation = mSettings.getCoordinatesFormat();
 		final String latitudeText;
@@ -363,10 +373,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		final String coordsFormat = getString(R.string.location_coords);
 		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
 
-		// Have we been destroyed?
-		View header = mHeader;
-		if (header == null)
-			return;
 		// Update the header.
 		TextView address = (TextView) header.findViewById(R.id.address);
 		address.setText(locationName);
@@ -527,6 +533,59 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		setDate(date.getTimeInMillis());
 		populateHeader();
 		populateTimes();
+	}
+
+	/**
+	 * Find an address.
+	 * 
+	 * @author Moshe
+	 */
+	private class FindAddress extends Thread {
+
+		private final Location mLocation;
+
+		/** Creates a new finder. */
+		public FindAddress(Location location) {
+			super();
+			mLocation = location;
+		}
+
+		@Override
+		public void run() {
+			AddressProvider provider = new AddressProvider(ZmanimActivity.this);
+			Address addr = provider.findNearestAddress(mLocation);
+			if (addr != null) {
+				mAddress = addr;
+
+				runOnUiThread(new Runnable() {
+
+					@Override
+					public void run() {
+						populateHeader();
+					}
+				});
+			}
+		}
+	}
+
+	/**
+	 * Format the address for the current location or time zone.
+	 * 
+	 * @return the formatted address.
+	 */
+	private String formatAddress() {
+		// Have we been destroyed?
+		Location loc = mLocation;
+		if (loc == null)
+			return null;
+		Address addr = mAddress;
+		if (addr != null)
+			return AddressProvider.formatAddress(addr);
+		String cityName = mCities.findCity(loc);
+		String locationName = (cityName == null) ? mTimeZone.getDisplayName() : cityName;
+		if (locationName == null)
+			locationName = getString(R.string.location_unknown);
+		return locationName;
 	}
 
 }
