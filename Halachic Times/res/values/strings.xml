@@ -64,6 +64,9 @@
     <string name="summaries_title">Summaries</string>
     <string name="summaries_hidden">Summaries are hidden</string>
     <string name="summaries_visible">Summaries are visible</string>
+    <string name="gradient_title">Gradient background</string>
+    <string name="gradient_hidden">Gradient is hidden</string>
+    <string name="gradient_visible">Gradient is visible</string>
     <string name="candles_title">Candle lighting</string>
     <string name="candles_summary">Light candles %1$d minutes before sunset</string>
     <!--

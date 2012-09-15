@@ -327,6 +327,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		ViewGroup list = (ViewGroup) mList.findViewById(R.id.list);
 		if (list == null)
 			return;
+		if (mSettings.isBackgroundGradient())
+			list.setBackgroundResource(R.drawable.list_gradient);
+		else
+			list.setBackgroundResource(0);
 		list.removeAllViews();
 		for (int i = 0; i < count; i++) {
 			list.addView(adapter.getView(i, null, list));

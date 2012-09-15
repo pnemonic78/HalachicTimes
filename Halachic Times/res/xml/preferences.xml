@@ -22,6 +22,12 @@
             android:summaryOff="@string/past_disabled"
             android:summaryOn="@string/past_enabled"
             android:title="@string/past_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="gradient"
+            android:summaryOff="@string/gradient_hidden"
+            android:summaryOn="@string/gradient_visible"
+            android:title="@string/gradient_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/category_opinion" >
         <net.sf.times.preference.SeekBarPreference

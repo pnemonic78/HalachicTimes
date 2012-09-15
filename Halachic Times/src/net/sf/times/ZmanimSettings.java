@@ -50,6 +50,8 @@ public class ZmanimSettings {
 	public static final String KEY_SUMMARIES = "summaries.visible";
 	/** Preference name for enabling past times. */
 	public static final String KEY_PAST = "past";
+	/** Preference name for the background gradient. */
+	public static final String KEY_BG_GRADIENT = "gradient";
 	/** Preference name for candle lighting minutes offset. */
 	public static final String KEY_CANDLES = "candles";
 
@@ -159,6 +161,15 @@ public class ZmanimSettings {
 	 */
 	public boolean isPast() {
 		return mData.getBoolean(KEY_PAST, false);
+	}
+
+	/**
+	 * Is background gradient visible?
+	 * 
+	 * @return {@code true} to show gradient.
+	 */
+	public boolean isBackgroundGradient() {
+		return mData.getBoolean(KEY_BG_GRADIENT, true);
 	}
 
 	/**
