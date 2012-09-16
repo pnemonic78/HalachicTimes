@@ -127,6 +127,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private FindAddress mFindAddress;
 	/** The gradient background. */
 	private Drawable mBackground;
+	/** Populate the header in UI thread. */
+	private Runnable mPopulateHeader;
 
 	/**
 	 * Creates a new activity.
@@ -561,14 +563,16 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			Address addr = provider.findNearestAddress(mLocation);
 			if (addr != null) {
 				mAddress = addr;
+				if (mPopulateHeader == null) {
+					mPopulateHeader = new Runnable() {
 
-				runOnUiThread(new Runnable() {
-
-					@Override
-					public void run() {
-						populateHeader();
-					}
-				});
+						@Override
+						public void run() {
+							populateHeader();
+						}
+					};
+				}
+				runOnUiThread(mPopulateHeader);
 			}
 		}
 	}
