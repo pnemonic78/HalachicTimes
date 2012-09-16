@@ -33,6 +33,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
@@ -124,6 +125,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private Address mAddress;
 	/** The address fetcher. */
 	private FindAddress mFindAddress;
+	/** The gradient background. */
+	private Drawable mBackground;
 
 	/**
 	 * Creates a new activity.
@@ -336,10 +339,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		ViewGroup list = (ViewGroup) mList.findViewById(R.id.list);
 		if (list == null)
 			return;
-		if (mSettings.isBackgroundGradient())
-			list.setBackgroundResource(R.drawable.list_gradient);
-		else
-			list.setBackgroundResource(0);
+		if (mSettings.isBackgroundGradient()) {
+			if (mBackground == null)
+				mBackground = getResources().getDrawable(R.drawable.list_gradient);
+			list.setBackgroundDrawable(mBackground);
+		} else
+			list.setBackgroundDrawable(null);
 		list.removeAllViews();
 		for (int i = 0; i < count; i++) {
 			list.addView(adapter.getView(i, null, list));
