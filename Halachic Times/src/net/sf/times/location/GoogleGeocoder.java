@@ -286,7 +286,7 @@ public class GoogleGeocoder {
 
 		/** Parse state. */
 		private enum State {
-			START, ROOT, STATUS, RESULT, RESULT_TYPE, RESULT_FORMATTED, ADDRESS, ADDRESS_TYPE, ADDRESS_LONG, ADDRESS_SHORT, GEOMETRY, LOCATION, LOC_LAT, LOC_LNG, FINISH
+			START, ROOT, STATUS, RESULT, RESULT_TYPE, RESULT_FORMATTED, ADDRESS, ADDRESS_TYPE, ADDRESS_LONG, ADDRESS_SHORT, GEOMETRY, LOCATION, LATITUDE, LONGITUDE, FINISH
 		};
 
 		private static final String STATUS_OK = "OK";
@@ -382,9 +382,9 @@ public class GoogleGeocoder {
 				break;
 			case LOCATION:
 				if (TAG_LATITUDE.equals(localName))
-					mState = State.LOC_LAT;
+					mState = State.LATITUDE;
 				else if (TAG_LONGITUDE.equals(localName))
-					mState = State.LOC_LNG;
+					mState = State.LONGITUDE;
 				break;
 			case FINISH:
 				return;
@@ -477,11 +477,11 @@ public class GoogleGeocoder {
 				if (TAG_LOCATION.equals(localName))
 					mState = State.GEOMETRY;
 				break;
-			case LOC_LAT:
+			case LATITUDE:
 				if (TAG_LATITUDE.equals(localName))
 					mState = State.LOCATION;
 				break;
-			case LOC_LNG:
+			case LONGITUDE:
 				if (TAG_LONGITUDE.equals(localName))
 					mState = State.LOCATION;
 				break;
@@ -535,11 +535,11 @@ public class GoogleGeocoder {
 				if (mAddressType == null)
 					mAddressType = s;
 				break;
-			case LOC_LAT:
+			case LATITUDE:
 				if (mAddress != null)
 					mAddress.setLatitude(Double.parseDouble(s));
 				break;
-			case LOC_LNG:
+			case LONGITUDE:
 				if (mAddress != null)
 					mAddress.setLongitude(Double.parseDouble(s));
 				break;

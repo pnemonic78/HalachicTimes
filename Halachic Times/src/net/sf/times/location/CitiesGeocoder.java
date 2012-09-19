@@ -17,12 +17,15 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.location;
 
+import java.util.Locale;
 import java.util.TimeZone;
 
+import net.sf.times.R;
 import android.content.Context;
 import android.content.res.Resources;
+import android.location.Address;
 import android.location.Location;
 
 /**
@@ -30,7 +33,7 @@ import android.location.Location;
  * 
  * @author Moshe
  */
-public class Cities {
+public class CitiesGeocoder {
 
 	/** The time zone location provider. */
 	public static final String TIMEZONE_PROVIDER = "timezone";
@@ -45,19 +48,40 @@ public class Cities {
 	/** Degrees per time zone hour. */
 	private static final double TZ_HOUR = 360 / 24;
 
-	// private final Context mContext;
+	protected final Locale mLocale;
 	private String[] mNames;
+	private static String[] mCountries;
 	private static double[] mLatitudes;
 	private static double[] mLongitudes;
 	private static String[] mTimeZones;
 
-	public Cities(Context context) {
+	/**
+	 * Constructs a new cities provider.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	public CitiesGeocoder(Context context) {
+		this(context, Locale.getDefault());
+	}
+
+	/**
+	 * Constructs a new cities provider.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param locale
+	 *            the locale.
+	 */
+	public CitiesGeocoder(Context context, Locale locale) {
 		super();
-		// mContext = context;
+		mLocale = locale;
 
 		// Populate arrays from "cities.xml"
 		Resources res = context.getResources();
 		mNames = res.getStringArray(R.array.cities);
+		if (mCountries == null)
+			mCountries = res.getStringArray(R.array.countries);
 		if (mTimeZones == null)
 			mTimeZones = res.getStringArray(R.array.timezones);
 		if (mLatitudes == null) {
@@ -79,10 +103,10 @@ public class Cities {
 	 * 
 	 * @param location
 	 *            the location.
-	 * @return the city name - {@code null} otherwise.
+	 * @return the city - {@code null} otherwise.
 	 */
-	public String findCity(Location location) {
-		return findCity(location.getLatitude(), location.getLongitude());
+	public Address getFromLocation(Location location) {
+		return getFromLocation(location.getLatitude(), location.getLongitude());
 	}
 
 	/**
@@ -92,16 +116,16 @@ public class Cities {
 	 *            the latitude.
 	 * @param longitude
 	 *            the longitude.
-	 * @return the city name - {@code null} otherwise.
+	 * @return the city - {@code null} otherwise.
 	 */
-	public String findCity(double latitude, double longitude) {
+	public Address getFromLocation(double latitude, double longitude) {
 		final double startLatitude = latitude;
 		final double startLongitude = longitude;
-		double endLatitude;
-		double endLongitude;
-		float[] results = new float[3];
+		double endLatitude = latitude;
+		double endLongitude = longitude;
+		float[] results = new float[1];
 		float distanceMin = Float.MAX_VALUE;
-		int indexMin = -1;
+		int found = -1;
 		int length = Math.min(mLatitudes.length, mLongitudes.length);
 
 		for (int i = 0; i < length; i++) {
@@ -110,11 +134,23 @@ public class Cities {
 			Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, results);
 			if (results[0] < distanceMin) {
 				distanceMin = results[0];
-				indexMin = i;
+				found = i;
 			}
 		}
 
-		return (indexMin >= 0) ? mNames[indexMin] : null;
+		if (found < 0)
+			return null;
+
+		Locale locale = new Locale(mLocale.getLanguage(), mCountries[found]);
+		ZmanimAddress city = new ZmanimAddress(locale);
+		city.setId(-found);
+		city.setLatitude(endLatitude);
+		city.setLongitude(endLongitude);
+		city.setCountryCode(locale.getCountry());
+		city.setCountryName(locale.getDisplayCountry());
+		city.setAdminArea(mNames[found]);
+
+		return city;
 	}
 
 	/**
@@ -129,14 +165,28 @@ public class Cities {
 			return null;
 		String tzId = tz.getID();
 
+		double longitude = (TZ_HOUR * tz.getRawOffset()) / ONE_HOUR;
 		Location loc = new Location(TIMEZONE_PROVIDER);
-		loc.setLongitude((TZ_HOUR * tz.getRawOffset()) / ONE_HOUR);
+		loc.setLongitude(longitude);
 
+		// Compare IDs.
 		for (int i = 0; i < mTimeZones.length; i++) {
 			if (tzId.equals(mTimeZones[i])) {
 				loc.setLatitude(mLatitudes[i]);
 				loc.setLongitude(mLongitudes[i]);
-				break;
+				return loc;
+			}
+		}
+
+		// Find nearest longitude.
+		double delta;
+		double deltaMin = Double.MAX_VALUE;
+		for (int i = 0; i < mTimeZones.length; i++) {
+			delta = Math.abs(longitude - mLongitudes[i]);
+			if (delta < deltaMin) {
+				deltaMin = delta;
+				loc.setLatitude(mLatitudes[i]);
+				loc.setLongitude(mLongitudes[i]);
 			}
 		}
 

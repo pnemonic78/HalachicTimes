@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.ZmanimAddress;
 import net.sourceforge.zmanim.ZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -33,6 +34,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Location;
@@ -115,14 +117,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private LocationManager mLocationManager;
 	/** The location. */
 	private Location mLocation;
-	/** The list of cities. */
-	private Cities mCities;
+	/** Address provider. */
+	private AddressProvider mAddressProvider;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
 	/** The date picker. */
 	private DatePickerDialog mDatePicker;
 	/** The address. */
-	private Address mAddress;
+	private ZmanimAddress mAddress;
 	/** The address fetcher. */
 	private FindAddress mFindAddress;
 	/** The gradient background. */
@@ -188,6 +190,17 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			mAdapter.clear();
 			mAdapter = null;
 		}
+		if (mAddressProvider != null) {
+			mAddressProvider.close();
+			mAddressProvider = null;
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		SQLiteDatabase.releaseMemory();
 	}
 
 	/** Initialise. */
@@ -209,15 +222,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			try {
 				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
 			} catch (IllegalArgumentException iae) {
-				iae.printStackTrace();
+				System.err.println(this + ": " + iae.getLocalizedMessage());
 			}
 			try {
 				mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
 			} catch (IllegalArgumentException iae) {
-				iae.printStackTrace();
+				System.err.println(this + ": " + iae.getLocalizedMessage());
 			}
 		}
-		mCities = new Cities(this);
 	}
 
 	/**
@@ -259,11 +271,11 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				return;
 		}
 		mLocation = location;
+		mSettings.putLocation(location);
 		if (mFindAddress != null)
 			mFindAddress.interrupt();
 		mFindAddress = new FindAddress(location);
 		mFindAddress.start();
-		mSettings.putLocation(location);
 		populateHeader();
 		populateTimes();
 	}
@@ -494,9 +506,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * @return the location - {@code null} otherwise.
 	 */
 	private Location getLocationTZ() {
-		if (mCities == null)
-			return null;
-		return mCities.findLocation(mTimeZone);
+		if (mAddressProvider == null)
+			mAddressProvider = new AddressProvider(this);
+		return mAddressProvider.findTimeZone(mTimeZone);
 	}
 
 	/**
@@ -559,10 +571,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		@Override
 		public void run() {
-			AddressProvider provider = new AddressProvider(ZmanimActivity.this);
-			Address addr = provider.findNearestAddress(mLocation);
+			if (mAddressProvider == null)
+				mAddressProvider = new AddressProvider(ZmanimActivity.this);
+			AddressProvider provider = mAddressProvider;
+			Address nearest = provider.findNearestAddress(mLocation);
+			ZmanimAddress addr = (nearest instanceof ZmanimAddress) ? ((ZmanimAddress) nearest) : new ZmanimAddress(nearest);
 			if (addr != null) {
 				mAddress = addr;
+				provider.insertAddress(mLocation, addr);
 				if (mPopulateHeader == null) {
 					mPopulateHeader = new Runnable() {
 
@@ -583,18 +599,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * @return the formatted address.
 	 */
 	private String formatAddress() {
-		// Have we been destroyed?
-		Location loc = mLocation;
-		if (loc == null)
-			return null;
-		Address addr = mAddress;
-		if (addr != null)
-			return AddressProvider.formatAddress(addr);
-		String cityName = mCities.findCity(loc);
-		String locationName = (cityName == null) ? mTimeZone.getDisplayName() : cityName;
-		if (locationName == null)
-			locationName = getString(R.string.location_unknown);
-		return locationName;
+		if (mAddress != null)
+			return mAddress.getFormatted();
+		if (mTimeZone != null)
+			return mTimeZone.getDisplayName();
+		return getString(R.string.location_unknown);
 	}
-
 }

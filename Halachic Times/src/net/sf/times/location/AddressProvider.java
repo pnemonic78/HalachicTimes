@@ -22,12 +22,19 @@ package net.sf.times.location;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Bundle;
+import android.provider.BaseColumns;
 
 /**
  * Address provider.<br>
@@ -37,17 +44,48 @@ import android.os.Bundle;
  */
 public class AddressProvider {
 
-	/** Address field separator. */
-	private static final String ADDRESS_SEPARATOR = ", ";
+	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
+			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE };
+	private static final int INDEX_ID = 0;
+	private static final int INDEX_LOCATION_LATITUDE = 1;
+	private static final int INDEX_LOCATION_LONGITUDE = 2;
+	private static final int INDEX_LATITUDE = 3;
+	private static final int INDEX_LONGITUDE = 4;
+	private static final int INDEX_ADDRESS = 5;
+	private static final int INDEX_LANGUAGE = 6;
+
+	/** Maximum distance to consider two locations in the same vicinity. */
+	private static final float SAME_LOCATION = 500f;// 500 meters.
 
 	private final Context mContext;
+	private final Locale mLocale;
+	private SQLiteOpenHelper mOpenHelper;
+	/** The list of cities. */
+	private CitiesGeocoder mCities;
 
 	/**
 	 * Constructs a new provider.
+	 * 
+	 * @param context
+	 *            the context.
 	 */
 	public AddressProvider(Context context) {
+		this(context, Locale.getDefault());
+	}
+
+	/**
+	 * Constructs a new provider.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param locale
+	 *            the locale.
+	 */
+	public AddressProvider(Context context, Locale locale) {
 		super();
 		mContext = context;
+		mLocale = locale;
+		mCities = new CitiesGeocoder(context, locale);
 	}
 
 	/**
@@ -61,6 +99,9 @@ public class AddressProvider {
 		List<Address> addresses = null;
 
 		if ((addresses == null) || addresses.isEmpty()) {
+			addresses = findNearestAddressDatabase(location);
+		}
+		if ((addresses == null) || addresses.isEmpty()) {
 			addresses = findNearestAddressGeocoder(location);
 		}
 		if ((addresses == null) || addresses.isEmpty()) {
@@ -68,6 +109,9 @@ public class AddressProvider {
 		}
 		if ((addresses == null) || addresses.isEmpty()) {
 			addresses = findNearestAddressGeoNames(location);
+		}
+		if ((addresses == null) || addresses.isEmpty()) {
+			addresses = findNearestCity(location);
 		}
 
 		return findBestAddress(location, addresses);
@@ -83,7 +127,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the list of addresses.
 	 */
-	protected List<Address> findNearestAddressGeocoder(Location location) {
+	private List<Address> findNearestAddressGeocoder(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses;
@@ -107,11 +151,11 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the list of addresses.
 	 */
-	protected List<Address> findNearestAddressGoogle(Location location) {
+	private List<Address> findNearestAddressGoogle(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses;
-		GoogleGeocoder geocoder = new GoogleGeocoder(mContext);
+		GoogleGeocoder geocoder = new GoogleGeocoder(mContext, mLocale);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
@@ -130,11 +174,11 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the list of addresses.
 	 */
-	protected List<Address> findNearestAddressGeoNames(Location location) {
+	private List<Address> findNearestAddressGeoNames(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses;
-		GeoNamesGeocoder geocoder = new GeoNamesGeocoder(mContext);
+		GeoNamesGeocoder geocoder = new GeoNamesGeocoder(mContext, mLocale);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
 		} catch (IOException e) {
@@ -156,13 +200,15 @@ public class AddressProvider {
 	private Address findBestAddress(Location location, List<Address> addresses) {
 		if ((addresses == null) || addresses.isEmpty())
 			return null;
+		if (addresses.size() == 1)
+			return addresses.get(0);
 
-		// First find the closest location.
+		// First, find the closest location.
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		float distanceMin = Float.MAX_VALUE;
 		Address addrMin = null;
-		float[] distances = new float[3];
+		float[] distances = new float[1];
 		for (Address a : addresses) {
 			Location.distanceBetween(latitude, longitude, a.getLatitude(), a.getLongitude(), distances);
 			if (distances[0] <= distanceMin) {
@@ -208,51 +254,166 @@ public class AddressProvider {
 	 *            the address.
 	 * @return the formatted address name.
 	 */
-	public static String formatAddress(Address a) {
-		Bundle extras = a.getExtras();
-		String formatted = (extras == null) ? null : extras.getString(GoogleGeocoder.KEY_FORMATTED);
-		if (formatted != null)
-			return formatted;
+	public static String formatAddress(ZmanimAddress a) {
+		return a.getFormatted();
+	}
 
-		StringBuilder buf = new StringBuilder();
-		String feature = a.getFeatureName();
-		String subloc = a.getSubLocality();
-		String locality = a.getLocality();
-		String subadmin = a.getSubAdminArea();
-		String admin = a.getAdminArea();
-		String country = a.getCountryName();
+	/**
+	 * Find addresses that are known to describe the area immediately
+	 * surrounding the given latitude and longitude.
+	 * <p>
+	 * Uses the local database.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the list of addresses.
+	 */
+	private List<Address> findNearestAddressDatabase(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
 
-		if (feature != null) {
-			if (buf.length() > 0)
-				buf.append(ADDRESS_SEPARATOR);
-			buf.append(feature);
-		}
-		if ((subloc != null) && !subloc.equals(feature)) {
-			if (buf.length() > 0)
-				buf.append(ADDRESS_SEPARATOR);
-			buf.append(subloc);
-		}
-		if ((locality != null) && !locality.equals(subloc) && !locality.equals(feature)) {
-			if (buf.length() > 0)
-				buf.append(ADDRESS_SEPARATOR);
-			buf.append(locality);
-		}
-		if ((subadmin != null) && !subadmin.equals(locality) && !subadmin.equals(subloc) && !subadmin.equals(feature)) {
-			if (buf.length() > 0)
-				buf.append(ADDRESS_SEPARATOR);
-			buf.append(subadmin);
-		}
-		if ((admin != null) && !admin.equals(subadmin) && !admin.equals(locality) && !admin.equals(subloc) && !admin.equals(feature)) {
-			if (buf.length() > 0)
-				buf.append(ADDRESS_SEPARATOR);
-			buf.append(admin);
-		}
-		if ((country != null) && !country.equals(feature)) {
-			if (buf.length() > 0)
-				buf.append(ADDRESS_SEPARATOR);
-			buf.append(country);
+		List<Address> addresses = new ArrayList<Address>();
+		SQLiteDatabase db = getReadableDatabase();
+		Cursor cursor = db.query(AddressOpenHelper.TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
+		if (cursor == null) {
+			db.close();
+			return addresses;
 		}
 
-		return buf.toString();
+		if (cursor.moveToFirst()) {
+			long id;
+			double locationLatitude;
+			double locationLongitude;
+			double addressLatitude;
+			double addressLongitude;
+			String formatted;
+			String language;
+			Locale locale;
+			ZmanimAddress address;
+			float[] distanceLocation = new float[1];
+			float[] distanceAddress = new float[1];
+
+			do {
+				id = cursor.getLong(INDEX_ID);
+				locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
+				locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
+				addressLatitude = cursor.getDouble(INDEX_LATITUDE);
+				addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+				formatted = cursor.getString(INDEX_ADDRESS);
+				language = cursor.getString(INDEX_LANGUAGE);
+
+				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
+				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceAddress);
+				if ((distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION)) {
+					if (language == null)
+						locale = mLocale;
+					else
+						locale = new Locale(language, mLocale.getCountry());
+					address = new ZmanimAddress(locale);
+					address.setFormatted(formatted);
+					address.setId(id);
+					address.setLatitude(addressLatitude);
+					address.setLongitude(addressLongitude);
+					addresses.add(address);
+				}
+			} while (cursor.moveToNext());
+		}
+		cursor.close();
+		db.close();
+
+		return addresses;
+	}
+
+	/**
+	 * Get the readable addresses database.
+	 * 
+	 * @return the database - {@code null} otherwise.
+	 */
+	private SQLiteDatabase getReadableDatabase() {
+		if (mOpenHelper == null)
+			mOpenHelper = new AddressOpenHelper(mContext);
+		try {
+			return mOpenHelper.getReadableDatabase();
+		} catch (SQLiteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Get the writable addresses database.
+	 * 
+	 * @return the database - {@code null} otherwise.
+	 */
+	private SQLiteDatabase getWritableDatabase() {
+		if (mOpenHelper == null)
+			mOpenHelper = new AddressOpenHelper(mContext);
+		try {
+			return mOpenHelper.getWritableDatabase();
+		} catch (SQLiteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Add the address to the local database. The local database is supposed to
+	 * reduce redundant network requests.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @param address
+	 *            the address.
+	 */
+	public void insertAddress(Location location, ZmanimAddress address) {
+		if (address.getId() != 0)
+			return;
+		ContentValues values = new ContentValues();
+		values.put(AddressColumns.ADDRESS, formatAddress(address));
+		values.put(AddressColumns.LANGUAGE, mLocale.getLanguage());
+		values.put(AddressColumns.LATITUDE, address.getLatitude());
+		values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
+		values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
+		values.put(AddressColumns.LONGITUDE, address.getLongitude());
+		SQLiteDatabase db = null;
+		try {
+			db = getWritableDatabase();
+			db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	/** Close database resources. */
+	public void close() {
+		if (mOpenHelper != null)
+			mOpenHelper.close();
+	}
+
+	/**
+	 * Find the nearest city to the latitude and longitude.
+	 * <p>
+	 * Uses the precompiled array of capital cities from GeoNames.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the list of addresses with 1 entry.
+	 */
+	private List<Address> findNearestCity(Location location) {
+		List<Address> cities = new ArrayList<Address>();
+		cities.add(mCities.getFromLocation(location));
+		return cities;
+	}
+
+	/**
+	 * Find the first corresponding location for the time zone.
+	 * 
+	 * @param tz
+	 *            the time zone.
+	 * @return the location - {@code null} otherwise.
+	 */
+	public Location findTimeZone(TimeZone tz) {
+		return mCities.findLocation(tz);
 	}
 }
