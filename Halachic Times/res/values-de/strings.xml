@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name">Halachische Mal</string>
+    <string name="title_activity_zmanim">Halachische Gebetszeiten</string>
+
+    <!-- List -->
+    <string name="location_unknown">Unbekannte adresse</string>
+    <string name="location_coords">Breite %1$s; Lng. %2$s</string>
+    <string name="dawn_16deg">Morgendämmerung</string>
+    <string name="dawn_16deg_summary">16,1° unter dem östlichen horizont</string>
+    <string name="dawn_72min">Morgendämmerung</string>
+    <string name="dawn_72min_summary">72 minuten vor dem meeresspiegel sonnenaufgang</string>
+    <string name="earliest">Älteste tallis und tefillin</string>
+    <string name="earliest_summary">Sonne ist 11,5° unter dem horizont</string>
+    <string name="sunrise">Sonnenaufgang</string>
+    <string name="sunrise_summary">In einem flachen bereich</string>
+    <string name="shema_mga">Letzte shema</string>
+    <string name="shema_mga_summary">Letzte shema nach Magen Avraham</string>
+    <string name="shema_gra">Letzte shema</string>
+    <string name="shema_gra_summary">Letzte shema nach Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Letzte morgengebet</string>
+    <string name="prayers_mga_summary">Letzten shacharis nach Magen Avraham</string>
+    <string name="prayers_gra">Letzte morgengebet</string>
+    <string name="prayers_gra_summary">Letzten shacharis nach Gra &amp; Baal Tanya</string>
+    <string name="midday">Mittag</string>
+    <string name="midday_summary">Mittag</string>
+    <string name="earliest_mincha">Frühester nachmittagsgebet</string>
+    <string name="earliest_mincha_summary">Frühester mincha (mincha gedola)</string>
+    <string name="mincha">Nachmittagsgebet</string>
+    <string name="mincha_summary">Mincha ketana</string>
+    <string name="plug_hamincha">Plug hamincha</string>
+    <string name="plug_hamincha_summary">Plug hamincha nach Gra &amp; Baal Tanya</string>
+    <string name="candles">Kerzenlicht</string>
+    <string name="candles_summary">%1$d minuten vor sonnenuntergang</string>
+    <string name="sunset">Sonnenuntergang</string>
+    <string name="sunset_summary">In einem flachen bereich</string>
+    <string name="nightfall_3stars">Einbruch der nacht</string>
+    <string name="nightfall_3stars_summary">3 sterne sichtbar</string>
+    <string name="nightfall_72min_summary">72 minuten</string>
+    <string name="nightfall_72min">Einbruch der nacht</string>
+    <string name="midnight">Mitternacht</string>
+    <string name="midnight_summary">Mitternacht (chatzos)</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Einstellungen</string>
+    <string name="category_general">Allgemein</string>
+    <string name="coords_format_title">Koordinaten-format</string>
+    <string name="coords_format_summary">Notation der breiten-und längengrad</string>
+    <string-array name="coords_format_entries">
+        <item>Dezimal</item>
+        <item>Sexagesimal</item>
+    </string-array>
+
+    <string name="category_opinion">Meinungen</string>
+    <string name="past_title">vergangenen zeiten</string>
+    <string name="past_enabled">Ältere zeiten sind aktiviert</string>
+    <string name="past_disabled">Ältere zeiten sind deaktiviert</string>
+    <string name="summaries_title">Zusammenfassungen</string>
+    <string name="summaries_hidden">Zusammenfassungen sind versteckt</string>
+    <string name="summaries_visible">Zusammenfassungen sind sichtbar</string>
+    <string name="gradient_title">Hintergrund mit Farbverlauf</string>
+    <string name="gradient_hidden">Gradient ist versteckt</string>
+    <string name="gradient_visible">Gradient ist sichtbar</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Gehe zu</string>
+
+</resources>

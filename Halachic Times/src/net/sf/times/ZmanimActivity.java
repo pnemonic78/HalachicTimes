@@ -322,29 +322,29 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		synchronized (adapter) {
 			adapter.clear();
 
-			adapter.add(R.string.time_dawn_16deg, R.string.time_summary_dawn_16deg, cal.getAlosHashachar());
-			adapter.add(R.string.time_dawn_72min, R.string.time_summary_dawn_72min, cal.getAlos72());
-			adapter.add(R.string.time_earliest, R.string.time_summary_earliest, cal.getSunriseOffsetByDegrees(ZENITH_TALLIS));
-			adapter.add(R.string.time_sunrise, R.string.time_summary_sunrise, cal.getSunrise());
-			adapter.add(R.string.time_shema_mga, R.string.time_summary_shema_mga, cal.getSofZmanShmaMGA());
-			adapter.add(R.string.time_shema_gra, R.string.time_summary_shema_gra, cal.getSofZmanShmaGRA());
-			adapter.add(R.string.time_prayers_mga, R.string.time_summary_prayers_mga, cal.getSofZmanTfilaMGA());
-			adapter.add(R.string.time_prayers_gra, R.string.time_summary_prayers_gra, cal.getSofZmanTfilaGRA());
-			adapter.add(R.string.time_midday, R.string.time_summary_midday, cal.getChatzos());
-			adapter.add(R.string.time_earliest_mincha, R.string.time_summary_earliest_mincha, cal.getMinchaGedola());
-			adapter.add(R.string.time_mincha, R.string.time_summary_mincha, cal.getMinchaKetana());
-			adapter.add(R.string.time_plug_hamincha, R.string.time_summary_plug_hamincha, cal.getPlagHamincha());
+			adapter.add(R.string.dawn_16deg, R.string.dawn_16deg_summary, cal.getAlosHashachar());
+			adapter.add(R.string.dawn_72min, R.string.dawn_72min_summary, cal.getAlos72());
+			adapter.add(R.string.earliest, R.string.earliest_summary, cal.getSunriseOffsetByDegrees(ZENITH_TALLIS));
+			adapter.add(R.string.sunrise, R.string.sunrise_summary, cal.getSunrise());
+			adapter.add(R.string.shema_mga, R.string.shema_mga_summary, cal.getSofZmanShmaMGA());
+			adapter.add(R.string.shema_gra, R.string.shema_gra_summary, cal.getSofZmanShmaGRA());
+			adapter.add(R.string.prayers_mga, R.string.prayers_mga_summary, cal.getSofZmanTfilaMGA());
+			adapter.add(R.string.prayers_gra, R.string.prayers_gra_summary, cal.getSofZmanTfilaGRA());
+			adapter.add(R.string.midday, R.string.midday_summary, cal.getChatzos());
+			adapter.add(R.string.earliest_mincha, R.string.earliest_mincha_summary, cal.getMinchaGedola());
+			adapter.add(R.string.mincha, R.string.mincha_summary, cal.getMinchaKetana());
+			adapter.add(R.string.plug_hamincha, R.string.plug_hamincha_summary, cal.getPlagHamincha());
 			if (candlesCount > 0) {
-				String summary = getString(R.string.time_summary_candles, candlesOffset);
-				adapter.add(R.string.time_candles, summary, cal.getCandleLighting());
+				String summary = getString(R.string.candles_summary, candlesOffset);
+				adapter.add(R.string.candles, summary, cal.getCandleLighting());
 			}
-			adapter.add(R.string.time_sunset, R.string.time_summary_sunset, cal.getSunset());
+			adapter.add(R.string.sunset, R.string.sunset_summary, cal.getSunset());
 			if (candlesCount < 0) {
-				adapter.add(R.string.time_candles, R.string.time_summary_nightfall_3stars, cal.getTzais());
+				adapter.add(R.string.candles, R.string.nightfall_3stars_summary, cal.getTzais());
 			}
-			adapter.add(R.string.time_nightfall_3stars, R.string.time_summary_nightfall_3stars, cal.getTzais());
-			adapter.add(R.string.time_nightfall_72min, R.string.time_summary_nightfall_72min, cal.getTzais72());
-			adapter.add(R.string.time_midnight, R.string.time_summary_midnight, cal.getChatzos().getTime() + TWELVE_HOURS);
+			adapter.add(R.string.nightfall_3stars, R.string.nightfall_3stars_summary, cal.getTzais());
+			adapter.add(R.string.nightfall_72min, R.string.nightfall_72min_summary, cal.getTzais72());
+			adapter.add(R.string.midnight, R.string.midnight_summary, cal.getChatzos().getTime() + TWELVE_HOURS);
 		}
 
 		final int count = adapter.getCount();
