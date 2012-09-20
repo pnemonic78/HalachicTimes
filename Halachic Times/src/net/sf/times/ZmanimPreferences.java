@@ -54,8 +54,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (preference == mCandles) {
-			// On ICS, setSummary always calls onCreateView, so postpone until
-			// after preference is persisted.
+			// Since ECLAIR, setSummary always calls onCreateView, so
+			// postpone until after preference is persisted.
 			runOnUiThread(new Runnable() {
 
 				@Override
