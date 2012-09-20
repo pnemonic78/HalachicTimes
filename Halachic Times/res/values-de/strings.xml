@@ -36,8 +36,8 @@
     <string name="sunset_summary">In einem flachen bereich</string>
     <string name="nightfall_3stars">Einbruch der nacht</string>
     <string name="nightfall_3stars_summary">3 sterne sichtbar</string>
-    <string name="nightfall_72min_summary">72 minuten</string>
     <string name="nightfall_72min">Einbruch der nacht</string>
+    <string name="nightfall_72min_summary">72 minuten</string>
     <string name="midnight">Mitternacht</string>
     <string name="midnight_summary">Mitternacht (chatzos)</string>
 
