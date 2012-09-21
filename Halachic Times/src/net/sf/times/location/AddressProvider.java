@@ -54,8 +54,8 @@ public class AddressProvider {
 	private static final int INDEX_ADDRESS = 5;
 	private static final int INDEX_LANGUAGE = 6;
 
-	/** Maximum distance to consider two locations in the same vicinity. */
-	private static final float SAME_LOCATION = 500f;// 500 meters.
+	/** Maximum radius to consider two locations in the same vicinity. */
+	private static final float SAME_LOCATION = 250f;// 250 meters.
 
 	private final Context mContext;
 	private final Locale mLocale;
@@ -294,17 +294,17 @@ public class AddressProvider {
 			float[] distanceAddress = new float[1];
 
 			do {
-				id = cursor.getLong(INDEX_ID);
 				locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
 				locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
 				addressLatitude = cursor.getDouble(INDEX_LATITUDE);
 				addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
-				formatted = cursor.getString(INDEX_ADDRESS);
-				language = cursor.getString(INDEX_LANGUAGE);
 
 				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
 				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceAddress);
 				if ((distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION)) {
+					id = cursor.getLong(INDEX_ID);
+					formatted = cursor.getString(INDEX_ADDRESS);
+					language = cursor.getString(INDEX_LANGUAGE);
 					if (language == null)
 						locale = mLocale;
 					else

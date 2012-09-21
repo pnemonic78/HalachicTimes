@@ -196,9 +196,10 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 				// FIXME print the progress on the bar instead of toasting.
 				if (mToast == null)
 					mToast = Toast.makeText(mContext, String.valueOf(progress), Toast.LENGTH_SHORT);
-				else
+				else {
 					mToast.setText(String.valueOf(progress));
-				mToast.show();
+					mToast.show();
+				}
 				persistProgress(progress);
 			}
 		}
