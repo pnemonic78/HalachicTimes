@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name">זמנים הלכתיים</string>
+    <string name="title_activity_zmanim">זמני תפילה הלכתיים</string>
+
+    <!-- List -->
+    <string name="location_unknown">כתובת לא ידועה</string>
+    <string name="location_coords">רוחב %1$s; אורך %2$s</string>
+    <string name="dawn_16deg">עלות השחר</string>
+    <string name="dawn_16deg_summary">16.1° מתחת לקו האופק המזרחי</string>
+    <string name="dawn_72min">עלות השחר</string>
+    <string name="dawn_72min_summary">72 דקות לפני זריחת פני הים</string>
+    <string name="earliest">טלית ותפילין המוקדם</string>
+    <string name="earliest_summary">שמש היא 11.5° מתחת לקו האופק</string>
+    <string name="sunrise">זריחה</string>
+    <string name="sunrise_summary">באזור שטוח</string>
+    <string name="shema_mga">סוף זמן קריאת שמע</string>
+    <string name="shema_mga_summary">סוף זמן קריאת שמע לפי מגן אברהם</string>
+    <string name="shema_gra">סוף זמן קריאת שמע</string>
+    <string name="shema_gra_summary">סוסוף זמן קריאת שמע לפי הגר"א ובעל התניא</string>
+    <string name="prayers_mga">תפילת השחרית האחרונה</string>
+    <string name="prayers_mga_summary">השחרית האחרונה לפי מגן אברהם</string>
+    <string name="prayers_gra">תפילת השחרית האחרונה</string>
+    <string name="prayers_gra_summary">השחרית האחרונה לפי הגר"א ובעל התניא</string>
+    <string name="midday">צהריים</string>
+    <string name="midday_summary">חצות יום</string>
+    <string name="earliest_mincha">תפילת מנחה המוקדמת</string>
+    <string name="earliest_mincha_summary">מנחה המוקדמת (מנחה גדולה)</string>
+    <string name="mincha">תפילת מנחה</string>
+    <string name="mincha_summary">מנחה קטנה</string>
+    <string name="plug_hamincha">פלג המנחה</string>
+    <string name="plug_hamincha_summary">פלג המנחה לפי הגר"א ובעל התניא</string>
+    <string name="candles">הדלקת נרות</string>
+    <string name="candles_summary">%1$d דקות לפני השקיעה</string>
+    <string name="sunset">שקיעת השמש</string>
+    <string name="sunset_summary">באזור שטוח</string>
+    <string name="nightfall_3stars">לילה</string>
+    <string name="nightfall_3stars_summary">3 כוכבים גלויים</string>
+    <string name="nightfall_72min">לילה</string>
+    <string name="nightfall_72min_summary">72 דקות</string>
+    <string name="midnight">חצות</string>
+    <string name="midnight_summary">חצות לילה</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">הגדרות</string>
+    <string name="category_general">כללי</string>
+    <string name="coords_format_title">פורמט קואורדינטות</string>
+    <string name="coords_format_summary">סימון של קווי אורך ורוחב</string>
+    <string-array name="coords_format_entries">
+        <item>עשרוני</item>
+        <item>סקסגסימלי</item>
+    </string-array>
+
+    <string name="category_opinion">דעות</string>
+    <string name="past_title">זמנים שחלפו</string>
+    <string name="past_enabled">זמנים שעברו מופעלים</string>
+    <string name="past_disabled">זמנים שעברו מושבתים</string>
+    <string name="summaries_title">תקצירים</string>
+    <string name="summaries_hidden">תקצירים מוסתרים</string>
+    <string name="summaries_visible">תקצירים גלויים</string>
+    <string name="gradient_title">רקע הדרגתי</string>
+    <string name="gradient_hidden">הדרגתיות מוסתרת</string>
+    <string name="gradient_visible">הדרגתיות גלויה</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">עבור ל-</string>
+
+</resources>

@@ -105,7 +105,6 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 		RelativeLayout host = (RelativeLayout) title.getParent();
 
 		mSeekBar = new SeekBar(getContext());
-		mSeekBar.setOnSeekBarChangeListener(this);
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		lp.alignWithParent = true;
 		lp.addRule(RelativeLayout.BELOW, android.R.id.summary);
@@ -122,6 +121,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 		final int progress = mProgress;
 		if (max != mSeekBar.getMax())
 			mSeekBar.setMax(max);
+		mSeekBar.setOnSeekBarChangeListener(this);
 		if (progress != mSeekBar.getProgress())
 			mSeekBar.setProgress(progress);
 	}

@@ -56,7 +56,7 @@
     </string-array>
 
     <string name="category_opinion">Opinions</string>
-    <string name="past_title">Times that have passed</string>
+    <string name="past_title">Times that have elapsed</string>
     <string name="past_enabled">Past times are enabled</string>
     <string name="past_disabled">Past times are disabled</string>
     <string name="summaries_title">Summaries</string>
@@ -82,7 +82,8 @@
 		<item>Magen Avraham</item>
 		<item>Rishonim</item>
 		<item>Rabbeinu Tam</item>
-	</string-array    -->
+	</string-array
+    -->
 
     <!-- Go to date -->
     <string name="menu_goto">Go to</string>

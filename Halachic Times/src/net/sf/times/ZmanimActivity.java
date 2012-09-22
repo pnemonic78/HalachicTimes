@@ -21,6 +21,7 @@ package net.sf.times;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import net.sf.times.location.AddressProvider;
@@ -102,6 +103,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private static final double ISRAEL_EAST = 35.891876;
 	/** Western-most longitude for Israel. */
 	private static final double ISRAEL_WEST = 34.215317;
+
+	/** ISO 639 language code for "Hebrew". */
+	public static final String ISO639_HEBREW = "he";
+	/** ISO 639 language code for "Hebrew" - Java compatibility. */
+	public static final String ISO639_HEBREW_FORMER = "iw";
+	/** ISO 639 language code for "Yiddish" - Java compatibility. */
+	public static final String ISO639_YIDDISH_FORMER = "ji";
+	/** ISO 639 language code for "Yiddish". */
+	public static final String ISO639_YIDDISH = "yi";
 
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
@@ -254,9 +264,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		JewishDate jewishDate = new JewishDate(mDate);
 		TextView textHebrew = (TextView) header.findViewById(R.id.date_hebrew);
 		HebrewDateFormatter formatter = new HebrewDateFormatter();
-		// TODO if (isLocaleRTL()) {
-		// formatter.setHebrewFormat(true);
-		// }
+		formatter.setHebrewFormat(isLocaleRTL());
 		CharSequence dateHebrew = formatter.format(jewishDate);
 		textHebrew.setText(dateHebrew);
 	}
@@ -604,5 +612,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (mTimeZone != null)
 			return mTimeZone.getDisplayName();
 		return getString(R.string.location_unknown);
+	}
+
+	/**
+	 * Is the default locale right-to-left?
+	 * 
+	 * @return true if the locale is either Hebrew or Yiddish.
+	 */
+	private boolean isLocaleRTL() {
+		final String iso639 = Locale.getDefault().getLanguage();
+		return ISO639_HEBREW.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
 	}
 }
