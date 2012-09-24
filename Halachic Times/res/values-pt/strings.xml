@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name">Haláchicas Tempos de Oração</string>
+    <string name="title_activity_zmanim">Tempos Haláchicas</string>
+
+    <!-- List -->
+    <string name="location_unknown">Endereço desconhecido</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="dawn_16deg">Madrugada</string>
+    <string name="dawn_16deg_summary">16,1° abaixo desse horizonte leste</string>
+    <string name="dawn_72min">Madrugada</string>
+    <string name="dawn_72min_summary">72 minutos antes do nascer do sol do mar nível</string>
+    <string name="earliest">Mais antigas talit e tefilin</string>
+    <string name="earliest_summary">Dom é de 11,5° abaixo do horizonte</string>
+    <string name="sunrise">Nascer do sol</string>
+    <string name="sunrise_summary">Em uma região de nível</string>
+    <string name="shema_mga">Últimos shema</string>
+    <string name="shema_mga_summary">Últimos shema acordo com a Magen Avraham</string>
+    <string name="shema_gra">Últimos shema</string>
+    <string name="shema_gra_summary">Últimos shema acordo com a Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Últimos ochtendgebed</string>
+    <string name="prayers_mga_summary">Últimos shacharis acordo com a Magen Avraham</string>
+    <string name="prayers_gra">Últimos ochtendgebed</string>
+    <string name="prayers_gra_summary">Últimos shacharis acordo com a Gra &amp; Baal Tanya</string>
+    <string name="midday">Meio-dia</string>
+    <string name="midday_summary">Meio do dia</string>
+    <string name="earliest_mincha">Mais antigas orações da tarde</string>
+    <string name="earliest_mincha_summary">Mais antigas mincha (mincha gedola)</string>
+    <string name="mincha">Orações da tarde</string>
+    <string name="mincha_summary">Mincha ketana</string>
+    <string name="plug_hamincha">Plug hamincha</string>
+    <string name="plug_hamincha_summary">Plug hamincha acordo com a Gra &amp; Baal Tanya</string>
+    <string name="candles">Iluminação de velas</string>
+    <string name="candles_summary">%1$d minutos antes do pôr do sol</string>
+    <string name="sunset">Pôr do sol</string>
+    <string name="sunset_summary">Em uma região de nível</string>
+    <string name="nightfall_3stars">Anoitecer</string>
+    <string name="nightfall_3stars_summary">3 estrelas visíveis</string>
+    <string name="nightfall_72min">Anoitecer</string>
+    <string name="nightfall_72min_summary">72 minutos</string>
+    <string name="midnight">Meia-noite</string>
+    <string name="midnight_summary">Meio da noite (chatzos)</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Definições</string>
+    <string name="category_general">Geral</string>
+    <string name="coords_format_title">Formato de coordenadas</string>
+    <string name="coords_format_summary">Notação de latitude e longitude</string>
+    <string-array name="coords_format_entries">
+        <item>Decimal</item>
+        <item>Sexagesimal</item>
+    </string-array>
+
+    <string name="category_opinion">Opiniões</string>
+    <string name="past_title">Tempos que transcorridos</string>
+    <string name="past_enabled">Tempos passados estão habilitados</string>
+    <string name="past_disabled">Tempos passados estão desabilitados</string>
+    <string name="summaries_title">Sumários</string>
+    <string name="summaries_hidden">Sumários são escondidos</string>
+    <string name="summaries_visible">Sumários são visíveis</string>
+    <string name="gradient_title">Fundo gradiente</string>
+    <string name="gradient_hidden">Gradiente está oculto</string>
+    <string name="gradient_visible">Gradiente está visível</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Ir a</string>
+
+</resources>
