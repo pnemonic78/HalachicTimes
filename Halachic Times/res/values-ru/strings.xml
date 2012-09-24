@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name">Галахических время молитву</string>
+    <string name="title_activity_zmanim">Галахических время</string>
+
+    <!-- List -->
+    <string name="location_unknown">Неизвестный адрес</string>
+    <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
+    <string name="dawn_16deg">Рассвет</string>
+    <string name="dawn_16deg_summary">16,1° ниже восточным горизонтом</string>
+    <string name="dawn_72min">Рассвет</string>
+    <string name="dawn_72min_summary">72 минут до восхода солнца на уровне моря</string>
+    <string name="earliest">Старейшие талес и тфилин</string>
+    <string name="earliest_summary">Солнце 11,5° ниже горизонта</string>
+    <string name="sunrise">Восход солнца</string>
+    <string name="sunrise_summary">В уровне регионе</string>
+    <string name="shema_mga">Последний шма</string>
+    <string name="shema_mga_summary">Последний шма соответствии с Маген Авраам</string>
+    <string name="shema_gra">Последний шма</string>
+    <string name="shema_gra_summary">Последний шма соответствии с Гра &amp; Ваал Таня</string>
+    <string name="prayers_mga">Последний утренние молитвы</string>
+    <string name="prayers_mga_summary">Последний шахарит соответствии с Маген Авраам</string>
+    <string name="prayers_gra">Последний утренние молитвы</string>
+    <string name="prayers_gra_summary">Последний шахарит соответствии с Гра &amp; Ваал Таня</string>
+    <string name="midday">Полдень</string>
+    <string name="midday_summary">Середине дня</string>
+    <string name="earliest_mincha">Старейшие молитвы днем</string>
+    <string name="earliest_mincha_summary">Старейшие минха (минха гедола)</string>
+    <string name="mincha">Днем молитвах</string>
+    <string name="mincha_summary">Минха кетана</string>
+    <string name="plug_hamincha">Плаг минха</string>
+    <string name="plug_hamincha_summary">Плаг минха соответствии с Гра &amp; Ваал Таня</string>
+    <string name="candles">Зажигание свечей</string>
+    <string name="candles_summary">%1$d минут до захода солнца</string>
+    <string name="sunset">Заход солнца</string>
+    <string name="sunset_summary">В уровне регионе</string>
+    <string name="nightfall_3stars">Наступление ночи</string>
+    <string name="nightfall_3stars_summary">3 звезды видимы</string>
+    <string name="nightfall_72min">Наступление ночи</string>
+    <string name="nightfall_72min_summary">72 минут</string>
+    <string name="midnight">Полночь</string>
+    <string name="midnight_summary">Непроглядная тьма (хацос)</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Настройки</string>
+    <string name="category_general">Общий</string>
+    <string name="coords_format_title">Координаты формате</string>
+    <string name="coords_format_summary">Формат широты и долготы</string>
+    <string-array name="coords_format_entries">
+        <item>Десятичный</item>
+        <item>Шестидесятеричный</item>
+    </string-array>
+
+    <string name="category_opinion">Мнения</string>
+    <string name="past_title">Прошедшее время</string>
+    <string name="past_enabled">Прошлые времена включены</string>
+    <string name="past_disabled">Прошлые времена отключены</string>
+    <string name="summaries_title">Описания</string>
+    <string name="summaries_hidden">Описания скрыты</string>
+    <string name="summaries_visible">Описания видны</string>
+    <string name="gradient_title">Градиент фона</string>
+    <string name="gradient_hidden">Градиент скрыты</string>
+    <string name="gradient_visible">Градиент видна</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Перейти к</string>
+
+</resources>
