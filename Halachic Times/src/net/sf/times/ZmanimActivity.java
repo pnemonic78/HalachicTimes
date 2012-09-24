@@ -222,7 +222,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mSettings = new ZmanimSettings(this);
 
 		setContentView(mList);
-		// TODO for ICS: getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/** Initialise the location providers. */
@@ -537,9 +536,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		// TODO case android.R.id.home:
-		// NavUtils.navigateUpFromSameTask(this);
-		// return true;
 		case R.id.menu_goto:
 			mDatePicker = new DatePickerDialog(this, this, mDate.get(Calendar.YEAR), mDate.get(Calendar.MONTH), mDate.get(Calendar.DAY_OF_MONTH));
 			mDatePicker.show();

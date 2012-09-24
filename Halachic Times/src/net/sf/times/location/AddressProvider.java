@@ -271,6 +271,7 @@ public class AddressProvider {
 	private List<Address> findNearestAddressDatabase(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
+		final String language = mLocale.getLanguage();
 
 		List<Address> addresses = new ArrayList<Address>();
 		SQLiteDatabase db = getReadableDatabase();
@@ -287,7 +288,7 @@ public class AddressProvider {
 			double addressLatitude;
 			double addressLongitude;
 			String formatted;
-			String language;
+			String locationLanguage;
 			Locale locale;
 			ZmanimAddress address;
 			float[] distanceLocation = new float[1];
@@ -298,17 +299,20 @@ public class AddressProvider {
 				locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
 				addressLatitude = cursor.getDouble(INDEX_LATITUDE);
 				addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+				locationLanguage = cursor.getString(INDEX_LANGUAGE);
 
 				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
 				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceAddress);
-				if ((distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION)) {
+				final boolean sameLocation = (distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION);
+				final boolean sameLanguage = (locationLanguage == null) || locationLanguage.equals(language);
+				if (sameLocation && sameLanguage) {
 					id = cursor.getLong(INDEX_ID);
 					formatted = cursor.getString(INDEX_ADDRESS);
-					language = cursor.getString(INDEX_LANGUAGE);
-					if (language == null)
+					System.out.println(language + " " + locationLanguage + " [" + formatted + "]");// @@@
+					if (locationLanguage == null)
 						locale = mLocale;
 					else
-						locale = new Locale(language, mLocale.getCountry());
+						locale = new Locale(locationLanguage, mLocale.getCountry());
 					address = new ZmanimAddress(locale);
 					address.setFormatted(formatted);
 					address.setId(id);
@@ -370,7 +374,7 @@ public class AddressProvider {
 			return;
 		ContentValues values = new ContentValues();
 		values.put(AddressColumns.ADDRESS, formatAddress(address));
-		values.put(AddressColumns.LANGUAGE, mLocale.getLanguage());
+		values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
 		values.put(AddressColumns.LATITUDE, address.getLatitude());
 		values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
 		values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
