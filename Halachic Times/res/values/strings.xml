@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Halachic Times</string>
-    <string name="title_activity_zmanim">Halachic Prayer Times</string>
+    <string name="app_name">Halachic Prayer Times</string>
+    <string name="title_activity_zmanim">Halachic Times</string>
 
     <!-- List -->
     <string name="location_unknown">Unknown address</string>

@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Horaires halachiques</string>
-    <string name="title_activity_zmanim">Les heures de prière halachiques</string>
+    <string name="app_name">Les temps de prière halachiques</string>
+    <string name="title_activity_zmanim">Les temps halachiques</string>
 
     <!-- List -->
     <string name="location_unknown">Adresse inconnue</string>

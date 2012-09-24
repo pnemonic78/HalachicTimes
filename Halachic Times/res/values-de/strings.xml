@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Halachische Mal</string>
-    <string name="title_activity_zmanim">Halachische Gebetszeiten</string>
+    <string name="app_name">Halachische Gebetszeiten</string>
+    <string name="title_activity_zmanim">Halachische Mal</string>
 
     <!-- List -->
     <string name="location_unknown">Unbekannte adresse</string>
@@ -39,7 +39,7 @@
     <string name="nightfall_72min">Einbruch der nacht</string>
     <string name="nightfall_72min_summary">72 minuten</string>
     <string name="midnight">Mitternacht</string>
-    <string name="midnight_summary">Mitternacht (chatzos)</string>
+    <string name="midnight_summary">Mitte der nacht (chatzos)</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>

@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">זמנים הלכתיים</string>
-    <string name="title_activity_zmanim">זמני תפילה הלכתיים</string>
+    <string name="app_name">זמני תפילה הלכתיים</string>
+    <string name="title_activity_zmanim">זמנים הלכתיים</string>
 
     <!-- List -->
     <string name="location_unknown">כתובת לא ידועה</string>

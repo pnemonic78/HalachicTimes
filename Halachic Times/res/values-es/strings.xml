@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Tiempos Halájicos</string>
-    <string name="title_activity_zmanim">Tiempos Halájicos de Oración</string>
+    <string name="app_name">Tiempos Halájicos de Oración</string>
+    <string name="title_activity_zmanim">Tiempos Halájicos</string>
 
     <!-- List -->
     <string name="location_unknown">Dirección desconocida</string>
@@ -39,7 +39,7 @@
     <string name="nightfall_72min">Anochecer</string>
     <string name="nightfall_72min_summary">72 minuto</string>
     <string name="midnight">Medianoche</string>
-    <string name="midnight_summary">Medianoche (jatzos)</string>
+    <string name="midnight_summary">Medio de la noche (jatzos)</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ajustes</string>
