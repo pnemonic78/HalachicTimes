@@ -330,22 +330,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (header == null)
 			return;
 
-		final double latitude = loc.getLatitude();
-		final double longitude = loc.getLongitude();
-		String locationName = formatAddress();
-
-		final String notation = mSettings.getCoordinatesFormat();
-		final String latitudeText;
-		final String longitudeText;
-		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
-			latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
-			longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
-		} else {
-			latitudeText = String.format("%1$.7f", latitude);
-			longitudeText = String.format("%1$.7f", longitude);
-		}
-		final String coordsFormat = getString(R.string.location_coords);
-		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
+		final String locationName = formatAddress();
+		final String coordsText = mLocations.formatCoordinates();
 
 		// Update the header.
 		TextView address = (TextView) header.findViewById(R.id.address);

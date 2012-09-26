@@ -270,4 +270,29 @@ public class ZmanimLocations implements LocationListener {
 		final double longitude = location.getLongitude();
 		return (latitude <= ISRAEL_NORTH) && (latitude >= ISRAEL_SOUTH) && (longitude >= ISRAEL_WEST) && (longitude <= ISRAEL_EAST);
 	}
+
+	/**
+	 * Format the coordinates.
+	 * 
+	 * @return the coordinates text.
+	 */
+	public String formatCoordinates() {
+		Location loc = getLocation();
+		final double latitude = loc.getLatitude();
+		final double longitude = loc.getLongitude();
+
+		final String notation = mSettings.getCoordinatesFormat();
+		final String latitudeText;
+		final String longitudeText;
+		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+			latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
+			longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
+		} else {
+			latitudeText = String.format("%1$.7f", latitude);
+			longitudeText = String.format("%1$.7f", longitude);
+		}
+		final String coordsFormat = mContext.getString(R.string.location_coords);
+		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
+		return coordsText;
+	}
 }
