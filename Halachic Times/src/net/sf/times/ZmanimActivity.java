@@ -40,7 +40,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -75,9 +74,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** 11.5&deg; before sunrise. */
 	private static final double ZENITH_TALLIS = 101.5;
 
-	/** 1 kilometre. */
-	private static final int ONE_KM = 1000;
-
 	/** Holiday id for Shabbath. */
 	private static final int SHABBATH = -1;
 
@@ -89,20 +85,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private static final int CANDLES_FESTIVAL = 2;
 	/** Number of candles to light for Yom Kippur. */
 	private static final int CANDLES_YOM_KIPPUR = 1;
-
-	/** Time zone ID for Jerusalem. */
-	private static final String TZ_JERUSALEM = "Asia/Jerusalem";
-	/** Time zone ID for Israeli Standard Time. */
-	private static final String TZ_IST = "IST";
-
-	/** Northern-most latitude for Israel. */
-	private static final double ISRAEL_NORTH = 33.289212;
-	/** Southern-most latitude for Israel. */
-	private static final double ISRAEL_SOUTH = 29.489218;
-	/** Eastern-most longitude for Israel. */
-	private static final double ISRAEL_EAST = 35.891876;
-	/** Western-most longitude for Israel. */
-	private static final double ISRAEL_WEST = 34.215317;
 
 	/** ISO 639 language code for "Hebrew". */
 	public static final String ISO639_HEBREW = "he";
@@ -123,10 +105,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private View mHeader;
 	/** The list adapter. */
 	private ZmanimAdapter mAdapter;
-	/** Service provider for locations. */
-	private LocationManager mLocationManager;
-	/** The location. */
-	private Location mLocation;
+	/** Provider for locations. */
+	private ZmanimLocations mLocations;
 	/** Address provider. */
 	private AddressProvider mAddressProvider;
 	/** The settings and preferences. */
@@ -172,16 +152,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onResume() {
 		super.onResume();
 
-		if (mLocation == null) {
-			Location loc = getLocationGPS();
-			if (loc == null)
-				loc = getLocationNetwork();
-			if (loc == null)
-				loc = getLocationSaved();
-			if (loc == null)
-				loc = getLocationTZ();
-			onLocationChanged(loc);
-		} else {
+		mLocations.resume();
+		Location location = mLocations.getLocation();
+		if (location != null) {
 			populateHeader();
 			populateTimes();
 		}
@@ -191,11 +164,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onDestroy() {
 		super.onDestroy();
 
-		mHeader = null;
-		if (mLocationManager != null) {
-			mLocationManager.removeUpdates(this);
-			mLocationManager = null;
-		}
+		mLocations.cancel();
 		if (mAdapter != null) {
 			mAdapter.clear();
 			mAdapter = null;
@@ -226,19 +195,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Initialise the location providers. */
 	private void initLocation() {
-		if (mLocationManager == null) {
-			mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-			try {
-				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
-			} catch (IllegalArgumentException iae) {
-				System.err.println(this + ": " + iae.getLocalizedMessage());
-			}
-			try {
-				mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
-			} catch (IllegalArgumentException iae) {
-				System.err.println(this + ": " + iae.getLocalizedMessage());
-			}
-		}
+		mLocations = new ZmanimLocations(this, this);
 	}
 
 	/**
@@ -270,15 +227,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if (location == null)
-			return;
-		// Ignore old locations.
-		if (mLocation != null) {
-			if (mLocation.getTime() >= location.getTime())
-				return;
-		}
-		mLocation = location;
-		mSettings.putLocation(location);
 		if (mFindAddress != null)
 			mFindAddress.interrupt();
 		mFindAddress = new FindAddress(location);
@@ -302,7 +250,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** Populate the list with times. */
 	private void populateTimes() {
 		// Have we been destroyed?
-		Location loc = mLocation;
+		Location loc = mLocations.getLocation();
 		if (loc == null)
 			return;
 		final String locationName = loc.getProvider();
@@ -319,7 +267,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		int candlesCount = 0;
 		Date candlesWhen = cal.getCandleLighting();
 		if (candlesWhen != null) {
-			candlesCount = getCandles(mDate);
+			candlesCount = getCandles(mDate, loc);
 		}
 
 		// Have we been destroyed?
@@ -375,7 +323,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** Populate the header item. */
 	private void populateHeader() {
 		// Have we been destroyed?
-		Location loc = mLocation;
+		Location loc = mLocations.getLocation();
 		if (loc == null)
 			return;
 		View header = mHeader;
@@ -411,15 +359,17 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * 
 	 * @param cal
 	 *            the Gregorian date.
+	 * @param location
+	 *            the location.
 	 * @return the candles to light. Upper bits are the day type. The lower bits
 	 *         art the number of candles. Positive values indicate lighting
 	 *         times before sunset. Negative values indicate lighting times
 	 *         after nightfall.
 	 */
-	private int getCandles(Calendar cal) {
+	private int getCandles(Calendar cal, Location location) {
 		final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 		final boolean isShabbath = (dayOfWeek == Calendar.SATURDAY);
-		final boolean inIsrael = isIsrael(mLocation, mTimeZone);
+		final boolean inIsrael = mLocations.inIsrael(location, mTimeZone);
 
 		// Check if the following day is special, because we can't check
 		// EREV_CHANUKAH.
@@ -458,73 +408,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		candles = isShabbath ? -candles : candles;
 
 		return candles;
-	}
-
-	/**
-	 * Is the user in Israel? <br>
-	 * Used to determine if user is in diaspora for 2-day festivals.
-	 * 
-	 * @param loc
-	 *            the location.
-	 * @param timeZone
-	 *            the time zone.
-	 * @return {@code true} if user is in Israel - {@code false} otherwise.
-	 */
-	private boolean isIsrael(Location loc, TimeZone timeZone) {
-		if (loc == null) {
-			if (timeZone == null)
-				timeZone = TimeZone.getDefault();
-			String id = timeZone.getID();
-			if (TZ_JERUSALEM.equals(id) || TZ_IST.equals(id))
-				return true;
-			return false;
-		}
-
-		double latitude = loc.getLatitude();
-		double longitude = loc.getLongitude();
-		return (latitude <= ISRAEL_NORTH) && (latitude >= ISRAEL_SOUTH) && (longitude >= ISRAEL_WEST) && (longitude <= ISRAEL_EAST);
-	}
-
-	/**
-	 * Get a location from GPS.
-	 * 
-	 * @return the location - {@code null} otherwise.
-	 */
-	private Location getLocationGPS() {
-		if (mLocationManager == null)
-			return null;
-		return mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-	}
-
-	/**
-	 * Get a location from the GSM network.
-	 * 
-	 * @return the location - {@code null} otherwise.
-	 */
-	private Location getLocationNetwork() {
-		if (mLocationManager == null)
-			return null;
-		return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-	}
-
-	/**
-	 * Get a location from the time zone.
-	 * 
-	 * @return the location - {@code null} otherwise.
-	 */
-	private Location getLocationTZ() {
-		if (mAddressProvider == null)
-			mAddressProvider = new AddressProvider(this);
-		return mAddressProvider.findTimeZone(mTimeZone);
-	}
-
-	/**
-	 * Get a location from the saved preferences.
-	 * 
-	 * @return the location - {@code null} otherwise.
-	 */
-	private Location getLocationSaved() {
-		return mSettings.getLocation();
 	}
 
 	@Override
