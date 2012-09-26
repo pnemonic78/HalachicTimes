@@ -1,0 +1,68 @@
+<resources>
+
+    <string name="app_name">Галахических разів молитву</string>
+    <string name="title_activity_zmanim">Галахических разів</string>
+
+    <!-- List -->
+    <string name="location_unknown">Невідома адреса</string>
+    <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
+    <string name="dawn_16deg">Світанок</string>
+    <string name="dawn_16deg_summary">16,1° нижче східним обрієм</string>
+    <string name="dawn_72min">Світанок</string>
+    <string name="dawn_72min_summary">72 хвилин до сходу сонця рівнем моря</string>
+    <string name="earliest">Перший талес і тфілін</string>
+    <string name="earliest_summary">Сонце 11,5 ° нижче обрію</string>
+    <string name="sunrise">Схід сонця</string>
+    <string name="sunrise_summary">У рівні регіону</string>
+    <string name="shema_mga">Останній шма</string>
+    <string name="shema_mga_summary">Останній шма відповідно до Маген Авраам</string>
+    <string name="shema_gra">Останній шма</string>
+    <string name="shema_gra_summary">Останній шма відповідно до Гра &amp; Ваал Таня</string>
+    <string name="prayers_mga">Останній ранкові молитви</string>
+    <string name="prayers_mga_summary">Останній шахарит відповідно до Маген Авраам</string>
+    <string name="prayers_gra">Останній ранкові молитви</string>
+    <string name="prayers_gra_summary">Останній шахарит відповідно до Гра &amp; Ваал Таня</string>
+    <string name="midday">Полудень</string>
+    <string name="midday_summary">Апогей</string>
+    <string name="earliest_mincha">Перший день молитви</string>
+    <string name="earliest_mincha_summary">Перший мінха (мінха гедола)</string>
+    <string name="mincha">День молитви</string>
+    <string name="mincha_summary">Мінха кетана</string>
+    <string name="plug_hamincha">Плаг мінха</string>
+    <string name="plug_hamincha_summary">Плаг мінха відповідно до Гра &amp; Ваал Таня</string>
+    <string name="candles">Розпалювання світло</string>
+    <string name="candles_summary">%1$d хвилин до заходу сонця</string>
+    <string name="sunset">Захід сонця</string>
+    <string name="sunset_summary">У рівні регіону</string>
+    <string name="nightfall_3stars">Настання ночі</string>
+    <string name="nightfall_3stars_summary">3 зірки видимі</string>
+    <string name="nightfall_72min">Настання ночі</string>
+    <string name="nightfall_72min_summary">72 хвилин</string>
+    <string name="midnight">Полуніч</string>
+    <string name="midnight_summary">Непроглядна темрява (хацос)</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Налаштування</string>
+    <string name="category_general">Загальний</string>
+    <string name="coords_format_title">Координати форматі</string>
+    <string name="coords_format_summary">Позначення широти і довготи</string>
+    <string-array name="coords_format_entries">
+        <item>Десятковий</item>
+        <item>Шістдесятирічний</item>
+    </string-array>
+
+    <string name="category_opinion">Погляди</string>
+    <string name="past_title">Минулі разів</string>
+    <string name="past_enabled">Минулі разів включений</string>
+    <string name="past_disabled">Минулі разів відключені</string>
+    <string name="summaries_title">Описи</string>
+    <string name="summaries_hidden">Описи приховано</string>
+    <string name="summaries_visible">Описи видно</string>
+    <string name="gradient_title">Градієнт фону</string>
+    <string name="gradient_hidden">Градієнт приховано</string>
+    <string name="gradient_visible">Градієнт видна</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Перейти до</string>
+
+</resources>
