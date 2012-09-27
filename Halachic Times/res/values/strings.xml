@@ -66,7 +66,7 @@
     <string name="gradient_title">Gradient background</string>
     <string name="gradient_hidden">Gradient is hidden</string>
     <string name="gradient_visible">Gradient is visible</string>
-    <string name="candles_title">@string/candles</string>
+    <string name="candles_title" translatable="false">@string/candles</string>
     <!--
     string name="opinion_title">Co-ordinates format</string>
 	<string name="opinion_summary">Notation of latitude and longitude</string>
