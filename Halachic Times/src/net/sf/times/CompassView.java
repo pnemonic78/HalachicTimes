@@ -43,19 +43,24 @@ public class CompassView extends View {
 	private static final double PI_2 = Math.PI / 2;
 
 	private float mNorth;
-	private float mSouth;
 	private float mEast;
+	private float mSouth;
 	private float mWest;
 	private float mHoliest;
 
 	private Paint mPaintCircle;
 	private Paint mPaintNorth;
-	private Paint mPaintSouth;
 	private Paint mPaintEast;
+	private Paint mPaintSouth;
 	private Paint mPaintWest;
 	private Paint mPaintHoliest;
 	private Paint mPaintFill;
 	private final RectF mRectFill = new RectF();
+
+	private String mLabelNorth;
+	private String mLabelEast;
+	private String mLabelSouth;
+	private String mLabelWest;
 
 	/**
 	 * Constructs a new compass view.
@@ -65,7 +70,7 @@ public class CompassView extends View {
 	 */
 	public CompassView(Context context) {
 		super(context);
-		init();
+		init(context);
 	}
 
 	/**
@@ -78,7 +83,7 @@ public class CompassView extends View {
 	 */
 	public CompassView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+		init(context);
 	}
 
 	/**
@@ -93,11 +98,16 @@ public class CompassView extends View {
 	 */
 	public CompassView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init();
+		init(context);
 	}
 
 	/** Initialise. */
-	private void init() {
+	private void init(Context context) {
+		mLabelNorth = context.getString(R.string.north);
+		mLabelEast = context.getString(R.string.east);
+		mLabelSouth = context.getString(R.string.south);
+		mLabelWest = context.getString(R.string.west);
+
 		mPaintCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintCircle.setStyle(Paint.Style.STROKE);
 		mPaintCircle.setStrokeWidth(CIRCLE_THICKNESS);
@@ -162,28 +172,28 @@ public class CompassView extends View {
 		float sinNorth = FloatMath.sin(radiansNorth);
 		float cosNorth = FloatMath.cos(radiansNorth);
 		canvas.drawLine(w2 + (r34 * sinNorth), h2 - (r34 * cosNorth), w2 + (r * sinNorth), h2 - (r * cosNorth), mPaintNorth);
-		canvas.drawText("N", w2 + (r2 * sinNorth), h2 - (r2 * cosNorth), mPaintNorth);
+		canvas.drawText(mLabelNorth, w2 + (r2 * sinNorth), h2 - (r2 * cosNorth), mPaintNorth);
 
 		mPaintEast.setTextSize(sizeDirections);
 		float radiansEast = -mEast;
 		float sinEast = FloatMath.sin(radiansEast);
 		float cosEast = FloatMath.cos(radiansEast);
 		canvas.drawLine(w2 + (r34 * sinEast), h2 - (r34 * cosEast), w2 + (r * sinEast), h2 - (r * cosEast), mPaintEast);
-		canvas.drawText("E", w2 + (r2 * sinEast), h2 + sizeDirections2 - (r2 * cosEast), mPaintEast);
+		canvas.drawText(mLabelEast, w2 + (r2 * sinEast), h2 + sizeDirections2 - (r2 * cosEast), mPaintEast);
 
 		mPaintSouth.setTextSize(sizeDirections);
 		float radiansSouth = -mSouth;
 		float sinSouth = FloatMath.sin(radiansSouth);
 		float cosSouth = FloatMath.cos(radiansSouth);
 		canvas.drawLine(w2 + (r34 * sinSouth), h2 - (r34 * cosSouth), w2 + (r * sinSouth), h2 - (r * cosSouth), mPaintSouth);
-		canvas.drawText("S", w2 + (r2 * sinSouth), h2 - (r2 * cosSouth), mPaintSouth);
+		canvas.drawText(mLabelSouth, w2 + (r2 * sinSouth), h2 - (r2 * cosSouth), mPaintSouth);
 
 		mPaintWest.setTextSize(sizeDirections);
 		float radiansWest = -mWest;
 		float sinWest = FloatMath.sin(radiansWest);
 		float cosWest = FloatMath.cos(radiansWest);
 		canvas.drawLine(w2 + (r34 * sinWest), h2 - (r34 * cosWest), w2 + (r * sinWest), h2 - (r * cosWest), mPaintWest);
-		canvas.drawText("W", w2 + (r2 * sinWest), h2 + sizeDirections2 - (r2 * cosWest), mPaintWest);
+		canvas.drawText(mLabelWest, w2 + (r2 * sinWest), h2 + sizeDirections2 - (r2 * cosWest), mPaintWest);
 
 		float radiansHoliest = radiansNorth + (float) Math.toRadians(mHoliest);
 		float sinHoliest = FloatMath.sin(radiansHoliest);

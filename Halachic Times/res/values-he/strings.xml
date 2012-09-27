@@ -68,5 +68,9 @@
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
+    <string name="north">צ</string>
+    <string name="east">ז</string>
+    <string name="south">ד</string>
+    <string name="west">ע</string>
 
 </resources>

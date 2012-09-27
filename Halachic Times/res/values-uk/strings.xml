@@ -68,5 +68,9 @@
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
+    <string name="north">П</string>
+    <string name="east">С</string>
+    <string name="south">п</string>
+    <string name="west">З</string>
 
 </resources>

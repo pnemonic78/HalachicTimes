@@ -68,5 +68,9 @@
 
     <!-- Compass -->
     <string name="menu_compass">Brújula</string>
+    <string name="north">N</string>
+    <string name="east">E</string>
+    <string name="south">S</string>
+    <string name="west">O</string>
 
 </resources>
