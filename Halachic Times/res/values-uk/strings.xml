@@ -46,6 +46,7 @@
     <string name="category_general">Загальний</string>
     <string name="coords_format_title">Координати форматі</string>
     <string name="coords_format_summary">Позначення широти і довготи</string>
+
     <string-array name="coords_format_entries">
         <item>Десятковий</item>
         <item>Шістдесятирічний</item>
@@ -64,5 +65,8 @@
 
     <!-- Go to date -->
     <string name="menu_goto">Перейти до</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Компас</string>
 
 </resources>

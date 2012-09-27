@@ -405,6 +405,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.menu_compass:
+			startActivity(new Intent(this, CompassActivity.class));
+			return true;
 		case R.id.menu_goto:
 			mDatePicker = new DatePickerDialog(this, this, mDate.get(Calendar.YEAR), mDate.get(Calendar.MONTH), mDate.get(Calendar.DAY_OF_MONTH));
 			mDatePicker.show();

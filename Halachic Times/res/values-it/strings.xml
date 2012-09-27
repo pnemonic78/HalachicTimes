@@ -46,6 +46,7 @@
     <string name="category_general">Generale</string>
     <string name="coords_format_title">Coordinate formato</string>
     <string name="coords_format_summary">Notazione di latitudine e longitudine</string>
+
     <string-array name="coords_format_entries">
         <item>Decimale</item>
         <item>Sessagesimale</item>
@@ -64,5 +65,8 @@
 
     <!-- Go to date -->
     <string name="menu_goto">Vai a</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Bussola</string>
 
 </resources>

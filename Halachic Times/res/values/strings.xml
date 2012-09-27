@@ -44,8 +44,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="category_general">General</string>
-    <string name="coords_format_title">Co-ordinates format</string>
+    <string name="coords_format_title">Coordinates format</string>
     <string name="coords_format_summary">Notation of latitude and longitude</string>
+
     <string-array name="coords_format_values" translatable="false">
         <item>decimal</item>
         <item>sexagesimal</item>
@@ -82,10 +83,14 @@
 		<item>Magen Avraham</item>
 		<item>Rishonim</item>
 		<item>Rabbeinu Tam</item>
-	</string-array
+	</string-array
     -->
+
 
     <!-- Go to date -->
     <string name="menu_goto">Go to</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Compass</string>
 
 </resources>

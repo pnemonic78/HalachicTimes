@@ -46,6 +46,7 @@
     <string name="category_general">Общий</string>
     <string name="coords_format_title">Координаты формате</string>
     <string name="coords_format_summary">Формат широты и долготы</string>
+
     <string-array name="coords_format_entries">
         <item>Десятичный</item>
         <item>Шестидесятеричный</item>
@@ -64,5 +65,8 @@
 
     <!-- Go to date -->
     <string name="menu_goto">Перейти к</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Компас</string>
 
 </resources>

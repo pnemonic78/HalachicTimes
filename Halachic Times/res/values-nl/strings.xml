@@ -46,6 +46,7 @@
     <string name="category_general">Algemeen</string>
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_summary">Notatie van breedtegraad en lengtegraad</string>
+
     <string-array name="coords_format_entries">
         <item>Decimale</item>
         <item>Sexagesimale</item>
@@ -64,5 +65,8 @@
 
     <!-- Go to date -->
     <string name="menu_goto">Gaan naar</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompas</string>
 
 </resources>
