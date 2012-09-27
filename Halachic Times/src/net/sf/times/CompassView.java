@@ -23,6 +23,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.RectF;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.View;
@@ -51,6 +54,8 @@ public class CompassView extends View {
 	private Paint mPaintEast;
 	private Paint mPaintWest;
 	private Paint mPaintHoliest;
+	private Paint mPaintFill;
+	private final RectF mRectFill = new RectF();
 
 	/**
 	 * Constructs a new compass view.
@@ -60,6 +65,7 @@ public class CompassView extends View {
 	 */
 	public CompassView(Context context) {
 		super(context);
+		init();
 	}
 
 	/**
@@ -72,6 +78,7 @@ public class CompassView extends View {
 	 */
 	public CompassView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		init();
 	}
 
 	/**
@@ -86,6 +93,43 @@ public class CompassView extends View {
 	 */
 	public CompassView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
+		init();
+	}
+
+	/** Initialise. */
+	private void init() {
+		mPaintCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaintCircle.setStyle(Paint.Style.STROKE);
+		mPaintCircle.setStrokeWidth(CIRCLE_THICKNESS);
+		mPaintCircle.setColor(Color.WHITE);
+
+		mPaintNorth = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+		mPaintNorth.setStyle(Paint.Style.FILL_AND_STROKE);
+		mPaintNorth.setStrokeWidth(4);
+		mPaintNorth.setTextSize(18);
+		mPaintNorth.setTextAlign(Align.CENTER);
+		mPaintNorth.setColor(Color.RED);
+
+		mPaintSouth = new TextPaint(mPaintNorth);
+		mPaintSouth.setStrokeWidth(1);
+		mPaintSouth.setColor(Color.YELLOW);
+
+		mPaintEast = new TextPaint(mPaintSouth);
+		mPaintEast.setColor(Color.WHITE);
+
+		mPaintWest = new TextPaint(mPaintEast);
+
+		mPaintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaintHoliest.setStyle(Paint.Style.STROKE);
+		mPaintHoliest.setStrokeWidth(6);
+		mPaintHoliest.setColor(Color.BLUE);
+
+		mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaintFill.setColor(Color.GRAY);
+		mPaintFill.setStyle(Paint.Style.STROKE);
+		mPaintFill.setStrokeCap(Paint.Cap.BUTT);
+
+		setNorth(0f);
 	}
 
 	@Override
@@ -96,55 +140,57 @@ public class CompassView extends View {
 		final int h = getHeight();
 		final int w2 = w / 2;
 		final int h2 = h / 2;
-		final int r = Math.min(w2, h2) - PADDING - CIRCLE_THICKNESS;
+		final float r = Math.min(w2, h2) - PADDING - CIRCLE_THICKNESS;
+		final float r2 = r / 2f;
+		final float r34 = (r * 3f) / 4f;
+		final float sizeDirections = r / 5f;
+		final float sizeDirections2 = sizeDirections / 2f;
+		final float degreesNorth = (float) Math.toDegrees(mNorth);
 
-		if (mPaintCircle == null) {
-			mPaintCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mPaintCircle.setStyle(Paint.Style.STROKE);
-			mPaintCircle.setStrokeWidth(CIRCLE_THICKNESS);
-			mPaintCircle.setColor(Color.WHITE);
-		}
-		canvas.drawCircle(w2, h2, r, mPaintCircle);
+		mRectFill.left = w2 - r2;
+		mRectFill.top = h2 - r2;
+		mRectFill.right = w2 + r2;
+		mRectFill.bottom = h2 + r2;
+		mPaintFill.setStrokeWidth(r);
+		float sweepAngle = mHoliest - degreesNorth;
+		if (sweepAngle > 180f)
+			sweepAngle = sweepAngle - 360f;
+		canvas.drawArc(mRectFill, -90f, sweepAngle, false, mPaintFill);
 
-		if (mPaintNorth == null) {
-			mPaintNorth = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mPaintNorth.setStyle(Paint.Style.STROKE);
-			mPaintNorth.setStrokeWidth(4);
-			mPaintNorth.setColor(Color.RED);
-		}
+		mPaintNorth.setTextSize(sizeDirections);
 		float radiansNorth = -mNorth;
-		canvas.drawLine(w2, h2, w2 + (r * FloatMath.sin(radiansNorth)), h2 - (r * FloatMath.cos(radiansNorth)), mPaintNorth);
+		float sinNorth = FloatMath.sin(radiansNorth);
+		float cosNorth = FloatMath.cos(radiansNorth);
+		canvas.drawLine(w2 + (r34 * sinNorth), h2 - (r34 * cosNorth), w2 + (r * sinNorth), h2 - (r * cosNorth), mPaintNorth);
+		canvas.drawText("N", w2 + (r2 * sinNorth), h2 - (r2 * cosNorth), mPaintNorth);
 
-		if (mPaintSouth == null) {
-			mPaintSouth = new Paint(mPaintNorth);
-			mPaintSouth.setStrokeWidth(1);
-			mPaintSouth.setColor(Color.YELLOW);
-		}
-		float radiansSouth = -mSouth;
-		canvas.drawLine(w2, h2, w2 + (r * FloatMath.sin(radiansSouth)), h2 - (r * FloatMath.cos(radiansSouth)), mPaintSouth);
-
-		if (mPaintEast == null) {
-			mPaintEast = new Paint(mPaintSouth);
-			mPaintEast.setColor(Color.GRAY);
-		}
+		mPaintEast.setTextSize(sizeDirections);
 		float radiansEast = -mEast;
-		canvas.drawLine(w2, h2, w2 + (r * FloatMath.sin(radiansEast)), h2 - (r * FloatMath.cos(radiansEast)), mPaintEast);
+		float sinEast = FloatMath.sin(radiansEast);
+		float cosEast = FloatMath.cos(radiansEast);
+		canvas.drawLine(w2 + (r34 * sinEast), h2 - (r34 * cosEast), w2 + (r * sinEast), h2 - (r * cosEast), mPaintEast);
+		canvas.drawText("E", w2 + (r2 * sinEast), h2 + sizeDirections2 - (r2 * cosEast), mPaintEast);
 
-		if (mPaintWest == null) {
-			mPaintWest = new Paint(mPaintEast);
-			mPaintWest.setColor(Color.GRAY);
-		}
+		mPaintSouth.setTextSize(sizeDirections);
+		float radiansSouth = -mSouth;
+		float sinSouth = FloatMath.sin(radiansSouth);
+		float cosSouth = FloatMath.cos(radiansSouth);
+		canvas.drawLine(w2 + (r34 * sinSouth), h2 - (r34 * cosSouth), w2 + (r * sinSouth), h2 - (r * cosSouth), mPaintSouth);
+		canvas.drawText("S", w2 + (r2 * sinSouth), h2 - (r2 * cosSouth), mPaintSouth);
+
+		mPaintWest.setTextSize(sizeDirections);
 		float radiansWest = -mWest;
-		canvas.drawLine(w2, h2, w2 + (r * FloatMath.sin(radiansWest)), h2 - (r * FloatMath.cos(radiansWest)), mPaintWest);
+		float sinWest = FloatMath.sin(radiansWest);
+		float cosWest = FloatMath.cos(radiansWest);
+		canvas.drawLine(w2 + (r34 * sinWest), h2 - (r34 * cosWest), w2 + (r * sinWest), h2 - (r * cosWest), mPaintWest);
+		canvas.drawText("W", w2 + (r2 * sinWest), h2 + sizeDirections2 - (r2 * cosWest), mPaintWest);
 
-		if (mPaintHoliest == null) {
-			mPaintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mPaintHoliest.setStyle(Paint.Style.STROKE);
-			mPaintHoliest.setStrokeWidth(4);
-			mPaintHoliest.setColor(Color.BLUE);
-		}
 		float radiansHoliest = radiansNorth + (float) Math.toRadians(mHoliest);
-		canvas.drawLine(w2, h2, w2 + (r * FloatMath.sin(radiansHoliest)), h2 - (r * FloatMath.cos(radiansHoliest)), mPaintHoliest);
+		float sinHoliest = FloatMath.sin(radiansHoliest);
+		float cosHoliest = FloatMath.cos(radiansHoliest);
+		canvas.drawLine(w2, h2, w2 + (r * sinHoliest), h2 - (r * cosHoliest), mPaintHoliest);
+
+		canvas.drawCircle(w2, h2, r, mPaintCircle);
 	}
 
 	/**
