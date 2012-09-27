@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Галахических время молитву</string>
-    <string name="title_activity_zmanim">Галахических время</string>
+    <string name="app_name">Галахическое время молитву</string>
+    <string name="title_activity_zmanim">Галахическое время</string>
 
     <!-- List -->
     <string name="location_unknown">Неизвестный адрес</string>
@@ -10,36 +10,36 @@
     <string name="dawn_16deg_summary">16,1° ниже восточным горизонтом</string>
     <string name="dawn_72min">Рассвет</string>
     <string name="dawn_72min_summary">72 минут до восхода солнца на уровне моря</string>
-    <string name="earliest">Старейшие талес и тфилин</string>
-    <string name="earliest_summary">Солнце 11,5° ниже горизонта</string>
+    <string name="earliest">Талита и тфилина</string>
+    <string name="earliest_summary">Самое раннее время наложения талита и тфилина. Солнце 11,5° ниже горизонта</string>
     <string name="sunrise">Восход солнца</string>
     <string name="sunrise_summary">В уровне регионе</string>
-    <string name="shema_mga">Последний шма</string>
-    <string name="shema_mga_summary">Последний шма соответствии с Маген Авраам</string>
-    <string name="shema_gra">Последний шма</string>
-    <string name="shema_gra_summary">Последний шма соответствии с Гра &amp; Ваал Таня</string>
-    <string name="prayers_mga">Последний утренние молитвы</string>
-    <string name="prayers_mga_summary">Последний шахарит соответствии с Маген Авраам</string>
-    <string name="prayers_gra">Последний утренние молитвы</string>
-    <string name="prayers_gra_summary">Последний шахарит соответствии с Гра &amp; Ваал Таня</string>
+    <string name="shema_mga">Самое позднее шма</string>
+    <string name="shema_mga_summary">Самое позднее время чтения шма соответствии с Маген Авраам</string>
+    <string name="shema_gra">Самое позднее шма</string>
+    <string name="shema_gra_summary">Самое позднее время чтения шма соответствии с Гра &amp; Ваал Таня</string>
+    <string name="prayers_mga">Самое позднее шахарит</string>
+    <string name="prayers_mga_summary">Самое позднее время утренние молитв соответствии с Маген Авраам</string>
+    <string name="prayers_gra">Самое позднее шахарит</string>
+    <string name="prayers_gra_summary">Самое позднее время утренние молитв соответствии с Гра &amp; Ваал Таня</string>
     <string name="midday">Полдень</string>
     <string name="midday_summary">Середине дня</string>
-    <string name="earliest_mincha">Старейшие молитвы днем</string>
-    <string name="earliest_mincha_summary">Старейшие минха (минха гедола)</string>
-    <string name="mincha">Днем молитвах</string>
-    <string name="mincha_summary">Минха кетана</string>
+    <string name="earliest_mincha">Минха гдола</string>
+    <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>
+    <string name="mincha">Минха ктана</string>
+    <string name="mincha_summary">Днем молитвах</string>
     <string name="plug_hamincha">Плаг минха</string>
     <string name="plug_hamincha_summary">Плаг минха соответствии с Гра &amp; Ваал Таня</string>
     <string name="candles">Зажигание свечей</string>
     <string name="candles_summary">%1$d минут до захода солнца</string>
     <string name="sunset">Заход солнца</string>
     <string name="sunset_summary">В уровне регионе</string>
-    <string name="nightfall_3stars">Наступление ночи</string>
+    <string name="nightfall_3stars">Наступление темноты</string>
     <string name="nightfall_3stars_summary">3 звезды видимы</string>
-    <string name="nightfall_72min">Наступление ночи</string>
+    <string name="nightfall_72min">Наступление темноты</string>
     <string name="nightfall_72min_summary">72 минут</string>
-    <string name="midnight">Полночь</string>
-    <string name="midnight_summary">Непроглядная тьма (хацос)</string>
+    <string name="midnight">Хацот</string>
+    <string name="midnight_summary">Полночь</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>

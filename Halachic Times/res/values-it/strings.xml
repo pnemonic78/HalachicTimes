@@ -18,16 +18,16 @@
     <string name="shema_mga_summary">Ultime shema secondo la Magen Avraham</string>
     <string name="shema_gra">Ultime shema</string>
     <string name="shema_gra_summary">Ultime shema secondo la Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Preghiere del mattino ultimi</string>
-    <string name="prayers_mga_summary">Ultime shacharis secondo la Magen Avraham</string>
-    <string name="prayers_gra">Preghiere del mattino ultimi</string>
-    <string name="prayers_gra_summary">Ultime shacharis secondo la Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Ultime shacharis</string>
+    <string name="prayers_mga_summary">Ultime preghiere del mattino secondo la Magen Avraham</string>
+    <string name="prayers_gra">Ultime shacharis</string>
+    <string name="prayers_gra_summary">Ultime preghiere del mattino secondo la Gra &amp; Baal Tanya</string>
     <string name="midday">Mezzogiorno</string>
     <string name="midday_summary">Mezzo del giorno</string>
-    <string name="earliest_mincha">Prima preghiere del pomeriggio</string>
-    <string name="earliest_mincha_summary">Prima mincha (mincha gedola)</string>
-    <string name="mincha">Pomeriggio preghiere</string>
-    <string name="mincha_summary">Mincha ketana</string>
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Pomeriggio preghiere</string>
     <string name="plug_hamincha">Plug hamincha</string>
     <string name="plug_hamincha_summary">Plug hamincha secondo la Gra &amp; Baal Tanya</string>
     <string name="candles">Candela illuminazione</string>
@@ -38,8 +38,8 @@
     <string name="nightfall_3stars_summary">3 stelle visibili</string>
     <string name="nightfall_72min">Crepuscolo</string>
     <string name="nightfall_72min_summary">72 minuti</string>
-    <string name="midnight">Mezzanotte</string>
-    <string name="midnight_summary">Mezzo della notte (chatzos)</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Mezzanotte</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Impostazioni</string>

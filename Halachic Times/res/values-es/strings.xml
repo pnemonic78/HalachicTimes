@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Tiempos Halájicos de Oración</string>
-    <string name="title_activity_zmanim">Tiempos Halájicos</string>
+    <string name="app_name">Horarios Halájicos de Oración</string>
+    <string name="title_activity_zmanim">Horarios Halájicos</string>
 
     <!-- List -->
     <string name="location_unknown">Dirección desconocida</string>
@@ -18,16 +18,16 @@
     <string name="shema_mga_summary">Últimas shema acuerdo a Magen Avraham</string>
     <string name="shema_gra">Últimas shema</string>
     <string name="shema_gra_summary">Últimas shema acuerdo a Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Últimas oraciones matutinas</string>
-    <string name="prayers_mga_summary">Últimas shajaris acuerdo a Magen Avraham</string>
-    <string name="prayers_gra">Últimas oraciones matutinas</string>
-    <string name="prayers_gra_summary">Últimas shajaris acuerdo a Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Últimas shajaris</string>
+    <string name="prayers_mga_summary">Últimas oraciones matutinas acuerdo a Magen Avraham</string>
+    <string name="prayers_gra">Últimas shajaris</string>
+    <string name="prayers_gra_summary">Últimas oraciones matutinas acuerdo a Gra &amp; Baal Tanya</string>
     <string name="midday">Mediodía</string>
     <string name="midday_summary">Mediodía</string>
-    <string name="earliest_mincha">Primeras plegarias de la tarde</string>
-    <string name="earliest_mincha_summary">Primeras minja (minja gedola)</string>
-    <string name="mincha">Plegarias de la tarde</string>
-    <string name="mincha_summary">Minja ketana</string>
+    <string name="earliest_mincha">Minja gedola</string>
+    <string name="earliest_mincha_summary">Primeras plegarias de la tarde</string>
+    <string name="mincha">Minja ketana</string>
+    <string name="mincha_summary">Plegarias de la tarde</string>
     <string name="plug_hamincha">Plug haminja</string>
     <string name="plug_hamincha_summary">Plug haminja acuerdo a Gra &amp; Baal Tanya</string>
     <string name="candles">Encendido de velas</string>
@@ -38,8 +38,8 @@
     <string name="nightfall_3stars_summary">3 estrellas visibles</string>
     <string name="nightfall_72min">Anochecer</string>
     <string name="nightfall_72min_summary">72 minuto</string>
-    <string name="midnight">Medianoche</string>
-    <string name="midnight_summary">Medio de la noche (jatzos)</string>
+    <string name="midnight">Jatzos</string>
+    <string name="midnight_summary">Medianoche</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ajustes</string>
@@ -53,9 +53,9 @@
     </string-array>
 
     <string name="category_opinion">Opiniones</string>
-    <string name="past_title">Tiempos que han superado</string>
-    <string name="past_enabled">Los tiempos pasados están habilitados</string>
-    <string name="past_disabled">Los tiempos pasados están desactivados</string>
+    <string name="past_title">Horarios que han superado</string>
+    <string name="past_enabled">Los horarios pasados están habilitados</string>
+    <string name="past_disabled">Los horarios pasados están desactivados</string>
     <string name="summaries_title">Descripciones</string>
     <string name="summaries_hidden">Descripciones están ocultas</string>
     <string name="summaries_visible">Descripciones están visibles</string>

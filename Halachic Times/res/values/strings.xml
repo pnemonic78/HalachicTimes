@@ -18,16 +18,16 @@
     <string name="shema_mga_summary">Latest shema according to Magen Avraham</string>
     <string name="shema_gra">Latest shema</string>
     <string name="shema_gra_summary">Latest shema according to Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Latest morning prayers</string>
-    <string name="prayers_mga_summary">Latest shacharis according to Magen Avraham</string>
-    <string name="prayers_gra">Latest morning prayers</string>
-    <string name="prayers_gra_summary">Latest shacharis according to Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Latest shacharis</string>
+    <string name="prayers_mga_summary">Latest morning prayers according to Magen Avraham</string>
+    <string name="prayers_gra">Latest shacharis</string>
+    <string name="prayers_gra_summary">Latest morning prayers according to Gra &amp; Baal Tanya</string>
     <string name="midday">Midday</string>
     <string name="midday_summary">Noon</string>
-    <string name="earliest_mincha">Earliest afternoon prayers</string>
-    <string name="earliest_mincha_summary">Earliest mincha (mincha gedola)</string>
-    <string name="mincha">Afternoon prayers</string>
-    <string name="mincha_summary">Mincha ketana</string>
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Afternoon prayers</string>
     <string name="plug_hamincha">Plug hamincha</string>
     <string name="plug_hamincha_summary">Plug hamincha according to Gra &amp; Baal Tanya</string>
     <string name="candles">Candle lighting</string>
@@ -38,8 +38,8 @@
     <string name="nightfall_3stars_summary">3 stars visible</string>
     <string name="nightfall_72min">Nightfall</string>
     <string name="nightfall_72min_summary">72 minutes</string>
-    <string name="midnight">Midnight</string>
-    <string name="midnight_summary">Midnight (chatzos)</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Midnight</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>

@@ -18,16 +18,16 @@
     <string name="shema_mga_summary">Laatste shema volgens Magen Avraham</string>
     <string name="shema_gra">Laatste shema</string>
     <string name="shema_gra_summary">Laatste shema volgens Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Laatste ochtendgebed</string>
-    <string name="prayers_mga_summary">Laatste shacharis volgens Magen Avraham</string>
-    <string name="prayers_gra">Laatste ochtendgebed</string>
-    <string name="prayers_gra_summary">Laatste shacharis volgens Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Laatste shacharis</string>
+    <string name="prayers_mga_summary">Laatste ochtendgebed volgens Magen Avraham</string>
+    <string name="prayers_gra">Laatste shacharis</string>
+    <string name="prayers_gra_summary">Laatste ochtendgebed volgens Gra &amp; Baal Tanya</string>
     <string name="midday">Middag</string>
     <string name="midday_summary">Middaghoogte</string>
-    <string name="earliest_mincha">Vroegste middag gebeden</string>
-    <string name="earliest_mincha_summary">Vroegste mincha (mincha gedola)</string>
-    <string name="mincha">Middag gebeden</string>
-    <string name="mincha_summary">Mincha ketana</string>
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Vroegste middag gebeden</string>
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Middag gebeden</string>
     <string name="plug_hamincha">Plug hamincha</string>
     <string name="plug_hamincha_summary">Plug hamincha volgens Gra &amp; Baal Tanya</string>
     <string name="candles">Kaars verlichting</string>
@@ -38,8 +38,8 @@
     <string name="nightfall_3stars_summary">3 sterren zichtbaar</string>
     <string name="nightfall_72min">Nacht</string>
     <string name="nightfall_72min_summary">72 minuten</string>
-    <string name="midnight">Middernacht</string>
-    <string name="midnight_summary">Pikdonker duisternis (chatzos)</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Middernacht</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>

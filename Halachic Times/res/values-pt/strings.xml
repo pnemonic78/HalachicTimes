@@ -1,45 +1,45 @@
 <resources>
 
-    <string name="app_name">Haláchicas Tempos de Oração</string>
-    <string name="title_activity_zmanim">Tempos Haláchicas</string>
+    <string name="app_name">Horários Haláchicos de Oração</string>
+    <string name="title_activity_zmanim">Horários Haláchicos</string>
 
     <!-- List -->
     <string name="location_unknown">Endereço desconhecido</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Madrugada</string>
+    <string name="dawn_16deg">Alvorecer</string>
     <string name="dawn_16deg_summary">16,1° abaixo desse horizonte leste</string>
-    <string name="dawn_72min">Madrugada</string>
+    <string name="dawn_72min">Alvorecer</string>
     <string name="dawn_72min_summary">72 minutos antes do nascer do sol do mar nível</string>
-    <string name="earliest">Mais antigas talit e tefilin</string>
+    <string name="earliest">Primeiro para talit e tefilin</string>
     <string name="earliest_summary">Dom é de 11,5° abaixo do horizonte</string>
     <string name="sunrise">Nascer do sol</string>
     <string name="sunrise_summary">Em uma região de nível</string>
-    <string name="shema_mga">Últimos shema</string>
-    <string name="shema_mga_summary">Últimos shema acordo com a Magen Avraham</string>
-    <string name="shema_gra">Últimos shema</string>
-    <string name="shema_gra_summary">Últimos shema acordo com a Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Últimos ochtendgebed</string>
-    <string name="prayers_mga_summary">Últimos shacharis acordo com a Magen Avraham</string>
-    <string name="prayers_gra">Últimos ochtendgebed</string>
-    <string name="prayers_gra_summary">Últimos shacharis acordo com a Gra &amp; Baal Tanya</string>
+    <string name="shema_mga">Último shemá</string>
+    <string name="shema_mga_summary">Último horário shemá acordo com a Magen Avraham</string>
+    <string name="shema_gra">Último shemá</string>
+    <string name="shema_gra_summary">Último horário shemá acordo com a Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Último shacharis</string>
+    <string name="prayers_mga_summary">Último orações da manhã acordo com a Magen Avraham</string>
+    <string name="prayers_gra">Último shacharis</string>
+    <string name="prayers_gra_summary">Último orações da manhã acordo com a Gra &amp; Baal Tanya</string>
     <string name="midday">Meio-dia</string>
     <string name="midday_summary">Meio do dia</string>
-    <string name="earliest_mincha">Mais antigas orações da tarde</string>
-    <string name="earliest_mincha_summary">Mais antigas mincha (mincha gedola)</string>
-    <string name="mincha">Orações da tarde</string>
-    <string name="mincha_summary">Mincha ketana</string>
-    <string name="plug_hamincha">Plug hamincha</string>
-    <string name="plug_hamincha_summary">Plug hamincha acordo com a Gra &amp; Baal Tanya</string>
-    <string name="candles">Iluminação de velas</string>
-    <string name="candles_summary">%1$d minutos antes do pôr do sol</string>
-    <string name="sunset">Pôr do sol</string>
+    <string name="earliest_mincha">Minchá guedolá</string>
+    <string name="earliest_mincha_summary">Primeiro horário para orações do tarde</string>
+    <string name="mincha">Minchá ketaná</string>
+    <string name="mincha_summary">Orações da tarde</string>
+    <string name="plug_hamincha">Plag haminchá</string>
+    <string name="plug_hamincha_summary">Plag haminchá acordo com a Gra &amp; Baal Tanya</string>
+    <string name="candles">Acendimento das velas</string>
+    <string name="candles_summary">%1$d minutos antes da pôr-do-sol</string>
+    <string name="sunset">Pôr-do-sol</string>
     <string name="sunset_summary">Em uma região de nível</string>
     <string name="nightfall_3stars">Anoitecer</string>
     <string name="nightfall_3stars_summary">3 estrelas visíveis</string>
     <string name="nightfall_72min">Anoitecer</string>
     <string name="nightfall_72min_summary">72 minutos</string>
-    <string name="midnight">Meia-noite</string>
-    <string name="midnight_summary">Meio da noite (chatzos)</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Meia-noite</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Definições</string>

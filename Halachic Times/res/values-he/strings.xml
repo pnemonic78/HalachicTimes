@@ -10,9 +10,9 @@
     <string name="dawn_16deg_summary">16.1° מתחת לקו האופק המזרחי</string>
     <string name="dawn_72min">עלות השחר</string>
     <string name="dawn_72min_summary">72 דקות לפני זריחת פני הים</string>
-    <string name="earliest">טלית ותפילין המוקדם</string>
+    <string name="earliest">טלית ותפילין המוקדם ביותר</string>
     <string name="earliest_summary">שמש היא 11.5° מתחת לקו האופק</string>
-    <string name="sunrise">זריחה</string>
+    <string name="sunrise">הנץ החמה</string>
     <string name="sunrise_summary">באזור שטוח</string>
     <string name="shema_mga">סוף זמן קריאת שמע</string>
     <string name="shema_mga_summary">סוף זמן קריאת שמע לפי מגן אברהם</string>
@@ -23,23 +23,23 @@
     <string name="prayers_gra">תפילת השחרית האחרונה</string>
     <string name="prayers_gra_summary">השחרית האחרונה לפי הגר"א ובעל התניא</string>
     <string name="midday">צהריים</string>
-    <string name="midday_summary">חצות יום</string>
-    <string name="earliest_mincha">תפילת מנחה המוקדמת</string>
-    <string name="earliest_mincha_summary">מנחה המוקדמת (מנחה גדולה)</string>
-    <string name="mincha">תפילת מנחה</string>
-    <string name="mincha_summary">מנחה קטנה</string>
+    <string name="midday_summary">חצות היום</string>
+    <string name="earliest_mincha">מנחה גדולה</string>
+    <string name="earliest_mincha_summary">תפילת מנחה המוקדמת ביותר</string>
+    <string name="mincha">מנחה קטנה</string>
+    <string name="mincha_summary">תפילת מנחה</string>
     <string name="plug_hamincha">פלג המנחה</string>
     <string name="plug_hamincha_summary">פלג המנחה לפי הגר"א ובעל התניא</string>
     <string name="candles">הדלקת נרות</string>
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
     <string name="sunset">שקיעת השמש</string>
     <string name="sunset_summary">באזור שטוח</string>
-    <string name="nightfall_3stars">לילה</string>
+    <string name="nightfall_3stars">צאת הכוכבים</string>
     <string name="nightfall_3stars_summary">3 כוכבים גלויים</string>
     <string name="nightfall_72min">לילה</string>
     <string name="nightfall_72min_summary">72 דקות</string>
     <string name="midnight">חצות</string>
-    <string name="midnight_summary">חצות לילה</string>
+    <string name="midnight_summary">חצות הלילה</string>
 
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
