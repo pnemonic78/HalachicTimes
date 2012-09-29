@@ -41,6 +41,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private final LayoutInflater mInflater;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
+	private long mNow = System.currentTimeMillis();
 
 	/**
 	 * Time row item.
@@ -72,6 +73,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mSettings = new ZmanimSettings(context);
+	}
+
+	@Override
+	public void clear() {
+		super.clear();
+		mNow = System.currentTimeMillis();
 	}
 
 	@Override
@@ -150,7 +157,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		item.title = mContext.getText(labelId);
 		item.summary = summaryVisible ? summary : null;
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
-		item.past = pastEnabled ? false : (time < System.currentTimeMillis());
+		item.past = pastEnabled ? false : (time < mNow);
 
 		add(item);
 	}
