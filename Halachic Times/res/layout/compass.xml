@@ -10,21 +10,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:id="@+id/azimuth"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/pitch"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/roll"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-
     <view
         android:id="@+id/compass"
         android:layout_width="fill_parent"
