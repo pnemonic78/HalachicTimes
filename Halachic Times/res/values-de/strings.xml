@@ -68,6 +68,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
+    <string name="title_activity_compass">Richtung des gebets</string>
     <string name="north">N</string>
     <string name="east">O</string>
     <string name="south">S</string>

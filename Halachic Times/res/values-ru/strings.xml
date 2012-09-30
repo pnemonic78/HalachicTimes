@@ -68,6 +68,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
+    <string name="title_activity_compass">Направление молитвы</string>
     <string name="north">С</string>
     <string name="east">В</string>
     <string name="south">Ю</string>

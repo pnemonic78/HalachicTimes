@@ -68,6 +68,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
+    <string name="title_activity_compass">כיוון התפילה</string>
     <string name="north">צ</string>
     <string name="east">ז</string>
     <string name="south">ד</string>

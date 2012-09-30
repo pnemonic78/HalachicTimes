@@ -68,6 +68,7 @@
 
     <!-- Compass -->
     <string name="menu_compass">Bússola</string>
+    <string name="title_activity_compass">Direção da oração</string>
     <string name="north">N</string>
     <string name="east">L</string>
     <string name="south">S</string>
