@@ -49,7 +49,6 @@ public class CitiesGeocoder {
 	private static final double TZ_HOUR = 360 / 24;
 
 	protected final Locale mLocale;
-	private String[] mNames;
 	private static String[] mCountries;
 	private static double[] mLatitudes;
 	private static double[] mLongitudes;
@@ -79,7 +78,6 @@ public class CitiesGeocoder {
 
 		// Populate arrays from "cities.xml"
 		Resources res = context.getResources();
-		mNames = res.getStringArray(R.array.cities);
 		if (mCountries == null)
 			mCountries = res.getStringArray(R.array.countries);
 		if (mTimeZones == null)
@@ -148,7 +146,6 @@ public class CitiesGeocoder {
 		city.setLongitude(endLongitude);
 		city.setCountryCode(locale.getCountry());
 		city.setCountryName(locale.getDisplayCountry());
-		city.setAdminArea(mNames[found]);
 
 		return city;
 	}
