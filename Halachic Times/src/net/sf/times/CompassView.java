@@ -137,7 +137,7 @@ public class CompassView extends View {
 		mPaintFill.setStyle(Paint.Style.STROKE);
 		mPaintFill.setStrokeCap(Paint.Cap.BUTT);
 
-		setNorth(0f);
+		setAzimuth(0f);
 	}
 
 	@Override
@@ -209,12 +209,12 @@ public class CompassView extends View {
 	}
 
 	/**
-	 * Set the bearing to magnetic North pole.
+	 * Set the azimuth to magnetic North pole.
 	 * 
 	 * @param bearing
 	 *            the bearing in radians.
 	 */
-	public void setNorth(float bearing) {
+	public void setAzimuth(float bearing) {
 		mNorth = (float) Math.toDegrees(-bearing);
 		invalidate();
 	}

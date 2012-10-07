@@ -84,7 +84,7 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		setContentView(R.layout.compass);
 		mView = (CompassView) findViewById(R.id.compass);
 
-		mLocations = new ZmanimLocations(this, this);
+		mLocations = ZmanimLocations.getInstance(this, this);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -99,13 +99,13 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		mLocations.cancel();
+		mLocations.cancel(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mLocations.resume();
+		mLocations.resume(this);
 		mSensorManager.registerListener(this, mAccel, SensorManager.SENSOR_DELAY_UI);
 		mSensorManager.registerListener(this, mMagnetic, SensorManager.SENSOR_DELAY_UI);
 	}
@@ -153,7 +153,7 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		}
 		if (SensorManager.getRotationMatrix(matrixR, null, mGravity, mGeomagnetic)) {
 			SensorManager.getOrientation(matrixR, mOrientation);
-			mView.setNorth(mOrientation[0]);
+			mView.setAzimuth(mOrientation[0]);
 		}
 	}
 }

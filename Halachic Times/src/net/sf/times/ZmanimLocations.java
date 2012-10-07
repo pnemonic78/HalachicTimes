@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
-import net.sf.times.location.CitiesGeocoder;
+import net.sf.times.location.CountriesGeocoder;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -69,8 +70,10 @@ public class ZmanimLocations implements LocationListener {
 	private Location mLocation;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
-	/** The list of cities. */
-	private CitiesGeocoder mCities;
+	/** The list of countries. */
+	private CountriesGeocoder mCountries;
+	/** The instance. */
+	private static ZmanimLocations mInstance;
 
 	/**
 	 * Constructs a new provider.
@@ -78,23 +81,39 @@ public class ZmanimLocations implements LocationListener {
 	 * @param context
 	 *            the context.
 	 */
-	public ZmanimLocations(Context context) {
-		this(context, null);
+	private ZmanimLocations(Context context) {
+		super();
+		mContext = context;
+		mSettings = new ZmanimSettings(context);
 	}
 
 	/**
-	 * Constructs a new provider.
+	 * Get the locations provider instance.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @return the provider.
+	 */
+	public static ZmanimLocations getInstance(Context context) {
+		if (mInstance == null)
+			mInstance = new ZmanimLocations(context);
+		return mInstance;
+	}
+
+	/**
+	 * Get the locations provider instance.
 	 * 
 	 * @param context
 	 *            the context.
 	 * @param listener
-	 *            the owner location listener.
+	 *            the listener.
+	 * @return the provider.
 	 */
-	public ZmanimLocations(Context context, LocationListener listener) {
-		super();
-		mContext = context;
-		mSettings = new ZmanimSettings(context);
-		addLocationListener(listener);
+	public static ZmanimLocations getInstance(Context context, LocationListener listener) {
+		if (mInstance == null)
+			mInstance = new ZmanimLocations(context);
+		mInstance.addLocationListener(listener);
+		return mInstance;
 	}
 
 	/**
@@ -180,9 +199,9 @@ public class ZmanimLocations implements LocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ(TimeZone tz) {
-		if (mCities == null)
-			mCities = new CitiesGeocoder(mContext);
-		return mCities.findLocation(tz);
+		if (mCountries == null)
+			mCountries = new CountriesGeocoder(mContext);
+		return mCountries.findLocation(tz);
 	}
 
 	/**
@@ -214,19 +233,31 @@ public class ZmanimLocations implements LocationListener {
 
 	/**
 	 * Cancel.
+	 * 
+	 * @param listener
+	 *            the listener who wants to stop listening.
 	 */
-	public void cancel() {
-		if (mLocationManager != null) {
-			mLocationManager.removeUpdates(this);
-			mLocationManager = null;
+	public void cancel(LocationListener listener) {
+		if (listener != null)
+			mLocationListeners.remove(listener);
+		if (mLocationListeners.isEmpty()) {
+			if (mLocationManager != null) {
+				mLocationManager.removeUpdates(this);
+				mLocationManager = null;
+			}
 		}
-		mLocation = null;
 	}
 
 	/**
 	 * Resume.
+	 * 
+	 * @param listener
+	 *            the listener who wants to resume listening.
 	 */
-	public void resume() {
+	public void resume(LocationListener listener) {
+		if (listener != null)
+			addLocationListener(listener);
+
 		if (mLocationManager == null) {
 			mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
 			try {
@@ -241,9 +272,8 @@ public class ZmanimLocations implements LocationListener {
 			}
 		}
 
-		if (mLocation == null) {
-			onLocationChanged(getLocation());
-		}
+		if (listener != null)
+			listener.onLocationChanged(getLocation());
 	}
 
 	/**
@@ -288,8 +318,8 @@ public class ZmanimLocations implements LocationListener {
 			latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
 			longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
 		} else {
-			latitudeText = String.format("%1$.7f", latitude);
-			longitudeText = String.format("%1$.7f", longitude);
+			latitudeText = String.format("%1$.6f", latitude);
+			longitudeText = String.format("%1$.6f", longitude);
 		}
 		final String coordsFormat = mContext.getString(R.string.location_coords);
 		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);

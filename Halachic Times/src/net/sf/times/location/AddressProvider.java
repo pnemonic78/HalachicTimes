@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -60,8 +59,8 @@ public class AddressProvider {
 	private final Context mContext;
 	private final Locale mLocale;
 	private SQLiteOpenHelper mOpenHelper;
-	/** The list of cities. */
-	private CitiesGeocoder mCities;
+	/** The list of countries. */
+	private CountriesGeocoder mCountries;
 
 	/**
 	 * Constructs a new provider.
@@ -85,7 +84,7 @@ public class AddressProvider {
 		super();
 		mContext = context;
 		mLocale = locale;
-		mCities = new CitiesGeocoder(context, locale);
+		mCountries = new CountriesGeocoder(context, locale);
 	}
 
 	/**
@@ -111,7 +110,7 @@ public class AddressProvider {
 			addresses = findNearestAddressGeoNames(location);
 		}
 		if ((addresses == null) || addresses.isEmpty()) {
-			addresses = findNearestCity(location);
+			addresses = findNearestCountry(location);
 		}
 
 		return findBestAddress(location, addresses);
@@ -135,7 +134,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getLocalizedMessage());
 			addresses = new ArrayList<Address>();
 		}
 		return addresses;
@@ -159,7 +158,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println(e.getLocalizedMessage());
 			addresses = new ArrayList<Address>();
 		}
 		return addresses;
@@ -396,28 +395,19 @@ public class AddressProvider {
 	}
 
 	/**
-	 * Find the nearest city to the latitude and longitude.
+	 * Find the nearest country to the latitude and longitude.
 	 * <p>
-	 * Uses the precompiled array of capital cities from GeoNames.
+	 * Uses the precompiled array of countries from GeoNames.
 	 * 
 	 * @param location
 	 *            the location.
 	 * @return the list of addresses with 1 entry.
 	 */
-	private List<Address> findNearestCity(Location location) {
-		List<Address> cities = new ArrayList<Address>();
-		cities.add(mCities.getFromLocation(location));
-		return cities;
-	}
-
-	/**
-	 * Find the first corresponding location for the time zone.
-	 * 
-	 * @param tz
-	 *            the time zone.
-	 * @return the location - {@code null} otherwise.
-	 */
-	public Location findTimeZone(TimeZone tz) {
-		return mCities.findLocation(tz);
+	private List<Address> findNearestCountry(Location location) {
+		List<Address> countries = new ArrayList<Address>();
+		Address country = mCountries.getFromLocation(location);
+		if (country != null)
+			countries.add(country);
+		return countries;
 	}
 }

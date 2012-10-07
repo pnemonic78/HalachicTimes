@@ -152,19 +152,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onResume() {
 		super.onResume();
 
-		mLocations.resume();
-		Location location = mLocations.getLocation();
-		if (location != null) {
-			populateHeader();
-			populateTimes();
-		}
+		mLocations.resume(this);
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 
-		mLocations.cancel();
+		mLocations.cancel(this);
 		if (mAdapter != null) {
 			mAdapter.clear();
 			mAdapter = null;
@@ -195,7 +190,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Initialise the location providers. */
 	private void initLocation() {
-		mLocations = new ZmanimLocations(this, this);
+		mLocations = ZmanimLocations.getInstance(this, this);
 	}
 
 	/**
@@ -451,20 +446,22 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				mAddressProvider = new AddressProvider(ZmanimActivity.this);
 			AddressProvider provider = mAddressProvider;
 			Address nearest = provider.findNearestAddress(mLocation);
-			ZmanimAddress addr = (nearest instanceof ZmanimAddress) ? ((ZmanimAddress) nearest) : new ZmanimAddress(nearest);
-			if (addr != null) {
-				mAddress = addr;
-				provider.insertAddress(mLocation, addr);
-				if (mPopulateHeader == null) {
-					mPopulateHeader = new Runnable() {
+			if (nearest != null) {
+				ZmanimAddress addr = (nearest instanceof ZmanimAddress) ? ((ZmanimAddress) nearest) : new ZmanimAddress(nearest);
+				if (addr != null) {
+					mAddress = addr;
+					provider.insertAddress(mLocation, addr);
+					if (mPopulateHeader == null) {
+						mPopulateHeader = new Runnable() {
 
-						@Override
-						public void run() {
-							populateHeader();
-						}
-					};
+							@Override
+							public void run() {
+								populateHeader();
+							}
+						};
+					}
+					runOnUiThread(mPopulateHeader);
 				}
-				runOnUiThread(mPopulateHeader);
 			}
 		}
 	}
