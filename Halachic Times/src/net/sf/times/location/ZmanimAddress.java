@@ -3,9 +3,9 @@
  * Copyright (c) 2012. All Rights Reserved.
  * 
  * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with the
+ * 2.0 (the "License"); you may not use this file except in compliance with the
  * License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/MPL-1.1.html
+ * http://www.mozilla.org/MPL/2.0
  *
  * Contributors can be contacted by electronic mail via the project Web pages:
  * 
