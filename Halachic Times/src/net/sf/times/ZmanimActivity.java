@@ -159,7 +159,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onDestroy() {
 		super.onDestroy();
 
-		mLocations.cancel(this);
 		if (mAdapter != null) {
 			mAdapter.clear();
 			mAdapter = null;
@@ -173,7 +172,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	protected void onPause() {
 		super.onPause();
-
+		mLocations.cancel(this);
 		SQLiteDatabase.releaseMemory();
 	}
 

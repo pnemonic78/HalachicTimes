@@ -60,8 +60,6 @@ public class ZmanimLocations implements LocationListener {
 	/** Western-most longitude for Israel. */
 	private static final double ISRAEL_WEST = 34.215317;
 
-	/** The context. */
-	private final Context mContext;
 	/** The owner location listener. */
 	private final List<LocationListener> mLocationListeners = new ArrayList<LocationListener>();
 	/** Service provider for locations. */
@@ -72,6 +70,8 @@ public class ZmanimLocations implements LocationListener {
 	private ZmanimSettings mSettings;
 	/** The list of countries. */
 	private CountriesGeocoder mCountries;
+	/** The coordinates format. */
+	private String mCoordsFormat;
 	/** The instance. */
 	private static ZmanimLocations mInstance;
 
@@ -83,8 +83,10 @@ public class ZmanimLocations implements LocationListener {
 	 */
 	private ZmanimLocations(Context context) {
 		super();
-		mContext = context;
 		mSettings = new ZmanimSettings(context);
+		mCountries = new CountriesGeocoder(context);
+		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		mCoordsFormat = context.getString(R.string.location_coords);
 	}
 
 	/**
@@ -199,8 +201,6 @@ public class ZmanimLocations implements LocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ(TimeZone tz) {
-		if (mCountries == null)
-			mCountries = new CountriesGeocoder(mContext);
 		return mCountries.findLocation(tz);
 	}
 
@@ -241,10 +241,7 @@ public class ZmanimLocations implements LocationListener {
 		if (listener != null)
 			mLocationListeners.remove(listener);
 		if (mLocationListeners.isEmpty()) {
-			if (mLocationManager != null) {
-				mLocationManager.removeUpdates(this);
-				mLocationManager = null;
-			}
+			mLocationManager.removeUpdates(this);
 		}
 	}
 
@@ -258,18 +255,15 @@ public class ZmanimLocations implements LocationListener {
 		if (listener != null)
 			addLocationListener(listener);
 
-		if (mLocationManager == null) {
-			mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-			try {
-				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
-			} catch (IllegalArgumentException iae) {
-				System.err.println(this + ": " + iae.getLocalizedMessage());
-			}
-			try {
-				mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
-			} catch (IllegalArgumentException iae) {
-				System.err.println(this + ": " + iae.getLocalizedMessage());
-			}
+		try {
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
+		} catch (IllegalArgumentException iae) {
+			System.err.println(this + ": " + iae.getLocalizedMessage());
+		}
+		try {
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
+		} catch (IllegalArgumentException iae) {
+			System.err.println(this + ": " + iae.getLocalizedMessage());
 		}
 
 		if (listener != null)
@@ -321,8 +315,7 @@ public class ZmanimLocations implements LocationListener {
 			latitudeText = String.format("%1$.6f", latitude);
 			longitudeText = String.format("%1$.6f", longitude);
 		}
-		final String coordsFormat = mContext.getString(R.string.location_coords);
-		final String coordsText = String.format(coordsFormat, latitudeText, longitudeText);
+		final String coordsText = String.format(mCoordsFormat, latitudeText, longitudeText);
 		return coordsText;
 	}
 }
