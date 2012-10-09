@@ -181,7 +181,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		LayoutInflater inflater = LayoutInflater.from(this);
 		mList = (ViewGroup) inflater.inflate(R.layout.times, null);
 		mHeader = mList.findViewById(R.id.header);
-		mAdapter = new ZmanimAdapter(this);
 		mSettings = new ZmanimSettings(this);
 
 		setContentView(mList);
@@ -264,37 +263,31 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			candlesCount = getCandles(mDate, loc);
 		}
 
-		// Have we been destroyed?
-		ZmanimAdapter adapter = mAdapter;
-		if (adapter == null)
-			return;
-		synchronized (adapter) {
-			adapter.clear();
-
-			adapter.add(R.string.dawn_16deg, R.string.dawn_16deg_summary, cal.getAlosHashachar());
-			adapter.add(R.string.dawn_72min, R.string.dawn_72min_summary, cal.getAlos72());
-			adapter.add(R.string.earliest, R.string.earliest_summary, cal.getSunriseOffsetByDegrees(ZENITH_TALLIS));
-			adapter.add(R.string.sunrise, R.string.sunrise_summary, cal.getSunrise());
-			adapter.add(R.string.shema_mga, R.string.shema_mga_summary, cal.getSofZmanShmaMGA());
-			adapter.add(R.string.shema_gra, R.string.shema_gra_summary, cal.getSofZmanShmaGRA());
-			adapter.add(R.string.prayers_mga, R.string.prayers_mga_summary, cal.getSofZmanTfilaMGA());
-			adapter.add(R.string.prayers_gra, R.string.prayers_gra_summary, cal.getSofZmanTfilaGRA());
-			adapter.add(R.string.midday, R.string.midday_summary, cal.getChatzos());
-			adapter.add(R.string.earliest_mincha, R.string.earliest_mincha_summary, cal.getMinchaGedola());
-			adapter.add(R.string.mincha, R.string.mincha_summary, cal.getMinchaKetana());
-			adapter.add(R.string.plug_hamincha, R.string.plug_hamincha_summary, cal.getPlagHamincha());
-			if (candlesCount > 0) {
-				String summary = getString(R.string.candles_summary, candlesOffset);
-				adapter.add(R.string.candles, summary, cal.getCandleLighting());
-			}
-			adapter.add(R.string.sunset, R.string.sunset_summary, cal.getSunset());
-			if (candlesCount < 0) {
-				adapter.add(R.string.candles, R.string.nightfall_3stars_summary, cal.getTzais());
-			}
-			adapter.add(R.string.nightfall_3stars, R.string.nightfall_3stars_summary, cal.getTzais());
-			adapter.add(R.string.nightfall_72min, R.string.nightfall_72min_summary, cal.getTzais72());
-			adapter.add(R.string.midnight, R.string.midnight_summary, cal.getChatzos().getTime() + TWELVE_HOURS);
+		ZmanimAdapter adapter = new ZmanimAdapter(this, mSettings);
+		mAdapter = adapter;
+		adapter.add(R.string.dawn_16deg, R.string.dawn_16deg_summary, cal.getAlosHashachar());
+		adapter.add(R.string.dawn_72min, R.string.dawn_72min_summary, cal.getAlos72());
+		adapter.add(R.string.earliest, R.string.earliest_summary, cal.getSunriseOffsetByDegrees(ZENITH_TALLIS));
+		adapter.add(R.string.sunrise, R.string.sunrise_summary, cal.getSunrise());
+		adapter.add(R.string.shema_mga, R.string.shema_mga_summary, cal.getSofZmanShmaMGA());
+		adapter.add(R.string.shema_gra, R.string.shema_gra_summary, cal.getSofZmanShmaGRA());
+		adapter.add(R.string.prayers_mga, R.string.prayers_mga_summary, cal.getSofZmanTfilaMGA());
+		adapter.add(R.string.prayers_gra, R.string.prayers_gra_summary, cal.getSofZmanTfilaGRA());
+		adapter.add(R.string.midday, R.string.midday_summary, cal.getChatzos());
+		adapter.add(R.string.earliest_mincha, R.string.earliest_mincha_summary, cal.getMinchaGedola());
+		adapter.add(R.string.mincha, R.string.mincha_summary, cal.getMinchaKetana());
+		adapter.add(R.string.plug_hamincha, R.string.plug_hamincha_summary, cal.getPlagHamincha());
+		if (candlesCount > 0) {
+			String summary = getString(R.string.candles_summary, candlesOffset);
+			adapter.add(R.string.candles, summary, cal.getCandleLighting());
 		}
+		adapter.add(R.string.sunset, R.string.sunset_summary, cal.getSunset());
+		if (candlesCount < 0) {
+			adapter.add(R.string.candles, R.string.nightfall_3stars_summary, cal.getTzais());
+		}
+		adapter.add(R.string.nightfall_3stars, R.string.nightfall_3stars_summary, cal.getTzais());
+		adapter.add(R.string.nightfall_72min, R.string.nightfall_72min_summary, cal.getTzais72());
+		adapter.add(R.string.midnight, R.string.midnight_summary, cal.getChatzos().getTime() + TWELVE_HOURS);
 
 		final int count = adapter.getCount();
 		if (mList == null)

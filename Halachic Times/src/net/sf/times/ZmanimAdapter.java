@@ -39,9 +39,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	private final Context mContext;
 	private final LayoutInflater mInflater;
-	/** The settings and preferences. */
-	private ZmanimSettings mSettings;
-	private long mNow = System.currentTimeMillis();
+	private final long mNow = System.currentTimeMillis();
+	private boolean mSummaries;
+	private boolean mElapsed;
 
 	/**
 	 * Time row item.
@@ -54,8 +54,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		public CharSequence summary;
 		/** The time. */
 		public CharSequence time;
-		/** Is the time past? */
-		public boolean past;
+		/** Has the time elapsed? */
+		public boolean elapsed;
 
 		public ZmanimItem() {
 			super();
@@ -67,18 +67,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 
 	 * @param context
 	 *            the context.
+	 * @param settings
+	 *            the application settings.
 	 */
-	public ZmanimAdapter(Context context) {
+	public ZmanimAdapter(Context context, ZmanimSettings settings) {
 		super(context, R.layout.times_item, 0);
 		mContext = context;
 		mInflater = LayoutInflater.from(context);
-		mSettings = new ZmanimSettings(context);
-	}
-
-	@Override
-	public void clear() {
-		super.clear();
-		mNow = System.currentTimeMillis();
+		mSummaries = settings.isSummaries();
+		mElapsed = settings.isPast();
 	}
 
 	@Override
@@ -113,7 +110,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary.setVisibility(View.GONE);
 		TextView time = (TextView) view.findViewById(R.id.time);
 		time.setText(item.time);
-		boolean enabled = !item.past;
+		boolean enabled = !item.elapsed;
 		title.setEnabled(enabled);
 		summary.setEnabled(enabled);
 		time.setEnabled(enabled);
@@ -132,8 +129,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the time in milliseconds.
 	 */
 	public void add(int labelId, int summaryId, long time) {
-		final boolean summaryVisible = mSettings.isSummaries();
-		add(labelId, summaryVisible ? mContext.getText(summaryId) : (CharSequence) null, time);
+		add(labelId, mSummaries ? mContext.getText(summaryId) : (CharSequence) null, time);
 	}
 
 	/**
@@ -150,14 +146,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (time == 0)
 			return;
 
-		final boolean summaryVisible = mSettings.isSummaries();
-		final boolean pastEnabled = mSettings.isPast();
-
 		ZmanimItem item = new ZmanimItem();
 		item.title = mContext.getText(labelId);
-		item.summary = summaryVisible ? summary : null;
+		item.summary = mSummaries ? summary : null;
 		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
-		item.past = pastEnabled ? false : (time < mNow);
+		item.elapsed = mElapsed ? false : (time < mNow);
 
 		add(item);
 	}
