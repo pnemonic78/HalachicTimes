@@ -91,16 +91,16 @@ public class CountriesGeocoder {
 			int[] latitudes = res.getIntArray(R.array.latitudes);
 			int[] longitudes = res.getIntArray(R.array.longitudes);
 			int verticesCount;
-			CountryPolygon border;
+			CountryPolygon country;
 			int i = 0;
 
 			for (int c = 0; c < countriesCount; c++) {
 				verticesCount = verticesCounts[c];
-				border = new CountryPolygon(countryCodes[c]);
+				country = new CountryPolygon(countryCodes[c]);
 				for (int v = 0; v < verticesCount; v++, i++) {
-					border.addPoint(latitudes[i], longitudes[i]);
+					country.addPoint(latitudes[i], longitudes[i]);
 				}
-				mCountryBorders[c] = border;
+				mCountryBorders[c] = country;
 			}
 		}
 	}
@@ -126,39 +126,29 @@ public class CountriesGeocoder {
 	 * @return the city - {@code null} otherwise.
 	 */
 	public Address getFromLocation(double latitude, double longitude) {
-		final double startLatitude = latitude;
-		final double startLongitude = longitude;
-		final int intLatitude = (int) (latitude * RATIO);
-		final int intLongitude = (int) (longitude * RATIO);
-		double endLatitude = latitude;
-		double endLongitude = longitude;
-		float[] results = new float[1];
-		float distanceMin = Float.MAX_VALUE;
+		final int fixedpointLatitude = (int) (latitude * RATIO);
+		final int fixedpointLongitude = (int) (longitude * RATIO);
+		double distanceToBorder;
+		double distanceMin = Double.MAX_VALUE;
 		int found = -1;
-		int countriesSize = mCountryBorders.length;
-		CountryPolygon border;
+		final int countriesSize = mCountryBorders.length;
+		CountryPolygon country;
 		int[] matches = new int[MAX_COUNTRIES_OVERLAP];
 		int matchesCount = 0;
-		int verticesCount;
 
 		for (int c = 0; (c < countriesSize) && (matchesCount < MAX_COUNTRIES_OVERLAP); c++) {
-			border = mCountryBorders[c];
-			if (border.contains(intLatitude, intLongitude))
+			country = mCountryBorders[c];
+			if (country.contains(fixedpointLatitude, fixedpointLongitude))
 				matches[matchesCount++] = c;
 		}
 		if (matchesCount == 0) {
-			// Find the nearest location.
+			// Find the nearest border.
 			for (int c = 0; c < countriesSize; c++) {
-				border = mCountryBorders[c];
-				verticesCount = border.npoints;
-				for (int v = 0; v < verticesCount; v++) {
-					endLatitude = border.latitudes[v] / RATIO;
-					endLongitude = border.longitudes[v] / RATIO;
-					Location.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude, results);
-					if (results[0] < distanceMin) {
-						distanceMin = results[0];
-						found = c;
-					}
+				country = mCountryBorders[c];
+				distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+				if (distanceToBorder < distanceMin) {
+					distanceMin = distanceToBorder;
+					found = c;
 				}
 			}
 
@@ -169,15 +159,15 @@ public class CountriesGeocoder {
 		} else {
 			// Case 1: Smaller country inside a larger country.
 			CountryPolygon other;
-			border = mCountryBorders[matches[0]];
+			country = mCountryBorders[matches[0]];
 			int matchCountryIndex;
 			for (int m = 1; m < matchesCount; m++) {
 				matchCountryIndex = matches[m];
 				other = mCountryBorders[matchCountryIndex];
-				if (border.contains(other)) {
-					border = other;
+				if (country.contains(other)) {
+					country = other;
 					found = matchCountryIndex;
-				} else if ((found < 0) && other.contains(border)) {
+				} else if ((found < 0) && other.contains(country)) {
 					found = matches[0];
 				}
 			}
@@ -185,14 +175,12 @@ public class CountriesGeocoder {
 			// Case 2: Country rectangle intersects another country's rectangle.
 			if (found < 0) {
 				// Find the nearest border.
-				double minDistance = Double.MAX_VALUE;
-				double d;
 				for (int m = 0; m < matchesCount; m++) {
 					matchCountryIndex = matches[m];
-					border = mCountryBorders[matchCountryIndex];
-					d = border.minimumDistanceToBorders(intLatitude, intLongitude);
-					if (d < minDistance) {
-						minDistance = d;
+					country = mCountryBorders[matchCountryIndex];
+					distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+					if (distanceToBorder < distanceMin) {
+						distanceMin = distanceToBorder;
 						found = matchCountryIndex;
 					}
 				}
@@ -202,8 +190,8 @@ public class CountriesGeocoder {
 		Locale locale = new Locale(mLocale.getLanguage(), mCountryBorders[found].countryCode);
 		ZmanimAddress city = new ZmanimAddress(locale);
 		city.setId(-found);
-		city.setLatitude(endLatitude);
-		city.setLongitude(endLongitude);
+		city.setLatitude(latitude);
+		city.setLongitude(longitude);
 		city.setCountryCode(locale.getCountry());
 		city.setCountryName(locale.getDisplayCountry());
 
