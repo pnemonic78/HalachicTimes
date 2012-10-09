@@ -190,10 +190,34 @@ public class CountryPolygon {
 	 *      from a point to a line</a>
 	 */
 	public static double pointToLineDistance(Point a, Point b, Point p) {
-		final double dxAB = b.x - a.x;
-		final double dyAB = b.y - a.y;
+		return pointToLineDistance(a.x, a.y, b.x, b.y, p.x, p.y);
+	}
+
+	/**
+	 * Calculate the distance from a point to a line.
+	 * 
+	 * @param ax
+	 *            X coordinate of a point on the line.
+	 * @param ay
+	 *            Y coordinate of a point on the line.
+	 * @param bx
+	 *            X coordinate of another point on the line.
+	 * @param by
+	 *            Y coordinate of another point on the line.
+	 * @param px
+	 *            X coordinate of the point, not on the line.
+	 * @param py
+	 *            Y coordinate of the point, not on the line.
+	 * @return the distance.
+	 * @see <a
+	 *      href="http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line">Distance
+	 *      from a point to a line</a>
+	 */
+	public static double pointToLineDistance(double ax, double ay, double bx, double by, double px, double py) {
+		final double dxAB = bx - ax;
+		final double dyAB = by - ay;
 		final double normalLength = Math.hypot(dxAB, dyAB);
-		return Math.abs(((p.x - a.x) * dyAB) - ((p.y - a.y) * dxAB)) / normalLength;
+		return Math.abs(((px - ax) * dyAB) - ((py - ay) * dxAB)) / normalLength;
 	}
 
 	/**
@@ -209,14 +233,9 @@ public class CountryPolygon {
 		int n = npoints - 1;
 		double minimum = Double.MAX_VALUE;
 		double d;
-		Point a = new Point();
-		Point b = new Point();
-		Point p = new Point(latitude, longitude);
 
 		for (int i = 0, j = 1; j < n; i++, j++) {
-			a.set(latitudes[i], longitudes[i]);
-			b.set(latitudes[j], longitudes[j]);
-			d = pointToLineDistance(a, b, p);
+			d = pointToLineDistance(latitudes[i], longitudes[i], latitudes[j], longitudes[j], latitude, longitude);
 			if (d < minimum)
 				minimum = d;
 		}
