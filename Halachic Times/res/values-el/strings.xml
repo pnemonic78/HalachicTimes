@@ -1,0 +1,77 @@
+<resources>
+
+    <string name="app_name">Ήαλαχικ Φορές Προσευχή</string>
+    <string name="title_activity_zmanim">Ήαλαχικ Φορές</string>
+
+    <!-- List -->
+    <string name="location_unknown">Άγνωστη διεύθυνση</string>
+    <string name="location_coords">Πλτ. %1$s; Μήκ. %2$s</string>
+    <string name="dawn_16deg">Αυγή</string>
+    <string name="dawn_16deg_summary">16,1° κάτω από τον ανατολικό ορίζοντα</string>
+    <string name="dawn_72min">Αυγή</string>
+    <string name="dawn_72min_summary">72 λεπτά πριν την ανατολή της στάθμης της θάλασσας</string>
+    <string name="earliest">Η πιο παλιά ταλιτ και τεφιλιν</string>
+    <string name="earliest_summary">Ήλιος είναι 11,5° κάτω από τον ορίζοντα</string>
+    <string name="sunrise">Ανατολή ηλίου</string>
+    <string name="sunrise_summary">Σε μια περιοχή επίπεδο</string>
+    <string name="shema_mga">Τελευταία σεμα</string>
+    <string name="shema_mga_summary">Τελευταία σεμα σύμφωνα με Μαγεν Αβραάμ</string>
+    <string name="shema_gra">Τελευταία σεμα</string>
+    <string name="shema_gra_summary">Τελευταία σεμα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
+    <string name="prayers_mga">Τελευταία σαχαριτ</string>
+    <string name="prayers_mga_summary">Τελευταία πρωινή προσευχή σύμφωνα με Μαγεν Αβραάμ</string>
+    <string name="prayers_gra">Τελευταία σαχαριτ</string>
+    <string name="prayers_gra_summary">Τελευταία πρωινή προσευχή σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
+    <string name="midday">Μεσημέρι</string>
+    <string name="midday_summary">Μεσημβρία</string>
+    <string name="earliest_mincha">Μινχα γδολα</string>
+    <string name="earliest_mincha_summary">Η πιο παλιά προσευχές απόγευμα</string>
+    <string name="mincha">Μινχα κτανα</string>
+    <string name="mincha_summary">Απόγευμα προσευχές</string>
+    <string name="plug_hamincha">Πλαγ μινχα</string>
+    <string name="plug_hamincha_summary">Πλαγ μινχα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
+    <string name="candles">Φωτισμό κεριών</string>
+    <string name="candles_summary">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
+    <string name="sunset">Ηλιοβασίλεμα</string>
+    <string name="sunset_summary">Σε μια περιοχή επίπεδο</string>
+    <string name="nightfall_3stars">Σούρουπο</string>
+    <string name="nightfall_3stars_summary">3 αστέρια ορατά</string>
+    <string name="nightfall_72min">Σούρουπο</string>
+    <string name="nightfall_72min_summary">72 λεπτά</string>
+    <string name="midnight">Χαζοτ</string>
+    <string name="midnight_summary">Μεσάνυχτα</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Ρυθμίσεις</string>
+    <string name="category_general">Γενικός</string>
+    <string name="coords_format_title">Συντεταγμένες μορφή</string>
+    <string name="coords_format_summary">Συμβολισμός του γεωγραφικού πλάτους και μήκους</string>
+
+    <string-array name="coords_format_entries">
+        <item>Δεκαδικός</item>
+        <item>Βάσης 60</item>
+    </string-array>
+
+    <string name="category_opinion">Γνώμες</string>
+    <string name="past_title">Φορές που έχει παρέλθει</string>
+    <string name="past_enabled">Παρελθόν οι χρόνοι είναι σχετικά</string>
+    <string name="past_disabled">Παρελθόν οι χρόνοι είναι μακριά</string>
+    <string name="summaries_title">Περιγραφές</string>
+    <string name="summaries_hidden">Περιγραφές είναι κρυμμένα</string>
+    <string name="summaries_visible">Περιγραφές είναι ορατές</string>
+    <string name="gradient_title">Υπόβαθρο ντεγκραντέ</string>
+    <string name="gradient_hidden">Ντεγκραντέ είναι κρυμμένο</string>
+    <string name="gradient_visible">Ντεγκραντέ είναι ορατή</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Πηγαίνετε στο</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Πυξίδα</string>
+    <string name="title_activity_compass">Κατεύθυνση της προσευχής</string>
+    <string name="north">Β</string>
+    <string name="east">Α</string>
+    <string name="south">Ν</string>
+    <string name="west">Δ</string>
+
+</resources>
