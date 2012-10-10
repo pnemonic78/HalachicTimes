@@ -1,0 +1,77 @@
+<resources>
+
+    <string name="app_name">Halachic Modlitební Časy</string>
+    <string name="title_activity_zmanim">Halachic Časy</string>
+
+    <!-- List -->
+    <string name="location_unknown">Neznámý Adresa</string>
+    <string name="location_coords">Šířka %1$s; Délka %2$s</string>
+    <string name="dawn_16deg">Svítání</string>
+    <string name="dawn_16deg_summary">16,1° pod východním obzorem</string>
+    <string name="dawn_72min">Svítání</string>
+    <string name="dawn_72min_summary">72 minut před mořem východem slunce</string>
+    <string name="earliest">Nástup na pobyt nejdřív tallis a tefillin</string>
+    <string name="earliest_summary">Slunce je 11,5° pod obzorem</string>
+    <string name="sunrise">Východ slunce</string>
+    <string name="sunrise_summary">V regionu soudržnosti</string>
+    <string name="shema_mga">Poslední šema</string>
+    <string name="shema_mga_summary">Poslední šema souladu s Magen Avraham</string>
+    <string name="shema_gra">Poslední šema</string>
+    <string name="shema_gra_summary">Poslední šema souladu s Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Poslední shacharis</string>
+    <string name="prayers_mga_summary">Poslední ráno modlitby souladu s Magen Avraham</string>
+    <string name="prayers_gra">Poslední shacharis</string>
+    <string name="prayers_gra_summary">Poslední ráno modlitby souladu s Gra &amp; Baal Tanya</string>
+    <string name="midday">Poledne</string>
+    <string name="midday_summary">Poledne</string>
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Nejranější odpolední modlitby</string>
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Odpolední modlitby</string>
+    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha_summary">Plag hamincha souladu s Gra &amp; Baal Tanya</string>
+    <string name="candles">Svíčka osvětlení</string>
+    <string name="candles_summary">%1$d minut před západem slunce</string>
+    <string name="sunset">Západ slunce</string>
+    <string name="sunset_summary">V regionu soudržnosti</string>
+    <string name="nightfall_3stars">Setmění</string>
+    <string name="nightfall_3stars_summary">3 hvězdiček viditelné</string>
+    <string name="nightfall_72min">Setmění</string>
+    <string name="nightfall_72min_summary">72 minut</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Půlnoc</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Nastavení</string>
+    <string name="category_general">Obecný</string>
+    <string name="coords_format_title">Souřadnice formát</string>
+    <string name="coords_format_summary">Zápis zeměpisné šířky a délky</string>
+
+    <string-array name="coords_format_entries">
+        <item>Desetinný</item>
+        <item>Šedesátý</item>
+    </string-array>
+
+    <string name="category_opinion">Stanovisek</string>
+    <string name="past_title">Časy, které uplynuly</string>
+    <string name="past_enabled">Minulé časy jsou povoleny</string>
+    <string name="past_disabled">Minulé časy jsou vypnuté</string>
+    <string name="summaries_title">Souhrny</string>
+    <string name="summaries_hidden">Souhrny jsou skryté</string>
+    <string name="summaries_visible">Souhrny jsou viditelné</string>
+    <string name="gradient_title">Gradient pozadí</string>
+    <string name="gradient_hidden">Gradient je skryta</string>
+    <string name="gradient_visible">Gradient je vidět</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Přejít na</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompas</string>
+    <string name="title_activity_compass">Směr modlitby</string>
+    <string name="north">S</string>
+    <string name="east">V</string>
+    <string name="south">J</string>
+    <string name="west">Z</string>
+
+</resources>
