@@ -1,0 +1,77 @@
+<resources>
+
+    <string name="app_name">Halachic Áhítatok</string>
+    <string name="title_activity_zmanim">Halachic Szor</string>
+
+    <!-- List -->
+    <string name="location_unknown">Ismeretlen cím</string>
+    <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
+    <string name="dawn_16deg">Hajnal</string>
+    <string name="dawn_16deg_summary">16,1° alatt a keleti horizont</string>
+    <string name="dawn_72min">Hajnal</string>
+    <string name="dawn_72min_summary">72 perc múlva a tenger szintje napkelte</string>
+    <string name="earliest">Legkorábbi tallis és tfilint</string>
+    <string name="earliest_summary">Nap 11,5° alatt horizont</string>
+    <string name="sunrise">Napkelte</string>
+    <string name="sunrise_summary">Egy szinten régióban</string>
+    <string name="shema_mga">Legutóbbi shema</string>
+    <string name="shema_mga_summary">Legutóbbi shema szerint Magen Avraham</string>
+    <string name="shema_gra">Legutóbbi shema</string>
+    <string name="shema_gra_summary">Legutóbbi shema szerint Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Legutóbbi shacharis</string>
+    <string name="prayers_mga_summary">Legutóbbi reggel imák szerint Magen Avraham</string>
+    <string name="prayers_gra">Legutóbbi shacharis</string>
+    <string name="prayers_gra_summary">Legutóbbi reggel imák szerint Gra &amp; Baal Tanya</string>
+    <string name="midday">Déli</string>
+    <string name="midday_summary">Dél</string>
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Legkorábbi délutáni ima</string>
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Délutáni ima</string>
+    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha_summary">Plag hamincha szerint Gra &amp; Baal Tanya</string>
+    <string name="candles">Gyertyagyújtás</string>
+    <string name="candles_summary">%1$d perc naplemente előtt</string>
+    <string name="sunset">Napnyugta</string>
+    <string name="sunset_summary">Egy szinten régióban</string>
+    <string name="nightfall_3stars">Alkony</string>
+    <string name="nightfall_3stars_summary">3 csillagos látható</string>
+    <string name="nightfall_72min">Alkony</string>
+    <string name="nightfall_72min_summary">72 perc</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Éjfél</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Beállítások</string>
+    <string name="category_general">Általános</string>
+    <string name="coords_format_title">Koordináták formátum</string>
+    <string name="coords_format_summary">Jelölések a szélességi és hosszúsági</string>
+
+    <string-array name="coords_format_entries">
+        <item>Decimális</item>
+        <item>Hatvanas</item>
+    </string-array>
+
+    <string name="category_opinion">Véleményeket</string>
+    <string name="past_title">Szor hogy az eltelt</string>
+    <string name="past_enabled">Elmúlt idők engedélyezve</string>
+    <string name="past_disabled">Elmúlt idők vannak tiltva</string>
+    <string name="summaries_title">Összefoglalók</string>
+    <string name="summaries_hidden">Összefoglalók rejtve</string>
+    <string name="summaries_visible">Összefoglalók látható</string>
+    <string name="gradient_title">Gradient háttér</string>
+    <string name="gradient_hidden">Gradient rejtve</string>
+    <string name="gradient_visible">Gradient látható</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Ugrás az</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Iránytű</string>
+    <string name="title_activity_compass">Irány az ima</string>
+    <string name="north">É</string>
+    <string name="east">K</string>
+    <string name="south">D</string>
+    <string name="west">N</string>
+
+</resources>
