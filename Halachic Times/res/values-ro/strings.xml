@@ -1,0 +1,77 @@
+<resources>
+
+    <string name="app_name">Ori Halachic Rugăciune</string>
+    <string name="title_activity_zmanim">Ori Halachic</string>
+
+    <!-- List -->
+    <string name="location_unknown">Necunoscuta adresa</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="dawn_16deg">Zori de zi</string>
+    <string name="dawn_16deg_summary">16.1° sub orizont de est</string>
+    <string name="dawn_72min">Zori de z</string>
+    <string name="dawn_72min_summary">72 minute înainte de răsărit nivelul mării</string>
+    <string name="earliest">Cazarea cel devreme tallis și tefillin</string>
+    <string name="earliest_summary">Soarele este de 11,5° sub orizont</string>
+    <string name="sunrise">Răsărit</string>
+    <string name="sunrise_summary">Într-o regiune nivel</string>
+    <string name="shema_mga">Ultima șema</string>
+    <string name="shema_mga_summary">Șema ultima în conformitate cu Magen Avraham</string>
+    <string name="shema_gra">Ultima șema</string>
+    <string name="shema_gra_summary">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Ultima shacharis</string>
+    <string name="prayers_mga_summary">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
+    <string name="prayers_gra">Ultima shacharis</string>
+    <string name="prayers_gra_summary">Rugăciunile de dimineață ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="midday">Amiază</string>
+    <string name="midday_summary">Miezul zilei</string>
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Mai timpurii de după-amiază rugăciunile</string>
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">De după-amiază rugăciunile</string>
+    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha_summary">Plag hamincha în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="candles">Lumânare de iluminat</string>
+    <string name="candles_summary">%1$d minute înainte de apus</string>
+    <string name="sunset">Apus de soare</string>
+    <string name="sunset_summary">Într-o regiune nivel</string>
+    <string name="nightfall_3stars">Căderea nopții</string>
+    <string name="nightfall_3stars_summary">3 stele vizibile</string>
+    <string name="nightfall_72min">Căderea nopții</string>
+    <string name="nightfall_72min_summary">72 minute</string>
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Miezul nopții</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Setări</string>
+    <string name="category_general">General</string>
+    <string name="coords_format_title">Coordonează format</string>
+    <string name="coords_format_summary">Notația de latitudine și longitudine</string>
+
+    <string-array name="coords_format_entries">
+        <item>Zecimal</item>
+        <item>Șaizecelea</item>
+    </string-array>
+
+    <string name="category_opinion">Opinii</string>
+    <string name="past_title">Ori care s-au scurs</string>
+    <string name="past_enabled">Ori în ultimile sunt activate</string>
+    <string name="past_disabled">Ori în ultimile sunt dezactivate</string>
+    <string name="summaries_title">Rezumatele</string>
+    <string name="summaries_hidden">Rezumatele sunt ascunse</string>
+    <string name="summaries_visible">Rezumatele sunt vizibile</string>
+    <string name="gradient_title">Gradient de fundal</string>
+    <string name="gradient_hidden">Gradient este ascuns</string>
+    <string name="gradient_visible">Gradient este vizibil</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Du-te la</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Busolă</string>
+    <string name="title_activity_compass">Direcția de rugăciune</string>
+    <string name="north">N</string>
+    <string name="east">E</string>
+    <string name="south">S</string>
+    <string name="west">V</string>
+
+</resources>
