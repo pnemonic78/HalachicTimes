@@ -83,7 +83,8 @@
 		<item>Magen Avraham</item>
 		<item>Rishonim</item>
 		<item>Rabbeinu Tam</item>
-	</string-array    -->
+	</string-array
+    -->
 
     <!-- Go to date -->
     <string name="menu_goto">Go to</string>
