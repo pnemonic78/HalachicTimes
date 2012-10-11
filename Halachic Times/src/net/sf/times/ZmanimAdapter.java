@@ -129,7 +129,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the time in milliseconds.
 	 */
 	public void add(int labelId, int summaryId, long time) {
-		add(labelId, mSummaries ? mContext.getText(summaryId) : (CharSequence) null, time);
+		add(labelId, mSummaries && (summaryId != 0) ? mContext.getText(summaryId) : (CharSequence) null, time);
 	}
 
 	/**

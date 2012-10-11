@@ -307,7 +307,6 @@ public class AddressProvider {
 				if (sameLocation && sameLanguage) {
 					id = cursor.getLong(INDEX_ID);
 					formatted = cursor.getString(INDEX_ADDRESS);
-					System.out.println(language + " " + locationLanguage + " [" + formatted + "]");// @@@
 					if (locationLanguage == null)
 						locale = mLocale;
 					else
