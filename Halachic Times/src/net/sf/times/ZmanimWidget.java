@@ -31,6 +31,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -95,12 +96,25 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		super.onReceive(context, intent);
 		mContext = context;
 
-		String activity = intent.getStringExtra(EXTRA_ACTIVITY);
-		if (activity != null) {
-			Intent activityIntent = new Intent();
-			activityIntent.setClassName(context, activity);
-			activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			context.startActivity(activityIntent);
+		String action = intent.getAction();
+		if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
+			IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
+			context.getApplicationContext().registerReceiver(this, timeChanged);
+
+			IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
+			context.getApplicationContext().registerReceiver(this, tzChanged);
+		} else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
+			populateTimes();
+		} else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
+			populateTimes();
+		} else {
+			String activity = intent.getStringExtra(EXTRA_ACTIVITY);
+			if (activity != null) {
+				Intent activityIntent = new Intent();
+				activityIntent.setClassName(context, activity);
+				activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(activityIntent);
+			}
 		}
 	}
 
