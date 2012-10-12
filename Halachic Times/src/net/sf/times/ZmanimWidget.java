@@ -96,13 +96,18 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		super.onReceive(context, intent);
 		mContext = context;
 
-		String action = intent.getAction();
+		final String action = intent.getAction();
 		if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
 			IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
 			context.getApplicationContext().registerReceiver(this, timeChanged);
 
+			IntentFilter dateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
+			context.getApplicationContext().registerReceiver(this, dateChanged);
+
 			IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
 			context.getApplicationContext().registerReceiver(this, tzChanged);
+		} else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
+			populateTimes();
 		} else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
 			populateTimes();
 		} else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
