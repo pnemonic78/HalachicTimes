@@ -26,9 +26,11 @@ import java.util.TimeZone;
 import net.sourceforge.zmanim.ZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -130,28 +132,9 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		mContext = context;
 		mAppWidgetManager = appWidgetManager;
 		mAppWidgetIds = appWidgetIds;
-		if (mSettings == null)
-			mSettings = new ZmanimSettings(context);
 		if (mLocations == null)
 			mLocations = ZmanimLocations.getInstance(context, this);
 		mLocations.resume(this);
-		mViews = new RemoteViews(context.getPackageName(), R.layout.times_widget);
-
-		// Intent activityIntent = new Intent(Intent.ACTION_MAIN);
-		// activityIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		// activityIntent.setClass(context, ZmanimActivity.class);
-		// activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		// PendingIntent activityPendingIntent =
-		// PendingIntent.getBroadcast(context, R.id.list, activityIntent,
-		// PendingIntent.FLAG_UPDATE_CURRENT);
-
-		// Pass the activity to ourselves, because starting another activity is
-		// not working.
-		Intent activityIntent = new Intent(context, ZmanimWidget.class);
-		activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
-		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		mViews.setOnClickPendingIntent(R.id.list, activityPendingIntent);
 
 		populateTimes();
 	}
@@ -160,14 +143,40 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 	private void populateTimes() {
 		Context context = mContext;
 		if (mAppWidgetManager == null)
-			return;
-		if (mAppWidgetIds == null)
-			return;
-		RemoteViews views = mViews;
-		if (views == null)
-			return;
+			mAppWidgetManager = AppWidgetManager.getInstance(context);
+		if (mAppWidgetIds == null) {
+			ComponentName provider = new ComponentName(context, ZmanimWidget.class);
+			mAppWidgetIds = mAppWidgetManager.getAppWidgetIds(provider);
+			if (mAppWidgetIds == null)
+				return;
+		}
+		if (mViews == null) {
+			mViews = new RemoteViews(context.getPackageName(), R.layout.times_widget);
 
-		// Have we been destroyed?
+			// Intent activityIntent = new Intent(Intent.ACTION_MAIN);
+			// activityIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+			// activityIntent.setClass(context, ZmanimActivity.class);
+			// activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			// PendingIntent activityPendingIntent =
+			// PendingIntent.getBroadcast(context, R.id.list, activityIntent,
+			// PendingIntent.FLAG_UPDATE_CURRENT);
+
+			// Pass the activity to ourselves, because starting another activity
+			// is not working.
+			Intent activityIntent = new Intent(context, ZmanimWidget.class);
+			activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
+			PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+			mViews.setOnClickPendingIntent(R.id.list, activityPendingIntent);
+		}
+		final RemoteViews views = mViews;
+
+		if (mSettings == null)
+			mSettings = new ZmanimSettings(context);
+		if (mLocations == null) {
+			mLocations = ZmanimLocations.getInstance(context, this);
+			mLocations.resume(this);
+		}
 		Location loc = mLocations.getLocation();
 		if (loc == null)
 			return;
@@ -186,9 +195,8 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 
 		int candlesCount = 0;
 		Date candlesWhen = cal.getCandleLighting();
-		if (candlesWhen != null) {
+		if (candlesWhen != null)
 			candlesCount = getCandles(today, loc);
-		}
 
 		populateTime(context, views, R.id.dawn_16deg_row, R.id.dawn_16deg_time, now, cal.getAlosHashachar());
 		populateTime(context, views, R.id.dawn_72min_row, R.id.dawn_72min_time, now, cal.getAlos72());
@@ -202,22 +210,22 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		populateTime(context, views, R.id.earliest_mincha_row, R.id.earliest_mincha_time, now, cal.getMinchaGedola());
 		populateTime(context, views, R.id.mincha_row, R.id.mincha_time, now, cal.getMinchaKetana());
 		populateTime(context, views, R.id.plug_hamincha_row, R.id.plug_hamincha_time, now, cal.getPlagHamincha());
-		if (candlesCount > 0) {
+		if (candlesCount > 0)
 			populateTime(context, views, R.id.candles_row, R.id.candles_time, now, cal.getCandleLighting());
-		} else {
+		else
 			populateTime(context, views, R.id.candles_row, R.id.candles_time, now, 0L);
-		}
 		populateTime(context, views, R.id.sunset_row, R.id.sunset_time, now, cal.getSunset());
-		if (candlesCount < 0) {
+		if (candlesCount < 0)
 			populateTime(context, views, R.id.candles2_row, R.id.candles2_time, now, cal.getTzais());
-		} else {
+		else
 			populateTime(context, views, R.id.candles2_row, R.id.candles2_time, now, 0L);
-		}
 		populateTime(context, views, R.id.nightfall_3stars_row, R.id.nightfall_3stars_time, now, cal.getTzais());
 		populateTime(context, views, R.id.nightfall_72min_row, R.id.nightfall_72min_time, now, cal.getTzais72());
 		populateTime(context, views, R.id.midnight_row, R.id.midnight_time, now, cal.getChatzos().getTime() + TWELVE_HOURS);
 
 		mAppWidgetManager.updateAppWidget(mAppWidgetIds, mViews);
+
+		scheduleForMidnight(mContext);
 	}
 
 	private void populateTime(Context context, RemoteViews views, int rowId, int timeId, long now, Date time) {
@@ -230,6 +238,7 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		} else {
 			String text = DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME);
 			views.setTextViewText(timeId, text);
+			views.setViewVisibility(rowId, View.VISIBLE);
 		}
 	}
 
@@ -318,5 +327,26 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		candles = isShabbath ? -candles : candles;
 
 		return candles;
+	}
+
+	/**
+	 * Schedule an update for midnight to populate the new day's list.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	private void scheduleForMidnight(Context context) {
+		Calendar midnight = Calendar.getInstance();
+		midnight.set(Calendar.HOUR_OF_DAY, 0);
+		midnight.set(Calendar.MINUTE, 0);
+		midnight.set(Calendar.SECOND, 0);
+		midnight.set(Calendar.MILLISECOND, 100);
+		midnight.add(Calendar.DATE, 1);
+		Intent alarmIntent = new Intent(context, ZmanimWidget.class);
+		alarmIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		alarmIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, mAppWidgetIds);
+		PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		alarm.set(AlarmManager.RTC, midnight.getTimeInMillis(), alarmPendingIntent);
 	}
 }
