@@ -1,27 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">זמני תפילה הלכתיים</string>
     <string name="title_activity_zmanim">זמנים הלכתיים</string>
 
     <!-- List -->
-    <string name="location_unknown">כתובת לא ידועה</string>
+    <string name="location_unknown">לא אותרה כתובת</string>
     <string name="location_coords">רוחב %1$s; אורך %2$s</string>
     <string name="dawn_16deg">עלות השחר</string>
-    <string name="dawn_16deg_summary">16.1° מתחת לקו האופק המזרחי</string>
+    <string name="dawn_16deg_summary">16.1° מתחת לאופק המזרחי</string>
     <string name="dawn_72min">עלות השחר</string>
-    <string name="dawn_72min_summary">72 דקות לפני זריחת פני הים</string>
+    <string name="dawn_72min_summary">‏72 דקות לפני הזריחה בגובה פני הים</string>
     <string name="earliest">טלית ותפילין המוקדם ביותר</string>
-    <string name="earliest_summary">שמש היא 11.5° מתחת לקו האופק</string>
+    <string name="earliest_summary">שמש 11.5° מתחת לאופק</string>
     <string name="sunrise">הנץ החמה</string>
-    <string name="sunrise_summary">באזור שטוח</string>
-    <string name="shema_mga">סוף זמן קריאת שמע</string>
+    <string name="sunrise_summary">באזור אפקי</string>
+    <string name="shema_mga">שמע אחרון</string>
     <string name="shema_mga_summary">סוף זמן קריאת שמע לפי מגן אברהם</string>
-    <string name="shema_gra">סוף זמן קריאת שמע</string>
-    <string name="shema_gra_summary">סוסוף זמן קריאת שמע לפי הגר"א ובעל התניא</string>
-    <string name="prayers_mga">תפילת השחרית האחרונה</string>
-    <string name="prayers_mga_summary">השחרית האחרונה לפי מגן אברהם</string>
-    <string name="prayers_gra">תפילת השחרית האחרונה</string>
-    <string name="prayers_gra_summary">השחרית האחרונה לפי הגר"א ובעל התניא</string>
+    <string name="shema_gra">שמע אחרון</string>
+    <string name="shema_gra_summary">סוף זמן קריאת שמע לפי הגר\"א ובעל התניא</string>
+    <string name="prayers_mga">תפילת שחרית האחרונה</string>
+    <string name="prayers_mga_summary">סוף זמן תפילות הבוקר לפי מגן אברהם</string>
+    <string name="prayers_gra">תפילת שחרית האחרונה</string>
+    <string name="prayers_gra_summary">סוף זמן תפילות הבוקר לפי הגר\"א ובעל התניא</string>
     <string name="midday">צהריים</string>
     <string name="midday_summary">חצות היום</string>
     <string name="earliest_mincha">מנחה גדולה</string>
@@ -29,15 +30,15 @@
     <string name="mincha">מנחה קטנה</string>
     <string name="mincha_summary">תפילת מנחה</string>
     <string name="plug_hamincha">פלג המנחה</string>
-    <string name="plug_hamincha_summary">פלג המנחה לפי הגר"א ובעל התניא</string>
+    <string name="plug_hamincha_summary">פלג המנחה לפי הגר\"א ובעל התניא</string>
     <string name="candles">הדלקת נרות</string>
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
     <string name="sunset">שקיעת השמש</string>
-    <string name="sunset_summary">באזור שטוח</string>
+    <string name="sunset_summary">באזור אפקי</string>
     <string name="nightfall_3stars">צאת הכוכבים</string>
     <string name="nightfall_3stars_summary">3 כוכבים גלויים</string>
     <string name="nightfall_72min">לילה</string>
-    <string name="nightfall_72min_summary">72 דקות</string>
+    <string name="nightfall_72min_summary">72 דקות לפי רבינו תם</string>
     <string name="midnight">חצות</string>
     <string name="midnight_summary">חצות הלילה</string>
 
@@ -64,7 +65,7 @@
     <string name="gradient_visible">הדרגתיות גלויה</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">עבור ל-</string>
+    <string name="menu_goto">עבור אל</string>
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
