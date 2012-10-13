@@ -65,7 +65,7 @@
     <string name="gradient_visible">Dégradé est visible</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Aller à la</string>
+    <string name="menu_goto">Choisir une date</string>
 
     <!-- Compass -->
     <string name="menu_compass">Boussole</string>

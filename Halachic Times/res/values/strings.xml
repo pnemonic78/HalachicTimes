@@ -88,7 +88,7 @@
     -->
 
     <!-- Go to date -->
-    <string name="menu_goto">Go to</string>
+    <string name="menu_goto">Pick a date</string>
 
     <!-- Compass -->
     <string name="menu_compass">Compass</string>

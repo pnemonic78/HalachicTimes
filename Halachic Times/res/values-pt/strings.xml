@@ -65,7 +65,7 @@
     <string name="gradient_visible">Gradiente está visível</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Ir a</string>
+    <string name="menu_goto">Escolha uma data</string>
 
     <!-- Compass -->
     <string name="menu_compass">Bússola</string>

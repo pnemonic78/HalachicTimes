@@ -65,7 +65,7 @@
     <string name="gradient_visible">Градиент видна</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Перейти к</string>
+    <string name="menu_goto">Выбрать дату</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>

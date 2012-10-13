@@ -65,7 +65,7 @@
     <string name="gradient_visible">Ντεγκραντέ είναι ορατή</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Πηγαίνετε στο</string>
+    <string name="menu_goto">Επιλέξτε μια ημερομηνία</string>
 
     <!-- Compass -->
     <string name="menu_compass">Πυξίδα</string>

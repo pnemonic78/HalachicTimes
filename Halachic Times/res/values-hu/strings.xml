@@ -65,7 +65,7 @@
     <string name="gradient_visible">Gradient látható</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Ugrás az</string>
+    <string name="menu_goto">Válassz egy dátumot</string>
 
     <!-- Compass -->
     <string name="menu_compass">Iránytű</string>

@@ -65,7 +65,7 @@
     <string name="gradient_visible">הדרגתיות גלויה</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">עבור אל</string>
+    <string name="menu_goto">בחר תאריך</string>
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
