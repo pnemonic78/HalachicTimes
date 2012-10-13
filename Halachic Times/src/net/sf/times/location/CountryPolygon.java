@@ -234,11 +234,14 @@ public class CountryPolygon {
 		double minimum = Double.MAX_VALUE;
 		double d;
 
-		for (int i = 0, j = 1; j < n; i++, j++) {
+		for (int i = 0, j = 1; j <= n; i++, j++) {
 			d = pointToLineDistance(latitudes[i], longitudes[i], latitudes[j], longitudes[j], latitude, longitude);
 			if (d < minimum)
 				minimum = d;
 		}
+		d = pointToLineDistance(latitudes[0], longitudes[0], latitudes[n], longitudes[n], latitude, longitude);
+		if (d < minimum)
+			minimum = d;
 		return minimum;
 	}
 
