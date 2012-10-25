@@ -3,14 +3,47 @@
 
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
-
-    <!-- List -->
     <string name="location_unknown">Unknown address</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Dawn</string>
+
+    <!-- List -->
+    <string name="dawn">Dawn</string>
     <string name="dawn_16deg_summary">16.1° below the eastern horizon</string>
-    <string name="dawn_72min">Dawn</string>
     <string name="dawn_72min_summary">72 minutes before sea level sunrise</string>
+    <string name="dawn_16">@string/dawn_16deg_summary</string>
+    <string name="dawn_72">@string/dawn_72min_summary</string>
+
+    <string-array name="dawn_values" translatable="false">
+        <item>19.8</item>
+        <item>120</item>
+        <item>18</item>
+        <item>26</item>
+        <item>120_zmanis</item>
+        <item>16.1</item>
+        <item>96</item>
+        <item>90</item>
+        <item>96_zmanis</item>
+        <item>90_zmanis</item>
+        <item>72</item>
+        <item>72_zmanis</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="dawn_entries" translatable="false">
+        <item>19.8°</item>
+        <item>120</item>
+        <item>18</item>
+        <item>26</item>
+        <item>120 zmanis</item>
+        <item>@string/dawn_16</item>
+        <item>96</item>
+        <item>90</item>
+        <item>96 zmanis</item>
+        <item>90 zmanis</item>
+        <item>@string/dawn_72</item>
+        <item>72 zmanis</item>
+        <item>60</item>
+    </string-array>
+
     <string name="earliest">Earliest tallis and tefillin</string>
     <string name="earliest_summary">Sun is 11.5° below horizon</string>
     <string name="sunrise">Sunrise</string>
@@ -69,8 +102,6 @@
     <string name="gradient_visible">Gradient is visible</string>
     <string name="candles_title" translatable="false">@string/candles</string>
     <!--
-    string name="opinion_title">Co-ordinates format</string>
-	<string name="opinion_summary">Notation of latitude and longitude</string>
 	<string-array name="opinion_values" translatable="false">
 		<item>ateret</item>
 		<item>gra</item>

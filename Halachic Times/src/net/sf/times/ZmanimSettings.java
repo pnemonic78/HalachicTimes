@@ -52,8 +52,10 @@ public class ZmanimSettings {
 	public static final String KEY_PAST = "past";
 	/** Preference name for the background gradient. */
 	public static final String KEY_BG_GRADIENT = "gradient";
+	/** Preference name for Alos type. */
+	public static final String KEY_OPINION_DAWN = "dawn";
 	/** Preference name for candle lighting minutes offset. */
-	public static final String KEY_CANDLES = "candles";
+	public static final String KEY_OPINION_CANDLES = "candles";
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -179,6 +181,15 @@ public class ZmanimSettings {
 	 * @return the number of minutes.
 	 */
 	public int getCandleLightingOffset() {
-		return mData.getInt(KEY_CANDLES, 18);
+		return mData.getInt(KEY_OPINION_CANDLES, 18);
+	}
+
+	/**
+	 * Get the opinion for dawn (<em>alos</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getDawn() {
+		return mData.getString(KEY_OPINION_DAWN, "16.1");
 	}
 }

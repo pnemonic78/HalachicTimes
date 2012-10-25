@@ -26,7 +26,7 @@ import java.util.TimeZone;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.ZmanimAddress;
-import net.sourceforge.zmanim.ZmanimCalendar;
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -253,7 +253,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		final int candlesOffset = mSettings.getCandleLightingOffset();
 
 		GeoLocation gloc = new GeoLocation(locationName, latitude, longitude, altitude, TimeZone.getDefault());
-		ZmanimCalendar cal = new ZmanimCalendar(gloc);
+		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCandleLightingOffset(candlesOffset);
 		cal.setCalendar(mDate);
 
@@ -265,8 +265,41 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		ZmanimAdapter adapter = new ZmanimAdapter(this, mSettings);
 		mAdapter = adapter;
-		adapter.add(R.string.dawn_16deg, R.string.dawn_16deg_summary, cal.getAlosHashachar());
-		adapter.add(R.string.dawn_72min, R.string.dawn_72min_summary, cal.getAlos72());
+		Date dawn;
+		String dawnType = mSettings.getDawn();
+		int dawnSummary = 0;
+		if ("19.8".equals(dawnType)) {
+			dawn = cal.getAlos19Point8Degrees();
+		} else if ("120".equals(dawnType)) {
+			dawn = cal.getAlos120();
+		} else if ("18".equals(dawnType)) {
+			dawn = cal.getAlos18Degrees();
+		} else if ("26".equals(dawnType)) {
+			dawn = cal.getAlos26Degrees();
+		} else if ("120_zmanis".equals(dawnType)) {
+			dawn = cal.getAlos120Zmanis();
+		} else if ("16.1".equals(dawnType)) {
+			dawn = cal.getAlos16Point1Degrees();
+			dawnSummary = R.string.dawn_16deg_summary;
+		} else if ("96".equals(dawnType)) {
+			dawn = cal.getAlos96();
+		} else if ("90".equals(dawnType)) {
+			dawn = cal.getAlos90();
+		} else if ("96_zmanis".equals(dawnType)) {
+			dawn = cal.getAlos90Zmanis();
+		} else if ("90_zmanis".equals(dawnType)) {
+			dawn = cal.getAlos90Zmanis();
+		} else if ("72".equals(dawnType)) {
+			dawn = cal.getAlos72();
+			dawnSummary = R.string.dawn_72min_summary;
+		} else if ("72_zmanis".equals(dawnType)) {
+			dawn = cal.getAlos72Zmanis();
+		} else if ("60".equals(dawnType)) {
+			dawn = cal.getAlos60();
+		} else {
+			dawn = cal.getAlosHashachar();
+		}
+		adapter.add(R.string.dawn, dawnSummary, dawn);
 		adapter.add(R.string.earliest, R.string.earliest_summary, cal.getSunriseOffsetByDegrees(ZENITH_TALLIS));
 		adapter.add(R.string.sunrise, R.string.sunrise_summary, cal.getSunrise());
 		adapter.add(R.string.shema_mga, R.string.shema_mga_summary, cal.getSofZmanShmaMGA());

@@ -30,6 +30,13 @@
             android:title="@string/gradient_title" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/category_opinion" >
+        <ListPreference
+            android:defaultValue="16.1"
+            android:entries="@array/dawn_entries"
+            android:entryValues="@array/dawn_values"
+            android:key="dawn"
+            android:title="@string/dawn" />
+
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"
             android:key="candles"

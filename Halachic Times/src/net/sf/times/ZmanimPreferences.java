@@ -21,6 +21,7 @@ package net.sf.times;
 
 import net.sf.times.preference.SeekBarPreference;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
@@ -46,9 +47,13 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
 
-		mCandles = (SeekBarPreference) findPreference(ZmanimSettings.KEY_CANDLES);
+		mCandles = (SeekBarPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
 		mCandles.setOnPreferenceChangeListener(this);
 		onPreferenceChange(mCandles, null);
+
+		ListPreference list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_DAWN);
+		list.setOnPreferenceChangeListener(this);
+		onPreferenceChange(list, list.getValue());
 	}
 
 	@Override
@@ -66,7 +71,33 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 				}
 			});
 			return true;
+		} else if (preference instanceof ListPreference) {
+			updateSummary((ListPreference) preference, newValue.toString());
 		}
 		return false;
+	}
+
+	/**
+	 * Find the summary that was selected from the list.
+	 * 
+	 * @param preference
+	 *            the preference.
+	 * @param newValue
+	 *            the new value.
+	 */
+	private void updateSummary(ListPreference preference, String newValue) {
+		preference.setValue(newValue);
+
+		CharSequence[] values = preference.getEntryValues();
+		CharSequence[] entries = preference.getEntries();
+		int length = values.length;
+
+		for (int i = 0; i < length; i++) {
+			if (newValue.equals(values[i])) {
+				preference.setSummary(entries[i]);
+				return;
+			}
+		}
+		preference.setSummary(null);
 	}
 }
