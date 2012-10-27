@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Άγνωστη διεύθυνση</string>
     <string name="location_coords">Πλτ. %1$s; Μήκ. %2$s</string>
-    <string name="dawn_16deg">Αυγή</string>
-    <string name="dawn_16deg_summary">16,1° κάτω από τον ανατολικό ορίζοντα</string>
-    <string name="dawn_72min">Αυγή</string>
-    <string name="dawn_72min_summary">72 λεπτά πριν την ανατολή της στάθμης της θάλασσας</string>
+    <string name="dawn">Αυγή</string>
+    <string name="dawn_16">16,1° κάτω από τον ανατολικό ορίζοντα</string>
+    <string name="dawn_72">72 λεπτά πριν την ανατολή της στάθμης της θάλασσας</string>
     <string name="earliest">Η πιο παλιά ταλιτ και τεφιλιν</string>
     <string name="earliest_summary">Ήλιος είναι 11,5° κάτω από τον ορίζοντα</string>
     <string name="sunrise">Ανατολή ηλίου</string>

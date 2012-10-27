@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Endereço desconhecido</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Alvorecer</string>
-    <string name="dawn_16deg_summary">16,1° abaixo desse horizonte leste</string>
-    <string name="dawn_72min">Alvorecer</string>
-    <string name="dawn_72min_summary">72 minutos antes do nascer do sol do mar nível</string>
+    <string name="dawn">Alvorecer</string>
+    <string name="dawn_16">16,1° abaixo desse horizonte leste</string>
+    <string name="dawn_72">72 minutos antes do nascer do sol do mar nível</string>
     <string name="earliest">Primeiro para talit e tefilin</string>
     <string name="earliest_summary">Dom é de 11,5° abaixo do horizonte</string>
     <string name="sunrise">Nascer do sol</string>

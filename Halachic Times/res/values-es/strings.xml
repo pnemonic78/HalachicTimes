@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Dirección desconocida</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Amanecer</string>
-    <string name="dawn_16deg_summary">16,1° por debajo del horizonte oriental</string>
-    <string name="dawn_72min">Amanecer</string>
-    <string name="dawn_72min_summary">72 minutos antes de la salida del sol el nivel del mar</string>
+    <string name="dawn">Amanecer</string>
+    <string name="dawn_16">16,1° por debajo del horizonte oriental</string>
+    <string name="dawn_72">72 minutos antes de la salida del sol el nivel del mar</string>
     <string name="earliest">Primeras talit y tefilín</string>
     <string name="earliest_summary">Sol es 11,5° bajo el horizonte</string>
     <string name="sunrise">Salida del sol</string>

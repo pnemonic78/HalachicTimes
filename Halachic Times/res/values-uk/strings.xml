@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
-    <string name="dawn_16deg">Світанок</string>
-    <string name="dawn_16deg_summary">16,1° нижче східним обрієм</string>
-    <string name="dawn_72min">Світанок</string>
-    <string name="dawn_72min_summary">72 хвилин до сходу сонця рівнем моря</string>
+    <string name="dawn">Світанок</string>
+    <string name="dawn_16">16,1° нижче східним обрієм</string>
+    <string name="dawn_72">72 хвилин до сходу сонця рівнем моря</string>
     <string name="earliest">Перший талес і тфілін</string>
     <string name="earliest_summary">Сонце 11,5 ° нижче обрію</string>
     <string name="sunrise">Схід сонця</string>

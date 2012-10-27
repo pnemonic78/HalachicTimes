@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">לא אותרה כתובת</string>
     <string name="location_coords">רוחב %1$s; אורך %2$s</string>
-    <string name="dawn_16deg">עלות השחר</string>
-    <string name="dawn_16deg_summary">16.1° מתחת לאופק המזרחי</string>
-    <string name="dawn_72min">עלות השחר</string>
-    <string name="dawn_72min_summary">‏72 דקות לפני הזריחה בגובה פני הים</string>
+    <string name="dawn">עלות השחר</string>
+    <string name="dawn_16">16.1° מתחת לאופק המזרחי</string>
+    <string name="dawn_72">‏72 דקות לפני הזריחה בגובה פני הים</string>
     <string name="earliest">טלית ותפילין המוקדם ביותר</string>
     <string name="earliest_summary">שמש 11.5° מתחת לאופק</string>
     <string name="sunrise">הנץ החמה</string>

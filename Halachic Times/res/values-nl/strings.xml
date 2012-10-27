@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Onbekend adres</string>
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Dageraad</string>
-    <string name="dawn_16deg_summary">16,1° onder de oostelijke horizon</string>
-    <string name="dawn_72min">Dageraad</string>
-    <string name="dawn_72min_summary">72 minuten vóór zeespiegel zonsopgang</string>
+    <string name="dawn">Dageraad</string>
+    <string name="dawn_16">16,1° onder de oostelijke horizon</string>
+    <string name="dawn_72">72 minuten vóór zeespiegel zonsopgang</string>
     <string name="earliest">Vroegste tallis en tefillin</string>
     <string name="earliest_summary">Zon is 11,5° onder de horizon</string>
     <string name="sunrise">Zonsopgang</string>

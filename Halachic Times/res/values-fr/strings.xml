@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Adresse inconnue</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Aube</string>
-    <string name="dawn_16deg_summary">16,1° sous l\'horizon oriental</string>
-    <string name="dawn_72min">Aube</string>
-    <string name="dawn_72min_summary">72 minutes avant le lever du au niveau mer</string>
+    <string name="dawn">Aube</string>
+    <string name="dawn_16">16,1° sous l\'horizon oriental</string>
+    <string name="dawn_72">72 minutes avant le lever du au niveau mer</string>
     <string name="earliest">Mise du talit et téfillin au plus tôt</string>
     <string name="earliest_summary">Soleil est de 11,5° sous l\'horizon</string>
     <string name="sunrise">Lever du soleil</string>

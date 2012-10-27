@@ -8,10 +8,19 @@
 
     <!-- List -->
     <string name="dawn">Dawn</string>
-    <string name="dawn_16deg_summary">16.1° below the eastern horizon</string>
-    <string name="dawn_72min_summary">72 minutes before sea level sunrise</string>
-    <string name="dawn_16">@string/dawn_16deg_summary</string>
-    <string name="dawn_72">@string/dawn_72min_summary</string>
+    <string name="dawn_19">19.8° below the eastern horizon</string>
+    <string name="dawn_120">120 minutes before sea level sunrise</string>
+    <string name="dawn_18">18° below the eastern horizon</string>
+    <string name="dawn_26">26° below the eastern horizon</string>
+    <string name="dawn_120_zmanis">120 minutes zmaniyos (Gra &amp; Baal Tanya) before sea level sunrise</string>
+    <string name="dawn_16">16.1° below the eastern horizon</string>
+    <string name="dawn_96">96 minutes before sea level sunrise</string>
+    <string name="dawn_90">90 minutes before sea level sunrise</string>
+    <string name="dawn_96_zmanis">96 minutes zmaniyos (Gra &amp; Baal Tanya) before sea level sunrise</string>
+    <string name="dawn_90_zmanis">90 minutes zmaniyos (Gra &amp; Baal Tanya) before sea level sunrise</string>
+    <string name="dawn_72">72 minutes before sea level sunrise</string>
+    <string name="dawn_72_zmanis">72 minutes zmaniyos (Gra &amp; Baal Tanya) before sea level sunrise</string>
+    <string name="dawn_60">60 minutes before sea level sunrise</string>
 
     <string-array name="dawn_values" translatable="false">
         <item>19.8</item>
@@ -29,19 +38,19 @@
         <item>60</item>
     </string-array>
     <string-array name="dawn_entries" translatable="false">
-        <item>19.8°</item>
-        <item>120</item>
-        <item>18</item>
-        <item>26</item>
-        <item>120 zmanis</item>
+        <item>@string/dawn_19</item>
+        <item>@string/dawn_120</item>
+        <item>@string/dawn_18</item>
+        <item>@string/dawn_26</item>
+        <item>@string/dawn_120_zmanis</item>
         <item>@string/dawn_16</item>
-        <item>96</item>
-        <item>90</item>
-        <item>96 zmanis</item>
-        <item>90 zmanis</item>
+        <item>@string/dawn_96</item>
+        <item>@string/dawn_90</item>
+        <item>@string/dawn_96_zmanis</item>
+        <item>@string/dawn_90_zmanis</item>
         <item>@string/dawn_72</item>
-        <item>72 zmanis</item>
-        <item>60</item>
+        <item>@string/dawn_72_zmanis</item>
+        <item>@string/dawn_60</item>
     </string-array>
 
     <string name="earliest">Earliest tallis and tefillin</string>
@@ -117,6 +126,7 @@
 		<item>Rabbeinu Tam</item>
 	</string-array
     -->
+
 
     <!-- Go to date -->
     <string name="menu_goto">Pick a date</string>

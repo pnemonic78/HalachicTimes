@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Neznámý Adresa</string>
     <string name="location_coords">Šířka %1$s; Délka %2$s</string>
-    <string name="dawn_16deg">Svítání</string>
-    <string name="dawn_16deg_summary">16,1° pod východním obzorem</string>
-    <string name="dawn_72min">Svítání</string>
-    <string name="dawn_72min_summary">72 minut před mořem východem slunce</string>
+    <string name="dawn">Svítání</string>
+    <string name="dawn_16">16,1° pod východním obzorem</string>
+    <string name="dawn_72">72 minut před mořem východem slunce</string>
     <string name="earliest">Nástup na pobyt nejdřív tallis a tefillin</string>
     <string name="earliest_summary">Slunce je 11,5° pod obzorem</string>
     <string name="sunrise">Východ slunce</string>

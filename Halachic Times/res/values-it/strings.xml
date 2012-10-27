@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Indirizzo sconosciuto</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Alba</string>
-    <string name="dawn_16deg_summary">16.1° sotto l\'orizzonte orientale</string>
-    <string name="dawn_72min">Alba</string>
-    <string name="dawn_72min_summary">72 minuti prima dell\'alba a livello del mare</string>
+    <string name="dawn">Alba</string>
+    <string name="dawn_16">16.1° sotto l\'orizzonte orientale</string>
+    <string name="dawn_72">72 minuti prima dell\'alba a livello del mare</string>
     <string name="earliest">Prima tallis e tefillin</string>
     <string name="earliest_summary">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="sunrise">Levata del sole</string>

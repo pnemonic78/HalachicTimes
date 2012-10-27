@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Necunoscuta adresa</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Zori de zi</string>
-    <string name="dawn_16deg_summary">16.1° sub orizont de est</string>
-    <string name="dawn_72min">Zori de z</string>
-    <string name="dawn_72min_summary">72 minute înainte de răsărit nivelul mării</string>
+    <string name="dawn">Zori de zi</string>
+    <string name="dawn_16">16.1° sub orizont de est</string>
+    <string name="dawn_72">72 minute înainte de răsărit nivelul mării</string>
     <string name="earliest">Cazarea cel devreme tallis și tefillin</string>
     <string name="earliest_summary">Soarele este de 11,5° sub orizont</string>
     <string name="sunrise">Răsărit</string>

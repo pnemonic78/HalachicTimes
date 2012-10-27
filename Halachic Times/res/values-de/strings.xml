@@ -7,10 +7,9 @@
     <!-- List -->
     <string name="location_unknown">Unbekannte adresse</string>
     <string name="location_coords">Brt. %1$s; Lng. %2$s</string>
-    <string name="dawn_16deg">Morgendämmerung</string>
-    <string name="dawn_16deg_summary">16,1° unter dem östlichen horizont</string>
-    <string name="dawn_72min">Morgendämmerung</string>
-    <string name="dawn_72min_summary">72 minuten vor dem meeresspiegel sonnenaufgang</string>
+    <string name="dawn">Morgendämmerung</string>
+    <string name="dawn_16">16,1° unter dem östlichen horizont</string>
+    <string name="dawn_72">72 minuten vor dem meeresspiegel sonnenaufgang</string>
     <string name="earliest">Früheste tallis und tefillin</string>
     <string name="earliest_summary">Sonne ist 11,5° unter dem horizont</string>
     <string name="sunrise">Sonnenaufgang</string>

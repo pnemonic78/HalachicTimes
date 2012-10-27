@@ -20,7 +20,6 @@
 package net.sf.times;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -28,7 +27,6 @@ import net.sf.times.location.AddressProvider;
 import net.sf.times.location.ZmanimAddress;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
@@ -62,30 +60,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** The time parameter. */
 	public static final String PARAMETER_TIME = "time";
 
-	/** 1 second. */
-	private static final long ONE_SECOND = 1000;
-	/** 1 minute. */
-	private static final long ONE_MINUTE = 60 * ONE_SECOND;
-	/** 1 hour. */
-	private static final long ONE_HOUR = 60 * ONE_MINUTE;
-	/** 12 hours. */
-	private static final long TWELVE_HOURS = 12 * ONE_HOUR;
-
-	/** 11.5&deg; before sunrise. */
-	private static final double ZENITH_TALLIS = 101.5;
-
-	/** Holiday id for Shabbath. */
-	private static final int SHABBATH = -1;
-
-	/** No candles to light. */
-	private static final int CANDLES_NONE = 0;
-	/** Number of candles to light for Shabbath. */
-	private static final int CANDLES_SHABBATH = 2;
-	/** Number of candles to light for a festival. */
-	private static final int CANDLES_FESTIVAL = 2;
-	/** Number of candles to light for Yom Kippur. */
-	private static final int CANDLES_YOM_KIPPUR = 1;
-
 	/** ISO 639 language code for "Hebrew". */
 	public static final String ISO639_HEBREW = "he";
 	/** ISO 639 language code for "Hebrew" - Java compatibility. */
@@ -103,8 +77,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ViewGroup mList;
 	/** The location header. */
 	private View mHeader;
-	/** The list adapter. */
-	private ZmanimAdapter mAdapter;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
 	/** Address provider. */
@@ -159,10 +131,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onDestroy() {
 		super.onDestroy();
 
-		if (mAdapter != null) {
-			mAdapter.clear();
-			mAdapter = null;
-		}
 		if (mAddressProvider != null) {
 			mAddressProvider.close();
 			mAddressProvider = null;
@@ -251,78 +219,16 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		final double longitude = loc.getLongitude();
 		final double altitude = Math.max(0, loc.getAltitude());
 		final int candlesOffset = mSettings.getCandleLightingOffset();
+		final boolean inIsrael = mLocations.inIsrael(loc, mTimeZone);
 
 		GeoLocation gloc = new GeoLocation(locationName, latitude, longitude, altitude, TimeZone.getDefault());
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCandleLightingOffset(candlesOffset);
 		cal.setCalendar(mDate);
 
-		int candlesCount = 0;
-		Date candlesWhen = cal.getCandleLighting();
-		if (candlesWhen != null) {
-			candlesCount = getCandles(mDate, loc);
-		}
-
 		ZmanimAdapter adapter = new ZmanimAdapter(this, mSettings);
-		mAdapter = adapter;
-		Date dawn;
-		String dawnType = mSettings.getDawn();
-		int dawnSummary = 0;
-		if ("19.8".equals(dawnType)) {
-			dawn = cal.getAlos19Point8Degrees();
-		} else if ("120".equals(dawnType)) {
-			dawn = cal.getAlos120();
-		} else if ("18".equals(dawnType)) {
-			dawn = cal.getAlos18Degrees();
-		} else if ("26".equals(dawnType)) {
-			dawn = cal.getAlos26Degrees();
-		} else if ("120_zmanis".equals(dawnType)) {
-			dawn = cal.getAlos120Zmanis();
-		} else if ("16.1".equals(dawnType)) {
-			dawn = cal.getAlos16Point1Degrees();
-			dawnSummary = R.string.dawn_16deg_summary;
-		} else if ("96".equals(dawnType)) {
-			dawn = cal.getAlos96();
-		} else if ("90".equals(dawnType)) {
-			dawn = cal.getAlos90();
-		} else if ("96_zmanis".equals(dawnType)) {
-			dawn = cal.getAlos90Zmanis();
-		} else if ("90_zmanis".equals(dawnType)) {
-			dawn = cal.getAlos90Zmanis();
-		} else if ("72".equals(dawnType)) {
-			dawn = cal.getAlos72();
-			dawnSummary = R.string.dawn_72min_summary;
-		} else if ("72_zmanis".equals(dawnType)) {
-			dawn = cal.getAlos72Zmanis();
-		} else if ("60".equals(dawnType)) {
-			dawn = cal.getAlos60();
-		} else {
-			dawn = cal.getAlosHashachar();
-		}
-		adapter.add(R.string.dawn, dawnSummary, dawn);
-		adapter.add(R.string.earliest, R.string.earliest_summary, cal.getSunriseOffsetByDegrees(ZENITH_TALLIS));
-		adapter.add(R.string.sunrise, R.string.sunrise_summary, cal.getSunrise());
-		adapter.add(R.string.shema_mga, R.string.shema_mga_summary, cal.getSofZmanShmaMGA());
-		adapter.add(R.string.shema_gra, R.string.shema_gra_summary, cal.getSofZmanShmaGRA());
-		adapter.add(R.string.prayers_mga, R.string.prayers_mga_summary, cal.getSofZmanTfilaMGA());
-		adapter.add(R.string.prayers_gra, R.string.prayers_gra_summary, cal.getSofZmanTfilaGRA());
-		adapter.add(R.string.midday, R.string.midday_summary, cal.getChatzos());
-		adapter.add(R.string.earliest_mincha, R.string.earliest_mincha_summary, cal.getMinchaGedola());
-		adapter.add(R.string.mincha, R.string.mincha_summary, cal.getMinchaKetana());
-		adapter.add(R.string.plug_hamincha, R.string.plug_hamincha_summary, cal.getPlagHamincha());
-		if (candlesCount > 0) {
-			String summary = getString(R.string.candles_summary, candlesOffset);
-			adapter.add(R.string.candles, summary, cal.getCandleLighting());
-		}
-		adapter.add(R.string.sunset, R.string.sunset_summary, cal.getSunset());
-		if (candlesCount < 0) {
-			adapter.add(R.string.candles, R.string.nightfall_3stars_summary, cal.getTzais());
-		}
-		adapter.add(R.string.nightfall_3stars, R.string.nightfall_3stars_summary, cal.getTzais());
-		adapter.add(R.string.nightfall_72min, R.string.nightfall_72min_summary, cal.getTzais72());
-		adapter.add(R.string.midnight, R.string.midnight_summary, cal.getChatzos().getTime() + TWELVE_HOURS);
+		adapter.populate(cal, inIsrael, false);
 
-		final int count = adapter.getCount();
 		if (mList == null)
 			return;
 		ViewGroup list = (ViewGroup) mList.findViewById(R.id.list);
@@ -334,10 +240,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			list.setBackgroundDrawable(mBackground);
 		} else
 			list.setBackgroundDrawable(null);
-		list.removeAllViews();
-		for (int i = 0; i < count; i++) {
-			list.addView(adapter.getView(i, null, list));
-		}
+		adapter.bindViews(list);
 	}
 
 	/** Populate the header item. */
@@ -358,62 +261,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		address.setText(locationName);
 		TextView coordinates = (TextView) header.findViewById(R.id.coordinates);
 		coordinates.setText(coordsText);
-	}
-
-	/**
-	 * Get the number of candles to light.
-	 * 
-	 * @param cal
-	 *            the Gregorian date.
-	 * @param location
-	 *            the location.
-	 * @return the candles to light. Upper bits are the day type. The lower bits
-	 *         art the number of candles. Positive values indicate lighting
-	 *         times before sunset. Negative values indicate lighting times
-	 *         after nightfall.
-	 */
-	private int getCandles(Calendar cal, Location location) {
-		final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-		final boolean isShabbath = (dayOfWeek == Calendar.SATURDAY);
-		final boolean inIsrael = mLocations.inIsrael(location, mTimeZone);
-
-		// Check if the following day is special, because we can't check
-		// EREV_CHANUKAH.
-		cal.add(Calendar.DAY_OF_MONTH, 1);
-		JewishCalendar jcal = new JewishCalendar(cal);
-		jcal.setInIsrael(inIsrael);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
-		int holiday = jcal.getYomTovIndex();
-
-		int candles = CANDLES_NONE;
-
-		switch (holiday) {
-		case JewishCalendar.ROSH_HASHANA:
-		case JewishCalendar.SUCCOS:
-		case JewishCalendar.SHEMINI_ATZERES:
-		case JewishCalendar.SIMCHAS_TORAH:
-		case JewishCalendar.PESACH:
-		case JewishCalendar.SHAVUOS:
-			candles = CANDLES_FESTIVAL;
-			break;
-		case JewishCalendar.YOM_KIPPUR:
-			candles = CANDLES_YOM_KIPPUR;
-			break;
-		case JewishCalendar.CHANUKAH:
-			candles = jcal.getDayOfChanukah();
-			break;
-		default:
-			if (dayOfWeek == Calendar.FRIDAY) {
-				holiday = SHABBATH;
-				candles = CANDLES_SHABBATH;
-			}
-			break;
-		}
-
-		// Forbidden to light candles during Shabbath.
-		candles = isShabbath ? -candles : candles;
-
-		return candles;
 	}
 
 	@Override
