@@ -40,6 +40,7 @@
 
         <receiver
             android:name="ZmanimWidget"
+            android:exported="false"
             android:label="@string/title_activity_zmanim" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
