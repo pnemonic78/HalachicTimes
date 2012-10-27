@@ -434,7 +434,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		date = cal.getCandleLighting();
 		if (remote)
-			add(R.id.candles_row, R.id.candles_time, date, true);
+			add(R.id.candles_row, R.id.candles_time, (candlesCount > 0) ? date : null, true);
 		else if (candlesCount > 0) {
 			String summaryText = mContext.getString(R.string.candles_summary, mCandlesOffset);
 			add(R.string.candles, summaryText, date);
@@ -448,7 +448,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		date = cal.getTzais();
 		if (remote)
-			add(R.id.candles2_row, R.id.candles2_time, date, true);
+			add(R.id.candles2_row, R.id.candles2_time, (candlesCount < 0) ? date : null, true);
 		else if (candlesCount < 0)
 			add(R.string.candles, R.string.nightfall_3stars_summary, date);
 		if (remote)
