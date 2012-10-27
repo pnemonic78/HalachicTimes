@@ -274,54 +274,61 @@ public class AddressProvider {
 
 		List<Address> addresses = new ArrayList<Address>();
 		SQLiteDatabase db = getReadableDatabase();
+		if (db == null)
+			return addresses;
 		Cursor cursor = db.query(AddressOpenHelper.TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
 		if (cursor == null) {
 			db.close();
 			return addresses;
 		}
 
-		if (cursor.moveToFirst()) {
-			long id;
-			double locationLatitude;
-			double locationLongitude;
-			double addressLatitude;
-			double addressLongitude;
-			String formatted;
-			String locationLanguage;
-			Locale locale;
-			ZmanimAddress address;
-			float[] distanceLocation = new float[1];
-			float[] distanceAddress = new float[1];
+		try {
+			if (cursor.moveToFirst()) {
+				long id;
+				double locationLatitude;
+				double locationLongitude;
+				double addressLatitude;
+				double addressLongitude;
+				String formatted;
+				String locationLanguage;
+				Locale locale;
+				ZmanimAddress address;
+				float[] distanceLocation = new float[1];
+				float[] distanceAddress = new float[1];
 
-			do {
-				locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
-				locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
-				addressLatitude = cursor.getDouble(INDEX_LATITUDE);
-				addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
-				locationLanguage = cursor.getString(INDEX_LANGUAGE);
+				do {
+					locationLanguage = cursor.getString(INDEX_LANGUAGE);
+					if ((locationLanguage == null) || locationLanguage.equals(language)) {
+						locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
+						locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
+						addressLatitude = cursor.getDouble(INDEX_LATITUDE);
+						addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+						Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
+						Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceAddress);
 
-				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
-				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceAddress);
-				final boolean sameLocation = (distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION);
-				final boolean sameLanguage = (locationLanguage == null) || locationLanguage.equals(language);
-				if (sameLocation && sameLanguage) {
-					id = cursor.getLong(INDEX_ID);
-					formatted = cursor.getString(INDEX_ADDRESS);
-					if (locationLanguage == null)
-						locale = mLocale;
-					else
-						locale = new Locale(locationLanguage, mLocale.getCountry());
-					address = new ZmanimAddress(locale);
-					address.setFormatted(formatted);
-					address.setId(id);
-					address.setLatitude(addressLatitude);
-					address.setLongitude(addressLongitude);
-					addresses.add(address);
-				}
-			} while (cursor.moveToNext());
+						if ((distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION)) {
+							id = cursor.getLong(INDEX_ID);
+							formatted = cursor.getString(INDEX_ADDRESS);
+							if (locationLanguage == null)
+								locale = mLocale;
+							else
+								locale = new Locale(locationLanguage, mLocale.getCountry());
+							address = new ZmanimAddress(locale);
+							address.setFormatted(formatted);
+							address.setId(id);
+							address.setLatitude(addressLatitude);
+							address.setLongitude(addressLongitude);
+							addresses.add(address);
+						}
+					}
+				} while (cursor.moveToNext());
+			}
+		} catch (SQLiteException se) {
+			se.printStackTrace();
+		} finally {
+			cursor.close();
+			db.close();
 		}
-		cursor.close();
-		db.close();
 
 		return addresses;
 	}
@@ -396,7 +403,7 @@ public class AddressProvider {
 	/**
 	 * Find the nearest country to the latitude and longitude.
 	 * <p>
-	 * Uses the precompiled array of countries from GeoNames.
+	 * Uses the pre-compiled array of countries from GeoNames.
 	 * 
 	 * @param location
 	 *            the location.
