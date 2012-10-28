@@ -14,10 +14,9 @@
     <string name="earliest_summary">שמש 11.5° מתחת לאופק</string>
     <string name="sunrise">הנץ החמה</string>
     <string name="sunrise_summary">באזור אפקי</string>
-    <string name="shema_mga">שמע אחרון</string>
-    <string name="shema_mga_summary">סוף זמן קריאת שמע לפי מגן אברהם</string>
-    <string name="shema_gra">שמע אחרון</string>
-    <string name="shema_gra_summary">סוף זמן קריאת שמע לפי הגר\"א ובעל התניא</string>
+    <string name="shema">שמע אחרון</string>
+    <string name="shema_mga">סוף זמן קריאת שמע לפי מגן אברהם</string>
+    <string name="shema_gra">סוף זמן קריאת שמע לפי הגר\"א ובעל התניא</string>
     <string name="prayers_mga">תפילת שחרית האחרונה</string>
     <string name="prayers_mga_summary">סוף זמן תפילות הבוקר לפי מגן אברהם</string>
     <string name="prayers_gra">תפילת שחרית האחרונה</string>

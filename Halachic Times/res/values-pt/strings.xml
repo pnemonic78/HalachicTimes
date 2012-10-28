@@ -14,10 +14,9 @@
     <string name="earliest_summary">Dom é de 11,5° abaixo do horizonte</string>
     <string name="sunrise">Nascer do sol</string>
     <string name="sunrise_summary">Em uma região de nível</string>
-    <string name="shema_mga">Último shemá</string>
-    <string name="shema_mga_summary">Último horário shemá acordo com a Magen Avraham</string>
-    <string name="shema_gra">Último shemá</string>
-    <string name="shema_gra_summary">Último horário shemá acordo com a Gra &amp; Baal Tanya</string>
+    <string name="shema">Último shemá</string>
+    <string name="shema_mga">Último horário shemá acordo com a Magen Avraham</string>
+    <string name="shema_gra">Último horário shemá acordo com a Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Último shacharis</string>
     <string name="prayers_mga_summary">Último orações da manhã acordo com a Magen Avraham</string>
     <string name="prayers_gra">Último shacharis</string>

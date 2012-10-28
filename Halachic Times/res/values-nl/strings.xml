@@ -14,10 +14,9 @@
     <string name="earliest_summary">Zon is 11,5° onder de horizon</string>
     <string name="sunrise">Zonsopgang</string>
     <string name="sunrise_summary">In een platte regio</string>
-    <string name="shema_mga">Laatste shema</string>
-    <string name="shema_mga_summary">Laatste shema volgens Magen Avraham</string>
-    <string name="shema_gra">Laatste shema</string>
-    <string name="shema_gra_summary">Laatste shema volgens Gra &amp; Baal Tanya</string>
+    <string name="shema">Laatste shema</string>
+    <string name="shema_mga">Laatste shema volgens Magen Avraham</string>
+    <string name="shema_gra">Laatste shema volgens Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Laatste shacharis</string>
     <string name="prayers_mga_summary">Laatste ochtendgebed volgens Magen Avraham</string>
     <string name="prayers_gra">Laatste shacharis</string>

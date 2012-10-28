@@ -57,10 +57,62 @@
     <string name="earliest_summary">Sun is 11.5° below horizon</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_summary">In a level region</string>
-    <string name="shema_mga">Latest shema</string>
-    <string name="shema_mga_summary">Latest shema according to Magen Avraham</string>
-    <string name="shema_gra">Latest shema</string>
-    <string name="shema_gra_summary">Latest shema according to Gra &amp; Baal Tanya</string>
+    <string name="shema">Latest shema</string>
+    <string name="shema_16_sunset">shema_16_sunset</string>
+    <string name="shema_7">shema_7</string>
+    <string name="shema_19">shema_19</string>
+    <string name="shema_120">shema_120</string>
+    <string name="shema_18">shema_18</string>
+    <string name="shema_96">shema_96</string>
+    <string name="shema_16">shema_16</string>
+    <string name="shema_90">shema_90</string>
+    <string name="shema_96_zmanis">shema_96_zmanis</string>
+    <string name="shema_90_zmanis">shema_90_zmanis</string>
+    <string name="shema_72">shema_72</string>
+    <string name="shema_mga">Latest shema according to Magen Avraham</string>
+    <string name="shema_ateret">shema_ateret</string>
+    <string name="shema_3">shema_3</string>
+    <string name="shema_72_zmanis">shema_72_zmanis</string>
+    <string name="shema_fixed">shema_fixed</string>
+    <string name="shema_gra">Latest shema according to Gra &amp; Baal Tanya</string>
+    <string-array name="shema_values" translatable="false">
+        <item>16.1_sunset</item>
+        <item>7.083</item>
+        <item>19.8</item>
+        <item>120</item>
+        <item>18</item>
+        <item>96</item>
+        <item>16.1</item>
+        <item>90</item>
+        <item>96_zmanis</item>
+        <item>90_zmanis</item>
+        <item>72</item>
+        <item>MGA</item>
+        <item>AT</item>
+        <item>3</item>
+        <item>72_zmanis</item>
+        <item>FL</item>
+        <item>GRA</item>
+    </string-array>
+    <string-array name="shema_entries" translatable="false">
+        <item>@string/shema_16_sunset</item>
+        <item>@string/shema_7</item>
+        <item>@string/shema_19</item>
+        <item>@string/shema_120</item>
+        <item>@string/shema_18</item>
+        <item>@string/shema_96</item>
+        <item>@string/shema_16</item>
+        <item>@string/shema_90</item>
+        <item>@string/shema_96_zmanis</item>
+        <item>@string/shema_90_zmanis</item>
+        <item>@string/shema_72</item>
+        <item>@string/shema_mga</item>
+        <item>@string/shema_ateret</item>
+        <item>@string/shema_3</item>
+        <item>@string/shema_72_zmanis</item>
+        <item>@string/shema_fixed</item>
+        <item>@string/shema_gra</item>
+    </string-array>
     <string name="prayers_mga">Latest shacharis</string>
     <string name="prayers_mga_summary">Latest morning prayers according to Magen Avraham</string>
     <string name="prayers_gra">Latest shacharis</string>

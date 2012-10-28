@@ -319,7 +319,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		Date candlesWhen = cal.getCandleLighting();
 		if (candlesWhen != null)
 			candlesCount = getCandles(cal.getCalendar(), inIsrael);
-		System.out.println("candlesCount=" + candlesCount);
 
 		Date date;
 		int summary;
@@ -384,17 +383,66 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.sunrise, R.string.sunrise_summary, date);
 
-		date = cal.getSofZmanShmaMGA();
+		opinion = mSettings.getLastShema();
+		if ("16.1_sunset".equals(opinion)) {
+			date = cal.getSofZmanShmaAlos16Point1ToSunset();
+			summary = R.string.shema_16_sunset;
+		} else if ("7.083".equals(opinion)) {
+			date = cal.getSofZmanShmaAlos16Point1ToTzaisGeonim7Point083Degrees();
+			summary = R.string.shema_7;
+		} else if ("19.8".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA19Point8Degrees();
+			summary = R.string.shema_19;
+		} else if ("120".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA120Minutes();
+			summary = R.string.shema_120;
+		} else if ("18".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA18Degrees();
+			summary = R.string.shema_18;
+		} else if ("96".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA96Minutes();
+			summary = R.string.shema_96;
+		} else if ("16.1".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA16Point1Degrees();
+			summary = R.string.shema_16;
+		} else if ("90".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA90Minutes();
+			summary = R.string.shema_90;
+		} else if ("96_zmanis".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA96MinutesZmanis();
+			summary = R.string.shema_96_zmanis;
+		} else if ("90_zmanis".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA90MinutesZmanis();
+			summary = R.string.shema_90_zmanis;
+		} else if ("72".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA72Minutes();
+			summary = R.string.shema_72;
+		} else if ("MGA".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA();
+			summary = R.string.shema_mga;
+		} else if ("AT".equals(opinion)) {
+			date = cal.getSofZmanShmaAteretTorah();
+			summary = R.string.shema_ateret;
+		} else if ("3".equals(opinion)) {
+			date = cal.getSofZmanShma3HoursBeforeChatzos();
+			summary = R.string.shema_3;
+		} else if ("72_zmanis".equals(opinion)) {
+			date = cal.getSofZmanShmaMGA72MinutesZmanis();
+			summary = R.string.shema_72_zmanis;
+		} else if ("FL".equals(opinion)) {
+			date = cal.getSofZmanShmaFixedLocal();
+			summary = R.string.shema_fixed;
+		} else if ("GRA".equals(opinion)) {
+			date = cal.getSofZmanShmaGRA();
+			summary = R.string.shema_gra;
+		} else {
+			date = cal.getSofZmanShmaMGA();
+			summary = R.string.shema_mga;
+		}
 		if (remote)
-			add(R.id.shema_mga_row, R.id.shema_mga_time, date, true);
+			add(R.id.shema_row, R.id.shema_time, date, true);
 		else
-			add(R.string.shema_mga, R.string.shema_mga_summary, date);
-
-		date = cal.getSofZmanShmaGRA();
-		if (remote)
-			add(R.id.shema_gra_row, R.id.shema_gra_time, date, true);
-		else
-			add(R.string.shema_gra, R.string.shema_gra_summary, date);
+			add(R.string.shema, summary, date);
 
 		date = cal.getSofZmanTfilaMGA();
 		if (remote)

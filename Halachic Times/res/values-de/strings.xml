@@ -14,10 +14,9 @@
     <string name="earliest_summary">Sonne ist 11,5° unter dem horizont</string>
     <string name="sunrise">Sonnenaufgang</string>
     <string name="sunrise_summary">In einem flachen bereich</string>
-    <string name="shema_mga">Spätestes schma</string>
-    <string name="shema_mga_summary">Spätestes schma nach Magen Avraham</string>
-    <string name="shema_gra">Spätestes schma</string>
-    <string name="shema_gra_summary">Spätestes schma nach Gra &amp; Baal Tanya</string>
+    <string name="shema">Spätestes schma</string>
+    <string name="shema_mga">Spätestes schma nach Magen Avraham</string>
+    <string name="shema_gra">Spätestes schma nach Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Spätestes shacharis</string>
     <string name="prayers_mga_summary">Spätestes morgengebet nach Magen Avraham</string>
     <string name="prayers_gra">Spätestes shacharis</string>

@@ -14,10 +14,9 @@
     <string name="earliest_summary">Ήλιος είναι 11,5° κάτω από τον ορίζοντα</string>
     <string name="sunrise">Ανατολή ηλίου</string>
     <string name="sunrise_summary">Σε μια περιοχή επίπεδο</string>
-    <string name="shema_mga">Τελευταία σεμα</string>
-    <string name="shema_mga_summary">Τελευταία σεμα σύμφωνα με Μαγεν Αβραάμ</string>
-    <string name="shema_gra">Τελευταία σεμα</string>
-    <string name="shema_gra_summary">Τελευταία σεμα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
+    <string name="shema">Τελευταία σεμα</string>
+    <string name="shema_mga">Τελευταία σεμα σύμφωνα με Μαγεν Αβραάμ</string>
+    <string name="shema_gra">Τελευταία σεμα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
     <string name="prayers_mga">Τελευταία σαχαριτ</string>
     <string name="prayers_mga_summary">Τελευταία πρωινή προσευχή σύμφωνα με Μαγεν Αβραάμ</string>
     <string name="prayers_gra">Τελευταία σαχαριτ</string>

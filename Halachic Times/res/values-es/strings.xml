@@ -14,10 +14,9 @@
     <string name="earliest_summary">Sol es 11,5° bajo el horizonte</string>
     <string name="sunrise">Salida del sol</string>
     <string name="sunrise_summary">En región de nivel</string>
-    <string name="shema_mga">Últimas shema</string>
-    <string name="shema_mga_summary">Últimas shema acuerdo a Magen Avraham</string>
-    <string name="shema_gra">Últimas shema</string>
-    <string name="shema_gra_summary">Últimas shema acuerdo a Gra &amp; Baal Tanya</string>
+    <string name="shema">Últimas shema</string>
+    <string name="shema_mga">Últimas shema acuerdo a Magen Avraham</string>
+    <string name="shema_gra">Últimas shema acuerdo a Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Últimas shajaris</string>
     <string name="prayers_mga_summary">Últimas oraciones matutinas acuerdo a Magen Avraham</string>
     <string name="prayers_gra">Últimas shajaris</string>

@@ -36,6 +36,12 @@
             android:entryValues="@array/dawn_values"
             android:key="dawn"
             android:title="@string/dawn" />
+        <ListPreference
+            android:defaultValue="MGA"
+            android:entries="@array/shema_entries"
+            android:entryValues="@array/shema_values"
+            android:key="shema"
+            android:title="@string/shema" />
 
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"

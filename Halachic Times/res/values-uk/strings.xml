@@ -14,10 +14,9 @@
     <string name="earliest_summary">Сонце 11,5 ° нижче обрію</string>
     <string name="sunrise">Схід сонця</string>
     <string name="sunrise_summary">У рівні регіону</string>
-    <string name="shema_mga">Останній шма</string>
-    <string name="shema_mga_summary">Останній шма відповідно до Маген Авраам</string>
-    <string name="shema_gra">Останній шма</string>
-    <string name="shema_gra_summary">Останній шма відповідно до Гра &amp; Ваал Таня</string>
+    <string name="shema">Останній шма</string>
+    <string name="shema_mga">Останній шма відповідно до Маген Авраам</string>
+    <string name="shema_gra">Останній шма відповідно до Гра &amp; Ваал Таня</string>
     <string name="prayers_mga">Останній шахарит</string>
     <string name="prayers_mga_summary">Останній ранкові молитви відповідно до Маген Авраам</string>
     <string name="prayers_gra">Останній шахарит</string>

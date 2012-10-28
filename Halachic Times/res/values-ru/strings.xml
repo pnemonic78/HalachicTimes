@@ -14,10 +14,9 @@
     <string name="earliest_summary">Самое раннее время наложения талита и тфилина. Солнце 11,5° ниже горизонта</string>
     <string name="sunrise">Восход солнца</string>
     <string name="sunrise_summary">В уровне регионе</string>
-    <string name="shema_mga">Самое позднее шма</string>
-    <string name="shema_mga_summary">Самое позднее время чтения шма соответствии с Маген Авраам</string>
-    <string name="shema_gra">Самое позднее шма</string>
-    <string name="shema_gra_summary">Самое позднее время чтения шма соответствии с Гра &amp; Ваал Таня</string>
+    <string name="shema">Самое позднее шма</string>
+    <string name="shema_mga">Самое позднее время чтения шма соответствии с Маген Авраам</string>
+    <string name="shema_gra">Самое позднее время чтения шма соответствии с Гра &amp; Ваал Таня</string>
     <string name="prayers_mga">Самое позднее шахарит</string>
     <string name="prayers_mga_summary">Самое позднее время утренние молитв соответствии с Маген Авраам</string>
     <string name="prayers_gra">Самое позднее шахарит</string>

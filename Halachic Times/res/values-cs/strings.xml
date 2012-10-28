@@ -14,10 +14,9 @@
     <string name="earliest_summary">Slunce je 11,5° pod obzorem</string>
     <string name="sunrise">Východ slunce</string>
     <string name="sunrise_summary">V regionu soudržnosti</string>
-    <string name="shema_mga">Poslední šema</string>
-    <string name="shema_mga_summary">Poslední šema souladu s Magen Avraham</string>
-    <string name="shema_gra">Poslední šema</string>
-    <string name="shema_gra_summary">Poslední šema souladu s Gra &amp; Baal Tanya</string>
+    <string name="shema">Poslední šema</string>
+    <string name="shema_mga">Poslední šema souladu s Magen Avraham</string>
+    <string name="shema_gra">Poslední šema souladu s Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Poslední shacharis</string>
     <string name="prayers_mga_summary">Poslední ráno modlitby souladu s Magen Avraham</string>
     <string name="prayers_gra">Poslední shacharis</string>

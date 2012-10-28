@@ -14,10 +14,9 @@
     <string name="earliest_summary">Soleil est de 11,5° sous l\'horizon</string>
     <string name="sunrise">Lever du soleil</string>
     <string name="sunrise_summary">Dans une région de niveau</string>
-    <string name="shema_mga">Heure de fin du chéma</string>
-    <string name="shema_mga_summary">Dernière chéma selon la Magen Avraham</string>
-    <string name="shema_gra">Heure de fin du chéma</string>
-    <string name="shema_gra_summary">Dernière chéma selon la Gra &amp; Baal Tanya</string>
+    <string name="shema">Heure de fin du chéma</string>
+    <string name="shema_mga">Dernière chéma selon la Magen Avraham</string>
+    <string name="shema_gra">Dernière chéma selon la Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Heure de fin du shakharis</string>
     <string name="prayers_mga_summary">Dernières prières du matin selon la Magen Avraham</string>
     <string name="prayers_gra">Heure de fin du shakharis</string>

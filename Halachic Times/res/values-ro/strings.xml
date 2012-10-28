@@ -14,10 +14,9 @@
     <string name="earliest_summary">Soarele este de 11,5° sub orizont</string>
     <string name="sunrise">Răsărit</string>
     <string name="sunrise_summary">Într-o regiune nivel</string>
-    <string name="shema_mga">Ultima șema</string>
-    <string name="shema_mga_summary">Șema ultima în conformitate cu Magen Avraham</string>
-    <string name="shema_gra">Ultima șema</string>
-    <string name="shema_gra_summary">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="shema">Ultima șema</string>
+    <string name="shema_mga">Șema ultima în conformitate cu Magen Avraham</string>
+    <string name="shema_gra">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Ultima shacharis</string>
     <string name="prayers_mga_summary">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
     <string name="prayers_gra">Ultima shacharis</string>

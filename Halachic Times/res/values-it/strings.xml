@@ -14,10 +14,9 @@
     <string name="earliest_summary">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="sunrise">Levata del sole</string>
     <string name="sunrise_summary">In una regione di livello</string>
-    <string name="shema_mga">Ultime shema</string>
-    <string name="shema_mga_summary">Ultime shema secondo la Magen Avraham</string>
-    <string name="shema_gra">Ultime shema</string>
-    <string name="shema_gra_summary">Ultime shema secondo la Gra &amp; Baal Tanya</string>
+    <string name="shema">Ultime shema</string>
+    <string name="shema_mga">Ultime shema secondo la Magen Avraham</string>
+    <string name="shema_gra">Ultime shema secondo la Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Ultime shacharis</string>
     <string name="prayers_mga_summary">Ultime preghiere del mattino secondo la Magen Avraham</string>
     <string name="prayers_gra">Ultime shacharis</string>

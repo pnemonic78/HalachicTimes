@@ -14,10 +14,9 @@
     <string name="earliest_summary">Słońce jest 11,5° poniżej horyzontu</string>
     <string name="sunrise">Wschód słońca</string>
     <string name="sunrise_summary">W regionie poziom</string>
-    <string name="shema_mga">Ostatnia szema</string>
-    <string name="shema_mga_summary">Ostatnia szema zgodnie z Magen Abrahama</string>
-    <string name="shema_gra">Ostatnia szema</string>
-    <string name="shema_gra_summary">Ostatnia szema zgodnie z Gra &amp; Baal Tanya</string>
+    <string name="shema">Ostatnia szema</string>
+    <string name="shema_mga">Ostatnia szema zgodnie z Magen Abrahama</string>
+    <string name="shema_gra">Ostatnia szema zgodnie z Gra &amp; Baal Tanya</string>
     <string name="prayers_mga">Ostatnia shacharis</string>
     <string name="prayers_mga_summary">Ostatnia modlitwy poranne zgodnie z Magen Abrahama</string>
     <string name="prayers_gra">Ostatnia shacharis</string>
