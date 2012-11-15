@@ -346,43 +346,43 @@ public class GoogleGeocoder {
 
 			switch (mState) {
 			case START:
-				if (TAG_ROOT.equals(qName))
+				if (TAG_ROOT.equals(localName))
 					mState = State.ROOT;
 				else
 					throw new SAXException("Unexpected root element " + localName);
 				break;
 			case ROOT:
-				if (TAG_STATUS.equals(qName))
+				if (TAG_STATUS.equals(localName))
 					mState = State.STATUS;
-				else if (TAG_RESULT.equals(qName))
+				else if (TAG_RESULT.equals(localName))
 					mState = State.RESULT;
 				break;
 			case RESULT:
-				if (TAG_TYPE.equals(qName))
+				if (TAG_TYPE.equals(localName))
 					mState = State.RESULT_TYPE;
-				else if (TAG_FORMATTED.equals(qName))
+				else if (TAG_FORMATTED.equals(localName))
 					mState = State.RESULT_FORMATTED;
-				else if (TAG_ADDRESS.equals(qName))
+				else if (TAG_ADDRESS.equals(localName))
 					mState = State.ADDRESS;
-				else if (TAG_GEOMETRY.equals(qName))
+				else if (TAG_GEOMETRY.equals(localName))
 					mState = State.GEOMETRY;
 				break;
 			case ADDRESS:
-				if (TAG_LONG_NAME.equals(qName))
+				if (TAG_LONG_NAME.equals(localName))
 					mState = State.ADDRESS_LONG;
-				else if (TAG_SHORT_NAME.equals(qName))
+				else if (TAG_SHORT_NAME.equals(localName))
 					mState = State.ADDRESS_SHORT;
-				else if (TAG_TYPE.equals(qName))
+				else if (TAG_TYPE.equals(localName))
 					mState = State.ADDRESS_TYPE;
 				break;
 			case GEOMETRY:
-				if (TAG_LOCATION.equals(qName))
+				if (TAG_LOCATION.equals(localName))
 					mState = State.LOCATION;
 				break;
 			case LOCATION:
-				if (TAG_LATITUDE.equals(qName))
+				if (TAG_LATITUDE.equals(localName))
 					mState = State.LATITUDE;
-				else if (TAG_LONGITUDE.equals(qName))
+				else if (TAG_LONGITUDE.equals(localName))
 					mState = State.LONGITUDE;
 				break;
 			case FINISH:
@@ -398,15 +398,15 @@ public class GoogleGeocoder {
 
 			switch (mState) {
 			case ROOT:
-				if (TAG_ROOT.equals(qName))
+				if (TAG_ROOT.equals(localName))
 					mState = State.FINISH;
 				break;
 			case STATUS:
-				if (TAG_STATUS.equals(qName))
+				if (TAG_STATUS.equals(localName))
 					mState = State.ROOT;
 				break;
 			case RESULT:
-				if (TAG_RESULT.equals(qName)) {
+				if (TAG_RESULT.equals(localName)) {
 					if (mAddress != null) {
 						if (mResults.size() < mMaxResults)
 							mResults.add(mAddress);
@@ -421,15 +421,15 @@ public class GoogleGeocoder {
 				}
 				break;
 			case RESULT_TYPE:
-				if (TAG_TYPE.equals(qName))
+				if (TAG_TYPE.equals(localName))
 					mState = State.RESULT;
 				break;
 			case RESULT_FORMATTED:
-				if (TAG_FORMATTED.equals(qName))
+				if (TAG_FORMATTED.equals(localName))
 					mState = State.RESULT;
 				break;
 			case ADDRESS:
-				if (TAG_ADDRESS.equals(qName)) {
+				if (TAG_ADDRESS.equals(localName)) {
 					if (mAddress != null) {
 						if (TYPE_ADMIN.equals(mAddressType)) {
 							mAddress.setAdminArea(mLongName);
@@ -457,31 +457,31 @@ public class GoogleGeocoder {
 				}
 				break;
 			case ADDRESS_LONG:
-				if (TAG_LONG_NAME.equals(qName))
+				if (TAG_LONG_NAME.equals(localName))
 					mState = State.ADDRESS;
 				break;
 			case ADDRESS_SHORT:
-				if (TAG_SHORT_NAME.equals(qName))
+				if (TAG_SHORT_NAME.equals(localName))
 					mState = State.ADDRESS;
 				break;
 			case ADDRESS_TYPE:
-				if (TAG_TYPE.equals(qName))
+				if (TAG_TYPE.equals(localName))
 					mState = State.ADDRESS;
 				break;
 			case GEOMETRY:
-				if (TAG_GEOMETRY.equals(qName))
+				if (TAG_GEOMETRY.equals(localName))
 					mState = State.RESULT;
 				break;
 			case LOCATION:
-				if (TAG_LOCATION.equals(qName))
+				if (TAG_LOCATION.equals(localName))
 					mState = State.GEOMETRY;
 				break;
 			case LATITUDE:
-				if (TAG_LATITUDE.equals(qName))
+				if (TAG_LATITUDE.equals(localName))
 					mState = State.LOCATION;
 				break;
 			case LONGITUDE:
-				if (TAG_LONGITUDE.equals(qName))
+				if (TAG_LONGITUDE.equals(localName))
 					mState = State.LOCATION;
 				break;
 			case FINISH:

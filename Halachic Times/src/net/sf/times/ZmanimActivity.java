@@ -89,6 +89,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ZmanimAddress mAddress;
 	/** The address fetcher. */
 	private FindAddress mFindAddress;
+	private boolean mFindingAddress;
 	/** The gradient background. */
 	private Drawable mBackground;
 	/** Populate the header in UI thread. */
@@ -188,10 +189,13 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if (mFindAddress != null)
-			mFindAddress.interrupt();
-		mFindAddress = new FindAddress(location);
-		mFindAddress.start();
+		if (mFindAddress == null) {
+			if (!mFindingAddress) {
+				mFindingAddress = true;
+				mFindAddress = new FindAddress(location);
+				mFindAddress.start();
+			}
+		}
 		populateHeader();
 		populateTimes();
 	}
@@ -314,26 +318,31 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		@Override
 		public void run() {
-			if (mAddressProvider == null)
-				mAddressProvider = new AddressProvider(ZmanimActivity.this);
-			AddressProvider provider = mAddressProvider;
-			Address nearest = provider.findNearestAddress(mLocation);
-			if (nearest != null) {
-				ZmanimAddress addr = (nearest instanceof ZmanimAddress) ? ((ZmanimAddress) nearest) : new ZmanimAddress(nearest);
-				if (addr != null) {
-					mAddress = addr;
-					provider.insertAddress(mLocation, addr);
-					if (mPopulateHeader == null) {
-						mPopulateHeader = new Runnable() {
+			try {
+				if (mAddressProvider == null)
+					mAddressProvider = new AddressProvider(ZmanimActivity.this);
+				AddressProvider provider = mAddressProvider;
+				Address nearest = provider.findNearestAddress(mLocation);
+				if (nearest != null) {
+					ZmanimAddress addr = (nearest instanceof ZmanimAddress) ? ((ZmanimAddress) nearest) : new ZmanimAddress(nearest);
+					if (addr != null) {
+						mAddress = addr;
+						provider.insertAddress(mLocation, addr);
+						if (mPopulateHeader == null) {
+							mPopulateHeader = new Runnable() {
 
-							@Override
-							public void run() {
-								populateHeader();
-							}
-						};
+								@Override
+								public void run() {
+									populateHeader();
+								}
+							};
+						}
+						runOnUiThread(mPopulateHeader);
 					}
-					runOnUiThread(mPopulateHeader);
 				}
+			} finally {
+				mFindAddress = null;
+				mFindingAddress = false;
 			}
 		}
 	}

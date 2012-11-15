@@ -383,18 +383,10 @@ public class GeoNamesGeocoder {
 					mState = State.MTFCC;
 				else if (TAG_STREET_NUMBER.equals(localName))
 					mState = State.STREET_NUMBER;
-				else if (TAG_LATITUDE.equals(localName))
-					mState = State.LATITUDE;
-				else if (TAG_LONGITUDE.equals(localName))
-					mState = State.LONGITUDE;
 				else if (TAG_POSTAL_CODE.equals(localName))
 					mState = State.POSTAL_CODE;
 				else if (TAG_LOCALITY.equals(localName))
 					mState = State.LOCALITY;
-				else if (TAG_CC.equals(localName))
-					mState = State.COUNTRY_CODE;
-				else if (TAG_COUNTRY.equals(localName))
-					mState = State.COUNTRY;
 				else if (TAG_ADMIN.equals(localName))
 					mState = State.ADMIN;
 				else if (TAG_ADMIN_CODE.equals(localName))
@@ -471,7 +463,7 @@ public class GeoNamesGeocoder {
 					mState = State.GEONAME;
 				break;
 			case MTFCC:
-				if (TAG_LONGITUDE.equals(localName))
+				if (TAG_MTFCC.equals(localName))
 					mState = State.GEONAME;
 				break;
 			case POSTAL_CODE:
