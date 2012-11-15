@@ -40,6 +40,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
+import android.text.TextUtils;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -347,6 +348,8 @@ public class GeoNamesGeocoder {
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 			super.startElement(uri, localName, qName, attributes);
+			if (TextUtils.isEmpty(localName))
+				localName = qName;
 
 			switch (mState) {
 			case START:
@@ -406,6 +409,8 @@ public class GeoNamesGeocoder {
 		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
 			super.endElement(uri, localName, qName);
+			if (TextUtils.isEmpty(localName))
+				localName = qName;
 
 			switch (mState) {
 			case ROOT:
