@@ -21,38 +21,6 @@
     <string name="dawn_72">72 minutes before sea level sunrise</string>
     <string name="dawn_72_zmanis">72 minutes zmaniyos (Gra &amp; Baal Tanya) before sea level sunrise</string>
     <string name="dawn_60">60 minutes before sea level sunrise</string>
-
-    <string-array name="dawn_values" translatable="false">
-        <item>19.8</item>
-        <item>120</item>
-        <item>18</item>
-        <item>26</item>
-        <item>120_zmanis</item>
-        <item>16.1</item>
-        <item>96</item>
-        <item>90</item>
-        <item>96_zmanis</item>
-        <item>90_zmanis</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>60</item>
-    </string-array>
-    <string-array name="dawn_entries" translatable="false">
-        <item>@string/dawn_19</item>
-        <item>@string/dawn_120</item>
-        <item>@string/dawn_18</item>
-        <item>@string/dawn_26</item>
-        <item>@string/dawn_120_zmanis</item>
-        <item>@string/dawn_16</item>
-        <item>@string/dawn_96</item>
-        <item>@string/dawn_90</item>
-        <item>@string/dawn_96_zmanis</item>
-        <item>@string/dawn_90_zmanis</item>
-        <item>@string/dawn_72</item>
-        <item>@string/dawn_72_zmanis</item>
-        <item>@string/dawn_60</item>
-    </string-array>
-
     <string name="earliest">Earliest tallis and tefillin</string>
     <string name="earliest_summary">Sun is 11.5° below horizon</string>
     <string name="sunrise">Sunrise</string>
@@ -75,44 +43,6 @@
     <string name="shema_72_zmanis">shema_72_zmanis</string>
     <string name="shema_fixed">shema_fixed</string>
     <string name="shema_gra">Latest shema according to Gra &amp; Baal Tanya</string>
-    <string-array name="shema_values" translatable="false">
-        <item>16.1_sunset</item>
-        <item>7.083</item>
-        <item>19.8</item>
-        <item>120</item>
-        <item>18</item>
-        <item>96</item>
-        <item>16.1</item>
-        <item>90</item>
-        <item>96_zmanis</item>
-        <item>90_zmanis</item>
-        <item>72</item>
-        <item>MGA</item>
-        <item>AT</item>
-        <item>3</item>
-        <item>72_zmanis</item>
-        <item>FL</item>
-        <item>GRA</item>
-    </string-array>
-    <string-array name="shema_entries" translatable="false">
-        <item>@string/shema_16_sunset</item>
-        <item>@string/shema_7</item>
-        <item>@string/shema_19</item>
-        <item>@string/shema_120</item>
-        <item>@string/shema_18</item>
-        <item>@string/shema_96</item>
-        <item>@string/shema_16</item>
-        <item>@string/shema_90</item>
-        <item>@string/shema_96_zmanis</item>
-        <item>@string/shema_90_zmanis</item>
-        <item>@string/shema_72</item>
-        <item>@string/shema_mga</item>
-        <item>@string/shema_ateret</item>
-        <item>@string/shema_3</item>
-        <item>@string/shema_72_zmanis</item>
-        <item>@string/shema_fixed</item>
-        <item>@string/shema_gra</item>
-    </string-array>
     <string name="prayers_mga">Latest shacharis</string>
     <string name="prayers_mga_summary">Latest morning prayers according to Magen Avraham</string>
     <string name="prayers_gra">Latest shacharis</string>
@@ -142,10 +72,6 @@
     <string name="coords_format_title">Coordinates format</string>
     <string name="coords_format_summary">Notation of latitude and longitude</string>
 
-    <string-array name="coords_format_values" translatable="false">
-        <item>decimal</item>
-        <item>sexagesimal</item>
-    </string-array>
     <string-array name="coords_format_entries">
         <item>Decimal</item>
         <item>Sexagesimal</item>
@@ -162,23 +88,6 @@
     <string name="gradient_hidden">Gradient is hidden</string>
     <string name="gradient_visible">Gradient is visible</string>
     <string name="candles_title" translatable="false">@string/candles</string>
-    <!--
-	<string-array name="opinion_values" translatable="false">
-		<item>ateret</item>
-		<item>gra</item>
-		<item>mga</item>
-		<item>rishonim</item>
-		<item>tam</item>
-	</string-array>
-	<string-array name="opinion_entries">
-		<item>Chacham Yosef Harari-Raful of Yeshivat Ateret Torah</item>
-		<item>GRA and the Baal Hatanya</item>
-		<item>Magen Avraham</item>
-		<item>Rishonim</item>
-		<item>Rabbeinu Tam</item>
-	</string-array
-    -->
-
 
     <!-- Go to date -->
     <string name="menu_goto">Pick a date</string>
