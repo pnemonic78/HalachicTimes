@@ -421,7 +421,7 @@ public class GeoNamesGeocoder {
 				if (TAG_GEONAME.equals(localName)) {
 					mState = State.ROOT;
 					if (mAddress != null) {
-						if (mResults.size() < mMaxResults)
+						if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
 							mResults.add(mAddress);
 						else
 							mState = State.FINISH;

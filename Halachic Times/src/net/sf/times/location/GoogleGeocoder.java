@@ -413,7 +413,7 @@ public class GoogleGeocoder {
 			case RESULT:
 				if (TAG_RESULT.equals(localName)) {
 					if (mAddress != null) {
-						if (mResults.size() < mMaxResults)
+						if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
 							mResults.add(mAddress);
 						else
 							mState = State.FINISH;

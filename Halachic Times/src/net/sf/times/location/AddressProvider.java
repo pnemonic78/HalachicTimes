@@ -209,6 +209,10 @@ public class AddressProvider {
 		Address addrMin = null;
 		float[] distances = new float[1];
 		for (Address a : addresses) {
+			if (!a.hasLatitude())
+				continue;
+			if (!a.hasLongitude())
+				continue;
 			Location.distanceBetween(latitude, longitude, a.getLatitude(), a.getLongitude(), distances);
 			if (distances[0] <= distanceMin) {
 				distanceMin = distances[0];
