@@ -5,12 +5,12 @@
     android:baselineAligned="false"
     android:paddingBottom="8dp"
     android:paddingLeft="8dp"
-    android:paddingRight="?android:attr/scrollbarSize" >
+    android:paddingRight="?android:attr/scrollbarSize">
 
     <ImageView
         style="@style/ListDivider"
         android:layout_alignParentTop="true"
-        android:contentDescription="@null" />
+        android:contentDescription="@null"/>
 
     <TextView
         android:id="@+id/title"
@@ -21,7 +21,7 @@
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/time"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/title"
         android:layout_alignParentLeft="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/summary"
@@ -39,6 +39,6 @@
         android:layout_below="@+id/title"
         android:maxLines="4"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorSecondary"/>
 
 </RelativeLayout>

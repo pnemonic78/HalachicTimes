@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="AppTheme" parent="android:Theme"/>
+
     <style name="ListDivider">
         <item name="android:src">@android:drawable/divider_horizontal_dark</item>
         <item name="android:layout_width">fill_parent</item>

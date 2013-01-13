@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/coordinates"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <view
         android:id="@+id/compass"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        class="net.sf.times.CompassView" />
+        class="net.sf.times.CompassView"/>
 
 </LinearLayout>

@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/category_general" >
+    <PreferenceCategory android:title="@string/category_general">
         <ListPreference
             android:defaultValue="decimal"
             android:entries="@array/coords_format_entries"
             android:entryValues="@array/coords_format_values"
             android:key="coords.format"
             android:summary="@string/coords_format_summary"
-            android:title="@string/coords_format_title" />
+            android:title="@string/coords_format_title"/>
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="summaries.visible"
             android:summaryOff="@string/summaries_hidden"
             android:summaryOn="@string/summaries_visible"
-            android:title="@string/summaries_title" />
+            android:title="@string/summaries_title"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="past"
             android:summaryOff="@string/past_disabled"
             android:summaryOn="@string/past_enabled"
-            android:title="@string/past_title" />
+            android:title="@string/past_title"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="gradient"
             android:summaryOff="@string/gradient_hidden"
             android:summaryOn="@string/gradient_visible"
-            android:title="@string/gradient_title" />
+            android:title="@string/gradient_title"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_opinion" >
+    <PreferenceCategory android:title="@string/category_opinion">
         <ListPreference
             android:defaultValue="16.1"
             android:entries="@array/dawn_entries"
             android:entryValues="@array/dawn_values"
             android:key="dawn"
-            android:title="@string/dawn" />
+            android:title="@string/dawn"/>
         <ListPreference
             android:defaultValue="MGA"
             android:entries="@array/shema_entries"
             android:entryValues="@array/shema_values"
             android:key="shema"
-            android:title="@string/shema" />
+            android:title="@string/shema"/>
 
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"
             android:key="candles"
             android:max="40"
             android:summary="@string/candles_summary"
-            android:title="@string/candles_title" />
+            android:title="@string/candles_title"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
