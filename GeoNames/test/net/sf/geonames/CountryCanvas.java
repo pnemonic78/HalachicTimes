@@ -38,6 +38,8 @@ public class CountryCanvas extends JComponent {
 	private static final int RATIO = 50000;
 	private static final int RATIO_ = -RATIO;
 
+	private static final int BORDER_VERTICES = 8;
+
 	private int[] main8;
 	private int[] centre;
 	private Polygon poly;
@@ -53,7 +55,7 @@ public class CountryCanvas extends JComponent {
 		centre = findCentre(region);
 		centre[0] /= RATIO;
 		centre[1] /= -RATIO;
-		main8 = region.findMainVertices(8);
+		main8 = region.findMainVertices(BORDER_VERTICES);
 
 		poly = new Polygon();
 		for (int i = 0; i < region.npoints; i++) {
@@ -69,6 +71,11 @@ public class CountryCanvas extends JComponent {
 		if ("AF".equals(region.getCountryCode())) {
 			tX = -1100;
 			tY = 900;
+		} else if ("BW".equals(region.getCountryCode())) {
+			tX = -250;
+			tY = -300;
+			// Dikholola near Brits.
+			specific = new int[] { 27746222, -25411172 };
 		} else if ("IL".equals(region.getCountryCode())) {
 			tX = -450;
 			tY = 850;
@@ -102,13 +109,13 @@ public class CountryCanvas extends JComponent {
 		g.setColor(Color.RED);
 		g.drawOval(cx - 2, cy - 2, 5, 5);
 
-		final double sweepAngle = (2f * Math.PI) / 8;
+		final double sweepAngle = (2f * Math.PI) / BORDER_VERTICES;
 		double angleStart = -(sweepAngle / 2f);
 		double angleEnd;
 		int x2, y2;
 		int r = 2500;
 
-		for (int v = 0; v < 8; v++) {
+		for (int v = 0; v < BORDER_VERTICES; v++) {
 			x2 = cx + (int) (r * Math.cos(angleStart));
 			y2 = cy + (int) (r * Math.sin(angleStart));
 			g.setColor(Color.CYAN);
