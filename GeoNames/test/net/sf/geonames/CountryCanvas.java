@@ -36,14 +36,18 @@ import javax.swing.JScrollPane;
 public class CountryCanvas extends JComponent {
 
 	private static final int RATIO = 50000;
+	private static final int RATIO_ = -RATIO;
 
 	private int[] main8;
 	private int[] centre;
 	private Polygon poly;
 	private Polygon border;
+	private int tX, tY;
+	private int[] specific;
 
 	public CountryCanvas(CountryRegion region) {
 		super();
+
 		setPreferredSize(new Dimension(2500, 1500));
 
 		centre = findCentre(region);
@@ -53,35 +57,35 @@ public class CountryCanvas extends JComponent {
 
 		poly = new Polygon();
 		for (int i = 0; i < region.npoints; i++) {
-			poly.addPoint(region.xpoints[i] / RATIO, -region.ypoints[i] / RATIO);
+			poly.addPoint(region.xpoints[i] / RATIO, region.ypoints[i] / RATIO_);
 		}
 		border = new Polygon();
 		for (int i : main8) {
 			if (i >= 0)
-				border.addPoint(region.xpoints[i] / RATIO, -region.ypoints[i] / RATIO);
+				border.addPoint(region.xpoints[i] / RATIO, region.ypoints[i] / RATIO_);
 		}
-		int dX = 0;
-		int dY = 0;
+		tX = 0;
+		tY = 0;
 		if ("AF".equals(region.getCountryCode())) {
-			dX = -1100;
-			dY = 900;
+			tX = -1100;
+			tY = 900;
 		} else if ("IL".equals(region.getCountryCode())) {
-			dX = -450;
-			dY = 850;
+			tX = -450;
+			tY = 850;
 		} else if ("US".equals(region.getCountryCode())) {
-			dX = 3400;
-			dY = 1500;
+			tX = 3400;
+			tY = 1500;
 		} else if ("ZA".equals(region.getCountryCode())) {
-			dX = -250;
-			dY = -300;
+			tX = -250;
+			tY = -300;
+			specific = new int[] { 27746222, -25411172 };
 		}
-		poly.translate(dX, dY);
-		border.translate(dX, dY);
-		centre[0] += dX;
-		centre[1] += dY;
 	}
 
 	public void paint(Graphics g) {
+		g.translate(tX, tY);
+
+		g.setColor(Color.DARK_GRAY);
 		if (g instanceof Graphics2D) {
 			((Graphics2D) g).draw(poly);
 		} else {
@@ -95,7 +99,7 @@ public class CountryCanvas extends JComponent {
 		int cx = centre[0];
 		int cy = centre[1];
 		g.setColor(Color.RED);
-		g.drawOval(cx, cy, 5, 5);
+		g.drawOval(cx - 2, cy - 2, 5, 5);
 
 		final double sweepAngle = (2f * Math.PI) / 8;
 		double angleStart = -(sweepAngle / 2f);
@@ -121,10 +125,15 @@ public class CountryCanvas extends JComponent {
 		g.setColor(Color.BLUE);
 		for (int i : main8) {
 			if (i >= 0)
-				g.drawOval(poly.xpoints[i], poly.ypoints[i], 5, 5);
+				g.drawOval(poly.xpoints[i] - 2, poly.ypoints[i] - 2, 5, 5);
 		}
 		g.setColor(Color.ORANGE);
 		g.drawPolygon(border);
+
+		if (specific != null) {
+			g.setColor(Color.RED);
+			g.drawOval((specific[0] / RATIO) - 5, (specific[1] / RATIO_) - 5, 10, 10);
+		}
 	}
 
 	/**
