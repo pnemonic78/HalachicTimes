@@ -126,8 +126,8 @@ public class CountriesGeocoder {
 	 * @return the city - {@code null} otherwise.
 	 */
 	public Address getFromLocation(double latitude, double longitude) {
-		final int fixedpointLatitude = (int) (latitude * RATIO);
-		final int fixedpointLongitude = (int) (longitude * RATIO);
+		final int fixedpointLatitude = (int) Math.rint(latitude * RATIO);
+		final int fixedpointLongitude = (int) Math.rint(longitude * RATIO);
 		double distanceToBorder;
 		double distanceMin = Double.MAX_VALUE;
 		int found = -1;
@@ -174,6 +174,10 @@ public class CountriesGeocoder {
 
 			// Case 2: Country rectangle intersects another country's rectangle.
 			if (found < 0) {
+				// Is the location inside of country#1 but actually outside
+				// of country#2 ?
+				// TODO implement me!
+
 				// Find the nearest border.
 				for (int m = 0; m < matchesCount; m++) {
 					matchCountryIndex = matches[m];
