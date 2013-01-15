@@ -78,6 +78,7 @@ public class CountryCanvas extends JComponent {
 		} else if ("ZA".equals(region.getCountryCode())) {
 			tX = -250;
 			tY = -300;
+			// Dikholola near Brits.
 			specific = new int[] { 27746222, -25411172 };
 		}
 	}
