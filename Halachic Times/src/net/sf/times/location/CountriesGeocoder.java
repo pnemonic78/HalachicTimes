@@ -174,18 +174,30 @@ public class CountriesGeocoder {
 
 			// Case 2: Country rectangle intersects another country's rectangle.
 			if (found < 0) {
-				// Is the location inside of country#1 but actually outside
-				// of country#2 ?
-				// TODO implement me!
-
-				// Find the nearest border.
+				// Only include countries foe which the location is actually
+				// inside the defined borders.
 				for (int m = 0; m < matchesCount; m++) {
 					matchCountryIndex = matches[m];
 					country = mCountryBorders[matchCountryIndex];
-					distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
-					if (distanceToBorder < distanceMin) {
-						distanceMin = distanceToBorder;
-						found = matchCountryIndex;
+					if (country.contains(fixedpointLatitude, fixedpointLongitude)) {
+						distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+						if (distanceToBorder < distanceMin) {
+							distanceMin = distanceToBorder;
+							found = matchCountryIndex;
+						}
+					}
+				}
+
+				if (found < 0) {
+					// Find the nearest border.
+					for (int m = 0; m < matchesCount; m++) {
+						matchCountryIndex = matches[m];
+						country = mCountryBorders[matchCountryIndex];
+						distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+						if (distanceToBorder < distanceMin) {
+							distanceMin = distanceToBorder;
+							found = matchCountryIndex;
+						}
 					}
 				}
 			}

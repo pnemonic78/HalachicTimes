@@ -125,6 +125,41 @@ public class CountryPolygon {
 	}
 
 	/**
+	 * Tests if the specified coordinates are inside the borders of the country.
+	 * <p>
+	 * Uses the ray casting algorithm.
+	 * 
+	 * @param latitude
+	 *            the latitude to be tested.
+	 * @param longitude
+	 *            the longitude to be tested.
+	 * @return {@code true} if the specified coordinates are inside the country
+	 *         boundary; {@code false} otherwise.
+	 */
+	public boolean contains(int latitude, int longitude) {
+		int j = npoints - 1;
+		boolean oddNodes = false;
+		int latI, lngI;
+		int latJ, lngJ;
+
+		for (int i = 0; i < npoints; i++) {
+			latI = latitudes[i];
+			lngI = longitudes[i];
+			latJ = latitudes[j];
+			lngJ = longitudes[j];
+
+			if ((((latI < latitude) && (latJ >= latitude)) || ((latJ < latitude) && (latI >= latitude))) && ((lngI <= longitude) || (lngJ <= longitude))) {
+				if (lngI + (((latitude - latI) * (lngJ - lngI)) / (latJ - latI)) < longitude) {
+					oddNodes = !oddNodes;
+				}
+			}
+			j = i;
+		}
+
+		return oddNodes;
+	}
+
+	/**
 	 * Appends the specified coordinates to this country.
 	 * <p>
 	 * 
@@ -135,7 +170,7 @@ public class CountryPolygon {
 	 */
 	public void addPoint(int latitude, int longitude) {
 		if (npoints >= latitudes.length || npoints >= longitudes.length) {
-			int newLength = npoints * 2;
+			int newLength = npoints << 1;
 			// Make sure that newLength will be greater than MIN_LENGTH and
 			// aligned to the power of 2
 			if (newLength < MIN_LENGTH) {
@@ -231,18 +266,16 @@ public class CountryPolygon {
 	 * @return the distance.
 	 */
 	public double minimumDistanceToBorders(int latitude, int longitude) {
-		int n = npoints - 1;
+		int j = npoints - 1;
 		double minimum = Double.MAX_VALUE;
 		double d;
 
-		for (int i = 0, j = 1; j <= n; i++, j++) {
+		for (int i = 0; i < npoints; i++) {
 			d = pointToLineDistance(latitudes[i], longitudes[i], latitudes[j], longitudes[j], latitude, longitude);
 			if (d < minimum)
 				minimum = d;
+			j = i;
 		}
-		d = pointToLineDistance(latitudes[0], longitudes[0], latitudes[n], longitudes[n], latitude, longitude);
-		if (d < minimum)
-			minimum = d;
 		return minimum;
 	}
 
