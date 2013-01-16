@@ -96,7 +96,7 @@ public class CountryPolygon {
 	}
 
 	/**
-	 * Tests if the specified coordinates are inside the boundary of the
+	 * Tests if the specified coordinates are inside the bounding box of the
 	 * country.
 	 * 
 	 * @param latitude
@@ -106,19 +106,20 @@ public class CountryPolygon {
 	 * @return {@code true} if the specified coordinates are inside the country
 	 *         boundary; {@code false} otherwise.
 	 */
-	public boolean contains(int latitude, int longitude) {
+	public boolean containsBox(int latitude, int longitude) {
 		return (latitude >= mMinLatitude) && (latitude <= mMaxLatitude) && (longitude >= mMinLongitude) && (longitude <= mMaxLongitude);
 	}
 
 	/**
-	 * Tests if the specified country is inside the boundary of this country.
+	 * Tests if the specified country is inside the bounding box of this
+	 * country.
 	 * 
 	 * @param other
 	 *            the other country to be tested.
 	 * @return {@code true} if the specified country is inside this country
 	 *         boundary; {@code false} otherwise.
 	 */
-	public boolean contains(CountryPolygon other) {
+	public boolean containsBox(CountryPolygon other) {
 		return (other.mMinLatitude >= this.mMinLatitude) && (other.mMinLongitude >= this.mMinLongitude) && (other.mMaxLatitude <= this.mMaxLatitude)
 				&& (other.mMaxLongitude <= this.mMaxLongitude);
 	}

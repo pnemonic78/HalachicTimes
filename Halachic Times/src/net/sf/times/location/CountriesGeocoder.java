@@ -138,7 +138,7 @@ public class CountriesGeocoder {
 
 		for (int c = 0; (c < countriesSize) && (matchesCount < MAX_COUNTRIES_OVERLAP); c++) {
 			country = mCountryBorders[c];
-			if (country.contains(fixedpointLatitude, fixedpointLongitude))
+			if (country.containsBox(fixedpointLatitude, fixedpointLongitude))
 				matches[matchesCount++] = c;
 		}
 		if (matchesCount == 0) {
@@ -164,10 +164,10 @@ public class CountriesGeocoder {
 			for (int m = 1; m < matchesCount; m++) {
 				matchCountryIndex = matches[m];
 				other = mCountryBorders[matchCountryIndex];
-				if (country.contains(other)) {
+				if (country.containsBox(other)) {
 					country = other;
 					found = matchCountryIndex;
-				} else if ((found < 0) && other.contains(country)) {
+				} else if ((found < 0) && other.containsBox(country)) {
 					found = matches[0];
 				}
 			}
