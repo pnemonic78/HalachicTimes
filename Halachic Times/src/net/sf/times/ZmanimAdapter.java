@@ -41,15 +41,6 @@ import android.widget.TextView;
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
-	/** 1 second. */
-	private static final long ONE_SECOND = 1000;
-	/** 1 minute. */
-	private static final long ONE_MINUTE = 60 * ONE_SECOND;
-	/** 1 hour. */
-	private static final long ONE_HOUR = 60 * ONE_MINUTE;
-	/** 12 hours. */
-	private static final long TWELVE_HOURS = 12 * ONE_HOUR;
-
 	/** 11.5&deg; before sunrise. */
 	private static final double ZENITH_TALLIS = 101.5;
 
@@ -510,11 +501,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.nightfall_72min, R.string.nightfall_72min_summary, date);
 
-		long time = cal.getChatzos().getTime() + TWELVE_HOURS;
+		date = cal.getSolarMidnight();
 		if (remote)
-			add(R.id.midnight_row, R.id.midnight_time, time, true);
+			add(R.id.midnight_row, R.id.midnight_time, date, true);
 		else
-			add(R.string.midnight, R.string.midnight_summary, time);
+			add(R.string.midnight, R.string.midnight_summary, date);
 	}
 
 	/**

@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.location.Address;
 import android.location.Location;
+import android.text.format.DateUtils;
 
 /**
  * Maintains the lists of countries.
@@ -37,13 +38,6 @@ public class CountriesGeocoder {
 
 	/** The time zone location provider. */
 	public static final String TIMEZONE_PROVIDER = "timezone";
-
-	/** One second (1 sec). */
-	private static final long ONE_SECOND = 1000;
-	/** One minute (1 min). */
-	private static final long ONE_MINUTE = 60 * ONE_SECOND;
-	/** One hour (1 hr). */
-	private static final long ONE_HOUR = 60 * ONE_MINUTE;
 
 	/** Degrees per time zone hour. */
 	private static final double TZ_HOUR = 360 / 24;
@@ -224,7 +218,7 @@ public class CountriesGeocoder {
 	public Location findLocation(TimeZone tz) {
 		Location loc = new Location(TIMEZONE_PROVIDER);
 		if (tz != null) {
-			double longitude = (TZ_HOUR * tz.getRawOffset()) / ONE_HOUR;
+			double longitude = (TZ_HOUR * tz.getRawOffset()) / DateUtils.HOUR_IN_MILLIS;
 			loc.setLongitude(longitude);
 		}
 		return loc;

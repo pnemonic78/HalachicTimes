@@ -25,11 +25,13 @@ import java.util.TimeZone;
 
 import net.sf.times.location.CountriesGeocoder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 
 /**
  * Location provider.
@@ -37,11 +39,6 @@ import android.os.Bundle;
  * @author Moshe
  */
 public class ZmanimLocations implements LocationListener {
-
-	/** 1 second. */
-	private static final long ONE_SECOND = 1000;
-	/** 1 minute. */
-	private static final long ONE_MINUTE = 60 * ONE_SECOND;
 
 	/** 1 kilometre. */
 	private static final int ONE_KM = 1000;
@@ -256,12 +253,12 @@ public class ZmanimLocations implements LocationListener {
 			addLocationListener(listener);
 
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, ONE_MINUTE, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, DateUtils.MINUTE_IN_MILLIS, ONE_KM, this);
 		} catch (IllegalArgumentException iae) {
 			System.err.println(this + ": " + iae.getLocalizedMessage());
 		}
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, ONE_MINUTE, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, DateUtils.MINUTE_IN_MILLIS, ONE_KM, this);
 		} catch (IllegalArgumentException iae) {
 			System.err.println(this + ": " + iae.getLocalizedMessage());
 		}
@@ -300,6 +297,7 @@ public class ZmanimLocations implements LocationListener {
 	 * 
 	 * @return the coordinates text.
 	 */
+	@SuppressLint("DefaultLocale")
 	public String formatCoordinates() {
 		Location loc = getLocation();
 		final double latitude = loc.getLatitude();
