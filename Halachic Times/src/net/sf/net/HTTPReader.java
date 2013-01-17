@@ -65,25 +65,21 @@ public class HTTPReader {
 		if ((contentTypeExpected != null) && !contentType.startsWith(contentTypeExpected))
 			return null;
 
-		int length = conn.getContentLength();
 		byte[] data = null;
 		InputStream in = null;
 		try {
 			in = new BufferedInputStream(conn.getInputStream());
-			if (length <= 0) {
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				byte[] buf = new byte[1024];
-				int count = in.read(buf);
-				while (count >= 0) {
-					out.write(buf, 0, count);
-					count = in.read(buf);
-				}
-				out.close();
-				data = out.toByteArray();
-			} else {
-				data = new byte[length];
-				in.read(data);
+			// Do NOT use content-length header for exact buffer size!
+			// It is not always accurate.
+			ByteArrayOutputStream out = new ByteArrayOutputStream(Math.max(256, conn.getContentLength()));
+			byte[] buf = new byte[1024];
+			int count = in.read(buf);
+			while (count >= 0) {
+				out.write(buf, 0, count);
+				count = in.read(buf);
 			}
+			out.close();
+			data = out.toByteArray();
 		} finally {
 			if (in != null) {
 				try {
