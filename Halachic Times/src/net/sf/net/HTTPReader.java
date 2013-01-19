@@ -62,7 +62,7 @@ public class HTTPReader {
 		String contentType = conn.getContentType();
 		if (contentType == null)
 			return null;
-		if ((contentTypeExpected != null) && !contentType.startsWith(contentTypeExpected))
+		if ((contentTypeExpected != null) && !contentType.equals(contentTypeExpected))
 			return null;
 
 		byte[] data = null;
@@ -70,9 +70,10 @@ public class HTTPReader {
 		try {
 			in = new BufferedInputStream(conn.getInputStream());
 			// Do NOT use content-length header for exact buffer size!
-			// It is not always accurate.
-			ByteArrayOutputStream out = new ByteArrayOutputStream(Math.max(256, conn.getContentLength()));
-			byte[] buf = new byte[1024];
+			// It is not always reliable / accurate.
+			final int outSize = Math.max(in.available(), conn.getContentLength());
+			ByteArrayOutputStream out = new ByteArrayOutputStream(outSize);
+			final byte[] buf = new byte[1024];
 			int count = in.read(buf);
 			while (count >= 0) {
 				out.write(buf, 0, count);
