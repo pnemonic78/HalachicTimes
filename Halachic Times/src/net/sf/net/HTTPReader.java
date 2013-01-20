@@ -71,7 +71,7 @@ public class HTTPReader {
 			in = new BufferedInputStream(conn.getInputStream());
 			// Do NOT use content-length header for exact buffer size!
 			// It is not always reliable / accurate.
-			final int outSize = Math.max(in.available(), conn.getContentLength());
+			final int outSize = Math.max(Math.max(in.available(), conn.getContentLength()), 32);
 			ByteArrayOutputStream out = new ByteArrayOutputStream(outSize);
 			final byte[] buf = new byte[1024];
 			int count = in.read(buf);
