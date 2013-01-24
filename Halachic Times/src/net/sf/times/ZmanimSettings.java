@@ -60,6 +60,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_SHEMA = "shema";
 	/** Preference name for candle lighting minutes offset. */
 	public static final String KEY_OPINION_CANDLES = "candles";
+	/** Preference name for sunset type. */
+	public static final String KEY_OPINION_SUNSET = "sunset";
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -213,5 +215,14 @@ public class ZmanimSettings {
 	 */
 	public String getLastShema() {
 		return mData.getString(KEY_OPINION_SHEMA, "MGA");
+	}
+
+	/**
+	 * Get the opinion for sunset.
+	 * 
+	 * @return the opinion.
+	 */
+	public String getSunset() {
+		return mData.getString(KEY_OPINION_SUNSET, "sunset");
 	}
 }

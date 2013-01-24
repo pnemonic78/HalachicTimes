@@ -77,6 +77,14 @@
         <item>@string/shema_fixed</item>
         <item>@string/shema_gra</item>
     </string-array>
+    <string-array name="sunset_values" translatable="false">
+        <item>sunset</item>
+        <item>sea</item>
+    </string-array>
+    <string-array name="sunset_entries" translatable="false">
+        <item>@string/sunset_summary</item>
+        <item>@string/sunset_sea</item>
+    </string-array>
     <string-array name="coords_format_values" translatable="false">
         <item>decimal</item>
         <item>sexagesimal</item>

@@ -59,7 +59,8 @@
     <string name="candles">Candle lighting</string>
     <string name="candles_summary">%1$d minutes before sunset</string>
     <string name="sunset">Sunset</string>
-    <string name="sunset_summary">In a level region</string>
+    <string name="sunset_summary">@string/sunrise_summary</string>
+    <string name="sunset_sea">@string/sunrise_sea</string>
     <string name="nightfall_3stars">Nightfall</string>
     <string name="nightfall_3stars_summary">3 stars visible</string>
     <string name="nightfall_72min">Nightfall</string>

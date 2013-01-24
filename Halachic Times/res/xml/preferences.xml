@@ -55,6 +55,13 @@
             android:max="40"
             android:summary="@string/candles_summary"
             android:title="@string/candles_title"/>
+
+        <ListPreference
+            android:defaultValue="sunset"
+            android:entries="@array/sunset_entries"
+            android:entryValues="@array/sunset_values"
+            android:key="sunset"
+            android:title="@string/sunset"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

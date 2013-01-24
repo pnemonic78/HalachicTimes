@@ -489,11 +489,18 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.candles, summaryText, date);
 		}
 
-		date = cal.getSunset();
+		opinion = mSettings.getSunset();
+		if ("sea".equals(opinion)) {
+			date = cal.getSeaLevelSunset();
+			summary = R.string.sunset_sea;
+		} else {
+			date = cal.getSunset();
+			summary = R.string.sunset_summary;
+		}
 		if (remote)
 			add(R.id.sunset_row, R.id.sunset_time, date, true);
 		else
-			add(R.string.sunset, R.string.sunset_summary, date);
+			add(R.string.sunset, summary, date);
 
 		date = cal.getTzais();
 		if (remote)
