@@ -370,9 +370,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		date = cal.getSunriseOffsetByDegrees(ZENITH_TALLIS);
 		if (remote)
-			add(R.id.earliest_row, R.id.earliest_time, date, true);
+			add(R.id.tallis_row, R.id.tallis_time, date, true);
 		else
-			add(R.string.earliest, R.string.earliest_summary, date);
+			add(R.string.tallis, R.string.tallis_summary, date);
 
 		opinion = mSettings.getSunrise();
 		if ("sea".equals(opinion)) {

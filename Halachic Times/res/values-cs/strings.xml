@@ -10,8 +10,8 @@
     <string name="dawn">Svítání</string>
     <string name="dawn_16">16,1° pod východním obzorem</string>
     <string name="dawn_72">72 minut před mořem východem slunce</string>
-    <string name="earliest">Nástup na pobyt nejdřív tallis a tefillin</string>
-    <string name="earliest_summary">Slunce je 11,5° pod obzorem</string>
+    <string name="tallis">Nástup na pobyt nejdřív tallis a tefillin</string>
+    <string name="tallis_summary">Slunce je 11,5° pod obzorem</string>
     <string name="sunrise">Východ slunce</string>
     <string name="sunrise_summary">V regionu soudržnosti</string>
     <string name="shema">Poslední šema</string>

@@ -21,8 +21,8 @@
     <string name="dawn_72">72 minutes before sea level sunrise</string>
     <string name="dawn_72_zmanis">72 minutes zmaniyos (Gra &amp; Baal Tanya) before sea level sunrise</string>
     <string name="dawn_60">60 minutes before sea level sunrise</string>
-    <string name="earliest">Earliest tallis and tefillin</string>
-    <string name="earliest_summary">Sun is 11.5° below horizon</string>
+    <string name="tallis">Earliest tallis and tefillin</string>
+    <string name="tallis_summary">Sun is 11.5° below horizon</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_summary">In a level region</string>
     <string name="sunrise_sea">At sea level</string>

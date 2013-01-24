@@ -10,8 +10,8 @@
     <string name="dawn">Світанок</string>
     <string name="dawn_16">16,1° нижче східним обрієм</string>
     <string name="dawn_72">72 хвилин до сходу сонця рівнем моря</string>
-    <string name="earliest">Перший талес і тфілін</string>
-    <string name="earliest_summary">Сонце 11,5 ° нижче обрію</string>
+    <string name="tallis">Перший талес і тфілін</string>
+    <string name="tallis_summary">Сонце 11,5 ° нижче обрію</string>
     <string name="sunrise">Схід сонця</string>
     <string name="sunrise_summary">У рівні регіону</string>
     <string name="shema">Останній шма</string>

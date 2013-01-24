@@ -10,8 +10,8 @@
     <string name="dawn">Świt</string>
     <string name="dawn_16">16,1° poniżej wschodnim horyzontem</string>
     <string name="dawn_72">72 minut przed wschodem słońca poziomem morza</string>
-    <string name="earliest">Najwcześniejsze tallis i tefilin</string>
-    <string name="earliest_summary">Słońce jest 11,5° poniżej horyzontu</string>
+    <string name="tallis">Najwcześniejsze tallis i tefilin</string>
+    <string name="tallis_summary">Słońce jest 11,5° poniżej horyzontu</string>
     <string name="sunrise">Wschód słońca</string>
     <string name="sunrise_summary">W regionie poziom</string>
     <string name="shema">Ostatnia szema</string>

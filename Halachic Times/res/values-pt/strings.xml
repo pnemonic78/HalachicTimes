@@ -10,8 +10,8 @@
     <string name="dawn">Alvorecer</string>
     <string name="dawn_16">16,1° abaixo desse horizonte leste</string>
     <string name="dawn_72">72 minutos antes do nascer do sol do mar nível</string>
-    <string name="earliest">Primeiro para talit e tefilin</string>
-    <string name="earliest_summary">Dom é de 11,5° abaixo do horizonte</string>
+    <string name="tallis">Primeiro para talit e tefilin</string>
+    <string name="tallis_summary">Dom é de 11,5° abaixo do horizonte</string>
     <string name="sunrise">Nascer do sol</string>
     <string name="sunrise_summary">Em uma região de nível</string>
     <string name="shema">Último shemá</string>

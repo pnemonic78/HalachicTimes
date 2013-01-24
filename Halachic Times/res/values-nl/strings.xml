@@ -10,8 +10,8 @@
     <string name="dawn">Dageraad</string>
     <string name="dawn_16">16,1° onder de oostelijke horizon</string>
     <string name="dawn_72">72 minuten vóór zeespiegel zonsopgang</string>
-    <string name="earliest">Vroegste tallis en tefillin</string>
-    <string name="earliest_summary">Zon is 11,5° onder de horizon</string>
+    <string name="tallis">Vroegste tallis en tefillin</string>
+    <string name="tallis_summary">Zon is 11,5° onder de horizon</string>
     <string name="sunrise">Zonsopgang</string>
     <string name="sunrise_summary">In een platte regio</string>
     <string name="shema">Laatste shema</string>

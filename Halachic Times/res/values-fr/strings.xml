@@ -10,8 +10,8 @@
     <string name="dawn">Aube</string>
     <string name="dawn_16">16,1° sous l\'horizon oriental</string>
     <string name="dawn_72">72 minutes avant le lever du au niveau mer</string>
-    <string name="earliest">Mise du talit et téfillin au plus tôt</string>
-    <string name="earliest_summary">Soleil est de 11,5° sous l\'horizon</string>
+    <string name="tallis">Mise du talit et téfillin au plus tôt</string>
+    <string name="tallis_summary">Soleil est de 11,5° sous l\'horizon</string>
     <string name="sunrise">Lever du soleil</string>
     <string name="sunrise_summary">Dans une région de niveau</string>
     <string name="shema">Heure de fin du chéma</string>

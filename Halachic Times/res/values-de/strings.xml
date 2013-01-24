@@ -10,8 +10,8 @@
     <string name="dawn">Morgendämmerung</string>
     <string name="dawn_16">16,1° unter dem östlichen horizont</string>
     <string name="dawn_72">72 minuten vor dem meeresspiegel sonnenaufgang</string>
-    <string name="earliest">Früheste tallis und tefillin</string>
-    <string name="earliest_summary">Sonne ist 11,5° unter dem horizont</string>
+    <string name="tallis">Früheste tallis und tefillin</string>
+    <string name="tallis_summary">Sonne ist 11,5° unter dem horizont</string>
     <string name="sunrise">Sonnenaufgang</string>
     <string name="sunrise_summary">In einem flachen bereich</string>
     <string name="shema">Spätestes schma</string>

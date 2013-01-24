@@ -10,8 +10,8 @@
     <string name="dawn">עלות השחר</string>
     <string name="dawn_16">16.1° מתחת לאופק המזרחי</string>
     <string name="dawn_72">‏72 דקות לפני הזריחה בגובה פני הים</string>
-    <string name="earliest">טלית ותפילין המוקדם ביותר</string>
-    <string name="earliest_summary">שמש 11.5° מתחת לאופק</string>
+    <string name="tallis">טלית ותפילין המוקדם ביותר</string>
+    <string name="tallis_summary">שמש 11.5° מתחת לאופק</string>
     <string name="sunrise">הנץ החמה</string>
     <string name="sunrise_summary">באזור אפקי</string>
     <string name="shema">שמע אחרון</string>

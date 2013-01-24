@@ -10,8 +10,8 @@
     <string name="dawn">Рассвет</string>
     <string name="dawn_16">16,1° ниже восточным горизонтом</string>
     <string name="dawn_72">72 минут до восхода солнца на уровне моря</string>
-    <string name="earliest">Талита и тфилина</string>
-    <string name="earliest_summary">Самое раннее время наложения талита и тфилина. Солнце 11,5° ниже горизонта</string>
+    <string name="tallis">Талита и тфилина</string>
+    <string name="tallis_summary">Самое раннее время наложения талита и тфилина. Солнце 11,5° ниже горизонта</string>
     <string name="sunrise">Восход солнца</string>
     <string name="sunrise_summary">В уровне регионе</string>
     <string name="shema">Самое позднее шма</string>

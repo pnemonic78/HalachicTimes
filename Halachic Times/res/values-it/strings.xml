@@ -10,8 +10,8 @@
     <string name="dawn">Alba</string>
     <string name="dawn_16">16.1° sotto l\'orizzonte orientale</string>
     <string name="dawn_72">72 minuti prima dell\'alba a livello del mare</string>
-    <string name="earliest">Prima tallis e tefillin</string>
-    <string name="earliest_summary">Sole è 11,5° sotto l\'orizzonte</string>
+    <string name="tallis">Prima tallis e tefillin</string>
+    <string name="tallis_summary">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="sunrise">Levata del sole</string>
     <string name="sunrise_summary">In una regione di livello</string>
     <string name="shema">Ultime shema</string>

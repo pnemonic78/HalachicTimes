@@ -10,8 +10,8 @@
     <string name="dawn">Amanecer</string>
     <string name="dawn_16">16,1° por debajo del horizonte oriental</string>
     <string name="dawn_72">72 minutos antes de la salida del sol el nivel del mar</string>
-    <string name="earliest">Primeras talit y tefilín</string>
-    <string name="earliest_summary">Sol es 11,5° bajo el horizonte</string>
+    <string name="tallis">Primeras talit y tefilín</string>
+    <string name="tallis_summary">Sol es 11,5° bajo el horizonte</string>
     <string name="sunrise">Salida del sol</string>
     <string name="sunrise_summary">En región de nivel</string>
     <string name="shema">Últimas shema</string>

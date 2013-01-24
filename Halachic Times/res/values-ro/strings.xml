@@ -10,8 +10,8 @@
     <string name="dawn">Zori de zi</string>
     <string name="dawn_16">16.1° sub orizont de est</string>
     <string name="dawn_72">72 minute înainte de răsărit nivelul mării</string>
-    <string name="earliest">Cazarea cel devreme tallis și tefillin</string>
-    <string name="earliest_summary">Soarele este de 11,5° sub orizont</string>
+    <string name="tallis">Cazarea cel devreme tallis și tefillin</string>
+    <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
     <string name="sunrise">Răsărit</string>
     <string name="sunrise_summary">Într-o regiune nivel</string>
     <string name="shema">Ultima șema</string>
