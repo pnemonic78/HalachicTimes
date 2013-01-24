@@ -54,6 +54,8 @@ public class ZmanimSettings {
 	public static final String KEY_BG_GRADIENT = "gradient";
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
+	/** Preference name for earliest tallis type. */
+	public static final String KEY_OPINION_TALLIS = "tallis";
 	/** Preference name for sunrise type. */
 	public static final String KEY_OPINION_SUNRISE = "sunrise";
 	/** Preference name for Last Shema type. */
@@ -201,6 +203,15 @@ public class ZmanimSettings {
 	 */
 	public String getDawn() {
 		return mData.getString(KEY_OPINION_DAWN, "16.1");
+	}
+
+	/**
+	 * Get the opinion for earliest tallis &amp; tefillin (<em>misheyakir</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getTallis() {
+		return mData.getString(KEY_OPINION_TALLIS, "");
 	}
 
 	/**

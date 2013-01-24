@@ -23,7 +23,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sourceforge.zmanim.AstronomicalCalendar;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
@@ -41,9 +40,6 @@ import android.widget.TextView;
  * @author Moshe
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
-
-	/** 11.5&deg; before sunrise. */
-	private static final double ZENITH_TALLIS = 11.5 + AstronomicalCalendar.GEOMETRIC_ZENITH;
 
 	/** 12 hours (half a full day). */
 	private static final long TWELVE_HOURS = 12 * DateUtils.HOUR_IN_MILLIS;
@@ -368,11 +364,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.dawn, summary, date);
 
-		date = cal.getSunriseOffsetByDegrees(ZENITH_TALLIS);
+		opinion = mSettings.getTallis();
+		if ("10.2".equals(opinion)) {
+			date = cal.getMisheyakir10Point2Degrees();
+			summary = R.string.tallis_10;
+		} else if ("11".equals(opinion)) {
+			date = cal.getMisheyakir11Degrees();
+			summary = R.string.tallis_11;
+		} else {
+			date = cal.getMisheyakir11Point5Degrees();
+			summary = R.string.tallis_summary;
+		}
 		if (remote)
 			add(R.id.tallis_row, R.id.tallis_time, date, true);
 		else
-			add(R.string.tallis, R.string.tallis_summary, date);
+			add(R.string.tallis, summary, date);
 
 		opinion = mSettings.getSunrise();
 		if ("sea".equals(opinion)) {

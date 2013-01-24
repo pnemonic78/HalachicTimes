@@ -37,6 +37,12 @@
             android:key="dawn"
             android:title="@string/dawn"/>
         <ListPreference
+            android:defaultValue="11.5"
+            android:entries="@array/tallis_entries"
+            android:entryValues="@array/tallis_values"
+            android:key="tallis"
+            android:title="@string/tallis"/>
+        <ListPreference
             android:defaultValue=""
             android:entries="@array/sunrise_entries"
             android:entryValues="@array/sunrise_values"

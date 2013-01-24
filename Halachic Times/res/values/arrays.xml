@@ -31,6 +31,16 @@
         <item>@string/dawn_72_zmanis</item>
         <item>@string/dawn_60</item>
     </string-array>
+    <string-array name="tallis_values" translatable="false">
+        <item>11.5</item>
+        <item>11</item>
+        <item>10.2</item>
+    </string-array>
+    <string-array name="tallis_entries" translatable="false">
+        <item>@string/tallis_summary</item>
+        <item>@string/tallis_11</item>
+        <item>@string/tallis_10</item>
+    </string-array>
     <string-array name="sunrise_values" translatable="false">
         <item></item>
         <item>sea</item>
