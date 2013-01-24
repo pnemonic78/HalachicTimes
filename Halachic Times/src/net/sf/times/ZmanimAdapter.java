@@ -45,6 +45,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/** 11.5&deg; before sunrise. */
 	private static final double ZENITH_TALLIS = 11.5 + AstronomicalCalendar.GEOMETRIC_ZENITH;
 
+	/** 12 hours (half a full day). */
+	private static final long TWELVE_HOURS = 12 * DateUtils.HOUR_IN_MILLIS;
+
 	/** Holiday id for Shabbath. */
 	private static final int SHABBATH = -1;
 
@@ -469,6 +472,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.midday_row, R.id.midday_time, date, true);
 		else
 			add(R.string.midday, summary, date);
+		Date midday = date;
 
 		date = cal.getMinchaGedola();
 		if (remote)
@@ -525,11 +529,20 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.nightfall_72min, R.string.nightfall_72min_summary, date);
 
-		date = cal.getSolarMidnight();
+		opinion = mSettings.getMidnight();
+		if ("12".equals(opinion)) {
+			date = midday;
+			if (date != null)
+				date.setTime(date.getTime() + TWELVE_HOURS);
+			summary = R.string.midnight_12;
+		} else {
+			date = cal.getSolarMidnight();
+			summary = R.string.midnight_summary;
+		}
 		if (remote)
 			add(R.id.midnight_row, R.id.midnight_time, date, true);
 		else
-			add(R.string.midnight, R.string.midnight_summary, date);
+			add(R.string.midnight, summary, date);
 	}
 
 	/**

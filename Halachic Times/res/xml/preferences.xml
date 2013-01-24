@@ -68,6 +68,12 @@
             android:entryValues="@array/sunset_values"
             android:key="sunset"
             android:title="@string/sunset"/>
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/midnight_entries"
+            android:entryValues="@array/midnight_values"
+            android:key="midnight"
+            android:title="@string/midnight"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

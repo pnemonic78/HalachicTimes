@@ -64,6 +64,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_CANDLES = "candles";
 	/** Preference name for sunset type. */
 	public static final String KEY_OPINION_SUNSET = "sunset";
+	/** Preference name for midnight type. */
+	public static final String KEY_OPINION_MIDNIGHT = "midnight";
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -235,5 +237,14 @@ public class ZmanimSettings {
 	 */
 	public String getSunset() {
 		return mData.getString(KEY_OPINION_SUNSET, "");
+	}
+
+	/**
+	 * Get the opinion for midnight (<em>chatzos layla</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getMidnight() {
+		return mData.getString(KEY_OPINION_MIDNIGHT, "");
 	}
 }

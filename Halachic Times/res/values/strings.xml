@@ -68,6 +68,7 @@
     <string name="nightfall_72min_summary">72 minutes</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Midnight</string>
+    <string name="midnight_12">12 hours after midday</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
