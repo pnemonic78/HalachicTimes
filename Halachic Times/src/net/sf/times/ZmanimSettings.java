@@ -54,6 +54,8 @@ public class ZmanimSettings {
 	public static final String KEY_BG_GRADIENT = "gradient";
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
+	/** Preference name for sunrise type. */
+	public static final String KEY_OPINION_SUNRISE = "sunrise";
 	/** Preference name for Last Shema type. */
 	public static final String KEY_OPINION_SHEMA = "shema";
 	/** Preference name for candle lighting minutes offset. */
@@ -193,6 +195,15 @@ public class ZmanimSettings {
 	 */
 	public String getDawn() {
 		return mData.getString(KEY_OPINION_DAWN, "16.1");
+	}
+
+	/**
+	 * Get the opinion for sunrise.
+	 * 
+	 * @return the opinion.
+	 */
+	public String getSunrise() {
+		return mData.getString(KEY_OPINION_SUNRISE, "sunrise");
 	}
 
 	/**

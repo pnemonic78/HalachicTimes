@@ -31,15 +31,23 @@
         <item>@string/dawn_72_zmanis</item>
         <item>@string/dawn_60</item>
     </string-array>
+    <string-array name="sunrise_values" translatable="false">
+        <item>sunrise</item>
+        <item>sea</item>
+    </string-array>
+    <string-array name="sunrise_entries" translatable="false">
+        <item>@string/sunrise_summary</item>
+        <item>@string/sunrise_sea</item>
+    </string-array>
     <string-array name="shema_values" translatable="false">
         <item>16.1_sunset</item>
         <item>7.083</item>
         <item>19.8</item>
         <item>120</item>
         <item>18</item>
+        <item>16.1</item>
         <item>96</item>
         <item>96_zmanis</item>
-        <item>16.1</item>
         <item>90</item>
         <item>90_zmanis</item>
         <item>72</item>
@@ -56,9 +64,9 @@
         <item>@string/shema_19</item>
         <item>@string/shema_120</item>
         <item>@string/shema_18</item>
+        <item>@string/shema_16</item>
         <item>@string/shema_96</item>
         <item>@string/shema_96_zmanis</item>
-        <item>@string/shema_16</item>
         <item>@string/shema_90</item>
         <item>@string/shema_90_zmanis</item>
         <item>@string/shema_72</item>

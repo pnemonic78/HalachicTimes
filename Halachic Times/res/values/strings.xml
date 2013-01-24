@@ -25,6 +25,7 @@
     <string name="earliest_summary">Sun is 11.5° below horizon</string>
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_summary">In a level region</string>
+    <string name="sunrise_sea">At sea level</string>
     <string name="shema">Latest shema</string>
     <string name="shema_16_sunset">shema_16_sunset</string>
     <string name="shema_7">shema_7</string>

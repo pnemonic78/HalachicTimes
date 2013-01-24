@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sourceforge.zmanim.AstronomicalCalendar;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
@@ -42,7 +43,7 @@ import android.widget.TextView;
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/** 11.5&deg; before sunrise. */
-	private static final double ZENITH_TALLIS = 101.5;
+	private static final double ZENITH_TALLIS = 11.5 + AstronomicalCalendar.GEOMETRIC_ZENITH;
 
 	/** Holiday id for Shabbath. */
 	private static final int SHABBATH = -1;
@@ -313,34 +314,36 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		Date date;
 		int summary;
-		String opinion = mSettings.getDawn();
+		String opinion;
+
+		opinion = mSettings.getDawn();
 		if ("19.8".equals(opinion)) {
 			date = cal.getAlos19Point8Degrees();
 			summary = R.string.dawn_19;
 		} else if ("120".equals(opinion)) {
 			date = cal.getAlos120();
 			summary = R.string.dawn_120;
+		} else if ("120_zmanis".equals(opinion)) {
+			date = cal.getAlos120Zmanis();
+			summary = R.string.dawn_120_zmanis;
 		} else if ("18".equals(opinion)) {
 			date = cal.getAlos18Degrees();
 			summary = R.string.dawn_18;
 		} else if ("26".equals(opinion)) {
 			date = cal.getAlos26Degrees();
 			summary = R.string.dawn_26;
-		} else if ("120_zmanis".equals(opinion)) {
-			date = cal.getAlos120Zmanis();
-			summary = R.string.dawn_120_zmanis;
 		} else if ("16.1".equals(opinion)) {
 			date = cal.getAlos16Point1Degrees();
 			summary = R.string.dawn_16;
 		} else if ("96".equals(opinion)) {
 			date = cal.getAlos96();
 			summary = R.string.dawn_96;
-		} else if ("90".equals(opinion)) {
-			date = cal.getAlos90();
-			summary = R.string.dawn_90;
 		} else if ("96_zmanis".equals(opinion)) {
 			date = cal.getAlos90Zmanis();
 			summary = R.string.dawn_96_zmanis;
+		} else if ("90".equals(opinion)) {
+			date = cal.getAlos90();
+			summary = R.string.dawn_90;
 		} else if ("90_zmanis".equals(opinion)) {
 			date = cal.getAlos90Zmanis();
 			summary = R.string.dawn_90_zmanis;
@@ -368,11 +371,18 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.earliest, R.string.earliest_summary, date);
 
-		date = cal.getSunrise();
+		opinion = mSettings.getSunrise();
+		if ("sea".equals(opinion)) {
+			date = cal.getSeaLevelSunrise();
+			summary = R.string.sunrise_sea;
+		} else {
+			date = cal.getSunrise();
+			summary = R.string.sunrise_summary;
+		}
 		if (remote)
 			add(R.id.sunrise_row, R.id.sunrise_time, date, true);
 		else
-			add(R.string.sunrise, R.string.sunrise_summary, date);
+			add(R.string.sunrise, summary, date);
 
 		opinion = mSettings.getLastShema();
 		if ("16.1_sunset".equals(opinion)) {

@@ -37,6 +37,12 @@
             android:key="dawn"
             android:title="@string/dawn"/>
         <ListPreference
+            android:defaultValue="sunrise"
+            android:entries="@array/sunrise_entries"
+            android:entryValues="@array/sunrise_values"
+            android:key="sunrise"
+            android:title="@string/sunrise"/>
+        <ListPreference
             android:defaultValue="MGA"
             android:entries="@array/shema_entries"
             android:entryValues="@array/shema_values"
