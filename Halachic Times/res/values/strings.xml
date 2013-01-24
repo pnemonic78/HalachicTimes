@@ -49,7 +49,8 @@
     <string name="prayers_gra">Latest shacharis</string>
     <string name="prayers_gra_summary">Latest morning prayers according to Gra &amp; Baal Tanya</string>
     <string name="midday">Midday</string>
-    <string name="midday_summary">Noon</string>
+    <string name="midday_summary">Solar noon</string>
+    <string name="midday_fixed">Noon adjusted for the local latitude</string>
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
     <string name="mincha">Mincha ketana</string>

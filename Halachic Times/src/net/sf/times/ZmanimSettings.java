@@ -58,6 +58,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_SUNRISE = "sunrise";
 	/** Preference name for Last Shema type. */
 	public static final String KEY_OPINION_SHEMA = "shema";
+	/** Preference name for midday / noon type. */
+	public static final String KEY_OPINION_NOON = "midday";
 	/** Preference name for candle lighting minutes offset. */
 	public static final String KEY_OPINION_CANDLES = "candles";
 	/** Preference name for sunset type. */
@@ -205,7 +207,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getSunrise() {
-		return mData.getString(KEY_OPINION_SUNRISE, "sunrise");
+		return mData.getString(KEY_OPINION_SUNRISE, "");
 	}
 
 	/**
@@ -218,11 +220,20 @@ public class ZmanimSettings {
 	}
 
 	/**
+	 * Get the opinion for noon (<em>chatzos</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getMidday() {
+		return mData.getString(KEY_OPINION_NOON, "");
+	}
+
+	/**
 	 * Get the opinion for sunset.
 	 * 
 	 * @return the opinion.
 	 */
 	public String getSunset() {
-		return mData.getString(KEY_OPINION_SUNSET, "sunset");
+		return mData.getString(KEY_OPINION_SUNSET, "");
 	}
 }

@@ -457,11 +457,18 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.prayers_gra, R.string.prayers_gra_summary, date);
 
-		date = cal.getChatzos();
+		opinion = mSettings.getMidday();
+		if ("fixed".equals(opinion)) {
+			date = cal.getFixedLocalChatzos();
+			summary = R.string.midday_fixed;
+		} else {
+			date = cal.getChatzos();
+			summary = R.string.midday_summary;
+		}
 		if (remote)
 			add(R.id.midday_row, R.id.midday_time, date, true);
 		else
-			add(R.string.midday, R.string.midday_summary, date);
+			add(R.string.midday, summary, date);
 
 		date = cal.getMinchaGedola();
 		if (remote)

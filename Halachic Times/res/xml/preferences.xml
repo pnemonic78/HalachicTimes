@@ -37,7 +37,7 @@
             android:key="dawn"
             android:title="@string/dawn"/>
         <ListPreference
-            android:defaultValue="sunrise"
+            android:defaultValue=""
             android:entries="@array/sunrise_entries"
             android:entryValues="@array/sunrise_values"
             android:key="sunrise"
@@ -48,6 +48,12 @@
             android:entryValues="@array/shema_values"
             android:key="shema"
             android:title="@string/shema"/>
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/midday_entries"
+            android:entryValues="@array/midday_values"
+            android:key="midday"
+            android:title="@string/midday"/>
 
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"
@@ -57,7 +63,7 @@
             android:title="@string/candles_title"/>
 
         <ListPreference
-            android:defaultValue="sunset"
+            android:defaultValue=""
             android:entries="@array/sunset_entries"
             android:entryValues="@array/sunset_values"
             android:key="sunset"

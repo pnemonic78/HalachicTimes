@@ -32,7 +32,7 @@
         <item>@string/dawn_60</item>
     </string-array>
     <string-array name="sunrise_values" translatable="false">
-        <item>sunrise</item>
+        <item></item>
         <item>sea</item>
     </string-array>
     <string-array name="sunrise_entries" translatable="false">
@@ -77,8 +77,16 @@
         <item>@string/shema_fixed</item>
         <item>@string/shema_gra</item>
     </string-array>
+    <string-array name="midday_values" translatable="false">
+        <item></item>
+        <item>fixed</item>
+    </string-array>
+    <string-array name="midday_entries" translatable="false">
+        <item>@string/midday_summary</item>
+        <item>@string/midday_fixed</item>
+    </string-array>
     <string-array name="sunset_values" translatable="false">
-        <item>sunset</item>
+        <item></item>
         <item>sea</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
