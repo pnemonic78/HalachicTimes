@@ -71,6 +71,10 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		list.setOnPreferenceChangeListener(this);
 		onPreferenceChange(list, list.getValue());
 
+		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_MINCHA);
+		list.setOnPreferenceChangeListener(this);
+		onPreferenceChange(list, list.getValue());
+
 		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_SUNSET);
 		list.setOnPreferenceChangeListener(this);
 		onPreferenceChange(list, list.getValue());

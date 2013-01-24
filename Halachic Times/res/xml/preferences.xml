@@ -60,6 +60,12 @@
             android:entryValues="@array/midday_values"
             android:key="midday"
             android:title="@string/midday"/>
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/mincha_entries"
+            android:entryValues="@array/mincha_values"
+            android:key="mincha"
+            android:title="@string/mincha"/>
 
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"

@@ -57,6 +57,9 @@
     <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Afternoon prayers</string>
+    <string name="mincha_72">mincha_72</string>
+    <string name="mincha_16">mincha_16</string>
+    <string name="mincha_ateret">mincha_ateret</string>
     <string name="plug_hamincha">Plug hamincha</string>
     <string name="plug_hamincha_summary">Plug hamincha according to Gra &amp; Baal Tanya</string>
     <string name="candles">Candle lighting</string>

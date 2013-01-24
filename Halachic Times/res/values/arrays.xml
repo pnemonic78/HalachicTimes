@@ -95,6 +95,18 @@
         <item>@string/midday_summary</item>
         <item>@string/midday_fixed</item>
     </string-array>
+    <string-array name="mincha_values" translatable="false">
+        <item>16.1</item>
+        <item>72</item>
+        <item>AT</item>
+        <item></item>
+    </string-array>
+    <string-array name="mincha_entries" translatable="false">
+        <item>@string/mincha_summary</item>
+        <item>@string/mincha_ateret</item>
+        <item>@string/mincha_72</item>
+        <item>@string/mincha_16</item>
+    </string-array>
     <string-array name="sunset_values" translatable="false">
         <item></item>
         <item>sea</item>

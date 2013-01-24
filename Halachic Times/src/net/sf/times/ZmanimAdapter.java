@@ -486,11 +486,24 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.earliest_mincha, R.string.earliest_mincha_summary, date);
 
-		date = cal.getMinchaKetana();
+		opinion = mSettings.getMincha();
+		if ("16.1".equals(opinion)) {
+			date = cal.getMinchaKetana16Point1Degrees();
+			summary = R.string.mincha_summary;
+		} else if ("72".equals(opinion)) {
+			date = cal.getMinchaKetana72Minutes();
+			summary = R.string.mincha_summary;
+		} else if ("AT".equals(opinion)) {
+			date = cal.getMinchaKetanaAteretTorah();
+			summary = R.string.mincha_summary;
+		} else {
+			date = cal.getMinchaKetana();
+			summary = R.string.mincha_summary;
+		}
 		if (remote)
 			add(R.id.mincha_row, R.id.mincha_time, date, true);
 		else
-			add(R.string.mincha, R.string.mincha_summary, date);
+			add(R.string.mincha, summary, date);
 
 		date = cal.getPlagHamincha();
 		if (remote)
