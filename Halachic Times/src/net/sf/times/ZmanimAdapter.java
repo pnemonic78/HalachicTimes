@@ -480,22 +480,39 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.midday, summary, date);
 		Date midday = date;
 
-		date = cal.getMinchaGedola();
+
+		opinion = mSettings.getEarliestMincha();
+		if ("16.1".equals(opinion)) {
+			date = cal.getMinchaGedola16Point1Degrees();
+			summary = R.string.earliest_mincha_16;
+		} else if ("30".equals(opinion)) {
+			date = cal.getMinchaGedola30Minutes();
+			summary = R.string.earliest_mincha_30;
+		} else if ("AT".equals(opinion)) {
+			date = cal.getMinchaGedolaAteretTorah();
+			summary = R.string.earliest_mincha_ateret;
+		} else if ("72".equals(opinion)) {
+			date = cal.getMinchaGedola72Minutes();
+			summary = R.string.earliest_mincha_72;
+		} else {
+			date = cal.getMinchaGedola();
+			summary = R.string.earliest_mincha_summary;
+		}
 		if (remote)
 			add(R.id.earliest_mincha_row, R.id.earliest_mincha_time, date, true);
 		else
-			add(R.string.earliest_mincha, R.string.earliest_mincha_summary, date);
+			add(R.string.earliest_mincha, summary, date);
 
 		opinion = mSettings.getMincha();
 		if ("16.1".equals(opinion)) {
 			date = cal.getMinchaKetana16Point1Degrees();
-			summary = R.string.mincha_summary;
+			summary = R.string.mincha_16;
 		} else if ("72".equals(opinion)) {
 			date = cal.getMinchaKetana72Minutes();
-			summary = R.string.mincha_summary;
+			summary = R.string.mincha_72;
 		} else if ("AT".equals(opinion)) {
 			date = cal.getMinchaKetanaAteretTorah();
-			summary = R.string.mincha_summary;
+			summary = R.string.mincha_ateret;
 		} else {
 			date = cal.getMinchaKetana();
 			summary = R.string.mincha_summary;

@@ -55,6 +55,10 @@
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
+    <string name="earliest_mincha_ateret">earliest_mincha_ateret</string>
+    <string name="earliest_mincha_72">earliest_mincha_72</string>
+    <string name="earliest_mincha_30">earliest_mincha_30</string>
+    <string name="earliest_mincha_16">earliest_mincha_16</string>
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Afternoon prayers</string>
     <string name="mincha_72">mincha_72</string>

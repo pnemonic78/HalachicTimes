@@ -62,6 +62,12 @@
             android:title="@string/midday"/>
         <ListPreference
             android:defaultValue=""
+            android:entries="@array/earliest_mincha_entries"
+            android:entryValues="@array/earliest_mincha_values"
+            android:key="earliest_mincha"
+            android:title="@string/earliest_mincha"/>
+        <ListPreference
+            android:defaultValue=""
             android:entries="@array/mincha_entries"
             android:entryValues="@array/mincha_values"
             android:key="mincha"

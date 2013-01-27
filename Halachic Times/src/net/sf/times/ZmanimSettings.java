@@ -60,6 +60,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_SHEMA = "shema";
 	/** Preference name for midday / noon type. */
 	public static final String KEY_OPINION_NOON = "midday";
+	/** Preference name for Earliest Mincha type. */
+	public static final String KEY_OPINION_EARLIEST_MINCHA = "earliest_mincha";
 	/** Preference name for Mincha Ketana type. */
 	public static final String KEY_OPINION_MINCHA = "mincha";
 	/** Preference name for candle lighting minutes offset. */
@@ -239,6 +241,15 @@ public class ZmanimSettings {
 	 */
 	public String getMidday() {
 		return mPrefs.getString(KEY_OPINION_NOON, "");
+	}
+
+	/**
+	 * Get the opinion for earliest afternoon prayers (<em>mincha gedola</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getEarliestMincha() {
+		return mPrefs.getString(KEY_OPINION_EARLIEST_MINCHA, "");
 	}
 
 	/**
