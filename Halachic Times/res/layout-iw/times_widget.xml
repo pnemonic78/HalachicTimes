@@ -105,7 +105,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/prayers_mga_row"
+        android:id="@+id/prayers_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false">
@@ -117,35 +117,11 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
-            android:text="@string/prayers_mga"
+            android:text="@string/prayers"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
-            android:id="@+id/prayers_mga_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/prayers_gra_row"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:singleLine="true"
-            android:text="@string/prayers_gra"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-        <TextView
-            android:id="@+id/prayers_gra_time"
+            android:id="@+id/prayers_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

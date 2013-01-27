@@ -58,6 +58,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_SUNRISE = "sunrise";
 	/** Preference name for Last Shema type. */
 	public static final String KEY_OPINION_SHEMA = "shema";
+	/** Preference name for Last Morning Tfila type. */
+	public static final String KEY_OPINION_TFILA = "prayers";
 	/** Preference name for midday / noon type. */
 	public static final String KEY_OPINION_NOON = "midday";
 	/** Preference name for Earliest Mincha type. */
@@ -232,6 +234,15 @@ public class ZmanimSettings {
 	 */
 	public String getLastShema() {
 		return mPrefs.getString(KEY_OPINION_SHEMA, "MGA");
+	}
+
+	/**
+	 * Get the opinion for the last morning prayers (<em>sof zman tfila</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getLastTfila() {
+		return mPrefs.getString(KEY_OPINION_TFILA, "MGA");
 	}
 
 	/**

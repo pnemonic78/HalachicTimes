@@ -87,6 +87,40 @@
         <item>@string/shema_fixed</item>
         <item>@string/shema_gra</item>
     </string-array>
+    <string-array name="prayers_values" translatable="false">
+        <item>120</item>
+        <item>96</item>
+        <item>96_zmanis</item>
+        <item>19.8</item>
+        <item>90</item>
+        <item>90_zmanis</item>
+        <item>AT</item>
+        <item>18</item>
+        <item>fixed</item>
+        <item>16.1</item>
+        <item>MGA</item>
+        <item>72</item>
+        <item>72_zmanis</item>
+        <item>2</item>
+        <item>GRA</item>
+    </string-array>
+    <string-array name="prayers_entries" translatable="false">
+        <item>@string/prayers_120</item>
+        <item>@string/prayers_96</item>
+        <item>@string/prayers_96_zmanis</item>
+        <item>@string/prayers_19</item>
+        <item>@string/prayers_90</item>
+        <item>@string/prayers_90_zmanis</item>
+        <item>@string/prayers_ateret</item>
+        <item>@string/prayers_18</item>
+        <item>@string/prayers_fixed</item>
+        <item>@string/prayers_16</item>
+        <item>@string/prayers_mga_summary</item>
+        <item>@string/prayers_72</item>
+        <item>@string/prayers_72_zmanis</item>
+        <item>@string/prayers_2</item>
+        <item>@string/prayers_gra_summary</item>
+    </string-array>
     <string-array name="midday_values" translatable="false">
         <item></item>
         <item>fixed</item>

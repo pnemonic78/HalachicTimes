@@ -454,17 +454,57 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.shema, summary, date);
 
-		date = cal.getSofZmanTfilaMGA();
+		opinion = mSettings.getLastTfila();
+		if ("120".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA120Minutes();
+			summary = R.string.prayers_120;
+		} else if ("96".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA96Minutes();
+			summary = R.string.prayers_96;
+		} else if ("96_zmanis".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA96MinutesZmanis();
+			summary = R.string.prayers_96_zmanis;
+		} else if ("19.8".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA19Point8Degrees();
+			summary = R.string.prayers_19;
+		} else if ("90".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA90Minutes();
+			summary = R.string.prayers_90;
+		} else if ("90_zmanis".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA90MinutesZmanis();
+			summary = R.string.prayers_90_zmanis;
+		} else if ("AT".equals(opinion)) {
+			date = cal.getSofZmanTfilahAteretTorah();
+			summary = R.string.prayers_ateret;
+		} else if ("18".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA18Degrees();
+			summary = R.string.prayers_18;
+		} else if ("fixed".equals(opinion)) {
+			date = cal.getSofZmanTfilaFixedLocal();
+			summary = R.string.prayers_fixed;
+		} else if ("16.1".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA16Point1Degrees();
+			summary = R.string.prayers_16;
+		} else if ("72".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA72Minutes();
+			summary = R.string.prayers_72;
+		} else if ("72_zmanis".equals(opinion)) {
+			date = cal.getSofZmanTfilaMGA72MinutesZmanis();
+			summary = R.string.prayers_72_zmanis;
+		} else if ("2".equals(opinion)) {
+			date = cal.getSofZmanTfila2HoursBeforeChatzos();
+			summary = R.string.prayers_2;
+		} else if ("GRA".equals(opinion)) {
+			date = cal.getSofZmanTfilaGRA();
+			summary = R.string.prayers_gra_summary;
+		} else {
+			date = cal.getSofZmanTfilaMGA();
+			summary = R.string.prayers_mga_summary;
+		}
 		if (remote)
-			add(R.id.prayers_mga_row, R.id.prayers_mga_time, date, true);
+			add(R.id.prayers_row, R.id.prayers_time, date, true);
 		else
-			add(R.string.prayers_mga, R.string.prayers_mga_summary, date);
-
-		date = cal.getSofZmanTfilaGRA();
-		if (remote)
-			add(R.id.prayers_gra_row, R.id.prayers_gra_time, date, true);
-		else
-			add(R.string.prayers_gra, R.string.prayers_gra_summary, date);
+			add(R.string.prayers, summary, date);
 
 		opinion = mSettings.getMidday();
 		if ("fixed".equals(opinion)) {

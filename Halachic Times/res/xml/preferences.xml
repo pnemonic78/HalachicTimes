@@ -55,6 +55,12 @@
             android:key="shema"
             android:title="@string/shema"/>
         <ListPreference
+            android:defaultValue="MGA"
+            android:entries="@array/prayers_entries"
+            android:entryValues="@array/prayers_values"
+            android:key="prayers"
+            android:title="@string/prayers"/>
+        <ListPreference
             android:defaultValue=""
             android:entries="@array/midday_entries"
             android:entryValues="@array/midday_values"
