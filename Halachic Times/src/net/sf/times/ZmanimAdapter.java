@@ -520,7 +520,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.midday, summary, date);
 		Date midday = date;
 
-
 		opinion = mSettings.getEarliestMincha();
 		if ("16.1".equals(opinion)) {
 			date = cal.getMinchaGedola16Point1Degrees();
@@ -562,11 +561,63 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.mincha, summary, date);
 
-		date = cal.getPlagHamincha();
+		opinion = mSettings.getPlugHamincha();
+		if ("alos".equals(opinion)) {
+			date = cal.getPlagAlosToSunset();
+			summary = R.string.plug_hamincha_alos;
+		} else if ("16.1_alos".equals(opinion)) {
+			date = cal.getPlagAlos16Point1ToTzaisGeonim7Point083Degrees();
+			summary = R.string.plug_hamincha_16_alos;
+		} else if ("AT".equals(opinion)) {
+			date = cal.getPlagHaminchaAteretTorah();
+			summary = R.string.plug_hamincha_ateret;
+		} else if ("60".equals(opinion)) {
+			date = cal.getPlagHamincha60Minutes();
+			summary = R.string.plug_hamincha_60;
+		} else if ("72".equals(opinion)) {
+			date = cal.getPlagHamincha72Minutes();
+			summary = R.string.plug_hamincha_72;
+		} else if ("72_zmanis".equals(opinion)) {
+			date = cal.getPlagHamincha72MinutesZmanis();
+			summary = R.string.plug_hamincha_72_zmanis;
+		} else if ("16.1".equals(opinion)) {
+			date = cal.getPlagHamincha16Point1Degrees();
+			summary = R.string.plug_hamincha_16;
+		} else if ("18".equals(opinion)) {
+			date = cal.getPlagHamincha18Degrees();
+			summary = R.string.plug_hamincha_18;
+		} else if ("90".equals(opinion)) {
+			date = cal.getPlagHamincha90Minutes();
+			summary = R.string.plug_hamincha_90;
+		} else if ("90_zmanis".equals(opinion)) {
+			date = cal.getPlagHamincha90MinutesZmanis();
+			summary = R.string.plug_hamincha_90_zmanis;
+		} else if ("19.8".equals(opinion)) {
+			date = cal.getPlagHamincha19Point8Degrees();
+			summary = R.string.plug_hamincha_19;
+		} else if ("96".equals(opinion)) {
+			date = cal.getPlagHamincha96Minutes();
+			summary = R.string.plug_hamincha_96;
+		} else if ("96_zmanis".equals(opinion)) {
+			date = cal.getPlagHamincha96MinutesZmanis();
+			summary = R.string.plug_hamincha_96_zmanis;
+		} else if ("120".equals(opinion)) {
+			date = cal.getPlagHamincha120Minutes();
+			summary = R.string.plug_hamincha_120;
+		} else if ("120_zmanis".equals(opinion)) {
+			date = cal.getPlagHamincha120MinutesZmanis();
+			summary = R.string.plug_hamincha_120_zmanis;
+		} else if ("26".equals(opinion)) {
+			date = cal.getPlagHamincha26Degrees();
+			summary = R.string.plug_hamincha_26;
+		} else {
+			date = cal.getPlagHamincha();
+			summary = R.string.plug_hamincha_summary;
+		}
 		if (remote)
 			add(R.id.plug_hamincha_row, R.id.plug_hamincha_time, date, true);
 		else
-			add(R.string.plug_hamincha, R.string.plug_hamincha_summary, date);
+			add(R.string.plug_hamincha, summary, date);
 
 		date = cal.getCandleLighting();
 		if (remote)

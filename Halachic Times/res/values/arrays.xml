@@ -155,6 +155,44 @@
         <item>@string/mincha_72</item>
         <item>@string/mincha_16</item>
     </string-array>
+    <string-array name="plug_hamincha_values" translatable="false">
+        <item>alos</item>
+        <item></item>
+        <item>16.1_alos</item>
+        <item>AT</item>
+        <item>60</item>
+        <item>72</item>
+        <item>72_zmanis</item>
+        <item>16.1</item>
+        <item>18</item>
+        <item>90</item>
+        <item>90_zmanis</item>
+        <item>19.8</item>
+        <item>96</item>
+        <item>96_zmanis</item>
+        <item>120</item>
+        <item>120_zmanis</item>
+        <item>26</item>
+    </string-array>
+    <string-array name="plug_hamincha_entries" translatable="false">
+        <item>@string/plug_hamincha_alos</item>
+        <item>@string/plug_hamincha_summary</item>
+        <item>@string/plug_hamincha_16_alos</item>
+        <item>@string/plug_hamincha_ateret</item>
+        <item>@string/plug_hamincha_60</item>
+        <item>@string/plug_hamincha_72</item>
+        <item>@string/plug_hamincha_72_zmanis</item>
+        <item>@string/plug_hamincha_16</item>
+        <item>@string/plug_hamincha_18</item>
+        <item>@string/plug_hamincha_90</item>
+        <item>@string/plug_hamincha_90_zmanis</item>
+        <item>@string/plug_hamincha_19</item>
+        <item>@string/plug_hamincha_96</item>
+        <item>@string/plug_hamincha_96_zmanis</item>
+        <item>@string/plug_hamincha_120</item>
+        <item>@string/plug_hamincha_120_zmanis</item>
+        <item>@string/plug_hamincha_26</item>
+    </string-array>
     <string-array name="sunset_values" translatable="false">
         <item></item>
         <item>sea</item>

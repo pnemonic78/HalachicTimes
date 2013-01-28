@@ -66,6 +66,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_EARLIEST_MINCHA = "earliest_mincha";
 	/** Preference name for Mincha Ketana type. */
 	public static final String KEY_OPINION_MINCHA = "mincha";
+	/** Preference name for Plug HaMincha type. */
+	public static final String KEY_OPINION_PLUG_MINCHA = "plug_hamincha";
 	/** Preference name for candle lighting minutes offset. */
 	public static final String KEY_OPINION_CANDLES = "candles";
 	/** Preference name for sunset type. */
@@ -270,6 +272,15 @@ public class ZmanimSettings {
 	 */
 	public String getMincha() {
 		return mPrefs.getString(KEY_OPINION_MINCHA, "");
+	}
+
+	/**
+	 * Get the opinion for afternoon prayers (<em>plag hamincha</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getPlugHamincha() {
+		return mPrefs.getString(KEY_OPINION_PLUG_MINCHA, "");
 	}
 
 	/**

@@ -78,6 +78,12 @@
             android:entryValues="@array/mincha_values"
             android:key="mincha"
             android:title="@string/mincha"/>
+        <ListPreference
+            android:defaultValue=""
+            android:entries="@array/plug_hamincha_entries"
+            android:entryValues="@array/plug_hamincha_values"
+            android:key="plug_hamincha"
+            android:title="@string/plug_hamincha"/>
 
         <net.sf.times.preference.SeekBarPreference
             android:defaultValue="18"
