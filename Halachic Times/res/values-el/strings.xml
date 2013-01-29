@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
     <string name="sunset">Ηλιοβασίλεμα</string>
     <string name="sunset_summary">Σε μια περιοχή επίπεδο</string>
-    <string name="nightfall_3stars">Σούρουπο</string>
-    <string name="nightfall_3stars_summary">3 αστέρια ορατά</string>
-    <string name="nightfall_72min">Σούρουπο</string>
-    <string name="nightfall_72min_summary">72 λεπτά</string>
+    <string name="nightfall">Σούρουπο</string>
+    <string name="nightfall_3stars">3 αστέρια ορατά</string>
+    <string name="nightfall_72">72 λεπτά</string>
     <string name="midnight">Χαζοτ</string>
     <string name="midnight_summary">Μεσάνυχτα</string>
 

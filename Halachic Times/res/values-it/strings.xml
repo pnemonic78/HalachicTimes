@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
     <string name="sunset">Tramonto</string>
     <string name="sunset_summary">In una regione di livello</string>
-    <string name="nightfall_3stars">Crepuscolo</string>
-    <string name="nightfall_3stars_summary">3 stelle visibili</string>
-    <string name="nightfall_72min">Crepuscolo</string>
-    <string name="nightfall_72min_summary">72 minuti</string>
+    <string name="nightfall">Crepuscolo</string>
+    <string name="nightfall_3stars">3 stelle visibili</string>
+    <string name="nightfall_72">72 minuti</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Mezzanotte</string>
 

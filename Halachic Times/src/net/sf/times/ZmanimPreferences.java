@@ -51,49 +51,25 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		mCandles.setOnPreferenceChangeListener(this);
 		onPreferenceChange(mCandles, null);
 
-		ListPreference list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_DAWN);
+		initList(ZmanimSettings.KEY_OPINION_DAWN);
+		initList(ZmanimSettings.KEY_OPINION_TALLIS);
+		initList(ZmanimSettings.KEY_OPINION_SUNRISE);
+		initList(ZmanimSettings.KEY_OPINION_SHEMA);
+		initList(ZmanimSettings.KEY_OPINION_TFILA);
+		initList(ZmanimSettings.KEY_OPINION_NOON);
+		initList(ZmanimSettings.KEY_OPINION_EARLIEST_MINCHA);
+		initList(ZmanimSettings.KEY_OPINION_MINCHA);
+		initList(ZmanimSettings.KEY_OPINION_PLUG_MINCHA);
+		initList(ZmanimSettings.KEY_OPINION_SUNSET);
+		initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
+		initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
+	}
+
+	private void initList(String name) {
+		ListPreference list = (ListPreference) findPreference(name);
 		list.setOnPreferenceChangeListener(this);
 		onPreferenceChange(list, list.getValue());
 
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_TALLIS);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_SUNRISE);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_SHEMA);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_TFILA);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_NOON);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_EARLIEST_MINCHA);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_MINCHA);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_PLUG_MINCHA);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_SUNSET);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
-
-		list = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_MIDNIGHT);
-		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
 	}
 
 	@Override

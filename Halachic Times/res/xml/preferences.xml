@@ -100,6 +100,12 @@
             android:title="@string/sunset"/>
         <ListPreference
             android:defaultValue=""
+            android:entries="@array/nightfall_entries"
+            android:entryValues="@array/nightfall_values"
+            android:key="nightfall"
+            android:title="@string/nightfall"/>
+        <ListPreference
+            android:defaultValue=""
             android:entries="@array/midnight_entries"
             android:entryValues="@array/midnight_values"
             android:key="midnight"

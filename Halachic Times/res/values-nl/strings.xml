@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minuten voor zonsondergang</string>
     <string name="sunset">Zonsondergang</string>
     <string name="sunset_summary">In een platte regio</string>
-    <string name="nightfall_3stars">Nacht</string>
-    <string name="nightfall_3stars_summary">3 sterren zichtbaar</string>
-    <string name="nightfall_72min">Nacht</string>
-    <string name="nightfall_72min_summary">72 minuten</string>
+    <string name="nightfall">Nacht</string>
+    <string name="nightfall_3stars">3 sterren zichtbaar</string>
+    <string name="nightfall_72">72 minuten</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Middernacht</string>
 

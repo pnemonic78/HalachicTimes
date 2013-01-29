@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minute înainte de apus</string>
     <string name="sunset">Apus de soare</string>
     <string name="sunset_summary">Într-o regiune nivel</string>
-    <string name="nightfall_3stars">Căderea nopții</string>
-    <string name="nightfall_3stars_summary">3 stele vizibile</string>
-    <string name="nightfall_72min">Căderea nopții</string>
-    <string name="nightfall_72min_summary">72 minute</string>
+    <string name="nightfall">Căderea nopții</string>
+    <string name="nightfall_3stars">3 stele vizibile</string>
+    <string name="nightfall_72">72 minute</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Miezul nopții</string>
 

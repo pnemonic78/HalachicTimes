@@ -201,6 +201,54 @@
         <item>@string/sunset_summary</item>
         <item>@string/sunset_sea</item>
     </string-array>
+    <string-array name="nightfall_values" translatable="false">
+        <item>3.65</item>
+        <item>4.37</item>
+        <item>4.61</item>
+        <item>4.8</item>
+        <item>5.88</item>
+        <item>5.95</item>
+        <item>7.083</item>
+        <item></item>
+        <item>8.5</item>
+        <item>AT</item>
+        <item>60</item>
+        <item>72</item>
+        <item>16.1</item>
+        <item>18</item>
+        <item>90</item>
+        <item>90_zmanis</item>
+        <item>19.8</item>
+        <item>96</item>
+        <item>96_zmanis</item>
+        <item>120</item>
+        <item>120_zmanis</item>
+        <item>26</item>
+    </string-array>
+    <string-array name="nightfall_entries" translatable="false">
+        <item>@string/nightfall_3_65</item>
+        <item>@string/nightfall_4_37</item>
+        <item>@string/nightfall_4_61</item>
+        <item>@string/nightfall_4_8</item>
+        <item>@string/nightfall_5_88</item>
+        <item>@string/nightfall_5_95</item>
+        <item>@string/nightfall_7</item>
+        <item>@string/nightfall_3stars</item>
+        <item>@string/nightfall_8</item>
+        <item>@string/nightfall_ateret</item>
+        <item>@string/nightfall_60</item>
+        <item>@string/nightfall_72</item>
+        <item>@string/nightfall_16</item>
+        <item>@string/nightfall_18</item>
+        <item>@string/nightfall_90</item>
+        <item>@string/nightfall_90_zmanis</item>
+        <item>@string/nightfall_19</item>
+        <item>@string/nightfall_96</item>
+        <item>@string/nightfall_96_zmanis</item>
+        <item>@string/nightfall_120</item>
+        <item>@string/nightfall_120_zmanis</item>
+        <item>@string/nightfall_26</item>
+    </string-array>
     <string-array name="midnight_values" translatable="false">
         <item></item>
         <item>12</item>

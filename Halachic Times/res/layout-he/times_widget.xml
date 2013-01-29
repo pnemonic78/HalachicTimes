@@ -297,7 +297,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/nightfall_3stars_row"
+        android:id="@+id/nightfall_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="false">
@@ -309,35 +309,11 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
-            android:text="@string/nightfall_3stars"
+            android:text="@string/nightfall"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
         <TextView
-            android:id="@+id/nightfall_3stars_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/nightfall_72min_row"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:singleLine="true"
-            android:text="@string/nightfall_72min"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-        <TextView
-            android:id="@+id/nightfall_72min_time"
+            android:id="@+id/nightfall_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

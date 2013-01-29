@@ -640,21 +640,84 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.sunset, summary, date);
 
-		date = cal.getTzais();
-		if (remote)
+		opinion = mSettings.getNightfall();
+		if ("120".equals(opinion)) {
+			date = cal.getTzais120();
+			summary = R.string.nightfall_120;
+		} else if ("120_zmanis".equals(opinion)) {
+			date = cal.getTzais120Zmanis();
+			summary = R.string.nightfall_120_zmanis;
+		} else if ("16.1".equals(opinion)) {
+			date = cal.getTzais16Point1Degrees();
+			summary = R.string.nightfall_16;
+		} else if ("18".equals(opinion)) {
+			date = cal.getTzais18Degrees();
+			summary = R.string.nightfall_18;
+		} else if ("19.8".equals(opinion)) {
+			date = cal.getTzais19Point8Degrees();
+			summary = R.string.nightfall_19;
+		} else if ("26".equals(opinion)) {
+			date = cal.getTzais26Degrees();
+			summary = R.string.nightfall_26;
+		} else if ("60".equals(opinion)) {
+			date = cal.getTzais60();
+			summary = R.string.nightfall_60;
+		} else if ("72".equals(opinion)) {
+			date = cal.getTzais72();
+			summary = R.string.nightfall_72;
+		} else if ("72_zmanis".equals(opinion)) {
+			date = cal.getTzais72Zmanis();
+			summary = R.string.nightfall_72_zmanis;
+		} else if ("90".equals(opinion)) {
+			date = cal.getTzais90();
+			summary = R.string.nightfall_90;
+		} else if ("90_zmanis".equals(opinion)) {
+			date = cal.getTzais90Zmanis();
+			summary = R.string.nightfall_90_zmanis;
+		} else if ("96".equals(opinion)) {
+			date = cal.getTzais96();
+			summary = R.string.nightfall_96;
+		} else if ("96_zmanis".equals(opinion)) {
+			date = cal.getTzais96Zmanis();
+			summary = R.string.nightfall_96_zmanis;
+		} else if ("AT".equals(opinion)) {
+			date = cal.getTzaisAteretTorah();
+			summary = R.string.nightfall_ateret;
+		} else if ("3.65".equals(opinion)) {
+			date = cal.getTzaisGeonim3Point65Degrees();
+			summary = R.string.nightfall_3_65;
+		} else if ("4.37".equals(opinion)) {
+			date = cal.getTzaisGeonim4Point37Degrees();
+			summary = R.string.nightfall_4_37;
+		} else if ("4.61".equals(opinion)) {
+			date = cal.getTzaisGeonim4Point61Degrees();
+			summary = R.string.nightfall_4_61;
+		} else if ("4.8".equals(opinion)) {
+			date = cal.getTzaisGeonim4Point8Degrees();
+			summary = R.string.nightfall_4_8;
+		} else if ("5.88".equals(opinion)) {
+			date = cal.getTzaisGeonim5Point88Degrees();
+			summary = R.string.nightfall_5_88;
+		} else if ("5.95".equals(opinion)) {
+			date = cal.getTzaisGeonim5Point95Degrees();
+			summary = R.string.nightfall_5_95;
+		} else if ("7.083".equals(opinion)) {
+			date = cal.getTzaisGeonim7Point083Degrees();
+			summary = R.string.nightfall_7;
+		} else if ("8.5".equals(opinion)) {
+			date = cal.getTzaisGeonim8Point5Degrees();
+			summary = R.string.nightfall_8;
+		} else {
+			date = cal.getTzais();
+			summary = R.string.nightfall_3stars;
+		}
+		if (remote) {
 			add(R.id.candles2_row, R.id.candles2_time, (candlesCount < 0) ? date : null, true);
-		else if (candlesCount < 0)
-			add(R.string.candles, R.string.nightfall_3stars_summary, date);
-		if (remote)
-			add(R.id.nightfall_3stars_row, R.id.nightfall_3stars_time, date, true);
-		else
-			add(R.string.nightfall_3stars, R.string.nightfall_3stars_summary, date);
-
-		date = cal.getTzais72();
-		if (remote)
-			add(R.id.nightfall_72min_row, R.id.nightfall_72min_time, date, true);
-		else
-			add(R.string.nightfall_72min, R.string.nightfall_72min_summary, date);
+			add(R.id.nightfall_row, R.id.nightfall_time, date, true);
+		} else if (candlesCount < 0) {
+			add(R.string.candles, summary, date);
+			add(R.string.nightfall, summary, date);
+		}
 
 		opinion = mSettings.getMidnight();
 		if ("12".equals(opinion)) {

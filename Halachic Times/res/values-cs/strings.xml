@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minut před západem slunce</string>
     <string name="sunset">Západ slunce</string>
     <string name="sunset_summary">V regionu soudržnosti</string>
-    <string name="nightfall_3stars">Setmění</string>
-    <string name="nightfall_3stars_summary">3 hvězdiček viditelné</string>
-    <string name="nightfall_72min">Setmění</string>
-    <string name="nightfall_72min_summary">72 minut</string>
+    <string name="nightfall">Setmění</string>
+    <string name="nightfall_3stars">3 hvězdiček viditelné</string>
+    <string name="nightfall_72">72 minut</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Půlnoc</string>
 

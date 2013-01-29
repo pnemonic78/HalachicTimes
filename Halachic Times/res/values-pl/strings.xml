@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minut przed zachodem słońca</string>
     <string name="sunset">Zachód słońca</string>
     <string name="sunset_summary">W regionie poziom</string>
-    <string name="nightfall_3stars">Zmrok</string>
-    <string name="nightfall_3stars_summary">3 gwiazdki widoczne</string>
-    <string name="nightfall_72min">Zmrok</string>
-    <string name="nightfall_72min_summary">72 minut</string>
+    <string name="nightfall">Zmrok</string>
+    <string name="nightfall_3stars">3 gwiazdki widoczne</string>
+    <string name="nightfall_72">72 minut</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Północ</string>
 

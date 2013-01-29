@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d хвилин до заходу сонця</string>
     <string name="sunset">Захід сонця</string>
     <string name="sunset_summary">У рівні регіону</string>
-    <string name="nightfall_3stars">Настання ночі</string>
-    <string name="nightfall_3stars_summary">3 зірки видимі</string>
-    <string name="nightfall_72min">Настання ночі</string>
-    <string name="nightfall_72min_summary">72 хвилин</string>
+    <string name="nightfall">Настання ночі</string>
+    <string name="nightfall_3stars">3 зірки видимі</string>
+    <string name="nightfall_72">72 хвилин</string>
     <string name="midnight">Хацот</string>
     <string name="midnight_summary">Полуніч</string>
 

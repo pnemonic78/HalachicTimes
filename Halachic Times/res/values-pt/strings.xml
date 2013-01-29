@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minutos antes da pôr-do-sol</string>
     <string name="sunset">Pôr-do-sol</string>
     <string name="sunset_summary">Em uma região de nível</string>
-    <string name="nightfall_3stars">Anoitecer</string>
-    <string name="nightfall_3stars_summary">3 estrelas visíveis</string>
-    <string name="nightfall_72min">Anoitecer</string>
-    <string name="nightfall_72min_summary">72 minutos</string>
+    <string name="nightfall">Anoitecer</string>
+    <string name="nightfall_3stars">3 estrelas visíveis</string>
+    <string name="nightfall_72">72 minutos</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Meia-noite</string>
 

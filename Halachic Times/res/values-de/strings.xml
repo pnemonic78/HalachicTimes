@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minuten vor sonnenuntergang</string>
     <string name="sunset">Sonnenuntergang</string>
     <string name="sunset_summary">In einem flachen bereich</string>
-    <string name="nightfall_3stars">Einbruch der dunkelheit</string>
-    <string name="nightfall_3stars_summary">3 sterne sichtbar</string>
-    <string name="nightfall_72min">Einbruch der nacht</string>
-    <string name="nightfall_72min_summary">72 minuten</string>
+    <string name="nightfall">Einbruch der nacht</string>
+    <string name="nightfall_3stars">3 sterne sichtbar</string>
+    <string name="nightfall_72">72 minuten</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Mitternacht</string>
 

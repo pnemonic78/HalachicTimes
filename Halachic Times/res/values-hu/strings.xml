@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d perc naplemente előtt</string>
     <string name="sunset">Napnyugta</string>
     <string name="sunset_summary">Egy szinten régióban</string>
-    <string name="nightfall_3stars">Alkony</string>
-    <string name="nightfall_3stars_summary">3 csillagos látható</string>
-    <string name="nightfall_72min">Alkony</string>
-    <string name="nightfall_72min_summary">72 perc</string>
+    <string name="nightfall">Alkony</string>
+    <string name="nightfall_3stars">3 csillagos látható</string>
+    <string name="nightfall_72">72 perc</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Éjfél</string>
 

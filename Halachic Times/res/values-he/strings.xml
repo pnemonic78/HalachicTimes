@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
     <string name="sunset">שקיעת השמש</string>
     <string name="sunset_summary">באזור אפקי</string>
-    <string name="nightfall_3stars">צאת הכוכבים</string>
-    <string name="nightfall_3stars_summary">3 כוכבים גלויים</string>
-    <string name="nightfall_72min">לילה</string>
-    <string name="nightfall_72min_summary">72 דקות לפי רבינו תם</string>
+    <string name="nightfall">לילה</string>
+    <string name="nightfall_3stars">כוכבים גלויים (צאת הכוכבים 3)</string>
+    <string name="nightfall_72">72 דקות לפי רבינו תם</string>
     <string name="midnight">חצות</string>
     <string name="midnight_summary">חצות הלילה</string>
 

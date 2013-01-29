@@ -33,10 +33,9 @@
     <string name="candles_summary">%1$d minutes avant le coucher du soleil</string>
     <string name="sunset">Coucher du soleil</string>
     <string name="sunset_summary">Dans une région de niveau</string>
-    <string name="nightfall_3stars">Tombée de la nuit</string>
-    <string name="nightfall_3stars_summary">3 étoiles visibles</string>
-    <string name="nightfall_72min">Tombée de la nuit</string>
-    <string name="nightfall_72min_summary">72 minutes</string>
+    <string name="nightfall">Tombée de la nuit</string>
+    <string name="nightfall_3stars">3 étoiles visibles</string>
+    <string name="nightfall_72">72 minutes</string>
     <string name="midnight">Khatsot</string>
     <string name="midnight_summary">Minuit</string>
 

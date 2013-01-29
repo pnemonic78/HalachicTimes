@@ -72,6 +72,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_CANDLES = "candles";
 	/** Preference name for sunset type. */
 	public static final String KEY_OPINION_SUNSET = "sunset";
+	/** Preference name for nightfall type. */
+	public static final String KEY_OPINION_NIGHTFALL = "nightfall";
 	/** Preference name for midnight type. */
 	public static final String KEY_OPINION_MIDNIGHT = "midnight";
 
@@ -290,6 +292,15 @@ public class ZmanimSettings {
 	 */
 	public String getSunset() {
 		return mPrefs.getString(KEY_OPINION_SUNSET, "");
+	}
+
+	/**
+	 * Get the opinion for nightfall.
+	 * 
+	 * @return the opinion.
+	 */
+	public String getNightfall() {
+		return mPrefs.getString(KEY_OPINION_NIGHTFALL, "");
 	}
 
 	/**
