@@ -65,7 +65,7 @@
         <item>MGA</item>
         <item>AT</item>
         <item>3</item>
-        <item>FL</item>
+        <item>fixed</item>
         <item>GRA</item>
     </string-array>
     <string-array name="shema_entries" translatable="false">
