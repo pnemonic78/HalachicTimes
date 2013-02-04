@@ -686,6 +686,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		} else if ("3.65".equals(opinion)) {
 			date = cal.getTzaisGeonim3Point65Degrees();
 			summary = R.string.nightfall_3_65;
+		} else if ("3.676".equals(opinion)) {
+			date = cal.getTzaisGeonim3Point676Degrees();
+			summary = R.string.nightfall_3_676;
 		} else if ("4.37".equals(opinion)) {
 			date = cal.getTzaisGeonim4Point37Degrees();
 			summary = R.string.nightfall_4_37;
@@ -714,8 +717,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (remote) {
 			add(R.id.candles2_row, R.id.candles2_time, (candlesCount < 0) ? date : null, true);
 			add(R.id.nightfall_row, R.id.nightfall_time, date, true);
-		} else if (candlesCount < 0) {
-			add(R.string.candles, summary, date);
+		} else {
+			add(R.string.candles, summary, (candlesCount < 0) ? date : null);
 			add(R.string.nightfall, summary, date);
 		}
 

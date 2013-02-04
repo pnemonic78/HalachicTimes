@@ -203,6 +203,7 @@
     </string-array>
     <string-array name="nightfall_values" translatable="false">
         <item>3.65</item>
+        <item>3.676</item>
         <item>4.37</item>
         <item>4.61</item>
         <item>4.8</item>
@@ -227,6 +228,7 @@
     </string-array>
     <string-array name="nightfall_entries" translatable="false">
         <item>@string/nightfall_3_65</item>
+        <item>@string/nightfall_3_676</item>
         <item>@string/nightfall_4_37</item>
         <item>@string/nightfall_4_61</item>
         <item>@string/nightfall_4_8</item>
