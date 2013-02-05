@@ -17,10 +17,9 @@
     <string name="shema">Legutóbbi shema</string>
     <string name="shema_mga">Legutóbbi shema szerint Magen Avraham</string>
     <string name="shema_gra">Legutóbbi shema szerint Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Legutóbbi shacharis</string>
-    <string name="prayers_mga_summary">Legutóbbi reggel imák szerint Magen Avraham</string>
-    <string name="prayers_gra">Legutóbbi shacharis</string>
-    <string name="prayers_gra_summary">Legutóbbi reggel imák szerint Gra &amp; Baal Tanya</string>
+    <string name="prayers">Legutóbbi shacharis</string>
+    <string name="prayers_mga">Legutóbbi reggel imák szerint Magen Avraham</string>
+    <string name="prayers_gra">Legutóbbi reggel imák szerint Gra &amp; Baal Tanya</string>
     <string name="midday">Déli</string>
     <string name="midday_summary">Dél</string>
     <string name="earliest_mincha">Mincha gedola</string>

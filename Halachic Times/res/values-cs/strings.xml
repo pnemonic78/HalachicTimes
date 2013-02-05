@@ -17,10 +17,9 @@
     <string name="shema">Poslední šema</string>
     <string name="shema_mga">Poslední šema souladu s Magen Avraham</string>
     <string name="shema_gra">Poslední šema souladu s Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Poslední shacharis</string>
-    <string name="prayers_mga_summary">Poslední ráno modlitby souladu s Magen Avraham</string>
-    <string name="prayers_gra">Poslední shacharis</string>
-    <string name="prayers_gra_summary">Poslední ráno modlitby souladu s Gra &amp; Baal Tanya</string>
+    <string name="prayers">Poslední shacharis</string>
+    <string name="prayers_mga">Poslední ráno modlitby souladu s Magen Avraham</string>
+    <string name="prayers_gra">Poslední ráno modlitby souladu s Gra &amp; Baal Tanya</string>
     <string name="midday">Poledne</string>
     <string name="midday_summary">Poledne</string>
     <string name="earliest_mincha">Mincha gedola</string>

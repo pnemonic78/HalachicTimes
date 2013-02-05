@@ -17,10 +17,9 @@
     <string name="shema">Últimas shema</string>
     <string name="shema_mga">Últimas shema acuerdo a Magen Avraham</string>
     <string name="shema_gra">Últimas shema acuerdo a Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Últimas shajaris</string>
-    <string name="prayers_mga_summary">Últimas oraciones matutinas acuerdo a Magen Avraham</string>
-    <string name="prayers_gra">Últimas shajaris</string>
-    <string name="prayers_gra_summary">Últimas oraciones matutinas acuerdo a Gra &amp; Baal Tanya</string>
+    <string name="prayers">Últimas shajaris</string>
+    <string name="prayers_mga">Últimas oraciones matutinas acuerdo a Magen Avraham</string>
+    <string name="prayers_gra">Últimas oraciones matutinas acuerdo a Gra &amp; Baal Tanya</string>
     <string name="midday">Mediodía</string>
     <string name="midday_summary">Mediodía</string>
     <string name="earliest_mincha">Minja gedola</string>

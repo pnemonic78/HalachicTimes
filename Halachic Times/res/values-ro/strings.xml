@@ -17,10 +17,9 @@
     <string name="shema">Ultima șema</string>
     <string name="shema_mga">Șema ultima în conformitate cu Magen Avraham</string>
     <string name="shema_gra">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Ultima shacharis</string>
-    <string name="prayers_mga_summary">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
-    <string name="prayers_gra">Ultima shacharis</string>
-    <string name="prayers_gra_summary">Rugăciunile de dimineață ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="prayers">Ultima shacharis</string>
+    <string name="prayers_mga">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
+    <string name="prayers_gra">Rugăciunile de dimineață ultima în conformitate cu Gra &amp; Baal Tanya</string>
     <string name="midday">Amiază</string>
     <string name="midday_summary">Miezul zilei</string>
     <string name="earliest_mincha">Mincha gedola</string>

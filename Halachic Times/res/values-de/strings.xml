@@ -17,10 +17,9 @@
     <string name="shema">Spätestes schma</string>
     <string name="shema_mga">Spätestes schma nach Magen Avraham</string>
     <string name="shema_gra">Spätestes schma nach Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Spätestes shacharis</string>
-    <string name="prayers_mga_summary">Spätestes morgengebet nach Magen Avraham</string>
-    <string name="prayers_gra">Spätestes shacharis</string>
-    <string name="prayers_gra_summary">Spätestes morgengebet nach Gra &amp; Baal Tanya</string>
+    <string name="prayers">Spätestes shacharis</string>
+    <string name="prayers_mga">Spätestes morgengebet nach Magen Avraham</string>
+    <string name="prayers_gra">Spätestes morgengebet nach Gra &amp; Baal Tanya</string>
     <string name="midday">Mittag</string>
     <string name="midday_summary">Mittag</string>
     <string name="earliest_mincha">Mincha gedola</string>

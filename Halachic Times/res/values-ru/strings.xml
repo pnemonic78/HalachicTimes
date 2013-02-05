@@ -17,10 +17,9 @@
     <string name="shema">Самое позднее шма</string>
     <string name="shema_mga">Самое позднее время чтения шма соответствии с Маген Авраам</string>
     <string name="shema_gra">Самое позднее время чтения шма соответствии с Гра &amp; Ваал Таня</string>
-    <string name="prayers_mga">Самое позднее шахарит</string>
-    <string name="prayers_mga_summary">Самое позднее время утренние молитв соответствии с Маген Авраам</string>
-    <string name="prayers_gra">Самое позднее шахарит</string>
-    <string name="prayers_gra_summary">Самое позднее время утренние молитв соответствии с Гра &amp; Ваал Таня</string>
+    <string name="prayers">Самое позднее шахарит</string>
+    <string name="prayers_mga">Самое позднее время утренние молитв соответствии с Маген Авраам</string>
+    <string name="prayers_gra">Самое позднее время утренние молитв соответствии с Гра &amp; Ваал Таня</string>
     <string name="midday">Полдень</string>
     <string name="midday_summary">Середине дня</string>
     <string name="earliest_mincha">Минха гдола</string>

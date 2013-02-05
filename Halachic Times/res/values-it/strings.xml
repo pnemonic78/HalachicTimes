@@ -17,10 +17,9 @@
     <string name="shema">Ultime shema</string>
     <string name="shema_mga">Ultime shema secondo la Magen Avraham</string>
     <string name="shema_gra">Ultime shema secondo la Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Ultime shacharis</string>
-    <string name="prayers_mga_summary">Ultime preghiere del mattino secondo la Magen Avraham</string>
-    <string name="prayers_gra">Ultime shacharis</string>
-    <string name="prayers_gra_summary">Ultime preghiere del mattino secondo la Gra &amp; Baal Tanya</string>
+    <string name="prayers">Ultime shacharis</string>
+    <string name="prayers_mga">Ultime preghiere del mattino secondo la Magen Avraham</string>
+    <string name="prayers_gra">Ultime preghiere del mattino secondo la Gra &amp; Baal Tanya</string>
     <string name="midday">Mezzogiorno</string>
     <string name="midday_summary">Mezzo del giorno</string>
     <string name="earliest_mincha">Mincha gedola</string>

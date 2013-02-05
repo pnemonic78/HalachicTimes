@@ -17,10 +17,9 @@
     <string name="shema">Останній шма</string>
     <string name="shema_mga">Останній шма відповідно до Маген Авраам</string>
     <string name="shema_gra">Останній шма відповідно до Гра &amp; Ваал Таня</string>
-    <string name="prayers_mga">Останній шахарит</string>
-    <string name="prayers_mga_summary">Останній ранкові молитви відповідно до Маген Авраам</string>
-    <string name="prayers_gra">Останній шахарит</string>
-    <string name="prayers_gra_summary">Останній ранкові молитви відповідно до Гра &amp; Ваал Таня</string>
+    <string name="prayers">Останній шахарит</string>
+    <string name="prayers_mga">Останній ранкові молитви відповідно до Маген Авраам</string>
+    <string name="prayers_gra">Останній ранкові молитви відповідно до Гра &amp; Ваал Таня</string>
     <string name="midday">Полудень</string>
     <string name="midday_summary">Апогей</string>
     <string name="earliest_mincha">Мінха гедола</string>

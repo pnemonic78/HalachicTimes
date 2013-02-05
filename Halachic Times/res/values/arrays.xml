@@ -115,11 +115,11 @@
         <item>@string/prayers_18</item>
         <item>@string/prayers_fixed</item>
         <item>@string/prayers_16</item>
-        <item>@string/prayers_mga_summary</item>
+        <item>@string/prayers_mga</item>
         <item>@string/prayers_72</item>
         <item>@string/prayers_72_zmanis</item>
         <item>@string/prayers_2</item>
-        <item>@string/prayers_gra_summary</item>
+        <item>@string/prayers_gra</item>
     </string-array>
     <string-array name="midday_values" translatable="false">
         <item></item>

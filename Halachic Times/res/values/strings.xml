@@ -46,8 +46,7 @@
     <string name="shema_3">3 hours before midday</string>
     <string name="shema_fixed">3 hours before fixed local midday</string>
     <string name="shema_gra">According to Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Latest shacharis</string>
-    <string name="prayers">@string/prayers_mga</string>
+    <string name="prayers">Latest shacharis</string>
     <string name="prayers_120">prayers_120</string>
     <string name="prayers_96">prayers_96</string>
     <string name="prayers_96_zmanis">prayers_96_zmanis</string>
@@ -61,8 +60,8 @@
     <string name="prayers_72">prayers_72</string>
     <string name="prayers_72_zmanis">prayers_72_zmanis</string>
     <string name="prayers_2">prayers_2</string>
-    <string name="prayers_mga_summary">Latest morning prayers according to Magen Avraham</string>
-    <string name="prayers_gra_summary">Latest morning prayers according to Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Latest morning prayers according to Magen Avraham</string>
+    <string name="prayers_gra">Latest morning prayers according to Gra &amp; Baal Tanya</string>
     <string name="midday">Midday</string>
     <string name="midday_summary">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>

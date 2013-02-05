@@ -17,10 +17,9 @@
     <string name="shema">Último shemá</string>
     <string name="shema_mga">Último horário shemá acordo com a Magen Avraham</string>
     <string name="shema_gra">Último horário shemá acordo com a Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Último shacharis</string>
-    <string name="prayers_mga_summary">Último orações da manhã acordo com a Magen Avraham</string>
-    <string name="prayers_gra">Último shacharis</string>
-    <string name="prayers_gra_summary">Último orações da manhã acordo com a Gra &amp; Baal Tanya</string>
+    <string name="prayers">Último shacharis</string>
+    <string name="prayers_mga">Último orações da manhã acordo com a Magen Avraham</string>
+    <string name="prayers_gra">Último orações da manhã acordo com a Gra &amp; Baal Tanya</string>
     <string name="midday">Meio-dia</string>
     <string name="midday_summary">Meio do dia</string>
     <string name="earliest_mincha">Minchá guedolá</string>

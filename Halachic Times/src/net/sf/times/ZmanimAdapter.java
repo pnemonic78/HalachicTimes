@@ -533,10 +533,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.prayers_2;
 		} else if (OPINION_GRA.equals(opinion)) {
 			date = cal.getSofZmanTfilaGRA();
-			summary = R.string.prayers_gra_summary;
+			summary = R.string.prayers_gra;
 		} else {
 			date = cal.getSofZmanTfilaMGA();
-			summary = R.string.prayers_mga_summary;
+			summary = R.string.prayers_mga;
 		}
 		if (remote)
 			add(R.id.prayers_row, R.id.prayers_time, date, true);
