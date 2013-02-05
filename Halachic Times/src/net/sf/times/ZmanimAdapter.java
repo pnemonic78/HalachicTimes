@@ -449,21 +449,24 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		} else if (OPINION_96.equals(opinion)) {
 			date = cal.getSofZmanShmaMGA96Minutes();
 			summary = R.string.shema_96;
+		} else if (OPINION_96_ZMANIS.equals(opinion)) {
+			date = cal.getSofZmanShmaMGA96MinutesZmanis();
+			summary = R.string.shema_96_zmanis;
 		} else if (OPINION_16_1.equals(opinion)) {
 			date = cal.getSofZmanShmaMGA16Point1Degrees();
 			summary = R.string.shema_16;
 		} else if (OPINION_90.equals(opinion)) {
 			date = cal.getSofZmanShmaMGA90Minutes();
 			summary = R.string.shema_90;
-		} else if (OPINION_96_ZMANIS.equals(opinion)) {
-			date = cal.getSofZmanShmaMGA96MinutesZmanis();
-			summary = R.string.shema_96_zmanis;
 		} else if (OPINION_90_ZMANIS.equals(opinion)) {
 			date = cal.getSofZmanShmaMGA90MinutesZmanis();
 			summary = R.string.shema_90_zmanis;
 		} else if (OPINION_72.equals(opinion)) {
 			date = cal.getSofZmanShmaMGA72Minutes();
 			summary = R.string.shema_72;
+		} else if (OPINION_72_ZMANIS.equals(opinion)) {
+			date = cal.getSofZmanShmaMGA72MinutesZmanis();
+			summary = R.string.shema_72_zmanis;
 		} else if (OPINION_MGA.equals(opinion)) {
 			date = cal.getSofZmanShmaMGA();
 			summary = R.string.shema_mga;
@@ -473,9 +476,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		} else if (OPINION_3.equals(opinion)) {
 			date = cal.getSofZmanShma3HoursBeforeChatzos();
 			summary = R.string.shema_3;
-		} else if (OPINION_72_ZMANIS.equals(opinion)) {
-			date = cal.getSofZmanShmaMGA72MinutesZmanis();
-			summary = R.string.shema_72_zmanis;
 		} else if (OPINION_FIXED.equals(opinion)) {
 			date = cal.getSofZmanShmaFixedLocal();
 			summary = R.string.shema_fixed;
