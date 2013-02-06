@@ -41,13 +41,16 @@
     <string name="dawn_72" translatable="false">@string/opinion_72</string>
     <string name="dawn_72_zmanis" translatable="false">@string/opinion_72_zmanis</string>
     <string name="dawn_60" translatable="false">@string/opinion_60</string>
+
     <string name="tallis">Earliest tallis and tefillin</string>
     <string name="tallis_summary">Sun is 11.5° below horizon</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
     <string name="tallis_10">Sun is 10.2° below horizon</string>
+
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_summary">In a level region</string>
     <string name="sunrise_sea">At sea level</string>
+
     <string name="shema">Latest shema</string>
     <string name="shema_16_sunset" translatable="false">@string/opinion_16_sunset</string>
     <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
@@ -66,6 +69,7 @@
     <string name="shema_3">3 hours before midday</string>
     <string name="shema_fixed">3 hours before fixed local midday</string>
     <string name="shema_gra" translatable="false">@string/opinion_gra</string>
+
     <string name="prayers">Latest morning prayers (shacharis)</string>
     <string name="prayers_120" translatable="false">@string/opinion_120</string>
     <string name="prayers_96" translatable="false">@string/opinion_96</string>
@@ -82,20 +86,24 @@
     <string name="prayers_2">2 hours before midday</string>
     <string name="prayers_mga" translatable="false">@string/opinion_mga</string>
     <string name="prayers_gra" translatable="false">@string/opinion_gra</string>
+
     <string name="midday">Midday</string>
     <string name="midday_summary">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
+
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
     <string name="earliest_mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>
     <string name="earliest_mincha_30">30 minutes after midday</string>
     <string name="earliest_mincha_16" translatable="false">@string/opinion_16</string>
+
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Afternoon prayers</string>
     <string name="mincha_72" translatable="false">@string/opinion_72</string>
     <string name="mincha_16" translatable="false">@string/opinion_16</string>
     <string name="mincha_ateret" translatable="false">@string/opinion_ateret</string>
+
     <string name="plug_hamincha">Plug hamincha</string>
     <string name="plug_hamincha_gra" translatable="false">@string/opinion_gra</string>
     <string name="plug_hamincha_120" translatable="false">@string/opinion_120</string>
@@ -114,11 +122,14 @@
     <string name="plug_hamincha_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
     <string name="plug_hamincha_16_sunset" translatable="false">@string/opinion_16_sunset</string>
     <string name="plug_hamincha_ateret" translatable="false">@string/opinion_ateret</string>
+
     <string name="candles">Candle lighting</string>
     <string name="candles_summary">%1$d minutes before sunset</string>
+
     <string name="sunset">Sunset</string>
     <string name="sunset_summary" translatable="false">@string/sunrise_summary</string>
     <string name="sunset_sea" translatable="false">@string/sunrise_sea</string>
+
     <string name="nightfall">Nightfall</string>
     <string name="nightfall_3stars">3 stars visible</string>
     <string name="nightfall_120" translatable="false">@string/opinion_120</string>
@@ -144,6 +155,7 @@
     <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
     <string name="nightfall_7">Sun is 7.083° below sea level</string>
     <string name="nightfall_8">Sun is 8.5° below sea level</string>
+
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Midnight</string>
     <string name="midnight_12">12 hours after midday</string>

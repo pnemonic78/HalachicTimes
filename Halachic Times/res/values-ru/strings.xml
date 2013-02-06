@@ -3,38 +3,50 @@
 
     <string name="app_name">Галахическое время молитву</string>
     <string name="title_activity_zmanim">Галахическое время</string>
-
-    <!-- List -->
     <string name="location_unknown">Неизвестный адрес</string>
     <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
+
+    <!-- List -->
     <string name="dawn">Рассвет</string>
     <string name="dawn_16">16,1° ниже восточным горизонтом</string>
     <string name="dawn_72">72 минут до восхода солнца на уровне моря</string>
+
     <string name="tallis">Талита и тфилина</string>
     <string name="tallis_summary">Самое раннее время наложения талита и тфилина. Солнце 11,5° ниже горизонта</string>
+
     <string name="sunrise">Восход солнца</string>
     <string name="sunrise_summary">В уровне регионе</string>
+
     <string name="shema">Самое позднее шма</string>
     <string name="shema_mga">Самое позднее время чтения шма соответствии с Маген Авраам</string>
     <string name="shema_gra">Самое позднее время чтения шма соответствии с Гра &amp; Ваал Таня</string>
+
     <string name="prayers">Самое позднее шахарит</string>
     <string name="prayers_mga">Самое позднее время утренние молитв соответствии с Маген Авраам</string>
     <string name="prayers_gra">Самое позднее время утренние молитв соответствии с Гра &amp; Ваал Таня</string>
+
     <string name="midday">Полдень</string>
     <string name="midday_summary">Середине дня</string>
+
     <string name="earliest_mincha">Минха гдола</string>
     <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>
+
     <string name="mincha">Минха ктана</string>
     <string name="mincha_summary">Днем молитвах</string>
+
     <string name="plug_hamincha">Плаг минха</string>
     <string name="plug_hamincha_gra">Плаг минха соответствии с Гра &amp; Ваал Таня</string>
+
     <string name="candles">Зажигание свечей</string>
     <string name="candles_summary">%1$d минут до захода солнца</string>
+
     <string name="sunset">Заход солнца</string>
     <string name="sunset_summary">В уровне регионе</string>
+
     <string name="nightfall">Наступление темноты</string>
     <string name="nightfall_3stars">3 звезды видимы</string>
     <string name="nightfall_72">72 минут</string>
+
     <string name="midnight">Хацот</string>
     <string name="midnight_summary">Полночь</string>
 

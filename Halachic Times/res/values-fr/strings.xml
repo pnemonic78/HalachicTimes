@@ -3,38 +3,50 @@
 
     <string name="app_name">Horaires halakhiques de prière</string>
     <string name="title_activity_zmanim">Horaires halakhiques</string>
-
-    <!-- List -->
     <string name="location_unknown">Adresse inconnue</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+
+    <!-- List -->
     <string name="dawn">Aube</string>
     <string name="dawn_16">16,1° sous l\'horizon oriental</string>
     <string name="dawn_72">72 minutes avant le lever du au niveau mer</string>
+
     <string name="tallis">Mise du talit et téfillin au plus tôt</string>
     <string name="tallis_summary">Soleil est de 11,5° sous l\'horizon</string>
+
     <string name="sunrise">Lever du soleil</string>
     <string name="sunrise_summary">Dans une région de niveau</string>
+
     <string name="shema">Heure de fin du chéma</string>
     <string name="shema_mga">Dernière chéma selon la Magen Avraham</string>
     <string name="shema_gra">Dernière chéma selon la Gra &amp; Baal Tanya</string>
+
     <string name="prayers">Heure de fin du shakharis</string>
     <string name="prayers_mga">Dernières prières du matin selon la Magen Avraham</string>
     <string name="prayers_gra">Dernières prières du matin selon la Gra &amp; Baal Tanya</string>
+
     <string name="midday">Midi</string>
     <string name="midday_summary">Milieu du jour</string>
+
     <string name="earliest_mincha">Minkha gedola</string>
     <string name="earliest_mincha_summary">Prières après-midi au plus tôt</string>
+
     <string name="mincha">Minkha kétana</string>
     <string name="mincha_summary">Prières après-midi</string>
+
     <string name="plug_hamincha">Plag haminkha</string>
     <string name="plug_hamincha_gra">Plug haminkha acuerdo a Gra &amp; Baal Tanya</string>
+
     <string name="candles">Allumage des bougies</string>
     <string name="candles_summary">%1$d minutes avant le coucher du soleil</string>
+
     <string name="sunset">Coucher du soleil</string>
     <string name="sunset_summary">Dans une région de niveau</string>
+
     <string name="nightfall">Tombée de la nuit</string>
     <string name="nightfall_3stars">3 étoiles visibles</string>
     <string name="nightfall_72">72 minutes</string>
+
     <string name="midnight">Khatsot</string>
     <string name="midnight_summary">Minuit</string>
 

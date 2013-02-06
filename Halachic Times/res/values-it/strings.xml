@@ -3,38 +3,50 @@
 
     <string name="app_name">Tempi di Preghiera Halachiche</string>
     <string name="title_activity_zmanim">Tempi Halachiche</string>
-
-    <!-- List -->
     <string name="location_unknown">Indirizzo sconosciuto</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+
+    <!-- List -->
     <string name="dawn">Alba</string>
     <string name="dawn_16">16.1° sotto l\'orizzonte orientale</string>
     <string name="dawn_72">72 minuti prima dell\'alba a livello del mare</string>
+
     <string name="tallis">Prima tallis e tefillin</string>
     <string name="tallis_summary">Sole è 11,5° sotto l\'orizzonte</string>
+
     <string name="sunrise">Levata del sole</string>
     <string name="sunrise_summary">In una regione di livello</string>
+
     <string name="shema">Ultime shema</string>
     <string name="shema_mga">Ultime shema secondo la Magen Avraham</string>
     <string name="shema_gra">Ultime shema secondo la Gra &amp; Baal Tanya</string>
+
     <string name="prayers">Ultime shacharis</string>
     <string name="prayers_mga">Ultime preghiere del mattino secondo la Magen Avraham</string>
     <string name="prayers_gra">Ultime preghiere del mattino secondo la Gra &amp; Baal Tanya</string>
+
     <string name="midday">Mezzogiorno</string>
     <string name="midday_summary">Mezzo del giorno</string>
+
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
+
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Pomeriggio preghiere</string>
+
     <string name="plug_hamincha">Plug hamincha</string>
     <string name="plug_hamincha_gra">Plug hamincha secondo la Gra &amp; Baal Tanya</string>
+
     <string name="candles">Candela illuminazione</string>
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
+
     <string name="sunset">Tramonto</string>
     <string name="sunset_summary">In una regione di livello</string>
+
     <string name="nightfall">Crepuscolo</string>
     <string name="nightfall_3stars">3 stelle visibili</string>
     <string name="nightfall_72">72 minuti</string>
+
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Mezzanotte</string>
 

@@ -3,38 +3,50 @@
 
     <string name="app_name">Галахических разів молитву</string>
     <string name="title_activity_zmanim">Галахических разів</string>
-
-    <!-- List -->
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
+
+    <!-- List -->
     <string name="dawn">Світанок</string>
     <string name="dawn_16">16,1° нижче східним обрієм</string>
     <string name="dawn_72">72 хвилин до сходу сонця рівнем моря</string>
+
     <string name="tallis">Перший талес і тфілін</string>
     <string name="tallis_summary">Сонце 11,5 ° нижче обрію</string>
+
     <string name="sunrise">Схід сонця</string>
     <string name="sunrise_summary">У рівні регіону</string>
+
     <string name="shema">Останній шма</string>
     <string name="shema_mga">Останній шма відповідно до Маген Авраам</string>
     <string name="shema_gra">Останній шма відповідно до Гра &amp; Ваал Таня</string>
+
     <string name="prayers">Останній шахарит</string>
     <string name="prayers_mga">Останній ранкові молитви відповідно до Маген Авраам</string>
     <string name="prayers_gra">Останній ранкові молитви відповідно до Гра &amp; Ваал Таня</string>
+
     <string name="midday">Полудень</string>
     <string name="midday_summary">Апогей</string>
+
     <string name="earliest_mincha">Мінха гедола</string>
     <string name="earliest_mincha_summary">Перший день молитви</string>
+
     <string name="mincha">Мінха ктана</string>
     <string name="mincha_summary">День молитви</string>
+
     <string name="plug_hamincha">Плаг мінха</string>
     <string name="plug_hamincha_gra">Плаг мінха відповідно до Гра &amp; Ваал Таня</string>
+
     <string name="candles">Розпалювання світло</string>
     <string name="candles_summary">%1$d хвилин до заходу сонця</string>
+
     <string name="sunset">Захід сонця</string>
     <string name="sunset_summary">У рівні регіону</string>
+
     <string name="nightfall">Настання ночі</string>
     <string name="nightfall_3stars">3 зірки видимі</string>
     <string name="nightfall_72">72 хвилин</string>
+
     <string name="midnight">Хацот</string>
     <string name="midnight_summary">Полуніч</string>
 
