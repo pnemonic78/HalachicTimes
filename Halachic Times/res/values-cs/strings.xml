@@ -3,40 +3,71 @@
 
     <string name="app_name">Halachic Modlitební Časy</string>
     <string name="title_activity_zmanim">Halachic Časy</string>
-
-    <!-- List -->
     <string name="location_unknown">Neznámý Adresa</string>
     <string name="location_coords">Šířka %1$s; Délka %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Den je 120 minut před východem slunce / po západu slunce</string>
+    <string name="opinion_120_zmanis">Den je 120 <i>zmaniyos</i> minut před východem slunce / po západu slunce</string>
+    <string name="opinion_16">Den je 16,1° pod východu / západ slunce</string>
+    <string name="opinion_16_sunset">Den je od úsvitu 16,1° do mořem západ slunce</string>
+    <string name="opinion_16_night">Den je od úsvitu 16,1° do soumraku</string>
+    <string name="opinion_26">Den je 26° pod východu / západ slunce</string>
+    <string name="opinion_19">Den je 19,8° pod východu / západ slunce</string>
+    <string name="opinion_18">Den je 18° pod východu / západ slunce</string>
+    <string name="opinion_60">Den je 60 minut před východem slunce / po západu slunce</string>
+    <string name="opinion_72">Den je 72 minut před východem slunce / po západu slunce</string>
+    <string name="opinion_72_zmanis">Den je 72 <i>zmaniyos</i> minut před východem slunce / po západu slunce</string>
+    <string name="opinion_90">Den je 90 minut před východem slunce / po západu slunce</string>
+    <string name="opinion_90_zmanis">Den je 90 <i>zmaniyos</i> minut před východem slunce / po západu slunce</string>
+    <string name="opinion_96">Den je 96 minut před východem slunce / po západu slunce</string>
+    <string name="opinion_96_zmanis">Den je 96 <i>zmaniyos</i> minut před východem slunce / po západu slunce</string>
+    <string name="opinion_ateret">Souladu s Yeshivat Ateret Torah</string>
+    <string name="opinion_gra">Souladu s Gra &amp; Baal Tanya</string>
+    <string name="opinion_mga">Souladu s Magen Avraham</string>
+
+    <!-- List -->
     <string name="dawn">Svítání</string>
-    <string name="dawn_16">16,1° pod východním obzorem</string>
-    <string name="dawn_72">72 minut před mořem východem slunce</string>
     <string name="tallis">Nástup na pobyt nejdřív tallis a tefillin</string>
     <string name="tallis_summary">Slunce je 11,5° pod obzorem</string>
+    <string name="tallis_11">Slunce je 11° pod obzorem</string>
+    <string name="tallis_10">Slunce je 10.2° pod obzorem</string>
     <string name="sunrise">Východ slunce</string>
     <string name="sunrise_summary">V regionu soudržnosti</string>
+    <string name="sunrise_sea">Na úrovni moře</string>
     <string name="shema">Poslední šema</string>
-    <string name="shema_mga">Poslední šema souladu s Magen Avraham</string>
-    <string name="shema_gra">Poslední šema souladu s Gra &amp; Baal Tanya</string>
-    <string name="prayers">Poslední shacharis</string>
-    <string name="prayers_mga">Poslední ráno modlitby souladu s Magen Avraham</string>
-    <string name="prayers_gra">Poslední ráno modlitby souladu s Gra &amp; Baal Tanya</string>
+    <string name="shema_7">Den je od úsvitu 16,1° do noci 7,083°</string>
+    <string name="shema_3">3 hodiny před poledne</string>
+    <string name="shema_fixed">3 hodiny před poledne pevné lokální</string>
+    <string name="prayers">Poslední ráno modlitby (shacharis)</string>
+    <string name="prayers_fixed">2 hodiny před poledne pevné lokální</string>
+    <string name="prayers_2">2 hodiny před poledne</string>
     <string name="midday">Poledne</string>
-    <string name="midday_summary">Poledne</string>
+    <string name="midday_summary">Solární poledne</string>
+    <string name="midday_fixed">Poledne upraveny pro lokální zeměpisné šířky</string>
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Nejranější odpolední modlitby</string>
+    <string name="earliest_mincha_30">30 minut po poledne</string>
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Odpolední modlitby</string>
     <string name="plug_hamincha">Plag hamincha</string>
-    <string name="plug_hamincha_gra">Plag hamincha souladu s Gra &amp; Baal Tanya</string>
     <string name="candles">Svíčka osvětlení</string>
     <string name="candles_summary">%1$d minut před západem slunce</string>
     <string name="sunset">Západ slunce</string>
-    <string name="sunset_summary">V regionu soudržnosti</string>
     <string name="nightfall">Setmění</string>
     <string name="nightfall_3stars">3 hvězdiček viditelné</string>
-    <string name="nightfall_72">72 minut</string>
+    <string name="nightfall_3_65">Slunce je 3,65° pod úrovní moře</string>
+    <string name="nightfall_3_676">Slunce je 3,676° pod úrovní moře</string>
+    <string name="nightfall_4_37">Slunce je 4,37° pod úrovní moře</string>
+    <string name="nightfall_4_61">Slunce je 4,61° pod úrovní moře</string>
+    <string name="nightfall_4_8">Slunce je 4,8° pod úrovní moře</string>
+    <string name="nightfall_5_88">Slunce je 5,88° pod úrovní moře</string>
+    <string name="nightfall_5_95">Slunce je 5,95° pod úrovní moře</string>
+    <string name="nightfall_7">Slunce je 7,083° pod úrovní moře</string>
+    <string name="nightfall_8">Slunce je 8,5° pod úrovní moře</string>
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Půlnoc</string>
+    <string name="midnight_12">12 hodin po poledni</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Nastavení</string>
