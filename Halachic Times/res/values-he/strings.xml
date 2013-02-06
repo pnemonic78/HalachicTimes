@@ -27,7 +27,7 @@
     <string name="mincha">מנחה קטנה</string>
     <string name="mincha_summary">תפילת מנחה</string>
     <string name="plug_hamincha">פלג המנחה</string>
-    <string name="plug_hamincha_summary">פלג המנחה לפי הגר\"א ובעל התניא</string>
+    <string name="plug_hamincha_gra">פלג המנחה לפי הגר\"א ובעל התניא</string>
     <string name="candles">הדלקת נרות</string>
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
     <string name="sunset">שקיעת השמש</string>

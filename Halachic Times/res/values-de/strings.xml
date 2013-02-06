@@ -27,7 +27,7 @@
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Nachmittagsgebet</string>
     <string name="plug_hamincha">Plag hamincha</string>
-    <string name="plug_hamincha_summary">Plag hamincha nach Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plag hamincha nach Gra &amp; Baal Tanya</string>
     <string name="candles">Kerzenzünden</string>
     <string name="candles_summary">%1$d minuten vor sonnenuntergang</string>
     <string name="sunset">Sonnenuntergang</string>

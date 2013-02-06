@@ -89,7 +89,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_ATERET = "AT";
 	private static final String OPINION_GRA = "GRA";
 	private static final String OPINION_MGA = "MGA";
-	private static final String OPINION_ALOS = "alos";
 	private static final String OPINION_FIXED = "fixed";
 	private static final String OPINION_SEA = "sea";
 
@@ -599,9 +598,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.mincha, summary, date);
 
 		opinion = mSettings.getPlugHamincha();
-		if (OPINION_ALOS.equals(opinion)) {
+		if (OPINION_16_1_SUNSET.equals(opinion)) {
 			date = cal.getPlagAlosToSunset();
-			summary = R.string.plug_hamincha_alos;
+			summary = R.string.plug_hamincha_16_sunset;
 		} else if (OPINION_16_1_ALOS.equals(opinion)) {
 			date = cal.getPlagAlos16Point1ToTzaisGeonim7Point083Degrees();
 			summary = R.string.plug_hamincha_16_alos;
@@ -649,7 +648,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.plug_hamincha_26;
 		} else {
 			date = cal.getPlagHamincha();
-			summary = R.string.plug_hamincha_summary;
+			summary = R.string.plug_hamincha_gra;
 		}
 		if (remote)
 			add(R.id.plug_hamincha_row, R.id.plug_hamincha_time, date, true);

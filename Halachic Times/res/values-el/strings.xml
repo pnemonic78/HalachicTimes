@@ -27,7 +27,7 @@
     <string name="mincha">Μινχα κτανα</string>
     <string name="mincha_summary">Απόγευμα προσευχές</string>
     <string name="plug_hamincha">Πλαγ μινχα</string>
-    <string name="plug_hamincha_summary">Πλαγ μινχα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
+    <string name="plug_hamincha_gra">Πλαγ μινχα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
     <string name="candles">Φωτισμό κεριών</string>
     <string name="candles_summary">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
     <string name="sunset">Ηλιοβασίλεμα</string>

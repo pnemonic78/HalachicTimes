@@ -27,7 +27,7 @@
     <string name="mincha">Мінха ктана</string>
     <string name="mincha_summary">День молитви</string>
     <string name="plug_hamincha">Плаг мінха</string>
-    <string name="plug_hamincha_summary">Плаг мінха відповідно до Гра &amp; Ваал Таня</string>
+    <string name="plug_hamincha_gra">Плаг мінха відповідно до Гра &amp; Ваал Таня</string>
     <string name="candles">Розпалювання світло</string>
     <string name="candles_summary">%1$d хвилин до заходу сонця</string>
     <string name="sunset">Захід сонця</string>

@@ -27,7 +27,7 @@
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Odpolední modlitby</string>
     <string name="plug_hamincha">Plag hamincha</string>
-    <string name="plug_hamincha_summary">Plag hamincha souladu s Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plag hamincha souladu s Gra &amp; Baal Tanya</string>
     <string name="candles">Svíčka osvětlení</string>
     <string name="candles_summary">%1$d minut před západem slunce</string>
     <string name="sunset">Západ slunce</string>

@@ -90,7 +90,7 @@
             android:key="candles"
             android:max="40"
             android:summary="@string/candles_summary"
-            android:title="@string/candles_title"/>
+            android:title="@string/candles"/>
 
         <ListPreference
             android:defaultValue=""

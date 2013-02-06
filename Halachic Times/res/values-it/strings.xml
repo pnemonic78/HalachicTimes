@@ -27,7 +27,7 @@
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Pomeriggio preghiere</string>
     <string name="plug_hamincha">Plug hamincha</string>
-    <string name="plug_hamincha_summary">Plug hamincha secondo la Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plug hamincha secondo la Gra &amp; Baal Tanya</string>
     <string name="candles">Candela illuminazione</string>
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
     <string name="sunset">Tramonto</string>

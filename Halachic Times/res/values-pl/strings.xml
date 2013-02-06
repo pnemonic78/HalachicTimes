@@ -27,7 +27,7 @@
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Modły popołudniowe</string>
     <string name="plug_hamincha">Plag hamincha</string>
-    <string name="plug_hamincha_summary">Plag hamincha zgodnie z Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plag hamincha zgodnie z Gra &amp; Baal Tanya</string>
     <string name="candles">Oświetlenie świecę</string>
     <string name="candles_summary">%1$d minut przed zachodem słońca</string>
     <string name="sunset">Zachód słońca</string>

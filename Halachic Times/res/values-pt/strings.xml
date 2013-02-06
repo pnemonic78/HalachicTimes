@@ -27,7 +27,7 @@
     <string name="mincha">Minchá ketaná</string>
     <string name="mincha_summary">Orações da tarde</string>
     <string name="plug_hamincha">Plag haminchá</string>
-    <string name="plug_hamincha_summary">Plag haminchá acordo com a Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plag haminchá acordo com a Gra &amp; Baal Tanya</string>
     <string name="candles">Acendimento das velas</string>
     <string name="candles_summary">%1$d minutos antes da pôr-do-sol</string>
     <string name="sunset">Pôr-do-sol</string>

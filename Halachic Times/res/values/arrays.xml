@@ -175,8 +175,8 @@
         <item>26</item>
     </string-array>
     <string-array name="plug_hamincha_entries" translatable="false">
-        <item>@string/plug_hamincha_alos</item>
-        <item>@string/plug_hamincha_summary</item>
+        <item>@string/plug_hamincha_16_sunset</item>
+        <item>@string/plug_hamincha_gra</item>
         <item>@string/plug_hamincha_16_alos</item>
         <item>@string/plug_hamincha_ateret</item>
         <item>@string/plug_hamincha_60</item>

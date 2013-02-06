@@ -27,7 +27,7 @@
     <string name="mincha">Minkha kétana</string>
     <string name="mincha_summary">Prières après-midi</string>
     <string name="plug_hamincha">Plag haminkha</string>
-    <string name="plug_hamincha_summary">Plug haminkha acuerdo a Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plug haminkha acuerdo a Gra &amp; Baal Tanya</string>
     <string name="candles">Allumage des bougies</string>
     <string name="candles_summary">%1$d minutes avant le coucher du soleil</string>
     <string name="sunset">Coucher du soleil</string>

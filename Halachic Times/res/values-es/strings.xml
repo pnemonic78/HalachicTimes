@@ -27,7 +27,7 @@
     <string name="mincha">Minja ketana</string>
     <string name="mincha_summary">Plegarias de la tarde</string>
     <string name="plug_hamincha">Plug haminja</string>
-    <string name="plug_hamincha_summary">Plug haminja acuerdo a Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plug haminja acuerdo a Gra &amp; Baal Tanya</string>
     <string name="candles">Encendido de velas</string>
     <string name="candles_summary">%1$d minutos antes de la puesta del sol</string>
     <string name="sunset">Puesta del sol</string>

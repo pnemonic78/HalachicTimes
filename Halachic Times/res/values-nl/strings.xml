@@ -27,7 +27,7 @@
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Middag gebeden</string>
     <string name="plug_hamincha">Plug hamincha</string>
-    <string name="plug_hamincha_summary">Plug hamincha volgens Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plug hamincha volgens Gra &amp; Baal Tanya</string>
     <string name="candles">Kaars verlichting</string>
     <string name="candles_summary">%1$d minuten voor zonsondergang</string>
     <string name="sunset">Zonsondergang</string>
