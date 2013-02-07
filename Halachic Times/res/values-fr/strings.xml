@@ -33,8 +33,6 @@
     <string name="prayers_mga">Dernières prières du matin selon la Magen Avraham</string>
     <string name="prayers_gra">Dernières prières du matin selon la Gra &amp; Baal Tanya</string>
     <string name="plug_hamincha_gra">Plug haminkha acuerdo a Gra &amp; Baal Tanya</string>
-    <string name="sunset_summary">Dans une région de niveau</string>
-    <string name="nightfall_72">72 minutes</string>
 
     <!-- List -->
     <string name="dawn">Aube</string>

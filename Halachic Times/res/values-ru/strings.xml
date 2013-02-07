@@ -33,8 +33,6 @@
     <string name="prayers_mga">Самое позднее время утренние молитв соответствии с Маген Авраам</string>
     <string name="prayers_gra">Самое позднее время утренние молитв соответствии с Гра &amp; Ваал Таня</string>
     <string name="plug_hamincha_gra">Плаг минха соответствии с Гра &amp; Ваал Таня</string>
-    <string name="sunset_summary">В уровне регионе</string>
-    <string name="nightfall_72">72 минут</string>
 
     <!-- List -->
     <string name="dawn">Рассвет</string>

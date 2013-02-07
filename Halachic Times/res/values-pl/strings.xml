@@ -33,8 +33,6 @@
     <string name="prayers_mga">Ostatnia modlitwy poranne zgodnie z Magen Abrahama</string>
     <string name="prayers_gra">Ostatnia modlitwy poranne zgodnie z Gra &amp; Baal Tanya</string>
     <string name="plug_hamincha_gra">Plag hamincha zgodnie z Gra &amp; Baal Tanya</string>
-    <string name="sunset_summary">W regionie poziom</string>
-    <string name="nightfall_72">72 minut</string>
 
     <!-- List -->
     <string name="dawn">Świt</string>

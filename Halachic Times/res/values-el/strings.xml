@@ -33,8 +33,6 @@
     <string name="prayers_mga">Τελευταία πρωινή προσευχή σύμφωνα με Μαγεν Αβραάμ</string>
     <string name="prayers_gra">Τελευταία πρωινή προσευχή σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
     <string name="plug_hamincha_gra">Πλαγ μινχα σύμφωνα με Γρά &amp; Βάαλ Τάνια</string>
-    <string name="sunset_summary">Σε μια περιοχή επίπεδο</string>
-    <string name="nightfall_72">72 λεπτά</string>
 
     <!-- List -->
     <string name="dawn">Αυγή</string>

@@ -33,8 +33,6 @@
     <string name="prayers_mga">סוף זמן תפילות הבוקר לפי מגן אברהם</string>
     <string name="prayers_gra">סוף זמן תפילות הבוקר לפי הגר\"א ובעל התניא</string>
     <string name="plug_hamincha_gra">פלג המנחה לפי הגר\"א ובעל התניא</string>
-    <string name="sunset_summary">באזור אפקי</string>
-    <string name="nightfall_72">72 דקות לפי רבינו תם</string>
 
     <!-- List -->
     <string name="dawn">עלות השחר</string>
