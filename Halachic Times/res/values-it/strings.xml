@@ -6,49 +6,89 @@
     <string name="location_unknown">Indirizzo sconosciuto</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
-    <!-- List -->
-    <string name="dawn">Alba</string>
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
+    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_16">Day is 16.1° below sunrise / sunset</string>
+    <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
+    <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
+    <string name="opinion_26">Day is 26° below sunrise / sunset</string>
+    <string name="opinion_19">Day is 19.8° below sunrise / sunset</string>
+    <string name="opinion_18">Day is 18° below sunrise / sunset</string>
+    <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
+    <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
+    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
+    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
+    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
+    <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
+    <string name="opinion_mga">According to Magen Avraham</string>
+
     <string name="dawn_16">16.1° sotto l\'orizzonte orientale</string>
     <string name="dawn_72">72 minuti prima dell\'alba a livello del mare</string>
+    <string name="shema_mga">Ultime shema secondo la Magen Avraham</string>
+    <string name="shema_gra">Ultime shema secondo la Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Ultime preghiere del mattino secondo la Magen Avraham</string>
+    <string name="prayers_gra">Ultime preghiere del mattino secondo la Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plug hamincha secondo la Gra &amp; Baal Tanya</string>
+    <string name="sunset_summary">In una regione di livello</string>
+    <string name="nightfall_72">72 minuti</string>
+
+    <!-- List -->
+    <string name="dawn">Alba</string>
 
     <string name="tallis">Prima tallis e tefillin</string>
     <string name="tallis_summary">Sole è 11,5° sotto l\'orizzonte</string>
+    <string name="tallis_11">Sun is 11° below horizon</string>
+    <string name="tallis_10">Sun is 10.2° below horizon</string>
 
     <string name="sunrise">Levata del sole</string>
     <string name="sunrise_summary">In una regione di livello</string>
+    <string name="sunrise_sea">At sea level</string>
 
     <string name="shema">Ultime shema</string>
-    <string name="shema_mga">Ultime shema secondo la Magen Avraham</string>
-    <string name="shema_gra">Ultime shema secondo la Gra &amp; Baal Tanya</string>
+    <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
+    <string name="shema_3">3 hours before midday</string>
+    <string name="shema_fixed">3 hours before fixed local midday</string>
 
     <string name="prayers">Ultime shacharis</string>
-    <string name="prayers_mga">Ultime preghiere del mattino secondo la Magen Avraham</string>
-    <string name="prayers_gra">Ultime preghiere del mattino secondo la Gra &amp; Baal Tanya</string>
+    <string name="prayers_fixed">2 hours before fixed local midday</string>
+    <string name="prayers_2">2 hours before midday</string>
 
     <string name="midday">Mezzogiorno</string>
     <string name="midday_summary">Mezzo del giorno</string>
 
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
+    <string name="earliest_mincha_30">30 minutes after midday</string>
 
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Pomeriggio preghiere</string>
 
     <string name="plug_hamincha">Plug hamincha</string>
-    <string name="plug_hamincha_gra">Plug hamincha secondo la Gra &amp; Baal Tanya</string>
 
     <string name="candles">Candela illuminazione</string>
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
 
     <string name="sunset">Tramonto</string>
-    <string name="sunset_summary">In una regione di livello</string>
 
     <string name="nightfall">Crepuscolo</string>
     <string name="nightfall_3stars">3 stelle visibili</string>
-    <string name="nightfall_72">72 minuti</string>
+    <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
+    <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
+    <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
+    <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
+    <string name="nightfall_4_8">Sun is 4.8° below sea level</string>
+    <string name="nightfall_5_88">Sun is 5.88° below sea level</string>
+    <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
+    <string name="nightfall_7">Sun is 7.083° below sea level</string>
+    <string name="nightfall_8">Sun is 8.5° below sea level</string>
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Mezzanotte</string>
+    <string name="midnight_12">12 hours after midday</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Impostazioni</string>

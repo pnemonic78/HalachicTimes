@@ -6,49 +6,89 @@
     <string name="location_unknown">Necunoscuta adresa</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
-    <!-- List -->
-    <string name="dawn">Zori de zi</string>
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
+    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_16">Day is 16.1° below sunrise / sunset</string>
+    <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
+    <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
+    <string name="opinion_26">Day is 26° below sunrise / sunset</string>
+    <string name="opinion_19">Day is 19.8° below sunrise / sunset</string>
+    <string name="opinion_18">Day is 18° below sunrise / sunset</string>
+    <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
+    <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
+    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
+    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
+    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
+    <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
+    <string name="opinion_mga">According to Magen Avraham</string>
+
     <string name="dawn_16">16.1° sub orizont de est</string>
     <string name="dawn_72">72 minute înainte de răsărit nivelul mării</string>
+    <string name="shema_mga">Șema ultima în conformitate cu Magen Avraham</string>
+    <string name="shema_gra">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="prayers_mga">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
+    <string name="prayers_gra">Rugăciunile de dimineață ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="plug_hamincha_gra">Plag hamincha în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="sunset_summary">Într-o regiune nivel</string>
+    <string name="nightfall_72">72 minute</string>
+
+    <!-- List -->
+    <string name="dawn">Zori de zi</string>
 
     <string name="tallis">Cazarea cel devreme tallis și tefillin</string>
     <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
+    <string name="tallis_11">Sun is 11° below horizon</string>
+    <string name="tallis_10">Sun is 10.2° below horizon</string>
 
     <string name="sunrise">Răsărit</string>
     <string name="sunrise_summary">Într-o regiune nivel</string>
+    <string name="sunrise_sea">At sea level</string>
 
     <string name="shema">Ultima șema</string>
-    <string name="shema_mga">Șema ultima în conformitate cu Magen Avraham</string>
-    <string name="shema_gra">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
+    <string name="shema_3">3 hours before midday</string>
+    <string name="shema_fixed">3 hours before fixed local midday</string>
 
     <string name="prayers">Ultima shacharis</string>
-    <string name="prayers_mga">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
-    <string name="prayers_gra">Rugăciunile de dimineață ultima în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="prayers_fixed">2 hours before fixed local midday</string>
+    <string name="prayers_2">2 hours before midday</string>
 
     <string name="midday">Amiază</string>
     <string name="midday_summary">Miezul zilei</string>
 
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Mai timpurii de după-amiază rugăciunile</string>
+    <string name="earliest_mincha_30">30 minutes after midday</string>
 
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">De după-amiază rugăciunile</string>
 
     <string name="plug_hamincha">Plag hamincha</string>
-    <string name="plug_hamincha_gra">Plag hamincha în conformitate cu Gra &amp; Baal Tanya</string>
 
     <string name="candles">Lumânare de iluminat</string>
     <string name="candles_summary">%1$d minute înainte de apus</string>
 
     <string name="sunset">Apus de soare</string>
-    <string name="sunset_summary">Într-o regiune nivel</string>
 
     <string name="nightfall">Căderea nopții</string>
     <string name="nightfall_3stars">3 stele vizibile</string>
-    <string name="nightfall_72">72 minute</string>
+    <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
+    <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
+    <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
+    <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
+    <string name="nightfall_4_8">Sun is 4.8° below sea level</string>
+    <string name="nightfall_5_88">Sun is 5.88° below sea level</string>
+    <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
+    <string name="nightfall_7">Sun is 7.083° below sea level</string>
+    <string name="nightfall_8">Sun is 8.5° below sea level</string>
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Miezul nopții</string>
+    <string name="midnight_12">12 hours after midday</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>

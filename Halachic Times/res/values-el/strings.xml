@@ -25,6 +25,7 @@
     <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
     <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
     <string name="opinion_mga">According to Magen Avraham</string>
+
     <string name="dawn_16">16,1° κάτω από τον ανατολικό ορίζοντα</string>
     <string name="dawn_72">72 λεπτά πριν την ανατολή της στάθμης της θάλασσας</string>
     <string name="shema_mga">Τελευταία σεμα σύμφωνα με Μαγεν Αβραάμ</string>
@@ -61,6 +62,7 @@
 
     <string name="earliest_mincha">Μινχα γδολα</string>
     <string name="earliest_mincha_summary">Η πιο παλιά προσευχές απόγευμα</string>
+    <string name="earliest_mincha_30">30 minutes after midday</string>
 
     <string name="mincha">Μινχα κτανα</string>
     <string name="mincha_summary">Απόγευμα προσευχές</string>
@@ -74,9 +76,19 @@
 
     <string name="nightfall">Σούρουπο</string>
     <string name="nightfall_3stars">3 αστέρια ορατά</string>
+    <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
+    <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
+    <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
+    <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
+    <string name="nightfall_4_8">Sun is 4.8° below sea level</string>
+    <string name="nightfall_5_88">Sun is 5.88° below sea level</string>
+    <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
+    <string name="nightfall_7">Sun is 7.083° below sea level</string>
+    <string name="nightfall_8">Sun is 8.5° below sea level</string>
 
     <string name="midnight">Χαζοτ</string>
     <string name="midnight_summary">Μεσάνυχτα</string>
+    <string name="midnight_12">12 hours after midday</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ρυθμίσεις</string>
