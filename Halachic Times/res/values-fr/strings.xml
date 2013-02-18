@@ -39,6 +39,7 @@
     <string name="sunrise_sea">À niveau de la mer</string>
 
     <string name="shema">Heure de fin du chéma</string>
+    <string name="shema_7">Jour est de l\'aube 16,1° à tombée de la nuit 7,083°</string>
     <string name="shema_3">3 heures avant de midi</string>
     <string name="shema_fixed">3 heures avant de midi fixe local</string>
 
