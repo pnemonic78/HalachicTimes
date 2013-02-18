@@ -49,6 +49,7 @@
 
     <string name="midday">צהריים</string>
     <string name="midday_summary">חצות היום</string>
+    <string name="midday_fixed">צהריים מותאמים קו הרוחב המקומי</string>
 
     <string name="earliest_mincha">מנחה גדולה</string>
     <string name="earliest_mincha_summary">תפילת מנחה המוקדמת ביותר</string>

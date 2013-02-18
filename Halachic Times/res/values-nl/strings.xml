@@ -57,6 +57,7 @@
 
     <string name="midday">Middag</string>
     <string name="midday_summary">Middaghoogte</string>
+    <string name="midday_fixed">Noon adjusted for the local latitude</string>
 
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Vroegste middag gebeden</string>

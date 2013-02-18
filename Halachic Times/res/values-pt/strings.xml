@@ -57,6 +57,7 @@
 
     <string name="midday">Meio-dia</string>
     <string name="midday_summary">Meio do dia</string>
+    <string name="midday_fixed">Noon adjusted for the local latitude</string>
 
     <string name="earliest_mincha">Minchá guedolá</string>
     <string name="earliest_mincha_summary">Primeiro horário para orações do tarde</string>

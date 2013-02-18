@@ -49,6 +49,7 @@
 
     <string name="midday">Mediodía</string>
     <string name="midday_summary">Mediodía</string>
+    <string name="midday_fixed">Mediodía ajustado por la latitud local</string>
 
     <string name="earliest_mincha">Minja gedola</string>
     <string name="earliest_mincha_summary">Primeras plegarias de la tarde</string>

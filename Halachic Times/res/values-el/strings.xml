@@ -49,6 +49,7 @@
 
     <string name="midday">Μεσημέρι</string>
     <string name="midday_summary">Μεσημβρία</string>
+    <string name="midday_fixed">Μεσημέρι ρυθμίζεται για το τοπικό γεωγραφικό πλάτος</string>
 
     <string name="earliest_mincha">Μινχα γδολα</string>
     <string name="earliest_mincha_summary">Η πιο παλιά προσευχές απόγευμα</string>

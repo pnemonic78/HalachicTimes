@@ -57,6 +57,7 @@
 
     <string name="midday">Полдень</string>
     <string name="midday_summary">Середине дня</string>
+    <string name="midday_fixed">Noon adjusted for the local latitude</string>
 
     <string name="earliest_mincha">Минха гдола</string>
     <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>

@@ -49,6 +49,7 @@
 
     <string name="midday">Midi</string>
     <string name="midday_summary">Milieu du jour</string>
+    <string name="midday_fixed">Midi ajusté pour la latitude locale</string>
 
     <string name="earliest_mincha">Minkha gedola</string>
     <string name="earliest_mincha_summary">Prières après-midi au plus tôt</string>
