@@ -7,61 +7,53 @@
     <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
 
     <!-- Recurring opinions -->
-    <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
-    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_16">Day is 16.1° below sunrise / sunset</string>
-    <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
-    <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
-    <string name="opinion_26">Day is 26° below sunrise / sunset</string>
-    <string name="opinion_19">Day is 19.8° below sunrise / sunset</string>
-    <string name="opinion_18">Day is 18° below sunrise / sunset</string>
-    <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
-    <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
-    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
-    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
-    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
-    <string name="opinion_mga">According to Magen Avraham</string>
-
-    <string name="dawn_16">16,1° alatt a keleti horizont</string>
-    <string name="dawn_72">72 perc múlva a tenger szintje napkelte</string>
-    <string name="shema_mga">Legutóbbi shema szerint Magen Avraham</string>
-    <string name="shema_gra">Legutóbbi shema szerint Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Legutóbbi reggel imák szerint Magen Avraham</string>
-    <string name="prayers_gra">Legutóbbi reggel imák szerint Gra &amp; Baal Tanya</string>
-    <string name="plug_hamincha_gra">Plag hamincha szerint Gra &amp; Baal Tanya</string>
+    <string name="opinion_120">Nap 120 perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_120_zmanis">Nap 120 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_16">Nap 16,1° alábbi napkelte / napnyugta</string>
+    <string name="opinion_16_sunset">Nap-tól hajnal 16,1° tenger szintje napnyugta</string>
+    <string name="opinion_16_night">Nap-tól hajnal 16,1° alkony</string>
+    <string name="opinion_26">Nap 26° alábbi napkelte / napnyugta</string>
+    <string name="opinion_19">Nap 19,8° alábbi napkelte / napnyugta</string>
+    <string name="opinion_18">Nap 18° alábbi napkelte / napnyugta</string>
+    <string name="opinion_60">Nap 60 perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_72">Nap 72 perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_72_zmanis">Nap 72 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_90">Nap 90 perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_90_zmanis">Nap 90 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_96">Nap 96 perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_96_zmanis">Nap 96 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_ateret">Szerint Yeshivat Ateret Tóra</string>
+    <string name="opinion_gra">Szerint Gra &amp; Baal Tanya</string>
+    <string name="opinion_mga">Szerint Magen Avraham</string>
 
     <!-- List -->
     <string name="dawn">Hajnal</string>
 
     <string name="tallis">Legkorábbi tallis és tfilint</string>
     <string name="tallis_summary">Nap 11,5° alatt horizont</string>
-    <string name="tallis_11">Sun is 11° below horizon</string>
-    <string name="tallis_10">Sun is 10.2° below horizon</string>
+    <string name="tallis_11">Nap 11° alatt horizont</string>
+    <string name="tallis_10">Nap 10,2° alatt horizont</string>
 
     <string name="sunrise">Napkelte</string>
     <string name="sunrise_summary">Egy szinten régióban</string>
-    <string name="sunrise_sea">At sea level</string>
+    <string name="sunrise_sea">A tenger szintje</string>
 
     <string name="shema">Legutóbbi shema</string>
-    <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
-    <string name="shema_3">3 hours before midday</string>
-    <string name="shema_fixed">3 hours before fixed local midday</string>
+    <string name="shema_7">Nap-tól hajnal 16,1° alkony 7,083°</string>
+    <string name="shema_3">Előtt 3 órával dél</string>
+    <string name="shema_fixed">Előtt 3 órával rögzített helyi dél</string>
 
     <string name="prayers">Legutóbbi shacharis</string>
-    <string name="prayers_fixed">2 hours before fixed local midday</string>
-    <string name="prayers_2">2 hours before midday</string>
+    <string name="prayers_fixed">Előtt 2 órával rögzített helyi dél</string>
+    <string name="prayers_2">Előtt 2 órával dél</string>
 
-    <string name="midday">Déli</string>
+    <string name="midday">Dél</string>
     <string name="midday_summary">Dél</string>
-    <string name="midday_fixed">Noon adjusted for the local latitude</string>
+    <string name="midday_fixed">Noon igazítani a helyi szélességi</string>
 
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Legkorábbi délutáni ima</string>
-    <string name="earliest_mincha_30">30 minutes after midday</string>
+    <string name="earliest_mincha_30">30 perc azután dél</string>
 
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Délutáni ima</string>
@@ -75,15 +67,15 @@
 
     <string name="nightfall">Alkony</string>
     <string name="nightfall_3stars">3 csillagos látható</string>
-    <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
-    <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
-    <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
-    <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
-    <string name="nightfall_4_8">Sun is 4.8° below sea level</string>
-    <string name="nightfall_5_88">Sun is 5.88° below sea level</string>
-    <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
-    <string name="nightfall_7">Sun is 7.083° below sea level</string>
-    <string name="nightfall_8">Sun is 8.5° below sea level</string>
+    <string name="nightfall_3_65">A nap 3,65° tenger szintje alatt</string>
+    <string name="nightfall_3_676">A nap 3,676° tenger szintje alatt</string>
+    <string name="nightfall_4_37">A nap 4,37° tenger szintje alatt</string>
+    <string name="nightfall_4_61">A nap 4,61° tenger szintje alatt</string>
+    <string name="nightfall_4_8">A nap 4,8° tenger szintje alatt</string>
+    <string name="nightfall_5_88">A nap 5,88° tenger szintje alatt</string>
+    <string name="nightfall_5_95">A nap 5,95° tenger szintje alatt</string>
+    <string name="nightfall_7">A nap 7,083° tenger szintje alatt</string>
+    <string name="nightfall_8">A nap 8,5° tenger szintje alatt</string>
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Éjfél</string>
