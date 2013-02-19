@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Halachik Namaz Vakitleri</string>
+    <string name="title_activity_zmanim">Halachik Vakitleri</string>
+    <string name="location_unknown">Bilinmeyen adres</string>
+    <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Gün 120 dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_120_zmanis">Gün 120 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_16">Gün 16,1° aşağıda gündoğumu / günbatımı</string>
+    <string name="opinion_16_sunset">Gün şafak 16,1° deniz seviyesi günbatımı</string>
+    <string name="opinion_16_night">Gün şafak 16,1° kadar akşam vakti</string>
+    <string name="opinion_26">Gün 26° aşağıda gündoğumu / günbatımı</string>
+    <string name="opinion_19">Gün 19,8° aşağıda gündoğumu / günbatımı</string>
+    <string name="opinion_18">Gün 18° aşağıda gündoğumu / günbatımı</string>
+    <string name="opinion_60">Gün 60 dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_72">Gün 72 dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_72_zmanis">Gün 72 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_90">Gün 90 dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_90_zmanis">Gün 90 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_96">Gün 96 dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_96_zmanis">Gün 96 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_ateret">Yeşivat Ateret Tora göre</string>
+    <string name="opinion_gra">Gra ve Baal Tanya göre</string>
+    <string name="opinion_mga">Magen Avraham göre</string>
+
+    <!-- List -->
+    <string name="dawn">Şafak</string>
+
+    <string name="tallis">En erken tallis ve tefillin</string>
+    <string name="tallis_summary">Güneş ufkun aşağıda 11,5°</string>
+    <string name="tallis_11">Güneş ufkun aşağıda 11°</string>
+    <string name="tallis_10">Güneş ufkun aşağıda 10,2°</string>
+
+    <string name="sunrise">Gündoğumu</string>
+    <string name="sunrise_summary">A seviye bölgede</string>
+    <string name="sunrise_sea">Deniz seviyesinde</string>
+
+    <string name="shema">En son şema</string>
+    <string name="shema_7">Gün şafak 16,1° kadar gece 7,083°</string>
+    <string name="shema_3">3 saat önce öğle vakti</string>
+    <string name="shema_fixed">3 saat önce öğle vakti sabit yerel</string>
+
+    <string name="prayers">En son sabah namazından (şacharis)</string>
+    <string name="prayers_fixed">2 saat önce öğle vakti sabit yerel</string>
+    <string name="prayers_2">2 saat önce öğle vakti</string>
+
+    <string name="midday">Öğlen</string>
+    <string name="midday_summary">Güneş öğlen</string>
+    <string name="midday_fixed">Öğlen yerel enlem için ayarlanabilir</string>
+
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">En erken ikindi namazından</string>
+    <string name="earliest_mincha_30">30 dakika sonra öğlen</string>
+
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">İkindi namazından</string>
+
+    <string name="plug_hamincha">Plag hamincha</string>
+
+    <string name="candles">Mum aydınlatma</string>
+    <string name="candles_summary">%1$d dakika önce günbatımı</string>
+
+    <string name="sunset">Gün batımı</string>
+
+    <string name="nightfall">Akşam vakti</string>
+    <string name="nightfall_3stars">3 yıldızlar görünür</string>
+    <string name="nightfall_3_65">Güneş deniz seviyesi altındadır 3,65°</string>
+    <string name="nightfall_3_676">Güneş deniz seviyesi altındadır 3,676°</string>
+    <string name="nightfall_4_37">Güneş deniz seviyesi altındadır 4,37°</string>
+    <string name="nightfall_4_61">Güneş deniz seviyesi altındadır 4,61°</string>
+    <string name="nightfall_4_8">Güneş deniz seviyesi altındadır 4,8°</string>
+    <string name="nightfall_5_88">Güneş deniz seviyesi altındadır 5,88°</string>
+    <string name="nightfall_5_95">Güneş deniz seviyesi altındadır 5,95°</string>
+    <string name="nightfall_7">Güneş deniz seviyesi altındadır 7,083°</string>
+    <string name="nightfall_8">Güneş deniz seviyesi altındadır 8,5°</string>
+
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Gece yarısı</string>
+    <string name="midnight_12">12 saat sonra öğlen</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Ayarlar</string>
+    <string name="category_general">Genel</string>
+    <string name="coords_format_title">Koordinatlar biçimi</string>
+    <string name="coords_format_summary">Enlem ve boylam notasyon</string>
+
+    <string-array name="coords_format_entries">
+        <item>Ondalık</item>
+        <item>Altmışlık</item>
+    </string-array>
+
+    <string name="category_opinion">Görüşler</string>
+    <string name="past_title">Zaman geçmiş olması vakitleri</string>
+    <string name="past_enabled">Geçmiş vakitleri etkindir</string>
+    <string name="past_disabled">Geçmiş vakitleri devre dışı</string>
+    <string name="summaries_title">Özetler</string>
+    <string name="summaries_hidden">Özetler gizlidir</string>
+    <string name="summaries_visible">Özetler görünür</string>
+    <string name="gradient_title">Degrade arka plan</string>
+    <string name="gradient_hidden">Degrade gizlidir</string>
+    <string name="gradient_visible">Degrade görünür</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Tarih seçebilirsiniz</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Pusula</string>
+    <string name="title_activity_compass">Namaz yönü</string>
+    <string name="north">K</string>
+    <string name="east">D</string>
+    <string name="south">G</string>
+    <string name="west">B</string>
+
+</resources>
