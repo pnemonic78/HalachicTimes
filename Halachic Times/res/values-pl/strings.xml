@@ -7,61 +7,53 @@
     <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
 
     <!-- Recurring opinions -->
-    <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
-    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_16">Day is 16,1° below sunrise / sunset</string>
-    <string name="opinion_16_sunset">Day is from dawn 16,1° to sea level sunset</string>
-    <string name="opinion_16_night">Day is from dawn 16,1° to nightfall</string>
-    <string name="opinion_26">Day is 26° below sunrise / sunset</string>
-    <string name="opinion_19">Day is 19,8° below sunrise / sunset</string>
-    <string name="opinion_18">Day is 18° below sunrise / sunset</string>
-    <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
-    <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
-    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
-    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
-    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
-    <string name="opinion_mga">According to Magen Avraham</string>
-
-    <string name="dawn_16">16,1° poniżej wschodnim horyzontem</string>
-    <string name="dawn_72">72 minut przed wschodem słońca poziomem morza</string>
-    <string name="shema_mga">Ostatnia szema zgodnie z Magen Abrahama</string>
-    <string name="shema_gra">Ostatnia szema zgodnie z Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Ostatnia modlitwy poranne zgodnie z Magen Abrahama</string>
-    <string name="prayers_gra">Ostatnia modlitwy poranne zgodnie z Gra &amp; Baal Tanya</string>
-    <string name="plug_hamincha_gra">Plag hamincha zgodnie z Gra &amp; Baal Tanya</string>
+    <string name="opinion_120">Dzień jest 120 minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_120_zmanis">Dzień jest 120 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_16">Dzień jest 16,1° poniżej wschodem słońca / zachodzie słońca</string>
+    <string name="opinion_16_sunset">Dzień jest od świtu 16,1° do poziomu morza słońca</string>
+    <string name="opinion_16_night">Dzień jest od świtu 16,1° do zmroku</string>
+    <string name="opinion_26">Dzień jest 26° poniżej wschodem słońca / zachodzie słońca</string>
+    <string name="opinion_19">Dzień jest 19,8° poniżej wschodem słońca / zachodzie słońca</string>
+    <string name="opinion_18">Dzień jest 18° poniżej wschodem słońca / zachodzie słońca</string>
+    <string name="opinion_60">Dzień jest 60 minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_72">Dzień jest 72 minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_72_zmanis">Dzień jest 72 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_90">Dzień jest 90 minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_90_zmanis">Dzień jest 90 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_96">Dzień jest 96 minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_96_zmanis">Dzień jest 96 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_ateret">Zgodnie z Jesziwy Ateret Torą</string>
+    <string name="opinion_gra">Zgodnie z Gra &amp; Baal Tanya</string>
+    <string name="opinion_mga">Zgodnie z Magen Abrahama</string>
 
     <!-- List -->
     <string name="dawn">Świt</string>
 
     <string name="tallis">Najwcześniejsze tallis i tefilin</string>
     <string name="tallis_summary">Słońce jest 11,5° poniżej horyzontu</string>
-    <string name="tallis_11">Sun is 11° below horizon</string>
-    <string name="tallis_10">Sun is 10,2° below horizon</string>
+    <string name="tallis_11">Słońce jest 11° poniżej horyzontu</string>
+    <string name="tallis_10">Słońce jest 10,2° poniżej horyzontu</string>
 
     <string name="sunrise">Wschód słońca</string>
     <string name="sunrise_summary">W regionie poziom</string>
-    <string name="sunrise_sea">At sea level</string>
+    <string name="sunrise_sea">Na poziomie morza</string>
 
     <string name="shema">Ostatnia szema</string>
-    <string name="shema_7">Day is from dawn 16,1° to night 7,083°</string>
-    <string name="shema_3">3 hours before midday</string>
-    <string name="shema_fixed">3 hours before fixed local midday</string>
+    <string name="shema_7">Dzień jest od świtu 16,1° do nocy 7,083°</string>
+    <string name="shema_3">3 godziny jeszcze przed południem</string>
+    <string name="shema_fixed">3 godziny przed stałym lokalnym południem</string>
 
-    <string name="prayers">Ostatnia shacharis</string>
-    <string name="prayers_fixed">2 hours before fixed local midday</string>
-    <string name="prayers_2">2 hours before midday</string>
+    <string name="prayers">Ostatnia szacharis</string>
+    <string name="prayers_fixed">2 godziny przed stałym lokalnym południem</string>
+    <string name="prayers_2">2 godziny jeszcze przed południem</string>
 
     <string name="midday">Południe</string>
     <string name="midday_summary">Południe</string>
-    <string name="midday_fixed">Noon adjusted for the local latitude</string>
+    <string name="midday_fixed">Południe korekcie o lokalnym szerokości geograficznej</string>
 
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Najwcześniejsze modlitwy popołudniowe</string>
-    <string name="earliest_mincha_30">30 minutes after midday</string>
+    <string name="earliest_mincha_30">30 minut po południa</string>
 
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Modły popołudniowe</string>
@@ -75,15 +67,15 @@
 
     <string name="nightfall">Zmrok</string>
     <string name="nightfall_3stars">3 gwiazdki widoczne</string>
-    <string name="nightfall_3_65">Sun is 3,65° below sea level</string>
-    <string name="nightfall_3_676">Sun is 3,676° below sea level</string>
-    <string name="nightfall_4_37">Sun is 4,37° below sea level</string>
-    <string name="nightfall_4_61">Sun is 4,61° below sea level</string>
-    <string name="nightfall_4_8">Sun is 4,8° below sea level</string>
-    <string name="nightfall_5_88">Sun is 5,88° below sea level</string>
-    <string name="nightfall_5_95">Sun is 5,95° below sea level</string>
-    <string name="nightfall_7">Sun is 7,083° below sea level</string>
-    <string name="nightfall_8">Sun is 8,5° below sea level</string>
+    <string name="nightfall_3_65">Słońce jest 3,65° poniżej poziomu morza</string>
+    <string name="nightfall_3_676">Słońce jest 3,676° poniżej poziomu morza</string>
+    <string name="nightfall_4_37">Słońce jest 4,37° poniżej poziomu morza</string>
+    <string name="nightfall_4_61">Słońce jest 4,61° poniżej poziomu morza</string>
+    <string name="nightfall_4_8">Słońce jest 4,8° poniżej poziomu morza</string>
+    <string name="nightfall_5_88">Słońce jest 5,88° poniżej poziomu morza</string>
+    <string name="nightfall_5_95">Słońce jest 5,95° poniżej poziomu morza</string>
+    <string name="nightfall_7">Słońce jest 7,083° poniżej poziomu morza</string>
+    <string name="nightfall_8">Słońce jest 8,5° poniżej poziomu morza</string>
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Północ</string>
