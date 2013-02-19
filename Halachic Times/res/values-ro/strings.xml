@@ -7,61 +7,53 @@
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
     <!-- Recurring opinions -->
-    <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
-    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_16">Day is 16,1° below sunrise / sunset</string>
-    <string name="opinion_16_sunset">Day is from dawn 16,1° to sea level sunset</string>
-    <string name="opinion_16_night">Day is from dawn 16,1° to nightfall</string>
-    <string name="opinion_26">Day is 26° below sunrise / sunset</string>
-    <string name="opinion_19">Day is 19,8° below sunrise / sunset</string>
-    <string name="opinion_18">Day is 18° below sunrise / sunset</string>
-    <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
-    <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
-    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
-    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
-    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
-    <string name="opinion_mga">According to Magen Avraham</string>
-
-    <string name="dawn_16">16,1° sub orizont de est</string>
-    <string name="dawn_72">72 minute înainte de răsărit nivelul mării</string>
-    <string name="shema_mga">Șema ultima în conformitate cu Magen Avraham</string>
-    <string name="shema_gra">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Rugăciunile de dimineață ultima în conformitate cu Magen Avraham</string>
-    <string name="prayers_gra">Rugăciunile de dimineață ultima în conformitate cu Gra &amp; Baal Tanya</string>
-    <string name="plug_hamincha_gra">Plag hamincha în conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="opinion_120">Ziua este 120 minute înainte de răsărit / după apus</string>
+    <string name="opinion_120_zmanis">Ziua este 120 minute <i>zmaniyos</i> înainte de răsărit / după apus</string>
+    <string name="opinion_16">Ziua este 16,1° sub răsărit / apus</string>
+    <string name="opinion_16_sunset">Ziua este din zori 16,1° la nivelul mării apus de soare</string>
+    <string name="opinion_16_night">Ziua este din zori 16,1° la căderea nopții</string>
+    <string name="opinion_26">Ziua este 26° sub răsărit / apus</string>
+    <string name="opinion_19">Ziua este 19,8° sub răsărit / apus</string>
+    <string name="opinion_18">Ziua este 18° sub răsărit / apus</string>
+    <string name="opinion_60">Ziua este 60 minute înainte de răsărit / după apus</string>
+    <string name="opinion_72">Ziua este 72 minute înainte de răsărit / după apus</string>
+    <string name="opinion_72_zmanis">Ziua este 72 minute <i>zmaniyos</i> înainte de răsărit / după apus</string>
+    <string name="opinion_90">Ziua este 90 minute înainte de răsărit / după apus</string>
+    <string name="opinion_90_zmanis">Ziua este 90 minute <i>zmaniyos</i> înainte de răsărit / după apus</string>
+    <string name="opinion_96">Ziua este 96 minute înainte de răsărit / după apus</string>
+    <string name="opinion_96_zmanis">Ziua este 96 minute <i>zmaniyos</i> înainte de răsărit / după apus</string>
+    <string name="opinion_ateret">În conformitate cu Yeşivat Ateret Tora</string>
+    <string name="opinion_gra">În conformitate cu Gra &amp; Baal Tanya</string>
+    <string name="opinion_mga">În conformitate cu Magen Avraham</string>
 
     <!-- List -->
     <string name="dawn">Zori de zi</string>
 
     <string name="tallis">Cazarea cel devreme tallis și tefillin</string>
     <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
-    <string name="tallis_11">Sun is 11° below horizon</string>
-    <string name="tallis_10">Sun is 10,2° below horizon</string>
+    <string name="tallis_11">Soarele este de 11° sub orizont</string>
+    <string name="tallis_10">Soarele este de 10,2° sub orizont</string>
 
     <string name="sunrise">Răsărit</string>
     <string name="sunrise_summary">Într-o regiune nivel</string>
-    <string name="sunrise_sea">At sea level</string>
+    <string name="sunrise_sea">La nivelul mării</string>
 
-    <string name="shema">Ultima șema</string>
-    <string name="shema_7">Day is from dawn 16,1° to night 7,083°</string>
-    <string name="shema_3">3 hours before midday</string>
-    <string name="shema_fixed">3 hours before fixed local midday</string>
+    <string name="shema">Ultima şema</string>
+    <string name="shema_7">Ziua este din zori 16,1° la noapte 7,083°</string>
+    <string name="shema_3">3 ore înainte amiază</string>
+    <string name="shema_fixed">3 ore înainte amiază fixă locală</string>
 
-    <string name="prayers">Ultima shacharis</string>
-    <string name="prayers_fixed">2 hours before fixed local midday</string>
-    <string name="prayers_2">2 hours before midday</string>
+    <string name="prayers">Ultima şacharis</string>
+    <string name="prayers_fixed">2 ore înainte amiază fixă locală</string>
+    <string name="prayers_2">2 ore înainte amiază</string>
 
     <string name="midday">Amiază</string>
     <string name="midday_summary">Miezul zilei</string>
-    <string name="midday_fixed">Noon adjusted for the local latitude</string>
+    <string name="midday_fixed">Amiază ajustate pentru latitudine locală</string>
 
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Mincha ghedola</string>
     <string name="earliest_mincha_summary">Mai timpurii de după-amiază rugăciunile</string>
-    <string name="earliest_mincha_30">30 minutes after midday</string>
+    <string name="earliest_mincha_30">30 minute după amiază</string>
 
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">De după-amiază rugăciunile</string>
@@ -75,19 +67,19 @@
 
     <string name="nightfall">Căderea nopții</string>
     <string name="nightfall_3stars">3 stele vizibile</string>
-    <string name="nightfall_3_65">Sun is 3,65° below sea level</string>
-    <string name="nightfall_3_676">Sun is 3,676° below sea level</string>
-    <string name="nightfall_4_37">Sun is 4,37° below sea level</string>
-    <string name="nightfall_4_61">Sun is 4,61° below sea level</string>
-    <string name="nightfall_4_8">Sun is 4,8° below sea level</string>
-    <string name="nightfall_5_88">Sun is 5,88° below sea level</string>
-    <string name="nightfall_5_95">Sun is 5,95° below sea level</string>
-    <string name="nightfall_7">Sun is 7,083° below sea level</string>
-    <string name="nightfall_8">Sun is 8,5° below sea level</string>
+    <string name="nightfall_3_65">Soarele este de 3,65° sub nivelul mării</string>
+    <string name="nightfall_3_676">Soarele este de 3,676° sub nivelul mării</string>
+    <string name="nightfall_4_37">Soarele este de 4,37° sub nivelul mării</string>
+    <string name="nightfall_4_61">Soarele este de 4,61° sub nivelul mării</string>
+    <string name="nightfall_4_8">Soarele este de 4,8° sub nivelul mării</string>
+    <string name="nightfall_5_88">Soarele este de 5,88° sub nivelul mării</string>
+    <string name="nightfall_5_95">Soarele este de 5,95° sub nivelul mării</string>
+    <string name="nightfall_7">Soarele este de 7,083° sub nivelul mării</string>
+    <string name="nightfall_8">Soarele este de 8,5° sub nivelul mării</string>
 
-    <string name="midnight">Chatzos</string>
+    <string name="midnight">Chaţos</string>
     <string name="midnight_summary">Miezul nopții</string>
-    <string name="midnight_12">12 hours after midday</string>
+    <string name="midnight_12">12 ore după amiază</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
