@@ -7,61 +7,53 @@
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
 
     <!-- Recurring opinions -->
-    <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
-    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_16">Day is 16.1° below sunrise / sunset</string>
-    <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
-    <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
-    <string name="opinion_26">Day is 26° below sunrise / sunset</string>
-    <string name="opinion_19">Day is 19.8° below sunrise / sunset</string>
-    <string name="opinion_18">Day is 18° below sunrise / sunset</string>
-    <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
-    <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
-    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
-    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
-    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
-    <string name="opinion_mga">According to Magen Avraham</string>
-
-    <string name="dawn_16">16,1° onder de oostelijke horizon</string>
-    <string name="dawn_72">72 minuten vóór zeespiegel zonsopgang</string>
-    <string name="shema_mga">Laatste shema volgens Magen Avraham</string>
-    <string name="shema_gra">Laatste shema volgens Gra &amp; Baal Tanya</string>
-    <string name="prayers_mga">Laatste ochtendgebed volgens Magen Avraham</string>
-    <string name="prayers_gra">Laatste ochtendgebed volgens Gra &amp; Baal Tanya</string>
-    <string name="plug_hamincha_gra">Plug hamincha volgens Gra &amp; Baal Tanya</string>
+    <string name="opinion_120">Dag is 120 minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_120_zmanis">Dag is 120 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_16">Dag is 16,1° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_16_sunset">Dag is van dageraad 16,1° tot zeeniveau zonsondergang</string>
+    <string name="opinion_16_night">Dag is van dageraad 16,1° tot vallen van de avond</string>
+    <string name="opinion_26">Dag is 26° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_19">Dag is 19,8° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_18">Dag is 18° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_60">Dag is 60 minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_72">Dag is 72 minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_72_zmanis">Dag is 72 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_90">Dag is 90 minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_90_zmanis">Dag is 90 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_96">Dag is 96 minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_96_zmanis">Dag is 96 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_ateret">Volgens Jeshiwat Ateret Tora</string>
+    <string name="opinion_gra">Volgens Gra &amp; Baal Tanja</string>
+    <string name="opinion_mga">Volgens Magen Awraham</string>
 
     <!-- List -->
     <string name="dawn">Dageraad</string>
 
     <string name="tallis">Vroegste tallis en tefillin</string>
     <string name="tallis_summary">Zon is 11,5° onder de horizon</string>
-    <string name="tallis_11">Sun is 11° below horizon</string>
-    <string name="tallis_10">Sun is 10.2° below horizon</string>
+    <string name="tallis_11">Zon is 11° onder de horizon</string>
+    <string name="tallis_10">Zon is onder de horizon</string>
 
     <string name="sunrise">Zonsopgang</string>
     <string name="sunrise_summary">In een platte regio</string>
-    <string name="sunrise_sea">At sea level</string>
+    <string name="sunrise_sea">Op zeeniveau</string>
 
     <string name="shema">Laatste shema</string>
-    <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
-    <string name="shema_3">3 hours before midday</string>
-    <string name="shema_fixed">3 hours before fixed local midday</string>
+    <string name="shema_7">Dag is from dawn 16,1° to night 7,083°</string>
+    <string name="shema_3">3 uur vóór de middag</string>
+    <string name="shema_fixed">3 uur vóór vaste lokale middag</string>
 
     <string name="prayers">Laatste shacharis</string>
-    <string name="prayers_fixed">2 hours before fixed local midday</string>
-    <string name="prayers_2">2 hours before midday</string>
+    <string name="prayers_fixed">2 uur vóór vaste lokale middag</string>
+    <string name="prayers_2">2 uur vóór de middag</string>
 
     <string name="midday">Middag</string>
     <string name="midday_summary">Middaghoogte</string>
-    <string name="midday_fixed">Noon adjusted for the local latitude</string>
+    <string name="midday_fixed">Middag aangepast vóór de lokale breedtegraad</string>
 
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Vroegste middag gebeden</string>
-    <string name="earliest_mincha_30">30 minutes after midday</string>
+    <string name="earliest_mincha_30">30 minuten na de middag</string>
 
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Middag gebeden</string>
@@ -69,25 +61,25 @@
     <string name="plug_hamincha">Plug hamincha</string>
 
     <string name="candles">Kaars verlichting</string>
-    <string name="candles_summary">%1$d minuten voor zonsondergang</string>
+    <string name="candles_summary">%1$d minuten vóór zonsondergang</string>
 
     <string name="sunset">Zonsondergang</string>
 
     <string name="nightfall">Nacht</string>
     <string name="nightfall_3stars">3 sterren zichtbaar</string>
-    <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
-    <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
-    <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
-    <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
-    <string name="nightfall_4_8">Sun is 4.8° below sea level</string>
-    <string name="nightfall_5_88">Sun is 5.88° below sea level</string>
-    <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
-    <string name="nightfall_7">Sun is 7.083° below sea level</string>
-    <string name="nightfall_8">Sun is 8.5° below sea level</string>
+    <string name="nightfall_3_65">Zon is 3,65° beneden zeeniveau</string>
+    <string name="nightfall_3_676">Zon is 3,676° beneden zeeniveau</string>
+    <string name="nightfall_4_37">Zon is 4,37° beneden zeeniveau</string>
+    <string name="nightfall_4_61">Zon is 4,61° beneden zeeniveau</string>
+    <string name="nightfall_4_8">Zon is 4,8° beneden zeeniveau</string>
+    <string name="nightfall_5_88">Zon is 5,88° beneden zeeniveau</string>
+    <string name="nightfall_5_95">Zon is 5,95° beneden zeeniveau</string>
+    <string name="nightfall_7">Zon is 7,083° beneden zeeniveau</string>
+    <string name="nightfall_8">Zon is 8,5° beneden zeeniveau</string>
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Middernacht</string>
-    <string name="midnight_12">12 hours after midday</string>
+    <string name="midnight_12">12 uur na de middag</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>

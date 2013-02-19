@@ -9,11 +9,11 @@
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
     <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
-    <string name="opinion_16">Day is 16.1° below sunrise / sunset</string>
-    <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
-    <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
+    <string name="opinion_16">Day is 16,1° below sunrise / sunset</string>
+    <string name="opinion_16_sunset">Day is from dawn 16,1° to sea level sunset</string>
+    <string name="opinion_16_night">Day is from dawn 16,1° to nightfall</string>
     <string name="opinion_26">Day is 26° below sunrise / sunset</string>
-    <string name="opinion_19">Day is 19.8° below sunrise / sunset</string>
+    <string name="opinion_19">Day is 19,8° below sunrise / sunset</string>
     <string name="opinion_18">Day is 18° below sunrise / sunset</string>
     <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
     <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
@@ -26,7 +26,7 @@
     <string name="opinion_gra">According to Gra &amp; Baal Tanya</string>
     <string name="opinion_mga">According to Magen Avraham</string>
 
-    <string name="dawn_16">16.1° sub orizont de est</string>
+    <string name="dawn_16">16,1° sub orizont de est</string>
     <string name="dawn_72">72 minute înainte de răsărit nivelul mării</string>
     <string name="shema_mga">Șema ultima în conformitate cu Magen Avraham</string>
     <string name="shema_gra">Șema ultima în conformitate cu Gra &amp; Baal Tanya</string>
@@ -40,14 +40,14 @@
     <string name="tallis">Cazarea cel devreme tallis și tefillin</string>
     <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
-    <string name="tallis_10">Sun is 10.2° below horizon</string>
+    <string name="tallis_10">Sun is 10,2° below horizon</string>
 
     <string name="sunrise">Răsărit</string>
     <string name="sunrise_summary">Într-o regiune nivel</string>
     <string name="sunrise_sea">At sea level</string>
 
     <string name="shema">Ultima șema</string>
-    <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
+    <string name="shema_7">Day is from dawn 16,1° to night 7,083°</string>
     <string name="shema_3">3 hours before midday</string>
     <string name="shema_fixed">3 hours before fixed local midday</string>
 
@@ -75,15 +75,15 @@
 
     <string name="nightfall">Căderea nopții</string>
     <string name="nightfall_3stars">3 stele vizibile</string>
-    <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
-    <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
-    <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
-    <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
-    <string name="nightfall_4_8">Sun is 4.8° below sea level</string>
-    <string name="nightfall_5_88">Sun is 5.88° below sea level</string>
-    <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
-    <string name="nightfall_7">Sun is 7.083° below sea level</string>
-    <string name="nightfall_8">Sun is 8.5° below sea level</string>
+    <string name="nightfall_3_65">Sun is 3,65° below sea level</string>
+    <string name="nightfall_3_676">Sun is 3,676° below sea level</string>
+    <string name="nightfall_4_37">Sun is 4,37° below sea level</string>
+    <string name="nightfall_4_61">Sun is 4,61° below sea level</string>
+    <string name="nightfall_4_8">Sun is 4,8° below sea level</string>
+    <string name="nightfall_5_88">Sun is 5,88° below sea level</string>
+    <string name="nightfall_5_95">Sun is 5,95° below sea level</string>
+    <string name="nightfall_7">Sun is 7,083° below sea level</string>
+    <string name="nightfall_8">Sun is 8,5° below sea level</string>
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Miezul nopții</string>
