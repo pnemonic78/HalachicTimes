@@ -21,6 +21,7 @@ package net.sf.times;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import net.sf.times.location.CountriesGeocoder;
@@ -310,10 +311,10 @@ public class ZmanimLocations implements LocationListener {
 			latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
 			longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
 		} else {
-			latitudeText = String.format("%1$.6f", latitude);
-			longitudeText = String.format("%1$.6f", longitude);
+			latitudeText = String.format(Locale.US, "%1$.6f", latitude);
+			longitudeText = String.format(Locale.US, "%1$.6f", longitude);
 		}
-		final String coordsText = String.format(mCoordsFormat, latitudeText, longitudeText);
+		final String coordsText = String.format(Locale.US, mCoordsFormat, latitudeText, longitudeText);
 		return coordsText;
 	}
 }

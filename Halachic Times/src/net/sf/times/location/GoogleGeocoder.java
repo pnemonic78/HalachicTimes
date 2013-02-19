@@ -125,7 +125,7 @@ public class GoogleGeocoder {
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
-		String queryUrl = String.format(URL_LATLNG, latitude, longitude, mLocale.getLanguage());
+		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, mLocale.getLanguage());
 		return getFromURL(queryUrl, maxResults);
 	}
 
@@ -155,7 +155,7 @@ public class GoogleGeocoder {
 	public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
 		if (locationName == null)
 			throw new IllegalArgumentException("locationName == null");
-		String queryUrl = String.format(URL_ADDRESS, locationName, mLocale.getLanguage());
+		String queryUrl = String.format(Locale.US, URL_ADDRESS, locationName, mLocale.getLanguage());
 		return getFromURL(queryUrl, maxResults);
 	}
 
@@ -206,7 +206,7 @@ public class GoogleGeocoder {
 			throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
 		if (upperRightLongitude < -180.0 || upperRightLongitude > 180.0)
 			throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
-		String queryUrl = String.format(URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, mLocale.getLanguage());
+		String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, mLocale.getLanguage());
 		return getFromURL(queryUrl, maxResults);
 	}
 

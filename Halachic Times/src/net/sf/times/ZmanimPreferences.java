@@ -19,6 +19,8 @@
  */
 package net.sf.times;
 
+import java.util.Locale;
+
 import net.sf.times.preference.SeekBarPreference;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -82,7 +84,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 				@Override
 				public void run() {
 					String format = getString(R.string.candles_summary);
-					CharSequence summary = String.format(format, mCandles.getProgress());
+					CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
 					mCandles.setSummary(summary);
 				}
 			});

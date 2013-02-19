@@ -124,7 +124,7 @@ public class GeoNamesGeocoder {
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
-		String queryUrl = String.format(URL_LATLNG, latitude, longitude, getLanguage(mLocale), USERNAME);
+		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(mLocale), USERNAME);
 		return getFromURL(queryUrl, maxResults);
 	}
 

@@ -79,6 +79,7 @@
 
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Północ</string>
+    <string name="midnight_12">12 godziny po południa</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>
