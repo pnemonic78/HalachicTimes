@@ -6,5 +6,7 @@
     <color name="midnight">#40000000</color>
     <color name="bright">#20ffffff</color>
     <color name="candles">#ccffff00</color>
+    <color name="widget_box">#40000000</color>
+    <color name="widget_border">#10ffffff</color>
 
 </resources>
