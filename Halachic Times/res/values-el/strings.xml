@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="category_general">Γενικός</string>
+    <string name="coords_title">Συντεταγμένες</string>
+    <string name="coords_hidden">Συντεταγμένες είναι κρυμμένα</string>
+    <string name="coords_visible">Συντεταγμένες είναι ορατές</string>
     <string name="coords_format_title">Συντεταγμένες μορφή</string>
     <string name="coords_format_summary">Συμβολισμός του γεωγραφικού πλάτους και μήκους</string>
 

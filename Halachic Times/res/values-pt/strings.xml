@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Definições</string>
     <string name="category_general">Geral</string>
+    <string name="coords_title">Coordenadas</string>
+    <string name="coords_hidden">Coordenadas são escondidos</string>
+    <string name="coords_visible">Coordenadas são visíveis</string>
     <string name="coords_format_title">Formato de coordenadas</string>
     <string name="coords_format_summary">Notação de latitude e longitude</string>
 

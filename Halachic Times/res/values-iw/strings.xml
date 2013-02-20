@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
     <string name="category_general">כללי</string>
+    <string name="coords_title">קואורדינטות</string>
+    <string name="coords_hidden">קואורדינטות מוסתרות</string>
+    <string name="coords_visible">קואורדינטות גלויות</string>
     <string name="coords_format_title">פורמט קואורדינטות</string>
     <string name="coords_format_summary">סימון של קווי אורך ורוחב</string>
 

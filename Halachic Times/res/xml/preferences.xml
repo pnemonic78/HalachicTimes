@@ -2,6 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory android:title="@string/category_general">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="coords.visible"
+            android:summaryOff="@string/coords_hidden"
+            android:summaryOn="@string/coords_visible"
+            android:title="@string/coords_title"/>
         <ListPreference
             android:defaultValue="decimal"
             android:entries="@array/coords_format_entries"

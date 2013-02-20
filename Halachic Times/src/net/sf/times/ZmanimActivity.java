@@ -265,6 +265,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		address.setText(locationName);
 		TextView coordinates = (TextView) header.findViewById(R.id.coordinates);
 		coordinates.setText(coordsText);
+		coordinates.setVisibility(mSettings.isCoordinates() ? View.VISIBLE : View.GONE);
 	}
 
 	@Override

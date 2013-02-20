@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Beállítások</string>
     <string name="category_general">Általános</string>
+    <string name="coords_title">Coordinates</string>
+    <string name="coords_hidden">Koordináták rejtve</string>
+    <string name="coords_visible">Koordináták látható</string>
     <string name="coords_format_title">Koordináták formátum</string>
     <string name="coords_format_summary">Jelölések a szélességi és hosszúsági</string>
 

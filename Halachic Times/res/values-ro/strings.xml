@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
     <string name="category_general">General</string>
+    <string name="coords_title">Coordonează</string>
+    <string name="coords_hidden">Coordonează sunt ascunse</string>
+    <string name="coords_visible">Coordonează sunt vizibile</string>
     <string name="coords_format_title">Coordonează format</string>
     <string name="coords_format_summary">Notația de latitudine și longitudine</string>
 

@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
     <string name="category_general">Общий</string>
+    <string name="coords_title">Координаты</string>
+    <string name="coords_hidden">Координаты скрыты</string>
+    <string name="coords_visible">Координаты видны</string>
     <string name="coords_format_title">Координаты формате</string>
     <string name="coords_format_summary">Формат широты и долготы</string>
 

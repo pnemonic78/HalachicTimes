@@ -42,6 +42,8 @@ public class ZmanimSettings {
 	private static final String KEY_PROVIDER = "provider";
 	/** Preference name for the location time. */
 	private static final String KEY_TIME = "time";
+	/** Preference name for the co-ordinates visibility. */
+	public static final String KEY_COORDS = "coords.visible";
 	/** Preference name for the co-ordinates format. */
 	public static final String KEY_COORDS_FORMAT = "coords.format";
 	/** Preference name for showing summaries. */
@@ -156,6 +158,15 @@ public class ZmanimSettings {
 		editor.putString(KEY_ALTITUDE, Double.toString(location.getAltitude()));
 		editor.putLong(KEY_TIME, location.getTime());
 		editor.commit();
+	}
+
+	/**
+	 * Are coordinates visible?
+	 * 
+	 * @return {@code true} to show coordinates.
+	 */
+	public boolean isCoordinates() {
+		return mPrefs.getBoolean(KEY_COORDS, true);
 	}
 
 	/**

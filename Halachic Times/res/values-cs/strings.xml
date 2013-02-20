@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Nastavení</string>
     <string name="category_general">Obecný</string>
+    <string name="coords_title">Souřadnice</string>
+    <string name="coords_hidden">Souřadnice jsou skryté</string>
+    <string name="coords_visible">Souřadnice jsou viditelné</string>
     <string name="coords_format_title">Souřadnice formát</string>
     <string name="coords_format_summary">Zápis zeměpisné šířky a délky</string>
 

@@ -84,6 +84,9 @@
     <!-- Preferences -->
     <string name="menu_settings">Ayarlar</string>
     <string name="category_general">Genel</string>
+    <string name="coords_title">Koordinatlar</string>
+    <string name="coords_hidden">Koordinatlar gizlidir</string>
+    <string name="coords_visible">Koordinatlar görünür</string>
     <string name="coords_format_title">Koordinatlar biçimi</string>
     <string name="coords_format_summary">Enlem ve boylam notasyon</string>
 
