@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="android:Theme"/>
 
@@ -7,6 +7,14 @@
         <item name="android:src">@android:drawable/divider_horizontal_dark</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">1dp</item>
+    </style>
+
+    <style name="LightRow">
+        <item name="android:background">@color/bright</item>
+    </style>
+
+    <style name="CandleRow">
+        <item name="android:background">@color/candles</item>
     </style>
 
 </resources>

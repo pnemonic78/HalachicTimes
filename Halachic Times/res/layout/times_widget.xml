@@ -8,16 +8,16 @@
     android:orientation="vertical"
     android:padding="@dimen/widget_padding">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/dawn_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -28,20 +28,21 @@
             android:id="@+id/dawn_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/tallis_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -52,20 +53,20 @@
             android:id="@+id/tallis_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/sunrise_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -76,20 +77,21 @@
             android:id="@+id/sunrise_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/shema_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -100,20 +102,20 @@
             android:id="@+id/shema_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/prayers_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -124,20 +126,21 @@
             android:id="@+id/prayers_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/midday_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -148,20 +151,20 @@
             android:id="@+id/midday_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/earliest_mincha_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -172,20 +175,21 @@
             android:id="@+id/earliest_mincha_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/mincha_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -196,20 +200,20 @@
             android:id="@+id/mincha_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/plug_hamincha_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -220,44 +224,46 @@
             android:id="@+id/plug_hamincha_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/candles_row"
+        style="@style/CandleRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
             android:text="@string/candles"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
 
         <TextView
             android:id="@+id/candles_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+            android:layout_marginLeft="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/sunset_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -268,44 +274,45 @@
             android:id="@+id/sunset_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/candles2_row"
+        style="@style/CandleRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
             android:text="@string/candles"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
 
         <TextView
             android:id="@+id/candles2_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+            android:layout_marginLeft="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/nightfall_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -316,20 +323,21 @@
             android:id="@+id/nightfall_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/midnight_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:baselineAligned="false">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:singleLine="true"
@@ -340,8 +348,8 @@
             android:id="@+id/midnight_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="4dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

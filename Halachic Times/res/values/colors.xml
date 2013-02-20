@@ -3,9 +3,8 @@
 
     <color name="sunrise">#40D99058</color>
     <color name="midday">#8087CEEB</color>
-    <!-- color name="sunset">#40D9603B</color -->
-    <!-- color name="nightfall">#40200020</color -->
-    <!-- color name="nightfall_72min">#40100010</color -->
     <color name="midnight">#40000000</color>
+    <color name="bright">#20ffffff</color>
+    <color name="candles">#ccffff00</color>
 
 </resources>
