@@ -25,8 +25,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import net.sf.times.location.CountriesGeocoder;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -298,7 +296,6 @@ public class ZmanimLocations implements LocationListener {
 	 * 
 	 * @return the coordinates text.
 	 */
-	@SuppressLint("DefaultLocale")
 	public String formatCoordinates() {
 		Location loc = getLocation();
 		final double latitude = loc.getLatitude();

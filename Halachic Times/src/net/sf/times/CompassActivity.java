@@ -19,6 +19,13 @@
  */
 package net.sf.times;
 
+import java.util.TimeZone;
+
+import net.sf.times.location.AddressProvider;
+import net.sf.times.location.FindAddress;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.FindAddress.OnFindAddressListener;
+
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -28,6 +35,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 /**
@@ -36,7 +44,7 @@ import android.widget.TextView;
  * 
  * @author Moshe
  */
-public class CompassActivity extends Activity implements LocationListener, SensorEventListener {
+public class CompassActivity extends Activity implements LocationListener, SensorEventListener, OnFindAddressListener {
 
 	/** Latitude of the Holy of Holies, according to Google. */
 	private static final double HOLIEST_LATITUDE = 31.778122;
@@ -65,6 +73,16 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	private final float[] matrixR = new float[9];
 	/** Orientation matrix. */
 	private final float[] mOrientation = new float[3];
+	/** The settings and preferences. */
+	private ZmanimSettings mSettings;
+	/** The time zone. */
+	private TimeZone mTimeZone;
+	/** The address. */
+	private ZmanimAddress mAddress;
+	/** Address provider. */
+	private AddressProvider mAddressProvider;
+	/** Populate the header in UI thread. */
+	private Runnable mPopulateHeader;
 
 	/**
 	 * Constructs a new compass.
@@ -83,6 +101,9 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.compass);
 		mView = (CompassView) findViewById(R.id.compass);
+
+		mSettings = new ZmanimSettings(this);
+		mTimeZone = TimeZone.getDefault();
 
 		mLocations = ZmanimLocations.getInstance(this, this);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -106,15 +127,20 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mAddressProvider != null) {
+			mAddressProvider.close();
+			mAddressProvider = null;
+		}
+	}
+
+	@Override
 	public void onLocationChanged(Location location) {
-		// Have we been destroyed?
-		Location loc = mLocations.getLocation();
-		if (loc == null)
-			return;
-
-		TextView coordinates = (TextView) findViewById(R.id.coordinates);
-		coordinates.setText(mLocations.formatCoordinates());
-
+		if (mAddressProvider == null)
+			mAddressProvider = new AddressProvider(this);
+		FindAddress.find(mAddressProvider, location, this);
+		populateHeader();
 		mView.setHoliest(location.bearingTo(mHoliest));
 	}
 
@@ -150,5 +176,51 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 			SensorManager.getOrientation(matrixR, mOrientation);
 			mView.setAzimuth(mOrientation[0]);
 		}
+	}
+
+	/** Populate the header item. */
+	private void populateHeader() {
+		// Have we been destroyed?
+		Location loc = mLocations.getLocation();
+		if (loc == null)
+			return;
+
+		final String locationName = formatAddress();
+		final String coordsText = mLocations.formatCoordinates();
+
+		// Update the location.
+		TextView address = (TextView) findViewById(R.id.address);
+		address.setText(locationName);
+		TextView coordinates = (TextView) findViewById(R.id.coordinates);
+		coordinates.setText(coordsText);
+		coordinates.setVisibility(mSettings.isCoordinates() ? View.VISIBLE : View.GONE);
+	}
+
+	/**
+	 * Format the address for the current location or time zone.
+	 * 
+	 * @return the formatted address.
+	 */
+	private String formatAddress() {
+		if (mAddress != null)
+			return mAddress.getFormatted();
+		if (mTimeZone != null)
+			return mTimeZone.getDisplayName();
+		return getString(R.string.location_unknown);
+	}
+
+	@Override
+	public void onAddressFound(Location location, ZmanimAddress address) {
+		mAddress = address;
+		if (mPopulateHeader == null) {
+			mPopulateHeader = new Runnable() {
+
+				@Override
+				public void run() {
+					populateHeader();
+				}
+			};
+		}
+		runOnUiThread(mPopulateHeader);
 	}
 }
