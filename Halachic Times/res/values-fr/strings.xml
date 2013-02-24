@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Horaires halakhiques de prière</string>
-    <string name="title_activity_zmanim">Horaires halakhiques</string>
+    <string name="app_name">Horaires Halakhiques de Prière</string>
+    <string name="title_activity_zmanim">Horaires Halakhiques</string>
     <string name="location_unknown">Adresse inconnue</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 

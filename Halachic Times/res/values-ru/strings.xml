@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Галахическое время молитву</string>
-    <string name="title_activity_zmanim">Галахическое время</string>
+    <string name="app_name">Галахическое Время Молитву</string>
+    <string name="title_activity_zmanim">Галахическое Время</string>
     <string name="location_unknown">Неизвестный адрес</string>
     <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
 

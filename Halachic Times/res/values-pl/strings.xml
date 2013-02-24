@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachic Czasy Modły</string>
-    <string name="title_activity_zmanim">Halachic Czasy</string>
+    <string name="app_name">Halachiczny Czasy Modły</string>
+    <string name="title_activity_zmanim">Halachiczny Czasy</string>
     <string name="location_unknown">Nieznany adres</string>
     <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
 

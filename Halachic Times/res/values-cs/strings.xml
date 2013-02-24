@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachic Modlitební Časy</string>
-    <string name="title_activity_zmanim">Halachic Časy</string>
+    <string name="app_name">Halachický Modlitební Časy</string>
+    <string name="title_activity_zmanim">Halachický Časy</string>
     <string name="location_unknown">Neznámý Adresa</string>
     <string name="location_coords">Šířka %1$s; Délka %2$s</string>
 

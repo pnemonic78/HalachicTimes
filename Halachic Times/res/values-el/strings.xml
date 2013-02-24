@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Ήαλαχικ Φορές Προσευχή</string>
-    <string name="title_activity_zmanim">Ήαλαχικ Φορές</string>
+    <string name="app_name">Ήαλαχικός Φορές Προσευχή</string>
+    <string name="title_activity_zmanim">Ήαλαχικός Φορές</string>
     <string name="location_unknown">Άγνωστη διεύθυνση</string>
     <string name="location_coords">Πλτ. %1$s; Μήκ. %2$s</string>
 
