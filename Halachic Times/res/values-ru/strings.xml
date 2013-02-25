@@ -79,7 +79,7 @@
 
     <string name="midnight">Хацот</string>
     <string name="midnight_summary">Полночь</string>
-    <string name="midnight_12">12 hours after midday</string>
+    <string name="midnight_12">12 часа после полудня</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
