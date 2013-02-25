@@ -62,6 +62,9 @@ public class HTTPReader {
 		String contentType = conn.getContentType();
 		if (contentType == null)
 			return null;
+		int indexSemi = contentType.indexOf(';');
+		if (indexSemi >= 0)
+			contentType = contentType.substring(0, indexSemi);
 		if ((contentTypeExpected != null) && !contentType.equals(contentTypeExpected))
 			return null;
 
