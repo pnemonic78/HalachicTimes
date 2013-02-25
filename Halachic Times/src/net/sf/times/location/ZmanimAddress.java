@@ -23,6 +23,7 @@ import java.util.Locale;
 
 import android.location.Address;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 /**
  * Address that is stored in the local database.
@@ -34,8 +35,8 @@ public class ZmanimAddress extends Address {
 	/** Address field separator. */
 	private static final String ADDRESS_SEPARATOR = ", ";
 
-	private long id;
-	private String formatted;
+	private long mId;
+	private String mFormatted;
 
 	/**
 	 * Constructs a new address.
@@ -87,7 +88,7 @@ public class ZmanimAddress extends Address {
 	 * @return the id
 	 */
 	public long getId() {
-		return id;
+		return mId;
 	}
 
 	/**
@@ -97,7 +98,7 @@ public class ZmanimAddress extends Address {
 	 *            the id.
 	 */
 	public void setId(long id) {
-		this.id = id;
+		this.mId = id;
 	}
 
 	/**
@@ -106,9 +107,9 @@ public class ZmanimAddress extends Address {
 	 * @return the address
 	 */
 	public String getFormatted() {
-		if (formatted == null)
-			formatted = format();
-		return formatted;
+		if (mFormatted == null)
+			mFormatted = format();
+		return mFormatted;
 	}
 
 	/**
@@ -118,7 +119,7 @@ public class ZmanimAddress extends Address {
 	 *            the address.
 	 */
 	public void setFormatted(String formatted) {
-		this.formatted = formatted;
+		mFormatted = formatted;
 	}
 
 	/**
@@ -134,38 +135,44 @@ public class ZmanimAddress extends Address {
 
 		StringBuilder buf = new StringBuilder();
 		String feature = getFeatureName();
+		String street = getThoroughfare();
 		String subloc = getSubLocality();
 		String locality = getLocality();
 		String subadmin = getSubAdminArea();
 		String admin = getAdminArea();
 		String country = getCountryName();
 
-		if (feature != null) {
+		if (!TextUtils.isEmpty(feature)) {
 			if (buf.length() > 0)
 				buf.append(ADDRESS_SEPARATOR);
 			buf.append(feature);
 		}
-		if ((subloc != null) && !subloc.equals(feature)) {
+		if (!TextUtils.isEmpty(street) && !street.equals(feature)) {
+			if (buf.length() > 0)
+				buf.append(ADDRESS_SEPARATOR);
+			buf.append(street);
+		}
+		if (!TextUtils.isEmpty(subloc) && !subloc.equals(street) && !subloc.equals(feature)) {
 			if (buf.length() > 0)
 				buf.append(ADDRESS_SEPARATOR);
 			buf.append(subloc);
 		}
-		if ((locality != null) && !locality.equals(subloc) && !locality.equals(feature)) {
+		if (!TextUtils.isEmpty(locality) && !locality.equals(subloc) && !locality.equals(feature)) {
 			if (buf.length() > 0)
 				buf.append(ADDRESS_SEPARATOR);
 			buf.append(locality);
 		}
-		if ((subadmin != null) && !subadmin.equals(locality) && !subadmin.equals(subloc) && !subadmin.equals(feature)) {
+		if (!TextUtils.isEmpty(subadmin) && !subadmin.equals(locality) && !subadmin.equals(subloc) && !subadmin.equals(feature)) {
 			if (buf.length() > 0)
 				buf.append(ADDRESS_SEPARATOR);
 			buf.append(subadmin);
 		}
-		if ((admin != null) && !admin.equals(subadmin) && !admin.equals(locality) && !admin.equals(subloc) && !admin.equals(feature)) {
+		if (!TextUtils.isEmpty(admin) && !admin.equals(subadmin) && !admin.equals(locality) && !admin.equals(subloc) && !admin.equals(feature)) {
 			if (buf.length() > 0)
 				buf.append(ADDRESS_SEPARATOR);
 			buf.append(admin);
 		}
-		if ((country != null) && !country.equals(feature)) {
+		if (!TextUtils.isEmpty(country) && !country.equals(feature)) {
 			if (buf.length() > 0)
 				buf.append(ADDRESS_SEPARATOR);
 			buf.append(country);
