@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Halachiska Bönetider</string>
+    <string name="title_activity_zmanim">Halachiska Tider</string>
+    <string name="location_unknown">Okänd adress</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Dag är 120 minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_120_zmanis">Dag är 120 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_16">Dag är 16,1° under oluppgången / solnedgången</string>
+    <string name="opinion_16_sunset">Dag är från gryning 16,1° till havsnivå solnedgången</string>
+    <string name="opinion_16_night">Dag är från gryning 16,1° till kvällen</string>
+    <string name="opinion_26">Dag är 26° under oluppgången / solnedgången</string>
+    <string name="opinion_19">Dag är 19,8° under oluppgången / solnedgången</string>
+    <string name="opinion_18">Dag är 18° under oluppgången / solnedgången</string>
+    <string name="opinion_60">Dag är 60 minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_72">Dag är 72 minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_72_zmanis">Dag är 72 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_90">Dag är 90 minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_90_zmanis">Dag är 90 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_96">Dag är 96 minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_96_zmanis">Dag är 96 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_ateret">Enligt Yešivat Ateret Tora</string>
+    <string name="opinion_gra">Enligt Gra och Baal Tanya</string>
+    <string name="opinion_mga">Enligt Magen Avraham</string>
+
+    <!-- List -->
+    <string name="dawn">Gryning</string>
+
+    <string name="tallis">Tidigast tallis och tefillin</string>
+    <string name="tallis_summary">Solen är 11,5° under horisonten</string>
+    <string name="tallis_11">Solen är 11° under horisonten</string>
+    <string name="tallis_10">Solen är 10,2° under horisonten</string>
+
+    <string name="sunrise">Soluppgången</string>
+    <string name="sunrise_summary">I en nivå region</string>
+    <string name="sunrise_sea">På havsnivå</string>
+
+    <string name="shema">Senaste šema</string>
+    <string name="shema_7">Dag är från gryning 16,1° till natten 7,083°</string>
+    <string name="shema_3">3 timmar före middag</string>
+    <string name="shema_fixed">3 timmar före fast lokal middag</string>
+
+    <string name="prayers">Latest morning prayers (šacharis)</string>
+    <string name="prayers_fixed">2 timmar före fast lokal middag</string>
+    <string name="prayers_2">2 timmar före middag</string>
+
+    <string name="middag">Middag</string>
+    <string name="midday_summary">Solens middagstid</string>
+    <string name="midday_fixed">Middagstid justerat för den lokala latitud</string>
+
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Tidigast eftermiddagens böner</string>
+    <string name="earliest_mincha_30">30 minuter efter middag</string>
+
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Eftermiddagens böner</string>
+
+    <string name="plug_hamincha">Plag hamincha</string>
+
+    <string name="candles">Ljus belysning</string>
+    <string name="candles_summary">%1$d minuter före solnedgången</string>
+
+    <string name="sunset">Solnedgången</string>
+
+    <string name="nightfall">Nattens inbrott</string>
+    <string name="nightfall_3stars">3 stjärnor synliga</string>
+    <string name="nightfall_3_65">Solen är 3,65° under havsnivå</string>
+    <string name="nightfall_3_676">Solen är 3,676° under havsnivå</string>
+    <string name="nightfall_4_37">Solen är 4,37° under havsnivå</string>
+    <string name="nightfall_4_61">Solen är 4,61° under havsnivå</string>
+    <string name="nightfall_4_8">Solen är 4,8° under havsnivå</string>
+    <string name="nightfall_5_88">Solen är 5,88° under havsnivå</string>
+    <string name="nightfall_5_95">Solen är 5,95° under havsnivå</string>
+    <string name="nightfall_7">Solen är 7,083° under havsnivå</string>
+    <string name="nightfall_8">Solen är 8,5° under havsnivå</string>
+
+    <string name="midnight">Chatzos</string>
+    <string name="midnight_summary">Midnatt</string>
+    <string name="midnight_12">12 timmar efter middag</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Inställningar</string>
+    <string name="category_general">Allmänt</string>
+    <string name="coords_title">Koordinater</string>
+    <string name="coords_hidden">Koordinater är dolda</string>
+    <string name="coords_visible">Koordinater är synliga</string>
+    <string name="coords_format_title">Koordinater format</string>
+    <string name="coords_format_summary">Notskrift av latitud och longitud</string>
+
+    <string-array name="coords_format_entries">
+        <item>Decimal</item>
+        <item>Sexagesimal</item>
+    </string-array>
+
+    <string name="category_opinion">Yttranden</string>
+    <string name="past_title">Tider som förflutit</string>
+    <string name="past_enabled">Tidigare tider är aktiverade</string>
+    <string name="past_disabled">Tidigare tider är inaktiverade</string>
+    <string name="summaries_title">Sammanfattningar</string>
+    <string name="summaries_hidden">Sammanfattningar är dolda</string>
+    <string name="summaries_visible">Sammanfattningar är synliga</string>
+    <string name="gradient_title">Gradient bakgrund</string>
+    <string name="gradient_hidden">Gradient är dold</string>
+    <string name="gradient_visible">Gradient är synliga</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Välj ett datum</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompass</string>
+    <string name="title_activity_compass">Riktning av bön</string>
+    <string name="north">N</string>
+    <string name="east">Ö</string>
+    <string name="south">S</string>
+    <string name="west">V</string>
+
+</resources>
