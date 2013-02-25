@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Halachinis Malda Kartų</string>
+    <string name="title_activity_zmanim">Halachinis Kartų</string>
+    <string name="location_unknown">Nežinomas adresas</string>
+    <string name="location_coords">Pla. %1$s; Ilg. %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Dieną yra 120 minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_120_zmanis">Dieną yra 120 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_16">Dieną yra 16,1° žemiau saulėtekį / saulėlydžio</string>
+    <string name="opinion_16_sunset">Dieną yra nuo aušros 16,1° jūros lygio saulėlydžio</string>
+    <string name="opinion_16_night">Dieną yra nuo aušros 16,1° iki ateina tamsa</string>
+    <string name="opinion_26">Dieną yra 26° žemiau saulėtekį / saulėlydžio</string>
+    <string name="opinion_19">Dieną yra 19,8° žemiau saulėtekį / saulėlydžio</string>
+    <string name="opinion_18">Dieną yra 18° žemiau saulėtekį / saulėlydžio</string>
+    <string name="opinion_60">Dieną yra 60 minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_72">Dieną yra 72 minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_72_zmanis">Dieną yra 72 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_90">Dieną yra 90 minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_90_zmanis">Dieną yra 90 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_96">Dieną yra 96 minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_96_zmanis">Dieną yra 96 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_ateret">Pasak Yešivat Ateret Tora</string>
+    <string name="opinion_gra">Pasak Gra ir Bąl Tanya</string>
+    <string name="opinion_mga">Pasak Magen Abraomas</string>
+
+    <!-- List -->
+    <string name="dawn">Aušra</string>
+
+    <string name="tallis">Seniausi tallis ir tefillin</string>
+    <string name="tallis_summary">Saulė yra 11,5° žemiau horizonto</string>
+    <string name="tallis_11">Saulė yra 11° žemiau horizonto</string>
+    <string name="tallis_10">Saulė yra 10,2° žemiau horizonto</string>
+
+    <string name="sunrise">Saulėtekis</string>
+    <string name="sunrise_summary">Horizontalioje regione</string>
+    <string name="sunrise_sea">Jūros lygyje</string>
+
+    <string name="shema">Vėliausiai šema</string>
+    <string name="shema_7">Dieną yra nuo aušros 16,1° iki naktį 7,083°</string>
+    <string name="shema_3">3 valandų iki vidurdienį</string>
+    <string name="shema_fixed">3 valandų iki fiksuoto vietinio vidurdienį</string>
+
+    <string name="prayers">Latest morning prayers (šacharis)</string>
+    <string name="prayers_fixed">2 valandų iki fiksuoto vietinio vidurdienį</string>
+    <string name="prayers_2">2 valandų iki vidurdienį</string>
+
+    <string name="midday">Vidurdienis</string>
+    <string name="midday_summary">Saulės vidurdienį</string>
+    <string name="midday_fixed">Vidurdienis pakoreguota vietos platumos</string>
+
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Seniausi popietės maldas</string>
+    <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
+
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Popietė maldas</string>
+
+    <string name="plug_hamincha">Plag hamincha</string>
+
+    <string name="candles">Žvakė apšvietimas</string>
+    <string name="candles_summary">%1$d minučių iki saulėlydžio</string>
+
+    <string name="sunset">Saulėlydis</string>
+
+    <string name="nightfall">Ateinančio naktys</string>
+    <string name="nightfall_3stars">3 žvaigždės yra matomi</string>
+    <string name="nightfall_3_65">Saulė yra 3,65° žemiau jūros lygio</string>
+    <string name="nightfall_3_676">Saulė yra 3,676° žemiau jūros lygio</string>
+    <string name="nightfall_4_37">Saulė yra 4,37° žemiau jūros lygio</string>
+    <string name="nightfall_4_61">Saulė yra 4,61° žemiau jūros lygio</string>
+    <string name="nightfall_4_8">Saulė yra 4,8° žemiau jūros lygio</string>
+    <string name="nightfall_5_88">Saulė yra 5,88° žemiau jūros lygio</string>
+    <string name="nightfall_5_95">Saulė yra 5,95° žemiau jūros lygio</string>
+    <string name="nightfall_7">Saulė yra 7,083° žemiau jūros lygio</string>
+    <string name="nightfall_8">Saulė yra 8,5° žemiau jūros lygio</string>
+
+    <string name="midnight">Chacos</string>
+    <string name="midnight_summary">Vidurnaktis</string>
+    <string name="midnight_12">12 valandų po vidurdienį</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Nustatymai</string>
+    <string name="category_general">Bendras</string>
+    <string name="coords_title">Koordinatės</string>
+    <string name="coords_hidden">Koordinatės yra paslėpti</string>
+    <string name="coords_visible">Koordinatės yra matomi</string>
+    <string name="coords_format_title">Koordinačių formatą,</string>
+    <string name="coords_format_summary">Notacija platumos ir ilgumos</string>
+
+    <string-array name="coords_format_entries">
+        <item>Dešimtainis</item>
+        <item>Šešiasdešimt dalis</item>
+    </string-array>
+
+    <string name="category_opinion">Nuomonės</string>
+    <string name="past_title">Kartų didesnis praėjo</string>
+    <string name="past_enabled">Ankstesni datos yra įgalinta</string>
+    <string name="past_disabled">Ankstesni datos yra išjungta</string>
+    <string name="summaries_title">Santraukas</string>
+    <string name="summaries_hidden">Santraukos paslėptas</string>
+    <string name="summaries_visible">Santraukos matomi</string>
+    <string name="gradient_title">Gradientas fone</string>
+    <string name="gradient_hidden">Gradientas yra paslėptas</string>
+    <string name="gradient_visible">Gradientas yra matomas</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Pasirinkite datą</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompasas</string>
+    <string name="title_activity_compass">Maldos kryptis</string>
+    <string name="north">Š</string>
+    <string name="east">R</string>
+    <string name="south">P</string>
+    <string name="west">V</string>
+
+</resources>
