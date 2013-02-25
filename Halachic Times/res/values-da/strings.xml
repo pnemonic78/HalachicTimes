@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Halachisk Bøn Tider</string>
+    <string name="title_activity_zmanim">Halachisk Tider</string>
+    <string name="location_unknown">Ukendte adresse</string>
+    <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Day er 120 minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_120_zmanis">Day er 120 <i>zmanijos</i> minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_16">Day er 16,1° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_16_sunset">Day er fra daggry 16,1° til havoverfladen solnedgang</string>
+    <string name="opinion_16_night">Day er fra daggry 16,1° til mřrkets frembrud</string>
+    <string name="opinion_26">Day er 26° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_19">Day er 19,8° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_18">Day er 18° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_60">Day er 60 minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_72">Day er 72 minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_72_zmanis">Day er 72 <i>zmanijos</i> minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_90">Day er 90 minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_90_zmanis">Day er 90 <i>zmanijos</i> minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_96">Day er 96 minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_96_zmanis">Day er 96 <i>zmanijos</i> minutter før solopgang / efter solnedgang</string>
+    <string name="opinion_ateret">Ifølge Jeshivat Ateret Tora</string>
+    <string name="opinion_gra">Ifølge Gra og Baal Tanya</string>
+    <string name="opinion_mga">Ifølge Magen Avraham</string>
+
+    <!-- List -->
+    <string name="dawn">Daggry</string>
+
+    <string name="tallis">Tidligst tallis og tefillin</string>
+    <string name="tallis_summary">Solen er 11,5° nedenfor horisonten</string>
+    <string name="tallis_11">Solen er 11° nedenfor horisonten</string>
+    <string name="tallis_10">Solen er 10,2° nedenfor horisonten</string>
+
+    <string name="sunrise">Solopgang</string>
+    <string name="sunrise_summary">I et niveau region</string>
+    <string name="sunrise_sea">På havoverfladen</string>
+
+    <string name="shema">Seneste shema</string>
+    <string name="shema_7">Day er fra daggry 16,1° til nat 7,083°</string>
+    <string name="shema_3">3 timer før middag</string>
+    <string name="shema_fixed">3 timer før fast lokalt middag</string>
+
+    <string name="prayers">Seneste morgen bønner (shacharis)</string>
+    <string name="prayers_fixed">2 timer før fast lokalt middag</string>
+    <string name="prayers_2">2 timer før middag</string>
+
+    <string name="midday">Middag</string>
+    <string name="midday_summary">Solen middag</string>
+    <string name="midday_fixed">Middag korrigeret for den lokale bredde</string>
+
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Tidligste eftermiddags bønner</string>
+    <string name="earliest_mincha_30">30 minutter efter middag</string>
+
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Eftermiddagen bønner</string>
+
+    <string name="plug_hamincha">Plag hamincha</string>
+
+    <string name="candles">Kerte belysning</string>
+    <string name="candles_summary">%1$d minutter før solnedgang</string>
+
+    <string name="sunset">Solnedgang</string>
+
+    <string name="nightfall">Mřrkets frembrud</string>
+    <string name="nightfall_3stars">3 stjerner synlige</string>
+    <string name="nightfall_3_65">Solen er 3,65° nedenfor havoverfladen</string>
+    <string name="nightfall_3_676">Solen er 3,676° nedenfor havoverfladen</string>
+    <string name="nightfall_4_37">Solen er 4,37° nedenfor havoverfladen</string>
+    <string name="nightfall_4_61">Solen er 4,61° nedenfor havoverfladen</string>
+    <string name="nightfall_4_8">Solen er 4,8° nedenfor havoverfladen</string>
+    <string name="nightfall_5_88">Solen er 5,88° nedenfor havoverfladen</string>
+    <string name="nightfall_5_95">Solen er 5,95° nedenfor havoverfladen</string>
+    <string name="nightfall_7">Solen er 7,083° nedenfor havoverfladen</string>
+    <string name="nightfall_8">Solen er 8,5° nedenfor havoverfladen</string>
+
+    <string name="midnight">Chazos</string>
+    <string name="midnight_summary">Midnat</string>
+    <string name="midnight_12">12 timer efter middag</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Indstillinger</string>
+    <string name="category_general">Generelt</string>
+    <string name="coords_title">Koordinater</string>
+    <string name="coords_hidden">Koordinater er skjulte</string>
+    <string name="coords_visible">Koordinater er synlige</string>
+    <string name="coords_format_title">Koordinater format</string>
+    <string name="coords_format_summary">Notation af bredde-og længdegrader</string>
+
+    <string-array name="coords_format_entries">
+        <item>Decimal</item>
+        <item>Sexagesimal</item>
+    </string-array>
+
+    <string name="category_opinion">Udtalelser</string>
+    <string name="past_title">Tider der er gået</string>
+    <string name="past_enabled">Tidligere tider er aktiveret</string>
+    <string name="past_disabled">Tidligere tider er deaktiveret</string>
+    <string name="summaries_title">Sammenfatninger</string>
+    <string name="summaries_hidden">Sammenfatninger er skjulte</string>
+    <string name="summaries_visible">Sammenfatninger er synlige</string>
+    <string name="gradient_title">Gradienten baggrund</string>
+    <string name="gradient_hidden">Gradienten er skjult</string>
+    <string name="gradient_visible">Gradienten er synlig</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Vælg en dato</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompas</string>
+    <string name="title_activity_compass">Retning af bøn</string>
+    <string name="north">N</string>
+    <string name="east">Ø</string>
+    <string name="south">S</string>
+    <string name="west">V</string>
+
+</resources>
