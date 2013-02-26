@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Halachiline Ajad Palvetes</string>
+    <string name="title_activity_zmanim">Halachiline Ajad</string>
+    <string name="location_unknown">Tundmatu aadress</string>
+    <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Päeval on 120 minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_120_zmanis">Päeval on 120 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_16">Päeval on 16,1° alla päikese tõusu / loojangu</string>
+    <string name="opinion_16_sunset">Päeval on ära koidust 16,1° kuni merepinnast loojang</string>
+    <string name="opinion_16_night">Päeval on ära koidust 16,1° kuni videvik</string>
+    <string name="opinion_26">Päeval on 26° alla päikese tõusu / loojangu</string>
+    <string name="opinion_19">Päeval on 19,8° alla päikese tõusu / loojangu</string>
+    <string name="opinion_18">Päeval on 18° alla päikese tõusu / loojangu</string>
+    <string name="opinion_60">Päeval on 60 minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_72">Päeval on 72 minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_72_zmanis">Päeval on 72 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_90">Päeval on 90 minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_90_zmanis">Päeval on 90 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_96">Päeval on 96 minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_96_zmanis">Päeval on 96 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_ateret">Vastavalt Ješivat Ateret Toora</string>
+    <string name="opinion_gra">Vastavalt Gra ja Baal Tanja</string>
+    <string name="opinion_mga">Vastavalt Magen Avraham</string>
+
+    <!-- List -->
+    <string name="koit">Koit</string>
+
+    <string name="tallis">Varaseim tallis ja tefillin</string>
+    <string name="tallis_summary">Päike on 11,5° alla horisonti</string>
+    <string name="tallis_11">Päike on 11° alla horisonti</string>
+    <string name="tallis_10">Päike on 10,2° alla horisonti</string>
+
+    <string name="sunrise">Päikesetõus</string>
+    <string name="sunrise_summary">In a level region</string>
+    <string name="sunrise_sea">Tasemel regioon</string>
+
+    <string name="shema">Viimane šema</string>
+    <string name="shema_7">Päeval on ära koidust 16,1° öö-7,083°</string>
+    <string name="shema_3">3 tundi enne keskpäeva</string>
+    <string name="shema_fixed">3 tundi enne fikseeritud kohalike keskpäeva</string>
+
+    <string name="prayers">Viimane hommikul palvetes (šacharis)</string>
+    <string name="prayers_fixed">2 tundi enne fikseeritud kohalike keskpäeva</string>
+    <string name="prayers_2">2 tundi enne keskpäeva</string>
+
+    <string name="midday">Keskpäeva</string>
+    <string name="midday_summary">Päikese keskpäeval</string>
+    <string name="midday_fixed">Keskpäev korrigeeritud kohalike laius</string>
+
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Varaseim pärastlõunal palvetes</string>
+    <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
+
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Pärastlõunal palvetes</string>
+
+    <string name="plug_hamincha">Plag hamincha</string>
+
+    <string name="candles">Küünal valgustus</string>
+    <string name="candles_summary">%1$d minutit enne loojangut</string>
+
+    <string name="sunset">Päikeseloojang</string>
+
+    <string name="nightfall">Videvik</string>
+    <string name="nightfall_3stars">3 tärni nähtav</string>
+    <string name="nightfall_3_65">Päike on 3,65° allpool merepinda</string>
+    <string name="nightfall_3_676">Päike on 3,676° allpool merepinda</string>
+    <string name="nightfall_4_37">Päike on 4,37° allpool merepinda</string>
+    <string name="nightfall_4_61">Päike on 4,61° allpool merepinda</string>
+    <string name="nightfall_4_8">Päike on 4,8° allpool merepinda</string>
+    <string name="nightfall_5_88">Päike on 5,88° allpool merepinda</string>
+    <string name="nightfall_5_95">Päike on 5,95° allpool merepinda</string>
+    <string name="nightfall_7">Päike on 7,083° allpool merepinda</string>
+    <string name="nightfall_8">Päike on 8,5° allpool merepinda</string>
+
+    <string name="midnight">Chatsos</string>
+    <string name="midnight_summary">Kesköö</string>
+    <string name="midnight_12">12 tundi pärast keskpäeva</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Seaded</string>
+    <string name="category_general">Üldine</string>
+    <string name="coords_title">Koordinaadid</string>
+    <string name="coords_hidden">Koordinaadid on peidetud</string>
+    <string name="coords_visible">Koordinaadid on nähtavad</string>
+    <string name="coords_format_title">Koordinaadid formaat</string>
+    <string name="coords_format_summary">Märge laius-ja pikkuskraadi</string>
+
+    <string-array name="coords_format_entries">
+        <item>Kümnend</item>
+        <item>Seksagesimaalne</item>
+    </string-array>
+
+    <string name="category_opinion">Arvamused</string>
+    <string name="past_title">Ajad mis on möödunud</string>
+    <string name="past_enabled">Möödunud ajad on aktiivne</string>
+    <string name="past_disabled">Möödunud ajad on puudega</string>
+    <string name="summaries_title">Kokkuvõtted</string>
+    <string name="summaries_hidden">Kokkuvõtted on peidetud</string>
+    <string name="summaries_visible">Kokkuvõtted on nähtavad</string>
+    <string name="gradient_title">Gradiendi tausta</string>
+    <string name="gradient_hidden">Gradiendi on peidetud</string>
+    <string name="gradient_visible">Gradiendi on nähtav</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Vali kuupäev</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompass</string>
+    <string name="title_activity_compass">Suund palve</string>
+    <string name="north">P</string>
+    <string name="east">I</string>
+    <string name="south">Lõ</string>
+    <string name="west">Lä</string>
+
+</resources>
