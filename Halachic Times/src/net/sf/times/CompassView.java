@@ -32,7 +32,7 @@ import android.view.View;
 /**
  * Compass view.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class CompassView extends View {
 

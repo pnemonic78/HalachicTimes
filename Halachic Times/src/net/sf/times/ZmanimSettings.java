@@ -28,7 +28,7 @@ import android.preference.PreferenceManager;
 /**
  * Application settings.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimSettings {
 

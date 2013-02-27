@@ -50,7 +50,7 @@ import android.text.TextUtils;
  * href="http://www.geonames.org/export/web-services.html">http://www.geonames
  * .org/export/web-services.html</a>
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class GeoNamesGeocoder {
 

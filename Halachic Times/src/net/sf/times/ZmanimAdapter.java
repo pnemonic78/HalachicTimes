@@ -38,7 +38,7 @@ import android.widget.TextView;
 /**
  * Adapter for halachic times list.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 

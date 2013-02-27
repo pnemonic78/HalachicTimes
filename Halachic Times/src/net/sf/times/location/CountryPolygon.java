@@ -28,7 +28,7 @@ import android.graphics.Region;
  * <p>
  * <em>{@link Region} has bug with large areas.</em>
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class CountryPolygon {
 

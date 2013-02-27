@@ -35,7 +35,7 @@ import android.text.format.DateUtils;
 /**
  * Location provider.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimLocations implements LocationListener {
 

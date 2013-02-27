@@ -28,7 +28,7 @@ import android.provider.BaseColumns;
  * A helper class to manage database creation and version management for
  * addresses.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class AddressOpenHelper extends SQLiteOpenHelper {
 

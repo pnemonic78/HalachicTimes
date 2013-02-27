@@ -50,7 +50,7 @@ import android.text.TextUtils;
  * <a href="http://code.google.com/apis/maps/documentation/geocoding/">http://
  * code.google.com/apis/maps/documentation/geocoding/</a>
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class GoogleGeocoder {
 

@@ -52,7 +52,7 @@ import android.widget.TextView;
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener {
 

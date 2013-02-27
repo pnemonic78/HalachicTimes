@@ -24,7 +24,7 @@ import android.provider.BaseColumns;
 /**
  * Address table columns.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public interface AddressColumns extends BaseColumns {
 

@@ -40,7 +40,7 @@ import android.widget.RemoteViews;
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimWidget extends AppWidgetProvider implements LocationListener {
 

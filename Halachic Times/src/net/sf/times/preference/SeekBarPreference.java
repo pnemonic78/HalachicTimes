@@ -39,7 +39,7 @@ import android.widget.Toast;
 /**
  * SeekBar preference.
  * 
- * @author moshe
+ * @author Moshe Waisberg
  */
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
 

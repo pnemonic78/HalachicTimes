@@ -32,7 +32,7 @@ import android.text.format.DateUtils;
 /**
  * Maintains the lists of countries.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class CountriesGeocoder {
 

@@ -29,7 +29,7 @@ import java.net.URL;
 /**
  * HTTP reader.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class HTTPReader {
 

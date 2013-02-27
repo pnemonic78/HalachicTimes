@@ -39,7 +39,7 @@ import android.provider.BaseColumns;
  * Address provider.<br>
  * Fetches addresses from various Internet providers, such as Google Maps.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class AddressProvider {
 

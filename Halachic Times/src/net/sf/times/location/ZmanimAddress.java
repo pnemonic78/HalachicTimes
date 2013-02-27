@@ -28,7 +28,7 @@ import android.text.TextUtils;
 /**
  * Address that is stored in the local database.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimAddress extends Address {
 

@@ -31,7 +31,7 @@ import android.preference.PreferenceActivity;
 /**
  * Application preferences.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener {
 

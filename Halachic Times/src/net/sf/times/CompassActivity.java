@@ -42,7 +42,7 @@ import android.widget.TextView;
  * Show the direction in which to pray. Points to the Holy of Holies in
  * Jerusalem in Israel.
  * 
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class CompassActivity extends Activity implements LocationListener, SensorEventListener, OnFindAddressListener {
 
