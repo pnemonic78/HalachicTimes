@@ -60,13 +60,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/** Flag indicating lighting times before sunset. */
 	private static final int BEFORE_SUNSET = 0x0000;
 	/** Flag indicating lighting times at sunset. */
-	private static final int AT_SUNSET = 0x0010;
+	private static final int AT_SUNSET = 0x1000;
 	/** Flag indicating lighting times after nightfall. */
-	private static final int MOTZE_SHABBATH = 0x0020;
+	private static final int MOTZE_SHABBATH = 0x2000;
 
 	private static final int CANDLES_MASK = 0x000F;
-	private static final int MOTZE_MASK = 0x00F0;
-	private static final int HOLIDAY_MASK = 0xFF00;
+	private static final int HOLIDAY_MASK = 0x0FF0;
+	private static final int MOTZE_MASK = 0xF000;
 
 	private static final String OPINION_10_2 = "10.2";
 	private static final String OPINION_11 = "11";
@@ -365,7 +365,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			candlesCount = candles & CANDLES_MASK;
 			hasCandles = candlesCount > 0;
 			candlesHow = candles & MOTZE_MASK;
-			holiday = (candles & HOLIDAY_MASK) >> 8;
+			holiday = (candles & HOLIDAY_MASK) >> 4;
 		}
 
 		Date date;
@@ -833,54 +833,51 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the Gregorian date.
 	 * @param inIsrael
 	 *            is in Israel?
-	 * @return the number of candles to light.
+	 * @return the number of candles to light, the holiday, and when to light.
 	 */
 	private int getCandles(Calendar cal, boolean inIsrael) {
 		final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-		final boolean isTodayShabbath = (dayOfWeek == Calendar.SATURDAY);
 
-		// Check if the following day is special, because we can't check
-		// EREV_CHANUKAH.
-		cal.add(Calendar.DAY_OF_MONTH, 1);
 		JewishCalendar jcal = new JewishCalendar(cal);
 		jcal.setInIsrael(inIsrael);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
-		int holiday = jcal.getYomTovIndex();
-		int candles = CANDLES_NONE;
+		// Check if the following day is special, because we can't check
+		// EREV_CHANUKAH.
+		jcal.forward();
+		int holidayTomorrow = jcal.getYomTovIndex();
+		int count = CANDLES_NONE;
 		int flags = BEFORE_SUNSET;
 
 		// Forbidden to light candles during Shabbath.
-		if (isTodayShabbath)
+		if (dayOfWeek == Calendar.SATURDAY)
 			flags = MOTZE_SHABBATH;
+		// During a festival, we can light for the next day from an existing
+		// flame.
 		else if (dayOfWeek != Calendar.FRIDAY)
 			flags = AT_SUNSET;
 
-		switch (holiday) {
+		switch (holidayTomorrow) {
 		case JewishCalendar.ROSH_HASHANA:
 		case JewishCalendar.SUCCOS:
 		case JewishCalendar.SHEMINI_ATZERES:
 		case JewishCalendar.SIMCHAS_TORAH:
 		case JewishCalendar.PESACH:
 		case JewishCalendar.SHAVUOS:
-			candles = CANDLES_FESTIVAL;
+			count = CANDLES_FESTIVAL;
 			break;
 		case JewishCalendar.YOM_KIPPUR:
-			candles = CANDLES_YOM_KIPPUR;
+			count = CANDLES_YOM_KIPPUR;
 			break;
 		case JewishCalendar.CHANUKAH:
-			candles = jcal.getDayOfChanukah();
+			count = jcal.getDayOfChanukah();
 			break;
 		default:
 			if (dayOfWeek == Calendar.FRIDAY) {
-				holiday = SHABBATH;
-				candles = CANDLES_SHABBATH;
+				holidayTomorrow = SHABBATH;
+				count = CANDLES_SHABBATH;
 			}
 			break;
 		}
 
-		int result = flags | (candles & CANDLES_MASK);
-		result |= (holiday << 8) & HOLIDAY_MASK;
-
-		return result;
+		return flags | ((holidayTomorrow << 4) & HOLIDAY_MASK) | (count & CANDLES_MASK);
 	}
 }
