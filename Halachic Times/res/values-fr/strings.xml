@@ -8,7 +8,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Jour est 120 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_120_zmanis">Jour est 120 <i>zmaniyos</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_120_zmanis">Jour est 120 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_16">Jour est 16,1° au-dessous de lever / coucher du soleil</string>
     <string name="opinion_16_sunset">Jour est de l\'aube 16,1° à niveau de la mer coucher de soleil</string>
     <string name="opinion_16_night">Jour est de l\'aube 16,1° à tombée de la nuit</string>
@@ -17,11 +17,11 @@
     <string name="opinion_18">Jour est 18° au-dessous de lever / coucher du soleil</string>
     <string name="opinion_60">Jour est 60 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_72">Jour est 72 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_72_zmanis">Jour est 72 <i>zmaniyos</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_72_zmanis">Jour est 72 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_90">Jour est 90 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_90_zmanis">Jour est 90 <i>zmaniyos</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_90_zmanis">Jour est 90 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_96">Jour est 96 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_96_zmanis">Jour est 96 <i>zmaniyos</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_96_zmanis">Jour est 96 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_ateret">Selon le Yeshivat Ateret Torah</string>
     <string name="opinion_gra">Selon le Gra et Baal Tanya</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>

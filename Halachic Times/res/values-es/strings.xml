@@ -8,7 +8,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Día es 120 minutos antes salida / después de la puesta</string>
-    <string name="opinion_120_zmanis">Día es 120 <i>zmaniyos</i> minutos antes salida / después de la puesta</string>
+    <string name="opinion_120_zmanis">Día es 120 <i>zmaniyot</i> minutos antes salida / después de la puesta</string>
     <string name="opinion_16">Día es 16,1° por debajo salida del sol / puesta del sol</string>
     <string name="opinion_16_sunset">Día es desde el amanecer 16,1° a nivel del mar puesta de sol </string>
     <string name="opinion_16_night">Día es desde el amanecer 16,1° al anochecer</string>
@@ -17,11 +17,11 @@
     <string name="opinion_18">Día es 18° por debajo salida del sol / puesta del sol</string>
     <string name="opinion_60">Día es 60 minutos antes salida / después de la puesta</string>
     <string name="opinion_72">Día es 72 minutos antes salida / después de la puesta</string>
-    <string name="opinion_72_zmanis">Día es 72 <i>zmaniyos</i> minutos antes salida / después de la puesta</string>
+    <string name="opinion_72_zmanis">Día es 72 <i>zmaniyot</i> minutos antes salida / después de la puesta</string>
     <string name="opinion_90">Día es 90 minutos antes salida / después de la puesta</string>
-    <string name="opinion_90_zmanis">Día es 90 <i>zmaniyos</i> minutos antes salida / después de la puesta</string>
+    <string name="opinion_90_zmanis">Día es 90 <i>zmaniyot</i> minutos antes salida / después de la puesta</string>
     <string name="opinion_96">Día es 96 minutos antes salida / después de la puesta</string>
-    <string name="opinion_96_zmanis">Día es 96 <i>zmaniyos</i> minutos antes salida / después de la puesta</string>
+    <string name="opinion_96_zmanis">Día es 96 <i>zmaniyot</i> minutos antes salida / después de la puesta</string>
     <string name="opinion_ateret">Acuerdo a Yeshivat Ateret Torá</string>
     <string name="opinion_gra">Acuerdo a Gra y Baal Tanya</string>
     <string name="opinion_mga">Acuerdo a Magen Avraham</string>
@@ -81,7 +81,7 @@
     <string name="nightfall_7">Sol es 7,083° debajo el nivel del mar</string>
     <string name="nightfall_8">Sol es 8,5° debajo el nivel del mar</string>
 
-    <string name="midnight">Jatzos</string>
+    <string name="midnight">Jatzot</string>
     <string name="midnight_summary">Medianoche</string>
     <string name="midnight_12">12 horas después de mediodía</string>
 

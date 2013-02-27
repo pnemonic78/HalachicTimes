@@ -8,7 +8,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Gün 120 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_120_zmanis">Gün 120 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_120_zmanis">Gün 120 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_16">Gün 16,1° aşağıda gündoğumu / günbatımı</string>
     <string name="opinion_16_sunset">Gün şafak 16,1° deniz seviyesi günbatımı</string>
     <string name="opinion_16_night">Gün şafak 16,1° kadar akşam vakti</string>
@@ -17,11 +17,11 @@
     <string name="opinion_18">Gün 18° aşağıda gündoğumu / günbatımı</string>
     <string name="opinion_60">Gün 60 dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_72">Gün 72 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_72_zmanis">Gün 72 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_72_zmanis">Gün 72 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_90">Gün 90 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_90_zmanis">Gün 90 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_90_zmanis">Gün 90 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_96">Gün 96 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_96_zmanis">Gün 96 <i>zmanıyos</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_96_zmanis">Gün 96 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_ateret">Yeşivat Ateret Tora göre</string>
     <string name="opinion_gra">Gra ve Baal Tanya göre</string>
     <string name="opinion_mga">Magen Avraham göre</string>
@@ -81,7 +81,7 @@
     <string name="nightfall_7">Güneş deniz seviyesi altındadır 7,083°</string>
     <string name="nightfall_8">Güneş deniz seviyesi altındadır 8,5°</string>
 
-    <string name="midnight">Chatzos</string>
+    <string name="midnight">Chatzot</string>
     <string name="midnight_summary">Gece yarısı</string>
     <string name="midnight_12">12 saat sonra öğlen</string>
 
