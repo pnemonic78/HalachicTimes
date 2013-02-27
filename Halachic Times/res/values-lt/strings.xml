@@ -62,6 +62,10 @@
 
     <string name="candles">Žvakė apšvietimas</string>
     <string name="candles_summary">%1$d minučių iki saulėlydžio</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanuka žvakė</item>
+        <item quantity="other">%1$d Chanuka žvakės</item>
+    </plurals>
 
     <string name="sunset">Saulėlydis</string>
 

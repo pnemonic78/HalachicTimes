@@ -62,6 +62,10 @@
 
     <string name="candles">Svíčka osvětlení</string>
     <string name="candles_summary">%1$d minut před západem slunce</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanuka svíčka</item>
+        <item quantity="other">%1$d Chanuka svíčky</item>
+    </plurals>
 
     <string name="sunset">Západ slunce</string>
 

@@ -62,6 +62,10 @@
 
     <string name="candles">Mum aydınlatma</string>
     <string name="candles_summary">%1$d dakika önce günbatımı</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanuka mum</item>
+        <item quantity="other">%1$d Chanuka mumları</item>
+    </plurals>
 
     <string name="sunset">Gün batımı</string>
 

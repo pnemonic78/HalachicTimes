@@ -22,7 +22,7 @@
     <string name="opinion_90_zmanis">Tag ist 90 <i>zmaniyos</i> minuten vor sonnenaufgang / nach sonnenuntergang</string>
     <string name="opinion_96">Tag ist 96 minuten vor sonnenaufgang / nach sonnenuntergang</string>
     <string name="opinion_96_zmanis">Tag ist 96 <i>zmaniyos</i> minuten vor sonnenaufgang / nach sonnenuntergang</string>
-    <string name="opinion_ateret">Nach Yeshivat Ateret Torah</string>
+    <string name="opinion_ateret">Nach Yeshivat Ateret Tora</string>
     <string name="opinion_gra">Nach Gra und Baal Tanya</string>
     <string name="opinion_mga">Nach Magen Avraham</string>
 
@@ -62,6 +62,10 @@
 
     <string name="candles">Kerzenzünden</string>
     <string name="candles_summary">%1$d minuten vor sonnenuntergang</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukka kerze</item>
+        <item quantity="other">%1$d Chanukka-kerzen</item>
+    </plurals>
 
     <string name="sunset">Sonnenuntergang</string>
 

@@ -323,35 +323,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/candles2_row"
-        style="@style/CandleRow"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/candles2_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:singleLine="true"
-            android:text="@string/candles"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/nightfall_row"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -377,6 +348,35 @@
             android:singleLine="true"
             android:text="@string/nightfall"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/candles_nightfall_row"
+        style="@style/CandleRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/candles_nightfall_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:singleLine="true"
+            android:text="@string/candles"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
     </LinearLayout>
 
     <LinearLayout

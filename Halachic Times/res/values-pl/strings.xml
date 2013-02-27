@@ -62,6 +62,10 @@
 
     <string name="candles">Oświetlenie świecę</string>
     <string name="candles_summary">%1$d minut przed zachodem słońca</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 świeca Chanuka</item>
+        <item quantity="other">%1$d świece Chanukowe</item>
+    </plurals>
 
     <string name="sunset">Zachód słońca</string>
 

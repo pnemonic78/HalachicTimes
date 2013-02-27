@@ -62,6 +62,10 @@
 
     <string name="candles">Φωτισμό κεριών</string>
     <string name="candles_summary">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Χανουκά κερί</item>
+        <item quantity="other">%1$d κεριά Χανουκά</item>
+    </plurals>
 
     <string name="sunset">Ηλιοβασίλεμα</string>
 

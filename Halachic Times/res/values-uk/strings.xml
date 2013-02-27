@@ -60,8 +60,12 @@
 
     <string name="plug_hamincha">Плаг мінха</string>
 
-    <string name="candles">Розпалювання світло</string>
+    <string name="candles">Розпалювання свічки</string>
     <string name="candles_summary">%1$d хвилин до заходу сонця</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 свічка Хануки</item>
+        <item quantity="other">%1$d Ханукальні свічки</item>
+    </plurals>
 
     <string name="sunset">Захід сонця</string>
 

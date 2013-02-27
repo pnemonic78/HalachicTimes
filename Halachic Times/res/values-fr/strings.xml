@@ -62,6 +62,10 @@
 
     <string name="candles">Allumage des bougies</string>
     <string name="candles_summary">%1$d minutes avant le coucher du soleil</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 bougie de Hanoukka</item>
+        <item quantity="other">%1$d bougies de Hanoukka</item>
+    </plurals>
 
     <string name="sunset">Coucher du soleil</string>
 

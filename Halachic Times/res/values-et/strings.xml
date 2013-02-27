@@ -27,7 +27,7 @@
     <string name="opinion_mga">Vastavalt Magen Avraham</string>
 
     <!-- List -->
-    <string name="koit">Koit</string>
+    <string name="dawn">Koit</string>
 
     <string name="tallis">Varaseim tallis ja tefillin</string>
     <string name="tallis_summary">Päike on 11,5° alla horisonti</string>
@@ -62,6 +62,10 @@
 
     <string name="candles">Küünal valgustus</string>
     <string name="candles_summary">%1$d minutit enne loojangut</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanuka küünal</item>
+        <item quantity="other">%1$d Chanuka küünlad</item>
+    </plurals>
 
     <string name="sunset">Päikeseloojang</string>
 

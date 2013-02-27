@@ -125,6 +125,10 @@
 
     <string name="candles">Candle lighting</string>
     <string name="candles_summary">%1$d minutes before sunset</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukka candle</item>
+        <item quantity="other">%1$d Chanukka candles</item>
+    </plurals>
 
     <string name="sunset">Sunset</string>
     <string name="sunset_summary" translatable="false">@string/sunrise_summary</string>

@@ -62,6 +62,10 @@
 
     <string name="candles">הדלקת נרות</string>
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">נר חנוכה 1</item>
+        <item quantity="other">%1$d נרות חנוכה</item>
+    </plurals>
 
     <string name="sunset">שקיעת השמש</string>
 

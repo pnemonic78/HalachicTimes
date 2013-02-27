@@ -62,6 +62,10 @@
 
     <string name="candles">Kynttilävalaistus</string>
     <string name="candles_summary">%1$d minuuttia ennen auringonlasku</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukka kynttilän</item>
+        <item quantity="other">%1$d Chanukka kynttilät</item>
+    </plurals>
 
     <string name="sunset">Auringonlasku</string>
 

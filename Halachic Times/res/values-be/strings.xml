@@ -62,6 +62,10 @@
 
     <string name="candles">Зажигание свечей</string>
     <string name="candles_summary">%1$d минут до захода солнца</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 свечка Ханукі</item>
+        <item quantity="other">%1$d Ханукальнай свечкі</item>
+    </plurals>
 
     <string name="sunset">Заход солнца</string>
 

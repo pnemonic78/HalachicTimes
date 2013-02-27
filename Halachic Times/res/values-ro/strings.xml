@@ -62,6 +62,10 @@
 
     <string name="candles">Lumânare de iluminat</string>
     <string name="candles_summary">%1$d minute înainte de apus</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanuka lumânare</item>
+        <item quantity="other">%1$d Chanuka lumânări</item>
+    </plurals>
 
     <string name="sunset">Apus de soare</string>
 

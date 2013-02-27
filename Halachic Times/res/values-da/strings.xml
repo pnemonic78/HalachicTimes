@@ -62,6 +62,11 @@
 
     <string name="candles">Kerte belysning</string>
     <string name="candles_summary">%1$d minutter før solnedgang</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukka lys</item>
+        <item quantity="two">2 Chanukka lys</item>
+        <item quantity="other">%1$d Chanukka stearinlys</item>
+    </plurals>
 
     <string name="sunset">Solnedgang</string>
 

@@ -62,6 +62,10 @@
 
     <string name="candles">Осветление на свещи</string>
     <string name="candles_summary">%1$d минути преди да залез</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Ханука свещ</item>
+        <item quantity="other">%1$d Ханука свещи</item>
+    </plurals>
 
     <string name="sunset">Залез слънце</string>
 

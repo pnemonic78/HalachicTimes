@@ -38,7 +38,7 @@
     <string name="sunrise_summary">In una regione di livello</string>
     <string name="sunrise_sea">Al livello del mare</string>
 
-    <string name="shema">Ultime shema</string>
+    <string name="shema">Ultime shemà</string>
     <string name="shema_7">Giorno è dall\'alba 16,1° a notte 7,083°</string>
     <string name="shema_3">3 ore prima di mezzogiorno</string>
     <string name="shema_fixed">3 ore prima di mezzogiorno fisso locale</string>
@@ -51,17 +51,21 @@
     <string name="midday_summary">Mezzo del giorno</string>
     <string name="midday_fixed">Mezzogiorno regolato per la latitudine locale</string>
 
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Minchà gedolà</string>
     <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
     <string name="earliest_mincha_30">30 minuti dopo mezzogiorno</string>
 
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">Minchà ketanà</string>
     <string name="mincha_summary">Pomeriggio preghiere</string>
 
-    <string name="plug_hamincha">Plug hamincha</string>
+    <string name="plug_hamincha">Plag haminchà</string>
 
     <string name="candles">Candela illuminazione</string>
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukkà candela</item>
+        <item quantity="other">%1$d Chanukkà candele</item>
+    </plurals>
 
     <string name="sunset">Tramonto</string>
 

@@ -4,9 +4,9 @@
     <color name="sunrise">#40D99058</color>
     <color name="midday">#8087CEEB</color>
     <color name="midnight">#40000000</color>
-    <color name="bright">#20ffffff</color>
+    <color name="bright">#10ffffff</color>
     <color name="candles">#ccffff00</color>
-    <color name="widget_box">#40000000</color>
+    <color name="widget_box">#80000000</color>
     <color name="widget_border">#10ffffff</color>
 
 </resources>

@@ -62,6 +62,10 @@
 
     <string name="candles">Kaars verlichting</string>
     <string name="candles_summary">%1$d minuten vóór zonsondergang</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanoeka kaars</item>
+        <item quantity="other">%1$d Chanoeka kaarsen</item>
+    </plurals>
 
     <string name="sunset">Zonsondergang</string>
 

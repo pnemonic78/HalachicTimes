@@ -62,6 +62,10 @@
 
     <string name="candles">Acendimento das velas</string>
     <string name="candles_summary">%1$d minutos antes da pôr do sol</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 vela de Hanucá</item>
+        <item quantity="other">%1$d velas de Hanucá</item>
+    </plurals>
 
     <string name="sunset">Pôr do sol</string>
 

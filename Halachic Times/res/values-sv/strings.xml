@@ -47,7 +47,7 @@
     <string name="prayers_fixed">2 timmar före fast lokal middag</string>
     <string name="prayers_2">2 timmar före middag</string>
 
-    <string name="middag">Middag</string>
+    <string name="midday">Middag</string>
     <string name="midday_summary">Solens middagstid</string>
     <string name="midday_fixed">Middagstid justerat för den lokala latitud</string>
 
@@ -60,8 +60,12 @@
 
     <string name="plug_hamincha">Plag hamincha</string>
 
-    <string name="candles">Ljus belysning</string>
+    <string name="candles">Stearinljus belysning</string>
     <string name="candles_summary">%1$d minuter före solnedgången</string>
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukka ljus</item>
+        <item quantity="other">%1$d Chanukka stearinljus</item>
+    </plurals>
 
     <string name="sunset">Solnedgången</string>
 
