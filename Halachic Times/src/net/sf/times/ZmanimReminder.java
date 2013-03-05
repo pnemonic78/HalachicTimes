@@ -54,7 +54,7 @@ public class ZmanimReminder {
 		mSettings = settings;
 		mLocations = locations;
 
-		// TODO register listeners for changes to:
+		// TODO register alarm receiver in manifest for changes to:
 		// Intent.ACTION_TIME_CHANGED
 		// Intent.ACTION_DATE_CHANGED
 		// Intent.ACTION_TIMEZONE_CHANGED
@@ -89,8 +89,8 @@ public class ZmanimReminder {
 			// Find the first remind of the day (that is now or in the future,
 			// and has a reminder).
 			before = mSettings.getReminder(item.timeId);
-			if (before <= 0) {
-				when = item.time + (before * DateUtils.MINUTE_IN_MILLIS);
+			if (before >= 0) {
+				when = item.time - (before * DateUtils.MINUTE_IN_MILLIS);
 				if ((was <= when) && (when <= soon)) {
 					notifyNow(item.titleId, item.time);
 					break;
