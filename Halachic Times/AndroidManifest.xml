@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="ZmanimActivity"
+            android:name=".ZmanimActivity"
             android:label="@string/title_activity_zmanim"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -31,16 +31,16 @@
                 android:value="android.app.Activity"/>
         </activity>
         <activity
-            android:name="ZmanimPreferences"
+            android:name=".ZmanimPreferences"
             android:label="@string/menu_settings">
         </activity>
         <activity
-            android:name="CompassActivity"
+            android:name=".CompassActivity"
             android:label="@string/title_activity_compass">
         </activity>
 
         <receiver
-            android:name="ZmanimWidget"
+            android:name=".ZmanimWidget"
             android:exported="false"
             android:label="@string/title_activity_zmanim">
             <intent-filter>
@@ -51,6 +51,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info"/>
         </receiver>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:exported="false"/>
     </application>
 
 </manifest>

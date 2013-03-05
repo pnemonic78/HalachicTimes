@@ -8,6 +8,7 @@
             android:summaryOff="@string/coords_hidden"
             android:summaryOn="@string/coords_visible"
             android:title="@string/coords_title"/>
+
         <ListPreference
             android:defaultValue="decimal"
             android:entries="@array/coords_format_entries"
@@ -35,87 +36,197 @@
             android:summaryOn="@string/gradient_visible"
             android:title="@string/gradient_title"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_opinion">
-        <ListPreference
-            android:defaultValue="16.1"
-            android:entries="@array/dawn_entries"
-            android:entryValues="@array/dawn_values"
-            android:key="dawn"
-            android:title="@string/dawn"/>
-        <ListPreference
-            android:defaultValue="11.5"
-            android:entries="@array/tallis_entries"
-            android:entryValues="@array/tallis_values"
-            android:key="tallis"
-            android:title="@string/tallis"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/sunrise_entries"
-            android:entryValues="@array/sunrise_values"
-            android:key="sunrise"
-            android:title="@string/sunrise"/>
-        <ListPreference
-            android:defaultValue="MGA"
-            android:entries="@array/shema_entries"
-            android:entryValues="@array/shema_values"
-            android:key="shema"
-            android:title="@string/shema"/>
-        <ListPreference
-            android:defaultValue="MGA"
-            android:entries="@array/prayers_entries"
-            android:entryValues="@array/prayers_values"
-            android:key="prayers"
-            android:title="@string/prayers"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/midday_entries"
-            android:entryValues="@array/midday_values"
-            android:key="midday"
-            android:title="@string/midday"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/earliest_mincha_entries"
-            android:entryValues="@array/earliest_mincha_values"
-            android:key="earliest_mincha"
-            android:title="@string/earliest_mincha"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/mincha_entries"
-            android:entryValues="@array/mincha_values"
-            android:key="mincha"
-            android:title="@string/mincha"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/plug_hamincha_entries"
-            android:entryValues="@array/plug_hamincha_values"
-            android:key="plug_hamincha"
-            android:title="@string/plug_hamincha"/>
+    <PreferenceCategory android:title="@string/title_activity_zmanim">
+        <PreferenceScreen android:title="@string/dawn">
+            <ListPreference
+                android:defaultValue="16.1"
+                android:entries="@array/dawn_entries"
+                android:entryValues="@array/dawn_values"
+                android:key="dawn"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="dawn.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/tallis">
+            <ListPreference
+                android:defaultValue="11.5"
+                android:entries="@array/tallis_entries"
+                android:entryValues="@array/tallis_values"
+                android:key="tallis"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="tallis.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/sunrise">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/sunrise_entries"
+                android:entryValues="@array/sunrise_values"
+                android:key="sunrise"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="sunrise.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/shema">
+            <ListPreference
+                android:defaultValue="MGA"
+                android:entries="@array/shema_entries"
+                android:entryValues="@array/shema_values"
+                android:key="shema"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="shema.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/prayers">
+            <ListPreference
+                android:defaultValue="MGA"
+                android:entries="@array/prayers_entries"
+                android:entryValues="@array/prayers_values"
+                android:key="prayers"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="prayers.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/midday">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/midday_entries"
+                android:entryValues="@array/midday_values"
+                android:key="midday"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="midday.reminder"
+                android:title="@string/reminder"/>
 
-        <net.sf.times.preference.SeekBarPreference
-            android:defaultValue="18"
-            android:key="candles"
-            android:max="40"
-            android:summary="@string/candles_summary"
-            android:title="@string/candles"/>
+            <RingtonePreference
+                android:key="midday.tone"
+                android:ringtoneType="notification"
+                android:showDefault="true"
+                android:showSilent="true"
+                android:title="@string/ringtone"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/earliest_mincha">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/earliest_mincha_entries"
+                android:entryValues="@array/earliest_mincha_values"
+                android:key="earliest_mincha"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="earliest_mincha.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/mincha">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/mincha_entries"
+                android:entryValues="@array/mincha_values"
+                android:key="mincha"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="mincha.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/plug_hamincha">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/plug_hamincha_entries"
+                android:entryValues="@array/plug_hamincha_values"
+                android:key="plug_hamincha"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="plug_hamincha.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/candles">
+            <net.sf.times.preference.SeekBarPreference
+                android:defaultValue="18"
+                android:key="candles"
+                android:max="40"
+                android:summary="@string/candles_summary"
+                android:title="@string/opinion"/>
 
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/sunset_entries"
-            android:entryValues="@array/sunset_values"
-            android:key="sunset"
-            android:title="@string/sunset"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/nightfall_entries"
-            android:entryValues="@array/nightfall_values"
-            android:key="nightfall"
-            android:title="@string/nightfall"/>
-        <ListPreference
-            android:defaultValue=""
-            android:entries="@array/midnight_entries"
-            android:entryValues="@array/midnight_values"
-            android:key="midnight"
-            android:title="@string/midnight"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="candles.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/sunset">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/sunset_entries"
+                android:entryValues="@array/sunset_values"
+                android:key="sunset"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="sunset.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/nightfall">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/nightfall_entries"
+                android:entryValues="@array/nightfall_values"
+                android:key="nightfall"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="nightfall.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/midnight">
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/midnight_entries"
+                android:entryValues="@array/midnight_values"
+                android:key="midnight"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:key="midnight.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>

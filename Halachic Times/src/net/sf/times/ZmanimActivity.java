@@ -40,6 +40,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -164,7 +165,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 */
 	private void setDate(long date) {
 		mDate.setTimeInMillis(date);
-		mTimeZone = TimeZone.getDefault();
+		mTimeZone = mLocations.getTimeZone();
 
 		View header = mHeader;
 		// Have we been destroyed?
@@ -207,19 +208,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** Populate the list with times. */
 	private void populateTimes() {
 		// Have we been destroyed?
-		Location loc = mLocations.getLocation();
-		if (loc == null)
+		GeoLocation gloc = mLocations.getGeoLocation();
+		if (gloc == null)
 			return;
-		final String locationName = loc.getProvider();
-		final double latitude = loc.getLatitude();
-		final double longitude = loc.getLongitude();
-		final double altitude = Math.max(0, loc.getAltitude());
-		final int candlesOffset = mSettings.getCandleLightingOffset();
-		final boolean inIsrael = mLocations.inIsrael(loc, mTimeZone);
+		final boolean inIsrael = mLocations.inIsrael();
 
-		GeoLocation gloc = new GeoLocation(locationName, latitude, longitude, altitude, TimeZone.getDefault());
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCandleLightingOffset(candlesOffset);
 		cal.setCalendar(mDate);
 
 		ZmanimAdapter adapter = new ZmanimAdapter(this, mSettings);
@@ -318,8 +312,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private String formatAddress() {
 		if (mAddress != null)
 			return mAddress.getFormatted();
-		if (mTimeZone != null)
-			return mTimeZone.getDisplayName();
+		String tz = mTimeZone.getDisplayName();
+		if (!TextUtils.isEmpty(tz))
+			return tz;
 		return getString(R.string.location_unknown);
 	}
 

@@ -34,6 +34,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Address provider.<br>
@@ -42,6 +43,7 @@ import android.provider.BaseColumns;
  * @author Moshe Waisberg
  */
 public class AddressProvider {
+	private static final String TAG = "AddressProvider";
 
 	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
 			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE };
@@ -134,7 +136,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			System.err.println(e.getLocalizedMessage());
+			Log.e(TAG, e.getLocalizedMessage());
 			addresses = new ArrayList<Address>();
 		}
 		return addresses;
@@ -158,7 +160,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			System.err.println(e.getLocalizedMessage());
+			Log.e(TAG, e.getLocalizedMessage());
 			addresses = new ArrayList<Address>();
 		}
 		return addresses;

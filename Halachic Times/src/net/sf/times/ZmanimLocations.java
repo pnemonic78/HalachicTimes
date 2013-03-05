@@ -25,12 +25,14 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import net.sf.times.location.CountriesGeocoder;
+import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 /**
  * Location provider.
@@ -38,6 +40,8 @@ import android.text.format.DateUtils;
  * @author Moshe Waisberg
  */
 public class ZmanimLocations implements LocationListener {
+
+	private static final String TAG = "ZmanimLocations";
 
 	/** 1 kilometre. */
 	private static final int ONE_KM = 1000;
@@ -70,6 +74,8 @@ public class ZmanimLocations implements LocationListener {
 	private String mCoordsFormat;
 	/** The instance. */
 	private static ZmanimLocations mInstance;
+	/** The time zone. */
+	private TimeZone mTimeZone;
 
 	/**
 	 * Constructs a new provider.
@@ -83,6 +89,7 @@ public class ZmanimLocations implements LocationListener {
 		mCountries = new CountriesGeocoder(context);
 		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		mCoordsFormat = context.getString(R.string.location_coords);
+		mTimeZone = TimeZone.getDefault();
 	}
 
 	/**
@@ -110,7 +117,8 @@ public class ZmanimLocations implements LocationListener {
 	public static ZmanimLocations getInstance(Context context, LocationListener listener) {
 		if (mInstance == null)
 			mInstance = new ZmanimLocations(context);
-		mInstance.addLocationListener(listener);
+		if (listener != null)
+			mInstance.addLocationListener(listener);
 		return mInstance;
 	}
 
@@ -186,18 +194,18 @@ public class ZmanimLocations implements LocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ() {
-		return getLocationTZ(TimeZone.getDefault());
+		return getLocationTZ(mTimeZone);
 	}
 
 	/**
 	 * Get a location from the time zone.
 	 * 
-	 * @param tz
+	 * @param timeZone
 	 *            the time zone.
 	 * @return the location - {@code null} otherwise.
 	 */
-	public Location getLocationTZ(TimeZone tz) {
-		return mCountries.findLocation(tz);
+	public Location getLocationTZ(TimeZone timeZone) {
+		return mCountries.findLocation(timeZone);
 	}
 
 	/**
@@ -254,12 +262,12 @@ public class ZmanimLocations implements LocationListener {
 		try {
 			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, DateUtils.MINUTE_IN_MILLIS, ONE_KM, this);
 		} catch (IllegalArgumentException iae) {
-			System.err.println(this + ": " + iae.getLocalizedMessage());
+			Log.e(TAG, iae.getLocalizedMessage());
 		}
 		try {
 			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, DateUtils.MINUTE_IN_MILLIS, ONE_KM, this);
 		} catch (IllegalArgumentException iae) {
-			System.err.println(this + ": " + iae.getLocalizedMessage());
+			Log.e(TAG, iae.getLocalizedMessage());
 		}
 
 		if (listener != null)
@@ -267,7 +275,7 @@ public class ZmanimLocations implements LocationListener {
 	}
 
 	/**
-	 * Is the user in Israel?<br>
+	 * Is the location in Israel?<br>
 	 * Used to determine if user is in diaspora for 2-day festivals.
 	 * 
 	 * @param location
@@ -279,7 +287,7 @@ public class ZmanimLocations implements LocationListener {
 	public boolean inIsrael(Location location, TimeZone timeZone) {
 		if (location == null) {
 			if (timeZone == null)
-				timeZone = TimeZone.getDefault();
+				timeZone = mTimeZone;
 			String id = timeZone.getID();
 			if (TZ_JERUSALEM.equals(id) || TZ_IST.equals(id))
 				return true;
@@ -289,6 +297,28 @@ public class ZmanimLocations implements LocationListener {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		return (latitude <= ISRAEL_NORTH) && (latitude >= ISRAEL_SOUTH) && (longitude >= ISRAEL_WEST) && (longitude <= ISRAEL_EAST);
+	}
+
+	/**
+	 * Is the current location in Israel?<br>
+	 * Used to determine if user is in diaspora for 2-day festivals.
+	 * 
+	 * @param timeZone
+	 *            the time zone.
+	 * @return {@code true} if user is in Israel - {@code false} otherwise.
+	 */
+	public boolean inIsrael(TimeZone timeZone) {
+		return inIsrael(getLocation(), timeZone);
+	}
+
+	/**
+	 * Is the current location in Israel?<br>
+	 * Used to determine if user is in diaspora for 2-day festivals.
+	 * 
+	 * @return {@code true} if user is in Israel - {@code false} otherwise.
+	 */
+	public boolean inIsrael() {
+		return inIsrael(mTimeZone);
 	}
 
 	/**
@@ -313,5 +343,42 @@ public class ZmanimLocations implements LocationListener {
 		}
 		final String coordsText = String.format(Locale.US, mCoordsFormat, latitudeText, longitudeText);
 		return coordsText;
+	}
+
+	/**
+	 * Get the location.
+	 * 
+	 * @param timeZone
+	 *            the time zone.
+	 * @return the location - {@code null} otherwise.
+	 */
+	public GeoLocation getGeoLocation(TimeZone timeZone) {
+		Location loc = getLocation();
+		if (loc == null)
+			return null;
+		final String locationName = loc.getProvider();
+		final double latitude = loc.getLatitude();
+		final double longitude = loc.getLongitude();
+		final double altitude = Math.max(0, loc.getAltitude());
+
+		return new GeoLocation(locationName, latitude, longitude, altitude, timeZone);
+	}
+
+	/**
+	 * Get the location.
+	 * 
+	 * @return the location - {@code null} otherwise.
+	 */
+	public GeoLocation getGeoLocation() {
+		return getGeoLocation(mTimeZone);
+	}
+
+	/**
+	 * Get the time zone.
+	 * 
+	 * @return the time zone.
+	 */
+	public TimeZone getTimeZone() {
+		return mTimeZone;
 	}
 }

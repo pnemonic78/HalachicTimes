@@ -20,7 +20,6 @@
 package net.sf.times;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -141,24 +140,14 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 			mLocations = ZmanimLocations.getInstance(context, this);
 			mLocations.resume(this);
 		}
-		Location loc = mLocations.getLocation();
-		if (loc == null)
+		GeoLocation gloc = mLocations.getGeoLocation();
+		if (gloc == null)
 			return;
-		final String locationName = loc.getProvider();
-		final double latitude = loc.getLatitude();
-		final double longitude = loc.getLongitude();
-		final double altitude = Math.max(0, loc.getAltitude());
-		final int candlesOffset = mSettings.getCandleLightingOffset();
-		final boolean inIsrael = mLocations.inIsrael(loc, TimeZone.getDefault());
-
-		Calendar today = Calendar.getInstance();
-		GeoLocation gloc = new GeoLocation(locationName, latitude, longitude, altitude, TimeZone.getDefault());
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCandleLightingOffset(candlesOffset);
-		cal.setCalendar(today);
+		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
+		final boolean inIsrael = mLocations.inIsrael();
 
 		ZmanimAdapter adapter = new ZmanimAdapter(mContext, mSettings);
-		adapter.populate(cal, inIsrael, true);
+		adapter.populate(today, inIsrael, true);
 		adapter.bindViews(views);
 
 		mAppWidgetManager.updateAppWidget(mAppWidgetIds, views);

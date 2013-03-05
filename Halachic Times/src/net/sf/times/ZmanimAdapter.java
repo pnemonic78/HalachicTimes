@@ -104,7 +104,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_FIXED = "fixed";
 	private static final String OPINION_SEA = "sea";
 
-	private final Context mContext;
 	private final LayoutInflater mInflater;
 	private final ZmanimSettings mSettings;
 	private final long mNow = System.currentTimeMillis();
@@ -121,12 +120,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		public int titleId;
 		/** The summary. */
 		public CharSequence summary;
-		/** The time. */
-		public CharSequence time;
-		/** Has the time elapsed? */
-		public boolean elapsed;
 		/** The time text id. */
 		public int timeId;
+		/** The time. */
+		public long time;
+		/** The time label. */
+		public CharSequence timeLabel;
+		/** Has the time elapsed? */
+		public boolean elapsed;
 
 		public ZmanimItem() {
 			super();
@@ -143,7 +144,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 */
 	public ZmanimAdapter(Context context, ZmanimSettings settings) {
 		super(context, R.layout.times_item, 0);
-		mContext = context;
 		mInflater = LayoutInflater.from(context);
 		mSettings = settings;
 		mSummaries = settings.isSummaries();
@@ -182,7 +182,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (item.summary == null)
 			summary.setVisibility(View.GONE);
 		TextView time = (TextView) view.findViewById(R.id.time);
-		time.setText(item.time);
+		time.setText(item.timeLabel);
 		boolean enabled = !item.elapsed;
 		title.setEnabled(enabled);
 		summary.setEnabled(enabled);
@@ -228,46 +228,48 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the remote views.
 	 */
 	private void bindView(RemoteViews views, ZmanimItem item) {
-		if (item.elapsed || (item.time == null)) {
+		if (item.elapsed || (item.timeLabel == null)) {
 			views.setViewVisibility(item.titleId, View.GONE);
 		} else {
 			views.setViewVisibility(item.titleId, View.VISIBLE);
-			views.setTextViewText(item.timeId, item.time);
+			views.setTextViewText(item.timeId, item.timeLabel);
 		}
 	}
 
 	/**
 	 * Adds the item to the array for a valid time.
 	 * 
-	 * @param labelId
-	 *            the label text id.
+	 * @param titleId
+	 *            the title label id.
 	 * @param summaryId
-	 *            the summary text id.
+	 *            the summary label id.
 	 * @param time
 	 *            the time in milliseconds.
 	 */
-	public void add(int labelId, int summaryId, long time) {
-		add(labelId, mSummaries && (summaryId != 0) ? mContext.getText(summaryId) : (CharSequence) null, time);
+	public void add(int titleId, int summaryId, long time) {
+		add(titleId, mSummaries && (summaryId != 0) ? getContext().getText(summaryId) : (CharSequence) null, time);
 	}
 
 	/**
 	 * Adds the item to the array for a valid time.
 	 * 
-	 * @param labelId
-	 *            the label text id.
+	 * @param titleId
+	 *            the title label id.
 	 * @param summaryId
-	 *            the summary text id.
+	 *            the summary label id.
 	 * @param time
 	 *            the time in milliseconds.
 	 */
-	public void add(int labelId, CharSequence summary, long time) {
+	public void add(int titleId, CharSequence summary, long time) {
 		if (time == 0)
 			return;
 
 		ZmanimItem item = new ZmanimItem();
-		item.titleId = labelId;
+		item.titleId = titleId;
 		item.summary = mSummaries ? summary : null;
-		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
+		item.timeId = titleId;
+		item.time = time;
+		item.timeLabel = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
 		item.elapsed = mElapsed ? false : (time < mNow);
 
 		add(item);
@@ -276,17 +278,17 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/**
 	 * Adds the item to the array for a valid date.
 	 * 
-	 * @param labelId
-	 *            the label text id.
+	 * @param titleId
+	 *            the title label id.
 	 * @param summaryId
-	 *            the summary text id.
+	 *            the summary label id.
 	 * @param date
 	 *            the date.
 	 */
-	public void add(int labelId, int summaryId, Date date) {
+	public void add(int titleId, int summaryId, Date date) {
 		if (date == null)
 			return;
-		add(labelId, summaryId, (date == null) ? 0L : date.getTime());
+		add(titleId, summaryId, (date == null) ? 0L : date.getTime());
 	}
 
 	/**
@@ -337,7 +339,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		ZmanimItem item = new ZmanimItem();
 		item.titleId = rowId;
 		item.timeId = timeId;
-		item.time = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
+		item.time = time;
+		item.timeLabel = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
 		item.elapsed = /* mElapsed && !set ? false : */(time < mNow);
 
 		add(item);
@@ -358,6 +361,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		boolean hasCandles = false;
 		int candlesHow = 0;
 		int holiday = -1;
+		cal.setCandleLightingOffset(mCandlesOffset);
 		Date candlesWhen = cal.getCandleLighting();
 		if (candlesWhen != null) {
 			Calendar gcal = cal.getCalendar();
@@ -371,7 +375,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		Date date;
 		int summary;
 		String opinion;
-		final Resources res = mContext.getResources();
+		final Resources res = getContext().getResources();
 
 		opinion = mSettings.getDawn();
 		if (OPINION_19_8.equals(opinion)) {
@@ -686,7 +690,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				if (holiday == JewishCalendar.CHANUKAH) {
 					summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				} else {
-					summaryText = mContext.getString(R.string.candles_summary, mCandlesOffset);
+					summaryText = getContext().getString(R.string.candles_summary, mCandlesOffset);
 				}
 				add(R.string.candles, summaryText, date);
 			}

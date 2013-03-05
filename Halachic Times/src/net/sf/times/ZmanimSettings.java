@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 /**
  * Application settings.
@@ -52,6 +53,7 @@ public class ZmanimSettings {
 	public static final String KEY_PAST = "past";
 	/** Preference name for the background gradient. */
 	public static final String KEY_BG_GRADIENT = "gradient";
+
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
 	/** Preference name for earliest tallis type. */
@@ -78,6 +80,35 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_NIGHTFALL = "nightfall";
 	/** Preference name for midnight type. */
 	public static final String KEY_OPINION_MIDNIGHT = "midnight";
+
+	static final String REMINDER_SUFFIX = ".reminder";
+
+	/** Preference name for Alos reminder. */
+	public static final String KEY_REMINDER_DAWN = KEY_OPINION_DAWN + REMINDER_SUFFIX;
+	/** Preference name for earliest tallis reminder. */
+	public static final String KEY_REMINDER_TALLIS = KEY_OPINION_TALLIS + REMINDER_SUFFIX;
+	/** Preference name for sunrise reminder. */
+	public static final String KEY_REMINDER_SUNRISE = KEY_OPINION_SUNRISE + REMINDER_SUFFIX;
+	/** Preference name for Last Shema reminder. */
+	public static final String KEY_REMINDER_SHEMA = KEY_OPINION_SHEMA + REMINDER_SUFFIX;
+	/** Preference name for Last Morning Tfila reminder. */
+	public static final String KEY_REMINDER_TFILA = KEY_OPINION_TFILA + REMINDER_SUFFIX;
+	/** Preference name for midday / noon reminder. */
+	public static final String KEY_REMINDER_NOON = KEY_OPINION_NOON + REMINDER_SUFFIX;
+	/** Preference name for Earliest Mincha reminder. */
+	public static final String KEY_REMINDER_EARLIEST_MINCHA = KEY_OPINION_EARLIEST_MINCHA + REMINDER_SUFFIX;
+	/** Preference name for Mincha Ketana reminder. */
+	public static final String KEY_REMINDER_MINCHA = KEY_OPINION_MINCHA + REMINDER_SUFFIX;
+	/** Preference name for Plug HaMincha reminder. */
+	public static final String KEY_REMINDER_PLUG_MINCHA = KEY_OPINION_PLUG_MINCHA + REMINDER_SUFFIX;
+	/** Preference name for candle lighting reminder. */
+	public static final String KEY_REMINDER_CANDLES = KEY_OPINION_CANDLES + REMINDER_SUFFIX;
+	/** Preference name for sunset reminder. */
+	public static final String KEY_REMINDER_SUNSET = KEY_OPINION_SUNSET + REMINDER_SUFFIX;
+	/** Preference name for nightfall reminder. */
+	public static final String KEY_REMINDER_NIGHTFALL = KEY_OPINION_NIGHTFALL + REMINDER_SUFFIX;
+	/** Preference name for midnight reminder. */
+	public static final String KEY_REMINDER_MIDNIGHT = KEY_OPINION_MIDNIGHT + REMINDER_SUFFIX;
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -321,5 +352,100 @@ public class ZmanimSettings {
 	 */
 	public String getMidnight() {
 		return mPrefs.getString(KEY_OPINION_MIDNIGHT, "");
+	}
+
+	/**
+	 * Get the opinion.
+	 * 
+	 * @param id
+	 *            the time id.
+	 * @return the opinion.
+	 */
+	public String getOpinion(int id) {
+		if ((id == R.id.dawn_row) || (id == R.id.dawn_time) || (id == R.string.dawn))
+			return getDawn();
+		if ((id == R.id.tallis_row) || (id == R.id.tallis_time) || (id == R.string.tallis))
+			return getTallis();
+		if ((id == R.id.sunrise_row) || (id == R.id.sunrise_time) || (id == R.string.sunrise))
+			return getSunrise();
+		if ((id == R.id.shema_row) || (id == R.id.shema_time) || (id == R.string.shema))
+			return getLastShema();
+		if ((id == R.id.prayers_row) || (id == R.id.prayers_time) || (id == R.string.prayers))
+			return getLastTfila();
+		if ((id == R.id.midday_row) || (id == R.id.midday_time) || (id == R.string.midday))
+			return getMidday();
+		if ((id == R.id.earliest_mincha_row) || (id == R.id.earliest_mincha_time) || (id == R.string.earliest_mincha))
+			return getEarliestMincha();
+		if ((id == R.id.mincha_row) || (id == R.id.mincha_time) || (id == R.string.mincha))
+			return getMincha();
+		if ((id == R.id.plug_hamincha_row) || (id == R.id.plug_hamincha_time) || (id == R.string.plug_hamincha))
+			return getPlugHamincha();
+		// if ((id == R.id.candles_row) || (id == R.id.candles_time) || (id ==
+		// R.string.candles))
+		// return getCandleLighting();
+		if ((id == R.id.sunset_row) || (id == R.id.sunset_time) || (id == R.string.sunset))
+			return getSunset();
+		if ((id == R.id.nightfall_row) || (id == R.id.nightfall_time) || (id == R.string.nightfall))
+			return getNightfall();
+		if ((id == R.id.candles_nightfall_row) || (id == R.id.candles_nightfall_time))
+			return getNightfall();
+		if ((id == R.id.midnight_row) || (id == R.id.midnight_time) || (id == R.string.midnight))
+			return getMidnight();
+		return null;
+	}
+
+	/**
+	 * Get the reminder.
+	 * 
+	 * @param id
+	 *            the time id.
+	 * @return the number of minutes before the prayer - positive value when no
+	 *         reminder.
+	 */
+	public int getReminder(int id) {
+		if ((id == R.id.dawn_row) || (id == R.id.dawn_time) || (id == R.string.dawn))
+			return getReminder(KEY_REMINDER_DAWN);
+		if ((id == R.id.tallis_row) || (id == R.id.tallis_time) || (id == R.string.tallis))
+			return getReminder(KEY_REMINDER_TALLIS);
+		if ((id == R.id.sunrise_row) || (id == R.id.sunrise_time) || (id == R.string.sunrise))
+			return getReminder(KEY_REMINDER_SUNRISE);
+		if ((id == R.id.shema_row) || (id == R.id.shema_time) || (id == R.string.shema))
+			return getReminder(KEY_REMINDER_SHEMA);
+		if ((id == R.id.prayers_row) || (id == R.id.prayers_time) || (id == R.string.prayers))
+			return getReminder(KEY_REMINDER_TFILA);
+		if ((id == R.id.midday_row) || (id == R.id.midday_time) || (id == R.string.midday))
+			return getReminder(KEY_REMINDER_NOON);
+		if ((id == R.id.earliest_mincha_row) || (id == R.id.earliest_mincha_time) || (id == R.string.earliest_mincha))
+			return getReminder(KEY_REMINDER_EARLIEST_MINCHA);
+		if ((id == R.id.mincha_row) || (id == R.id.mincha_time) || (id == R.string.mincha))
+			return getReminder(KEY_REMINDER_MINCHA);
+		if ((id == R.id.plug_hamincha_row) || (id == R.id.plug_hamincha_time) || (id == R.string.plug_hamincha))
+			return getReminder(KEY_REMINDER_PLUG_MINCHA);
+		if ((id == R.id.candles_row) || (id == R.id.candles_time) || (id == R.string.candles))
+			return getReminder(KEY_REMINDER_CANDLES);
+		if ((id == R.id.sunset_row) || (id == R.id.sunset_time) || (id == R.string.sunset))
+			return getReminder(KEY_REMINDER_SUNSET);
+		if ((id == R.id.nightfall_row) || (id == R.id.nightfall_time) || (id == R.string.nightfall))
+			return getReminder(KEY_REMINDER_NIGHTFALL);
+		if ((id == R.id.candles_nightfall_row) || (id == R.id.candles_nightfall_time))
+			return getReminder(KEY_REMINDER_NIGHTFALL);
+		if ((id == R.id.midnight_row) || (id == R.id.midnight_time) || (id == R.string.midnight))
+			return getReminder(KEY_REMINDER_MIDNIGHT);
+		return Integer.MAX_VALUE;
+	}
+
+	/**
+	 * Get the reminder.
+	 * 
+	 * @param key
+	 *            the key.
+	 * @return the number of minutes before the prayer - positive value when no
+	 *         reminder.
+	 */
+	public int getReminder(String key) {
+		String value = mPrefs.getString(key, null);
+		if (!TextUtils.isEmpty(value))
+			return Integer.parseInt(value);
+		return Integer.MAX_VALUE;
 	}
 }

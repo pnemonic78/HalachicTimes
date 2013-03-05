@@ -36,6 +36,9 @@ import android.preference.PreferenceActivity;
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener {
 
 	private SeekBarPreference mCandles;
+	private ZmanimSettings mSettings;
+	private ZmanimLocations mLocations;
+	private ZmanimReminder mReminder;
 
 	/**
 	 * Constructs a new preferences.
@@ -65,13 +68,25 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_OPINION_SUNSET);
 		initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
 		initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
+
+		initList(ZmanimSettings.KEY_REMINDER_DAWN);
+		initList(ZmanimSettings.KEY_REMINDER_TALLIS);
+		initList(ZmanimSettings.KEY_REMINDER_SUNRISE);
+		initList(ZmanimSettings.KEY_REMINDER_SHEMA);
+		initList(ZmanimSettings.KEY_REMINDER_TFILA);
+		initList(ZmanimSettings.KEY_REMINDER_NOON);
+		initList(ZmanimSettings.KEY_REMINDER_EARLIEST_MINCHA);
+		initList(ZmanimSettings.KEY_REMINDER_MINCHA);
+		initList(ZmanimSettings.KEY_REMINDER_PLUG_MINCHA);
+		initList(ZmanimSettings.KEY_REMINDER_SUNSET);
+		initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
+		initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
 	}
 
 	private void initList(String name) {
 		ListPreference list = (ListPreference) findPreference(name);
 		list.setOnPreferenceChangeListener(this);
 		onPreferenceChange(list, list.getValue());
-
 	}
 
 	@Override
@@ -90,7 +105,22 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 			});
 			return true;
 		} else if (preference instanceof ListPreference) {
-			updateSummary((ListPreference) preference, newValue.toString());
+			ListPreference list = (ListPreference) preference;
+			String oldValue = list.getValue();
+			String value = newValue.toString();
+			updateSummary(list, value);
+
+			if (!oldValue.equals(newValue)) {
+				if (preference.getKey().endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
+					if (mSettings == null)
+						mSettings = new ZmanimSettings(this);
+					if (mLocations == null)
+						mLocations = ZmanimLocations.getInstance(this);
+					if (mReminder == null)
+						mReminder = new ZmanimReminder(this, mSettings, mLocations);
+					mReminder.remind();
+				}
+			}
 		}
 		return false;
 	}
