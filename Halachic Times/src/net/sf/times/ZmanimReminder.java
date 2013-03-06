@@ -26,18 +26,20 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 
 /**
- * Reminders.
+ * Reminders. Receive alarm events, or date-time events, to update reminders.
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimReminder {
+public class ZmanimReminder extends BroadcastReceiver {
 
 	private static final String TAG = "ZmanimReminder";
 
@@ -48,10 +50,20 @@ public class ZmanimReminder {
 
 	private static final long HALF_MINUTE = 30 * DateUtils.SECOND_IN_MILLIS;
 
-	private final Context mContext;
+	private Context mContext;
 
+	/**
+	 * Creats a new reminder.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
 	public ZmanimReminder(Context context) {
 		mContext = context;
+	}
+
+	/** No-argument constructor for broadcast receiver. */
+	public ZmanimReminder() {
 	}
 
 	/**
@@ -169,8 +181,39 @@ public class ZmanimReminder {
 	}
 
 	private PendingIntent createAlarmIntent() {
-		Intent intent = new Intent(mContext, AlarmReceiver.class);
+		Intent intent = new Intent(mContext, ZmanimReminder.class);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		return pendingIntent;
+	}
+
+	@Override
+	public void onReceive(Context context, Intent intent) {
+		String nowFormat = DateUtils.formatDateTime(context, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+		Log.i(TAG, "onReceive " + intent + " [" + nowFormat + "]");
+
+		mContext = context;
+		boolean update = false;
+
+		String action = intent.getAction();
+		if (Intent.ACTION_BOOT_COMPLETED.equals(action))
+			update = true;
+		else if (Intent.ACTION_DATE_CHANGED.equals(action))
+			update = true;
+		else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action))
+			update = true;
+		else if (Intent.ACTION_TIME_CHANGED.equals(action))
+			update = true;
+		else {
+			Bundle extras = intent.getExtras();
+			if (extras != null) {
+				update = (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0);
+			}
+		}
+
+		if (update) {
+			ZmanimSettings settings = new ZmanimSettings(context);
+			ZmanimLocations locations = ZmanimLocations.getInstance(context);
+			remind(settings, locations);
+		}
 	}
 }

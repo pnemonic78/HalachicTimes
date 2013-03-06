@@ -53,7 +53,7 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".ZmanimReminder"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
