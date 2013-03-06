@@ -25,6 +25,7 @@ import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 
 /**
  * Application settings.
@@ -399,10 +400,10 @@ public class ZmanimSettings {
 	 * 
 	 * @param id
 	 *            the time id.
-	 * @return the number of minutes before the prayer - positive value when no
-	 *         reminder.
+	 * @return the number of minutes before the prayer, in milliseconds -
+	 *         positive value when no reminder.
 	 */
-	public int getReminder(int id) {
+	public long getReminder(int id) {
 		if ((id == R.id.dawn_row) || (id == R.id.dawn_time) || (id == R.string.dawn))
 			return getReminder(KEY_REMINDER_DAWN);
 		if ((id == R.id.tallis_row) || (id == R.id.tallis_time) || (id == R.string.tallis))
@@ -431,7 +432,8 @@ public class ZmanimSettings {
 			return getReminder(KEY_REMINDER_NIGHTFALL);
 		if ((id == R.id.midnight_row) || (id == R.id.midnight_time) || (id == R.string.midnight))
 			return getReminder(KEY_REMINDER_MIDNIGHT);
-		return Integer.MAX_VALUE;
+
+		return Long.MAX_VALUE;
 	}
 
 	/**
@@ -439,13 +441,13 @@ public class ZmanimSettings {
 	 * 
 	 * @param key
 	 *            the key.
-	 * @return the number of minutes before the prayer - positive value when no
-	 *         reminder.
+	 * @return the number of minutes before the prayer, in milliseconds -
+	 *         positive value when no reminder.
 	 */
-	public int getReminder(String key) {
+	public long getReminder(String key) {
 		String value = mPrefs.getString(key, null);
 		if (!TextUtils.isEmpty(value))
-			return Integer.parseInt(value);
-		return Integer.MAX_VALUE;
+			return Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
+		return Long.MAX_VALUE;
 	}
 }

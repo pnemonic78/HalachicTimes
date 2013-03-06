@@ -23,27 +23,44 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.Log;
 
 /**
- * Receive alarm events.
+ * Receive alarm events, or date-time events, to update reminders.
  * 
  * @author Moshe Waisberg
  */
 public class AlarmReceiver extends BroadcastReceiver {
+
+	private static final String TAG = "AlarmReceiver";
 
 	public AlarmReceiver() {
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		boolean isAlarm = false;
+		String nowFormat = DateUtils.formatDateTime(context, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+		Log.i(TAG, "onReceive " + intent + " [" + nowFormat + "]");
+		boolean update = false;
 
-		Bundle extras = intent.getExtras();
-		if (extras != null) {
-			isAlarm = (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0);
+		String action = intent.getAction();
+		if (Intent.ACTION_BOOT_COMPLETED.equals(action))
+			update = true;
+		else if (Intent.ACTION_DATE_CHANGED.equals(action))
+			update = true;
+		else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action))
+			update = true;
+		else if (Intent.ACTION_TIME_CHANGED.equals(action))
+			update = true;
+		else {
+			Bundle extras = intent.getExtras();
+			if (extras != null) {
+				update = (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0);
+			}
 		}
 
-		if (isAlarm) {
+		if (update) {
 			ZmanimSettings settings = new ZmanimSettings(context);
 			ZmanimLocations locations = ZmanimLocations.getInstance(context);
 			ZmanimReminder reminder = new ZmanimReminder(context);

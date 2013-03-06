@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 /**
  * Reminders.
@@ -38,10 +39,12 @@ import android.text.format.DateUtils;
  */
 public class ZmanimReminder {
 
+	private static final String TAG = "ZmanimReminder";
+
 	/** Reminder id for notifications. */
-	public static final int ID_NOTIFY = 1;
+	private static final int ID_NOTIFY = 1;
 	/** Reminder id for alarms. */
-	public static final int ID_ALARM = 2;
+	private static final int ID_ALARM = 2;
 
 	private static final long HALF_MINUTE = 30 * DateUtils.SECOND_IN_MILLIS;
 
@@ -49,48 +52,65 @@ public class ZmanimReminder {
 
 	public ZmanimReminder(Context context) {
 		mContext = context;
-
-		// TODO register alarm receiver in manifest for changes to:
-		// Intent.ACTION_TIME_CHANGED
-		// Intent.ACTION_DATE_CHANGED
-		// Intent.ACTION_TIMEZONE_CHANGED
 	}
 
 	/**
 	 * Setup the first reminder for today.
+	 * 
+	 * @param settings
+	 *            the settings.
+	 * @param locations
+	 *            the locations provider.
 	 */
 	public void remind(ZmanimSettings settings, ZmanimLocations locations) {
-		cancel();
-
 		// Have we been destroyed?
 		GeoLocation gloc = locations.getGeoLocation();
 		if (gloc == null)
 			return;
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
-		final boolean inIsrael = locations.inIsrael();
+		boolean inIsrael = locations.inIsrael();
 
 		ZmanimAdapter adapter = new ZmanimAdapter(mContext, settings);
 		adapter.populate(today, inIsrael, false);
 
-		final long now = today.getCalendar().getTimeInMillis();
+		remind(settings, adapter);
+	}
+
+	/**
+	 * Setup the first reminder for today.
+	 * 
+	 * @param settings
+	 *            the settings.
+	 * @param adapter
+	 *            the populated adapter.
+	 */
+	public void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
+		cancel();
+
+		final long now = System.currentTimeMillis();
 		final long was = now - HALF_MINUTE;
 		final long soon = now + HALF_MINUTE;
-		final int count = adapter.getCount();
 		ZmanimItem item;
-		int before;
+		long before;
 		long when;
 
+		final int count = adapter.getCount();
 		for (int i = 0; i < count; i++) {
 			item = adapter.getItem(i);
 			// Find the first remind of the day (that is now or in the future,
 			// and has a reminder).
 			before = settings.getReminder(item.timeId);
-			if (before >= 0) {
-				when = item.time - (before * DateUtils.MINUTE_IN_MILLIS);
+			if (before >= 0L) {
+				when = item.time - before;
 				if ((was <= when) && (when <= soon)) {
 					notifyNow(item.titleId, item.time);
 					break;
-				} else if (now < when) {
+				}
+				if (now < when) {
+					String whenFormat = DateUtils.formatDateTime(mContext, when, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+					String timeFormat = DateUtils.formatDateTime(mContext, item.time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+					Log.i(TAG, "notify at [" + whenFormat + "] for [" + timeFormat + "]");
+
 					notifyFuture(when);
 					break;
 				}
@@ -121,7 +141,7 @@ public class ZmanimReminder {
 		noti.icon = R.drawable.ic_launcher;
 		noti.defaults = Notification.DEFAULT_ALL;
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-		noti.when = when;// When the prayer is due.
+		noti.when = when;// When the zman is due.
 		noti.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
 
 		NotificationManager manager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
