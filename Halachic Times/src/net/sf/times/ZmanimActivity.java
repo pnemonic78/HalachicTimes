@@ -124,6 +124,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onResume() {
 		super.onResume();
 		mLocations.resume(this);
+		ZmanimReminder reminder = new ZmanimReminder(this);
+		reminder.cancel();
 	}
 
 	@Override

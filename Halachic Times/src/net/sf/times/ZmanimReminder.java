@@ -46,13 +46,9 @@ public class ZmanimReminder {
 	private static final long HALF_MINUTE = 30 * DateUtils.SECOND_IN_MILLIS;
 
 	private final Context mContext;
-	private final ZmanimSettings mSettings;
-	private final ZmanimLocations mLocations;
 
-	public ZmanimReminder(Context context, ZmanimSettings settings, ZmanimLocations locations) {
+	public ZmanimReminder(Context context) {
 		mContext = context;
-		mSettings = settings;
-		mLocations = locations;
 
 		// TODO register alarm receiver in manifest for changes to:
 		// Intent.ACTION_TIME_CHANGED
@@ -63,17 +59,17 @@ public class ZmanimReminder {
 	/**
 	 * Setup the first reminder for today.
 	 */
-	public void remind() {
+	public void remind(ZmanimSettings settings, ZmanimLocations locations) {
 		cancel();
 
 		// Have we been destroyed?
-		GeoLocation gloc = mLocations.getGeoLocation();
+		GeoLocation gloc = locations.getGeoLocation();
 		if (gloc == null)
 			return;
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
-		final boolean inIsrael = mLocations.inIsrael();
+		final boolean inIsrael = locations.inIsrael();
 
-		ZmanimAdapter adapter = new ZmanimAdapter(mContext, mSettings);
+		ZmanimAdapter adapter = new ZmanimAdapter(mContext, settings);
 		adapter.populate(today, inIsrael, false);
 
 		final long now = today.getCalendar().getTimeInMillis();
@@ -88,7 +84,7 @@ public class ZmanimReminder {
 			item = adapter.getItem(i);
 			// Find the first remind of the day (that is now or in the future,
 			// and has a reminder).
-			before = mSettings.getReminder(item.timeId);
+			before = settings.getReminder(item.timeId);
 			if (before >= 0) {
 				when = item.time - (before * DateUtils.MINUTE_IN_MILLIS);
 				if ((was <= when) && (when <= soon)) {
@@ -102,7 +98,10 @@ public class ZmanimReminder {
 		}
 	}
 
-	private void cancel() {
+	/**
+	 * Cancel all reminders.
+	 */
+	public void cancel() {
 		AlarmManager alarms = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent alarmIntent = createAlarmIntent();
 		alarms.cancel(alarmIntent);

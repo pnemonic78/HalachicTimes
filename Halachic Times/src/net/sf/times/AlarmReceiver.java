@@ -46,8 +46,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 		if (isAlarm) {
 			ZmanimSettings settings = new ZmanimSettings(context);
 			ZmanimLocations locations = ZmanimLocations.getInstance(context);
-			ZmanimReminder reminder = new ZmanimReminder(context, settings, locations);
-			reminder.remind();
+			ZmanimReminder reminder = new ZmanimReminder(context);
+			reminder.remind(settings, locations);
 		}
 	}
 }

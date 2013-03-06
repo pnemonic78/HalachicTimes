@@ -117,8 +117,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 					if (mLocations == null)
 						mLocations = ZmanimLocations.getInstance(this);
 					if (mReminder == null)
-						mReminder = new ZmanimReminder(this, mSettings, mLocations);
-					mReminder.remind();
+						mReminder = new ZmanimReminder(this);
+					mReminder.remind(mSettings, mLocations);
 				}
 			}
 		}
