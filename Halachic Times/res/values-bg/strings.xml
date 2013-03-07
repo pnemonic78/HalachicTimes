@@ -29,7 +29,7 @@
     <!-- List -->
     <string name="dawn">Зората</string>
 
-    <string name="tallis">Най-рано талис и тфилин</string>
+    <string name="tallis">Най-рано талис и тфилин (мишякир)</string>
     <string name="tallis_summary">Слънцето е 11,5° под хоризонта</string>
     <string name="tallis_11">Слънцето е 11° под хоризонта</string>
     <string name="tallis_10">Слънцето е 10,2° под хоризонта</string>

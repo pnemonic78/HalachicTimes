@@ -30,7 +30,7 @@
     <string name="dawn">Daggry</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Tidligste tallis og tefillin</string>
+    <string name="tallis">Tidligste tallis og tefillin (mishejakir)</string>
     <string name="tallis_summary">Sol er 11,5° nedenfor horizon</string>
     <string name="tallis_11">Sol er 11° nedenfor horizon</string>
     <string name="tallis_10">Sol er 10,2° nedenfor horizon</string>

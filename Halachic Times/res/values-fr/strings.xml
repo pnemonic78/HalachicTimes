@@ -22,7 +22,7 @@
     <string name="opinion_90_zmanis">Jour est 90 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_96">Jour est 96 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_96_zmanis">Jour est 96 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_ateret">Selon le Yeshivat Ateret Torah</string>
+    <string name="opinion_ateret">Selon le Yechivat Ateret Torah</string>
     <string name="opinion_gra">Selon le Gra et Baal Tanya</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>
 
@@ -30,7 +30,7 @@
     <string name="dawn">Aube</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Mise du talit et téfillin au plus tôt</string>
+    <string name="tallis">Mise du talit et téfillin au plus tôt (micheyakir)</string>
     <string name="tallis_summary">Soleil est 11,5° sous l\'horizon</string>
     <string name="tallis_11">Soleil est 11° sous l\'horizon</string>
     <string name="tallis_10">Soleil est 10,2° sous l\'horizon</string>

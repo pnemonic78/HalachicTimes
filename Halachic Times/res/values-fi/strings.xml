@@ -30,7 +30,7 @@
     <string name="dawn">Sarastus</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Aikaisintaan tallis ja tefillin</string>
+    <string name="tallis">Aikaisintaan tallis ja tefillin (mišejakir)</string>
     <string name="tallis_summary">Aurinko on 11,5° horisontin alapuolella</string>
     <string name="tallis_11">Aurinko on 11° horisontin alapuolella</string>
     <string name="tallis_10">Aurinko on 10,2° horisontin alapuolella</string>

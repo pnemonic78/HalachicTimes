@@ -22,7 +22,7 @@
     <string name="opinion_90_zmanis">Den je 90 <i>zmaniyos</i> minut před východem slunce / po západu slunce</string>
     <string name="opinion_96">Den je 96 minut před východem slunce / po západu slunce</string>
     <string name="opinion_96_zmanis">Den je 96 <i>zmaniyos</i> minut před východem slunce / po západu slunce</string>
-    <string name="opinion_ateret">Souladu s Yeshivat Ateret Torah</string>
+    <string name="opinion_ateret">Souladu s Yešivat Ateret Tora</string>
     <string name="opinion_gra">Souladu s Gra a Baal Tanya</string>
     <string name="opinion_mga">Souladu s Magen Avraham</string>
 
@@ -30,7 +30,7 @@
     <string name="dawn">Svítání</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Nástup na pobyt nejdřív tallis a tefillin</string>
+    <string name="tallis">Nástup na pobyt nejdřív tallis a tefillin (mišeyakir)</string>
     <string name="tallis_summary">Slunce je 11,5° pod obzorem</string>
     <string name="tallis_11">Slunce je 11° pod obzorem</string>
     <string name="tallis_10">Slunce je 10.2° pod obzorem</string>

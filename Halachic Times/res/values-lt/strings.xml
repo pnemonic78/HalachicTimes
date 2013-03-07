@@ -30,7 +30,7 @@
     <string name="dawn">Aušra</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Seniausi tallis ir tefillin</string>
+    <string name="tallis">Seniausi tallis ir tefillin (mišeyakir)</string>
     <string name="tallis_summary">Saulė yra 11,5° žemiau horizonto</string>
     <string name="tallis_11">Saulė yra 11° žemiau horizonto</string>
     <string name="tallis_10">Saulė yra 10,2° žemiau horizonto</string>

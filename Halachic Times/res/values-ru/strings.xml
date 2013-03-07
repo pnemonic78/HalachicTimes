@@ -30,7 +30,7 @@
     <string name="dawn">Рассвет</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Талита и тфилина, самое раннее время наложения</string>
+    <string name="tallis">Талита и тфилина, самое раннее наложения (мишякир)</string>
     <string name="tallis_summary">Солнце 11,5° ниже горизонта</string>
     <string name="tallis_11">Солнце 11° ниже горизонта</string>
     <string name="tallis_10">Солнце 10,2° ниже горизонта</string>

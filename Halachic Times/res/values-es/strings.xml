@@ -30,7 +30,7 @@
     <string name="dawn">Amanecer</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Primeras talit y tefilín</string>
+    <string name="tallis">Primeras talit y tefilín (misheyakir)</string>
     <string name="tallis_summary">Sol es 11,5° debajo el horizonte</string>
     <string name="tallis_11">Sol es 11° debajo el horizonte</string>
     <string name="tallis_10">Sol es 10,2° debajo el horizonte</string>

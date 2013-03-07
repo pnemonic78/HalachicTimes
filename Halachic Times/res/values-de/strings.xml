@@ -30,7 +30,7 @@
     <string name="dawn">Morgendämmerung</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Früheste tallis und tefillin</string>
+    <string name="tallis">Früheste tallis und tefillin (misheyakir)</string>
     <string name="tallis_summary">Sonne ist 11,5° unter dem horizont</string>
     <string name="tallis_11">Sonne ist 11° unter dem horizont</string>
     <string name="tallis_10">Sonne ist 10,2° unter dem horizon</string>

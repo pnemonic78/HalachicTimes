@@ -30,7 +30,7 @@
     <string name="dawn">Zori de zi</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Cazarea cel devreme tallis și tefillin</string>
+    <string name="tallis">Cazarea cel devreme tallis și tefillin (mişeyakir)</string>
     <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
     <string name="tallis_11">Soarele este de 11° sub orizont</string>
     <string name="tallis_10">Soarele este de 10,2° sub orizont</string>
