@@ -37,6 +37,9 @@ import android.widget.TextView;
 
 /**
  * Adapter for halachic times list.
+ * <p>
+ * See also Wikipedia article on <a
+ * href="http://en.wikipedia.org/wiki/Zmanim">Zmanim</a>.
  * 
  * @author Moshe Waisberg
  */
