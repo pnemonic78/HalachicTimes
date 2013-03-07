@@ -93,6 +93,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private Drawable mBackground;
 	/** Populate the header in UI thread. */
 	private Runnable mPopulateHeader;
+	private ZmanimAdapter mAdapter;
+	private ZmanimReminder mReminder;
 
 	/**
 	 * Creates a new activity.
@@ -124,8 +126,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onResume() {
 		super.onResume();
 		mLocations.resume(this);
-		ZmanimReminder reminder = new ZmanimReminder(this);
-		reminder.cancel();
+		if (mReminder == null)
+			mReminder = new ZmanimReminder(this);
+		mReminder.cancel();
 	}
 
 	@Override
@@ -139,8 +142,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	protected void onPause() {
+		System.out.println("~~~ onPause");
 		super.onPause();
 		mLocations.cancel(this);
+		if (mReminder != null) {
+			if (mAdapter == null)
+				mReminder.remind(mSettings, mLocations);
+			else
+				mReminder.remind(mSettings, mAdapter);
+		}
 		SQLiteDatabase.releaseMemory();
 	}
 
@@ -218,8 +228,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCalendar(mDate);
 
-		ZmanimAdapter adapter = new ZmanimAdapter(this, mSettings);
-		adapter.populate(cal, inIsrael, false);
+		mAdapter = new ZmanimAdapter(this, mSettings);
+		mAdapter.populate(cal, inIsrael, false);
 
 		if (mList == null)
 			return;
@@ -232,7 +242,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			list.setBackgroundDrawable(mBackground);
 		} else
 			list.setBackgroundDrawable(null);
-		adapter.bindViews(list);
+		mAdapter.bindViews(list);
 	}
 
 	/** Populate the header item. */
