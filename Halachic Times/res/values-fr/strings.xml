@@ -97,6 +97,9 @@
     <string name="midnight_summary">Minuit</string>
     <string name="midnight_12">12 heures après de midi</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Heure de fin du manger hamets</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Paramètres</string>
     <string name="category_general">Général</string>

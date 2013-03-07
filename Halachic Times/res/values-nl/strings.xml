@@ -93,9 +93,12 @@
     <string name="nightfall_8">Zon is 8,5° beneden zeeniveau</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzos</string>
+    <string name="midnight">Chatsos</string>
     <string name="midnight_summary">Middernacht</string>
     <string name="midnight_12">12 uur na de middag</string>
+
+    <!-- Pesach -->
+    <string name="eat_chametz">Laatste tijd om chameets te eten</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>

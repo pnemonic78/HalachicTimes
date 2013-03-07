@@ -177,6 +177,9 @@
     <string name="midnight_summary">Midnight</string>
     <string name="midnight_12">12 hours after midday</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Latest time to eat chametz</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="category_general">General</string>

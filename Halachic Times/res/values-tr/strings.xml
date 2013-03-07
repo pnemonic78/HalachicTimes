@@ -97,6 +97,9 @@
     <string name="midnight_summary">Gece yarısı</string>
     <string name="midnight_12">12 saat sonra öğlen</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Chametz yemek için son kez</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Ayarlar</string>
     <string name="category_general">Genel</string>

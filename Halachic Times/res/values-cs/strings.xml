@@ -97,6 +97,9 @@
     <string name="midnight_summary">Půlnoc</string>
     <string name="midnight_12">12 hodin po poledni</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Poslední čas k jídlu chametz</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Nastavení</string>
     <string name="category_general">Obecný</string>

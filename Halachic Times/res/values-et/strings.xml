@@ -97,6 +97,9 @@
     <string name="midnight_summary">Kesköö</string>
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Viimane aeg süüa chamets</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>
     <string name="category_general">Üldine</string>

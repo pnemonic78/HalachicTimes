@@ -97,6 +97,9 @@
     <string name="midnight_summary">Keskiyö</string>
     <string name="midnight_12">12 tuntia jälkeen keskipäivä</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Uusin aika syödä chamez</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
     <string name="category_general">Yleinen</string>

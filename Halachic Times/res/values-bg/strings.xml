@@ -96,6 +96,9 @@
     <string name="midnight_summary">Полунощ</string>
     <string name="midnight_12">12 часа след пладне</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Последни време за ядене хамец</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
     <string name="category_general">Общ</string>

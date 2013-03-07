@@ -97,6 +97,9 @@
     <string name="midnight_summary">Meia-noite</string>
     <string name="midnight_12">12 horas após de meio-dia</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Última hora de comer chametz</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Definições</string>
     <string name="category_general">Geral</string>

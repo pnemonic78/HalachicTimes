@@ -97,6 +97,9 @@
     <string name="midnight_summary">חצות הלילה</string>
     <string name="midnight_12">12 שעות לאחר צהריים</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">הזמן האחרון לאכול חמץ</string>
+
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
     <string name="category_general">כללי</string>

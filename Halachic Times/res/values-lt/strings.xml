@@ -47,7 +47,7 @@
     <string name="shema_fixed">3 valandų iki fiksuoto vietinio vidurdienį</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Latest morning prayers (šacharis)</string>
+    <string name="prayers">Vėliausiai ryto malda (šacharis)</string>
     <string name="prayers_fixed">2 valandų iki fiksuoto vietinio vidurdienį</string>
     <string name="prayers_2">2 valandų iki vidurdienį</string>
 
@@ -96,6 +96,9 @@
     <string name="midnight">Chacos</string>
     <string name="midnight_summary">Vidurnaktis</string>
     <string name="midnight_12">12 valandų po vidurdienį</string>
+
+    <!-- Pesach -->
+    <string name="eat_chametz">Vėliausiai laikas valgyti chamec</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Nustatymai</string>

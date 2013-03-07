@@ -98,6 +98,9 @@
     <string name="midnight_summary">Midnat</string>
     <string name="midnight_12">12 timer efter middag</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Seneste tid til at spise chamez</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Indstillinger</string>
     <string name="category_general">Generelt</string>

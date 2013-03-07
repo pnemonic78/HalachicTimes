@@ -97,6 +97,9 @@
     <string name="midnight_summary">Éjfél</string>
     <string name="midnight_12">12 órával azután dél</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Legutóbbi ideje enni chametz</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Beállítások</string>
     <string name="category_general">Általános</string>

@@ -568,8 +568,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		}
 		if (remote)
 			add(R.id.prayers_row, R.id.prayers_time, date, true);
-		else
+		else {
 			add(R.string.prayers, summary, date);
+			if (holiday == JewishCalendar.PESACH)
+				add(R.string.eat_chametz, summary, date);
+		}
 
 		opinion = mSettings.getMidday();
 		if (OPINION_FIXED.equals(opinion)) {

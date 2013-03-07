@@ -97,6 +97,9 @@
     <string name="midnight_summary">Μεσάνυχτα</string>
     <string name="midnight_12">2 ώρες μετά το μεσημέρι</string>
 
+    <!-- Pesach -->
+    <string name="eat_chametz">Τελευταία στιγμή για να φάει χαμεζ</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="category_general">Γενικός</string>
