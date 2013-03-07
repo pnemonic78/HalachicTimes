@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Aušra</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Seniausi tallis ir tefillin</string>
     <string name="tallis_summary">Saulė yra 11,5° žemiau horizonto</string>
     <string name="tallis_11">Saulė yra 11° žemiau horizonto</string>
     <string name="tallis_10">Saulė yra 10,2° žemiau horizonto</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Saulėtekis</string>
     <string name="sunrise_summary">Horizontalioje regione</string>
     <string name="sunrise_sea">Jūros lygyje</string>
 
+    <!-- Latest shema -->
     <string name="shema">Vėliausiai šema</string>
     <string name="shema_7">Dieną yra nuo aušros 16,1° iki naktį 7,083°</string>
     <string name="shema_3">3 valandų iki vidurdienį</string>
     <string name="shema_fixed">3 valandų iki fiksuoto vietinio vidurdienį</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Latest morning prayers (šacharis)</string>
     <string name="prayers_fixed">2 valandų iki fiksuoto vietinio vidurdienį</string>
     <string name="prayers_2">2 valandų iki vidurdienį</string>
 
+    <!-- Midday -->
     <string name="midday">Vidurdienis</string>
     <string name="midday_summary">Saulės vidurdienį</string>
     <string name="midday_fixed">Vidurdienis pakoreguota vietos platumos</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Seniausi popietės maldas</string>
     <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Popietė maldas</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Žvakė apšvietimas</string>
     <string name="candles_summary">%1$d minučių iki saulėlydžio</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanuka žvakės</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Saulėlydis</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Ateinančio naktys</string>
     <string name="nightfall_3stars">3 žvaigždės yra matomi</string>
     <string name="nightfall_3_65">Saulė yra 3,65° žemiau jūros lygio</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Saulė yra 7,083° žemiau jūros lygio</string>
     <string name="nightfall_8">Saulė yra 8,5° žemiau jūros lygio</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chacos</string>
     <string name="midnight_summary">Vidurnaktis</string>
     <string name="midnight_12">12 valandų po vidurdienį</string>
@@ -99,7 +111,6 @@
         <item>Šešiasdešimt dalis</item>
     </string-array>
 
-    <string name="category_opinion">Nuomonės</string>
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="past_enabled">Ankstesni datos yra įgalinta</string>
     <string name="past_disabled">Ankstesni datos yra išjungta</string>
@@ -120,5 +131,23 @@
     <string name="east">R</string>
     <string name="south">P</string>
     <string name="west">V</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Nuomonė</string>
+    <string name="reminder">Priminimas</string>
+
+    <string-array name="reminder_entries">
+        <item>Išjungtas</item>
+        <item>Punktualus</item>
+        <item>1 minutę iki</item>
+        <item>5 minučių iki</item>
+        <item>10 minučių iki</item>
+        <item>15 minučių iki</item>
+        <item>20 minučių iki</item>
+        <item>25 minučių iki</item>
+        <item>30 minučių iki</item>
+        <item>45 minučių iki</item>
+        <item>1 valanda iki</item>
+    </string-array>
 
 </resources>

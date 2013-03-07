@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Zori de zi</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Cazarea cel devreme tallis și tefillin</string>
     <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
     <string name="tallis_11">Soarele este de 11° sub orizont</string>
     <string name="tallis_10">Soarele este de 10,2° sub orizont</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Răsărit</string>
     <string name="sunrise_summary">Într-o regiune nivel</string>
     <string name="sunrise_sea">La nivelul mării</string>
 
+    <!-- Latest shema -->
     <string name="shema">Ultima şema</string>
     <string name="shema_7">Ziua este din zori 16,1° la noapte 7,083°</string>
     <string name="shema_3">3 ore înainte amiază</string>
     <string name="shema_fixed">3 ore înainte amiază fixă locală</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Ultima şacharis</string>
     <string name="prayers_fixed">2 ore înainte amiază fixă locală</string>
     <string name="prayers_2">2 ore înainte amiază</string>
 
+    <!-- Midday -->
     <string name="midday">Amiază</string>
     <string name="midday_summary">Miezul zilei</string>
     <string name="midday_fixed">Amiază ajustate pentru latitudine locală</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha ghedola</string>
     <string name="earliest_mincha_summary">Mai timpurii de după-amiază rugăciunile</string>
     <string name="earliest_mincha_30">30 minute după amiază</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">De după-amiază rugăciunile</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Lumânare de iluminat</string>
     <string name="candles_summary">%1$d minute înainte de apus</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanuka lumânări</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Apus de soare</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Căderea nopții</string>
     <string name="nightfall_3stars">3 stele vizibile</string>
     <string name="nightfall_3_65">Soarele este de 3,65° sub nivelul mării</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Soarele este de 7,083° sub nivelul mării</string>
     <string name="nightfall_8">Soarele este de 8,5° sub nivelul mării</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chaţos</string>
     <string name="midnight_summary">Miezul nopții</string>
     <string name="midnight_12">12 ore după amiază</string>
@@ -99,7 +111,6 @@
         <item>Șaizecelea</item>
     </string-array>
 
-    <string name="category_opinion">Opinii</string>
     <string name="past_title">Ori care s-au scurs</string>
     <string name="past_enabled">Ori în ultimile sunt activate</string>
     <string name="past_disabled">Ori în ultimile sunt dezactivate</string>
@@ -120,5 +131,23 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">V</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Opinie</string>
+    <string name="reminder">Alarmă</string>
+
+    <string-array name="reminder_entries">
+        <item>Dezactivat</item>
+        <item>La ora</item>
+        <item>1 minut înainte de</item>
+        <item>5 minute înainte de</item>
+        <item>10 minute înainte de</item>
+        <item>15 minute înainte de</item>
+        <item>20 minute înainte de</item>
+        <item>25 minute înainte de</item>
+        <item>30 minute înainte de</item>
+        <item>45 minute înainte de</item>
+        <item>1 oră înainte de</item>
+    </string-array>
 
 </resources>

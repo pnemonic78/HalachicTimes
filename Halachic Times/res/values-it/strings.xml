@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Alba</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Prima tallis e tefillin</string>
     <string name="tallis_summary">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="tallis_11">Sole è 11° sotto l\'orizzonte</string>
     <string name="tallis_10">Sole è 10,2° sotto l\'orizzonte</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Levata del sole</string>
     <string name="sunrise_summary">In una regione di livello</string>
     <string name="sunrise_sea">Al livello del mare</string>
 
+    <!-- Latest shema -->
     <string name="shema">Ultime shemà</string>
     <string name="shema_7">Giorno è dall\'alba 16,1° a notte 7,083°</string>
     <string name="shema_3">3 ore prima di mezzogiorno</string>
     <string name="shema_fixed">3 ore prima di mezzogiorno fisso locale</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Ultime shacharis</string>
     <string name="prayers_fixed">2 ore prima di mezzogiorno fisso locale</string>
     <string name="prayers_2">2 ore prima di mezzogiorno</string>
 
+    <!-- Midday -->
     <string name="midday">Mezzogiorno</string>
     <string name="midday_summary">Mezzo del giorno</string>
     <string name="midday_fixed">Mezzogiorno regolato per la latitudine locale</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Minchà gedolà</string>
     <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
     <string name="earliest_mincha_30">30 minuti dopo mezzogiorno</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Minchà ketanà</string>
     <string name="mincha_summary">Pomeriggio preghiere</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag haminchà</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Candela illuminazione</string>
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanukkà candele</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Tramonto</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Crepuscolo</string>
     <string name="nightfall_3stars">3 stelle visibili</string>
     <string name="nightfall_3_65">Sole è 3,65° sotto livello del mare</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Sole è 7,083° sotto livello del mare</string>
     <string name="nightfall_8">Sole è 8,5° sotto livello del mare</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Mezzanotte</string>
     <string name="midnight_12">12 ore dopo mezzogiorno</string>
@@ -88,7 +100,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Impostazioni</string>
     <string name="category_general">Generale</string>
-    <string name="coords_title">Coordinates</string>
+    <string name="coords_title">Coordinate</string>
     <string name="coords_hidden">Coordinate sono nascosti</string>
     <string name="coords_visible">Coordinate sono visibili</string>
     <string name="coords_format_title">Coordinate formato</string>
@@ -99,7 +111,6 @@
         <item>Sessagesimale</item>
     </string-array>
 
-    <string name="category_opinion">Opinioni</string>
     <string name="past_title">Tempi che sono trascorsi</string>
     <string name="past_enabled">I tempi sono trascorsi sono abilitati</string>
     <string name="past_disabled">I tempi sono trascorsi sono disabilitati</string>
@@ -120,5 +131,23 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">O</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Opinione</string>
+    <string name="reminder">Promemoria</string>
+
+    <string-array name="reminder_entries">
+        <item>Spento</item>
+        <item>Puntuale</item>
+        <item>1 minuto prima</item>
+        <item>5 minuti prima</item>
+        <item>10 minuti prima</item>
+        <item>15 minuti prima</item>
+        <item>20 minuti prima</item>
+        <item>25 minuti prima</item>
+        <item>30 minuti prima</item>
+        <item>45 minuti prima</item>
+        <item>1 ora prima</item>
+    </string-array>
 
 </resources>

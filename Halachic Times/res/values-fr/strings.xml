@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Aube</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Mise du talit et téfillin au plus tôt</string>
     <string name="tallis_summary">Soleil est 11,5° sous l\'horizon</string>
     <string name="tallis_11">Soleil est 11° sous l\'horizon</string>
     <string name="tallis_10">Soleil est 10,2° sous l\'horizon</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Lever du soleil</string>
     <string name="sunrise_summary">Dans une région de niveau</string>
     <string name="sunrise_sea">À niveau de la mer</string>
 
+    <!-- Latest shema -->
     <string name="shema">Heure de fin du chéma</string>
     <string name="shema_7">Jour est de l\'aube 16,1° à tombée de la nuit 7,083°</string>
     <string name="shema_3">3 heures avant de midi</string>
     <string name="shema_fixed">3 heures avant de midi fixe local</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Heure de fin du shakharis</string>
     <string name="prayers_fixed">2 heures avant de midi fixe local</string>
     <string name="prayers_2">2 heures avant de midi</string>
 
+    <!-- Midday -->
     <string name="midday">Midi</string>
     <string name="midday_summary">Milieu du jour</string>
     <string name="midday_fixed">Midi ajusté pour la latitude locale</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Minkha gedola</string>
     <string name="earliest_mincha_summary">Prières après-midi au plus tôt</string>
     <string name="earliest_mincha_30">30 minutes après de midi</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Minkha kétana</string>
     <string name="mincha_summary">Prières après-midi</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag haminkha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Allumage des bougies</string>
     <string name="candles_summary">%1$d minutes avant le coucher du soleil</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d bougies de Hanoukka</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Coucher du soleil</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Tombée de la nuit</string>
     <string name="nightfall_3stars">3 étoiles visibles</string>
     <string name="nightfall_3_65">Soleil est 3,65° au-dessous de niveau de la mer</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Soleil est 7,083° au-dessous de niveau de la mer</string>
     <string name="nightfall_8">Soleil est 8,5° au-dessous de niveau de la mer</string>
 
+    <!-- Midnight -->
     <string name="midnight">Khatsot</string>
     <string name="midnight_summary">Minuit</string>
     <string name="midnight_12">12 heures après de midi</string>
@@ -99,7 +111,6 @@
         <item>Sexagésimal</item>
     </string-array>
 
-    <string name="category_opinion">Opinions</string>
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="past_enabled">Les temps passés sont activés</string>
     <string name="past_disabled">Les temps passés sont désactivées</string>
@@ -120,5 +131,23 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">O</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Opinion</string>
+    <string name="reminder">Rappel</string>
+
+    <string-array name="reminder_entries">
+        <item>Désactivée</item>
+        <item>À l\'heure</item>
+        <item>1 minute avant</item>
+        <item>5 minutes avant</item>
+        <item>10 minutes avant</item>
+        <item>15 minutes avant</item>
+        <item>20 minutes avant</item>
+        <item>25 minutes avant</item>
+        <item>30 minutes avant</item>
+        <item>45 minutes avant</item>
+        <item>1 heure avant</item>
+    </string-array>
 
 </resources>

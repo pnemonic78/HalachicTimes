@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Sarastus</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Aikaisintaan tallis ja tefillin</string>
     <string name="tallis_summary">Aurinko on 11,5° horisontin alapuolella</string>
     <string name="tallis_11">Aurinko on 11° horisontin alapuolella</string>
     <string name="tallis_10">Aurinko on 10,2° horisontin alapuolella</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Auringonnousu</string>
     <string name="sunrise_summary">Vuonna tason alueella</string>
     <string name="sunrise_sea">Merenpinnan tasolla</string>
 
+    <!-- Latest shema -->
     <string name="shema">Uusin šema</string>
     <string name="shema_7">Päivä on sarastus 16,1° iltaan 7,083°</string>
     <string name="shema_3">3 tuntia ennen keskipäivä</string>
     <string name="shema_fixed">3 tuntia ennen kiinteä paikallisia keskipäivä</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Uusin aamurukouksiin (šacharis)</string>
     <string name="prayers_fixed">2 tuntia ennen kiinteä paikallisia keskipäivä</string>
     <string name="prayers_2">2 tuntia ennen keskipäivä</string>
 
+    <!-- Midday -->
     <string name="midday">Keskipäivä</string>
     <string name="midday_summary">Aurinko keskipäivä</string>
     <string name="midday_fixed">Keskipäivä oikaistu paikallisia leveysaste</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Aikaisintaan iltapäivän rukoukset</string>
     <string name="earliest_mincha_30">30 minuuttia jälkeen keskipäivä</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Iltapäivän rukoukset</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Kynttilävalaistus</string>
     <string name="candles_summary">%1$d minuuttia ennen auringonlasku</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanukka kynttilät</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Auringonlasku</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Pimetessä</string>
     <string name="nightfall_3stars">3 tähteä näkyvissä</string>
     <string name="nightfall_3_65">Aurinko on 3,65° meren pinnan alapuolella</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Aurinko on 7,083° meren pinnan alapuolella</string>
     <string name="nightfall_8">Aurinko on 8,5° meren pinnan alapuolella</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chazos</string>
     <string name="midnight_summary">Keskiyö</string>
     <string name="midnight_12">12 tuntia jälkeen keskipäivä</string>
@@ -99,7 +111,6 @@
         <item>Seksagesimaali</item>
     </string-array>
 
-    <string name="category_opinion">Lausunnot</string>
     <string name="past_title">Ajat että kulunut</string>
     <string name="past_enabled">Menneiden aikojen ovat käytössä</string>
     <string name="past_disabled">Menneiden aikojen ovat pois käytöstä</string>
@@ -120,5 +131,23 @@
     <string name="east">I</string>
     <string name="south">E</string>
     <string name="west">L</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Lausunto</string>
+    <string name="reminder">Muistutus</string>
+
+    <string-array name="reminder_entries">
+        <item>Pois</item>
+        <item>Määräaikaan</item>
+        <item>1 minuutti ennen</item>
+        <item>5 minuuttia ennen</item>
+        <item>10 minuuttia ennen</item>
+        <item>15 minuuttia ennen</item>
+        <item>20 minuuttia ennen</item>
+        <item>25 minuuttia ennen</item>
+        <item>30 minuuttia ennen</item>
+        <item>45 minuuttia ennen</item>
+        <item>1 tunti ennen</item>
+    </string-array>
 
 </resources>

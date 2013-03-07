@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Світанок</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Перший талес і тфілін</string>
     <string name="tallis_summary">Сонце 11,5° нижче обрію</string>
     <string name="tallis_11">Сонце 11° нижче обрію</string>
     <string name="tallis_10">Сонце 10,2° нижче обрію</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Схід сонця</string>
     <string name="sunrise_summary">У рівні регіону</string>
     <string name="sunrise_sea">На рівні моря</string>
 
+    <!-- Latest shema -->
     <string name="shema">Останній шма</string>
     <string name="shema_7">День від світанку 16,1° до ночі 7,083°</string>
     <string name="shema_3">3 годин до полудня</string>
     <string name="shema_fixed">3 годин до фіксованого місцевого полудень</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Останній шахарит</string>
     <string name="prayers_fixed">2 годин до фіксованого місцевого полудень</string>
     <string name="prayers_2">2 годин до полудня</string>
 
+    <!-- Midday -->
     <string name="midday">Полудень</string>
     <string name="midday_summary">Апогей</string>
     <string name="midday_fixed">полудень з урахуванням місцеві широт</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Мінха гедола</string>
     <string name="earliest_mincha_summary">Перший день молитви</string>
     <string name="earliest_mincha_30">30 мінут після полудня</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Мінха ктана</string>
     <string name="mincha_summary">День молитви</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Плаг мінха</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Розпалювання свічки</string>
     <string name="candles_summary">%1$d хвилин до заходу сонця</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Ханукальні свічки</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Захід сонця</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Настання ночі</string>
     <string name="nightfall_3stars">3 зірки видимі</string>
     <string name="nightfall_3_65">Сонце 3,65° нижче рівня моря</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Сонце 7,083° нижче рівня моря</string>
     <string name="nightfall_8">Сонце 8,5° нижче рівня моря</string>
 
+    <!-- Midnight -->
     <string name="midnight">Хацот</string>
     <string name="midnight_summary">Полуніч</string>
     <string name="midnight_12">12 годин після полудня</string>
@@ -99,7 +111,6 @@
         <item>Шістдесятирічний</item>
     </string-array>
 
-    <string name="category_opinion">Погляди</string>
     <string name="past_title">Минулі разів</string>
     <string name="past_enabled">Минулі разів включений</string>
     <string name="past_disabled">Минулі разів відключені</string>
@@ -120,5 +131,23 @@
     <string name="east">С</string>
     <string name="south">п</string>
     <string name="west">З</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Думка</string>
+    <string name="reminder">Нагадування</string>
+
+    <string-array name="reminder_entries">
+        <item>Вимкнена</item>
+        <item>В той час</item>
+        <item>За 1 хвилину до</item>
+        <item>За 5 хвилин до</item>
+        <item>За 10 хвилин до</item>
+        <item>За 15 хвилин до</item>
+        <item>За 20 хвилин до</item>
+        <item>За 25 хвилин до</item>
+        <item>За 30 хвилин до</item>
+        <item>За 45 хвилин до</item>
+        <item>За 1 годину до</item>
+    </string-array>
 
 </resources>

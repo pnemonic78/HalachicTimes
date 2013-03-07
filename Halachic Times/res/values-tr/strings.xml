@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Şafak</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">En erken tallis ve tefillin</string>
     <string name="tallis_summary">Güneş ufkun aşağıda 11,5°</string>
     <string name="tallis_11">Güneş ufkun aşağıda 11°</string>
     <string name="tallis_10">Güneş ufkun aşağıda 10,2°</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Gündoğumu</string>
     <string name="sunrise_summary">A seviye bölgede</string>
     <string name="sunrise_sea">Deniz seviyesinde</string>
 
+    <!-- Latest shema -->
     <string name="shema">En son şema</string>
     <string name="shema_7">Gün şafak 16,1° kadar gece 7,083°</string>
     <string name="shema_3">3 saat önce öğle vakti</string>
     <string name="shema_fixed">3 saat önce öğle vakti sabit yerel</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">En son sabah namazından (şacharis)</string>
     <string name="prayers_fixed">2 saat önce öğle vakti sabit yerel</string>
     <string name="prayers_2">2 saat önce öğle vakti</string>
 
+    <!-- Midday -->
     <string name="midday">Öğlen</string>
     <string name="midday_summary">Güneş öğlen</string>
     <string name="midday_fixed">Öğlen yerel enlem için ayarlanabilir</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">En erken ikindi namazından</string>
     <string name="earliest_mincha_30">30 dakika sonra öğlen</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">İkindi namazından</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Mum aydınlatma</string>
     <string name="candles_summary">%1$d dakika önce günbatımı</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanuka mumları</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Gün batımı</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Akşam vakti</string>
     <string name="nightfall_3stars">3 yıldızlar görünür</string>
     <string name="nightfall_3_65">Güneş deniz seviyesi altındadır 3,65°</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Güneş deniz seviyesi altındadır 7,083°</string>
     <string name="nightfall_8">Güneş deniz seviyesi altındadır 8,5°</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chatzot</string>
     <string name="midnight_summary">Gece yarısı</string>
     <string name="midnight_12">12 saat sonra öğlen</string>
@@ -99,7 +111,6 @@
         <item>Altmışlık</item>
     </string-array>
 
-    <string name="category_opinion">Görüşler</string>
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="past_enabled">Geçmiş vakitleri etkindir</string>
     <string name="past_disabled">Geçmiş vakitleri devre dışı</string>
@@ -120,5 +131,23 @@
     <string name="east">D</string>
     <string name="south">G</string>
     <string name="west">B</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Görüş</string>
+    <string name="reminder">Hatırlatıcı</string>
+
+    <string-array name="reminder_entries">
+        <item>Kapalı</item>
+        <item>Zamanında</item>
+        <item>1 dakika önce</item>
+        <item>5 dakika önce</item>
+        <item>10 dakika önce</item>
+        <item>15 dakika önce</item>
+        <item>20 dakika önce</item>
+        <item>25 dakika önce</item>
+        <item>30 dakika önce</item>
+        <item>45 dakika önce</item>
+        <item>1 saat önce</item>
+    </string-array>
 
 </resources>

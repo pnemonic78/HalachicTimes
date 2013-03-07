@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Daggry</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Tidligste tallis og tefillin</string>
     <string name="tallis_summary">Sol er 11,5° nedenfor horisonten</string>
     <string name="tallis_11">Sol er 11° nedenfor horisonten</string>
     <string name="tallis_10">Sol er 10,2° nedenfor horisonten</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Solopgang</string>
     <string name="sunrise_summary">I et niveau region</string>
     <string name="sunrise_sea">På havoverfladen</string>
 
+    <!-- Latest shema -->
     <string name="shema">Seneste shema</string>
     <string name="shema_7">Dag er fra daggry 16,1° til nat 7,083°</string>
     <string name="shema_3">3 timer før middag</string>
     <string name="shema_fixed">3 timer før fast lokalt middag</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Seneste morgen bønner (shacharis)</string>
     <string name="prayers_fixed">2 timer før fast lokalt middag</string>
     <string name="prayers_2">2 timer før middag</string>
 
+    <!-- Midday -->
     <string name="midday">Middag</string>
     <string name="midday_summary">Solen middag</string>
     <string name="midday_fixed">Middag korrigeret for den lokale bredde</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Tidligste eftermiddags bønner</string>
     <string name="earliest_mincha_30">30 minutter efter middag</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Eftermiddagen bønner</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Kerte belysning</string>
     <string name="candles_summary">%1$d minutter før solnedgang</string>
     <plurals name="candles_chanukka">
@@ -68,8 +77,10 @@
         <item quantity="other">%1$d Chanukka stearinlys</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Solnedgang</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Mřrkets frembrud</string>
     <string name="nightfall_3stars">3 stjerner synlige</string>
     <string name="nightfall_3_65">Sol er 3,65° nedenfor havoverfladen</string>
@@ -82,6 +93,7 @@
     <string name="nightfall_7">Sol er 7,083° nedenfor havoverfladen</string>
     <string name="nightfall_8">Sol er 8,5° nedenfor havoverfladen</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chazos</string>
     <string name="midnight_summary">Midnat</string>
     <string name="midnight_12">12 timer efter middag</string>
@@ -100,7 +112,6 @@
         <item>Sexagesimal</item>
     </string-array>
 
-    <string name="category_opinion">Udtalelser</string>
     <string name="past_title">Tider der er gået</string>
     <string name="past_enabled">Tidligere tider er aktiveret</string>
     <string name="past_disabled">Tidligere tider er deaktiveret</string>
@@ -121,5 +132,23 @@
     <string name="east">Ø</string>
     <string name="south">S</string>
     <string name="west">V</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Udtalelse</string>
+    <string name="reminder">Påmindelse</string>
+
+    <string-array name="reminder_entries">
+        <item>Slukket</item>
+        <item>Tidspunktet</item>
+        <item>1 minut før</item>
+        <item>5 minutter før</item>
+        <item>10 minutter før</item>
+        <item>15 minutter før</item>
+        <item>20 minutter før</item>
+        <item>25 minutter før</item>
+        <item>30 minutter før</item>
+        <item>45 minutter før</item>
+        <item>1 time før</item>
+    </string-array>
 
 </resources>

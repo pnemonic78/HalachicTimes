@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Dageraad</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Vroegste tallis en tefillin</string>
     <string name="tallis_summary">Zon is 11,5° onder de horizon</string>
     <string name="tallis_11">Zon is 11° onder de horizon</string>
     <string name="tallis_10">Zon is onder de horizon</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Zonsopgang</string>
     <string name="sunrise_summary">In een platte regio</string>
     <string name="sunrise_sea">Op zeeniveau</string>
 
+    <!-- Latest shema -->
     <string name="shema">Laatste shema</string>
     <string name="shema_7">Dag is from dawn 16,1° to night 7,083°</string>
     <string name="shema_3">3 uur vóór de middag</string>
     <string name="shema_fixed">3 uur vóór vaste lokale middag</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Laatste shacharis</string>
     <string name="prayers_fixed">2 uur vóór vaste lokale middag</string>
     <string name="prayers_2">2 uur vóór de middag</string>
 
+    <!-- Midday -->
     <string name="midday">Middag</string>
     <string name="midday_summary">Middaghoogte</string>
     <string name="midday_fixed">Middag aangepast vóór de lokale breedtegraad</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Vroegste middag gebeden</string>
     <string name="earliest_mincha_30">30 minuten na de middag</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Middag gebeden</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plug hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Kaars verlichting</string>
     <string name="candles_summary">%1$d minuten vóór zonsondergang</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanoeka kaarsen</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Zonsondergang</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Nacht</string>
     <string name="nightfall_3stars">3 sterren zichtbaar</string>
     <string name="nightfall_3_65">Zon is 3,65° beneden zeeniveau</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Zon is 7,083° beneden zeeniveau</string>
     <string name="nightfall_8">Zon is 8,5° beneden zeeniveau</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Middernacht</string>
     <string name="midnight_12">12 uur na de middag</string>
@@ -99,7 +111,6 @@
         <item>Sexagesimale</item>
     </string-array>
 
-    <string name="category_opinion">Meningen</string>
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="past_enabled">Vroegere tijden zijn ingeschakeld</string>
     <string name="past_disabled">Vroegere tijden zijn uitgeschakeld</string>
@@ -120,5 +131,23 @@
     <string name="east">O</string>
     <string name="south">Z</string>
     <string name="west">W</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Mening</string>
+    <string name="reminder">Herinnering</string>
+
+    <string-array name="reminder_entries">
+        <item>Af</item>
+        <item>Op tijd</item>
+        <item>1 minuut voor</item>
+        <item>5 minuten voor</item>
+        <item>10 minuten voor</item>
+        <item>15 minuten voor</item>
+        <item>20 minuten voor</item>
+        <item>25 minuten voor</item>
+        <item>30 minuten voor</item>
+        <item>45 minuten voor</item>
+        <item>1 uur voor</item>
+    </string-array>
 
 </resources>

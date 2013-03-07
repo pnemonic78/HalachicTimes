@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Рассвет</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Талита и тфилина, самое раннее время наложения</string>
     <string name="tallis_summary">Солнце 11,5° ниже горизонта</string>
     <string name="tallis_11">Солнце 11° ниже горизонта</string>
     <string name="tallis_10">Солнце 10,2° ниже горизонта</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Восход солнца</string>
     <string name="sunrise_summary">В уровне регионе</string>
     <string name="sunrise_sea">На уровне моря</string>
 
+    <!-- Latest shema -->
     <string name="shema">Самое позднее шма</string>
     <string name="shema_7">День с рассвета 16,1° до ночь 7,083°</string>
     <string name="shema_3">3 часа до полдень</string>
     <string name="shema_fixed">3 часа до фиксированной местной полдень</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Самое позднее шахарит</string>
     <string name="prayers_fixed">2 часа до фиксированной местной полдень</string>
     <string name="prayers_2">2 часа до полдень</string>
 
+    <!-- Midday -->
     <string name="midday">Полдень</string>
     <string name="midday_summary">Середине дня</string>
     <string name="midday_fixed">Полдень с поправкой на местных широты</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Минха гдола</string>
     <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>
     <string name="earliest_mincha_30">30 минут после полдень</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Минха ктана</string>
     <string name="mincha_summary">Днем молитвах</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Плаг минха</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Зажигание свечей</string>
     <string name="candles_summary">%1$d минут до захода солнца</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Ханукальные свечи</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Заход солнца</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Наступление темноты</string>
     <string name="nightfall_3stars">3 звезды видимы</string>
     <string name="nightfall_3_65">Солнце 3,65° ниже уровне моря</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Солнце 7,083° ниже уровне моря</string>
     <string name="nightfall_8">Солнце 8,5° ниже уровне моря</string>
 
+    <!-- Midnight -->
     <string name="midnight">Хацот</string>
     <string name="midnight_summary">Полночь</string>
     <string name="midnight_12">12 часа после полудня</string>
@@ -99,7 +111,6 @@
         <item>Шестидесятеричный</item>
     </string-array>
 
-    <string name="category_opinion">Мнения</string>
     <string name="past_title">Прошедшее время</string>
     <string name="past_enabled">Прошлые времена включены</string>
     <string name="past_disabled">Прошлые времена отключены</string>
@@ -120,5 +131,23 @@
     <string name="east">В</string>
     <string name="south">Ю</string>
     <string name="west">З</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Мнение</string>
+    <string name="reminder">Напоминание</string>
+
+    <string-array name="reminder_entries">
+        <item>Выключена</item>
+        <item>Вовремя</item>
+        <item>За 1 минуту до</item>
+        <item>За 5 минут до</item>
+        <item>За 10 минут до</item>
+        <item>За 15 минут до</item>
+        <item>За 20 минут до</item>
+        <item>За 25 минут до</item>
+        <item>За 30 минут до</item>
+        <item>За 45 минут до</item>
+        <item>За 1 час до</item>
+    </string-array>
 
 </resources>

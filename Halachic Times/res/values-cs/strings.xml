@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Svítání</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Nástup na pobyt nejdřív tallis a tefillin</string>
     <string name="tallis_summary">Slunce je 11,5° pod obzorem</string>
     <string name="tallis_11">Slunce je 11° pod obzorem</string>
     <string name="tallis_10">Slunce je 10.2° pod obzorem</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Východ slunce</string>
     <string name="sunrise_summary">V regionu soudržnosti</string>
     <string name="sunrise_sea">Na úrovni moře</string>
 
+    <!-- Latest shema -->
     <string name="shema">Poslední šema</string>
     <string name="shema_7">Den je od úsvitu 16,1° do noci 7,083°</string>
     <string name="shema_3">3 hodiny před poledne</string>
     <string name="shema_fixed">3 hodiny před poledne pevné lokální</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Poslední ráno modlitby (shacharis)</string>
     <string name="prayers_fixed">2 hodiny před poledne pevné lokální</string>
     <string name="prayers_2">2 hodiny před poledne</string>
 
+    <!-- Midday -->
     <string name="midday">Poledne</string>
     <string name="midday_summary">Solární poledne</string>
     <string name="midday_fixed">Poledne upraveny pro lokální zeměpisné šířky</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Nejranější odpolední modlitby</string>
     <string name="earliest_mincha_30">30 minut po poledne</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Odpolední modlitby</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Svíčka osvětlení</string>
     <string name="candles_summary">%1$d minut před západem slunce</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanuka svíčky</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Západ slunce</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Setmění</string>
     <string name="nightfall_3stars">3 hvězdiček viditelné</string>
     <string name="nightfall_3_65">Slunce je 3,65° pod úrovní moře</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Slunce je 7,083° pod úrovní moře</string>
     <string name="nightfall_8">Slunce je 8,5° pod úrovní moře</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chatzos</string>
     <string name="midnight_summary">Půlnoc</string>
     <string name="midnight_12">12 hodin po poledni</string>
@@ -99,7 +111,6 @@
         <item>Šedesátý</item>
     </string-array>
 
-    <string name="category_opinion">Stanovisek</string>
     <string name="past_title">Časy, které uplynuly</string>
     <string name="past_enabled">Minulé časy jsou povoleny</string>
     <string name="past_disabled">Minulé časy jsou vypnuté</string>
@@ -120,5 +131,23 @@
     <string name="east">V</string>
     <string name="south">J</string>
     <string name="west">Z</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Stanoviska</string>
+    <string name="reminder">Ppřipomínka</string>
+
+    <string-array name="reminder_entries">
+        <item>Vypnuto</item>
+        <item>Včas</item>
+        <item>1 minutu před</item>
+        <item>5 minut před</item>
+        <item>10 minut před</item>
+        <item>15 minut před</item>
+        <item>20 minut před</item>
+        <item>25 minut před</item>
+        <item>30 minut před</item>
+        <item>45 minut před</item>
+        <item>1 hodinu před</item>
+    </string-array>
 
 </resources>

@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Koit</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Varaseim tallis ja tefillin</string>
     <string name="tallis_summary">Päike on 11,5° alla horisonti</string>
     <string name="tallis_11">Päike on 11° alla horisonti</string>
     <string name="tallis_10">Päike on 10,2° alla horisonti</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Päikesetõus</string>
     <string name="sunrise_summary">In a level region</string>
     <string name="sunrise_sea">Tasemel regioon</string>
 
+    <!-- Latest shema -->
     <string name="shema">Viimane šema</string>
     <string name="shema_7">Päeval on ära koidust 16,1° öö-7,083°</string>
     <string name="shema_3">3 tundi enne keskpäeva</string>
     <string name="shema_fixed">3 tundi enne fikseeritud kohalike keskpäeva</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Viimane hommikul palvetes (šacharis)</string>
     <string name="prayers_fixed">2 tundi enne fikseeritud kohalike keskpäeva</string>
     <string name="prayers_2">2 tundi enne keskpäeva</string>
 
+    <!-- Midday -->
     <string name="midday">Keskpäeva</string>
     <string name="midday_summary">Päikese keskpäeval</string>
     <string name="midday_fixed">Keskpäev korrigeeritud kohalike laius</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Mincha gedola</string>
     <string name="earliest_mincha_summary">Varaseim pärastlõunal palvetes</string>
     <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Mincha ketana</string>
     <string name="mincha_summary">Pärastlõunal palvetes</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Plag hamincha</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Küünal valgustus</string>
     <string name="candles_summary">%1$d minutit enne loojangut</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d Chanuka küünlad</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Päikeseloojang</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Videvik</string>
     <string name="nightfall_3stars">3 tärni nähtav</string>
     <string name="nightfall_3_65">Päike on 3,65° allpool merepinda</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Päike on 7,083° allpool merepinda</string>
     <string name="nightfall_8">Päike on 8,5° allpool merepinda</string>
 
+    <!-- Midnight -->
     <string name="midnight">Chatsos</string>
     <string name="midnight_summary">Kesköö</string>
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
@@ -99,7 +111,6 @@
         <item>Seksagesimaalne</item>
     </string-array>
 
-    <string name="category_opinion">Arvamused</string>
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="past_enabled">Möödunud ajad on aktiivne</string>
     <string name="past_disabled">Möödunud ajad on puudega</string>
@@ -120,5 +131,23 @@
     <string name="east">I</string>
     <string name="south">Lõ</string>
     <string name="west">Lä</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Arvamus</string>
+    <string name="reminder">Meeldetuletus</string>
+
+    <string-array name="reminder_entries">
+        <item>Väljas</item>
+        <item>Õigel ajal</item>
+        <item>1 minut enne</item>
+        <item>5 minutit enne</item>
+        <item>10 minutit enne</item>
+        <item>15 minutit enne</item>
+        <item>20 minutit enne</item>
+        <item>25 minutit enne</item>
+        <item>30 minutit enne</item>
+        <item>45 minutit enne</item>
+        <item>1 tund enne</item>
+    </string-array>
 
 </resources>

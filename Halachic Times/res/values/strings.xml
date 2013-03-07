@@ -215,11 +215,9 @@
     <!-- Setting per time -->
     <string name="opinion">Opinion</string>
     <string name="reminder">Reminder</string>
-    <string name="reminder_none">Off</string>
-    <string name="ringtone">Ringtone</string>
 
     <string-array name="reminder_entries">
-        <item>@string/reminder_none</item>
+        <item>Off</item>
         <item>On time</item>
         <item>1 minute before</item>
         <item>5 minutes before</item>

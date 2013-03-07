@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">Αυγή</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Η πιο παλιά ταλιτ και τεφιλιν</string>
     <string name="tallis_summary">Ήλιος είναι 11,5° κάτω από τον ορίζοντα</string>
     <string name="tallis_11">Ήλιος είναι 11° κάτω από τον ορίζοντα</string>
     <string name="tallis_10">Ήλιος είναι 10,2° κάτω από τον ορίζοντα</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">Ανατολή ηλίου</string>
     <string name="sunrise_summary">Σε μια περιοχή επίπεδο</string>
     <string name="sunrise_sea">Στο επίπεδο της θάλασσας</string>
 
+    <!-- Latest shema -->
     <string name="shema">Τελευταία σεμα</string>
     <string name="shema_7">Ημέρα είναι από την αυγή 16,1° έως 7.083° νύχτα</string>
     <string name="shema_3">3 ώρες πριν από μεσημέρι</string>
     <string name="shema_fixed">3 ώρες πριν από μεσημέρι τοπικές σταθερής</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">Τελευταία σαχαριτ</string>
     <string name="prayers_fixed">2 ώρες πριν από μεσημέρι τοπικές σταθερής</string>
     <string name="prayers_2">2 ώρες πριν από μεσημέρι</string>
 
+    <!-- Midday -->
     <string name="midday">Μεσημέρι</string>
     <string name="midday_summary">Μεσημβρία</string>
     <string name="midday_fixed">Μεσημέρι ρυθμίζεται για το τοπικό γεωγραφικό πλάτος</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">Μινχα γδολα</string>
     <string name="earliest_mincha_summary">Η πιο παλιά προσευχές απόγευμα</string>
     <string name="earliest_mincha_30">30 λεπτά μετά το μεσημέρι</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">Μινχα κτανα</string>
     <string name="mincha_summary">Απόγευμα προσευχές</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">Πλαγ μινχα</string>
 
+    <!-- Candle lighting -->
     <string name="candles">Φωτισμό κεριών</string>
     <string name="candles_summary">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d κεριά Χανουκά</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">Ηλιοβασίλεμα</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">Σούρουπο</string>
     <string name="nightfall_3stars">3 αστέρια ορατά</string>
     <string name="nightfall_3_65">Ήλιος είναι 3,65° κάτω από επίπεδο της θάλασσας</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">Ήλιος είναι 7,083° κάτω από επίπεδο της θάλασσας</string>
     <string name="nightfall_8">Ήλιος είναι 8,5° κάτω από επίπεδο της θάλασσας</string>
 
+    <!-- Midnight -->
     <string name="midnight">Χαζοτ</string>
     <string name="midnight_summary">Μεσάνυχτα</string>
     <string name="midnight_12">2 ώρες μετά το μεσημέρι</string>
@@ -99,7 +111,6 @@
         <item>Βάσης 60</item>
     </string-array>
 
-    <string name="category_opinion">Γνώμες</string>
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="past_enabled">Παρελθόν οι χρόνοι είναι σχετικά</string>
     <string name="past_disabled">Παρελθόν οι χρόνοι είναι μακριά</string>
@@ -120,5 +131,23 @@
     <string name="east">Α</string>
     <string name="south">Ν</string>
     <string name="west">Δ</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Γνώμες</string>
+    <string name="reminder">Υπενθύμιση</string>
+
+    <string-array name="reminder_entries">
+        <item>Απενεργοποιείται</item>
+        <item>Κατά την ώρα</item>
+        <item>1 λεπτό πριν</item>
+        <item>5 λεπτά πριν</item>
+        <item>10 λεπτά πριν</item>
+        <item>15 λεπτά πριν</item>
+        <item>20 λεπτά πριν</item>
+        <item>25 λεπτά πριν</item>
+        <item>30 λεπτά πριν</item>
+        <item>45 λεπτά πριν</item>
+        <item>1 ώρα πριν</item>
+    </string-array>
 
 </resources>

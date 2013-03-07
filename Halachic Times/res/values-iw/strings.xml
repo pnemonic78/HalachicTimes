@@ -29,37 +29,46 @@
     <!-- List -->
     <string name="dawn">עלות השחר</string>
 
+    <!-- Tallis and Tefillin -->
     <string name="tallis">טלית ותפילין המוקדם ביותר</string>
     <string name="tallis_summary">שמש 11.5° מתחת לאופק</string>
     <string name="tallis_11">שמש 11° מתחת לאופק</string>
     <string name="tallis_10">שמש 10.2° מתחת לאופק</string>
 
+    <!-- Sunrise -->
     <string name="sunrise">הנץ החמה</string>
     <string name="sunrise_summary">באזור אפקי</string>
     <string name="sunrise_sea">בגובה פני הים</string>
 
+    <!-- Latest shema -->
     <string name="shema">שמע אחרון</string>
     <string name="shema_7">יום הוא משחר 16.1° עד לילה 7.083°</string>
     <string name="shema_3">3 שעות לפני צהריים</string>
     <string name="shema_fixed">3 שעות לפני צהריים מקומי קבוע</string>
 
+    <!-- Latest shacharis -->
     <string name="prayers">תפילת שחרית האחרונה</string>
     <string name="prayers_fixed">שעתיים לפני צהריים מקומי קבוע</string>
     <string name="prayers_2">שעתיים לפני צהריים</string>
 
+    <!-- Midday -->
     <string name="midday">צהריים</string>
     <string name="midday_summary">חצות היום</string>
     <string name="midday_fixed">צהריים מותאמים קו הרוחב המקומי</string>
 
+    <!-- Earliest mincha -->
     <string name="earliest_mincha">מנחה גדולה</string>
     <string name="earliest_mincha_summary">תפילת מנחה המוקדמת ביותר</string>
     <string name="earliest_mincha_30">30 דקות לאחר צהריים</string>
 
+    <!-- Mincha ketana -->
     <string name="mincha">מנחה קטנה</string>
     <string name="mincha_summary">תפילת מנחה</string>
 
+    <!-- Plug hamincha -->
     <string name="plug_hamincha">פלג המנחה</string>
 
+    <!-- Candle lighting -->
     <string name="candles">הדלקת נרות</string>
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
     <plurals name="candles_chanukka">
@@ -67,8 +76,10 @@
         <item quantity="other">%1$d נרות חנוכה</item>
     </plurals>
 
+    <!-- Sunset -->
     <string name="sunset">שקיעת השמש</string>
 
+    <!-- Nightfall -->
     <string name="nightfall">לילה</string>
     <string name="nightfall_3stars">צאת הכוכבים (3 כוכבים גלויים)</string>
     <string name="nightfall_3_65">שמש 3.65° מתחת לגובה פני הים</string>
@@ -81,6 +92,7 @@
     <string name="nightfall_7">שמש 7.083° מתחת לגובה פני הים</string>
     <string name="nightfall_8">שמש 8.5° מתחת לגובה פני הים</string>
 
+    <!-- Midnight -->
     <string name="midnight">חצות</string>
     <string name="midnight_summary">חצות הלילה</string>
     <string name="midnight_12">12 שעות לאחר צהריים</string>
@@ -99,7 +111,6 @@
         <item>סקסגסימלי</item>
     </string-array>
 
-    <string name="category_opinion">דעות</string>
     <string name="past_title">זמנים שחלפו</string>
     <string name="past_enabled">זמנים שעברו מופעלים</string>
     <string name="past_disabled">זמנים שעברו מושבתים</string>
@@ -120,5 +131,23 @@
     <string name="east">ז</string>
     <string name="south">ד</string>
     <string name="west">ע</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">דעה</string>
+    <string name="reminder">תזכורת</string>
+
+    <string-array name="reminder_entries">
+        <item>כבוי</item>
+        <item>בזמן</item>
+        <item>1 דקה לפני</item>
+        <item>5 דקות לפני</item>
+        <item>10 דקות לפני</item>
+        <item>15 דקות לפני</item>
+        <item>20 דקות לפני</item>
+        <item>25 דקות לפני</item>
+        <item>30 דקות לפני</item>
+        <item>45 דקות לפני</item>
+        <item>1 שעה לפני</item>
+    </string-array>
 
 </resources>
