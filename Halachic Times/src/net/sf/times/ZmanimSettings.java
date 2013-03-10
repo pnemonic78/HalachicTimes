@@ -65,6 +65,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_SHEMA = "shema";
 	/** Preference name for Last Morning Tfila type. */
 	public static final String KEY_OPINION_TFILA = "prayers";
+	/** Preference name for Last Biur Chametz type. */
+	public static final String KEY_OPINION_BURN = "biur_chametz";
 	/** Preference name for midday / noon type. */
 	public static final String KEY_OPINION_NOON = "midday";
 	/** Preference name for Earliest Mincha type. */
@@ -290,6 +292,15 @@ public class ZmanimSettings {
 	 */
 	public String getLastTfila() {
 		return mPrefs.getString(KEY_OPINION_TFILA, "MGA");
+	}
+
+	/**
+	 * Get the opinion for burning chametz (<em>biur chametz</em>).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getBurnChametz() {
+		return mPrefs.getString(KEY_OPINION_BURN, "GRA");
 	}
 
 	/**

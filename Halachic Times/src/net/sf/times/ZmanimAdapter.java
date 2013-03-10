@@ -591,6 +591,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				add(R.string.eat_chametz, summary, date);
 		}
 
+		if (!remote && (holidayToday == JewishCalendar.EREV_PESACH)) {
+			opinion = mSettings.getBurnChametz();
+			if (OPINION_16_1.equals(opinion)) {
+				date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
+				summary = R.string.burn_chametz_16;
+			} else if (OPINION_72.equals(opinion)) {
+				date = cal.getSofZmanBiurChametzMGA72Minutes();
+				summary = R.string.burn_chametz_72;
+			} else {
+				date = cal.getSofZmanBiurChametzGRA();
+				summary = R.string.burn_chametz_gra;
+			}
+			add(R.string.burn_chametz, summary, date);
+		}
+
 		opinion = mSettings.getMidday();
 		if (OPINION_FIXED.equals(opinion)) {
 			date = cal.getFixedLocalChatzos();

@@ -121,6 +121,16 @@
         <item>@string/prayers_2</item>
         <item>@string/prayers_gra</item>
     </string-array>
+    <string-array name="burn_chametz_values" translatable="false">
+        <item>16.1</item>
+        <item>72</item>
+        <item>GRA</item>
+    </string-array>
+    <string-array name="burn_chametz_entries" translatable="false">
+        <item>@string/burn_chametz_16</item>
+        <item>@string/burn_chametz_72</item>
+        <item>@string/burn_chametz_gra</item>
+    </string-array>
     <string-array name="midday_values" translatable="false">
         <item></item>
         <item>fixed</item>
