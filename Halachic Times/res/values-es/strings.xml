@@ -141,7 +141,7 @@
 
     <string-array name="reminder_entries">
         <item>Aapagado</item>
-        <item>En hora</item>
+        <item>0 minutos antes</item>
         <item>1 minuto antes</item>
         <item>5 minutos antes</item>
         <item>10 minutos antes</item>

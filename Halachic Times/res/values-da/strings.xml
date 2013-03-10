@@ -142,7 +142,7 @@
 
     <string-array name="reminder_entries">
         <item>Slukket</item>
-        <item>Tidspunktet</item>
+        <item>Til tiden</item>
         <item>1 minut før</item>
         <item>5 minutter før</item>
         <item>10 minutter før</item>

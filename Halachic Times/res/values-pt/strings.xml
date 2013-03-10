@@ -140,7 +140,7 @@
     <string name="reminder">Lembrete</string>
 
     <string-array name="reminder_entries">
-        <item>Desligado</item>
+        <item>Nenhum</item>
         <item>No momento</item>
         <item>1 minuto antes</item>
         <item>5 minutos antes</item>

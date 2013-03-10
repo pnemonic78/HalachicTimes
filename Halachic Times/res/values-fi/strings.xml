@@ -141,7 +141,7 @@
 
     <string-array name="reminder_entries">
         <item>Pois</item>
-        <item>Määräaikaan</item>
+        <item>Ajallaan</item>
         <item>1 minuutti ennen</item>
         <item>5 minuuttia ennen</item>
         <item>10 minuuttia ennen</item>

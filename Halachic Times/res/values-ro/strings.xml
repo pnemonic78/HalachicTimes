@@ -141,7 +141,7 @@
 
     <string-array name="reminder_entries">
         <item>Dezactivat</item>
-        <item>La ora</item>
+        <item>La timp</item>
         <item>1 minut înainte de</item>
         <item>5 minute înainte de</item>
         <item>10 minute înainte de</item>

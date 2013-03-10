@@ -11,7 +11,7 @@
     <string name="opinion_120_zmanis">Dieną yra 120 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_16">Dieną yra 16,1° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_16_sunset">Dieną yra nuo aušros 16,1° jūros lygio saulėlydžio</string>
-    <string name="opinion_16_night">Dieną yra nuo aušros 16,1° iki ateina tamsa</string>
+    <string name="opinion_16_night">Dieną yra nuo aušros 16,1° prieš ateina tamsa</string>
     <string name="opinion_26">Dieną yra 26° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_19">Dieną yra 19,8° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_18">Dieną yra 18° žemiau saulėtekį / saulėlydžio</string>
@@ -42,14 +42,14 @@
 
     <!-- Latest shema -->
     <string name="shema">Vėliausiai šema</string>
-    <string name="shema_7">Dieną yra nuo aušros 16,1° iki naktį 7,083°</string>
-    <string name="shema_3">3 valandų iki vidurdienį</string>
-    <string name="shema_fixed">3 valandų iki fiksuoto vietinio vidurdienį</string>
+    <string name="shema_7">Dieną yra nuo aušros 16,1° prieš naktį 7,083°</string>
+    <string name="shema_3">3 valandų prieš vidurdienį</string>
+    <string name="shema_fixed">3 valandų prieš fiksuoto vietinio vidurdienį</string>
 
     <!-- Latest shacharis -->
     <string name="prayers">Vėliausiai ryto malda (šacharis)</string>
-    <string name="prayers_fixed">2 valandų iki fiksuoto vietinio vidurdienį</string>
-    <string name="prayers_2">2 valandų iki vidurdienį</string>
+    <string name="prayers_fixed">2 valandų prieš fiksuoto vietinio vidurdienį</string>
+    <string name="prayers_2">2 valandų prieš vidurdienį</string>
 
     <!-- Midday -->
     <string name="midday">Vidurdienis</string>
@@ -70,7 +70,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Žvakė apšvietimas</string>
-    <string name="candles_summary">%1$d minučių iki saulėlydžio</string>
+    <string name="candles_summary">%1$d minučių prieš saulėlydžio</string>
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka žvakė</item>
         <item quantity="other">%1$d Chanuka žvakės</item>
@@ -141,16 +141,16 @@
 
     <string-array name="reminder_entries">
         <item>Išjungtas</item>
-        <item>Punktualus</item>
-        <item>1 minutę iki</item>
-        <item>5 minučių iki</item>
-        <item>10 minučių iki</item>
-        <item>15 minučių iki</item>
-        <item>20 minučių iki</item>
-        <item>25 minučių iki</item>
-        <item>30 minučių iki</item>
-        <item>45 minučių iki</item>
-        <item>1 valanda iki</item>
+        <item>Laiku</item>
+        <item>1 minutę prieš</item>
+        <item>5 minučių prieš</item>
+        <item>10 minučių prieš</item>
+        <item>15 minučių prieš</item>
+        <item>20 minučių prieš</item>
+        <item>25 minučių prieš</item>
+        <item>30 minučių prieš</item>
+        <item>45 minučių prieš</item>
+        <item>1 valanda prieš</item>
     </string-array>
 
 </resources>

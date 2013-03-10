@@ -141,16 +141,16 @@
 
     <string-array name="reminder_entries">
         <item>Вимкнена</item>
-        <item>В той час</item>
-        <item>За 1 хвилину до</item>
-        <item>За 5 хвилин до</item>
-        <item>За 10 хвилин до</item>
-        <item>За 15 хвилин до</item>
-        <item>За 20 хвилин до</item>
-        <item>За 25 хвилин до</item>
-        <item>За 30 хвилин до</item>
-        <item>За 45 хвилин до</item>
-        <item>За 1 годину до</item>
+        <item>Вчасно</item>
+        <item>1 хвилина до</item>
+        <item>5 хвилин до</item>
+        <item>10 хвилин до</item>
+        <item>15 хвилин до</item>
+        <item>20 хвилин до</item>
+        <item>25 хвилин до</item>
+        <item>30 хвилин до</item>
+        <item>45 хвилин до</item>
+        <item>1 година до</item>
     </string-array>
 
 </resources>

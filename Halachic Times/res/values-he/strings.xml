@@ -142,7 +142,7 @@
     <string-array name="reminder_entries">
         <item>כבוי</item>
         <item>בזמן</item>
-        <item>1 דקה לפני</item>
+        <item>דקה אחת לפני</item>
         <item>5 דקות לפני</item>
         <item>10 דקות לפני</item>
         <item>15 דקות לפני</item>
