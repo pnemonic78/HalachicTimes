@@ -137,7 +137,7 @@
 
     <!-- Setting per time -->
     <string name="opinion">Stanoviska</string>
-    <string name="reminder">Ppřipomínka</string>
+    <string name="reminder">Připomenutí</string>
 
     <string-array name="reminder_entries">
         <item>Vyp</item>

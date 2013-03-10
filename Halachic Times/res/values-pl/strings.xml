@@ -136,9 +136,8 @@
     <string name="west">Z</string>
 
     <!-- Setting per time -->
-    <string name="category_opinion">Opinie</string>
-    <string name="opinion">Opinion</string>
-    <string name="reminder">Reminder</string>
+    <string name="opinion">Opinia</string>
+    <string name="reminder">Przypomnienie</string>
 
     <string-array name="reminder_entries">
         <item>Wyłączony</item>

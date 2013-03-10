@@ -137,7 +137,7 @@
 
     <!-- Setting per time -->
     <string name="opinion">Meinung</string>
-    <string name="reminder">Alarm</string>
+    <string name="reminder">Erinnerung</string>
 
     <string-array name="reminder_entries">
         <item>Aus</item>
