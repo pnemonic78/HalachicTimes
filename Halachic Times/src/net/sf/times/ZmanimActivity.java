@@ -142,15 +142,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	protected void onPause() {
-		System.out.println("~~~ onPause");
 		super.onPause();
 		mLocations.cancel(this);
-		if (mReminder != null) {
-			if (mAdapter == null)
-				mReminder.remind(mSettings, mLocations);
-			else
-				mReminder.remind(mSettings, mAdapter);
-		}
+		if (mReminder != null)
+			mReminder.remind(mSettings, mLocations);
 		SQLiteDatabase.releaseMemory();
 	}
 
@@ -223,13 +218,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		GeoLocation gloc = mLocations.getGeoLocation();
 		if (gloc == null)
 			return;
-		final boolean inIsrael = mLocations.inIsrael();
-
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCalendar(mDate);
+		final boolean inIsrael = mLocations.inIsrael();
 
-		mAdapter = new ZmanimAdapter(this, mSettings);
-		mAdapter.populate(cal, inIsrael, false);
+		mAdapter = new ZmanimAdapter(this, mSettings, cal, inIsrael);
+		mAdapter.populate(false);
 
 		if (mList == null)
 			return;

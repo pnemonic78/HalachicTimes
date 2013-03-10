@@ -109,6 +109,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	private final LayoutInflater mInflater;
 	private final ZmanimSettings mSettings;
+	private final ComplexZmanimCalendar mCalendar;
+	private final boolean mInIsrael;
 	private final long mNow = System.currentTimeMillis();
 	private final boolean mSummaries;
 	private final boolean mElapsed;
@@ -144,14 +146,29 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the context.
 	 * @param settings
 	 *            the application settings.
+	 * @param cal
+	 *            the calendar.
+	 * @param inIsrael
+	 *            is in Israel?
 	 */
-	public ZmanimAdapter(Context context, ZmanimSettings settings) {
+	public ZmanimAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael) {
 		super(context, R.layout.times_item, 0);
 		mInflater = LayoutInflater.from(context);
 		mSettings = settings;
 		mSummaries = settings.isSummaries();
 		mElapsed = settings.isPast();
 		mCandlesOffset = settings.getCandleLightingOffset();
+		mCalendar = cal;
+		mInIsrael = inIsrael;
+	}
+
+	/**
+	 * Get the calendar.
+	 * 
+	 * @return the calendar.
+	 */
+	public ComplexZmanimCalendar getCalendar() {
+		return mCalendar;
 	}
 
 	@Override
@@ -352,18 +369,16 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/**
 	 * Populate the list of times.
 	 * 
-	 * @param cal
-	 *            the calendar.
-	 * @param inIsrael
-	 *            is in Israel?
 	 * @param remote
 	 *            is for remote views?
 	 */
-	public void populate(ComplexZmanimCalendar cal, boolean inIsrael, boolean remote) {
+	public void populate(boolean remote) {
 		int candlesCount = 0;
 		boolean hasCandles = false;
 		int candlesHow = 0;
 		int holiday = -1;
+		ComplexZmanimCalendar cal = mCalendar;
+		boolean inIsrael = mInIsrael;
 		cal.setCandleLightingOffset(mCandlesOffset);
 		Date candlesWhen = cal.getCandleLighting();
 		if (candlesWhen != null) {

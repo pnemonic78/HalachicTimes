@@ -146,8 +146,8 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
 		final boolean inIsrael = mLocations.inIsrael();
 
-		ZmanimAdapter adapter = new ZmanimAdapter(mContext, mSettings);
-		adapter.populate(today, inIsrael, true);
+		ZmanimAdapter adapter = new ZmanimAdapter(mContext, mSettings, today, inIsrael);
+		adapter.populate(true);
 		adapter.bindViews(views);
 
 		mAppWidgetManager.updateAppWidget(mAppWidgetIds, views);

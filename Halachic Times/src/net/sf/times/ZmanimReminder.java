@@ -19,6 +19,8 @@
  */
 package net.sf.times;
 
+import java.util.Calendar;
+
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -82,8 +84,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
 		boolean inIsrael = locations.inIsrael();
 
-		ZmanimAdapter adapter = new ZmanimAdapter(mContext, settings);
-		adapter.populate(today, inIsrael, false);
+		ZmanimAdapter adapter = new ZmanimAdapter(mContext, settings, today, inIsrael);
+		adapter.populate(false);
 
 		remind(settings, adapter);
 	}
@@ -96,7 +98,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * @param adapter
 	 *            the populated adapter.
 	 */
-	public void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
+	private void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
 		cancel();
 
 		final long now = System.currentTimeMillis();
@@ -105,26 +107,99 @@ public class ZmanimReminder extends BroadcastReceiver {
 		ZmanimItem item;
 		long before;
 		long when;
+		boolean needToday = true;
+		boolean needTodayLater = true;
+		boolean needTomorrow = true;
+		boolean needWeek = true;
+		int id;
 
-		final int count = adapter.getCount();
+		int count = adapter.getCount();
 		for (int i = 0; i < count; i++) {
 			item = adapter.getItem(i);
-			// Find the first remind of the day (that is now or in the future,
-			// and has a reminder).
-			before = settings.getReminder(item.timeId);
+			id = item.timeId;
+			before = settings.getReminder(id);
 			if (before >= 0L) {
 				when = item.time - before;
-				if ((was <= when) && (when <= soon)) {
+				if (needToday && (was <= when) && (when <= soon)) {
 					notifyNow(item.titleId, item.time);
-					break;
+					needToday = false;
 				}
-				if (now < when) {
+				if (needTodayLater && (now < when)) {
 					String whenFormat = DateUtils.formatDateTime(mContext, when, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
 					String timeFormat = DateUtils.formatDateTime(mContext, item.time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
-					Log.i(TAG, "notify at [" + whenFormat + "] for [" + timeFormat + "]");
+					Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
 
 					notifyFuture(when);
-					break;
+					needTodayLater = false;
+					needTomorrow = false;
+					needWeek = false;
+				}
+			}
+		}
+
+		ComplexZmanimCalendar zcal = adapter.getCalendar();
+		Calendar cal = zcal.getCalendar();
+		if (needTomorrow) {
+			// Populate the adapter with tomorrow's times.
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+			adapter.clear();
+			adapter.populate(false);
+
+			count = adapter.getCount();
+			for (int i = 0; i < count; i++) {
+				item = adapter.getItem(i);
+				id = item.timeId;
+				before = settings.getReminder(id);
+				if (before >= 0L) {
+					when = item.time - before;
+					if (needToday && (was <= when) && (when <= soon)) {
+						notifyNow(item.titleId, item.time);
+						needToday = false;
+					}
+					if (now < when) {
+						String whenFormat = DateUtils.formatDateTime(mContext, when, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+						String timeFormat = DateUtils.formatDateTime(mContext, item.time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+						Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
+
+						notifyFuture(when);
+						needWeek = false;
+						break;
+					}
+				}
+			}
+		}
+
+		if (needWeek) {
+			// Populate the adapter with week's worth of times to check
+			// "Candle lighting".
+			int daysUntilFriday = Calendar.FRIDAY - cal.get(Calendar.DAY_OF_WEEK);
+			if ((daysUntilFriday == -1) || (daysUntilFriday == 0) || (daysUntilFriday == 1)) {
+				// We already checked a Friday above.
+				return;
+			}
+			adapter.clear();
+			for (int d = 1; d <= 5; d++) {
+				cal.add(Calendar.DAY_OF_MONTH, 1);
+				adapter.populate(false);
+			}
+
+			count = adapter.getCount();
+			for (int i = 0; i < count; i++) {
+				item = adapter.getItem(i);
+				id = item.timeId;
+				// id is supposed to be 1 of 3 possible values: R.id.candles_row
+				// or R.id.candles_time or R.string.candles
+				before = settings.getReminder(id);
+				if (before >= 0L) {
+					when = item.time - before;
+					if (now < when) {
+						String whenFormat = DateUtils.formatDateTime(mContext, when, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+						String timeFormat = DateUtils.formatDateTime(mContext, item.time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+						Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
+
+						notifyFuture(when);
+						break;
+					}
 				}
 			}
 		}

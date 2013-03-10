@@ -78,6 +78,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_REMINDER_EARLIEST_MINCHA);
 		initList(ZmanimSettings.KEY_REMINDER_MINCHA);
 		initList(ZmanimSettings.KEY_REMINDER_PLUG_MINCHA);
+		initList(ZmanimSettings.KEY_REMINDER_CANDLES);
 		initList(ZmanimSettings.KEY_REMINDER_SUNSET);
 		initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
 		initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
