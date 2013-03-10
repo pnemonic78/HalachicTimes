@@ -98,7 +98,8 @@
     <string name="midnight_12">12 ore după amiază</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Ultima moment pentru a manca chametz</string>
+    <string name="eat_chametz">Ultima moment a manca chametz</string>
+    <string name="burn_chametz">Ultima moment a arde chametz</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>

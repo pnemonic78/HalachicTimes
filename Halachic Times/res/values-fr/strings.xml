@@ -99,6 +99,7 @@
 
     <!-- Pesach -->
     <string name="eat_chametz">Heure de fin du manger hamets</string>
+    <string name="burn_chametz">Heure de fin de brûler hamets</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Paramètres</string>

@@ -99,6 +99,7 @@
 
     <!-- Pesach -->
     <string name="eat_chametz">Uusin aika syödä chamez</string>
+    <string name="burn_chametz">Uusin aika polttaa chamez</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>

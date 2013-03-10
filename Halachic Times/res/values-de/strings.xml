@@ -41,13 +41,13 @@
     <string name="sunrise_sea">Auf meereshöhe</string>
 
     <!-- Latest shema -->
-    <string name="shema">Spätestes schma</string>
+    <string name="shema">Letzte schma</string>
     <string name="shema_7">Tag vom morgengrauen 16,1° auf nacht 7,083°</string>
     <string name="shema_3">3 stunden vor mittag</string>
     <string name="shema_fixed">3 stunden vor festen lokalen mittag</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Spätestes morgengebet nach (shacharis)</string>
+    <string name="prayers">Letzte morgengebet nach (shacharis)</string>
     <string name="prayers_fixed">2 stunden vor festen lokalen mittag</string>
     <string name="prayers_2">2 stunden vor mittag</string>
 
@@ -98,7 +98,8 @@
     <string name="midnight_12">12 stunden ab mittag</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Spätestes zeit zu essen chametz</string>
+    <string name="eat_chametz">Letzte zeit zu essen chametz</string>
+    <string name="burn_chametz">Letzte zeit zu chametz brennen</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>
@@ -114,7 +115,7 @@
         <item>Sexagesimal</item>
     </string-array>
 
-    <string name="past_title">vergangenen zeiten</string>
+    <string name="past_title">Vergangenen zeiten</string>
     <string name="past_enabled">Ältere zeiten sind aktiviert</string>
     <string name="past_disabled">Ältere zeiten sind deaktiviert</string>
     <string name="summaries_title">Zusammenfassungen</string>

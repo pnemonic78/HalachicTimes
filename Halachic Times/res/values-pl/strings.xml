@@ -99,6 +99,7 @@
 
     <!-- Pesach -->
     <string name="eat_chametz">Ostatni czas zjeść chamec</string>
+    <string name="burn_chametz">Ostatni czas spalić chamec</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>

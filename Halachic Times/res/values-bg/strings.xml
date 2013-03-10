@@ -98,6 +98,7 @@
 
     <!-- Pesach -->
     <string name="eat_chametz">Последни време за ядене хамец</string>
+    <string name="burn_chametz">Последни време за изгори хамец</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>

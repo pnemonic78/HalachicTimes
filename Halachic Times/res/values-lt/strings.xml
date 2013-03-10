@@ -99,6 +99,7 @@
 
     <!-- Pesach -->
     <string name="eat_chametz">Vėliausiai laikas valgyti chamec</string>
+    <string name="burn_chametz">Vėliausiai laikas sudeginti chametz</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Nustatymai</string>
