@@ -61,15 +61,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final int CANDLES_YOM_KIPPUR = 1;
 
 	/** Flag indicating lighting times before sunset. */
-	private static final int BEFORE_SUNSET = 0x0000;
+	private static final int BEFORE_SUNSET = 0x00000000;
 	/** Flag indicating lighting times at sunset. */
-	private static final int AT_SUNSET = 0x1000;
+	private static final int AT_SUNSET = 0x10000000;
 	/** Flag indicating lighting times after nightfall. */
-	private static final int MOTZE_SHABBATH = 0x2000;
+	private static final int MOTZE_SHABBATH = 0x20000000;
 
-	private static final int CANDLES_MASK = 0x000F;
-	private static final int HOLIDAY_MASK = 0x0FF0;
-	private static final int MOTZE_MASK = 0xF000;
+	private static final int CANDLES_MASK = 0x0000000F;
+	private static final int HOLIDAY_MASK = 0x000000FF;
+	private static final int MOTZE_MASK = 0xF0000000;
 
 	private static final String OPINION_10_2 = "10.2";
 	private static final String OPINION_11 = "11";
@@ -376,7 +376,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int candlesCount = 0;
 		boolean hasCandles = false;
 		int candlesHow = 0;
-		int holiday = -1;
+		int holidayToday = -1;
+		int holidayTomorrow = -1;
 		ComplexZmanimCalendar cal = mCalendar;
 		boolean inIsrael = mInIsrael;
 		cal.setCandleLightingOffset(mCandlesOffset);
@@ -387,7 +388,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			candlesCount = candles & CANDLES_MASK;
 			hasCandles = candlesCount > 0;
 			candlesHow = candles & MOTZE_MASK;
-			holiday = (candles & HOLIDAY_MASK) >> 4;
+			holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
+			holidayToday = (candles >> 12) & HOLIDAY_MASK;
 		}
 
 		Date date;
@@ -585,7 +587,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.prayers_row, R.id.prayers_time, date, true);
 		else {
 			add(R.string.prayers, summary, date);
-			if (holiday == JewishCalendar.PESACH)
+			if (holidayToday == JewishCalendar.EREV_PESACH)
 				add(R.string.eat_chametz, summary, date);
 		}
 
@@ -708,7 +710,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				add(R.id.candles_row, R.id.candles_time, date, true);
 			} else {
 				String summaryText;
-				if (holiday == JewishCalendar.CHANUKAH) {
+				if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 					summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				} else {
 					summaryText = getContext().getString(R.string.candles_summary, mCandlesOffset);
@@ -730,7 +732,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (hasCandles && (candlesHow == AT_SUNSET)) {
 			if (remote) {
 				add(R.id.candles_row, R.id.candles_time, date, true);
-			} else if (holiday == JewishCalendar.CHANUKAH) {
+			} else if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 				String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				add(R.string.candles, summaryText, date);
 			} else {
@@ -825,7 +827,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (hasCandles && (candlesHow == MOTZE_SHABBATH)) {
 			if (remote) {
 				add(R.id.candles_nightfall_row, R.id.candles_nightfall_time, date, true);
-			} else if (holiday == JewishCalendar.CHANUKAH) {
+			} else if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 				String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				add(R.string.candles, summaryText, date);
 			} else {
@@ -867,6 +869,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		jcal.setInIsrael(inIsrael);
 		// Check if the following day is special, because we can't check
 		// EREV_CHANUKAH.
+		int holidayToday = jcal.getYomTovIndex();
 		jcal.forward();
 		int holidayTomorrow = jcal.getYomTovIndex();
 		int count = CANDLES_NONE;
@@ -899,10 +902,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			if (dayOfWeek == Calendar.FRIDAY) {
 				holidayTomorrow = SHABBATH;
 				count = CANDLES_SHABBATH;
+			} else if (dayOfWeek == Calendar.SUNDAY) {
+				holidayToday = SHABBATH;
 			}
 			break;
 		}
 
-		return flags | ((holidayTomorrow << 4) & HOLIDAY_MASK) | (count & CANDLES_MASK);
+		return flags | ((holidayToday & HOLIDAY_MASK) << 12) | ((holidayTomorrow & HOLIDAY_MASK) << 4) | (count & CANDLES_MASK);
 	}
 }
