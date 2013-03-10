@@ -187,8 +187,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 			for (int i = 0; i < count; i++) {
 				item = adapter.getItem(i);
 				id = item.timeId;
-				// id is supposed to be 1 of 3 possible values: R.id.candles_row
-				// or R.id.candles_time or R.string.candles
+				// All non-candle times were checked "today" and "tomorrow"
+				// above.
+				if ((id != R.id.candles_row) && (id != R.id.candles_time) && (id != R.string.candles))
+					continue;
 				before = settings.getReminder(id);
 				if (before >= 0L) {
 					when = item.time - before;
