@@ -140,7 +140,7 @@
     <string name="reminder">Herinnering</string>
 
     <string-array name="reminder_entries">
-        <item>Af</item>
+        <item>Uit</item>
         <item>Op tijd</item>
         <item>1 minuut voor</item>
         <item>5 minuten voor</item>

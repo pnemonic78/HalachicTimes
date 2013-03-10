@@ -140,7 +140,7 @@
     <string name="reminder">Ppřipomínka</string>
 
     <string-array name="reminder_entries">
-        <item>Vypnuto</item>
+        <item>Vyp</item>
         <item>S časem</item>
         <item>1 minutu před</item>
         <item>5 minut před</item>

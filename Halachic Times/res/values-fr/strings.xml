@@ -140,7 +140,7 @@
     <string name="reminder">Rappel</string>
 
     <string-array name="reminder_entries">
-        <item>Désactivée</item>
+        <item>Désactivé</item>
         <item>À l\'heure</item>
         <item>1 minute avant</item>
         <item>5 minutes avant</item>

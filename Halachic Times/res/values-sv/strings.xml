@@ -140,7 +140,7 @@
     <string name="reminder">Påminnelse</string>
 
     <string-array name="reminder_entries">
-        <item>Avstängd</item>
+        <item>Av</item>
         <item>Vid tiden</item>
         <item>1 minut före</item>
         <item>5 minuter före</item>

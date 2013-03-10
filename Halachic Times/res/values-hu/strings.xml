@@ -140,7 +140,7 @@
     <string name="reminder">Emlékeztető</string>
 
     <string-array name="reminder_entries">
-        <item>Kikapcsolva</item>
+        <item>Ki</item>
         <item>Időben</item>
         <item>Előtt 1 perccel</item>
         <item>Előtt 5 perccel</item>

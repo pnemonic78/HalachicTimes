@@ -140,7 +140,7 @@
     <string name="reminder">Priminimas</string>
 
     <string-array name="reminder_entries">
-        <item>Išjungtas</item>
+        <item>Išjungta</item>
         <item>Laiku</item>
         <item>1 minutę prieš</item>
         <item>5 minučių prieš</item>

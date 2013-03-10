@@ -140,7 +140,7 @@
     <string name="reminder">Alarm</string>
 
     <string-array name="reminder_entries">
-        <item>Ausgeschaltet</item>
+        <item>Aus</item>
         <item>Pünktlich</item>
         <item>1 minute vor</item>
         <item>5 minuten vor</item>

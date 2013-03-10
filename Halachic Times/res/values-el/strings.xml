@@ -140,7 +140,7 @@
     <string name="reminder">Υπενθύμιση</string>
 
     <string-array name="reminder_entries">
-        <item>Απενεργοποιείται</item>
+        <item>Ανενεργό</item>
         <item>Έγκαιρα</item>
         <item>1 λεπτό πριν</item>
         <item>5 λεπτά πριν</item>

@@ -139,7 +139,7 @@
     <string name="reminder">Напомняне</string>
 
     <string-array name="reminder_entries">
-        <item>Изключен</item>
+        <item>Изключено</item>
         <item>Навреме</item>
         <item>1 минута преди</item>
         <item>5 минути преди</item>

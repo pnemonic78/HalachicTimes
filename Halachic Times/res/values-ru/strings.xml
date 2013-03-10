@@ -140,7 +140,7 @@
     <string name="reminder">Напоминание</string>
 
     <string-array name="reminder_entries">
-        <item>Выключена</item>
+        <item>Выключено</item>
         <item>Вовремя</item>
         <item>За 1 минуту до</item>
         <item>За 5 минут до</item>
