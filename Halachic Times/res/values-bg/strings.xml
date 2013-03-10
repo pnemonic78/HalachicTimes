@@ -101,7 +101,7 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
-    <string name="category_general">Общ</string>
+    <string name="category_general">Общи</string>
     <string name="coords_title">Координати</string>
     <string name="coords_hidden">Координати са скрити</string>
     <string name="coords_visible">Координати са видими</string>

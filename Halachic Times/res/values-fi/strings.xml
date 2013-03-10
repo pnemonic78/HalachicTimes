@@ -102,7 +102,7 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
-    <string name="category_general">Yleinen</string>
+    <string name="category_general">Yleiset</string>
     <string name="coords_title">Koordinaatit</string>
     <string name="coords_hidden">Koordinaatit ovat piilossa</string>
     <string name="coords_visible">Koordinaatit ovat näkyvä</string>

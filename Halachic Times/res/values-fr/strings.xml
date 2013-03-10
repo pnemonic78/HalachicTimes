@@ -102,7 +102,7 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Paramètres</string>
-    <string name="category_general">Général</string>
+    <string name="category_general">Généraux</string>
     <string name="coords_title">Coordonnées</string>
     <string name="coords_hidden">Coordonnées sont cachés</string>
     <string name="coords_visible">Coordonnées sont visibles</string>

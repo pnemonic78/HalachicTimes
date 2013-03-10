@@ -102,7 +102,7 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>
-    <string name="category_general">Ogólny</string>
+    <string name="category_general">Ogólne</string>
     <string name="coords_title">Współrzędne</string>
     <string name="coords_hidden">Współrzędne są ukryte</string>
     <string name="coords_visible">Współrzędne są widoczne</string>

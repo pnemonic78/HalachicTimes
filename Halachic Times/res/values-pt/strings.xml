@@ -101,7 +101,7 @@
     <string name="eat_chametz">Última hora de comer chametz</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Definições</string>
+    <string name="menu_settings">Configurações</string>
     <string name="category_general">Geral</string>
     <string name="coords_title">Coordenadas</string>
     <string name="coords_hidden">Coordenadas são escondidos</string>
