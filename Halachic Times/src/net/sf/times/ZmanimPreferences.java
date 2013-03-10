@@ -66,6 +66,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_OPINION_MINCHA);
 		initList(ZmanimSettings.KEY_OPINION_PLUG_MINCHA);
 		initList(ZmanimSettings.KEY_OPINION_SUNSET);
+		initList(ZmanimSettings.KEY_OPINION_TWILIGHT);
 		initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
 		initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
 
@@ -80,6 +81,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_REMINDER_PLUG_MINCHA);
 		initList(ZmanimSettings.KEY_REMINDER_CANDLES);
 		initList(ZmanimSettings.KEY_REMINDER_SUNSET);
+		initList(ZmanimSettings.KEY_REMINDER_TWILIGHT);
 		initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
 		initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
 	}

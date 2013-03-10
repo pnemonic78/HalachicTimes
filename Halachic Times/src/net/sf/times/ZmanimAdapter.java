@@ -76,6 +76,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_12 = "12";
 	private static final String OPINION_120 = "120";
 	private static final String OPINION_120_ZMANIS = "120_zmanis";
+	private static final Object OPINION_13 = "13.24";
 	private static final String OPINION_16_1 = "16.1";
 	private static final String OPINION_16_1_ALOS = "16.1_alos";
 	private static final String OPINION_16_1_SUNSET = "16.1_sunset";
@@ -92,6 +93,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_4_8 = "4.8";
 	private static final String OPINION_5_88 = "5.88";
 	private static final String OPINION_5_95 = "5.95";
+	private static final Object OPINION_58 = "58.5";
 	private static final String OPINION_60 = "60";
 	private static final String OPINION_7_083 = "7.083";
 	private static final String OPINION_72 = "72";
@@ -760,6 +762,25 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.sunset_row, R.id.sunset_time, date, true);
 		else
 			add(R.string.sunset, summary, date);
+
+		opinion = mSettings.getTwilight();
+		if (OPINION_7_083.equals(opinion)) {
+			date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
+			summary = R.string.twilight_7_083;
+		} else if (OPINION_58.equals(opinion)) {
+			date = cal.getBainHasmashosRT58Point5Minutes();
+			summary = R.string.twilight_58;
+		} else if (OPINION_13.equals(opinion)) {
+			date = cal.getBainHasmashosRT13Point24Degrees();
+			summary = R.string.twilight_13;
+		} else {
+			date = cal.getBainHasmashosRT2Stars();
+			summary = R.string.twilight_2stars;
+		}
+		if (remote)
+			add(R.id.twilight_row, R.id.twilight_time, date, true);
+		else
+			add(R.string.twilight, summary, date);
 
 		opinion = mSettings.getNightfall();
 		if (OPINION_120.equals(opinion)) {

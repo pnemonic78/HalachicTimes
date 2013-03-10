@@ -79,6 +79,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_CANDLES = "candles";
 	/** Preference name for sunset type. */
 	public static final String KEY_OPINION_SUNSET = "sunset";
+	/** Preference name for twilight type. */
+	public static final String KEY_OPINION_TWILIGHT = "twilight";
 	/** Preference name for nightfall type. */
 	public static final String KEY_OPINION_NIGHTFALL = "nightfall";
 	/** Preference name for midnight type. */
@@ -108,6 +110,8 @@ public class ZmanimSettings {
 	public static final String KEY_REMINDER_CANDLES = KEY_OPINION_CANDLES + REMINDER_SUFFIX;
 	/** Preference name for sunset reminder. */
 	public static final String KEY_REMINDER_SUNSET = KEY_OPINION_SUNSET + REMINDER_SUFFIX;
+	/** Preference name for twilight reminder. */
+	public static final String KEY_REMINDER_TWILIGHT = KEY_OPINION_TWILIGHT + REMINDER_SUFFIX;
 	/** Preference name for nightfall reminder. */
 	public static final String KEY_REMINDER_NIGHTFALL = KEY_OPINION_NIGHTFALL + REMINDER_SUFFIX;
 	/** Preference name for midnight reminder. */
@@ -349,6 +353,15 @@ public class ZmanimSettings {
 	}
 
 	/**
+	 * Get the opinion for twilight (dusk).
+	 * 
+	 * @return the opinion.
+	 */
+	public String getTwilight() {
+		return mPrefs.getString(KEY_OPINION_TWILIGHT, "");
+	}
+
+	/**
 	 * Get the opinion for nightfall.
 	 * 
 	 * @return the opinion.
@@ -392,11 +405,10 @@ public class ZmanimSettings {
 			return getMincha();
 		if ((id == R.id.plug_hamincha_row) || (id == R.id.plug_hamincha_time) || (id == R.string.plug_hamincha))
 			return getPlugHamincha();
-		// if ((id == R.id.candles_row) || (id == R.id.candles_time) || (id ==
-		// R.string.candles))
-		// return getCandleLighting();
 		if ((id == R.id.sunset_row) || (id == R.id.sunset_time) || (id == R.string.sunset))
 			return getSunset();
+		if ((id == R.id.twilight_row) || (id == R.id.twilight_time) || (id == R.string.twilight))
+			return getTwilight();
 		if ((id == R.id.nightfall_row) || (id == R.id.nightfall_time) || (id == R.string.nightfall))
 			return getNightfall();
 		if ((id == R.id.candles_nightfall_row) || (id == R.id.candles_nightfall_time))
@@ -437,6 +449,8 @@ public class ZmanimSettings {
 			return getReminder(KEY_REMINDER_CANDLES);
 		if ((id == R.id.sunset_row) || (id == R.id.sunset_time) || (id == R.string.sunset))
 			return getReminder(KEY_REMINDER_SUNSET);
+		if ((id == R.id.twilight_row) || (id == R.id.twilight_time) || (id == R.string.twilight))
+			return getReminder(KEY_REMINDER_TWILIGHT);
 		if ((id == R.id.nightfall_row) || (id == R.id.nightfall_time) || (id == R.string.nightfall))
 			return getReminder(KEY_REMINDER_NIGHTFALL);
 		if ((id == R.id.candles_nightfall_row) || (id == R.id.candles_nightfall_time))

@@ -145,6 +145,13 @@
     <string name="sunset_summary" translatable="false">@string/sunrise_summary</string>
     <string name="sunset_sea" translatable="false">@string/sunrise_sea</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Twilight</string>
+    <string name="twilight_2stars">2 stars visible</string>
+    <string name="twilight_7_083">13.5 minutes before 7.083° nightfall</string>
+    <string name="twilight_58">58.5 minutes after sunset</string>
+    <string name="twilight_13">Sun is 13.24° below horizon</string>
+
     <!-- Nightfall -->
     <string name="nightfall">Nightfall</string>
     <string name="nightfall_3stars">3 stars visible</string>

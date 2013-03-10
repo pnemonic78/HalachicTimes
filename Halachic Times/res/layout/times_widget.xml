@@ -255,7 +255,6 @@
 
     <LinearLayout
         android:id="@+id/sunset_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -272,6 +271,31 @@
 
         <TextView
             android:id="@+id/sunset_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/twilight_row"
+        style="@style/LightRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:singleLine="true"
+            android:text="@string/twilight"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <TextView
+            android:id="@+id/twilight_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"

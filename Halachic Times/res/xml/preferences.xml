@@ -246,6 +246,24 @@
                 android:key="sunset.reminder"
                 android:title="@string/reminder"/>
         </PreferenceScreen>
+        <PreferenceScreen android:title="@string/twilight">
+            <ListPreference
+                android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:entries="@array/twilight_entries"
+                android:entryValues="@array/twilight_values"
+                android:icon="@drawable/ic_opinion"
+                android:key="twilight"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:icon="@drawable/ic_alarm"
+                android:key="twilight.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
         <PreferenceScreen android:title="@string/nightfall">
             <ListPreference
                 android:defaultValue=""

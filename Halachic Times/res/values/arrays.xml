@@ -211,6 +211,18 @@
         <item>@string/sunset_summary</item>
         <item>@string/sunset_sea</item>
     </string-array>
+    <string-array name="twilight_values" translatable="false">
+        <item>7.083</item>
+        <item></item>
+        <item>13.24</item>
+        <item>58.5</item>
+    </string-array>
+    <string-array name="twilight_entries" translatable="false">
+        <item>@string/twilight_7_083</item>
+        <item>@string/twilight_2stars</item>
+        <item>@string/twilight_13</item>
+        <item>@string/twilight_58</item>
+    </string-array>
     <string-array name="nightfall_values" translatable="false">
         <item>3.65</item>
         <item>3.676</item>
