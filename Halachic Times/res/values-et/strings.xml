@@ -11,7 +11,7 @@
     <string name="opinion_120_zmanis">Päeval on 120 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_16">Päeval on 16,1° alla päikese tõusu / loojangu</string>
     <string name="opinion_16_sunset">Päeval on ära koidust 16,1° kuni merepinnast loojang</string>
-    <string name="opinion_16_night">Päeval on ära koidust 16,1° kuni videvik</string>
+    <string name="opinion_16_night">Päeval on ära koidust 16,1° kuni öö</string>
     <string name="opinion_26">Päeval on 26° alla päikese tõusu / loojangu</string>
     <string name="opinion_19">Päeval on 19,8° alla päikese tõusu / loojangu</string>
     <string name="opinion_18">Päeval on 18° alla päikese tõusu / loojangu</string>
@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Küünal valgustus</string>
     <string name="candles_summary">%1$d minutit enne loojangut</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka küünal</item>
         <item quantity="other">%1$d Chanuka küünlad</item>
@@ -79,8 +80,15 @@
     <!-- Sunset -->
     <string name="sunset">Päikeseloojang</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Videvik</string>
+    <string name="twilight_2stars">2 tärni nähtav</string>
+    <string name="twilight_7_083">13,5 minutit enne 7,083° öö</string>
+    <string name="twilight_58">58,5 minutit pärast päikeseloojangut</string>
+    <string name="twilight_13">Päike on 13,24° allpool horisonti</string>
+
     <!-- Nightfall -->
-    <string name="nightfall">Videvik</string>
+    <string name="nightfall">Öö</string>
     <string name="nightfall_3stars">3 tärni nähtav</string>
     <string name="nightfall_3_65">Päike on 3,65° allpool merepinda</string>
     <string name="nightfall_3_676">Päike on 3,676° allpool merepinda</string>

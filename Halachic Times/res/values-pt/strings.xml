@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Acendimento das velas</string>
     <string name="candles_summary">%1$d minutos antes da pôr do sol</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 vela de Hanucá</item>
         <item quantity="other">%1$d velas de Hanucá</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Pôr do sol</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Crepúsculo</string>
+    <string name="twilight_2stars">2 estrelas visíveis</string>
+    <string name="twilight_7_083">13,5 minutos antes 7,083° anoitecer</string>
+    <string name="twilight_58">58,5 minutos depois do pôr do sol</string>
+    <string name="twilight_13">Sol é 13,24° abaixo do horizonte</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Anoitecer</string>

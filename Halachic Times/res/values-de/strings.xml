@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Kerzenzünden</string>
     <string name="candles_summary">%1$d minuten vor sonnenuntergang</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanukka kerze</item>
         <item quantity="other">%1$d Chanukka-kerzen</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Sonnenuntergang</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Zwielicht</string>
+    <string name="twilight_2stars">2 sterne sichtbar</string>
+    <string name="twilight_7_083">13,5 minuten vor 7,083° nacht</string>
+    <string name="twilight_58">58,5 minuten nach sonnenuntergang</string>
+    <string name="twilight_13">Sonne ist 13,24° unter dem horizont</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Einbruch der nacht</string>

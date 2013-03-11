@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Svíčka osvětlení</string>
     <string name="candles_summary">%1$d minut před západem slunce</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka svíčka</item>
         <item quantity="other">%1$d Chanuka svíčky</item>
@@ -79,9 +80,16 @@
     <!-- Sunset -->
     <string name="sunset">Západ slunce</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Soumrak</string>
+    <string name="twilight_2stars">2 hvězdičky viditelné</string>
+    <string name="twilight_7_083">13,5 minut před 7,083° setmění</string>
+    <string name="twilight_58">58,5 minut po západu slunce</string>
+    <string name="twilight_13">Slunce je 13,24° pod obzorem</string>
+
     <!-- Nightfall -->
     <string name="nightfall">Setmění</string>
-    <string name="nightfall_3stars">3 hvězdiček viditelné</string>
+    <string name="nightfall_3stars">3 hvězdičky viditelné</string>
     <string name="nightfall_3_65">Slunce je 3,65° pod úrovní moře</string>
     <string name="nightfall_3_676">Slunce je 3,676° pod úrovní moře</string>
     <string name="nightfall_4_37">Slunce je 4,37° pod úrovní moře</string>

@@ -9,12 +9,12 @@
     <!-- Recurring opinions -->
     <string name="opinion_120">Jour est 120 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_120_zmanis">Jour est 120 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_16">Jour est 16,1° au-dessous de lever / coucher du soleil</string>
+    <string name="opinion_16">Jour est 16,1° sous de lever / coucher du soleil</string>
     <string name="opinion_16_sunset">Jour est de l\'aube 16,1° à niveau de la mer coucher de soleil</string>
     <string name="opinion_16_night">Jour est de l\'aube 16,1° à tombée de la nuit</string>
-    <string name="opinion_26">Jour est 26° au-dessous de lever / coucher du soleil</string>
-    <string name="opinion_19">Jour est 19,8° au-dessous de lever / coucher du soleil</string>
-    <string name="opinion_18">Jour est 18° au-dessous de lever / coucher du soleil</string>
+    <string name="opinion_26">Jour est 26° sous de lever / coucher du soleil</string>
+    <string name="opinion_19">Jour est 19,8° sous de lever / coucher du soleil</string>
+    <string name="opinion_18">Jour est 18° sous de lever / coucher du soleil</string>
     <string name="opinion_60">Jour est 60 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_72">Jour est 72 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_72_zmanis">Jour est 72 <i>zmaniyot</i> minutes avant le lever / après le coucher du soleil</string>
@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Allumage des bougies</string>
     <string name="candles_summary">%1$d minutes avant le coucher du soleil</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 bougie de Hanoukka</item>
         <item quantity="other">%1$d bougies de Hanoukka</item>
@@ -79,18 +80,25 @@
     <!-- Sunset -->
     <string name="sunset">Coucher du soleil</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Crépuscule</string>
+    <string name="twilight_2stars">2 étoiles visibles</string>
+    <string name="twilight_7_083">13,5 minutes before 7,083° nightfall</string>
+    <string name="twilight_58">58,5 minutes après le coucher du soleil</string>
+    <string name="twilight_13">Soleil est 13,24° sous l\'horizon</string>
+
     <!-- Nightfall -->
     <string name="nightfall">Tombée de la nuit</string>
     <string name="nightfall_3stars">3 étoiles visibles</string>
-    <string name="nightfall_3_65">Soleil est 3,65° au-dessous de niveau de la mer</string>
-    <string name="nightfall_3_676">Soleil est 3,676° au-dessous de niveau de la mer</string>
-    <string name="nightfall_4_37">Soleil est 4,37° au-dessous de niveau de la mer</string>
-    <string name="nightfall_4_61">Soleil est 4,61° au-dessous de niveau de la mer</string>
-    <string name="nightfall_4_8">Soleil est 4,8° au-dessous de niveau de la mer</string>
-    <string name="nightfall_5_88">Soleil est 5,88° au-dessous de niveau de la mer</string>
-    <string name="nightfall_5_95">Soleil est 5,95° au-dessous de niveau de la mer</string>
-    <string name="nightfall_7">Soleil est 7,083° au-dessous de niveau de la mer</string>
-    <string name="nightfall_8">Soleil est 8,5° au-dessous de niveau de la mer</string>
+    <string name="nightfall_3_65">Soleil est 3,65° sous de niveau de la mer</string>
+    <string name="nightfall_3_676">Soleil est 3,676° sous de niveau de la mer</string>
+    <string name="nightfall_4_37">Soleil est 4,37° sous de niveau de la mer</string>
+    <string name="nightfall_4_61">Soleil est 4,61° sous de niveau de la mer</string>
+    <string name="nightfall_4_8">Soleil est 4,8° sous de niveau de la mer</string>
+    <string name="nightfall_5_88">Soleil est 5,88° sous de niveau de la mer</string>
+    <string name="nightfall_5_95">Soleil est 5,95° sous de niveau de la mer</string>
+    <string name="nightfall_7">Soleil est 7,083° sous de niveau de la mer</string>
+    <string name="nightfall_8">Soleil est 8,5° sous de niveau de la mer</string>
 
     <!-- Midnight -->
     <string name="midnight">Khatsot</string>

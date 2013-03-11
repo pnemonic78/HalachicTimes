@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Φωτισμό κεριών</string>
     <string name="candles_summary">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Χανουκά κερί</item>
         <item quantity="other">%1$d κεριά Χανουκά</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Ηλιοβασίλεμα</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Λυκόφως</string>
+    <string name="twilight_2stars">2 αστέρια ορατά</string>
+    <string name="twilight_7_083">13,5 λεπτά πριν από 7,083° νύχτα</string>
+    <string name="twilight_58">58,5 λεπτά μετά τη δύση</string>
+    <string name="twilight_13">Ήλιος είναι 13,24° κάτω από τον ορίζοντα</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Σούρουπο</string>

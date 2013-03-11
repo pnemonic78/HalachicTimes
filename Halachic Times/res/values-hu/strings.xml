@@ -10,7 +10,7 @@
     <string name="opinion_120">Nap 120 perc napkelte előtt / napnyugta után</string>
     <string name="opinion_120_zmanis">Nap 120 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
     <string name="opinion_16">Nap 16,1° alábbi napkelte / napnyugta</string>
-    <string name="opinion_16_sunset">Nap-tól hajnal 16,1° tenger szintje napnyugta</string>
+    <string name="opinion_16_sunset">Nap-tól hajnal 16,1° tengerszint napnyugta</string>
     <string name="opinion_16_night">Nap-tól hajnal 16,1° alkony</string>
     <string name="opinion_26">Nap 26° alábbi napkelte / napnyugta</string>
     <string name="opinion_19">Nap 19,8° alábbi napkelte / napnyugta</string>
@@ -38,7 +38,7 @@
     <!-- Sunrise -->
     <string name="sunrise">Napkelte</string>
     <string name="sunrise_summary">Egy szinten régióban</string>
-    <string name="sunrise_sea">A tenger szintje</string>
+    <string name="sunrise_sea">A tengerszint</string>
 
     <!-- Latest shema -->
     <string name="shema">Legutóbbi shema</string>
@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Gyertyagyújtás</string>
     <string name="candles_summary">%1$d perc naplemente előtt</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka gyertya</item>
         <item quantity="other">%1$d Chanuka gyertyák</item>
@@ -79,18 +80,25 @@
     <!-- Sunset -->
     <string name="sunset">Napnyugta</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Szürkület</string>
+    <string name="twilight_2stars">2 csillagos látható</string>
+    <string name="twilight_7_083">Előtt 13,5 perc 7,083° alkony</string>
+    <string name="twilight_58">58,5 perccel napnyugta után</string>
+    <string name="twilight_13">A nap 13,24° alatt horizont</string>
+
     <!-- Nightfall -->
     <string name="nightfall">Alkony</string>
     <string name="nightfall_3stars">3 csillagos látható</string>
-    <string name="nightfall_3_65">A nap 3,65° tenger szintje alatt</string>
-    <string name="nightfall_3_676">A nap 3,676° tenger szintje alatt</string>
-    <string name="nightfall_4_37">A nap 4,37° tenger szintje alatt</string>
-    <string name="nightfall_4_61">A nap 4,61° tenger szintje alatt</string>
-    <string name="nightfall_4_8">A nap 4,8° tenger szintje alatt</string>
-    <string name="nightfall_5_88">A nap 5,88° tenger szintje alatt</string>
-    <string name="nightfall_5_95">A nap 5,95° tenger szintje alatt</string>
-    <string name="nightfall_7">A nap 7,083° tenger szintje alatt</string>
-    <string name="nightfall_8">A nap 8,5° tenger szintje alatt</string>
+    <string name="nightfall_3_65">A nap 3,65° tengerszint alatt</string>
+    <string name="nightfall_3_676">A nap 3,676° tengerszint alatt</string>
+    <string name="nightfall_4_37">A nap 4,37° tengerszint alatt</string>
+    <string name="nightfall_4_61">A nap 4,61° tengerszint alatt</string>
+    <string name="nightfall_4_8">A nap 4,8° tengerszint alatt</string>
+    <string name="nightfall_5_88">A nap 5,88° tengerszint alatt</string>
+    <string name="nightfall_5_95">A nap 5,95° tengerszint alatt</string>
+    <string name="nightfall_7">A nap 7,083° tengerszint alatt</string>
+    <string name="nightfall_8">A nap 8,5° tengerszint alatt</string>
 
     <!-- Midnight -->
     <string name="midnight">Chatzos</string>

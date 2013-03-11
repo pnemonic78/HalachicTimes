@@ -28,7 +28,6 @@
 
     <!-- List -->
     <string name="dawn">Зората</string>
-
     <string name="tallis">Най-рано талис и тфилин (мишякир)</string>
     <string name="tallis_summary">Слънцето е 11,5° под хоризонта</string>
     <string name="tallis_11">Слънцето е 11° под хоризонта</string>
@@ -70,6 +69,7 @@
     <!-- Candle lighting -->
     <string name="candles">Осветление на свещи</string>
     <string name="candles_summary">%1$d минути преди да залез</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Ханука свещ</item>
         <item quantity="other">%1$d Ханука свещи</item>
@@ -77,6 +77,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Залез слънце</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Полумрак</string>
+    <string name="twilight_2stars">2 звезди видими</string>
+    <string name="twilight_7_083">13,5 минути преди 7,083° свечеряване</string>
+    <string name="twilight_58">58,5 минути след залез слънце</string>
+    <string name="twilight_13">Слънцето е 13,24° под хоризонта</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Свечеряване</string>

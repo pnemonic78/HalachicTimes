@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Lumânare de iluminat</string>
     <string name="candles_summary">%1$d minute înainte de apus</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka lumânare</item>
         <item quantity="other">%1$d Chanuka lumânări</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Apus de soare</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Amurg</string>
+    <string name="twilight_2stars">2 stele vizibile</string>
+    <string name="twilight_7_083">13,5 minute înainte de 7,083° căderea nopții</string>
+    <string name="twilight_58">58,5 minute după apus</string>
+    <string name="twilight_13">Soarele este des 13,24° sub orizont</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Căderea nopții</string>

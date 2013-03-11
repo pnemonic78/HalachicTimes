@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Žvakė apšvietimas</string>
     <string name="candles_summary">%1$d minučių prieš saulėlydžio</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka žvakė</item>
         <item quantity="other">%1$d Chanuka žvakės</item>
@@ -79,9 +80,16 @@
     <!-- Sunset -->
     <string name="sunset">Saulėlydis</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Apytema</string>
+    <string name="twilight_2stars">2 žvaigždės matomas</string>
+    <string name="twilight_7_083">13,5 minučių prieš 7,083° naktį</string>
+    <string name="twilight_58">58,5 minutes po saulėlydžio</string>
+    <string name="twilight_13">Saulė yra 13,24° žemiau horizonto</string>
+
     <!-- Nightfall -->
     <string name="nightfall">Ateinančio naktys</string>
-    <string name="nightfall_3stars">3 žvaigždės yra matomi</string>
+    <string name="nightfall_3stars">3 žvaigždės matomas</string>
     <string name="nightfall_3_65">Saulė yra 3,65° žemiau jūros lygio</string>
     <string name="nightfall_3_676">Saulė yra 3,676° žemiau jūros lygio</string>
     <string name="nightfall_4_37">Saulė yra 4,37° žemiau jūros lygio</string>

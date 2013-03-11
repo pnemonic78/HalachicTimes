@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Stearinljus belysning</string>
     <string name="candles_summary">%1$d minuter före solnedgången</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanukka ljus</item>
         <item quantity="other">%1$d Chanukka stearinljus</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Solnedgången</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Skymningen</string>
+    <string name="twilight_2stars">2 stjärnor synliga</string>
+    <string name="twilight_7_083">13,5 minuter före 7,083° natt</string>
+    <string name="twilight_58">58,5 minuter efter solnedgången</string>
+    <string name="twilight_13">Solen är 13,24° under horisonten</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Nattens inbrott</string>

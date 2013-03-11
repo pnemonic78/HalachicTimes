@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">הדלקת נרות</string>
     <string name="candles_summary">%1$d דקות לפני השקיעה</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">נר חנוכה 1</item>
         <item quantity="other">%1$d נרות חנוכה</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">שקיעת השמש</string>
+
+    <!-- Twilight -->
+    <string name="twilight">בין השמשות</string>
+    <string name="twilight_2stars">2 כוכבים גלויים</string>
+    <string name="twilight_7_083">13.5 דקות לפני 7.083° לילה</string>
+    <string name="twilight_58">58.5 דקות לאחר השקיעה</string>
+    <string name="twilight_13">שמש 13.24° מתחת לאופק</string>
 
     <!-- Nightfall -->
     <string name="nightfall">לילה</string>

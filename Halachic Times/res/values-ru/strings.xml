@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Зажигание свечей</string>
     <string name="candles_summary">%1$d минут до захода солнца</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 свеча Хануки</item>
         <item quantity="other">%1$d Ханукальные свечи</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Заход солнца</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Сумерки</string>
+    <string name="twilight_2stars">2 звезды видимы</string>
+    <string name="twilight_7_083">13,5 минут до 7,083° темноты</string>
+    <string name="twilight_58">58,5 минут после захода солнца</string>
+    <string name="twilight_13">Солнце 13,24° ниже горизонта</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Наступление темноты</string>

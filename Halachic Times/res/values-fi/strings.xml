@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Kynttilävalaistus</string>
     <string name="candles_summary">%1$d minuuttia ennen auringonlasku</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanukka kynttilän</item>
         <item quantity="other">%1$d Chanukka kynttilät</item>
@@ -78,6 +79,13 @@
 
     <!-- Sunset -->
     <string name="sunset">Auringonlasku</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Hämärä</string>
+    <string name="twilight_2stars">2 tähteä näkyvissä</string>
+    <string name="twilight_7_083">13,5 minuuttia ennen 7,083° pimetessä</string>
+    <string name="twilight_58">58,5 minuuttia auringonlaskun jälkeen</string>
+    <string name="twilight_13">Aurinko on 13,24° horisontin alapuolella</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Pimetessä</string>

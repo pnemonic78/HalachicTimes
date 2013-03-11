@@ -71,6 +71,7 @@
     <!-- Candle lighting -->
     <string name="candles">Candela illuminazione</string>
     <string name="candles_summary">%1$d minutes minuti prima del tramonto</string>
+
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanukkà candela</item>
         <item quantity="other">%1$d Chanukkà candele</item>
@@ -79,8 +80,15 @@
     <!-- Sunset -->
     <string name="sunset">Tramonto</string>
 
+    <!-- Twilight -->
+    <string name="twilight">Crepuscolo</string>
+    <string name="twilight_2stars">2 stelle visibili</string>
+    <string name="twilight_7_083">13,5 minuti prima di 7,083° imbrunire</string>
+    <string name="twilight_58">58,5 minuti dopo il tramonto</string>
+    <string name="twilight_13">Sole è 13,24° sotto l\'orizzonte</string>
+
     <!-- Nightfall -->
-    <string name="nightfall">Crepuscolo</string>
+    <string name="nightfall">Imbrunire</string>
     <string name="nightfall_3stars">3 stelle visibili</string>
     <string name="nightfall_3_65">Sole è 3,65° sotto livello del mare</string>
     <string name="nightfall_3_676">Sole è 3,676° sotto livello del mare</string>
