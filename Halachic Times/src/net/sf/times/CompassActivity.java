@@ -88,8 +88,6 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	 * Constructs a new compass.
 	 */
 	public CompassActivity() {
-		super();
-
 		mHoliest = new Location(LocationManager.GPS_PROVIDER);
 		mHoliest.setLatitude(HOLIEST_LATITUDE);
 		mHoliest.setLongitude(HOLIEST_LONGITUDE);

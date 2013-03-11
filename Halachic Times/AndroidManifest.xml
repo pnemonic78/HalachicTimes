@@ -19,8 +19,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ZmanimActivity"
-            android:label="@string/title_activity_zmanim"
-            android:theme="@style/AppTheme">
+            android:label="@string/title_activity_zmanim">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -38,6 +37,10 @@
         <activity
             android:name=".CompassActivity"
             android:label="@string/title_activity_compass">
+        </activity>
+        <activity
+            android:name=".ComplexZmanimActivity"
+            android:label="@string/title_activity_zmanim">
         </activity>
 
         <receiver

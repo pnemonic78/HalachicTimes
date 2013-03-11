@@ -20,16 +20,19 @@
 package net.sf.times;
 
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RemoteViews;
@@ -46,7 +49,7 @@ import android.widget.TextView;
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/** 12 hours (half a full day). */
-	private static final long TWELVE_HOURS = DateUtils.DAY_IN_MILLIS >> 1;
+	protected static final long TWELVE_HOURS = DateUtils.DAY_IN_MILLIS >> 1;
 
 	/** Holiday id for Shabbath. */
 	private static final int SHABBATH = 100;
@@ -106,17 +109,19 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_ATERET = "AT";
 	private static final String OPINION_GRA = "GRA";
 	private static final String OPINION_MGA = "MGA";
-	private static final String OPINION_FIXED = "fixed";
+	protected static final String OPINION_FIXED = "fixed";
 	private static final String OPINION_SEA = "sea";
 
-	private final LayoutInflater mInflater;
-	private final ZmanimSettings mSettings;
-	private final ComplexZmanimCalendar mCalendar;
-	private final boolean mInIsrael;
-	private final long mNow = System.currentTimeMillis();
-	private final boolean mSummaries;
-	private final boolean mElapsed;
-	private final int mCandlesOffset;
+	protected final LayoutInflater mInflater;
+	protected final ZmanimSettings mSettings;
+	protected final ComplexZmanimCalendar mCalendar;
+	protected final boolean mInIsrael;
+	protected final long mNow = System.currentTimeMillis();
+	protected final boolean mSummaries;
+	protected final boolean mElapsed;
+	protected final int mCandlesOffset;
+	private OnClickListener mOnClickListener;
+	private Comparator<ZmanimItem> mComparator;
 
 	/**
 	 * Time row item.
@@ -196,6 +201,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (convertView == null)
 			view = mInflater.inflate(resource, parent, false);
 		ZmanimItem item = getItem(position);
+		view.setTag(item);
 
 		TextView title = (TextView) view.findViewById(R.id.title);
 		title.setText(item.titleId);
@@ -209,6 +215,32 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		title.setEnabled(enabled);
 		summary.setEnabled(enabled);
 		time.setEnabled(enabled);
+
+		view.setOnClickListener(null);
+		if (enabled) {
+			boolean clickable = true;
+			final int id = item.titleId;
+			if (id == R.string.candles)
+				clickable = false;
+
+			if (clickable) {
+				if (mOnClickListener == null) {
+					mOnClickListener = new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ZmanimItem item = (ZmanimItem) v.getTag();
+
+							final Context context = getContext();
+							Intent intent = new Intent(context, ComplexZmanimActivity.class);
+							intent.putExtra(ZmanimActivity.PARAMETER_DATE, mCalendar.getCalendar().getTimeInMillis());
+							intent.putExtra(ComplexZmanimActivity.PARAMETER_ITEM, item.titleId);
+							context.startActivity(intent);
+						}
+					};
+				}
+				view.setOnClickListener(mOnClickListener);
+			}
+		}
 
 		return view;
 	}
@@ -945,5 +977,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		}
 
 		return flags | ((holidayToday & HOLIDAY_MASK) << 12) | ((holidayTomorrow & HOLIDAY_MASK) << 4) | (count & CANDLES_MASK);
+	}
+
+	protected void sort() {
+		if (mComparator == null) {
+			mComparator = new Comparator<ZmanimItem>() {
+
+				@Override
+				public int compare(ZmanimItem lhs, ZmanimItem rhs) {
+					long dt = lhs.time - rhs.time;
+					if (dt != 0L)
+						return (int) dt;
+					return lhs.titleId - rhs.titleId;
+				}
+			};
+		}
+		sort(mComparator);
 	}
 }

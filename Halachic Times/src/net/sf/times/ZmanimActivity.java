@@ -84,7 +84,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** Address provider. */
 	private AddressProvider mAddressProvider;
 	/** The settings and preferences. */
-	private ZmanimSettings mSettings;
+	protected ZmanimSettings mSettings;
 	/** The date picker. */
 	private DatePickerDialog mDatePicker;
 	/** The address. */
@@ -100,11 +100,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * Creates a new activity.
 	 */
 	public ZmanimActivity() {
-		super();
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		init();
 		initLocation();
@@ -127,8 +126,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		super.onResume();
 		mLocations.resume(this);
 		if (mReminder == null)
-			mReminder = new ZmanimReminder(this);
-		mReminder.cancel();
+			mReminder = createReminder();
+		if (mReminder != null)
+			mReminder.cancel();
 	}
 
 	@Override
@@ -218,11 +218,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		GeoLocation gloc = mLocations.getGeoLocation();
 		if (gloc == null)
 			return;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCalendar(mDate);
-		final boolean inIsrael = mLocations.inIsrael();
 
-		mAdapter = new ZmanimAdapter(this, mSettings, cal, inIsrael);
+		mAdapter = createAdapter(mDate, mLocations);
 		mAdapter.populate(false);
 
 		if (mList == null)
@@ -230,13 +227,36 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		ViewGroup list = (ViewGroup) mList.findViewById(R.id.list);
 		if (list == null)
 			return;
-		if (mSettings.isBackgroundGradient()) {
-			if (mBackground == null)
-				mBackground = getResources().getDrawable(R.drawable.list_gradient);
-			list.setBackgroundDrawable(mBackground);
-		} else
-			list.setBackgroundDrawable(null);
+		if (isBackgroundDrawable()) {
+			if (mSettings.isBackgroundGradient()) {
+				if (mBackground == null)
+					mBackground = getResources().getDrawable(R.drawable.list_gradient);
+				list.setBackgroundDrawable(mBackground);
+			} else
+				list.setBackgroundDrawable(null);
+		}
 		mAdapter.bindViews(list);
+	}
+
+	/**
+	 * Is the list background painted?
+	 * 
+	 * @return {@code true} for non-transparent background.
+	 */
+	protected boolean isBackgroundDrawable() {
+		return true;
+	}
+
+	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
+		GeoLocation gloc = locations.getGeoLocation();
+		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
+		cal.setCalendar(date);
+		boolean inIsrael = locations.inIsrael();
+		return new ZmanimAdapter(this, mSettings, cal, inIsrael);
+	}
+
+	protected ZmanimReminder createReminder() {
+		return new ZmanimReminder(this);
 	}
 
 	/** Populate the header item. */
