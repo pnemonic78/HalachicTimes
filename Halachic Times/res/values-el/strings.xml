@@ -52,7 +52,7 @@
     <string name="prayers_2">2 ώρες πριν από μεσημέρι</string>
 
     <!-- Midday -->
-    <string name="midday">Μεσημέρι</string>
+    <string name="midday">Μεσημέρι (χαζοτ)</string>
     <string name="midday_summary">Μεσημβρία</string>
     <string name="midday_fixed">Μεσημέρι ρυθμίζεται για το τοπικό γεωγραφικό πλάτος</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Ήλιος είναι 8,5° κάτω από επίπεδο της θάλασσας</string>
 
     <!-- Midnight -->
-    <string name="midnight">Χαζοτ</string>
-    <string name="midnight_summary">Μεσάνυχτα</string>
+    <string name="midnight">Μεσάνυχτα (χαζοτ)</string>
+    <string name="midnight_summary">Ηλιακό μεσάνυχτα</string>
     <string name="midnight_12">2 ώρες μετά το μεσημέρι</string>
 
     <!-- Pesach -->

@@ -52,8 +52,8 @@
     <string name="prayers_2">Előtt 2 órával dél</string>
 
     <!-- Midday -->
-    <string name="midday">Dél</string>
-    <string name="midday_summary">Dél</string>
+    <string name="midday">Dél (chatzos)</string>
+    <string name="midday_summary">Szolár délig</string>
     <string name="midday_fixed">Noon igazítani a helyi szélességi</string>
 
     <!-- Earliest mincha -->
@@ -101,8 +101,8 @@
     <string name="nightfall_8">A nap 8,5° tengerszint alatt</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzos</string>
-    <string name="midnight_summary">Éjfél</string>
+    <string name="midnight">Éjfél (chatzos)</string>
+    <string name="midnight_summary">Szolár éjfél</string>
     <string name="midnight_12">12 órával azután dél</string>
 
     <!-- Pesach -->

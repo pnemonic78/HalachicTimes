@@ -52,7 +52,7 @@
     <string name="prayers_2">2 tuntia ennen keskipäivä</string>
 
     <!-- Midday -->
-    <string name="midday">Keskipäivä</string>
+    <string name="midday">Keskipäivä (chazos)</string>
     <string name="midday_summary">Aurinko keskipäivä</string>
     <string name="midday_fixed">Keskipäivä oikaistu paikallisia leveysaste</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Aurinko on 8,5° meren pinnan alapuolella</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chazos</string>
-    <string name="midnight_summary">Keskiyö</string>
+    <string name="midnight">Keskiyö (chazos)</string>
+    <string name="midnight_summary">Aurinko keskiyön</string>
     <string name="midnight_12">12 tuntia jälkeen keskipäivä</string>
 
     <!-- Pesach -->

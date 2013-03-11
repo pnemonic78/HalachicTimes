@@ -52,7 +52,7 @@
     <string name="prayers_2">2 ore prima di mezzogiorno</string>
 
     <!-- Midday -->
-    <string name="midday">Mezzogiorno</string>
+    <string name="midday">Mezzogiorno (chatzos)</string>
     <string name="midday_summary">Mezzo del giorno</string>
     <string name="midday_fixed">Mezzogiorno regolato per la latitudine locale</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Sole è 8,5° sotto livello del mare</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzos</string>
-    <string name="midnight_summary">Mezzanotte</string>
+    <string name="midnight">Mezzanotte (chatzos)</string>
+    <string name="midnight_summary">Mezzanotte solare</string>
     <string name="midnight_12">12 ore dopo mezzogiorno</string>
 
     <!-- Pesach -->

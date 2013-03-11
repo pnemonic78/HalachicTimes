@@ -52,7 +52,7 @@
     <string name="prayers_2">2 часа до полдень</string>
 
     <!-- Midday -->
-    <string name="midday">Полдень</string>
+    <string name="midday">Полдень (хацот)</string>
     <string name="midday_summary">Середине дня</string>
     <string name="midday_fixed">Полдень с поправкой на местных широты</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Солнце 8,5° ниже уровне моря</string>
 
     <!-- Midnight -->
-    <string name="midnight">Хацот</string>
-    <string name="midnight_summary">Полночь</string>
+    <string name="midnight">Полночь (хацот)</string>
+    <string name="midnight_summary">Солнечная полночь</string>
     <string name="midnight_12">12 часа после полудня</string>
 
     <!-- Pesach -->

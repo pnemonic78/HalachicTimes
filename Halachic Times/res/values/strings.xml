@@ -92,7 +92,7 @@
     <string name="prayers_gra" translatable="false">@string/opinion_gra</string>
 
     <!-- Midday -->
-    <string name="midday">Midday</string>
+    <string name="midday">Midday (chatzos)</string>
     <string name="midday_summary">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
 
@@ -180,8 +180,8 @@
     <string name="nightfall_8">Sun is 8.5° below sea level</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzos</string>
-    <string name="midnight_summary">Midnight</string>
+    <string name="midnight">Midnight (chatzos)</string>
+    <string name="midnight_summary">Solar midnight</string>
     <string name="midnight_12">12 hours after midday</string>
 
     <!-- Pesach -->

@@ -52,8 +52,8 @@
     <string name="prayers_2">2 horas antes mediodía</string>
 
     <!-- Midday -->
-    <string name="midday">Mediodía</string>
-    <string name="midday_summary">Mediodía</string>
+    <string name="midday">Mediodía (jatzot)</string>
+    <string name="midday_summary">Mediodía solar</string>
     <string name="midday_fixed">Mediodía ajustado por la latitud local</string>
 
     <!-- Earliest mincha -->
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Sol es 8,5° debajo el nivel del mar</string>
 
     <!-- Midnight -->
-    <string name="midnight">Jatzot</string>
-    <string name="midnight_summary">Medianoche</string>
+    <string name="midnight">Medianoche (jatzot)</string>
+    <string name="midnight_summary">Medianoche solar</string>
     <string name="midnight_12">12 horas después de mediodía</string>
 
     <!-- Pesach -->

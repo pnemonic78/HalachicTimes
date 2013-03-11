@@ -52,7 +52,7 @@
     <string name="prayers_2">2 heures avant de midi</string>
 
     <!-- Midday -->
-    <string name="midday">Midi</string>
+    <string name="midday">Midi (khatsot)</string>
     <string name="midday_summary">Milieu du jour</string>
     <string name="midday_fixed">Midi ajusté pour la latitude locale</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Soleil est 8,5° sous de niveau de la mer</string>
 
     <!-- Midnight -->
-    <string name="midnight">Khatsot</string>
-    <string name="midnight_summary">Minuit</string>
+    <string name="midnight">Minuit (khatsot)</string>
+    <string name="midnight_summary">Minuit solaire</string>
     <string name="midnight_12">12 heures après de midi</string>
 
     <!-- Pesach -->

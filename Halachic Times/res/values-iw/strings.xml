@@ -52,8 +52,8 @@
     <string name="prayers_2">שעתיים לפני צהריים</string>
 
     <!-- Midday -->
-    <string name="midday">צהריים</string>
-    <string name="midday_summary">חצות היום</string>
+    <string name="midday">חצות היום</string>
+    <string name="midday_summary">צהריים</string>
     <string name="midday_fixed">צהריים מותאמים קו הרוחב המקומי</string>
 
     <!-- Earliest mincha -->
@@ -101,8 +101,8 @@
     <string name="nightfall_8">שמש 8.5° מתחת לגובה פני הים</string>
 
     <!-- Midnight -->
-    <string name="midnight">חצות</string>
-    <string name="midnight_summary">חצות הלילה</string>
+    <string name="midnight">חצות הלילה</string>
+    <string name="midnight_summary">חצות סולארית</string>
     <string name="midnight_12">12 שעות לאחר צהריים</string>
 
     <!-- Pesach -->

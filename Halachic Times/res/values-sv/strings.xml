@@ -52,7 +52,7 @@
     <string name="prayers_2">2 timmar före middag</string>
 
     <!-- Midday -->
-    <string name="midday">Middag</string>
+    <string name="midday">Middag (chatzos)</string>
     <string name="midday_summary">Solens middagstid</string>
     <string name="midday_fixed">Middagstid justerat för den lokala latitud</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Solen är 8,5° under havsnivå</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzos</string>
-    <string name="midnight_summary">Midnatt</string>
+    <string name="midnight">Midnatt (chatzos)</string>
+    <string name="midnight_summary">Solens midnatt</string>
     <string name="midnight_12">12 timmar efter middag</string>
 
     <!-- Pesach -->

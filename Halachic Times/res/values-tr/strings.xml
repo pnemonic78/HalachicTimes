@@ -52,7 +52,7 @@
     <string name="prayers_2">2 saat önce öğle vakti</string>
 
     <!-- Midday -->
-    <string name="midday">Öğlen</string>
+    <string name="midday">Öğlen (chatzot)</string>
     <string name="midday_summary">Güneş öğlen</string>
     <string name="midday_fixed">Öğlen yerel enlem için ayarlanabilir</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Güneş deniz seviyesi altındadır 8,5°</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzot</string>
-    <string name="midnight_summary">Gece yarısı</string>
+    <string name="midnight">Gece yarısı (chatzot)</string>
+    <string name="midnight_summary">Güneş geceyarısı</string>
     <string name="midnight_12">12 saat sonra öğlen</string>
 
     <!-- Pesach -->

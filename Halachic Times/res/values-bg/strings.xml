@@ -50,7 +50,7 @@
     <string name="prayers_2">2 часа преди пладне</string>
 
     <!-- Midday -->
-    <string name="midday">Пладне</string>
+    <string name="midday">Пладне (хацот)</string>
     <string name="midday_summary">Слънчевата обяд</string>
     <string name="midday_fixed">Обяд коригирани за местната ширина</string>
 
@@ -99,8 +99,8 @@
     <string name="nightfall_8">Слънцето е 8,5° под морското ниво</string>
 
     <!-- Midnight -->
-    <string name="midnight">Хацот</string>
-    <string name="midnight_summary">Полунощ</string>
+    <string name="midnight">Полунощ (хацот)</string>
+    <string name="midnight_summary">Слънчевата полунощ</string>
     <string name="midnight_12">12 часа след пладне</string>
 
     <!-- Pesach -->

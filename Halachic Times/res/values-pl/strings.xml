@@ -52,8 +52,8 @@
     <string name="prayers_2">2 godziny jeszcze przed południem</string>
 
     <!-- Midday -->
-    <string name="midday">Południe</string>
-    <string name="midday_summary">Południe</string>
+    <string name="midday">Południe (chatzos)</string>
+    <string name="midday_summary">Słoneczne południe</string>
     <string name="midday_fixed">Południe korekcie o lokalnym szerokości geograficznej</string>
 
     <!-- Earliest mincha -->
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Słońce jest 8,5° poniżej poziomu morza</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatzos</string>
-    <string name="midnight_summary">Północ</string>
+    <string name="midnight">Północ (chatzos)</string>
+    <string name="midnight_summary">Słoneczne północ</string>
     <string name="midnight_12">12 godziny po południa</string>
 
     <!-- Pesach -->

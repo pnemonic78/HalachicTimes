@@ -52,7 +52,7 @@
     <string name="prayers_2">2 tundi enne keskpäeva</string>
 
     <!-- Midday -->
-    <string name="midday">Keskpäeva</string>
+    <string name="midday">Keskpäeva (chatsos)</string>
     <string name="midday_summary">Päikese keskpäeval</string>
     <string name="midday_fixed">Keskpäev korrigeeritud kohalike laius</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Päike on 8,5° allpool merepinda</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chatsos</string>
-    <string name="midnight_summary">Kesköö</string>
+    <string name="midnight">Kesköö (chatsos)</string>
+    <string name="midnight_summary">Päikese keskööd</string>
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
 
     <!-- Pesach -->

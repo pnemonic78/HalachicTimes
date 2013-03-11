@@ -52,7 +52,7 @@
     <string name="prayers_2">2 ore înainte amiază</string>
 
     <!-- Midday -->
-    <string name="midday">Amiază</string>
+    <string name="midday">Amiază (chaţos)</string>
     <string name="midday_summary">Miezul zilei</string>
     <string name="midday_fixed">Amiază ajustate pentru latitudine locală</string>
 
@@ -101,8 +101,8 @@
     <string name="nightfall_8">Soarele este de 8,5° sub nivelul mării</string>
 
     <!-- Midnight -->
-    <string name="midnight">Chaţos</string>
-    <string name="midnight_summary">Miezul nopții</string>
+    <string name="midnight">Miezul nopții (chaţos)</string>
+    <string name="midnight_summary">Solar miezul nopții</string>
     <string name="midnight_12">12 ore după amiază</string>
 
     <!-- Pesach -->
