@@ -197,23 +197,27 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @return the item view.
 	 */
 	private View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
+		ZmanimItem item = getItem(position);
+		boolean enabled = !item.elapsed;
+
 		View view = convertView;
 		if (convertView == null)
 			view = mInflater.inflate(resource, parent, false);
-		ZmanimItem item = getItem(position);
 		view.setTag(item);
+		view.setEnabled(enabled);
 
 		TextView title = (TextView) view.findViewById(R.id.title);
 		title.setText(item.titleId);
+		title.setEnabled(enabled);
+
 		TextView summary = (TextView) view.findViewById(R.id.summary);
 		summary.setText(item.summary);
+		summary.setEnabled(enabled);
 		if (item.summary == null)
 			summary.setVisibility(View.GONE);
+
 		TextView time = (TextView) view.findViewById(R.id.time);
 		time.setText(item.timeLabel);
-		boolean enabled = !item.elapsed;
-		title.setEnabled(enabled);
-		summary.setEnabled(enabled);
 		time.setEnabled(enabled);
 
 		view.setOnClickListener(null);
@@ -254,7 +258,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	public void bindViews(ViewGroup list) {
 		final int count = getCount();
 		list.removeAllViews();
+
 		for (int position = 0; position < count; position++) {
+			if (position > 0)
+				mInflater.inflate(R.layout.divider, list);
 			list.addView(getView(position, null, list));
 		}
 	}

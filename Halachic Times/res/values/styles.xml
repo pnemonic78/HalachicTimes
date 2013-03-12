@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ListDivider">
-        <item name="android:src">@android:drawable/divider_horizontal_dark</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">1dp</item>
+    <style name="Zmanim" parent="android:Widget"/>
+
+    <style name="Zmanim.ListView" parent="android:Widget.ListView"/>
+
+    <style name="Zmanim.ListDivider">
+        <item name="android:background">@drawable/divider_horizontal_dark</item>
     </style>
 
     <style name="LightRow">
