@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Halachisk Bønnetidene</string>
+    <string name="title_activity_zmanim">Halachisk Tider</string>
+    <string name="location_unknown">Ukjent adresse</string>
+    <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
+
+    <!-- Recurring opinions -->
+    <string name="opinion_120">Dag er 120 minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_120_zmanis">Dag er 120 <i>zmanjos</i> minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_16">Dag er 16,1° nedenfor soloppgang / solnedgang</string>
+    <string name="opinion_16_sunset">Dag er fra daggry 16,1° til havnivå solnedgang</string>
+    <string name="opinion_16_night">Dag er fra daggry 16,1° til mørkningen</string>
+    <string name="opinion_26">Dag er 26° nedenfor soloppgang / solnedgang</string>
+    <string name="opinion_19">Dag er 19,8° nedenfor soloppgang / solnedgang</string>
+    <string name="opinion_18">Dag er 18° nedenfor soloppgang / solnedgang</string>
+    <string name="opinion_60">Dag er 60 minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_72">Dag er 72 minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_72_zmanis">Dag er 72 <i>zmanjos</i> minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_90">Dag er 90 minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_90_zmanis">Dag er 90 <i>zmanjos</i> minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_96">Dag er 96 minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_96_zmanis">Dag er 96 <i>zmanjos</i> minutter før soloppgang / etter solnedgang</string>
+    <string name="opinion_ateret">Ifølge Jeshivat Ateret Tora</string>
+    <string name="opinion_gra">Ifølge GRA og Baal Tanja</string>
+    <string name="opinion_mga">Ifølge Magen Avraham</string>
+
+    <!-- List -->
+    <string name="dawn">Daggry</string>
+
+    <!-- Tallis and Tefillin -->
+    <string name="tallis">Tidligste tallis og tefillin (mishejakir)</string>
+    <string name="tallis_summary">Sol er 11,5° nedenfor horizon</string>
+    <string name="tallis_11">Sol er 11° nedenfor horizon</string>
+    <string name="tallis_10">Sol er 10,2° nedenfor horizon</string>
+
+    <!-- Sunrise -->
+    <string name="sunrise">Soloppgang</string>
+    <string name="sunrise_summary">I et nivå region</string>
+    <string name="sunrise_sea">At havnivå</string>
+
+    <!-- Latest shema -->
+    <string name="shema">Siste shema</string>
+    <string name="shema_7">Dag er fra daggry 16,1° til natt 7,083°</string>
+    <string name="shema_3">3 timer før middag</string>
+    <string name="shema_fixed">3 timer før fast lokale middag</string>
+
+    <!-- Latest shacharis -->
+    <string name="prayers">Siste morgenbønnen (shacharis)</string>
+    <string name="prayers_fixed">2 timer før fast lokale middag</string>
+    <string name="prayers_2">2 timer før middag</string>
+
+    <!-- Midday -->
+    <string name="midday">Middag (chatzos)</string>
+    <string name="midday_summary">Solens middagstid</string>
+    <string name="midday_fixed">Middagstid justert for lokale breddegrad</string>
+
+    <!-- Earliest mincha -->
+    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha_summary">Tidligste ettermiddag bønner</string>
+    <string name="earliest_mincha_30">30 minutter etter middag</string>
+
+    <!-- Mincha ketana -->
+    <string name="mincha">Mincha ketana</string>
+    <string name="mincha_summary">Ettermiddag bønner</string>
+
+    <!-- Plug hamincha -->
+    <string name="plug_hamincha">Plag hamincha</string>
+
+    <!-- Candle lighting -->
+    <string name="candles">Stearinlys belysning</string>
+    <string name="candles_summary">%1$d minutter før solnedgang</string>
+
+    <plurals name="candles_chanukka">
+        <item quantity="one">1 Chanukka stearinlys</item>
+        <item quantity="other">%1$d Chanukka lys</item>
+    </plurals>
+
+    <!-- Sunset -->
+    <string name="sunset">Solnedgang</string>
+
+    <!-- Twilight -->
+    <string name="twilight">Skumringen</string>
+    <string name="twilight_2stars">2 stjerner synlig</string>
+    <string name="twilight_7_083">13,5 minutter før 7,083° mørkningen</string>
+    <string name="twilight_58">58,5 minutter etter solnedgang</string>
+    <string name="twilight_13">Sol er 13,24° nedenfor horisonten</string>
+
+    <!-- Nightfall -->
+    <string name="nightfall">Mørkningen</string>
+    <string name="nightfall_3stars">3 stjerner synlig</string>
+    <string name="nightfall_3_65">Sol er 3,65° nedenfor havnivå</string>
+    <string name="nightfall_3_676">Sol er 3,676° nedenfor havnivå</string>
+    <string name="nightfall_4_37">Sol er 4,37° nedenfor havnivå</string>
+    <string name="nightfall_4_61">Sol er 4,61° nedenfor havnivå</string>
+    <string name="nightfall_4_8">Sol er 4,8° nedenfor havnivå</string>
+    <string name="nightfall_5_88">Sol er 5,88° nedenfor havnivå</string>
+    <string name="nightfall_5_95">Sol er 5,95° nedenfor havnivå</string>
+    <string name="nightfall_7">Sol er 7,083° nedenfor havnivå</string>
+    <string name="nightfall_8">Sol er 8,5° nedenfor havnivå</string>
+
+    <!-- Midnight -->
+    <string name="midnight">Midnatt (chatzos)</string>
+    <string name="midnight_summary">Solens midnatt</string>
+    <string name="midnight_12">12 timer etter middag</string>
+
+    <!-- Pesach -->
+    <string name="eat_chametz">Siste tid til å spise chametz</string>
+    <string name="burn_chametz">Siste tid til å brenne chametz</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Innstillinger</string>
+    <string name="category_general">Generelt</string>
+    <string name="coords_title">Koordinerer</string>
+    <string name="coords_hidden">Koordinerer er skjult</string>
+    <string name="coords_visible">Koordinerer er synlig</string>
+    <string name="coords_format_title">Koordinerer format</string>
+    <string name="coords_format_summary">Notasjon av breddegrad og lengdegrad</string>
+
+    <string-array name="coords_format_entries">
+        <item>Desimal</item>
+        <item>Seksagesimal</item>
+    </string-array>
+
+    <string name="past_title">Tider som er gått</string>
+    <string name="past_enabled">Tidligere tider er aktivert</string>
+    <string name="past_disabled">Tidligere tider er deaktivert</string>
+    <string name="summaries_title">Sammentrag</string>
+    <string name="summaries_hidden">Sammentrag er skjult</string>
+    <string name="summaries_visible">Sammentrag er synlig</string>
+    <string name="gradient_title">Gradient bakgrunn</string>
+    <string name="gradient_hidden">Gradient er skjult</string>
+    <string name="gradient_visible">Gradient er synlig</string>
+
+    <!-- Go to date -->
+    <string name="menu_goto">Velge en dato</string>
+
+    <!-- Compass -->
+    <string name="menu_compass">Kompass</string>
+    <string name="title_activity_compass">Retning av bønn</string>
+    <string name="north">N</string>
+    <string name="east">Ø</string>
+    <string name="south">S</string>
+    <string name="west">V</string>
+
+    <!-- Setting per time -->
+    <string name="opinion">Mening</string>
+    <string name="reminder">Påminnelse</string>
+
+    <string-array name="reminder_entries">
+        <item>Av</item>
+        <item>På tiden</item>
+        <item>1 minutt før</item>
+        <item>5 minutter før</item>
+        <item>10 minutter før</item>
+        <item>15 minutter før</item>
+        <item>20 minutter før</item>
+        <item>25 minutter før</item>
+        <item>30 minutter før</item>
+        <item>45 minutter før</item>
+        <item>1 time før</item>
+    </string-array>
+
+</resources>
