@@ -23,6 +23,7 @@ import java.util.Date;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import android.content.Context;
+import android.view.View;
 
 /**
  * Adapter for all opinions of an halachic time.
@@ -36,6 +37,11 @@ public class ComplexZmanimAdapter extends ZmanimAdapter {
 	public ComplexZmanimAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael, int itemId) {
 		super(context, settings, cal, inIsrael);
 		mItemId = itemId;
+	}
+
+	@Override
+	protected void setOnClickListener(View view, ZmanimItem item) {
+		// Ignore clicks.
 	}
 
 	/**

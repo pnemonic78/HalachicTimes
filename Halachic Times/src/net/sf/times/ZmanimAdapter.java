@@ -221,32 +221,35 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		time.setEnabled(enabled);
 
 		view.setOnClickListener(null);
-		if (enabled) {
-			boolean clickable = true;
-			final int id = item.titleId;
-			if (id == R.string.candles)
-				clickable = false;
-
-			if (clickable) {
-				if (mOnClickListener == null) {
-					mOnClickListener = new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							ZmanimItem item = (ZmanimItem) v.getTag();
-
-							final Context context = getContext();
-							Intent intent = new Intent(context, ComplexZmanimActivity.class);
-							intent.putExtra(ZmanimActivity.PARAMETER_DATE, mCalendar.getCalendar().getTimeInMillis());
-							intent.putExtra(ComplexZmanimActivity.PARAMETER_ITEM, item.titleId);
-							context.startActivity(intent);
-						}
-					};
-				}
-				view.setOnClickListener(mOnClickListener);
-			}
-		}
+		if (enabled)
+			setOnClickListener(view, item);
 
 		return view;
+	}
+
+	protected void setOnClickListener(View view, ZmanimItem item) {
+		boolean clickable = true;
+		final int id = item.titleId;
+		if (id == R.string.candles)
+			clickable = false;
+
+		if (clickable) {
+			if (mOnClickListener == null) {
+				mOnClickListener = new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						ZmanimItem item = (ZmanimItem) v.getTag();
+
+						final Context context = getContext();
+						Intent intent = new Intent(context, ComplexZmanimActivity.class);
+						intent.putExtra(ZmanimActivity.PARAMETER_DATE, mCalendar.getCalendar().getTimeInMillis());
+						intent.putExtra(ComplexZmanimActivity.PARAMETER_ITEM, item.titleId);
+						context.startActivity(intent);
+					}
+				};
+			}
+			view.setOnClickListener(mOnClickListener);
+		}
 	}
 
 	/**
