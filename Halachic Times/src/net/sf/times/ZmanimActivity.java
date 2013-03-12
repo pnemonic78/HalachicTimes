@@ -224,7 +224,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		if (mList == null)
 			return;
-		ViewGroup list = (ViewGroup) mList.findViewById(R.id.list);
+		ViewGroup list = (ViewGroup) mList.findViewById(android.R.id.list);
 		if (list == null)
 			return;
 		if (isBackgroundDrawable()) {

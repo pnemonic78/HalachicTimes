@@ -128,9 +128,9 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 			// is not working.
 			Intent activityIntent = new Intent(context, ZmanimWidget.class);
 			activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
-			PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, android.R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			mViews.setOnClickPendingIntent(R.id.list, activityPendingIntent);
+			mViews.setOnClickPendingIntent(android.R.id.list, activityPendingIntent);
 		}
 		final RemoteViews views = mViews;
 
