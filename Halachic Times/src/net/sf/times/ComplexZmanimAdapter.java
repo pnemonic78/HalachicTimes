@@ -141,10 +141,6 @@ public class ComplexZmanimAdapter extends ZmanimAdapter {
 		date = cal.getAlos60();
 		title = R.string.dawn_60;
 		add(title, 0, date);
-
-		date = cal.getAlosHashachar();
-		title = R.string.dawn_16;
-		add(title, 0, date);
 	}
 
 	private void populateTallis(ComplexZmanimCalendar cal) {
@@ -247,10 +243,6 @@ public class ComplexZmanimAdapter extends ZmanimAdapter {
 
 		date = cal.getSofZmanShmaGRA();
 		title = R.string.shema_gra;
-		add(title, 0, date);
-
-		date = cal.getSofZmanShmaMGA();
-		title = R.string.shema_mga;
 		add(title, 0, date);
 	}
 
