@@ -41,7 +41,7 @@
     <string name="sunrise_sea">בגובה פני הים</string>
 
     <!-- Latest shema -->
-    <string name="shema">שמע אחרון</string>
+    <string name="shema">סוף זמן קריאת שמע</string>
     <string name="shema_7">יום הוא משחר 16.1° עד לילה 7.083°</string>
     <string name="shema_3">3 שעות לפני צהריים</string>
     <string name="shema_fixed">3 שעות לפני צהריים מקומי קבוע</string>
