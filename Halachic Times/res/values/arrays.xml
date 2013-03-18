@@ -154,10 +154,10 @@
         <item>@string/earliest_mincha_16</item>
     </string-array>
     <string-array name="mincha_values" translatable="false">
-        <item>16.1</item>
-        <item>72</item>
-        <item>AT</item>
         <item></item>
+        <item>AT</item>
+        <item>72</item>
+        <item>16.1</item>
     </string-array>
     <string-array name="mincha_entries" translatable="false">
         <item>@string/mincha_summary</item>
