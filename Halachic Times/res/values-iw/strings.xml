@@ -44,11 +44,11 @@
     <string name="shema">סוף זמן קריאת שמע</string>
     <string name="shema_7">יום הוא משחר 16.1° עד לילה 7.083°</string>
     <string name="shema_3">3 שעות לפני צהריים</string>
-    <string name="shema_fixed">3 שעות לפני צהריים מקומי קבוע</string>
+    <string name="shema_fixed">3 שעות לפני צהריים מקומיים קבועים</string>
 
     <!-- Latest shacharis -->
     <string name="prayers">תפילת שחרית האחרונה</string>
-    <string name="prayers_fixed">שעתיים לפני צהריים מקומי קבוע</string>
+    <string name="prayers_fixed">שעתיים לפני צהריים מקומיים קבועים</string>
     <string name="prayers_2">שעתיים לפני צהריים</string>
 
     <!-- Midday -->
