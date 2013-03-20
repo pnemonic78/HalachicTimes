@@ -50,7 +50,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	/** Reminder id for alarms. */
 	private static final int ID_ALARM = 2;
 
-	private static final long HALF_MINUTE = 30 * DateUtils.SECOND_IN_MILLIS;
+	private static final long EPSILON = 5 * DateUtils.SECOND_IN_MILLIS;
 
 	private Context mContext;
 
@@ -102,8 +102,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 		cancel();
 
 		final long now = System.currentTimeMillis();
-		final long was = now - HALF_MINUTE;
-		final long soon = now + HALF_MINUTE;
+		final long was = now - EPSILON;
+		final long soon = now + EPSILON;
 		ZmanimItem item;
 		long before;
 		long when;
