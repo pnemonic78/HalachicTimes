@@ -21,6 +21,7 @@ package net.sf.times;
 
 import java.util.Calendar;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.AlarmManager;
@@ -34,6 +35,7 @@ import android.content.IntentFilter;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RemoteViews;
 
 /**
@@ -148,7 +150,7 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 
 		ZmanimAdapter adapter = new ZmanimAdapter(mContext, mSettings, today, inIsrael);
 		adapter.populate(true);
-		adapter.bindViews(views);
+		bindViews(views, adapter);
 
 		mAppWidgetManager.updateAppWidget(mAppWidgetIds, views);
 
@@ -205,5 +207,36 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarm.set(AlarmManager.RTC, midnight.getTimeInMillis(), alarmPendingIntent);
+	}
+
+	/**
+	 * Bind the times to remote views.
+	 * 
+	 * @param views
+	 *            the remote views.
+	 */
+	private void bindViews(RemoteViews views, ZmanimAdapter adapter) {
+		final int count = adapter.getCount();
+		ZmanimItem item;
+
+		for (int position = 0; position < count; position++) {
+			item = adapter.getItem(position);
+			bindView(views, item);
+		}
+	}
+
+	/**
+	 * Bind the times to remote views.
+	 * 
+	 * @param list
+	 *            the remote list.
+	 */
+	private void bindView(RemoteViews list, ZmanimItem item) {
+		if (item.elapsed || (item.timeLabel == null)) {
+			list.setViewVisibility(item.titleId, View.GONE);
+		} else {
+			list.setViewVisibility(item.titleId, View.VISIBLE);
+			list.setTextViewText(item.timeId, item.timeLabel);
+		}
 	}
 }

@@ -24,24 +24,25 @@ import java.util.Date;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Adapter for all opinions of an halachic time.
  * 
  * @author Moshe Waisberg
  */
-public class ComplexZmanimAdapter extends ZmanimAdapter {
+public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
 	private final int mItemId;
 
-	public ComplexZmanimAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael, int itemId) {
+	public ZmanimDetailsAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael, int itemId) {
 		super(context, settings, cal, inIsrael);
 		mItemId = itemId;
 	}
 
 	@Override
-	protected void setOnClickListener(View view, ZmanimItem item) {
-		// Ignore clicks.
+	public View getView(int position, View convertView, ViewGroup parent) {
+		return createViewFromResource(position, convertView, parent, R.layout.times_detail);
 	}
 
 	/**

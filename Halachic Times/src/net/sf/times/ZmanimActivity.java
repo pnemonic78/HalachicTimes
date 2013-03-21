@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.FindAddress;
 import net.sf.times.location.FindAddress.OnFindAddressListener;
@@ -42,10 +43,12 @@ import android.location.LocationListener;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -77,6 +80,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private TimeZone mTimeZone;
 	/** The list. */
 	private ViewGroup mList;
+	/** The detailed list. */
+	private ViewGroup mLayoutDetails;
+	private ViewGroup mListDetails;
+	private int mDetailsId;
 	/** The location header. */
 	private View mHeader;
 	/** Provider for locations. */
@@ -95,6 +102,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private Runnable mPopulateHeader;
 	private ZmanimAdapter mAdapter;
 	private ZmanimReminder mReminder;
+	private OnClickListener mOnClickListener;
+	protected LayoutInflater mInflater;
 
 	/**
 	 * Creates a new activity.
@@ -151,12 +160,16 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Initialise. */
 	private void init() {
-		LayoutInflater inflater = LayoutInflater.from(this);
-		mList = (ViewGroup) inflater.inflate(R.layout.times, null);
-		mHeader = mList.findViewById(R.id.header);
 		mSettings = new ZmanimSettings(this);
 
-		setContentView(mList);
+		mInflater = LayoutInflater.from(this);
+		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times, null);
+		mHeader = view.findViewById(R.id.header);
+		mList = (ViewGroup) view.findViewById(android.R.id.list);
+		mLayoutDetails = (ViewGroup) view.findViewById(R.id.panel_details);
+		mListDetails = (ViewGroup) view.findViewById(R.id.list_details);
+
+		setContentView(view);
 	}
 
 	/** Initialise the location providers. */
@@ -219,12 +232,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (gloc == null)
 			return;
 
-		mAdapter = createAdapter(mDate, mLocations);
-		mAdapter.populate(false);
+		ZmanimAdapter adapter = createAdapter(mDate, mLocations);
+		adapter.populate(false);
 
 		if (mList == null)
 			return;
-		ViewGroup list = (ViewGroup) mList.findViewById(android.R.id.list);
+		ViewGroup list = mList;
 		if (list == null)
 			return;
 		if (isBackgroundDrawable()) {
@@ -235,7 +248,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			} else
 				list.setBackgroundDrawable(null);
 		}
-		mAdapter.bindViews(list);
+		bindViews(list, adapter);
+		mAdapter = adapter;
 	}
 
 	/**
@@ -352,5 +366,122 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private boolean isLocaleRTL() {
 		final String iso639 = Locale.getDefault().getLanguage();
 		return ISO639_HEBREW.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
+	}
+
+	/**
+	 * Bind the times to a list.
+	 * 
+	 * @param list
+	 *            the list.
+	 * @param adapter
+	 *            the list adapter.
+	 */
+	private void bindViews(ViewGroup list, ZmanimAdapter adapter) {
+		if (list == null)
+			return;
+		final int count = adapter.getCount();
+		list.removeAllViews();
+
+		ZmanimItem item;
+		View row;
+
+		for (int position = 0; position < count; position++) {
+			item = adapter.getItem(position);
+			row = adapter.getView(position, null, list);
+			bindView(list, position, row, item);
+		}
+	}
+
+	/**
+	 * Bind the time to a list.
+	 * 
+	 * @param list
+	 *            the list.
+	 * @param position
+	 *            the position index.
+	 * @param view
+	 *            the row view.
+	 * @param item
+	 *            the item.
+	 */
+	private void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
+		setOnClickListener(row, item);
+		if (position > 0)
+			mInflater.inflate(R.layout.divider, list);
+		list.addView(row);
+	}
+
+	protected void setOnClickListener(View view, ZmanimItem item) {
+		boolean clickable = view.isEnabled();
+		final int id = item.titleId;
+		if (id == R.string.candles)
+			clickable = false;
+
+		if (clickable) {
+			if (mOnClickListener == null) {
+				mOnClickListener = new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						ZmanimItem item = (ZmanimItem) v.getTag();
+						showDetails(item);
+					}
+				};
+			}
+			view.setOnClickListener(mOnClickListener);
+		} else {
+			view.setOnClickListener(null);
+		}
+	}
+
+	private void showDetails(ZmanimItem item) {
+		if (mLayoutDetails == null) {
+			Intent intent = new Intent(this, ZmanimDetailsActivity.class);
+			intent.putExtra(ZmanimActivity.PARAMETER_DATE, mDate.getTimeInMillis());
+			intent.putExtra(ZmanimDetailsActivity.PARAMETER_ITEM, item.titleId);
+			startActivity(intent);
+		} else if ((mDetailsId == item.titleId) && (mLayoutDetails.getVisibility() == View.VISIBLE)) {
+			mLayoutDetails.setVisibility(View.GONE);
+		} else {
+			mLayoutDetails.setVisibility(View.VISIBLE);
+			populateDetailTimes(item.titleId);
+		}
+	}
+
+	/**
+	 * Populate the list with detailed times.
+	 * 
+	 * @param id
+	 *            the time id.
+	 */
+	private void populateDetailTimes(int id) {
+		// Have we been destroyed?
+		GeoLocation gloc = mLocations.getGeoLocation();
+		if (gloc == null)
+			return;
+		boolean inIsrael = mLocations.inIsrael();
+
+		ZmanimAdapter adapterMaster = mAdapter;
+		if (adapterMaster == null)
+			return;
+		ZmanimAdapter adapter = new ZmanimDetailsAdapter(this, mSettings, adapterMaster.getCalendar(), inIsrael, id);
+		adapter.populate(false);
+
+		if (mListDetails == null)
+			return;
+		bindViews(mListDetails, adapter);
+		mDetailsId = id;
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (mLayoutDetails != null) {
+				if (mLayoutDetails.getVisibility() == View.VISIBLE) {
+					mLayoutDetails.setVisibility(View.GONE);
+					return true;
+				}
+			}
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

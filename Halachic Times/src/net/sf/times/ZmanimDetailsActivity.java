@@ -21,18 +21,20 @@ package net.sf.times;
 
 import java.util.Calendar;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
  * 
  * @author Moshe Waisberg
  */
-public class ComplexZmanimActivity extends ZmanimActivity {
+public class ZmanimDetailsActivity extends ZmanimActivity {
 
 	/** The item (time row) parameter. */
 	public static final String PARAMETER_ITEM = "item";
@@ -42,7 +44,7 @@ public class ComplexZmanimActivity extends ZmanimActivity {
 	/**
 	 * Creates a new activity.
 	 */
-	public ComplexZmanimActivity() {
+	public ZmanimDetailsActivity() {
 	}
 
 	@Override
@@ -74,7 +76,7 @@ public class ComplexZmanimActivity extends ZmanimActivity {
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCalendar(date);
 		boolean inIsrael = locations.inIsrael();
-		return new ComplexZmanimAdapter(this, mSettings, cal, inIsrael, mTitleId);
+		return new ZmanimDetailsAdapter(this, mSettings, cal, inIsrael, mTitleId);
 	}
 
 	@Override
@@ -85,5 +87,10 @@ public class ComplexZmanimActivity extends ZmanimActivity {
 	@Override
 	protected boolean isBackgroundDrawable() {
 		return false;
+	}
+
+	@Override
+	protected void setOnClickListener(View view, ZmanimItem item) {
+		// Ignore clicks.
 	}
 }

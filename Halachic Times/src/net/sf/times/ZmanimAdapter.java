@@ -27,15 +27,12 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
 /**
@@ -120,7 +117,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected final boolean mSummaries;
 	protected final boolean mElapsed;
 	protected final int mCandlesOffset;
-	private OnClickListener mOnClickListener;
 	private Comparator<ZmanimItem> mComparator;
 
 	/**
@@ -196,7 +192,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the resource layout.
 	 * @return the item view.
 	 */
-	private View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
+	protected View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
 		ZmanimItem item = getItem(position);
 		boolean enabled = !item.elapsed;
 
@@ -211,93 +207,18 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		title.setEnabled(enabled);
 
 		TextView summary = (TextView) view.findViewById(R.id.summary);
-		summary.setText(item.summary);
-		summary.setEnabled(enabled);
-		if (item.summary == null)
-			summary.setVisibility(View.GONE);
+		if (summary != null) {
+			summary.setText(item.summary);
+			summary.setEnabled(enabled);
+			if (item.summary == null)
+				summary.setVisibility(View.GONE);
+		}
 
 		TextView time = (TextView) view.findViewById(R.id.time);
 		time.setText(item.timeLabel);
 		time.setEnabled(enabled);
 
-		view.setOnClickListener(null);
-		if (enabled)
-			setOnClickListener(view, item);
-
 		return view;
-	}
-
-	protected void setOnClickListener(View view, ZmanimItem item) {
-		boolean clickable = true;
-		final int id = item.titleId;
-		if (id == R.string.candles)
-			clickable = false;
-
-		if (clickable) {
-			if (mOnClickListener == null) {
-				mOnClickListener = new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						ZmanimItem item = (ZmanimItem) v.getTag();
-
-						final Context context = getContext();
-						Intent intent = new Intent(context, ComplexZmanimActivity.class);
-						intent.putExtra(ZmanimActivity.PARAMETER_DATE, mCalendar.getCalendar().getTimeInMillis());
-						intent.putExtra(ComplexZmanimActivity.PARAMETER_ITEM, item.titleId);
-						context.startActivity(intent);
-					}
-				};
-			}
-			view.setOnClickListener(mOnClickListener);
-		}
-	}
-
-	/**
-	 * Bind the times to a list.
-	 * 
-	 * @param list
-	 *            the list.
-	 */
-	public void bindViews(ViewGroup list) {
-		final int count = getCount();
-		list.removeAllViews();
-
-		for (int position = 0; position < count; position++) {
-			if (position > 0)
-				mInflater.inflate(R.layout.divider, list);
-			list.addView(getView(position, null, list));
-		}
-	}
-
-	/**
-	 * Bind the times to remote views.
-	 * 
-	 * @param views
-	 *            the remote views.
-	 */
-	public void bindViews(RemoteViews views) {
-		final int count = getCount();
-		ZmanimItem item;
-
-		for (int position = 0; position < count; position++) {
-			item = getItem(position);
-			bindView(views, item);
-		}
-	}
-
-	/**
-	 * Bind the times to remote views.
-	 * 
-	 * @param views
-	 *            the remote views.
-	 */
-	private void bindView(RemoteViews views, ZmanimItem item) {
-		if (item.elapsed || (item.timeLabel == null)) {
-			views.setViewVisibility(item.titleId, View.GONE);
-		} else {
-			views.setViewVisibility(item.titleId, View.VISIBLE);
-			views.setTextViewText(item.timeId, item.timeLabel);
-		}
 	}
 
 	/**
