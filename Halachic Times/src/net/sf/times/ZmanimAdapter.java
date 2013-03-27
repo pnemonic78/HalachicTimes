@@ -887,8 +887,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			case JewishCalendar.SIMCHAS_TORAH:
 			case JewishCalendar.PESACH:
 			case JewishCalendar.SHAVUOS:
-			case JewishCalendar.YOM_KIPPUR:
-			case JewishCalendar.CHANUKAH:
 				flags = AT_SUNSET;
 				break;
 			}
@@ -908,6 +906,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			break;
 		case JewishCalendar.CHANUKAH:
 			count = jcal.getDayOfChanukah();
+			if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY))
+				flags = AT_SUNSET;
 			break;
 		default:
 			if (dayOfWeek == Calendar.FRIDAY) {
