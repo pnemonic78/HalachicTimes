@@ -80,10 +80,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private TimeZone mTimeZone;
 	/** The list. */
 	private ViewGroup mList;
-	/** The detailed list. */
-	private ViewGroup mLayoutDetails;
-	private ViewGroup mListDetails;
-	private int mDetailsId;
 	/** The location header. */
 	private View mHeader;
 	/** Provider for locations. */
@@ -104,6 +100,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ZmanimReminder mReminder;
 	private OnClickListener mOnClickListener;
 	protected LayoutInflater mInflater;
+	/** The detailed list panel. */
+	private ViewGroup mLayoutDetails;
+	/** The detailed list. */
+	private ViewGroup mListDetails;
+	/** The master item selected id. */
+	private int mSelectedId;
+	/** The master item selected row. */
+	private View mSelectedRow;
 
 	/**
 	 * Creates a new activity.
@@ -119,15 +123,24 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		Intent intent = getIntent();
 		long date = intent.getLongExtra(PARAMETER_DATE, 0L);
-		long time = intent.getLongExtra(PARAMETER_TIME, 0L);
 		if (date == 0L) {
-			if (time == 0L) {
+			date = intent.getLongExtra(PARAMETER_TIME, 0L);
+			if (date == 0L)
 				date = System.currentTimeMillis();
-			} else {
-				date = time;
-			}
 		}
 		setDate(date);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putLong(PARAMETER_DATE, mDate.getTimeInMillis());
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		setDate(savedInstanceState.getLong(PARAMETER_DATE));
 	}
 
 	@Override
@@ -422,6 +435,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				mOnClickListener = new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						if (mSelectedRow != null) {
+							// Deselect the previously selected row.
+							// TODO implement me!
+						}
+						mSelectedRow = v;
+
 						ZmanimItem item = (ZmanimItem) v.getTag();
 						showDetails(item);
 					}
@@ -439,7 +458,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			intent.putExtra(ZmanimActivity.PARAMETER_DATE, mDate.getTimeInMillis());
 			intent.putExtra(ZmanimDetailsActivity.PARAMETER_ITEM, item.titleId);
 			startActivity(intent);
-		} else if ((mDetailsId == item.titleId) && (mLayoutDetails.getVisibility() == View.VISIBLE)) {
+		} else if ((mSelectedId == item.titleId) && (mLayoutDetails.getVisibility() == View.VISIBLE)) {
 			mLayoutDetails.setVisibility(View.GONE);
 		} else {
 			mLayoutDetails.setVisibility(View.VISIBLE);
@@ -469,7 +488,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (mListDetails == null)
 			return;
 		bindViews(mListDetails, adapter);
-		mDetailsId = id;
+		mSelectedId = id;
 	}
 
 	@Override
@@ -477,6 +496,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (mLayoutDetails != null) {
 				if (mLayoutDetails.getVisibility() == View.VISIBLE) {
+					if (mSelectedRow != null) {
+						// TODO
+						// mSelectedRow.setBackgroundDrawable(mDefaultBackground);
+					}
 					mLayoutDetails.setVisibility(View.GONE);
 					return true;
 				}
