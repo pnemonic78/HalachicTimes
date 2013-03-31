@@ -9,6 +9,10 @@
         <item name="android:background">@drawable/divider_horizontal_dark</item>
     </style>
 
+    <style name="Zmanim.ListItem">
+        <item name="android:background">@android:drawable/list_selector_background</item>
+    </style>
+
     <style name="LightRow">
         <item name="android:background">@color/bright</item>
     </style>

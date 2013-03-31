@@ -5,4 +5,8 @@
 
     <style name="Zmanim.ListView" parent="android:Widget.Holo.ListView"/>
 
+    <style name="Zmanim.ListItem">
+        <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
+    </style>
+
 </resources>
