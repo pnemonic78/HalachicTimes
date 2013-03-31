@@ -866,9 +866,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int flags = BEFORE_SUNSET;
 
 		// Forbidden to light candles during Shabbath.
-		if (dayOfWeek == Calendar.SATURDAY)
+		if (dayOfWeek == Calendar.SATURDAY) {
 			flags = MOTZE_SHABBATH;
-		else if (dayOfWeek != Calendar.FRIDAY) {
+		} else if (dayOfWeek == Calendar.FRIDAY) {
+			// Probably never happens that Yom Kippur falls on a Friday.
+			// Prohibited to light candles on Yom Kippur.
+			if (holidayToday == JewishCalendar.YOM_KIPPUR) {
+				return 0;
+			}
+		} else {
 			// During a holiday, we can light for the next day from an existing
 			// flame.
 			switch (holidayToday) {
