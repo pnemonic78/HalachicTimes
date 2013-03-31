@@ -338,24 +338,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            is for remote views?
 	 */
 	public void populate(boolean remote) {
-		int candlesCount = 0;
-		boolean hasCandles = false;
-		int candlesHow = 0;
-		int holidayToday = -1;
-		int holidayTomorrow = -1;
 		ComplexZmanimCalendar cal = mCalendar;
-		boolean inIsrael = mInIsrael;
 		cal.setCandleLightingOffset(mCandlesOffset);
-		Date candlesWhen = cal.getCandleLighting();
-		if (candlesWhen != null) {
-			Calendar gcal = cal.getCalendar();
-			int candles = getCandles(gcal, inIsrael);
-			candlesCount = candles & CANDLES_MASK;
-			hasCandles = candlesCount > 0;
-			candlesHow = candles & MOTZE_MASK;
-			holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
-			holidayToday = (candles >> 12) & HOLIDAY_MASK;
-		}
+		Calendar gcal = cal.getCalendar();
+		int candles = getCandles(gcal, mInIsrael);
+		int candlesCount = candles & CANDLES_MASK;
+		boolean hasCandles = candlesCount > 0;
+		int candlesHow = candles & MOTZE_MASK;
+		int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
+		int holidayToday = (candles >> 12) & HOLIDAY_MASK;
 
 		Date date;
 		int summary;
