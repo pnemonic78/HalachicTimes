@@ -202,11 +202,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		view.setTag(item);
 		view.setEnabled(enabled);
 
-		TextView title = (TextView) view.findViewById(R.id.title);
+		TextView title = (TextView) view.findViewById(android.R.id.title);
 		title.setText(item.titleId);
 		title.setEnabled(enabled);
 
-		TextView summary = (TextView) view.findViewById(R.id.summary);
+		TextView summary = (TextView) view.findViewById(android.R.id.summary);
 		if (summary != null) {
 			summary.setText(item.summary);
 			summary.setEnabled(enabled);
