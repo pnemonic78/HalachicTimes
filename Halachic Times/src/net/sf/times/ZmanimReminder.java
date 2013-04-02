@@ -51,7 +51,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	private static final int ID_ALARM = 2;
 
 	private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
-	private static final long SOON_DELTA = 5 * DateUtils.SECOND_IN_MILLIS;
+	private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
 
 	private Context mContext;
 
@@ -103,6 +103,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		cancel();
 
 		final long now = System.currentTimeMillis();
+		final long latest = settings.getLatestReminder();
 		final long was = now - WAS_DELTA;
 		final long soon = now + SOON_DELTA;
 		ZmanimItem item;
@@ -121,8 +122,9 @@ public class ZmanimReminder extends BroadcastReceiver {
 			before = settings.getReminder(id);
 			if (before >= 0L) {
 				when = item.time - before;
-				if (needToday && (was <= when) && (when <= soon)) {
+				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 					notifyNow(item.titleId, item.time);
+					settings.setLatestReminder(item.time);
 					needToday = false;
 				}
 				if (needTodayLater && (now < when)) {
@@ -153,8 +155,9 @@ public class ZmanimReminder extends BroadcastReceiver {
 				before = settings.getReminder(id);
 				if (before >= 0L) {
 					when = item.time - before;
-					if (needToday && (was <= when) && (when <= soon)) {
+					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 						notifyNow(item.titleId, item.time);
+						settings.setLatestReminder(item.time);
 						needToday = false;
 					}
 					if (now < when) {

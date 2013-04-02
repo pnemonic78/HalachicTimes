@@ -54,6 +54,8 @@ public class ZmanimSettings {
 	public static final String KEY_PAST = "past";
 	/** Preference name for the background gradient. */
 	public static final String KEY_BG_GRADIENT = "gradient";
+	/** Preference name for the latest reminder. */
+	private static final String KEY_REMINDER_LATEST = "reminder";
 
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
@@ -474,5 +476,26 @@ public class ZmanimSettings {
 		if (!TextUtils.isEmpty(value))
 			return Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
 		return Long.MAX_VALUE;
+	}
+
+	/**
+	 * Get the time that was used for the latest reminder.
+	 * 
+	 * @return the time.
+	 */
+	public long getLatestReminder() {
+		return mPrefs.getLong(KEY_REMINDER_LATEST, 0L);
+	}
+
+	/**
+	 * Set the time that was used for the latest reminder to now.
+	 * 
+	 * @param time
+	 *            the time.
+	 */
+	public void setLatestReminder(long time) {
+		Editor editor = mPrefs.edit();
+		editor.putLong(KEY_REMINDER_LATEST, time);
+		editor.commit();
 	}
 }
