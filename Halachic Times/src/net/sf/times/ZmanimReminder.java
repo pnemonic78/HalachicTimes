@@ -124,7 +124,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				when = item.time - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 					notifyNow(item.titleId, item.time);
-					settings.setLatestReminder(item.time);
+					settings.setLatestReminder(now);
 					needToday = false;
 				}
 				if (needTodayLater && (now < when)) {
@@ -157,7 +157,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 					when = item.time - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 						notifyNow(item.titleId, item.time);
-						settings.setLatestReminder(item.time);
+						settings.setLatestReminder(now);
 						needToday = false;
 					}
 					if (now < when) {

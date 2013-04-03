@@ -37,6 +37,7 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -107,7 +108,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** The master item selected id. */
 	private int mSelectedId;
 	/** The master item selected row. */
-	private View mSelectedRow;
+	private View mHighlightRow;
+	/** The master item background that is not selected. */
+	private Drawable mUnhighlightBackground;
+	private int mUnhighlightPaddingLeft;
+	private int mUnhighlightPaddingTop;
+	private int mUnhighlightPaddingRight;
+	private int mUnhighlightPaddingBottom;
+	/** The master item background that is selected. */
+	private Drawable mHighlightBackground;
 
 	/**
 	 * Creates a new activity.
@@ -180,7 +189,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mHeader = view.findViewById(R.id.header);
 		mList = (ViewGroup) view.findViewById(android.R.id.list);
 		mLayoutDetails = (ViewGroup) view.findViewById(R.id.panel_details);
-		mListDetails = (ViewGroup) view.findViewById(R.id.list_details);
+		if (mLayoutDetails != null)
+			mListDetails = (ViewGroup) view.findViewById(R.id.list_details);
 
 		setContentView(view);
 	}
@@ -435,14 +445,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				mOnClickListener = new OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						if (mSelectedRow != null) {
-							// Deselect the previously selected row.
-							// TODO implement me!
-						}
-						mSelectedRow = v;
-
 						ZmanimItem item = (ZmanimItem) v.getTag();
-						showDetails(item);
+						showDetails(item, v);
 					}
 				};
 			}
@@ -452,15 +456,29 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		}
 	}
 
-	private void showDetails(ZmanimItem item) {
+	/**
+	 * Show the details list.
+	 * 
+	 * @param item
+	 *            the master item.
+	 * @param view
+	 *            the master row view that was clicked.
+	 */
+	private void showDetails(ZmanimItem item, View view) {
+		if (item == null)
+			item = (ZmanimItem) view.getTag();
+
 		if (mLayoutDetails == null) {
 			Intent intent = new Intent(this, ZmanimDetailsActivity.class);
 			intent.putExtra(ZmanimActivity.PARAMETER_DATE, mDate.getTimeInMillis());
 			intent.putExtra(ZmanimDetailsActivity.PARAMETER_ITEM, item.titleId);
 			startActivity(intent);
-		} else if ((mSelectedId == item.titleId) && (mLayoutDetails.getVisibility() == View.VISIBLE)) {
+		} else if (((mSelectedId == item.titleId) || (view == mHighlightRow)) && (mLayoutDetails.getVisibility() == View.VISIBLE)) {
+			unhighlight(view);
 			mLayoutDetails.setVisibility(View.GONE);
 		} else {
+			unhighlight(mHighlightRow);
+			highlight(view);
 			mLayoutDetails.setVisibility(View.VISIBLE);
 			populateDetailTimes(item.titleId);
 		}
@@ -496,15 +514,57 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (mLayoutDetails != null) {
 				if (mLayoutDetails.getVisibility() == View.VISIBLE) {
-					if (mSelectedRow != null) {
-						// TODO
-						// mSelectedRow.setBackgroundDrawable(mDefaultBackground);
-					}
+					unhighlight(mHighlightRow);
 					mLayoutDetails.setVisibility(View.GONE);
 					return true;
 				}
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * Get the background for the selected item.
+	 * 
+	 * @return the background.
+	 */
+	private Drawable getSelectedBackground() {
+		if (mHighlightBackground == null) {
+			ColorDrawable drawable = new ColorDrawable(0x40ffffff);
+			mHighlightBackground = drawable;
+		}
+		return mHighlightBackground;
+	}
+
+	/**
+	 * Mark the row as unselected.
+	 * 
+	 * @param view
+	 *            the master row view.
+	 */
+	private void unhighlight(View view) {
+		if (view == null)
+			return;
+
+		view.setBackgroundDrawable(mUnhighlightBackground);
+		view.setPadding(mUnhighlightPaddingLeft, mUnhighlightPaddingTop, mUnhighlightPaddingRight, mUnhighlightPaddingBottom);
+
+		mUnhighlightBackground = null;
+	}
+
+	/**
+	 * Mark the row as selected.
+	 * 
+	 * @param view
+	 *            the master row view.
+	 */
+	private void highlight(View view) {
+		mUnhighlightBackground = view.getBackground();
+		mUnhighlightPaddingLeft = view.getPaddingLeft();
+		mUnhighlightPaddingTop = view.getPaddingTop();
+		mUnhighlightPaddingRight = view.getPaddingRight();
+		mUnhighlightPaddingBottom = view.getPaddingBottom();
+		view.setBackgroundDrawable(getSelectedBackground());
+		mHighlightRow = view;
 	}
 }
