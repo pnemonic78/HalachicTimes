@@ -255,6 +255,7 @@
 
     <LinearLayout
         android:id="@+id/sunset_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -279,7 +280,6 @@
 
     <LinearLayout
         android:id="@+id/twilight_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -304,6 +304,7 @@
 
     <LinearLayout
         android:id="@+id/nightfall_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -353,7 +354,6 @@
 
     <LinearLayout
         android:id="@+id/midnight_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
