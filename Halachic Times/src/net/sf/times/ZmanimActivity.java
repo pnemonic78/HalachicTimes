@@ -354,17 +354,21 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	public void onAddressFound(Location location, ZmanimAddress address) {
 		mAddress = address;
+		// Have we been destroyed?
+		if (mAddressProvider == null)
+			return;
 		mAddressProvider.insertAddress(location, address);
-		if (mPopulateHeader == null) {
-			mPopulateHeader = new Runnable() {
-
+		Runnable runner = mPopulateHeader;
+		if (runner == null) {
+			runner = new Runnable() {
 				@Override
 				public void run() {
 					populateHeader();
 				}
 			};
+			mPopulateHeader = runner;
 		}
-		runOnUiThread(mPopulateHeader);
+		runOnUiThread(runner);
 	}
 
 	/**
