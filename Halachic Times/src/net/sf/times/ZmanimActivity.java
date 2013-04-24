@@ -59,7 +59,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener {
+public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener, OnClickListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -99,7 +99,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private Runnable mPopulateHeader;
 	private ZmanimAdapter mAdapter;
 	private ZmanimReminder mReminder;
-	private OnClickListener mOnClickListener;
 	protected LayoutInflater mInflater;
 	/** The detailed list panel. */
 	private ViewGroup mLayoutDetails;
@@ -208,7 +207,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 */
 	private void setDate(long date) {
 		mDate.setTimeInMillis(date);
-		mTimeZone = mLocations.getTimeZone();
+		TimeZone tz = mLocations.getTimeZone();
+		mDate.setTimeZone(tz);
+		mTimeZone = tz;
 
 		View header = mHeader;
 		// Have we been destroyed?
@@ -443,21 +444,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		final int id = item.titleId;
 		if (id == R.string.candles)
 			clickable = false;
-
-		if (clickable) {
-			if (mOnClickListener == null) {
-				mOnClickListener = new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						ZmanimItem item = (ZmanimItem) v.getTag();
-						showDetails(item, v);
-					}
-				};
-			}
-			view.setOnClickListener(mOnClickListener);
-		} else {
-			view.setOnClickListener(null);
-		}
+		view.setOnClickListener(clickable ? this : null);
 	}
 
 	/**
@@ -570,5 +557,11 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mUnhighlightPaddingBottom = view.getPaddingBottom();
 		view.setBackgroundDrawable(getSelectedBackground());
 		mHighlightRow = view;
+	}
+
+	@Override
+	public void onClick(View v) {
+		ZmanimItem item = (ZmanimItem) v.getTag();
+		showDetails(item, v);
 	}
 }
