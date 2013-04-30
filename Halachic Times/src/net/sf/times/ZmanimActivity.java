@@ -39,6 +39,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -551,7 +552,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private void highlight(View view) {
 		mUnhighlightBackground = view.getBackground();
 		// Workaround for Samsung bug where the highlight lingers.
-		if (mUnhighlightBackground != null)
+		if ((mUnhighlightBackground != null) && (mUnhighlightBackground instanceof StateListDrawable))
 			mUnhighlightBackground = mUnhighlightBackground.getConstantState().newDrawable();
 		mUnhighlightPaddingLeft = view.getPaddingLeft();
 		mUnhighlightPaddingTop = view.getPaddingTop();
