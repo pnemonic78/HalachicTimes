@@ -533,13 +533,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * @param view
 	 *            the master row view.
 	 */
-	private void unhighlight(View view) {
-		if (view == null)
+	private void unhighlight(final View view) {
+		if ((view == null) || (mUnhighlightBackground == null))
 			return;
 
 		view.setBackgroundDrawable(mUnhighlightBackground);
 		view.setPadding(mUnhighlightPaddingLeft, mUnhighlightPaddingTop, mUnhighlightPaddingRight, mUnhighlightPaddingBottom);
-
 		mUnhighlightBackground = null;
 	}
 
@@ -551,6 +550,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 */
 	private void highlight(View view) {
 		mUnhighlightBackground = view.getBackground();
+		// Workaround for Samsung bug where the highlight lingers.
+		if (mUnhighlightBackground != null)
+			mUnhighlightBackground = mUnhighlightBackground.getConstantState().newDrawable();
 		mUnhighlightPaddingLeft = view.getPaddingLeft();
 		mUnhighlightPaddingTop = view.getPaddingTop();
 		mUnhighlightPaddingRight = view.getPaddingRight();
@@ -560,8 +562,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	@Override
-	public void onClick(View v) {
-		ZmanimItem item = (ZmanimItem) v.getTag();
-		showDetails(item, v);
+	public void onClick(View view) {
+		ZmanimItem item = (ZmanimItem) view.getTag();
+		showDetails(item, view);
 	}
 }
