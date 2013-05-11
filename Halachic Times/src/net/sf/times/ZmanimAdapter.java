@@ -122,7 +122,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/**
 	 * Time row item.
 	 */
-	protected static class ZmanimItem {
+	protected static class ZmanimItem implements Comparable<ZmanimItem> {
 
 		/** The title id. */
 		public int titleId;
@@ -139,6 +139,24 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		public ZmanimItem() {
 			super();
+		}
+
+		@Override
+		public int compareTo(ZmanimItem another) {
+			long dt = this.time - another.time;
+			if (dt != 0L)
+				return (int) dt;
+			return this.titleId - another.titleId;
+		}
+	}
+
+	/**
+	 * Compare two time items.
+	 */
+	protected static class ZmanimComparator implements Comparator<ZmanimItem> {
+		@Override
+		public int compare(ZmanimItem lhs, ZmanimItem rhs) {
+			return lhs.compareTo(rhs);
 		}
 	}
 
@@ -919,18 +937,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		return flags | ((holidayToday & HOLIDAY_MASK) << 12) | ((holidayTomorrow & HOLIDAY_MASK) << 4) | (count & CANDLES_MASK);
 	}
 
+	/**
+	 * Sort.
+	 */
 	protected void sort() {
 		if (mComparator == null) {
-			mComparator = new Comparator<ZmanimItem>() {
-
-				@Override
-				public int compare(ZmanimItem lhs, ZmanimItem rhs) {
-					long dt = lhs.time - rhs.time;
-					if (dt != 0L)
-						return (int) dt;
-					return lhs.titleId - rhs.titleId;
-				}
-			};
+			mComparator = new ZmanimComparator();
 		}
 		sort(mComparator);
 	}
