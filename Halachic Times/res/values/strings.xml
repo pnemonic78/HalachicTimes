@@ -191,6 +191,10 @@
     <string name="burn_chametz_16" translatable="false">@string/opinion_16</string>
     <string name="burn_chametz_72" translatable="false">@string/opinion_72</string>
 
+    <!-- Moon -->
+    <string name="molad">Birth of new moon (molad)</string>
+    <string name="molad_summary">Average molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="category_general">General</string>

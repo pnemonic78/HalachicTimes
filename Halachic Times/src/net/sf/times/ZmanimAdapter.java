@@ -26,6 +26,7 @@ import java.util.Date;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
@@ -359,7 +360,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		ComplexZmanimCalendar cal = mCalendar;
 		cal.setCandleLightingOffset(mCandlesOffset);
 		Calendar gcal = cal.getCalendar();
-		int candles = getCandles(gcal, mInIsrael);
+		JewishCalendar jcal = new JewishCalendar(gcal);
+		jcal.setInIsrael(mInIsrael);
+		int candles = getCandles(jcal);
 		int candlesCount = candles & CANDLES_MASK;
 		boolean hasCandles = candlesCount > 0;
 		int candlesHow = candles & MOTZE_MASK;
@@ -859,6 +862,26 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.midnight_row, R.id.midnight_time, date, true);
 		else
 			add(R.string.midnight, summary, date);
+
+		if (!remote) {
+			final int jDayOfMonth = jcal.getJewishDayOfMonth();
+			if ((jDayOfMonth <= 5) || (jDayOfMonth >= 25)) {
+				int y = gcal.get(Calendar.YEAR);
+				int m = gcal.get(Calendar.MONTH);
+				int d = gcal.get(Calendar.DAY_OF_MONTH);
+				JewishDate molad = jcal.getMolad();
+				int moladYear = molad.getGregorianYear();
+				int moladMonth = molad.getGregorianMonth();
+				int moladDay = molad.getGregorianDayOfMonth();
+				if ((moladYear == y) && (moladMonth == m) && (moladDay == d)) {
+					date = molad.getTime();
+					summary = R.string.molad_summary;
+					add(R.string.molad, summary, date);
+				}
+			}
+		}
+
+		sort();
 	}
 
 	/**
@@ -870,11 +893,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            is in Israel?
 	 * @return the number of candles to light, the holiday, and when to light.
 	 */
-	private int getCandles(Calendar cal, boolean inIsrael) {
-		final int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+	private int getCandles(JewishCalendar jcal) {
+		final int dayOfWeek = jcal.getDayOfWeek();
 
-		JewishCalendar jcal = new JewishCalendar(cal);
-		jcal.setInIsrael(inIsrael);
 		// Check if the following day is special, because we can't check
 		// EREV_CHANUKAH.
 		int holidayToday = jcal.getYomTovIndex();
