@@ -109,6 +109,10 @@
     <string name="eat_chametz">Ultima moment a manca chametz</string>
     <string name="burn_chametz">Ultima moment a arde chametz</string>
 
+    <!-- Moon -->
+    <string name="molad">Nașterea din lună nouă (molad)</string>
+    <string name="molad_summary">Medie molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
     <string name="category_general">General</string>

@@ -445,7 +445,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		final int id = item.titleId;
 		if (id == R.string.candles)
 			clickable = false;
+		else if (id == R.string.molad)
+			clickable = false;
 		view.setOnClickListener(clickable ? this : null);
+		view.setClickable(clickable);
 	}
 
 	/**

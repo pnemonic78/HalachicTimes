@@ -109,6 +109,10 @@
     <string name="eat_chametz">Heure limite de manger \'hamets</string>
     <string name="burn_chametz">Heure limite de brûler \'hamets</string>
 
+    <!-- Moon -->
+    <string name="molad">Naissance de la nouvelle lune (molad)</string>
+    <string name="molad_summary">Moyenne des molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Paramètres</string>
     <string name="category_general">Généraux</string>

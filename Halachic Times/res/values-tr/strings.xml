@@ -109,6 +109,10 @@
     <string name="eat_chametz">Chametz yemek için son kez</string>
     <string name="burn_chametz">Chametz yakmak için son kez</string>
 
+    <!-- Moon -->
+    <string name="molad">Doğuşu Yeni ay (molad)</string>
+    <string name="molad_summary">Ortalama molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Ayarlar</string>
     <string name="category_general">Genel</string>

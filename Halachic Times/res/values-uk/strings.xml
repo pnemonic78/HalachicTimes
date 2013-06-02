@@ -109,6 +109,10 @@
     <string name="eat_chametz">Останній час їсти хамец</string>
     <string name="burn_chametz">Останній час спалити хамец</string>
 
+    <!-- Moon -->
+    <string name="molad">Народження нового місяця (молад)</string>
+    <string name="molad_summary">Середня молад</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Налаштування</string>
     <string name="category_general">Загальні</string>

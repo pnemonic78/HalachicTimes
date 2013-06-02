@@ -109,6 +109,10 @@
     <string name="eat_chametz">Últimas hora de comer jametz</string>
     <string name="burn_chametz">Última hora de quemar jametz</string>
 
+    <!-- Moon -->
+    <string name="molad">El nacimiento de la luna nueva (molad)</string>
+    <string name="molad_summary">Promedio de molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Ajustes</string>
     <string name="category_general">General</string>

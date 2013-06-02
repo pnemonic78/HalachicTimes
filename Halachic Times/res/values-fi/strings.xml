@@ -109,6 +109,10 @@
     <string name="eat_chametz">Uusin aika syödä chamez</string>
     <string name="burn_chametz">Uusin aika polttaa chamez</string>
 
+    <!-- Moon -->
+    <string name="molad">Syntymän uusikuu (molad)</string>
+    <string name="molad_summary">Keskimäärin molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
     <string name="category_general">Yleiset</string>

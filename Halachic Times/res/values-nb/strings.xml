@@ -109,6 +109,10 @@
     <string name="eat_chametz">Siste tid til å spise chametz</string>
     <string name="burn_chametz">Siste tid til å brenne chametz</string>
 
+    <!-- Moon -->
+    <string name="molad">Født av ny måne (molad)</string>
+    <string name="molad_summary">Gjennomsnittlig molad</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Innstillinger</string>
     <string name="category_general">Generelt</string>

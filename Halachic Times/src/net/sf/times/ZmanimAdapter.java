@@ -865,7 +865,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		if (!remote) {
 			final int jDayOfMonth = jcal.getJewishDayOfMonth();
-			if ((jDayOfMonth <= 5) || (jDayOfMonth >= 25)) {
+			if ((jDayOfMonth <= 2) || (jDayOfMonth >= 25)) {
 				int y = gcal.get(Calendar.YEAR);
 				int m = gcal.get(Calendar.MONTH);
 				int d = gcal.get(Calendar.DAY_OF_MONTH);
