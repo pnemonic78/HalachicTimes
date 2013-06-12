@@ -111,7 +111,7 @@
 
     <!-- Moon -->
     <string name="molad">לידת ירח החדש (מולד)</string>
-    <string name="molad_summary">מולד אמצעי</string>
+    <string name="molad_summary">מולד ממוצע</string>
 
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
