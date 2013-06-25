@@ -36,6 +36,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.text.format.DateUtils;
 import android.util.Log;
 
@@ -231,6 +233,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		nm.cancelAll();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void notifyNow(int titleId, long when) {
 		CharSequence contentTitle = mContext.getText(R.string.app_name);
 		CharSequence contentText = mContext.getText(titleId);
@@ -243,8 +246,13 @@ public class ZmanimReminder extends BroadcastReceiver {
 		noti.icon = R.drawable.ic_launcher;
 		noti.defaults = Notification.DEFAULT_ALL;
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-		noti.when = when;// When the zman is due.
+		noti.when = when;// When the zman is supposed to occur.
 		noti.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
+
+		// Wake up the device to notify the user.
+		PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+		wake.acquire(2000L);
 
 		NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.notify(ID_NOTIFY, noti);
