@@ -50,8 +50,15 @@ public class CountriesGeocoder {
 	 */
 	private static final int MAX_COUNTRIES_OVERLAP = 20;
 
+	/** Maximum radius for which a zman is the same. */
+	private static final double CITY_RADIUS = 20000;
+
 	protected final Locale mLocale;
 	private static CountryPolygon[] mCountryBorders;
+	private String[] mCitiesNames;
+	private static String[] mCitiesCountries;
+	private static double[] mCitiesLatitudes;
+	private static double[] mCitiesLongitudes;
 
 	/**
 	 * Constructs a new cities provider.
@@ -97,6 +104,19 @@ public class CountriesGeocoder {
 				mCountryBorders[c] = country;
 			}
 		}
+		if (mCitiesCountries == null) {
+			mCitiesCountries = res.getStringArray(R.array.cities_countries);
+			int citiesCount = mCitiesCountries.length;
+			String[] latitudes = res.getStringArray(R.array.cities_latitudes);
+			String[] longitudes = res.getStringArray(R.array.cities_longitudes);
+			mCitiesLatitudes = new double[citiesCount];
+			mCitiesLongitudes = new double[citiesCount];
+			for (int i = 0; i < citiesCount; i++) {
+				mCitiesLatitudes[i] = Double.parseDouble(latitudes[i]);
+				mCitiesLongitudes[i] = Double.parseDouble(longitudes[i]);
+			}
+		}
+		mCitiesNames = res.getStringArray(R.array.cities);
 	}
 
 	/**
@@ -106,8 +126,8 @@ public class CountriesGeocoder {
 	 *            the location.
 	 * @return the city - {@code null} otherwise.
 	 */
-	public Address getFromLocation(Location location) {
-		return getFromLocation(location.getLatitude(), location.getLongitude());
+	public Address findCountry(Location location) {
+		return findCountry(location.getLatitude(), location.getLongitude());
 	}
 
 	/**
@@ -119,7 +139,7 @@ public class CountriesGeocoder {
 	 *            the longitude.
 	 * @return the city - {@code null} otherwise.
 	 */
-	public Address getFromLocation(double latitude, double longitude) {
+	public Address findCountry(double latitude, double longitude) {
 		final int fixedpointLatitude = (int) Math.rint(latitude * RATIO);
 		final int fixedpointLongitude = (int) Math.rint(longitude * RATIO);
 		double distanceToBorder;
@@ -222,5 +242,52 @@ public class CountriesGeocoder {
 			loc.setLongitude(longitude);
 		}
 		return loc;
+	}
+
+	/**
+	 * Find the nearest valid city for the location.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the city - {@code null} otherwise.
+	 */
+	public Address findCity(Location location) {
+		ZmanimAddress city = null;
+		int citiesCount = mCitiesNames.length;
+		double searchLatitude = location.getLatitude();
+		double searchLongitude = location.getLongitude();
+		double latitude;
+		double longitude;
+		String cityName;
+		double distanceMin = Double.MAX_VALUE;
+		float[] distances = new float[1];
+		Locale locale;
+		int nearestCityIndex = -1;
+
+		for (int i = 0; i < citiesCount; i++) {
+			latitude = mCitiesLatitudes[i];
+			longitude = mCitiesLongitudes[i];
+			Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
+			if (distances[0] <= distanceMin) {
+				distanceMin = distances[0];
+				if (distanceMin <= CITY_RADIUS) {
+					nearestCityIndex = i;
+				}
+			}
+		}
+		if (nearestCityIndex >= 0) {
+			cityName = mCitiesNames[nearestCityIndex];
+			locale = new Locale(mLocale.getLanguage(), mCitiesCountries[nearestCityIndex]);
+
+			city = new ZmanimAddress(mLocale);
+			city.setId(-nearestCityIndex);
+			city.setLatitude(mCitiesLatitudes[nearestCityIndex]);
+			city.setLongitude(mCitiesLongitudes[nearestCityIndex]);
+			city.setCountryCode(locale.getCountry());
+			city.setCountryName(locale.getDisplayCountry());
+			city.setLocality(cityName);
+		}
+
+		return city;
 	}
 }

@@ -112,6 +112,9 @@ public class AddressProvider {
 			addresses = findNearestAddressGeoNames(location);
 		}
 		if ((addresses == null) || addresses.isEmpty()) {
+			addresses = findNearestCity(location);
+		}
+		if ((addresses == null) || addresses.isEmpty()) {
 			addresses = findNearestCountry(location);
 		}
 
@@ -417,9 +420,26 @@ public class AddressProvider {
 	 */
 	private List<Address> findNearestCountry(Location location) {
 		List<Address> countries = new ArrayList<Address>();
-		Address country = mCountries.getFromLocation(location);
+		Address country = mCountries.findCountry(location);
 		if (country != null)
 			countries.add(country);
 		return countries;
+	}
+
+	/**
+	 * Find the nearest city to the latitude and longitude.
+	 * <p>
+	 * Uses the pre-compiled array of cities from GeoNames.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the list of addresses with 1 entry.
+	 */
+	private List<Address> findNearestCity(Location location) {
+		List<Address> cities = new ArrayList<Address>();
+		Address city = mCountries.findCity(location);
+		if (city != null)
+			cities.add(city);
+		return cities;
 	}
 }
