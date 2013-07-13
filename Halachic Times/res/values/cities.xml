@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
- <!-- Generated from geonames.org data. -->
+<!-- Generated from geonames.org data. -->
 <resources>
 
     <string-array name="cities">
@@ -22,11 +22,11 @@
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
-        <item>Washington, D. C.</item>
+        <item>Washington, D.C.</item>
         <item>Baltimore</item>
         <item>Philadelphia</item>
         <item>Bogotá</item>
-        <item>New York City</item>
+        <item>New York</item>
         <item>Montréal</item>
         <item>Los Ángeles</item>
         <item>Boston</item>
@@ -46,7 +46,7 @@
         <item>Nice</item>
         <item>Zürich</item>
         <item>München</item>
-        <item>Roma</item>
+        <item>Rome</item>
         <item>Berlin</item>
         <item>Vienna</item>
         <item>Stockholm</item>
@@ -62,11 +62,11 @@
         <item>Ashqelon</item>
         <item>Ashdod</item>
         <item>Tel Aviv</item>
-        <item>Beersheba</item>
+        <item>Be\'er Sheva</item>
         <item>H̱adera</item>
         <item>Eilat</item>
         <item>Haifa</item>
-        <item>Bet Shemesh</item>
+        <item>Beit Shemesh</item>
         <item>Nahariyya</item>
         <item>Ariel</item>
         <item>Jerusalem</item>
