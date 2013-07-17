@@ -50,8 +50,8 @@ public class CountriesGeocoder {
 	 */
 	private static final int MAX_COUNTRIES_OVERLAP = 20;
 
-	/** Maximum radius for which a zman is the same. */
-	private static final double CITY_RADIUS = 20000;
+	/** Maximum radius for which a zman is the same (20 kilometres). */
+	private static final float CITY_RADIUS = 20000f;
 
 	protected final Locale mLocale;
 	private static CountryPolygon[] mCountryBorders;
@@ -259,7 +259,7 @@ public class CountriesGeocoder {
 		double latitude;
 		double longitude;
 		String cityName;
-		double distanceMin = Double.MAX_VALUE;
+		float distanceMin = Float.MAX_VALUE;
 		float[] distances = new float[1];
 		Locale locale;
 		int nearestCityIndex = -1;
