@@ -874,9 +874,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				int moladMonth = molad.getGregorianMonth();
 				int moladDay = molad.getGregorianDayOfMonth();
 				if ((moladYear == y) && (moladMonth == m) && (moladDay == d)) {
-					date = molad.getTime();
+					double moladSeconds = (molad.getMoladChalakim() * 10.0) / 3.0;
+					double moladSecondsFloor = Math.floor(moladSeconds);
+					Calendar calMolad = (Calendar) gcal.clone();
+					calMolad.set(moladYear, moladMonth, moladDay, molad.getMoladHours(), molad.getMoladMinutes(), (int) moladSecondsFloor);
+					calMolad.set(Calendar.MILLISECOND, (int) (DateUtils.SECOND_IN_MILLIS * (moladSeconds - moladSecondsFloor)));
 					summary = R.string.molad_summary;
-					add(R.string.molad, summary, date);
+					add(R.string.molad, summary, calMolad.getTimeInMillis());
 				}
 			}
 		}

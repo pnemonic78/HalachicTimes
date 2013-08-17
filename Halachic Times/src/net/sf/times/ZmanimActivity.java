@@ -78,8 +78,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
-	/** The time zone. */
-	private TimeZone mTimeZone;
 	/** The list. */
 	private ViewGroup mList;
 	/** The location header. */
@@ -210,7 +208,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mDate.setTimeInMillis(date);
 		TimeZone tz = mLocations.getTimeZone();
 		mDate.setTimeZone(tz);
-		mTimeZone = tz;
 
 		View header = mHeader;
 		// Have we been destroyed?
@@ -381,9 +378,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private String formatAddress() {
 		if (mAddress != null)
 			return mAddress.getFormatted();
-		String tz = mTimeZone.getDisplayName();
-		if (!TextUtils.isEmpty(tz))
-			return tz;
+		TimeZone tz = mLocations.getTimeZone();
+		String tzName = tz.getDisplayName();
+		if (!TextUtils.isEmpty(tzName))
+			return tzName;
 		return getString(R.string.location_unknown);
 	}
 
