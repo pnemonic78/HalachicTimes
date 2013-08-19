@@ -40,5 +40,7 @@ public interface AddressColumns extends BaseColumns {
 	public static final String ADDRESS = "address";
 	/** The address' language. */
 	public static final String LANGUAGE = "language";
+	/** The address' timestamp. */
+	public static final String TIMESTAMP = "timestamp";
 
 }

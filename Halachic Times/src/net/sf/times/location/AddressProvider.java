@@ -393,6 +393,7 @@ public class AddressProvider {
 		values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
 		values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
 		values.put(AddressColumns.LONGITUDE, address.getLongitude());
+		values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
 		SQLiteDatabase db = null;
 		try {
 			db = getWritableDatabase();

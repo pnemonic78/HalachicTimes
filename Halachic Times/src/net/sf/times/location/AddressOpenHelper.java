@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
+import android.text.format.DateUtils;
 
 /**
  * A helper class to manage database creation and version management for
@@ -35,7 +36,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	/** Database name for times. */
 	private static final String DB_NAME = "times";
 	/** Database version. */
-	private static final int DB_VERSION = 1;
+	private static final int DB_VERSION = 2;
 	/** Database table for addresses. */
 	public static final String TABLE_ADDRESSES = "addresses";
 
@@ -59,7 +60,8 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		sql.append(AddressColumns.LATITUDE).append(" DOUBLE NOT NULL,");
 		sql.append(AddressColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
 		sql.append(AddressColumns.ADDRESS).append(" TEXT NOT NULL,");
-		sql.append(AddressColumns.LANGUAGE).append(" TEXT");
+		sql.append(AddressColumns.LANGUAGE).append(" TEXT,");
+		sql.append(AddressColumns.TIMESTAMP).append(" INTEGER");
 		sql.append(");");
 		db.execSQL(sql.toString());
 	}
@@ -70,4 +72,13 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	@Override
+	public void onOpen(SQLiteDatabase db) {
+		super.onOpen(db);
+
+		// Delete all records older than 1 year.
+		String whereClause = "(" + AddressColumns.TIMESTAMP + " IS NULL) OR (" + AddressColumns.TIMESTAMP + " < " + (System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS) + ")";
+		String[] whereArgs = null;
+		db.delete(TABLE_ADDRESSES, whereClause, whereArgs);
+	}
 }
