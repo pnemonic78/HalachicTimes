@@ -134,7 +134,10 @@ public class ZmanimSettings {
 	 */
 	public ZmanimSettings(Context context) {
 		super();
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+		Context app = context.getApplicationContext();
+		if (app != null)
+			context = app;
+		mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 	/**

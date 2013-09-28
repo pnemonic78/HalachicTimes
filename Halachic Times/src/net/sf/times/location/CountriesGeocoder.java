@@ -238,7 +238,8 @@ public class CountriesGeocoder {
 	public Location findLocation(TimeZone tz) {
 		Location loc = new Location(TIMEZONE_PROVIDER);
 		if (tz != null) {
-			double longitude = (TZ_HOUR * tz.getRawOffset()) / DateUtils.HOUR_IN_MILLIS;
+			int offset = tz.getRawOffset() % 43200000;
+			double longitude = (TZ_HOUR * offset) / DateUtils.HOUR_IN_MILLIS;
 			loc.setLongitude(longitude);
 		}
 		return loc;
