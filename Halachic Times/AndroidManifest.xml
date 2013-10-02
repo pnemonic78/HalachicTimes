@@ -40,10 +40,6 @@
             android:name=".CompassActivity"
             android:label="@string/title_activity_compass">
         </activity>
-        <activity
-            android:name=".ZmanimDetailsActivity"
-            android:label="@string/title_activity_zmanim">
-        </activity>
 
         <receiver
             android:name=".ZmanimWidget"

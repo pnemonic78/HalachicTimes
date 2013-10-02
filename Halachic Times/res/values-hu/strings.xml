@@ -73,8 +73,8 @@
     <string name="candles_summary">%1$d perc naplemente előtt</string>
 
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanuka gyertya</item>
-        <item quantity="other">%1$d Chanuka gyertyák</item>
+        <item quantity="one">1 Hanuka gyertya</item>
+        <item quantity="other">%1$d Hanuka gyertyák</item>
     </plurals>
 
     <!-- Sunset -->

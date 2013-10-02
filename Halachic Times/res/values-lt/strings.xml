@@ -74,6 +74,7 @@
 
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka žvakė</item>
+        <item quantity="few">%1$d Chanuka žvakės</item>
         <item quantity="other">%1$d Chanuka žvakės</item>
     </plurals>
 

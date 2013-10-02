@@ -24,9 +24,6 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 /**
@@ -34,63 +31,54 @@ import android.view.View;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsActivity extends ZmanimActivity {
+public class ZmanimDetailsFragment extends ZmanimFragment {
 
-	/** The item (time row) parameter. */
-	public static final String PARAMETER_ITEM = "item";
-
-	private int mTitleId;
+	/** The master id. */
+	private int mMasterId;
 
 	/**
-	 * Creates a new activity.
+	 * Constructs a new fragment.
 	 */
-	public ZmanimDetailsActivity() {
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		Intent intent = getIntent();
-		mTitleId = intent.getIntExtra(PARAMETER_ITEM, 0);
-		if (mTitleId == 0) {
-			finish();
-		}
-		setTitle(mTitleId);
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		setIntent(intent);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return false;
+	public ZmanimDetailsFragment() {
 	}
 
 	@Override
 	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
+		if (mMasterId == 0)
+			return null;
+
 		GeoLocation gloc = locations.getGeoLocation();
+		// Have we been destroyed?
+		if (gloc == null)
+			return null;
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCalendar(date);
 		boolean inIsrael = locations.inIsrael();
-		return new ZmanimDetailsAdapter(this, mSettings, cal, inIsrael, mTitleId);
+		return new ZmanimDetailsAdapter(mActivity, mSettings, cal, inIsrael, mMasterId);
 	}
 
-	@Override
-	protected ZmanimReminder createReminder() {
-		return null;
+	/**
+	 * Populate the list with detailed times.
+	 * 
+	 * @param date
+	 *            the date.
+	 * @param id
+	 *            the time id.
+	 */
+	public void populateTimes(Calendar date, int id) {
+		mMasterId = id;
+
+		super.populateTimes(date);
 	}
 
 	@Override
 	protected boolean isBackgroundDrawable() {
+		// No special background.
 		return false;
 	}
 
 	@Override
 	protected void setOnClickListener(View view, ZmanimItem item) {
-		// Ignore clicks.
+		// No clicking allowed.
 	}
 }

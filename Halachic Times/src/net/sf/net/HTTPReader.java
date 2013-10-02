@@ -38,6 +38,8 @@ public class HTTPReader {
 	/** Content type that is XML text. */
 	public static final String CONTENT_TEXT_XML = "text/xml";
 
+	private static final int BUFFER_SIZE = 1024;
+
 	/** Creates a new reader. */
 	public HTTPReader() {
 		super();
@@ -71,12 +73,12 @@ public class HTTPReader {
 		byte[] data = null;
 		InputStream in = null;
 		try {
-			in = new BufferedInputStream(conn.getInputStream());
+			in = new BufferedInputStream(conn.getInputStream(), BUFFER_SIZE);
 			// Do NOT use content-length header for exact buffer size!
 			// It is not always reliable / accurate.
 			final int outSize = Math.max(Math.max(in.available(), conn.getContentLength()), 32);
 			ByteArrayOutputStream out = new ByteArrayOutputStream(outSize);
-			final byte[] buf = new byte[1024];
+			final byte[] buf = new byte[BUFFER_SIZE];
 			int count = in.read(buf);
 			while (count >= 0) {
 				out.write(buf, 0, count);

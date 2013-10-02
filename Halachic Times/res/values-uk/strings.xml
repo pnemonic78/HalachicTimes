@@ -74,6 +74,8 @@
 
     <plurals name="candles_chanukka">
         <item quantity="one">1 свічка Хануки</item>
+        <item quantity="few">%1$d Ханукальні свічки</item>
+        <item quantity="many">%1$d Ханукальні свічки</item>
         <item quantity="other">%1$d Ханукальні свічки</item>
     </plurals>
 

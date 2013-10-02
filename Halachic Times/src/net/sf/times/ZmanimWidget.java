@@ -115,26 +115,27 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 	/** Populate the list with times. */
 	private void populateTimes() {
 		Context context = mContext;
-		if (mAppWidgetManager == null)
-			mAppWidgetManager = AppWidgetManager.getInstance(context);
-		if (mAppWidgetIds == null) {
-			ComponentName provider = new ComponentName(context, ZmanimWidget.class);
-			mAppWidgetIds = mAppWidgetManager.getAppWidgetIds(provider);
-			if (mAppWidgetIds == null)
-				return;
-		}
-		if (mViews == null) {
-			mViews = new RemoteViews(context.getPackageName(), R.layout.times_widget);
+		// if (mAppWidgetManager == null)
+		mAppWidgetManager = AppWidgetManager.getInstance(context);
+		// if (mAppWidgetIds == null) {
+		ComponentName provider = new ComponentName(context, ZmanimWidget.class);
+		mAppWidgetIds = mAppWidgetManager.getAppWidgetIds(provider);
+		if (mAppWidgetIds == null)
+			return;
+		// }
+		RemoteViews views = mViews;
+		// if (views == null) {
+		views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
 
-			// Pass the activity to ourselves, because starting another activity
-			// is not working.
-			Intent activityIntent = new Intent(context, ZmanimWidget.class);
-			activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
-			PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, android.R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		// Pass the activity to ourselves, because starting another activity
+		// is not working.
+		Intent activityIntent = new Intent(context, ZmanimWidget.class);
+		activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
+		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, android.R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			mViews.setOnClickPendingIntent(android.R.id.list, activityPendingIntent);
-		}
-		final RemoteViews views = mViews;
+		views.setOnClickPendingIntent(android.R.id.list, activityPendingIntent);
+		mViews = views;
+		// }
 
 		if (mSettings == null)
 			mSettings = new ZmanimSettings(context);
@@ -153,6 +154,8 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		bindViews(views, adapter);
 
 		mAppWidgetManager.updateAppWidget(mAppWidgetIds, views);
+		// FIXME mAppWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetIds,
+		// android.R.id.list);
 
 		scheduleForMidnight(mContext);
 	}

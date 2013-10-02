@@ -27,6 +27,7 @@ import java.util.Locale;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -234,6 +235,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	}
 
 	@SuppressWarnings("deprecation")
+	@SuppressLint("Wakelock")
 	private void notifyNow(int titleId, long when) {
 		CharSequence contentTitle = mContext.getText(R.string.app_name);
 		CharSequence contentText = mContext.getText(titleId);

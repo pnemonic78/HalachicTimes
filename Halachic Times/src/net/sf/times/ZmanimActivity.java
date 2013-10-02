@@ -32,17 +32,16 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.StateListDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
@@ -50,7 +49,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -60,7 +58,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener, OnClickListener {
+public class ZmanimActivity extends FragmentActivity implements LocationListener, OnDateSetListener, OnFindAddressListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -76,10 +74,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** ISO 639 language code for "Yiddish". */
 	public static final String ISO639_YIDDISH = "yi";
 
+	private static final String STACK_DETAILS = "details";
+
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
-	/** The list. */
-	private ViewGroup mList;
 	/** The location header. */
 	private View mHeader;
 	/** Provider for locations. */
@@ -92,29 +90,18 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private DatePickerDialog mDatePicker;
 	/** The address. */
 	private ZmanimAddress mAddress;
-	/** The gradient background. */
-	private Drawable mBackground;
 	/** Populate the header in UI thread. */
 	private Runnable mPopulateHeader;
-	private ZmanimAdapter mAdapter;
 	private ZmanimReminder mReminder;
 	protected LayoutInflater mInflater;
-	/** The detailed list panel. */
-	private ViewGroup mLayoutDetails;
-	/** The detailed list. */
-	private ViewGroup mListDetails;
+	/** The master fragment. */
+	private ZmanimFragment mMasterFragment;
+	/** The details fragment. */
+	private ZmanimDetailsFragment mDetailsFragment;
+	/** Is master fragment next to details fragment? */
+	private boolean mSideBySide;
 	/** The master item selected id. */
 	private int mSelectedId;
-	/** The master item selected row. */
-	private View mHighlightRow;
-	/** The master item background that is not selected. */
-	private Drawable mUnhighlightBackground;
-	private int mUnhighlightPaddingLeft;
-	private int mUnhighlightPaddingTop;
-	private int mUnhighlightPaddingRight;
-	private int mUnhighlightPaddingBottom;
-	/** The master item background that is selected. */
-	private Drawable mHighlightBackground;
 
 	/**
 	 * Creates a new activity.
@@ -185,12 +172,16 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mInflater = LayoutInflater.from(this);
 		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times, null);
 		mHeader = view.findViewById(R.id.header);
-		mList = (ViewGroup) view.findViewById(android.R.id.list);
-		mLayoutDetails = (ViewGroup) view.findViewById(R.id.panel_details);
-		if (mLayoutDetails != null)
-			mListDetails = (ViewGroup) view.findViewById(R.id.list_details);
 
 		setContentView(view);
+
+		FragmentManager fm = getSupportFragmentManager();
+		mMasterFragment = (ZmanimFragment) fm.findFragmentById(R.id.list_fragment);
+		mDetailsFragment = (ZmanimDetailsFragment) fm.findFragmentById(R.id.details_fragment);
+		mSideBySide = view.findViewById(R.id.frame_fragments) == null;
+		FragmentTransaction tx = fm.beginTransaction();
+		tx.hide(mDetailsFragment);
+		tx.commit();
 	}
 
 	/** Initialise the location providers. */
@@ -232,7 +223,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			mAddressProvider = new AddressProvider(this);
 		FindAddress.find(mAddressProvider, location, this);
 		populateHeader();
-		populateTimes();
+
+		mMasterFragment.populateTimes(mDate);
+		mDetailsFragment.populateTimes(mDate);
 	}
 
 	@Override
@@ -245,33 +238,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-	}
-
-	/** Populate the list with times. */
-	private void populateTimes() {
-		// Have we been destroyed?
-		GeoLocation gloc = mLocations.getGeoLocation();
-		if (gloc == null)
-			return;
-
-		ZmanimAdapter adapter = createAdapter(mDate, mLocations);
-		adapter.populate(false);
-
-		if (mList == null)
-			return;
-		ViewGroup list = mList;
-		if (list == null)
-			return;
-		if (isBackgroundDrawable()) {
-			if (mSettings.isBackgroundGradient()) {
-				if (mBackground == null)
-					mBackground = getResources().getDrawable(R.drawable.list_gradient);
-				list.setBackgroundDrawable(mBackground);
-			} else
-				list.setBackgroundDrawable(null);
-		}
-		bindViews(list, adapter);
-		mAdapter = adapter;
 	}
 
 	/**
@@ -297,8 +263,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Populate the header item. */
 	private void populateHeader() {
-		// Have we been destroyed?
 		Location loc = mLocations.getLocation();
+		// Have we been destroyed?
 		if (loc == null)
 			return;
 		View header = mHeader;
@@ -347,14 +313,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 		setDate(date.getTimeInMillis());
 		populateHeader();
-		populateTimes();
+		mMasterFragment.populateTimes(mDate);
+		mDetailsFragment.populateTimes(mDate);
 	}
 
 	@Override
 	public void onAddressFound(Location location, ZmanimAddress address) {
 		mAddress = address;
-		// Have we been destroyed?
 		AddressProvider provider = mAddressProvider;
+		// Have we been destroyed?
 		if (provider == null)
 			return;
 		provider.insertAddress(location, address);
@@ -397,60 +364,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	/**
-	 * Bind the times to a list.
-	 * 
-	 * @param list
-	 *            the list.
-	 * @param adapter
-	 *            the list adapter.
-	 */
-	private void bindViews(ViewGroup list, ZmanimAdapter adapter) {
-		if (list == null)
-			return;
-		final int count = adapter.getCount();
-		list.removeAllViews();
-
-		ZmanimItem item;
-		View row;
-
-		for (int position = 0; position < count; position++) {
-			item = adapter.getItem(position);
-			row = adapter.getView(position, null, list);
-			bindView(list, position, row, item);
-		}
-	}
-
-	/**
-	 * Bind the time to a list.
-	 * 
-	 * @param list
-	 *            the list.
-	 * @param position
-	 *            the position index.
-	 * @param view
-	 *            the row view.
-	 * @param item
-	 *            the item.
-	 */
-	private void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
-		setOnClickListener(row, item);
-		if (position > 0)
-			mInflater.inflate(R.layout.divider, list);
-		list.addView(row);
-	}
-
-	protected void setOnClickListener(View view, ZmanimItem item) {
-		boolean clickable = view.isEnabled();
-		final int id = item.titleId;
-		if (id == R.string.candles)
-			clickable = false;
-		else if (id == R.string.molad)
-			clickable = false;
-		view.setOnClickListener(clickable ? this : null);
-		view.setClickable(clickable);
-	}
-
-	/**
 	 * Show the details list.
 	 * 
 	 * @param item
@@ -458,116 +371,43 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * @param view
 	 *            the master row view that was clicked.
 	 */
-	private void showDetails(ZmanimItem item, View view) {
+	public void showDetails(ZmanimItem item, View view) {
 		if (item == null)
 			item = (ZmanimItem) view.getTag();
 
-		if (mLayoutDetails == null) {
-			Intent intent = new Intent(this, ZmanimDetailsActivity.class);
-			intent.putExtra(ZmanimActivity.PARAMETER_DATE, mDate.getTimeInMillis());
-			intent.putExtra(ZmanimDetailsActivity.PARAMETER_ITEM, item.titleId);
-			startActivity(intent);
-		} else if (((mSelectedId == item.titleId) || (view == mHighlightRow)) && (mLayoutDetails.getVisibility() == View.VISIBLE)) {
-			unhighlight(view);
-			mLayoutDetails.setVisibility(View.GONE);
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction tx = fm.beginTransaction();
+
+		if (!mSideBySide) {
+			mDetailsFragment.populateTimes(mDate, item.titleId);
+			tx.hide(mMasterFragment);
+			tx.show(mDetailsFragment);
+			tx.addToBackStack(STACK_DETAILS);
+			tx.setBreadCrumbTitle(R.string.title_activity_zmanim);
+			mSelectedId = item.titleId;
+		} else if ((mSelectedId == item.titleId) && mDetailsFragment.isVisible()) {
+			mMasterFragment.unhighlight();
+			fm.popBackStack(STACK_DETAILS, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		} else {
-			unhighlight(mHighlightRow);
-			highlight(view);
-			mLayoutDetails.setVisibility(View.VISIBLE);
-			populateDetailTimes(item.titleId);
+			mDetailsFragment.populateTimes(mDate, item.titleId);
+			mMasterFragment.unhighlight();
+			mMasterFragment.highlight(view);
+			tx.show(mDetailsFragment);
+			if (!mDetailsFragment.isVisible())
+				tx.addToBackStack(STACK_DETAILS);
+			mSelectedId = item.titleId;
 		}
+
+		tx.commit();
 	}
 
-	/**
-	 * Populate the list with detailed times.
-	 * 
-	 * @param id
-	 *            the time id.
-	 */
-	private void populateDetailTimes(int id) {
-		// Have we been destroyed?
-		GeoLocation gloc = mLocations.getGeoLocation();
-		if (gloc == null)
-			return;
-		boolean inIsrael = mLocations.inIsrael();
-
-		ZmanimAdapter adapterMaster = mAdapter;
-		if (adapterMaster == null)
-			return;
-		ZmanimAdapter adapter = new ZmanimDetailsAdapter(this, mSettings, adapterMaster.getCalendar(), inIsrael, id);
-		adapter.populate(false);
-
-		if (mListDetails == null)
-			return;
-		bindViews(mListDetails, adapter);
-		mSelectedId = id;
-	}
-
+	/* onBackPressed requires API 5+. */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (mLayoutDetails != null) {
-				if (mLayoutDetails.getVisibility() == View.VISIBLE) {
-					unhighlight(mHighlightRow);
-					mLayoutDetails.setVisibility(View.GONE);
-					return true;
-				}
-			}
+			if (mMasterFragment != null)
+				mMasterFragment.unhighlight();
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	/**
-	 * Get the background for the selected item.
-	 * 
-	 * @return the background.
-	 */
-	private Drawable getSelectedBackground() {
-		if (mHighlightBackground == null) {
-			ColorDrawable drawable = new ColorDrawable(0x40ffffff);
-			mHighlightBackground = drawable;
-		}
-		return mHighlightBackground;
-	}
-
-	/**
-	 * Mark the row as unselected.
-	 * 
-	 * @param view
-	 *            the master row view.
-	 */
-	private void unhighlight(final View view) {
-		Drawable bg = mUnhighlightBackground;
-		if ((view == null) || (bg == null))
-			return;
-
-		// Workaround for Samsung ICS bug where the highlight lingers.
-		if (bg instanceof StateListDrawable)
-			bg = bg.getConstantState().newDrawable();
-		view.setBackgroundDrawable(bg);
-		view.setPadding(mUnhighlightPaddingLeft, mUnhighlightPaddingTop, mUnhighlightPaddingRight, mUnhighlightPaddingBottom);
-		mUnhighlightBackground = null;
-	}
-
-	/**
-	 * Mark the row as selected.
-	 * 
-	 * @param view
-	 *            the master row view.
-	 */
-	private void highlight(View view) {
-		mUnhighlightBackground = view.getBackground();
-		mUnhighlightPaddingLeft = view.getPaddingLeft();
-		mUnhighlightPaddingTop = view.getPaddingTop();
-		mUnhighlightPaddingRight = view.getPaddingRight();
-		mUnhighlightPaddingBottom = view.getPaddingBottom();
-		view.setBackgroundDrawable(getSelectedBackground());
-		mHighlightRow = view;
-	}
-
-	@Override
-	public void onClick(View view) {
-		ZmanimItem item = (ZmanimItem) view.getTag();
-		showDetails(item, view);
 	}
 }
