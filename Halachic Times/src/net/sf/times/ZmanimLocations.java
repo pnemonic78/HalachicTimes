@@ -260,12 +260,12 @@ public class ZmanimLocations implements LocationListener {
 			addLocationListener(listener);
 
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, DateUtils.MINUTE_IN_MILLIS, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, DateUtils.HOUR_IN_MILLIS, ONE_KM, this);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, iae.getLocalizedMessage());
 		}
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, DateUtils.MINUTE_IN_MILLIS, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, DateUtils.HOUR_IN_MILLIS, ONE_KM, this);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, iae.getLocalizedMessage());
 		}
