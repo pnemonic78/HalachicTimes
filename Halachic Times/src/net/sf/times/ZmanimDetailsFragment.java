@@ -24,6 +24,8 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 
 /**
@@ -37,9 +39,39 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	private int mMasterId;
 
 	/**
-	 * Constructs a new fragment.
+	 * Constructs a new details list.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param attrs
+	 *            the XMl attributes.
+	 * @param defStyle
+	 *            the default style.
 	 */
-	public ZmanimDetailsFragment() {
+	public ZmanimDetailsFragment(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+	}
+
+	/**
+	 * Constructs a new details list.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param attrs
+	 *            the XML attributes.
+	 */
+	public ZmanimDetailsFragment(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	/**
+	 * Constructs a new details list.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	public ZmanimDetailsFragment(Context context) {
+		super(context);
 	}
 
 	@Override
@@ -54,7 +86,7 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCalendar(date);
 		boolean inIsrael = locations.inIsrael();
-		return new ZmanimDetailsAdapter(mActivity, mSettings, cal, inIsrael, mMasterId);
+		return new ZmanimDetailsAdapter(mContext, mSettings, cal, inIsrael, mMasterId);
 	}
 
 	/**

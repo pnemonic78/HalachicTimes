@@ -24,26 +24,26 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimFragment extends Fragment implements OnClickListener {
+public class ZmanimFragment extends FrameLayout {
 
-	protected ZmanimActivity mActivity;
+	protected final Context mContext;
 	protected LayoutInflater mInflater;
+	private OnClickListener mOnClickListener;
 	/** The list. */
 	protected ViewGroup mList;
 	/** Provider for locations. */
@@ -64,35 +64,55 @@ public class ZmanimFragment extends Fragment implements OnClickListener {
 	private Drawable mHighlightBackground;
 
 	/**
-	 * Constructs a new fragment.
+	 * Constructs a new list.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param attrs
+	 *            the XMl attributes.
+	 * @param defStyle
+	 *            the default style.
 	 */
-	public ZmanimFragment() {
+	public ZmanimFragment(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		mContext = context;
+		init();
 	}
 
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		mActivity = (ZmanimActivity) activity;
+	/**
+	 * Constructs a new list.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param attrs
+	 *            the XML attributes.
+	 */
+	public ZmanimFragment(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		mContext = context;
+		init();
 	}
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	/**
+	 * Constructs a new list.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	public ZmanimFragment(Context context) {
+		super(context);
+		mContext = context;
 		init();
 	}
 
 	/** Initialise. */
 	private void init() {
-		mSettings = new ZmanimSettings(mActivity);
-		mLocations = ZmanimLocations.getInstance(mActivity);
-	}
+		mSettings = new ZmanimSettings(mContext);
+		mLocations = ZmanimLocations.getInstance(mContext);
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mInflater = inflater;
-		ViewGroup view = (ViewGroup) inflater.inflate(R.layout.times_list, container, false);
+		mInflater = LayoutInflater.from(mContext);
+		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times_list, this);
 		mList = (ViewGroup) view.findViewById(android.R.id.list);
-		return view;
 	}
 
 	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
@@ -103,7 +123,7 @@ public class ZmanimFragment extends Fragment implements OnClickListener {
 		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 		cal.setCalendar(date);
 		boolean inIsrael = locations.inIsrael();
-		return new ZmanimAdapter(mActivity, mSettings, cal, inIsrael);
+		return new ZmanimAdapter(mContext, mSettings, cal, inIsrael);
 	}
 
 	/**
@@ -189,20 +209,15 @@ public class ZmanimFragment extends Fragment implements OnClickListener {
 	}
 
 	protected void setOnClickListener(View view, ZmanimItem item) {
-		boolean clickable = view.isEnabled();
 		final int id = item.titleId;
-		if (id == R.string.candles)
-			clickable = false;
-		else if (id == R.string.molad)
-			clickable = false;
-		view.setOnClickListener(clickable ? this : null);
+		boolean clickable = view.isEnabled() && (id != R.string.candles) && (id != R.string.molad);
+		view.setOnClickListener(clickable ? mOnClickListener : null);
 		view.setClickable(clickable);
 	}
 
 	@Override
-	public void onClick(View view) {
-		ZmanimItem item = (ZmanimItem) view.getTag();
-		mActivity.showDetails(item, view);
+	public void setOnClickListener(OnClickListener listener) {
+		mOnClickListener = listener;
 	}
 
 	/**
@@ -258,5 +273,9 @@ public class ZmanimFragment extends Fragment implements OnClickListener {
 		mUnhighlightPaddingBottom = view.getPaddingBottom();
 		view.setBackgroundDrawable(getSelectedBackground());
 		mHighlightRow = view;
+	}
+
+	public boolean isVisible() {
+		return getVisibility() == VISIBLE;
 	}
 }

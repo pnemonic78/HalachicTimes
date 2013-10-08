@@ -15,19 +15,19 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <fragment
+        <view
             android:id="@+id/list_fragment"
-            android:name="net.sf.times.ZmanimFragment"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            class="net.sf.times.ZmanimFragment"/>
 
-        <fragment
+        <view
             android:id="@+id/details_fragment"
-            android:name="net.sf.times.ZmanimDetailsFragment"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="2"/>
+            android:layout_weight="2"
+            class="net.sf.times.ZmanimDetailsFragment"/>
     </LinearLayout>
 
 </LinearLayout>

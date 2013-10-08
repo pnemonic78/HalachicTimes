@@ -32,6 +32,7 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
@@ -39,9 +40,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
@@ -49,6 +47,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -58,7 +57,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends FragmentActivity implements LocationListener, OnDateSetListener, OnFindAddressListener {
+public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener, OnClickListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -73,8 +72,6 @@ public class ZmanimActivity extends FragmentActivity implements LocationListener
 	public static final String ISO639_YIDDISH_FORMER = "ji";
 	/** ISO 639 language code for "Yiddish". */
 	public static final String ISO639_YIDDISH = "yi";
-
-	private static final String STACK_DETAILS = "details";
 
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
@@ -175,13 +172,11 @@ public class ZmanimActivity extends FragmentActivity implements LocationListener
 
 		setContentView(view);
 
-		FragmentManager fm = getSupportFragmentManager();
-		mMasterFragment = (ZmanimFragment) fm.findFragmentById(R.id.list_fragment);
-		mDetailsFragment = (ZmanimDetailsFragment) fm.findFragmentById(R.id.details_fragment);
+		mMasterFragment = (ZmanimFragment) view.findViewById(R.id.list_fragment);
+		mMasterFragment.setOnClickListener(this);
+		mDetailsFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_fragment);
 		mSideBySide = view.findViewById(R.id.frame_fragments) == null;
-		FragmentTransaction tx = fm.beginTransaction();
-		tx.hide(mDetailsFragment);
-		tx.commit();
+		hide(mDetailsFragment);
 	}
 
 	/** Initialise the location providers. */
@@ -375,39 +370,50 @@ public class ZmanimActivity extends FragmentActivity implements LocationListener
 		if (item == null)
 			item = (ZmanimItem) view.getTag();
 
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction tx = fm.beginTransaction();
-
 		if (!mSideBySide) {
 			mDetailsFragment.populateTimes(mDate, item.titleId);
-			tx.hide(mMasterFragment);
-			tx.show(mDetailsFragment);
-			tx.addToBackStack(STACK_DETAILS);
-			tx.setBreadCrumbTitle(R.string.title_activity_zmanim);
+			hide(mMasterFragment);
+			show(mDetailsFragment);
 			mSelectedId = item.titleId;
 		} else if ((mSelectedId == item.titleId) && mDetailsFragment.isVisible()) {
 			mMasterFragment.unhighlight();
-			fm.popBackStack(STACK_DETAILS, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		} else {
 			mDetailsFragment.populateTimes(mDate, item.titleId);
 			mMasterFragment.unhighlight();
 			mMasterFragment.highlight(view);
-			tx.show(mDetailsFragment);
-			if (!mDetailsFragment.isVisible())
-				tx.addToBackStack(STACK_DETAILS);
+			show(mDetailsFragment);
 			mSelectedId = item.titleId;
 		}
-
-		tx.commit();
 	}
 
 	/* onBackPressed requires API 5+. */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (mMasterFragment != null)
+			if (mMasterFragment != null) {
 				mMasterFragment.unhighlight();
+
+				if (mDetailsFragment.isVisible()) {
+					show(mMasterFragment);
+					hide(mDetailsFragment);
+					return true;
+				}
+			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void onClick(View view) {
+		ZmanimItem item = (ZmanimItem) view.getTag();
+		showDetails(item, view);
+	}
+
+	private void hide(ZmanimFragment fragment) {
+		fragment.setVisibility(View.GONE);
+	}
+
+	private void show(ZmanimFragment fragment) {
+		fragment.setVisibility(View.VISIBLE);
 	}
 }
