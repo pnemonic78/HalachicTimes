@@ -236,7 +236,7 @@ public class ZmanimSettings {
 	 * @return {@code true} if older times are not grayed.
 	 */
 	public boolean isPast() {
-		return mPrefs.getBoolean(KEY_PAST, false);
+		return mPrefs.getBoolean(KEY_PAST, true);
 	}
 
 	/**

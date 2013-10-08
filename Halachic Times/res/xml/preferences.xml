@@ -24,7 +24,7 @@
             android:summaryOn="@string/summaries_visible"
             android:title="@string/summaries_title"/>
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="past"
             android:summaryOff="@string/past_disabled"
             android:summaryOn="@string/past_enabled"
