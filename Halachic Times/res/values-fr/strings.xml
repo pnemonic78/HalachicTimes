@@ -143,6 +143,7 @@
     <!-- Compass -->
     <string name="menu_compass">Boussole</string>
     <string name="title_activity_compass">Direction de la prière</string>
+    <string name="compass_summary">Direction de la prière à saint des saints à Jérusalem</string>
     <string name="north">N</string>
     <string name="east">E</string>
     <string name="south">S</string>

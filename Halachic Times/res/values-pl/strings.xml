@@ -145,6 +145,7 @@
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
     <string name="title_activity_compass">Kierunek modlitwy</string>
+    <string name="compass_summary">Kierunek modlitwy do Świętego Świętych w Jerozolimie</string>
     <string name="north">P</string>
     <string name="east">W</string>
     <string name="south">p</string>

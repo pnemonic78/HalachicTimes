@@ -144,6 +144,7 @@
     <!-- Compass -->
     <string name="menu_compass">Busolă</string>
     <string name="title_activity_compass">Direcția de rugăciune</string>
+    <string name="compass_summary">Direcția de rugăciune la Sfânta Sfintelor din Ierusalim</string>
     <string name="north">N</string>
     <string name="east">E</string>
     <string name="south">S</string>

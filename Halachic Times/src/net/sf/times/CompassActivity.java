@@ -101,8 +101,12 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		mView = (CompassView) findViewById(R.id.compass);
 
 		mSettings = new ZmanimSettings(this);
-		mTimeZone = TimeZone.getDefault();
+		if (!mSettings.isSummaries()) {
+			View summary = findViewById(android.R.id.summary);
+			summary.setVisibility(View.GONE);
+		}
 
+		mTimeZone = TimeZone.getDefault();
 		mLocations = ZmanimLocations.getInstance(this, this);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

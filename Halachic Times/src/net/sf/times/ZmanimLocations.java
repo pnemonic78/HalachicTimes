@@ -44,7 +44,12 @@ public class ZmanimLocations implements LocationListener {
 	private static final String TAG = "ZmanimLocations";
 
 	/** 1 kilometre. */
-	private static final int ONE_KM = 1000;
+	private static final int KILOMETRE = 1000;
+
+	/** The minimum time interval between location updates. */
+	private static final long UPDATE_TIME = DateUtils.HOUR_IN_MILLIS >> 1L;
+	/** The minimum distance between location updates. */
+	private static final int UPDATE_DISTANCE = KILOMETRE;
 
 	/** Time zone ID for Jerusalem. */
 	private static final String TZ_JERUSALEM = "Asia/Jerusalem";
@@ -260,12 +265,12 @@ public class ZmanimLocations implements LocationListener {
 			addLocationListener(listener);
 
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, DateUtils.HOUR_IN_MILLIS, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, iae.getLocalizedMessage());
 		}
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, DateUtils.HOUR_IN_MILLIS, ONE_KM, this);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, iae.getLocalizedMessage());
 		}

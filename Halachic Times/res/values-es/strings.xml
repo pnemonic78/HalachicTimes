@@ -142,7 +142,8 @@
 
     <!-- Compass -->
     <string name="menu_compass">Brújula</string>
-    <string name="title_activity_compass">La dirección de la oración</string>
+    <string name="title_activity_compass">Dirección de la oración</string>
+    <string name="compass_summary">Dirección de la oración a la Santa de los Santos en Jerusalén</string>
     <string name="north">N</string>
     <string name="east">E</string>
     <string name="south">S</string>

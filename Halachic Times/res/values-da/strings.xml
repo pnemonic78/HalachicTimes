@@ -143,6 +143,7 @@
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
     <string name="title_activity_compass">Retning af bøn</string>
+    <string name="compass_summary">Retning for bøn til Allerhelligste i Jerusalem</string>
     <string name="north">N</string>
     <string name="east">Ø</string>
     <string name="south">S</string>

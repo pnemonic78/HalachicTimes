@@ -143,6 +143,7 @@
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
     <string name="title_activity_compass">Richting van het gebed</string>
+    <string name="compass_summary">Richting van het gebed om de Heilige der Heiligen in Jeruzalem</string>
     <string name="north">N</string>
     <string name="east">O</string>
     <string name="south">Z</string>

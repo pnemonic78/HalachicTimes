@@ -144,6 +144,7 @@
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
     <string name="title_activity_compass">Směr modlitby</string>
+    <string name="compass_summary">Směr modlitbě nejsvětější svatyně v Jeruzalémě</string>
     <string name="north">S</string>
     <string name="east">V</string>
     <string name="south">J</string>

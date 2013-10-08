@@ -8,5 +8,6 @@
     <color name="candles">#ccffff00</color>
     <color name="widget_box">#80000000</color>
     <color name="widget_border">#10ffffff</color>
+    <color name="compass_arrow">#ff00ff</color>
 
 </resources>

@@ -130,7 +130,7 @@ public class CompassView extends View {
 		mPaintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintHoliest.setStyle(Paint.Style.STROKE);
 		mPaintHoliest.setStrokeWidth(6);
-		mPaintHoliest.setColor(Color.MAGENTA);
+		mPaintHoliest.setColor(context.getResources().getColor(R.color.compass_arrow));
 
 		mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintFill.setColor(Color.GRAY);
