@@ -62,6 +62,7 @@ public class ZmanimFragment extends FrameLayout {
 	private int mUnhighlightPaddingBottom;
 	/** The master item background that is selected. */
 	private Drawable mHighlightBackground;
+	private ZmanimAdapter mAdapter;
 
 	/**
 	 * Constructs a new list.
@@ -141,6 +142,7 @@ public class ZmanimFragment extends FrameLayout {
 		if (adapter == null)
 			return;
 		adapter.populate(false);
+		mAdapter = adapter;
 
 		ViewGroup list = mList;
 		if (list == null)
@@ -262,10 +264,35 @@ public class ZmanimFragment extends FrameLayout {
 	/**
 	 * Mark the row as selected.
 	 * 
-	 * @param view
-	 *            the row view.
+	 * @param itemId
+	 *            the row id.
 	 */
-	public void highlight(View view) {
+	public void highlight(int itemId) {
+		// Find the view that matches the item id (the view that was clicked).
+		final ZmanimAdapter adapter = mAdapter;
+		if (adapter == null)
+			return;
+		final ViewGroup list = mList;
+		if (list == null)
+			return;
+		View view = null;
+		View child;
+		ZmanimItem item;
+		final int count = list.getChildCount();
+		for (int i = 0; i < count; i++) {
+			child = list.getChildAt(i);
+			item = (ZmanimItem) child.getTag();
+			// Maybe row divider?
+			if (item == null)
+				continue;
+			if (item.titleId == itemId) {
+				view = child;
+				break;
+			}
+		}
+		if (view == null)
+			return;
+
 		mUnhighlightBackground = view.getBackground();
 		mUnhighlightPaddingLeft = view.getPaddingLeft();
 		mUnhighlightPaddingTop = view.getPaddingTop();

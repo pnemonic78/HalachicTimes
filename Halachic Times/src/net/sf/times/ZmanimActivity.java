@@ -63,6 +63,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public static final String PARAMETER_DATE = "date";
 	/** The time parameter. */
 	public static final String PARAMETER_TIME = "time";
+	/** The details list parameter. */
+	public static final String PARAMETER_DETAILS = "details";
 
 	/** ISO 639 language code for "Hebrew". */
 	public static final String ISO639_HEBREW = "he";
@@ -126,12 +128,30 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putLong(PARAMETER_DATE, mDate.getTimeInMillis());
+		outState.putInt(PARAMETER_DETAILS, mSelectedId);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		setDate(savedInstanceState.getLong(PARAMETER_DATE));
+		final int itemId = savedInstanceState.getInt(PARAMETER_DETAILS, 0);
+
+		if (itemId != 0) {
+			// We need to wait for the list rows to get their default
+			// backgrounds before we can highlight any row.
+			new Thread() {
+				public void run() {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							mMasterFragment.populateTimes(mDate);
+							toggleDetails(itemId);
+						}
+					});
+				}
+			}.start();
+		}
 	}
 
 	@Override
@@ -359,30 +379,43 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	/**
-	 * Show the details list.
+	 * Show/hide the details list.
 	 * 
 	 * @param item
 	 *            the master item.
 	 * @param view
 	 *            the master row view that was clicked.
 	 */
-	public void showDetails(ZmanimItem item, View view) {
+	protected void toggleDetails(ZmanimItem item, View view) {
 		if (item == null)
 			item = (ZmanimItem) view.getTag();
+		toggleDetails(item.titleId);
+	}
+
+	/**
+	 * Show/hide the details list.
+	 * 
+	 * @param itemId
+	 *            the master item id.
+	 */
+	protected void toggleDetails(int itemId) {
+		if (itemId == 0)
+			return;
 
 		if (!mSideBySide) {
-			mDetailsFragment.populateTimes(mDate, item.titleId);
+			mDetailsFragment.populateTimes(mDate, itemId);
 			hide(mMasterFragment);
 			show(mDetailsFragment);
-			mSelectedId = item.titleId;
-		} else if ((mSelectedId == item.titleId) && mDetailsFragment.isVisible()) {
+			mSelectedId = itemId;
+		} else if ((mSelectedId == itemId) && mDetailsFragment.isVisible()) {
+			hide(mDetailsFragment);
 			mMasterFragment.unhighlight();
 		} else {
-			mDetailsFragment.populateTimes(mDate, item.titleId);
+			mDetailsFragment.populateTimes(mDate, itemId);
 			mMasterFragment.unhighlight();
-			mMasterFragment.highlight(view);
+			mMasterFragment.highlight(itemId);
 			show(mDetailsFragment);
-			mSelectedId = item.titleId;
+			mSelectedId = itemId;
 		}
 	}
 
@@ -406,7 +439,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	public void onClick(View view) {
 		ZmanimItem item = (ZmanimItem) view.getTag();
-		showDetails(item, view);
+		toggleDetails(item, view);
 	}
 
 	private void hide(ZmanimFragment fragment) {
