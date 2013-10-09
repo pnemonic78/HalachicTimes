@@ -97,6 +97,13 @@ public class AddressProvider {
 	 * @return the address.
 	 */
 	public Address findNearestAddress(Location location) {
+		final double latitude = location.getLatitude();
+		if ((latitude > 90) || (latitude < -90))
+			return null;
+		final double longitude = location.getLongitude();
+		if ((longitude > 180) || (longitude < -180))
+			return null;
+
 		List<Address> addresses = null;
 
 		if ((addresses == null) || addresses.isEmpty()) {
@@ -134,13 +141,12 @@ public class AddressProvider {
 	private List<Address> findNearestAddressGeocoder(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		List<Address> addresses;
+		List<Address> addresses = null;
 		Geocoder geocoder = new Geocoder(mContext);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
 			Log.e(TAG, e.getLocalizedMessage());
-			addresses = new ArrayList<Address>();
 		}
 		return addresses;
 	}
@@ -158,13 +164,12 @@ public class AddressProvider {
 	private List<Address> findNearestAddressGoogle(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		List<Address> addresses;
+		List<Address> addresses = null;
 		GoogleGeocoder geocoder = new GoogleGeocoder(mContext, mLocale);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
 			Log.e(TAG, e.getLocalizedMessage());
-			addresses = new ArrayList<Address>();
 		}
 		return addresses;
 	}
@@ -181,13 +186,12 @@ public class AddressProvider {
 	private List<Address> findNearestAddressGeoNames(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		List<Address> addresses;
+		List<Address> addresses = null;
 		GeoNamesGeocoder geocoder = new GeoNamesGeocoder(mContext, mLocale);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
 		} catch (IOException e) {
 			e.printStackTrace();
-			addresses = new ArrayList<Address>();
 		}
 		return addresses;
 	}
@@ -417,13 +421,15 @@ public class AddressProvider {
 	 * 
 	 * @param location
 	 *            the location.
-	 * @return the list of addresses with 1 entry.
+	 * @return the list of addresses with at most 1 entry.
 	 */
 	private List<Address> findNearestCountry(Location location) {
-		List<Address> countries = new ArrayList<Address>();
+		List<Address> countries = null;
 		Address country = mCountries.findCountry(location);
-		if (country != null)
+		if (country != null) {
+			countries = new ArrayList<Address>();
 			countries.add(country);
+		}
 		return countries;
 	}
 
@@ -434,13 +440,15 @@ public class AddressProvider {
 	 * 
 	 * @param location
 	 *            the location.
-	 * @return the list of addresses with 1 entry.
+	 * @return the list of addresses with at most 1 entry.
 	 */
 	private List<Address> findNearestCity(Location location) {
-		List<Address> cities = new ArrayList<Address>();
+		List<Address> cities = null;
 		Address city = mCountries.findCity(location);
-		if (city != null)
+		if (city != null) {
+			cities = new ArrayList<Address>();
 			cities.add(city);
+		}
 		return cities;
 	}
 }

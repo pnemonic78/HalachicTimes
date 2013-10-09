@@ -47,7 +47,7 @@ public class ZmanimLocations implements LocationListener {
 	private static final int KILOMETRE = 1000;
 
 	/** The minimum time interval between location updates. */
-	private static final long UPDATE_TIME = DateUtils.HOUR_IN_MILLIS >> 1L;
+	private static final long UPDATE_TIME = DateUtils.MINUTE_IN_MILLIS * 15L;
 	/** The minimum distance between location updates. */
 	private static final int UPDATE_DISTANCE = KILOMETRE;
 
@@ -55,6 +55,8 @@ public class ZmanimLocations implements LocationListener {
 	private static final String TZ_JERUSALEM = "Asia/Jerusalem";
 	/** Time zone ID for Israeli Standard Time. */
 	private static final String TZ_IST = "IST";
+	/** Time zone ID for Beirut (patch for Israeli law of DST 2013). */
+	private static final String TZ_BEIRUT = "Asia/Beirut";
 
 	/** Northern-most latitude for Israel. */
 	private static final double ISRAEL_NORTH = 33.289212;
@@ -140,7 +142,7 @@ public class ZmanimLocations implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if (location == null)
+		if (!isValid(location))
 			return;
 		// Ignore old locations.
 		if (mLocation != null) {
@@ -229,15 +231,34 @@ public class ZmanimLocations implements LocationListener {
 	 */
 	public Location getLocation() {
 		Location loc = mLocation;
-		if (loc == null)
+		if (!isValid(loc))
 			loc = getLocationGPS();
-		if (loc == null)
+		if (!isValid(loc))
 			loc = getLocationNetwork();
-		if (loc == null)
+		if (!isValid(loc))
 			loc = getLocationSaved();
-		if (loc == null)
+		if (!isValid(loc))
 			loc = getLocationTZ();
 		return loc;
+	}
+
+	/**
+	 * Is the location valid?
+	 * 
+	 * @param location
+	 *            the location to check.
+	 * @return {@code false} if location is invalid.
+	 */
+	public boolean isValid(Location location) {
+		if (location == null)
+			return false;
+		final double latitude = location.getLatitude();
+		if ((latitude > 90) || (latitude < -90))
+			return false;
+		final double longitude = location.getLongitude();
+		if ((longitude > 180) || (longitude < -180))
+			return false;
+		return true;
 	}
 
 	/**
@@ -294,7 +315,7 @@ public class ZmanimLocations implements LocationListener {
 			if (timeZone == null)
 				timeZone = mTimeZone;
 			String id = timeZone.getID();
-			if (TZ_JERUSALEM.equals(id) || TZ_IST.equals(id))
+			if (TZ_JERUSALEM.equals(id) || TZ_IST.equals(id) || TZ_BEIRUT.equals(id))
 				return true;
 			return false;
 		}

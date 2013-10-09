@@ -142,6 +142,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			// backgrounds before we can highlight any row.
 			new Thread() {
 				public void run() {
+					try {
+						sleep(1000L);
+					} catch (InterruptedException e) {
+					}
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
