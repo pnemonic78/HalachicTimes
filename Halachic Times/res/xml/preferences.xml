@@ -211,7 +211,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/candles">
             <net.sf.times.preference.SeekBarPreference
-                android:defaultValue="18"
+                android:defaultValue="22"
                 android:dialogIcon="@android:drawable/ic_dialog_info"
                 android:icon="@drawable/ic_opinion"
                 android:key="candles"

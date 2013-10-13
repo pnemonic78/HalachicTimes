@@ -255,7 +255,7 @@ public class ZmanimSettings {
 	 * @return the number of minutes.
 	 */
 	public int getCandleLightingOffset() {
-		return mPrefs.getInt(KEY_OPINION_CANDLES, 18);
+		return mPrefs.getInt(KEY_OPINION_CANDLES, 22);
 	}
 
 	/**
