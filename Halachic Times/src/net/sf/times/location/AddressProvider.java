@@ -97,6 +97,8 @@ public class AddressProvider {
 	 * @return the address.
 	 */
 	public Address findNearestAddress(Location location) {
+		if (location == null)
+			return null;
 		final double latitude = location.getLatitude();
 		if ((latitude > 90) || (latitude < -90))
 			return null;

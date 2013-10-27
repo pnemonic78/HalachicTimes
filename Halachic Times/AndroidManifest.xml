@@ -31,6 +31,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.app.Activity"/>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".LocationActivity"/>
         </activity>
         <activity
             android:name=".ZmanimPreferences"
@@ -39,6 +42,17 @@
         <activity
             android:name=".CompassActivity"
             android:label="@string/title_activity_compass">
+        </activity>
+        <activity
+            android:name=".LocationActivity"
+            android:label="@string/title_activity_location">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
 
         <receiver

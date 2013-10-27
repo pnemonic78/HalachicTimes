@@ -34,11 +34,13 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.SearchManager;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -74,6 +76,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public static final String ISO639_YIDDISH_FORMER = "ji";
 	/** ISO 639 language code for "Yiddish". */
 	public static final String ISO639_YIDDISH = "yi";
+
+	/** Activity id for searching locations. */
+	private static final int ACTIVITY_LOCATIONS = 1;
 
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
@@ -290,15 +295,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (header == null)
 			return;
 
+		final String coordsText = mLocations.formatCoordinates(loc);
 		final String locationName = formatAddress();
-		final String coordsText = mLocations.formatCoordinates();
 
 		// Update the location.
-		TextView address = (TextView) header.findViewById(R.id.address);
-		address.setText(locationName);
 		TextView coordinates = (TextView) header.findViewById(R.id.coordinates);
 		coordinates.setText(coordsText);
 		coordinates.setVisibility(mSettings.isCoordinates() ? View.VISIBLE : View.GONE);
+		TextView address = (TextView) header.findViewById(R.id.address);
+		address.setText(locationName);
 	}
 
 	@Override
@@ -316,6 +321,19 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		case R.id.menu_goto:
 			mDatePicker = new DatePickerDialog(this, this, mDate.get(Calendar.YEAR), mDate.get(Calendar.MONTH), mDate.get(Calendar.DAY_OF_MONTH));
 			mDatePicker.show();
+			return true;
+		case R.id.menu_location:
+			Location loc = mLocations.getLocation();
+			// Have we been destroyed?
+			if (loc == null)
+				break;
+			Bundle appData = new Bundle();
+			appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
+
+			Intent intent = new Intent(this, LocationActivity.class);
+			intent.putExtra(SearchManager.APP_DATA, appData);
+			intent.setAction(Intent.ACTION_SEARCH);
+			startActivityForResult(intent, ACTIVITY_LOCATIONS);
 			return true;
 		case R.id.menu_settings:
 			startActivity(new Intent(this, ZmanimPreferences.class));
@@ -452,5 +470,30 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	private void show(ZmanimFragment fragment) {
 		fragment.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public boolean onSearchRequested() {
+		Location loc = mLocations.getLocation();
+		// Have we been destroyed?
+		if (loc == null)
+			return false;
+
+		Bundle appData = new Bundle();
+		appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
+		startSearch(null, false, appData, false);
+		return true;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (requestCode == ACTIVITY_LOCATIONS) {
+			if (resultCode == RESULT_OK) {
+				Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+				mLocations.setLocation(loc);
+			}
+		}
 	}
 }

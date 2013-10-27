@@ -27,6 +27,7 @@ import java.util.TimeZone;
 import net.sf.times.location.CountriesGeocoder;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -144,9 +145,12 @@ public class ZmanimLocations implements LocationListener {
 	public void onLocationChanged(Location location) {
 		if (!isValid(location))
 			return;
-		// Ignore old locations.
 		if (mLocation != null) {
+			// Ignore old locations.
 			if (mLocation.getTime() >= location.getTime())
+				return;
+			// Ignore manual location.
+			if (CountriesGeocoder.USER_PROVIDER.equals(mLocation.getProvider()))
 				return;
 		}
 		mLocation = location;
@@ -353,10 +357,45 @@ public class ZmanimLocations implements LocationListener {
 	 * @return the coordinates text.
 	 */
 	public String formatCoordinates() {
-		Location loc = getLocation();
-		final double latitude = loc.getLatitude();
-		final double longitude = loc.getLongitude();
+		return formatCoordinates(getLocation());
+	}
 
+	/**
+	 * Format the coordinates.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the coordinates text.
+	 */
+	public String formatCoordinates(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		return formatCoordinates(latitude, longitude);
+	}
+
+	/**
+	 * Format the coordinates.
+	 * 
+	 * @param address
+	 *            the address.
+	 * @return the coordinates text.
+	 */
+	public String formatCoordinates(Address address) {
+		final double latitude = address.getLatitude();
+		final double longitude = address.getLongitude();
+		return formatCoordinates(latitude, longitude);
+	}
+
+	/**
+	 * Format the coordinates.
+	 * 
+	 * @param latitude
+	 *            the latitude.
+	 * @param longitude
+	 *            the longitude.
+	 * @return the coordinates text.
+	 */
+	public String formatCoordinates(double latitude, double longitude) {
 		final String notation = mSettings.getCoordinatesFormat();
 		final String latitudeText;
 		final String longitudeText;
@@ -367,8 +406,7 @@ public class ZmanimLocations implements LocationListener {
 			latitudeText = String.format(Locale.US, "%1$.6f", latitude);
 			longitudeText = String.format(Locale.US, "%1$.6f", longitude);
 		}
-		final String coordsText = String.format(Locale.US, mCoordsFormat, latitudeText, longitudeText);
-		return coordsText;
+		return String.format(Locale.US, mCoordsFormat, latitudeText, longitudeText);
 	}
 
 	/**
@@ -406,5 +444,16 @@ public class ZmanimLocations implements LocationListener {
 	 */
 	public TimeZone getTimeZone() {
 		return mTimeZone;
+	}
+
+	/**
+	 * Set the location.
+	 * 
+	 * @param location
+	 *            the location.
+	 */
+	public void setLocation(Location location) {
+		mLocation = null;
+		onLocationChanged(location);
 	}
 }

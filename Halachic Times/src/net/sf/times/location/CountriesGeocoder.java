@@ -19,6 +19,8 @@
  */
 package net.sf.times.location;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -38,6 +40,8 @@ public class CountriesGeocoder {
 
 	/** The time zone location provider. */
 	public static final String TIMEZONE_PROVIDER = "timezone";
+	/** The "user pick a city" location provider. */
+	public static final String USER_PROVIDER = "user";
 
 	/** Degrees per time zone hour. */
 	private static final double TZ_HOUR = 360 / 24;
@@ -254,7 +258,7 @@ public class CountriesGeocoder {
 	 */
 	public Address findCity(Location location) {
 		ZmanimAddress city = null;
-		int citiesCount = mCitiesNames.length;
+		final int citiesCount = mCitiesNames.length;
 		double searchLatitude = location.getLatitude();
 		double searchLongitude = location.getLongitude();
 		double latitude;
@@ -281,7 +285,7 @@ public class CountriesGeocoder {
 			locale = new Locale(mLocale.getLanguage(), mCitiesCountries[nearestCityIndex]);
 
 			city = new ZmanimAddress(mLocale);
-			city.setId(-nearestCityIndex);
+			city.setId(-nearestCityIndex - 1);
 			city.setLatitude(mCitiesLatitudes[nearestCityIndex]);
 			city.setLongitude(mCitiesLongitudes[nearestCityIndex]);
 			city.setCountryCode(locale.getCountry());
@@ -290,5 +294,41 @@ public class CountriesGeocoder {
 		}
 
 		return city;
+	}
+
+	/**
+	 * Get the list of cities.
+	 * 
+	 * @return the list of addresses.
+	 */
+	public List<Address> getCities() {
+		final int citiesCount = mCitiesNames.length;
+		List<Address> cities = new ArrayList<Address>(citiesCount);
+		double latitude;
+		double longitude;
+		String cityName;
+		Locale locale = mLocale;
+		Locale cityLocale;
+		String languageCode = locale.getLanguage();
+		ZmanimAddress city;
+
+		for (int i = 0, j = -1; i < citiesCount; i++, j--) {
+			latitude = mCitiesLatitudes[i];
+			longitude = mCitiesLongitudes[i];
+			cityName = mCitiesNames[i];
+			cityLocale = new Locale(languageCode, mCitiesCountries[i]);
+
+			city = new ZmanimAddress(locale);
+			city.setId(j);
+			city.setLatitude(latitude);
+			city.setLongitude(longitude);
+			city.setCountryCode(cityLocale.getCountry());
+			city.setCountryName(cityLocale.getDisplayCountry());
+			city.setLocality(cityName);
+
+			cities.add(city);
+		}
+
+		return cities;
 	}
 }

@@ -249,4 +249,8 @@
         <item>1 hour before</item>
     </string-array>
 
+    <!-- Location -->
+    <string name="menu_location">Pick a location</string>
+    <string name="title_activity_location">My location</string>
+
 </resources>
