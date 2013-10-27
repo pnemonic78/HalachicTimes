@@ -27,7 +27,7 @@ import android.location.Location;
  * 
  * @author Moshe Waisberg
  */
-public class FindAddress extends Thread {
+public class FindAddress extends Thread implements AddressProvider.OnFindAddressListener {
 
 	public static interface OnFindAddressListener {
 
@@ -45,11 +45,11 @@ public class FindAddress extends Thread {
 
 	/** The instance. */
 	private static FindAddress mInstance;
-	private static boolean mFindingAddress;
 
 	private final Location mLocation;
 	private final OnFindAddressListener mListener;
 	private final AddressProvider mAddressProvider;
+	private boolean mCancelled;
 
 	/** Creates a new finder. */
 	private FindAddress(AddressProvider provider, Location location, OnFindAddressListener callback) {
@@ -60,29 +60,44 @@ public class FindAddress extends Thread {
 	}
 
 	public static void find(AddressProvider provider, Location location, OnFindAddressListener callback) {
-		if (mInstance == null) {
-			if (!mFindingAddress) {
-				mFindingAddress = true;
-				mInstance = new FindAddress(provider, location, callback);
-				mInstance.start();
-			}
+		if (mInstance != null) {
+			mInstance.cancel();
 		}
+		FindAddress instance = new FindAddress(provider, location, callback);
+		mInstance = instance;
+		instance.start();
 	}
 
 	@Override
 	public void run() {
+		if (mCancelled)
+			return;
 		try {
 			AddressProvider provider = mAddressProvider;
-			Address nearest = provider.findNearestAddress(mLocation);
-			if (nearest != null) {
-				ZmanimAddress addr = (nearest instanceof ZmanimAddress) ? ((ZmanimAddress) nearest) : new ZmanimAddress(nearest);
-				if (addr != null) {
-					mListener.onAddressFound(mLocation, addr);
-				}
-			}
+			Address nearest = provider.findNearestAddress(mLocation, this);
+			if (mCancelled)
+				return;
+			onFindAddress(provider, mLocation, nearest);
 		} finally {
 			mInstance = null;
-			mFindingAddress = false;
 		}
 	}
+
+	/**
+	 * Cancel finding.
+	 */
+	public void cancel() {
+		mCancelled = true;
+	}
+
+	@Override
+	public void onFindAddress(AddressProvider provider, Location location, Address address) {
+		if (address == null)
+			return;
+		if (mCancelled)
+			return;
+		ZmanimAddress addr = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address) : new ZmanimAddress(address);
+		mListener.onAddressFound(location, addr);
+	}
+
 }

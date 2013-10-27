@@ -34,15 +34,14 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.SearchManager;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -287,12 +286,13 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Populate the header item. */
 	private void populateHeader() {
+		View header = mHeader;
+		// Have we been destroyed?
+		if (header == null)
+			return;
 		Location loc = mLocations.getLocation();
 		// Have we been destroyed?
 		if (loc == null)
-			return;
-		View header = mHeader;
-		if (header == null)
 			return;
 
 		final String coordsText = mLocations.formatCoordinates(loc);
@@ -383,10 +383,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private String formatAddress() {
 		if (mAddress != null)
 			return mAddress.getFormatted();
-		TimeZone tz = mLocations.getTimeZone();
-		String tzName = tz.getDisplayName();
-		if (!TextUtils.isEmpty(tzName))
-			return tzName;
 		return getString(R.string.location_unknown);
 	}
 
@@ -492,6 +488,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (requestCode == ACTIVITY_LOCATIONS) {
 			if (resultCode == RESULT_OK) {
 				Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+				if (loc == null) {
+					mLocations.setLocation(null);
+					loc = mLocations.getLocation();
+				}
 				mLocations.setLocation(loc);
 			}
 		}

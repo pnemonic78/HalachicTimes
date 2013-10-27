@@ -45,6 +45,22 @@ import android.util.Log;
 public class AddressProvider {
 	private static final String TAG = "AddressProvider";
 
+	public static interface OnFindAddressListener {
+
+		/**
+		 * Called when an address is found.
+		 * 
+		 * @param provider
+		 *            the address provider.
+		 * @param location
+		 *            the requested location.
+		 * @param address
+		 *            the found address.
+		 */
+		public void onFindAddress(AddressProvider provider, Location location, Address address);
+
+	}
+
 	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
 			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE };
 	private static final int INDEX_ID = 0;
@@ -94,9 +110,11 @@ public class AddressProvider {
 	 * 
 	 * @param location
 	 *            the location.
+	 * @param listener
+	 *            the listener.
 	 * @return the address.
 	 */
-	public Address findNearestAddress(Location location) {
+	public Address findNearestAddress(Location location, OnFindAddressListener listener) {
 		if (location == null)
 			return null;
 		final double latitude = location.getLatitude();
@@ -106,28 +124,57 @@ public class AddressProvider {
 		if ((longitude > 180) || (longitude < -180))
 			return null;
 
-		List<Address> addresses = null;
+		List<Address> addresses;
+		Address best = null;
+		Address bestCountry;
+		Address bestCity;
 
-		if ((addresses == null) || addresses.isEmpty()) {
-			addresses = findNearestAddressDatabase(location);
-		}
-		if ((addresses == null) || addresses.isEmpty()) {
+		if (listener != null)
+			listener.onFindAddress(this, location, best);
+
+		addresses = findNearestCountry(location);
+		best = findBestAddress(location, addresses);
+		if ((best != null) && (listener != null))
+			listener.onFindAddress(this, location, best);
+		bestCountry = best;
+
+		addresses = findNearestCity(location);
+		best = findBestAddress(location, addresses);
+		if ((best != null) && (listener != null))
+			listener.onFindAddress(this, location, best);
+		bestCity = best;
+
+		addresses = findNearestAddressDatabase(location);
+		best = findBestAddress(location, addresses);
+		if ((best != null) && (listener != null))
+			listener.onFindAddress(this, location, best);
+
+		if (best == null) {
 			addresses = findNearestAddressGeocoder(location);
+			best = findBestAddress(location, addresses);
+			if ((best != null) && (listener != null))
+				listener.onFindAddress(this, location, best);
 		}
-		if ((addresses == null) || addresses.isEmpty()) {
+		if (best == null) {
 			addresses = findNearestAddressGoogle(location);
+			best = findBestAddress(location, addresses);
+			if ((best != null) && (listener != null))
+				listener.onFindAddress(this, location, best);
 		}
-		if ((addresses == null) || addresses.isEmpty()) {
+		if (best == null) {
 			addresses = findNearestAddressGeoNames(location);
+			best = findBestAddress(location, addresses);
+			if ((best != null) && (listener != null))
+				listener.onFindAddress(this, location, best);
 		}
-		if ((addresses == null) || addresses.isEmpty()) {
-			addresses = findNearestCity(location);
+		if (best == null) {
+			best = bestCity;
 		}
-		if ((addresses == null) || addresses.isEmpty()) {
-			addresses = findNearestCountry(location);
+		if (best == null) {
+			best = bestCountry;
 		}
 
-		return findBestAddress(location, addresses);
+		return best;
 	}
 
 	/**
@@ -390,6 +437,8 @@ public class AddressProvider {
 	 *            the address.
 	 */
 	public void insertAddress(Location location, ZmanimAddress address) {
+		if (address == null)
+			return;
 		if (address.getId() != 0)
 			return;
 		ContentValues values = new ContentValues();

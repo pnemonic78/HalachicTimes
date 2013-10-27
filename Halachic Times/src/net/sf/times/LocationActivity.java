@@ -29,9 +29,12 @@ import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -40,11 +43,11 @@ import android.widget.ListView;
  * 
  * @author Moshe Waisberg
  */
-public class LocationActivity extends ListActivity implements OnClickListener {
+public class LocationActivity extends ListActivity implements OnClickListener, TextWatcher {
 
 	private EditText mSearchText;
-	private Location mLocation;
 	private CountriesGeocoder mCountries;
+	private LocationAdapter mAdapter;
 
 	/**
 	 * Constructs a new activity.
@@ -58,6 +61,8 @@ public class LocationActivity extends ListActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locations);
 		EditText searchText = (EditText) findViewById(R.id.search_src_text);
+		searchText.addTextChangedListener(this);
+		searchText.requestFocus();
 		mSearchText = searchText;
 		ImageView searchClear = (ImageView) findViewById(R.id.search_close_btn);
 		searchClear.setOnClickListener(this);
@@ -89,9 +94,8 @@ public class LocationActivity extends ListActivity implements OnClickListener {
 	 *            the location.
 	 */
 	protected void doSearch(String query, Location loc) {
-		mSearchText.setText(query);
-		mLocation = loc;
 		populateList();
+		mSearchText.setText(query);
 	}
 
 	@Override
@@ -101,8 +105,6 @@ public class LocationActivity extends ListActivity implements OnClickListener {
 		if (id == R.id.search_close_btn) {
 			mSearchText.setText(null);
 		} else if (id == R.id.my_location) {
-			mSearchText.setText(null);
-
 			Intent data = new Intent();
 			data.putExtra(LocationManager.KEY_LOCATION_CHANGED, (Location) null);
 			setResult(RESULT_OK, data);
@@ -116,6 +118,8 @@ public class LocationActivity extends ListActivity implements OnClickListener {
 	protected void populateList() {
 		List<Address> cities = mCountries.getCities();
 		LocationAdapter adapter = new LocationAdapter(this, cities);
+		adapter.sort();
+		mAdapter = adapter;
 		setListAdapter(adapter);
 	}
 
@@ -134,5 +138,21 @@ public class LocationActivity extends ListActivity implements OnClickListener {
 		data.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
 		setResult(RESULT_OK, data);
 		finish();
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		if (mAdapter == null)
+			return;
+		Filter filter = mAdapter.getFilter();
+		filter.filter(s);
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
 	}
 }

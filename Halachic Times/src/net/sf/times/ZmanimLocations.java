@@ -149,7 +149,7 @@ public class ZmanimLocations implements LocationListener {
 			// Ignore old locations.
 			if (mLocation.getTime() >= location.getTime())
 				return;
-			// Ignore manual location.
+			// Ignore manual locations.
 			if (CountriesGeocoder.USER_PROVIDER.equals(mLocation.getProvider()))
 				return;
 		}
