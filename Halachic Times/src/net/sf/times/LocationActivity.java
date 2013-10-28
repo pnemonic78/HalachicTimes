@@ -31,8 +31,10 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -43,7 +45,7 @@ import android.widget.ListView;
  * 
  * @author Moshe Waisberg
  */
-public class LocationActivity extends ListActivity implements OnClickListener, TextWatcher {
+public class LocationActivity extends ListActivity implements TextWatcher, OnClickListener, OnLongClickListener {
 
 	private EditText mSearchText;
 	private CountriesGeocoder mCountries;
@@ -66,23 +68,24 @@ public class LocationActivity extends ListActivity implements OnClickListener, T
 		mSearchText = searchText;
 		ImageView searchClear = (ImageView) findViewById(R.id.search_close_btn);
 		searchClear.setOnClickListener(this);
+		searchClear.setOnLongClickListener(this);
 		ImageView myLocation = (ImageView) findViewById(R.id.my_location);
 		myLocation.setOnClickListener(this);
 
 		mCountries = new CountriesGeocoder(this);
 
 		// Get the intent, verify the action and get the query
+		// if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+		// }
 		Intent intent = getIntent();
-		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			String query = intent.getStringExtra(SearchManager.QUERY);
-			Location loc = null;
-			Bundle appData = intent.getBundleExtra(SearchManager.APP_DATA);
-			if (appData != null) {
-				loc = appData.getParcelable(LocationManager.KEY_LOCATION_CHANGED);
-			}
-
-			doSearch(query, loc);
+		String query = intent.getStringExtra(SearchManager.QUERY);
+		Location loc = null;
+		Bundle appData = intent.getBundleExtra(SearchManager.APP_DATA);
+		if (appData != null) {
+			loc = appData.getParcelable(LocationManager.KEY_LOCATION_CHANGED);
 		}
+
+		doSearch(query, loc);
 	}
 
 	/**
@@ -103,13 +106,27 @@ public class LocationActivity extends ListActivity implements OnClickListener, T
 		final int id = view.getId();
 
 		if (id == R.id.search_close_btn) {
-			mSearchText.setText(null);
+			EditText edit = mSearchText;
+			if (edit != null) {
+				edit.dispatchKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
+			}
 		} else if (id == R.id.my_location) {
 			Intent data = new Intent();
 			data.putExtra(LocationManager.KEY_LOCATION_CHANGED, (Location) null);
 			setResult(RESULT_OK, data);
 			finish();
 		}
+	}
+
+	@Override
+	public boolean onLongClick(View view) {
+		final int id = view.getId();
+
+		if (id == R.id.search_close_btn) {
+			mSearchText.setText(null);
+			return true;
+		}
+		return false;
 	}
 
 	/**

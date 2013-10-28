@@ -332,7 +332,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 			Intent intent = new Intent(this, LocationActivity.class);
 			intent.putExtra(SearchManager.APP_DATA, appData);
-			intent.setAction(Intent.ACTION_SEARCH);
 			startActivityForResult(intent, ACTIVITY_LOCATIONS);
 			return true;
 		case R.id.menu_settings:
