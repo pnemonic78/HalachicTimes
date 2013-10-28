@@ -139,7 +139,7 @@
     <string name="gradient_visible">Gradientas yra matomas</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Pasirinkite datą</string>
+    <string name="menu_date">Data</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompasas</string>
@@ -167,5 +167,9 @@
         <item>45 minučių prieš</item>
         <item>1 valanda prieš</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Vieta</string>
+    <string name="title_activity_location">Mano vieta</string>
 
 </resources>

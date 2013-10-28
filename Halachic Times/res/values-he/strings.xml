@@ -138,7 +138,7 @@
     <string name="gradient_visible">הדרגתיות גלויה</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">בחר תאריך</string>
+    <string name="menu_date">תאריך</string>
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
@@ -166,5 +166,9 @@
         <item>45 דקות לפני</item>
         <item>1 שעה לפני</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">מיקום</string>
+    <string name="title_activity_location">המיקום שלי</string>
 
 </resources>

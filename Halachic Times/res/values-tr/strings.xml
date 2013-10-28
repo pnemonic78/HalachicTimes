@@ -138,7 +138,7 @@
     <string name="gradient_visible">Degrade görünür</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Tarih seçebilirsiniz</string>
+    <string name="menu_date">Tarih</string>
 
     <!-- Compass -->
     <string name="menu_compass">Pusula</string>
@@ -166,5 +166,9 @@
         <item>45 dakika önce</item>
         <item>1 saat önce</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Konum</string>
+    <string name="title_activity_location">Konumum</string>
 
 </resources>

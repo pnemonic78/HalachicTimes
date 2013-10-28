@@ -62,13 +62,15 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.locations);
+
 		EditText searchText = (EditText) findViewById(R.id.search_src_text);
 		searchText.addTextChangedListener(this);
-		searchText.requestFocus();
 		mSearchText = searchText;
+
 		ImageView searchClear = (ImageView) findViewById(R.id.search_close_btn);
 		searchClear.setOnClickListener(this);
 		searchClear.setOnLongClickListener(this);
+
 		ImageView myLocation = (ImageView) findViewById(R.id.my_location);
 		myLocation.setOnClickListener(this);
 

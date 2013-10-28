@@ -138,7 +138,7 @@
     <string name="gradient_visible">Dégradé est visible</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Choisir une date</string>
+    <string name="menu_date">Date</string>
 
     <!-- Compass -->
     <string name="menu_compass">Boussole</string>
@@ -166,5 +166,9 @@
         <item>45 minutes avant</item>
         <item>1 heure avant</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Position</string>
+    <string name="title_activity_location">Ma position</string>
 
 </resources>

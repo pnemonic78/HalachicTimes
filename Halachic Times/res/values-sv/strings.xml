@@ -138,7 +138,7 @@
     <string name="gradient_visible">Gradient är synliga</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Välj ett datum</string>
+    <string name="menu_date">Datum</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
@@ -166,5 +166,9 @@
         <item>45 minuter före</item>
         <item>1 timme före</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Plats</string>
+    <string name="title_activity_location">Min plats</string>
 
 </resources>

@@ -121,7 +121,7 @@
     <string name="coords_format_summary">Нотация на географска ширина и дължина</string>
 
     <string-array name="coords_format_entries">
-        <item>десетичен</item>
+        <item>Десетичен</item>
         <item>Шестдесетичен</item>
     </string-array>
 
@@ -136,7 +136,7 @@
     <string name="gradient_visible">Градиент е видима</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Изберете дата</string>
+    <string name="menu_date">Дата</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
@@ -164,5 +164,9 @@
         <item>45 минути преди</item>
         <item>1 час преди</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Място</string>
+    <string name="title_activity_location">Моето място</string>
 
 </resources>

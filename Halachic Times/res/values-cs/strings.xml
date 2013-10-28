@@ -3,7 +3,7 @@
 
     <string name="app_name">Halachický Modlitební Časy</string>
     <string name="title_activity_zmanim">Halachický Časy</string>
-    <string name="location_unknown">Neznámý Adresa</string>
+    <string name="location_unknown">Neznámý adresa</string>
     <string name="location_coords">Šířka %1$s; Délka %2$s</string>
 
     <!-- Recurring opinions -->
@@ -139,7 +139,7 @@
     <string name="gradient_visible">Gradient je vidět</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Vyberte datum</string>
+    <string name="menu_date">Datum</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
@@ -167,5 +167,9 @@
         <item>45 minut před</item>
         <item>1 hodinu před</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Místo</string>
+    <string name="title_activity_location">Moje místo</string>
 
 </resources>

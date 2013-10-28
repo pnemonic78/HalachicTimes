@@ -139,7 +139,7 @@
     <string name="gradient_visible">Gradient este vizibil</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Alege o data</string>
+    <string name="menu_date">Data</string>
 
     <!-- Compass -->
     <string name="menu_compass">Busolă</string>
@@ -167,5 +167,9 @@
         <item>45 minute înainte de</item>
         <item>1 oră înainte de</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Locație</string>
+    <string name="title_activity_location">Locația mea</string>
 
 </resources>

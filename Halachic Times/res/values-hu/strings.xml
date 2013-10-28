@@ -138,7 +138,7 @@
     <string name="gradient_visible">Gradient látható</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Válassz egy dátumot</string>
+    <string name="menu_date">Dátum</string>
 
     <!-- Compass -->
     <string name="menu_compass">Iránytű</string>
@@ -166,5 +166,9 @@
         <item>Előtt 45 perccel</item>
         <item>Előtt 1 órával</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Hely</string>
+    <string name="title_activity_location">Saját hely</string>
 
 </resources>

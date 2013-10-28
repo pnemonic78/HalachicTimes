@@ -140,7 +140,7 @@
     <string name="gradient_visible">Градієнт видна</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Виберіть дату</string>
+    <string name="menu_date">Дата</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
@@ -168,5 +168,9 @@
         <item>45 хвилин до</item>
         <item>1 година до</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Місцезнаходження</string>
+    <string name="title_activity_location">Мое місцезнаходження</string>
 
 </resources>

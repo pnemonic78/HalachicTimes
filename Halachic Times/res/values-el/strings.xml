@@ -138,7 +138,7 @@
     <string name="gradient_visible">Ντεγκραντέ είναι ορατή</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Επιλέξτε μια ημερομηνία</string>
+    <string name="menu_date">Ημερομηνία</string>
 
     <!-- Compass -->
     <string name="menu_compass">Πυξίδα</string>
@@ -166,5 +166,9 @@
         <item>45 λεπτά πριν</item>
         <item>1 ώρα πριν</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Τοποθεσία</string>
+    <string name="title_activity_location">Η τοποθεσία μου</string>
 
 </resources>

@@ -220,7 +220,7 @@
     <string name="gradient_visible">Gradient is visible</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Pick a date</string>
+    <string name="menu_date">Date</string>
 
     <!-- Compass -->
     <string name="menu_compass">Compass</string>
@@ -250,7 +250,7 @@
     </string-array>
 
     <!-- Location -->
-    <string name="menu_location">Pick a location</string>
+    <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
 
 </resources>

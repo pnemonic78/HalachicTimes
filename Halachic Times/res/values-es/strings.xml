@@ -138,7 +138,7 @@
     <string name="gradient_visible">Gradiente está visible</string>
 
     <!-- Go to date -->
-    <string name="menu_goto">Elija una fecha</string>
+    <string name="menu_date">Fecha</string>
 
     <!-- Compass -->
     <string name="menu_compass">Brújula</string>
@@ -166,5 +166,9 @@
         <item>45 minutos antes</item>
         <item>1 hora antes</item>
     </string-array>
+
+    <!-- Location -->
+    <string name="menu_location">Ubicación</string>
+    <string name="title_activity_location">Mi ubicación</string>
 
 </resources>

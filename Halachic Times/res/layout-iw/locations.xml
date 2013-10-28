@@ -11,12 +11,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/search_src_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textCapWords"/>
+        <ImageButton
+            android:id="@+id/my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@android:drawable/ic_menu_mylocation"/>
 
         <ImageButton
             android:id="@+id/search_close_btn"
@@ -24,11 +23,12 @@
             android:layout_height="fill_parent"
             android:src="@android:drawable/ic_input_delete"/>
 
-        <ImageButton
-            android:id="@+id/my_location"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_menu_mylocation"/>
+        <EditText
+            android:id="@+id/search_src_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textCapWords"/>
     </LinearLayout>
 
     <ListView
