@@ -11,23 +11,35 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/search_src_text"
+        <LinearLayout
+            style="@style/Zmanim.EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:inputType="textCapWords"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="2dp">
 
-        <ImageButton
-            android:id="@+id/search_close_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:src="@android:drawable/ic_input_delete"/>
+            <EditText
+                android:id="@+id/search_src_text"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@android:string/search_go"
+                android:inputType="text"/>
+
+            <ImageView
+                android:id="@+id/search_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_delete"/>
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/my_location"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_mylocation"/>
     </LinearLayout>
 

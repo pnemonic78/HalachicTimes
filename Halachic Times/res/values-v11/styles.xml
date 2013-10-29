@@ -3,6 +3,10 @@
 
     <style name="Zmanim" parent="android:Widget.Holo"/>
 
+    <style name="Zmanim.EditText">
+        <item name="android:background">?android:attr/editTextBackground</item>
+    </style>
+
     <style name="Zmanim.ListView" parent="android:Widget.Holo.ListView"/>
 
     <style name="Zmanim.ListItem">
