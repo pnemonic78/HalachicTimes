@@ -12,7 +12,6 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            style="@style/Zmanim.EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -23,9 +22,8 @@
             <EditText
                 android:id="@+id/search_src_text"
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@null"
                 android:hint="@android:string/search_go"
                 android:inputType="text"/>
 

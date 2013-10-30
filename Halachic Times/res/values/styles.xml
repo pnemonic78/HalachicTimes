@@ -3,10 +3,6 @@
 
     <style name="Zmanim" parent="android:Widget"/>
 
-    <style name="Zmanim.EditText">
-        <item name="android:background">@android:drawable/edit_text</item>
-    </style>
-
     <style name="Zmanim.ListView" parent="android:Widget.ListView"/>
 
     <style name="Zmanim.ListDivider">

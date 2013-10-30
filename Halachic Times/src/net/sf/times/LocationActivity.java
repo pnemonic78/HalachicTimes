@@ -25,6 +25,7 @@ import net.sf.times.location.CountriesGeocoder;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
@@ -33,6 +34,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -63,6 +65,10 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 		EditText searchText = (EditText) findViewById(R.id.search_src_text);
 		searchText.addTextChangedListener(this);
+		Drawable searchTextBg = searchText.getBackground();
+		ViewGroup searchTextParent = (ViewGroup) searchText.getParent();
+		searchTextParent.setBackgroundDrawable(searchTextBg);
+		searchText.setBackgroundDrawable(null);
 		mSearchText = searchText;
 
 		ImageView searchClear = (ImageView) findViewById(R.id.search_close_btn);
@@ -73,9 +79,6 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 		mCountries = new CountriesGeocoder(this);
 
-		// Get the intent, verify the action and get the query
-		// if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-		// }
 		Intent intent = getIntent();
 		String query = intent.getStringExtra(SearchManager.QUERY);
 		Location loc = null;
