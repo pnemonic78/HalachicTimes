@@ -339,7 +339,7 @@ public class AddressProvider {
 		if (db == null)
 			return addresses;
 		Cursor cursor = db.query(AddressOpenHelper.TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
-		if (cursor == null) {
+		if ((cursor == null) || cursor.isClosed()) {
 			db.close();
 			return addresses;
 		}

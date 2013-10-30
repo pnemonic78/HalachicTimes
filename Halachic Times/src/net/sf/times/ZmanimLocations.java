@@ -26,10 +26,7 @@ import java.util.TimeZone;
 
 import net.sf.times.location.CountriesGeocoder;
 import net.sourceforge.zmanim.util.GeoLocation;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
@@ -43,12 +40,9 @@ import android.util.Log;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimLocations extends BroadcastReceiver implements LocationListener {
+public class ZmanimLocations implements LocationListener {
 
 	private static final String TAG = "ZmanimLocations";
-
-	/** Broadcast intent action when the configured location changed. */
-	public static final String ACTION_LOCATION_CHANGED = "net.sf.location.LOCATION_CHANGED";
 
 	/** 1 kilometre. */
 	private static final int KILOMETRE = 1000;
@@ -284,7 +278,6 @@ public class ZmanimLocations extends BroadcastReceiver implements LocationListen
 			mLocationListeners.remove(listener);
 		if (mLocationListeners.isEmpty())
 			mLocationManager.removeUpdates(this);
-		mContext.unregisterReceiver(this);
 	}
 
 	/**
@@ -307,7 +300,6 @@ public class ZmanimLocations extends BroadcastReceiver implements LocationListen
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, iae.getLocalizedMessage());
 		}
-		mContext.registerReceiver(this, new IntentFilter(ACTION_LOCATION_CHANGED));
 
 		if (listener != null)
 			listener.onLocationChanged(getLocation());
@@ -464,15 +456,5 @@ public class ZmanimLocations extends BroadcastReceiver implements LocationListen
 	public void setLocation(Location location) {
 		mLocation = null;
 		onLocationChanged(location);
-	}
-
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		final String action = intent.getAction();
-
-		if (ZmanimLocations.ACTION_LOCATION_CHANGED.equals(action)) {
-			Location loc = intent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-			setLocation(loc);
-		}
 	}
 }

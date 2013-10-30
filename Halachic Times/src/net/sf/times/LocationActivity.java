@@ -79,13 +79,15 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 		Intent intent = getIntent();
 		String query = intent.getStringExtra(SearchManager.QUERY);
-		Location loc = null;
-		Bundle appData = intent.getBundleExtra(SearchManager.APP_DATA);
-		if (appData != null) {
-			loc = appData.getParcelable(LocationManager.KEY_LOCATION_CHANGED);
+		Location loc = intent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+		if (loc == null) {
+			Bundle appData = intent.getBundleExtra(SearchManager.APP_DATA);
+			if (appData != null) {
+				loc = appData.getParcelable(LocationManager.KEY_LOCATION_CHANGED);
+			}
 		}
 
-		doSearch(query, loc);
+		search(query, loc);
 	}
 
 	/**
@@ -96,7 +98,7 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 	 * @param loc
 	 *            the location.
 	 */
-	protected void doSearch(String query, Location loc) {
+	protected void search(String query, Location loc) {
 		populateList();
 
 		EditText searchText = mSearchText;
@@ -142,13 +144,14 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 		loc.setTime(System.currentTimeMillis());
 
 		Intent data = new Intent();
-		data.setAction(ZmanimLocations.ACTION_LOCATION_CHANGED);
 		data.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
 
 		Intent intent = getIntent();
 		String action = intent.getAction();
 		if (Intent.ACTION_SEARCH.equals(action)) {
-			sendBroadcast(data);
+			data.setClass(this, ZmanimActivity.class);
+			data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(data);
 		} else {
 			setResult(RESULT_OK, data);
 		}

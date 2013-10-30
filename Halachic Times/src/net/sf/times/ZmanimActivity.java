@@ -66,6 +66,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public static final String PARAMETER_TIME = "time";
 	/** The details list parameter. */
 	public static final String PARAMETER_DETAILS = "details";
+	/** The location parameter. */
+	public static final String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
 
 	/** ISO 639 language code for "Hebrew". */
 	public static final String ISO639_HEBREW = "he";
@@ -126,6 +128,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				date = System.currentTimeMillis();
 		}
 		setDate(date);
+
+		Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
+		if (location != null)
+			mLocations.setLocation(location);
 	}
 
 	@Override
