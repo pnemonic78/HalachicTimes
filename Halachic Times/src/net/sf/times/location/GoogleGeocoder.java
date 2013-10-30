@@ -206,7 +206,8 @@ public class GoogleGeocoder {
 			throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
 		if (upperRightLongitude < -180.0 || upperRightLongitude > 180.0)
 			throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
-		String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, mLocale.getLanguage());
+		String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude,
+				mLocale.getLanguage());
 		return getFromURL(queryUrl, maxResults);
 	}
 

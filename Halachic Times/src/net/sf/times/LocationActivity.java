@@ -25,16 +25,15 @@ import net.sf.times.location.CountriesGeocoder;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -65,9 +64,8 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 		EditText searchText = (EditText) findViewById(R.id.search_src_text);
 		searchText.addTextChangedListener(this);
-		Drawable searchTextBg = searchText.getBackground();
-		ViewGroup searchTextParent = (ViewGroup) searchText.getParent();
-		searchTextParent.setBackgroundDrawable(searchTextBg);
+		View searchTextParent = (View) searchText.getParent();
+		searchTextParent.setBackgroundDrawable(searchText.getBackground());
 		searchText.setBackgroundDrawable(null);
 		mSearchText = searchText;
 
@@ -100,7 +98,11 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 	 */
 	protected void doSearch(String query, Location loc) {
 		populateList();
-		mSearchText.setText(query);
+
+		EditText searchText = mSearchText;
+		searchText.setText(query);
+		if (!TextUtils.isEmpty(query))
+			searchText.setSelection(query.length());
 	}
 
 	@Override
@@ -140,8 +142,17 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 		loc.setTime(System.currentTimeMillis());
 
 		Intent data = new Intent();
+		data.setAction(ZmanimLocations.ACTION_LOCATION_CHANGED);
 		data.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-		setResult(RESULT_OK, data);
+
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		if (Intent.ACTION_SEARCH.equals(action)) {
+			sendBroadcast(data);
+		} else {
+			setResult(RESULT_OK, data);
+		}
+
 		finish();
 	}
 
