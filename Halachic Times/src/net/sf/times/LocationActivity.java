@@ -32,19 +32,22 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 /**
  * Pick a city from the list.
  * 
  * @author Moshe Waisberg
  */
-public class LocationActivity extends ListActivity implements TextWatcher, OnClickListener {
+public class LocationActivity extends ListActivity implements TextWatcher, OnClickListener, OnEditorActionListener {
 
 	private EditText mSearchText;
 	private CountriesGeocoder mCountries;
@@ -57,6 +60,7 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 		super();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,6 +68,7 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 		EditText searchText = (EditText) findViewById(R.id.search_src_text);
 		searchText.addTextChangedListener(this);
+		searchText.setOnEditorActionListener(this);
 		View searchTextParent = (View) searchText.getParent();
 		searchTextParent.setBackgroundDrawable(searchText.getBackground());
 		searchText.setBackgroundDrawable(null);
@@ -142,21 +147,7 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 		loc.setLatitude(addr.getLatitude());
 		loc.setLongitude(addr.getLongitude());
 		loc.setTime(System.currentTimeMillis());
-
-		Intent data = new Intent();
-		data.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-
-		Intent intent = getIntent();
-		String action = intent.getAction();
-		if (Intent.ACTION_SEARCH.equals(action)) {
-			data.setClass(this, ZmanimActivity.class);
-			data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(data);
-		} else {
-			setResult(RESULT_OK, data);
-		}
-
-		finish();
+		setAddress(loc);
 	}
 
 	@Override
@@ -173,5 +164,69 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
+	}
+
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		// Maybe user typed "latitude,longitude"?
+		boolean submit = false;
+		switch (actionId) {
+		case 5:
+		case 6:
+			submit = true;
+		case 0:
+			if (event != null) {
+				switch (event.getKeyCode()) {
+				case KeyEvent.KEYCODE_ENTER:
+					submit = true;
+				}
+			}
+		}
+		if (submit) {
+			CharSequence text = v.getText();
+			Location loc = null;
+			if (!TextUtils.isEmpty(text)) {
+				String textStr = text.toString();
+				String[] tokens = textStr.split(",");
+				if (tokens.length >= 2) {
+					try {
+						double latitude = Location.convert(tokens[0]);
+						double longitude = Location.convert(tokens[1]);
+
+						loc = new Location(CountriesGeocoder.USER_PROVIDER);
+						loc.setLatitude(latitude);
+						loc.setLongitude(longitude);
+						loc.setTime(System.currentTimeMillis());
+					} catch (IllegalArgumentException e) {
+						// Not valid coordinate.
+					}
+				}
+			}
+			setAddress(loc);
+		}
+		return submit;
+	}
+
+	/**
+	 * Set the result location and close the activity.
+	 * 
+	 * @param location
+	 *            the location.
+	 */
+	protected void setAddress(Location location) {
+		Intent data = new Intent();
+		data.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
+
+		Intent intent = getIntent();
+		String action = intent.getAction();
+		if (Intent.ACTION_SEARCH.equals(action)) {
+			data.setClass(this, ZmanimActivity.class);
+			data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(data);
+		} else {
+			setResult(RESULT_OK, data);
+		}
+
+		finish();
 	}
 }

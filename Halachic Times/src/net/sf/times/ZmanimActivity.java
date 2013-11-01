@@ -35,7 +35,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
@@ -333,11 +332,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			// Have we been destroyed?
 			if (loc == null)
 				break;
-			Bundle appData = new Bundle();
-			appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
 
 			Intent intent = new Intent(this, LocationActivity.class);
-			intent.putExtra(SearchManager.APP_DATA, appData);
+			intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
 			startActivityForResult(intent, ACTIVITY_LOCATIONS);
 			return true;
 		case R.id.menu_settings:
