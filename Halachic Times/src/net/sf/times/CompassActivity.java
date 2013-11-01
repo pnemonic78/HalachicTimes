@@ -216,7 +216,6 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		mAddress = address;
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
-
 				@Override
 				public void run() {
 					populateHeader();

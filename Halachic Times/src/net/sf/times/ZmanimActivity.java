@@ -41,6 +41,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -106,11 +107,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private boolean mSideBySide;
 	/** The master item selected id. */
 	private int mSelectedId;
+	/** The handler. */
+	private final Handler mHandler;
 
 	/**
 	 * Creates a new activity.
 	 */
 	public ZmanimActivity() {
+		mHandler = new Handler();
 	}
 
 	@Override
@@ -149,21 +153,13 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (itemId != 0) {
 			// We need to wait for the list rows to get their default
 			// backgrounds before we can highlight any row.
-			new Thread() {
+			mHandler.postDelayed(new Runnable() {
+				@Override
 				public void run() {
-					try {
-						sleep(1000L);
-					} catch (InterruptedException e) {
-					}
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							mMasterFragment.populateTimes(mDate);
-							toggleDetails(itemId);
-						}
-					});
+					mMasterFragment.populateTimes(mDate);
+					toggleDetails(itemId);
 				}
-			}.start();
+			}, 1000L);
 		}
 	}
 
@@ -251,7 +247,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			mAddressProvider = new AddressProvider(this);
 		FindAddress.find(mAddressProvider, location, this);
 		populateHeader();
-
 		mMasterFragment.populateTimes(mDate);
 		mDetailsFragment.populateTimes(mDate);
 	}
@@ -364,17 +359,15 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (provider == null)
 			return;
 		provider.insertAddress(location, address);
-		Runnable runner = mPopulateHeader;
-		if (runner == null) {
-			runner = new Runnable() {
+		if (mPopulateHeader == null) {
+			mPopulateHeader = new Runnable() {
 				@Override
 				public void run() {
 					populateHeader();
 				}
 			};
-			mPopulateHeader = runner;
 		}
-		runOnUiThread(runner);
+		runOnUiThread(mPopulateHeader);
 	}
 
 	/**

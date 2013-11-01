@@ -39,6 +39,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	private ZmanimSettings mSettings;
 	private ZmanimLocations mLocations;
 	private ZmanimReminder mReminder;
+	private Runnable mCandlesRunnable;
 
 	/**
 	 * Constructs a new preferences.
@@ -47,6 +48,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		super();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,6 +89,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	}
 
 	private void initList(String name) {
+		@SuppressWarnings("deprecation")
 		ListPreference list = (ListPreference) findPreference(name);
 		list.setOnPreferenceChangeListener(this);
 		onPreferenceChange(list, list.getValue());
@@ -97,17 +100,20 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		if (preference == mCandles) {
 			// Since ECLAIR, setSummary always calls onCreateView, so
 			// postpone until after preference is persisted.
-			runOnUiThread(new Runnable() {
-
-				@Override
-				public void run() {
-					String format = getString(R.string.candles_summary);
-					CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
-					mCandles.setSummary(summary);
-				}
-			});
+			if (mCandlesRunnable == null) {
+				mCandlesRunnable = new Runnable() {
+					@Override
+					public void run() {
+						String format = getString(R.string.candles_summary);
+						CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
+						mCandles.setSummary(summary);
+					}
+				};
+			}
+			runOnUiThread(mCandlesRunnable);
 			return true;
-		} else if (preference instanceof ListPreference) {
+		}
+		if (preference instanceof ListPreference) {
 			ListPreference list = (ListPreference) preference;
 			String oldValue = list.getValue();
 			String value = newValue.toString();
