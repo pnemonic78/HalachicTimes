@@ -37,15 +37,18 @@
         </activity>
         <activity
             android:name=".ZmanimPreferences"
-            android:label="@string/menu_settings">
+            android:label="@string/menu_settings"
+            android:parentActivityName=".ZmanimActivity">
         </activity>
         <activity
             android:name=".CompassActivity"
-            android:label="@string/title_activity_compass">
+            android:label="@string/title_activity_compass"
+            android:parentActivityName=".ZmanimActivity">
         </activity>
         <activity
             android:name=".LocationActivity"
-            android:label="@string/title_activity_location">
+            android:label="@string/title_activity_location"
+            android:parentActivityName=".ZmanimActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>

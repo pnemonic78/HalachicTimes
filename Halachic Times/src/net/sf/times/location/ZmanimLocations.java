@@ -26,7 +26,6 @@ import java.util.TimeZone;
 
 import net.sf.times.R;
 import net.sf.times.ZmanimSettings;
-import net.sf.times.R.string;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.location.Address;

@@ -23,10 +23,9 @@ import java.util.TimeZone;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.FindAddress;
+import net.sf.times.location.FindAddress.OnFindAddressListener;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.location.FindAddress.OnFindAddressListener;
-
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
