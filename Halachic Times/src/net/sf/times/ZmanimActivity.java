@@ -20,8 +20,6 @@
 package net.sf.times;
 
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressProvider;
@@ -37,6 +35,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
@@ -44,10 +43,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateUtils;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -59,7 +61,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener, OnClickListener {
+public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener, OnClickListener, OnGestureListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -69,15 +71,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public static final String PARAMETER_DETAILS = "details";
 	/** The location parameter. */
 	public static final String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-
-	/** ISO 639 language code for "Hebrew". */
-	public static final String ISO639_HEBREW = "he";
-	/** ISO 639 language code for "Hebrew" - Java compatibility. */
-	public static final String ISO639_HEBREW_FORMER = "iw";
-	/** ISO 639 language code for "Yiddish" - Java compatibility. */
-	public static final String ISO639_YIDDISH_FORMER = "ji";
-	/** ISO 639 language code for "Yiddish". */
-	public static final String ISO639_YIDDISH = "yi";
 
 	/** Activity id for searching locations. */
 	private static final int ACTIVITY_LOCATIONS = 1;
@@ -110,6 +103,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private int mSelectedId;
 	/** The handler. */
 	private final Handler mHandler;
+	/** The gesture detector. */
+	private GestureDetector mGestureDetector;
+	/** Is locale RTL? */
+	private boolean mLocaleRTL;
 
 	/**
 	 * Creates a new activity.
@@ -198,13 +195,18 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		mInflater = LayoutInflater.from(this);
 		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times, null);
-		mHeader = view.findViewById(R.id.header);
 
 		setContentView(view);
 
+		mGestureDetector = new GestureDetector(this, this);
+		mGestureDetector.setIsLongpressEnabled(false);
+
+		mHeader = view.findViewById(R.id.header);
 		mMasterFragment = (ZmanimFragment) view.findViewById(R.id.list_fragment);
 		mMasterFragment.setOnClickListener(this);
+		mMasterFragment.setGestureDetector(mGestureDetector);
 		mDetailsFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_fragment);
+		mDetailsFragment.setGestureDetector(mGestureDetector);
 		mSideBySide = view.findViewById(R.id.frame_fragments) == null;
 		hide(mDetailsFragment);
 	}
@@ -212,6 +214,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** Initialise the location providers. */
 	private void initLocation() {
 		mLocations = ZmanimLocations.getInstance(this, this);
+		mLocaleRTL = ZmanimLocations.isLocaleRTL();
 	}
 
 	/**
@@ -222,8 +225,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 */
 	private void setDate(long date) {
 		mDate.setTimeInMillis(date);
-		TimeZone tz = mLocations.getTimeZone();
-		mDate.setTimeZone(tz);
+		mDate.setTimeZone(mLocations.getTimeZone());
 
 		View header = mHeader;
 		// Have we been destroyed?
@@ -237,7 +239,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		JewishDate jewishDate = new JewishDate(mDate);
 		TextView textHebrew = (TextView) header.findViewById(R.id.date_hebrew);
 		HebrewDateFormatter formatter = new HebrewDateFormatter();
-		formatter.setHebrewFormat(isLocaleRTL());
+		formatter.setHebrewFormat(mLocaleRTL);
 		CharSequence dateHebrew = formatter.format(jewishDate);
 		textHebrew.setText(dateHebrew);
 	}
@@ -383,16 +385,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	/**
-	 * Is the default locale right-to-left?
-	 * 
-	 * @return true if the locale is either Hebrew or Yiddish.
-	 */
-	private boolean isLocaleRTL() {
-		final String iso639 = Locale.getDefault().getLanguage();
-		return ISO639_HEBREW.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
-	}
-
-	/**
 	 * Show/hide the details list.
 	 * 
 	 * @param item
@@ -491,5 +483,62 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				mLocations.setLocation(loc);
 			}
 		}
+	}
+
+	@Override
+	public boolean onDown(MotionEvent event) {
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent event) {
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent event) {
+		return false;
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent event) {
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		// Go to date?
+		float dX = e2.getX() - e1.getX();
+		float dY = e2.getY() - e1.getY();
+		if (Math.abs(dX) > Math.abs(dY)) {
+			Calendar date = mDate;
+			int day = date.get(Calendar.DATE);
+			if (dX < 0) {
+				date.set(Calendar.DATE, mLocaleRTL ? (day - 1) : (day + 1));
+			} else {
+				date.set(Calendar.DATE, mLocaleRTL ? (day + 1) : (day - 1));
+			}
+			setDate(date.getTimeInMillis());
+			mMasterFragment.populateTimes(date);
+			mDetailsFragment.populateTimes(date);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if (mGestureDetector.onTouchEvent(event))
+			return true;
+		return super.onTouchEvent(event);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		mLocaleRTL = ZmanimLocations.isLocaleRTL();
 	}
 }

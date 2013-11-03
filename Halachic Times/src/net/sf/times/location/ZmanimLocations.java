@@ -45,6 +45,15 @@ public class ZmanimLocations implements LocationListener {
 
 	private static final String TAG = "ZmanimLocations";
 
+	/** ISO 639 language code for "Hebrew". */
+	public static final String ISO639_HEBREW_FORMER = "he";
+	/** ISO 639 language code for "Hebrew" (Java compatibility). */
+	public static final String ISO639_HEBREW = "iw";
+	/** ISO 639 language code for "Yiddish" (Java compatibility). */
+	public static final String ISO639_YIDDISH_FORMER = "ji";
+	/** ISO 639 language code for "Yiddish". */
+	public static final String ISO639_YIDDISH = "yi";
+
 	/** 1 kilometre. */
 	private static final int KILOMETRE = 1000;
 
@@ -85,7 +94,6 @@ public class ZmanimLocations implements LocationListener {
 	private static ZmanimLocations mInstance;
 	/** The time zone. */
 	private TimeZone mTimeZone;
-	private final Context mContext;
 
 	/**
 	 * Constructs a new provider.
@@ -95,7 +103,6 @@ public class ZmanimLocations implements LocationListener {
 	 */
 	private ZmanimLocations(Context context) {
 		super();
-		mContext = context;
 		mSettings = new ZmanimSettings(context);
 		mCountries = new CountriesGeocoder(context);
 		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -458,4 +465,15 @@ public class ZmanimLocations implements LocationListener {
 		mLocation = null;
 		onLocationChanged(location);
 	}
+
+	/**
+	 * Is the default locale right-to-left?
+	 * 
+	 * @return {@code true} if the locale is either Hebrew or Yiddish.
+	 */
+	public static boolean isLocaleRTL() {
+		final String iso639 = Locale.getDefault().getLanguage();
+		return ISO639_HEBREW.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
+	}
+
 }

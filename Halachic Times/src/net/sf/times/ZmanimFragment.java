@@ -30,7 +30,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -64,6 +66,8 @@ public class ZmanimFragment extends FrameLayout {
 	/** The master item background that is selected. */
 	private Drawable mHighlightBackground;
 	private ZmanimAdapter mAdapter;
+	/** The gesture detector. */
+	private GestureDetector mGestureDetector;
 
 	/**
 	 * Constructs a new list.
@@ -134,6 +138,7 @@ public class ZmanimFragment extends FrameLayout {
 	 * @param date
 	 *            the date.
 	 */
+	@SuppressWarnings("deprecation")
 	public void populateTimes(Calendar date) {
 		// Called before attached to activity?
 		if (mLocations == null)
@@ -249,6 +254,7 @@ public class ZmanimFragment extends FrameLayout {
 	 * @param view
 	 *            the row view.
 	 */
+	@SuppressWarnings("deprecation")
 	private void unhighlight(View view) {
 		Drawable bg = mUnhighlightBackground;
 		if ((view == null) || (bg == null))
@@ -268,6 +274,7 @@ public class ZmanimFragment extends FrameLayout {
 	 * @param itemId
 	 *            the row id.
 	 */
+	@SuppressWarnings("deprecation")
 	public void highlight(int itemId) {
 		// Find the view that matches the item id (the view that was clicked).
 		final ZmanimAdapter adapter = mAdapter;
@@ -305,5 +312,22 @@ public class ZmanimFragment extends FrameLayout {
 
 	public boolean isVisible() {
 		return getVisibility() == VISIBLE;
+	}
+
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent event) {
+		if ((mGestureDetector != null) && mGestureDetector.onTouchEvent(event))
+			return true;
+		return super.onInterceptTouchEvent(event);
+	}
+
+	/**
+	 * Set the gesture detector.
+	 * 
+	 * @param gestureDetector
+	 *            the gesture detector.
+	 */
+	public void setGestureDetector(GestureDetector gestureDetector) {
+		mGestureDetector = gestureDetector;
 	}
 }

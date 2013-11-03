@@ -215,11 +215,11 @@ public class GeoNamesGeocoder {
 	private String getLanguage(Locale locale) {
 		String language = locale.getLanguage();
 		if ("in".equals(language))
-			language = "id";
-		else if ("iw".equals(language))
-			language = "he";
-		else if ("ji".equals(language))
-			language = "yi";
+			return "id";
+		if ("iw".equals(language))
+			return "he";
+		if ("ji".equals(language))
+			return "yi";
 		return language;
 	}
 
