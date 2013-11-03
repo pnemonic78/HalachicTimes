@@ -17,14 +17,16 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.location;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import net.sf.times.location.CountriesGeocoder;
+import net.sf.times.R;
+import net.sf.times.ZmanimSettings;
+import net.sf.times.R.string;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.location.Address;

@@ -21,6 +21,7 @@ package net.sf.times;
 
 import java.util.Locale;
 
+import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.SeekBarPreference;
 import android.os.Bundle;
 import android.preference.ListPreference;

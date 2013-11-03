@@ -22,6 +22,7 @@ package net.sf.times;
 import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;

@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;

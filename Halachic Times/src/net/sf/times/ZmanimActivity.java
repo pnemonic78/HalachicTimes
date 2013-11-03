@@ -26,6 +26,7 @@ import java.util.TimeZone;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.FindAddress;
+import net.sf.times.location.ZmanimLocations;
 import net.sf.times.location.FindAddress.OnFindAddressListener;
 import net.sf.times.location.ZmanimAddress;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
