@@ -322,7 +322,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			startActivity(new Intent(this, CompassActivity.class));
 			return true;
 		case R.id.menu_date:
-			mDatePicker = new DatePickerDialog(this, this, mDate.get(Calendar.YEAR), mDate.get(Calendar.MONTH), mDate.get(Calendar.DAY_OF_MONTH));
+			final int year = mDate.get(Calendar.YEAR);
+			final int month = mDate.get(Calendar.MONTH);
+			final int day = mDate.get(Calendar.DAY_OF_MONTH);
+			if (mDatePicker == null) {
+				mDatePicker = new DatePickerDialog(this, this, year, month, day);
+			} else {
+				mDatePicker.updateDate(year, month, day);
+			}
 			mDatePicker.show();
 			return true;
 		case R.id.menu_location:
