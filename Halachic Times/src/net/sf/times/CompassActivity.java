@@ -22,8 +22,8 @@ package net.sf.times;
 import java.util.TimeZone;
 
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import net.sf.times.location.FindAddress;
-import net.sf.times.location.FindAddress.OnFindAddressListener;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import android.app.Activity;
@@ -31,6 +31,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -79,8 +80,6 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	private TimeZone mTimeZone;
 	/** The address. */
 	private ZmanimAddress mAddress;
-	/** Address provider. */
-	private AddressProvider mAddressProvider;
 	/** Populate the header in UI thread. */
 	private Runnable mPopulateHeader;
 
@@ -129,19 +128,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (mAddressProvider != null) {
-			mAddressProvider.close();
-			mAddressProvider = null;
-		}
-	}
-
-	@Override
 	public void onLocationChanged(Location location) {
-		if (mAddressProvider == null)
-			mAddressProvider = new AddressProvider(this);
-		FindAddress.find(mAddressProvider, location, this);
+		FindAddress.find(this, location, this);
 		populateHeader();
 		mView.setHoliest(location.bearingTo(mHoliest));
 	}
@@ -212,8 +200,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	@Override
-	public void onAddressFound(Location location, ZmanimAddress address) {
-		mAddress = address;
+	public void onFindAddress(AddressProvider provider, Location location, Address address) {
+		mAddress = (ZmanimAddress) address;
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
 				@Override

@@ -23,8 +23,8 @@ import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import net.sf.times.location.FindAddress;
-import net.sf.times.location.FindAddress.OnFindAddressListener;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
@@ -37,6 +37,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -81,8 +82,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private View mHeader;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
-	/** Address provider. */
-	private AddressProvider mAddressProvider;
 	/** The settings and preferences. */
 	protected ZmanimSettings mSettings;
 	/** The date picker. */
@@ -175,10 +174,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onDestroy() {
 		super.onDestroy();
 		mLocations.cancel(this);
-		if (mAddressProvider != null) {
-			mAddressProvider.close();
-			mAddressProvider = null;
-		}
 	}
 
 	@Override
@@ -246,9 +241,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if (mAddressProvider == null)
-			mAddressProvider = new AddressProvider(this);
-		FindAddress.find(mAddressProvider, location, this);
+		FindAddress.find(this, location, this);
 		populateHeader();
 		mMasterFragment.populateTimes(mDate);
 		mDetailsFragment.populateTimes(mDate);
@@ -362,13 +355,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	@Override
-	public void onAddressFound(Location location, ZmanimAddress address) {
-		mAddress = address;
-		AddressProvider provider = mAddressProvider;
-		// Have we been destroyed?
-		if (provider == null)
-			return;
-		provider.insertAddress(location, address);
+	public void onFindAddress(AddressProvider provider, Location location, Address address) {
+		ZmanimAddress zaddr = (ZmanimAddress) address;
+		mAddress = zaddr;
+		provider.insertAddress(location, zaddr);
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
 				@Override

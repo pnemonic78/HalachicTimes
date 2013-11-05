@@ -19,6 +19,8 @@
  */
 package net.sf.times.location;
 
+import net.sf.times.location.AddressProvider.OnFindAddressListener;
+import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 
@@ -27,21 +29,7 @@ import android.location.Location;
  * 
  * @author Moshe Waisberg
  */
-public class FindAddress extends Thread implements AddressProvider.OnFindAddressListener {
-
-	public static interface OnFindAddressListener {
-
-		/**
-		 * Called when an address is found.
-		 * 
-		 * @param location
-		 *            the requested location.
-		 * @param address
-		 *            the found address. Never {@code null}.
-		 */
-		public void onAddressFound(Location location, ZmanimAddress address);
-
-	}
+public class FindAddress extends Thread implements OnFindAddressListener {
 
 	/** The instance. */
 	private static FindAddress mInstance;
@@ -52,18 +40,18 @@ public class FindAddress extends Thread implements AddressProvider.OnFindAddress
 	private boolean mCancelled;
 
 	/** Creates a new finder. */
-	private FindAddress(AddressProvider provider, Location location, OnFindAddressListener callback) {
+	private FindAddress(Context context, Location location, OnFindAddressListener callback) {
 		super();
-		mAddressProvider = provider;
+		mAddressProvider = new AddressProvider(context);
 		mLocation = location;
 		mListener = callback;
 	}
 
-	public static void find(AddressProvider provider, Location location, OnFindAddressListener callback) {
+	public static void find(Context context, Location location, OnFindAddressListener callback) {
 		if (mInstance != null) {
 			mInstance.cancel();
 		}
-		FindAddress instance = new FindAddress(provider, location, callback);
+		FindAddress instance = new FindAddress(context, location, callback);
 		mInstance = instance;
 		instance.start();
 	}
@@ -79,7 +67,7 @@ public class FindAddress extends Thread implements AddressProvider.OnFindAddress
 				return;
 			onFindAddress(provider, mLocation, nearest);
 		} finally {
-			mInstance = null;
+			close();
 		}
 	}
 
@@ -97,7 +85,13 @@ public class FindAddress extends Thread implements AddressProvider.OnFindAddress
 		if (mCancelled)
 			return;
 		ZmanimAddress addr = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address) : new ZmanimAddress(address);
-		mListener.onAddressFound(location, addr);
+		mListener.onFindAddress(provider, location, addr);
 	}
 
+	/** Close. */
+	protected void close() {
+		cancel();
+		mAddressProvider.close();
+		mInstance = null;
+	}
 }
