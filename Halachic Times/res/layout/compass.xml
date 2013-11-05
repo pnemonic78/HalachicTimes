@@ -4,29 +4,9 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/coordinates"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="@string/location_unknown"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-    <TextView
-        android:id="@android:id/summary"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:text="@string/compass_summary"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/compass_arrow"/>
+    <include
+        android:id="@+id/header"
+        layout="@layout/compass_header"/>
 
     <view
         android:id="@+id/compass"
