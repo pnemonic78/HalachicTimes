@@ -26,7 +26,6 @@
             android:id="@+id/details_fragment"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="2"
             class="net.sf.times.ZmanimDetailsFragment"/>
     </LinearLayout>
 

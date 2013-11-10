@@ -26,6 +26,7 @@ import net.sf.times.location.AddressProvider;
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.view.animation.LayoutWeightAnimation;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -53,8 +54,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -95,8 +102,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ZmanimFragment mMasterFragment;
 	/** The details fragment. */
 	private ZmanimDetailsFragment mDetailsFragment;
-	/** Is master fragment next to details fragment? */
-	private boolean mSideBySide;
+	/** Is master fragment switched with details fragment? */
+	private ViewSwitcher mSwitcher;
 	/** The master item selected id. */
 	private int mSelectedId;
 	/** The handler. */
@@ -105,6 +112,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private GestureDetector mGestureDetector;
 	/** Is locale RTL? */
 	private boolean mLocaleRTL;
+	/** Slide left-to-right animation. */
+	private Animation mSlideLeftToRight;
+	/** Slide right-to-left animation. */
+	private Animation mSlideRightToLeft;
+	/** Grow details animation. */
+	private Animation mDetailsGrow;
+	/** Shrink details animation. */
+	private Animation mDetailsShrink;
 
 	/**
 	 * Creates a new activity.
@@ -201,8 +216,16 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mMasterFragment.setGestureDetector(mGestureDetector);
 		mDetailsFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_fragment);
 		mDetailsFragment.setGestureDetector(mGestureDetector);
-		mSideBySide = view.findViewById(R.id.frame_fragments) == null;
-		hide(mDetailsFragment);
+
+		mSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
+		if (mSwitcher != null) {
+			Animation inAnim = AnimationUtils.makeInAnimation(this, false);
+			inAnim.setDuration(500);
+			mSwitcher.setInAnimation(inAnim);
+			Animation outAnim = AnimationUtils.makeOutAnimation(this, true);
+			outAnim.setDuration(500);
+			mSwitcher.setOutAnimation(outAnim);
+		}
 	}
 
 	/** Initialise the location providers. */
@@ -405,19 +428,19 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (itemId == 0)
 			return;
 
-		if (!mSideBySide) {
+		if (mSwitcher != null) {
 			mDetailsFragment.populateTimes(mDate, itemId);
-			hide(mMasterFragment);
-			show(mDetailsFragment);
+			mSwitcher.showNext();
 			mSelectedId = itemId;
-		} else if ((mSelectedId == itemId) && mDetailsFragment.isVisible()) {
-			hide(mDetailsFragment);
+		} else if ((mSelectedId == itemId) && isDetailsShowing()) {
+			hideDetails();
 			mMasterFragment.unhighlight();
 		} else {
 			mDetailsFragment.populateTimes(mDate, itemId);
 			mMasterFragment.unhighlight();
 			mMasterFragment.highlight(itemId);
-			show(mDetailsFragment);
+			if (!isDetailsShowing())
+				showDetails();
 			mSelectedId = itemId;
 		}
 	}
@@ -429,9 +452,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			if (mMasterFragment != null) {
 				mMasterFragment.unhighlight();
 
-				if (mDetailsFragment.isVisible()) {
-					show(mMasterFragment);
-					hide(mDetailsFragment);
+				if (isDetailsShowing()) {
+					if (mSwitcher != null) {
+						mSwitcher.showPrevious();
+					} else {
+						hideDetails();
+					}
 					return true;
 				}
 			}
@@ -445,12 +471,27 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		toggleDetails(item, view);
 	}
 
-	private void hide(ZmanimFragment fragment) {
-		fragment.setVisibility(View.GONE);
+	protected void hideDetails() {
+		// mDetailsFragment.setVisibility(View.GONE);
+		if (mDetailsShrink == null) {
+			mDetailsShrink = new LayoutWeightAnimation(mDetailsFragment, 2f, 0f);
+			mDetailsShrink.setDuration(500);
+		}
+		mDetailsFragment.startAnimation(mDetailsShrink);
 	}
 
-	private void show(ZmanimFragment fragment) {
-		fragment.setVisibility(View.VISIBLE);
+	protected void showDetails() {
+		// mDetailsFragment.setVisibility(View.VISIBLE);
+		if (mDetailsGrow == null) {
+			mDetailsGrow = new LayoutWeightAnimation(mDetailsFragment, 0f, 2f);
+			mDetailsGrow.setDuration(500);
+		}
+		mDetailsFragment.startAnimation(mDetailsGrow);
+	}
+
+	protected boolean isDetailsShowing() {
+		LinearLayout.LayoutParams lp = (LayoutParams) mDetailsFragment.getLayoutParams();
+		return mDetailsFragment.isVisible() && (lp.weight > 0);
 	}
 
 	@Override
@@ -514,9 +555,25 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			Calendar date = mDate;
 			int day = date.get(Calendar.DATE);
 			if (dX < 0) {
-				date.set(Calendar.DATE, mLocaleRTL ? (day - 1) : (day + 1));
+				if (mLocaleRTL) {
+					date.set(Calendar.DATE, day - 1);
+					slideRight(mMasterFragment);
+					slideRight(mDetailsFragment);
+				} else {
+					date.set(Calendar.DATE, day + 1);
+					slideLeft(mMasterFragment);
+					slideLeft(mDetailsFragment);
+				}
 			} else {
-				date.set(Calendar.DATE, mLocaleRTL ? (day + 1) : (day - 1));
+				if (mLocaleRTL) {
+					date.set(Calendar.DATE, day + 1);
+					slideLeft(mMasterFragment);
+					slideLeft(mDetailsFragment);
+				} else {
+					date.set(Calendar.DATE, day - 1);
+					slideRight(mMasterFragment);
+					slideRight(mDetailsFragment);
+				}
 			}
 			setDate(date.getTimeInMillis());
 			mMasterFragment.populateTimes(date);
@@ -537,5 +594,35 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		mLocaleRTL = ZmanimLocations.isLocaleRTL();
+	}
+
+	/**
+	 * Slide the view in from right to left.
+	 * 
+	 * @param view
+	 *            the view to animate.
+	 */
+	protected void slideLeft(View view) {
+		if (mSlideRightToLeft == null) {
+			mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+					Animation.RELATIVE_TO_SELF, 0.0f);
+			mSlideRightToLeft.setDuration(500);
+		}
+		view.startAnimation(mSlideRightToLeft);
+	}
+
+	/**
+	 * Slide the view in from left to right.
+	 * 
+	 * @param view
+	 *            the view to animate.
+	 */
+	protected void slideRight(View view) {
+		if (mSlideLeftToRight == null) {
+			mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+					Animation.RELATIVE_TO_SELF, 0.0f);
+			mSlideLeftToRight.setDuration(500);
+		}
+		view.startAnimation(mSlideLeftToRight);
 	}
 }

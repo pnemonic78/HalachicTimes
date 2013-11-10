@@ -9,7 +9,7 @@
         android:id="@+id/header"
         layout="@layout/times_header"/>
 
-    <FrameLayout
+    <ViewSwitcher
         android:id="@+id/frame_fragments"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -25,6 +25,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             class="net.sf.times.ZmanimDetailsFragment"/>
-    </FrameLayout>
+    </ViewSwitcher>
 
 </LinearLayout>
