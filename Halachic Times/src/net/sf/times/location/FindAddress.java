@@ -19,6 +19,13 @@
  */
 package net.sf.times.location;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import android.content.Context;
 import android.location.Address;
@@ -31,67 +38,101 @@ import android.location.Location;
  */
 public class FindAddress extends Thread implements OnFindAddressListener {
 
-	/** The instance. */
-	private static FindAddress mInstance;
-
-	private final Location mLocation;
-	private final OnFindAddressListener mListener;
+	private final Queue<Location> mLocations = new ArrayBlockingQueue<Location>(10);
+	private final List<OnFindAddressListener> mListeners = new ArrayList<OnFindAddressListener>();
 	private final AddressProvider mAddressProvider;
-	private boolean mCancelled;
+	private boolean mRunning;
 
-	/** Creates a new finder. */
-	private FindAddress(Context context, Location location, OnFindAddressListener callback) {
+	/**
+	 * Creates a new finder.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	public FindAddress(Context context) {
 		super();
 		mAddressProvider = new AddressProvider(context);
-		mLocation = location;
-		mListener = callback;
 	}
 
-	public static void find(Context context, Location location, OnFindAddressListener callback) {
-		if (mInstance != null) {
-			mInstance.cancel();
-		}
-		FindAddress instance = new FindAddress(context, location, callback);
-		mInstance = instance;
-		instance.start();
+	/**
+	 * Register an address listener.
+	 * 
+	 * @param listener
+	 *            the listener to add.
+	 */
+	public void addListener(OnFindAddressListener listener) {
+		if (!mListeners.contains(listener))
+			mListeners.add(listener);
+	}
+
+	/**
+	 * Remove an address listener.
+	 * 
+	 * @param listener
+	 *            the listener to remove.
+	 */
+	public void removeListener(OnFindAddressListener listener) {
+		mListeners.remove(listener);
+	}
+
+	/**
+	 * Find the address for the location.
+	 * 
+	 * @param location
+	 *            the location.
+	 */
+	public void find(Location location) {
+		mLocations.add(location);
+	}
+
+	/**
+	 * Find the address for the location.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @param listener
+	 *            the listener.
+	 */
+	public void find(Location location, OnFindAddressListener listener) {
+		addListener(listener);
+		mLocations.add(location);
 	}
 
 	@Override
 	public void run() {
-		if (mCancelled)
-			return;
+		mRunning = true;
+		Location location;
+		AddressProvider provider = mAddressProvider;
+		Address nearest;
 		try {
-			AddressProvider provider = mAddressProvider;
-			Address nearest = provider.findNearestAddress(mLocation, this);
-			if (mCancelled)
-				return;
-			onFindAddress(provider, mLocation, nearest);
+			while (mRunning) {
+				location = mLocations.remove();
+				nearest = provider.findNearestAddress(location, this);
+				onFindAddress(provider, location, nearest);
+			}
+		} catch (NoSuchElementException nsee) {
 		} finally {
-			close();
+			cancel();
 		}
-	}
-
-	/**
-	 * Cancel finding.
-	 */
-	public void cancel() {
-		mCancelled = true;
 	}
 
 	@Override
 	public void onFindAddress(AddressProvider provider, Location location, Address address) {
-		if (address == null)
-			return;
-		if (mCancelled)
+		if ((address == null) || !mRunning)
 			return;
 		ZmanimAddress addr = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address) : new ZmanimAddress(address);
-		mListener.onFindAddress(provider, location, addr);
+
+		// Make copy of listeners to avoid ConcurrentModificationException.
+		Collection<OnFindAddressListener> listenersCopy = new ArrayList<OnFindAddressListener>(mListeners);
+		for (OnFindAddressListener listener : listenersCopy)
+			listener.onFindAddress(provider, location, addr);
 	}
 
-	/** Close. */
-	protected void close() {
-		cancel();
+	/** Cancel finding and close. */
+	public void cancel() {
+		mRunning = false;
+		mListeners.clear();
+		mLocations.clear();
 		mAddressProvider.close();
-		mInstance = null;
 	}
 }

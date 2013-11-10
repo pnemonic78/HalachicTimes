@@ -23,7 +23,6 @@ import java.util.TimeZone;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
-import net.sf.times.location.FindAddress;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import android.app.Activity;
@@ -129,7 +128,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 
 	@Override
 	public void onLocationChanged(Location location) {
-		FindAddress.find(this, location, this);
+		ZmanimApplication app = (ZmanimApplication) getApplication();
+		app.findAddress(location, this);
 		populateHeader();
 		mView.setHoliest(location.bearingTo(mHoliest));
 	}

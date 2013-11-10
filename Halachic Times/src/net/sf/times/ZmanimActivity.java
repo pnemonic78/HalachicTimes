@@ -24,7 +24,6 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
-import net.sf.times.location.FindAddress;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
@@ -241,7 +240,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
-		FindAddress.find(this, location, this);
+		ZmanimApplication app = (ZmanimApplication) getApplication();
+		app.findAddress(location, this);
 		populateHeader();
 		mMasterFragment.populateTimes(mDate);
 		mDetailsFragment.populateTimes(mDate);
