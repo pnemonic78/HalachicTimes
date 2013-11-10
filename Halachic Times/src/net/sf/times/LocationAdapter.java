@@ -19,11 +19,14 @@
  */
 package net.sf.times;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocations;
 import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
@@ -38,12 +41,14 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class LocationAdapter extends ArrayAdapter<Address> {
+public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 
-	private List<Address> mObjects;
-	private List<Address> mOriginalValues;
+	private List<ZmanimAddress> mObjects;
+	private List<ZmanimAddress> mOriginalValues;
 	private Comparator<Address> mComparator;
 	private LocationsFilter mFilter;
+	/** Provider for locations. */
+	private ZmanimLocations mLocations;
 
 	/**
 	 * Constructs a new adapter.
@@ -53,26 +58,27 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 	 * @param addresses
 	 *            the list of cities.
 	 */
-	public LocationAdapter(Context context, List<Address> addresses) {
+	public LocationAdapter(Context context, List<ZmanimAddress> addresses) {
 		super(context, R.layout.times_item, android.R.id.title, addresses);
 		mObjects = addresses;
+		mLocations = ZmanimLocations.getInstance(context);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = super.getView(position, convertView, parent);
+		ZmanimAddress addr = getItem(position);
 
-		Address addr = getItem(position);
-		TextView text1 = (TextView) view.findViewById(android.R.id.title);
-		text1.setText(addr.getLocality());
-		TextView text2 = (TextView) view.findViewById(android.R.id.summary);
-		text2.setText(addr.getCountryName());
+		TextView cityName = (TextView) view.findViewById(android.R.id.title);
+		cityName.setText(String.format("%s (%s)", addr.getLocality(), addr.getCountryName()));
+		TextView coordinates = (TextView) view.findViewById(android.R.id.summary);
+		coordinates.setText(mLocations.formatCoordinates(addr));
 
 		return view;
 	}
 
 	@Override
-	public void add(Address object) {
+	public void add(ZmanimAddress object) {
 		if (mOriginalValues != null) {
 			mOriginalValues.add(object);
 		} else {
@@ -82,7 +88,7 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 	}
 
 	@Override
-	public void insert(Address object, int index) {
+	public void insert(ZmanimAddress object, int index) {
 		if (mOriginalValues != null) {
 			mOriginalValues.add(index, object);
 		} else {
@@ -92,7 +98,7 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 	}
 
 	@Override
-	public void remove(Address object) {
+	public void remove(ZmanimAddress object) {
 		if (mOriginalValues != null) {
 			mOriginalValues.remove(object);
 		} else {
@@ -152,11 +158,17 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 	 * @author Moshe Waisberg
 	 */
 	protected class LocationsFilter extends Filter {
+
+		private Collator mCollator;
+		private final Locale mLocale = Locale.getDefault();
+
 		/**
 		 * Constructs a new filter.
 		 */
 		public LocationsFilter() {
 			super();
+			mCollator = Collator.getInstance();
+			mCollator.setStrength(Collator.PRIMARY);
 		}
 
 		@Override
@@ -164,7 +176,7 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 			FilterResults results = new FilterResults();
 
 			if (mOriginalValues == null) {
-				mOriginalValues = new ArrayList<Address>(mObjects);
+				mOriginalValues = new ArrayList<ZmanimAddress>(mObjects);
 			}
 
 			final List<Address> values = new ArrayList<Address>(mOriginalValues);
@@ -174,7 +186,7 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 				results.values = values;
 				results.count = values.size();
 			} else {
-				final Locale locale = Locale.getDefault();
+				final Locale locale = mLocale;
 				final String constraintString = constraint.toString().toLowerCase(locale);
 
 				final List<Address> newValues = new ArrayList<Address>();
@@ -185,7 +197,7 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 					value = values.get(i);
 					valueText = value.getLocality().toLowerCase(locale);
 
-					if (valueText.contains(constraintString)) {
+					if (contains(valueText, constraintString)) {
 						newValues.add(value);
 					}
 				}
@@ -200,15 +212,58 @@ public class LocationAdapter extends ArrayAdapter<Address> {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			List<Address> list = (List<Address>) results.values;
+			List<ZmanimAddress> list = (List<ZmanimAddress>) results.values;
 			LocationAdapter.super.clear();
 			if (results.count > 0) {
-				for (Address address : list) {
+				for (ZmanimAddress address : list) {
 					LocationAdapter.super.add(address);
 				}
 			} else {
 				notifyDataSetInvalidated();
 			}
+		}
+
+		/**
+		 * Does the first string contain the other string?
+		 * 
+		 * @param s
+		 *            the source string.
+		 * @param search
+		 *            the character sequence to search for.
+		 * @return {@code true} if {@code s} contains {@code search}.
+		 */
+		private boolean contains(String s, String search) {
+			final int len1 = s.length();
+			final int len2 = search.length();
+
+			if (len1 < len2)
+				return false;
+
+			final Collator collator = mCollator;
+
+			if (len1 == len2) {
+				if (s.equals(search) || collator.equals(s, search))
+					return true;
+				return false;
+			}
+
+			if (s.contains(search))
+				return true;
+
+			// Let's do a "Collator.contains"
+			String lhs;
+			String rhs;
+			int dLen = len1 - len2;
+			String concat;
+			for (int i = 0; i < dLen; i++) {
+				lhs = s.substring(0, i);
+				rhs = s.substring(len2 + i);
+				concat = lhs + search + rhs;
+				if (collator.equals(s, concat))
+					return true;
+			}
+
+			return false;
 		}
 	}
 }

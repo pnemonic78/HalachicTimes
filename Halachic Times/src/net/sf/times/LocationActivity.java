@@ -22,6 +22,7 @@ package net.sf.times;
 import java.util.List;
 
 import net.sf.times.location.CountriesGeocoder;
+import net.sf.times.location.ZmanimAddress;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -130,7 +131,7 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 	 * Populate the list with cities.
 	 */
 	protected void populateList() {
-		List<Address> cities = mCountries.getCities();
+		List<ZmanimAddress> cities = mCountries.getCities();
 		LocationAdapter adapter = new LocationAdapter(this, cities);
 		adapter.sort();
 		mAdapter = adapter;

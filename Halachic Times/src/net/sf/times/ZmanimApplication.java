@@ -53,6 +53,7 @@ public class ZmanimApplication extends Application {
 	public void findAddress(Location location, OnFindAddressListener listener) {
 		if (mFinder == null) {
 			mFinder = new FindAddress(this);
+			mFinder.start();
 		}
 		mFinder.find(location, listener);
 	}

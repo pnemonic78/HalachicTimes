@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import android.content.Context;
@@ -38,7 +38,7 @@ import android.location.Location;
  */
 public class FindAddress extends Thread implements OnFindAddressListener {
 
-	private final Queue<Location> mLocations = new ArrayBlockingQueue<Location>(10);
+	private final BlockingQueue<Location> mLocations = new ArrayBlockingQueue<Location>(10);
 	private final List<OnFindAddressListener> mListeners = new ArrayList<OnFindAddressListener>();
 	private final AddressProvider mAddressProvider;
 	private boolean mRunning;
@@ -106,11 +106,12 @@ public class FindAddress extends Thread implements OnFindAddressListener {
 		Address nearest;
 		try {
 			while (mRunning) {
-				location = mLocations.remove();
+				location = mLocations.take();
 				nearest = provider.findNearestAddress(location, this);
 				onFindAddress(provider, location, nearest);
 			}
 		} catch (NoSuchElementException nsee) {
+		} catch (InterruptedException ie) {
 		} finally {
 			cancel();
 		}

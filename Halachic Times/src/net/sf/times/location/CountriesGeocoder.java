@@ -301,9 +301,9 @@ public class CountriesGeocoder {
 	 * 
 	 * @return the list of addresses.
 	 */
-	public List<Address> getCities() {
+	public List<ZmanimAddress> getCities() {
 		final int citiesCount = mCitiesNames.length;
-		List<Address> cities = new ArrayList<Address>(citiesCount);
+		List<ZmanimAddress> cities = new ArrayList<ZmanimAddress>(citiesCount);
 		double latitude;
 		double longitude;
 		String cityName;
