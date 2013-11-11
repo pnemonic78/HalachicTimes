@@ -61,7 +61,8 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	public LocationAdapter(Context context, List<ZmanimAddress> addresses) {
 		super(context, R.layout.times_item, android.R.id.title, addresses);
 		mObjects = addresses;
-		mLocations = ZmanimLocations.getInstance(context);
+		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+		mLocations = app.getLocations();
 	}
 
 	@Override

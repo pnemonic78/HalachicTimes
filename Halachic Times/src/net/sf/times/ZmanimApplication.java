@@ -19,10 +19,9 @@
  */
 package net.sf.times;
 
-import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import net.sf.times.location.FindAddress;
+import net.sf.times.location.ZmanimLocations;
 import android.app.Application;
-import android.location.Location;
 
 /**
  * Zmanim application.
@@ -33,6 +32,8 @@ public class ZmanimApplication extends Application {
 
 	/** The finder instance. */
 	private FindAddress mFinder;
+	/** Provider for locations. */
+	private ZmanimLocations mLocations;
 
 	/**
 	 * Constructs a new application.
@@ -42,20 +43,17 @@ public class ZmanimApplication extends Application {
 	}
 
 	/**
-	 * Find an address.
+	 * Get the address finder instance.
 	 * 
-	 * @param location
-	 *            the location.
-	 * @param listener
-	 *            the callback listener.
 	 * @return the address finder.
 	 */
-	public void findAddress(Location location, OnFindAddressListener listener) {
+	public FindAddress getFinder() {
 		if (mFinder == null) {
-			mFinder = new FindAddress(this);
-			mFinder.start();
+			FindAddress finder = new FindAddress(this);
+			finder.start();
+			mFinder = finder;
 		}
-		mFinder.find(location, listener);
+		return mFinder;
 	}
 
 	@Override
@@ -65,5 +63,17 @@ public class ZmanimApplication extends Application {
 			mFinder = null;
 		}
 		super.onTerminate();
+	}
+
+	/**
+	 * Get the locations provider instance.
+	 * 
+	 * @return the provider.
+	 */
+	public ZmanimLocations getLocations() {
+		if (mLocations == null) {
+			mLocations = new ZmanimLocations(this);
+		}
+		return mLocations;
 	}
 }

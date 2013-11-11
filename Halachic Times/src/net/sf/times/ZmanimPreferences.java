@@ -21,7 +21,6 @@ package net.sf.times;
 
 import java.util.Locale;
 
-import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.SeekBarPreference;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -38,7 +37,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	private SeekBarPreference mCandles;
 	private ZmanimSettings mSettings;
-	private ZmanimLocations mLocations;
 	private ZmanimReminder mReminder;
 	private Runnable mCandlesRunnable;
 
@@ -124,11 +122,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 				if (preference.getKey().endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
 					if (mSettings == null)
 						mSettings = new ZmanimSettings(this);
-					if (mLocations == null)
-						mLocations = ZmanimLocations.getInstance(this);
 					if (mReminder == null)
 						mReminder = new ZmanimReminder(this);
-					mReminder.remind(mSettings, mLocations);
+					mReminder.remind(mSettings);
 				}
 			}
 		}

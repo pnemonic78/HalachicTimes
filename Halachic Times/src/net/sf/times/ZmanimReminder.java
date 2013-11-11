@@ -85,9 +85,11 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * @param locations
 	 *            the locations provider.
 	 */
-	public void remind(ZmanimSettings settings, ZmanimLocations locations) {
-		// Have we been destroyed?
+	public void remind(ZmanimSettings settings) {
+		ZmanimApplication app = (ZmanimApplication) mContext.getApplicationContext();
+		ZmanimLocations locations = app.getLocations();
 		GeoLocation gloc = locations.getGeoLocation();
+		// Have we been destroyed?
 		if (gloc == null)
 			return;
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
@@ -314,8 +316,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 		if (update) {
 			ZmanimSettings settings = new ZmanimSettings(context);
-			ZmanimLocations locations = ZmanimLocations.getInstance(context);
-			remind(settings, locations);
+			remind(settings);
 		}
 	}
 

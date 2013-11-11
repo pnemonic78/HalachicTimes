@@ -82,7 +82,7 @@ public class ZmanimFragment extends FrameLayout {
 	public ZmanimFragment(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
-		init();
+		init(context);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class ZmanimFragment extends FrameLayout {
 	public ZmanimFragment(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
-		init();
+		init(context);
 	}
 
 	/**
@@ -108,19 +108,29 @@ public class ZmanimFragment extends FrameLayout {
 	public ZmanimFragment(Context context) {
 		super(context);
 		mContext = context;
-		init();
+		init(context);
 	}
 
 	/** Initialise. */
-	private void init() {
-		mSettings = new ZmanimSettings(mContext);
-		mLocations = ZmanimLocations.getInstance(mContext);
+	private void init(Context context) {
+		mSettings = new ZmanimSettings(context);
+		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+		mLocations = app.getLocations();
 
-		mInflater = LayoutInflater.from(mContext);
+		mInflater = LayoutInflater.from(context);
 		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times_list, this);
 		mList = (ViewGroup) view.findViewById(android.R.id.list);
 	}
 
+	/**
+	 * Create a new times adapter.
+	 * 
+	 * @param date
+	 *            the date.
+	 * @param locations
+	 *            the locations provider.
+	 * @return the adapter.
+	 */
 	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
 		GeoLocation gloc = locations.getGeoLocation();
 		// Have we been destroyed?

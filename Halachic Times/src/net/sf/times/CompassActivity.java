@@ -104,8 +104,10 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 			summary.setVisibility(View.GONE);
 		}
 
+		ZmanimApplication app = (ZmanimApplication) getApplication();
 		mTimeZone = TimeZone.getDefault();
-		mLocations = ZmanimLocations.getInstance(this, this);
+		mLocations = app.getLocations();
+		mLocations.addLocationListener(this);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -114,7 +116,6 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mLocations.cancel(this);
 		mSensorManager.unregisterListener(this);
 	}
 
@@ -127,9 +128,15 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	@Override
+	protected void onDestroy() {
+		mLocations.cancel(this);
+		super.onDestroy();
+	}
+
+	@Override
 	public void onLocationChanged(Location location) {
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		app.findAddress(location, this);
+		app.getFinder().find(location, this);
 		populateHeader();
 		mView.setHoliest(location.bearingTo(mHoliest));
 	}

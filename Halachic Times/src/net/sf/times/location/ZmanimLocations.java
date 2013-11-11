@@ -90,8 +90,6 @@ public class ZmanimLocations implements LocationListener {
 	private CountriesGeocoder mCountries;
 	/** The coordinates format. */
 	private String mCoordsFormat;
-	/** The instance. */
-	private static ZmanimLocations mInstance;
 	/** The time zone. */
 	private TimeZone mTimeZone;
 
@@ -101,43 +99,13 @@ public class ZmanimLocations implements LocationListener {
 	 * @param context
 	 *            the context.
 	 */
-	private ZmanimLocations(Context context) {
+	public ZmanimLocations(Context context) {
 		super();
 		mSettings = new ZmanimSettings(context);
 		mCountries = new CountriesGeocoder(context);
 		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		mCoordsFormat = context.getString(R.string.location_coords);
 		mTimeZone = TimeZone.getDefault();
-	}
-
-	/**
-	 * Get the locations provider instance.
-	 * 
-	 * @param context
-	 *            the context.
-	 * @return the provider.
-	 */
-	public static ZmanimLocations getInstance(Context context) {
-		if (mInstance == null)
-			mInstance = new ZmanimLocations(context);
-		return mInstance;
-	}
-
-	/**
-	 * Get the locations provider instance.
-	 * 
-	 * @param context
-	 *            the context.
-	 * @param listener
-	 *            the listener.
-	 * @return the provider.
-	 */
-	public static ZmanimLocations getInstance(Context context, LocationListener listener) {
-		if (mInstance == null)
-			mInstance = new ZmanimLocations(context);
-		if (listener != null)
-			mInstance.addLocationListener(listener);
-		return mInstance;
 	}
 
 	/**

@@ -194,7 +194,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected void onPause() {
 		super.onPause();
 		if (mReminder != null)
-			mReminder.remind(mSettings, mLocations);
+			mReminder.remind(mSettings);
 		SQLiteDatabase.releaseMemory();
 	}
 
@@ -230,7 +230,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Initialise the location providers. */
 	private void initLocation() {
-		mLocations = ZmanimLocations.getInstance(this, this);
+		ZmanimApplication app = (ZmanimApplication) getApplication();
+		mLocations = app.getLocations();
+		mLocations.addLocationListener(this);
 		mLocaleRTL = ZmanimLocations.isLocaleRTL();
 	}
 
@@ -264,7 +266,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	public void onLocationChanged(Location location) {
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		app.findAddress(location, this);
+		app.getFinder().find(location, this);
 		populateHeader();
 		mMasterFragment.populateTimes(mDate);
 		mDetailsFragment.populateTimes(mDate);

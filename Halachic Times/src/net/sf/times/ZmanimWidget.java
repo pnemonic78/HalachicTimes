@@ -106,8 +106,11 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		mContext = context;
 		mAppWidgetManager = appWidgetManager;
 		mAppWidgetIds = appWidgetIds;
-		if (mLocations == null)
-			mLocations = ZmanimLocations.getInstance(context, this);
+		if (mLocations == null) {
+			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+			mLocations = app.getLocations();
+			mLocations.addLocationListener(this);
+		}
 		mLocations.resume(this);
 
 		populateTimes();
@@ -141,7 +144,9 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		if (mSettings == null)
 			mSettings = new ZmanimSettings(context);
 		if (mLocations == null) {
-			mLocations = ZmanimLocations.getInstance(context, this);
+			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+			mLocations = app.getLocations();
+			mLocations.addLocationListener(this);
 			mLocations.resume(this);
 		}
 		GeoLocation gloc = mLocations.getGeoLocation();
@@ -155,8 +160,6 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		bindViews(views, adapter);
 
 		mAppWidgetManager.updateAppWidget(mAppWidgetIds, views);
-		// FIXME mAppWidgetManager.notifyAppWidgetViewDataChanged(mAppWidgetIds,
-		// android.R.id.list);
 
 		scheduleForMidnight(mContext);
 	}
