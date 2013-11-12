@@ -26,7 +26,6 @@ import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
@@ -57,14 +56,14 @@ public class ZmanimFragment extends FrameLayout {
 	private Drawable mBackground;
 	/** The master item selected row. */
 	private View mHighlightRow;
-	/** The master item background that is not selected. */
-	private Drawable mUnhighlightBackground;
-	private int mUnhighlightPaddingLeft;
-	private int mUnhighlightPaddingTop;
-	private int mUnhighlightPaddingRight;
-	private int mUnhighlightPaddingBottom;
 	/** The master item background that is selected. */
 	private Drawable mHighlightBackground;
+	/** The master item background that is not selected. */
+	private Drawable mUnhighlightBackground;
+	private int mPaddingLeft;
+	private int mPaddingTop;
+	private int mPaddingRight;
+	private int mPaddingBottom;
 	private ZmanimAdapter mAdapter;
 	/** The gesture detector. */
 	private GestureDetector mGestureDetector;
@@ -247,8 +246,7 @@ public class ZmanimFragment extends FrameLayout {
 	 */
 	private Drawable getSelectedBackground() {
 		if (mHighlightBackground == null) {
-			ColorDrawable drawable = new ColorDrawable(0x40ffffff);
-			mHighlightBackground = drawable;
+			mHighlightBackground = getResources().getDrawable(R.drawable.list_selected);
 		}
 		return mHighlightBackground;
 	}
@@ -276,7 +274,7 @@ public class ZmanimFragment extends FrameLayout {
 		if (bg instanceof StateListDrawable)
 			bg = bg.getConstantState().newDrawable();
 		view.setBackgroundDrawable(bg);
-		view.setPadding(mUnhighlightPaddingLeft, mUnhighlightPaddingTop, mUnhighlightPaddingRight, mUnhighlightPaddingBottom);
+		view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
 		mUnhighlightBackground = null;
 	}
 
@@ -314,11 +312,12 @@ public class ZmanimFragment extends FrameLayout {
 			return;
 
 		mUnhighlightBackground = view.getBackground();
-		mUnhighlightPaddingLeft = view.getPaddingLeft();
-		mUnhighlightPaddingTop = view.getPaddingTop();
-		mUnhighlightPaddingRight = view.getPaddingRight();
-		mUnhighlightPaddingBottom = view.getPaddingBottom();
+		mPaddingLeft = view.getPaddingLeft();
+		mPaddingTop = view.getPaddingTop();
+		mPaddingRight = view.getPaddingRight();
+		mPaddingBottom = view.getPaddingBottom();
 		view.setBackgroundDrawable(getSelectedBackground());
+		view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
 		mHighlightRow = view;
 	}
 
