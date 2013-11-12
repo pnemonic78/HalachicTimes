@@ -22,6 +22,11 @@
             android:layout_weight="1"
             class="net.sf.times.ZmanimFragment"/>
 
+       <View
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/fragment_divider"/>
+
         <view
             android:id="@+id/details_fragment"
             android:layout_width="0dp"

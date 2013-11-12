@@ -114,8 +114,10 @@ public class ZmanimFragment extends FrameLayout {
 	/** Initialise. */
 	private void init(Context context) {
 		mSettings = new ZmanimSettings(context);
-		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-		mLocations = app.getLocations();
+		if (!isInEditMode()) {
+			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+			mLocations = app.getLocations();
+		}
 
 		mInflater = LayoutInflater.from(context);
 		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times_list, this);
