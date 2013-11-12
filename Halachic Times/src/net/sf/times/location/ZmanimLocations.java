@@ -387,6 +387,21 @@ public class ZmanimLocations implements LocationListener {
 	}
 
 	/**
+	 * Format the coordinates.
+	 * 
+	 * @param coord
+	 *            the coordinate.
+	 * @return the coordinate text.
+	 */
+	public String formatCoordinate(double coord) {
+		final String notation = mSettings.getCoordinatesFormat();
+		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+			return Location.convert(coord, Location.FORMAT_SECONDS);
+		}
+		return String.format(Locale.US, "%1$.6f", coord);
+	}
+
+	/**
 	 * Get the location.
 	 * 
 	 * @param timeZone

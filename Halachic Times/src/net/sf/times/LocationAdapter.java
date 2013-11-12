@@ -14,20 +14,21 @@
  * http://halachictimes.sourceforge.net
  *
  * Contributor(s):
- *   Moshe Waisberg
+ *   Moshe Waisberggdcfvrfdfg v 
  * 
  */
 package net.sf.times;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import net.sf.times.location.LocationComparator;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,19 +38,20 @@ import android.widget.Filter;
 import android.widget.TextView;
 
 /**
- * Location (city) adapter.
+ * Location adapter.
  * 
  * @author Moshe Waisberg
  */
 public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 
-	private List<ZmanimAddress> mObjects;
-	private List<ZmanimAddress> mOriginalValues;
-	private Comparator<ZmanimAddress> mComparator;
+	private List<LocationItem> mObjects = new ArrayList<LocationItem>();
+	private List<LocationItem> mOriginalValues;
+	private Comparator<LocationItem> mComparator;
 	private LocationsFilter mFilter;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
 	private Collator mCollator;
+	private final Locale mLocale = Locale.getDefault();
 
 	/**
 	 * Constructs a new adapter.
@@ -61,7 +63,9 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	 */
 	public LocationAdapter(Context context, List<ZmanimAddress> addresses) {
 		super(context, R.layout.times_item, android.R.id.title, addresses);
-		mObjects = addresses;
+		for (ZmanimAddress addr : addresses) {
+			mObjects.add(new LocationItem(addr));
+		}
 		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 		mLocations = app.getLocations();
 		mCollator = Collator.getInstance();
@@ -69,34 +73,53 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	}
 
 	@Override
+	public int getCount() {
+		return mObjects.size();
+	}
+
+	@Override
+	public ZmanimAddress getItem(int position) {
+		return mObjects.get(position).getAddress();
+	}
+
+	@Override
+	public int getPosition(ZmanimAddress item) {
+		return mObjects.indexOf(item);
+	}
+
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = super.getView(position, convertView, parent);
-		ZmanimAddress addr = getItem(position);
+		LocationItem item = mObjects.get(position);
 
 		TextView cityName = (TextView) view.findViewById(android.R.id.title);
-		cityName.setText(addr.getFormatted());
+		cityName.setText(item.getLabel());
 		TextView coordinates = (TextView) view.findViewById(android.R.id.summary);
-		coordinates.setText(mLocations.formatCoordinates(addr));
+		coordinates.setText(item.getCoordinates());
 
 		return view;
 	}
 
 	@Override
 	public void add(ZmanimAddress object) {
+		add(new LocationItem(object));
+	}
+
+	public void add(LocationItem object) {
 		if (mOriginalValues != null) {
 			mOriginalValues.add(object);
 		} else {
 			mObjects.add(object);
 		}
-		super.add(object);
+		super.add(object.getAddress());
 	}
 
 	@Override
 	public void insert(ZmanimAddress object, int index) {
 		if (mOriginalValues != null) {
-			mOriginalValues.add(index, object);
+			mOriginalValues.add(index, new LocationItem(object));
 		} else {
-			mObjects.add(index, object);
+			mObjects.add(index, new LocationItem(object));
 		}
 		super.insert(object, index);
 	}
@@ -128,7 +151,12 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		if (mComparator == null) {
 			mComparator = new LocationComparator();
 		}
-		sort(mComparator);
+		if (mOriginalValues != null) {
+			Collections.sort(mOriginalValues, mComparator);
+		} else {
+			Collections.sort(mObjects, mComparator);
+		}
+		notifyDataSetChanged();
 	}
 
 	@Override
@@ -147,8 +175,6 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	 */
 	protected class LocationsFilter extends Filter {
 
-		private final Locale mLocale = Locale.getDefault();
-
 		/**
 		 * Constructs a new filter.
 		 */
@@ -161,10 +187,10 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 			FilterResults results = new FilterResults();
 
 			if (mOriginalValues == null) {
-				mOriginalValues = new ArrayList<ZmanimAddress>(mObjects);
+				mOriginalValues = new ArrayList<LocationItem>(mObjects);
 			}
 
-			final List<ZmanimAddress> values = new ArrayList<ZmanimAddress>(mOriginalValues);
+			final List<LocationItem> values = new ArrayList<LocationItem>(mOriginalValues);
 			final int count = values.size();
 
 			if (TextUtils.isEmpty(constraint)) {
@@ -173,16 +199,20 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 			} else {
 				final Locale locale = mLocale;
 				final String constraintString = constraint.toString().toLowerCase(locale);
+				String latitude;
+				String longitude;
 
-				final List<ZmanimAddress> newValues = new ArrayList<ZmanimAddress>();
-				ZmanimAddress value;
+				final List<LocationItem> newValues = new ArrayList<LocationItem>();
+				LocationItem value;
 				String valueText;
 
 				for (int i = 0; i < count; i++) {
 					value = values.get(i);
-					valueText = value.getFormatted().toLowerCase(locale);
+					valueText = value.getLabelLower();
+					latitude = value.getFormatLatitude();
+					longitude = value.getFormatLongitude();
 
-					if (contains(valueText, constraintString)) {
+					if (contains(valueText, constraintString) || latitude.contains(constraintString) || longitude.contains(constraintString)) {
 						newValues.add(value);
 					}
 				}
@@ -197,12 +227,9 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			List<ZmanimAddress> list = (List<ZmanimAddress>) results.values;
-			LocationAdapter.super.clear();
+			mObjects = (List<LocationItem>) results.values;
 			if (results.count > 0) {
-				for (ZmanimAddress address : list) {
-					LocationAdapter.super.add(address);
-				}
+				notifyDataSetChanged();
 			} else {
 				notifyDataSetInvalidated();
 			}
@@ -249,6 +276,161 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 			}
 
 			return false;
+		}
+	}
+
+	/**
+	 * Location item.
+	 * 
+	 * @author Moshe Waisberg
+	 */
+	protected class LocationItem {
+
+		private final ZmanimAddress address;
+		private final String label;
+		private final String labelLower;
+		private String latitude;
+		private String longitude;
+		private String coordinates;
+
+		/**
+		 * Constructs a new item.
+		 * 
+		 * @param address
+		 *            the address.
+		 */
+		public LocationItem(ZmanimAddress address) {
+			super();
+			this.address = address;
+			this.label = address.getFormatted();
+			this.labelLower = label.toLowerCase(mLocale);
+		}
+
+		/**
+		 * Get the source address.
+		 * 
+		 * @return the address.
+		 */
+		public ZmanimAddress getAddress() {
+			return address;
+		}
+
+		/**
+		 * Get the label.
+		 * 
+		 * @return the label.
+		 */
+		public String getLabel() {
+			return label;
+		}
+
+		/**
+		 * Get the label in lower casing.
+		 * 
+		 * @return the label.
+		 */
+		public String getLabelLower() {
+			return labelLower;
+		}
+
+		/**
+		 * Get the formatted latitude.
+		 * 
+		 * @return the latitude.
+		 */
+		public String getFormatLatitude() {
+			if (mLocations == null)
+				return null;
+			if (latitude == null)
+				this.latitude = mLocations.formatCoordinate(address.getLatitude());
+			return latitude;
+		}
+
+		/**
+		 * Get the formatted longitude.
+		 * 
+		 * @return the longitude.
+		 */
+		public String getFormatLongitude() {
+			if (mLocations == null)
+				return null;
+			if (longitude == null)
+				this.longitude = mLocations.formatCoordinate(address.getLongitude());
+			return longitude;
+		}
+
+		/**
+		 * Get the formatted coordinates.
+		 * 
+		 * @return the coordinates.
+		 */
+		public String getCoordinates() {
+			if (mLocations == null)
+				return null;
+			if (coordinates == null)
+				this.coordinates = mLocations.formatCoordinates(getAddress());
+			return coordinates;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (o == null)
+				return false;
+			if (o instanceof LocationItem)
+				return getAddress().equals(((LocationItem) o).getAddress());
+			if (o instanceof ZmanimAddress)
+				return getAddress().equals(o);
+			return super.equals(o);
+		}
+	}
+
+	/**
+	 * Compare two cities by their names, then their countries, but not by their
+	 * locations.
+	 * 
+	 * @author Moshe Waisberg
+	 */
+	protected class LocationComparator implements Comparator<LocationItem> {
+
+		/** Double subtraction error. */
+		private static final double EPSILON = 1e-6;
+
+		private Collator mCollator;
+
+		/**
+		 * Constructs a new comparator.
+		 */
+		public LocationComparator() {
+			super();
+			mCollator = Collator.getInstance();
+			mCollator.setStrength(Collator.PRIMARY);
+		}
+
+		@SuppressLint("DefaultLocale")
+		@Override
+		public int compare(LocationItem item1, LocationItem item2) {
+			String format1 = item1.getLabelLower();
+			String format2 = item2.getLabelLower();
+			int c = mCollator.compare(format1, format2);
+			if (c != 0)
+				return c;
+			ZmanimAddress addr1 = item1.getAddress();
+			ZmanimAddress addr2 = item2.getAddress();
+			double lat1 = addr1.getLatitude();
+			double lat2 = addr2.getLatitude();
+			double latD = lat1 - lat2;
+			if (latD >= EPSILON)
+				return 1;
+			if (latD <= -EPSILON)
+				return -1;
+			double lng1 = addr1.getLongitude();
+			double lng2 = addr2.getLongitude();
+			double lngD = lng1 - lng2;
+			if (lngD >= EPSILON)
+				return 1;
+			if (lngD < -EPSILON)
+				return -1;
+			return 0;
 		}
 	}
 }
