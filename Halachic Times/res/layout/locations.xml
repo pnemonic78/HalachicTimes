@@ -25,7 +25,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@android:string/search_go"
-                android:inputType="text"/>
+                android:inputType="text">
+
+                <requestFocus/>
+            </EditText>
 
             <ImageView
                 android:id="@+id/search_close_btn"

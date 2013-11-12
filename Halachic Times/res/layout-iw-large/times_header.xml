@@ -39,23 +39,26 @@
             android:id="@+id/coordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
+            android:singleLine="true"
             android:text="@string/location_coords"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-        <View
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:text="@string/location_unknown"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:gravity="right">
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@string/location_unknown"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
