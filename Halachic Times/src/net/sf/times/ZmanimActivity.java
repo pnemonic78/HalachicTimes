@@ -492,8 +492,11 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	protected boolean isDetailsShowing() {
-		LinearLayout.LayoutParams lp = (LayoutParams) mDetailsFragment.getLayoutParams();
-		return mDetailsFragment.isVisible() && (lp.weight > 0);
+		if (mSwitcher == null) {
+			LinearLayout.LayoutParams lp = (LayoutParams) mDetailsFragment.getLayoutParams();
+			return mDetailsFragment.isVisible() && (lp.weight > 0);
+		}
+		return mDetailsFragment.isVisible() && (mSwitcher.getCurrentView() == mDetailsFragment);
 	}
 
 	@Override
