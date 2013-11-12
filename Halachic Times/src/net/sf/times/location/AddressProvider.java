@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -333,6 +335,7 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		final String language = mLocale.getLanguage();
+		final String country = mLocale.getCountry();
 
 		List<Address> addresses = new ArrayList<Address>();
 		SQLiteDatabase db = getReadableDatabase();
@@ -374,7 +377,8 @@ public class AddressProvider {
 							if (locationLanguage == null)
 								locale = mLocale;
 							else
-								locale = new Locale(locationLanguage, mLocale.getCountry());
+								locale = new Locale(locationLanguage, country);
+
 							address = new ZmanimAddress(locale);
 							address.setFormatted(formatted);
 							address.setId(id);
@@ -501,5 +505,65 @@ public class AddressProvider {
 			cities.add(city);
 		}
 		return cities;
+	}
+
+	/**
+	 * Fetch addresses from the database.
+	 * 
+	 * @return the list of addresses.
+	 */
+	public Set<ZmanimAddress> query() {
+		final String language = mLocale.getLanguage();
+		final String country = mLocale.getCountry();
+
+		Set<ZmanimAddress> addresses = new TreeSet<ZmanimAddress>();
+		SQLiteDatabase db = getReadableDatabase();
+		if (db == null)
+			return addresses;
+		Cursor cursor = db.query(AddressOpenHelper.TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
+		if ((cursor == null) || cursor.isClosed()) {
+			db.close();
+			return addresses;
+		}
+
+		try {
+			if (cursor.moveToFirst()) {
+				long id;
+				double addressLatitude;
+				double addressLongitude;
+				String formatted;
+				String locationLanguage;
+				Locale locale;
+				ZmanimAddress address;
+
+				do {
+					locationLanguage = cursor.getString(INDEX_LANGUAGE);
+					if ((locationLanguage == null) || locationLanguage.equals(language)) {
+						addressLatitude = cursor.getDouble(INDEX_LATITUDE);
+						addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+						id = cursor.getLong(INDEX_ID);
+						formatted = cursor.getString(INDEX_ADDRESS);
+						if (locationLanguage == null)
+							locale = mLocale;
+						else
+							locale = new Locale(locationLanguage, country);
+
+						address = new ZmanimAddress(locale);
+						address.setFormatted(formatted);
+						address.setId(id);
+						address.setLatitude(addressLatitude);
+						address.setLongitude(addressLongitude);
+						addresses.add(address);
+					}
+				} while (cursor.moveToNext());
+			}
+		} catch (SQLiteException se) {
+			se.printStackTrace();
+		} finally {
+			cursor.close();
+			db.close();
+		}
+
+		return addresses;
 	}
 }

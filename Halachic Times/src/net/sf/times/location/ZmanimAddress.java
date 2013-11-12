@@ -30,10 +30,12 @@ import android.text.TextUtils;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimAddress extends Address {
+public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> {
 
 	/** Address field separator. */
 	private static final String ADDRESS_SEPARATOR = ", ";
+	/** Double subtraction error. */
+	private static final double EPSILON = 1e-6;
 
 	private long mId;
 	private String mFormatted;
@@ -182,5 +184,28 @@ public class ZmanimAddress extends Address {
 			return getLocale().getDisplayCountry();
 
 		return buf.toString();
+	}
+
+	@Override
+	public int compareTo(ZmanimAddress that) {
+		double lat1 = this.getLatitude();
+		double lat2 = that.getLatitude();
+		double latD = lat1 - lat2;
+		if (latD >= EPSILON)
+			return 1;
+		if (latD <= -EPSILON)
+			return -1;
+
+		double lng1 = this.getLongitude();
+		double lng2 = that.getLongitude();
+		double lngD = lng1 - lng2;
+		if (lngD >= EPSILON)
+			return 1;
+		if (lngD <= -EPSILON)
+			return -1;
+
+		String format1 = this.getFormatted();
+		String format2 = that.getFormatted();
+		return format1.compareToIgnoreCase(format2);
 	}
 }

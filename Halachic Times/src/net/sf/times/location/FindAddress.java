@@ -55,6 +55,19 @@ public class FindAddress extends Thread implements OnFindAddressListener {
 	}
 
 	/**
+	 * Creates a new finder.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param provider
+	 *            the addresses provider.
+	 */
+	public FindAddress(Context context, AddressProvider provider) {
+		super();
+		mAddressProvider = provider;
+	}
+
+	/**
 	 * Register an address listener.
 	 * 
 	 * @param listener

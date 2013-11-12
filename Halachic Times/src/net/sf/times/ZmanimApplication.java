@@ -19,6 +19,7 @@
  */
 package net.sf.times;
 
+import net.sf.times.location.AddressProvider;
 import net.sf.times.location.FindAddress;
 import net.sf.times.location.ZmanimLocations;
 import android.app.Application;
@@ -34,6 +35,8 @@ public class ZmanimApplication extends Application {
 	private FindAddress mFinder;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
+	/** Provider for addresses. */
+	private AddressProvider mAddressProvider;
 
 	/**
 	 * Constructs a new application.
@@ -49,7 +52,7 @@ public class ZmanimApplication extends Application {
 	 */
 	public FindAddress getFinder() {
 		if (mFinder == null) {
-			FindAddress finder = new FindAddress(this);
+			FindAddress finder = new FindAddress(this, getAddresses());
 			finder.start();
 			mFinder = finder;
 		}
@@ -75,5 +78,17 @@ public class ZmanimApplication extends Application {
 			mLocations = new ZmanimLocations(this);
 		}
 		return mLocations;
+	}
+
+	/**
+	 * Get the addresses provider instance.
+	 * 
+	 * @return the provider.
+	 */
+	public AddressProvider getAddresses() {
+		if (mAddressProvider == null) {
+			mAddressProvider = new AddressProvider(this);
+		}
+		return mAddressProvider;
 	}
 }

@@ -25,10 +25,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import net.sf.times.location.LocationComparator;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import android.content.Context;
-import android.location.Address;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +45,11 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 
 	private List<ZmanimAddress> mObjects;
 	private List<ZmanimAddress> mOriginalValues;
-	private Comparator<Address> mComparator;
+	private Comparator<ZmanimAddress> mComparator;
 	private LocationsFilter mFilter;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
+	private Collator mCollator;
 
 	/**
 	 * Constructs a new adapter.
@@ -63,6 +64,8 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		mObjects = addresses;
 		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 		mLocations = app.getLocations();
+		mCollator = Collator.getInstance();
+		mCollator.setStrength(Collator.PRIMARY);
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		ZmanimAddress addr = getItem(position);
 
 		TextView cityName = (TextView) view.findViewById(android.R.id.title);
-		cityName.setText(String.format("%s (%s)", addr.getLocality(), addr.getCountryName()));
+		cityName.setText(addr.getFormatted());
 		TextView coordinates = (TextView) view.findViewById(android.R.id.summary);
 		coordinates.setText(mLocations.formatCoordinates(addr));
 
@@ -137,22 +140,6 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	}
 
 	/**
-	 * Compare two cities by their names, then their countries, but not by their
-	 * locations.
-	 * 
-	 * @author Moshe Waisberg
-	 */
-	protected static class LocationComparator implements Comparator<Address> {
-		@Override
-		public int compare(Address lhs, Address rhs) {
-			int c = lhs.getLocality().compareTo(rhs.getLocality());
-			if (c != 0)
-				return c;
-			return lhs.getCountryName().compareTo(rhs.getCountryName());
-		}
-	}
-
-	/**
 	 * Filter the list of locations to match cities' names that contain the
 	 * contraint.
 	 * 
@@ -160,7 +147,6 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	 */
 	protected class LocationsFilter extends Filter {
 
-		private Collator mCollator;
 		private final Locale mLocale = Locale.getDefault();
 
 		/**
@@ -168,8 +154,6 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		 */
 		public LocationsFilter() {
 			super();
-			mCollator = Collator.getInstance();
-			mCollator.setStrength(Collator.PRIMARY);
 		}
 
 		@Override
@@ -180,7 +164,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 				mOriginalValues = new ArrayList<ZmanimAddress>(mObjects);
 			}
 
-			final List<Address> values = new ArrayList<Address>(mOriginalValues);
+			final List<ZmanimAddress> values = new ArrayList<ZmanimAddress>(mOriginalValues);
 			final int count = values.size();
 
 			if (TextUtils.isEmpty(constraint)) {
@@ -190,13 +174,13 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 				final Locale locale = mLocale;
 				final String constraintString = constraint.toString().toLowerCase(locale);
 
-				final List<Address> newValues = new ArrayList<Address>();
-				Address value;
+				final List<ZmanimAddress> newValues = new ArrayList<ZmanimAddress>();
+				ZmanimAddress value;
 				String valueText;
 
 				for (int i = 0; i < count; i++) {
 					value = values.get(i);
-					valueText = value.getLocality().toLowerCase(locale);
+					valueText = value.getFormatted().toLowerCase(locale);
 
 					if (contains(valueText, constraintString)) {
 						newValues.add(value);
