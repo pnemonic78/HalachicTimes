@@ -21,10 +21,11 @@ package net.sf.times;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
@@ -46,7 +47,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 
 	private List<LocationItem> mObjects = new ArrayList<LocationItem>();
 	private List<LocationItem> mOriginalValues;
-	private Comparator<LocationItem> mComparator;
+	private LocationComparator mComparator;
 	private LocationsFilter mFilter;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
@@ -151,10 +152,16 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		if (mComparator == null) {
 			mComparator = new LocationComparator();
 		}
+		// Remove duplicate locations.
+		Set<LocationItem> items = new TreeSet<LocationItem>(mComparator);
 		if (mOriginalValues != null) {
-			Collections.sort(mOriginalValues, mComparator);
+			items.addAll(mOriginalValues);
+			mOriginalValues.clear();
+			mOriginalValues.addAll(items);
 		} else {
-			Collections.sort(mObjects, mComparator);
+			items.addAll(mObjects);
+			mObjects.clear();
+			mObjects.addAll(items);
 		}
 		notifyDataSetChanged();
 	}
@@ -409,28 +416,40 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		@SuppressLint("DefaultLocale")
 		@Override
 		public int compare(LocationItem item1, LocationItem item2) {
-			String format1 = item1.getLabelLower();
-			String format2 = item2.getLabelLower();
-			int c = mCollator.compare(format1, format2);
-			if (c != 0)
-				return c;
 			ZmanimAddress addr1 = item1.getAddress();
 			ZmanimAddress addr2 = item2.getAddress();
 			double lat1 = addr1.getLatitude();
 			double lat2 = addr2.getLatitude();
 			double latD = lat1 - lat2;
+			double lng1 = addr1.getLongitude();
+			double lng2 = addr2.getLongitude();
+			double lngD = lng1 - lng2;
+
+			// Is same location?
+			if ((latD > -EPSILON) && (latD < EPSILON) && (lngD > -EPSILON) && (lngD < EPSILON))
+				return 0;
+
+			// Sort first by name.
+			String format1 = item1.getLabelLower();
+			String format2 = item2.getLabelLower();
+			int c = mCollator.compare(format1, format2);
+			if (c != 0)
+				return c;
+
+			// Then sort by location.
 			if (latD >= EPSILON)
 				return 1;
 			if (latD <= -EPSILON)
 				return -1;
-			double lng1 = addr1.getLongitude();
-			double lng2 = addr2.getLongitude();
-			double lngD = lng1 - lng2;
 			if (lngD >= EPSILON)
 				return 1;
 			if (lngD < -EPSILON)
 				return -1;
-			return 0;
+
+			// Then sort by id. Negative id is more important.
+			long id1 = addr1.getId();
+			long id2 = addr2.getId();
+			return (id1 < id2 ? 1 : (id1 == id2 ? 0 : 1));
 		}
 	}
 }

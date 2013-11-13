@@ -206,6 +206,12 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 		String format1 = this.getFormatted();
 		String format2 = that.getFormatted();
-		return format1.compareToIgnoreCase(format2);
+		int c = format1.compareToIgnoreCase(format2);
+		if (c != 0)
+			return c;
+
+		long id1 = this.getId();
+		long id2 = that.getId();
+		return (id1 < id2 ? 1 : (id1 == id2 ? 0 : 1));
 	}
 }
