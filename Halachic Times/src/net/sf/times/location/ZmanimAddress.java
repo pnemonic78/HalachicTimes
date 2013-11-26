@@ -212,6 +212,6 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 		long id1 = this.getId();
 		long id2 = that.getId();
-		return (id1 < id2 ? 1 : (id1 == id2 ? 0 : 1));
+		return (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
 	}
 }

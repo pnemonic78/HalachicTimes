@@ -220,12 +220,23 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
 		if (mSwitcher != null) {
 			Animation inAnim = AnimationUtils.makeInAnimation(this, false);
-			inAnim.setDuration(500);
+			inAnim.setDuration(400);
 			mSwitcher.setInAnimation(inAnim);
 			Animation outAnim = AnimationUtils.makeOutAnimation(this, true);
-			outAnim.setDuration(500);
+			outAnim.setDuration(400);
 			mSwitcher.setOutAnimation(outAnim);
 		}
+
+		mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f);
+		mSlideRightToLeft.setDuration(400);
+		mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f);
+		mSlideLeftToRight.setDuration(400);
+		mDetailsGrow = new LayoutWeightAnimation(mDetailsFragment, 0f, 2f);
+		mDetailsGrow.setDuration(500);
+		mDetailsShrink = new LayoutWeightAnimation(mDetailsFragment, 2f, 0f);
+		mDetailsShrink.setDuration(500);
 	}
 
 	/** Initialise the location providers. */
@@ -474,20 +485,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	protected void hideDetails() {
-		// mDetailsFragment.setVisibility(View.GONE);
-		if (mDetailsShrink == null) {
-			mDetailsShrink = new LayoutWeightAnimation(mDetailsFragment, 2f, 0f);
-			mDetailsShrink.setDuration(500);
-		}
 		mDetailsFragment.startAnimation(mDetailsShrink);
 	}
 
 	protected void showDetails() {
-		// mDetailsFragment.setVisibility(View.VISIBLE);
-		if (mDetailsGrow == null) {
-			mDetailsGrow = new LayoutWeightAnimation(mDetailsFragment, 0f, 2f);
-			mDetailsGrow.setDuration(500);
-		}
 		mDetailsFragment.startAnimation(mDetailsGrow);
 	}
 
@@ -608,11 +609,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 *            the view to animate.
 	 */
 	protected void slideLeft(View view) {
-		if (mSlideRightToLeft == null) {
-			mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-					Animation.RELATIVE_TO_SELF, 0.0f);
-			mSlideRightToLeft.setDuration(500);
-		}
 		view.startAnimation(mSlideRightToLeft);
 	}
 
@@ -623,11 +619,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 *            the view to animate.
 	 */
 	protected void slideRight(View view) {
-		if (mSlideLeftToRight == null) {
-			mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-					Animation.RELATIVE_TO_SELF, 0.0f);
-			mSlideLeftToRight.setDuration(500);
-		}
 		view.startAnimation(mSlideLeftToRight);
 	}
 }
