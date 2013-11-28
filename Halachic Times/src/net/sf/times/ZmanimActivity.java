@@ -24,6 +24,7 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
+import net.sf.times.location.AddressService;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.view.animation.LayoutWeightAnimation;
@@ -34,9 +35,11 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
@@ -120,12 +123,23 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private Animation mDetailsGrow;
 	/** Shrink details animation. */
 	private Animation mDetailsShrink;
+	/** The address receiver. */
+	private final BroadcastReceiver mAddressReceiver;
 
 	/**
 	 * Creates a new activity.
 	 */
 	public ZmanimActivity() {
 		mHandler = new Handler();
+
+		mAddressReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Location loc = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
+				ZmanimAddress a = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
+				onFindAddress(null, loc, a);
+			}
+		};
 	}
 
 	@Override
@@ -187,6 +201,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	protected void onDestroy() {
 		mLocations.cancel(this);
+		unregisterReceiver(mAddressReceiver);
 		super.onDestroy();
 	}
 
@@ -195,7 +210,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		super.onPause();
 		if (mReminder != null)
 			mReminder.remind(mSettings);
-		SQLiteDatabase.releaseMemory();
 	}
 
 	/** Initialise. */
@@ -245,6 +259,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mLocations = app.getLocations();
 		mLocations.addLocationListener(this);
 		mLocaleRTL = ZmanimLocations.isLocaleRTL();
+
+		IntentFilter filter = new IntentFilter(AddressService.ADDRESS_ACTION);
+		registerReceiver(mAddressReceiver, filter);
 	}
 
 	/**
@@ -276,8 +293,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
-		ZmanimApplication app = (ZmanimApplication) getApplication();
-		app.getFinder().find(location, this);
+		Intent find = new Intent(this, AddressService.class);
+		find.putExtra(AddressService.PARAMETER_LOCATION, location);
+		startService(find);
 		populateHeader();
 		mMasterFragment.populateTimes(mDate);
 		mDetailsFragment.populateTimes(mDate);
@@ -394,7 +412,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public void onFindAddress(AddressProvider provider, Location location, Address address) {
 		ZmanimAddress zaddr = (ZmanimAddress) address;
 		mAddress = zaddr;
-		provider.insertAddress(location, zaddr);
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
 				@Override
@@ -407,7 +424,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	/**
-	 * Format the address for the current location or time zone.
+	 * Format the address for the current location.
 	 * 
 	 * @return the formatted address.
 	 */

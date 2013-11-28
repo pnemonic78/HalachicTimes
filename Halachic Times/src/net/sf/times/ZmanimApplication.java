@@ -20,9 +20,9 @@
 package net.sf.times;
 
 import net.sf.times.location.AddressProvider;
-import net.sf.times.location.FindAddress;
 import net.sf.times.location.ZmanimLocations;
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Zmanim application.
@@ -31,8 +31,6 @@ import android.app.Application;
  */
 public class ZmanimApplication extends Application {
 
-	/** The finder instance. */
-	private FindAddress mFinder;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
 	/** Provider for addresses. */
@@ -43,29 +41,6 @@ public class ZmanimApplication extends Application {
 	 */
 	public ZmanimApplication() {
 		super();
-	}
-
-	/**
-	 * Get the address finder instance.
-	 * 
-	 * @return the address finder.
-	 */
-	public FindAddress getFinder() {
-		if (mFinder == null) {
-			FindAddress finder = new FindAddress(this, getAddresses());
-			finder.start();
-			mFinder = finder;
-		}
-		return mFinder;
-	}
-
-	@Override
-	public void onTerminate() {
-		if (mFinder != null) {
-			mFinder.cancel();
-			mFinder = null;
-		}
-		super.onTerminate();
 	}
 
 	/**
@@ -90,5 +65,11 @@ public class ZmanimApplication extends Application {
 			mAddressProvider = new AddressProvider(this);
 		}
 		return mAddressProvider;
+	}
+
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		SQLiteDatabase.releaseMemory();
 	}
 }

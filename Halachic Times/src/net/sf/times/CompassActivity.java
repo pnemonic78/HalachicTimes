@@ -19,13 +19,16 @@
  */
 package net.sf.times;
 
-import java.util.TimeZone;
-
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
+import net.sf.times.location.AddressService;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -75,12 +78,12 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	private final float[] mOrientation = new float[3];
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
-	/** The time zone. */
-	private TimeZone mTimeZone;
 	/** The address. */
 	private ZmanimAddress mAddress;
 	/** Populate the header in UI thread. */
 	private Runnable mPopulateHeader;
+	/** The address receiver. */
+	private final BroadcastReceiver mAddressReceiver;
 
 	/**
 	 * Constructs a new compass.
@@ -90,6 +93,15 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		mHoliest.setLatitude(HOLIEST_LATITUDE);
 		mHoliest.setLongitude(HOLIEST_LONGITUDE);
 		mHoliest.setAltitude(HOLIEST_ELEVATION);
+
+		mAddressReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Location loc = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
+				ZmanimAddress a = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
+				onFindAddress(null, loc, a);
+			}
+		};
 	}
 
 	@Override
@@ -105,12 +117,14 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		}
 
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		mTimeZone = TimeZone.getDefault();
 		mLocations = app.getLocations();
 		mLocations.addLocationListener(this);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+		IntentFilter filter = new IntentFilter(AddressService.ADDRESS_ACTION);
+		registerReceiver(mAddressReceiver, filter);
 	}
 
 	@Override
@@ -130,13 +144,15 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	@Override
 	protected void onDestroy() {
 		mLocations.cancel(this);
+		unregisterReceiver(mAddressReceiver);
 		super.onDestroy();
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
-		ZmanimApplication app = (ZmanimApplication) getApplication();
-		app.getFinder().find(location, this);
+		Intent find = new Intent(this, AddressService.class);
+		find.putExtra(AddressService.PARAMETER_LOCATION, location);
+		startService(find);
 		populateHeader();
 		mView.setHoliest(location.bearingTo(mHoliest));
 	}
@@ -194,15 +210,13 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	/**
-	 * Format the address for the current location or time zone.
+	 * Format the address for the current location.
 	 * 
 	 * @return the formatted address.
 	 */
 	private String formatAddress() {
 		if (mAddress != null)
 			return mAddress.getFormatted();
-		if (mTimeZone != null)
-			return mTimeZone.getDisplayName();
 		return getString(R.string.location_unknown);
 	}
 

@@ -23,6 +23,8 @@ import java.util.Locale;
 
 import android.location.Address;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 /**
@@ -214,4 +216,25 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 		long id2 = that.getId();
 		return (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
 	}
+
+	@Override
+	public void writeToParcel(Parcel parcel, int flags) {
+		super.writeToParcel(parcel, flags);
+		parcel.writeLong(mId);
+	}
+
+	public static final Parcelable.Creator<ZmanimAddress> CREATOR = new Parcelable.Creator<ZmanimAddress>() {
+		@Override
+		public ZmanimAddress createFromParcel(Parcel source) {
+			Address a = Address.CREATOR.createFromParcel(source);
+			ZmanimAddress za = new ZmanimAddress(a);
+			za.mId = source.readLong();
+			return za;
+		}
+
+		@Override
+		public ZmanimAddress[] newArray(int size) {
+			return new ZmanimAddress[size];
+		}
+	};
 }
