@@ -105,7 +105,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 		RelativeLayout host = (RelativeLayout) title.getParent();
 
 		mSeekBar = new SeekBar(getContext());
-		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
+		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		lp.alignWithParent = true;
 		lp.addRule(RelativeLayout.BELOW, android.R.id.summary);
 		host.addView(mSeekBar, lp);

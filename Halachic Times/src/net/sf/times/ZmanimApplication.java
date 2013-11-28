@@ -72,4 +72,12 @@ public class ZmanimApplication extends Application {
 		super.onLowMemory();
 		SQLiteDatabase.releaseMemory();
 	}
+
+	@Override
+	public void onTerminate() {
+		if (mAddressProvider != null) {
+			mAddressProvider.close();
+		}
+		super.onTerminate();
+	}
 }

@@ -94,10 +94,4 @@ public class AddressService extends IntentService implements OnFindAddressListen
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		mAddressProvider = app.getAddresses();
 	}
-
-	@Override
-	public void onDestroy() {
-		mAddressProvider.close();
-		super.onDestroy();
-	}
 }

@@ -19,8 +19,6 @@
  */
 package net.sf.times;
 
-import net.sf.times.location.AddressProvider;
-import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import net.sf.times.location.AddressService;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
@@ -33,7 +31,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -47,7 +44,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class CompassActivity extends Activity implements LocationListener, SensorEventListener, OnFindAddressListener {
+public class CompassActivity extends Activity implements LocationListener, SensorEventListener {
 
 	/** Latitude of the Holy of Holies, according to Google. */
 	private static final double HOLIEST_LATITUDE = 31.778122;
@@ -99,7 +96,7 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 			public void onReceive(Context context, Intent intent) {
 				Location loc = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
 				ZmanimAddress a = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
-				onFindAddress(null, loc, a);
+				onFindAddress(loc, a);
 			}
 		};
 	}
@@ -220,9 +217,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		return getString(R.string.location_unknown);
 	}
 
-	@Override
-	public void onFindAddress(AddressProvider provider, Location location, Address address) {
-		mAddress = (ZmanimAddress) address;
+	protected void onFindAddress(Location location, ZmanimAddress address) {
+		mAddress = address;
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
 				@Override

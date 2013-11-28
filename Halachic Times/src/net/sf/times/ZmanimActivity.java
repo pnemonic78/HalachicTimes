@@ -22,8 +22,6 @@ package net.sf.times;
 import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.AddressProvider;
-import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import net.sf.times.location.AddressService;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
@@ -40,7 +38,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -71,7 +68,7 @@ import android.widget.ViewSwitcher;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnFindAddressListener, OnClickListener, OnGestureListener {
+public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnClickListener, OnGestureListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -137,7 +134,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			public void onReceive(Context context, Intent intent) {
 				Location loc = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
 				ZmanimAddress a = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
-				onFindAddress(null, loc, a);
+				onFindAddress(loc, a);
 			}
 		};
 	}
@@ -408,10 +405,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mDetailsFragment.populateTimes(mDate);
 	}
 
-	@Override
-	public void onFindAddress(AddressProvider provider, Location location, Address address) {
-		ZmanimAddress zaddr = (ZmanimAddress) address;
-		mAddress = zaddr;
+	protected void onFindAddress(Location location, ZmanimAddress address) {
+		mAddress = address;
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
 				@Override
