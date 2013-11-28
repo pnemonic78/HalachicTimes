@@ -148,7 +148,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 
 	private static final int CHALAKIM_PER_MINUTE = 18;
 	private static final int CHALAKIM_PER_HOUR = 1080;
-	private static final int CHALAKIM_PER_DAY = 25920; // 24 * 1080
+	private static final long CHALAKIM_PER_DAY = 25920; // 24 * 1080
 	private static final long CHALAKIM_PER_MONTH = 765433; // (29 * 24 + 12) * 1080 + 793
 	/**
 	 * Days from the beginning of Sunday till molad BaHaRaD. Calculated as 1 day, 5 hours and 204 chalakim = (24 + 5) *
@@ -319,9 +319,8 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 		case 2:
 			if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
 				return 29;
-			} else {
-				return 28;
 			}
+			return 28;
 		case 4:
 		case 6:
 		case 9:
@@ -432,8 +431,8 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	 */
 	public static int getJewishCalendarElapsedDays(int year) {
 		long chalakimSince = getChalakimSinceMoladTohu(year, JewishDate.TISHREI);
-		int moladDay = (int) (chalakimSince / (long) CHALAKIM_PER_DAY);
-		int moladParts = (int) (chalakimSince - moladDay * (long) CHALAKIM_PER_DAY);
+		int moladDay = (int) (chalakimSince / CHALAKIM_PER_DAY);
+		int moladParts = (int) (chalakimSince - moladDay * CHALAKIM_PER_DAY);
 		// delay Rosh Hashana for the 4 dechiyos
 		return addDechiyos(year, moladDay, moladParts);
 	}
@@ -781,9 +780,8 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 				|| ((month == KISLEV) && isKislevShort(year)) || (month == TEVES)
 				|| ((month == ADAR) && !(isJewishLeapYear(year))) || (month == ADAR_II)) {
 			return 29;
-		} else {
-			return 30;
 		}
+		return 30;
 	}
 
 	/**
@@ -879,8 +877,8 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 	public JewishDate(long molad) {
 		absDateToDate(moladToAbsDate(molad));
 		// long chalakimSince = getChalakimSinceMoladTohu(year, JewishDate.TISHREI);// tishrei
-		int conjunctionDay = (int) (molad / (long) CHALAKIM_PER_DAY);
-		int conjunctionParts = (int) (molad - conjunctionDay * (long) CHALAKIM_PER_DAY);
+		int conjunctionDay = (int) (molad / CHALAKIM_PER_DAY);
+		int conjunctionParts = (int) (molad - conjunctionDay * CHALAKIM_PER_DAY);
 		setMoladTime(conjunctionParts);
 	}
 

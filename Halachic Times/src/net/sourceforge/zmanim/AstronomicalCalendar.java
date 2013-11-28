@@ -134,9 +134,8 @@ public class AstronomicalCalendar implements Cloneable {
 		double sunrise = getUTCSunrise(GEOMETRIC_ZENITH);
 		if (Double.isNaN(sunrise)) {
 			return null;
-		} else {
-			return getDateFromTime(sunrise);
 		}
+		return getDateFromTime(sunrise);
 	}
 
 	/**
@@ -156,9 +155,8 @@ public class AstronomicalCalendar implements Cloneable {
 		double sunrise = getUTCSeaLevelSunrise(GEOMETRIC_ZENITH);
 		if (Double.isNaN(sunrise)) {
 			return null;
-		} else {
-			return getDateFromTime(sunrise);
 		}
+		return getDateFromTime(sunrise);
 	}
 
 	/**
@@ -218,9 +216,8 @@ public class AstronomicalCalendar implements Cloneable {
 		double sunset = getUTCSunset(GEOMETRIC_ZENITH);
 		if (Double.isNaN(sunset)) {
 			return null;
-		} else {
-			return getAdjustedSunsetDate(getDateFromTime(sunset), getSunrise());
 		}
+		return getAdjustedSunsetDate(getDateFromTime(sunset), getSunrise());
 	}
 
 	/**
@@ -247,9 +244,8 @@ public class AstronomicalCalendar implements Cloneable {
 			clonedCalendar.setTime(sunset);
 			clonedCalendar.add(Calendar.DAY_OF_MONTH, 1);
 			return clonedCalendar.getTime();
-		} else {
-			return sunset;
 		}
+		return sunset;
 	}
 
 	/**
@@ -268,9 +264,8 @@ public class AstronomicalCalendar implements Cloneable {
 		double sunset = getUTCSeaLevelSunset(GEOMETRIC_ZENITH);
 		if (Double.isNaN(sunset)) {
 			return null;
-		} else {
-			return getAdjustedSunsetDate(getDateFromTime(sunset), getSeaLevelSunrise());
 		}
+		return getAdjustedSunsetDate(getDateFromTime(sunset), getSeaLevelSunrise());
 	}
 
 	/**
@@ -360,9 +355,8 @@ public class AstronomicalCalendar implements Cloneable {
 		double dawn = getUTCSunrise(offsetZenith);
 		if (Double.isNaN(dawn)) {
 			return null;
-		} else {
-			return getDateFromTime(dawn);
 		}
+		return getDateFromTime(dawn);
 	}
 
 	/**
@@ -383,9 +377,8 @@ public class AstronomicalCalendar implements Cloneable {
 		double sunset = getUTCSunset(offsetZenith);
 		if (Double.isNaN(sunset)) {
 			return null;
-		} else {
-			return getAdjustedSunsetDate(getDateFromTime(sunset), getSunriseOffsetByDegrees(offsetZenith));
 		}
+		return getAdjustedSunsetDate(getDateFromTime(sunset), getSunriseOffsetByDegrees(offsetZenith));
 	}
 
 	/**

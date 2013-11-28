@@ -235,10 +235,8 @@ public class ZmanimFormatter {
 		this.dateFormat.setCalendar(calendar);
 		if (this.dateFormat.toPattern().equals("yyyy-MM-dd'T'HH:mm:ss")) {
 			return getXSDateTime(dateTime, calendar);
-		} else {
-			return this.dateFormat.format(dateTime);
 		}
-
+		return this.dateFormat.format(dateTime);
 	}
 
 	/**
@@ -438,14 +436,14 @@ public class ZmanimFormatter {
 		Collections.sort(dateList, Zman.DATE_ORDER);
 
 		for (int i = 0; i < dateList.size(); i++) {
-			zman = (Zman) dateList.get(i);
+			zman = dateList.get(i);
 			sb.append("\t<").append(zman.getZmanLabel()).append(">");
 			sb.append(formatter.formatDateTime(zman.getZman(), ac.getCalendar()));
 			sb.append("</").append(zman.getZmanLabel()).append(">\n");
 		}
 		Collections.sort(durationList, Zman.DURATION_ORDER);
 		for (int i = 0; i < durationList.size(); i++) {
-			zman = (Zman) durationList.get(i);
+			zman = durationList.get(i);
 			sb.append("\t<" + zman.getZmanLabel()).append(">");
 			sb.append(formatter.format((int) zman.getDuration())).append("</").append(zman.getZmanLabel())
 					.append(">\n");

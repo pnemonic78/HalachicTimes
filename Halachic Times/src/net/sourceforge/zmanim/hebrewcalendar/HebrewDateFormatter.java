@@ -191,10 +191,10 @@ public class HebrewDateFormatter {
 		String formattedRoshChodesh = "";
 		int month = jewishCalendar.getJewishMonth();
 		if (jewishCalendar.getJewishDayOfMonth() == 30) {
-			if (month < JewishCalendar.ADAR || (month == JewishCalendar.ADAR && jewishCalendar.isJewishLeapYear())) {
+			if (month < JewishDate.ADAR || (month == JewishDate.ADAR && jewishCalendar.isJewishLeapYear())) {
 				month++;
 			} else { // roll to Nissan
-				month = JewishCalendar.NISSAN;
+				month = JewishDate.NISSAN;
 			}
 		}
 
@@ -398,10 +398,9 @@ public class HebrewDateFormatter {
 			sb.append(longWeekFormat ? hebrewDaysOfWeek[jewishDate.getDayOfWeek() - 1] : formatHebrewNumber(jewishDate
 					.getDayOfWeek()));
 			return sb.toString();
-		} else {
-			return jewishDate.getDayOfWeek() == 7 ? getTransliteratedShabbosDayOfWeek() : new SimpleDateFormat("EEEE")
-					.format(jewishDate.getTime());
 		}
+		return jewishDate.getDayOfWeek() == 7 ? getTransliteratedShabbosDayOfWeek() : new SimpleDateFormat("EEEE")
+				.format(jewishDate.getTime());
 	}
 
 	/**
@@ -503,9 +502,8 @@ public class HebrewDateFormatter {
 		if (isHebrewFormat()) {
 			return formatHebrewNumber(jewishDate.getJewishDayOfMonth()) + " " + formatMonth(jewishDate) + " "
 					+ formatHebrewNumber(jewishDate.getJewishYear());
-		} else {
-			return jewishDate.getJewishDayOfMonth() + " " + formatMonth(jewishDate) + ", " + jewishDate.getJewishYear();
 		}
+		return jewishDate.getJewishDayOfMonth() + " " + formatMonth(jewishDate) + ", " + jewishDate.getJewishYear();
 	}
 
 	/**
@@ -530,13 +528,11 @@ public class HebrewDateFormatter {
 			} else {
 				return hebrewMonths[month - 1];
 			}
-		} else {
-			if (jewishDate.isJewishLeapYear() && month == JewishDate.ADAR) {
-				return transliteratedMonths[13]; // return Adar I, not Adar in a leap year
-			} else {
-				return transliteratedMonths[month - 1];
-			}
 		}
+		if (jewishDate.isJewishLeapYear() && month == JewishDate.ADAR) {
+			return transliteratedMonths[13]; // return Adar I, not Adar in a leap year
+		}
+		return transliteratedMonths[month - 1];
 	}
 
 	/**
@@ -558,13 +554,11 @@ public class HebrewDateFormatter {
 		}
 		if (hebrewFormat) {
 			return formatHebrewNumber(omer) + " " + hebrewOmerPrefix + "\u05E2\u05D5\u05DE\u05E8";
-		} else {
-			if (omer == 33) { // if lag b'omer
-				return "Lag BaOmer";
-			} else {
-				return "Omer " + omer;
-			}
 		}
+		if (omer == 33) { // if lag b'omer
+			return "Lag BaOmer";
+		}
+		return "Omer " + omer;
 	}
 
 	/**
@@ -624,9 +618,8 @@ public class HebrewDateFormatter {
 	public String formatDafYomiBavli(Daf daf) {
 		if (hebrewFormat) {
 			return daf.getMasechta() + " " + formatHebrewNumber(daf.getDaf());
-		} else {
-			return daf.getMasechtaTransliterated() + " " + daf.getDaf();
 		}
+		return daf.getMasechtaTransliterated() + " " + daf.getDaf();
 	}
 
 	/**

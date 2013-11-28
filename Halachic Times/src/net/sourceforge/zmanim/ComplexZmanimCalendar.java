@@ -1378,10 +1378,9 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	public Date getMinchaGedolaGreaterThan30() {
 		if (getMinchaGedola30Minutes() == null || getMinchaGedola() == null) {
 			return null;
-		} else {
-			return getMinchaGedola30Minutes().compareTo(getMinchaGedola()) > 0 ? getMinchaGedola30Minutes()
-					: getMinchaGedola();
 		}
+		return getMinchaGedola30Minutes().compareTo(getMinchaGedola()) > 0 ? getMinchaGedola30Minutes()
+				: getMinchaGedola();
 	}
 
 	/**
@@ -2343,9 +2342,8 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 				&& sofZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == getCalendar().get(Calendar.DAY_OF_MONTH)) {
 			if (sofZmanKidushLevana.after(alos) && sofZmanKidushLevana.before(tzais)) {
 				return alos;
-			} else {
-				return sofZmanKidushLevana;
 			}
+			return sofZmanKidushLevana;
 		}
 		return null;
 	}
@@ -2405,9 +2403,8 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 				&& sofZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == getCalendar().get(Calendar.DAY_OF_MONTH)) {
 			if (sofZmanKidushLevana.after(alos) && sofZmanKidushLevana.before(tzais)) {
 				return alos;
-			} else {
-				return sofZmanKidushLevana;
 			}
+			return sofZmanKidushLevana;
 		}
 		return null;
 	}
@@ -2467,9 +2464,8 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 						Calendar.DAY_OF_MONTH)) {
 			if (tchilasZmanKidushLevana.after(alos) && tchilasZmanKidushLevana.before(tzais)) {
 				return tzais;
-			} else {
-				return tchilasZmanKidushLevana;
 			}
+			return tchilasZmanKidushLevana;
 		}
 		return null;
 	}
@@ -2522,9 +2518,8 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 						Calendar.DAY_OF_MONTH)) {
 			if (tchilasZmanKidushLevana.after(alos) && tchilasZmanKidushLevana.before(tzais)) {
 				return tzais;
-			} else {
-				return tchilasZmanKidushLevana;
 			}
+			return tchilasZmanKidushLevana;
 		}
 		return null;
 	}
