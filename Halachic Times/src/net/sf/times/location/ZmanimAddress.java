@@ -221,6 +221,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	public void writeToParcel(Parcel parcel, int flags) {
 		super.writeToParcel(parcel, flags);
 		parcel.writeLong(mId);
+		parcel.writeString(mFormatted);
 	}
 
 	public static final Parcelable.Creator<ZmanimAddress> CREATOR = new Parcelable.Creator<ZmanimAddress>() {
@@ -229,6 +230,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 			Address a = Address.CREATOR.createFromParcel(source);
 			ZmanimAddress za = new ZmanimAddress(a);
 			za.mId = source.readLong();
+			za.mFormatted = source.readString();
 			return za;
 		}
 

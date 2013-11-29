@@ -76,11 +76,11 @@ public class AddressService extends IntentService implements OnFindAddressListen
 
 	@Override
 	public void onFindAddress(AddressProvider provider, Location location, Address address) {
-		if (address == null)
-			return;
-		ZmanimAddress addr = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address) : new ZmanimAddress(address);
-
-		provider.insertAddress(location, addr);
+		ZmanimAddress addr = null;
+		if (address != null) {
+			addr = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address) : new ZmanimAddress(address);
+			provider.insertAddress(location, addr);
+		}
 
 		Intent result = new Intent(ADDRESS_ACTION);
 		result.putExtra(PARAMETER_LOCATION, location);

@@ -132,9 +132,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mAddressReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				Location loc = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
-				ZmanimAddress a = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
-				onFindAddress(loc, a);
+				Location location = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
+				ZmanimAddress address = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
+				onFindAddress(location, address);
 			}
 		};
 	}
