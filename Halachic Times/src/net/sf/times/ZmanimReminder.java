@@ -119,10 +119,11 @@ public class ZmanimReminder extends BroadcastReceiver {
 		final long was = now - WAS_DELTA;
 		final long soon = now + SOON_DELTA;
 		ZmanimItem item;
+		ZmanimItem itemFirst = null;
 		long before;
 		long when;
+		long whenFirst = Long.MAX_VALUE;
 		boolean needToday = true;
-		boolean needTodayLater = true;
 		boolean needTomorrow = true;
 		boolean needWeek = true;
 		int id;
@@ -140,17 +141,20 @@ public class ZmanimReminder extends BroadcastReceiver {
 					settings.setLatestReminder(now);
 					needToday = false;
 				}
-				if (needTodayLater && (now < when)) {
-					String whenFormat = formatDateTime(when);
-					String timeFormat = formatDateTime(item.time);
-					Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
-
-					notifyFuture(when);
-					needTodayLater = false;
-					needTomorrow = false;
-					needWeek = false;
+				if ((now < when) && (when < whenFirst)) {
+					itemFirst = item;
+					whenFirst = when;
 				}
 			}
+		}
+		if (itemFirst != null) {
+			String whenFormat = formatDateTime(whenFirst);
+			String timeFormat = formatDateTime(itemFirst.time);
+			Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
+
+			notifyFuture(whenFirst);
+			needTomorrow = false;
+			needWeek = false;
 		}
 
 		ComplexZmanimCalendar zcal = adapter.getCalendar();
@@ -160,6 +164,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 			cal.add(Calendar.DAY_OF_MONTH, 1);
 			adapter.clear();
 			adapter.populate(false);
+			itemFirst = null;
+			whenFirst = Long.MAX_VALUE;
 
 			count = adapter.getCount();
 			for (int i = 0; i < count; i++) {
@@ -173,16 +179,19 @@ public class ZmanimReminder extends BroadcastReceiver {
 						settings.setLatestReminder(now);
 						needToday = false;
 					}
-					if (now < when) {
-						String whenFormat = formatDateTime(when);
-						String timeFormat = formatDateTime(item.time);
-						Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
-
-						notifyFuture(when);
-						needWeek = false;
-						break;
+					if ((now < when) && (when < whenFirst)) {
+						itemFirst = item;
+						whenFirst = when;
 					}
 				}
+			}
+			if (itemFirst != null) {
+				String whenFormat = formatDateTime(whenFirst);
+				String timeFormat = formatDateTime(itemFirst.time);
+				Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
+
+				notifyFuture(whenFirst);
+				needWeek = false;
 			}
 		}
 
@@ -199,6 +208,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 				cal.add(Calendar.DAY_OF_MONTH, 1);
 				adapter.populate(false);
 			}
+			itemFirst = null;
+			whenFirst = Long.MAX_VALUE;
 
 			count = adapter.getCount();
 			for (int i = 0; i < count; i++) {
@@ -211,15 +222,18 @@ public class ZmanimReminder extends BroadcastReceiver {
 				before = settings.getReminder(id);
 				if (before >= 0L) {
 					when = item.time - before;
-					if (now < when) {
-						String whenFormat = formatDateTime(when);
-						String timeFormat = formatDateTime(item.time);
-						Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
-
-						notifyFuture(when);
-						break;
+					if ((now < when) && (when < whenFirst)) {
+						itemFirst = item;
+						whenFirst = when;
 					}
 				}
+			}
+			if (itemFirst != null) {
+				String whenFormat = formatDateTime(whenFirst);
+				String timeFormat = formatDateTime(itemFirst.time);
+				Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
+
+				notifyFuture(whenFirst);
 			}
 		}
 	}
