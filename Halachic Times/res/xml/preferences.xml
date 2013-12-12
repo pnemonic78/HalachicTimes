@@ -210,7 +210,7 @@
                 android:title="@string/reminder"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/candles">
-            <net.sf.times.preference.SeekBarPreference
+            <net.sf.preference.SeekBarPreference
                 android:defaultValue="22"
                 android:dialogIcon="@android:drawable/ic_dialog_info"
                 android:icon="@drawable/ic_opinion"

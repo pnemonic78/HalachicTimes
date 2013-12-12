@@ -21,12 +21,13 @@ package net.sf.times;
 
 import java.util.Locale;
 
-import net.sf.times.preference.SeekBarPreference;
+import net.sf.preference.SeekBarPreference;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 
 /**
  * Application preferences.
@@ -51,6 +52,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		addPreferencesFromResource(R.xml.preferences);
 
 		mCandles = (SeekBarPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);

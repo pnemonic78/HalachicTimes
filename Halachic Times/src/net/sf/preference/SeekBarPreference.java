@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times.preference;
+package net.sf.preference;
 
 import java.util.Timer;
 import java.util.TimerTask;
