@@ -541,12 +541,22 @@ public class GoogleGeocoder {
 					mAddressType = s;
 				break;
 			case LATITUDE:
-				if (mAddress != null)
-					mAddress.setLatitude(Double.parseDouble(s));
+				if (mAddress != null) {
+					try {
+						mAddress.setLatitude(Double.parseDouble(s));
+					} catch (NumberFormatException nfe) {
+						throw new SAXException(nfe);
+					}
+				}
 				break;
 			case LONGITUDE:
-				if (mAddress != null)
-					mAddress.setLongitude(Double.parseDouble(s));
+				if (mAddress != null) {
+					try {
+						mAddress.setLongitude(Double.parseDouble(s));
+					} catch (NumberFormatException nfe) {
+						throw new SAXException(nfe);
+					}
+				}
 				break;
 			case FINISH:
 				return;
