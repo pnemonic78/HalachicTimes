@@ -20,8 +20,8 @@
 package net.sf.times;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.RectF;
@@ -43,6 +43,7 @@ public class CompassView extends View {
 	private float mHoliest;
 
 	private Paint mPaintCircle;
+	private Paint mPaintFrame;
 	private Paint mPaintNorth;
 	private Paint mPaintEast;
 	private Paint mPaintSouth;
@@ -50,6 +51,7 @@ public class CompassView extends View {
 	private Paint mPaintNE;
 	private Paint mPaintHoliest;
 	private Paint mPaintFill;
+	private final RectF mRectCompass = new RectF();
 	private final RectF mRectFill = new RectF();
 
 	private String mLabelNorth;
@@ -98,42 +100,48 @@ public class CompassView extends View {
 
 	/** Initialise. */
 	private void init(Context context) {
+		Resources res = getResources();
+
 		mLabelNorth = context.getString(R.string.north);
 		mLabelEast = context.getString(R.string.east);
 		mLabelSouth = context.getString(R.string.south);
 		mLabelWest = context.getString(R.string.west);
 
 		mPaintCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaintCircle.setStyle(Paint.Style.STROKE);
-		mPaintCircle.setStrokeWidth(CIRCLE_THICKNESS);
-		mPaintCircle.setColor(Color.WHITE);
+		mPaintCircle.setStyle(Paint.Style.FILL);
+		mPaintCircle.setColor(res.getColor(R.color.compass));
+
+		mPaintFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaintFrame.setStyle(Paint.Style.STROKE);
+		mPaintFrame.setStrokeWidth(CIRCLE_THICKNESS);
+		mPaintFrame.setColor(res.getColor(R.color.compass_frame));
 
 		mPaintNorth = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 		mPaintNorth.setStyle(Paint.Style.FILL_AND_STROKE);
 		mPaintNorth.setStrokeWidth(4);
 		mPaintNorth.setTextSize(18);
 		mPaintNorth.setTextAlign(Align.CENTER);
-		mPaintNorth.setColor(Color.RED);
+		mPaintNorth.setColor(res.getColor(R.color.compass_north));
 
 		mPaintSouth = new TextPaint(mPaintNorth);
 		mPaintSouth.setStrokeWidth(1);
-		mPaintSouth.setColor(Color.BLUE);
+		mPaintSouth.setColor(res.getColor(R.color.compass_south));
 
 		mPaintEast = new TextPaint(mPaintSouth);
-		mPaintEast.setColor(Color.WHITE);
+		mPaintEast.setColor(res.getColor(R.color.compass_label));
 
 		mPaintWest = new TextPaint(mPaintEast);
 
 		mPaintNE = new Paint(mPaintEast);
-		mPaintNE.setColor(Color.DKGRAY);
+		mPaintNE.setColor(res.getColor(R.color.compass_label2));
 
 		mPaintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintHoliest.setStyle(Paint.Style.STROKE);
 		mPaintHoliest.setStrokeWidth(6);
-		mPaintHoliest.setColor(context.getResources().getColor(R.color.compass_arrow));
+		mPaintHoliest.setColor(res.getColor(R.color.compass_arrow));
 
 		mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaintFill.setColor(Color.GRAY);
+		mPaintFill.setColor(res.getColor(R.color.compass_arrow_bg));
 		mPaintFill.setStyle(Paint.Style.STROKE);
 		mPaintFill.setStrokeCap(Paint.Cap.BUTT);
 
@@ -163,6 +171,12 @@ public class CompassView extends View {
 		mPaintEast.setTextSize(sizeDirections);
 		mPaintSouth.setTextSize(sizeDirections);
 		mPaintWest.setTextSize(sizeDirections);
+
+		mRectCompass.left = w2 - r;
+		mRectCompass.top = h2 - r;
+		mRectCompass.right = w2 + r;
+		mRectCompass.bottom = h2 + r;
+		canvas.drawArc(mRectCompass, 0, 360, true, mPaintCircle);
 
 		mRectFill.left = w2 - r5;
 		mRectFill.top = h2 - r5;
@@ -205,7 +219,7 @@ public class CompassView extends View {
 		canvas.rotate(45 + mHoliest, w2, h2);
 		canvas.drawLine(w2, h2, w2, h2 - r, mPaintHoliest);
 
-		canvas.drawCircle(w2, h2, r, mPaintCircle);
+		canvas.drawCircle(w2, h2, r, mPaintFrame);
 	}
 
 	/**

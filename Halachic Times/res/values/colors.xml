@@ -8,6 +8,13 @@
     <color name="candles">#ccffff00</color>
     <color name="widget_box">#80000000</color>
     <color name="widget_border">#10ffffff</color>
+    <color name="compass">#ffffff</color>
+    <color name="compass_frame">#ffff00</color>
+    <color name="compass_label">#000000</color>
+    <color name="compass_label2">#808080</color>
+    <color name="compass_north">#ff0000</color>
+    <color name="compass_south">#0000ff</color>
     <color name="compass_arrow">#ff00ff</color>
+    <color name="compass_arrow_bg">#80ff00ff</color>
 
 </resources>
