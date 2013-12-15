@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="sunrise">#40D99058</color>
-    <color name="midday">#8087CEEB</color>
+    <color name="dawn">#90fbf2db</color>
+    <color name="tallis">#60eac599</color>
+    <color name="sunrise">#60d99058</color>
+    <color name="shema">#60B9A78F</color>
+    <color name="prayers">#60A8B4AE</color>
+    <color name="midday">#8087ceeb</color>
+    <color name="earliest_mincha">#808EC4DB</color>
+    <color name="mincha">#80B68D84</color>
+    <color name="plug_hamincha">#80C7765F</color>
+    <color name="sunset">#80d9603b</color>
+    <color name="twilight">#409966cc</color>
+    <color name="nightfall">#80200020</color>
     <color name="midnight">#40000000</color>
+
+    <!-- Widget applet. -->
     <color name="bright">#10ffffff</color>
     <color name="candles">#ccffff00</color>
     <color name="widget_box">#80000000</color>
     <color name="widget_border">#10ffffff</color>
+
+    <!-- Compass. -->
     <color name="compass">#ffffff</color>
-    <color name="compass_frame">#ffff00</color>
+    <color name="compass_frame">#cc9933</color>
     <color name="compass_label">#000000</color>
     <color name="compass_label2">#808080</color>
     <color name="compass_north">#ff0000</color>

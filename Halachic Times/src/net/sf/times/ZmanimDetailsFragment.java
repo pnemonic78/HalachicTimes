@@ -26,6 +26,8 @@ import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -98,16 +100,52 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	 * @param id
 	 *            the time id.
 	 */
+	@SuppressWarnings("deprecation")
 	public void populateTimes(Calendar date, int id) {
 		mMasterId = id;
+
+		if (mSettings.isBackgroundGradient()) {
+			Resources res = getResources();
+
+			if (id == R.string.dawn) {
+				setBackgroundColor(res.getColor(R.color.dawn));
+			} else if (id == R.string.tallis) {
+				setBackgroundColor(res.getColor(R.color.tallis));
+			} else if (id == R.string.sunrise) {
+				setBackgroundColor(res.getColor(R.color.sunrise));
+			} else if (id == R.string.shema) {
+				setBackgroundColor(res.getColor(R.color.shema));
+			} else if (id == R.string.prayers) {
+				setBackgroundColor(res.getColor(R.color.prayers));
+			} else if (id == R.string.midday) {
+				setBackgroundColor(res.getColor(R.color.midday));
+			} else if (id == R.string.earliest_mincha) {
+				setBackgroundColor(res.getColor(R.color.earliest_mincha));
+			} else if (id == R.string.mincha) {
+				setBackgroundColor(res.getColor(R.color.mincha));
+			} else if (id == R.string.plug_hamincha) {
+				setBackgroundColor(res.getColor(R.color.plug_hamincha));
+			} else if (id == R.string.sunset) {
+				setBackgroundColor(res.getColor(R.color.sunset));
+			} else if (id == R.string.twilight) {
+				setBackgroundColor(res.getColor(R.color.twilight));
+			} else if (id == R.string.nightfall) {
+				setBackgroundColor(res.getColor(R.color.nightfall));
+			} else if (id == R.string.midnight) {
+				setBackgroundColor(res.getColor(R.color.midnight));
+			} else {
+				setBackgroundDrawable(null);
+			}
+		} else {
+			setBackgroundDrawable(null);
+		}
 
 		super.populateTimes(date);
 	}
 
 	@Override
-	protected boolean isBackgroundDrawable() {
-		// No special background.
-		return false;
+	protected Drawable getListBackground() {
+		return null;
 	}
 
 	@Override

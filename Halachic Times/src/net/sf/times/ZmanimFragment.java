@@ -164,24 +164,22 @@ public class ZmanimFragment extends FrameLayout {
 		ViewGroup list = mList;
 		if (list == null)
 			return;
-		if (isBackgroundDrawable()) {
-			if (mSettings.isBackgroundGradient()) {
-				if (mBackground == null)
-					mBackground = getResources().getDrawable(R.drawable.list_gradient);
-				list.setBackgroundDrawable(mBackground);
-			} else
-				list.setBackgroundDrawable(null);
-		}
+		list.setBackgroundDrawable(getListBackground());
 		bindViews(list, adapter);
 	}
 
 	/**
-	 * Is the list background painted?
+	 * Get the list background.
 	 * 
-	 * @return {@code true} for non-transparent background.
+	 * @return the background - {@code null} otherwise.
 	 */
-	protected boolean isBackgroundDrawable() {
-		return true;
+	protected Drawable getListBackground() {
+		if (mSettings.isBackgroundGradient()) {
+			if (mBackground == null)
+				mBackground = getResources().getDrawable(R.drawable.list_gradient);
+			return mBackground;
+		}
+		return null;
 	}
 
 	/**
