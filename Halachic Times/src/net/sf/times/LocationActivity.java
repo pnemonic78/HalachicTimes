@@ -194,7 +194,7 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 			Location loc = null;
 			if (!TextUtils.isEmpty(text)) {
 				String textStr = text.toString();
-				String[] tokens = textStr.split(",;");
+				String[] tokens = textStr.split("[,;]");
 				if (tokens.length >= 2) {
 					try {
 						double latitude = Location.convert(tokens[0]);
