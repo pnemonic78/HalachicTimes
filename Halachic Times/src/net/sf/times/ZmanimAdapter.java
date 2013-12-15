@@ -50,7 +50,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected static final long TWELVE_HOURS = DateUtils.DAY_IN_MILLIS >> 1;
 
 	/** Holiday id for Shabbath. */
-	private static final int SHABBATH = 100;
+	public static final int SHABBATH = 100;
 
 	/** No candles to light. */
 	private static final int CANDLES_NONE = 0;
@@ -58,7 +58,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final int CANDLES_SHABBATH = 2;
 	/** Number of candles to light for a festival. */
 	private static final int CANDLES_FESTIVAL = 2;
-	/** Number of candles to light for Yom Kippur. */
+	/** Number of candles to light for Yom Kippurim. */
 	private static final int CANDLES_YOM_KIPPUR = 1;
 
 	/** Flag indicating lighting times before sunset. */
@@ -119,6 +119,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected final boolean mElapsed;
 	protected final int mCandlesOffset;
 	private Comparator<ZmanimItem> mComparator;
+	protected int mCandles;
 
 	/**
 	 * Time row item.
@@ -368,6 +369,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int candlesHow = candles & MOTZE_MASK;
 		int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
 		int holidayToday = (candles >> 12) & HOLIDAY_MASK;
+		mCandles = candles;
 
 		Date date;
 		int summary;
@@ -897,7 +899,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            is in Israel?
 	 * @return the number of candles to light, the holiday, and when to light.
 	 */
-	private int getCandles(JewishCalendar jcal) {
+	protected int getCandles(JewishCalendar jcal) {
 		final int dayOfWeek = jcal.getDayOfWeek();
 
 		// Check if the following day is special, because we can't check
@@ -912,8 +914,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (dayOfWeek == Calendar.SATURDAY) {
 			flags = MOTZE_SHABBATH;
 		} else if (dayOfWeek == Calendar.FRIDAY) {
-			// Probably never happens that Yom Kippur falls on a Friday.
-			// Prohibited to light candles on Yom Kippur.
+			// Probably never happens that Yom Kippurim falls on a Friday.
+			// Prohibited to light candles on Yom Kippurim.
 			if (holidayToday == JewishCalendar.YOM_KIPPUR) {
 				return 0;
 			}
@@ -970,5 +972,27 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			mComparator = new ZmanimComparator();
 		}
 		sort(mComparator);
+	}
+
+	/**
+	 * Get the candles count.
+	 * 
+	 * @return the number of candles.
+	 */
+	public int getCandlesCount() {
+		return mCandles & CANDLES_MASK;
+	}
+
+	/**
+	 * Get the occasion for lighting candles.
+	 * 
+	 * @return the candles holiday.
+	 */
+	public int getCandlesHoliday() {
+		int candles = mCandles;
+		// int candlesHow = candles & MOTZE_MASK;
+		int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
+		// int holidayToday = (candles >> 12) & HOLIDAY_MASK;
+		return holidayTomorrow;
 	}
 }

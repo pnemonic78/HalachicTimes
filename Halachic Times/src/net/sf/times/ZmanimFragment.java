@@ -46,6 +46,8 @@ public class ZmanimFragment extends FrameLayout {
 	protected final Context mContext;
 	protected LayoutInflater mInflater;
 	private OnClickListener mOnClickListener;
+	/** The main list view. */
+	protected ViewGroup mView;
 	/** The list. */
 	protected ViewGroup mList;
 	/** Provider for locations. */
@@ -119,8 +121,9 @@ public class ZmanimFragment extends FrameLayout {
 		}
 
 		mInflater = LayoutInflater.from(context);
-		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times_list, this);
-		mList = (ViewGroup) view.findViewById(android.R.id.list);
+		mView = (ViewGroup) mInflater.inflate(R.layout.times_list, null);
+		addView(mView);
+		mList = (ViewGroup) mView.findViewById(android.R.id.list);
 	}
 
 	/**
@@ -150,22 +153,23 @@ public class ZmanimFragment extends FrameLayout {
 	 *            the date.
 	 */
 	@SuppressWarnings("deprecation")
-	public void populateTimes(Calendar date) {
+	public ZmanimAdapter populateTimes(Calendar date) {
 		// Called before attached to activity?
 		if (mLocations == null)
-			return;
+			return null;
 		ZmanimAdapter adapter = createAdapter(date, mLocations);
 		// Have we been destroyed?
 		if (adapter == null)
-			return;
+			return null;
 		adapter.populate(false);
 		mAdapter = adapter;
 
 		ViewGroup list = mList;
 		if (list == null)
-			return;
+			return adapter;
 		list.setBackgroundDrawable(getListBackground());
 		bindViews(list, adapter);
+		return adapter;
 	}
 
 	/**
@@ -227,7 +231,7 @@ public class ZmanimFragment extends FrameLayout {
 
 	protected void setOnClickListener(View view, ZmanimItem item) {
 		final int id = item.titleId;
-		boolean clickable = view.isEnabled() && (id != R.string.candles) && (id != R.string.molad);
+		boolean clickable = view.isEnabled() && (id != R.string.molad);
 		view.setOnClickListener(clickable ? mOnClickListener : null);
 		view.setClickable(clickable);
 	}
