@@ -92,6 +92,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected ZmanimSettings mSettings;
 	/** The date picker. */
 	private DatePickerDialog mDatePicker;
+	/** The address location. */
+	private Location mAddressLocation;
 	/** The address. */
 	private ZmanimAddress mAddress;
 	/** Populate the header in UI thread. */
@@ -290,6 +292,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
+		mAddressLocation = location;
+		mAddress = null;
 		Intent find = new Intent(this, AddressService.class);
 		find.putExtra(AddressService.PARAMETER_LOCATION, location);
 		startService(find);
@@ -337,7 +341,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		// Have we been destroyed?
 		if (header == null)
 			return;
-		Location loc = mLocations.getLocation();
+		Location loc = (mAddressLocation == null) ? mLocations.getLocation() : mAddressLocation;
 		// Have we been destroyed?
 		if (loc == null)
 			return;
@@ -406,6 +410,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	protected void onFindAddress(Location location, ZmanimAddress address) {
+		mAddressLocation = location;
 		mAddress = address;
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {

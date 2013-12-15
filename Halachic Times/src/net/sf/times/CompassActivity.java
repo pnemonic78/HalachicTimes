@@ -75,6 +75,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	private final float[] mOrientation = new float[3];
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
+	/** The address location. */
+	private Location mAddressLocation;
 	/** The address. */
 	private ZmanimAddress mAddress;
 	/** Populate the header in UI thread. */
@@ -147,6 +149,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 
 	@Override
 	public void onLocationChanged(Location location) {
+		mAddressLocation = location;
+		mAddress = null;
 		Intent find = new Intent(this, AddressService.class);
 		find.putExtra(AddressService.PARAMETER_LOCATION, location);
 		startService(find);
@@ -191,12 +195,12 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	/** Populate the header item. */
 	private void populateHeader() {
 		// Have we been destroyed?
-		Location loc = mLocations.getLocation();
+		Location loc = (mAddressLocation == null) ? mLocations.getLocation() : mAddressLocation;
 		if (loc == null)
 			return;
 
+		final String coordsText = mLocations.formatCoordinates(loc);
 		final String locationName = formatAddress();
-		final String coordsText = mLocations.formatCoordinates();
 
 		// Update the location.
 		TextView address = (TextView) findViewById(R.id.address);
@@ -218,6 +222,7 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	protected void onFindAddress(Location location, ZmanimAddress address) {
+		mAddressLocation = location;
 		mAddress = address;
 		if (mPopulateHeader == null) {
 			mPopulateHeader = new Runnable() {
