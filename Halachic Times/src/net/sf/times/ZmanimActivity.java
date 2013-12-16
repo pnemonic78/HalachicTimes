@@ -102,8 +102,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	protected LayoutInflater mInflater;
 	/** The master fragment. */
 	private ZmanimFragment mMasterFragment;
+	/** The details fragment switcher. */
+	private ViewSwitcher mDetailsFragment;
 	/** The details fragment. */
-	private ZmanimDetailsFragment mDetailsFragment;
+	private ZmanimDetailsFragment mDetailsListFragment;
+	/** The candles fragment. */
+	private CandlesFragment mCandesFragment;
 	/** Is master fragment switched with details fragment? */
 	private ViewSwitcher mSwitcher;
 	/** The master item selected id. */
@@ -227,8 +231,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mMasterFragment = (ZmanimFragment) view.findViewById(R.id.list_fragment);
 		mMasterFragment.setOnClickListener(this);
 		mMasterFragment.setGestureDetector(mGestureDetector);
-		mDetailsFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_fragment);
-		mDetailsFragment.setGestureDetector(mGestureDetector);
+		mDetailsFragment = (ViewSwitcher) view.findViewById(R.id.details_fragment);
+		mDetailsListFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_list_fragment);
+		mDetailsListFragment.setGestureDetector(mGestureDetector);
+		mCandesFragment = (CandlesFragment) view.findViewById(R.id.candles_fragment);
 
 		mSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
 		if (mSwitcher != null) {
@@ -299,7 +305,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		startService(find);
 		populateHeader();
 		mMasterFragment.populateTimes(mDate);
-		mDetailsFragment.populateTimes(mDate);
+		mDetailsListFragment.populateTimes(mDate);
+		mCandesFragment.populateTimes(mDate);
 	}
 
 	@Override
@@ -405,8 +412,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 		setDate(date.getTimeInMillis());
 		populateHeader();
-		mMasterFragment.populateTimes(mDate);
-		mDetailsFragment.populateTimes(mDate);
+		mMasterFragment.populateTimes(date);
+		mDetailsListFragment.populateTimes(date);
+		mCandesFragment.populateTimes(date);
 	}
 
 	protected void onFindAddress(Location location, ZmanimAddress address) {
@@ -459,14 +467,24 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			return;
 
 		if (mSwitcher != null) {
-			mDetailsFragment.populateTimes(mDate, itemId);
+			if (itemId == R.string.candles) {
+				mDetailsFragment.setDisplayedChild(1);
+			} else {
+				mDetailsListFragment.populateTimes(mDate, itemId);
+				mDetailsFragment.setDisplayedChild(0);
+			}
 			mSwitcher.showNext();
 			mSelectedId = itemId;
 		} else if ((mSelectedId == itemId) && isDetailsShowing()) {
 			hideDetails();
 			mMasterFragment.unhighlight();
 		} else {
-			mDetailsFragment.populateTimes(mDate, itemId);
+			if (itemId == R.string.candles) {
+				mDetailsFragment.setDisplayedChild(1);
+			} else {
+				mDetailsListFragment.populateTimes(mDate, itemId);
+				mDetailsFragment.setDisplayedChild(0);
+			}
 			mMasterFragment.unhighlight();
 			mMasterFragment.highlight(itemId);
 			if (!isDetailsShowing())
@@ -510,11 +528,13 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	protected boolean isDetailsShowing() {
+		if (mDetailsFragment.getVisibility() != View.VISIBLE)
+			return false;
 		if (mSwitcher == null) {
 			LinearLayout.LayoutParams lp = (LayoutParams) mDetailsFragment.getLayoutParams();
-			return mDetailsFragment.isVisible() && (lp.weight > 0);
+			return (lp.weight > 0);
 		}
-		return mDetailsFragment.isVisible() && (mSwitcher.getCurrentView() == mDetailsFragment);
+		return (mSwitcher.getCurrentView() == mDetailsFragment);
 	}
 
 	@Override
@@ -571,6 +591,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+		// Disable fling if showing candles to avoid showing no candles.
+		if (isDetailsShowing() && (mDetailsFragment.getDisplayedChild() != 0))
+			return false;
+
 		// Go to date?
 		float dX = e2.getX() - e1.getX();
 		float dY = e2.getY() - e1.getY();
@@ -600,7 +624,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			}
 			setDate(date.getTimeInMillis());
 			mMasterFragment.populateTimes(date);
-			mDetailsFragment.populateTimes(date);
+			mDetailsListFragment.populateTimes(date);
+			mCandesFragment.populateTimes(date);
 			return true;
 		}
 		return false;

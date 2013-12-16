@@ -114,8 +114,8 @@ public class ZmanimFragment extends FrameLayout {
 
 	/** Initialise. */
 	private void init(Context context) {
-		mSettings = new ZmanimSettings(context);
 		if (!isInEditMode()) {
+			mSettings = new ZmanimSettings(context);
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 			mLocations = app.getLocations();
 		}

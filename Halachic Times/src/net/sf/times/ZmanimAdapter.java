@@ -68,9 +68,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/** Flag indicating lighting times after nightfall. */
 	private static final int MOTZE_SHABBATH = 0x20000000;
 
-	private static final int CANDLES_MASK = 0x0000000F;
-	private static final int HOLIDAY_MASK = 0x000000FF;
-	private static final int MOTZE_MASK = 0xF0000000;
+	protected static final int CANDLES_MASK = 0x0000000F;
+	protected static final int HOLIDAY_MASK = 0x000000FF;
+	protected static final int MOTZE_MASK = 0xF0000000;
 
 	private static final String OPINION_10_2 = "10.2";
 	private static final String OPINION_11 = "11";
@@ -119,7 +119,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected final boolean mElapsed;
 	protected final int mCandlesOffset;
 	private Comparator<ZmanimItem> mComparator;
-	protected int mCandles;
 
 	/**
 	 * Time row item.
@@ -369,7 +368,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int candlesHow = candles & MOTZE_MASK;
 		int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
 		int holidayToday = (candles >> 12) & HOLIDAY_MASK;
-		mCandles = candles;
 
 		Date date;
 		int summary;
@@ -972,27 +970,5 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			mComparator = new ZmanimComparator();
 		}
 		sort(mComparator);
-	}
-
-	/**
-	 * Get the candles count.
-	 * 
-	 * @return the number of candles.
-	 */
-	public int getCandlesCount() {
-		return mCandles & CANDLES_MASK;
-	}
-
-	/**
-	 * Get the occasion for lighting candles.
-	 * 
-	 * @return the candles holiday.
-	 */
-	public int getCandlesHoliday() {
-		int candles = mCandles;
-		// int candlesHow = candles & MOTZE_MASK;
-		int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
-		// int holidayToday = (candles >> 12) & HOLIDAY_MASK;
-		return holidayTomorrow;
 	}
 }

@@ -27,11 +27,24 @@
             android:layout_height="fill_parent"
             android:background="@drawable/fragment_divider"/>
 
-        <view
+        <ViewSwitcher
             android:id="@+id/details_fragment"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            class="net.sf.times.ZmanimDetailsFragment"/>
+            android:layout_weight="0">
+
+            <view
+                android:id="@+id/details_list_fragment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                class="net.sf.times.ZmanimDetailsFragment"/>
+
+            <view
+                android:id="@+id/candles_fragment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                class="net.sf.times.CandlesFragment"/>
+        </ViewSwitcher>
     </LinearLayout>
 
 </LinearLayout>

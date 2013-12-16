@@ -24,7 +24,6 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.content.res.Resources;
@@ -39,16 +38,8 @@ import android.view.View;
  */
 public class ZmanimDetailsFragment extends ZmanimFragment {
 
-	private static final int[] CHANNUKA_CANDLES = { R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8 };
-
 	/** The master id. */
 	private int mMasterId;
-	/** The candles view for Shabbat. */
-	private View mCandlesShabbat;
-	/** The candles view for Channuka. */
-	private View mCandlesChannuka;
-	/** The candles view for Yom Kippurim. */
-	private View mCandlesKippurim;
 
 	/**
 	 * Constructs a new details list.
@@ -115,9 +106,10 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	 *            the time id.
 	 */
 	@SuppressWarnings("deprecation")
-	public ZmanimAdapter populateTimes(Calendar date, int id) {
+	protected ZmanimAdapter populateTimes(Calendar date, int id) {
 		mMasterId = id;
-		this.setVisibility(View.VISIBLE);
+
+		ZmanimAdapter adapter = super.populateTimes(date);
 
 		if (mSettings.isBackgroundGradient()) {
 			Resources res = getResources();
@@ -153,79 +145,6 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 			}
 		} else {
 			setBackgroundDrawable(null);
-		}
-
-		ZmanimAdapter adapter = super.populateTimes(date);
-
-		if ((adapter != null) && (id == R.string.candles)) {
-			int holiday = adapter.getCandlesHoliday();
-			int candlesCount = adapter.getCandlesCount();
-
-			switch (holiday) {
-			case JewishCalendar.YOM_KIPPUR:
-				if (mCandlesKippurim == null) {
-					mCandlesKippurim = mInflater.inflate(R.layout.candles_kippurim, null);
-					addView(mCandlesKippurim);
-				}
-				mView.setVisibility(View.GONE);
-				if (mCandlesShabbat != null)
-					mCandlesShabbat.setVisibility(View.GONE);
-				if (mCandlesChannuka != null)
-					mCandlesChannuka.setVisibility(View.GONE);
-				mCandlesKippurim.setVisibility(View.VISIBLE);
-				break;
-			case JewishCalendar.CHANUKAH:
-				if (mCandlesChannuka == null) {
-					mCandlesChannuka = mInflater.inflate(R.layout.candles_channuka, null);
-					addView(mCandlesChannuka);
-				}
-				// Only show relevant candles.
-				for (int i = 0; i < candlesCount; i++) {
-					mCandlesChannuka.findViewById(CHANNUKA_CANDLES[i]).setVisibility(View.VISIBLE);
-				}
-				for (int i = candlesCount; i < CHANNUKA_CANDLES.length; i++) {
-					mCandlesChannuka.findViewById(CHANNUKA_CANDLES[i]).setVisibility(View.INVISIBLE);
-				}
-				mView.setVisibility(View.GONE);
-				if (mCandlesShabbat != null)
-					mCandlesShabbat.setVisibility(View.GONE);
-				if (mCandlesKippurim != null)
-					mCandlesKippurim.setVisibility(View.GONE);
-				mCandlesChannuka.setVisibility(View.VISIBLE);
-				break;
-			default:
-				if (candlesCount == 0) {
-					// TODO ZmanimActivity.toggleDetail() - remove the detail
-					// fragment, and show only the master fragment.
-					if (mCandlesShabbat != null)
-						mCandlesShabbat.setVisibility(View.GONE);
-					if (mCandlesKippurim != null)
-						mCandlesKippurim.setVisibility(View.GONE);
-					if (mCandlesChannuka != null)
-						mCandlesChannuka.setVisibility(View.GONE);
-					this.setVisibility(View.GONE);
-				} else {
-					if (mCandlesShabbat == null) {
-						mCandlesShabbat = mInflater.inflate(R.layout.candles_shabbat, null);
-						addView(mCandlesShabbat);
-					}
-					mView.setVisibility(View.GONE);
-					if (mCandlesKippurim != null)
-						mCandlesKippurim.setVisibility(View.GONE);
-					if (mCandlesChannuka != null)
-						mCandlesChannuka.setVisibility(View.GONE);
-					mCandlesShabbat.setVisibility(View.VISIBLE);
-				}
-				break;
-			}
-		} else {
-			if (mCandlesShabbat != null)
-				mCandlesShabbat.setVisibility(View.GONE);
-			if (mCandlesKippurim != null)
-				mCandlesKippurim.setVisibility(View.GONE);
-			if (mCandlesChannuka != null)
-				mCandlesChannuka.setVisibility(View.GONE);
-			mView.setVisibility(View.VISIBLE);
 		}
 
 		return adapter;

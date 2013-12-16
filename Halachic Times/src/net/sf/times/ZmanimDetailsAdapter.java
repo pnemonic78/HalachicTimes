@@ -19,11 +19,9 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +71,6 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 			populateMincha(mCalendar);
 		} else if (id == R.string.plug_hamincha) {
 			populatePlugHamincha(mCalendar);
-		} else if (id == R.string.candles) {
-			populateCandles(mCalendar);
 		} else if (id == R.string.sunset) {
 			populateSunset(mCalendar);
 		} else if (id == R.string.twilight) {
@@ -163,15 +159,6 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 		date = cal.getMisheyakir11Point5Degrees();
 		title = R.string.tallis_summary;
 		add(title, 0, date);
-	}
-
-	private void populateCandles(ComplexZmanimCalendar mCalendar) {
-		ComplexZmanimCalendar cal = mCalendar;
-		cal.setCandleLightingOffset(mCandlesOffset);
-		Calendar gcal = cal.getCalendar();
-		JewishCalendar jcal = new JewishCalendar(gcal);
-		jcal.setInIsrael(mInIsrael);
-		mCandles = getCandles(jcal);
 	}
 
 	private void populateSunrise(ComplexZmanimCalendar cal) {
