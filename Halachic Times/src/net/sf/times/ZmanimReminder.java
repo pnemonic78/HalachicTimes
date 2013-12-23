@@ -52,7 +52,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	private static final String TAG = "ZmanimReminder";
 
-	/** Reminder id for notifications. */
+	/**
+	 * Reminder id for all notifications.<br>
+	 * Newer notifications will override current notifications.
+	 */
 	private static final int ID_NOTIFY = 1;
 	/** Reminder id for alarms. */
 	private static final int ID_ALARM = 2;
@@ -137,7 +140,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			if (before >= 0L) {
 				when = item.time - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-					notifyNow(item.titleId, item.time);
+					notifyNow(item);
 					settings.setLatestReminder(now);
 					needToday = false;
 				}
@@ -175,7 +178,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				if (before >= 0L) {
 					when = item.time - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-						notifyNow(item.titleId, item.time);
+						notifyNow(item);
 						settings.setLatestReminder(now);
 						needToday = false;
 					}
@@ -253,10 +256,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint("Wakelock")
-	private void notifyNow(int titleId, long when) {
-		CharSequence contentTitle = mContext.getText(R.string.app_name);
-		CharSequence contentText = mContext.getText(titleId);
-		Log.i(TAG, "notify now [" + contentText + "]");
+	private void notifyNow(ZmanimItem item) {
+		CharSequence contentTitle = mContext.getText(item.titleId);
+		CharSequence contentText = item.summary;
+		Log.i(TAG, "notify now [" + contentTitle + "]");
 
 		// Clicking on the item will launch the main activity.
 		PendingIntent contentIntent = createActivityIntent();
@@ -265,13 +268,13 @@ public class ZmanimReminder extends BroadcastReceiver {
 		noti.icon = R.drawable.ic_launcher;
 		noti.defaults = Notification.DEFAULT_ALL;
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-		noti.when = when;// When the zman is supposed to occur.
+		noti.when = item.time;// When the zman is supposed to occur.
 		noti.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
 
 		// Wake up the device to notify the user.
 		PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
 		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-		wake.acquire(2000L);
+		wake.acquire(3000L);// enough time to also hear an alarm tone
 
 		NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.notify(ID_NOTIFY, noti);
