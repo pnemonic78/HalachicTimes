@@ -19,12 +19,15 @@
  */
 package net.sf.times;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -37,7 +40,13 @@ import android.view.View;
 public class CompassView extends View {
 
 	private static final int PADDING = 0;
-	private static final int CIRCLE_THICKNESS = 2;
+	private static final float CIRCLE_THICKNESS = 3;
+	private static final float HOLIEST_THICKNESS = 6;
+	private static final float NORTH_THICKNESS = 4;
+	private static final float SOUTH_THICKNESS = 2;
+	private static final float LABEL_THICKNESS = 1;
+	private static final float LABEL2_THICKNESS = 1;
+	private static final float PIVOT_RADIUS = HOLIEST_THICKNESS;
 
 	private float mNorth;
 	private float mHoliest;
@@ -51,8 +60,11 @@ public class CompassView extends View {
 	private Paint mPaintNE;
 	private Paint mPaintHoliest;
 	private Paint mPaintFill;
-	private final RectF mRectCompass = new RectF();
+	private Paint mPaintPivot;
 	private final RectF mRectFill = new RectF();
+	private float mWidth2;
+	private float mHeight2;
+	private float mRadius;
 
 	private String mLabelNorth;
 	private String mLabelEast;
@@ -107,37 +119,48 @@ public class CompassView extends View {
 		mLabelSouth = context.getString(R.string.south);
 		mLabelWest = context.getString(R.string.west);
 
-		mPaintCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaintCircle.setStyle(Paint.Style.FILL);
-		mPaintCircle.setColor(res.getColor(R.color.compass));
+		mPaintCircle = new Paint(Paint.DITHER_FLAG);
+		if (mRadius > 0) {
+			RadialGradient gradientCircle = new RadialGradient(mWidth2, mHeight2, mRadius, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient),
+					Shader.TileMode.CLAMP);
+			mPaintCircle.setShader(gradientCircle);
+		} else {
+			mPaintCircle.setStyle(Paint.Style.FILL);
+			mPaintCircle.setColor(res.getColor(R.color.compass));
+		}
 
 		mPaintFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintFrame.setStyle(Paint.Style.STROKE);
 		mPaintFrame.setStrokeWidth(CIRCLE_THICKNESS);
 		mPaintFrame.setColor(res.getColor(R.color.compass_frame));
 
+		mPaintPivot = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mPaintPivot.setColor(mPaintFrame.getColor());
+
 		mPaintNorth = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 		mPaintNorth.setStyle(Paint.Style.FILL_AND_STROKE);
-		mPaintNorth.setStrokeWidth(4);
+		mPaintNorth.setStrokeWidth(NORTH_THICKNESS);
 		mPaintNorth.setTextSize(18);
 		mPaintNorth.setTextAlign(Align.CENTER);
 		mPaintNorth.setColor(res.getColor(R.color.compass_north));
 
 		mPaintSouth = new TextPaint(mPaintNorth);
-		mPaintSouth.setStrokeWidth(1);
+		mPaintSouth.setStrokeWidth(SOUTH_THICKNESS);
 		mPaintSouth.setColor(res.getColor(R.color.compass_south));
 
 		mPaintEast = new TextPaint(mPaintSouth);
+		mPaintEast.setStrokeWidth(LABEL_THICKNESS);
 		mPaintEast.setColor(res.getColor(R.color.compass_label));
 
 		mPaintWest = new TextPaint(mPaintEast);
 
 		mPaintNE = new Paint(mPaintEast);
+		mPaintNE.setStrokeWidth(LABEL2_THICKNESS);
 		mPaintNE.setColor(res.getColor(R.color.compass_label2));
 
 		mPaintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintHoliest.setStyle(Paint.Style.STROKE);
-		mPaintHoliest.setStrokeWidth(6);
+		mPaintHoliest.setStrokeWidth(HOLIEST_THICKNESS);
 		mPaintHoliest.setColor(res.getColor(R.color.compass_arrow));
 
 		mPaintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -152,11 +175,9 @@ public class CompassView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		final int w = getWidth();
-		final int h = getHeight();
-		final int w2 = w / 2;
-		final int h2 = h / 2;
-		final float r = Math.max(0, Math.min(w2, h2) - PADDING - CIRCLE_THICKNESS);
+		final float w2 = mWidth2;
+		final float h2 = mHeight2;
+		final float r = mRadius;
 		final float r5 = r / 2f;
 		final float r7 = (r * 7f) / 10f;
 		final float r8 = (r * 8f) / 10f;
@@ -172,11 +193,7 @@ public class CompassView extends View {
 		mPaintSouth.setTextSize(sizeDirections);
 		mPaintWest.setTextSize(sizeDirections);
 
-		mRectCompass.left = w2 - r;
-		mRectCompass.top = h2 - r;
-		mRectCompass.right = w2 + r;
-		mRectCompass.bottom = h2 + r;
-		canvas.drawArc(mRectCompass, 0, 360, true, mPaintCircle);
+		canvas.drawCircle(w2, h2, r, mPaintCircle);
 
 		mRectFill.left = w2 - r5;
 		mRectFill.top = h2 - r5;
@@ -220,6 +237,7 @@ public class CompassView extends View {
 		canvas.drawLine(w2, h2, w2, h2 - r, mPaintHoliest);
 
 		canvas.drawCircle(w2, h2, r, mPaintFrame);
+		canvas.drawCircle(w2, h2, PIVOT_RADIUS, mPaintPivot);
 	}
 
 	/**
@@ -242,5 +260,20 @@ public class CompassView extends View {
 	public void setHoliest(float bearing) {
 		mHoliest = bearing;
 		invalidate();
+	}
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+
+		final int w2 = w / 2;
+		final int h2 = h / 2;
+		final float r = Math.max(0, Math.min(w2, h2) - PADDING - CIRCLE_THICKNESS);
+
+		mWidth2 = w2;
+		mHeight2 = h2;
+		mRadius = r;
+
+		init(getContext());
 	}
 }

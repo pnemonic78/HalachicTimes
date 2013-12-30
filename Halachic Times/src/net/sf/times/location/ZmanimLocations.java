@@ -245,16 +245,21 @@ public class ZmanimLocations implements LocationListener {
 	 */
 	public Location getLocation() {
 		Location loc = mLocation;
-		if (!isValid(loc))
-			loc = getLocationGPS();
-		if (!isValid(loc))
-			loc = getLocationNetwork();
-		if (!isValid(loc))
-			loc = getLocationPassive();
-		if (!isValid(loc))
-			loc = getLocationSaved();
-		if (!isValid(loc))
-			loc = getLocationTZ();
+		if (isValid(loc))
+			return loc;
+		loc = getLocationGPS();
+		if (isValid(loc))
+			return loc;
+		loc = getLocationNetwork();
+		if (isValid(loc))
+			return loc;
+		loc = getLocationPassive();
+		if (isValid(loc))
+			return loc;
+		loc = getLocationSaved();
+		if (isValid(loc))
+			return loc;
+		loc = getLocationTZ();
 		return loc;
 	}
 
