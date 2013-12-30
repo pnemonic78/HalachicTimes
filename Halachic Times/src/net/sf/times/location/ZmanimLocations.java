@@ -27,11 +27,14 @@ import java.util.TimeZone;
 import net.sf.times.R;
 import net.sf.times.ZmanimSettings;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -163,7 +166,12 @@ public class ZmanimLocations implements LocationListener {
 	public Location getLocationGPS() {
 		if (mLocationManager == null)
 			return null;
-		return mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		try {
+			return mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		} catch (IllegalArgumentException iae) {
+			Log.e(TAG, iae.getLocalizedMessage());
+		}
+		return null;
 	}
 
 	/**
@@ -174,7 +182,31 @@ public class ZmanimLocations implements LocationListener {
 	public Location getLocationNetwork() {
 		if (mLocationManager == null)
 			return null;
-		return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		try {
+			return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		} catch (IllegalArgumentException iae) {
+			Log.e(TAG, iae.getLocalizedMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * Get a passive location from other application's GPS.
+	 * 
+	 * @return the location - {@code null} otherwise.
+	 */
+	@TargetApi(Build.VERSION_CODES.FROYO)
+	public Location getLocationPassive() {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO)
+			return null;
+		if (mLocationManager == null)
+			return null;
+		try {
+			return mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+		} catch (IllegalArgumentException iae) {
+			Log.e(TAG, iae.getLocalizedMessage());
+		}
+		return null;
 	}
 
 	/**
@@ -217,6 +249,8 @@ public class ZmanimLocations implements LocationListener {
 			loc = getLocationGPS();
 		if (!isValid(loc))
 			loc = getLocationNetwork();
+		if (!isValid(loc))
+			loc = getLocationPassive();
 		if (!isValid(loc))
 			loc = getLocationSaved();
 		if (!isValid(loc))
@@ -266,13 +300,16 @@ public class ZmanimLocations implements LocationListener {
 		if (listener != null)
 			addLocationListener(listener);
 
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+		criteria.setAltitudeRequired(true);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_LOW);
+		criteria.setSpeedRequired(false);
+
+		String provider = mLocationManager.getBestProvider(criteria, true);
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
-		} catch (IllegalArgumentException iae) {
-			Log.e(TAG, iae.getLocalizedMessage());
-		}
-		try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, UPDATE_TIME, UPDATE_DISTANCE, this);
+			mLocationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, iae.getLocalizedMessage());
 		}
