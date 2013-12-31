@@ -23,7 +23,7 @@
 
     <!-- Compass. -->
     <color name="compass">#ffffff</color>
-    <color name="compass_gradient">#ffee88</color>
+    <color name="compass_gradient">#cc9933</color>
     <color name="compass_frame">#cc9933</color>
     <color name="compass_label">#000000</color>
     <color name="compass_label2">#808080</color>

@@ -19,7 +19,6 @@
  */
 package net.sf.times;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -120,14 +119,8 @@ public class CompassView extends View {
 		mLabelWest = context.getString(R.string.west);
 
 		mPaintCircle = new Paint(Paint.DITHER_FLAG);
-		if (mRadius > 0) {
-			RadialGradient gradientCircle = new RadialGradient(mWidth2, mHeight2, mRadius, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient),
-					Shader.TileMode.CLAMP);
-			mPaintCircle.setShader(gradientCircle);
-		} else {
-			mPaintCircle.setStyle(Paint.Style.FILL);
-			mPaintCircle.setColor(res.getColor(R.color.compass));
-		}
+		mPaintCircle.setStyle(Paint.Style.FILL);
+		mPaintCircle.setColor(res.getColor(R.color.compass));
 
 		mPaintFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mPaintFrame.setStyle(Paint.Style.STROKE);
@@ -187,19 +180,8 @@ public class CompassView extends View {
 		final float h2r8 = h2 - r8;
 		final float h2r9 = h2 - r9;
 
-		final float sizeDirections = r / 5f;
-		mPaintNorth.setTextSize(sizeDirections);
-		mPaintEast.setTextSize(sizeDirections);
-		mPaintSouth.setTextSize(sizeDirections);
-		mPaintWest.setTextSize(sizeDirections);
-
 		canvas.drawCircle(w2, h2, r, mPaintCircle);
 
-		mRectFill.left = w2 - r5;
-		mRectFill.top = h2 - r5;
-		mRectFill.right = w2 + r5;
-		mRectFill.bottom = h2 + r5;
-		mPaintFill.setStrokeWidth(r);
 		float sweepAngle = mNorth + mHoliest;
 		if (sweepAngle > 180f)
 			sweepAngle -= 360f;
@@ -269,11 +251,29 @@ public class CompassView extends View {
 		final int w2 = w / 2;
 		final int h2 = h / 2;
 		final float r = Math.max(0, Math.min(w2, h2) - PADDING - CIRCLE_THICKNESS);
+		final float r5 = r / 2f;
 
 		mWidth2 = w2;
 		mHeight2 = h2;
 		mRadius = r;
 
-		init(getContext());
+		if (r > 0) {
+			Resources res = getResources();
+			RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient),
+					Shader.TileMode.CLAMP);
+			mPaintCircle.setShader(gradientCircle);
+		}
+
+		final float sizeDirections = r / 5f;
+		mPaintNorth.setTextSize(sizeDirections);
+		mPaintEast.setTextSize(sizeDirections);
+		mPaintSouth.setTextSize(sizeDirections);
+		mPaintWest.setTextSize(sizeDirections);
+
+		mRectFill.left = w2 - r5;
+		mRectFill.top = h2 - r5;
+		mRectFill.right = w2 + r5;
+		mRectFill.bottom = h2 + r5;
+		mPaintFill.setStrokeWidth(r);
 	}
 }
