@@ -28,8 +28,11 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
 /**
  * Shows candle images.
@@ -38,14 +41,21 @@ import android.view.View;
  */
 public class CandlesFragment extends ZmanimFragment {
 
-	private static final int[] CHANNUKA_CANDLES = { R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8 };
+	private static final int[] SHABBAT_CANDLES = { R.id.candle_1, R.id.candle_2 };
+	private static final int[] YOM_KIPPURIM_CANDLES = { R.id.candle_1 };
+	private static final int[] CHANNUKA_CANDLES = { R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6,
+													R.id.candle_7, R.id.candle_8 };
 
 	/** The candles view for Shabbat. */
-	private View mCandlesShabbat;
+	private ViewGroup mCandlesShabbat;
 	/** The candles view for Channuka. */
-	private View mCandlesChannuka;
+	private ViewGroup mCandlesChannuka;
 	/** The candles view for Yom Kippurim. */
-	private View mCandlesKippurim;
+	private ViewGroup mCandlesKippurim;
+	/** The animation scheduler. */
+	private final Handler mHandler = new Handler();
+	/** The flaming candle animations. */
+	private CandleAnimation[] mAnimations;
 
 	/**
 	 * Constructs a new candles view.
@@ -84,6 +94,12 @@ public class CandlesFragment extends ZmanimFragment {
 	}
 
 	@Override
+	protected void onDetachedFromWindow() {
+		super.onDetachedFromWindow();
+		stopAnimation();
+	}
+
+	@Override
 	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
 		GeoLocation gloc = locations.getGeoLocation();
 		// Have we been destroyed?
@@ -99,17 +115,27 @@ public class CandlesFragment extends ZmanimFragment {
 	public ZmanimAdapter populateTimes(Calendar date) {
 		CandlesAdapter adapter = (CandlesAdapter) super.populateTimes(date);
 
+		stopAnimation();
+
 		if (adapter == null)
 			return null;
 
 		int holiday = adapter.getCandlesHoliday();
 		int candlesCount = adapter.getCandlesCount();
+		ImageView view;
 
 		switch (holiday) {
 		case JewishCalendar.YOM_KIPPUR:
 			if (mCandlesKippurim == null) {
-				mCandlesKippurim = mInflater.inflate(R.layout.candles_kippurim, null);
+				mCandlesKippurim = (ViewGroup) mInflater.inflate(R.layout.candles_kippurim, null);
 				addView(mCandlesKippurim);
+
+				assert candlesCount == YOM_KIPPURIM_CANDLES.length;
+				mAnimations = new CandleAnimation[candlesCount];
+				for (int i = 0; i < candlesCount; i++) {
+					view = (ImageView) mCandlesShabbat.findViewById(YOM_KIPPURIM_CANDLES[i]);
+					mAnimations[i] = new CandleAnimation(mHandler, view);
+				}
 			}
 			if (mCandlesShabbat != null)
 				mCandlesShabbat.setVisibility(View.GONE);
@@ -119,8 +145,16 @@ public class CandlesFragment extends ZmanimFragment {
 			break;
 		case JewishCalendar.CHANUKAH:
 			if (mCandlesChannuka == null) {
-				mCandlesChannuka = mInflater.inflate(R.layout.candles_channuka, null);
+				mCandlesChannuka = (ViewGroup) mInflater.inflate(R.layout.candles_channuka, null);
 				addView(mCandlesChannuka);
+
+				mAnimations = new CandleAnimation[candlesCount + 1];
+				for (int i = 0; i < candlesCount; i++) {
+					view = (ImageView) mCandlesShabbat.findViewById(CHANNUKA_CANDLES[i]);
+					mAnimations[i] = new CandleAnimation(mHandler, view);
+				}
+				view = (ImageView) mCandlesShabbat.findViewById(R.id.candle_shamash);
+				mAnimations[candlesCount] = new CandleAnimation(mHandler, view);
 			}
 			// Only show relevant candles.
 			for (int i = 0; i < candlesCount; i++) {
@@ -146,8 +180,15 @@ public class CandlesFragment extends ZmanimFragment {
 					mCandlesChannuka.setVisibility(View.GONE);
 			} else {
 				if (mCandlesShabbat == null) {
-					mCandlesShabbat = mInflater.inflate(R.layout.candles_shabbat, null);
+					mCandlesShabbat = (ViewGroup) mInflater.inflate(R.layout.candles_shabbat, null);
 					addView(mCandlesShabbat);
+
+					assert candlesCount == SHABBAT_CANDLES.length;
+					mAnimations = new CandleAnimation[candlesCount];
+					for (int i = 0; i < candlesCount; i++) {
+						view = (ImageView) mCandlesShabbat.findViewById(SHABBAT_CANDLES[i]);
+						mAnimations[i] = new CandleAnimation(mHandler, view);
+					}
 				}
 				if (mCandlesKippurim != null)
 					mCandlesKippurim.setVisibility(View.GONE);
@@ -157,6 +198,8 @@ public class CandlesFragment extends ZmanimFragment {
 			}
 			break;
 		}
+
+		startAnimation();
 
 		return adapter;
 	}
@@ -169,5 +212,27 @@ public class CandlesFragment extends ZmanimFragment {
 	@Override
 	protected void setOnClickListener(View view, ZmanimItem item) {
 		// No clicking allowed.
+	}
+
+	private void stopAnimation() {
+		final CandleAnimation[] anims = mAnimations;
+		if (anims == null)
+			return;
+		for (Runnable anim : anims) {
+			if (anim == null)
+				continue;
+			mHandler.removeCallbacks(anim);
+		}
+	}
+
+	private void startAnimation() {
+		final CandleAnimation[] anims = mAnimations;
+		if (anims == null)
+			return;
+		for (Runnable anim : anims) {
+			if (anim == null)
+				continue;
+			mHandler.post(anim);
+		}
 	}
 }

@@ -8,6 +8,7 @@
     android:padding="4dp">
 
     <ImageView
+        android:id="@+id/candle_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -15,6 +16,7 @@
         android:src="@drawable/candle_0"/>
 
     <ImageView
+        android:id="@+id/candle_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
