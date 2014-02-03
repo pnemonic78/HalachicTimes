@@ -287,13 +287,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				| DateUtils.FORMAT_SHOW_WEEKDAY);
 		TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
 		textGregorian.setText(dateGregorian);
-
-		JewishDate jewishDate = new JewishDate(mDate);
-		TextView textHebrew = (TextView) header.findViewById(R.id.date_hebrew);
-		HebrewDateFormatter formatter = new HebrewDateFormatter();
-		formatter.setHebrewFormat(mLocaleRTL);
-		CharSequence dateHebrew = formatter.format(jewishDate);
-		textHebrew.setText(dateHebrew);
 	}
 
 	@Override

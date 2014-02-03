@@ -24,6 +24,8 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -35,6 +37,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -168,7 +171,7 @@ public class ZmanimFragment extends FrameLayout {
 		if (list == null)
 			return adapter;
 		list.setBackgroundDrawable(getListBackground());
-		bindViews(list, adapter);
+		bindViews(list, adapter, date);
 		return adapter;
 	}
 
@@ -193,8 +196,10 @@ public class ZmanimFragment extends FrameLayout {
 	 *            the list.
 	 * @param adapter
 	 *            the list adapter.
+	 * @param date
+	 *            the date.
 	 */
-	protected void bindViews(ViewGroup list, ZmanimAdapter adapter) {
+	protected void bindViews(ViewGroup list, ZmanimAdapter adapter, Calendar date) {
 		if (list == null)
 			return;
 		final int count = adapter.getCount();
@@ -203,10 +208,24 @@ public class ZmanimFragment extends FrameLayout {
 		ZmanimItem item;
 		View row;
 
+		JewishDate jewishDate = new JewishDate(date);
+		HebrewDateFormatter formatter = new HebrewDateFormatter();
+		formatter.setHebrewFormat(ZmanimLocations.isLocaleRTL());
+		CharSequence dateHebrew = formatter.format(jewishDate);
+
+		bindViewGrouping(list, -1, dateHebrew);
+
 		for (int position = 0; position < count; position++) {
 			item = adapter.getItem(position);
 			row = adapter.getView(position, null, list);
 			bindView(list, position, row, item);
+
+			// New Hebrew day.
+			if (item.titleId == R.string.sunset) {
+				jewishDate.forward();
+				dateHebrew = formatter.format(jewishDate);
+				bindViewGrouping(list, position, dateHebrew);
+			}
 		}
 	}
 
@@ -224,8 +243,26 @@ public class ZmanimFragment extends FrameLayout {
 	 */
 	protected void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
 		setOnClickListener(row, item);
+		mInflater.inflate(R.layout.divider, list);
+		list.addView(row);
+	}
+
+	/**
+	 * Bind the date group header to a list.
+	 * 
+	 * @param list
+	 *            the list.
+	 * @param position
+	 *            the position index.
+	 * @param label
+	 *            the formatted Hebrew date label.
+	 */
+	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
 		if (position > 0)
 			mInflater.inflate(R.layout.divider, list);
+		ViewGroup row = (ViewGroup) mInflater.inflate(R.layout.date_group, null);
+		TextView text = (TextView) row.findViewById(R.id.date_hebrew);
+		text.setText(label);
 		list.addView(row);
 	}
 
