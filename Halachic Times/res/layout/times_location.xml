@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="right"
-    android:orientation="vertical"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp">
-
-    <include layout="@layout/times_date"/>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/coordinates"
@@ -24,4 +16,4 @@
         android:text="@string/location_unknown"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-</LinearLayout>
+</merge>

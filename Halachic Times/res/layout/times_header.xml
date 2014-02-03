@@ -8,19 +8,6 @@
 
     <include layout="@layout/times_date"/>
 
-    <TextView
-        android:id="@+id/coordinates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-    <TextView
-        android:id="@+id/address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="@string/location_unknown"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+    <include layout="@layout/times_location"/>
 
 </LinearLayout>
