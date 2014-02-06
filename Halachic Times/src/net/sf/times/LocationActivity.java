@@ -19,13 +19,14 @@
  */
 package net.sf.times;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.CountriesGeocoder;
 import net.sf.times.location.ZmanimAddress;
-import android.app.ListActivity;
 import android.app.SearchManager;
+import android.app.TabActivity;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
@@ -37,10 +38,14 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TabHost;
+import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -49,11 +54,16 @@ import android.widget.TextView.OnEditorActionListener;
  * 
  * @author Moshe Waisberg
  */
-public class LocationActivity extends ListActivity implements TextWatcher, OnClickListener, OnEditorActionListener {
+@SuppressWarnings("deprecation")
+public class LocationActivity extends TabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener {
+
+	private static final String TAG_ALL = "all";
+	private static final String TAG_HISTORY = "history";
 
 	private EditText mSearchText;
 	private CountriesGeocoder mCountries;
-	private LocationAdapter mAdapter;
+	private LocationAdapter mAdapterAll;
+	private LocationAdapter mAdapterHistory;
 
 	/**
 	 * Constructs a new activity.
@@ -82,6 +92,18 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 		ImageView myLocation = (ImageView) findViewById(R.id.my_location);
 		myLocation.setOnClickListener(this);
 
+		TabHost tabs = getTabHost();
+
+		TabSpec tabAll = tabs.newTabSpec(TAG_ALL);
+		tabAll.setIndicator(getText(R.string.all));
+		tabAll.setContent(android.R.id.list);
+		tabs.addTab(tabAll);
+
+		TabSpec tabHistory = tabs.newTabSpec(TAG_HISTORY);
+		tabHistory.setIndicator(getText(R.string.history));
+		tabHistory.setContent(R.id.listHistory);
+		tabs.addTab(tabHistory);
+
 		mCountries = new CountriesGeocoder(this);
 
 		Intent intent = getIntent();
@@ -106,9 +128,10 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 	 *            the location.
 	 */
 	protected void search(String query, Location loc) {
-		populateList();
+		populateLists();
 
 		EditText searchText = mSearchText;
+		searchText.requestFocus();
 		searchText.setText(query);
 		if (!TextUtils.isEmpty(query))
 			searchText.setSelection(query.length());
@@ -129,26 +152,36 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 	}
 
 	/**
-	 * Populate the list with cities.
+	 * Populate the lists with cities.
 	 */
-	protected void populateList() {
+	protected void populateLists() {
 		List<ZmanimAddress> cities = mCountries.getCities();
 
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		AddressProvider addressProvider = app.getAddresses();
-		cities.addAll(addressProvider.query());
+		List<ZmanimAddress> history = new ArrayList<ZmanimAddress>(addressProvider.query());
+		cities.addAll(history);
 
 		LocationAdapter adapter = new LocationAdapter(this, cities);
 		adapter.sort();
-		setListAdapter(adapter);
-		mAdapter = adapter;
+		mAdapterAll = adapter;
+		ListView list = (ListView) findViewById(android.R.id.list);
+		list.setOnItemClickListener(this);
+		list.setAdapter(adapter);
+
+		adapter = new LocationAdapter(this, history);
+		adapter.sort();
+		mAdapterHistory = adapter;
+		list = (ListView) findViewById(R.id.listHistory);
+		list.setOnItemClickListener(this);
+		list.setAdapter(adapter);
 	}
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-
-		LocationAdapter adapter = (LocationAdapter) getListAdapter();
+	public void onItemClick(AdapterView<?> l, View view, int position, long id) {
+		LocationAdapter adapter = mAdapterAll;
+		if (l.getId() == R.id.listHistory)
+			adapter = mAdapterHistory;
 		Address addr = adapter.getItem(position);
 		Location loc = new Location(CountriesGeocoder.USER_PROVIDER);
 		loc.setLatitude(addr.getLatitude());
@@ -159,9 +192,14 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		if (mAdapter == null)
+		if (mAdapterAll == null)
 			return;
-		Filter filter = mAdapter.getFilter();
+		Filter filter = mAdapterAll.getFilter();
+		filter.filter(s);
+
+		if (mAdapterHistory == null)
+			return;
+		filter = mAdapterHistory.getFilter();
 		filter.filter(s);
 	}
 
@@ -236,4 +274,5 @@ public class LocationActivity extends ListActivity implements TextWatcher, OnCli
 
 		finish();
 	}
+
 }

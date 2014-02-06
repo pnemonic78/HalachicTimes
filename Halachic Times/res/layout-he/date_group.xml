@@ -5,8 +5,10 @@
     android:background="#80000000"
     android:gravity="right"
     android:orientation="horizontal"
+    android:paddingBottom="2dp"
     android:paddingLeft="4dp"
-    android:paddingRight="4dp">
+    android:paddingRight="4dp"
+    android:paddingTop="2dp">
 
     <TextView
         android:id="@+id/date_hebrew"

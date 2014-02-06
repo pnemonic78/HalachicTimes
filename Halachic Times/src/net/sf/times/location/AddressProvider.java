@@ -440,6 +440,7 @@ public class AddressProvider {
 	 * @param address
 	 *            the address.
 	 */
+	@SuppressWarnings("resource")
 	public void insertAddress(Location location, ZmanimAddress address) {
 		if (address == null)
 			return;
@@ -512,6 +513,7 @@ public class AddressProvider {
 	 * 
 	 * @return the list of addresses.
 	 */
+	@SuppressWarnings("resource")
 	public Set<ZmanimAddress> query() {
 		final String language = mLocale.getLanguage();
 		final String country = mLocale.getCountry();
