@@ -20,6 +20,7 @@
 package net.sf.times;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
@@ -43,8 +44,7 @@ public class CandlesFragment extends ZmanimFragment {
 
 	private static final int[] SHABBAT_CANDLES = { R.id.candle_1, R.id.candle_2 };
 	private static final int[] YOM_KIPPURIM_CANDLES = { R.id.candle_1 };
-	private static final int[] CHANNUKA_CANDLES = { R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6,
-													R.id.candle_7, R.id.candle_8 };
+	private static final int[] CHANNUKA_CANDLES = { R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8 };
 
 	/** The candles view for Shabbat. */
 	private ViewGroup mCandlesShabbat;
@@ -56,6 +56,8 @@ public class CandlesFragment extends ZmanimFragment {
 	private final Handler mHandler = new Handler();
 	/** The flaming candle animations. */
 	private CandleAnimation[] mAnimations;
+	/** Randomizer. */
+	private final Random mRandom = new Random();
 
 	/**
 	 * Constructs a new candles view.
@@ -134,7 +136,7 @@ public class CandlesFragment extends ZmanimFragment {
 				mAnimations = new CandleAnimation[candlesCount];
 				for (int i = 0; i < candlesCount; i++) {
 					view = (ImageView) mCandlesShabbat.findViewById(YOM_KIPPURIM_CANDLES[i]);
-					mAnimations[i] = new CandleAnimation(mHandler, view);
+					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 				}
 			}
 			if (mCandlesShabbat != null)
@@ -151,10 +153,10 @@ public class CandlesFragment extends ZmanimFragment {
 				mAnimations = new CandleAnimation[candlesCount + 1];
 				for (int i = 0; i < candlesCount; i++) {
 					view = (ImageView) mCandlesShabbat.findViewById(CHANNUKA_CANDLES[i]);
-					mAnimations[i] = new CandleAnimation(mHandler, view);
+					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 				}
 				view = (ImageView) mCandlesShabbat.findViewById(R.id.candle_shamash);
-				mAnimations[candlesCount] = new CandleAnimation(mHandler, view);
+				mAnimations[candlesCount] = new CandleAnimation(mHandler, view, mRandom);
 			}
 			// Only show relevant candles.
 			for (int i = 0; i < candlesCount; i++) {
@@ -187,7 +189,7 @@ public class CandlesFragment extends ZmanimFragment {
 					mAnimations = new CandleAnimation[candlesCount];
 					for (int i = 0; i < candlesCount; i++) {
 						view = (ImageView) mCandlesShabbat.findViewById(SHABBAT_CANDLES[i]);
-						mAnimations[i] = new CandleAnimation(mHandler, view);
+						mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 					}
 				}
 				if (mCandlesKippurim != null)

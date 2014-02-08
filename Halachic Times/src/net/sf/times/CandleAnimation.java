@@ -23,7 +23,7 @@ public class CandleAnimation implements Runnable {
 	private final Drawable[] mSprites = new Drawable[SPRITES_COUNT];
 	private int mSpriteIndex;
 	/** Randomizer. */
-	private final Random mRandom = new Random();
+	private final Random mRandom;
 
 	/**
 	 * Create a new animation.
@@ -34,10 +34,25 @@ public class CandleAnimation implements Runnable {
 	 *            the image view.
 	 */
 	public CandleAnimation(Handler handler, ImageView view) {
+		this(handler, view, null);
+	}
+
+	/**
+	 * Create a new animation.
+	 * 
+	 * @param handler
+	 *            the timer.
+	 * @param view
+	 *            the image view.
+	 * @param random
+	 *            the delay randomizer.
+	 */
+	public CandleAnimation(Handler handler, ImageView view, Random random) {
 		mHandler = handler;
 		if (view == null)
 			throw new IllegalArgumentException("view required");
 		mView = view;
+		mRandom = random;
 
 		Resources res = view.getResources();
 		mSprites[0] = res.getDrawable(R.drawable.candle_0);
@@ -50,7 +65,10 @@ public class CandleAnimation implements Runnable {
 		mView.setImageDrawable(mSprites[index]);
 		index = (index + 1) % SPRITES_COUNT;
 		mSpriteIndex = index;
-		mHandler.postDelayed(this, mRandom.nextInt(PERIOD));
+		if (mRandom == null)
+			mHandler.postDelayed(this, PERIOD);
+		else
+			mHandler.postDelayed(this, mRandom.nextInt(PERIOD));
 	}
 
 }

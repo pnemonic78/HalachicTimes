@@ -259,8 +259,7 @@ public class CompassView extends View {
 
 		if (r > 0) {
 			Resources res = getResources();
-			RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient),
-					Shader.TileMode.CLAMP);
+			RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient), Shader.TileMode.CLAMP);
 			mPaintCircle.setShader(gradientCircle);
 		}
 
