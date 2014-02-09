@@ -252,7 +252,5 @@
     <!-- Location -->
     <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
-    <string name="all">All</string>
-    <string name="history">History</string>
 
 </resources>

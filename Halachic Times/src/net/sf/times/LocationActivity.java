@@ -28,6 +28,7 @@ import net.sf.times.location.ZmanimAddress;
 import android.app.SearchManager;
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
@@ -72,7 +73,6 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		super();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,14 +93,15 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		myLocation.setOnClickListener(this);
 
 		TabHost tabs = getTabHost();
+		Resources res = getResources();
 
 		TabSpec tabAll = tabs.newTabSpec(TAG_ALL);
-		tabAll.setIndicator(getText(R.string.all));
+		tabAll.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_mapmode));
 		tabAll.setContent(android.R.id.list);
 		tabs.addTab(tabAll);
 
 		TabSpec tabHistory = tabs.newTabSpec(TAG_HISTORY);
-		tabHistory.setIndicator(getText(R.string.history));
+		tabHistory.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_recent_history));
 		tabHistory.setContent(R.id.listHistory);
 		tabs.addTab(tabHistory);
 
@@ -180,8 +181,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	@Override
 	public void onItemClick(AdapterView<?> l, View view, int position, long id) {
 		LocationAdapter adapter = mAdapterAll;
-		if (l.getId() == R.id.listHistory)
+		switch (l.getId()) {
+		case R.id.listHistory:
 			adapter = mAdapterHistory;
+			break;
+		}
 		Address addr = adapter.getItem(position);
 		Location loc = new Location(CountriesGeocoder.USER_PROVIDER);
 		loc.setLatitude(addr.getLatitude());
@@ -192,15 +196,17 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		if (mAdapterAll == null)
-			return;
-		Filter filter = mAdapterAll.getFilter();
-		filter.filter(s);
+		Filter filter;
 
-		if (mAdapterHistory == null)
-			return;
-		filter = mAdapterHistory.getFilter();
-		filter.filter(s);
+		if (mAdapterAll != null) {
+			filter = mAdapterAll.getFilter();
+			filter.filter(s);
+		}
+
+		if (mAdapterHistory != null) {
+			filter = mAdapterHistory.getFilter();
+			filter.filter(s);
+		}
 	}
 
 	@Override
