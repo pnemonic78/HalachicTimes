@@ -34,6 +34,11 @@ import android.text.TextUtils;
  */
 public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> {
 
+	/** ISO 639 country code for Israel. */
+	public static final String ISO639_ISRAEL = "IL";
+	/** ISO 639 country code for Palestine. */
+	public static final String ISO639_PALESTINE = "PS";
+
 	/** Address field separator. */
 	private static final String ADDRESS_SEPARATOR = ", ";
 	/** Double subtraction error. */
@@ -239,4 +244,22 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 			return new ZmanimAddress[size];
 		}
 	};
+
+	public void setCountryCode(String countryCode) {
+		if (ISO639_PALESTINE.equals(countryCode)) {
+			countryCode = ISO639_ISRAEL;
+			super.setCountryCode(countryCode);
+			Locale locale = new Locale("", countryCode);
+			setCountryName(locale.getDisplayCountry());
+		} else {
+			super.setCountryCode(countryCode);
+		}
+	}
+
+	@Override
+	public void setCountryName(String countryName) {
+		if (getCountryName() != null)
+			return;
+		super.setCountryName(countryName);
+	}
 }
