@@ -169,7 +169,7 @@ public class ZmanimLocations implements LocationListener {
 		try {
 			return mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		} catch (IllegalArgumentException iae) {
-			Log.e(TAG, iae.getLocalizedMessage());
+			Log.e(TAG, "GPS: " + iae.getLocalizedMessage(), iae);
 		}
 		return null;
 	}
@@ -185,7 +185,7 @@ public class ZmanimLocations implements LocationListener {
 		try {
 			return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		} catch (IllegalArgumentException iae) {
-			Log.e(TAG, iae.getLocalizedMessage());
+			Log.e(TAG, "Network: " + iae.getLocalizedMessage(), iae);
 		}
 		return null;
 	}
@@ -204,7 +204,7 @@ public class ZmanimLocations implements LocationListener {
 		try {
 			return mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 		} catch (IllegalArgumentException iae) {
-			Log.e(TAG, iae.getLocalizedMessage());
+			Log.e(TAG, "Passive: " + iae.getLocalizedMessage(), iae);
 		}
 		return null;
 	}
@@ -316,7 +316,7 @@ public class ZmanimLocations implements LocationListener {
 		try {
 			mLocationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} catch (IllegalArgumentException iae) {
-			Log.e(TAG, iae.getLocalizedMessage());
+			Log.e(TAG, "resume: " + iae.getLocalizedMessage(), iae);
 		}
 
 		if (listener != null)

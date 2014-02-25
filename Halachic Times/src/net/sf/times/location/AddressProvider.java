@@ -197,7 +197,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			Log.e(TAG, e.getLocalizedMessage());
+			Log.e(TAG, "Geocoder: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
@@ -220,7 +220,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			Log.e(TAG, e.getLocalizedMessage());
+			Log.e(TAG, "GoogleGeocoder: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
