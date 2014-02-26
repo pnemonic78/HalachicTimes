@@ -19,9 +19,10 @@
  */
 package net.sf.times;
 
-import java.util.ArrayList;
+import java.lang.reflect.Field;
 import java.util.List;
 
+import net.sf.times.LocationAdapter.OnFavoriteClickListener;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.CountriesGeocoder;
 import net.sf.times.location.ZmanimAddress;
@@ -41,6 +42,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -56,15 +58,29 @@ import android.widget.TextView.OnEditorActionListener;
  * @author Moshe Waisberg
  */
 @SuppressWarnings("deprecation")
-public class LocationActivity extends TabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener {
+public class LocationActivity extends TabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
 
 	private static final String TAG_ALL = "all";
+	private static final String TAG_FAVORITES = "favorites";
 	private static final String TAG_HISTORY = "history";
+
+	private static int ic_menu_star;
 
 	private EditText mSearchText;
 	private CountriesGeocoder mCountries;
 	private LocationAdapter mAdapterAll;
+	private LocationAdapter mAdapterFavorites;
 	private LocationAdapter mAdapterHistory;
+
+	static {
+		try {
+			Class<?> clazz = Class.forName("com.android.internal.R$drawable");
+			Field field = clazz.getDeclaredField("ic_menu_star");
+			ic_menu_star = field.getInt(null);
+		} catch (Exception e) {
+			ic_menu_star = android.R.drawable.btn_star_big_off;
+		}
+	}
 
 	/**
 	 * Constructs a new activity.
@@ -94,6 +110,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 		TabHost tabs = getTabHost();
 		Resources res = getResources();
+
+		TabSpec tabFavorites = tabs.newTabSpec(TAG_FAVORITES);
+		tabFavorites.setIndicator(null, res.getDrawable(ic_menu_star));
+		tabFavorites.setContent(R.id.listFavorites);
+		tabs.addTab(tabFavorites);
 
 		TabSpec tabAll = tabs.newTabSpec(TAG_ALL);
 		tabAll.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_mapmode));
@@ -156,24 +177,34 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	 * Populate the lists with cities.
 	 */
 	protected void populateLists() {
-		List<ZmanimAddress> cities = mCountries.getCities();
-
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		AddressProvider addressProvider = app.getAddresses();
-		List<ZmanimAddress> history = new ArrayList<ZmanimAddress>(addressProvider.query());
-		cities.addAll(history);
+		List<ZmanimAddress> cities = addressProvider.query();
+
+		// "History" locations take precedence over "built-in" locations.
+		cities.addAll(mCountries.getCities());
 
 		LocationAdapter adapter = new LocationAdapter(this, cities);
+		adapter.setOnFavoriteClickListener(this);
 		adapter.sort();
 		mAdapterAll = adapter;
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
-		adapter = new LocationAdapter(this, history);
+		adapter = new HistoryLocationAdapter(this, cities);
+		adapter.setOnFavoriteClickListener(this);
 		adapter.sort();
 		mAdapterHistory = adapter;
 		list = (ListView) findViewById(R.id.listHistory);
+		list.setOnItemClickListener(this);
+		list.setAdapter(adapter);
+
+		adapter = new FavoritesLocationAdapter(this, cities);
+		adapter.setOnFavoriteClickListener(this);
+		adapter.sort();
+		mAdapterFavorites = adapter;
+		list = (ListView) findViewById(R.id.listFavorites);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 	}
@@ -182,6 +213,9 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	public void onItemClick(AdapterView<?> l, View view, int position, long id) {
 		LocationAdapter adapter = mAdapterAll;
 		switch (l.getId()) {
+		case R.id.listFavorites:
+			adapter = mAdapterFavorites;
+			break;
 		case R.id.listHistory:
 			adapter = mAdapterHistory;
 			break;
@@ -200,6 +234,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 		if (mAdapterAll != null) {
 			filter = mAdapterAll.getFilter();
+			filter.filter(s);
+		}
+
+		if (mAdapterFavorites != null) {
+			filter = mAdapterFavorites.getFilter();
 			filter.filter(s);
 		}
 
@@ -279,6 +318,22 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		}
 
 		finish();
+	}
+
+	@Override
+	public void onFavoriteClick(LocationAdapter adapter, CompoundButton button, ZmanimAddress address) {
+		address.setFavorite(button.isChecked());
+		// FIXME modify the db in non-UI thread.
+		long idBefore = address.getId();
+		AddressProvider provider = ((ZmanimApplication) getApplication()).getAddresses();
+		if (idBefore < 0L) {
+			address.setId(0L);
+		}
+		provider.insertOrUpdate(null, address);
+
+		mAdapterAll.notifyDataSetChanged();
+		mAdapterFavorites.notifyDataSetChanged();
+		mAdapterHistory.notifyDataSetChanged();
 	}
 
 }

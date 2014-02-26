@@ -32,15 +32,17 @@ public interface AddressColumns extends BaseColumns {
 	public static final String LOCATION_LATITUDE = "loc_latitude";
 	/** The location's longitude. */
 	public static final String LOCATION_LONGITUDE = "loc_longitude";
-	/** The address' latitude. */
+	/** The latitude. */
 	public static final String LATITUDE = "latitude";
-	/** The address' longitude. */
+	/** The longitude. */
 	public static final String LONGITUDE = "longitude";
-	/** The address' formatted name. */
+	/** The formatted name. */
 	public static final String ADDRESS = "address";
-	/** The address' language. */
+	/** The language. */
 	public static final String LANGUAGE = "language";
-	/** The address' timestamp. */
+	/** The timestamp. */
 	public static final String TIMESTAMP = "timestamp";
+	/** Is favourite address?. */
+	public static final String FAVORITE = "favorite";
 
 }

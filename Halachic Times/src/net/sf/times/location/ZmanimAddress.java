@@ -46,6 +46,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	private long mId;
 	private String mFormatted;
+	private boolean mFavorite;
 
 	/**
 	 * Constructs a new address.
@@ -129,6 +130,25 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 */
 	public void setFormatted(String formatted) {
 		mFormatted = formatted;
+	}
+
+	/**
+	 * Is favourite address?
+	 * 
+	 * @return {@code true} if favourite.
+	 */
+	public boolean isFavorite() {
+		return mFavorite;
+	}
+
+	/**
+	 * Mark the address as a favourite.
+	 * 
+	 * @param favorite
+	 *            is favourite?
+	 */
+	public void setFavorite(boolean favorite) {
+		this.mFavorite = favorite;
 	}
 
 	/**

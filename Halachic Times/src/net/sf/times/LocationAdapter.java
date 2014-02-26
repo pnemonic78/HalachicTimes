@@ -33,8 +33,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.TextView;
 
@@ -43,9 +46,9 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
+public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnClickListener {
 
-	private List<LocationItem> mObjects = new ArrayList<LocationItem>();
+	protected List<LocationItem> mObjects = new ArrayList<LocationItem>();
 	private List<LocationItem> mOriginalValues;
 	private LocationComparator mComparator;
 	private LocationsFilter mFilter;
@@ -53,6 +56,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	private ZmanimLocations mLocations;
 	private Collator mCollator;
 	private final Locale mLocale = Locale.getDefault();
+	private OnFavoriteClickListener mOnFavoriteClickListener;
 
 	/**
 	 * Constructs a new adapter.
@@ -63,7 +67,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	 *            the list of cities.
 	 */
 	public LocationAdapter(Context context, List<ZmanimAddress> addresses) {
-		super(context, R.layout.times_item, android.R.id.title, addresses);
+		super(context, R.layout.location, android.R.id.title, addresses);
 		for (ZmanimAddress addr : addresses) {
 			mObjects.add(new LocationItem(addr));
 		}
@@ -80,23 +84,59 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 
 	@Override
 	public ZmanimAddress getItem(int position) {
-		return mObjects.get(position).getAddress();
+		return getLocationItem(position).getAddress();
+	}
+
+	/**
+	 * Get the location item.
+	 * 
+	 * @param position
+	 *            the position index.
+	 * @return the item.
+	 */
+	protected LocationItem getLocationItem(int position) {
+		return mObjects.get(position);
 	}
 
 	@Override
-	public int getPosition(ZmanimAddress item) {
-		return mObjects.indexOf(item);
+	public int getPosition(ZmanimAddress address) {
+		final int size = mObjects.size();
+		LocationItem item;
+		for (int i = 0; i < size; i++) {
+			item = mObjects.get(i);
+			if (item.getAddress().equals(address))
+				return i;
+		}
+		return super.getPosition(address);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = super.getView(position, convertView, parent);
-		LocationItem item = mObjects.get(position);
+		LocationItem item = getLocationItem(position);
+		TextView cityName;
+		TextView coordinates;
+		CheckBox checkbox;
 
-		TextView cityName = (TextView) view.findViewById(android.R.id.title);
+		ViewHolder holder = (ViewHolder) view.getTag();
+		if (holder == null) {
+			cityName = (TextView) view.findViewById(android.R.id.title);
+			coordinates = (TextView) view.findViewById(R.id.coordinates);
+			checkbox = (CheckBox) view.findViewById(android.R.id.checkbox);
+			checkbox.setOnClickListener(this);
+
+			holder = new ViewHolder(cityName, coordinates, checkbox);
+			view.setTag(holder);
+		} else {
+			cityName = holder.cityName;
+			coordinates = holder.coordinates;
+			checkbox = holder.checkbox;
+		}
+
 		cityName.setText(item.getLabel());
-		TextView coordinates = (TextView) view.findViewById(android.R.id.summary);
 		coordinates.setText(item.getCoordinates());
+		checkbox.setChecked(item.isFavorite());
+		checkbox.setTag(item.address);
 
 		return view;
 	}
@@ -175,8 +215,26 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	}
 
 	/**
+	 * View holder for location row item.
+	 * 
+	 * @author Moshe W
+	 */
+	private static class ViewHolder {
+
+		public final TextView cityName;
+		public final TextView coordinates;
+		public final CheckBox checkbox;
+
+		public ViewHolder(TextView cityName, TextView coordinates, CheckBox checkbox) {
+			this.cityName = cityName;
+			this.coordinates = coordinates;
+			this.checkbox = checkbox;
+		}
+	}
+
+	/**
 	 * Filter the list of locations to match cities' names that contain the
-	 * contraint.
+	 * constraint.
 	 * 
 	 * @author Moshe Waisberg
 	 */
@@ -379,6 +437,15 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 			return coordinates;
 		}
 
+		/**
+		 * Is location a favourite?
+		 * 
+		 * @return {@code true} if a favourite.
+		 */
+		public boolean isFavorite() {
+			return getAddress().isFavorite();
+		}
+
 		@Override
 		public boolean equals(Object o) {
 			if (o == null)
@@ -392,8 +459,8 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 	}
 
 	/**
-	 * Compare two cities by their names, then their countries, but not by their
-	 * locations.
+	 * Compare two locations by their locations, then by their names, then their
+	 * ids.
 	 * 
 	 * @author Moshe Waisberg
 	 */
@@ -418,16 +485,6 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 		public int compare(LocationItem item1, LocationItem item2) {
 			ZmanimAddress addr1 = item1.getAddress();
 			ZmanimAddress addr2 = item2.getAddress();
-			double lat1 = addr1.getLatitude();
-			double lat2 = addr2.getLatitude();
-			double latD = lat1 - lat2;
-			double lng1 = addr1.getLongitude();
-			double lng2 = addr2.getLongitude();
-			double lngD = lng1 - lng2;
-
-			// Is same location?
-			if ((latD > -EPSILON) && (latD < EPSILON) && (lngD > -EPSILON) && (lngD < EPSILON))
-				return 0;
 
 			// Sort first by name.
 			String format1 = item1.getLabelLower();
@@ -436,7 +493,13 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 			if (c != 0)
 				return c;
 
-			// Then sort by location.
+			// Is same location?
+			double lat1 = addr1.getLatitude();
+			double lat2 = addr2.getLatitude();
+			double latD = lat1 - lat2;
+			double lng1 = addr1.getLongitude();
+			double lng2 = addr2.getLongitude();
+			double lngD = lng1 - lng2;
 			if (latD >= EPSILON)
 				return 1;
 			if (latD <= -EPSILON)
@@ -446,10 +509,57 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> {
 			if (lngD < -EPSILON)
 				return -1;
 
-			// Then sort by id. Negative id is more important.
-			long id1 = addr1.getId();
-			long id2 = addr2.getId();
-			return (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
+			// Then sort by id. Positive id is more important.
+			// long id1 = addr1.getId();
+			// long id2 = addr2.getId();
+			// return (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
+			return 0;
 		}
 	}
+
+	/**
+	 * Interface definition for a callback to be invoked when a "favorite"
+	 * checkbox in this list has been clicked.
+	 * 
+	 * @author Moshe W
+	 */
+	public interface OnFavoriteClickListener {
+
+		void onFavoriteClick(LocationAdapter adapter, CompoundButton button, ZmanimAddress address);
+
+	}
+
+	/**
+	 * Get the listener for "favorite" clicked callbacks.
+	 * 
+	 * @return the listener.
+	 */
+	public OnFavoriteClickListener getOnFavoriteClickListener() {
+		return mOnFavoriteClickListener;
+	}
+
+	/**
+	 * Set the listener for "favorite" clicked callbacks.
+	 * 
+	 * @param listener
+	 *            the listener.
+	 */
+	public void setOnFavoriteClickListener(OnFavoriteClickListener listener) {
+		this.mOnFavoriteClickListener = listener;
+	}
+
+	@Override
+	public void onClick(View v) {
+		final int id = v.getId();
+
+		if (id == android.R.id.checkbox) {
+			CompoundButton buttonView = (CompoundButton) v;
+			ZmanimAddress address = (ZmanimAddress) buttonView.getTag();
+
+			if ((address != null) && (mOnFavoriteClickListener != null)) {
+				mOnFavoriteClickListener.onFavoriteClick(LocationAdapter.this, buttonView, address);
+			}
+		}
+	}
+
 }

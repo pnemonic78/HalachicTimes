@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -63,8 +61,8 @@ public class AddressProvider {
 
 	}
 
-	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
-			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE };
+	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE, AddressColumns.LONGITUDE,
+			AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE };
 	private static final int INDEX_ID = 0;
 	private static final int INDEX_LOCATION_LATITUDE = 1;
 	private static final int INDEX_LOCATION_LONGITUDE = 2;
@@ -72,6 +70,9 @@ public class AddressProvider {
 	private static final int INDEX_LONGITUDE = 4;
 	private static final int INDEX_ADDRESS = 5;
 	private static final int INDEX_LANGUAGE = 6;
+	private static final int INDEX_FAVORITE = 7;
+
+	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
 	/** Maximum radius to consider two locations in the same vicinity. */
 	private static final float SAME_LOCATION = 250f;// 250 meters.
@@ -331,6 +332,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the list of addresses.
 	 */
+	@SuppressWarnings("resource")
 	private List<Address> findNearestAddressDatabase(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
@@ -441,23 +443,38 @@ public class AddressProvider {
 	 *            the address.
 	 */
 	@SuppressWarnings("resource")
-	public void insertAddress(Location location, ZmanimAddress address) {
+	public void insertOrUpdate(Location location, ZmanimAddress address) {
 		if (address == null)
 			return;
-		if (address.getId() != 0)
+		long id = address.getId();
+		if (id < 0L)
 			return;
+
 		ContentValues values = new ContentValues();
 		values.put(AddressColumns.ADDRESS, formatAddress(address));
 		values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
 		values.put(AddressColumns.LATITUDE, address.getLatitude());
-		values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
-		values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
+		if (location == null) {
+			values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
+			values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
+		} else {
+			values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
+			values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
+		}
 		values.put(AddressColumns.LONGITUDE, address.getLongitude());
 		values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
+		values.put(AddressColumns.FAVORITE, address.isFavorite());
+
 		SQLiteDatabase db = null;
 		try {
 			db = getWritableDatabase();
-			db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
+			if (id == 0L) {
+				id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
+				address.setId(id);
+			} else {
+				String[] whereArgs = { Long.toString(id) };
+				db.update(AddressOpenHelper.TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
+			}
 		} finally {
 			if (db != null)
 				db.close();
@@ -514,11 +531,11 @@ public class AddressProvider {
 	 * @return the list of addresses.
 	 */
 	@SuppressWarnings("resource")
-	public Set<ZmanimAddress> query() {
+	public List<ZmanimAddress> query() {
 		final String language = mLocale.getLanguage();
 		final String country = mLocale.getCountry();
 
-		Set<ZmanimAddress> addresses = new TreeSet<ZmanimAddress>();
+		List<ZmanimAddress> addresses = new ArrayList<ZmanimAddress>();
 		SQLiteDatabase db = getReadableDatabase();
 		if (db == null)
 			return addresses;
@@ -537,6 +554,7 @@ public class AddressProvider {
 				String locationLanguage;
 				Locale locale;
 				ZmanimAddress address;
+				boolean favorite;
 
 				do {
 					locationLanguage = cursor.getString(INDEX_LANGUAGE);
@@ -545,6 +563,7 @@ public class AddressProvider {
 						addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
 						id = cursor.getLong(INDEX_ID);
 						formatted = cursor.getString(INDEX_ADDRESS);
+						favorite = cursor.getShort(INDEX_FAVORITE) != 0;
 						if (locationLanguage == null)
 							locale = mLocale;
 						else
@@ -555,6 +574,7 @@ public class AddressProvider {
 						address.setId(id);
 						address.setLatitude(addressLatitude);
 						address.setLongitude(addressLongitude);
+						address.setFavorite(favorite);
 						addresses.add(address);
 					}
 				} while (cursor.moveToNext());
@@ -568,4 +588,5 @@ public class AddressProvider {
 
 		return addresses;
 	}
+
 }
