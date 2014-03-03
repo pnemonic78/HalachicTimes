@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachinis Kartų</string>
     <string name="location_unknown">Nežinomas adresas</string>
     <string name="location_coords">Pla. %1$s; Ilg. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dieną yra 120 minučių prieš saulėtekį / po saulėlydžio</string>
@@ -131,6 +133,9 @@
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="past_enabled">Ankstesni datos yra įgalinta</string>
     <string name="past_disabled">Ankstesni datos yra išjungta</string>
+    <string name="seconds_title">Sekundės</string>
+    <string name="seconds_hidden">Sekundės paslėptas</string>
+    <string name="seconds_visible">Sekundės matomi</string>
     <string name="summaries_title">Santraukas</string>
     <string name="summaries_hidden">Santraukos paslėptas</string>
     <string name="summaries_visible">Santraukos matomi</string>

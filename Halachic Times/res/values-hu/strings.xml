@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachikus Szor</string>
     <string name="location_unknown">Ismeretlen cím</string>
     <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Nap 120 perc napkelte előtt / napnyugta után</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="past_enabled">Elmúlt idők engedélyezve</string>
     <string name="past_disabled">Elmúlt idők vannak tiltva</string>
+    <string name="seconds_title">Másodperc</string>
+    <string name="seconds_hidden">Másodperc rejtve</string>
+    <string name="seconds_visible">Másodperc látható</string>
     <string name="summaries_title">Összefoglalók</string>
     <string name="summaries_hidden">Összefoglalók rejtve</string>
     <string name="summaries_visible">Összefoglalók látható</string>

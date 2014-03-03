@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachic Times</string>
     <string name="location_unknown">Unknown address</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
@@ -212,6 +214,9 @@
     <string name="past_title">Times that have elapsed</string>
     <string name="past_enabled">Past times are enabled</string>
     <string name="past_disabled">Past times are disabled</string>
+    <string name="seconds_title">Seconds</string>
+    <string name="seconds_hidden">Seconds are hidden</string>
+    <string name="seconds_visible">Seconds are visible</string>
     <string name="summaries_title">Summaries</string>
     <string name="summaries_hidden">Summaries are hidden</string>
     <string name="summaries_visible">Summaries are visible</string>

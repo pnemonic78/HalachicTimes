@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachický Časy</string>
     <string name="location_unknown">Neznámý adresa</string>
     <string name="location_coords">Šířka %1$s; Délka %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Den je 120 minut před východem slunce / po západu slunce</string>
@@ -131,6 +133,9 @@
     <string name="past_title">Časy, které uplynuly</string>
     <string name="past_enabled">Minulé časy jsou povoleny</string>
     <string name="past_disabled">Minulé časy jsou vypnuté</string>
+    <string name="seconds_title">Sekundy</string>
+    <string name="seconds_hidden">Sekundy jsou skryté</string>
+    <string name="seconds_visible">Sekundy jsou viditelné</string>
     <string name="summaries_title">Souhrny</string>
     <string name="summaries_hidden">Souhrny jsou skryté</string>
     <string name="summaries_visible">Souhrny jsou viditelné</string>

@@ -48,6 +48,8 @@ public class ZmanimSettings {
 	public static final String KEY_COORDS = "coords.visible";
 	/** Preference name for the co-ordinates format. */
 	public static final String KEY_COORDS_FORMAT = "coords.format";
+	/** Preference name for showing seconds. */
+	public static final String KEY_SECONDS = "seconds.visible";
 	/** Preference name for showing summaries. */
 	public static final String KEY_SUMMARIES = "summaries.visible";
 	/** Preference name for enabling past times. */
@@ -219,6 +221,15 @@ public class ZmanimSettings {
 	 */
 	public String getCoordinatesFormat() {
 		return mPrefs.getString(KEY_COORDS_FORMAT, FORMAT_DECIMAL);
+	}
+
+	/**
+	 * Format times with seconds?
+	 * 
+	 * @return {@code true} to show seconds.
+	 */
+	public boolean isSeconds() {
+		return mPrefs.getBoolean(KEY_SECONDS, false);
 	}
 
 	/**

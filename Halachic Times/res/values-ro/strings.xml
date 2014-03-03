@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Ori Halachic</string>
     <string name="location_unknown">Necunoscuta adresa</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Ziua este 120 minute înainte de răsărit / după apus</string>
@@ -131,6 +133,9 @@
     <string name="past_title">Ori care s-au scurs</string>
     <string name="past_enabled">Ori în ultimile sunt activate</string>
     <string name="past_disabled">Ori în ultimile sunt dezactivate</string>
+    <string name="seconds_title">Secunde</string>
+    <string name="seconds_hidden">Secunde sunt ascunse</string>
+    <string name="seconds_visible">Secunde sunt vizibile</string>
     <string name="summaries_title">Rezumatele</string>
     <string name="summaries_hidden">Rezumatele sunt ascunse</string>
     <string name="summaries_visible">Rezumatele sunt vizibile</string>

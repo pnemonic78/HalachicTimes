@@ -27,8 +27,6 @@ import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.view.animation.LayoutWeightAnimation;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -508,7 +506,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onClick(View view) {
-		ZmanimItem item = (ZmanimItem) view.getTag();
+		ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
 		toggleDetails(item, view);
 	}
 

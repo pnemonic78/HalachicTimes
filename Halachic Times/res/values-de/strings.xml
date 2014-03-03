@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachische Zeiten</string>
     <string name="location_unknown">Unbekannte adresse</string>
     <string name="location_coords">Brt. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Tag ist 120 minuten vor sonnenaufgang / nach sonnenuntergang</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Vergangenen zeiten</string>
     <string name="past_enabled">Ältere zeiten sind aktiviert</string>
     <string name="past_disabled">Ältere zeiten sind deaktiviert</string>
+    <string name="seconds_title">Sekunden</string>
+    <string name="seconds_hidden">Sekunden sind versteckt</string>
+    <string name="seconds_visible">Sekunden sind sichtbar</string>
     <string name="summaries_title">Zusammenfassungen</string>
     <string name="summaries_hidden">Zusammenfassungen sind versteckt</string>
     <string name="summaries_visible">Zusammenfassungen sind sichtbar</string>

@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Галахических разів</string>
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 мінут перед сходом сонця / після заходу сонця</string>
@@ -132,6 +134,9 @@
     <string name="past_title">Минулі разів</string>
     <string name="past_enabled">Минулі разів включений</string>
     <string name="past_disabled">Минулі разів відключені</string>
+    <string name="seconds_title">Секунди</string>
+    <string name="seconds_hidden">Секунди приховано</string>
+    <string name="seconds_visible">Секунди видно</string>
     <string name="summaries_title">Описи</string>
     <string name="summaries_hidden">Описи приховано</string>
     <string name="summaries_visible">Описи видно</string>

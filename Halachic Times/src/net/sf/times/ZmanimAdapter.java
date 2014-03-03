@@ -19,6 +19,8 @@
  */
 package net.sf.times;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -27,6 +29,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
@@ -118,6 +121,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected final boolean mSummaries;
 	protected final boolean mElapsed;
 	protected final int mCandlesOffset;
+	private final DateFormat mTimeFormat;
 	private Comparator<ZmanimItem> mComparator;
 
 	/**
@@ -173,6 +177,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @param inIsrael
 	 *            is in Israel?
 	 */
+	@SuppressLint("SimpleDateFormat")
 	public ZmanimAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael) {
 		super(context, R.layout.times_item, 0);
 		mInflater = LayoutInflater.from(context);
@@ -182,6 +187,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		mCandlesOffset = settings.getCandleLightingOffset();
 		mCalendar = cal;
 		mInIsrael = inIsrael;
+
+		if (settings.isSeconds()) {
+			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
+			String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
+			mTimeFormat = new SimpleDateFormat(pattern);
+		} else {
+			mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
+		}
 	}
 
 	/**
@@ -216,16 +229,32 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		boolean enabled = !item.elapsed;
 
 		View view = convertView;
-		if (convertView == null)
-			view = mInflater.inflate(resource, parent, false);
-		view.setTag(item);
-		view.setEnabled(enabled);
+		ViewHolder holder;
+		TextView title;
+		TextView summary;
+		TextView time;
 
-		TextView title = (TextView) view.findViewById(android.R.id.title);
+		if (view == null) {
+			view = mInflater.inflate(resource, parent, false);
+
+			title = (TextView) view.findViewById(android.R.id.title);
+			summary = (TextView) view.findViewById(android.R.id.summary);
+			time = (TextView) view.findViewById(R.id.time);
+
+			holder = new ViewHolder(title, summary, time);
+			view.setTag(holder);
+		} else {
+			holder = (ViewHolder) view.getTag();
+			title = holder.title;
+			summary = holder.summary;
+			time = holder.time;
+		}
+		view.setEnabled(enabled);
+		view.setTag(R.id.time, item);
+
 		title.setText(item.titleId);
 		title.setEnabled(enabled);
 
-		TextView summary = (TextView) view.findViewById(android.R.id.summary);
 		if (summary != null) {
 			summary.setText(item.summary);
 			summary.setEnabled(enabled);
@@ -233,7 +262,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				summary.setVisibility(View.GONE);
 		}
 
-		TextView time = (TextView) view.findViewById(R.id.time);
 		time.setText(item.timeLabel);
 		time.setEnabled(enabled);
 
@@ -273,7 +301,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		item.summary = mSummaries ? summary : null;
 		item.timeId = titleId;
 		item.time = time;
-		item.timeLabel = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
+		item.timeLabel = mTimeFormat.format(new Date(time));
 		item.elapsed = mElapsed ? false : (time < mNow);
 
 		add(item);
@@ -970,5 +998,23 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			mComparator = new ZmanimComparator();
 		}
 		sort(mComparator);
+	}
+
+	/**
+	 * View holder for zman row item.
+	 * 
+	 * @author Moshe W
+	 */
+	private static class ViewHolder {
+
+		public final TextView title;
+		public final TextView summary;
+		public final TextView time;
+
+		public ViewHolder(TextView title, TextView summary, TextView time) {
+			this.title = title;
+			this.summary = summary;
+			this.time = time;
+		}
 	}
 }

@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachische Tijden</string>
     <string name="location_unknown">Onbekend adres</string>
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dag is 120 minuten vóór zonsopgang / na zonsondergang</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="past_enabled">Vroegere tijden zijn ingeschakeld</string>
     <string name="past_disabled">Vroegere tijden zijn uitgeschakeld</string>
+    <string name="seconds_title">Seconden</string>
+    <string name="seconds_hidden">Seconden zijn verborgen</string>
+    <string name="seconds_visible">Seconden zijn zichtbaar</string>
     <string name="summaries_title">Samenvattingen</string>
     <string name="summaries_hidden">Samenvattingen zijn verborgen</string>
     <string name="summaries_visible">Samenvattingen zijn zichtbaar</string>

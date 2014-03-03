@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Халахичен Време</string>
     <string name="location_unknown">Неизвестен адрес</string>
     <string name="location_coords">Lai. %1$s; Pik. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Ден е 120 минути преди изгрев / след залез</string>
@@ -128,6 +130,9 @@
     <string name="past_title">Време са изминали</string>
     <string name="past_enabled">Минали времена са разрешити</string>
     <string name="past_disabled">Минали времена са инвалиди</string>
+    <string name="seconds_title">Секунди</string>
+    <string name="seconds_hidden">Секунди са скрити</string>
+    <string name="seconds_visible">Секунди са видими</string>
     <string name="summaries_title">Описания</string>
     <string name="summaries_hidden">Описания са скрити</string>
     <string name="summaries_visible">Описания са видими</string>

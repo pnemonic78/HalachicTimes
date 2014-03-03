@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Horários Haláchicos</string>
     <string name="location_unknown">Endereço desconhecido</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dia é de 120 minutos antes do nascer do sol / depois do sol</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Tempos que transcorridos</string>
     <string name="past_enabled">Tempos passados estão habilitados</string>
     <string name="past_disabled">Tempos passados estão desabilitados</string>
+    <string name="seconds_title">Segundos</string>
+    <string name="seconds_hidden">Segundos são escondidos</string>
+    <string name="seconds_visible">Segundos são visíveis</string>
     <string name="summaries_title">Sumários</string>
     <string name="summaries_hidden">Sumários são escondidos</string>
     <string name="summaries_visible">Sumários são visíveis</string>

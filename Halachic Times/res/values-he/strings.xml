@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">זמנים הלכתיים</string>
     <string name="location_unknown">לא אותרה כתובת</string>
     <string name="location_coords">רוחב %1$s; אורך %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">יום הוא 120 דקות קודם הנץ / אחרי השקיעה</string>
@@ -130,6 +132,9 @@
     <string name="past_title">זמנים שחלפו</string>
     <string name="past_enabled">זמנים שעברו מופעלים</string>
     <string name="past_disabled">זמנים שעברו מושבתים</string>
+    <string name="seconds_title">שניות</string>
+    <string name="seconds_hidden">שניות מוסתרות</string>
+    <string name="seconds_visible">שניות גלויות</string>
     <string name="summaries_title">תקצירים</string>
     <string name="summaries_hidden">תקצירים מוסתרים</string>
     <string name="summaries_visible">תקצירים גלויים</string>

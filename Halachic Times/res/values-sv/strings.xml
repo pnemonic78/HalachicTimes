@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachiska Tider</string>
     <string name="location_unknown">Okänd adress</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dag är 120 minuter före soluppgången / efter solnedgången</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Tider som förflutit</string>
     <string name="past_enabled">Tidigare tider är aktiverade</string>
     <string name="past_disabled">Tidigare tider är inaktiverade</string>
+    <string name="seconds_title">Sekunder</string>
+    <string name="seconds_hidden">Sekunder är dolda</string>
+    <string name="seconds_visible">Sekunder är synliga</string>
     <string name="summaries_title">Sammanfattningar</string>
     <string name="summaries_hidden">Sammanfattningar är dolda</string>
     <string name="summaries_visible">Sammanfattningar är synliga</string>

@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Галахическое Время</string>
     <string name="location_unknown">Неизвестный адрес</string>
     <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 минут до восхода / после заката</string>
@@ -132,6 +134,9 @@
     <string name="past_title">Прошедшее время</string>
     <string name="past_enabled">Прошлые времена включены</string>
     <string name="past_disabled">Прошлые времена отключены</string>
+    <string name="seconds_title">Секунды</string>
+    <string name="seconds_hidden">Секунды скрыты</string>
+    <string name="seconds_visible">Секунды видны</string>
     <string name="summaries_title">Описания</string>
     <string name="summaries_hidden">Описания скрыты</string>
     <string name="summaries_visible">Описания видны</string>

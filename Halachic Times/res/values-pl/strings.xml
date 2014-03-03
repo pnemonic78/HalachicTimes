@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachiczny Czasy</string>
     <string name="location_unknown">Nieznany adres</string>
     <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dzień jest 120 minut przed wschodem słońca / po zachodzie słońca</string>
@@ -132,6 +134,9 @@
     <string name="past_title">Czasy które upłynęły</string>
     <string name="past_enabled">Przeszłe czasy są włączone</string>
     <string name="past_disabled">Przeszłe czasy są wyłączone</string>
+    <string name="seconds_title">Sekund</string>
+    <string name="seconds_hidden">Sekund są ukryte</string>
+    <string name="seconds_visible">Sekund są widoczne</string>
     <string name="summaries_title">Podsumowań</string>
     <string name="summaries_hidden">Podsumowań są ukryte</string>
     <string name="summaries_visible">Podsumowań są widoczne</string>

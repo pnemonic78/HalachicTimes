@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachiline Ajad</string>
     <string name="location_unknown">Tundmatu aadress</string>
     <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Päeval on 120 minut enne päikesetõusu / pärast päikeseloojangut</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="past_enabled">Möödunud ajad on aktiivne</string>
     <string name="past_disabled">Möödunud ajad on puudega</string>
+    <string name="seconds_title">Sekundit</string>
+    <string name="seconds_hidden">Sekundit on peidetud</string>
+    <string name="seconds_visible">Sekundit on nähtavad</string>
     <string name="summaries_title">Kokkuvõtted</string>
     <string name="summaries_hidden">Kokkuvõtted on peidetud</string>
     <string name="summaries_visible">Kokkuvõtted on nähtavad</string>

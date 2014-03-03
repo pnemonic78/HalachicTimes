@@ -18,6 +18,12 @@
             android:title="@string/coords_format_title"/>
 
         <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="seconds.visible"
+            android:summaryOff="@string/seconds_hidden"
+            android:summaryOn="@string/seconds_visible"
+            android:title="@string/seconds_title"/>
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="summaries.visible"
             android:summaryOff="@string/summaries_hidden"

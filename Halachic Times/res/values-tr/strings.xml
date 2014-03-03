@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Halachik Vakitleri</string>
     <string name="location_unknown">Bilinmeyen adres</string>
     <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Gün 120 dakika güneş doğmadan / günbatımı sonradır</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="past_enabled">Geçmiş vakitleri etkindir</string>
     <string name="past_disabled">Geçmiş vakitleri devre dışı</string>
+    <string name="seconds_title">Saniye</string>
+    <string name="seconds_hidden">Saniye gizlidir</string>
+    <string name="seconds_visible">Saniye görünür</string>
     <string name="summaries_title">Özetler</string>
     <string name="summaries_hidden">Özetler gizlidir</string>
     <string name="summaries_visible">Özetler görünür</string>

@@ -5,6 +5,8 @@
     <string name="title_activity_zmanim">Horarios Halájicos</string>
     <string name="location_unknown">Dirección desconocida</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Día es 120 minutos antes salida / después de la puesta</string>
@@ -130,6 +132,9 @@
     <string name="past_title">Horarios que han superado</string>
     <string name="past_enabled">Los horarios pasados están habilitados</string>
     <string name="past_disabled">Los horarios pasados están desactivados</string>
+    <string name="seconds_title">Segundos</string>
+    <string name="seconds_hidden">Segundos están ocultas</string>
+    <string name="seconds_visible">Segundos están visibles</string>
     <string name="summaries_title">Descripciones</string>
     <string name="summaries_hidden">Descripciones están ocultas</string>
     <string name="summaries_visible">Descripciones están visibles</string>
