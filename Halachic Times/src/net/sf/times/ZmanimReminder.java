@@ -138,7 +138,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			before = settings.getReminder(id);
 
 			if (before >= 0L) {
-				when = item.time - before;
+				when = item.time.getTime() - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 					notifyNow(item);
 					settings.setLatestReminder(now);
@@ -176,7 +176,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				id = item.timeId;
 				before = settings.getReminder(id);
 				if (before >= 0L) {
-					when = item.time - before;
+					when = item.time.getTime() - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 						notifyNow(item);
 						settings.setLatestReminder(now);
@@ -224,7 +224,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 					continue;
 				before = settings.getReminder(id);
 				if (before >= 0L) {
-					when = item.time - before;
+					when = item.time.getTime() - before;
 					if ((now < when) && (when < whenFirst)) {
 						itemFirst = item;
 						whenFirst = when;
@@ -268,7 +268,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		noti.icon = R.drawable.ic_launcher;
 		noti.defaults = Notification.DEFAULT_ALL;
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-		noti.when = item.time;// When the zman is supposed to occur.
+		noti.when = item.time.getTime();// When the zman is supposed to occur.
 		noti.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
 
 		// Wake up the device to notify the user.
@@ -345,10 +345,22 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 *            the time to format.
 	 * @return the formatted time.
 	 */
-	private String formatDateTime(long time) {
+	private String formatDateTime(Date time) {
 		if (format == null) {
 			format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 		}
-		return format.format(new Date(time));
+		return format.format(time);
+	}
+
+	/**
+	 * Format the date and time with seconds.<br>
+	 * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
+	 * 
+	 * @param time
+	 *            the time to format.
+	 * @return the formatted time.
+	 */
+	private String formatDateTime(long time) {
+		return formatDateTime(new Date(time));
 	}
 }

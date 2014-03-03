@@ -24,12 +24,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
@@ -136,22 +136,26 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		/** The time text id. */
 		public int timeId;
 		/** The time. */
-		public long time;
+		public Date time;
 		/** The time label. */
 		public CharSequence timeLabel;
 		/** Has the time elapsed? */
 		public boolean elapsed;
 
+		/**
+		 * Creates a new row item.
+		 */
 		public ZmanimItem() {
 			super();
 		}
 
 		@Override
 		public int compareTo(ZmanimItem another) {
-			long dt = this.time - another.time;
-			if (dt != 0L)
-				return (int) dt;
-			return this.titleId - another.titleId;
+			long t1 = this.time.getTime();
+			long t2 = another.time.getTime();
+			if (t1 == t2)
+				return this.titleId - another.titleId;
+			return (t1 < t2) ? -1 : +1;
 		}
 	}
 
@@ -177,7 +181,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @param inIsrael
 	 *            is in Israel?
 	 */
-	@SuppressLint("SimpleDateFormat")
 	public ZmanimAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael) {
 		super(context, R.layout.times_item, 0);
 		mInflater = LayoutInflater.from(context);
@@ -191,7 +194,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (settings.isSeconds()) {
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
 			String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
-			mTimeFormat = new SimpleDateFormat(pattern);
+			mTimeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
 		} else {
 			mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
 		}
@@ -276,9 +279,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @param summaryId
 	 *            the summary label id.
 	 * @param time
-	 *            the time in milliseconds.
+	 *            the time.
 	 */
-	public void add(int titleId, int summaryId, long time) {
+	public void add(int titleId, int summaryId, Date time) {
 		add(titleId, mSummaries && (summaryId != 0) ? getContext().getText(summaryId) : (CharSequence) null, time);
 	}
 
@@ -287,93 +290,58 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 
 	 * @param titleId
 	 *            the title label id.
-	 * @param summaryId
-	 *            the summary label id.
+	 * @param summary
+	 *            the summary label.
 	 * @param time
 	 *            the time in milliseconds.
 	 */
-	public void add(int titleId, CharSequence summary, long time) {
-		if (time == 0)
+	public void add(int titleId, CharSequence summary, Date time) {
+		add(titleId, summary, titleId, time, false);
+	}
+
+	/**
+	 * Adds the item to the array for a valid date.
+	 * 
+	 * @param titleId
+	 *            the row layout id.
+	 * @param time
+	 *            the time.
+	 * @param timeId
+	 *            the time text id to set for remote views.
+	 */
+	public void add(int titleId, Date time, int timeId) {
+		add(titleId, null, timeId, time, true);
+	}
+
+	/**
+	 * Adds the item to the array for a valid date.
+	 * 
+	 * @param titleId
+	 *            the row layout id.
+	 * @param summary
+	 *            the summary label.
+	 * @param timeId
+	 *            the time text id to set for remote views.
+	 * @param time
+	 *            the time.
+	 * @param set
+	 *            set for remote views?
+	 */
+	private void add(int titleId, CharSequence summary, int timeId, Date time, boolean set) {
+		if (time == null)
 			return;
+		long t = time.getTime();
 
 		ZmanimItem item = new ZmanimItem();
 		item.titleId = titleId;
 		item.summary = mSummaries ? summary : null;
-		item.timeId = titleId;
-		item.time = time;
-		item.timeLabel = mTimeFormat.format(new Date(time));
-		item.elapsed = mElapsed ? false : (time < mNow);
-
-		add(item);
-	}
-
-	/**
-	 * Adds the item to the array for a valid date.
-	 * 
-	 * @param titleId
-	 *            the title label id.
-	 * @param summaryId
-	 *            the summary label id.
-	 * @param date
-	 *            the date.
-	 */
-	public void add(int titleId, int summaryId, Date date) {
-		if (date == null)
-			return;
-		add(titleId, summaryId, (date == null) ? 0L : date.getTime());
-	}
-
-	/**
-	 * Adds the item to the array for a valid date.
-	 * 
-	 * @param titleId
-	 *            the title text id.
-	 * @param summary
-	 *            the summary text.
-	 * @param date
-	 *            the date.
-	 */
-	public void add(int titleId, CharSequence summary, Date date) {
-		if (date == null)
-			return;
-		add(titleId, summary, (date == null) ? 0L : date.getTime());
-	}
-
-	/**
-	 * Adds the item to the array for a valid date.
-	 * 
-	 * @param rowId
-	 *            the row layout id.
-	 * @param timeId
-	 *            the time text id.
-	 * @param date
-	 *            the date.
-	 * @param set
-	 *            set for remote views?
-	 */
-	public void add(int rowId, int timeId, Date date, boolean set) {
-		add(rowId, timeId, (date == null) ? 0L : date.getTime(), set);
-	}
-
-	/**
-	 * Adds the item to the array for a valid date.
-	 * 
-	 * @param rowId
-	 *            the row layout id.
-	 * @param timeId
-	 *            the time text id.
-	 * @param time
-	 *            the time in milliseconds.
-	 * @param set
-	 *            set for remote views?
-	 */
-	public void add(int rowId, int timeId, long time, boolean set) {
-		ZmanimItem item = new ZmanimItem();
-		item.titleId = rowId;
 		item.timeId = timeId;
 		item.time = time;
-		item.timeLabel = DateUtils.formatDateTime(getContext(), time, DateUtils.FORMAT_SHOW_TIME);
-		item.elapsed = /* mElapsed && !set ? false : */(time < mNow);
+		item.timeLabel = mTimeFormat.format(time);
+		if (set)
+			item.elapsed = (t < mNow);
+		else
+			item.elapsed = mElapsed ? false : (t < mNow);
 
 		add(item);
 	}
@@ -447,7 +415,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.dawn_16;
 		}
 		if (remote)
-			add(R.id.dawn_row, R.id.dawn_time, date, true);
+			add(R.id.dawn_row, date, R.id.dawn_time);
 		else
 			add(R.string.dawn, summary, date);
 
@@ -463,7 +431,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.tallis_summary;
 		}
 		if (remote)
-			add(R.id.tallis_row, R.id.tallis_time, date, true);
+			add(R.id.tallis_row, date, R.id.tallis_time);
 		else
 			add(R.string.tallis, summary, date);
 
@@ -476,7 +444,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.sunrise_summary;
 		}
 		if (remote)
-			add(R.id.sunrise_row, R.id.sunrise_time, date, true);
+			add(R.id.sunrise_row, date, R.id.sunrise_time);
 		else
 			add(R.string.sunrise, summary, date);
 
@@ -537,7 +505,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.shema_mga;
 		}
 		if (remote)
-			add(R.id.shema_row, R.id.shema_time, date, true);
+			add(R.id.shema_row, date, R.id.shema_time);
 		else
 			add(R.string.shema, summary, date);
 
@@ -589,7 +557,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.prayers_mga;
 		}
 		if (remote)
-			add(R.id.prayers_row, R.id.prayers_time, date, true);
+			add(R.id.prayers_row, date, R.id.prayers_time);
 		else {
 			add(R.string.prayers, summary, date);
 			if (holidayToday == JewishCalendar.EREV_PESACH)
@@ -620,7 +588,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.midday_summary;
 		}
 		if (remote)
-			add(R.id.midday_row, R.id.midday_time, date, true);
+			add(R.id.midday_row, date, R.id.midday_time);
 		else
 			add(R.string.midday, summary, date);
 		Date midday = date;
@@ -643,7 +611,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.earliest_mincha_summary;
 		}
 		if (remote)
-			add(R.id.earliest_mincha_row, R.id.earliest_mincha_time, date, true);
+			add(R.id.earliest_mincha_row, date, R.id.earliest_mincha_time);
 		else
 			add(R.string.earliest_mincha, summary, date);
 
@@ -662,7 +630,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.mincha_summary;
 		}
 		if (remote)
-			add(R.id.mincha_row, R.id.mincha_time, date, true);
+			add(R.id.mincha_row, date, R.id.mincha_time);
 		else
 			add(R.string.mincha, summary, date);
 
@@ -720,14 +688,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.plug_hamincha_gra;
 		}
 		if (remote)
-			add(R.id.plug_hamincha_row, R.id.plug_hamincha_time, date, true);
+			add(R.id.plug_hamincha_row, date, R.id.plug_hamincha_time);
 		else
 			add(R.string.plug_hamincha, summary, date);
 
 		date = cal.getCandleLighting();
 		if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
 			if (remote) {
-				add(R.id.candles_row, R.id.candles_time, date, true);
+				add(R.id.candles_row, date, R.id.candles_time);
 			} else {
 				String summaryText;
 				if (holidayTomorrow == JewishCalendar.CHANUKAH) {
@@ -738,7 +706,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				add(R.string.candles, summaryText, date);
 			}
 		} else if (remote) {
-			add(R.id.candles_row, R.id.candles_time, null, true);
+			add(R.id.candles_row, null, R.id.candles_time);
 		}
 
 		opinion = mSettings.getSunset();
@@ -751,7 +719,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		}
 		if (hasCandles && (candlesHow == AT_SUNSET)) {
 			if (remote) {
-				add(R.id.candles_row, R.id.candles_time, date, true);
+				add(R.id.candles_row, date, R.id.candles_time);
 			} else if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 				String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				add(R.string.candles, summaryText, date);
@@ -759,10 +727,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				add(R.string.candles, summary, date);
 			}
 		} else if (remote) {
-			add(R.id.candles_row, R.id.candles_time, null, true);
+			add(R.id.candles_row, null, R.id.candles_time);
 		}
 		if (remote)
-			add(R.id.sunset_row, R.id.sunset_time, date, true);
+			add(R.id.sunset_row, date, R.id.sunset_time);
 		else
 			add(R.string.sunset, summary, date);
 
@@ -781,7 +749,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.twilight_2stars;
 		}
 		if (remote)
-			add(R.id.twilight_row, R.id.twilight_time, date, true);
+			add(R.id.twilight_row, date, R.id.twilight_time);
 		else
 			add(R.string.twilight, summary, date);
 
@@ -860,12 +828,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.nightfall_3stars;
 		}
 		if (remote)
-			add(R.id.nightfall_row, R.id.nightfall_time, date, true);
+			add(R.id.nightfall_row, date, R.id.nightfall_time);
 		else
 			add(R.string.nightfall, summary, date);
 		if (hasCandles && (candlesHow == MOTZE_SHABBATH)) {
 			if (remote) {
-				add(R.id.candles_nightfall_row, R.id.candles_nightfall_time, date, true);
+				add(R.id.candles_nightfall_row, date, R.id.candles_nightfall_time);
 			} else if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 				String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				add(R.string.candles, summaryText, date);
@@ -873,7 +841,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				add(R.string.candles, summary, date);
 			}
 		} else if (remote) {
-			add(R.id.candles_nightfall_row, R.id.candles_nightfall_time, null, true);
+			add(R.id.candles_nightfall_row, null, R.id.candles_nightfall_time);
 		}
 
 		opinion = mSettings.getMidnight();
@@ -887,7 +855,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			summary = R.string.midnight_summary;
 		}
 		if (remote)
-			add(R.id.midnight_row, R.id.midnight_time, date, true);
+			add(R.id.midnight_row, date, R.id.midnight_time);
 		else
 			add(R.string.midnight, summary, date);
 
@@ -908,7 +876,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 					calMolad.set(moladYear, moladMonth, moladDay, molad.getMoladHours(), molad.getMoladMinutes(), (int) moladSecondsFloor);
 					calMolad.set(Calendar.MILLISECOND, (int) (DateUtils.SECOND_IN_MILLIS * (moladSeconds - moladSecondsFloor)));
 					summary = R.string.molad_summary;
-					add(R.string.molad, summary, calMolad.getTimeInMillis());
+					add(R.string.molad, summary, calMolad.getTime());
 				}
 			}
 		}
