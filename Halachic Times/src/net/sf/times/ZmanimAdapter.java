@@ -865,6 +865,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				int y = gcal.get(Calendar.YEAR);
 				int m = gcal.get(Calendar.MONTH);
 				int d = gcal.get(Calendar.DAY_OF_MONTH);
+				jcal.forward();// Molad is always of the previous month.
 				JewishDate molad = jcal.getMolad();
 				int moladYear = molad.getGregorianYear();
 				int moladMonth = molad.getGregorianMonth();
