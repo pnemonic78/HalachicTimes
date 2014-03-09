@@ -81,6 +81,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_120 = "120";
 	private static final String OPINION_120_ZMANIS = "120_zmanis";
 	private static final Object OPINION_13 = "13.24";
+	private static final String OPINION_15 = "15";
 	private static final String OPINION_16_1 = "16.1";
 	private static final String OPINION_16_1_ALOS = "16.1_alos";
 	private static final String OPINION_16_1_SUNSET = "16.1_sunset";
@@ -861,6 +862,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		if (!remote) {
 			final int jDayOfMonth = jcal.getJewishDayOfMonth();
+			// Molad.
 			if ((jDayOfMonth <= 2) || (jDayOfMonth >= 25)) {
 				int y = gcal.get(Calendar.YEAR);
 				int m = gcal.get(Calendar.MONTH);
@@ -879,6 +881,24 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 					summary = R.string.molad_summary;
 					add(R.string.molad, summary, calMolad.getTime());
 				}
+			}
+			// Last Kiddush Levana.
+			else if ((jDayOfMonth > 10) && (jDayOfMonth < 20)) {
+				opinion = mSettings.getKiddushLevana();
+				if (OPINION_15.equals(opinion)) {
+					date = cal.getSofZmanKidushLevana15Days();
+					if (date == null) {
+						date = jcal.getSofZmanKidushLevana15Days();
+					}
+					summary = R.string.levana_15;
+				} else {
+					date = cal.getSofZmanKidushLevanaBetweenMoldos();
+					if (date == null) {
+						date = jcal.getSofZmanKidushLevanaBetweenMoldos();
+					}
+					summary = R.string.levana_summary;
+				}
+				add(R.string.levana, summary, date);
 			}
 		}
 

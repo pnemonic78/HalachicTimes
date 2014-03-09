@@ -281,6 +281,14 @@
         <item>@string/midnight_summary</item>
         <item>@string/midnight_12</item>
     </string-array>
+    <string-array name="levana_values" translatable="false">
+        <item></item>
+        <item>15</item>
+    </string-array>
+    <string-array name="levana_entries" translatable="false">
+        <item>@string/levana_summary</item>
+        <item>@string/levana_15</item>
+    </string-array>
     <string-array name="coords_format_values" translatable="false">
         <item>decimal</item>
         <item>sexagesimal</item>

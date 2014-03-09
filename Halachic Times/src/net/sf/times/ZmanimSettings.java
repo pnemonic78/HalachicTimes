@@ -89,6 +89,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_NIGHTFALL = "nightfall";
 	/** Preference name for midnight type. */
 	public static final String KEY_OPINION_MIDNIGHT = "midnight";
+	/** Preference name for kiddush levana type. */
+	public static final String KEY_OPINION_LEVANA = "levana";
 
 	static final String REMINDER_SUFFIX = ".reminder";
 
@@ -120,6 +122,8 @@ public class ZmanimSettings {
 	public static final String KEY_REMINDER_NIGHTFALL = KEY_OPINION_NIGHTFALL + REMINDER_SUFFIX;
 	/** Preference name for midnight reminder. */
 	public static final String KEY_REMINDER_MIDNIGHT = KEY_OPINION_MIDNIGHT + REMINDER_SUFFIX;
+	/** Preference name for kiddush levana reminder. */
+	public static final String KEY_REMINDER_LEVANA = KEY_OPINION_LEVANA + REMINDER_SUFFIX;
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -396,6 +400,15 @@ public class ZmanimSettings {
 	}
 
 	/**
+	 * Get the opinion for latest kiddush levana.
+	 * 
+	 * @return the opinion.
+	 */
+	public String getKiddushLevana() {
+		return mPrefs.getString(KEY_OPINION_LEVANA, "");
+	}
+
+	/**
 	 * Get the opinion.
 	 * 
 	 * @param id
@@ -403,34 +416,37 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getOpinion(int id) {
-		if ((id == R.id.dawn_row) || (id == R.id.dawn_time) || (id == R.string.dawn))
+		if ((id == R.id.dawn_row) || (id == R.string.dawn))
 			return getDawn();
-		if ((id == R.id.tallis_row) || (id == R.id.tallis_time) || (id == R.string.tallis))
+		if ((id == R.id.tallis_row) || (id == R.string.tallis))
 			return getTallis();
-		if ((id == R.id.sunrise_row) || (id == R.id.sunrise_time) || (id == R.string.sunrise))
+		if ((id == R.id.sunrise_row) || (id == R.string.sunrise))
 			return getSunrise();
-		if ((id == R.id.shema_row) || (id == R.id.shema_time) || (id == R.string.shema))
+		if ((id == R.id.shema_row) || (id == R.string.shema))
 			return getLastShema();
-		if ((id == R.id.prayers_row) || (id == R.id.prayers_time) || (id == R.string.prayers))
+		if ((id == R.id.prayers_row) || (id == R.string.prayers))
 			return getLastTfila();
-		if ((id == R.id.midday_row) || (id == R.id.midday_time) || (id == R.string.midday))
+		if ((id == R.id.midday_row) || (id == R.string.midday))
 			return getMidday();
-		if ((id == R.id.earliest_mincha_row) || (id == R.id.earliest_mincha_time) || (id == R.string.earliest_mincha))
+		if ((id == R.id.earliest_mincha_row) || (id == R.string.earliest_mincha))
 			return getEarliestMincha();
-		if ((id == R.id.mincha_row) || (id == R.id.mincha_time) || (id == R.string.mincha))
+		if ((id == R.id.mincha_row) || (id == R.string.mincha))
 			return getMincha();
-		if ((id == R.id.plug_hamincha_row) || (id == R.id.plug_hamincha_time) || (id == R.string.plug_hamincha))
+		if ((id == R.id.plug_hamincha_row) || (id == R.string.plug_hamincha))
 			return getPlugHamincha();
-		if ((id == R.id.sunset_row) || (id == R.id.sunset_time) || (id == R.string.sunset))
+		if ((id == R.id.sunset_row) || (id == R.string.sunset))
 			return getSunset();
-		if ((id == R.id.twilight_row) || (id == R.id.twilight_time) || (id == R.string.twilight))
+		if ((id == R.id.twilight_row) || (id == R.string.twilight))
 			return getTwilight();
-		if ((id == R.id.nightfall_row) || (id == R.id.nightfall_time) || (id == R.string.nightfall))
+		if ((id == R.id.nightfall_row) || (id == R.string.nightfall))
 			return getNightfall();
-		if ((id == R.id.candles_nightfall_row) || (id == R.id.candles_nightfall_time))
+		if (id == R.id.candles_nightfall_row)
 			return getNightfall();
-		if ((id == R.id.midnight_row) || (id == R.id.midnight_time) || (id == R.string.midnight))
+		if ((id == R.id.midnight_row) || (id == R.string.midnight))
 			return getMidnight();
+		if (id == R.string.levana)
+			return getKiddushLevana();
+
 		return null;
 	}
 
@@ -443,36 +459,38 @@ public class ZmanimSettings {
 	 *         positive value when no reminder.
 	 */
 	public long getReminder(int id) {
-		if ((id == R.id.dawn_row) || (id == R.id.dawn_time) || (id == R.string.dawn))
+		if ((id == R.id.dawn_row) || (id == R.string.dawn))
 			return getReminder(KEY_REMINDER_DAWN);
-		if ((id == R.id.tallis_row) || (id == R.id.tallis_time) || (id == R.string.tallis))
+		if ((id == R.id.tallis_row) || (id == R.string.tallis))
 			return getReminder(KEY_REMINDER_TALLIS);
-		if ((id == R.id.sunrise_row) || (id == R.id.sunrise_time) || (id == R.string.sunrise))
+		if ((id == R.id.sunrise_row) || (id == R.string.sunrise))
 			return getReminder(KEY_REMINDER_SUNRISE);
-		if ((id == R.id.shema_row) || (id == R.id.shema_time) || (id == R.string.shema))
+		if ((id == R.id.shema_row) || (id == R.string.shema))
 			return getReminder(KEY_REMINDER_SHEMA);
-		if ((id == R.id.prayers_row) || (id == R.id.prayers_time) || (id == R.string.prayers))
+		if ((id == R.id.prayers_row) || (id == R.string.prayers))
 			return getReminder(KEY_REMINDER_TFILA);
-		if ((id == R.id.midday_row) || (id == R.id.midday_time) || (id == R.string.midday))
+		if ((id == R.id.midday_row) || (id == R.string.midday))
 			return getReminder(KEY_REMINDER_NOON);
-		if ((id == R.id.earliest_mincha_row) || (id == R.id.earliest_mincha_time) || (id == R.string.earliest_mincha))
+		if ((id == R.id.earliest_mincha_row) || (id == R.string.earliest_mincha))
 			return getReminder(KEY_REMINDER_EARLIEST_MINCHA);
-		if ((id == R.id.mincha_row) || (id == R.id.mincha_time) || (id == R.string.mincha))
+		if ((id == R.id.mincha_row) || (id == R.string.mincha))
 			return getReminder(KEY_REMINDER_MINCHA);
-		if ((id == R.id.plug_hamincha_row) || (id == R.id.plug_hamincha_time) || (id == R.string.plug_hamincha))
+		if ((id == R.id.plug_hamincha_row) || (id == R.string.plug_hamincha))
 			return getReminder(KEY_REMINDER_PLUG_MINCHA);
-		if ((id == R.id.candles_row) || (id == R.id.candles_time) || (id == R.string.candles))
+		if ((id == R.id.candles_row) || (id == R.string.candles))
 			return getReminder(KEY_REMINDER_CANDLES);
-		if ((id == R.id.sunset_row) || (id == R.id.sunset_time) || (id == R.string.sunset))
+		if ((id == R.id.sunset_row) || (id == R.string.sunset))
 			return getReminder(KEY_REMINDER_SUNSET);
-		if ((id == R.id.twilight_row) || (id == R.id.twilight_time) || (id == R.string.twilight))
+		if ((id == R.id.twilight_row) || (id == R.string.twilight))
 			return getReminder(KEY_REMINDER_TWILIGHT);
-		if ((id == R.id.nightfall_row) || (id == R.id.nightfall_time) || (id == R.string.nightfall))
+		if ((id == R.id.nightfall_row) || (id == R.string.nightfall))
 			return getReminder(KEY_REMINDER_NIGHTFALL);
-		if ((id == R.id.candles_nightfall_row) || (id == R.id.candles_nightfall_time))
+		if (id == R.id.candles_nightfall_row)
 			return getReminder(KEY_REMINDER_NIGHTFALL);
-		if ((id == R.id.midnight_row) || (id == R.id.midnight_time) || (id == R.string.midnight))
+		if ((id == R.id.midnight_row) || (id == R.string.midnight))
 			return getReminder(KEY_REMINDER_MIDNIGHT);
+		if (id == R.string.levana)
+			return getReminder(KEY_REMINDER_LEVANA);
 
 		return Long.MAX_VALUE;
 	}

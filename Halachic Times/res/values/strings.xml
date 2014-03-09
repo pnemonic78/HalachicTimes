@@ -196,6 +196,9 @@
     <!-- Moon -->
     <string name="molad">Birth of new moon (molad)</string>
     <string name="molad_summary">Average molad</string>
+    <string name="levana">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_summary">Halfway between molad and molad</string>
+    <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>

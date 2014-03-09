@@ -22,6 +22,7 @@ package net.sf.times;
 import java.util.Date;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,8 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 			populateNightfall(mCalendar);
 		} else if (id == R.string.midnight) {
 			populateMidnight(mCalendar);
+		} else if (id == R.string.levana) {
+			populateKiddushLevana(mCalendar);
 		} else if (id == R.string.eat_chametz) {
 			populateEatChametz(mCalendar);
 		} else if (id == R.string.burn_chametz) {
@@ -634,6 +637,27 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
 		date = cal.getSofZmanBiurChametzGRA();
 		title = R.string.burn_chametz_gra;
+		add(title, 0, date);
+	}
+
+	private void populateKiddushLevana(ComplexZmanimCalendar cal) {
+		Date date;
+		int title;
+
+		date = cal.getSofZmanKidushLevanaBetweenMoldos();
+		if (date == null) {
+			JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
+			date = jcal.getSofZmanKidushLevanaBetweenMoldos();
+		}
+		title = R.string.levana_summary;
+		add(title, 0, date);
+
+		date = cal.getSofZmanKidushLevana15Days();
+		if (date == null) {
+			JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
+			date = jcal.getSofZmanKidushLevana15Days();
+		}
+		title = R.string.levana_15;
 		add(title, 0, date);
 	}
 }

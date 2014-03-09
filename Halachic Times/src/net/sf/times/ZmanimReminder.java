@@ -134,7 +134,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		int count = adapter.getCount();
 		for (int i = 0; i < count; i++) {
 			item = adapter.getItem(i);
-			id = item.timeId;
+			id = item.titleId;
 			before = settings.getReminder(id);
 
 			if (before >= 0L) {
@@ -173,7 +173,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			count = adapter.getCount();
 			for (int i = 0; i < count; i++) {
 				item = adapter.getItem(i);
-				id = item.timeId;
+				id = item.titleId;
 				before = settings.getReminder(id);
 				if (before >= 0L) {
 					when = item.time.getTime() - before;
@@ -217,10 +217,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 			count = adapter.getCount();
 			for (int i = 0; i < count; i++) {
 				item = adapter.getItem(i);
-				id = item.timeId;
+				id = item.titleId;
 				// All non-candle times were checked "today" and "tomorrow"
 				// above.
-				if ((id != R.id.candles_row) && (id != R.id.candles_time) && (id != R.string.candles))
+				if ((id != R.id.candles_row) && (id != R.string.candles))
 					continue;
 				before = settings.getReminder(id);
 				if (before >= 0L) {

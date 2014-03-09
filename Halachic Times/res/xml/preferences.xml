@@ -306,6 +306,24 @@
                 android:key="midnight.reminder"
                 android:title="@string/reminder"/>
         </PreferenceScreen>
+        <PreferenceScreen android:title="@string/levana">
+            <ListPreference
+                android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:entries="@array/levana_entries"
+                android:entryValues="@array/levana_values"
+                android:icon="@drawable/ic_opinion"
+                android:key="levana"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:icon="@drawable/ic_alarm"
+                android:key="levana.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
     </PreferenceCategory>
 
 </PreferenceScreen>
