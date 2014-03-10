@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="Zmanim" parent="android:Widget"/>
 
@@ -7,6 +7,7 @@
 
     <style name="Zmanim.ListDivider">
         <item name="android:background">@drawable/divider_horizontal_dark</item>
+        <item name="android:singleLine">true</item>
     </style>
 
     <style name="Zmanim.ListItem">

@@ -30,6 +30,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
@@ -159,4 +160,10 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	protected void setOnClickListener(View view, ZmanimItem item) {
 		// No clicking allowed.
 	}
+
+	@Override
+	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
+		super.bindViewGrouping(list, position, getResources().getText(mMasterId));
+	}
+
 }
