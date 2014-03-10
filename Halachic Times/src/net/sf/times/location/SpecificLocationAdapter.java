@@ -17,12 +17,11 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.location;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.times.location.ZmanimAddress;
 import android.content.Context;
 
 /**

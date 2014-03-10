@@ -17,7 +17,7 @@
  *   Moshe Waisberggdcfvrfdfg v 
  * 
  */
-package net.sf.times;
+package net.sf.times.location;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -27,8 +27,10 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocations;
+import net.sf.times.R;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.R.id;
+import net.sf.times.R.layout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;

@@ -17,15 +17,17 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.location;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
-import net.sf.times.LocationAdapter.OnFavoriteClickListener;
-import net.sf.times.location.AddressProvider;
-import net.sf.times.location.CountriesGeocoder;
-import net.sf.times.location.ZmanimAddress;
+import net.sf.times.R;
+import net.sf.times.ZmanimActivity;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.R.id;
+import net.sf.times.R.layout;
+import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 import android.app.SearchManager;
 import android.app.TabActivity;
 import android.content.Intent;

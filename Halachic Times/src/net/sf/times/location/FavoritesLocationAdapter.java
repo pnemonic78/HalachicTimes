@@ -17,27 +17,25 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.location;
 
 import java.util.List;
 
-import net.sf.times.location.ZmanimAddress;
 import android.content.Context;
 
 /**
- * Location adapter for locations the user has "previously visited".
+ * Location adapter for "favorite" locations.
  * 
  * @author Moshe Waisberg
  */
-public class HistoryLocationAdapter extends SpecificLocationAdapter {
+public class FavoritesLocationAdapter extends SpecificLocationAdapter {
 
-	public HistoryLocationAdapter(Context context, List<ZmanimAddress> addresses) {
+	public FavoritesLocationAdapter(Context context, List<ZmanimAddress> addresses) {
 		super(context, addresses);
 	}
 
 	@Override
 	protected boolean isSpecific(ZmanimAddress address) {
-		return address.getId() > 0L;
+		return address.isFavorite();
 	}
-
 }

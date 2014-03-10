@@ -47,7 +47,7 @@
             android:parentActivityName=".ZmanimActivity">
         </activity>
         <activity
-            android:name="LocationActivity"
+            android:name="net.sf.times.location.LocationActivity"
             android:label="@string/title_activity_location"
             android:parentActivityName=".ZmanimActivity">
             <intent-filter>

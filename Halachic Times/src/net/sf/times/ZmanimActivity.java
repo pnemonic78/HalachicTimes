@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressService;
+import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.view.animation.LayoutWeightAnimation;
