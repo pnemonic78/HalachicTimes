@@ -245,11 +245,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			mSwitcher.setOutAnimation(outAnim);
 		}
 
-		mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-				Animation.RELATIVE_TO_SELF, 0.0f);
+		mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 		mSlideRightToLeft.setDuration(400);
-		mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-				Animation.RELATIVE_TO_SELF, 0.0f);
+		mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 		mSlideLeftToRight.setDuration(400);
 		mDetailsGrow = new LayoutWeightAnimation(mDetailsFragment, 0f, 2f);
 		mDetailsGrow.setDuration(500);
@@ -282,8 +280,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		// Have we been destroyed?
 		if (header == null)
 			return;
-		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-				| DateUtils.FORMAT_SHOW_WEEKDAY);
+		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_WEEKDAY);
 		TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
 		textGregorian.setText(dateGregorian);
 	}
@@ -465,7 +462,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				mDetailsListFragment.populateTimes(mDate, itemId);
 				mDetailsFragment.setDisplayedChild(0);
 			}
-			mSwitcher.showNext();
+			if (isDetailsShowing())
+				hideDetails();
+			else
+				showDetails();
 			mSelectedId = itemId;
 		} else if ((mSelectedId == itemId) && isDetailsShowing()) {
 			hideDetails();
@@ -493,11 +493,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				mMasterFragment.unhighlight();
 
 				if (isDetailsShowing()) {
-					if (mSwitcher != null) {
-						mSwitcher.showPrevious();
-					} else {
-						hideDetails();
-					}
+					hideDetails();
 					return true;
 				}
 			}
@@ -512,11 +508,19 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	protected void hideDetails() {
-		mDetailsFragment.startAnimation(mDetailsShrink);
+		if (mSwitcher != null) {
+			mSwitcher.showPrevious();
+		} else {
+			mDetailsFragment.startAnimation(mDetailsShrink);
+		}
 	}
 
 	protected void showDetails() {
-		mDetailsFragment.startAnimation(mDetailsGrow);
+		if (mSwitcher != null) {
+			mSwitcher.showNext();
+		} else {
+			mDetailsFragment.startAnimation(mDetailsGrow);
+		}
 	}
 
 	protected boolean isDetailsShowing() {

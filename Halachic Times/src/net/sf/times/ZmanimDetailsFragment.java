@@ -78,6 +78,15 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 		super(context);
 	}
 
+	/**
+	 * Get the master id for populating the details.
+	 * 
+	 * @return the master id.
+	 */
+	public int getMasterId() {
+		return mMasterId;
+	}
+
 	@Override
 	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
 		if (mMasterId == 0)
@@ -107,7 +116,7 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	 *            the time id.
 	 */
 	@SuppressWarnings("deprecation")
-	protected ZmanimAdapter populateTimes(Calendar date, int id) {
+	public ZmanimAdapter populateTimes(Calendar date, int id) {
 		mMasterId = id;
 
 		ZmanimAdapter adapter = super.populateTimes(date);
@@ -163,6 +172,8 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 
 	@Override
 	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
+		if (position >= 0)
+			return;
 		super.bindViewGrouping(list, position, getResources().getText(mMasterId));
 	}
 

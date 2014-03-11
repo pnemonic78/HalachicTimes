@@ -887,15 +887,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				opinion = mSettings.getKiddushLevana();
 				if (OPINION_15.equals(opinion)) {
 					date = cal.getSofZmanKidushLevana15Days();
-					if (date == null) {
-						date = jcal.getSofZmanKidushLevana15Days();
-					}
 					summary = R.string.levana_15;
 				} else {
 					date = cal.getSofZmanKidushLevanaBetweenMoldos();
-					if (date == null) {
-						date = jcal.getSofZmanKidushLevanaBetweenMoldos();
-					}
 					summary = R.string.levana_summary;
 				}
 				add(R.string.levana, summary, date);
