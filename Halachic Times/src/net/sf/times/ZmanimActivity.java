@@ -210,8 +210,14 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (mReminder != null)
-			mReminder.remind(mSettings);
+		if (mReminder != null) {
+			// Don't run on UI thread.
+			new Thread() {
+				public void run() {
+					mReminder.remind(mSettings);
+				}
+			}.start();
+		}
 	}
 
 	/** Initialise. */
