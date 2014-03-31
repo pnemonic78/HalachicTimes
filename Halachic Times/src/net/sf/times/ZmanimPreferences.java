@@ -22,11 +22,14 @@ package net.sf.times;
 import java.util.Locale;
 
 import net.sf.preference.SeekBarPreference;
+import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
@@ -35,12 +38,13 @@ import android.preference.PreferenceManager;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener {
+public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
 	private SeekBarPreference mCandles;
 	private ZmanimSettings mSettings;
 	private ZmanimReminder mReminder;
 	private Runnable mCandlesRunnable;
+	private Preference mAboutKosherJava;
 
 	/**
 	 * Constructs a new preferences.
@@ -98,6 +102,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		} catch (NameNotFoundException e) {
 			// Never should happen with our own pacakge!
 		}
+		mAboutKosherJava = findPreference("about.kosherjava");
+		mAboutKosherJava.setOnPreferenceClickListener(this);
 	}
 
 	private void initList(String name) {
@@ -166,5 +172,16 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 			}
 		}
 		preference.setSummary(null);
+	}
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		if (preference == mAboutKosherJava) {
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(getString(R.string.kosherjava_url)));
+			startActivity(intent);
+			return true;
+		}
+		return false;
 	}
 }
