@@ -22,6 +22,7 @@ package net.sf.times;
 import java.util.Locale;
 
 import net.sf.preference.SeekBarPreference;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -90,6 +91,13 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
 		initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
 		initList(ZmanimSettings.KEY_REMINDER_LEVANA);
+
+		Preference version = findPreference("about.version");
+		try {
+			version.setSummary(getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+		} catch (NameNotFoundException e) {
+			// Never should happen with our own pacakge!
+		}
 	}
 
 	private void initList(String name) {
