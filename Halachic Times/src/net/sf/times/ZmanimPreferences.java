@@ -78,7 +78,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_OPINION_TWILIGHT);
 		initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
 		initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
-		initList(ZmanimSettings.KEY_OPINION_LEVANA);
+		initList(ZmanimSettings.KEY_OPINION_EARLIEST_LEVANA);
+		initList(ZmanimSettings.KEY_OPINION_LATEST_LEVANA);
 
 		initList(ZmanimSettings.KEY_REMINDER_DAWN);
 		initList(ZmanimSettings.KEY_REMINDER_TALLIS);
@@ -94,7 +95,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_REMINDER_TWILIGHT);
 		initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
 		initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
-		initList(ZmanimSettings.KEY_REMINDER_LEVANA);
+		initList(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
+		initList(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
 
 		Preference version = findPreference("about.version");
 		try {

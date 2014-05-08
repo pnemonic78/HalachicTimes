@@ -196,8 +196,11 @@
     <!-- Moon -->
     <string name="molad">Birth of new moon (molad)</string>
     <string name="molad_summary">Average molad</string>
-    <string name="levana">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_summary">Halfway between molad and molad</string>
+    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 days after the molad</string>
+    <string name="levana_7">7 days after the molad</string>
+    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_latest_summary">Halfway between molad and molad</string>
     <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
@@ -263,7 +266,7 @@
 
     <!-- About -->
     <string name="category_about">About</string>
-    <string name="version">Version</string>
+    <string name="version">Application version</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004-2011 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>

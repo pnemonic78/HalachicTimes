@@ -80,8 +80,10 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 			populateNightfall(mCalendar);
 		} else if (id == R.string.midnight) {
 			populateMidnight(mCalendar);
-		} else if (id == R.string.levana) {
-			populateKiddushLevana(mCalendar);
+		} else if (id == R.string.levana_earliest) {
+			populateEarliestKiddushLevana(mCalendar);
+		} else if (id == R.string.levana_latest) {
+			populateLatestKiddushLevana(mCalendar);
 		} else if (id == R.string.eat_chametz) {
 			populateEatChametz(mCalendar);
 		} else if (id == R.string.burn_chametz) {
@@ -640,7 +642,28 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 		add(title, 0, date);
 	}
 
-	private void populateKiddushLevana(ComplexZmanimCalendar cal) {
+	private void populateEarliestKiddushLevana(ComplexZmanimCalendar cal) {
+		Date date;
+		int title;
+
+		date = cal.getTchilasZmanKidushLevana3Days();
+		if (date == null) {
+			JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
+			date = jcal.getTchilasZmanKidushLevana3Days();
+		}
+		title = R.string.levana_earliest_summary;
+		add(title, 0, date);
+
+		date = cal.getTchilasZmanKidushLevana7Days();
+		if (date == null) {
+			JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
+			date = jcal.getTchilasZmanKidushLevana7Days();
+		}
+		title = R.string.levana_7;
+		add(title, 0, date);
+	}
+
+	private void populateLatestKiddushLevana(ComplexZmanimCalendar cal) {
 		Date date;
 		int title;
 
@@ -649,7 +672,7 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 			JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
 			date = jcal.getSofZmanKidushLevanaBetweenMoldos();
 		}
-		title = R.string.levana_summary;
+		title = R.string.levana_latest_summary;
 		add(title, 0, date);
 
 		date = cal.getSofZmanKidushLevana15Days();

@@ -89,8 +89,10 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_NIGHTFALL = "nightfall";
 	/** Preference name for midnight type. */
 	public static final String KEY_OPINION_MIDNIGHT = "midnight";
-	/** Preference name for kiddush levana type. */
-	public static final String KEY_OPINION_LEVANA = "levana";
+	/** Preference name for earliest kiddush levana type. */
+	public static final String KEY_OPINION_EARLIEST_LEVANA = "levana_earliest";
+	/** Preference name for latest kiddush levana type. */
+	public static final String KEY_OPINION_LATEST_LEVANA = "levana_latest";
 
 	static final String REMINDER_SUFFIX = ".reminder";
 
@@ -122,8 +124,10 @@ public class ZmanimSettings {
 	public static final String KEY_REMINDER_NIGHTFALL = KEY_OPINION_NIGHTFALL + REMINDER_SUFFIX;
 	/** Preference name for midnight reminder. */
 	public static final String KEY_REMINDER_MIDNIGHT = KEY_OPINION_MIDNIGHT + REMINDER_SUFFIX;
-	/** Preference name for kiddush levana reminder. */
-	public static final String KEY_REMINDER_LEVANA = KEY_OPINION_LEVANA + REMINDER_SUFFIX;
+	/** Preference name for earliest kiddush levana reminder. */
+	public static final String KEY_REMINDER_EARLIEST_LEVANA = KEY_OPINION_EARLIEST_LEVANA + REMINDER_SUFFIX;
+	/** Preference name for latest kiddush levana reminder. */
+	public static final String KEY_REMINDER_LATEST_LEVANA = KEY_OPINION_LATEST_LEVANA + REMINDER_SUFFIX;
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -400,12 +404,21 @@ public class ZmanimSettings {
 	}
 
 	/**
+	 * Get the opinion for earliest kiddush levana.
+	 * 
+	 * @return the opinion.
+	 */
+	public String getEarliestKiddushLevana() {
+		return mPrefs.getString(KEY_OPINION_EARLIEST_LEVANA, "");
+	}
+
+	/**
 	 * Get the opinion for latest kiddush levana.
 	 * 
 	 * @return the opinion.
 	 */
-	public String getKiddushLevana() {
-		return mPrefs.getString(KEY_OPINION_LEVANA, "");
+	public String getLatestKiddushLevana() {
+		return mPrefs.getString(KEY_OPINION_LATEST_LEVANA, "");
 	}
 
 	/**
@@ -444,8 +457,10 @@ public class ZmanimSettings {
 			return getNightfall();
 		if ((id == R.id.midnight_row) || (id == R.string.midnight))
 			return getMidnight();
-		if (id == R.string.levana)
-			return getKiddushLevana();
+		if (id == R.string.levana_earliest)
+			return getEarliestKiddushLevana();
+		if (id == R.string.levana_latest)
+			return getLatestKiddushLevana();
 
 		return null;
 	}
@@ -489,8 +504,10 @@ public class ZmanimSettings {
 			return getReminder(KEY_REMINDER_NIGHTFALL);
 		if ((id == R.id.midnight_row) || (id == R.string.midnight))
 			return getReminder(KEY_REMINDER_MIDNIGHT);
-		if (id == R.string.levana)
-			return getReminder(KEY_REMINDER_LEVANA);
+		if (id == R.string.levana_earliest)
+			return getReminder(KEY_REMINDER_EARLIEST_LEVANA);
+		if (id == R.string.levana_latest)
+			return getReminder(KEY_REMINDER_LATEST_LEVANA);
 
 		return Long.MAX_VALUE;
 	}

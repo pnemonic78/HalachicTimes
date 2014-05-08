@@ -306,14 +306,14 @@
                 android:key="midnight.reminder"
                 android:title="@string/reminder"/>
         </PreferenceScreen>
-        <PreferenceScreen android:title="@string/levana">
+        <PreferenceScreen android:title="@string/levana_earliest">
             <ListPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_info"
-                android:entries="@array/levana_entries"
-                android:entryValues="@array/levana_values"
+                android:entries="@array/levana_earliest_entries"
+                android:entryValues="@array/levana_earliest_values"
                 android:icon="@drawable/ic_opinion"
-                android:key="levana"
+                android:key="levana_earliest"
                 android:title="@string/opinion"/>
             <ListPreference
                 android:defaultValue=""
@@ -321,7 +321,25 @@
                 android:entries="@array/reminder_entries"
                 android:entryValues="@array/reminder_values"
                 android:icon="@drawable/ic_alarm"
-                android:key="levana.reminder"
+                android:key="levana_earliest.reminder"
+                android:title="@string/reminder"/>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="@string/levana_latest">
+            <ListPreference
+                android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:entries="@array/levana_latest_entries"
+                android:entryValues="@array/levana_latest_values"
+                android:icon="@drawable/ic_opinion"
+                android:key="levana_latest"
+                android:title="@string/opinion"/>
+            <ListPreference
+                android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_alert"
+                android:entries="@array/reminder_entries"
+                android:entryValues="@array/reminder_values"
+                android:icon="@drawable/ic_alarm"
+                android:key="levana_latest.reminder"
                 android:title="@string/reminder"/>
         </PreferenceScreen>
     </PreferenceCategory>
