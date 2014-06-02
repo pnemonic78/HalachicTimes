@@ -25,14 +25,11 @@ import java.util.List;
 import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimApplication;
-import net.sf.times.R.id;
-import net.sf.times.R.layout;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 import android.app.SearchManager;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -222,10 +219,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 			adapter = mAdapterHistory;
 			break;
 		}
-		Address addr = adapter.getItem(position);
+		ZmanimAddress addr = adapter.getItem(position);
 		Location loc = new Location(CountriesGeocoder.USER_PROVIDER);
 		loc.setLatitude(addr.getLatitude());
 		loc.setLongitude(addr.getLongitude());
+		loc.setAltitude(addr.getElevation());
 		loc.setTime(System.currentTimeMillis());
 		setAddress(loc);
 	}
@@ -289,6 +287,12 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 						loc.setLatitude(latitude);
 						loc.setLongitude(longitude);
 						loc.setTime(System.currentTimeMillis());
+
+						if (tokens.length >= 3) {
+							double elevation = Location.convert(tokens[2]);
+
+							loc.setAltitude(elevation);
+						}
 					} catch (IllegalArgumentException e) {
 						// Not valid coordinate.
 					}

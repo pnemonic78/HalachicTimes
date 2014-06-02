@@ -38,8 +38,8 @@ public class ZmanimSettings {
 	private static final String KEY_LATITUDE = "latitude";
 	/** Preference name for the longitude. */
 	private static final String KEY_LONGITUDE = "longitude";
-	/** Preference key for the altitude. */
-	private static final String KEY_ALTITUDE = "altitude";
+	/** Preference key for the elevation / altitude. */
+	private static final String KEY_ELEVATION = "altitude";
 	/** Preference name for the location provider. */
 	private static final String KEY_PROVIDER = "provider";
 	/** Preference name for the location time. */
@@ -180,11 +180,11 @@ public class ZmanimSettings {
 			return null;
 		double latitude;
 		double longitude;
-		double altitude;
+		double elevation;
 		try {
 			latitude = Double.parseDouble(mPrefs.getString(KEY_LATITUDE, "0"));
 			longitude = Double.parseDouble(mPrefs.getString(KEY_LONGITUDE, "0"));
-			altitude = Double.parseDouble(mPrefs.getString(KEY_ALTITUDE, "0"));
+			elevation = Double.parseDouble(mPrefs.getString(KEY_ELEVATION, "0"));
 		} catch (NumberFormatException nfe) {
 			nfe.printStackTrace();
 			return null;
@@ -193,7 +193,7 @@ public class ZmanimSettings {
 		Location location = new Location(provider);
 		location.setLatitude(latitude);
 		location.setLongitude(longitude);
-		location.setAltitude(altitude);
+		location.setAltitude(elevation);
 		location.setTime(mPrefs.getLong(KEY_TIME, 0));
 		return location;
 	}
@@ -208,7 +208,7 @@ public class ZmanimSettings {
 		editor.putString(KEY_PROVIDER, location.getProvider());
 		editor.putString(KEY_LATITUDE, Double.toString(location.getLatitude()));
 		editor.putString(KEY_LONGITUDE, Double.toString(location.getLongitude()));
-		editor.putString(KEY_ALTITUDE, Double.toString(location.getAltitude()));
+		editor.putString(KEY_ELEVATION, Double.toString(location.getAltitude()));
 		editor.putLong(KEY_TIME, location.getTime());
 		editor.commit();
 	}

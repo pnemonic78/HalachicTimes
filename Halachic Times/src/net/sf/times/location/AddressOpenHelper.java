@@ -58,6 +58,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		sql.append(AddressColumns.LOCATION_LONGITUDE).append(" DOUBLE NOT NULL,");
 		sql.append(AddressColumns.LATITUDE).append(" DOUBLE NOT NULL,");
 		sql.append(AddressColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
+		sql.append(AddressColumns.ELEVATION).append(" DOUBLE NOT NULL,");
 		sql.append(AddressColumns.ADDRESS).append(" TEXT NOT NULL,");
 		sql.append(AddressColumns.LANGUAGE).append(" TEXT,");
 		sql.append(AddressColumns.TIMESTAMP).append(" INTEGER NOT NULL,");

@@ -29,8 +29,6 @@ import java.util.TreeSet;
 
 import net.sf.times.R;
 import net.sf.times.ZmanimApplication;
-import net.sf.times.R.id;
-import net.sf.times.R.layout;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;

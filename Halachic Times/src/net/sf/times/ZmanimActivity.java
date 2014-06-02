@@ -251,9 +251,11 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			mSwitcher.setOutAnimation(outAnim);
 		}
 
-		mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f);
 		mSlideRightToLeft.setDuration(400);
-		mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f);
 		mSlideLeftToRight.setDuration(400);
 		mDetailsGrow = new LayoutWeightAnimation(mDetailsFragment, 0f, 2f);
 		mDetailsGrow.setDuration(500);
@@ -286,7 +288,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		// Have we been destroyed?
 		if (header == null)
 			return;
-		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_WEEKDAY);
+		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+				| DateUtils.FORMAT_SHOW_WEEKDAY);
 		TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
 		textGregorian.setText(dateGregorian);
 	}
@@ -323,14 +326,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 */
 	protected boolean isBackgroundDrawable() {
 		return true;
-	}
-
-	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
-		GeoLocation gloc = locations.getGeoLocation();
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCalendar(date);
-		boolean inIsrael = locations.inIsrael();
-		return new ZmanimAdapter(this, mSettings, cal, inIsrael);
 	}
 
 	protected ZmanimReminder createReminder() {

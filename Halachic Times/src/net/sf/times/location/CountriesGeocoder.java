@@ -63,6 +63,7 @@ public class CountriesGeocoder {
 	private static String[] mCitiesCountries;
 	private static double[] mCitiesLatitudes;
 	private static double[] mCitiesLongitudes;
+	private static double[] mCitiesElevations;
 
 	/**
 	 * Constructs a new cities provider.
@@ -113,11 +114,14 @@ public class CountriesGeocoder {
 			int citiesCount = mCitiesCountries.length;
 			String[] latitudes = res.getStringArray(R.array.cities_latitudes);
 			String[] longitudes = res.getStringArray(R.array.cities_longitudes);
+			String[] elevations = res.getStringArray(R.array.cities_elevations);
 			mCitiesLatitudes = new double[citiesCount];
 			mCitiesLongitudes = new double[citiesCount];
+			mCitiesElevations = new double[citiesCount];
 			for (int i = 0; i < citiesCount; i++) {
 				mCitiesLatitudes[i] = Double.parseDouble(latitudes[i]);
 				mCitiesLongitudes[i] = Double.parseDouble(longitudes[i]);
+				mCitiesElevations[i] = Double.parseDouble(elevations[i]);
 			}
 		}
 		mCitiesNames = res.getStringArray(R.array.cities);
@@ -288,6 +292,7 @@ public class CountriesGeocoder {
 			city.setId(-nearestCityIndex - 1);
 			city.setLatitude(mCitiesLatitudes[nearestCityIndex]);
 			city.setLongitude(mCitiesLongitudes[nearestCityIndex]);
+			city.setElevation(mCitiesElevations[nearestCityIndex]);
 			city.setCountryCode(locale.getCountry());
 			city.setCountryName(locale.getDisplayCountry());
 			city.setLocality(cityName);
@@ -306,6 +311,7 @@ public class CountriesGeocoder {
 		List<ZmanimAddress> cities = new ArrayList<ZmanimAddress>(citiesCount);
 		double latitude;
 		double longitude;
+		double elevation;
 		String cityName;
 		Locale locale = mLocale;
 		Locale cityLocale;
@@ -315,6 +321,7 @@ public class CountriesGeocoder {
 		for (int i = 0, j = -1; i < citiesCount; i++, j--) {
 			latitude = mCitiesLatitudes[i];
 			longitude = mCitiesLongitudes[i];
+			elevation = mCitiesElevations[i];
 			cityName = mCitiesNames[i];
 			cityLocale = new Locale(languageCode, mCitiesCountries[i]);
 
@@ -322,6 +329,7 @@ public class CountriesGeocoder {
 			city.setId(j);
 			city.setLatitude(latitude);
 			city.setLongitude(longitude);
+			city.setElevation(elevation);
 			city.setCountryCode(cityLocale.getCountry());
 			city.setCountryName(cityLocale.getDisplayCountry());
 			city.setLocality(cityName);

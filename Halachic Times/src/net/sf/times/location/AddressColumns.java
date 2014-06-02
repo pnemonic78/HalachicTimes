@@ -36,6 +36,8 @@ public interface AddressColumns extends BaseColumns {
 	public static final String LATITUDE = "latitude";
 	/** The longitude. */
 	public static final String LONGITUDE = "longitude";
+	/** The elevation / altitude. */
+	public static final String ELEVATION = "elevation";
 	/** The formatted name. */
 	public static final String ADDRESS = "address";
 	/** The language. */

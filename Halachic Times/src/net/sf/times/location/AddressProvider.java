@@ -61,16 +61,17 @@ public class AddressProvider {
 
 	}
 
-	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE, AddressColumns.LONGITUDE,
-			AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE };
+	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
+			AddressColumns.LONGITUDE, AddressColumns.ELEVATION, AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE };
 	private static final int INDEX_ID = 0;
 	private static final int INDEX_LOCATION_LATITUDE = 1;
 	private static final int INDEX_LOCATION_LONGITUDE = 2;
 	private static final int INDEX_LATITUDE = 3;
 	private static final int INDEX_LONGITUDE = 4;
-	private static final int INDEX_ADDRESS = 5;
-	private static final int INDEX_LANGUAGE = 6;
-	private static final int INDEX_FAVORITE = 7;
+	private static final int INDEX_ELEVATION = 5;
+	private static final int INDEX_ADDRESS = 6;
+	private static final int INDEX_LANGUAGE = 7;
+	private static final int INDEX_FAVORITE = 8;
 
 	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
@@ -332,7 +333,6 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the list of addresses.
 	 */
-	@SuppressWarnings("resource")
 	private List<Address> findNearestAddressDatabase(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
@@ -356,6 +356,7 @@ public class AddressProvider {
 				double locationLongitude;
 				double addressLatitude;
 				double addressLongitude;
+				double addressElevation;
 				String formatted;
 				String locationLanguage;
 				Locale locale;
@@ -375,6 +376,7 @@ public class AddressProvider {
 
 						if ((distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION)) {
 							id = cursor.getLong(INDEX_ID);
+							addressElevation = cursor.getDouble(INDEX_ELEVATION);
 							formatted = cursor.getString(INDEX_ADDRESS);
 							if (locationLanguage == null)
 								locale = mLocale;
@@ -386,6 +388,7 @@ public class AddressProvider {
 							address.setId(id);
 							address.setLatitude(addressLatitude);
 							address.setLongitude(addressLongitude);
+							address.setElevation(addressElevation);
 							addresses.add(address);
 						}
 					}
@@ -442,7 +445,6 @@ public class AddressProvider {
 	 * @param address
 	 *            the address.
 	 */
-	@SuppressWarnings("resource")
 	public void insertOrUpdate(Location location, ZmanimAddress address) {
 		if (address == null)
 			return;
@@ -462,6 +464,7 @@ public class AddressProvider {
 			values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
 		}
 		values.put(AddressColumns.LONGITUDE, address.getLongitude());
+		values.put(AddressColumns.ELEVATION, address.getElevation());
 		values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
 		values.put(AddressColumns.FAVORITE, address.isFavorite());
 
@@ -530,7 +533,6 @@ public class AddressProvider {
 	 * 
 	 * @return the list of addresses.
 	 */
-	@SuppressWarnings("resource")
 	public List<ZmanimAddress> query() {
 		final String language = mLocale.getLanguage();
 		final String country = mLocale.getCountry();
@@ -550,6 +552,7 @@ public class AddressProvider {
 				long id;
 				double addressLatitude;
 				double addressLongitude;
+				double addressElevation;
 				String formatted;
 				String locationLanguage;
 				Locale locale;
@@ -561,6 +564,7 @@ public class AddressProvider {
 					if ((locationLanguage == null) || locationLanguage.equals(language)) {
 						addressLatitude = cursor.getDouble(INDEX_LATITUDE);
 						addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+						addressElevation = cursor.getDouble(INDEX_ELEVATION);
 						id = cursor.getLong(INDEX_ID);
 						formatted = cursor.getString(INDEX_ADDRESS);
 						favorite = cursor.getShort(INDEX_FAVORITE) != 0;
@@ -574,6 +578,7 @@ public class AddressProvider {
 						address.setId(id);
 						address.setLatitude(addressLatitude);
 						address.setLongitude(addressLongitude);
+						address.setElevation(addressElevation);
 						address.setFavorite(favorite);
 						addresses.add(address);
 					}

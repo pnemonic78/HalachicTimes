@@ -457,9 +457,9 @@ public class ZmanimLocations implements LocationListener {
 		final String locationName = loc.getProvider();
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
-		final double altitude = Math.max(0, loc.getAltitude());
+		final double elevation = Math.max(0, loc.getAltitude());
 
-		return new GeoLocation(locationName, latitude, longitude, altitude, timeZone);
+		return new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
 	}
 
 	/**

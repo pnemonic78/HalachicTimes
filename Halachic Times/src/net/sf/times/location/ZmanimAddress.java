@@ -45,6 +45,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	private static final double EPSILON = 1e-6;
 
 	private long mId;
+	private double mElevation;
 	private String mFormatted;
 	private boolean mFavorite;
 
@@ -152,6 +153,25 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	}
 
 	/**
+	 * Set the elevation.
+	 * 
+	 * @param elevation
+	 *            the elevation in meters.
+	 */
+	public void setElevation(double elevation) {
+		this.mElevation = elevation;
+	}
+
+	/**
+	 * Get the elevation.
+	 * 
+	 * @return the elevation in meters.
+	 */
+	public double getElevation() {
+		return mElevation;
+	}
+
+	/**
 	 * Format the address.
 	 * 
 	 * @return the formatted address.
@@ -231,6 +251,8 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 		if (lngD <= -EPSILON)
 			return -1;
 
+		// Don't need to compare elevation.
+
 		String format1 = this.getFormatted();
 		String format2 = that.getFormatted();
 		int c = format1.compareToIgnoreCase(format2);
@@ -246,7 +268,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	public void writeToParcel(Parcel parcel, int flags) {
 		super.writeToParcel(parcel, flags);
 		parcel.writeLong(mId);
+		parcel.writeDouble(mElevation);
 		parcel.writeString(mFormatted);
+		parcel.writeInt(mFavorite ? 1 : 0);
 	}
 
 	public static final Parcelable.Creator<ZmanimAddress> CREATOR = new Parcelable.Creator<ZmanimAddress>() {
@@ -255,7 +279,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 			Address a = Address.CREATOR.createFromParcel(source);
 			ZmanimAddress za = new ZmanimAddress(a);
 			za.mId = source.readLong();
+			za.mElevation = source.readDouble();
 			za.mFormatted = source.readString();
+			za.mFavorite = source.readInt() == 0 ? false : true;
 			return za;
 		}
 
