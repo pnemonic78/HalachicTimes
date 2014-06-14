@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:src="@drawable/candle_0"/>
+        android:src="@drawable/candle"/>
 
     <ImageView
         android:id="@+id/candle_2"
@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:src="@drawable/candle_0"/>
+        android:src="@drawable/candle"/>
 
 </LinearLayout>
