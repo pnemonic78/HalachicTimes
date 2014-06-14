@@ -38,8 +38,7 @@ public class CandleAnimation implements Runnable {
 	private static final int PERIOD = (int) (DateUtils.SECOND_IN_MILLIS >> 1);
 
 	private final Handler mHandler;
-	private final ImageView mView;
-	private final Drawable[] mSprites = new Drawable[SPRITES_COUNT];
+	private final Drawable mSprites;
 	private int mSpriteIndex;
 	/** Randomizer. */
 	private final Random mRandom;
@@ -70,18 +69,17 @@ public class CandleAnimation implements Runnable {
 		mHandler = handler;
 		if (view == null)
 			throw new IllegalArgumentException("view required");
-		mView = view;
 		mRandom = random;
 
 		Resources res = view.getResources();
-		mSprites[0] = res.getDrawable(R.drawable.candle_0);
-		mSprites[1] = res.getDrawable(R.drawable.candle_1);
+		mSprites = res.getDrawable(R.drawable.candle);
+		view.setImageDrawable(mSprites);
 	}
 
 	@Override
 	public void run() {
 		int index = mSpriteIndex;
-		mView.setImageDrawable(mSprites[index]);
+		mSprites.setLevel(index);
 		index = (index + 1) % SPRITES_COUNT;
 		mSpriteIndex = index;
 		if (mRandom == null)
