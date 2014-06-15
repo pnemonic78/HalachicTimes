@@ -21,7 +21,9 @@ package net.sf.times;
 
 import java.util.Random;
 
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LevelListDrawable;
 import android.os.Handler;
 import android.text.format.DateUtils;
 import android.widget.ImageView;
@@ -34,12 +36,14 @@ import android.widget.ImageView;
 public class CandleAnimation implements Runnable {
 
 	private static final int LEVELS = 6;
-	private static final int PERIOD = (int) (DateUtils.SECOND_IN_MILLIS >> 2);
+	private static final long PERIOD = DateUtils.SECOND_IN_MILLIS >> 1;
+	private static final int PERIOD_INT = (int) PERIOD;
 
 	private final Handler mHandler;
-	private final Drawable mCandle;
+	private Drawable mCandle;
 	/** Randomizer. */
 	private final Random mRandom;
+	private static Drawable[] mSprites;
 
 	/**
 	 * Create a new animation.
@@ -68,7 +72,24 @@ public class CandleAnimation implements Runnable {
 		if (view == null)
 			throw new IllegalArgumentException("view required");
 		mRandom = random;
-		mCandle = view.getDrawable();
+
+		if (mSprites == null) {
+			mSprites = new Drawable[LEVELS];
+
+			Resources res = view.getResources();
+			mSprites[0] = res.getDrawable(R.drawable.candle_0);
+			mSprites[1] = res.getDrawable(R.drawable.candle_1);
+			mSprites[2] = res.getDrawable(R.drawable.candle_2);
+			mSprites[3] = res.getDrawable(R.drawable.candle_3);
+			mSprites[4] = mSprites[2];
+			mSprites[5] = mSprites[1];
+		}
+
+		LevelListDrawable candle = new LevelListDrawable();
+		for (int i = 0; i < LEVELS; i++)
+			candle.addLevel(0, i, mSprites[i]);
+		view.setImageDrawable(candle);
+		mCandle = candle;
 	}
 
 	@Override
@@ -82,7 +103,7 @@ public class CandleAnimation implements Runnable {
 		if (mRandom == null)
 			mHandler.postDelayed(this, PERIOD);
 		else
-			mHandler.postDelayed(this, mRandom.nextInt(PERIOD));
+			mHandler.postDelayed(this, mRandom.nextInt(PERIOD_INT));
 	}
 
 }
