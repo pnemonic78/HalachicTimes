@@ -183,10 +183,9 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			mHandler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					mMasterFragment.populateTimes(mDate);
 					toggleDetails(itemId);
 				}
-			}, 1000L);
+			}, DateUtils.SECOND_IN_MILLIS);
 		}
 	}
 
@@ -458,6 +457,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 		if (mSwitcher != null) {
 			if (itemId == R.string.candles) {
+				mCandesFragment.populateTimes(mDate);
 				mDetailsFragment.setDisplayedChild(1);
 			} else {
 				mDetailsListFragment.populateTimes(mDate, itemId);

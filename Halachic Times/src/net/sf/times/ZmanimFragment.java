@@ -338,7 +338,7 @@ public class ZmanimFragment extends FrameLayout {
 		final int count = list.getChildCount();
 		for (int i = 0; i < count; i++) {
 			child = list.getChildAt(i);
-			item = (ZmanimItem) child.getTag();
+			item = (ZmanimItem) child.getTag(R.id.time);
 			// Maybe row divider?
 			if (item == null)
 				continue;
