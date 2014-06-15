@@ -33,7 +33,7 @@ import android.widget.ImageView;
  */
 public class CandleAnimation implements Runnable {
 
-	private static final int SPRITES_COUNT = 2;
+	private static final int LEVELS = 6;
 	private static final int PERIOD = (int) (DateUtils.SECOND_IN_MILLIS >> 1);
 
 	private final Handler mHandler;
@@ -76,7 +76,9 @@ public class CandleAnimation implements Runnable {
 	public void run() {
 		int index = mSpriteIndex;
 		mCandle.setLevel(index);
-		index = (index + 1) % SPRITES_COUNT;
+		index++;
+		if (index >= LEVELS)
+			index = 0;
 		mSpriteIndex = index;
 		if (mRandom == null)
 			mHandler.postDelayed(this, PERIOD);

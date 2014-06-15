@@ -13,5 +13,11 @@
     <item
         android:drawable="@drawable/candle_3"
         android:maxLevel="3"/>
+    <item
+        android:drawable="@drawable/candle_2"
+        android:maxLevel="4"/>
+    <item
+        android:drawable="@drawable/candle_1"
+        android:maxLevel="5"/>
 
 </level-list>
