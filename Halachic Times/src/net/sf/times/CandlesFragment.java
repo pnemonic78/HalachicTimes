@@ -129,13 +129,14 @@ public class CandlesFragment extends ZmanimFragment {
 		switch (holiday) {
 		case JewishCalendar.YOM_KIPPUR:
 			if (mCandlesKippurim == null) {
-				mCandlesKippurim = (ViewGroup) mInflater.inflate(R.layout.candles_kippurim, null);
-				addView(mCandlesKippurim);
+				ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_kippurim, null);
+				addView(group);
+				mCandlesKippurim = group;
 
 				assert candlesCount == YOM_KIPPURIM_CANDLES.length;
 				mAnimations = new CandleAnimation[candlesCount];
 				for (int i = 0; i < candlesCount; i++) {
-					view = (ImageView) mCandlesShabbat.findViewById(YOM_KIPPURIM_CANDLES[i]);
+					view = (ImageView) group.findViewById(YOM_KIPPURIM_CANDLES[i]);
 					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 				}
 			}
@@ -147,15 +148,17 @@ public class CandlesFragment extends ZmanimFragment {
 			break;
 		case JewishCalendar.CHANUKAH:
 			if (mCandlesChannuka == null) {
-				mCandlesChannuka = (ViewGroup) mInflater.inflate(R.layout.candles_channuka, null);
-				addView(mCandlesChannuka);
+				ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_channuka, null);
+				addView(group);
+				mCandlesChannuka = group;
 
+				assert candlesCount <= CHANNUKA_CANDLES.length;
 				mAnimations = new CandleAnimation[candlesCount + 1];
 				for (int i = 0; i < candlesCount; i++) {
-					view = (ImageView) mCandlesShabbat.findViewById(CHANNUKA_CANDLES[i]);
+					view = (ImageView) group.findViewById(CHANNUKA_CANDLES[i]);
 					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 				}
-				view = (ImageView) mCandlesShabbat.findViewById(R.id.candle_shamash);
+				view = (ImageView) group.findViewById(R.id.candle_shamash);
 				mAnimations[candlesCount] = new CandleAnimation(mHandler, view, mRandom);
 			}
 			// Only show relevant candles.
@@ -182,13 +185,14 @@ public class CandlesFragment extends ZmanimFragment {
 					mCandlesChannuka.setVisibility(View.GONE);
 			} else {
 				if (mCandlesShabbat == null) {
-					mCandlesShabbat = (ViewGroup) mInflater.inflate(R.layout.candles_shabbat, null);
-					addView(mCandlesShabbat);
+					ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_shabbat, null);
+					addView(group);
+					mCandlesShabbat = group;
 
 					assert candlesCount == SHABBAT_CANDLES.length;
 					mAnimations = new CandleAnimation[candlesCount];
 					for (int i = 0; i < candlesCount; i++) {
-						view = (ImageView) mCandlesShabbat.findViewById(SHABBAT_CANDLES[i]);
+						view = (ImageView) group.findViewById(SHABBAT_CANDLES[i]);
 						mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 					}
 				}
