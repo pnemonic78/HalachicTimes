@@ -34,11 +34,10 @@ import android.widget.ImageView;
 public class CandleAnimation implements Runnable {
 
 	private static final int LEVELS = 6;
-	private static final int PERIOD = (int) (DateUtils.SECOND_IN_MILLIS >> 1);
+	private static final int PERIOD = (int) (DateUtils.SECOND_IN_MILLIS >> 2);
 
 	private final Handler mHandler;
 	private final Drawable mCandle;
-	private int mSpriteIndex;
 	/** Randomizer. */
 	private final Random mRandom;
 
@@ -74,12 +73,12 @@ public class CandleAnimation implements Runnable {
 
 	@Override
 	public void run() {
-		int index = mSpriteIndex;
-		mCandle.setLevel(index);
-		index++;
-		if (index >= LEVELS)
-			index = 0;
-		mSpriteIndex = index;
+		int level = mCandle.getLevel();
+		level++;
+		if (level >= LEVELS)
+			level = 0;
+		mCandle.setLevel(level);
+
 		if (mRandom == null)
 			mHandler.postDelayed(this, PERIOD);
 		else
