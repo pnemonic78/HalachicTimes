@@ -83,7 +83,8 @@ public class CandleAnimation implements Runnable {
 
 			Resources res = view.getResources();
 			Options opts = new Options();
-			opts.inPreferredConfig = Bitmap.Config.RGB_565;// JPEG doesn't use transparency.
+			// JPEG doesn't use transparency.
+			opts.inPreferredConfig = Bitmap.Config.RGB_565;
 			Bitmap bmp0 = BitmapFactory.decodeResource(res, R.drawable.candle_0, opts);
 			Bitmap bmp1 = BitmapFactory.decodeResource(res, R.drawable.candle_1, opts);
 			Bitmap bmp2 = BitmapFactory.decodeResource(res, R.drawable.candle_2, opts);

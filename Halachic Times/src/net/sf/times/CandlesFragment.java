@@ -124,6 +124,7 @@ public class CandlesFragment extends ZmanimFragment {
 
 		int holiday = adapter.getCandlesHoliday();
 		int candlesCount = adapter.getCandlesCount();
+		boolean animate = mSettings.isCandlesAnimated();
 		ImageView view;
 
 		switch (holiday) {
@@ -205,7 +206,8 @@ public class CandlesFragment extends ZmanimFragment {
 			break;
 		}
 
-		startAnimation();
+		if (animate)
+			startAnimation();
 
 		return adapter;
 	}

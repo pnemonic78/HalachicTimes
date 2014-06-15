@@ -233,6 +233,14 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="candles.reminder"
                 android:title="@string/reminder"/>
+
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:icon="@android:drawable/ic_media_play"
+                android:key="candles.anim"
+                android:summaryOff="@string/animations_disabled"
+                android:summaryOn="@string/animations_enabled"
+                android:title="@string/animations"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/sunset">
             <ListPreference

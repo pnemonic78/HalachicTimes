@@ -95,6 +95,7 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_LATEST_LEVANA = "levana_latest";
 
 	static final String REMINDER_SUFFIX = ".reminder";
+	private static final String ANIM_SUFFIX = ".anim";
 
 	/** Preference name for Alos reminder. */
 	public static final String KEY_REMINDER_DAWN = KEY_OPINION_DAWN + REMINDER_SUFFIX;
@@ -128,6 +129,9 @@ public class ZmanimSettings {
 	public static final String KEY_REMINDER_EARLIEST_LEVANA = KEY_OPINION_EARLIEST_LEVANA + REMINDER_SUFFIX;
 	/** Preference name for latest kiddush levana reminder. */
 	public static final String KEY_REMINDER_LATEST_LEVANA = KEY_OPINION_LATEST_LEVANA + REMINDER_SUFFIX;
+
+	/** Preference name for candle lighting animations. */
+	public static final String KEY_ANIM_CANDLES = KEY_OPINION_CANDLES + ANIM_SUFFIX;
 
 	/** Format the coordinates in decimal notation. */
 	public static final String FORMAT_DECIMAL = "decimal";
@@ -546,5 +550,14 @@ public class ZmanimSettings {
 		Editor editor = mPrefs.edit();
 		editor.putLong(KEY_REMINDER_LATEST, time);
 		editor.commit();
+	}
+
+	/**
+	 * Are the candles animated?
+	 * 
+	 * @return {@code true} if candles animations enabled.
+	 */
+	public boolean isCandlesAnimated() {
+		return mPrefs.getBoolean(KEY_ANIM_CANDLES, true);
 	}
 }

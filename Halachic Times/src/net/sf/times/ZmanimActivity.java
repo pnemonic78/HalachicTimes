@@ -27,8 +27,6 @@ import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.view.animation.LayoutWeightAnimation;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;

@@ -229,6 +229,9 @@
     <string name="gradient_title">Gradient background</string>
     <string name="gradient_hidden">Gradient is hidden</string>
     <string name="gradient_visible">Gradient is visible</string>
+    <string name="animations">Animations</string>
+    <string name="animations_enabled">Animations are enabled</string>
+    <string name="animations_disabled">Animations are disabled</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>
