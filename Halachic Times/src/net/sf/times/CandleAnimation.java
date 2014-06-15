@@ -22,6 +22,10 @@ package net.sf.times;
 import java.util.Random;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.Handler;
@@ -73,14 +77,21 @@ public class CandleAnimation implements Runnable {
 			throw new IllegalArgumentException("view required");
 		mRandom = random;
 
+		// Cache the images to avoid "bitmap size exceeds VM budget".
 		if (mSprites == null) {
 			mSprites = new Drawable[LEVELS];
 
 			Resources res = view.getResources();
-			mSprites[0] = res.getDrawable(R.drawable.candle_0);
-			mSprites[1] = res.getDrawable(R.drawable.candle_1);
-			mSprites[2] = res.getDrawable(R.drawable.candle_2);
-			mSprites[3] = res.getDrawable(R.drawable.candle_3);
+			Options opts = new Options();
+			opts.inPreferredConfig = Bitmap.Config.RGB_565;// JPEG doesn't use transparency.
+			Bitmap bmp0 = BitmapFactory.decodeResource(res, R.drawable.candle_0, opts);
+			Bitmap bmp1 = BitmapFactory.decodeResource(res, R.drawable.candle_1, opts);
+			Bitmap bmp2 = BitmapFactory.decodeResource(res, R.drawable.candle_2, opts);
+			Bitmap bmp3 = BitmapFactory.decodeResource(res, R.drawable.candle_3, opts);
+			mSprites[0] = new BitmapDrawable(res, bmp0);
+			mSprites[1] = new BitmapDrawable(res, bmp1);
+			mSprites[2] = new BitmapDrawable(res, bmp2);
+			mSprites[3] = new BitmapDrawable(res, bmp3);
 			mSprites[4] = mSprites[2];
 			mSprites[5] = mSprites[1];
 		}
