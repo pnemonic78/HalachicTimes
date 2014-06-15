@@ -21,7 +21,7 @@ package net.sf.times;
 
 import java.util.Locale;
 
-import net.sf.preference.SeekBarPreference;
+import net.sf.preference.SeekBarDialogPreference;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -40,10 +40,9 @@ import android.preference.PreferenceManager;
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
-	private SeekBarPreference mCandles;
+	private SeekBarDialogPreference mCandles;
 	private ZmanimSettings mSettings;
 	private ZmanimReminder mReminder;
-	private Runnable mCandlesRunnable;
 	private Preference mAboutKosherJava;
 
 	/**
@@ -61,7 +60,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		addPreferencesFromResource(R.xml.preferences);
 
-		mCandles = (SeekBarPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+		mCandles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
 		mCandles.setOnPreferenceChangeListener(this);
 		onPreferenceChange(mCandles, null);
 
@@ -118,19 +117,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (preference == mCandles) {
-			// Since ECLAIR, setSummary always calls onCreateView, so
-			// postpone until after preference is persisted.
-			if (mCandlesRunnable == null) {
-				mCandlesRunnable = new Runnable() {
-					@Override
-					public void run() {
-						String format = getString(R.string.candles_summary);
-						CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
-						mCandles.setSummary(summary);
-					}
-				};
-			}
-			runOnUiThread(mCandlesRunnable);
+			String format = getString(R.string.candles_summary);
+			CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
+			mCandles.setSummary(summary);
 			return true;
 		}
 		if (preference instanceof ListPreference) {

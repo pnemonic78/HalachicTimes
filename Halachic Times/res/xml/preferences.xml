@@ -216,12 +216,16 @@
                 android:title="@string/reminder"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/candles">
-            <net.sf.preference.SeekBarPreference
+            <net.sf.preference.SeekBarDialogPreference
                 android:defaultValue="22"
                 android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogLayout="@layout/candles_seek"
+                android:dialogTitle="@string/opinion"
                 android:icon="@drawable/ic_opinion"
                 android:key="candles"
                 android:max="40"
+                android:negativeButtonText="@android:string/cancel"
+                android:positiveButtonText="@android:string/ok"
                 android:summary="@string/candles_summary"
                 android:title="@string/opinion"/>
 
