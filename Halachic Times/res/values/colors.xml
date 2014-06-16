@@ -30,6 +30,6 @@
     <color name="compass_north">#ff0000</color>
     <color name="compass_south">#0000ff</color>
     <color name="compass_arrow">#ff00ff</color>
-    <color name="compass_arrow_bg">#80ff00ff</color>
+    <color name="compass_arrow_bg">#80400040</color>
 
 </resources>
