@@ -95,6 +95,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ZmanimAddress mAddress;
 	/** Populate the header in UI thread. */
 	private Runnable mPopulateHeader;
+	/** Update the location in UI thread. */
+	private Runnable mUpdateLocation;
 	private ZmanimReminder mReminder;
 	protected LayoutInflater mInflater;
 	/** The master fragment. */
@@ -190,7 +192,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mLocations.resume(this);
+		mLocations.start(this);
 		if (mReminder == null)
 			mReminder = createReminder();
 		if (mReminder != null)
@@ -199,7 +201,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	protected void onDestroy() {
-		mLocations.cancel(this);
+		mLocations.stop(this);
 		unregisterReceiver(mAddressReceiver);
 		super.onDestroy();
 	}
@@ -298,10 +300,18 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		Intent find = new Intent(this, AddressService.class);
 		find.putExtra(AddressService.PARAMETER_LOCATION, location);
 		startService(find);
-		populateHeader();
-		mMasterFragment.populateTimes(mDate);
-		mDetailsListFragment.populateTimes(mDate);
-		mCandesFragment.populateTimes(mDate);
+		if (mUpdateLocation == null) {
+			mUpdateLocation = new Runnable() {
+				@Override
+				public void run() {
+					populateHeader();
+					mMasterFragment.populateTimes(mDate);
+					mDetailsListFragment.populateTimes(mDate);
+					mCandesFragment.populateTimes(mDate);
+				}
+			};
+		}
+		runOnUiThread(mUpdateLocation);
 	}
 
 	@Override

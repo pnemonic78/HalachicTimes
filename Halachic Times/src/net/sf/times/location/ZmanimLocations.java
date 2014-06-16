@@ -36,6 +36,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.text.format.DateUtils;
 import android.util.Log;
 
@@ -58,12 +62,18 @@ public class ZmanimLocations implements LocationListener {
 	public static final String ISO639_YIDDISH = "yi";
 
 	/** 1 kilometre. */
-	private static final int KILOMETRE = 1000;
+	//private static final int KILOMETRE = 1000;
 
-	/** The minimum time interval between location updates. */
-	private static final long UPDATE_TIME = DateUtils.MINUTE_IN_MILLIS * 15L;
-	/** The minimum distance between location updates. */
-	private static final int UPDATE_DISTANCE = KILOMETRE;
+	/** The minimum time interval between location updates, in milliseconds. */
+	private static final long UPDATE_TIME = DateUtils.SECOND_IN_MILLIS;
+	/** The maximum time interval between location updates, in milliseconds. */
+	private static final long UPDATE_TIME_MAX = DateUtils.HOUR_IN_MILLIS;
+	/** The time interval between requesting location updates, in milliseconds. */
+	private static final long UPDATE_TIME_START = DateUtils.MINUTE_IN_MILLIS;
+	/** The time interval between removing location updates, in milliseconds. */
+	private static final long UPDATE_TIME_STOP = DateUtils.MINUTE_IN_MILLIS;
+	/** The minimum distance between location updates, in metres. */
+	private static final int UPDATE_DISTANCE = 100;
 
 	/** Time zone ID for Jerusalem. */
 	private static final String TZ_JERUSALEM = "Asia/Jerusalem";
@@ -81,6 +91,9 @@ public class ZmanimLocations implements LocationListener {
 	/** Western-most longitude for Israel. */
 	private static final double ISRAEL_WEST = 34.215317;
 
+	private static final int WHAT_START = 0;
+	private static final int WHAT_STOP = 1;
+
 	/** The owner location listener. */
 	private final List<LocationListener> mLocationListeners = new ArrayList<LocationListener>();
 	/** Service provider for locations. */
@@ -95,6 +108,14 @@ public class ZmanimLocations implements LocationListener {
 	private String mCoordsFormat;
 	/** The time zone. */
 	private TimeZone mTimeZone;
+	/** The handler thread. */
+	private HandlerThread mHandlerThread;
+	/** The handler. */
+	private Handler mHandler;
+	/** The next time to start update locations. */
+	private long mStartTaskNext = UPDATE_TIME_START;
+	/** The next time to stop update locations. */
+	private long mStopTaskNext = UPDATE_TIME_STOP;
 
 	/**
 	 * Constructs a new provider.
@@ -109,6 +130,10 @@ public class ZmanimLocations implements LocationListener {
 		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		mCoordsFormat = context.getString(R.string.location_coords);
 		mTimeZone = TimeZone.getDefault();
+
+		mHandlerThread = new HandlerThread(TAG);
+		mHandlerThread.start();
+		mHandler = new UpdatesHandler(mHandlerThread.getLooper());
 	}
 
 	/**
@@ -283,41 +308,32 @@ public class ZmanimLocations implements LocationListener {
 	}
 
 	/**
-	 * Cancel.
+	 * Stop listening.
 	 * 
 	 * @param listener
 	 *            the listener who wants to stop listening.
 	 */
-	public void cancel(LocationListener listener) {
+	public void stop(LocationListener listener) {
 		if (listener != null)
 			mLocationListeners.remove(listener);
-		if (mLocationListeners.isEmpty())
-			mLocationManager.removeUpdates(this);
+
+		if (mLocationListeners.isEmpty()) {
+			removeUpdates();
+			mHandler.removeMessages(WHAT_START);
+		}
 	}
 
 	/**
-	 * Resume.
+	 * Start or resume listening.
 	 * 
 	 * @param listener
 	 *            the listener who wants to resume listening.
 	 */
-	public void resume(LocationListener listener) {
+	public void start(LocationListener listener) {
 		if (listener != null)
 			addLocationListener(listener);
 
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-		criteria.setAltitudeRequired(true);
-		criteria.setCostAllowed(true);
-		criteria.setPowerRequirement(Criteria.POWER_LOW);
-		criteria.setSpeedRequired(false);
-
-		String provider = mLocationManager.getBestProvider(criteria, true);
-		try {
-			mLocationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
-		} catch (IllegalArgumentException iae) {
-			Log.e(TAG, "resume: " + iae.getLocalizedMessage(), iae);
-		}
+		requestUpdates();
 
 		if (listener != null)
 			listener.onLocationChanged(getLocation());
@@ -499,6 +515,50 @@ public class ZmanimLocations implements LocationListener {
 	public static boolean isLocaleRTL() {
 		final String iso639 = Locale.getDefault().getLanguage();
 		return ISO639_HEBREW.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
+	}
+
+	private void requestUpdates() {
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+		criteria.setAltitudeRequired(true);
+		criteria.setCostAllowed(true);
+		//criteria.setPowerRequirement(Criteria.POWER_LOW);
+
+		String provider = mLocationManager.getBestProvider(criteria, true);
+		try {
+			mLocationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
+		} catch (IllegalArgumentException iae) {
+			Log.e(TAG, "resume: " + iae.getLocalizedMessage(), iae);
+		}
+
+		// Let the updates run for only a small while to save battery.
+		mHandler.sendEmptyMessageDelayed(WHAT_STOP, mStopTaskNext);
+	}
+
+	private void removeUpdates() {
+		mLocationManager.removeUpdates(this);
+
+		if (!mLocationListeners.isEmpty())
+			mHandler.sendEmptyMessageDelayed(WHAT_START, mStartTaskNext);
+	}
+
+	private class UpdatesHandler extends Handler {
+
+		public UpdatesHandler(Looper looper) {
+			super(looper);
+		}
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case WHAT_START:
+				requestUpdates();
+				break;
+			case WHAT_STOP:
+				removeUpdates();
+				break;
+			}
+		}
 	}
 
 }

@@ -111,7 +111,7 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 			mLocations = app.getLocations();
 			mLocations.addLocationListener(this);
 		}
-		mLocations.resume(this);
+		mLocations.start(this);
 
 		populateTimes();
 	}
@@ -147,7 +147,7 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 			mLocations = app.getLocations();
 			mLocations.addLocationListener(this);
-			mLocations.resume(this);
+			mLocations.start(this);
 		}
 		GeoLocation gloc = mLocations.getGeoLocation();
 		if (gloc == null)
@@ -168,14 +168,14 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
 		if (mLocations != null)
-			mLocations.cancel(this);
+			mLocations.stop(this);
 	}
 
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
 		if (mLocations != null)
-			mLocations.resume(this);
+			mLocations.start(this);
 	}
 
 	@Override

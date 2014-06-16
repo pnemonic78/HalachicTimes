@@ -135,14 +135,14 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mLocations.resume(this);
+		mLocations.start(this);
 		mSensorManager.registerListener(this, mAccel, SensorManager.SENSOR_DELAY_UI);
 		mSensorManager.registerListener(this, mMagnetic, SensorManager.SENSOR_DELAY_UI);
 	}
 
 	@Override
 	protected void onDestroy() {
-		mLocations.cancel(this);
+		mLocations.stop(this);
 		unregisterReceiver(mAddressReceiver);
 		super.onDestroy();
 	}
