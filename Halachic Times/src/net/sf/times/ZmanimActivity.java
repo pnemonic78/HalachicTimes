@@ -21,6 +21,7 @@ package net.sf.times;
 
 import java.util.Calendar;
 
+import net.sf.app.TodayDatePickerDialog;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.AddressService;
 import net.sf.times.location.LocationActivity;
@@ -150,7 +151,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				final int month = mDate.get(Calendar.MONTH);
 				final int day = mDate.get(Calendar.DAY_OF_MONTH);
 				if (mDatePicker == null) {
-					mDatePicker = new DatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
+					mDatePicker = new TodayDatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
 				} else {
 					mDatePicker.updateDate(year, month, day);
 				}
