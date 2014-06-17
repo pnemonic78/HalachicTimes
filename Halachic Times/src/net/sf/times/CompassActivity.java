@@ -145,8 +145,13 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	@Override
 	protected void onStop() {
 		mLocations.stop(this);
-		unregisterReceiver(mAddressReceiver);
 		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(mAddressReceiver);
+		super.onDestroy();
 	}
 
 	@Override

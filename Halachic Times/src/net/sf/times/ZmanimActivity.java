@@ -27,6 +27,7 @@ import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.view.animation.LayoutWeightAnimation;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -40,6 +41,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -49,7 +51,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -65,7 +66,7 @@ import android.widget.ViewSwitcher;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, OnClickListener, OnGestureListener {
+public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -78,6 +79,12 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	/** Activity id for searching locations. */
 	private static final int ACTIVITY_LOCATIONS = 1;
+
+	private static final int WHAT_TOGGLE_DETAILS = 0;
+	private static final int WHAT_COMPASS = 1;
+	private static final int WHAT_DATE = 2;
+	private static final int WHAT_LOCATION = 3;
+	private static final int WHAT_SETTINGS = 4;
 
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
@@ -111,8 +118,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private ViewSwitcher mSwitcher;
 	/** The master item selected id. */
 	private int mSelectedId;
-	/** The handler. */
-	private final Handler mHandler;
 	/** The gesture detector. */
 	private GestureDetector mGestureDetector;
 	/** Is locale RTL? */
@@ -128,12 +133,50 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	/** The address receiver. */
 	private final BroadcastReceiver mAddressReceiver;
 
+	/** The handler. */
+	@SuppressLint("HandlerLeak")
+	private final Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case WHAT_TOGGLE_DETAILS:
+				toggleDetails(msg.arg1);
+				break;
+			case WHAT_COMPASS:
+				startActivity(new Intent(ZmanimActivity.this, CompassActivity.class));
+				break;
+			case WHAT_DATE:
+				final int year = mDate.get(Calendar.YEAR);
+				final int month = mDate.get(Calendar.MONTH);
+				final int day = mDate.get(Calendar.DAY_OF_MONTH);
+				if (mDatePicker == null) {
+					mDatePicker = new DatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
+				} else {
+					mDatePicker.updateDate(year, month, day);
+				}
+				mDatePicker.show();
+				break;
+			case WHAT_LOCATION:
+				Location loc = mLocations.getLocation();
+				// Have we been destroyed?
+				if (loc == null)
+					break;
+
+				Intent intent = new Intent(ZmanimActivity.this, LocationActivity.class);
+				intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
+				startActivityForResult(intent, ACTIVITY_LOCATIONS);
+				break;
+			case WHAT_SETTINGS:
+				startActivity(new Intent(ZmanimActivity.this, ZmanimPreferences.class));
+				break;
+			}
+		}
+	};
+
 	/**
 	 * Creates a new activity.
 	 */
 	public ZmanimActivity() {
-		mHandler = new Handler();
-
 		mAddressReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -180,12 +223,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		if (itemId != 0) {
 			// We need to wait for the list rows to get their default
 			// backgrounds before we can highlight any row.
-			mHandler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					toggleDetails(itemId);
-				}
-			}, DateUtils.SECOND_IN_MILLIS);
+			Message msg = mHandler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
+			mHandler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
 		}
 	}
 
@@ -200,13 +239,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	@Override
-	protected void onStop() {
-		mLocations.stop(this);
-		unregisterReceiver(mAddressReceiver);
-		super.onStop();
-	}
-
-	@Override
 	protected void onPause() {
 		super.onPause();
 		if (mReminder != null) {
@@ -217,6 +249,18 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 				}
 			}.start();
 		}
+	}
+
+	@Override
+	protected void onStop() {
+		mLocations.stop(this);
+		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(mAddressReceiver);
+		super.onDestroy();
 	}
 
 	/** Initialise. */
@@ -281,6 +325,32 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 */
 	private void setDate(long date) {
 		mDate.setTimeInMillis(date);
+		mDate.setTimeZone(mLocations.getTimeZone());
+
+		View header = mHeader;
+		// Have we been destroyed?
+		if (header == null)
+			return;
+		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+				| DateUtils.FORMAT_SHOW_WEEKDAY);
+		TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
+		textGregorian.setText(dateGregorian);
+	}
+
+	/**
+	 * Set the date for the list.
+	 * 
+	 * @param year
+	 *            the year.
+	 * @param monthOfYear
+	 *            the month of the year.
+	 * @param dayOfMonth
+	 *            the day of the month.
+	 */
+	private void setDate(int year, int monthOfYear, int dayOfMonth) {
+		mDate.set(Calendar.YEAR, year);
+		mDate.set(Calendar.MONTH, monthOfYear);
+		mDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 		mDate.setTimeZone(mLocations.getTimeZone());
 
 		View header = mHeader;
@@ -371,31 +441,16 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_compass:
-			startActivity(new Intent(this, CompassActivity.class));
+			mHandler.sendEmptyMessage(WHAT_COMPASS);
 			return true;
 		case R.id.menu_date:
-			final int year = mDate.get(Calendar.YEAR);
-			final int month = mDate.get(Calendar.MONTH);
-			final int day = mDate.get(Calendar.DAY_OF_MONTH);
-			if (mDatePicker == null) {
-				mDatePicker = new DatePickerDialog(this, this, year, month, day);
-			} else {
-				mDatePicker.updateDate(year, month, day);
-			}
-			mDatePicker.show();
+			mHandler.sendEmptyMessage(WHAT_DATE);
 			return true;
 		case R.id.menu_location:
-			Location loc = mLocations.getLocation();
-			// Have we been destroyed?
-			if (loc == null)
-				break;
-
-			Intent intent = new Intent(this, LocationActivity.class);
-			intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-			startActivityForResult(intent, ACTIVITY_LOCATIONS);
+			mHandler.sendEmptyMessage(WHAT_LOCATION);
 			return true;
 		case R.id.menu_settings:
-			startActivity(new Intent(this, ZmanimPreferences.class));
+			mHandler.sendEmptyMessage(WHAT_SETTINGS);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -403,15 +458,11 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-		Calendar date = Calendar.getInstance();
-		date.set(Calendar.YEAR, year);
-		date.set(Calendar.MONTH, monthOfYear);
-		date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-		setDate(date.getTimeInMillis());
+		setDate(year, monthOfYear, dayOfMonth);
 		populateHeader();
-		mMasterFragment.populateTimes(date);
-		mDetailsListFragment.populateTimes(date);
-		mCandesFragment.populateTimes(date);
+		mMasterFragment.populateTimes(mDate);
+		mDetailsListFragment.populateTimes(mDate);
+		mCandesFragment.populateTimes(mDate);
 	}
 
 	protected void onFindAddress(Location location, ZmanimAddress address) {
