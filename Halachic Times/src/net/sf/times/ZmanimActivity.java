@@ -200,10 +200,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onStop() {
 		mLocations.stop(this);
 		unregisterReceiver(mAddressReceiver);
-		super.onDestroy();
+		super.onStop();
 	}
 
 	@Override

@@ -81,6 +81,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	private ZmanimAddress mAddress;
 	/** Populate the header in UI thread. */
 	private Runnable mPopulateHeader;
+	/** Update the location in UI thread. */
+	private Runnable mUpdateLocation;
 	/** The address receiver. */
 	private final BroadcastReceiver mAddressReceiver;
 
@@ -141,21 +143,29 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onStop() {
 		mLocations.stop(this);
 		unregisterReceiver(mAddressReceiver);
-		super.onDestroy();
+		super.onStop();
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(final Location location) {
 		mAddressLocation = location;
 		mAddress = null;
 		Intent find = new Intent(this, AddressService.class);
 		find.putExtra(AddressService.PARAMETER_LOCATION, location);
 		startService(find);
-		populateHeader();
-		mView.setHoliest(location.bearingTo(mHoliest));
+		if (mUpdateLocation == null) {
+			mUpdateLocation = new Runnable() {
+				@Override
+				public void run() {
+					populateHeader();
+					mView.setHoliest(location.bearingTo(mHoliest));
+				}
+			};
+		}
+		runOnUiThread(mUpdateLocation);
 	}
 
 	@Override

@@ -83,6 +83,9 @@ public class ZmanimApplication extends Application {
 		if (mAddressProvider != null) {
 			mAddressProvider.close();
 		}
+		if (mLocations != null) {
+			mLocations.quit();
+		}
 		super.onTerminate();
 	}
 }

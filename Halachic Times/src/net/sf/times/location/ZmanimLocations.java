@@ -20,6 +20,8 @@
 package net.sf.times.location;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -69,9 +71,12 @@ public class ZmanimLocations implements LocationListener {
 	/** The maximum time interval between location updates, in milliseconds. */
 	private static final long UPDATE_TIME_MAX = DateUtils.HOUR_IN_MILLIS;
 	/** The time interval between requesting location updates, in milliseconds. */
-	private static final long UPDATE_TIME_START = DateUtils.MINUTE_IN_MILLIS;
-	/** The time interval between removing location updates, in milliseconds. */
-	private static final long UPDATE_TIME_STOP = DateUtils.MINUTE_IN_MILLIS;
+	private static final long UPDATE_TIME_START = 30 * DateUtils.SECOND_IN_MILLIS;
+	/**
+	 * The duration to receive updates, in milliseconds.<br>
+	 * Should be enough time to get a sufficiently accurate location.
+	 */
+	private static final long UPDATE_DURATION = 30 * DateUtils.SECOND_IN_MILLIS;
 	/** The minimum distance between location updates, in metres. */
 	private static final int UPDATE_DISTANCE = 100;
 
@@ -113,9 +118,9 @@ public class ZmanimLocations implements LocationListener {
 	/** The handler. */
 	private Handler mHandler;
 	/** The next time to start update locations. */
-	private long mStartTaskNext = UPDATE_TIME_START;
+	private long mStartTaskDelay = UPDATE_TIME_START;
 	/** The next time to stop update locations. */
-	private long mStopTaskNext = UPDATE_TIME_STOP;
+	private final long mStopTaskDelay = UPDATE_DURATION;
 
 	/**
 	 * Constructs a new provider.
@@ -161,25 +166,30 @@ public class ZmanimLocations implements LocationListener {
 		}
 		mLocation = location;
 		mSettings.putLocation(location);
-		for (LocationListener listener : mLocationListeners)
+
+		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
+		for (LocationListener listener : listeners)
 			listener.onLocationChanged(location);
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		for (LocationListener listener : mLocationListeners)
+		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
+		for (LocationListener listener : listeners)
 			listener.onProviderDisabled(provider);
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		for (LocationListener listener : mLocationListeners)
+		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
+		for (LocationListener listener : listeners)
 			listener.onProviderEnabled(provider);
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		for (LocationListener listener : mLocationListeners)
+		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
+		for (LocationListener listener : listeners)
 			listener.onStatusChanged(provider, status, extras);
 	}
 
@@ -333,7 +343,8 @@ public class ZmanimLocations implements LocationListener {
 		if (listener != null)
 			addLocationListener(listener);
 
-		requestUpdates();
+		mStartTaskDelay = UPDATE_TIME_START;
+		mHandler.sendEmptyMessage(WHAT_START);
 
 		if (listener != null)
 			listener.onLocationChanged(getLocation());
@@ -532,14 +543,31 @@ public class ZmanimLocations implements LocationListener {
 		}
 
 		// Let the updates run for only a small while to save battery.
-		mHandler.sendEmptyMessageDelayed(WHAT_STOP, mStopTaskNext);
+		mHandler.sendEmptyMessageDelayed(WHAT_STOP, mStopTaskDelay);
+		mStartTaskDelay = Math.min(UPDATE_TIME_MAX, mStartTaskDelay << 1);
 	}
 
 	private void removeUpdates() {
 		mLocationManager.removeUpdates(this);
 
-		if (!mLocationListeners.isEmpty())
-			mHandler.sendEmptyMessageDelayed(WHAT_START, mStartTaskNext);
+		if (!mLocationListeners.isEmpty()) {
+			mHandler.sendEmptyMessageDelayed(WHAT_START, mStartTaskDelay);
+		}
+	}
+
+	/**
+	 * Quit updating locations.
+	 */
+	public void quit() {
+		mLocationListeners.clear();
+		removeUpdates();
+		mHandler.removeMessages(WHAT_START);
+
+		Looper looper = mHandlerThread.getLooper();
+		if (looper != null) {
+			looper.quit();
+		}
+		mHandlerThread.interrupt();
 	}
 
 	private class UpdatesHandler extends Handler {
