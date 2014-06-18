@@ -61,12 +61,6 @@ public class GoogleGeocoder {
 	/** URL that accepts a bounded address as parameters. */
 	private static final String URL_ADDRESS_BOUNDED = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&sensor=true";
 
-	/**
-	 * Key to store the formatted address, instead of formatting it ourselves
-	 * elsewhere.
-	 */
-	public static final String KEY_FORMATTED = "formatted_address";
-
 	protected final Context mContext;
 	protected final Locale mLocale;
 	private static SAXParserFactory mParserFactory;
@@ -525,7 +519,7 @@ public class GoogleGeocoder {
 						mAddress.setExtras(extras);
 						extras = mAddress.getExtras();
 					}
-					extras.putString(KEY_FORMATTED, s);
+					extras.putString(ZmanimAddress.KEY_FORMATTED, s);
 				}
 				break;
 			case ADDRESS_LONG:

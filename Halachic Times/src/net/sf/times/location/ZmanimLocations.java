@@ -20,7 +20,6 @@
 package net.sf.times.location;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +63,7 @@ public class ZmanimLocations implements LocationListener {
 	public static final String ISO639_YIDDISH = "yi";
 
 	/** 1 kilometre. */
-	//private static final int KILOMETRE = 1000;
+	// private static final int KILOMETRE = 1000;
 
 	/** The minimum time interval between location updates, in milliseconds. */
 	private static final long UPDATE_TIME = DateUtils.SECOND_IN_MILLIS;
@@ -99,8 +98,10 @@ public class ZmanimLocations implements LocationListener {
 	private static final int WHAT_START = 0;
 	private static final int WHAT_STOP = 1;
 
-	/** The owner location listener. */
+	/** The owner location listeners. */
 	private final List<LocationListener> mLocationListeners = new ArrayList<LocationListener>();
+	/** The owner location listeners for dispatching events. */
+	private List<LocationListener> mLocationListenersLoop = mLocationListeners;
 	/** Service provider for locations. */
 	private LocationManager mLocationManager;
 	/** The location. */
@@ -148,8 +149,10 @@ public class ZmanimLocations implements LocationListener {
 	 *            the listener.
 	 */
 	public void addLocationListener(LocationListener listener) {
-		if (!mLocationListeners.contains(listener))
+		if (!mLocationListeners.contains(listener)) {
 			mLocationListeners.add(listener);
+			mLocationListenersLoop = Collections.unmodifiableList(mLocationListeners);
+		}
 	}
 
 	@Override
@@ -167,29 +170,25 @@ public class ZmanimLocations implements LocationListener {
 		mLocation = location;
 		mSettings.putLocation(location);
 
-		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
-		for (LocationListener listener : listeners)
+		for (LocationListener listener : mLocationListenersLoop)
 			listener.onLocationChanged(location);
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
-		for (LocationListener listener : listeners)
+		for (LocationListener listener : mLocationListenersLoop)
 			listener.onProviderDisabled(provider);
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
-		for (LocationListener listener : listeners)
+		for (LocationListener listener : mLocationListenersLoop)
 			listener.onProviderEnabled(provider);
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		Collection<LocationListener> listeners = Collections.unmodifiableList(mLocationListeners);
-		for (LocationListener listener : listeners)
+		for (LocationListener listener : mLocationListenersLoop)
 			listener.onStatusChanged(provider, status, extras);
 	}
 
@@ -324,8 +323,10 @@ public class ZmanimLocations implements LocationListener {
 	 *            the listener who wants to stop listening.
 	 */
 	public void stop(LocationListener listener) {
-		if (listener != null)
+		if (listener != null) {
 			mLocationListeners.remove(listener);
+			mLocationListenersLoop = Collections.unmodifiableList(mLocationListeners);
+		}
 
 		if (mLocationListeners.isEmpty()) {
 			removeUpdates();
@@ -533,7 +534,7 @@ public class ZmanimLocations implements LocationListener {
 		criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 		criteria.setAltitudeRequired(true);
 		criteria.setCostAllowed(true);
-		//criteria.setPowerRequirement(Criteria.POWER_LOW);
+		// criteria.setPowerRequirement(Criteria.POWER_LOW);
 
 		String provider = mLocationManager.getBestProvider(criteria, true);
 		try {

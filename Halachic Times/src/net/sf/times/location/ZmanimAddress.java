@@ -34,6 +34,12 @@ import android.text.TextUtils;
  */
 public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> {
 
+	/**
+	 * Key to store the formatted address, instead of formatting it ourselves
+	 * elsewhere.
+	 */
+	public static final String KEY_FORMATTED = "formatted_address";
+
 	/** ISO 639 country code for Israel. */
 	public static final String ISO639_ISRAEL = "IL";
 	/** ISO 639 country code for Palestine. */
@@ -178,7 +184,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 */
 	protected String format() {
 		Bundle extras = getExtras();
-		String formatted = (extras == null) ? null : extras.getString(GoogleGeocoder.KEY_FORMATTED);
+		String formatted = (extras == null) ? null : extras.getString(KEY_FORMATTED);
 		if (formatted != null)
 			return formatted;
 

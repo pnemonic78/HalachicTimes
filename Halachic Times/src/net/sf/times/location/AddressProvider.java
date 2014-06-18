@@ -244,7 +244,7 @@ public class AddressProvider {
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, "GeoNames: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
@@ -395,7 +395,7 @@ public class AddressProvider {
 				} while (cursor.moveToNext());
 			}
 		} catch (SQLiteException se) {
-			se.printStackTrace();
+			Log.e(TAG, "Find nearest db address: " + se.getLocalizedMessage(), se);
 		} finally {
 			cursor.close();
 			db.close();
@@ -415,7 +415,7 @@ public class AddressProvider {
 		try {
 			return mOpenHelper.getReadableDatabase();
 		} catch (SQLiteException e) {
-			e.printStackTrace();
+			Log.e(TAG, "no readable db", e);
 		}
 		return null;
 	}
@@ -431,7 +431,7 @@ public class AddressProvider {
 		try {
 			return mOpenHelper.getWritableDatabase();
 		} catch (SQLiteException e) {
-			e.printStackTrace();
+			Log.e(TAG, "no writable db", e);
 		}
 		return null;
 	}
@@ -453,9 +453,6 @@ public class AddressProvider {
 			return;
 
 		ContentValues values = new ContentValues();
-		values.put(AddressColumns.ADDRESS, formatAddress(address));
-		values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
-		values.put(AddressColumns.LATITUDE, address.getLatitude());
 		if (location == null) {
 			values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
 			values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
@@ -463,6 +460,9 @@ public class AddressProvider {
 			values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
 			values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
 		}
+		values.put(AddressColumns.ADDRESS, formatAddress(address));
+		values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
+		values.put(AddressColumns.LATITUDE, address.getLatitude());
 		values.put(AddressColumns.LONGITUDE, address.getLongitude());
 		values.put(AddressColumns.ELEVATION, address.getElevation());
 		values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
@@ -471,6 +471,8 @@ public class AddressProvider {
 		SQLiteDatabase db = null;
 		try {
 			db = getWritableDatabase();
+			if (db == null)
+				return;
 			if (id == 0L) {
 				id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
 				address.setId(id);
@@ -585,13 +587,81 @@ public class AddressProvider {
 				} while (cursor.moveToNext());
 			}
 		} catch (SQLiteException se) {
-			se.printStackTrace();
+			Log.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
 		} finally {
 			cursor.close();
 			db.close();
 		}
 
 		return addresses;
+	}
+
+	/**
+	 * Find the elevation (altitude).
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the elevation.
+	 */
+	public double findElevation(Location location) {
+		if (location.hasAltitude())
+			return location.getAltitude();
+		double elevation;
+		elevation = findElevationCity();
+		if (elevation != Double.NaN)
+			return elevation;
+		elevation = findElevationCities();
+		if (elevation != Double.NaN)
+			return elevation;
+		elevation = findElevationGoogle();
+		if (elevation != Double.NaN)
+			return elevation;
+		elevation = findElevationGeoNames();
+		if (elevation != Double.NaN)
+			return elevation;
+		return 0;
+	}
+
+	/**
+	 * Find elevation of the nearest city. Cities within a 10km radius are
+	 * assumed have the same elevation.
+	 * 
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 */
+	private double findElevationCity() {
+		// TODO implement me!
+		return Double.NaN;
+	}
+
+	/**
+	 * Find elevation of nearest cities. Calculates the average elevation of
+	 * neighbouring cities.
+	 * 
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 */
+	private double findElevationCities() {
+		// TODO implement me!
+		return Double.NaN;
+	}
+
+	/**
+	 * Find elevation according to Google Maps.
+	 * 
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 */
+	private double findElevationGoogle() {
+		// TODO implement me!
+		return Double.NaN;
+	}
+
+	/**
+	 * Find elevation according to GeoNames.
+	 * 
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 */
+	private double findElevationGeoNames() {
+		// TODO implement me!
+		return Double.NaN;
 	}
 
 }

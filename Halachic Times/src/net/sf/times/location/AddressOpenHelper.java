@@ -77,7 +77,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	public void onOpen(SQLiteDatabase db) {
 		super.onOpen(db);
 
-		// Delete all records older than 1 year.
+		// Delete stale records older than 1 year.
 		String whereClause = "(" + AddressColumns.TIMESTAMP + " < " + (System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS) + ")";
 		db.delete(TABLE_ADDRESSES, whereClause, null);
 	}
