@@ -76,7 +76,14 @@ public class AddressProvider {
 	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
 	/** Maximum radius to consider two locations in the same vicinity. */
-	private static final float SAME_LOCATION = 250f;// 250 meters.
+	private static final float SAME_LOCATION = 250f;// 250 metres.
+	/** Maximum radius to consider a location near the same city. */
+	private static final float SAME_CITY = 10000f;// 10 kilometres.
+	/**
+	 * Maximum radius to consider a location near the same plateau with similar
+	 * terrain.
+	 */
+	private static final float SAME_PLATEAU = 50000f;// 50 kilometres.
 
 	private final Context mContext;
 	private final Locale mLocale;
@@ -607,16 +614,16 @@ public class AddressProvider {
 		if (location.hasAltitude())
 			return location.getAltitude();
 		double elevation;
-		elevation = findElevationCity();
+		elevation = findElevationCity(location);
 		if (elevation != Double.NaN)
 			return elevation;
-		elevation = findElevationCities();
+		elevation = findElevationCities(location);
 		if (elevation != Double.NaN)
 			return elevation;
-		elevation = findElevationGoogle();
+		elevation = findElevationGoogle(location);
 		if (elevation != Double.NaN)
 			return elevation;
-		elevation = findElevationGeoNames();
+		elevation = findElevationGeoNames(location);
 		if (elevation != Double.NaN)
 			return elevation;
 		return 0;
@@ -626,10 +633,34 @@ public class AddressProvider {
 	 * Find elevation of the nearest city. Cities within a 10km radius are
 	 * assumed have the same elevation.
 	 * 
+	 * @param location
+	 *            the location.
 	 * @return the elevation - {@code Double#NaN} otherwise.
 	 */
-	private double findElevationCity() {
-		// TODO implement me!
+	private double findElevationCity(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+
+		List<ZmanimAddress> cities = mCountries.getCities();
+		ZmanimAddress cityNearest = null;
+
+		float distance;
+		float distanceMin = Float.MAX_VALUE;
+		float[] distances = new float[1];
+
+		for (ZmanimAddress city : cities) {
+			Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distances);
+			distance = distances[0];
+			if ((distance <= distanceMin) && (distance <= SAME_CITY)) {
+				distanceMin = distances[0];
+				cityNearest = city;
+			}
+		}
+
+		if (cityNearest != null) {
+			return cityNearest.getElevation();
+		}
+
 		return Double.NaN;
 	}
 
@@ -637,19 +668,58 @@ public class AddressProvider {
 	 * Find elevation of nearest cities. Calculates the average elevation of
 	 * neighbouring cities.
 	 * 
+	 * @param location
+	 *            the location.
 	 * @return the elevation - {@code Double#NaN} otherwise.
 	 */
-	private double findElevationCities() {
-		// TODO implement me!
-		return Double.NaN;
+	private double findElevationCities(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+
+		List<ZmanimAddress> cities = mCountries.getCities();
+		int citiesCount = cities.size();
+
+		float distance;
+		float[] distanceCity = new float[1];
+		double d;
+		double distancesSum = 0;
+		int n = 0;
+		double[] distances = new double[citiesCount];
+		double[] elevations = new double[citiesCount];
+
+		for (ZmanimAddress city : cities) {
+			Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distanceCity);
+			distance = distanceCity[0];
+			if (distance <= SAME_PLATEAU) {
+				elevations[n] = city.getElevation();
+				d = distance * distance;
+				distances[n] = d;
+				distancesSum += d;
+				n++;
+			}
+		}
+
+		if (n <= 1)
+			return Double.NaN;
+
+		double weight;
+		double weightSum = 0;
+		for (int i = 0; i < n; i++) {
+			weight = (1 - (distances[i] / distancesSum)) * elevations[i];
+			weightSum += weight;
+		}
+
+		return weightSum / (n - 1);
 	}
 
 	/**
 	 * Find elevation according to Google Maps.
 	 * 
+	 * @param location
+	 *            the location.
 	 * @return the elevation - {@code Double#NaN} otherwise.
 	 */
-	private double findElevationGoogle() {
+	private double findElevationGoogle(Location location) {
 		// TODO implement me!
 		return Double.NaN;
 	}
@@ -657,9 +727,11 @@ public class AddressProvider {
 	/**
 	 * Find elevation according to GeoNames.
 	 * 
+	 * @param location
+	 *            the location.
 	 * @return the elevation - {@code Double#NaN} otherwise.
 	 */
-	private double findElevationGeoNames() {
+	private double findElevationGeoNames(Location location) {
 		// TODO implement me!
 		return Double.NaN;
 	}
