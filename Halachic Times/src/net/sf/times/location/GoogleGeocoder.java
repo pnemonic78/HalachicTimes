@@ -19,19 +19,9 @@
  */
 package net.sf.times.location;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import net.sf.net.HTTPReader;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -52,7 +42,7 @@ import android.text.TextUtils;
  * 
  * @author Moshe Waisberg
  */
-public class GoogleGeocoder {
+public class GoogleGeocoder extends GeocoderBase {
 
 	/** URL that accepts latitude and longitude coordinates as parameters. */
 	private static final String URL_LATLNG = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=%f,%f&language=%s&sensor=true";
@@ -61,11 +51,6 @@ public class GoogleGeocoder {
 	/** URL that accepts a bounded address as parameters. */
 	private static final String URL_ADDRESS_BOUNDED = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&sensor=true";
 
-	protected final Context mContext;
-	protected final Locale mLocale;
-	private static SAXParserFactory mParserFactory;
-	private static SAXParser mParser;
-
 	/**
 	 * Creates a new Google geocoder.
 	 * 
@@ -73,7 +58,7 @@ public class GoogleGeocoder {
 	 *            the context.
 	 */
 	public GoogleGeocoder(Context context) {
-		this(context, Locale.getDefault());
+		super(context);
 	}
 
 	/**
@@ -85,42 +70,17 @@ public class GoogleGeocoder {
 	 *            the locale.
 	 */
 	public GoogleGeocoder(Context context, Locale locale) {
-		super();
-		mContext = context;
-		mLocale = locale;
+		super(context, locale);
 	}
 
-	/**
-	 * Returns an array of Addresses that are known to describe the area
-	 * immediately surrounding the given latitude and longitude. The returned
-	 * addresses will be localized for the locale provided to this class's
-	 * constructor.
-	 * <p>
-	 * The returned values may be obtained by means of a network lookup. The
-	 * results are a best guess and are not guaranteed to be meaningful or
-	 * correct. It may be useful to call this method from a thread separate from
-	 * your primary UI thread.
-	 * 
-	 * @param latitude
-	 *            the latitude a point for the search.
-	 * @param longitude
-	 *            the longitude a point for the search.
-	 * @param maxResults
-	 *            max number of addresses to return. Smaller numbers (1 to 5)
-	 *            are recommended.
-	 * @return a list of addresses. Returns {@code null} or empty list if no
-	 *         matches were found or there is no backend service available.
-	 * @throws IOException
-	 *             if the network is unavailable or any other I/O problem
-	 *             occurs.
-	 */
+	@Override
 	public List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException {
 		if (latitude < -90.0 || latitude > 90.0)
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
-		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, mLocale.getLanguage());
-		return getFromURL(queryUrl, maxResults);
+		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage());
+		return getXMLFromURL(queryUrl, maxResults);
 	}
 
 	/**
@@ -149,8 +109,8 @@ public class GoogleGeocoder {
 	public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
 		if (locationName == null)
 			throw new IllegalArgumentException("locationName == null");
-		String queryUrl = String.format(Locale.US, URL_ADDRESS, locationName, mLocale.getLanguage());
-		return getFromURL(queryUrl, maxResults);
+		String queryUrl = String.format(Locale.US, URL_ADDRESS, locationName, getLanguage());
+		return getXMLFromURL(queryUrl, maxResults);
 	}
 
 	/**
@@ -200,77 +160,14 @@ public class GoogleGeocoder {
 			throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
 		if (upperRightLongitude < -180.0 || upperRightLongitude > 180.0)
 			throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
-		String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude,
-				mLocale.getLanguage());
-		return getFromURL(queryUrl, maxResults);
+		String queryUrl = String
+				.format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
+		return getXMLFromURL(queryUrl, maxResults);
 	}
 
-	/**
-	 * Get the address by parsing the URL results.
-	 * 
-	 * @param queryUrl
-	 *            the URL.
-	 * @param maxResults
-	 *            the maximum number of results.
-	 * @return a list of addresses. Returns {@code null} or empty list if no
-	 *         matches were found or there is no backend service available.
-	 * @throws IOException
-	 *             if the network is unavailable or any other I/O problem
-	 *             occurs.
-	 */
-	private List<Address> getFromURL(String queryUrl, int maxResults) throws IOException {
-		URL url = new URL(queryUrl);
-		byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-		try {
-			return parseLocations(data, maxResults);
-		} catch (ParserConfigurationException pce) {
-			throw new IOException(pce.getMessage());
-		} catch (SAXException se) {
-			throw new IOException(se.getMessage());
-		}
-	}
-
-	/**
-	 * Parse the XML response.
-	 * 
-	 * @param data
-	 *            the XML data.
-	 * @param maxResults
-	 *            the maximum number of results.
-	 * @return a list of addresses. Returns {@code null} or empty list if no
-	 *         matches were found or there is no backend service available.
-	 * @throws ParserConfigurationException
-	 *             if an XML error occurs.
-	 * @throws SAXException
-	 *             if an XML error occurs.
-	 * @throws IOException
-	 *             if the network is unavailable or any other I/O problem
-	 *             occurs.
-	 */
-	private List<Address> parseLocations(byte[] data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
-		// Minimum length for "<GeocodeResponse/>"
-		if ((data == null) || (data.length < 18))
-			return null;
-
-		List<Address> results = new ArrayList<Address>();
-		InputStream in = new ByteArrayInputStream(data);
-		SAXParser parser = getParser();
-		DefaultHandler handler = new GeocodeResponseHandler(results, maxResults, mLocale);
-		parser.parse(in, handler);
-
-		return results;
-	}
-
-	protected SAXParserFactory getParserFactory() {
-		if (mParserFactory == null)
-			mParserFactory = SAXParserFactory.newInstance();
-		return mParserFactory;
-	}
-
-	protected SAXParser getParser() throws ParserConfigurationException, SAXException {
-		if (mParser == null)
-			mParser = getParserFactory().newSAXParser();
-		return mParser;
+	@Override
+	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+		return new GeocodeResponseHandler(results, maxResults, locale);
 	}
 
 	/**

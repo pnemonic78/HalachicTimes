@@ -19,10 +19,13 @@
  */
 package net.sf.times.location;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import org.xml.sax.helpers.DefaultHandler;
 
 import net.sf.times.R;
 import android.content.Context;
@@ -36,7 +39,7 @@ import android.text.format.DateUtils;
  * 
  * @author Moshe Waisberg
  */
-public class CountriesGeocoder {
+public class CountriesGeocoder extends GeocoderBase {
 
 	/** The time zone location provider. */
 	public static final String TIMEZONE_PROVIDER = "timezone";
@@ -57,7 +60,6 @@ public class CountriesGeocoder {
 	/** Maximum radius for which a zman is the same (20 kilometres). */
 	private static final float CITY_RADIUS = 20000f;
 
-	protected final Locale mLocale;
 	private static CountryPolygon[] mCountryBorders;
 	private String[] mCitiesNames;
 	private static String[] mCitiesCountries;
@@ -72,7 +74,7 @@ public class CountriesGeocoder {
 	 *            the context.
 	 */
 	public CountriesGeocoder(Context context) {
-		this(context, Locale.getDefault());
+		super(context);
 	}
 
 	/**
@@ -84,8 +86,7 @@ public class CountriesGeocoder {
 	 *            the locale.
 	 */
 	public CountriesGeocoder(Context context, Locale locale) {
-		super();
-		mLocale = locale;
+		super(context, locale);
 
 		// Populate arrays from "countries.xml"
 		Resources res = context.getResources();
@@ -225,7 +226,7 @@ public class CountriesGeocoder {
 			}
 		}
 
-		Locale locale = new Locale(mLocale.getLanguage(), mCountryBorders[found].countryCode);
+		Locale locale = new Locale(getLanguage(), mCountryBorders[found].countryCode);
 		ZmanimAddress city = new ZmanimAddress(locale);
 		city.setId(-found);
 		city.setLatitude(latitude);
@@ -267,10 +268,9 @@ public class CountriesGeocoder {
 		double searchLongitude = location.getLongitude();
 		double latitude;
 		double longitude;
-		String cityName;
 		float distanceMin = Float.MAX_VALUE;
 		float[] distances = new float[1];
-		Locale locale;
+		Locale cityLocale;
 		int nearestCityIndex = -1;
 
 		for (int i = 0; i < citiesCount; i++) {
@@ -285,17 +285,16 @@ public class CountriesGeocoder {
 			}
 		}
 		if (nearestCityIndex >= 0) {
-			cityName = mCitiesNames[nearestCityIndex];
-			locale = new Locale(mLocale.getLanguage(), mCitiesCountries[nearestCityIndex]);
+			cityLocale = new Locale(getLanguage(), mCitiesCountries[nearestCityIndex]);
 
 			city = new ZmanimAddress(mLocale);
 			city.setId(-nearestCityIndex - 1);
 			city.setLatitude(mCitiesLatitudes[nearestCityIndex]);
 			city.setLongitude(mCitiesLongitudes[nearestCityIndex]);
 			city.setElevation(mCitiesElevations[nearestCityIndex]);
-			city.setCountryCode(locale.getCountry());
-			city.setCountryName(locale.getDisplayCountry());
-			city.setLocality(cityName);
+			city.setCountryCode(cityLocale.getCountry());
+			city.setCountryName(cityLocale.getDisplayCountry());
+			city.setLocality(mCitiesNames[nearestCityIndex]);
 		}
 
 		return city;
@@ -338,6 +337,49 @@ public class CountriesGeocoder {
 		}
 
 		return cities;
+	}
+
+	@Override
+	public List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException {
+		if (latitude < -90.0 || latitude > 90.0)
+			throw new IllegalArgumentException("latitude == " + latitude);
+		if (longitude < -180.0 || longitude > 180.0)
+			throw new IllegalArgumentException("longitude == " + longitude);
+
+		List<Address> cities = new ArrayList<Address>(maxResults);
+		ZmanimAddress city = null;
+		final int citiesCount = mCitiesNames.length;
+		double cityLatitude;
+		double cityLongitude;
+		float[] distances = new float[1];
+		Locale cityLocale;
+
+		for (int i = 0; i < citiesCount; i++) {
+			cityLatitude = mCitiesLatitudes[i];
+			cityLongitude = mCitiesLongitudes[i];
+			Location.distanceBetween(latitude, longitude, cityLatitude, cityLongitude, distances);
+			if (distances[0] <= CITY_RADIUS) {
+				cityLocale = new Locale(getLanguage(), mCitiesCountries[i]);
+
+				city = new ZmanimAddress(mLocale);
+				city.setId(-i - 1);
+				city.setLatitude(cityLatitude);
+				city.setLongitude(cityLongitude);
+				city.setElevation(mCitiesElevations[i]);
+				city.setCountryCode(cityLocale.getCountry());
+				city.setCountryName(cityLocale.getDisplayCountry());
+				city.setLocality(mCitiesNames[i]);
+
+				cities.add(city);
+			}
+		}
+
+		return cities;
+	}
+
+	@Override
+	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+		return null;
 	}
 
 }

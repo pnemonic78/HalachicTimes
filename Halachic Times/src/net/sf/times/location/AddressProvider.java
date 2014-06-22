@@ -173,6 +173,12 @@ public class AddressProvider {
 				listener.onFindAddress(this, location, best);
 		}
 		if (best == null) {
+			addresses = findNearestAddressBing(location);
+			best = findBestAddress(location, addresses);
+			if ((best != null) && (listener != null))
+				listener.onFindAddress(this, location, best);
+		}
+		if (best == null) {
 			addresses = findNearestAddressGeoNames(location);
 			best = findBestAddress(location, addresses);
 			if ((best != null) && (listener != null))
@@ -225,7 +231,7 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GoogleGeocoder geocoder = new GoogleGeocoder(mContext, mLocale);
+		GeocoderBase geocoder = new GoogleGeocoder(mContext, mLocale);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
@@ -247,11 +253,33 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeoNamesGeocoder geocoder = new GeoNamesGeocoder(mContext, mLocale);
+		GeocoderBase geocoder = new GeoNamesGeocoder(mContext, mLocale);
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
 		} catch (IOException e) {
 			Log.e(TAG, "GeoNames: " + e.getLocalizedMessage(), e);
+		}
+		return addresses;
+	}
+
+	/**
+	 * Finds the nearest street and address for a given lat/lng pair.
+	 * <p>
+	 * Uses the Bing API.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the list of addresses.
+	 */
+	private List<Address> findNearestAddressBing(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		List<Address> addresses = null;
+		GeocoderBase geocoder = new BingGeocoder(mContext, mLocale);
+		try {
+			addresses = geocoder.getFromLocation(latitude, longitude, 5);
+		} catch (IOException e) {
+			Log.e(TAG, "Bing: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
@@ -528,13 +556,16 @@ public class AddressProvider {
 	 * @return the list of addresses with at most 1 entry.
 	 */
 	private List<Address> findNearestCity(Location location) {
-		List<Address> cities = null;
-		Address city = mCountries.findCity(location);
-		if (city != null) {
-			cities = new ArrayList<Address>();
-			cities.add(city);
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		List<Address> addresses = null;
+		GeocoderBase geocoder = mCountries;
+		try {
+			addresses = geocoder.getFromLocation(latitude, longitude, 10);
+		} catch (IOException e) {
+			Log.e(TAG, "City: " + e.getLocalizedMessage(), e);
 		}
-		return cities;
+		return addresses;
 	}
 
 	/**

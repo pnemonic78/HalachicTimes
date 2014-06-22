@@ -19,12 +19,13 @@
  */
 package net.sf.net;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import net.sf.io.StreamUtils;
 
 /**
  * HTTP reader.
@@ -37,8 +38,6 @@ public class HTTPReader {
 	public static final String CONTENT_XML = "application/xml";
 	/** Content type that is XML text. */
 	public static final String CONTENT_TEXT_XML = "text/xml";
-
-	private static final int BUFFER_SIZE = 1024;
 
 	/** Creates a new reader. */
 	public HTTPReader() {
@@ -73,18 +72,11 @@ public class HTTPReader {
 		byte[] data = null;
 		InputStream in = null;
 		try {
-			in = new BufferedInputStream(conn.getInputStream(), BUFFER_SIZE);
-			// Do NOT use content-length header for exact buffer size!
+			in = conn.getInputStream();
+			// Do NOT use Content-Length header for an exact buffer size!
 			// It is not always reliable / accurate.
-			final int outSize = Math.max(Math.max(in.available(), conn.getContentLength()), 32);
-			ByteArrayOutputStream out = new ByteArrayOutputStream(outSize);
-			final byte[] buf = new byte[BUFFER_SIZE];
-			int count = in.read(buf);
-			while (count >= 0) {
-				out.write(buf, 0, count);
-				count = in.read(buf);
-			}
-			out.close();
+			final int outSize = Math.max(in.available(), conn.getContentLength());
+			ByteArrayOutputStream out = StreamUtils.readFully(in, outSize);
 			data = out.toByteArray();
 		} finally {
 			if (in != null) {
