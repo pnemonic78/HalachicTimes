@@ -107,6 +107,83 @@ public abstract class GeocoderBase {
 	public abstract List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException;
 
 	/**
+	 * Returns an array of Addresses that are known to describe the named
+	 * location, which may be a place name such as "Dalvik, Iceland", an address
+	 * such as "1600 Amphitheatre Parkway, Mountain View, CA", an airport code
+	 * such as "SFO", etc.. The returned addresses will be localized for the
+	 * locale provided to this class's constructor.
+	 * <p>
+	 * The query will block and returned values will be obtained by means of a
+	 * network lookup. The results are a best guess and are not guaranteed to be
+	 * meaningful or correct. It may be useful to call this method from a thread
+	 * separate from your primary UI thread.
+	 * 
+	 * @param locationName
+	 *            a user-supplied description of a location.
+	 * @param maxResults
+	 *            max number of addresses to return. Smaller numbers (1 to 5)
+	 *            are recommended.
+	 * @return a list of addresses. Returns {@code null} or empty list if no
+	 *         matches were found or there is no backend service available.
+	 * @throws IOException
+	 *             if the network is unavailable or any other I/O problem
+	 *             occurs.
+	 */
+	public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
+		return null;
+	}
+
+	/**
+	 * Returns an array of Addresses that are known to describe the named
+	 * location, which may be a place name such as "Dalvik, Iceland", an address
+	 * such as "1600 Amphitheatre Parkway, Mountain View, CA", an airport code
+	 * such as "SFO", etc.. The returned addresses will be localized for the
+	 * locale provided to this class's constructor.
+	 * <p>
+	 * You may specify a bounding box for the search results by including the
+	 * Latitude and Longitude of the Lower Left point and Upper Right point of
+	 * the box.
+	 * <p>
+	 * The query will block and returned values will be obtained by means of a
+	 * network lookup. The results are a best guess and are not guaranteed to be
+	 * meaningful or correct. It may be useful to call this method from a thread
+	 * separate from your primary UI thread.
+	 * 
+	 * @param locationName
+	 *            a user-supplied description of a location.
+	 * @param maxResults
+	 *            max number of addresses to return. Smaller numbers (1 to 5)
+	 *            are recommended.
+	 * @param lowerLeftLatitude
+	 *            the latitude of the lower left corner of the bounding box.
+	 * @param lowerLeftLongitude
+	 *            the longitude of the lower left corner of the bounding box.
+	 * @param upperRightLatitude
+	 *            the latitude of the upper right corner of the bounding box.
+	 * @param upperRightLongitude
+	 *            the longitude of the upper right corner of the bounding box.
+	 * @return a list of addresses. Returns {@code null} or empty list if no
+	 *         matches were found or there is no backend service available.
+	 * @throws IOException
+	 *             if the network is unavailable or any other I/O problem
+	 *             occurs.
+	 */
+	public List<Address> getFromLocationName(String locationName, int maxResults, double lowerLeftLatitude, double lowerLeftLongitude, double upperRightLatitude,
+			double upperRightLongitude) throws IOException {
+		if (locationName == null)
+			throw new IllegalArgumentException("locationName == null");
+		if (lowerLeftLatitude < -90.0 || lowerLeftLatitude > 90.0)
+			throw new IllegalArgumentException("lowerLeftLatitude == " + lowerLeftLatitude);
+		if (lowerLeftLongitude < -180.0 || lowerLeftLongitude > 180.0)
+			throw new IllegalArgumentException("lowerLeftLongitude == " + lowerLeftLongitude);
+		if (upperRightLatitude < -90.0 || upperRightLatitude > 90.0)
+			throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
+		if (upperRightLongitude < -180.0 || upperRightLongitude > 180.0)
+			throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
+		return null;
+	}
+
+	/**
 	 * Get the address by parsing the URL results.
 	 * 
 	 * @param queryUrl
@@ -190,4 +267,18 @@ public abstract class GeocoderBase {
 			return "yi";
 		return language;
 	}
+
+	/**
+	 * Get the location's elevation.
+	 * 
+	 * @param latitude
+	 *            the latitude a point for the search.
+	 * @param longitude
+	 *            the longitude a point for the search.
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 * @throws IOException
+	 *             if the network is unavailable or any other I/O problem
+	 *             occurs.
+	 */
+	public abstract double getElevation(double latitude, double longitude) throws IOException;
 }

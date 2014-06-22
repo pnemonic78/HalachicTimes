@@ -52,6 +52,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	private long mId;
 	private double mElevation;
+	private boolean mHasElevation;
 	private String mFormatted;
 	private boolean mFavorite;
 
@@ -155,26 +156,38 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 *            is favourite?
 	 */
 	public void setFavorite(boolean favorite) {
-		this.mFavorite = favorite;
+		mFavorite = favorite;
 	}
 
 	/**
 	 * Set the elevation.
 	 * 
 	 * @param elevation
-	 *            the elevation in meters.
+	 *            the elevation in metres.
 	 */
 	public void setElevation(double elevation) {
-		this.mElevation = elevation;
+		mElevation = elevation;
+		mHasElevation = true;
 	}
 
 	/**
 	 * Get the elevation.
 	 * 
-	 * @return the elevation in meters.
+	 * @return the elevation in metres.
 	 */
 	public double getElevation() {
-		return mElevation;
+		if (mHasElevation) {
+			return mElevation;
+		}
+		throw new IllegalStateException();
+	}
+
+	/**
+	 * Returns true if an elevation has been assigned to this Address, false
+	 * otherwise.
+	 */
+	public boolean hasElevation() {
+		return mHasElevation;
 	}
 
 	/**

@@ -48,7 +48,7 @@ public class BingGeocoder extends GeocoderBase {
 	private static final String API_KEY = "BingMapsKey";
 
 	/** URL that accepts latitude and longitude coordinates as parameters. */
-	private static final String URL_LATLNG = "https://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";
+	private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";
 
 	/**
 	 * Creates a new Bing geocoder.
@@ -326,4 +326,9 @@ public class BingGeocoder extends GeocoderBase {
 		}
 	}
 
+	@Override
+	public double getElevation(double latitude, double longitude) throws IOException {
+		// TODO Auto-generated method stub
+		return Double.NaN;
+	}
 }

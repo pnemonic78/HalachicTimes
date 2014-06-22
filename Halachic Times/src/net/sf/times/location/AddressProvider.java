@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import net.sf.times.database.CursorFilter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -64,8 +65,6 @@ public class AddressProvider {
 	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
 			AddressColumns.LONGITUDE, AddressColumns.ELEVATION, AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE };
 	private static final int INDEX_ID = 0;
-	private static final int INDEX_LOCATION_LATITUDE = 1;
-	private static final int INDEX_LOCATION_LONGITUDE = 2;
 	private static final int INDEX_LATITUDE = 3;
 	private static final int INDEX_LONGITUDE = 4;
 	private static final int INDEX_ELEVATION = 5;
@@ -75,8 +74,6 @@ public class AddressProvider {
 
 	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
-	/** Maximum radius to consider two locations in the same vicinity. */
-	private static final float SAME_LOCATION = 250f;// 250 metres.
 	/** Maximum radius to consider a location near the same city. */
 	private static final float SAME_CITY = 10000f;// 10 kilometres.
 	/**
@@ -90,6 +87,11 @@ public class AddressProvider {
 	private SQLiteOpenHelper mOpenHelper;
 	/** The list of countries. */
 	private CountriesGeocoder mCountries;
+	private Geocoder mGeocoder;
+	private GeocoderBase mGeocoderGoogle;
+	private GeocoderBase mGeocoderBing;
+	private GeocoderBase mGeocoderGeoNames;
+	private GeocoderBase mGeocoderDatabase;
 
 	/**
 	 * Constructs a new provider.
@@ -208,7 +210,11 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		Geocoder geocoder = new Geocoder(mContext);
+		Geocoder geocoder = mGeocoder;
+		if (geocoder == null) {
+			geocoder = new Geocoder(mContext);
+			mGeocoder = geocoder;
+		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
@@ -231,11 +237,15 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = new GoogleGeocoder(mContext, mLocale);
+		GeocoderBase geocoder = mGeocoderGoogle;
+		if (geocoder == null) {
+			geocoder = new GoogleGeocoder(mContext, mLocale);
+			mGeocoderGoogle = geocoder;
+		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			Log.e(TAG, "GoogleGeocoder: " + e.getLocalizedMessage(), e);
+			Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
@@ -253,11 +263,15 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = new GeoNamesGeocoder(mContext, mLocale);
+		GeocoderBase geocoder = mGeocoderGeoNames;
+		if (geocoder == null) {
+			geocoder = new GeoNamesGeocoder(mContext, mLocale);
+			mGeocoderGeoNames = geocoder;
+		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
 		} catch (IOException e) {
-			Log.e(TAG, "GeoNames: " + e.getLocalizedMessage(), e);
+			Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
@@ -275,11 +289,15 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = new BingGeocoder(mContext, mLocale);
+		GeocoderBase geocoder = mGeocoderBing;
+		if (geocoder == null) {
+			geocoder = new BingGeocoder(mContext, mLocale);
+			mGeocoderBing = geocoder;
+		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
 		} catch (IOException e) {
-			Log.e(TAG, "Bing: " + e.getLocalizedMessage(), e);
+			Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage(), e);
 		}
 		return addresses;
 	}
@@ -371,71 +389,17 @@ public class AddressProvider {
 	private List<Address> findNearestAddressDatabase(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		final String language = mLocale.getLanguage();
-		final String country = mLocale.getCountry();
-
-		List<Address> addresses = new ArrayList<Address>();
-		SQLiteDatabase db = getReadableDatabase();
-		if (db == null)
-			return addresses;
-		Cursor cursor = db.query(AddressOpenHelper.TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
-		if ((cursor == null) || cursor.isClosed()) {
-			db.close();
-			return addresses;
+		List<Address> addresses = null;
+		GeocoderBase geocoder = mGeocoderDatabase;
+		if (geocoder == null) {
+			geocoder = new DatabaseGeocoder(mContext, mLocale);
+			mGeocoderDatabase = geocoder;
 		}
-
 		try {
-			if (cursor.moveToFirst()) {
-				long id;
-				double locationLatitude;
-				double locationLongitude;
-				double addressLatitude;
-				double addressLongitude;
-				double addressElevation;
-				String formatted;
-				String locationLanguage;
-				Locale locale;
-				ZmanimAddress address;
-				float[] distanceLocation = new float[1];
-				float[] distanceAddress = new float[1];
-
-				do {
-					locationLanguage = cursor.getString(INDEX_LANGUAGE);
-					if ((locationLanguage == null) || locationLanguage.equals(language)) {
-						locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
-						locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
-						addressLatitude = cursor.getDouble(INDEX_LATITUDE);
-						addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
-						Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
-						Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceAddress);
-
-						if ((distanceLocation[0] <= SAME_LOCATION) || (distanceAddress[0] <= SAME_LOCATION)) {
-							id = cursor.getLong(INDEX_ID);
-							addressElevation = cursor.getDouble(INDEX_ELEVATION);
-							formatted = cursor.getString(INDEX_ADDRESS);
-							if (locationLanguage == null)
-								locale = mLocale;
-							else
-								locale = new Locale(locationLanguage, country);
-
-							address = new ZmanimAddress(locale);
-							address.setFormatted(formatted);
-							address.setId(id);
-							address.setLatitude(addressLatitude);
-							address.setLongitude(addressLongitude);
-							address.setElevation(addressElevation);
-							addresses.add(address);
-						}
-					}
-				} while (cursor.moveToNext());
-			}
-		} catch (SQLiteException se) {
-			Log.e(TAG, "Find nearest db address: " + se.getLocalizedMessage(), se);
-		} finally {
-			cursor.close();
-			db.close();
+			addresses = geocoder.getFromLocation(latitude, longitude, 10);
+		} catch (IOException e) {
+			Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage(), e);
 		}
-
 		return addresses;
 	}
 
@@ -499,7 +463,7 @@ public class AddressProvider {
 		values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
 		values.put(AddressColumns.LATITUDE, address.getLatitude());
 		values.put(AddressColumns.LONGITUDE, address.getLongitude());
-		values.put(AddressColumns.ELEVATION, address.getElevation());
+		values.put(AddressColumns.ELEVATION, address.hasElevation() ? address.getElevation() : null);
 		values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
 		values.put(AddressColumns.FAVORITE, address.isFavorite());
 
@@ -571,9 +535,11 @@ public class AddressProvider {
 	/**
 	 * Fetch addresses from the database.
 	 * 
+	 * @param filter
+	 *            a cursor filter.
 	 * @return the list of addresses.
 	 */
-	public List<ZmanimAddress> query() {
+	public List<ZmanimAddress> query(CursorFilter filter) {
 		final String language = mLocale.getLanguage();
 		final String country = mLocale.getCountry();
 
@@ -592,7 +558,6 @@ public class AddressProvider {
 				long id;
 				double addressLatitude;
 				double addressLongitude;
-				double addressElevation;
 				String formatted;
 				String locationLanguage;
 				Locale locale;
@@ -602,9 +567,11 @@ public class AddressProvider {
 				do {
 					locationLanguage = cursor.getString(INDEX_LANGUAGE);
 					if ((locationLanguage == null) || locationLanguage.equals(language)) {
+						if ((filter != null) && !filter.accept(cursor))
+							continue;
+
 						addressLatitude = cursor.getDouble(INDEX_LATITUDE);
 						addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
-						addressElevation = cursor.getDouble(INDEX_ELEVATION);
 						id = cursor.getLong(INDEX_ID);
 						formatted = cursor.getString(INDEX_ADDRESS);
 						favorite = cursor.getShort(INDEX_FAVORITE) != 0;
@@ -618,7 +585,8 @@ public class AddressProvider {
 						address.setId(id);
 						address.setLatitude(addressLatitude);
 						address.setLongitude(addressLongitude);
-						address.setElevation(addressElevation);
+						if (!cursor.isNull(INDEX_ELEVATION))
+							address.setElevation(cursor.getDouble(INDEX_ELEVATION));
 						address.setFavorite(favorite);
 						addresses.add(address);
 					}
@@ -639,22 +607,34 @@ public class AddressProvider {
 	 * 
 	 * @param location
 	 *            the location.
-	 * @return the elevation.
+	 * @return the elevation - {@code 0} otherwise.
 	 */
 	public double findElevation(Location location) {
 		if (location.hasAltitude())
 			return location.getAltitude();
 		double elevation;
 		elevation = findElevationCity(location);
-		if (elevation != Double.NaN)
-			return elevation;
+		System.out.println("~!@ city:" + elevation);
+		// if (elevation != Double.NaN)
+		// return elevation;
 		elevation = findElevationCities(location);
+		System.out.println("~!@ cities:" + elevation);
+		// if (elevation != Double.NaN)
+		// return elevation;
+		elevation = findElevationDatabase(location);
+		System.out.println("~!@ db:" + elevation);
+		// if (elevation != Double.NaN)
+		// return elevation;
+		elevation = findElevationGoogle(location);
+		System.out.println("~!@ google:" + elevation);
 		if (elevation != Double.NaN)
 			return elevation;
-		elevation = findElevationGoogle(location);
+		elevation = findElevationBing(location);
+		System.out.println("~!@ bing:" + elevation);
 		if (elevation != Double.NaN)
 			return elevation;
 		elevation = findElevationGeoNames(location);
+		System.out.println("~!@ geonames:" + elevation);
 		if (elevation != Double.NaN)
 			return elevation;
 		return 0;
@@ -719,6 +699,8 @@ public class AddressProvider {
 		double[] elevations = new double[citiesCount];
 
 		for (ZmanimAddress city : cities) {
+			if (!city.hasElevation())
+				continue;
 			Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distanceCity);
 			distance = distanceCity[0];
 			if (distance <= SAME_PLATEAU) {
@@ -730,6 +712,8 @@ public class AddressProvider {
 			}
 		}
 
+		if ((n == 1) && (distanceCity[0] <= SAME_CITY))
+			return elevations[0];
 		if (n <= 1)
 			return Double.NaN;
 
@@ -751,7 +735,18 @@ public class AddressProvider {
 	 * @return the elevation - {@code Double#NaN} otherwise.
 	 */
 	private double findElevationGoogle(Location location) {
-		// TODO implement me!
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		GeocoderBase geocoder = mGeocoderGoogle;
+		if (geocoder == null) {
+			geocoder = new GoogleGeocoder(mContext, mLocale);
+			mGeocoderGoogle = geocoder;
+		}
+		try {
+			return geocoder.getElevation(latitude, longitude);
+		} catch (IOException e) {
+			Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage(), e);
+		}
 		return Double.NaN;
 	}
 
@@ -763,7 +758,64 @@ public class AddressProvider {
 	 * @return the elevation - {@code Double#NaN} otherwise.
 	 */
 	private double findElevationGeoNames(Location location) {
-		// TODO implement me!
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		GeocoderBase geocoder = mGeocoderGeoNames;
+		if (geocoder == null) {
+			geocoder = new GeoNamesGeocoder(mContext, mLocale);
+			mGeocoderGeoNames = geocoder;
+		}
+		try {
+			return geocoder.getElevation(latitude, longitude);
+		} catch (IOException e) {
+			Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage(), e);
+		}
+		return Double.NaN;
+	}
+
+	/**
+	 * Find elevation according to Bing.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 */
+	private double findElevationBing(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		GeocoderBase geocoder = mGeocoderBing;
+		if (geocoder == null) {
+			geocoder = new BingGeocoder(mContext, mLocale);
+			mGeocoderBing = geocoder;
+		}
+		try {
+			return geocoder.getElevation(latitude, longitude);
+		} catch (IOException e) {
+			Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage(), e);
+		}
+		return Double.NaN;
+	}
+
+	/**
+	 * Find elevation according to Bing.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @return the elevation - {@code Double#NaN} otherwise.
+	 */
+	private double findElevationDatabase(Location location) {
+		final double latitude = location.getLatitude();
+		final double longitude = location.getLongitude();
+		GeocoderBase geocoder = mGeocoderDatabase;
+		if (geocoder == null) {
+			geocoder = new DatabaseGeocoder(mContext, mLocale);
+			mGeocoderDatabase = geocoder;
+		}
+		try {
+			return geocoder.getElevation(latitude, longitude);
+		} catch (IOException e) {
+			Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage(), e);
+		}
 		return Double.NaN;
 	}
 

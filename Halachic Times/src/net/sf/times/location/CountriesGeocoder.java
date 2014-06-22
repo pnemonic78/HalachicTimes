@@ -382,4 +382,10 @@ public class CountriesGeocoder extends GeocoderBase {
 		return null;
 	}
 
+	@Override
+	public double getElevation(double latitude, double longitude) throws IOException {
+		// TODO Auto-generated method stub
+		return Double.NaN;
+	}
+
 }
