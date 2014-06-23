@@ -614,7 +614,7 @@ public class AddressProvider {
 		if (location.hasAltitude())
 			return location;
 
-		Location elevated;
+		ZmanimLocation elevated;
 
 		elevated = findElevationCities(location);
 		if ((elevated != null) && elevated.hasAltitude())
@@ -643,7 +643,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
-	private Location findElevationCities(Location location) {
+	private ZmanimLocation findElevationCities(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		try {
@@ -661,7 +661,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the location with elevation - {@code null} otherwise.
 	 */
-	private Location findElevationGoogle(Location location) {
+	private ZmanimLocation findElevationGoogle(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		GeocoderBase geocoder = mGoogleGeocoder;
@@ -684,7 +684,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
-	private Location findElevationGeoNames(Location location) {
+	private ZmanimLocation findElevationGeoNames(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		GeocoderBase geocoder = mGeoNamesGeocoder;
@@ -707,7 +707,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
-	private Location findElevationBing(Location location) {
+	private ZmanimLocation findElevationBing(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		GeocoderBase geocoder = mBingGeocoder;
@@ -730,7 +730,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
-	private Location findElevationDatabase(Location location) {
+	private ZmanimLocation findElevationDatabase(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		GeocoderBase geocoder = mDatabaseGeocoder;

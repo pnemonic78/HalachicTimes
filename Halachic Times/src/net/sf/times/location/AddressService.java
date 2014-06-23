@@ -82,7 +82,8 @@ public class AddressService extends IntentService implements OnFindAddressListen
 				addr = (ZmanimAddress) address;
 			} else {
 				addr = new ZmanimAddress(address);
-				addr.setElevation(location.getAltitude());
+				if (location.hasAltitude())
+					addr.setElevation(location.getAltitude());
 			}
 			provider.insertOrUpdate(location, addr);
 		}

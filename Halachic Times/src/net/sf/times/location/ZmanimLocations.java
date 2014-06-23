@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import net.sf.times.R;
+import net.sf.times.ZmanimApplication;
 import net.sf.times.ZmanimSettings;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.TargetApi;
@@ -122,6 +123,8 @@ public class ZmanimLocations implements LocationListener {
 	private long mStartTaskDelay = UPDATE_TIME_START;
 	/** The next time to stop update locations. */
 	private final long mStopTaskDelay = UPDATE_DURATION;
+	/** The address provider. */
+	private AddressProvider mAddressProvider;
 
 	/**
 	 * Constructs a new provider.
@@ -136,6 +139,9 @@ public class ZmanimLocations implements LocationListener {
 		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		mCoordsFormat = context.getString(R.string.location_coords);
 		mTimeZone = TimeZone.getDefault();
+
+		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+		mAddressProvider = app.getAddresses();
 
 		mHandlerThread = new HandlerThread(TAG);
 		mHandlerThread.start();
@@ -164,9 +170,16 @@ public class ZmanimLocations implements LocationListener {
 			if (mLocation.getTime() >= location.getTime())
 				return;
 			// Ignore manual locations.
-			if (CountriesGeocoder.USER_PROVIDER.equals(mLocation.getProvider()))
+			if (GeocoderBase.USER_PROVIDER.equals(mLocation.getProvider()))
 				return;
 		}
+
+		Location elevated = mAddressProvider.findElevation(location);
+		if ((elevated != null) && (elevated instanceof ZmanimLocation)) {
+			mAddressProvider.insertOrUpdate((ZmanimLocation) elevated);
+			location = elevated;
+		}
+
 		mLocation = location;
 		mSettings.putLocation(location);
 
@@ -485,7 +498,7 @@ public class ZmanimLocations implements LocationListener {
 		final String locationName = loc.getProvider();
 		final double latitude = loc.getLatitude();
 		final double longitude = loc.getLongitude();
-		final double elevation = loc.hasAltitude() ? 0 : loc.getAltitude();
+		final double elevation = loc.hasAltitude() ? loc.getAltitude() : 0;
 
 		return new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
 	}
