@@ -62,14 +62,27 @@ public class AddressProvider {
 
 	}
 
+	/** Database provider. */
+	public static final String DB_PROVIDER = "db";
+
 	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
 			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE };
-	private static final int INDEX_ID = 0;
-	private static final int INDEX_LATITUDE = 3;
-	private static final int INDEX_LONGITUDE = 4;
-	private static final int INDEX_ADDRESS = 6;
-	private static final int INDEX_LANGUAGE = 7;
-	private static final int INDEX_FAVORITE = 8;
+	static final int INDEX_ID = 0;
+	static final int INDEX_LOCATION_LATITUDE = 1;
+	static final int INDEX_LOCATION_LONGITUDE = 2;
+	static final int INDEX_LATITUDE = 3;
+	static final int INDEX_LONGITUDE = 4;
+	static final int INDEX_ADDRESS = 6;
+	static final int INDEX_LANGUAGE = 7;
+	static final int INDEX_FAVORITE = 8;
+
+	private static final String[] COLUMNS_ELEVATIONS = { BaseColumns._ID, ElevationColumns.LATITUDE, ElevationColumns.LONGITUDE, ElevationColumns.ELEVATION,
+			ElevationColumns.TIMESTAMP };
+	static final int INDEX_ELEVATIONS_ID = 0;
+	static final int INDEX_ELEVATIONS_LATITUDE = 1;
+	static final int INDEX_ELEVATIONS_LONGITUDE = 2;
+	static final int INDEX_ELEVATIONS_ELEVATION = 3;
+	static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
 
 	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
@@ -731,6 +744,89 @@ public class AddressProvider {
 			Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage(), e);
 		}
 		return null;
+	}
+
+	/**
+	 * Add the location with elevation to the local database. The local database
+	 * is supposed to reduce redundant network requests.
+	 * 
+	 * @param location
+	 *            the location.
+	 */
+	public void insertOrUpdate(ZmanimLocation location) {
+		if ((location == null) || !location.hasAltitude())
+			return;
+		long id = location.getId();
+		if (id < 0L)
+			return;
+
+		ContentValues values = new ContentValues();
+		values.put(ElevationColumns.LATITUDE, location.getLatitude());
+		values.put(ElevationColumns.LONGITUDE, location.getLongitude());
+		values.put(ElevationColumns.ELEVATION, location.getAltitude());
+		values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
+
+		SQLiteDatabase db = null;
+		try {
+			db = getWritableDatabase();
+			if (db == null)
+				return;
+			if (id == 0L) {
+				id = db.insert(AddressOpenHelper.TABLE_ELEVATIONS, null, values);
+				location.setId(id);
+			} else {
+				String[] whereArgs = { Long.toString(id) };
+				db.update(AddressOpenHelper.TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	/**
+	 * Fetch elevations from the database.
+	 * 
+	 * @param filter
+	 *            a cursor filter.
+	 * @return the list of locations with elevations.
+	 */
+	public List<ZmanimLocation> queryElevations(CursorFilter filter) {
+		List<ZmanimLocation> locations = new ArrayList<ZmanimLocation>();
+		SQLiteDatabase db = getReadableDatabase();
+		if (db == null)
+			return locations;
+		Cursor cursor = db.query(AddressOpenHelper.TABLE_ELEVATIONS, COLUMNS_ELEVATIONS, null, null, null, null, null);
+		if ((cursor == null) || cursor.isClosed()) {
+			db.close();
+			return locations;
+		}
+
+		try {
+			if (cursor.moveToFirst()) {
+				ZmanimLocation location;
+
+				do {
+					if ((filter != null) && !filter.accept(cursor))
+						continue;
+
+					location = new ZmanimLocation(DB_PROVIDER);
+					location.setId(cursor.getLong(INDEX_ELEVATIONS_ID));
+					location.setLatitude(cursor.getDouble(INDEX_ELEVATIONS_LATITUDE));
+					location.setLongitude(cursor.getDouble(INDEX_ELEVATIONS_LONGITUDE));
+					location.setAltitude(cursor.getDouble(INDEX_ELEVATIONS_ELEVATION));
+					location.setTime(cursor.getLong(INDEX_ELEVATIONS_TIMESTAMP));
+					locations.add(location);
+				} while (cursor.moveToNext());
+			}
+		} catch (SQLiteException se) {
+			Log.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
+		} finally {
+			cursor.close();
+			db.close();
+		}
+
+		return locations;
 	}
 
 }

@@ -30,7 +30,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -408,7 +407,7 @@ public class GoogleGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public Location getElevation(double latitude, double longitude) throws IOException {
+	public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
 		if (latitude < -90.0 || latitude > 90.0)
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
@@ -418,7 +417,7 @@ public class GoogleGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+	protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
 		return new ElevationResponseHandler(results);
 	}
 
@@ -445,8 +444,8 @@ public class GoogleGeocoder extends GeocoderBase {
 		private static final String TAG_ELEVATION = "elevation";
 
 		private State mState = State.START;
-		private final List<Location> mResults;
-		private Location mLocation;
+		private final List<ZmanimLocation> mResults;
+		private ZmanimLocation mLocation;
 		private String mTag;
 
 		/**
@@ -457,7 +456,7 @@ public class GoogleGeocoder extends GeocoderBase {
 		 * @param maxResults
 		 *            the maximum number of results.
 		 */
-		public ElevationResponseHandler(List<Location> results) {
+		public ElevationResponseHandler(List<ZmanimLocation> results) {
 			super();
 			mResults = results;
 		}
@@ -485,7 +484,7 @@ public class GoogleGeocoder extends GeocoderBase {
 				break;
 			case RESULT:
 				if (TAG_LOCATION.equals(localName)) {
-					mLocation = new Location(USER_PROVIDER);
+					mLocation = new ZmanimLocation(USER_PROVIDER);
 					mLocation.setTime(System.currentTimeMillis());
 					mState = State.LOCATION;
 				}
@@ -517,6 +516,7 @@ public class GoogleGeocoder extends GeocoderBase {
 					if (mLocation != null) {
 						if (mLocation.hasAltitude())
 							mResults.add(mLocation);
+						mLocation = null;
 					}
 					mState = State.ROOT;
 				}
@@ -566,8 +566,7 @@ public class GoogleGeocoder extends GeocoderBase {
 						} catch (NumberFormatException nfe) {
 							throw new SAXException(nfe);
 						}
-					}
-					else if (TAG_LONGITUDE.equals(mTag)) {
+					} else if (TAG_LONGITUDE.equals(mTag)) {
 						try {
 							mLocation.setLongitude(Double.parseDouble(s));
 						} catch (NumberFormatException nfe) {

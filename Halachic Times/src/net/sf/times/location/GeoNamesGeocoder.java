@@ -33,7 +33,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Location;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -419,7 +418,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public Location getElevation(double latitude, double longitude) throws IOException {
+	public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
 		if (latitude < -90.0 || latitude > 90.0)
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
@@ -431,12 +430,12 @@ public class GeoNamesGeocoder extends GeocoderBase {
 			return null;
 		String text = new String(data);
 		double elevation;
-		Location elevated;
+		ZmanimLocation elevated;
 		try {
 			elevation = Double.parseDouble(text);
 			if (elevation <= -9999)
 				return null;
-			elevated = new Location(USER_PROVIDER);
+			elevated = new ZmanimLocation(USER_PROVIDER);
 			elevated.setTime(System.currentTimeMillis());
 			elevated.setLatitude(latitude);
 			elevated.setLongitude(longitude);
@@ -449,7 +448,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+	protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
 		return null;
 	}
 

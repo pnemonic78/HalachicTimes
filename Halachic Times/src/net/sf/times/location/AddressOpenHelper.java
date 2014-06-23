@@ -26,7 +26,8 @@ import android.provider.BaseColumns;
 import android.text.format.DateUtils;
 
 /**
- * A helper class to manage database creation and version management for addresses.
+ * A helper class to manage database creation and version management for
+ * addresses and elevations.
  * 
  * @author Moshe Waisberg
  */
@@ -38,6 +39,8 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	private static final int DB_VERSION = 3;
 	/** Database table for addresses. */
 	public static final String TABLE_ADDRESSES = "addresses";
+	/** Database table for elevations. */
+	public static final String TABLE_ELEVATIONS = "elevations";
 
 	/**
 	 * Constructs a new helper.
@@ -64,11 +67,24 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		sql.append(AddressColumns.FAVORITE).append(" INTEGER NOT NULL");
 		sql.append(");");
 		db.execSQL(sql.toString());
+
+		sql = new StringBuilder();
+		sql.append("CREATE TABLE ").append(TABLE_ELEVATIONS).append('(');
+		sql.append(BaseColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
+		sql.append(ElevationColumns.LATITUDE).append(" DOUBLE NOT NULL,");
+		sql.append(ElevationColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
+		sql.append(ElevationColumns.ELEVATION).append(" DOUBLE NOT NULL,");
+		sql.append(ElevationColumns.TIMESTAMP).append(" INTEGER NOT NULL");
+		sql.append(");");
+		db.execSQL(sql.toString());
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE " + TABLE_ADDRESSES + ";");
+		if (oldVersion >= 3) {
+			db.execSQL("DROP TABLE " + TABLE_ELEVATIONS + ";");
+		}
 		onCreate(db);
 	}
 

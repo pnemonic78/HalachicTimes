@@ -38,7 +38,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Location;
 
 /**
  * A class for handling geocoding and reverse geocoding.
@@ -294,7 +293,7 @@ public abstract class GeocoderBase {
 	 *             if the network is unavailable or any other I/O problem
 	 *             occurs.
 	 */
-	public abstract Location getElevation(double latitude, double longitude) throws IOException;
+	public abstract ZmanimLocation getElevation(double latitude, double longitude) throws IOException;
 
 	/**
 	 * Get the elevation by parsing the XML results.
@@ -306,7 +305,7 @@ public abstract class GeocoderBase {
 	 *             if the network is unavailable or any other I/O problem
 	 *             occurs.
 	 */
-	protected Location getElevationXMLFromURL(String queryUrl) throws IOException {
+	protected ZmanimLocation getElevationXMLFromURL(String queryUrl) throws IOException {
 		URL url = new URL(queryUrl);
 		byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
 		try {
@@ -334,12 +333,12 @@ public abstract class GeocoderBase {
 	 *             if the network is unavailable or any other I/O problem
 	 *             occurs.
 	 */
-	protected Location parseElevation(byte[] data) throws ParserConfigurationException, SAXException, IOException {
+	protected ZmanimLocation parseElevation(byte[] data) throws ParserConfigurationException, SAXException, IOException {
 		// Minimum length for "<X/>"
 		if ((data == null) || (data.length <= 4))
 			return null;
 
-		List<Location> results = new ArrayList<Location>(1);
+		List<ZmanimLocation> results = new ArrayList<ZmanimLocation>(1);
 		InputStream in = new ByteArrayInputStream(data);
 		SAXParser parser = getParser();
 		DefaultHandler handler = createElevationResponseHandler(results);
@@ -358,6 +357,6 @@ public abstract class GeocoderBase {
 	 *            the list of results to populate.
 	 * @return the XML handler.
 	 */
-	protected abstract DefaultHandler createElevationResponseHandler(List<Location> results);
+	protected abstract DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results);
 
 }

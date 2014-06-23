@@ -30,7 +30,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -328,13 +327,13 @@ public class BingGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public Location getElevation(double latitude, double longitude) throws IOException {
+	public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+	protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
 		// TODO Auto-generated method stub
 		return null;
 	}

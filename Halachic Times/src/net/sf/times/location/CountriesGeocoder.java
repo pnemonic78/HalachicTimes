@@ -25,9 +25,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import net.sf.times.R;
+
 import org.xml.sax.helpers.DefaultHandler;
 
-import net.sf.times.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Address;
@@ -381,7 +382,7 @@ public class CountriesGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public Location getElevation(double latitude, double longitude) throws IOException {
+	public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
 		if (latitude < -90.0 || latitude > 90.0)
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
@@ -397,7 +398,9 @@ public class CountriesGeocoder extends GeocoderBase {
 		int n = 0;
 		double[] distances = new double[citiesCount];
 		double[] elevations = new double[citiesCount];
-		Location elevated;
+		ZmanimLocation elevated;
+		ZmanimAddress cityNearest = null;
+		double distanceCityMin = SAME_CITY;
 
 		for (ZmanimAddress city : cities) {
 			if (!city.hasElevation())
@@ -405,6 +408,10 @@ public class CountriesGeocoder extends GeocoderBase {
 			Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distanceCity);
 			distance = distanceCity[0];
 			if (distance <= SAME_PLATEAU) {
+				if (distance < distanceCityMin) {
+					cityNearest = city;
+					distanceCityMin = distance;
+				}
 				elevations[n] = city.getElevation();
 				d = distance * distance;
 				distances[n] = d;
@@ -413,12 +420,13 @@ public class CountriesGeocoder extends GeocoderBase {
 			}
 		}
 
-		if ((n == 1) && (distanceCity[0] <= SAME_CITY)) {
-			elevated = new Location(GeocoderBase.USER_PROVIDER);
+		if ((n == 1) && (cityNearest != null)) {
+			elevated = new ZmanimLocation(USER_PROVIDER);
 			elevated.setTime(System.currentTimeMillis());
-			elevated.setLatitude(latitude);
-			elevated.setLongitude(longitude);
-			elevated.setAltitude(elevations[0]);
+			elevated.setLatitude(cityNearest.getLatitude());
+			elevated.setLongitude(cityNearest.getLongitude());
+			elevated.setAltitude(cityNearest.getElevation());
+			elevated.setId(cityNearest.getId());
 			return elevated;
 		}
 		if (n <= 1)
@@ -429,17 +437,18 @@ public class CountriesGeocoder extends GeocoderBase {
 			weightSum += (1 - (distances[i] / distancesSum)) * elevations[i];
 		}
 
-		elevated = new Location(GeocoderBase.USER_PROVIDER);
+		elevated = new ZmanimLocation(USER_PROVIDER);
 		elevated.setTime(System.currentTimeMillis());
 		elevated.setLatitude(latitude);
 		elevated.setLongitude(longitude);
 		elevated.setAltitude(weightSum / (n - 1));
+		elevated.setId(-1);
 		return elevated;
 
 	}
 
 	@Override
-	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+	protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
 		return null;
 	}
 
