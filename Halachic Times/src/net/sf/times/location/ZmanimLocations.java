@@ -98,6 +98,8 @@ public class ZmanimLocations implements LocationListener {
 
 	private static final int WHAT_START = 0;
 	private static final int WHAT_STOP = 1;
+	private static final int WHAT_CHANGED = 2;
+	private static final int WHAT_ELEVATION = 3;
 
 	/** The owner location listeners. */
 	private final List<LocationListener> mLocationListeners = new ArrayList<LocationListener>();
@@ -174,17 +176,14 @@ public class ZmanimLocations implements LocationListener {
 				return;
 		}
 
-		Location elevated = mAddressProvider.findElevation(location);
-		if ((elevated != null) && (elevated instanceof ZmanimLocation)) {
-			mAddressProvider.insertOrUpdate((ZmanimLocation) elevated);
-			location = elevated;
-		}
-
 		mLocation = location;
 		mSettings.putLocation(location);
 
 		for (LocationListener listener : mLocationListenersLoop)
 			listener.onLocationChanged(location);
+
+		if (!location.hasAltitude())
+			mHandler.sendEmptyMessage(WHAT_ELEVATION);
 	}
 
 	@Override
@@ -360,8 +359,8 @@ public class ZmanimLocations implements LocationListener {
 		mStartTaskDelay = UPDATE_TIME_START;
 		mHandler.sendEmptyMessage(WHAT_START);
 
-		if (listener != null)
-			listener.onLocationChanged(getLocation());
+		// Finding address and elevation do network access.
+		mHandler.sendEmptyMessage(WHAT_CHANGED);
 	}
 
 	/**
@@ -599,7 +598,27 @@ public class ZmanimLocations implements LocationListener {
 			case WHAT_STOP:
 				removeUpdates();
 				break;
+			case WHAT_CHANGED:
+				onLocationChanged(getLocation());
+				break;
+			case WHAT_ELEVATION:
+				findElevation(getLocation());
+				break;
 			}
+		}
+	}
+
+	/**
+	 * Find the elevation for the location.
+	 * 
+	 * @param location
+	 *            the location.
+	 */
+	private void findElevation(Location location) {
+		Location elevated = mAddressProvider.findElevation(location);
+		if ((elevated != null) && (elevated instanceof ZmanimLocation)) {
+			mAddressProvider.insertOrUpdate((ZmanimLocation) elevated);
+			onLocationChanged(elevated);
 		}
 	}
 

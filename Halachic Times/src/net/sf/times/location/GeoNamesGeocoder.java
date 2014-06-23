@@ -109,7 +109,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
 	@Override
 	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-		return new GeoNamesResponseHandler(results, maxResults, locale);
+		return new AddressResponseHandler(results, maxResults, locale);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 	 * 
 	 * @author Moshe
 	 */
-	protected static class GeoNamesResponseHandler extends DefaultHandler2 {
+	protected static class AddressResponseHandler extends DefaultHandler2 {
 
 		/** Parse state. */
 		private enum State {
@@ -159,7 +159,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 		 * @param maxResults
 		 *            the maximum number of results.
 		 */
-		public GeoNamesResponseHandler(List<Address> results, int maxResults, Locale locale) {
+		public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 			super();
 			mResults = results;
 			mMaxResults = maxResults;

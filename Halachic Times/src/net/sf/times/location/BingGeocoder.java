@@ -49,6 +49,11 @@ public class BingGeocoder extends GeocoderBase {
 
 	/** URL that accepts latitude and longitude coordinates as parameters. */
 	private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";
+	/**
+	 * URL that accepts latitude and longitude coordinates as parameters for an
+	 * elevation.
+	 */
+	private static final String URL_ELEVATION = "http://dev.virtualearth.net/REST/v1/Elevation/List?o=xml&points=%f,%f&key=%s";
 
 	/**
 	 * Creates a new Bing geocoder.
@@ -84,7 +89,7 @@ public class BingGeocoder extends GeocoderBase {
 
 	@Override
 	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-		return new BingResponseHandler(results, maxResults, locale);
+		return new AddressResponseHandler(results, maxResults, locale);
 	}
 
 	/**
@@ -92,7 +97,7 @@ public class BingGeocoder extends GeocoderBase {
 	 * 
 	 * @author Moshe
 	 */
-	protected static class BingResponseHandler extends DefaultHandler2 {
+	protected static class AddressResponseHandler extends DefaultHandler2 {
 
 		/** Parse state. */
 		private enum State {
@@ -107,7 +112,6 @@ public class BingGeocoder extends GeocoderBase {
 		private static final String TAG_RESOURCE_SET = "ResourceSet";
 		private static final String TAG_RESOURCES = "Resources";
 		private static final String TAG_LOCATION = "Location";
-		// private static final String TAG_TYPE = "EntityType";
 		private static final String TAG_NAME = "Name";
 		private static final String TAG_ADDRESS = "Address";
 		private static final String TAG_ADDRESS_LINE = "AddressLine";
@@ -118,9 +122,6 @@ public class BingGeocoder extends GeocoderBase {
 		private static final String TAG_POINT = "Point";
 		private static final String TAG_LATITUDE = "Latitude";
 		private static final String TAG_LONGITUDE = "Longitude";
-
-		// private static final String TYPE_ADDRESS = "Address";
-		// private static final String TYPE_POPULATED = "PopulatedPlace";
 
 		private State mState = State.START;
 		private final List<Address> mResults;
@@ -137,7 +138,7 @@ public class BingGeocoder extends GeocoderBase {
 		 * @param maxResults
 		 *            the maximum number of results.
 		 */
-		public BingResponseHandler(List<Address> results, int maxResults, Locale locale) {
+		public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 			super();
 			mResults = results;
 			mMaxResults = maxResults;
@@ -328,14 +329,195 @@ public class BingGeocoder extends GeocoderBase {
 
 	@Override
 	public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+		if (latitude < -90.0 || latitude > 90.0)
+			throw new IllegalArgumentException("latitude == " + latitude);
+		if (longitude < -180.0 || longitude > 180.0)
+			throw new IllegalArgumentException("longitude == " + longitude);
+		String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
+		ZmanimLocation location = getElevationXMLFromURL(queryUrl);
+		if (location != null) {
+			location.setLatitude(latitude);
+			location.setLongitude(longitude);
+		}
+		return location;
 	}
 
 	@Override
 	protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ElevationResponseHandler(results);
+	}
+
+	/**
+	 * Handler for parsing the XML response.
+	 * 
+	 * @author Moshe
+	 */
+	protected static class ElevationResponseHandler extends DefaultHandler2 {
+
+		/** Parse state. */
+		private enum State {
+			START, ROOT, STATUS, RESOURCE_SETS, RESOURCE_SET, RESOURCES, ELEVATION_DATA, ELEVATION, FINISH
+		};
+
+		private static final String STATUS_OK = "200";
+
+		private static final String TAG_ROOT = "Response";
+		private static final String TAG_STATUS = "StatusCode";
+		private static final String TAG_RESOURCE_SETS = "ResourceSets";
+		private static final String TAG_RESOURCE_SET = "ResourceSet";
+		private static final String TAG_RESOURCES = "Resources";
+		private static final String TAG_ELEVATION_DATA = "ElevationData";
+		private static final String TAG_ELEVATIONS = "Elevations";
+		private static final String TAG_ELEVATION = "int";
+
+		private State mState = State.START;
+		private final List<ZmanimLocation> mResults;
+		private ZmanimLocation mLocation;
+		private String mTag;
+
+		/**
+		 * Constructs a new parse handler.
+		 * 
+		 * @param results
+		 *            the destination results.
+		 */
+		public ElevationResponseHandler(List<ZmanimLocation> results) {
+			super();
+			mResults = results;
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			super.startElement(uri, localName, qName, attributes);
+			if (TextUtils.isEmpty(localName))
+				localName = qName;
+
+			mTag = localName;
+
+			switch (mState) {
+			case START:
+				if (TAG_ROOT.equals(localName))
+					mState = State.ROOT;
+				else
+					throw new SAXException("Unexpected root element " + localName);
+				break;
+			case ROOT:
+				if (TAG_STATUS.equals(localName))
+					mState = State.STATUS;
+				else if (TAG_RESOURCE_SETS.equals(localName))
+					mState = State.RESOURCE_SETS;
+				break;
+			case RESOURCE_SETS:
+				if (TAG_RESOURCE_SET.equals(localName))
+					mState = State.RESOURCE_SET;
+				break;
+			case RESOURCE_SET:
+				if (TAG_RESOURCES.equals(localName))
+					mState = State.RESOURCES;
+				break;
+			case RESOURCES:
+				if (TAG_ELEVATION_DATA.equals(localName)) {
+					mState = State.ELEVATION_DATA;
+					mLocation = new ZmanimLocation(USER_PROVIDER);
+					mLocation.setTime(System.currentTimeMillis());
+				}
+				break;
+			case ELEVATION_DATA:
+				if (TAG_ELEVATIONS.equals(localName))
+					mState = State.ELEVATION;
+				break;
+			case ELEVATION:
+				break;
+			case FINISH:
+				return;
+			default:
+				break;
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			super.endElement(uri, localName, qName);
+			if (TextUtils.isEmpty(localName))
+				localName = qName;
+
+			mTag = localName;
+
+			switch (mState) {
+			case ROOT:
+				if (TAG_ROOT.equals(localName))
+					mState = State.FINISH;
+				break;
+			case STATUS:
+				if (TAG_STATUS.equals(localName))
+					mState = State.ROOT;
+				break;
+			case RESOURCE_SETS:
+				if (TAG_RESOURCE_SETS.equals(localName))
+					mState = State.ROOT;
+				break;
+			case RESOURCE_SET:
+				if (TAG_RESOURCE_SET.equals(localName))
+					mState = State.RESOURCE_SETS;
+				break;
+			case RESOURCES:
+				if (TAG_RESOURCES.equals(localName))
+					mState = State.RESOURCE_SET;
+				break;
+			case ELEVATION_DATA:
+				if (TAG_ELEVATION_DATA.equals(localName)) {
+					if (mLocation != null) {
+						if (mLocation.hasAltitude())
+							mResults.add(mLocation);
+						else
+							mState = State.FINISH;
+						mLocation = null;
+					}
+					mState = State.RESOURCES;
+				}
+				break;
+			case ELEVATION:
+				if (TAG_ELEVATIONS.equals(localName))
+					mState = State.ELEVATION_DATA;
+				break;
+			case FINISH:
+				return;
+			default:
+				break;
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) throws SAXException {
+			super.characters(ch, start, length);
+
+			if (length == 0)
+				return;
+			String s = new String(ch, start, length).trim();
+			if (s.length() == 0)
+				return;
+
+			switch (mState) {
+			case STATUS:
+				if (!STATUS_OK.equals(s))
+					mState = State.FINISH;
+				break;
+			case ELEVATION:
+				if (mLocation != null) {
+					if (TAG_ELEVATION.equals(mTag)) {
+						try {
+							mLocation.setAltitude(Double.parseDouble(s));
+						} catch (NumberFormatException nfe) {
+							throw new SAXException(nfe);
+						}
+					}
+				}
+			case FINISH:
+				return;
+			default:
+				break;
+			}
+		}
 	}
 
 }
