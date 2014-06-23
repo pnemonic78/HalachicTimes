@@ -30,6 +30,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -50,6 +51,11 @@ public class GoogleGeocoder extends GeocoderBase {
 	private static final String URL_ADDRESS = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&language=%s&sensor=true";
 	/** URL that accepts a bounded address as parameters. */
 	private static final String URL_ADDRESS_BOUNDED = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&sensor=true";
+	/**
+	 * URL that accepts latitude and longitude coordinates as parameters for an
+	 * elevation.
+	 */
+	private static final String URL_ELEVATION = "http://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f";
 
 	/**
 	 * Creates a new Google geocoder.
@@ -80,7 +86,7 @@ public class GoogleGeocoder extends GeocoderBase {
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
 		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage());
-		return getXMLFromURL(queryUrl, maxResults);
+		return getAddressXMLFromURL(queryUrl, maxResults);
 	}
 
 	@Override
@@ -88,7 +94,7 @@ public class GoogleGeocoder extends GeocoderBase {
 		if (locationName == null)
 			throw new IllegalArgumentException("locationName == null");
 		String queryUrl = String.format(Locale.US, URL_ADDRESS, locationName, getLanguage());
-		return getXMLFromURL(queryUrl, maxResults);
+		return getAddressXMLFromURL(queryUrl, maxResults);
 	}
 
 	@Override
@@ -106,11 +112,11 @@ public class GoogleGeocoder extends GeocoderBase {
 			throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
 		String queryUrl = String
 				.format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
-		return getXMLFromURL(queryUrl, maxResults);
+		return getAddressXMLFromURL(queryUrl, maxResults);
 	}
 
 	@Override
-	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 		return new GeocodeResponseHandler(results, maxResults, locale);
 	}
 
@@ -402,8 +408,180 @@ public class GoogleGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public double getElevation(double latitude, double longitude) throws IOException {
-		// TODO Auto-generated method stub
-		return Double.NaN;
+	public Location getElevation(double latitude, double longitude) throws IOException {
+		if (latitude < -90.0 || latitude > 90.0)
+			throw new IllegalArgumentException("latitude == " + latitude);
+		if (longitude < -180.0 || longitude > 180.0)
+			throw new IllegalArgumentException("longitude == " + longitude);
+		String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude);
+		return getElevationXMLFromURL(queryUrl);
 	}
+
+	@Override
+	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+		return new ElevationResponseHandler(results);
+	}
+
+	/**
+	 * Handler for parsing the XML response.
+	 * 
+	 * @author Moshe
+	 */
+	protected static class ElevationResponseHandler extends DefaultHandler2 {
+
+		/** Parse state. */
+		private enum State {
+			START, ROOT, STATUS, RESULT, LOCATION, FINISH
+		};
+
+		private static final String STATUS_OK = "OK";
+
+		private static final String TAG_ROOT = "ElevationResponse";
+		private static final String TAG_STATUS = "status";
+		private static final String TAG_RESULT = "result";
+		private static final String TAG_LOCATION = "location";
+		private static final String TAG_LATITUDE = "lat";
+		private static final String TAG_LONGITUDE = "lng";
+		private static final String TAG_ELEVATION = "elevation";
+
+		private State mState = State.START;
+		private final List<Location> mResults;
+		private Location mLocation;
+		private String mTag;
+
+		/**
+		 * Constructs a new parse handler.
+		 * 
+		 * @param results
+		 *            the destination results.
+		 * @param maxResults
+		 *            the maximum number of results.
+		 */
+		public ElevationResponseHandler(List<Location> results) {
+			super();
+			mResults = results;
+		}
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+			super.startElement(uri, localName, qName, attributes);
+			if (TextUtils.isEmpty(localName))
+				localName = qName;
+
+			mTag = localName;
+
+			switch (mState) {
+			case START:
+				if (TAG_ROOT.equals(localName))
+					mState = State.ROOT;
+				else
+					throw new SAXException("Unexpected root element " + localName);
+				break;
+			case ROOT:
+				if (TAG_STATUS.equals(localName))
+					mState = State.STATUS;
+				else if (TAG_RESULT.equals(localName))
+					mState = State.RESULT;
+				break;
+			case RESULT:
+				if (TAG_LOCATION.equals(localName)) {
+					mLocation = new Location(USER_PROVIDER);
+					mLocation.setTime(System.currentTimeMillis());
+					mState = State.LOCATION;
+				}
+				break;
+			case FINISH:
+				return;
+			default:
+				break;
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			super.endElement(uri, localName, qName);
+			if (TextUtils.isEmpty(localName))
+				localName = qName;
+
+			switch (mState) {
+			case ROOT:
+				if (TAG_ROOT.equals(localName))
+					mState = State.FINISH;
+				break;
+			case STATUS:
+				if (TAG_STATUS.equals(localName))
+					mState = State.ROOT;
+				break;
+			case RESULT:
+				if (TAG_RESULT.equals(localName)) {
+					if (mLocation != null) {
+						if (mLocation.hasAltitude())
+							mResults.add(mLocation);
+					}
+					mState = State.ROOT;
+				}
+				break;
+			case LOCATION:
+				if (TAG_LOCATION.equals(localName))
+					mState = State.RESULT;
+				break;
+			case FINISH:
+				return;
+			default:
+				break;
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) throws SAXException {
+			super.characters(ch, start, length);
+
+			if (length == 0)
+				return;
+			String s = new String(ch, start, length).trim();
+			if (s.length() == 0)
+				return;
+
+			switch (mState) {
+			case STATUS:
+				if (!STATUS_OK.equals(s))
+					mState = State.FINISH;
+				break;
+			case RESULT:
+				if (mLocation != null) {
+					if (TAG_ELEVATION.equals(mTag)) {
+						try {
+							mLocation.setAltitude(Double.parseDouble(s));
+						} catch (NumberFormatException nfe) {
+							throw new SAXException(nfe);
+						}
+					}
+				}
+				break;
+			case LOCATION:
+				if (mLocation != null) {
+					if (TAG_LATITUDE.equals(mTag)) {
+						try {
+							mLocation.setLatitude(Double.parseDouble(s));
+						} catch (NumberFormatException nfe) {
+							throw new SAXException(nfe);
+						}
+					}
+					else if (TAG_LONGITUDE.equals(mTag)) {
+						try {
+							mLocation.setLongitude(Double.parseDouble(s));
+						} catch (NumberFormatException nfe) {
+							throw new SAXException(nfe);
+						}
+					}
+				}
+				break;
+			case FINISH:
+				return;
+			default:
+				break;
+			}
+		}
+	}
+
 }

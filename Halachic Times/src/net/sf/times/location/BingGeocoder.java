@@ -30,6 +30,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -79,11 +80,11 @@ public class BingGeocoder extends GeocoderBase {
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
 		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-		return getXMLFromURL(queryUrl, maxResults);
+		return getAddressXMLFromURL(queryUrl, maxResults);
 	}
 
 	@Override
-	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 		return new BingResponseHandler(results, maxResults, locale);
 	}
 
@@ -327,8 +328,15 @@ public class BingGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public double getElevation(double latitude, double longitude) throws IOException {
+	public Location getElevation(double latitude, double longitude) throws IOException {
 		// TODO Auto-generated method stub
-		return Double.NaN;
+		return null;
 	}
+
+	@Override
+	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

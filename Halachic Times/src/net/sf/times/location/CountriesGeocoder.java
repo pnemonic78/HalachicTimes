@@ -43,8 +43,6 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/** The time zone location provider. */
 	public static final String TIMEZONE_PROVIDER = "timezone";
-	/** The "user pick a city" location provider. */
-	public static final String USER_PROVIDER = "user";
 
 	/** Degrees per time zone hour. */
 	private static final double TZ_HOUR = 360 / 24;
@@ -378,14 +376,71 @@ public class CountriesGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 		return null;
 	}
 
 	@Override
-	public double getElevation(double latitude, double longitude) throws IOException {
-		// TODO Auto-generated method stub
-		return Double.NaN;
+	public Location getElevation(double latitude, double longitude) throws IOException {
+		if (latitude < -90.0 || latitude > 90.0)
+			throw new IllegalArgumentException("latitude == " + latitude);
+		if (longitude < -180.0 || longitude > 180.0)
+			throw new IllegalArgumentException("longitude == " + longitude);
+
+		List<ZmanimAddress> cities = getCities();
+		int citiesCount = cities.size();
+
+		float distance;
+		float[] distanceCity = new float[1];
+		double d;
+		double distancesSum = 0;
+		int n = 0;
+		double[] distances = new double[citiesCount];
+		double[] elevations = new double[citiesCount];
+		Location elevated;
+
+		for (ZmanimAddress city : cities) {
+			if (!city.hasElevation())
+				continue;
+			Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distanceCity);
+			distance = distanceCity[0];
+			if (distance <= SAME_PLATEAU) {
+				elevations[n] = city.getElevation();
+				d = distance * distance;
+				distances[n] = d;
+				distancesSum += d;
+				n++;
+			}
+		}
+
+		if ((n == 1) && (distanceCity[0] <= SAME_CITY)) {
+			elevated = new Location(GeocoderBase.USER_PROVIDER);
+			elevated.setTime(System.currentTimeMillis());
+			elevated.setLatitude(latitude);
+			elevated.setLongitude(longitude);
+			elevated.setAltitude(elevations[0]);
+			return elevated;
+		}
+		if (n <= 1)
+			return null;
+
+		double weightSum = 0;
+		for (int i = 0; i < n; i++) {
+			weightSum += (1 - (distances[i] / distancesSum)) * elevations[i];
+		}
+
+		elevated = new Location(GeocoderBase.USER_PROVIDER);
+		elevated.setTime(System.currentTimeMillis());
+		elevated.setLatitude(latitude);
+		elevated.setLongitude(longitude);
+		elevated.setAltitude(weightSum / (n - 1));
+		return elevated;
+
+	}
+
+	@Override
+	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+		return null;
 	}
 
 }

@@ -38,6 +38,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 
 /**
  * A class for handling geocoding and reverse geocoding.
@@ -45,6 +46,19 @@ import android.location.Address;
  * @author Moshe Waisberg
  */
 public abstract class GeocoderBase {
+
+	/** The "user pick a city" location provider. */
+	public static final String USER_PROVIDER = "user";
+
+	/** Maximum radius to consider two locations in the same vicinity. */
+	protected static final float SAME_LOCATION = 250f;// 250 metres.
+	/** Maximum radius to consider a location near the same city. */
+	protected static final float SAME_CITY = 10000f;// 10 kilometres.
+	/**
+	 * Maximum radius to consider a location near the same plateau with similar
+	 * terrain.
+	 */
+	protected static final float SAME_PLATEAU = 50000f;// 50 kilometres.
 
 	protected final Context mContext;
 	protected final Locale mLocale;
@@ -184,7 +198,7 @@ public abstract class GeocoderBase {
 	}
 
 	/**
-	 * Get the address by parsing the URL results.
+	 * Get the address by parsing the XML results.
 	 * 
 	 * @param queryUrl
 	 *            the URL.
@@ -196,7 +210,7 @@ public abstract class GeocoderBase {
 	 *             if the network is unavailable or any other I/O problem
 	 *             occurs.
 	 */
-	protected List<Address> getXMLFromURL(String queryUrl, int maxResults) throws IOException {
+	protected List<Address> getAddressXMLFromURL(String queryUrl, int maxResults) throws IOException {
 		URL url = new URL(queryUrl);
 		byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
 		try {
@@ -209,7 +223,7 @@ public abstract class GeocoderBase {
 	}
 
 	/**
-	 * Parse the XML response.
+	 * Parse the XML response for addresses.
 	 * 
 	 * @param data
 	 *            the XML data.
@@ -233,14 +247,14 @@ public abstract class GeocoderBase {
 		List<Address> results = new ArrayList<Address>(maxResults);
 		InputStream in = new ByteArrayInputStream(data);
 		SAXParser parser = getParser();
-		DefaultHandler handler = createResponseHandler(results, maxResults, mLocale);
+		DefaultHandler handler = createAddressResponseHandler(results, maxResults, mLocale);
 		parser.parse(in, handler);
 
 		return results;
 	}
 
 	/**
-	 * Create an SAX XML handler.
+	 * Create an SAX XML handler for addresses.
 	 * 
 	 * @param results
 	 *            the list of results to populate.
@@ -250,7 +264,7 @@ public abstract class GeocoderBase {
 	 *            the locale.
 	 * @return the XML handler.
 	 */
-	protected abstract DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale);
+	protected abstract DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
 
 	/**
 	 * Get the ISO 639 language code.
@@ -269,16 +283,81 @@ public abstract class GeocoderBase {
 	}
 
 	/**
-	 * Get the location's elevation.
+	 * Get the location with elevation.
 	 * 
 	 * @param latitude
 	 *            the latitude a point for the search.
 	 * @param longitude
 	 *            the longitude a point for the search.
-	 * @return the elevation - {@code Double#NaN} otherwise.
+	 * @return the location - {@code null} otherwise.
 	 * @throws IOException
 	 *             if the network is unavailable or any other I/O problem
 	 *             occurs.
 	 */
-	public abstract double getElevation(double latitude, double longitude) throws IOException;
+	public abstract Location getElevation(double latitude, double longitude) throws IOException;
+
+	/**
+	 * Get the elevation by parsing the XML results.
+	 * 
+	 * @param queryUrl
+	 *            the URL.
+	 * @return the location - {@code null} otherwise.
+	 * @throws IOException
+	 *             if the network is unavailable or any other I/O problem
+	 *             occurs.
+	 */
+	protected Location getElevationXMLFromURL(String queryUrl) throws IOException {
+		URL url = new URL(queryUrl);
+		byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+		try {
+			return parseElevation(data);
+		} catch (ParserConfigurationException pce) {
+			throw new IOException(pce.getMessage());
+		} catch (SAXException se) {
+			throw new IOException(se.getMessage());
+		}
+	}
+
+	/**
+	 * Parse the XML response for an elevation.
+	 * 
+	 * @param data
+	 *            the XML data.
+	 * @param maxResults
+	 *            the maximum number of results.
+	 * @return the location - {@code null} otherwise.
+	 * @throws ParserConfigurationException
+	 *             if an XML error occurs.
+	 * @throws SAXException
+	 *             if an XML error occurs.
+	 * @throws IOException
+	 *             if the network is unavailable or any other I/O problem
+	 *             occurs.
+	 */
+	protected Location parseElevation(byte[] data) throws ParserConfigurationException, SAXException, IOException {
+		// Minimum length for "<X/>"
+		if ((data == null) || (data.length <= 4))
+			return null;
+
+		List<Location> results = new ArrayList<Location>(1);
+		InputStream in = new ByteArrayInputStream(data);
+		SAXParser parser = getParser();
+		DefaultHandler handler = createElevationResponseHandler(results);
+		parser.parse(in, handler);
+
+		if (results.isEmpty())
+			return null;
+
+		return results.get(0);
+	}
+
+	/**
+	 * Create an SAX XML handler for elevations.
+	 * 
+	 * @param results
+	 *            the list of results to populate.
+	 * @return the XML handler.
+	 */
+	protected abstract DefaultHandler createElevationResponseHandler(List<Location> results);
+
 }

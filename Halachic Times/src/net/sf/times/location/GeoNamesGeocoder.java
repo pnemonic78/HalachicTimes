@@ -20,8 +20,11 @@
 package net.sf.times.location;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+
+import net.sf.net.HTTPReader;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -30,7 +33,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -44,11 +49,32 @@ import android.text.TextUtils;
  */
 public class GeoNamesGeocoder extends GeocoderBase {
 
+	private static final String TAG = "GeoNamesGeocoder";
+
 	/** GeoNames user name. */
 	private static final String USERNAME = "pnemonic";
 
 	/** URL that accepts latitude and longitude coordinates as parameters. */
 	private static final String URL_LATLNG = "http://api.geonames.org/extendedFindNearby?lat=%f&lng=%f&lang=%s&username=%s";
+	/**
+	 * URL that accepts latitude and longitude coordinates as parameters for an
+	 * elevation.<br>
+	 * Uses Shuttle Radar Topography Mission (SRTM) elevation data.
+	 */
+	private static final String URL_ELEVATION_SRTM3 = "http://api.geonames.org/srtm3?lat=%f&lng=%f&username=%s";
+	/**
+	 * URL that accepts latitude and longitude coordinates as parameters for an
+	 * elevation.<br>
+	 * Uses Aster Global Digital Elevation Model data.
+	 */
+	private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
+	/**
+	 * URL that accepts latitude and longitude coordinates as parameters for an
+	 * elevation.<br>
+	 * GTOPO30 is a global digital elevation model (DEM) with a horizontal grid
+	 * spacing of 30 arc seconds (approximately 1 kilometer).
+	 */
+	private static final String URL_ELEVATION_GTOPO30 = "http://api.geonames.org/gtopo3?lat=%f&lng=%f&username=%s";
 
 	/**
 	 * Creates a new GeoNames geocoder.
@@ -79,11 +105,11 @@ public class GeoNamesGeocoder extends GeocoderBase {
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
 		String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
-		return getXMLFromURL(queryUrl, maxResults);
+		return getAddressXMLFromURL(queryUrl, maxResults);
 	}
 
 	@Override
-	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 		return new GeoNamesResponseHandler(results, maxResults, locale);
 	}
 
@@ -393,8 +419,38 @@ public class GeoNamesGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	public double getElevation(double latitude, double longitude) throws IOException {
-		// TODO Auto-generated method stub
-		return Double.NaN;
+	public Location getElevation(double latitude, double longitude) throws IOException {
+		if (latitude < -90.0 || latitude > 90.0)
+			throw new IllegalArgumentException("latitude == " + latitude);
+		if (longitude < -180.0 || longitude > 180.0)
+			throw new IllegalArgumentException("longitude == " + longitude);
+		String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
+		URL url = new URL(queryUrl);
+		byte[] data = HTTPReader.read(url, null);
+		if (data == null)
+			return null;
+		String text = new String(data);
+		double elevation;
+		Location elevated;
+		try {
+			elevation = Double.parseDouble(text);
+			if (elevation <= -9999)
+				return null;
+			elevated = new Location(USER_PROVIDER);
+			elevated.setTime(System.currentTimeMillis());
+			elevated.setLatitude(latitude);
+			elevated.setLongitude(longitude);
+			elevated.setAltitude(elevation);
+			return elevated;
+		} catch (NumberFormatException nfe) {
+			Log.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
+		}
+		return null;
 	}
+
+	@Override
+	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+		return null;
+	}
+
 }

@@ -48,16 +48,6 @@ public class DatabaseGeocoder extends GeocoderBase {
 	private static final int INDEX_LONGITUDE = 4;
 	private static final int INDEX_ELEVATION = 5;
 
-	/** Maximum radius to consider two locations in the same vicinity. */
-	private static final float SAME_LOCATION = 250f;// 250 metres.
-	/** Maximum radius to consider a location near the same city. */
-	private static final float SAME_CITY = 10000f;// 10 kilometres.
-	/**
-	 * Maximum radius to consider a location near the same plateau with similar
-	 * terrain.
-	 */
-	private static final float SAME_PLATEAU = 50000f;// 50 kilometres.
-
 	/**
 	 * Creates a new database geocoder.
 	 * 
@@ -115,12 +105,12 @@ public class DatabaseGeocoder extends GeocoderBase {
 	}
 
 	@Override
-	protected DefaultHandler createResponseHandler(List<Address> results, int maxResults, Locale locale) {
+	protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 		return null;
 	}
 
 	@Override
-	public double getElevation(final double latitude, final double longitude) throws IOException {
+	public Location getElevation(final double latitude, final double longitude) throws IOException {
 		if (latitude < -90.0 || latitude > 90.0)
 			throw new IllegalArgumentException("latitude == " + latitude);
 		if (longitude < -180.0 || longitude > 180.0)
@@ -154,7 +144,7 @@ public class DatabaseGeocoder extends GeocoderBase {
 
 		int addressesCount = addresses.size();
 		if (addressesCount == 0)
-			return Double.NaN;
+			return null;
 
 		float distance;
 		float[] distanceLoc = new float[1];
@@ -163,6 +153,7 @@ public class DatabaseGeocoder extends GeocoderBase {
 		int n = 0;
 		double[] distances = new double[addressesCount];
 		double[] elevations = new double[addressesCount];
+		Location elevated;
 
 		for (ZmanimAddress loc : addresses) {
 			Location.distanceBetween(latitude, longitude, loc.getLatitude(), loc.getLongitude(), distanceLoc);
@@ -174,18 +165,33 @@ public class DatabaseGeocoder extends GeocoderBase {
 			n++;
 		}
 
-		if ((n == 1) && (distanceLoc[0] <= SAME_CITY))
-			return elevations[0];
+		if ((n == 1) && (distanceLoc[0] <= SAME_CITY)) {
+			elevated = new Location(USER_PROVIDER);
+			elevated.setTime(System.currentTimeMillis());
+			elevated.setLatitude(latitude);
+			elevated.setLongitude(longitude);
+			elevated.setAltitude(elevations[0]);
+			return elevated;
+		}
 		if (n <= 1)
-			return Double.NaN;
+			return null;
 
-		double weight;
 		double weightSum = 0;
 		for (int i = 0; i < n; i++) {
-			weight = (1 - (distances[i] / distancesSum)) * elevations[i];
-			weightSum += weight;
+			weightSum += (1 - (distances[i] / distancesSum)) * elevations[i];
 		}
 
-		return weightSum / (n - 1);
+		elevated = new Location(USER_PROVIDER);
+		elevated.setTime(System.currentTimeMillis());
+		elevated.setLatitude(latitude);
+		elevated.setLongitude(longitude);
+		elevated.setAltitude(weightSum / (n - 1));
+		return elevated;
 	}
+
+	@Override
+	protected DefaultHandler createElevationResponseHandler(List<Location> results) {
+		return null;
+	}
+
 }

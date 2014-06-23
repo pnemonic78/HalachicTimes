@@ -221,10 +221,10 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		}
 		ZmanimAddress addr = adapter.getItem(position);
 		Location loc = new Location(CountriesGeocoder.USER_PROVIDER);
+		loc.setTime(System.currentTimeMillis());
 		loc.setLatitude(addr.getLatitude());
 		loc.setLongitude(addr.getLongitude());
 		loc.setAltitude(addr.getElevation());
-		loc.setTime(System.currentTimeMillis());
 		setAddress(loc);
 	}
 
