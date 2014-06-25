@@ -22,6 +22,7 @@ package net.sf.times;
 import java.util.Locale;
 
 import net.sf.preference.SeekBarDialogPreference;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -32,13 +33,16 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 /**
- * Application preferences.
+ * Application preferences that populate the settings.
  * 
  * @author Moshe Waisberg
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
+
+	private static final String TAG = "ZmanimPreferences";
 
 	private SeekBarDialogPreference mCandles;
 	private ZmanimSettings mSettings;
@@ -101,14 +105,14 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		try {
 			version.setSummary(getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
 		} catch (NameNotFoundException e) {
-			// Never should happen with our own pacakge!
+			// Never should happen with our own package!
 		}
 		mAboutKosherJava = findPreference("about.kosherjava");
 		mAboutKosherJava.setOnPreferenceClickListener(this);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void initList(String name) {
-		@SuppressWarnings("deprecation")
 		ListPreference list = (ListPreference) findPreference(name);
 		list.setOnPreferenceChangeListener(this);
 		onPreferenceChange(list, list.getValue());
@@ -170,8 +174,12 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		if (preference == mAboutKosherJava) {
 			Intent intent = new Intent(Intent.ACTION_VIEW);
 			intent.setData(Uri.parse(getString(R.string.kosherjava_url)));
-			startActivity(intent);
-			return true;
+			try {
+				startActivity(intent);
+				return true;
+			} catch (ActivityNotFoundException e) {
+				Log.e(TAG, "Cannot view KosherJava", e);
+			}
 		}
 		return false;
 	}
