@@ -4,4 +4,10 @@
     <!-- Preferences -->
     <string name="menu_settings">Definições</string>
 
+    <!-- About -->
+    <string name="category_about">Acerca</string>
+    <string name="version">Versão do aplicação</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Direitos de autor \u00A9 2004-2011 Eliyahu Hershfeld</string>
+
 </resources>

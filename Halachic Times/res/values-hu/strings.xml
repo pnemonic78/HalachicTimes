@@ -176,4 +176,10 @@
     <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
 
+    <!-- About -->
+    <string name="category_about">Körülbelül</string>
+    <string name="version">Alkalmazás verziója</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Szerzői jog \u00A9 2004-2011 Illés Hershfeld</string>
+
 </resources>

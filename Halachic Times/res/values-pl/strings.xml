@@ -178,4 +178,10 @@
     <string name="menu_location">Lokalizacja</string>
     <string name="title_activity_location">Moja lokalizacja</string>
 
+    <!-- About -->
+    <string name="category_about">O</string>
+    <string name="version">Wersja aplikacji</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Prawa autorskie \u00A9 2004-2011 Elijahu Hershfeld</string>
+
 </resources>

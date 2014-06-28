@@ -176,4 +176,10 @@
     <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
 
+    <!-- About -->
+    <string name="category_about">Kohta</string>
+    <string name="version">Rakenduse versioon</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Autoriõigus \u00A9 2004-2011 Eelija Hershfeld</string>
+
 </resources>

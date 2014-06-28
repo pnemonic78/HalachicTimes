@@ -176,4 +176,10 @@
     <string name="menu_location">Posisjon</string>
     <string name="title_activity_location">Min posisjon</string>
 
+    <!-- About -->
+    <string name="category_about">Om</string>
+    <string name="version">Apper versjon</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Opphavsrett \u00A9 2004-2011 Elijahu Hershfeld</string>
+
 </resources>

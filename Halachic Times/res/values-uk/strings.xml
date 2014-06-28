@@ -178,4 +178,10 @@
     <string name="menu_location">Місцезнаходження</string>
     <string name="title_activity_location">Мое місцезнаходження</string>
 
+    <!-- About -->
+    <string name="category_about">Про</string>
+    <string name="version">Версія програми</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Автор. право \u00A9 2004-2011 Еліягу Хиршфельд</string>
+
 </resources>

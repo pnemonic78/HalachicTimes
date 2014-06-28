@@ -177,4 +177,10 @@
     <string name="menu_location">Místo</string>
     <string name="title_activity_location">Moje místo</string>
 
+    <!-- About -->
+    <string name="category_about">Info o</string>
+    <string name="version">Verze aplikace</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Autorská práva \u00A9 2004-2011 Eliyahu Hershfeld</string>
+
 </resources>

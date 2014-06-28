@@ -176,4 +176,10 @@
     <string name="menu_location">Τοποθεσία</string>
     <string name="title_activity_location">Η τοποθεσία μου</string>
 
+    <!-- About -->
+    <string name="category_about">Σχετικά</string>
+    <string name="version">Έκδοση της εφαρμογής</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Πνευματικά δικαιώματα \u00A9 2004-2011 Ηλίας Χίρσφελτ</string>
+
 </resources>

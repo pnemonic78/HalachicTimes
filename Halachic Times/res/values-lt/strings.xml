@@ -177,4 +177,10 @@
     <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
 
+    <!-- About -->
+    <string name="category_about">Apie</string>
+    <string name="version">Programos versija </string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Autorių teisės \u00A9 2004-2011 Elijas Hershfeld</string>
+
 </resources>

@@ -176,4 +176,10 @@
     <string name="menu_location">Sijainti</string>
     <string name="title_activity_location">Oma sijainti</string>
 
+    <!-- About -->
+    <string name="category_about">Tietoja</string>
+    <string name="version">Sovellusversio </string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004-2011 Elia Hirschfeldin</string>
+
 </resources>

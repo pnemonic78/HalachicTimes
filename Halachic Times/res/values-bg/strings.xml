@@ -174,4 +174,10 @@
     <string name="menu_location">Място</string>
     <string name="title_activity_location">Моето място</string>
 
+    <!-- About -->
+    <string name="category_about">За</string>
+    <string name="version">Версия на приложението</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Авторски права \u00A9 2004-2011 Илия Хиршфелд</string>
+
 </resources>

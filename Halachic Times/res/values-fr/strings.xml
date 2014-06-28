@@ -176,4 +176,10 @@
     <string name="menu_location">Position</string>
     <string name="title_activity_location">Ma position</string>
 
+    <!-- About -->
+    <string name="category_about">À propos</string>
+    <string name="version">Version de l\'application</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Droits d\'auteur \u00A9 2004-2011 Élie Hershfeld</string>
+
 </resources>

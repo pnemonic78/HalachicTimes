@@ -177,4 +177,10 @@
     <string name="menu_location">Locație</string>
     <string name="title_activity_location">Locația mea</string>
 
+    <!-- About -->
+    <string name="category_about">Despre</string>
+    <string name="version">Versiunea aplicație</string>
+    <string name="kosherjava">KosherJava</string>
+    <string name="kosherjava_version">Drept de autor \u00A9 2004-2011 Ilie Hershfeld</string>
+
 </resources>
