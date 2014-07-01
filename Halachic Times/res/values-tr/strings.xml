@@ -144,6 +144,7 @@
 
     <!-- Go to date -->
     <string name="menu_date">Tarih</string>
+    <string name="today">Bugün</string>
 
     <!-- Compass -->
     <string name="menu_compass">Pusula</string>

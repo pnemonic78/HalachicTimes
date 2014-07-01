@@ -144,6 +144,7 @@
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>
+    <string name="today">Täna</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>

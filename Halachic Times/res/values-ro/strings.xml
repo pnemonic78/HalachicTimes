@@ -145,6 +145,7 @@
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>
+    <string name="today">Azi</string>
 
     <!-- Compass -->
     <string name="menu_compass">Busolă</string>

@@ -144,6 +144,7 @@
 
     <!-- Go to date -->
     <string name="menu_date">Ημερομηνία</string>
+    <string name="today">Σήμερα</string>
 
     <!-- Compass -->
     <string name="menu_compass">Πυξίδα</string>

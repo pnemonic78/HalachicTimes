@@ -146,6 +146,7 @@
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>
+    <string name="today">Сегодня</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>

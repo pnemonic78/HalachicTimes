@@ -144,6 +144,7 @@
 
     <!-- Go to date -->
     <string name="menu_date">Dato</string>
+    <string name="today">I dag</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
