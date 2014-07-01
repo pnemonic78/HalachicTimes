@@ -112,6 +112,12 @@
     <!-- Moon -->
     <string name="molad">Раждането на новата луна (молад)</string>
     <string name="molad_summary">Средна молад</string>
+    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 days after the molad</string>
+    <string name="levana_7">7 days after the molad</string>
+    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_latest_summary">Halfway between molad and molad</string>
+    <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
@@ -139,6 +145,9 @@
     <string name="gradient_title">Градиентна фона</string>
     <string name="gradient_hidden">Градиент е скрита</string>
     <string name="gradient_visible">Градиент е видима</string>
+    <string name="animations">Анимации</string>
+    <string name="animations_enabled">Анимации са разрешити</string>
+    <string name="animations_disabled">Анимации са инвалиди</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>

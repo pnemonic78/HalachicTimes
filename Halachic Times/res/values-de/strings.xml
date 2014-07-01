@@ -114,6 +114,12 @@
     <!-- Moon -->
     <string name="molad">Geburt der neumond (molad)</string>
     <string name="molad_summary">Durchschnittliche molad</string>
+    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 days after the molad</string>
+    <string name="levana_7">7 days after the molad</string>
+    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_latest_summary">Halfway between molad and molad</string>
+    <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>
@@ -141,6 +147,9 @@
     <string name="gradient_title">Hintergrund mit Farbverlauf</string>
     <string name="gradient_hidden">Gradient ist versteckt</string>
     <string name="gradient_visible">Gradient ist sichtbar</string>
+    <string name="animations">Animationen</string>
+    <string name="animations_enabled">Animationen sind aktiviert</string>
+    <string name="animations_disabled">Animationen sind deaktiviert</string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>

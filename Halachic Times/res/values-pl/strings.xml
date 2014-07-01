@@ -116,6 +116,12 @@
     <!-- Moon -->
     <string name="molad">Narodziny nowego księżyca (molad)</string>
     <string name="molad_summary">Średnia molad</string>
+    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 days after the molad</string>
+    <string name="levana_7">7 days after the molad</string>
+    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_latest_summary">Halfway between molad and molad</string>
+    <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>
@@ -141,8 +147,11 @@
     <string name="summaries_hidden">Podsumowań są ukryte</string>
     <string name="summaries_visible">Podsumowań są widoczne</string>
     <string name="gradient_title">Tło gradient</string>
-    <string name="gradient_hidden">Gradient jest ukryty</string>
-    <string name="gradient_visible">Gradient jest widoczny</string>
+    <string name="gradient_hidden">Gradient jest ukryte</string>
+    <string name="gradient_visible">Gradient jest widoczne</string>
+    <string name="animations">Animacje</string>
+    <string name="animations_enabled">Animacje są włączone</string>
+    <string name="animations_disabled">Animacje są wyłączone</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

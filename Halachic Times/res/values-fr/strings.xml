@@ -114,6 +114,12 @@
     <!-- Moon -->
     <string name="molad">Naissance de la nouvelle lune (molad)</string>
     <string name="molad_summary">Moyenne des molad</string>
+    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 days after the molad</string>
+    <string name="levana_7">7 days after the molad</string>
+    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_latest_summary">Halfway between molad and molad</string>
+    <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Paramètres</string>
@@ -130,7 +136,7 @@
     </string-array>
 
     <string name="past_title">Temps qui se sont écoulées</string>
-    <string name="past_enabled">Les temps passés sont activés</string>
+    <string name="past_enabled">Les temps passés sont activées</string>
     <string name="past_disabled">Les temps passés sont désactivées</string>
     <string name="seconds_title">Secondes</string>
     <string name="seconds_hidden">Secondes sont cachés</string>
@@ -141,10 +147,13 @@
     <string name="gradient_title">Fond dégradé</string>
     <string name="gradient_hidden">Dégradé est caché</string>
     <string name="gradient_visible">Dégradé est visible</string>
+    <string name="animations">Animations</string>
+    <string name="animations_enabled">Animations sont activées</string>
+    <string name="animations_disabled">Animations ont désactivées</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>
-    <string name="today">Aujourd'hui</string>
+    <string name="today">Aujourd\'hui</string>
 
     <!-- Compass -->
     <string name="menu_compass">Boussole</string>

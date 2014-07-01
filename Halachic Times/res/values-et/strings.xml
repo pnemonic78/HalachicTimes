@@ -114,6 +114,12 @@
     <!-- Moon -->
     <string name="molad">Sündi noorkuu (molad)</string>
     <string name="molad_summary">Keskmine molad</string>
+    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 days after the molad</string>
+    <string name="levana_7">7 days after the molad</string>
+    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
+    <string name="levana_latest_summary">Halfway between molad and molad</string>
+    <string name="levana_15">15 days after the molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>
@@ -130,8 +136,8 @@
     </string-array>
 
     <string name="past_title">Ajad mis on möödunud</string>
-    <string name="past_enabled">Möödunud ajad on aktiivne</string>
-    <string name="past_disabled">Möödunud ajad on puudega</string>
+    <string name="past_enabled">Möödunud ajad on lubatud</string>
+    <string name="past_disabled">Möödunud ajad on keelatud</string>
     <string name="seconds_title">Sekundit</string>
     <string name="seconds_hidden">Sekundit on peidetud</string>
     <string name="seconds_visible">Sekundit on nähtavad</string>
@@ -141,6 +147,9 @@
     <string name="gradient_title">Gradiendi tausta</string>
     <string name="gradient_hidden">Gradiendi on peidetud</string>
     <string name="gradient_visible">Gradiendi on nähtav</string>
+    <string name="animations">Animatsioonid</string>
+    <string name="animations_enabled">Animatsioonid on lubatud</string>
+    <string name="animations_disabled">Animatsioonid on keelatud</string>
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>
