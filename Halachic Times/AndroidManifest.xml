@@ -14,6 +14,15 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
+    <!-- The application uses one or more features on the device for determining location, such as GPS location, network location, or cell location. -->
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false"/>
+    <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="false"/>
+
     <application
         android:name="ZmanimApplication"
         android:allowBackup="true"
