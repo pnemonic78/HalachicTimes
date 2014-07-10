@@ -114,12 +114,12 @@
     <!-- Moon -->
     <string name="molad">Doğuşu Yeni ay (molad)</string>
     <string name="molad_summary">Ortalama molad</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Yeni ay en erken kutsallaştırılması (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 gün sonra molad</string>
+    <string name="levana_7">7 gün sonra molad</string>
+    <string name="levana_latest">Yeni ay en son kutsallaştırılması (kiddush levana)</string>
+    <string name="levana_latest_summary">Yarım molad ve molad arasında</string>
+    <string name="levana_15">15 gün sonra molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ayarlar</string>

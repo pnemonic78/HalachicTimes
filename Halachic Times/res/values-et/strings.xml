@@ -114,12 +114,12 @@
     <!-- Moon -->
     <string name="molad">Sündi noorkuu (molad)</string>
     <string name="molad_summary">Keskmine molad</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Varaseim pühitsemise noorkuu (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 päeva pärast molad</string>
+    <string name="levana_7">7 päeva pärast molad</string>
+    <string name="levana_latest">Viimane pühitsemise noorkuu (kiddush levana)</string>
+    <string name="levana_latest_summary">Poolenisti vahel molad ja molad</string>
+    <string name="levana_15">15 päeva pärast molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>

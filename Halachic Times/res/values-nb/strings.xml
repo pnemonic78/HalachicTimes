@@ -114,12 +114,12 @@
     <!-- Moon -->
     <string name="molad">Født av ny måne (molad)</string>
     <string name="molad_summary">Gjennomsnittlig molad</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Tidligste velsignelse av nymånen (kiddush levana) </string>
+    <string name="levana_earliest_summary">3 dager etter molad</string>
+    <string name="levana_7">7 dager etter molad</string>
+    <string name="levana_latest">Siste velsignelse av nymånen (kiddush levana) </string>
+    <string name="levana_latest_summary">Halvveis mellom molad og molad</string>
+    <string name="levana_15">15 dager etter molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Innstillinger</string>

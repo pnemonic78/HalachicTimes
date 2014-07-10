@@ -116,12 +116,12 @@
     <!-- Moon -->
     <string name="molad">Рождение новой луны (молад)</string>
     <string name="molad_summary">Средняя молад</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Самое раннее время освящение новой луны (киддуш левана)</string>
+    <string name="levana_earliest_summary">3 дня после молад</string>
+    <string name="levana_7">7 дня после молад</string>
+    <string name="levana_latest">Самое позднее освящение новой луны (киддуш левана)</string>
+    <string name="levana_latest_summary">Полпути между молад и молад</string>
+    <string name="levana_15">15 дня после молад</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>

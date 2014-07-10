@@ -114,12 +114,12 @@
     <!-- Moon -->
     <string name="molad">Nascita di luna nuova (molad)</string>
     <string name="molad_summary">Media molad</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Prima santificazione del novilunio (qiddùsh levana)</string>
+    <string name="levana_earliest_summary">3 giorni dopo l\'molad</string>
+    <string name="levana_7">7 giorni dopo l\'molad</string>
+    <string name="levana_latest">Ultime santificazione del novilunio (qiddùsh levana)</string>
+    <string name="levana_latest_summary">Metà strada tra molad e molad</string>
+    <string name="levana_15">15 giorni dopo l\'molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Impostazioni</string>

@@ -115,12 +115,12 @@
     <!-- Moon -->
     <string name="molad">Nașterea din lună nouă (molad)</string>
     <string name="molad_summary">Medie molad</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Mai timpurii sfințire a lunii noi (kiduș levana)</string>
+    <string name="levana_earliest_summary">3 zile după molad</string>
+    <string name="levana_7">7 zile după molad</string>
+    <string name="levana_latest">Ultima sfințire a lunii noi (kiduș levana)</string>
+    <string name="levana_latest_summary">Jumătatea distanței dintre molad și molad</string>
+    <string name="levana_15">15 zile după molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>

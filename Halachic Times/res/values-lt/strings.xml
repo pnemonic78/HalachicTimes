@@ -115,12 +115,12 @@
     <!-- Moon -->
     <string name="molad">Gimimo jaunatį (molad)</string>
     <string name="molad_summary">Vidutinė molad</string>
-    <string name="levana_earliest">Earliest blessing the new moon (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 days after the molad</string>
-    <string name="levana_7">7 days after the molad</string>
-    <string name="levana_latest">Latest blessing the new moon (kiddush levana)</string>
-    <string name="levana_latest_summary">Halfway between molad and molad</string>
-    <string name="levana_15">15 days after the molad</string>
+    <string name="levana_earliest">Seniausi pašventinimą jaunatį (kiddush levana)</string>
+    <string name="levana_earliest_summary">3 dienas po molad</string>
+    <string name="levana_7">7 dienas po molad</string>
+    <string name="levana_latest">Vėliausiai pašventinimą jaunatį (kiddush levana)</string>
+    <string name="levana_latest_summary">Pusiaukelėje tarp molad ir molad</string>
+    <string name="levana_15">15 dienas po molad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Nustatymai</string>
