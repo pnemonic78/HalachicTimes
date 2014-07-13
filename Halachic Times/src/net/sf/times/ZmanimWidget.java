@@ -22,6 +22,8 @@ package net.sf.times;
 import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -34,7 +36,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -44,7 +45,7 @@ import android.widget.RemoteViews;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimWidget extends AppWidgetProvider implements LocationListener {
+public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationListener {
 
 	/** Which activity to start? */
 	private static final String EXTRA_ACTIVITY = "activity";
@@ -109,7 +110,6 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		if (mLocations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 			mLocations = app.getLocations();
-			mLocations.addLocationListener(this);
 		}
 		mLocations.start(this);
 
@@ -146,7 +146,6 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 		if (mLocations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 			mLocations = app.getLocations();
-			mLocations.addLocationListener(this);
 			mLocations.start(this);
 		}
 		GeoLocation gloc = mLocations.getGeoLocation();
@@ -193,6 +192,15 @@ public class ZmanimWidget extends AppWidgetProvider implements LocationListener 
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
+	}
+
+	@Override
+	public void onAddressChanged(Location location, ZmanimAddress address) {
+	}
+
+	@Override
+	public void onElevationChanged(Location location) {
+		onLocationChanged(location);
 	}
 
 	/**

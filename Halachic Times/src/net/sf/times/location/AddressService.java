@@ -25,7 +25,6 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
-import android.location.LocationManager;
 
 /**
  * Service to find an address.
@@ -34,12 +33,10 @@ import android.location.LocationManager;
  */
 public class AddressService extends IntentService implements OnFindAddressListener {
 
-	/** The location parameter. */
-	public static final String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-	/** The address parameter. */
-	public static final String PARAMETER_ADDRESS = "address";
-	/** The intent action for an address that was found. */
-	public static final String ADDRESS_ACTION = "net.sf.times.location.ADDRESS";
+	public static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
+	public static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
+	public static final String ADDRESS_ACTION = ZmanimLocationListener.ADDRESS_ACTION;
+	public static final String ELEVATION_ACTION = ZmanimLocationListener.ELEVATION_ACTION;
 
 	private static final String NAME = "AddressService";
 
@@ -71,7 +68,12 @@ public class AddressService extends IntentService implements OnFindAddressListen
 		final AddressProvider provider = mAddressProvider;
 		if (provider == null)
 			return;
-		provider.findNearestAddress(location, this);
+		String action = intent.getAction();
+		if (ADDRESS_ACTION.equals(action)) {
+			provider.findNearestAddress(location, this);
+		} else if (ELEVATION_ACTION.equals(action)) {
+			provider.findElevation(location, this);
+		}
 	}
 
 	@Override
@@ -99,5 +101,16 @@ public class AddressService extends IntentService implements OnFindAddressListen
 		super.onCreate();
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		mAddressProvider = app.getAddresses();
+	}
+
+	@Override
+	public void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated) {
+		if (elevated != null) {
+			provider.insertOrUpdate(elevated);
+
+			Intent result = new Intent(ELEVATION_ACTION);
+			result.putExtra(PARAMETER_LOCATION, elevated);
+			sendBroadcast(result);
+		}
 	}
 }

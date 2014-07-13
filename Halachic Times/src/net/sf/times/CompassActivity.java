@@ -19,20 +19,16 @@
  */
 package net.sf.times;
 
-import net.sf.times.location.AddressService;
 import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocation;
+import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
@@ -44,7 +40,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class CompassActivity extends Activity implements LocationListener, SensorEventListener {
+public class CompassActivity extends Activity implements ZmanimLocationListener, SensorEventListener {
 
 	/** Latitude of the Holy of Holies, according to Google. */
 	private static final double HOLIEST_LATITUDE = 31.778122;
@@ -83,8 +79,6 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	private Runnable mPopulateHeader;
 	/** Update the location in UI thread. */
 	private Runnable mUpdateLocation;
-	/** The address receiver. */
-	private final BroadcastReceiver mAddressReceiver;
 
 	/**
 	 * Constructs a new compass.
@@ -94,15 +88,6 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		mHoliest.setLatitude(HOLIEST_LATITUDE);
 		mHoliest.setLongitude(HOLIEST_LONGITUDE);
 		mHoliest.setAltitude(HOLIEST_ELEVATION);
-
-		mAddressReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				Location loc = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
-				ZmanimAddress a = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
-				onFindAddress(loc, a);
-			}
-		};
 	}
 
 	@Override
@@ -119,13 +104,9 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		mLocations = app.getLocations();
-		mLocations.addLocationListener(this);
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
-		IntentFilter filter = new IntentFilter(AddressService.ADDRESS_ACTION);
-		registerReceiver(mAddressReceiver, filter);
 	}
 
 	@Override
@@ -149,24 +130,17 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 	}
 
 	@Override
-	protected void onDestroy() {
-		unregisterReceiver(mAddressReceiver);
-		super.onDestroy();
-	}
-
-	@Override
-	public void onLocationChanged(final Location location) {
+	public void onLocationChanged(Location location) {
+		if (ZmanimLocation.compareTo(mAddressLocation, location) != 0) {
+			mAddress = null;
+		}
 		mAddressLocation = location;
-		mAddress = null;
-		Intent find = new Intent(this, AddressService.class);
-		find.putExtra(AddressService.PARAMETER_LOCATION, location);
-		startService(find);
 		if (mUpdateLocation == null) {
 			mUpdateLocation = new Runnable() {
 				@Override
 				public void run() {
 					populateHeader();
-					mView.setHoliest(location.bearingTo(mHoliest));
+					mView.setHoliest(mAddressLocation.bearingTo(mHoliest));
 				}
 			};
 		}
@@ -236,7 +210,8 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 		return getString(R.string.location_unknown);
 	}
 
-	protected void onFindAddress(Location location, ZmanimAddress address) {
+	@Override
+	public void onAddressChanged(Location location, ZmanimAddress address) {
 		mAddressLocation = location;
 		mAddress = address;
 		if (mPopulateHeader == null) {
@@ -248,5 +223,10 @@ public class CompassActivity extends Activity implements LocationListener, Senso
 			};
 		}
 		runOnUiThread(mPopulateHeader);
+	}
+
+	@Override
+	public void onElevationChanged(Location location) {
+		onLocationChanged(location);
 	}
 }

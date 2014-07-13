@@ -30,6 +30,9 @@ import android.os.Parcelable;
  */
 public class ZmanimLocation extends Location {
 
+	/** Double subtraction error. */
+	private static final double EPSILON = 1e-6;
+
 	private long mId;
 
 	/**
@@ -92,4 +95,90 @@ public class ZmanimLocation extends Location {
 		}
 	};
 
+	/**
+	 * Compare two locations by latitude and longitude only.
+	 * 
+	 * @param l1
+	 *            the first location.
+	 * @param l2
+	 *            the second location.
+	 * @return the comparison as per {@link Comparable}.
+	 */
+	public static int compareTo(Location l1, Location l2) {
+		if (l1 == null) {
+			if (l2 == null)
+				return 0;
+			return -1;
+		}
+		if (l2 == null) {
+			return 1;
+		}
+
+		double lat1 = l1.getLatitude();
+		double lat2 = l2.getLatitude();
+		double latD = lat1 - lat2;
+		if (latD >= EPSILON)
+			return 1;
+		if (latD <= -EPSILON)
+			return -1;
+
+		double lng1 = l1.getLongitude();
+		double lng2 = l2.getLongitude();
+		double lngD = lng1 - lng2;
+		if (lngD >= EPSILON)
+			return 1;
+		if (lngD <= -EPSILON)
+			return -1;
+
+		return 0;
+	}
+
+	/**
+	 * Compare two locations by latitude and then longitude, and then altitude,
+	 * and then time.
+	 * 
+	 * @param l1
+	 *            the first location.
+	 * @param l2
+	 *            the second location.
+	 * @return the comparison as per {@link Comparable}.
+	 */
+	public static int compareAll(Location l1, Location l2) {
+		if (l1 == null) {
+			if (l2 == null)
+				return 0;
+			return -1;
+		}
+		if (l2 == null) {
+			return 1;
+		}
+
+		double lat1 = l1.getLatitude();
+		double lat2 = l2.getLatitude();
+		double latD = lat1 - lat2;
+		if (latD >= EPSILON)
+			return 1;
+		if (latD <= -EPSILON)
+			return -1;
+
+		double lng1 = l1.getLongitude();
+		double lng2 = l2.getLongitude();
+		double lngD = lng1 - lng2;
+		if (lngD >= EPSILON)
+			return 1;
+		if (lngD <= -EPSILON)
+			return -1;
+
+		double ele1 = l1.hasAltitude() ? l1.getAltitude() : 0;
+		double ele2 = l2.hasAltitude() ? l2.getAltitude() : 0;
+		double eleD = ele1 - ele2;
+		if (eleD >= EPSILON)
+			return 1;
+		if (eleD <= -EPSILON)
+			return -1;
+
+		long t1 = l1.getTime();
+		long t2 = l2.getTime();
+		return (t1 > t2) ? 1 : (t1 < t2 ? -1 : 0);
+	}
 }

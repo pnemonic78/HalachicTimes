@@ -21,6 +21,7 @@ package net.sf.times.location;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Locale;
 
 import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
@@ -125,7 +126,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		tabHistory.setContent(R.id.listHistory);
 		tabs.addTab(tabHistory);
 
-		mCountries = new CountriesGeocoder(this);
+		mCountries = new CountriesGeocoder(this, Locale.getDefault());
 
 		Intent intent = getIntent();
 		String query = intent.getStringExtra(SearchManager.QUERY);

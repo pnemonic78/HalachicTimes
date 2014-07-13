@@ -60,6 +60,18 @@ public class AddressProvider {
 		 */
 		public void onFindAddress(AddressProvider provider, Location location, Address address);
 
+		/**
+		 * Called when a location with an elevation is found.
+		 * 
+		 * @param provider
+		 *            the address provider.
+		 * @param location
+		 *            the requested location.
+		 * @param elevated
+		 *            the location with elevation.
+		 */
+		public void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated);
+
 	}
 
 	/** Database provider. */
@@ -129,7 +141,7 @@ public class AddressProvider {
 	 *            the location.
 	 * @param listener
 	 *            the listener.
-	 * @return the address.
+	 * @return the address - {@code null} otherwise.
 	 */
 	public Address findNearestAddress(Location location, OnFindAddressListener listener) {
 		if (location == null)
@@ -608,29 +620,53 @@ public class AddressProvider {
 	 * 
 	 * @param location
 	 *            the location.
+	 * @param listener
+	 *            the listener.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
-	public Location findElevation(Location location) {
-		if (location.hasAltitude())
+	public Location findElevation(Location location, OnFindAddressListener listener) {
+		if (location.hasAltitude()) {
+			if (listener != null)
+				listener.onFindElevation(this, location, null);
 			return location;
+		}
 
 		ZmanimLocation elevated;
 
 		elevated = findElevationCities(location);
-		if ((elevated != null) && elevated.hasAltitude())
+		if ((elevated != null) && elevated.hasAltitude()) {
+			if (listener != null)
+				listener.onFindElevation(this, location, elevated);
 			return elevated;
+		}
+
 		elevated = findElevationDatabase(location);
-		if ((elevated != null) && elevated.hasAltitude())
+		if ((elevated != null) && elevated.hasAltitude()) {
+			if (listener != null)
+				listener.onFindElevation(this, location, elevated);
 			return elevated;
+		}
+
 		elevated = findElevationGoogle(location);
-		if ((elevated != null) && elevated.hasAltitude())
+		if ((elevated != null) && elevated.hasAltitude()) {
+			if (listener != null)
+				listener.onFindElevation(this, location, elevated);
 			return elevated;
+		}
+
 		elevated = findElevationBing(location);
-		if ((elevated != null) && elevated.hasAltitude())
+		if ((elevated != null) && elevated.hasAltitude()) {
+			if (listener != null)
+				listener.onFindElevation(this, location, elevated);
 			return elevated;
+		}
+
 		elevated = findElevationGeoNames(location);
-		if ((elevated != null) && elevated.hasAltitude())
+		if ((elevated != null) && elevated.hasAltitude()) {
+			if (listener != null)
+				listener.onFindElevation(this, location, elevated);
 			return elevated;
+		}
 
 		return null;
 	}

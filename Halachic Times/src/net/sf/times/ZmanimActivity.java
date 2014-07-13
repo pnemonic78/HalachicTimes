@@ -23,23 +23,22 @@ import java.util.Calendar;
 
 import net.sf.app.TodayDatePickerDialog;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.AddressService;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocation;
+import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.view.animation.LayoutWeightAnimation;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -67,7 +66,7 @@ import android.widget.ViewSwitcher;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements LocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener {
+public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener {
 
 	/** The date parameter. */
 	public static final String PARAMETER_DATE = "date";
@@ -131,8 +130,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private Animation mDetailsGrow;
 	/** Shrink details animation. */
 	private Animation mDetailsShrink;
-	/** The address receiver. */
-	private final BroadcastReceiver mAddressReceiver;
 
 	/** The handler. */
 	@SuppressLint("HandlerLeak")
@@ -178,14 +175,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	 * Creates a new activity.
 	 */
 	public ZmanimActivity() {
-		mAddressReceiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				Location location = intent.getParcelableExtra(AddressService.PARAMETER_LOCATION);
-				ZmanimAddress address = intent.getParcelableExtra(AddressService.PARAMETER_ADDRESS);
-				onFindAddress(location, address);
-			}
-		};
 	}
 
 	@Override
@@ -258,12 +247,6 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		super.onStop();
 	}
 
-	@Override
-	protected void onDestroy() {
-		unregisterReceiver(mAddressReceiver);
-		super.onDestroy();
-	}
-
 	/** Initialise. */
 	private void init() {
 		mSettings = new ZmanimSettings(this);
@@ -311,11 +294,7 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 	private void initLocation() {
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		mLocations = app.getLocations();
-		mLocations.addLocationListener(this);
 		mLocaleRTL = ZmanimLocations.isLocaleRTL();
-
-		IntentFilter filter = new IntentFilter(AddressService.ADDRESS_ACTION);
-		registerReceiver(mAddressReceiver, filter);
 	}
 
 	/**
@@ -366,11 +345,10 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 
 	@Override
 	public void onLocationChanged(Location location) {
+		if (ZmanimLocation.compareTo(mAddressLocation, location) != 0) {
+			mAddress = null;
+		}
 		mAddressLocation = location;
-		mAddress = null;
-		Intent find = new Intent(this, AddressService.class);
-		find.putExtra(AddressService.PARAMETER_LOCATION, location);
-		startService(find);
 		if (mUpdateLocation == null) {
 			mUpdateLocation = new Runnable() {
 				@Override
@@ -432,9 +410,17 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		address.setText(locationName);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.zmanim, menu);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
+			PackageManager pkg = getPackageManager();
+			if (!pkg.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS))
+				menu.removeItem(R.id.menu_compass);
+		}
+
 		return true;
 	}
 
@@ -466,7 +452,8 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 		mCandesFragment.populateTimes(mDate);
 	}
 
-	protected void onFindAddress(Location location, ZmanimAddress address) {
+	@Override
+	public void onAddressChanged(Location location, ZmanimAddress address) {
 		mAddressLocation = location;
 		mAddress = address;
 		if (mPopulateHeader == null) {
@@ -478,6 +465,11 @@ public class ZmanimActivity extends Activity implements LocationListener, OnDate
 			};
 		}
 		runOnUiThread(mPopulateHeader);
+	}
+
+	@Override
+	public void onElevationChanged(Location location) {
+		onLocationChanged(location);
 	}
 
 	/**
