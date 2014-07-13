@@ -139,6 +139,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	private final long mStopTaskDelay = UPDATE_DURATION;
 	/** The address receiver. */
 	private final BroadcastReceiver mAddressReceiver;
+	/** The location is externally set? */
+	private boolean mManualLocation;
 
 	/**
 	 * Constructs a new provider.
@@ -221,18 +223,16 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			return;
 
 		boolean keepLocation = true;
-		if (mLocation != null) {
+		if ((mLocation != null) && (ZmanimLocation.compareTo(mLocation, location) != 0)) {
 			// Ignore old locations.
 			if (mLocation.getTime() + LOCATION_EXPIRATION >= location.getTime()) {
 				keepLocation = false;
-				// // Prefer locations with elevation.
-				// if (location.hasAltitude() && !mLocation.hasAltitude())
-				// keepLocation = true;
 			}
 			// Ignore manual locations.
-			// else if
-			// (GeocoderBase.USER_PROVIDER.equals(mLocation.getProvider()))
-			// keepLocation = false;
+			if (mManualLocation) {
+				location = mLocation;
+				keepLocation = false;
+			}
 		}
 
 		if (keepLocation) {
@@ -605,6 +605,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 */
 	public void setLocation(Location location) {
 		mLocation = null;
+		mManualLocation = location != null;
 		onLocationChanged(location);
 	}
 
@@ -649,6 +650,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * Quit updating locations.
 	 */
 	public void quit() {
+		mManualLocation = false;
 		mLocationListeners.clear();
 		removeUpdates();
 		mHandler.removeMessages(WHAT_START);
