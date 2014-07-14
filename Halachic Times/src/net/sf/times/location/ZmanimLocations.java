@@ -108,8 +108,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	/** Found an address. */
 	private static final int WHAT_ADDRESS = 4;
 
-	/** Any location that is older than 0.5 seconds ago, is too old. */
-	private static final long LOCATION_EXPIRATION = DateUtils.SECOND_IN_MILLIS / 2;
+	/** If the current location is older than 1 second, then it is stale. */
+	private static final long LOCATION_EXPIRATION = DateUtils.SECOND_IN_MILLIS;
 
 	/** The context. */
 	private final Context mContext;
@@ -171,8 +171,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
 							address.setExtras(extras);
 						}
 						extras.putParcelable(PARAMETER_LOCATION, location);
+						mHandler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
+					} else {
+						mHandler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
 					}
-					mHandler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
 				} else if (ELEVATION_ACTION.equals(action)) {
 					Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
 					mHandler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
@@ -225,7 +227,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		boolean keepLocation = true;
 		if ((mLocation != null) && (ZmanimLocation.compareTo(mLocation, location) != 0)) {
 			// Ignore old locations.
-			if (mLocation.getTime() + LOCATION_EXPIRATION >= location.getTime()) {
+			if (mLocation.getTime() + LOCATION_EXPIRATION > location.getTime()) {
 				keepLocation = false;
 			}
 			// Ignore manual locations.
@@ -277,7 +279,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	@Override
 	public void onElevationChanged(Location location) {
-		onLocationChanged(location, false);
+		onLocationChanged(location, true);
 	}
 
 	/**
