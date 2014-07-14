@@ -22,24 +22,12 @@ package net.sf.times.location;
 import android.provider.BaseColumns;
 
 /**
- * Address table columns.
+ * Elevation table columns.
  * 
  * @author Moshe Waisberg
  */
-public interface AddressColumns extends BaseColumns {
+public interface CitiesColumns extends BaseColumns {
 
-	/** The location's latitude. */
-	public static final String LOCATION_LATITUDE = "loc_latitude";
-	/** The location's longitude. */
-	public static final String LOCATION_LONGITUDE = "loc_longitude";
-	/** The latitude. */
-	public static final String LATITUDE = "latitude";
-	/** The longitude. */
-	public static final String LONGITUDE = "longitude";
-	/** The formatted name. */
-	public static final String ADDRESS = "address";
-	/** The language. */
-	public static final String LANGUAGE = "language";
 	/** The timestamp. */
 	public static final String TIMESTAMP = "timestamp";
 	/** Is favourite address? */

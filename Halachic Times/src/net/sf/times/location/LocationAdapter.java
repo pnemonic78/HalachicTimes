@@ -510,10 +510,9 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 				return -1;
 
 			// Then sort by id. Positive id is more important.
-			// long id1 = addr1.getId();
-			// long id2 = addr2.getId();
-			// return (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
-			return 0;
+			long id1 = addr1.getId();
+			long id2 = addr2.getId();
+			return (id1 == id2 ? 0 : (id1 < id2 ? -1 : 1));
 		}
 	}
 

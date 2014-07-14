@@ -183,13 +183,16 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	 */
 	protected void populateLists() {
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		AddressProvider addressProvider = app.getAddresses();
-		List<ZmanimAddress> cities = addressProvider.query(null);
+		AddressProvider provider = app.getAddresses();
+		List<ZmanimAddress> addresses = provider.query(null);
+		List<ZmanimAddress> cities = mCountries.getCities();
+
+		provider.populateCities(cities);
 
 		// "History" locations take precedence over "built-in" locations.
-		cities.addAll(mCountries.getCities());
+		addresses.addAll(cities);
 
-		LocationAdapter adapter = new LocationAdapter(this, cities);
+		LocationAdapter adapter = new LocationAdapter(this, addresses);
 		adapter.setOnFavoriteClickListener(this);
 		adapter.sort();
 		mAdapterAll = adapter;
@@ -197,7 +200,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
-		adapter = new HistoryLocationAdapter(this, cities);
+		adapter = new HistoryLocationAdapter(this, addresses);
 		adapter.setOnFavoriteClickListener(this);
 		adapter.sort();
 		mAdapterHistory = adapter;
@@ -205,7 +208,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
-		adapter = new FavoritesLocationAdapter(this, cities);
+		adapter = new FavoritesLocationAdapter(this, addresses);
 		adapter.setOnFavoriteClickListener(this);
 		adapter.sort();
 		mAdapterFavorites = adapter;
@@ -226,7 +229,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 			break;
 		}
 		ZmanimAddress addr = adapter.getItem(position);
-		Location loc = new Location(CountriesGeocoder.USER_PROVIDER);
+		Location loc = new Location(GeocoderBase.USER_PROVIDER);
 		loc.setTime(System.currentTimeMillis());
 		loc.setLatitude(addr.getLatitude());
 		loc.setLongitude(addr.getLongitude());
@@ -290,7 +293,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 						double latitude = Location.convert(tokens[0]);
 						double longitude = Location.convert(tokens[1]);
 
-						loc = new Location(CountriesGeocoder.USER_PROVIDER);
+						loc = new Location(GeocoderBase.USER_PROVIDER);
 						loc.setLatitude(latitude);
 						loc.setLongitude(longitude);
 						loc.setTime(System.currentTimeMillis());
@@ -346,12 +349,14 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 			switch (msg.what) {
 			case WHAT_FAVORITE:
 				ZmanimAddress address = (ZmanimAddress) msg.obj;
-				long idBefore = address.getId();
-				AddressProvider provider = ((ZmanimApplication) getApplication()).getAddresses();
-				if (idBefore < 0L) {
-					address.setId(0L);
+				long id = address.getId();
+				ZmanimApplication app = (ZmanimApplication) getApplication();
+				AddressProvider provider = app.getAddresses();
+				if (id < 0L) {
+					provider.insertOrUpdateCity(address);
+				} else {
+					provider.insertOrUpdate(null, address);
 				}
-				provider.insertOrUpdate(null, address);
 
 				mAdapterAll.notifyDataSetChanged();
 				mAdapterFavorites.notifyDataSetChanged();

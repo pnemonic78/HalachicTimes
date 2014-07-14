@@ -19,7 +19,10 @@
  */
 package net.sf.times.location;
 
+import net.sf.times.R;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -36,11 +39,15 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	/** Database name for times. */
 	private static final String DB_NAME = "times";
 	/** Database version. */
-	private static final int DB_VERSION = 3;
+	private static final int DB_VERSION = 4;
 	/** Database table for addresses. */
 	public static final String TABLE_ADDRESSES = "addresses";
 	/** Database table for elevations. */
 	public static final String TABLE_ELEVATIONS = "elevations";
+	/** Database table for cities. */
+	public static final String TABLE_CITIES = "cities";
+
+	private final Context mContext;
 
 	/**
 	 * Constructs a new helper.
@@ -50,6 +57,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	 */
 	public AddressOpenHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
+		mContext = context;
 	}
 
 	@Override
@@ -77,6 +85,16 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		sql.append(ElevationColumns.TIMESTAMP).append(" INTEGER NOT NULL");
 		sql.append(");");
 		db.execSQL(sql.toString());
+
+		sql = new StringBuilder();
+		sql.append("CREATE TABLE ").append(TABLE_CITIES).append('(');
+		sql.append(BaseColumns._ID).append(" INTEGER PRIMARY KEY,");
+		sql.append(CitiesColumns.TIMESTAMP).append(" INTEGER NOT NULL,");
+		sql.append(CitiesColumns.FAVORITE).append(" INTEGER NOT NULL");
+		sql.append(");");
+		db.execSQL(sql.toString());
+
+		fillCities(db);
 	}
 
 	@Override
@@ -84,6 +102,9 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE " + TABLE_ADDRESSES + ";");
 		if (oldVersion >= 3) {
 			db.execSQL("DROP TABLE " + TABLE_ELEVATIONS + ";");
+			if (oldVersion >= 4) {
+				db.execSQL("DROP TABLE " + TABLE_CITIES + ";");
+			}
 		}
 		onCreate(db);
 	}
@@ -95,5 +116,26 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 		// Delete stale records older than 1 year.
 		String whereClause = "(" + AddressColumns.TIMESTAMP + " < " + (System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS) + ")";
 		db.delete(TABLE_ADDRESSES, whereClause, null);
+	}
+
+	/**
+	 * Fill the cities table with empty rows.
+	 * 
+	 * @param db
+	 *            the database.
+	 */
+	private void fillCities(SQLiteDatabase db) {
+		Resources res = mContext.getResources();
+		String[] citiesCountries = res.getStringArray(R.array.cities_countries);
+		int citiesCount = citiesCountries.length;
+
+		ContentValues values = new ContentValues();
+		values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
+		values.put(CitiesColumns.FAVORITE, 0);
+
+		for (int i = 0, j = 1; i < citiesCount; i++, j++) {
+			values.put(BaseColumns._ID, j);
+			db.insert(TABLE_CITIES, null, values);
+		}
 	}
 }

@@ -21,8 +21,11 @@ package net.sf.times.location;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import net.sf.times.database.CursorFilter;
 import android.content.ContentValues;
@@ -95,6 +98,11 @@ public class AddressProvider {
 	static final int INDEX_ELEVATIONS_LONGITUDE = 2;
 	static final int INDEX_ELEVATIONS_ELEVATION = 3;
 	static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
+
+	private static final String[] COLUMNS_CITIES = { BaseColumns._ID, CitiesColumns.TIMESTAMP, CitiesColumns.FAVORITE };
+	static final int INDEX_CITIES_ID = 0;
+	static final int INDEX_CITIES_TIMESTAMP = 1;
+	static final int INDEX_CITIES_FAVORITE = 2;
 
 	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
@@ -452,8 +460,8 @@ public class AddressProvider {
 	}
 
 	/**
-	 * Add the address to the local database. The local database is supposed to
-	 * reduce redundant network requests.
+	 * Insert or update the address in the local database. The local database is
+	 * supposed to reduce redundant network requests.
 	 * 
 	 * @param location
 	 *            the location.
@@ -783,8 +791,8 @@ public class AddressProvider {
 	}
 
 	/**
-	 * Add the location with elevation to the local database. The local database
-	 * is supposed to reduce redundant network requests.
+	 * Insert or update the location with elevation in the local database. The
+	 * local database is supposed to reduce redundant network requests.
 	 * 
 	 * @param location
 	 *            the location.
@@ -865,4 +873,80 @@ public class AddressProvider {
 		return locations;
 	}
 
+	/**
+	 * Populate the cities with data from the table.
+	 * 
+	 * @param cities
+	 *            the list of cities to populate.
+	 */
+	public void populateCities(Collection<ZmanimAddress> cities) {
+		SQLiteDatabase db = getReadableDatabase();
+		if (db == null)
+			return;
+		Cursor cursor = db.query(AddressOpenHelper.TABLE_CITIES, COLUMNS_CITIES, null, null, null, null, null);
+		if ((cursor == null) || cursor.isClosed()) {
+			db.close();
+			return;
+		}
+
+		Map<Long, ZmanimAddress> citiesById = new HashMap<Long, ZmanimAddress>();
+		long id;
+		for (ZmanimAddress city : cities) {
+			id = -city.getId();
+			citiesById.put(id, city);
+		}
+
+		try {
+			if (cursor.moveToFirst()) {
+				boolean favorite;
+				ZmanimAddress city;
+
+				do {
+					id = cursor.getLong(INDEX_CITIES_ID);
+					favorite = cursor.getShort(INDEX_CITIES_FAVORITE) != 0;
+
+					city = citiesById.get(id);
+					city.setFavorite(favorite);
+				} while (cursor.moveToNext());
+			}
+		} catch (SQLiteException se) {
+			Log.e(TAG, "Populate cities: " + se.getLocalizedMessage(), se);
+		} finally {
+			cursor.close();
+			db.close();
+		}
+	}
+
+	/**
+	 * Insert or update the city in the local database.
+	 * 
+	 * @param city
+	 *            the city.
+	 */
+	public void insertOrUpdateCity(ZmanimAddress city) {
+		if (city == null)
+			return;
+		long id = city.getId();
+		if (id >= 0L)
+			return;
+
+		id = -id;
+
+		ContentValues values = new ContentValues();
+		values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
+		values.put(CitiesColumns.FAVORITE, city.isFavorite());
+
+		SQLiteDatabase db = null;
+		try {
+			db = getWritableDatabase();
+			if (db == null)
+				return;
+
+			String[] whereArgs = { Long.toString(id) };
+			db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 }
