@@ -84,9 +84,9 @@ public class AddressProvider {
 	static final int INDEX_LOCATION_LONGITUDE = 2;
 	static final int INDEX_LATITUDE = 3;
 	static final int INDEX_LONGITUDE = 4;
-	static final int INDEX_ADDRESS = 6;
-	static final int INDEX_LANGUAGE = 7;
-	static final int INDEX_FAVORITE = 8;
+	static final int INDEX_ADDRESS = 5;
+	static final int INDEX_LANGUAGE = 6;
+	static final int INDEX_FAVORITE = 7;
 
 	private static final String[] COLUMNS_ELEVATIONS = { BaseColumns._ID, ElevationColumns.LATITUDE, ElevationColumns.LONGITUDE, ElevationColumns.ELEVATION,
 			ElevationColumns.TIMESTAMP };

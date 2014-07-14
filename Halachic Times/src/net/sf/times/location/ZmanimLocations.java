@@ -217,10 +217,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		onLocationChanged(location, true);
+		onLocationChanged(location, true, true);
 	}
 
-	private void onLocationChanged(Location location, boolean find) {
+	private void onLocationChanged(Location location, boolean findAddress, boolean findElevation) {
 		if (!isValid(location))
 			return;
 
@@ -245,12 +245,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		for (ZmanimLocationListener listener : mLocationListenersLoop)
 			listener.onLocationChanged(location);
 
-		if (find) {
+		if (findAddress)
 			findAddress(location);
 
-			if (!location.hasAltitude())
-				findElevation(location);
-		}
+		if (findElevation && !location.hasAltitude())
+			findElevation(location);
 	}
 
 	@Override
@@ -279,7 +278,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	@Override
 	public void onElevationChanged(Location location) {
-		onLocationChanged(location, true);
+		onLocationChanged(location, true, false);
 	}
 
 	/**

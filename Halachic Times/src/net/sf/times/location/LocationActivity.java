@@ -27,6 +27,7 @@ import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -34,6 +35,8 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -66,12 +69,6 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	private static int ic_menu_star;
 
-	private EditText mSearchText;
-	private CountriesGeocoder mCountries;
-	private LocationAdapter mAdapterAll;
-	private LocationAdapter mAdapterFavorites;
-	private LocationAdapter mAdapterHistory;
-
 	static {
 		try {
 			Class<?> clazz = Class.forName("com.android.internal.R$drawable");
@@ -81,6 +78,14 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 			ic_menu_star = android.R.drawable.btn_star_big_off;
 		}
 	}
+
+	private static final int WHAT_FAVORITE = 1;
+
+	private EditText mSearchText;
+	private CountriesGeocoder mCountries;
+	private LocationAdapter mAdapterAll;
+	private LocationAdapter mAdapterFavorites;
+	private LocationAdapter mAdapterHistory;
 
 	/**
 	 * Constructs a new activity.
@@ -225,7 +230,8 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		loc.setTime(System.currentTimeMillis());
 		loc.setLatitude(addr.getLatitude());
 		loc.setLongitude(addr.getLongitude());
-		loc.setAltitude(addr.getElevation());
+		if (addr.hasElevation())
+			loc.setAltitude(addr.getElevation());
 		setAddress(loc);
 	}
 
@@ -330,17 +336,29 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	@Override
 	public void onFavoriteClick(LocationAdapter adapter, CompoundButton button, ZmanimAddress address) {
 		address.setFavorite(button.isChecked());
-		// FIXME modify the db in non-UI thread.
-		long idBefore = address.getId();
-		AddressProvider provider = ((ZmanimApplication) getApplication()).getAddresses();
-		if (idBefore < 0L) {
-			address.setId(0L);
-		}
-		provider.insertOrUpdate(null, address);
-
-		mAdapterAll.notifyDataSetChanged();
-		mAdapterFavorites.notifyDataSetChanged();
-		mAdapterHistory.notifyDataSetChanged();
+		mHandler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
 	}
 
+	@SuppressLint("HandlerLeak")
+	private final Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case WHAT_FAVORITE:
+				ZmanimAddress address = (ZmanimAddress) msg.obj;
+				long idBefore = address.getId();
+				AddressProvider provider = ((ZmanimApplication) getApplication()).getAddresses();
+				if (idBefore < 0L) {
+					address.setId(0L);
+				}
+				provider.insertOrUpdate(null, address);
+
+				mAdapterAll.notifyDataSetChanged();
+				mAdapterFavorites.notifyDataSetChanged();
+				mAdapterHistory.notifyDataSetChanged();
+
+				break;
+			}
+		}
+	};
 }
