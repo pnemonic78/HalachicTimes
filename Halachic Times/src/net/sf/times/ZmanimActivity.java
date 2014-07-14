@@ -38,7 +38,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -410,16 +409,13 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		address.setText(locationName);
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.zmanim, menu);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-			PackageManager pkg = getPackageManager();
-			if (!pkg.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS))
-				menu.removeItem(R.id.menu_compass);
-		}
+		PackageManager pkg = getPackageManager();
+		if (!pkg.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS))
+			menu.removeItem(R.id.menu_compass);
 
 		return true;
 	}
