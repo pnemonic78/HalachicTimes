@@ -42,9 +42,6 @@ import android.location.Location;
  */
 public class DatabaseGeocoder extends GeocoderBase {
 
-	private CursorFilter mLocationFilter;
-	private CursorFilter mElevationFilter;
-
 	/**
 	 * Creates a new database geocoder.
 	 * 
@@ -74,30 +71,27 @@ public class DatabaseGeocoder extends GeocoderBase {
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
 
-		final float[] distanceLocation = new float[1];
-		final float[] distanceAddress = new float[1];
+		CursorFilter filter = new CursorFilter() {
 
-		if (mLocationFilter == null) {
-			mLocationFilter = new CursorFilter() {
+			private final float[] mDistance = new float[1];
 
-				@Override
-				public boolean accept(Cursor cursor) {
-					double locationLatitude = cursor.getDouble(AddressProvider.INDEX_LOCATION_LATITUDE);
-					double locationLongitude = cursor.getDouble(AddressProvider.INDEX_LOCATION_LONGITUDE);
-					Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
-					if (distanceLocation[0] <= SAME_LOCATION)
-						return true;
+			@Override
+			public boolean accept(Cursor cursor) {
+				double locationLatitude = cursor.getDouble(AddressProvider.INDEX_LOCATION_LATITUDE);
+				double locationLongitude = cursor.getDouble(AddressProvider.INDEX_LOCATION_LONGITUDE);
+				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
+				if (mDistance[0] <= SAME_LOCATION)
+					return true;
 
-					double addressLatitude = cursor.getDouble(AddressProvider.INDEX_LATITUDE);
-					double addressLongitude = cursor.getDouble(AddressProvider.INDEX_LONGITUDE);
-					Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, distanceAddress);
-					return (distanceAddress[0] <= SAME_LOCATION);
-				}
-			};
-		}
+				double addressLatitude = cursor.getDouble(AddressProvider.INDEX_LATITUDE);
+				double addressLongitude = cursor.getDouble(AddressProvider.INDEX_LONGITUDE);
+				Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, mDistance);
+				return (mDistance[0] <= SAME_LOCATION);
+			}
+		};
 		ZmanimApplication app = (ZmanimApplication) mContext.getApplicationContext();
 		AddressProvider provider = app.getAddresses();
-		List<ZmanimAddress> q = provider.query(mLocationFilter);
+		List<ZmanimAddress> q = provider.query(filter);
 		List<Address> addresses = new ArrayList<Address>(q);
 
 		return addresses;
@@ -115,23 +109,21 @@ public class DatabaseGeocoder extends GeocoderBase {
 		if (longitude < -180.0 || longitude > 180.0)
 			throw new IllegalArgumentException("longitude == " + longitude);
 
-		final float[] distanceLocation = new float[1];
 
-		if (mElevationFilter == null) {
-			mElevationFilter = new CursorFilter() {
+		CursorFilter filter = new CursorFilter() {
+			private final float[] mDistance = new float[1];
 
-				@Override
-				public boolean accept(Cursor cursor) {
-					double locationLatitude = cursor.getDouble(AddressProvider.INDEX_ELEVATIONS_LATITUDE);
-					double locationLongitude = cursor.getDouble(AddressProvider.INDEX_ELEVATIONS_LONGITUDE);
-					Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distanceLocation);
-					return (distanceLocation[0] <= SAME_PLATEAU);
-				}
-			};
-		}
+			@Override
+			public boolean accept(Cursor cursor) {
+				double locationLatitude = cursor.getDouble(AddressProvider.INDEX_ELEVATIONS_LATITUDE);
+				double locationLongitude = cursor.getDouble(AddressProvider.INDEX_ELEVATIONS_LONGITUDE);
+				Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
+				return (mDistance[0] <= SAME_PLATEAU);
+			}
+		};
 		ZmanimApplication app = (ZmanimApplication) mContext.getApplicationContext();
 		AddressProvider provider = app.getAddresses();
-		List<ZmanimLocation> locations = provider.queryElevations(mElevationFilter);
+		List<ZmanimLocation> locations = provider.queryElevations(filter);
 
 		int locationsCount = locations.size();
 		if (locationsCount == 0)

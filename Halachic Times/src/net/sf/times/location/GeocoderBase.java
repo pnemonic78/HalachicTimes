@@ -58,6 +58,10 @@ public abstract class GeocoderBase {
 	 * terrain.
 	 */
 	protected static final float SAME_PLATEAU = 50000f;// 50 kilometres.
+	/**
+	 * Maximum radius to consider a location near the same planet.
+	 */
+	protected static final float SAME_PLANET = 5000000f;// 5000 kilometres.
 
 	protected final Context mContext;
 	protected final Locale mLocale;

@@ -170,13 +170,13 @@ public class AddressProvider {
 			listener.onFindAddress(this, location, best);
 
 		addresses = findNearestCountry(location);
-		best = findBestAddress(location, addresses);
+		best = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET);
 		if ((best != null) && (listener != null))
 			listener.onFindAddress(this, location, best);
 		bestCountry = best;
 
 		addresses = findNearestCity(location);
-		best = findBestAddress(location, addresses);
+		best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU);
 		if ((best != null) && (listener != null))
 			listener.onFindAddress(this, location, best);
 		bestCity = best;
@@ -333,60 +333,81 @@ public class AddressProvider {
 	 *            the location.
 	 * @param addresses
 	 *            the list of addresses.
-	 * @return the best address.
+	 * @return the best address - {@code null} otherwise.
 	 */
 	private Address findBestAddress(Location location, List<Address> addresses) {
+		return findBestAddress(location, addresses, GeocoderBase.SAME_CITY);
+	}
+
+	/**
+	 * Find the best address by checking relevant fields.
+	 * 
+	 * @param location
+	 *            the location.
+	 * @param addresses
+	 *            the list of addresses.
+	 * @param radius
+	 *            the maximum radius.
+	 * @return the best address - {@code null} otherwise.
+	 */
+	private Address findBestAddress(Location location, List<Address> addresses, float radius) {
 		if ((addresses == null) || addresses.isEmpty())
 			return null;
-		if (addresses.size() == 1)
-			return addresses.get(0);
 
 		// First, find the closest location.
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		float distanceMin = Float.MAX_VALUE;
+		float distanceMin = radius;
 		Address addrMin = null;
 		float[] distances = new float[1];
+		List<Address> near = new ArrayList<Address>(addresses.size());
+
 		for (Address a : addresses) {
-			if (!a.hasLatitude())
-				continue;
-			if (!a.hasLongitude())
+			if (!a.hasLatitude() || !a.hasLongitude())
 				continue;
 			Location.distanceBetween(latitude, longitude, a.getLatitude(), a.getLongitude(), distances);
-			if (distances[0] <= distanceMin) {
-				distanceMin = distances[0];
-				addrMin = a;
+			if (distances[0] <= radius) {
+				near.add(a);
+				if (distances[0] <= distanceMin) {
+					distanceMin = distances[0];
+					addrMin = a;
+				}
 			}
 		}
+
 		if (addrMin != null)
 			return addrMin;
+		if (near.isEmpty())
+			return null;
+		if (near.size() == 1)
+			return near.get(0);
 
 		// Next, find the best address part.
-		for (Address a : addresses) {
+		for (Address a : near) {
 			if (a.getFeatureName() != null)
 				return a;
 		}
-		for (Address a : addresses) {
+		for (Address a : near) {
 			if (a.getLocality() != null)
 				return a;
 		}
-		for (Address a : addresses) {
+		for (Address a : near) {
 			if (a.getSubLocality() != null)
 				return a;
 		}
-		for (Address a : addresses) {
+		for (Address a : near) {
 			if (a.getAdminArea() != null)
 				return a;
 		}
-		for (Address a : addresses) {
+		for (Address a : near) {
 			if (a.getSubAdminArea() != null)
 				return a;
 		}
-		for (Address a : addresses) {
+		for (Address a : near) {
 			if (a.getCountryName() != null)
 				return a;
 		}
-		return addresses.get(0);
+		return near.get(0);
 	}
 
 	/**
@@ -474,14 +495,17 @@ public class AddressProvider {
 		long id = address.getId();
 		if (id < 0L)
 			return;
+		boolean insert = id == 0L;
 
 		ContentValues values = new ContentValues();
-		if (location == null) {
-			values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
-			values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
-		} else {
-			values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
-			values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
+		if (insert) {
+			if (location == null) {
+				values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
+				values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
+			} else {
+				values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
+				values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
+			}
 		}
 		values.put(AddressColumns.ADDRESS, formatAddress(address));
 		values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
@@ -495,7 +519,7 @@ public class AddressProvider {
 			db = getWritableDatabase();
 			if (db == null)
 				return;
-			if (id == 0L) {
+			if (insert) {
 				id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
 				address.setId(id);
 			} else {
