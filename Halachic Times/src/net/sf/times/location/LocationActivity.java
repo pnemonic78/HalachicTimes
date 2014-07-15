@@ -71,9 +71,13 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	static {
 		try {
-			Class<?> clazz = Class.forName("com.android.internal.R$drawable");
-			Field field = clazz.getDeclaredField("ic_menu_star");
-			ic_menu_star = field.getInt(null);
+			Resources res = Resources.getSystem();
+			ic_menu_star = res.getIdentifier("ic_menu_star", "drawable", "android");
+			if (ic_menu_star == 0) {
+				Class<?> clazz = Class.forName("com.android.internal.R$drawable");
+				Field field = clazz.getDeclaredField("ic_menu_star");
+				ic_menu_star = field.getInt(null);
+			}
 		} catch (Exception e) {
 			ic_menu_star = android.R.drawable.btn_star_big_off;
 		}
