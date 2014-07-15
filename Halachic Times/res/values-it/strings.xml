@@ -190,6 +190,6 @@
     <string name="category_about">Su</string>
     <string name="version">Versione di applicazione</string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Copyright \u00A9 2004-2011 Elia Hershfeld</string>
+    <string name="kosherjava_version">Copyright \u00A9 2004–2011 Elia Hershfeld</string>
 
 </resources>

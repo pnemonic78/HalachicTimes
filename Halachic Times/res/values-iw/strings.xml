@@ -190,6 +190,6 @@
     <string name="category_about">אודות</string>
     <string name="version">גרסת יישום</string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">זכויות יוצרים \u00A9 2004-2011 אליהו הירשפלד</string>
+    <string name="kosherjava_version">זכויות יוצרים \u00A9 2004–2011 אליהו הירשפלד</string>
 
 </resources>

@@ -192,6 +192,6 @@
     <string name="category_about">О</string>
     <string name="version">Версия приложения</string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Авторские права \u00A9 2004-2011 Элиягу Хиршфельд</string>
+    <string name="kosherjava_version">Авторские права \u00A9 2004–2011 Элиягу Хиршфельд</string>
 
 </resources>

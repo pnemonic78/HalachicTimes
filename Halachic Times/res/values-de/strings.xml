@@ -190,6 +190,6 @@
     <string name="category_about">Über</string>
     <string name="version">Anwendungsversion</string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Urheberrecht \u00A9 2004-2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava_version">Urheberrecht \u00A9 2004–2011 Eliyahu Hershfeld</string>
 
 </resources>

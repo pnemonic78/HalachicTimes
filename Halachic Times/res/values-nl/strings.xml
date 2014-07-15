@@ -190,6 +190,6 @@
     <string name="category_about">Over</string>
     <string name="version">App versie</string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Auteursrecht \u00A9 2004-2011 Elijahoe Hershfeld</string>
+    <string name="kosherjava_version">Auteursrecht \u00A9 2004–2011 Elijahoe Hershfeld</string>
 
 </resources>

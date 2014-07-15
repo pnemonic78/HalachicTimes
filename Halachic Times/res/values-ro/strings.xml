@@ -191,6 +191,6 @@
     <string name="category_about">Despre</string>
     <string name="version">Versiunea aplicație</string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Drept de autor \u00A9 2004-2011 Ilie Hershfeld</string>
+    <string name="kosherjava_version">Drept de autor \u00A9 2004–2011 Ilie Hershfeld</string>
 
 </resources>

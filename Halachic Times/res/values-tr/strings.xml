@@ -190,6 +190,6 @@
     <string name="category_about">Hakkında</string>
     <string name="version">Uygulama sürümü </string>
     <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Telif Hakkı \u00A9 2004-2011 İlyas Hershfeld</string>
+    <string name="kosherjava_version">Telif Hakkı \u00A9 2004–2011 İlyas Hershfeld</string>
 
 </resources>
