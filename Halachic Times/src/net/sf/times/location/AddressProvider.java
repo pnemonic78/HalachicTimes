@@ -468,7 +468,7 @@ public class AddressProvider {
 	 * @param address
 	 *            the address.
 	 */
-	public void insertOrUpdate(Location location, ZmanimAddress address) {
+	public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
 		if (address == null)
 			return;
 		long id = address.getId();
@@ -797,7 +797,7 @@ public class AddressProvider {
 	 * @param location
 	 *            the location.
 	 */
-	public void insertOrUpdate(ZmanimLocation location) {
+	public void insertOrUpdateElevation(ZmanimLocation location) {
 		if ((location == null) || !location.hasAltitude())
 			return;
 		long id = location.getId();

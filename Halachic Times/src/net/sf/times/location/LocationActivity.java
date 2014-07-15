@@ -355,7 +355,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 				if (id < 0L) {
 					provider.insertOrUpdateCity(address);
 				} else {
-					provider.insertOrUpdate(null, address);
+					provider.insertOrUpdateAddress(null, address);
 				}
 
 				mAdapterAll.notifyDataSetChanged();
