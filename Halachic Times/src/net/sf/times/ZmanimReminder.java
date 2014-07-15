@@ -37,6 +37,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -67,7 +69,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	private SimpleDateFormat format;
 
 	/**
-	 * Creats a new reminder.
+	 * Creates a new reminder manager.
 	 * 
 	 * @param context
 	 *            the context.
@@ -264,12 +266,17 @@ public class ZmanimReminder extends BroadcastReceiver {
 		// Clicking on the item will launch the main activity.
 		PendingIntent contentIntent = createActivityIntent();
 
-		Notification noti = new Notification();
-		noti.icon = R.drawable.ic_launcher;
-		noti.defaults = Notification.DEFAULT_ALL;
-		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-		noti.when = item.time.getTime();// When the zman is supposed to occur.
-		noti.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
+		Notification notification = new Notification();
+		notification.audioStreamType = AudioManager.STREAM_ALARM;
+		notification.icon = R.drawable.ic_launcher;
+		notification.defaults = Notification.DEFAULT_ALL;
+		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+		notification.ledARGB = Color.YELLOW;
+		notification.ledOffMS = 0;
+		notification.ledOnMS = 1;
+		notification.when = item.time.getTime();// When the zman is supposed to
+												// occur.
+		notification.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
 
 		// Wake up the device to notify the user.
 		PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
@@ -277,7 +284,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		wake.acquire(3000L);// enough time to also hear an alarm tone
 
 		NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-		nm.notify(ID_NOTIFY, noti);
+		nm.notify(ID_NOTIFY, notification);
 	}
 
 	/**

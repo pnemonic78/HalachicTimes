@@ -263,7 +263,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (summary != null) {
 			summary.setText(item.summary);
 			summary.setEnabled(enabled);
-			if (item.summary == null)
+			if (!mSummaries || (item.summary == null))
 				summary.setVisibility(View.GONE);
 		}
 
@@ -284,7 +284,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the time.
 	 */
 	public void add(int titleId, int summaryId, Date time) {
-		add(titleId, mSummaries && (summaryId != 0) ? getContext().getText(summaryId) : (CharSequence) null, time);
+		add(titleId, (summaryId != 0) ? getContext().getText(summaryId) : (CharSequence) null, time);
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		ZmanimItem item = new ZmanimItem();
 		item.titleId = titleId;
-		item.summary = mSummaries ? summary : null;
+		item.summary = summary;
 		item.timeId = timeId;
 		item.time = time;
 		item.timeLabel = mTimeFormat.format(time);
