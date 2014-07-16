@@ -21,6 +21,8 @@
     <color name="widget_box">#80000000</color>
     <color name="widget_border">#10ffffff</color>
     <color name="background_nokia">#ffff8200</color>
+    <color name="text_nokia">@android:color/white</color>
+    <color name="text_inverse_nokia">@android:color/black</color>
 
     <!-- Compass. -->
     <color name="compass">#ffffff</color>

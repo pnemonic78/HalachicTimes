@@ -122,10 +122,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		if (mAppWidgetIds == null)
 			return;
 
-		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
-
+		RemoteViews views = null;
 		if (isDeviceNokia()) {
-			views.setInt(android.R.id.list, "setBackgroundColor", context.getResources().getColor(R.color.background_nokia));
+			views = new RemoteViews(context.getPackageName(), R.layout.times_widget_nokia);
+		} else {
+			views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
 		}
 
 		// Pass the activity to ourselves, because starting another activity
