@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -52,10 +53,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/** The context. */
 	private Context mContext;
-	private AppWidgetManager mAppWidgetManager;
 	private int[] mAppWidgetIds;
-	/** The remote views. */
-	private RemoteViews mViews;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
@@ -105,7 +103,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
 		mContext = context;
-		mAppWidgetManager = appWidgetManager;
 		mAppWidgetIds = appWidgetIds;
 		if (mLocations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
@@ -119,17 +116,17 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	/** Populate the list with times. */
 	private void populateTimes() {
 		Context context = mContext;
-		// if (mAppWidgetManager == null)
-		mAppWidgetManager = AppWidgetManager.getInstance(context);
-		// if (mAppWidgetIds == null) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		ComponentName provider = new ComponentName(context, ZmanimWidget.class);
-		mAppWidgetIds = mAppWidgetManager.getAppWidgetIds(provider);
+		mAppWidgetIds = appWidgetManager.getAppWidgetIds(provider);
 		if (mAppWidgetIds == null)
 			return;
-		// }
-		RemoteViews views = mViews;
-		// if (views == null) {
-		views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
+
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
+
+		if (isDeviceNokia()) {
+			views.setInt(android.R.id.list, "setBackgroundColor", context.getResources().getColor(R.color.background_nokia));
+		}
 
 		// Pass the activity to ourselves, because starting another activity
 		// is not working.
@@ -138,8 +135,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, android.R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		views.setOnClickPendingIntent(android.R.id.list, activityPendingIntent);
-		mViews = views;
-		// }
 
 		if (mSettings == null)
 			mSettings = new ZmanimSettings(context);
@@ -158,7 +153,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		adapter.populate(true);
 		bindViews(views, adapter);
 
-		mAppWidgetManager.updateAppWidget(mAppWidgetIds, views);
+		appWidgetManager.updateAppWidget(mAppWidgetIds, views);
 
 		scheduleForMidnight(mContext);
 	}
@@ -253,5 +248,15 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			list.setViewVisibility(item.titleId, View.VISIBLE);
 			list.setTextViewText(item.timeId, item.timeLabel);
 		}
+	}
+
+	/**
+	 * Is the device made by Nokia?
+	 * 
+	 * @return {@code true} if either the brand or manufacturer start with
+	 *         {@code "Nokia"}.
+	 */
+	private boolean isDeviceNokia() {
+		return Build.BRAND.startsWith("Nokia") || Build.MANUFACTURER.startsWith("Nokia");
 	}
 }
