@@ -425,7 +425,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 			throw new IllegalArgumentException("longitude == " + longitude);
 		String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
 		URL url = new URL(queryUrl);
-		byte[] data = HTTPReader.read(url, null);
+		byte[] data = HTTPReader.read(url);
 		if (data == null)
 			return null;
 		String text = new String(data);

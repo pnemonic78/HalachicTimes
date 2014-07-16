@@ -35,13 +35,28 @@ import net.sf.io.StreamUtils;
 public class HTTPReader {
 
 	/** Content type that is XML text. */
-	public static final String CONTENT_XML = "application/xml";
+	public static final String CONTENT_APP_XML = "application/xml";
 	/** Content type that is XML text. */
 	public static final String CONTENT_TEXT_XML = "text/xml";
+	/** Content type that is XML text. */
+	public static final String[] CONTENT_XML = { CONTENT_APP_XML, CONTENT_TEXT_XML };
 
 	/** Creates a new reader. */
 	public HTTPReader() {
 		super();
+	}
+
+	/**
+	 * Read bytes from the network.
+	 * 
+	 * @param url
+	 *            the URL.
+	 * @return the data - {@code null} otherwise.
+	 * @throws IOException
+	 *             if an I/O error occurs.
+	 */
+	public static byte[] read(URL url) throws IOException {
+		return read(url, (String[]) null);
 	}
 
 	/**
@@ -56,6 +71,21 @@ public class HTTPReader {
 	 *             if an I/O error occurs.
 	 */
 	public static byte[] read(URL url, String contentTypeExpected) throws IOException {
+		return read(url, new String[] { contentTypeExpected });
+	}
+
+	/**
+	 * Read bytes from the network.
+	 * 
+	 * @param url
+	 *            the URL.
+	 * @param contentTypesExpected
+	 *            the expected content types.
+	 * @return the data - {@code null} otherwise.
+	 * @throws IOException
+	 *             if an I/O error occurs.
+	 */
+	public static byte[] read(URL url, String[] contentTypesExpected) throws IOException {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		int code = conn.getResponseCode();
 		if (code != HttpURLConnection.HTTP_OK)
@@ -66,8 +96,17 @@ public class HTTPReader {
 		int indexSemi = contentType.indexOf(';');
 		if (indexSemi >= 0)
 			contentType = contentType.substring(0, indexSemi);
-		if ((contentTypeExpected != null) && !contentType.equals(contentTypeExpected))
-			return null;
+		if (contentTypesExpected != null) {
+			boolean hasType = false;
+			for (String contentTypeExpected : contentTypesExpected) {
+				if (contentType.equals(contentTypeExpected)) {
+					hasType = true;
+					break;
+				}
+			}
+			if (!hasType)
+				return null;
+		}
 
 		byte[] data = null;
 		InputStream in = null;
