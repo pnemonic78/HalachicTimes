@@ -148,6 +148,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		}
 
 		search(query, loc);
+
+		// Switch to the first non-empty tab.
+		if (mAdapterFavorites.getCount() == 0) {
+			tabs.setCurrentTab(1);
+		}
 	}
 
 	/**
