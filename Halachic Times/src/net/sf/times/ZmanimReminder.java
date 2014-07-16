@@ -139,7 +139,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			id = item.titleId;
 			before = settings.getReminder(id);
 
-			if (before >= 0L) {
+			if ((before >= 0L) && (item.time != null)) {
 				when = item.time.getTime() - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 					notifyNow(item);
@@ -177,7 +177,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				item = adapter.getItem(i);
 				id = item.titleId;
 				before = settings.getReminder(id);
-				if (before >= 0L) {
+				if ((before >= 0L) && (item.time != null)) {
 					when = item.time.getTime() - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 						notifyNow(item);
@@ -225,7 +225,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				if ((id != R.id.candles_row) && (id != R.string.candles))
 					continue;
 				before = settings.getReminder(id);
-				if (before >= 0L) {
+				if ((before >= 0L) && (item.time != null)) {
 					when = item.time.getTime() - before;
 					if ((now < when) && (when < whenFirst)) {
 						itemFirst = item;

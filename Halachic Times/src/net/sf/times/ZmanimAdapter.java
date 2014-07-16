@@ -153,8 +153,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		@Override
 		public int compareTo(ZmanimItem another) {
-			long t1 = this.time.getTime();
-			long t2 = another.time.getTime();
+			Date time1 = this.time;
+			Date time2 = another.time;
+			long t1 = (time1 == null) ? 0 : time1.getTime();
+			long t2 = (time2 == null) ? 0 : time2.getTime();
 			if (t1 == t2)
 				return this.titleId - another.titleId;
 			return (t1 < t2) ? -1 : +1;
@@ -330,20 +332,23 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            set for remote views?
 	 */
 	private void add(int titleId, CharSequence summary, int timeId, Date time, boolean set) {
-		if (time == null)
-			return;
-		long t = time.getTime();
-
 		ZmanimItem item = new ZmanimItem();
 		item.titleId = titleId;
 		item.summary = summary;
 		item.timeId = timeId;
 		item.time = time;
-		item.timeLabel = mTimeFormat.format(time);
-		if (set)
-			item.elapsed = (t < mNow);
-		else
-			item.elapsed = mElapsed ? false : (t < mNow);
+
+		if (time == null) {
+			item.timeLabel = null;
+			item.elapsed = true;
+		} else {
+			long t = time.getTime();
+			item.timeLabel = mTimeFormat.format(time);
+			if (set)
+				item.elapsed = (t < mNow);
+			else
+				item.elapsed = mElapsed ? false : (t < mNow);
+		}
 
 		add(item);
 	}
