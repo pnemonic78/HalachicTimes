@@ -53,7 +53,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/** The context. */
 	private Context mContext;
-	private int[] mAppWidgetIds;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
@@ -82,11 +81,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
 			context.getApplicationContext().registerReceiver(this, tzChanged);
 		} else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-			populateTimes();
+			populateTimes(context, AppWidgetManager.getInstance(context), null);
 		} else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-			populateTimes();
+			populateTimes(context, AppWidgetManager.getInstance(context), null);
 		} else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
-			populateTimes();
+			populateTimes(context, AppWidgetManager.getInstance(context), null);
 		} else {
 			String activity = intent.getStringExtra(EXTRA_ACTIVITY);
 			if (activity != null) {
@@ -103,34 +102,43 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
 		mContext = context;
-		mAppWidgetIds = appWidgetIds;
 		if (mLocations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 			mLocations = app.getLocations();
 		}
 		mLocations.start(this);
 
-		populateTimes();
+		populateTimes(context, appWidgetManager, appWidgetIds);
 	}
 
-	/** Populate the list with times. */
-	private void populateTimes() {
-		Context context = mContext;
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+	/**
+	 * Populate the list with times.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param appWidgetManager
+	 *            the widget manager.
+	 * @param appWidgetIds
+	 *            the widget ids for which an update is needed - {@code null} to
+	 *            get ids from the manager.
+	 * */
+	private void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		ComponentName provider = new ComponentName(context, ZmanimWidget.class);
-		mAppWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-		if (mAppWidgetIds == null)
-			return;
+		if (appWidgetIds == null) {
+			appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
+			if (appWidgetIds == null)
+				return;
+		}
 
-		RemoteViews views = null;
+		RemoteViews views;
 		if (isDeviceNokia()) {
 			views = new RemoteViews(context.getPackageName(), R.layout.times_widget_nokia);
 		} else {
 			views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
 		}
 
-		// Pass the activity to ourselves, because starting another activity
-		// is not working.
+		// Pass the activity to ourselves, because starting another activity is
+		// not working.
 		Intent activityIntent = new Intent(context, ZmanimWidget.class);
 		activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
 		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, android.R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -150,13 +158,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
 		final boolean inIsrael = mLocations.inIsrael();
 
-		ZmanimAdapter adapter = new ZmanimAdapter(mContext, mSettings, today, inIsrael);
+		ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings, today, inIsrael);
 		adapter.populate(true);
 		bindViews(views, adapter);
 
-		appWidgetManager.updateAppWidget(mAppWidgetIds, views);
+		appWidgetManager.updateAppWidget(appWidgetIds, views);
 
-		scheduleForMidnight(mContext);
+		scheduleForMidnight(context, appWidgetIds);
 	}
 
 	@Override
@@ -175,7 +183,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	@Override
 	public void onLocationChanged(Location location) {
-		populateTimes();
+		populateTimes(mContext, AppWidgetManager.getInstance(mContext), null);
 	}
 
 	@Override
@@ -204,8 +212,10 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * 
 	 * @param context
 	 *            the context.
+	 * @param appWidgetIds
+	 *            the widget ids for which an update is needed.
 	 */
-	private void scheduleForMidnight(Context context) {
+	private void scheduleForMidnight(Context context, int[] appWidgetIds) {
 		Calendar midnight = Calendar.getInstance();
 		midnight.set(Calendar.HOUR_OF_DAY, 0);
 		midnight.set(Calendar.MINUTE, 0);
@@ -214,7 +224,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		midnight.add(Calendar.DATE, 1);
 		Intent alarmIntent = new Intent(context, ZmanimWidget.class);
 		alarmIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-		alarmIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, mAppWidgetIds);
+		alarmIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
 		PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarm.set(AlarmManager.RTC, midnight.getTimeInMillis(), alarmPendingIntent);
