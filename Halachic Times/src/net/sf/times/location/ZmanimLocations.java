@@ -200,7 +200,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	private void addLocationListener(ZmanimLocationListener listener) {
 		if (!mLocationListeners.contains(listener) && (listener != this)) {
 			mLocationListeners.add(listener);
-			mLocationListenersLoop = Collections.unmodifiableList(mLocationListeners);
+			mLocationListenersLoop = new ArrayList<ZmanimLocationListener>(mLocationListeners);
 		}
 	}
 
@@ -212,7 +212,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 */
 	private void removeLocationListener(ZmanimLocationListener listener) {
 		mLocationListeners.remove(listener);
-		mLocationListenersLoop = Collections.unmodifiableList(mLocationListeners);
+		mLocationListenersLoop = new ArrayList<ZmanimLocationListener>(mLocationListeners);
 	}
 
 	@Override
