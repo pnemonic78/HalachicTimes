@@ -286,7 +286,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the time.
 	 */
 	public void add(int titleId, int summaryId, Date time) {
-		add(titleId, (summaryId != 0) ? getContext().getText(summaryId) : (CharSequence) null, time);
+		add(titleId, (summaryId == 0) ? (CharSequence) null : getContext().getText(summaryId), time);
 	}
 
 	/**
@@ -350,7 +350,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				item.elapsed = mElapsed ? false : (t < mNow);
 		}
 
-		add(item);
+		if ((time != null) || set) {
+			add(item);
+		}
 	}
 
 	/**

@@ -253,7 +253,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 *            the remote list.
 	 */
 	private void bindView(RemoteViews list, ZmanimItem item) {
-		if (item.elapsed || (item.time == null)) {
+		if (item.elapsed || (item.time == null) || (item.timeLabel == null)) {
 			list.setViewVisibility(item.titleId, View.GONE);
 		} else {
 			list.setViewVisibility(item.titleId, View.VISIBLE);
