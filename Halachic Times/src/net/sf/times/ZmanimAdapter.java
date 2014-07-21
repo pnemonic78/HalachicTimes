@@ -423,6 +423,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			date = cal.getAlosHashachar();
 			summary = R.string.dawn_16;
 		}
+		if (date == null) {
+			date = cal.getAlos120Zmanis();
+			summary = R.string.dawn_120_zmanis;
+		}
 		if (remote)
 			add(R.id.dawn_row, date, R.id.dawn_time);
 		else
@@ -756,6 +760,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		} else {
 			date = cal.getBainHasmashosRT2Stars();
 			summary = R.string.twilight_2stars;
+			if (date == null) {
+				date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
+				summary = R.string.twilight_7_083;
+			}
 		}
 		if (remote)
 			add(R.id.twilight_row, date, R.id.twilight_time);
