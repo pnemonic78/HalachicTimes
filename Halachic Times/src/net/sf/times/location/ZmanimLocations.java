@@ -242,7 +242,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			mSettings.putLocation(location);
 		}
 
-		for (ZmanimLocationListener listener : mLocationListenersLoop)
+		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		for (ZmanimLocationListener listener : listeners)
 			listener.onLocationChanged(location);
 
 		if (findAddress)
@@ -254,25 +255,29 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		for (ZmanimLocationListener listener : mLocationListenersLoop)
+		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		for (ZmanimLocationListener listener : listeners)
 			listener.onProviderDisabled(provider);
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		for (ZmanimLocationListener listener : mLocationListenersLoop)
+		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		for (ZmanimLocationListener listener : listeners)
 			listener.onProviderEnabled(provider);
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		for (ZmanimLocationListener listener : mLocationListenersLoop)
+		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		for (ZmanimLocationListener listener : listeners)
 			listener.onStatusChanged(provider, status, extras);
 	}
 
 	@Override
 	public void onAddressChanged(Location location, ZmanimAddress address) {
-		for (ZmanimLocationListener listener : mLocationListenersLoop)
+		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		for (ZmanimLocationListener listener : listeners)
 			listener.onAddressChanged(location, address);
 	}
 
