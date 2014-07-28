@@ -140,7 +140,8 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 				@Override
 				public void run() {
 					populateHeader();
-					mView.setHoliest(mAddressLocation.bearingTo(mHoliest));
+					if ((mView != null) && (mAddressLocation != null))
+						mView.setHoliest(mAddressLocation.bearingTo(mHoliest));
 				}
 			};
 		}
