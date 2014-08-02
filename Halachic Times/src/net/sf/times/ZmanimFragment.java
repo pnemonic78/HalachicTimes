@@ -211,6 +211,7 @@ public class ZmanimFragment extends FrameLayout {
 		JewishDate jewishDate = new JewishDate(date);
 		HebrewDateFormatter formatter = new HebrewDateFormatter();
 		formatter.setHebrewFormat(ZmanimLocations.isLocaleRTL());
+		formatter.setTransliteratedMonthList(mContext.getResources().getStringArray(R.array.hebrew_months));
 		CharSequence dateHebrew = formatter.format(jewishDate);
 
 		bindViewGrouping(list, -1, dateHebrew);

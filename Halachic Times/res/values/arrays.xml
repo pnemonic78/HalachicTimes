@@ -314,5 +314,21 @@
         <item>45</item>
         <item>60</item>
     </string-array>
+    <string-array name="hebrew_months">
+        <item>Nissan</item>
+        <item>Iyar</item>
+        <item>Sivan</item>
+        <item>Tammuz</item>
+        <item>Av</item>
+        <item>Elul</item>
+        <item>Tishrei</item>
+        <item>Cheshvan</item>
+        <item>Kislev</item>
+        <item>Teves</item>
+        <item>Shevat</item>
+        <item>Adar</item>
+        <item>Adar II</item>
+        <item>Adar I</item>
+    </string-array>
 
 </resources>

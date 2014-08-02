@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="hebrew_months">
+        <item>ניסן</item>
+        <item>אייר</item>
+        <item>סיון</item>
+        <item>תמוז</item>
+        <item>אב</item>
+        <item>אלול</item>
+        <item>תשרי</item>
+        <item>חשוון</item>
+        <item>כסלו</item>
+        <item>טבת</item>
+        <item>שבט</item>
+        <item>אדר</item>
+        <item>אדר ב</item>
+        <item>אדר א</item>
+    </string-array>
+
+</resources>
