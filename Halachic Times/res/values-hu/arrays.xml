@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="hebrew_months">
+        <item>Nissán</item>
+        <item>Ijár</item>
+        <item>Siván</item>
+        <item>Tammuz</item>
+        <item>Av</item>
+        <item>Elul</item>
+        <item>Tishrei</item>
+        <item>Cheshván</item>
+        <item>Kislev</item>
+        <item>Teves</item>
+        <item>Shevat</item>
+        <item>Ádár</item>
+        <item>Ádár II</item>
+        <item>Ádár I</item>
+    </string-array>
+
+</resources>
