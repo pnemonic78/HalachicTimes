@@ -633,6 +633,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		// criteria.setPowerRequirement(Criteria.POWER_LOW);
 
 		String provider = mLocationManager.getBestProvider(criteria, true);
+		if (provider == null) {
+			Log.w(TAG, "No location provider");
+			return;
+		}
 		try {
 			mLocationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} catch (IllegalArgumentException iae) {

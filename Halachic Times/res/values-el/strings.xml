@@ -7,6 +7,7 @@
     <string name="location_coords">Πλτ. %1$s; Μήκ. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
+    <string name="month_day_year" formatted="false">%d %B %Y</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Ημέρα είναι 120 λεπτά πριν την ανατολή / μετά τη δύση</string>

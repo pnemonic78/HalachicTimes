@@ -7,6 +7,7 @@
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
+    <string name="month_day_year" formatted="false">%-e %B %Y</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Jour est 120 minutes avant le lever / après le coucher du soleil</string>

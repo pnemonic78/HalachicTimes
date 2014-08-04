@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="month_day_year" formatted="false">%-e de %B de %Y</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Definições</string>
 
