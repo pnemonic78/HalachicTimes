@@ -131,12 +131,6 @@
     <string name="coords_visible">Coordonează sunt vizibile</string>
     <string name="coords_format_title">Coordonează format</string>
     <string name="coords_format_summary">Notația de latitudine și longitudine</string>
-
-    <string-array name="coords_format_entries">
-        <item>Zecimal</item>
-        <item>Șaizecelea</item>
-    </string-array>
-
     <string name="past_title">Ori care s-au scurs</string>
     <string name="past_enabled">Ori în ultimile sunt activate</string>
     <string name="past_disabled">Ori în ultimile sunt dezactivate</string>

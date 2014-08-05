@@ -132,12 +132,6 @@
     <string name="coords_visible">Współrzędne są widoczne</string>
     <string name="coords_format_title">Format współrzędne</string>
     <string name="coords_format_summary">Notacja długości i szerokości geograficznej</string>
-
-    <string-array name="coords_format_entries">
-        <item>Dziesiętny</item>
-        <item>Sześćdziesiątkowa</item>
-    </string-array>
-
     <string name="past_title">Czasy które upłynęły</string>
     <string name="past_enabled">Przeszłe czasy są włączone</string>
     <string name="past_disabled">Przeszłe czasy są wyłączone</string>

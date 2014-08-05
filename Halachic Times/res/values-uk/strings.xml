@@ -132,12 +132,6 @@
     <string name="coords_visible">Координати видно</string>
     <string name="coords_format_title">Координати форматі</string>
     <string name="coords_format_summary">Позначення широти і довготи</string>
-
-    <string-array name="coords_format_entries">
-        <item>Десятковий</item>
-        <item>Шістдесятирічний</item>
-    </string-array>
-
     <string name="past_title">Минулі разів</string>
     <string name="past_enabled">Минулі разів вімкнено</string>
     <string name="past_disabled">Минулі разів відключено</string>

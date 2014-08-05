@@ -128,12 +128,6 @@
     <string name="coords_visible">Координати са видими</string>
     <string name="coords_format_title">Координати формат</string>
     <string name="coords_format_summary">Нотация на географска ширина и дължина</string>
-
-    <string-array name="coords_format_entries">
-        <item>Десетичен</item>
-        <item>Шестдесетичен</item>
-    </string-array>
-
     <string name="past_title">Време са изминали</string>
     <string name="past_enabled">Минали времена са разрешити</string>
     <string name="past_disabled">Минали времена са инвалиди</string>

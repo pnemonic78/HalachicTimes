@@ -130,12 +130,6 @@
     <string name="coords_visible">Συντεταγμένες είναι ορατές</string>
     <string name="coords_format_title">Συντεταγμένες μορφή</string>
     <string name="coords_format_summary">Συμβολισμός του γεωγραφικού πλάτους και μήκους</string>
-
-    <string-array name="coords_format_entries">
-        <item>Δεκαδικός</item>
-        <item>Βάσης 60</item>
-    </string-array>
-
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="past_enabled">Παρελθόν οι χρόνοι είναι ενεργοποιημένη</string>
     <string name="past_disabled">Παρελθόν οι χρόνοι είναι ανενεργό.</string>

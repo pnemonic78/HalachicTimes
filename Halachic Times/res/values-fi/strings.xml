@@ -130,12 +130,6 @@
     <string name="coords_visible">Koordinaatit ovat näkyvä</string>
     <string name="coords_format_title">Koordinaatit formaatti</string>
     <string name="coords_format_summary">Notaatio leveyttä ja pituuspiirin</string>
-
-    <string-array name="coords_format_entries">
-        <item>Desimaali</item>
-        <item>Seksagesimaali</item>
-    </string-array>
-
     <string name="past_title">Ajat että kulunut</string>
     <string name="past_enabled">Menneiden aikojen ovat käytössä</string>
     <string name="past_disabled">Menneiden aikojen ovat pois käytöstä</string>

@@ -130,12 +130,6 @@
     <string name="coords_visible">Koordinatlar görünür</string>
     <string name="coords_format_title">Koordinatlar biçimi</string>
     <string name="coords_format_summary">Enlem ve boylam notasyon</string>
-
-    <string-array name="coords_format_entries">
-        <item>Ondalık</item>
-        <item>Altmışlık</item>
-    </string-array>
-
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="past_enabled">Geçmiş vakitleri etkindir</string>
     <string name="past_disabled">Geçmiş vakitleri devre dışı</string>

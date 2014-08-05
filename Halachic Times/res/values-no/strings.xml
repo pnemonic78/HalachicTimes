@@ -130,12 +130,6 @@
     <string name="coords_visible">Koordinerer er synlig</string>
     <string name="coords_format_title">Koordinerer format</string>
     <string name="coords_format_summary">Notasjon av breddegrad og lengdegrad</string>
-
-    <string-array name="coords_format_entries">
-        <item>Desimal</item>
-        <item>Seksagesimal</item>
-    </string-array>
-
     <string name="past_title">Tider som er gått</string>
     <string name="past_enabled">Tidligere tider er aktivert</string>
     <string name="past_disabled">Tidligere tider er deaktivert</string>

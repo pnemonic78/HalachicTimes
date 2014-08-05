@@ -131,12 +131,6 @@
     <string name="coords_visible">Souřadnice jsou viditelné</string>
     <string name="coords_format_title">Souřadnice formát</string>
     <string name="coords_format_summary">Zápis zeměpisné šířky a délky</string>
-
-    <string-array name="coords_format_entries">
-        <item>Desetinný</item>
-        <item>Šedesátý</item>
-    </string-array>
-
     <string name="past_title">Časy, které uplynuly</string>
     <string name="past_enabled">Minulé časy jsou povoleny</string>
     <string name="past_disabled">Minulé časy jsou vypnuté</string>

@@ -132,12 +132,6 @@
     <string name="coords_visible">Координаты видны</string>
     <string name="coords_format_title">Координаты формате</string>
     <string name="coords_format_summary">Формат широты и долготы</string>
-
-    <string-array name="coords_format_entries">
-        <item>Десятичный</item>
-        <item>Шестидесятеричный</item>
-    </string-array>
-
     <string name="past_title">Прошедшее время</string>
     <string name="past_enabled">Прошлые времена включены</string>
     <string name="past_disabled">Прошлые времена отключены</string>

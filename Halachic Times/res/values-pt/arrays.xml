@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="coords_format_entries">
+        <item>Decimal</item>
+        <item>Sexagesimal</item>
+    </string-array>
     <string-array name="reminder_entries">
         <item>Nenhum</item>
         <item>No momento</item>

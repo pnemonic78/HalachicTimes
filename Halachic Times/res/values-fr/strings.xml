@@ -130,12 +130,6 @@
     <string name="coords_visible">Coordonnées visibles</string>
     <string name="coords_format_title">Format des coordonnées</string>
     <string name="coords_format_summary">Notation de la latitude et la longitude</string>
-
-    <string-array name="coords_format_entries">
-        <item>Décimal</item>
-        <item>Sexagésimal</item>
-    </string-array>
-
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="past_enabled">Les temps passés sont activées</string>
     <string name="past_disabled">Les temps passés sont désactivées</string>

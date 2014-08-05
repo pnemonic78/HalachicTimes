@@ -130,12 +130,6 @@
     <string name="coords_visible">Koordináták látható</string>
     <string name="coords_format_title">Koordináták formátum</string>
     <string name="coords_format_summary">Jelölések a szélességi és hosszúsági</string>
-
-    <string-array name="coords_format_entries">
-        <item>Decimális</item>
-        <item>Hatvanas</item>
-    </string-array>
-
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="past_enabled">Elmúlt idők engedélyezve</string>
     <string name="past_disabled">Elmúlt idők vannak tiltva</string>

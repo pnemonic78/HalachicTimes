@@ -130,12 +130,6 @@
     <string name="coords_visible">Koordinater är synliga</string>
     <string name="coords_format_title">Koordinater format</string>
     <string name="coords_format_summary">Notskrift av latitud och longitud</string>
-
-    <string-array name="coords_format_entries">
-        <item>Decimal</item>
-        <item>Sexagesimal</item>
-    </string-array>
-
     <string name="past_title">Tider som förflutit</string>
     <string name="past_enabled">Tidigare tider är aktiverade</string>
     <string name="past_disabled">Tidigare tider är inaktiverade</string>

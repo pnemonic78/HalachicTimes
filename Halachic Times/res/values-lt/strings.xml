@@ -131,12 +131,6 @@
     <string name="coords_visible">Koordinatės yra matomi</string>
     <string name="coords_format_title">Koordinačių formatą,</string>
     <string name="coords_format_summary">Notacija platumos ir ilgumos</string>
-
-    <string-array name="coords_format_entries">
-        <item>Dešimtainis</item>
-        <item>Šešiasdešimt dalis</item>
-    </string-array>
-
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="past_enabled">Ankstesni datos yra įgalinta</string>
     <string name="past_disabled">Ankstesni datos yra išjungta</string>

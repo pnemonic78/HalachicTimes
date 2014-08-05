@@ -130,12 +130,6 @@
     <string name="coords_visible">Coördinaten zijn zichtbaar</string>
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_summary">Notatie van breedtegraad en lengtegraad</string>
-
-    <string-array name="coords_format_entries">
-        <item>Decimale</item>
-        <item>Sexagesimale</item>
-    </string-array>
-
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="past_enabled">Vroegere tijden zijn ingeschakeld</string>
     <string name="past_disabled">Vroegere tijden zijn uitgeschakeld</string>

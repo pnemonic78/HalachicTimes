@@ -301,6 +301,10 @@
         <item>decimal</item>
         <item>sexagesimal</item>
     </string-array>
+    <string-array name="coords_format_entries">
+        <item>Decimal</item>
+        <item>Sexagesimal</item>
+    </string-array>
     <string-array name="reminder_values" translatable="false">
         <item/>
         <item>0</item>

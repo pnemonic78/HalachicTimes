@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="coords_format_entries">
+        <item>Ondalık</item>
+        <item>Altmışlık</item>
+    </string-array>
     <string-array name="reminder_entries">
         <item>Kapalı</item>
         <item>Zamanında</item>

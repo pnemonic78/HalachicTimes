@@ -130,12 +130,6 @@
     <string name="coords_visible">Koordinaadid on nähtavad</string>
     <string name="coords_format_title">Koordinaadid formaat</string>
     <string name="coords_format_summary">Märge laius-ja pikkuskraadi</string>
-
-    <string-array name="coords_format_entries">
-        <item>Kümnend</item>
-        <item>Seksagesimaalne</item>
-    </string-array>
-
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="past_enabled">Möödunud ajad on lubatud</string>
     <string name="past_disabled">Möödunud ajad on keelatud</string>

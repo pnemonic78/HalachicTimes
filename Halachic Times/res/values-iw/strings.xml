@@ -130,12 +130,6 @@
     <string name="coords_visible">קואורדינטות גלויות</string>
     <string name="coords_format_title">פורמט קואורדינטות</string>
     <string name="coords_format_summary">סימון של קווי אורך ורוחב</string>
-
-    <string-array name="coords_format_entries">
-        <item>עשרוני</item>
-        <item>סקסגסימלי</item>
-    </string-array>
-
     <string name="past_title">זמנים שחלפו</string>
     <string name="past_enabled">זמנים שעברו מופעלים</string>
     <string name="past_disabled">זמנים שעברו מושבתים</string>
