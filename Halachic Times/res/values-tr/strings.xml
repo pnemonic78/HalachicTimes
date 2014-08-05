@@ -169,20 +169,6 @@
     <string name="opinion">Görüş</string>
     <string name="reminder">Hatırlatıcı</string>
 
-    <string-array name="reminder_entries">
-        <item>Kapalı</item>
-        <item>Zamanında</item>
-        <item>1 dakika önce</item>
-        <item>5 dakika önce</item>
-        <item>10 dakika önce</item>
-        <item>15 dakika önce</item>
-        <item>20 dakika önce</item>
-        <item>25 dakika önce</item>
-        <item>30 dakika önce</item>
-        <item>45 dakika önce</item>
-        <item>1 saat önce</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>

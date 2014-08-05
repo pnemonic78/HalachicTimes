@@ -171,20 +171,6 @@
     <string name="opinion">Думка</string>
     <string name="reminder">Нагадування</string>
 
-    <string-array name="reminder_entries">
-        <item>Вимкнено</item>
-        <item>Вчасно</item>
-        <item>1 хвилина до</item>
-        <item>5 хвилин до</item>
-        <item>10 хвилин до</item>
-        <item>15 хвилин до</item>
-        <item>20 хвилин до</item>
-        <item>25 хвилин до</item>
-        <item>30 хвилин до</item>
-        <item>45 хвилин до</item>
-        <item>1 година до</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Місцезнаходження</string>
     <string name="title_activity_location">Мое місцезнаходження</string>

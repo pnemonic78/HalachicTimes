@@ -255,20 +255,6 @@
     <string name="opinion">Opinion</string>
     <string name="reminder">Reminder</string>
 
-    <string-array name="reminder_entries">
-        <item>Off</item>
-        <item>On time</item>
-        <item>1 minute before</item>
-        <item>5 minutes before</item>
-        <item>10 minutes before</item>
-        <item>15 minutes before</item>
-        <item>20 minutes before</item>
-        <item>25 minutes before</item>
-        <item>30 minutes before</item>
-        <item>45 minutes before</item>
-        <item>1 hour before</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>

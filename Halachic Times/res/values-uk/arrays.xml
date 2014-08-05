@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="reminder_entries">
+        <item>Вимкнено</item>
+        <item>Вчасно</item>
+        <item>1 хвилина до</item>
+        <item>5 хвилин до</item>
+        <item>10 хвилин до</item>
+        <item>15 хвилин до</item>
+        <item>20 хвилин до</item>
+        <item>25 хвилин до</item>
+        <item>30 хвилин до</item>
+        <item>45 хвилин до</item>
+        <item>1 година до</item>
+    </string-array>
     <string-array name="hebrew_months">
         <item>Нісан</item>
         <item>Ійяр</item>

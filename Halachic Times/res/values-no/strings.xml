@@ -169,20 +169,6 @@
     <string name="opinion">Mening</string>
     <string name="reminder">Påminnelse</string>
 
-    <string-array name="reminder_entries">
-        <item>Av</item>
-        <item>På tiden</item>
-        <item>1 minutt før</item>
-        <item>5 minutter før</item>
-        <item>10 minutter før</item>
-        <item>15 minutter før</item>
-        <item>20 minutter før</item>
-        <item>25 minutter før</item>
-        <item>30 minutter før</item>
-        <item>45 minutter før</item>
-        <item>1 time før</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Posisjon</string>
     <string name="title_activity_location">Min posisjon</string>

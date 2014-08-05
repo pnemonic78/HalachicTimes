@@ -169,20 +169,6 @@
     <string name="opinion">Opinion</string>
     <string name="reminder">Rappel</string>
 
-    <string-array name="reminder_entries">
-        <item>Eteint</item>
-        <item>À l\'heure</item>
-        <item>1 minute avant</item>
-        <item>5 minutes avant</item>
-        <item>10 minutes avant</item>
-        <item>15 minutes avant</item>
-        <item>20 minutes avant</item>
-        <item>25 minutes avant</item>
-        <item>30 minutes avant</item>
-        <item>45 minutes avant</item>
-        <item>1 heure avant</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Position</string>
     <string name="title_activity_location">Ma position</string>

@@ -171,20 +171,6 @@
     <string name="opinion">Мнение</string>
     <string name="reminder">Напоминание</string>
 
-    <string-array name="reminder_entries">
-        <item>Выключено</item>
-        <item>Вовремя</item>
-        <item>За 1 минуту до</item>
-        <item>За 5 минут до</item>
-        <item>За 10 минут до</item>
-        <item>За 15 минут до</item>
-        <item>За 20 минут до</item>
-        <item>За 25 минут до</item>
-        <item>За 30 минут до</item>
-        <item>За 45 минут до</item>
-        <item>За 1 час до</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Местоположение</string>
     <string name="title_activity_location">Мое местоположение</string>

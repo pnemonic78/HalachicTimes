@@ -169,20 +169,6 @@
     <string name="opinion">Mening</string>
     <string name="reminder">Herinnering</string>
 
-    <string-array name="reminder_entries">
-        <item>Uit</item>
-        <item>Op tijd</item>
-        <item>1 minuut voor</item>
-        <item>5 minuten voor</item>
-        <item>10 minuten voor</item>
-        <item>15 minuten voor</item>
-        <item>20 minuten voor</item>
-        <item>25 minuten voor</item>
-        <item>30 minuten voor</item>
-        <item>45 minuten voor</item>
-        <item>1 uur voor</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Locatie</string>
     <string name="title_activity_location">Mijn locatie</string>

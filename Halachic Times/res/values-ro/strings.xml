@@ -170,20 +170,6 @@
     <string name="opinion">Opinie</string>
     <string name="reminder">Memento</string>
 
-    <string-array name="reminder_entries">
-        <item>Dezactivat</item>
-        <item>La timp</item>
-        <item>1 minut înainte de</item>
-        <item>5 minute înainte de</item>
-        <item>10 minute înainte de</item>
-        <item>15 minute înainte de</item>
-        <item>20 minute înainte de</item>
-        <item>25 minute înainte de</item>
-        <item>30 minute înainte de</item>
-        <item>45 minute înainte de</item>
-        <item>1 oră înainte de</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Locație</string>
     <string name="title_activity_location">Locația mea</string>

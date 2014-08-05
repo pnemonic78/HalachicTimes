@@ -171,20 +171,6 @@
     <string name="opinion">Opinia</string>
     <string name="reminder">Przypomnienie</string>
 
-    <string-array name="reminder_entries">
-        <item>Wyłączony</item>
-        <item>Na czas</item>
-        <item>1 minutę przed</item>
-        <item>5 minut przed</item>
-        <item>10 minut przed</item>
-        <item>15 minut przed</item>
-        <item>20 minut przed</item>
-        <item>25 minut przed</item>
-        <item>30 minut przed</item>
-        <item>45 minut przed</item>
-        <item>1 godzinę przed</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Lokalizacja</string>
     <string name="title_activity_location">Moja lokalizacja</string>

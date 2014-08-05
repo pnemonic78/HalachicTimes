@@ -167,20 +167,6 @@
     <string name="opinion">Становище</string>
     <string name="reminder">Напомняне</string>
 
-    <string-array name="reminder_entries">
-        <item>Изключено</item>
-        <item>Навреме</item>
-        <item>1 минута преди</item>
-        <item>5 минути преди</item>
-        <item>10 минути преди</item>
-        <item>15 минути преди</item>
-        <item>20 минути преди</item>
-        <item>25 минути преди</item>
-        <item>30 минути преди</item>
-        <item>45 минути преди</item>
-        <item>1 час преди</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Място</string>
     <string name="title_activity_location">Моето място</string>

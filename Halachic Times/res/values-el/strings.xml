@@ -169,20 +169,6 @@
     <string name="opinion">Γνώμες</string>
     <string name="reminder">Υπενθύμιση</string>
 
-    <string-array name="reminder_entries">
-        <item>Ανενεργό</item>
-        <item>Έγκαιρα</item>
-        <item>1 λεπτό πριν</item>
-        <item>5 λεπτά πριν</item>
-        <item>10 λεπτά πριν</item>
-        <item>15 λεπτά πριν</item>
-        <item>20 λεπτά πριν</item>
-        <item>25 λεπτά πριν</item>
-        <item>30 λεπτά πριν</item>
-        <item>45 λεπτά πριν</item>
-        <item>1 ώρα πριν</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Τοποθεσία</string>
     <string name="title_activity_location">Η τοποθεσία μου</string>

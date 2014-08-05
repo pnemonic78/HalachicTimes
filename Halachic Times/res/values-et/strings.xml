@@ -169,20 +169,6 @@
     <string name="opinion">Arvamus</string>
     <string name="reminder">Meeldetuletus</string>
 
-    <string-array name="reminder_entries">
-        <item>Väljas</item>
-        <item>Õigel ajal</item>
-        <item>1 minut enne</item>
-        <item>5 minutit enne</item>
-        <item>10 minutit enne</item>
-        <item>15 minutit enne</item>
-        <item>20 minutit enne</item>
-        <item>25 minutit enne</item>
-        <item>30 minutit enne</item>
-        <item>45 minutit enne</item>
-        <item>1 tund enne</item>
-    </string-array>
-
     <!-- Location -->
     <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
