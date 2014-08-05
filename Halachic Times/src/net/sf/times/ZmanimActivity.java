@@ -500,7 +500,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 *            the master item id.
 	 */
 	protected void toggleDetails(int itemId) {
-		if (itemId == 0)
+		if ((itemId == 0) || (itemId == R.string.fast_begins) || (itemId == R.string.fast_ends))
 			return;
 
 		if (mSwitcher != null) {

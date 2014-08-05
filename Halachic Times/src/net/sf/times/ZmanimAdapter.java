@@ -460,6 +460,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.sunrise_row, date, R.id.sunrise_time);
 		else
 			add(R.string.sunrise, summary, date);
+		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
+				|| (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
+			add(R.string.fast_begins, null, date);
+		}
 
 		opinion = mSettings.getLastShema();
 		if (OPINION_16_1_SUNSET.equals(opinion)) {
@@ -742,6 +746,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		} else if (remote) {
 			add(R.id.candles_row, null, R.id.candles_time);
 		}
+		if ((holidayTomorrow == JewishCalendar.TISHA_BEAV) || (holidayTomorrow == JewishCalendar.YOM_KIPPUR)) {
+			add(R.string.fast_begins, null, date);
+		}
 		if (remote)
 			add(R.id.sunset_row, date, R.id.sunset_time);
 		else
@@ -769,6 +776,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.twilight_row, date, R.id.twilight_time);
 		else
 			add(R.string.twilight, summary, date);
+		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.TISHA_BEAV)
+				|| (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
+				|| (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
+			add(R.string.fast_ends, null, date);
+		}
 
 		opinion = mSettings.getNightfall();
 		if (OPINION_120.equals(opinion)) {
@@ -848,6 +860,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.nightfall_row, date, R.id.nightfall_time);
 		else
 			add(R.string.nightfall, summary, date);
+		if (holidayToday == JewishCalendar.YOM_KIPPUR) {
+			add(R.string.fast_ends, null, date);
+		}
 		if (hasCandles && (candlesHow == MOTZE_SHABBATH)) {
 			if (remote) {
 				add(R.id.candles_nightfall_row, date, R.id.candles_nightfall_time);

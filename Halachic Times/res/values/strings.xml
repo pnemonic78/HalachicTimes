@@ -204,6 +204,10 @@
     <string name="levana_latest_summary">Halfway between molad and molad</string>
     <string name="levana_15">15 days after the molad</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">Fast begins</string>
+    <string name="fast_ends">Fast ends</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="category_general">General</string>
