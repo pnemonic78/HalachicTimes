@@ -66,7 +66,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
 
 	private Context mContext;
-	private SimpleDateFormat format;
+	private SimpleDateFormat mFormat;
 
 	/**
 	 * Creates a new reminder manager.
@@ -91,7 +91,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 *            the locations provider.
 	 */
 	public void remind(ZmanimSettings settings) {
-		ZmanimApplication app = (ZmanimApplication) mContext.getApplicationContext();
+		final Context context = mContext;
+		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 		ZmanimLocations locations = app.getLocations();
 		GeoLocation gloc = locations.getGeoLocation();
 		// Have we been destroyed?
@@ -100,7 +101,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
 		boolean inIsrael = locations.inIsrael();
 
-		ZmanimAdapter adapter = new ZmanimAdapter(mContext, settings, today, inIsrael);
+		ZmanimAdapter adapter = new ZmanimAdapter(context, settings, today, inIsrael);
 		adapter.populate(false);
 
 		remind(settings, adapter);
@@ -118,6 +119,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		Log.i(TAG, "remind");
 		cancel();
 
+		final Context context = mContext;
 		final long now = System.currentTimeMillis();
 		final long latest = settings.getLatestReminder();
 		Log.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
@@ -142,7 +144,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			if ((before >= 0L) && (item.time != null)) {
 				when = item.time.getTime() - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-					notifyNow(item);
+					notifyNow(context, item);
 					settings.setLatestReminder(now);
 					needToday = false;
 				}
@@ -157,7 +159,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			String timeFormat = formatDateTime(itemFirst.time);
 			Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
 
-			notifyFuture(whenFirst);
+			notifyFuture(context, whenFirst);
 			needTomorrow = false;
 			needWeek = false;
 		}
@@ -180,7 +182,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				if ((before >= 0L) && (item.time != null)) {
 					when = item.time.getTime() - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-						notifyNow(item);
+						notifyNow(context, item);
 						settings.setLatestReminder(now);
 						needToday = false;
 					}
@@ -195,7 +197,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				String timeFormat = formatDateTime(itemFirst.time);
 				Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
 
-				notifyFuture(whenFirst);
+				notifyFuture(context, whenFirst);
 				needWeek = false;
 			}
 		}
@@ -238,7 +240,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				String timeFormat = formatDateTime(itemFirst.time);
 				Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
 
-				notifyFuture(whenFirst);
+				notifyFuture(context, whenFirst);
 			}
 		}
 	}
@@ -248,23 +250,32 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 */
 	public void cancel() {
 		Log.i(TAG, "cancel");
-		AlarmManager alarms = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent alarmIntent = createAlarmIntent();
+		final Context context = mContext;
+		AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		PendingIntent alarmIntent = createAlarmIntent(context);
 		alarms.cancel(alarmIntent);
 
-		NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.cancelAll();
 	}
 
+	/**
+	 * Notify now.
+	 * 
+	 * @param context
+	 *            the context.
+	 * @param item
+	 *            the zmanim item to notify about.
+	 */
 	@SuppressWarnings("deprecation")
 	@SuppressLint("Wakelock")
-	private void notifyNow(ZmanimItem item) {
-		CharSequence contentTitle = mContext.getText(item.titleId);
+	private void notifyNow(Context context, ZmanimItem item) {
+		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
 		Log.i(TAG, "notify now [" + contentTitle + "]");
 
 		// Clicking on the item will launch the main activity.
-		PendingIntent contentIntent = createActivityIntent();
+		PendingIntent contentIntent = createActivityIntent(context);
 
 		Notification notification = new Notification();
 		notification.audioStreamType = AudioManager.STREAM_ALARM;
@@ -276,41 +287,43 @@ public class ZmanimReminder extends BroadcastReceiver {
 		notification.ledOnMS = 1;
 		notification.when = item.time.getTime();// When the zman is supposed to
 												// occur.
-		notification.setLatestEventInfo(mContext, contentTitle, contentText, contentIntent);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
 		// Wake up the device to notify the user.
-		PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
 		wake.acquire(3000L);// enough time to also hear an alarm tone
 
-		NotificationManager nm = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.notify(ID_NOTIFY, notification);
 	}
 
 	/**
 	 * Set alarm manager to alert us for the next reminder.
 	 * 
+	 * @param context
+	 *            the context.
 	 * @param when
 	 *            the upcoming reminder.
 	 */
-	private void notifyFuture(long when) {
+	private void notifyFuture(Context context, long when) {
 		Log.i(TAG, "notify future [" + formatDateTime(when) + "]");
-		AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent alarmIntent = createAlarmIntent();
+		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		PendingIntent alarmIntent = createAlarmIntent(context);
 		manager.set(AlarmManager.RTC_WAKEUP, when, alarmIntent);
 	}
 
-	private PendingIntent createActivityIntent() {
-		PackageManager pkg = mContext.getPackageManager();
-		Intent intent = pkg.getLaunchIntentForPackage(mContext.getPackageName());
+	private PendingIntent createActivityIntent(Context context) {
+		PackageManager pkg = context.getPackageManager();
+		Intent intent = pkg.getLaunchIntentForPackage(context.getPackageName());
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pendingIntent = PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		return pendingIntent;
 	}
 
-	private PendingIntent createAlarmIntent() {
-		Intent intent = new Intent(mContext, ZmanimReminder.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+	private PendingIntent createAlarmIntent(Context context) {
+		Intent intent = new Intent(context, ZmanimReminder.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		return pendingIntent;
 	}
 
@@ -353,19 +366,19 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * @return the formatted time.
 	 */
 	private String formatDateTime(Date time) {
-		if (format == null) {
-			format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+		if (mFormat == null) {
+			mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 		}
-		return format.format(time);
+		return mFormat.format(time);
 	}
 
 	/**
-	 * Format the date and time with seconds.<br>
-	 * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
+	 * Format the date and time with seconds.
 	 * 
 	 * @param time
 	 *            the time to format.
 	 * @return the formatted time.
+	 * @see #formatDateTime(Date)
 	 */
 	private String formatDateTime(long time) {
 		return formatDateTime(new Date(time));
