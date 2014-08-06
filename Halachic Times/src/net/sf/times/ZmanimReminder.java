@@ -279,7 +279,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 		Notification notification = new Notification();
 		notification.audioStreamType = AudioManager.STREAM_ALARM;
-		notification.icon = R.drawable.ic_launcher;
+		notification.icon = R.drawable.stat_notify_time;
 		notification.defaults = Notification.DEFAULT_ALL;
 		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
 		notification.ledARGB = Color.YELLOW;
