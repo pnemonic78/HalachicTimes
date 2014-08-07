@@ -122,6 +122,10 @@
     <string name="levana_latest_summary">Meio caminho entre molad e molad</string>
     <string name="levana_15">15 dias após a molad</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">fast_begins</string>
+    <string name="fast_ends">fast_ends</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Configurações</string>
     <string name="category_general">Geral</string>
@@ -166,6 +170,10 @@
     <!-- Location -->
     <string name="menu_location">Localização</string>
     <string name="title_activity_location">Minha localização</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Privacidade e segurança</string>
+    <string name="pref_privacy_clear_history">Limpar histórico</string>
 
     <!-- About -->
     <string name="category_about">Sobre</string>

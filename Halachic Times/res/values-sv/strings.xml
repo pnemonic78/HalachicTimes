@@ -122,6 +122,10 @@
     <string name="levana_latest_summary">Halvvägs mellan molad och molad</string>
     <string name="levana_15">15 dagar efter den molad</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">fast_begins</string>
+    <string name="fast_ends">fast_ends</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Inställningar</string>
     <string name="category_general">Allmänt</string>
@@ -166,6 +170,10 @@
     <!-- Location -->
     <string name="menu_location">Plats</string>
     <string name="title_activity_location">Min plats</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Sekretess och säkerhet</string>
+    <string name="pref_privacy_clear_history">Rensa historik</string>
 
     <!-- About -->
     <string name="category_about">Om</string>

@@ -120,6 +120,10 @@
     <string name="levana_latest_summary">Средата между молад и молад</string>
     <string name="levana_15">15 дни след молад</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">fast_begins</string>
+    <string name="fast_ends">fast_ends</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
     <string name="category_general">Общи</string>
@@ -164,6 +168,10 @@
     <!-- Location -->
     <string name="menu_location">Място</string>
     <string name="title_activity_location">Моето място</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Поверителност и сигурност</string>
+    <string name="pref_privacy_clear_history">Изчистване на историята</string>
 
     <!-- About -->
     <string name="category_about">За</string>

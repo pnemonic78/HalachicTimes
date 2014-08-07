@@ -123,6 +123,10 @@
     <string name="levana_latest_summary">Jumătatea distanței dintre molad și molad</string>
     <string name="levana_15">15 zile după molad</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">fast_begins</string>
+    <string name="fast_ends">fast_ends</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
     <string name="category_general">General</string>
@@ -167,6 +171,10 @@
     <!-- Location -->
     <string name="menu_location">Locație</string>
     <string name="title_activity_location">Locația mea</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Confidenţialitate şi securitate</string>
+    <string name="pref_privacy_clear_history">Ștergeţi istoricul</string>
 
     <!-- About -->
     <string name="category_about">Despre</string>

@@ -122,6 +122,10 @@
     <string name="levana_latest_summary">באמצע בין מולד למולד</string>
     <string name="levana_15">15 ימים לאחר המולד</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">תענית מתחילה</string>
+    <string name="fast_ends">תענית מסתיימת</string>
+
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
     <string name="category_general">כללי</string>
@@ -166,6 +170,10 @@
     <!-- Location -->
     <string name="menu_location">מיקום</string>
     <string name="title_activity_location">המיקום שלי</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">פרטיות ואבטחה</string>
+    <string name="pref_privacy_clear_history">נקה היסטוריה</string>
 
     <!-- About -->
     <string name="category_about">אודות</string>

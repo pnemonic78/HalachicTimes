@@ -122,6 +122,10 @@
     <string name="levana_latest_summary">Puolivälissä molad ja molad</string>
     <string name="levana_15">15 päivää jälkeen molad</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">fast_begins</string>
+    <string name="fast_ends">fast_ends</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
     <string name="category_general">Yleiset</string>
@@ -166,6 +170,10 @@
     <!-- Location -->
     <string name="menu_location">Sijainti</string>
     <string name="title_activity_location">Oma sijainti</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Tietosuoja ja turvallisuus</string>
+    <string name="pref_privacy_clear_history">Tyhjennä historia</string>
 
     <!-- About -->
     <string name="category_about">Tietoja</string>

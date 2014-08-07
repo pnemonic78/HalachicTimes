@@ -122,6 +122,10 @@
     <string name="levana_latest_summary">Halverwege tussen molad en molad</string>
     <string name="levana_15">15 dagen na de molad</string>
 
+    <!-- Fast / Taanis -->
+    <string name="fast_begins">Vasten begint</string>
+    <string name="fast_ends">Vasten eindigt</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>
     <string name="category_general">Algemeen</string>
@@ -166,6 +170,10 @@
     <!-- Location -->
     <string name="menu_location">Locatie</string>
     <string name="title_activity_location">Mijn locatie</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Privacy en beveiliging</string>
+    <string name="pref_privacy_clear_history">Geschiedenis wissen</string>
 
     <!-- About -->
     <string name="category_about">Over</string>
