@@ -847,8 +847,7 @@ public class AddressProvider {
 				db.update(AddressOpenHelper.TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
 			}
 		} finally {
-			if (db != null)
-				db.close();
+			db.close();
 		}
 	}
 
@@ -969,8 +968,23 @@ public class AddressProvider {
 			String[] whereArgs = { Long.toString(id) };
 			db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
 		} finally {
-			if (db != null)
-				db.close();
+			db.close();
+		}
+	}
+
+	/**
+	 * Delete the list of cached addresses.
+	 */
+	public void deleteAddresses() {
+		SQLiteDatabase db = null;
+		try {
+			db = getWritableDatabase();
+			if (db == null)
+				return;
+
+			db.delete(AddressOpenHelper.TABLE_ADDRESSES, null, null);
+		} finally {
+			db.close();
 		}
 	}
 }

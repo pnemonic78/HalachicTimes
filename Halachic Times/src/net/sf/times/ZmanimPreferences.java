@@ -22,6 +22,7 @@ package net.sf.times;
 import java.util.Locale;
 
 import net.sf.preference.SeekBarDialogPreference;
+import net.sf.times.location.AddressProvider;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -47,6 +48,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	private SeekBarDialogPreference mCandles;
 	private ZmanimSettings mSettings;
 	private ZmanimReminder mReminder;
+	private Preference mClearHistory;
 	private Preference mAboutKosherJava;
 
 	/**
@@ -58,7 +60,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -100,6 +102,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
 		initList(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
 		initList(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
+
+		mClearHistory = findPreference("clear_history");
+		mClearHistory.setOnPreferenceClickListener(this);
 
 		Preference version = findPreference("about.version");
 		try {
@@ -171,16 +176,36 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
+		if (preference == mClearHistory) {
+			deleteHistory();
+			return true;
+		}
 		if (preference == mAboutKosherJava) {
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse(getString(R.string.kosherjava_url)));
-			try {
-				startActivity(intent);
-				return true;
-			} catch (ActivityNotFoundException e) {
-				Log.e(TAG, "Cannot view KosherJava", e);
-			}
+			gotoKosherJava();
+			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Navigate to the KosherJava page.
+	 */
+	private void gotoKosherJava() {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(getString(R.string.kosherjava_url)));
+		try {
+			startActivity(intent);
+		} catch (ActivityNotFoundException e) {
+			Log.e(TAG, "Cannot view KosherJava", e);
+		}
+	}
+
+	/**
+	 * Clear the history of addresses.
+	 */
+	private void deleteHistory() {
+		ZmanimApplication app = (ZmanimApplication) getApplication();
+		AddressProvider provider = app.getAddresses();
+		provider.deleteAddresses();
 	}
 }

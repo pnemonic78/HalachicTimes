@@ -163,7 +163,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	 * @param loc
 	 *            the location.
 	 */
-	protected void search(String query, Location loc) {
+	protected void search(CharSequence query, Location loc) {
 		populateLists();
 
 		EditText searchText = mSearchText;
@@ -180,10 +180,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		if (id == R.id.search_close_btn) {
 			mSearchText.setText(null);
 		} else if (id == R.id.my_location) {
-			Intent data = new Intent();
-			data.putExtra(LocationManager.KEY_LOCATION_CHANGED, (Location) null);
-			setResult(RESULT_OK, data);
-			finish();
+			gotoHere();
 		}
 	}
 
@@ -375,4 +372,15 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 			}
 		}
 	};
+
+	/**
+	 * Set the location to "here".
+	 */
+	private void gotoHere() {
+		Intent data = new Intent();
+		data.putExtra(LocationManager.KEY_LOCATION_CHANGED, (Location) null);
+		setResult(RESULT_OK, data);
+		finish();
+	}
+
 }

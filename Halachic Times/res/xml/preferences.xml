@@ -355,9 +355,12 @@
                 android:title="@string/reminder"/>
         </PreferenceScreen>
     </PreferenceCategory>
-    <PreferenceCategory
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:title="@string/category_about">
+    <PreferenceCategory android:title="@string/pref_privacy_security_title">
+        <Preference android:key="clear_history"
+            android:icon="@android:drawable/ic_menu_recent_history"
+            android:title="@string/pref_privacy_clear_history"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/category_about">
         <Preference
             android:key="about.version"
             android:title="@string/version"/>
