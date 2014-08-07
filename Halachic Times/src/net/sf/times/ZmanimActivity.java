@@ -84,6 +84,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	private static final int WHAT_DATE = 2;
 	private static final int WHAT_LOCATION = 3;
 	private static final int WHAT_SETTINGS = 4;
+	private static final int WHAT_TODAY = 5;
 
 	/** The date. */
 	private final Calendar mDate = Calendar.getInstance();
@@ -165,6 +166,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 				break;
 			case WHAT_SETTINGS:
 				startActivity(new Intent(ZmanimActivity.this, ZmanimPreferences.class));
+				break;
+			case WHAT_TODAY:
+				setDate(System.currentTimeMillis());
+				mMasterFragment.populateTimes(mDate);
+				mDetailsListFragment.populateTimes(mDate);
+				mCandesFragment.populateTimes(mDate);
 				break;
 			}
 		}
@@ -435,6 +442,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		case R.id.menu_settings:
 			mHandler.sendEmptyMessage(WHAT_SETTINGS);
 			return true;
+		case R.id.menu_today:
+			mHandler.sendEmptyMessage(WHAT_TODAY);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -442,7 +452,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		setDate(year, monthOfYear, dayOfMonth);
-		populateHeader();
 		mMasterFragment.populateTimes(mDate);
 		mDetailsListFragment.populateTimes(mDate);
 		mCandesFragment.populateTimes(mDate);
