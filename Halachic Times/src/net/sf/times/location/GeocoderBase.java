@@ -51,8 +51,17 @@ public abstract class GeocoderBase {
 
 	/** Maximum radius to consider two locations in the same vicinity. */
 	protected static final float SAME_LOCATION = 250f;// 250 metres.
-	/** Maximum radius to consider a location near the same city. */
-	protected static final float SAME_CITY = 10000f;// 10 kilometres.
+	/**
+	 * Maximum radius to consider a location near the same city.
+	 * <p>
+	 * New York city, USA, is <tt>8,683 km<sup>2</sup></tt>, thus radius is
+	 * about <tt>37.175 km</tt>.<br>
+	 * Johannesburg/East Rand, ZA, is <tt>2,396 km<sup>2</sup></tt>, thus radius
+	 * is about <tt>19.527 km</tt>..<br>
+	 * Cape Town, ZA, is <tt>686 km<sup>2</sup></tt>, thus radius is about
+	 * <tt>10.449 km</tt>.
+	 */
+	protected static final float SAME_CITY = 15000f;// 15 kilometres.
 	/**
 	 * Maximum radius to consider a location near the same plateau with similar
 	 * terrain.

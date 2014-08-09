@@ -247,8 +247,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 		if (findElevation && !location.hasAltitude())
 			findElevation(location);
-
-		if (findAddress)
+		else if (findAddress)
 			findAddress(location);
 	}
 

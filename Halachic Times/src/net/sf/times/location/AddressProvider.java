@@ -514,11 +514,10 @@ public class AddressProvider {
 		values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
 		values.put(AddressColumns.FAVORITE, address.isFavorite());
 
-		SQLiteDatabase db = null;
+		SQLiteDatabase db = getWritableDatabase();
+		if (db == null)
+			return;
 		try {
-			db = getWritableDatabase();
-			if (db == null)
-				return;
 			if (insert) {
 				id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
 				address.setId(id);
@@ -657,13 +656,16 @@ public class AddressProvider {
 	 * @return the elevated location - {@code null} otherwise.
 	 */
 	public Location findElevation(Location location, OnFindAddressListener listener) {
-		if (location.hasAltitude()) {
-			if (listener != null)
-				listener.onFindElevation(this, location, null);
-			return location;
-		}
-
 		ZmanimLocation elevated;
+
+		if (location.hasAltitude()) {
+			elevated = findElevationDatabase(location);
+			if (elevated == null)
+				elevated = new ZmanimLocation(location);
+			if (listener != null)
+				listener.onFindElevation(this, location, elevated);
+			return elevated;
+		}
 
 		elevated = findElevationCities(location);
 		if ((elevated != null) && elevated.hasAltitude()) {
@@ -792,7 +794,9 @@ public class AddressProvider {
 	}
 
 	/**
-	 * Find elevation according to Bing.
+	 * Find elevation of nearest locations cached in the database. Calculates
+	 * the average elevation of neighbouring locations if more than {@code 1} is
+	 * found.
 	 * 
 	 * @param location
 	 *            the location.
@@ -834,11 +838,10 @@ public class AddressProvider {
 		values.put(ElevationColumns.ELEVATION, location.getAltitude());
 		values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
 
-		SQLiteDatabase db = null;
+		SQLiteDatabase db = getWritableDatabase();
+		if (db == null)
+			return;
 		try {
-			db = getWritableDatabase();
-			if (db == null)
-				return;
 			if (id == 0L) {
 				id = db.insert(AddressOpenHelper.TABLE_ELEVATIONS, null, values);
 				location.setId(id);
@@ -959,12 +962,10 @@ public class AddressProvider {
 		values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
 		values.put(CitiesColumns.FAVORITE, city.isFavorite());
 
-		SQLiteDatabase db = null;
+		SQLiteDatabase db = getWritableDatabase();
+		if (db == null)
+			return;
 		try {
-			db = getWritableDatabase();
-			if (db == null)
-				return;
-
 			String[] whereArgs = { Long.toString(id) };
 			db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
 		} finally {
@@ -976,12 +977,10 @@ public class AddressProvider {
 	 * Delete the list of cached addresses.
 	 */
 	public void deleteAddresses() {
-		SQLiteDatabase db = null;
+		SQLiteDatabase db = getWritableDatabase();
+		if (db == null)
+			return;
 		try {
-			db = getWritableDatabase();
-			if (db == null)
-				return;
-
 			db.delete(AddressOpenHelper.TABLE_ADDRESSES, null, null);
 		} finally {
 			db.close();

@@ -33,10 +33,10 @@ import android.location.Location;
  */
 public class AddressService extends IntentService implements OnFindAddressListener {
 
-	public static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
-	public static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
-	public static final String ADDRESS_ACTION = ZmanimLocationListener.ADDRESS_ACTION;
-	public static final String ELEVATION_ACTION = ZmanimLocationListener.ELEVATION_ACTION;
+	private static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
+	private static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
+	private static final String ADDRESS_ACTION = ZmanimLocationListener.ADDRESS_ACTION;
+	private static final String ELEVATION_ACTION = ZmanimLocationListener.ELEVATION_ACTION;
 
 	private static final String NAME = "AddressService";
 
