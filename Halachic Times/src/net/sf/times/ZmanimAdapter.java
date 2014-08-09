@@ -431,6 +431,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.dawn_row, date, R.id.dawn_time);
 		else
 			add(R.string.dawn, summary, date);
+		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
+				|| (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
+			add(R.string.fast_begins, null, date);
+		}
 
 		opinion = mSettings.getTallis();
 		if (OPINION_10_2.equals(opinion)) {
@@ -460,10 +464,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.sunrise_row, date, R.id.sunrise_time);
 		else
 			add(R.string.sunrise, summary, date);
-		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
-				|| (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
-			add(R.string.fast_begins, null, date);
-		}
 
 		opinion = mSettings.getLastShema();
 		if (OPINION_16_1_SUNSET.equals(opinion)) {
