@@ -71,7 +71,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 	 * URL that accepts latitude and longitude coordinates as parameters for an
 	 * elevation.<br>
 	 * GTOPO30 is a global digital elevation model (DEM) with a horizontal grid
-	 * spacing of 30 arc seconds (approximately 1 kilometer).
+	 * spacing of 30 arc seconds (approximately 1 kilometre).
 	 */
 	private static final String URL_ELEVATION_GTOPO30 = "http://api.geonames.org/gtopo3?lat=%f&lng=%f&username=%s";
 

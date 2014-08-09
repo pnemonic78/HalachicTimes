@@ -20,7 +20,6 @@
 package net.sf.times.location;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -246,11 +245,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		for (ZmanimLocationListener listener : listeners)
 			listener.onLocationChanged(location);
 
-		if (findAddress)
-			findAddress(location);
-
 		if (findElevation && !location.hasAltitude())
 			findElevation(location);
+
+		if (findAddress)
+			findAddress(location);
 	}
 
 	@Override
