@@ -431,8 +431,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.dawn_row, date, R.id.dawn_time);
 		else
 			add(R.string.dawn, summary, date);
-		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
-				|| (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
+		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
+				|| (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
 			add(R.string.fast_begins, null, date);
 		}
 
@@ -776,9 +776,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.twilight_row, date, R.id.twilight_time);
 		else
 			add(R.string.twilight, summary, date);
-		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.TISHA_BEAV)
-				|| (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
-				|| (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
+		if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.TISHA_BEAV) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
+				|| (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
 			add(R.string.fast_ends, null, date);
 		}
 
