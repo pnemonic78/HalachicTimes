@@ -177,11 +177,15 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
 		if (preference == mClearHistory) {
+			preference.setEnabled(false);
 			deleteHistory();
+			preference.setEnabled(true);
 			return true;
 		}
 		if (preference == mAboutKosherJava) {
+			preference.setEnabled(false);
 			gotoKosherJava();
+			preference.setEnabled(true);
 			return true;
 		}
 		return false;
