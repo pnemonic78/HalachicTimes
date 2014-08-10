@@ -105,6 +105,8 @@ public class ZmanimLocation extends Location {
 	 * @return the comparison as per {@link Comparable}.
 	 */
 	public static int compareTo(Location l1, Location l2) {
+		if (l1 == l2)
+			return 0;
 		if (l1 == null) {
 			if (l2 == null)
 				return 0;
@@ -144,6 +146,8 @@ public class ZmanimLocation extends Location {
 	 * @return the comparison as per {@link Comparable}.
 	 */
 	public static int compareAll(Location l1, Location l2) {
+		if (l1 == l2)
+			return 0;
 		if (l1 == null) {
 			if (l2 == null)
 				return 0;
