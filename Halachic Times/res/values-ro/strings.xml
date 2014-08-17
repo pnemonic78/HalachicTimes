@@ -124,8 +124,8 @@
     <string name="levana_15">15 zile după molad</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">fast_begins</string>
-    <string name="fast_ends">fast_ends</string>
+    <string name="fast_begins">Postului începe</string>
+    <string name="fast_ends">Postului finisaje</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>

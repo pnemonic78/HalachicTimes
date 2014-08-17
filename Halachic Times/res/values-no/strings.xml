@@ -123,8 +123,8 @@
     <string name="levana_15">15 dager etter molad</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">fast_begins</string>
-    <string name="fast_ends">fast_ends</string>
+    <string name="fast_begins">Faste begynner</string>
+    <string name="fast_ends">Faste ender</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Innstillinger</string>

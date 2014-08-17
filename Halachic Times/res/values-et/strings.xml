@@ -123,8 +123,8 @@
     <string name="levana_15">15 päeva pärast molad</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">fast_begins</string>
-    <string name="fast_ends">fast_ends</string>
+    <string name="fast_begins">Paastu algab</string>
+    <string name="fast_ends">Paastu otsad</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>

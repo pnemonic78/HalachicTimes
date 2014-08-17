@@ -123,8 +123,8 @@
     <string name="levana_15">15 dias após a molad</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">fast_begins</string>
-    <string name="fast_ends">fast_ends</string>
+    <string name="fast_begins">Começa o jejum</string>
+    <string name="fast_ends">Termina o jejum</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Configurações</string>

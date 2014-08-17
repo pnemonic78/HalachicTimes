@@ -125,8 +125,8 @@
     <string name="levana_15">15 dni po molad</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">fast_begins</string>
-    <string name="fast_ends">fast_ends</string>
+    <string name="fast_begins">Post rozpoczyna</string>
+    <string name="fast_ends">Post kończy</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>
