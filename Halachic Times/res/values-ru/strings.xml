@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Галахическое Время Молитву</string>
-    <string name="title_activity_zmanim">Галахическое Время</string>
-    <string name="location_unknown">Неизвестный адрес</string>
+    <string name="app_name">Галахические Времена Молитв</string>
+    <string name="title_activity_zmanim">Галахические Времена</string>
+    <string name="location_unknown">Адрес не найден</string>
     <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
@@ -11,62 +11,62 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 минут до восхода / после заката</string>
-    <string name="opinion_120_zmanis">День 120 <i>зманёс</i> минут до восхода / после заката</string>
-    <string name="opinion_16">День 16,1° ниже восход / закат</string>
-    <string name="opinion_16_sunset">День с рассвета 16,1° до заката на уровне моря</string>
-    <string name="opinion_16_night">День с рассвета 16,1° до темноты</string>
-    <string name="opinion_26">День 26° ниже восход / закат</string>
-    <string name="opinion_19">День 19,8° ниже восход / закат</string>
-    <string name="opinion_18">День 18° ниже восход / закат</string>
+    <string name="opinion_120_zmanis">День 120 <i>временных</i> минут до восхода / после заката</string>
+    <string name="opinion_16">День 16,1° ниже восхода / заката</string>
+    <string name="opinion_16_sunset">День с 16,1° рассвета до заката на уровне моря</string>
+    <string name="opinion_16_night">День с 16,1°  рассвета до темноты</string>
+    <string name="opinion_26">День 26° ниже восхода / заката</string>
+    <string name="opinion_19">День 19,8° ниже восхода / заката</string>
+    <string name="opinion_18">День 18° ниже восхода / заката</string>
     <string name="opinion_60">День 60 минут до восхода / после заката</string>
     <string name="opinion_72">День 72 минут до восхода / после заката</string>
-    <string name="opinion_72_zmanis">День 72 <i>зманёс</i> минут до восхода / после заката</string>
+    <string name="opinion_72_zmanis">День 72 <i>временных</i> минут до восхода / после заката</string>
     <string name="opinion_90">День 90 минут до восхода / после заката</string>
-    <string name="opinion_90_zmanis">День 90 <i>зманёс</i> минут до восхода / после заката</string>
+    <string name="opinion_90_zmanis">День 90 <i>временных</i> минут до восхода / после заката</string>
     <string name="opinion_96">День 96 минут до восхода / после заката</string>
-    <string name="opinion_96_zmanis">День 96 <i>зманёс</i> минут до восхода / после заката</string>
-    <string name="opinion_ateret">Соответствии с Ешйват Атэрэт Тора</string>
-    <string name="opinion_gra">Соответствии с ГРА и Ваал Таня</string>
-    <string name="opinion_mga">Соответствии с Маген Авраам</string>
+    <string name="opinion_96_zmanis">День 96 <i>временных</i> минут до восхода / после заката</string>
+    <string name="opinion_ateret">В соответствии с Ешйват Атэрэт Тора</string>
+    <string name="opinion_gra">В соответствии с ГРА и Баал хаТания</string>
+    <string name="opinion_mga">В соответствии с Маген Авраам</string>
 
     <!-- List -->
     <string name="dawn">Рассвет</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Талита и тфилина, самое раннее наложения (мишякир)</string>
+    <string name="tallis">Самое раннее время для Талита и Тфилина (мишякир)</string>
     <string name="tallis_summary">Солнце 11,5° ниже горизонта</string>
     <string name="tallis_11">Солнце 11° ниже горизонта</string>
     <string name="tallis_10">Солнце 10,2° ниже горизонта</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Восход солнца</string>
-    <string name="sunrise_summary">В уровне регионе</string>
+    <string name="sunrise_summary">На горизонтальном регионе</string>
     <string name="sunrise_sea">На уровне моря</string>
 
     <!-- Latest shema -->
-    <string name="shema">Самое позднее шма</string>
-    <string name="shema_7">День с рассвета 16,1° до ночь 7,083°</string>
-    <string name="shema_3">3 часа до полдень</string>
-    <string name="shema_fixed">3 часа до фиксированной местной полдень</string>
+    <string name="shema">Самое позднее время для Киръят Шма</string>
+    <string name="shema_7">День с 16,1° рассвета до 7,083° ночи</string>
+    <string name="shema_3">3 часа до полудня</string>
+    <string name="shema_fixed">3 часа до местного фикс. полудня</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Самое позднее шахарит</string>
-    <string name="prayers_fixed">2 часа до фиксированной местной полдень</string>
-    <string name="prayers_2">2 часа до полдень</string>
+    <string name="prayers">Самое позднее время для Шахарит</string>
+    <string name="prayers_fixed">2 часа до местного фикс. полудня</string>
+    <string name="prayers_2">2 часа до полудня</string>
 
     <!-- Midday -->
     <string name="midday">Полдень (хацот)</string>
-    <string name="midday_summary">Середине дня</string>
-    <string name="midday_fixed">Полдень с поправкой на местных широты</string>
+    <string name="midday_summary">Середина дня</string>
+    <string name="midday_fixed">Середина дня с поправкой на местную широту</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Минха гдола</string>
     <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>
-    <string name="earliest_mincha_30">30 минут после полдень</string>
+    <string name="earliest_mincha_30">30 минут после полудня</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Минха ктана</string>
-    <string name="mincha_summary">Днем молитвах</string>
+    <string name="mincha_summary">Молитва Минха</string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha">Плаг минха</string>
@@ -76,7 +76,7 @@
     <string name="candles_summary">%1$d минут до захода солнца</string>
 
     <plurals name="candles_chanukka">
-        <item quantity="one">1 свечу Хануки</item>
+        <item quantity="one">1 Ханукальная свеча</item>
         <item quantity="few">%1$d Ханукальные свечи</item>
         <item quantity="many">%1$d Ханукальные свечи</item>
         <item quantity="other">%1$d Ханукальные свечи</item>
@@ -87,14 +87,14 @@
 
     <!-- Twilight -->
     <string name="twilight">Сумерки</string>
-    <string name="twilight_2stars">2 звезды видимы</string>
+    <string name="twilight_2stars">2 звезды видны</string>
     <string name="twilight_7_083">13,5 минут до 7,083° темноты</string>
     <string name="twilight_58">58,5 минут после захода солнца</string>
     <string name="twilight_13">Солнце 13,24° ниже горизонта</string>
 
     <!-- Nightfall -->
     <string name="nightfall">Наступление темноты</string>
-    <string name="nightfall_3stars">3 звезды видимы</string>
+    <string name="nightfall_3stars">3 звезды видны</string>
     <string name="nightfall_3_65">Солнце 3,65° ниже уровне моря</string>
     <string name="nightfall_3_676">Солнце 3,676° ниже уровне моря</string>
     <string name="nightfall_4_37">Солнце 4,37° ниже уровне моря</string>
@@ -111,18 +111,18 @@
     <string name="midnight_12">12 часа после полудня</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Последнее время есть хамец</string>
-    <string name="burn_chametz">Последнее время сжечь хамец</string>
+    <string name="eat_chametz">Последнее время есть Хамец</string>
+    <string name="burn_chametz">Последнее время сжигания Хамеца</string>
 
     <!-- Moon -->
     <string name="molad">Рождение новой луны (молад)</string>
-    <string name="molad_summary">Средняя молад</string>
+    <string name="molad_summary">Средний молад</string>
     <string name="levana_earliest">Самое раннее время освящение новой луны (киддуш левана)</string>
-    <string name="levana_earliest_summary">3 дня после молад</string>
-    <string name="levana_7">7 дня после молад</string>
+    <string name="levana_earliest_summary">3 дня после молада</string>
+    <string name="levana_7">7 дня после молада</string>
     <string name="levana_latest">Самое позднее освящение новой луны (киддуш левана)</string>
-    <string name="levana_latest_summary">Полпути между молад и молад</string>
-    <string name="levana_15">15 дня после молад</string>
+    <string name="levana_latest_summary">Между моладами</string>
+    <string name="levana_15">15 дней после молада</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Пост начинается</string>
@@ -134,11 +134,11 @@
     <string name="coords_title">Координаты</string>
     <string name="coords_hidden">Координаты скрыты</string>
     <string name="coords_visible">Координаты видны</string>
-    <string name="coords_format_title">Координаты формате</string>
-    <string name="coords_format_summary">Формат широты и долготы</string>
-    <string name="past_title">Прошедшее время</string>
-    <string name="past_enabled">Прошлые времена включены</string>
-    <string name="past_disabled">Прошлые времена отключены</string>
+    <string name="coords_format_title">Формат координатов</string>
+    <string name="coords_format_summary">Пометка широты и долготы</string>
+    <string name="past_title">Прошедшие времена</string>
+    <string name="past_enabled">Прошедшие времена включены</string>
+    <string name="past_disabled">Прошедшие времена отключены</string>
     <string name="seconds_title">Секунды</string>
     <string name="seconds_hidden">Секунды скрыты</string>
     <string name="seconds_visible">Секунды видны</string>
@@ -146,8 +146,8 @@
     <string name="summaries_hidden">Описания скрыты</string>
     <string name="summaries_visible">Описания видны</string>
     <string name="gradient_title">Градиент фона</string>
-    <string name="gradient_hidden">Градиент скрыты</string>
-    <string name="gradient_visible">Градиент видна</string>
+    <string name="gradient_hidden">Градиент скрыт</string>
+    <string name="gradient_visible">Градиент виден</string>
     <string name="animations">Анимации</string>
     <string name="animations_enabled">Анимации включены</string>
     <string name="animations_disabled">Анимации отключены</string>
@@ -159,7 +159,7 @@
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
     <string name="title_activity_compass">Направление молитвы</string>
-    <string name="compass_summary">Направление молитве Святому Святых в Иерусалиме</string>
+    <string name="compass_summary">Направление молитвы к Святому Святых в Иерусалиме</string>
     <string name="north">С</string>
     <string name="east">В</string>
     <string name="south">Ю</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Очистить историю</string>
 
     <!-- About -->
-    <string name="category_about">О</string>
+    <string name="category_about">Инфо</string>
     <string name="version">Версия приложения</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Авторские права \u00A9 2004–2011 Элиягу Хиршфельд</string>
