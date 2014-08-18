@@ -33,8 +33,8 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 
 	private final List<LocationItem> mSpecific = new ArrayList<LocationItem>();
 
-	public SpecificLocationAdapter(Context context, List<ZmanimAddress> addresses) {
-		super(context, addresses);
+	public SpecificLocationAdapter(Context context, List<LocationItem> items) {
+		super(context, items);
 		populateSpecific();
 	}
 
@@ -69,15 +69,15 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 	}
 
 	@Override
-	public int getPosition(ZmanimAddress address) {
+	public int getPosition(LocationItem object) {
 		final int size = mSpecific.size();
 		LocationItem item;
 		for (int i = 0; i < size; i++) {
 			item = mSpecific.get(i);
-			if (item.getAddress().equals(address))
+			if (item.equals(object))
 				return i;
 		}
-		return super.getPosition(address);
+		return super.getPosition(object);
 	}
 
 	@Override

@@ -30,8 +30,8 @@ import android.content.Context;
  */
 public class HistoryLocationAdapter extends SpecificLocationAdapter {
 
-	public HistoryLocationAdapter(Context context, List<ZmanimAddress> addresses) {
-		super(context, addresses);
+	public HistoryLocationAdapter(Context context, List<LocationItem> items) {
+		super(context, items);
 	}
 
 	@Override

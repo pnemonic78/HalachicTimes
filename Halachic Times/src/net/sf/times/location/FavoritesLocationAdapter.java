@@ -30,8 +30,8 @@ import android.content.Context;
  */
 public class FavoritesLocationAdapter extends SpecificLocationAdapter {
 
-	public FavoritesLocationAdapter(Context context, List<ZmanimAddress> addresses) {
-		super(context, addresses);
+	public FavoritesLocationAdapter(Context context, List<LocationItem> items) {
+		super(context, items);
 	}
 
 	@Override

@@ -110,6 +110,12 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	/** If the current location is older than 1 second, then it is stale. */
 	private static final long LOCATION_EXPIRATION = DateUtils.SECOND_IN_MILLIS;
 
+	/**
+	 * Constant used to specify formatting of a latitude or longitude in the
+	 * form "[+-]DDD.DDDDD" where D indicates degrees.
+	 */
+	private static final String FORMAT_DEGREES = "%1$.6f";
+
 	/** The context. */
 	private final Context mContext;
 	/** The owner location listeners. */
@@ -543,8 +549,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
 			longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
 		} else {
-			latitudeText = String.format(Locale.US, "%1$.6f", latitude);
-			longitudeText = String.format(Locale.US, "%1$.6f", longitude);
+			latitudeText = String.format(Locale.US, FORMAT_DEGREES, latitude);
+			longitudeText = String.format(Locale.US, FORMAT_DEGREES, longitude);
 		}
 		return String.format(Locale.US, mCoordsFormat, latitudeText, longitudeText);
 	}
@@ -561,7 +567,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
 			return Location.convert(coord, Location.FORMAT_SECONDS);
 		}
-		return String.format(Locale.US, "%1$.6f", coord);
+		return String.format(Locale.US, FORMAT_DEGREES, coord);
 	}
 
 	/**

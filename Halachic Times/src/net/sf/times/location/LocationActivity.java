@@ -20,12 +20,14 @@
 package net.sf.times.location;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimApplication;
+import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
@@ -47,7 +49,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -190,6 +191,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	protected void populateLists() {
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		AddressProvider provider = app.getAddresses();
+		ZmanimLocations locations = app.getLocations();
 		List<ZmanimAddress> addresses = provider.query(null);
 		List<ZmanimAddress> cities = mCountries.getCities();
 
@@ -198,25 +200,30 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		// "History" locations take precedence over "built-in" locations.
 		addresses.addAll(cities);
 
-		LocationAdapter adapter = new LocationAdapter(this, addresses);
+		// Prepare the common list of items for all adapters.
+		// Also to save time formatting the same addresses in each adapter by
+		// themselves.
+		List<LocationItem> items = new ArrayList<LocationItem>(addresses.size());
+		for (ZmanimAddress addr : addresses) {
+			items.add(new LocationItem(addr, locations));
+		}
+
+		LocationAdapter adapter = new LocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
-		adapter.sort();
 		mAdapterAll = adapter;
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
-		adapter = new HistoryLocationAdapter(this, addresses);
+		adapter = new HistoryLocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
-		adapter.sort();
 		mAdapterHistory = adapter;
 		list = (ListView) findViewById(R.id.listHistory);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
-		adapter = new FavoritesLocationAdapter(this, addresses);
+		adapter = new FavoritesLocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
-		adapter.sort();
 		mAdapterFavorites = adapter;
 		list = (ListView) findViewById(R.id.listFavorites);
 		list.setOnItemClickListener(this);
@@ -234,7 +241,8 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 			adapter = mAdapterHistory;
 			break;
 		}
-		ZmanimAddress addr = adapter.getItem(position);
+		LocationItem item = adapter.getItem(position);
+		ZmanimAddress addr = item.getAddress();
 		Location loc = new Location(GeocoderBase.USER_PROVIDER);
 		loc.setTime(System.currentTimeMillis());
 		loc.setLatitude(addr.getLatitude());
@@ -246,21 +254,16 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		Filter filter;
-
 		if (mAdapterAll != null) {
-			filter = mAdapterAll.getFilter();
-			filter.filter(s);
+			mAdapterAll.getFilter().filter(s);
 		}
 
 		if (mAdapterFavorites != null) {
-			filter = mAdapterFavorites.getFilter();
-			filter.filter(s);
+			mAdapterFavorites.getFilter().filter(s);
 		}
 
 		if (mAdapterHistory != null) {
-			filter = mAdapterHistory.getFilter();
-			filter.filter(s);
+			mAdapterHistory.getFilter().filter(s);
 		}
 	}
 

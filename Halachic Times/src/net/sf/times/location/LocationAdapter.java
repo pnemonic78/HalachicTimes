@@ -28,7 +28,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sf.times.R;
-import net.sf.times.ZmanimApplication;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
@@ -46,14 +45,12 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnClickListener {
+public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> implements OnClickListener {
 
-	protected List<LocationItem> mObjects = new ArrayList<LocationItem>();
+	protected List<LocationItem> mObjects;
 	private List<LocationItem> mOriginalValues;
 	private LocationComparator mComparator;
 	private LocationsFilter mFilter;
-	/** Provider for locations. */
-	private ZmanimLocations mLocations;
 	private Collator mCollator;
 	private final Locale mLocale = Locale.getDefault();
 	private OnFavoriteClickListener mOnFavoriteClickListener;
@@ -63,18 +60,15 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 	 * 
 	 * @param context
 	 *            the context.
-	 * @param addresses
-	 *            the list of cities.
+	 * @param items
+	 *            the list of addresses' items.
 	 */
-	public LocationAdapter(Context context, List<ZmanimAddress> addresses) {
-		super(context, R.layout.location, android.R.id.title, addresses);
-		for (ZmanimAddress addr : addresses) {
-			mObjects.add(new LocationItem(addr));
-		}
-		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-		mLocations = app.getLocations();
+	public LocationAdapter(Context context, List<LocationItem> items) {
+		super(context, R.layout.location, android.R.id.title, items);
+		mObjects = new ArrayList<LocationItem>(items);
 		mCollator = Collator.getInstance();
 		mCollator.setStrength(Collator.PRIMARY);
+		sortNoNotify();
 	}
 
 	@Override
@@ -83,8 +77,8 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 	}
 
 	@Override
-	public ZmanimAddress getItem(int position) {
-		return getLocationItem(position).getAddress();
+	public LocationItem getItem(int position) {
+		return getLocationItem(position);
 	}
 
 	/**
@@ -99,15 +93,20 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 	}
 
 	@Override
-	public int getPosition(ZmanimAddress address) {
+	public long getItemId(int position) {
+		return getItem(position).getAddress().getId();
+	}
+
+	@Override
+	public int getPosition(LocationItem object) {
 		final int size = mObjects.size();
 		LocationItem item;
 		for (int i = 0; i < size; i++) {
 			item = mObjects.get(i);
-			if (item.getAddress().equals(address))
+			if (item.equals(object))
 				return i;
 		}
-		return super.getPosition(address);
+		return super.getPosition(object);
 	}
 
 	@Override
@@ -136,37 +135,33 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		cityName.setText(item.getLabel());
 		coordinates.setText(item.getCoordinates());
 		checkbox.setChecked(item.isFavorite());
-		checkbox.setTag(item.address);
+		checkbox.setTag(item.getAddress());
 
 		return view;
 	}
 
 	@Override
-	public void add(ZmanimAddress object) {
-		add(new LocationItem(object));
-	}
-
 	public void add(LocationItem object) {
 		if (mOriginalValues != null) {
 			mOriginalValues.add(object);
 		} else {
 			mObjects.add(object);
 		}
-		super.add(object.getAddress());
+		super.add(object);
 	}
 
 	@Override
-	public void insert(ZmanimAddress object, int index) {
+	public void insert(LocationItem object, int index) {
 		if (mOriginalValues != null) {
-			mOriginalValues.add(index, new LocationItem(object));
+			mOriginalValues.add(index, object);
 		} else {
-			mObjects.add(index, new LocationItem(object));
+			mObjects.add(index, object);
 		}
 		super.insert(object, index);
 	}
 
 	@Override
-	public void remove(ZmanimAddress object) {
+	public void remove(LocationItem object) {
 		if (mOriginalValues != null) {
 			mOriginalValues.remove(object);
 		} else {
@@ -186,14 +181,24 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 	}
 
 	/**
-	 * Sort.
+	 * Sort without notification.
 	 */
-	public void sort() {
+	protected void sortNoNotify() {
 		if (mComparator == null) {
 			mComparator = new LocationComparator();
 		}
+		sortNoNotify(mComparator);
+	}
+
+	/**
+	 * Sort without notification.
+	 * 
+	 * @param the
+	 *            comparator used to sort the objects contained in this adapter.
+	 */
+	protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
 		// Remove duplicate locations.
-		Set<LocationItem> items = new TreeSet<LocationItem>(mComparator);
+		Set<LocationItem> items = new TreeSet<LocationItem>(comparator);
 		if (mOriginalValues != null) {
 			items.addAll(mOriginalValues);
 			mOriginalValues.clear();
@@ -203,6 +208,19 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 			mObjects.clear();
 			mObjects.addAll(items);
 		}
+	}
+
+	/**
+	 * Sort.
+	 */
+	public void sort() {
+		sortNoNotify();
+		notifyDataSetChanged();
+	}
+
+	@Override
+	public void sort(Comparator<? super LocationItem> comparator) {
+		sortNoNotify(comparator);
 		notifyDataSetChanged();
 	}
 
@@ -349,14 +367,14 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 	 * 
 	 * @author Moshe Waisberg
 	 */
-	protected class LocationItem {
+	protected static class LocationItem {
 
-		private final ZmanimAddress address;
-		private final String label;
-		private final String labelLower;
-		private String latitude;
-		private String longitude;
-		private String coordinates;
+		private final ZmanimAddress mAddress;
+		private final String mLabel;
+		private final String mLabelLower;
+		private final String mLatitude;
+		private final String mLongitude;
+		private final String mCoordinates;
 
 		/**
 		 * Constructs a new item.
@@ -364,11 +382,14 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @param address
 		 *            the address.
 		 */
-		public LocationItem(ZmanimAddress address) {
+		public LocationItem(ZmanimAddress address, ZmanimLocations locations) {
 			super();
-			this.address = address;
-			this.label = address.getFormatted();
-			this.labelLower = label.toLowerCase(mLocale);
+			this.mAddress = address;
+			this.mLabel = address.getFormatted();
+			this.mLabelLower = mLabel.toLowerCase(address.getLocale());
+			this.mLatitude = locations.formatCoordinate(address.getLatitude());
+			this.mLongitude = locations.formatCoordinate(address.getLongitude());
+			this.mCoordinates = locations.formatCoordinates(getAddress());
 		}
 
 		/**
@@ -377,7 +398,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @return the address.
 		 */
 		public ZmanimAddress getAddress() {
-			return address;
+			return mAddress;
 		}
 
 		/**
@@ -386,7 +407,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @return the label.
 		 */
 		public String getLabel() {
-			return label;
+			return mLabel;
 		}
 
 		/**
@@ -395,7 +416,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @return the label.
 		 */
 		public String getLabelLower() {
-			return labelLower;
+			return mLabelLower;
 		}
 
 		/**
@@ -404,11 +425,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @return the latitude.
 		 */
 		public String getFormatLatitude() {
-			if (mLocations == null)
-				return null;
-			if (latitude == null)
-				this.latitude = mLocations.formatCoordinate(address.getLatitude());
-			return latitude;
+			return mLatitude;
 		}
 
 		/**
@@ -417,11 +434,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @return the longitude.
 		 */
 		public String getFormatLongitude() {
-			if (mLocations == null)
-				return null;
-			if (longitude == null)
-				this.longitude = mLocations.formatCoordinate(address.getLongitude());
-			return longitude;
+			return mLongitude;
 		}
 
 		/**
@@ -430,11 +443,7 @@ public class LocationAdapter extends ArrayAdapter<ZmanimAddress> implements OnCl
 		 * @return the coordinates.
 		 */
 		public String getCoordinates() {
-			if (mLocations == null)
-				return null;
-			if (coordinates == null)
-				this.coordinates = mLocations.formatCoordinates(getAddress());
-			return coordinates;
+			return mCoordinates;
 		}
 
 		/**
