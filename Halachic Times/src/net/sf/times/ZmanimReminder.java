@@ -37,8 +37,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -268,7 +271,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 *            the zmanim item to notify about.
 	 */
 	@SuppressWarnings("deprecation")
-	@SuppressLint("Wakelock")
+	@SuppressLint({ "Wakelock", "NewApi" })
 	private void notifyNow(Context context, ZmanimItem item) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
@@ -277,17 +280,34 @@ public class ZmanimReminder extends BroadcastReceiver {
 		// Clicking on the item will launch the main activity.
 		PendingIntent contentIntent = createActivityIntent(context);
 
-		Notification notification = new Notification();
-		notification.audioStreamType = AudioManager.STREAM_ALARM;
-		notification.icon = R.drawable.stat_notify_time;
-		notification.defaults = Notification.DEFAULT_ALL;
-		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-		notification.ledARGB = Color.YELLOW;
-		notification.ledOffMS = 0;
-		notification.ledOnMS = 1;
-		notification.when = item.time.getTime();// When the zman is supposed to
-												// occur.
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		Notification notification;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			Notification.Builder builder = new Notification.Builder(context);
+			builder.setContentIntent(contentIntent);
+			builder.setContentText(contentText);
+			builder.setContentTitle(contentTitle);
+			builder.setDefaults(Notification.DEFAULT_ALL);
+			builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
+			builder.setLights(Color.YELLOW, 1, 0);
+			builder.setShowWhen(true);
+			builder.setSmallIcon(R.drawable.stat_notify_time);
+			builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM), AudioManager.STREAM_ALARM);
+			builder.setWhen(item.time.getTime());// When the zman is supposed to
+													// occur.
+			notification = builder.build();
+		} else {
+			notification = new Notification();
+			notification.audioStreamType = AudioManager.STREAM_ALARM;
+			notification.icon = R.drawable.stat_notify_time;
+			notification.defaults = Notification.DEFAULT_ALL;
+			notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+			notification.ledARGB = Color.YELLOW;
+			notification.ledOffMS = 0;
+			notification.ledOnMS = 1;
+			notification.when = item.time.getTime();// When the zman is supposed
+													// to occur.
+			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		}
 
 		// Wake up the device to notify the user.
 		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
