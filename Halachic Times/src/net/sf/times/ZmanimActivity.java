@@ -360,9 +360,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 				@Override
 				public void run() {
 					populateHeader();
-					mMasterFragment.populateTimes(mDate);
-					mDetailsListFragment.populateTimes(mDate);
-					mCandesFragment.populateTimes(mDate);
+					populateFragments(mDate);
 				}
 			};
 		}
@@ -452,9 +450,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		setDate(year, monthOfYear, dayOfMonth);
-		mMasterFragment.populateTimes(mDate);
-		mDetailsListFragment.populateTimes(mDate);
-		mCandesFragment.populateTimes(mDate);
+		populateFragments(mDate);
 	}
 
 	@Override
@@ -677,9 +673,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 				}
 			}
 			setDate(date.getTimeInMillis());
-			mMasterFragment.populateTimes(date);
-			mDetailsListFragment.populateTimes(date);
-			mCandesFragment.populateTimes(date);
+			populateFragments(date);
 			return true;
 		}
 		return false;
@@ -716,5 +710,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 */
 	protected void slideRight(View view) {
 		view.startAnimation(mSlideLeftToRight);
+	}
+	
+	private void populateFragments(Calendar date) {
+		mMasterFragment.populateTimes(mDate);
+		mDetailsListFragment.populateTimes(mDate);
+		mCandesFragment.populateTimes(mDate);
+		
 	}
 }
