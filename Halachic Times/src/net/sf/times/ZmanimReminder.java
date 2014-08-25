@@ -41,6 +41,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -280,6 +281,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		// Clicking on the item will launch the main activity.
 		PendingIntent contentIntent = createActivityIntent(context);
 
+		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		Notification notification;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			Notification.Builder builder = new Notification.Builder(context);
@@ -291,7 +293,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			builder.setLights(Color.YELLOW, 1, 0);
 			builder.setShowWhen(true);
 			builder.setSmallIcon(R.drawable.stat_notify_time);
-			builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM), AudioManager.STREAM_ALARM);
+			builder.setSound(sound, AudioManager.STREAM_ALARM);
 			builder.setWhen(item.time.getTime());// When the zman is supposed to
 													// occur.
 			notification = builder.build();
@@ -306,6 +308,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			notification.ledOnMS = 1;
 			notification.when = item.time.getTime();// When the zman is supposed
 													// to occur.
+			notification.sound = sound;
 			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 		}
 
