@@ -71,7 +71,7 @@
         <receiver
             android:name="net.sf.times.ZmanimWidget"
             android:exported="false"
-            android:label="@string/title_activity_zmanim">
+            android:label="@string/title_widget_zmanim">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -79,6 +79,18 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info"/>
+        </receiver>
+        <receiver
+            android:name="net.sf.times.ClockWidget"
+            android:exported="false"
+            android:label="@string/title_widget_clock">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_clock"/>
         </receiver>
         <receiver
             android:name="net.sf.times.ZmanimReminder"

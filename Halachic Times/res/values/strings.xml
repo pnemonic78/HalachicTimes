@@ -3,6 +3,8 @@
 
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
+    <string name="title_widget_zmanim" translatable="false">@string/title_activity_zmanim</string>
+    <string name="title_widget_clock">Halachic Times Clock</string>
     <string name="location_unknown">Unknown address</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>

@@ -3,5 +3,7 @@
 
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_padding">8dp</dimen>
+    <!-- dimen name="widget_big_font_size">80dp</dimen -->
+    <dimen name="widget_big_font_size">80dp</dimen>
 
 </resources>

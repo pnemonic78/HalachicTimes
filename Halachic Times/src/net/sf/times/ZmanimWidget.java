@@ -52,7 +52,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	private static final String EXTRA_ACTIVITY = "activity";
 
 	/** The context. */
-	private Context mContext;
+	protected Context mContext;
 	/** Provider for locations. */
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
@@ -122,7 +122,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 *            the widget ids for which an update is needed - {@code null} to
 	 *            get ids from the manager.
 	 * */
-	private void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+	protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		ComponentName provider = new ComponentName(context, ZmanimWidget.class);
 		if (appWidgetIds == null) {
 			appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
@@ -130,12 +130,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 				return;
 		}
 
-		RemoteViews views;
-		if (isDeviceNokia()) {
-			views = new RemoteViews(context.getPackageName(), R.layout.times_widget_nokia);
-		} else {
-			views = new RemoteViews(context.getPackageName(), R.layout.times_widget);
-		}
+		RemoteViews views = new RemoteViews(context.getPackageName(), getLayoutId());
 
 		// Pass the activity to ourselves, because starting another activity is
 		// not working.
@@ -236,7 +231,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @param views
 	 *            the remote views.
 	 */
-	private void bindViews(RemoteViews views, ZmanimAdapter adapter) {
+	protected void bindViews(RemoteViews views, ZmanimAdapter adapter) {
 		final int count = adapter.getCount();
 		ZmanimItem item;
 
@@ -252,11 +247,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @param list
 	 *            the remote list.
 	 */
-	private void bindView(RemoteViews list, ZmanimItem item) {
+	protected void bindView(RemoteViews list, ZmanimItem item) {
 		if (item.elapsed || (item.time == null) || (item.timeLabel == null)) {
-			list.setViewVisibility(item.titleId, View.GONE);
+			list.setViewVisibility(item.rowId, View.GONE);
 		} else {
-			list.setViewVisibility(item.titleId, View.VISIBLE);
+			list.setViewVisibility(item.rowId, View.VISIBLE);
 			list.setTextViewText(item.timeId, item.timeLabel);
 		}
 	}
@@ -267,7 +262,18 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @return {@code true} if either the brand or manufacturer start with
 	 *         {@code "Nokia"}.
 	 */
-	private boolean isDeviceNokia() {
+	protected boolean isDeviceNokia() {
 		return Build.BRAND.startsWith("Nokia") || Build.MANUFACTURER.startsWith("Nokia");
+	}
+
+	/**
+	 * Get the layout.
+	 * 
+	 * @return the layout id.
+	 */
+	protected int getLayoutId() {
+		if (isDeviceNokia())
+			return R.layout.times_widget_nokia;
+		return R.layout.times_widget;
 	}
 }
