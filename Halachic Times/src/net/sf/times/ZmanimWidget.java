@@ -123,7 +123,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 *            get ids from the manager.
 	 * */
 	protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		ComponentName provider = new ComponentName(context, ZmanimWidget.class);
+		ComponentName provider = new ComponentName(context, getClass());
 		if (appWidgetIds == null) {
 			appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
 			if (appWidgetIds == null)
@@ -134,11 +134,12 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 		// Pass the activity to ourselves, because starting another activity is
 		// not working.
-		Intent activityIntent = new Intent(context, ZmanimWidget.class);
+		final int viewId = getIntentViewId();
+		Intent activityIntent = new Intent(context, getClass());
 		activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
-		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, android.R.id.list, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, viewId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		views.setOnClickPendingIntent(android.R.id.list, activityPendingIntent);
+		views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
 		if (mSettings == null)
 			mSettings = new ZmanimSettings(context);
@@ -275,5 +276,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		if (isDeviceNokia())
 			return R.layout.times_widget_nokia;
 		return R.layout.times_widget;
+	}
+
+	/**
+	 * Get the view for the intent click.
+	 * 
+	 * @return the view id.
+	 */
+	protected int getIntentViewId() {
+		return android.R.id.list;
 	}
 }

@@ -4,7 +4,8 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import android.widget.RemoteViews;
 
 /**
- * Clock widget with hour and title underneath.
+ * Clock widget with hour and title underneath.<br>
+ * Based on the default Android digital clock widget.
  * 
  * @author Moshe
  */
@@ -19,6 +20,11 @@ public class ClockWidget extends ZmanimWidget {
 	@Override
 	protected int getLayoutId() {
 		return R.layout.clock_widget;
+	}
+
+	@Override
+	protected int getIntentViewId() {
+		return R.id.date_gregorian;
 	}
 
 	@Override

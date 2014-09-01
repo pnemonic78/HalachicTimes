@@ -123,7 +123,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 		TabSpec tabFavorites = tabs.newTabSpec(TAG_FAVORITES);
 		tabFavorites.setIndicator(null, res.getDrawable(ic_menu_star));
-		tabFavorites.setContent(R.id.listFavorites);
+		tabFavorites.setContent(R.id.list_favorites);
 		tabs.addTab(tabFavorites);
 
 		TabSpec tabAll = tabs.newTabSpec(TAG_ALL);
@@ -133,7 +133,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 		TabSpec tabHistory = tabs.newTabSpec(TAG_HISTORY);
 		tabHistory.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_recent_history));
-		tabHistory.setContent(R.id.listHistory);
+		tabHistory.setContent(R.id.list_history);
 		tabs.addTab(tabHistory);
 
 		mCountries = new CountriesGeocoder(this, Locale.getDefault());
@@ -218,14 +218,14 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		adapter = new HistoryLocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
 		mAdapterHistory = adapter;
-		list = (ListView) findViewById(R.id.listHistory);
+		list = (ListView) findViewById(R.id.list_history);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
 		adapter = new FavoritesLocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
 		mAdapterFavorites = adapter;
-		list = (ListView) findViewById(R.id.listFavorites);
+		list = (ListView) findViewById(R.id.list_favorites);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 	}
@@ -234,10 +234,10 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	public void onItemClick(AdapterView<?> l, View view, int position, long id) {
 		LocationAdapter adapter = mAdapterAll;
 		switch (l.getId()) {
-		case R.id.listFavorites:
+		case R.id.list_favorites:
 			adapter = mAdapterFavorites;
 			break;
-		case R.id.listHistory:
+		case R.id.list_history:
 			adapter = mAdapterHistory;
 			break;
 		}
