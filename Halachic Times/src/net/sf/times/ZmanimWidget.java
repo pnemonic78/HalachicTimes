@@ -27,17 +27,24 @@ import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -48,6 +55,8 @@ import android.widget.RemoteViews;
  */
 public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationListener {
 
+	private static final String ACTION_ACTIVITY = "android.intent.action.Activity";
+
 	/** Which activity to start? */
 	private static final String EXTRA_ACTIVITY = "activity";
 
@@ -57,6 +66,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
+
+	private final ContentObserver mFormatChangeObserver = new ContentObserver(new Handler()) {
+		@Override
+		public void onChange(boolean selfChange) {
+			notifyAppWidgetViewDataChanged(mContext);
+		}
+	};
 
 	/**
 	 * Constructs a new widget.
@@ -72,23 +88,34 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 		final String action = intent.getAction();
 		if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
+			Context app = context.getApplicationContext();
+
 			IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
-			context.getApplicationContext().registerReceiver(this, timeChanged);
+			app.registerReceiver(this, timeChanged);
 
 			IntentFilter dateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
-			context.getApplicationContext().registerReceiver(this, dateChanged);
+			app.registerReceiver(this, dateChanged);
 
 			IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-			context.getApplicationContext().registerReceiver(this, tzChanged);
+			app.registerReceiver(this, tzChanged);
+
+			ContentResolver resolver = context.getContentResolver();
+			resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, mFormatChangeObserver);
+		} else if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
+			Context app = context.getApplicationContext();
+			app.unregisterReceiver(this);
+
+			ContentResolver resolver = context.getContentResolver();
+			resolver.unregisterContentObserver(mFormatChangeObserver);
 		} else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-			populateTimes(context, AppWidgetManager.getInstance(context), null);
+			notifyAppWidgetViewDataChanged(context);
 		} else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-			populateTimes(context, AppWidgetManager.getInstance(context), null);
+			notifyAppWidgetViewDataChanged(context);
 		} else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
-			populateTimes(context, AppWidgetManager.getInstance(context), null);
-		} else {
-			String activity = intent.getStringExtra(EXTRA_ACTIVITY);
-			if (activity != null) {
+			notifyAppWidgetViewDataChanged(context);
+		} else if (ACTION_ACTIVITY.equals(action)) {
+			if (intent.hasExtra(EXTRA_ACTIVITY)) {
+				String activity = intent.getStringExtra(EXTRA_ACTIVITY);
 				Intent activityIntent = new Intent();
 				activityIntent.setClassName(context, activity);
 				activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -122,45 +149,72 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 *            the widget ids for which an update is needed - {@code null} to
 	 *            get ids from the manager.
 	 * */
+	@SuppressLint("NewApi")
 	protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		ComponentName provider = new ComponentName(context, getClass());
+		final Class<?> clazz = getClass();
+		ComponentName provider = new ComponentName(context, clazz);
 		if (appWidgetIds == null) {
 			appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
 			if (appWidgetIds == null)
 				return;
 		}
-
-		RemoteViews views = new RemoteViews(context.getPackageName(), getLayoutId());
+		if (appWidgetIds.length == 0)
+			return;
 
 		// Pass the activity to ourselves, because starting another activity is
 		// not working.
 		final int viewId = getIntentViewId();
-		Intent activityIntent = new Intent(context, getClass());
-		activityIntent.putExtra(EXTRA_ACTIVITY, ZmanimActivity.class.getName());
-		PendingIntent activityPendingIntent = PendingIntent.getBroadcast(context, viewId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		Intent activityIntent;
+		PendingIntent activityPendingIntent;
+		String packageName = context.getPackageName();
+		RemoteViews views;
+		int layoutId = getLayoutId();
 
-		views.setOnClickPendingIntent(viewId, activityPendingIntent);
+		for (int appWidgetId : appWidgetIds) {
+			activityIntent = new Intent(context, ZmanimActivity.class);
+			activityIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+			activityPendingIntent = PendingIntent.getActivity(context, 0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		if (mSettings == null)
-			mSettings = new ZmanimSettings(context);
-		if (mLocations == null) {
-			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-			mLocations = app.getLocations();
-			mLocations.start(this);
+			views = new RemoteViews(packageName, layoutId);
+
+			if (isRemoteList()) {
+				views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
+				bindListView(appWidgetId, views);
+			} else {
+				views.setOnClickPendingIntent(viewId, activityPendingIntent);
+
+				if (mSettings == null)
+					mSettings = new ZmanimSettings(context);
+				if (mLocations == null) {
+					ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+					mLocations = app.getLocations();
+					mLocations.start(this);
+				}
+				GeoLocation gloc = mLocations.getGeoLocation();
+				if (gloc == null)
+					return;
+				ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
+				final boolean inIsrael = mLocations.inIsrael();
+
+				ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings, today, inIsrael);
+				adapter.populate(true);
+				bindViews(views, adapter);
+			}
+
+			appWidgetManager.updateAppWidget(appWidgetId, views);
 		}
-		GeoLocation gloc = mLocations.getGeoLocation();
-		if (gloc == null)
-			return;
-		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
-		final boolean inIsrael = mLocations.inIsrael();
-
-		ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings, today, inIsrael);
-		adapter.populate(true);
-		bindViews(views, adapter);
-
-		appWidgetManager.updateAppWidget(appWidgetIds, views);
 
 		scheduleForMidnight(context, appWidgetIds);
+	}
+
+	/**
+	 * Populate the list with times.
+	 * 
+	 * @param context
+	 *            the context.
+	 */
+	protected void populateTimes(Context context) {
+		populateTimes(context, AppWidgetManager.getInstance(context), null);
 	}
 
 	@Override
@@ -179,7 +233,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	@Override
 	public void onLocationChanged(Location location) {
-		populateTimes(mContext, AppWidgetManager.getInstance(mContext), null);
+		notifyAppWidgetViewDataChanged(mContext);
 	}
 
 	@Override
@@ -243,10 +297,12 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	}
 
 	/**
-	 * Bind the times to remote views.
+	 * Bind the item to remote views.
 	 * 
 	 * @param list
 	 *            the remote list.
+	 * @param item
+	 *            the zmanim item.
 	 */
 	protected void bindView(RemoteViews list, ZmanimItem item) {
 		if (item.elapsed || (item.time == null) || (item.timeLabel == null)) {
@@ -285,5 +341,47 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 */
 	protected int getIntentViewId() {
 		return android.R.id.list;
+	}
+
+	/**
+	 * Is the widget a list with remote adapter?
+	 * 
+	 * @return {@code true} if remote list.
+	 */
+	protected boolean isRemoteList() {
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+	}
+
+	/**
+	 * Bind the times to remote list view.
+	 * 
+	 * @param appWidgetId
+	 *            the app widget id.
+	 * @param list
+	 *            the remote list.
+	 */
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	protected void bindListView(int appWidgetId, RemoteViews list) {
+		Intent service = new Intent(mContext, ZmanimWidgetService.class);
+		service.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		service.setData(Uri.parse(service.toUri(Intent.URI_INTENT_SCHEME)));
+		list.setRemoteAdapter(appWidgetId, android.R.id.list, service);
+	}
+
+	@SuppressLint("NewApi")
+	protected void notifyAppWidgetViewDataChanged(Context context) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+			final Class<?> clazz = getClass();
+			ComponentName provider = new ComponentName(context, clazz);
+			int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
+			if ((appWidgetIds == null) || (appWidgetIds.length == 0))
+				return;
+			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
+		} else {
+			populateTimes(context);
+		}
 	}
 }

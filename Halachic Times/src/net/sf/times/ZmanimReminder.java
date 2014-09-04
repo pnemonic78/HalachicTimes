@@ -29,6 +29,7 @@ import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -271,54 +272,13 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * @param item
 	 *            the zmanim item to notify about.
 	 */
-	@SuppressWarnings("deprecation")
-	@SuppressLint({ "Wakelock", "NewApi" })
+	@SuppressLint("NewApi")
 	private void notifyNow(Context context, ZmanimItem item) {
-		CharSequence contentTitle = context.getText(item.titleId);
-		CharSequence contentText = item.summary;
-		Log.i(TAG, "notify now [" + contentTitle + "]");
-
-		// Clicking on the item will launch the main activity.
-		PendingIntent contentIntent = createActivityIntent(context);
-
-		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-		Notification notification;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			Notification.Builder builder = new Notification.Builder(context);
-			builder.setContentIntent(contentIntent);
-			builder.setContentText(contentText);
-			builder.setContentTitle(contentTitle);
-			builder.setDefaults(Notification.DEFAULT_ALL);
-			builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
-			builder.setLights(Color.YELLOW, 1, 0);
-			builder.setShowWhen(true);
-			builder.setSmallIcon(R.drawable.stat_notify_time);
-			builder.setSound(sound, AudioManager.STREAM_ALARM);
-			builder.setWhen(item.time.getTime());// When the zman is supposed to
-													// occur.
-			notification = builder.build();
+			notifyNowHoneycomb(context, item);
 		} else {
-			notification = new Notification();
-			notification.audioStreamType = AudioManager.STREAM_ALARM;
-			notification.icon = R.drawable.stat_notify_time;
-			notification.defaults = Notification.DEFAULT_ALL;
-			notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-			notification.ledARGB = Color.YELLOW;
-			notification.ledOffMS = 0;
-			notification.ledOnMS = 1;
-			notification.when = item.time.getTime();// When the zman is supposed
-													// to occur.
-			notification.sound = sound;
-			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+			notifyNowEclair(context, item);
 		}
-
-		// Wake up the device to notify the user.
-		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-		wake.acquire(3000L);// enough time to also hear an alarm tone
-
-		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		nm.notify(ID_NOTIFY, notification);
 	}
 
 	/**
@@ -405,5 +365,80 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 */
 	private String formatDateTime(long time) {
 		return formatDateTime(new Date(time));
+	}
+
+	@SuppressWarnings("deprecation")
+	@SuppressLint({ "Wakelock", "NewApi" })
+	private void notifyNowEclair(Context context, ZmanimItem item) {
+		CharSequence contentTitle = context.getText(item.titleId);
+		CharSequence contentText = item.summary;
+		Log.i(TAG, "notify now [" + contentTitle + "]");
+
+		// Clicking on the item will launch the main activity.
+		PendingIntent contentIntent = createActivityIntent(context);
+
+		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		Notification notification = new Notification();
+		notification.audioStreamType = AudioManager.STREAM_ALARM;
+		notification.icon = R.drawable.stat_notify_time;
+		notification.defaults = Notification.DEFAULT_ALL;
+		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+		notification.ledARGB = Color.YELLOW;
+		notification.ledOffMS = 0;
+		notification.ledOnMS = 1;
+		notification.when = item.time.getTime();// When the zman is supposed
+												// to occur.
+		notification.sound = sound;
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		// Wake up the device to notify the user.
+		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+		wake.acquire(3000L);// enough time to also hear an alarm tone
+
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		nm.notify(ID_NOTIFY, notification);
+	}
+
+	@SuppressWarnings("deprecation")
+	@SuppressLint({ "Wakelock", "NewApi" })
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void notifyNowHoneycomb(Context context, ZmanimItem item) {
+		CharSequence contentTitle = context.getText(item.titleId);
+		CharSequence contentText = item.summary;
+		Log.i(TAG, "notify now [" + contentTitle + "]");
+
+		// Clicking on the item will launch the main activity.
+		PendingIntent contentIntent = createActivityIntent(context);
+
+		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		Notification.Builder builder = new Notification.Builder(context);
+		builder.setContentIntent(contentIntent);
+		builder.setContentText(contentText);
+		builder.setContentTitle(contentTitle);
+		builder.setDefaults(Notification.DEFAULT_ALL);
+		builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
+		builder.setLights(Color.YELLOW, 1, 0);
+		builder.setSmallIcon(R.drawable.stat_notify_time);
+		builder.setSound(sound, AudioManager.STREAM_ALARM);
+		builder.setWhen(item.time.getTime());// When the zman is supposed to
+												// occur.
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			builder.setShowWhen(true);
+		}
+		Notification notification = null;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			notification = builder.build();
+		} else {
+			notification = builder.getNotification();
+		}
+
+		// Wake up the device to notify the user.
+		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+		wake.acquire(3000L);// enough time to also hear an alarm tone
+
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		nm.notify(ID_NOTIFY, notification);
 	}
 }

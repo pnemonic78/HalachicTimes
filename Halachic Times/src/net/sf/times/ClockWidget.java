@@ -46,4 +46,9 @@ public class ClockWidget extends ZmanimWidget {
 		views.setTextViewText(R.id.time, item.timeLabel);
 		views.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
 	}
+
+	@Override
+	protected boolean isRemoteList() {
+		return false;
+	}
 }
