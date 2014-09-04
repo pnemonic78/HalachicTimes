@@ -372,7 +372,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	@SuppressLint("NewApi")
 	protected void notifyAppWidgetViewDataChanged(Context context) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (isRemoteList()) {
 			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 			final Class<?> clazz = getClass();
 			ComponentName provider = new ComponentName(context, clazz);
