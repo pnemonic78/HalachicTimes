@@ -55,11 +55,6 @@ import android.widget.RemoteViews;
  */
 public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationListener {
 
-	private static final String ACTION_ACTIVITY = "android.intent.action.Activity";
-
-	/** Which activity to start? */
-	private static final String EXTRA_ACTIVITY = "activity";
-
 	/** The context. */
 	protected Context mContext;
 	/** Provider for locations. */
@@ -113,14 +108,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			notifyAppWidgetViewDataChanged(context);
 		} else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
 			notifyAppWidgetViewDataChanged(context);
-		} else if (ACTION_ACTIVITY.equals(action)) {
-			if (intent.hasExtra(EXTRA_ACTIVITY)) {
-				String activity = intent.getStringExtra(EXTRA_ACTIVITY);
-				Intent activityIntent = new Intent();
-				activityIntent.setClassName(context, activity);
-				activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(activityIntent);
-			}
 		}
 	}
 
