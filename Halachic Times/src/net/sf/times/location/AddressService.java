@@ -25,6 +25,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
+import android.os.Bundle;
 
 /**
  * Service to find an address.
@@ -61,7 +62,12 @@ public class AddressService extends IntentService implements OnFindAddressListen
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
+		if (intent == null)
+			return;
+		Bundle extras = intent.getExtras();
+		if (extras == null)
+			return;
+		Location location = extras.getParcelable(PARAMETER_LOCATION);
 		if (location == null)
 			return;
 
