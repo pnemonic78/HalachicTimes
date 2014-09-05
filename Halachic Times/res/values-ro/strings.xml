@@ -182,4 +182,7 @@
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Drept de autor \u00A9 2004–2011 Ilie Hershfeld</string>
 
+    <!-- Widget -->
+    <string name="title_widget_clock">Ori Halachic Ceas</string>
+
 </resources>

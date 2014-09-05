@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Галахических разів молитву</string>
-    <string name="title_activity_zmanim">Галахических разів</string>
+    <string name="app_name">Галахических Разів Молитву</string>
+    <string name="title_activity_zmanim">Галахических Разів</string>
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
@@ -182,5 +182,8 @@
     <string name="version">Версія програми</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Автор. право \u00A9 2004–2011 Еліягу Хиршфельд</string>
+
+    <!-- Widget -->
+    <string name="title_widget_clock">Галахических Разів Годинник</string>
 
 </resources>

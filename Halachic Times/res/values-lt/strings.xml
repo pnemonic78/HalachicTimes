@@ -182,4 +182,7 @@
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Autorių teisės \u00A9 2004–2011 Elijas Hershfeld</string>
 
+    <!-- Widget -->
+    <string name="title_widget_clock">Halachinis Kartų Laikrodis</string>
+
 </resources>

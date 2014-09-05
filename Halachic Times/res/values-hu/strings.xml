@@ -181,4 +181,7 @@
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Szerzői jog \u00A9 2004–2011 Illés Hershfeld</string>
 
+    <!-- Widget -->
+    <string name="title_widget_clock">Halachikus Szor Óra</string>
+
 </resources>

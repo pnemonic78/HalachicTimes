@@ -3,15 +3,11 @@
 
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
-    <string name="title_widget_zmanim" translatable="false">@string/title_activity_zmanim</string>
-    <string name="title_widget_clock">Halachic Times Clock</string>
     <string name="location_unknown">Unknown address</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
-    <string name="clock_12_hours_format" translatable="false">h:mm</string>
-    <string name="clock_24_hours_format" translatable="false">HH:mm</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
@@ -267,5 +263,11 @@
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2011 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>
+
+    <!-- Widget -->
+    <string name="title_widget_zmanim" translatable="false">@string/title_activity_zmanim</string>
+    <string name="title_widget_clock">Halachic Times Clock</string>
+    <string name="clock_12_hours_format" translatable="false">h:mm</string>
+    <string name="clock_24_hours_format" translatable="false">HH:mm</string>
 
 </resources>

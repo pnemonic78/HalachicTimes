@@ -183,4 +183,7 @@
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Авторские права \u00A9 2004–2011 Элиягу Хиршфельд</string>
 
+    <!-- Widget -->
+    <string name="title_widget_clock">Галахические Времена Часы</string>
+
 </resources>
