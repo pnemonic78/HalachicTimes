@@ -10,6 +10,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 	private ZmanimAdapter mAdapter;
 	/** Position index of next Hebrew day. */
 	private int mPositionTomorrow;
+	private int mColorDisabled = Color.DKGRAY;
+	private int mColorEnabled = Color.WHITE;
 
 	public ZmanimWidgetViewsFactory(Context context, Intent intent) {
 		mContext = context;
@@ -183,12 +186,17 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 	private void bindView(RemoteViews row, int position, ZmanimItem item) {
 		row.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
 		row.setTextViewText(R.id.time, item.timeLabel);
-		// if (item.elapsed) {
-		// // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws
-		// error.
-		// row.setTextColor(android.R.id.title, Color.DKGRAY);
-		// row.setTextColor(R.id.time, Color.DKGRAY);
-		// }
+		// FIXME - the application must notify the widget that "past times" has
+		// changed.
+		if (item.elapsed) {
+			// Using {@code row.setBoolean(id, "setEnabled", enabled)} throws
+			// error.
+			row.setTextColor(android.R.id.title, mColorDisabled);
+			row.setTextColor(R.id.time, mColorDisabled);
+		} else {
+			row.setTextColor(android.R.id.title, mColorEnabled);
+			row.setTextColor(R.id.time, mColorEnabled);
+		}
 		// Enable clicking to open the main activity.
 		row.setOnClickFillInIntent(R.id.widget_item, new Intent());
 	}
