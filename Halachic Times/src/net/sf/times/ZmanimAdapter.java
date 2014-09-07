@@ -27,7 +27,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import android.content.Context;
@@ -115,6 +117,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected static final String OPINION_FIXED = "fixed";
 	private static final String OPINION_SEA = "sea";
 
+	/** The day of the month as a decimal number (range 01 to 31). */
+	private static final String DAY_PAD_VAR = "%d";
+	/** The day of the month as a decimal number (range 1 to 31). */
+	private static final String DAY_VAR = "%-e";
+	/** The full month name according to the current locale. */
+	private static final String MONTH_VAR = "%B";
+	/** The year as a decimal number including the century. */
+	private static final String YEAR_VAR = "%Y";
+
 	protected final LayoutInflater mInflater;
 	protected final ZmanimSettings mSettings;
 	protected final ComplexZmanimCalendar mCalendar;
@@ -125,6 +136,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected final int mCandlesOffset;
 	private final DateFormat mTimeFormat;
 	private Comparator<ZmanimItem> mComparator;
+	private HebrewDateFormatter mHebrewDateFormatter;
+	private String[] mMonthNames;
+	private String mMonthDayYear;
 
 	/**
 	 * Time row item.
@@ -1049,5 +1063,54 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			this.summary = summary;
 			this.time = time;
 		}
+	}
+
+	public CharSequence formatDate(JewishDate jewishDate) {
+		int jewishDay = jewishDate.getJewishDayOfMonth();
+		int jewishMonth = jewishDate.getJewishMonth();
+		int jewishYear = jewishDate.getJewishYear();
+		if ((jewishMonth == JewishDate.ADAR) && jewishDate.isJewishLeapYear()) {
+			jewishMonth = 14; // return Adar I, not Adar in a leap year
+		}
+
+		String[] monthNames = mMonthNames;
+		if (monthNames == null) {
+			monthNames = getContext().getResources().getStringArray(R.array.hebrew_months);
+			mMonthNames = monthNames;
+		}
+		String format = mMonthDayYear;
+		if (format == null) {
+			format = getContext().getString(R.string.month_day_year);
+			mMonthDayYear = format;
+		}
+
+		String yearStr = null;
+		String monthStr = monthNames[jewishMonth - 1];
+		String dayStr = null;
+		String dayPadded = null;
+
+		if (ZmanimLocations.isLocaleRTL()) {
+			HebrewDateFormatter formatter = mHebrewDateFormatter;
+			if (formatter == null) {
+				formatter = new HebrewDateFormatter();
+				formatter.setHebrewFormat(true);
+				mHebrewDateFormatter = formatter;
+			}
+
+			yearStr = formatter.formatHebrewNumber(jewishYear);
+			dayStr = formatter.formatHebrewNumber(jewishDay);
+			dayPadded = dayStr;
+		} else {
+			yearStr = String.valueOf(jewishYear);
+			dayStr = String.valueOf(jewishDay);
+			dayPadded = (jewishDay < 10) ? "0" + dayStr : dayStr;
+		}
+
+		String formatted = format.replaceAll(YEAR_VAR, yearStr);
+		formatted = formatted.replaceAll(MONTH_VAR, monthStr);
+		formatted = formatted.replaceAll(DAY_VAR, dayStr);
+		formatted = formatted.replaceAll(DAY_PAD_VAR, dayPadded);
+
+		return formatted;
 	}
 }

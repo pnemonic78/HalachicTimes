@@ -24,7 +24,6 @@ import java.util.Calendar;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
@@ -45,15 +44,6 @@ import android.widget.TextView;
  * @author Moshe Waisberg
  */
 public class ZmanimFragment extends FrameLayout {
-
-	/** The day of the month as a decimal number (range 01 to 31). */
-	private static final String DAY_PAD_VAR = "%d";
-	/** The day of the month as a decimal number (range 1 to 31). */
-	private static final String DAY_VAR = "%-e";
-	/** The full month name according to the current locale. */
-	private static final String MONTH_VAR = "%B";
-	/** The year as a decimal number including the century. */
-	private static final String YEAR_VAR = "%Y";
 
 	protected final Context mContext;
 	protected LayoutInflater mInflater;
@@ -81,9 +71,6 @@ public class ZmanimFragment extends FrameLayout {
 	private ZmanimAdapter mAdapter;
 	/** The gesture detector. */
 	private GestureDetector mGestureDetector;
-	private HebrewDateFormatter mHebrewDateFormatter;
-	private String[] mMonthNames;
-	private String mMonthDayYear;
 
 	/**
 	 * Constructs a new list.
@@ -221,7 +208,7 @@ public class ZmanimFragment extends FrameLayout {
 		View row;
 
 		JewishDate jewishDate = new JewishDate(date);
-		CharSequence dateHebrew = formatDate(jewishDate);
+		CharSequence dateHebrew = adapter.formatDate(jewishDate);
 
 		bindViewGrouping(list, -1, dateHebrew);
 
@@ -233,7 +220,7 @@ public class ZmanimFragment extends FrameLayout {
 			// New Hebrew day.
 			if (item.titleId == R.string.sunset) {
 				jewishDate.forward();
-				dateHebrew = formatDate(jewishDate);
+				dateHebrew = adapter.formatDate(jewishDate);
 				bindViewGrouping(list, position, dateHebrew);
 			}
 		}
@@ -391,52 +378,4 @@ public class ZmanimFragment extends FrameLayout {
 		mGestureDetector = gestureDetector;
 	}
 
-	private CharSequence formatDate(JewishDate jewishDate) {
-		int jewishDay = jewishDate.getJewishDayOfMonth();
-		int jewishMonth = jewishDate.getJewishMonth();
-		int jewishYear = jewishDate.getJewishYear();
-		if ((jewishMonth == JewishDate.ADAR) && jewishDate.isJewishLeapYear()) {
-			jewishMonth = 14; // return Adar I, not Adar in a leap year
-		}
-
-		String[] monthNames = mMonthNames;
-		if (monthNames == null) {
-			monthNames = mContext.getResources().getStringArray(R.array.hebrew_months);
-			mMonthNames = monthNames;
-		}
-		String format = mMonthDayYear;
-		if (format == null) {
-			format = mContext.getString(R.string.month_day_year);
-			mMonthDayYear = format;
-		}
-
-		String yearStr = null;
-		String monthStr = monthNames[jewishMonth - 1];
-		String dayStr = null;
-		String dayPadded = null;
-
-		if (ZmanimLocations.isLocaleRTL()) {
-			HebrewDateFormatter formatter = mHebrewDateFormatter;
-			if (formatter == null) {
-				formatter = new HebrewDateFormatter();
-				formatter.setHebrewFormat(true);
-				mHebrewDateFormatter = formatter;
-			}
-
-			yearStr = formatter.formatHebrewNumber(jewishYear);
-			dayStr = formatter.formatHebrewNumber(jewishDay);
-			dayPadded = dayStr;
-		} else {
-			yearStr = String.valueOf(jewishYear);
-			dayStr = String.valueOf(jewishDay);
-			dayPadded = (jewishDay < 10) ? "0" + dayStr : dayStr;
-		}
-
-		String formatted = format.replaceAll(YEAR_VAR, yearStr);
-		formatted = formatted.replaceAll(MONTH_VAR, monthStr);
-		formatted = formatted.replaceAll(DAY_VAR, dayStr);
-		formatted = formatted.replaceAll(DAY_PAD_VAR, dayPadded);
-
-		return formatted;
-	}
 }
