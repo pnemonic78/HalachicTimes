@@ -316,6 +316,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @return the layout id.
 	 */
 	protected int getLayoutId() {
+		if (isRemoteList())
+			return R.layout.widget_list;
 		if (isDeviceNokia())
 			return R.layout.times_widget_nokia;
 		return R.layout.times_widget;
@@ -347,7 +349,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @param list
 	 *            the remote list.
 	 */
-	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void bindListView(int appWidgetId, RemoteViews list) {
