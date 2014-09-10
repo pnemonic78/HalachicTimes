@@ -23,7 +23,10 @@ import java.util.Locale;
 
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.location.AddressProvider;
+import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -68,7 +71,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 		mCandles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
 		mCandles.setOnPreferenceChangeListener(this);
-		onPreferenceChange(mCandles, null);
+		onCandlesPreferenceChange(mCandles, null);
 
 		initList(ZmanimSettings.KEY_OPINION_DAWN);
 		initList(ZmanimSettings.KEY_OPINION_TALLIS);
@@ -114,40 +117,55 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		}
 		mAboutKosherJava = findPreference("about.kosherjava");
 		mAboutKosherJava.setOnPreferenceClickListener(this);
+
+		// Other preferences that affect the app widget.
+		findPreference(ZmanimSettings.KEY_PAST).setOnPreferenceChangeListener(this);
+		findPreference(ZmanimSettings.KEY_SECONDS).setOnPreferenceChangeListener(this);
 	}
 
 	@SuppressWarnings("deprecation")
 	private void initList(String name) {
 		ListPreference list = (ListPreference) findPreference(name);
 		list.setOnPreferenceChangeListener(this);
-		onPreferenceChange(list, list.getValue());
+		onListPreferenceChange(list, list.getValue());
 	}
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		if (preference == mCandles) {
-			String format = getString(R.string.candles_summary);
-			CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
-			mCandles.setSummary(summary);
+			onCandlesPreferenceChange(preference, newValue);
 			return true;
 		}
 		if (preference instanceof ListPreference) {
 			ListPreference list = (ListPreference) preference;
-			String oldValue = list.getValue();
-			String value = newValue.toString();
-			updateSummary(list, value);
+			onListPreferenceChange(list, newValue);
+			notifyAppWidgets();
+			return false;
+		}
+		notifyAppWidgets();
+		return true;
+	}
 
-			if (!oldValue.equals(newValue)) {
-				if (preference.getKey().endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
-					if (mSettings == null)
-						mSettings = new ZmanimSettings(this);
-					if (mReminder == null)
-						mReminder = new ZmanimReminder(this);
-					mReminder.remind(mSettings);
-				}
+	private void onCandlesPreferenceChange(Preference preference, Object newValue) {
+		String format = getString(R.string.candles_summary);
+		CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
+		mCandles.setSummary(summary);
+	}
+
+	private void onListPreferenceChange(ListPreference preference, Object newValue) {
+		String oldValue = preference.getValue();
+		String value = newValue.toString();
+		updateSummary(preference, value);
+
+		if (!oldValue.equals(newValue)) {
+			if (preference.getKey().endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
+				if (mSettings == null)
+					mSettings = new ZmanimSettings(this);
+				if (mReminder == null)
+					mReminder = new ZmanimReminder(this);
+				mReminder.remind(mSettings);
 			}
 		}
-		return false;
 	}
 
 	/**
@@ -211,5 +229,20 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		ZmanimApplication app = (ZmanimApplication) getApplication();
 		AddressProvider provider = app.getAddresses();
 		provider.deleteAddresses();
+	}
+
+	private void notifyAppWidgets() {
+		Context context = this;
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		final Class<?> clazz = ZmanimWidget.class;
+		ComponentName provider = new ComponentName(context, clazz);
+		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
+		if ((appWidgetIds == null) || (appWidgetIds.length == 0))
+			return;
+
+		Intent intent = new Intent(context, ZmanimWidget.class);
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+		sendBroadcast(intent);
 	}
 }
