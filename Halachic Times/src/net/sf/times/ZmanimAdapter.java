@@ -740,7 +740,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 					summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				} else {
-					summaryText = getContext().getString(R.string.candles_summary, mCandlesOffset);
+					summaryText = res.getQuantityString(R.plurals.candles_summary, mCandlesOffset, mCandlesOffset);
 				}
 				add(R.string.candles, summaryText, date);
 			}

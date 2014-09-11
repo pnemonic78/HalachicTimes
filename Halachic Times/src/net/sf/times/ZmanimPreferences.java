@@ -19,8 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Locale;
-
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.location.AddressProvider;
 import android.appwidget.AppWidgetManager;
@@ -29,6 +27,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -70,6 +69,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		addPreferencesFromResource(R.xml.preferences);
 
 		mCandles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+		mCandles.setSummary(R.plurals.candles_summary);
 		mCandles.setOnPreferenceChangeListener(this);
 		onCandlesPreferenceChange(mCandles, null);
 
@@ -147,8 +147,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 	}
 
 	private void onCandlesPreferenceChange(Preference preference, Object newValue) {
-		String format = getString(R.string.candles_summary);
-		CharSequence summary = String.format(Locale.getDefault(), format, mCandles.getProgress());
+		Resources res = getResources();
+		int minutes = mCandles.getProgress();
+		CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
 		mCandles.setSummary(summary);
 	}
 

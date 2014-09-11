@@ -19,10 +19,9 @@
  */
 package net.sf.preference;
 
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
@@ -39,21 +38,18 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	private int mProgress;
 	private int mMax;
 	private boolean mProgressSet;
-	private String mSummaryFormat;
+	private int mSummaryFormat;
 	private SeekBar mSeekBar;
-	private TextView mSummary;
-	private final Locale mLocale = Locale.getDefault();
+	private TextView mSummaryView;
 
 	public SeekBarDialogPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
-		mSummaryFormat = getSummary().toString();
 	}
 
 	public SeekBarDialogPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
-		mSummaryFormat = getSummary().toString();
 	}
 
 	@Override
@@ -126,7 +122,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 		seek.setOnSeekBarChangeListener(this);
 		mSeekBar = seek;
 
-		mSummary = (TextView) view.findViewById(android.R.id.summary);
+		mSummaryView = (TextView) view.findViewById(android.R.id.summary);
 
 		seek.setProgress(getProgress());
 	}
@@ -137,8 +133,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 		if (positiveResult) {
 			int progress = mSeekBar.getProgress();
-			if (callChangeListener(progress)) {
-				String summary = String.format(mLocale, mSummaryFormat, progress);
+			if (callChangeListener(progress) && (mSummaryFormat != 0)) {
+				Resources res = getContext().getResources();
+				CharSequence summary = res.getQuantityString(mSummaryFormat, progress, progress);
 				setSummary(summary);
 
 				setProgress(progress);
@@ -148,9 +145,10 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		if (mSeekBar == seekBar) {
-			String summary = String.format(mLocale, mSummaryFormat, progress);
-			mSummary.setText(summary);
+		if ((mSeekBar == seekBar) && (mSummaryFormat != 0)) {
+			Resources res = getContext().getResources();
+			CharSequence summary = res.getQuantityString(mSummaryFormat, progress, progress);
+			mSummaryView.setText(summary);
 		}
 	}
 
@@ -160,5 +158,15 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
+	}
+
+	/**
+	 * Set the summary format.
+	 * 
+	 * @param pluralId
+	 *            the plural id for quantity.
+	 */
+	public void setSummary(int pluralId) {
+		mSummaryFormat = pluralId;
 	}
 }
