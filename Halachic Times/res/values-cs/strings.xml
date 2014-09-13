@@ -73,8 +73,12 @@
 
     <!-- Candle lighting -->
     <string name="candles">Svíčka osvětlení</string>
-    <string name="candles_summary">%1$d minut před západem slunce</string>
 
+    <plurals name="candles_summary">
+        <item quantity="one">%1$d minut před západem slunce</item>
+        <item quantity="few">%1$d minuty před západem slunce</item>
+        <item quantity="other">%1$d minuty před západem slunce</item>
+    </plurals>
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka svíčka</item>
         <item quantity="few">%1$d Chanuka svíčky</item>

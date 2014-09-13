@@ -73,8 +73,13 @@
 
     <!-- Candle lighting -->
     <string name="candles">Розпалювання свічки</string>
-    <string name="candles_summary">%1$d хвилин до заходу сонця</string>
 
+    <plurals name="candles_summary">
+        <item quantity="one">%1$d хвилина до заходу сонця</item>
+        <item quantity="few">%1$d хвилини до заходу сонця</item>
+        <item quantity="many">%1$d хвилин до заходу сонця</item>
+        <item quantity="other">%1$d хвилин до заходу сонця</item>
+    </plurals>
     <plurals name="candles_chanukka">
         <item quantity="one">1 свічка Хануки</item>
         <item quantity="few">%1$d Ханукальні свічки</item>

@@ -73,8 +73,11 @@
 
     <!-- Candle lighting -->
     <string name="candles">Encendido de velas</string>
-    <string name="candles_summary">%1$d minutos antes de la puesta del sol</string>
 
+    <plurals name="candles_summary">
+        <item quantity="one">%1$d minuto antes de la puesta del sol</item>
+        <item quantity="other">%1$d minutos antes de la puesta del sol</item>
+    </plurals>
     <plurals name="candles_chanukka">
         <item quantity="one">1 vela de Jánuca</item>
         <item quantity="other">%1$d velas de Jánuca</item>

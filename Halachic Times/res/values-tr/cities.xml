@@ -3,7 +3,7 @@
 <resources>
 
     <string-array name="cities">
-         <item>Vancouver</item>
+        <item>Vancouver</item>
         <item>San Francisco</item>
         <item>Seattle</item>
         <item>San Diego</item>

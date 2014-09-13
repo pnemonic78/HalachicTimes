@@ -73,8 +73,11 @@
 
     <!-- Candle lighting -->
     <string name="candles">Kynttilävalaistus</string>
-    <string name="candles_summary">%1$d minuuttia ennen auringonlasku</string>
 
+    <plurals name="candles_summary">
+        <item quantity="one">%1$d minuutti ennen auringonlasku</item>
+        <item quantity="other">%1$d minuuttia ennen auringonlasku</item>
+    </plurals>
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanukka kynttilän</item>
         <item quantity="other">%1$d Chanukka kynttilät</item>

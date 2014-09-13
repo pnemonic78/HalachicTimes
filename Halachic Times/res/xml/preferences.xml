@@ -226,7 +226,7 @@
                 android:max="40"
                 android:negativeButtonText="@android:string/cancel"
                 android:positiveButtonText="@android:string/ok"
-                android:summary="@string/candles_summary"
+                android:summary="@plurals/candles_summary"
                 android:title="@string/opinion"/>
 
             <ListPreference
@@ -356,8 +356,9 @@
         </PreferenceScreen>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_privacy_security_title">
-        <Preference android:key="clear_history"
+        <Preference
             android:icon="@android:drawable/ic_menu_recent_history"
+            android:key="clear_history"
             android:title="@string/pref_privacy_clear_history"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/category_about">

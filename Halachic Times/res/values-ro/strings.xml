@@ -73,8 +73,12 @@
 
     <!-- Candle lighting -->
     <string name="candles">Lumânare de iluminat</string>
-    <string name="candles_summary">%1$d minute înainte de apus</string>
 
+    <plurals name="candles_summary">
+        <item quantity="one">%1$d minute înainte de apus</item>
+        <item quantity="few">%1$d minute înainte de apus</item>
+        <item quantity="other">%1$d minute înainte de apus</item>
+    </plurals>
     <plurals name="candles_chanukka">
         <item quantity="one">1 Chanuka lumânare</item>
         <item quantity="few">%1$d lumânări de Chanuka</item>

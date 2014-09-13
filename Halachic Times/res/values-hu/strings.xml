@@ -73,10 +73,13 @@
 
     <!-- Candle lighting -->
     <string name="candles">Gyertyagyújtás</string>
-    <string name="candles_summary">%1$d perc naplemente előtt</string>
 
+    <plurals name="candles_summary">
+        <item quantity="one">%1$d perc naplemente előtt</item>
+        <item quantity="other">%1$d perccel naplemente előtt</item>
+    </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Hanuka gyertya</item>
+        <item quantity="one">%1$d Hanuka gyertya</item>
         <item quantity="other">%1$d Hanuka gyertyák</item>
     </plurals>
 
