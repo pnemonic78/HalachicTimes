@@ -72,6 +72,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	private Context mContext;
 	private SimpleDateFormat mFormat;
+	/** The adapter. */
+	private ZmanimAdapter mAdapter;
 
 	/**
 	 * Creates a new reminder manager.
@@ -103,10 +105,15 @@ public class ZmanimReminder extends BroadcastReceiver {
 		// Have we been destroyed?
 		if (gloc == null)
 			return;
-		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
-		boolean inIsrael = locations.inIsrael();
+		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 
-		ZmanimAdapter adapter = new ZmanimAdapter(context, settings, today, inIsrael);
+		ZmanimAdapter adapter = mAdapter;
+		if (adapter == null) {
+			adapter = new ZmanimAdapter(context, settings);
+			mAdapter = adapter;
+		}
+		adapter.setCalendar(cal);
+		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
 
 		remind(settings, adapter);
@@ -174,7 +181,6 @@ public class ZmanimReminder extends BroadcastReceiver {
 		if (needTomorrow) {
 			// Populate the adapter with tomorrow's times.
 			cal.add(Calendar.DAY_OF_MONTH, 1);
-			adapter.clear();
 			adapter.populate(false);
 			itemFirst = null;
 			whenFirst = Long.MAX_VALUE;

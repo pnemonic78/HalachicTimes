@@ -36,8 +36,8 @@ public class CandlesAdapter extends ZmanimAdapter {
 
 	private int mCandles;
 
-	public CandlesAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael) {
-		super(context, settings, cal, inIsrael);
+	public CandlesAdapter(Context context, ZmanimSettings settings) {
+		super(context, settings);
 	}
 
 	@Override
@@ -45,20 +45,16 @@ public class CandlesAdapter extends ZmanimAdapter {
 		return null;
 	}
 
-	/**
-	 * Populate the list of times.
-	 * 
-	 * @param remote
-	 *            is for remote views?
-	 */
+	@Override
 	public void populate(boolean remote) {
+		clear();
 		populateCandles(mCalendar);
 	}
 
-	private void populateCandles(ComplexZmanimCalendar mCalendar) {
-		ComplexZmanimCalendar cal = mCalendar;
-		cal.setCandleLightingOffset(mCandlesOffset);
-		Calendar gcal = cal.getCalendar();
+	private void populateCandles(ComplexZmanimCalendar calendar) {
+		int candlesOffset = mSettings.getCandleLightingOffset();
+		calendar.setCandleLightingOffset(candlesOffset);
+		Calendar gcal = calendar.getCalendar();
 		JewishCalendar jcal = new JewishCalendar(gcal);
 		jcal.setInIsrael(mInIsrael);
 		mCandles = getCandles(jcal);

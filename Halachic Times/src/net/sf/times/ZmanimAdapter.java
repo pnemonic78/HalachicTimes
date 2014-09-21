@@ -128,12 +128,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	protected final LayoutInflater mInflater;
 	protected final ZmanimSettings mSettings;
-	protected final ComplexZmanimCalendar mCalendar;
-	protected final boolean mInIsrael;
+	protected ComplexZmanimCalendar mCalendar;
+	protected boolean mInIsrael;
 	protected final long mNow = System.currentTimeMillis();
-	protected final boolean mSummaries;
-	protected final boolean mElapsed;
-	protected final int mCandlesOffset;
+	protected boolean mSummaries;
+	protected boolean mElapsed;
 	private final DateFormat mTimeFormat;
 	private Comparator<ZmanimItem> mComparator;
 	private HebrewDateFormatter mHebrewDateFormatter;
@@ -199,20 +198,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            the context.
 	 * @param settings
 	 *            the application settings.
-	 * @param cal
-	 *            the calendar.
-	 * @param inIsrael
-	 *            is in Israel?
 	 */
-	public ZmanimAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael) {
+	public ZmanimAdapter(Context context, ZmanimSettings settings) {
 		super(context, R.layout.times_item, 0);
 		mInflater = LayoutInflater.from(context);
 		mSettings = settings;
-		mSummaries = settings.isSummaries();
-		mElapsed = settings.isPast();
-		mCandlesOffset = settings.getCandleLightingOffset();
-		mCalendar = cal;
-		mInIsrael = inIsrael;
 
 		if (settings.isSeconds()) {
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
@@ -384,8 +374,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            is for remote views?
 	 */
 	public void populate(boolean remote) {
+		clear();
+
+		mSummaries = mSettings.isSummaries();
+		mElapsed = mSettings.isPast();
+
 		ComplexZmanimCalendar cal = mCalendar;
-		cal.setCandleLightingOffset(mCandlesOffset);
+		int candlesOffset = mSettings.getCandleLightingOffset();
+		cal.setCandleLightingOffset(candlesOffset);
 		Calendar gcal = cal.getCalendar();
 		JewishCalendar jcal = new JewishCalendar(gcal);
 		jcal.setInIsrael(mInIsrael);
@@ -740,7 +736,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				if (holidayTomorrow == JewishCalendar.CHANUKAH) {
 					summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
 				} else {
-					summaryText = res.getQuantityString(R.plurals.candles_summary, mCandlesOffset, mCandlesOffset);
+					summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
 				}
 				add(R.string.candles, summaryText, date);
 			}
@@ -1112,5 +1108,25 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		formatted = formatted.replaceAll(DAY_PAD_VAR, dayPadded);
 
 		return formatted;
+	}
+
+	/**
+	 * Set the calendar.
+	 * 
+	 * @param calendar
+	 *            the calendar.
+	 */
+	public void setCalendar(ComplexZmanimCalendar calendar) {
+		this.mCalendar = calendar;
+	}
+
+	/**
+	 * Sets whether to use Israel holiday scheme or not.
+	 * 
+	 * @param inIsrael
+	 *            set to {@code true} for calculations for Israel.
+	 */
+	public void setInIsrael(boolean inIsrael) {
+		this.mInIsrael = inIsrael;
 	}
 }

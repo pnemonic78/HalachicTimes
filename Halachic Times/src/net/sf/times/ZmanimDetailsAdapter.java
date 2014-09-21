@@ -36,8 +36,8 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
 	private final int mItemId;
 
-	public ZmanimDetailsAdapter(Context context, ZmanimSettings settings, ComplexZmanimCalendar cal, boolean inIsrael, int itemId) {
-		super(context, settings, cal, inIsrael);
+	public ZmanimDetailsAdapter(Context context, ZmanimSettings settings, int itemId) {
+		super(context, settings);
 		mItemId = itemId;
 	}
 
@@ -46,13 +46,10 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 		return createViewFromResource(position, convertView, parent, R.layout.times_detail);
 	}
 
-	/**
-	 * Populate the list of times.
-	 * 
-	 * @param remote
-	 *            is for remote views?
-	 */
+	@Override
 	public void populate(boolean remote) {
+		clear();
+
 		final int id = mItemId;
 		if (id == R.string.dawn) {
 			populateDawn(mCalendar);

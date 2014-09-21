@@ -23,10 +23,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -102,15 +99,8 @@ public class CandlesFragment extends ZmanimFragment {
 	}
 
 	@Override
-	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
-		GeoLocation gloc = locations.getGeoLocation();
-		// Have we been destroyed?
-		if (gloc == null)
-			return null;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCalendar(date);
-		boolean inIsrael = locations.inIsrael();
-		return new CandlesAdapter(mContext, mSettings, cal, inIsrael);
+	protected ZmanimAdapter createAdapter() {
+		return new CandlesAdapter(mContext, mSettings);
 	}
 
 	@Override

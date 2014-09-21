@@ -68,6 +68,7 @@ public class ZmanimFragment extends FrameLayout {
 	private int mPaddingTop;
 	private int mPaddingRight;
 	private int mPaddingBottom;
+	/** The adapter. */
 	private ZmanimAdapter mAdapter;
 	/** The gesture detector. */
 	private GestureDetector mGestureDetector;
@@ -131,21 +132,10 @@ public class ZmanimFragment extends FrameLayout {
 	/**
 	 * Create a new times adapter.
 	 * 
-	 * @param date
-	 *            the date.
-	 * @param locations
-	 *            the locations provider.
 	 * @return the adapter.
 	 */
-	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
-		GeoLocation gloc = locations.getGeoLocation();
-		// Have we been destroyed?
-		if (gloc == null)
-			return null;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCalendar(date);
-		boolean inIsrael = locations.inIsrael();
-		return new ZmanimAdapter(mContext, mSettings, cal, inIsrael);
+	protected ZmanimAdapter createAdapter() {
+		return new ZmanimAdapter(mContext, mSettings);
 	}
 
 	/**
@@ -157,14 +147,26 @@ public class ZmanimFragment extends FrameLayout {
 	@SuppressWarnings("deprecation")
 	public ZmanimAdapter populateTimes(Calendar date) {
 		// Called before attached to activity?
-		if (mLocations == null)
+		ZmanimLocations locations = mLocations;
+		if (locations == null)
 			return null;
-		ZmanimAdapter adapter = createAdapter(date, mLocations);
+		GeoLocation gloc = locations.getGeoLocation();
 		// Have we been destroyed?
-		if (adapter == null)
+		if (gloc == null)
 			return null;
+		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
+		cal.setCalendar(date);
+
+		ZmanimAdapter adapter = mAdapter;
+		if (adapter == null) {
+			adapter = createAdapter();
+			if (adapter == null)
+				return null;
+			mAdapter = adapter;
+		}
+		adapter.setCalendar(cal);
+		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
-		mAdapter = adapter;
 
 		ViewGroup list = mList;
 		if (list == null)

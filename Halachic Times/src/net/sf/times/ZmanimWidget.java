@@ -61,6 +61,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
+	/** The adapter. */
+	private ZmanimAdapter mAdapter;
 
 	private final ContentObserver mFormatChangeObserver = new ContentObserver(new Handler()) {
 		@Override
@@ -135,7 +137,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @param appWidgetIds
 	 *            the widget ids for which an update is needed - {@code null} to
 	 *            get ids from the manager.
-	 * */
+	 */
 	@SuppressLint("NewApi")
 	protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		final Class<?> clazz = getClass();
@@ -172,18 +174,26 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 				if (mSettings == null)
 					mSettings = new ZmanimSettings(context);
-				if (mLocations == null) {
+
+				ZmanimLocations locations = mLocations;
+				if (locations == null) {
 					ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-					mLocations = app.getLocations();
-					mLocations.start(this);
+					locations = app.getLocations();
+					locations.start(this);
+					mLocations = locations;
 				}
-				GeoLocation gloc = mLocations.getGeoLocation();
+				GeoLocation gloc = locations.getGeoLocation();
 				if (gloc == null)
 					return;
-				ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
-				final boolean inIsrael = mLocations.inIsrael();
+				ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 
-				ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings, today, inIsrael);
+				ZmanimAdapter adapter = mAdapter;
+				if (adapter == null) {
+					adapter = new ZmanimAdapter(context, mSettings);
+					mAdapter = adapter;
+				}
+				adapter.setCalendar(cal);
+				adapter.setInIsrael(locations.inIsrael());
 				adapter.populate(true);
 				bindViews(views, adapter);
 			}

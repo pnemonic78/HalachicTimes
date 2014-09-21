@@ -22,9 +22,6 @@ package net.sf.times;
 import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -88,18 +85,11 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	}
 
 	@Override
-	protected ZmanimAdapter createAdapter(Calendar date, ZmanimLocations locations) {
+	protected ZmanimAdapter createAdapter() {
 		if (mMasterId == 0)
 			return null;
 
-		GeoLocation gloc = locations.getGeoLocation();
-		// Have we been destroyed?
-		if (gloc == null)
-			return null;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCalendar(date);
-		boolean inIsrael = locations.inIsrael();
-		return new ZmanimDetailsAdapter(mContext, mSettings, cal, inIsrael, mMasterId);
+		return new ZmanimDetailsAdapter(mContext, mSettings, mMasterId);
 	}
 
 	@Override

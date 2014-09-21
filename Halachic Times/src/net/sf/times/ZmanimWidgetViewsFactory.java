@@ -26,6 +26,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
+	/** The adapter. */
 	private ZmanimAdapter mAdapter;
 	/** Position index of next Hebrew day. */
 	private int mPositionTomorrow;
@@ -146,20 +147,27 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 		if (mSettings == null)
 			mSettings = new ZmanimSettings(context);
-		if (mLocations == null) {
+
+		ZmanimLocations locations = mLocations;
+		if (locations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-			mLocations = app.getLocations();
-			mLocations.start(this);
+			locations = app.getLocations();
+			locations.start(this);
+			mLocations = locations;
 		}
-		GeoLocation gloc = mLocations.getGeoLocation();
+		GeoLocation gloc = locations.getGeoLocation();
 		if (gloc == null)
 			return;
-		ComplexZmanimCalendar today = new ComplexZmanimCalendar(gloc);
-		final boolean inIsrael = mLocations.inIsrael();
+		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 
-		ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings, today, inIsrael);
+		ZmanimAdapter adapter = mAdapter;
+		if (adapter == null) {
+			adapter = new ZmanimAdapter(context, mSettings);
+			mAdapter = adapter;
+		}
+		adapter.setCalendar(cal);
+		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
-		mAdapter = adapter;
 
 		mPositionTomorrow = -1;
 		ZmanimItem item;
