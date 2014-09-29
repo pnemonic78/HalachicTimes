@@ -50,6 +50,9 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 	public void populate(boolean remote) {
 		clear();
 
+		mSummaries = mSettings.isSummaries();
+		mElapsed = mSettings.isPast();
+
 		final int id = mItemId;
 		if (id == R.string.dawn) {
 			populateDawn(mCalendar);
