@@ -979,37 +979,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int count = CANDLES_NONE;
 		int flags = BEFORE_SUNSET;
 
-		// Forbidden to light candles during Shabbath.
-		switch (dayOfWeek) {
-		case Calendar.FRIDAY:
-			// Probably never happens that Yom Kippurim falls on a Friday.
-			// Prohibited to light candles on Yom Kippurim for Shabbath.
-			if (holidayToday == JewishCalendar.YOM_KIPPUR) {
-				return 0;
-			}
-			break;
-		case Calendar.SATURDAY:
-			if (holidayToday == -1) {
-				holidayToday = SHABBATH;
-			}
-			flags = MOTZE_SHABBATH;
-			break;
-		default:
-			// During a holiday, we can light for the next day from an existing
-			// flame.
-			switch (holidayToday) {
-			case JewishCalendar.ROSH_HASHANA:
-			case JewishCalendar.SUCCOS:
-			case JewishCalendar.SHEMINI_ATZERES:
-			case JewishCalendar.SIMCHAS_TORAH:
-			case JewishCalendar.PESACH:
-			case JewishCalendar.SHAVUOS:
-				flags = AT_SUNSET;
-				break;
-			}
-			break;
-		}
-
 		switch (holidayTomorrow) {
 		case JewishCalendar.ROSH_HASHANA:
 		case JewishCalendar.SUCCOS:
@@ -1031,6 +1000,37 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			if (dayOfWeek == Calendar.FRIDAY) {
 				holidayTomorrow = SHABBATH;
 				count = CANDLES_SHABBATH;
+			}
+			break;
+		}
+
+		// Forbidden to light candles during Shabbath.
+		switch (dayOfWeek) {
+		case Calendar.FRIDAY:
+			// Probably never happens that Yom Kippurim falls on a Friday.
+			// Prohibited to light candles on Yom Kippurim for Shabbath.
+			if (holidayToday == JewishCalendar.YOM_KIPPUR) {
+				count = CANDLES_NONE;
+			}
+			break;
+		case Calendar.SATURDAY:
+			if (holidayToday == -1) {
+				holidayToday = SHABBATH;
+			}
+			flags = MOTZE_SHABBATH;
+			break;
+		default:
+			// During a holiday, we can light for the next day from an existing
+			// flame.
+			switch (holidayToday) {
+			case JewishCalendar.ROSH_HASHANA:
+			case JewishCalendar.SUCCOS:
+			case JewishCalendar.SHEMINI_ATZERES:
+			case JewishCalendar.SIMCHAS_TORAH:
+			case JewishCalendar.PESACH:
+			case JewishCalendar.SHAVUOS:
+				flags = AT_SUNSET;
+				break;
 			}
 			break;
 		}
