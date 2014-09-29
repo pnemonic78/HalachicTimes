@@ -1024,8 +1024,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			if (dayOfWeek == Calendar.FRIDAY) {
 				holidayTomorrow = SHABBATH;
 				count = CANDLES_SHABBATH;
-			} else if (dayOfWeek == Calendar.SUNDAY) {
-				holidayToday = SHABBATH;
 			}
 			break;
 		}
