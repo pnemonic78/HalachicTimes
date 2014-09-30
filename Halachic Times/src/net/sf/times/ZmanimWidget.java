@@ -25,7 +25,6 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -158,6 +157,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		String packageName = context.getPackageName();
 		RemoteViews views;
 		int layoutId = getLayoutId();
+		long now = System.currentTimeMillis();
 
 		for (int appWidgetId : appWidgetIds) {
 			activityIntent = new Intent(context, ZmanimActivity.class);
@@ -185,14 +185,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 				GeoLocation gloc = locations.getGeoLocation();
 				if (gloc == null)
 					return;
-				ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 
 				ZmanimAdapter adapter = mAdapter;
 				if (adapter == null) {
 					adapter = new ZmanimAdapter(context, mSettings);
 					mAdapter = adapter;
 				}
-				adapter.setCalendar(cal);
+				adapter.setCalendar(now);
+				adapter.setGeoLocation(gloc);
 				adapter.setInIsrael(locations.inIsrael());
 				adapter.populate(true);
 				bindViews(views, adapter);

@@ -1,5 +1,7 @@
 package net.sf.times;
 
+import java.util.Calendar;
+
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
@@ -158,14 +160,14 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 		GeoLocation gloc = locations.getGeoLocation();
 		if (gloc == null)
 			return;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 
 		ZmanimAdapter adapter = mAdapter;
 		if (adapter == null) {
 			adapter = new ZmanimAdapter(context, mSettings);
 			mAdapter = adapter;
 		}
-		adapter.setCalendar(cal);
+		adapter.setCalendar(System.currentTimeMillis());
+		adapter.setGeoLocation(gloc);
 		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
 

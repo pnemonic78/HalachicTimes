@@ -26,7 +26,6 @@ import java.util.Locale;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -105,14 +104,14 @@ public class ZmanimReminder extends BroadcastReceiver {
 		// Have we been destroyed?
 		if (gloc == null)
 			return;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
 
 		ZmanimAdapter adapter = mAdapter;
 		if (adapter == null) {
 			adapter = new ZmanimAdapter(context, settings);
 			mAdapter = adapter;
 		}
-		adapter.setCalendar(cal);
+		adapter.setCalendar(System.currentTimeMillis());
+		adapter.setGeoLocation(gloc);
 		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
 
@@ -176,8 +175,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			needWeek = false;
 		}
 
-		ComplexZmanimCalendar zcal = adapter.getCalendar();
-		Calendar cal = zcal.getCalendar();
+		Calendar cal = adapter.getCalendar().getCalendar();
 		if (needTomorrow) {
 			// Populate the adapter with tomorrow's times.
 			cal.add(Calendar.DAY_OF_MONTH, 1);

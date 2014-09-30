@@ -48,10 +48,7 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
 	@Override
 	public void populate(boolean remote) {
-		clear();
-
-		mSummaries = mSettings.isSummaries();
-		mElapsed = mSettings.isPast();
+		prePopulate();
 
 		final int id = mItemId;
 		if (id == R.string.dawn) {

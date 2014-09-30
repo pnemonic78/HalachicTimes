@@ -23,7 +23,6 @@ import java.util.Calendar;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
@@ -154,8 +153,6 @@ public class ZmanimFragment extends FrameLayout {
 		// Have we been destroyed?
 		if (gloc == null)
 			return null;
-		ComplexZmanimCalendar cal = new ComplexZmanimCalendar(gloc);
-		cal.setCalendar(date);
 
 		ZmanimAdapter adapter = mAdapter;
 		if (adapter == null) {
@@ -164,7 +161,8 @@ public class ZmanimFragment extends FrameLayout {
 				return null;
 			mAdapter = adapter;
 		}
-		adapter.setCalendar(cal);
+		adapter.setCalendar(date);
+		adapter.setGeoLocation(gloc);
 		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
 

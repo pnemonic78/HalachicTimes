@@ -32,6 +32,7 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
@@ -128,12 +129,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	protected final LayoutInflater mInflater;
 	protected final ZmanimSettings mSettings;
-	protected ComplexZmanimCalendar mCalendar;
+	protected final ComplexZmanimCalendar mCalendar;
 	protected boolean mInIsrael;
-	protected final long mNow = System.currentTimeMillis();
+	protected long mNow = System.currentTimeMillis();
 	protected boolean mSummaries;
 	protected boolean mElapsed;
-	private final DateFormat mTimeFormat;
+	private DateFormat mTimeFormat;
 	private Comparator<ZmanimItem> mComparator;
 	private HebrewDateFormatter mHebrewDateFormatter;
 	private String[] mMonthNames;
@@ -203,6 +204,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		super(context, R.layout.times_item, 0);
 		mInflater = LayoutInflater.from(context);
 		mSettings = settings;
+		mCalendar = new ComplexZmanimCalendar();
+		mCalendar.setCandleLightingOffset(settings.getCandleLightingOffset());
 
 		if (settings.isSeconds()) {
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
@@ -367,6 +370,29 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		}
 	}
 
+	protected void prePopulate() {
+		clear();
+
+		ZmanimSettings settings = mSettings;
+
+		mSummaries = settings.isSummaries();
+		mElapsed = settings.isPast();
+
+		Context context = getContext();
+		if (settings.isSeconds()) {
+			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
+			String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
+			mTimeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+		} else {
+			mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
+		}
+
+		int candlesOffset = settings.getCandleLightingOffset();
+		mCalendar.setCandleLightingOffset(candlesOffset);
+
+		mNow = System.currentTimeMillis();
+	}
+
 	/**
 	 * Populate the list of times.
 	 * 
@@ -374,17 +400,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 *            is for remote views?
 	 */
 	public void populate(boolean remote) {
-		clear();
-
-		mSummaries = mSettings.isSummaries();
-		mElapsed = mSettings.isPast();
+		prePopulate();
 
 		ComplexZmanimCalendar cal = mCalendar;
-		int candlesOffset = mSettings.getCandleLightingOffset();
-		cal.setCandleLightingOffset(candlesOffset);
 		Calendar gcal = cal.getCalendar();
 		JewishCalendar jcal = new JewishCalendar(gcal);
 		jcal.setInIsrael(mInIsrael);
+		int candlesOffset = (int) cal.getCandleLightingOffset();
 		int candles = getCandles(jcal);
 		int candlesCount = candles & CANDLES_MASK;
 		boolean hasCandles = candlesCount > 0;
@@ -1121,8 +1143,29 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @param calendar
 	 *            the calendar.
 	 */
-	public void setCalendar(ComplexZmanimCalendar calendar) {
-		this.mCalendar = calendar;
+	public void setCalendar(Calendar calendar) {
+		this.mCalendar.setCalendar(calendar);
+	}
+
+	/**
+	 * Set the calendar time.
+	 * 
+	 * @param time
+	 *            the time in milliseconds.
+	 */
+	public void setCalendar(long time) {
+		Calendar cal = mCalendar.getCalendar();
+		cal.setTimeInMillis(time);
+	}
+
+	/**
+	 * Sets the {@link GeoLocation}.
+	 * 
+	 * @param geoLocation
+	 *            the location.
+	 */
+	public void setGeoLocation(GeoLocation geoLocation) {
+		this.mCalendar.setGeoLocation(geoLocation);
 	}
 
 	/**
