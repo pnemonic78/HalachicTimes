@@ -205,7 +205,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		mInflater = LayoutInflater.from(context);
 		mSettings = settings;
 		mCalendar = new ComplexZmanimCalendar();
-		mCalendar.setCandleLightingOffset(settings.getCandleLightingOffset());
 
 		if (settings.isSeconds()) {
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
@@ -387,9 +386,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
 		}
 
-		int candlesOffset = settings.getCandleLightingOffset();
-		mCalendar.setCandleLightingOffset(candlesOffset);
-
 		mNow = System.currentTimeMillis();
 	}
 
@@ -406,13 +402,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		Calendar gcal = cal.getCalendar();
 		JewishCalendar jcal = new JewishCalendar(gcal);
 		jcal.setInIsrael(mInIsrael);
-		int candlesOffset = (int) cal.getCandleLightingOffset();
+		int candlesOffset = mSettings.getCandleLightingOffset();
 		int candles = getCandles(jcal);
 		int candlesCount = candles & CANDLES_MASK;
 		boolean hasCandles = candlesCount > 0;
 		int candlesHow = candles & MOTZE_MASK;
 		int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
 		int holidayToday = (candles >> 12) & HOLIDAY_MASK;
+		Date dateCandles;
 
 		Date date;
 		int summary;
@@ -749,23 +746,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.plug_hamincha, summary, date);
 
-		date = cal.getCandleLighting();
-		if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
-			if (remote) {
-				add(R.id.candles_row, R.string.candles, R.id.candles_time, date);
-			} else {
-				String summaryText;
-				if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-					summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-				} else {
-					summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
-				}
-				add(R.string.candles, summaryText, date);
-			}
-		} else if (remote) {
-			add(R.id.candles_row, R.string.candles, R.id.candles_time, null);
-		}
-
 		opinion = mSettings.getSunset();
 		if (OPINION_SEA.equals(opinion)) {
 			date = cal.getSeaLevelSunset();
@@ -774,6 +754,23 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			date = cal.getSunset();
 			summary = R.string.sunset_summary;
 		}
+		if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
+			dateCandles = cal.getTimeOffset(date, -candlesOffset * DateUtils.MINUTE_IN_MILLIS);
+			if (remote) {
+				add(R.id.candles_row, R.string.candles, R.id.candles_time, dateCandles);
+			} else {
+				String summaryText;
+				if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+					summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+				} else {
+					summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
+				}
+				add(R.string.candles, summaryText, dateCandles);
+			}
+		} else if (remote) {
+			add(R.id.candles_row, R.string.candles, R.id.candles_time, null);
+		}
+
 		if (hasCandles && (candlesHow == AT_SUNSET)) {
 			if (remote) {
 				add(R.id.candles_row, R.string.candles, R.id.candles_time, date);
