@@ -42,7 +42,7 @@ import android.widget.TextView;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimFragment extends FrameLayout {
+public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	protected final Context mContext;
 	protected LayoutInflater mInflater;
@@ -68,7 +68,7 @@ public class ZmanimFragment extends FrameLayout {
 	private int mPaddingRight;
 	private int mPaddingBottom;
 	/** The adapter. */
-	private ZmanimAdapter mAdapter;
+	private A mAdapter;
 	/** The gesture detector. */
 	private GestureDetector mGestureDetector;
 
@@ -133,8 +133,23 @@ public class ZmanimFragment extends FrameLayout {
 	 * 
 	 * @return the adapter.
 	 */
-	protected ZmanimAdapter createAdapter() {
-		return new ZmanimAdapter(mContext, mSettings);
+	@SuppressWarnings("unchecked")
+	protected A createAdapter() {
+		return (A) new ZmanimAdapter(mContext, mSettings);
+	}
+
+	/**
+	 * Get the times adapter.
+	 * 
+	 * @return the adapter.
+	 */
+	protected A getAdapter() {
+		A adapter = mAdapter;
+		if (adapter == null) {
+			adapter = createAdapter();
+			mAdapter = adapter;
+		}
+		return adapter;
 	}
 
 	/**
@@ -144,7 +159,7 @@ public class ZmanimFragment extends FrameLayout {
 	 *            the date.
 	 */
 	@SuppressWarnings("deprecation")
-	public ZmanimAdapter populateTimes(Calendar date) {
+	public A populateTimes(Calendar date) {
 		// Called before attached to activity?
 		ZmanimLocations locations = mLocations;
 		if (locations == null)
@@ -154,13 +169,7 @@ public class ZmanimFragment extends FrameLayout {
 		if (gloc == null)
 			return null;
 
-		ZmanimAdapter adapter = mAdapter;
-		if (adapter == null) {
-			adapter = createAdapter();
-			if (adapter == null)
-				return null;
-			mAdapter = adapter;
-		}
+		A adapter = getAdapter();
 		adapter.setCalendar(date);
 		adapter.setGeoLocation(gloc);
 		adapter.setInIsrael(locations.inIsrael());
@@ -198,7 +207,7 @@ public class ZmanimFragment extends FrameLayout {
 	 * @param date
 	 *            the date.
 	 */
-	protected void bindViews(ViewGroup list, ZmanimAdapter adapter, Calendar date) {
+	protected void bindViews(ViewGroup list, A adapter, Calendar date) {
 		if (list == null)
 			return;
 		final int count = adapter.getCount();
@@ -323,7 +332,7 @@ public class ZmanimFragment extends FrameLayout {
 	@SuppressWarnings("deprecation")
 	public void highlight(int itemId) {
 		// Find the view that matches the item id (the view that was clicked).
-		final ZmanimAdapter adapter = mAdapter;
+		final A adapter = mAdapter;
 		if (adapter == null)
 			return;
 		final ViewGroup list = mList;

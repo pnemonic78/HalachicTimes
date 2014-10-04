@@ -34,7 +34,7 @@ import android.view.ViewGroup;
  * 
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsFragment extends ZmanimFragment {
+public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends ZmanimFragment<A> {
 
 	/** The master id. */
 	private int mMasterId;
@@ -84,16 +84,17 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 		return mMasterId;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	protected ZmanimAdapter createAdapter() {
+	protected A createAdapter() {
 		if (mMasterId == 0)
 			return null;
 
-		return new ZmanimDetailsAdapter(mContext, mSettings, mMasterId);
+		return (A) new ZmanimDetailsAdapter(mContext, mSettings, mMasterId);
 	}
 
 	@Override
-	public ZmanimAdapter populateTimes(Calendar date) {
+	public A populateTimes(Calendar date) {
 		return populateTimes(date, mMasterId);
 	}
 
@@ -106,10 +107,14 @@ public class ZmanimDetailsFragment extends ZmanimFragment {
 	 *            the time id.
 	 */
 	@SuppressWarnings("deprecation")
-	public ZmanimAdapter populateTimes(Calendar date, int id) {
+	public A populateTimes(Calendar date, int id) {
 		mMasterId = id;
 
-		ZmanimAdapter adapter = super.populateTimes(date);
+		A adapter = getAdapter();
+		if (adapter != null) {
+			adapter.setItemId(id);
+			super.populateTimes(date);
+		}
 
 		if (mSettings.isBackgroundGradient()) {
 			Resources res = getResources();

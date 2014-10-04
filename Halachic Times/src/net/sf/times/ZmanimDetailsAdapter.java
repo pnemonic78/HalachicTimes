@@ -34,11 +34,15 @@ import android.view.ViewGroup;
  */
 public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
-	private final int mItemId;
+	private int mItemId;
 
 	public ZmanimDetailsAdapter(Context context, ZmanimSettings settings, int itemId) {
 		super(context, settings);
 		mItemId = itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.mItemId = itemId;
 	}
 
 	@Override

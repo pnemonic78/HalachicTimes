@@ -107,7 +107,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	private ZmanimReminder mReminder;
 	protected LayoutInflater mInflater;
 	/** The master fragment. */
-	private ZmanimFragment mMasterFragment;
+	private ZmanimFragment<ZmanimAdapter> mMasterFragment;
 	/** The details fragment switcher. */
 	private ViewSwitcher mDetailsFragment;
 	/** The details fragment. */
@@ -254,6 +254,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	}
 
 	/** Initialise. */
+	@SuppressWarnings("unchecked")
 	private void init() {
 		mSettings = new ZmanimSettings(this);
 
@@ -266,7 +267,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		mGestureDetector.setIsLongpressEnabled(false);
 
 		mHeader = view.findViewById(R.id.header);
-		mMasterFragment = (ZmanimFragment) view.findViewById(R.id.list_fragment);
+		mMasterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
 		mMasterFragment.setOnClickListener(this);
 		mMasterFragment.setGestureDetector(mGestureDetector);
 		mDetailsFragment = (ViewSwitcher) view.findViewById(R.id.details_fragment);
