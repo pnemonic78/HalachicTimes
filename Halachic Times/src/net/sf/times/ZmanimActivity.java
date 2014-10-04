@@ -564,6 +564,13 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	protected void hideDetails() {
 		if (mSwitcher != null) {
 			mSwitcher.showPrevious();
+
+			// Not enough to hide the details switcher = must also hide its
+			// children otherwise visible when sliding dates.
+			if (mDetailsListFragment != null)
+				mDetailsListFragment.setVisibility(View.INVISIBLE);
+			if (mCandesFragment != null)
+				mCandesFragment.setVisibility(View.INVISIBLE);
 		} else {
 			mDetailsFragment.startAnimation(mDetailsShrink);
 		}
@@ -711,11 +718,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	protected void slideRight(View view) {
 		view.startAnimation(mSlideLeftToRight);
 	}
-	
+
 	private void populateFragments(Calendar date) {
 		mMasterFragment.populateTimes(mDate);
 		mDetailsListFragment.populateTimes(mDate);
 		mCandesFragment.populateTimes(mDate);
-		
 	}
 }
