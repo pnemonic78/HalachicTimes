@@ -205,11 +205,11 @@
     </string-array>
     <string-array name="sunset_values" translatable="false">
         <item></item>
-        <item>sea</item>
+        <item>level</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
-        <item>@string/sunset_summary</item>
         <item>@string/sunset_sea</item>
+        <item>@string/sunset_summary</item>
     </string-array>
     <string-array name="twilight_values" translatable="false">
         <item>7.083</item>

@@ -116,6 +116,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final String OPINION_GRA = "GRA";
 	private static final String OPINION_MGA = "MGA";
 	protected static final String OPINION_FIXED = "fixed";
+	private static final String OPINION_LEVEL = "level";
 	private static final String OPINION_SEA = "sea";
 
 	/** The day of the month as a decimal number (range 01 to 31). */
@@ -747,12 +748,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.plug_hamincha, summary, date);
 
 		opinion = mSettings.getSunset();
-		if (OPINION_SEA.equals(opinion)) {
-			date = cal.getSeaLevelSunset();
-			summary = R.string.sunset_sea;
-		} else {
+		if (OPINION_LEVEL.equals(opinion)) {
 			date = cal.getSunset();
 			summary = R.string.sunset_summary;
+		} else {
+			date = cal.getSeaLevelSunset();
+			summary = R.string.sunset_sea;
 		}
 		if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
 			dateCandles = cal.getTimeOffset(date, -candlesOffset * DateUtils.MINUTE_IN_MILLIS);

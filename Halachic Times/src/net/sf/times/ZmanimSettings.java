@@ -377,7 +377,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getSunset() {
-		return mPrefs.getString(KEY_OPINION_SUNSET, "sea");
+		return mPrefs.getString(KEY_OPINION_SUNSET, "");
 	}
 
 	/**

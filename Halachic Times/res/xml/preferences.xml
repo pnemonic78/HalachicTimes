@@ -256,7 +256,7 @@
                 android:key="sunset"
                 android:title="@string/opinion"/>
             <ListPreference
-                android:defaultValue="sea"
+                android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
                 android:entryValues="@array/reminder_values"
