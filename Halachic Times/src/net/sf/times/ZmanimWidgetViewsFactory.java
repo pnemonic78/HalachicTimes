@@ -1,7 +1,5 @@
 package net.sf.times;
 
-import java.util.Calendar;
-
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
