@@ -517,17 +517,12 @@ public class AddressProvider {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db == null)
 			return;
-		try {
-			if (insert) {
-				id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
-				address.setId(id);
-			} else {
-				String[] whereArgs = { Long.toString(id) };
-				db.update(AddressOpenHelper.TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
-			}
-		} finally {
-			if (db != null)
-				db.close();
+		if (insert) {
+			id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
+			address.setId(id);
+		} else {
+			String[] whereArgs = { Long.toString(id) };
+			db.update(AddressOpenHelper.TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
 		}
 	}
 
@@ -595,7 +590,6 @@ public class AddressProvider {
 			return addresses;
 		Cursor cursor = db.query(AddressOpenHelper.TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
 		if ((cursor == null) || cursor.isClosed()) {
-			db.close();
 			return addresses;
 		}
 
@@ -640,7 +634,6 @@ public class AddressProvider {
 			Log.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
 		} finally {
 			cursor.close();
-			db.close();
 		}
 
 		return addresses;
@@ -847,16 +840,12 @@ public class AddressProvider {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db == null)
 			return;
-		try {
-			if (id == 0L) {
-				id = db.insert(AddressOpenHelper.TABLE_ELEVATIONS, null, values);
-				location.setId(id);
-			} else {
-				String[] whereArgs = { Long.toString(id) };
-				db.update(AddressOpenHelper.TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
-			}
-		} finally {
-			db.close();
+		if (id == 0L) {
+			id = db.insert(AddressOpenHelper.TABLE_ELEVATIONS, null, values);
+			location.setId(id);
+		} else {
+			String[] whereArgs = { Long.toString(id) };
+			db.update(AddressOpenHelper.TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
 		}
 	}
 
@@ -874,7 +863,6 @@ public class AddressProvider {
 			return locations;
 		Cursor cursor = db.query(AddressOpenHelper.TABLE_ELEVATIONS, COLUMNS_ELEVATIONS, null, null, null, null, null);
 		if ((cursor == null) || cursor.isClosed()) {
-			db.close();
 			return locations;
 		}
 
@@ -899,7 +887,6 @@ public class AddressProvider {
 			Log.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
 		} finally {
 			cursor.close();
-			db.close();
 		}
 
 		return locations;
@@ -917,7 +904,6 @@ public class AddressProvider {
 			return;
 		Cursor cursor = db.query(AddressOpenHelper.TABLE_CITIES, COLUMNS_CITIES, null, null, null, null, null);
 		if ((cursor == null) || cursor.isClosed()) {
-			db.close();
 			return;
 		}
 
@@ -945,7 +931,6 @@ public class AddressProvider {
 			Log.e(TAG, "Populate cities: " + se.getLocalizedMessage(), se);
 		} finally {
 			cursor.close();
-			db.close();
 		}
 	}
 
@@ -971,12 +956,8 @@ public class AddressProvider {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db == null)
 			return;
-		try {
-			String[] whereArgs = { Long.toString(id) };
-			db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
-		} finally {
-			db.close();
-		}
+		String[] whereArgs = { Long.toString(id) };
+		db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
 	}
 
 	/**
@@ -986,10 +967,6 @@ public class AddressProvider {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db == null)
 			return;
-		try {
-			db.delete(AddressOpenHelper.TABLE_ADDRESSES, null, null);
-		} finally {
-			db.close();
-		}
+		db.delete(AddressOpenHelper.TABLE_ADDRESSES, null, null);
 	}
 }
