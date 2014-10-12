@@ -81,6 +81,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 		if (position > mPositionTomorrow) {
 			position--;
 		}
+		if ((position < 0) || (position >= adapter.getCount()))
+			return null;
 
 		ZmanimItem item = adapter.getItem(position);
 		row = new RemoteViews(pkg, R.layout.widget_item);
