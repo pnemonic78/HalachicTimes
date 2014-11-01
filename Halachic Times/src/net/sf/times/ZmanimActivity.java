@@ -586,7 +586,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	}
 
 	protected boolean isDetailsShowing() {
-		if (mDetailsFragment.getVisibility() != View.VISIBLE)
+		if ((mDetailsFragment == null) || (mDetailsFragment.getVisibility() != View.VISIBLE))
 			return false;
 		if (mSwitcher == null) {
 			LinearLayout.LayoutParams lp = (LayoutParams) mDetailsFragment.getLayoutParams();
