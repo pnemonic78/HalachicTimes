@@ -143,7 +143,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 		onDataSetChanged();
 	}
 
-	private synchronized void populateAdapter() {
+	private void populateAdapter() {
 		Context context = mContext;
 
 		if (mSettings == null)
@@ -160,15 +160,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 		if (gloc == null)
 			return;
 
-		ZmanimAdapter adapter = mAdapter;
-		if (adapter == null) {
-			adapter = new ZmanimAdapter(context, mSettings);
-			mAdapter = adapter;
-		}
+		// Always create new adapter to avoid concurrency bugs.
+		ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings);
 		adapter.setCalendar(System.currentTimeMillis());
 		adapter.setGeoLocation(gloc);
 		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
+		mAdapter = adapter;
 
 		mPositionToday = 0;
 		mPositionTomorrow = -1;
