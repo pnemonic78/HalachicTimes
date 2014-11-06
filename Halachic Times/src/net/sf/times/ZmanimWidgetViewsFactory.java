@@ -17,6 +17,11 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
+/**
+ * Factory to create views for list widget.
+ * 
+ * @author Moshe
+ */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
 

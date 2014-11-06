@@ -348,7 +348,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * @return {@code true} if remote list.
 	 */
 	protected boolean isRemoteList() {
-		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+		return false;
 	}
 
 	/**
