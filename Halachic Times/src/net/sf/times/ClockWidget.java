@@ -42,7 +42,7 @@ public class ClockWidget extends ZmanimWidget {
 	}
 
 	@Override
-	protected void bindViews(RemoteViews views, ZmanimAdapter adapter) {
+	protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
 		final int count = adapter.getCount();
 		ZmanimItem item;
 
@@ -50,13 +50,13 @@ public class ClockWidget extends ZmanimWidget {
 			item = adapter.getItem(position);
 			if (item.elapsed || (item.time == null) || (item.timeLabel == null))
 				continue;
-			bindView(views, item);
+			bindView(list, position, item);
 			break;
 		}
 	}
 
 	@Override
-	protected void bindView(RemoteViews views, ZmanimItem item) {
+	protected void bindView(RemoteViews list, int position, ZmanimItem item) {
 		if (mTimeFormat == null) {
 			Context context = mContext;
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
@@ -69,8 +69,8 @@ public class ClockWidget extends ZmanimWidget {
 		int indexMinutes = TextUtils.indexOf(label, ':');
 		spans.setSpan(new TypefaceSpan("sans-serif"), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		spans.setSpan(new StyleSpan(Typeface.BOLD), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-		views.setTextViewText(R.id.time, spans);
-		views.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
+		list.setTextViewText(R.id.time, spans);
+		list.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
 	}
 
 	@Override

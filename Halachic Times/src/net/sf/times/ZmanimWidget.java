@@ -25,6 +25,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -280,17 +281,37 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	/**
 	 * Bind the times to remote views.
 	 * 
-	 * @param views
+	 * @param list
 	 *            the remote views.
+	 * @param adapter
+	 *            the list adapter.
 	 */
-	protected void bindViews(RemoteViews views, ZmanimAdapter adapter) {
+	protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
 		final int count = adapter.getCount();
 		ZmanimItem item;
 
+		int positionToday = -1;
+
 		for (int position = 0; position < count; position++) {
 			item = adapter.getItem(position);
-			bindView(views, item);
+			bindView(list, position, item);
+
+			if ((item.titleId <= R.string.sunset) && !(item.elapsed || (item.time == null) || (item.timeLabel == null))) {
+				positionToday = position;
+			}
 		}
+
+		Calendar date = adapter.getCalendar().getCalendar();
+		JewishDate jewishDate = new JewishDate(date);
+		CharSequence dateHebrew = null;
+		if (positionToday >= 0) {
+			dateHebrew = adapter.formatDate(jewishDate);
+		}
+		bindViewGrouping(list, 0, R.id.today_row, R.id.today_date, dateHebrew);
+
+		jewishDate.forward();
+		dateHebrew = adapter.formatDate(jewishDate);
+		bindViewGrouping(list, 1, R.id.tomorrow_row, R.id.tomorrow_date, dateHebrew);
 	}
 
 	/**
@@ -298,10 +319,12 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * 
 	 * @param list
 	 *            the remote list.
+	 * @param position
+	 *            the position index.
 	 * @param item
 	 *            the zmanim item.
 	 */
-	protected void bindView(RemoteViews list, ZmanimItem item) {
+	protected void bindView(RemoteViews list, int position, ZmanimItem item) {
 		if (item.elapsed || (item.time == null) || (item.timeLabel == null)) {
 			list.setViewVisibility(item.rowId, View.GONE);
 		} else {
@@ -380,6 +403,29 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
 		} else {
 			populateTimes(context);
+		}
+	}
+
+	/**
+	 * Bind the date group header to a list.
+	 * 
+	 * @param list
+	 *            the list.
+	 * @param position
+	 *            the position index.
+	 * @param rowId
+	 *            the row id.
+	 * @param textId
+	 *            the text id.
+	 * @param label
+	 *            the formatted Hebrew date label.
+	 */
+	protected void bindViewGrouping(RemoteViews list, int position, int rowId, int textId, CharSequence label) {
+		if ((position < 0) || (label == null)) {
+			list.setViewVisibility(rowId, View.GONE);
+		} else {
+			list.setViewVisibility(rowId, View.VISIBLE);
+			list.setTextViewText(textId, label);
 		}
 	}
 }

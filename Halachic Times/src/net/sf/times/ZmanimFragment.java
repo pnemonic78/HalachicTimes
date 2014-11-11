@@ -25,6 +25,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -115,6 +116,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	}
 
 	/** Initialise. */
+	@SuppressLint("InflateParams")
 	private void init(Context context) {
 		if (!isInEditMode()) {
 			mSettings = new ZmanimSettings(context);
@@ -179,7 +181,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 		if (list == null)
 			return adapter;
 		list.setBackgroundDrawable(getListBackground());
-		bindViews(list, adapter, date);
+		bindViews(list, adapter);
 		return adapter;
 	}
 
@@ -204,10 +206,8 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 *            the list.
 	 * @param adapter
 	 *            the list adapter.
-	 * @param date
-	 *            the date.
 	 */
-	protected void bindViews(ViewGroup list, A adapter, Calendar date) {
+	protected void bindViews(ViewGroup list, A adapter) {
 		if (list == null)
 			return;
 		final int count = adapter.getCount();
@@ -216,6 +216,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 		ZmanimItem item;
 		View row;
 
+		Calendar date = adapter.getCalendar().getCalendar();
 		JewishDate jewishDate = new JewishDate(date);
 		CharSequence dateHebrew = adapter.formatDate(jewishDate);
 
@@ -263,6 +264,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 * @param label
 	 *            the formatted Hebrew date label.
 	 */
+	@SuppressLint("InflateParams")
 	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
 		if (position > 0)
 			mInflater.inflate(R.layout.divider, list);
