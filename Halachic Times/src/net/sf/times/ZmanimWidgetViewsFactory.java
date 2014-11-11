@@ -46,7 +46,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	@Override
 	public int getCount() {
-		return (mPositionToday >= 0 ? 1 : 0) + mAdapter.getCount() + (mPositionTomorrow > 0 ? 1 : 0);
+		return (mAdapter == null) ? 0 : (mPositionToday >= 0 ? 1 : 0) + mAdapter.getCount() + (mPositionTomorrow > 0 ? 1 : 0);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	@Override
 	public int getViewTypeCount() {
-		return 1 + mAdapter.getViewTypeCount();
+		return 1 + ((mAdapter == null) ? 0 : mAdapter.getViewTypeCount());
 	}
 
 	@Override
