@@ -9,7 +9,23 @@
     android:padding="@dimen/widget_padding">
 
     <LinearLayout
+        android:id="@+id/today_row"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/today_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_nokia"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/dawn_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -36,7 +52,6 @@
 
     <LinearLayout
         android:id="@+id/tallis_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -63,6 +78,7 @@
 
     <LinearLayout
         android:id="@+id/sunrise_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -89,7 +105,6 @@
 
     <LinearLayout
         android:id="@+id/shema_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -116,6 +131,7 @@
 
     <LinearLayout
         android:id="@+id/prayers_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -142,7 +158,6 @@
 
     <LinearLayout
         android:id="@+id/midday_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -169,6 +184,7 @@
 
     <LinearLayout
         android:id="@+id/earliest_mincha_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -195,7 +211,6 @@
 
     <LinearLayout
         android:id="@+id/mincha_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -222,6 +237,7 @@
 
     <LinearLayout
         android:id="@+id/plug_hamincha_row"
+        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -275,7 +291,6 @@
 
     <LinearLayout
         android:id="@+id/sunset_row"
-        style="@style/LightRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -296,6 +311,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/text_nokia"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tomorrow_row"
+        style="@style/LightRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tomorrow_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/text_nokia"/>
     </LinearLayout>
