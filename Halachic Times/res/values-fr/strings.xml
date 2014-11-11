@@ -79,7 +79,7 @@
         <item quantity="other">%1$d minutes avant le coucher du soleil</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 bougie de \'Hanoukka</item>
+        <item quantity="one">%1$d bougie de \'Hanoukka</item>
         <item quantity="other">%1$d bougies de \'Hanoukka</item>
     </plurals>
 

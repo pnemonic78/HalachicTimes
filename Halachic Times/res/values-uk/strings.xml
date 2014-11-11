@@ -81,7 +81,7 @@
         <item quantity="other">%1$d хвилин до заходу сонця</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 свічка Хануки</item>
+        <item quantity="one">%1$d свічка Хануки</item>
         <item quantity="few">%1$d Ханукальні свічки</item>
         <item quantity="many">%1$d Ханукальні свічки</item>
         <item quantity="other">%1$d Ханукальні свічки</item>
