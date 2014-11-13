@@ -61,8 +61,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	private ZmanimLocations mLocations;
 	/** The settings and preferences. */
 	private ZmanimSettings mSettings;
-	/** The adapter. */
-	private ZmanimAdapter mAdapter;
 
 	private final ContentObserver mFormatChangeObserver = new ContentObserver(new Handler()) {
 		@Override
@@ -187,11 +185,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 				if (gloc == null)
 					return;
 
-				ZmanimAdapter adapter = mAdapter;
-				if (adapter == null) {
-					adapter = new ZmanimAdapter(context, mSettings);
-					mAdapter = adapter;
-				}
+				ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings);
 				adapter.setCalendar(now);
 				adapter.setGeoLocation(gloc);
 				adapter.setInIsrael(locations.inIsrael());
