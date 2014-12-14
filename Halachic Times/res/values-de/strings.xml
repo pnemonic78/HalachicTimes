@@ -28,6 +28,7 @@
     <string name="opinion_ateret">Nach Yeshivat Ateret Tora</string>
     <string name="opinion_gra">Nach GRA und Baal Tanya</string>
     <string name="opinion_mga">Nach Magen Avraham</string>
+    <string name="opinion_tam">Nach Rabbenu Tam</string>
 
     <!-- List -->
     <string name="dawn">Morgendämmerung</string>

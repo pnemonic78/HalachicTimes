@@ -28,6 +28,7 @@
     <string name="opinion_ateret">Selon le Yechivat Ateret Torah</string>
     <string name="opinion_gra">Selon le GRA et Baal Tanya</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>
+    <string name="opinion_tam">Selon le Rabbenou Tam</string>
 
     <!-- List -->
     <string name="dawn">Aube</string>

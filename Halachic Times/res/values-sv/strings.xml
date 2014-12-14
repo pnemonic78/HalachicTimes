@@ -28,6 +28,7 @@
     <string name="opinion_ateret">Enligt Yešivat Ateret Tora</string>
     <string name="opinion_gra">Enligt GRA och Baal Tanya</string>
     <string name="opinion_mga">Enligt Magen Avraham</string>
+    <string name="opinion_tam">Enligt Rabbeinu Tam</string>
 
     <!-- List -->
     <string name="dawn">Gryning</string>
