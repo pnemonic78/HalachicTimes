@@ -45,6 +45,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -54,6 +55,8 @@ import android.widget.RemoteViews;
  * @author Moshe Waisberg
  */
 public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationListener {
+
+	private static final String TAG = "ZmanimWidget";
 
 	/** The context. */
 	protected Context mContext;
@@ -98,10 +101,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, mFormatChangeObserver);
 		} else if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
 			Context app = context.getApplicationContext();
-			app.unregisterReceiver(this);
-
 			ContentResolver resolver = context.getContentResolver();
-			resolver.unregisterContentObserver(mFormatChangeObserver);
+			try {
+				app.unregisterReceiver(this);
+				resolver.unregisterContentObserver(mFormatChangeObserver);
+			} catch (IllegalArgumentException e) {
+				Log.e(TAG, "unregister receiver: " + e.getLocalizedMessage(), e);
+			}
 		} else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
 			notifyAppWidgetViewDataChanged(context);
 		} else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
