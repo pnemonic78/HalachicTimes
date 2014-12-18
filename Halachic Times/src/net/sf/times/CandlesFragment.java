@@ -143,14 +143,16 @@ public class CandlesFragment extends ZmanimFragment {
 				addView(group);
 				mCandlesChannuka = group;
 
-				assert candlesCount <= CHANNUKA_CANDLES.length;
-				mAnimations = new CandleAnimation[candlesCount + 1];
-				for (int i = 0; i < candlesCount; i++) {
+				// create all candles in case user navigates to future day.
+				final int allCandlesCount = CHANNUKA_CANDLES.length;
+				assert candlesCount <= allCandlesCount;
+				mAnimations = new CandleAnimation[allCandlesCount + 1];
+				for (int i = 0; i < allCandlesCount; i++) {
 					view = (ImageView) group.findViewById(CHANNUKA_CANDLES[i]);
 					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
 				}
 				view = (ImageView) group.findViewById(R.id.candle_shamash);
-				mAnimations[candlesCount] = new CandleAnimation(mHandler, view, mRandom);
+				mAnimations[allCandlesCount] = new CandleAnimation(mHandler, view, mRandom);
 			}
 			// Only show relevant candles.
 			for (int i = 0; i < candlesCount; i++) {
