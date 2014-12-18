@@ -77,10 +77,14 @@
 
     <plurals name="candles_summary">
         <item quantity="one">דקה %1$d לפני השקיעה</item>
+        <item quantity="two">%1$d דקות לפני השקיעה</item>
+        <item quantity="many">%1$d דקות לפני השקיעה</item>
         <item quantity="other">%1$d דקות לפני השקיעה</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">נר חנוכה 1</item>
+        <item quantity="one">נר חנוכה %1$d</item>
+        <item quantity="two">%1$d נרות חנוכה</item>
+        <item quantity="many">%1$d נרות חנוכה</item>
         <item quantity="other">%1$d נרות חנוכה</item>
     </plurals>
 

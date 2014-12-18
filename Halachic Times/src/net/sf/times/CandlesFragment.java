@@ -24,6 +24,7 @@ import java.util.Random;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -103,6 +104,7 @@ public class CandlesFragment extends ZmanimFragment {
 		return new CandlesAdapter(mContext, mSettings);
 	}
 
+	@SuppressLint("InflateParams")
 	@Override
 	public ZmanimAdapter populateTimes(Calendar date) {
 		CandlesAdapter adapter = (CandlesAdapter) super.populateTimes(date);
@@ -124,7 +126,7 @@ public class CandlesFragment extends ZmanimFragment {
 				addView(group);
 				mCandlesKippurim = group;
 
-				assert candlesCount == YOM_KIPPURIM_CANDLES.length;
+				// assert candlesCount == YOM_KIPPURIM_CANDLES.length;
 				mAnimations = new CandleAnimation[candlesCount];
 				for (int i = 0; i < candlesCount; i++) {
 					view = (ImageView) group.findViewById(YOM_KIPPURIM_CANDLES[i]);
@@ -145,7 +147,7 @@ public class CandlesFragment extends ZmanimFragment {
 
 				// create all candles in case user navigates to future day.
 				final int allCandlesCount = CHANNUKA_CANDLES.length;
-				assert candlesCount <= allCandlesCount;
+				// assert candlesCount <= allCandlesCount;
 				mAnimations = new CandleAnimation[allCandlesCount + 1];
 				for (int i = 0; i < allCandlesCount; i++) {
 					view = (ImageView) group.findViewById(CHANNUKA_CANDLES[i]);
@@ -182,7 +184,7 @@ public class CandlesFragment extends ZmanimFragment {
 					addView(group);
 					mCandlesShabbat = group;
 
-					assert candlesCount == SHABBAT_CANDLES.length;
+					// assert candlesCount == SHABBAT_CANDLES.length;
 					mAnimations = new CandleAnimation[candlesCount];
 					for (int i = 0; i < candlesCount; i++) {
 						view = (ImageView) group.findViewById(SHABBAT_CANDLES[i]);
