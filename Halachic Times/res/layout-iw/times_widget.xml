@@ -404,6 +404,37 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/candles_twilight_row"
+        style="@style/CandleRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/candles_twilight_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
+                android:singleLine="true"
+                android:text="@string/candles"
+                android:textAppearance="?android:attr/textAppearanceSmallInverse"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/nightfall_row"
         style="@style/LightRow"
         android:layout_width="fill_parent"

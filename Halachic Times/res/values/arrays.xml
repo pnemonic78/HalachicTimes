@@ -281,6 +281,16 @@
         <item>@string/midnight_summary</item>
         <item>@string/midnight_12</item>
     </string-array>
+    <string-array name="candles_chanukka_values" translatable="false">
+        <item></item>
+        <item>twilight</item>
+        <item>nightfall</item>
+    </string-array>
+    <string-array name="candles_chanukka_entries" translatable="false">
+        <item>@string/sunset</item>
+        <item>@string/twilight</item>
+        <item>@string/nightfall</item>
+    </string-array>
     <string-array name="levana_earliest_values" translatable="false">
         <item></item>
         <item>7</item>

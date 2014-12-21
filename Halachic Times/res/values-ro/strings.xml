@@ -81,7 +81,7 @@
         <item quantity="other">%1$d minute înainte de apus</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanuka lumânare</item>
+        <item quantity="one">%1$d Chanuka lumânare</item>
         <item quantity="few">%1$d lumânări de Chanuka</item>
         <item quantity="other">%1$d lumânări de Chanuka</item>
     </plurals>

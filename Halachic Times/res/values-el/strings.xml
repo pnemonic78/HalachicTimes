@@ -80,7 +80,7 @@
         <item quantity="other">%1$d λεπτά πριν το ηλιοβασίλεμα</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Χανουκά κερί</item>
+        <item quantity="one">%1$d Χανουκά κερί</item>
         <item quantity="other">%1$d κεριά Χανουκά</item>
     </plurals>
 

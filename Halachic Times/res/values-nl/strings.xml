@@ -80,7 +80,7 @@
         <item quantity="other">%1$d minuten vóór zonsondergang</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanoeka kaars</item>
+        <item quantity="one">%1$d Chanoeka kaars</item>
         <item quantity="other">%1$d Chanoeka kaarsen</item>
     </plurals>
 

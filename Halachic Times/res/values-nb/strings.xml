@@ -80,7 +80,7 @@
         <item quantity="other">%1$d minutter før solnedgang</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanukka stearinlys</item>
+        <item quantity="one">%1$d Chanukka stearinlys</item>
         <item quantity="other">%1$d Chanukka lys</item>
     </plurals>
 

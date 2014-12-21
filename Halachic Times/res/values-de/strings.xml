@@ -80,7 +80,7 @@
         <item quantity="other">%1$d minuten vor sonnenuntergang</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanukka kerze</item>
+        <item quantity="one">%1$d Chanukka kerze</item>
         <item quantity="other">%1$d Chanukka-kerzen</item>
     </plurals>
 

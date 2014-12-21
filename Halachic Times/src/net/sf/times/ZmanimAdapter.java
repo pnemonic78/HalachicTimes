@@ -71,8 +71,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	private static final int BEFORE_SUNSET = 0x00000000;
 	/** Flag indicating lighting times at sunset. */
 	private static final int AT_SUNSET = 0x10000000;
+	/** Flag indicating lighting times at twilight. */
+	private static final int AT_TWILIGHT = 0x20000000;
 	/** Flag indicating lighting times after nightfall. */
-	private static final int MOTZE_SHABBATH = 0x20000000;
+	private static final int AT_NIGHT = 0x40000000;
+	/** Flag indicating lighting times after Shabbath. */
+	private static final int MOTZE_SHABBATH = AT_NIGHT;
 
 	protected static final int CANDLES_MASK = 0x0000000F;
 	protected static final int HOLIDAY_MASK = 0x000000FF;
@@ -118,6 +122,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected static final String OPINION_FIXED = "fixed";
 	private static final String OPINION_LEVEL = "level";
 	private static final String OPINION_SEA = "sea";
+	private static final String OPINION_TWILIGHT = "twilight";
+	private static final String OPINION_NIGHT = "nightfall";
 
 	/** The day of the month as a decimal number (range 01 to 31). */
 	private static final String DAY_PAD_VAR = "%d";
@@ -810,6 +816,16 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				summary = R.string.twilight_7_083;
 			}
 		}
+		if (hasCandles && (candlesHow == AT_TWILIGHT)) {
+			if (remote) {
+				add(R.id.candles_twilight_row, R.string.twilight, R.id.candles_twilight_time, date);
+			} else if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+				String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+				add(R.string.candles, summaryText, date);
+			}
+		} else if (remote) {
+			add(R.id.candles_twilight_row, R.string.candles, R.id.candles_twilight_time, null);
+		}
 		if (remote)
 			add(R.id.twilight_row, R.string.twilight, R.id.twilight_time, date);
 		else
@@ -900,7 +916,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (holidayToday == JewishCalendar.YOM_KIPPUR) {
 			add(R.string.fast_ends, null, date);
 		}
-		if (hasCandles && (candlesHow == MOTZE_SHABBATH)) {
+		if (hasCandles && (candlesHow == AT_NIGHT)) {
 			if (remote) {
 				add(R.id.candles_nightfall_row, R.string.nightfall, R.id.candles_nightfall_time, date);
 			} else if (holidayTomorrow == JewishCalendar.CHANUKAH) {
@@ -1013,8 +1029,16 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			break;
 		case JewishCalendar.CHANUKAH:
 			count = jcal.getDayOfChanukah();
-			if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY))
-				flags = AT_SUNSET;
+			if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY)) {
+				String opinion = mSettings.getChanukkaCandles();
+				if (OPINION_TWILIGHT.equals(opinion)) {
+					flags = AT_TWILIGHT;
+				} else if (OPINION_NIGHT.equals(opinion)) {
+					flags = AT_NIGHT;
+				} else {
+					flags = AT_SUNSET;
+				}
+			}
 			break;
 		default:
 			if (dayOfWeek == Calendar.FRIDAY) {

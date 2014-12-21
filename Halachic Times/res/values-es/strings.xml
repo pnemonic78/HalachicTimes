@@ -80,7 +80,7 @@
         <item quantity="other">%1$d minutos antes de la puesta del sol</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 vela de Jánuca</item>
+        <item quantity="one">%1$d vela de Jánuca</item>
         <item quantity="other">%1$d velas de Jánuca</item>
     </plurals>
 

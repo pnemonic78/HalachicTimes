@@ -81,6 +81,8 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_PLUG_MINCHA = "plug_hamincha";
 	/** Preference name for candle lighting minutes offset. */
 	public static final String KEY_OPINION_CANDLES = "candles";
+	/** Preference name for Chanukka candle lighting. */
+	public static final String KEY_OPINION_CANDLES_CHANUKKA = "candles_chanukka";
 	/** Preference name for sunset type. */
 	public static final String KEY_OPINION_SUNSET = "sunset";
 	/** Preference name for twilight type. */
@@ -282,6 +284,15 @@ public class ZmanimSettings {
 	}
 
 	/**
+	 * Get the opinion for Chanukka candle lighting time.
+	 * 
+	 * @return the opinion.
+	 */
+	public String getChanukkaCandles() {
+		return mPrefs.getString(KEY_OPINION_CANDLES_CHANUKKA, "");
+	}
+
+	/**
 	 * Get the opinion for dawn (<em>alos</em>).
 	 * 
 	 * @return the opinion.
@@ -453,11 +464,9 @@ public class ZmanimSettings {
 			return getPlugHamincha();
 		if ((id == R.id.sunset_row) || (id == R.string.sunset))
 			return getSunset();
-		if ((id == R.id.twilight_row) || (id == R.string.twilight))
+		if ((id == R.id.twilight_row) || (id == R.string.twilight) || (id == R.id.candles_twilight_row))
 			return getTwilight();
-		if ((id == R.id.nightfall_row) || (id == R.string.nightfall))
-			return getNightfall();
-		if (id == R.id.candles_nightfall_row)
+		if ((id == R.id.nightfall_row) || (id == R.string.nightfall) || (id == R.id.candles_nightfall_row))
 			return getNightfall();
 		if ((id == R.id.midnight_row) || (id == R.string.midnight))
 			return getMidnight();
@@ -500,11 +509,9 @@ public class ZmanimSettings {
 			return getReminder(KEY_REMINDER_CANDLES);
 		if ((id == R.id.sunset_row) || (id == R.string.sunset))
 			return getReminder(KEY_REMINDER_SUNSET);
-		if ((id == R.id.twilight_row) || (id == R.string.twilight))
+		if ((id == R.id.twilight_row) || (id == R.string.twilight) || (id == R.id.candles_twilight_row))
 			return getReminder(KEY_REMINDER_TWILIGHT);
-		if ((id == R.id.nightfall_row) || (id == R.string.nightfall))
-			return getReminder(KEY_REMINDER_NIGHTFALL);
-		if (id == R.id.candles_nightfall_row)
+		if ((id == R.id.nightfall_row) || (id == R.string.nightfall) || (id == R.id.candles_nightfall_row))
 			return getReminder(KEY_REMINDER_NIGHTFALL);
 		if ((id == R.id.midnight_row) || (id == R.string.midnight))
 			return getReminder(KEY_REMINDER_MIDNIGHT);

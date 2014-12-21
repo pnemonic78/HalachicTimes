@@ -81,7 +81,7 @@
         <item quantity="other">%1$d minuty před západem slunce</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanuka svíčka</item>
+        <item quantity="one">%1$d Chanuka svíčka</item>
         <item quantity="few">%1$d Chanuka svíčky</item>
         <item quantity="other">%1$d Chanuka svíčky</item>
     </plurals>

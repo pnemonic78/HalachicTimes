@@ -82,7 +82,7 @@
         <item quantity="other">%1$d minut przed zachodem słońca</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 świeca Hanukowy</item>
+        <item quantity="one">%1$d świeca Hanukowy</item>
         <item quantity="few">%1$d świece Hanukowy</item>
         <item quantity="many">%1$d świec Hanukowy</item>
         <item quantity="other">%1$d świec Hanukowy</item>

@@ -80,7 +80,7 @@
         <item quantity="other">%1$d dakika önce günbatımı</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanuka mum</item>
+        <item quantity="one">%1$d Chanuka mum</item>
         <item quantity="other">%1$d Chanuka mumlar</item>
     </plurals>
 

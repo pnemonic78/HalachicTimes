@@ -231,6 +231,14 @@
 
             <ListPreference
                 android:defaultValue=""
+                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:entries="@array/candles_chanukka_entries"
+                android:entryValues="@array/candles_chanukka_values"
+                android:icon="@drawable/ic_opinion"
+                android:key="candles_chanukka"
+                android:title="@string/candles_chanukka_opinion"/>
+            <ListPreference
+                android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
                 android:entryValues="@array/reminder_values"

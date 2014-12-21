@@ -137,13 +137,15 @@
 
     <!-- Candle lighting -->
     <string name="candles">Candle lighting</string>
+    <string name="chanukka">Chanukka</string>
+    <string name="candles_chanukka_opinion" translatable="false">@string/chanukka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minute before sunset</item>
         <item quantity="other">%1$d minutes before sunset</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Chanukka candle</item>
+        <item quantity="one">%1$d Chanukka candle</item>
         <item quantity="other">%1$d Chanukka candles</item>
     </plurals>
 

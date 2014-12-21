@@ -78,7 +78,7 @@
         <item quantity="other">%1$d минути преди да залез</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">1 Ханука свещ</item>
+        <item quantity="one">%1$d Ханука свещ</item>
         <item quantity="other">%1$d Ханука свещи</item>
     </plurals>
 
