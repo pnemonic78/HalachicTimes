@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Kaars verlichting</string>
+    <string name="chanukka">Chanoeka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minuut vóór zonsondergang</item>

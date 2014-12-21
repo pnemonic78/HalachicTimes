@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Φωτισμό κεριών</string>
+    <string name="chanukka">Χανουκά</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d λεπτό πριν το ηλιοβασίλεμα</item>

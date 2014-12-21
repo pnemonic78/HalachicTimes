@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Žvakė apšvietimas</string>
+    <string name="chanukka">Chanuka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minutės prieš saulėlydžio</item>

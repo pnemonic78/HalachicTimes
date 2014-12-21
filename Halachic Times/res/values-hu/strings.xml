@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Gyertyagyújtás</string>
+    <string name="chanukka">Hanuka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d perc naplemente előtt</item>

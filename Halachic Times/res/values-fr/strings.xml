@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Allumage des bougies</string>
+    <string name="chanukka">\'Hanoukka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minute avant le coucher du soleil</item>

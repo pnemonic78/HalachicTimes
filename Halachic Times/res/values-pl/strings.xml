@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Oświetlenie świecę</string>
+    <string name="chanukka">Hanukka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minut przed zachodem słońca</item>
@@ -82,10 +83,10 @@
         <item quantity="other">%1$d minut przed zachodem słońca</item>
     </plurals>
     <plurals name="candles_chanukka">
-        <item quantity="one">%1$d świeca Hanukowy</item>
-        <item quantity="few">%1$d świece Hanukowy</item>
-        <item quantity="many">%1$d świec Hanukowy</item>
-        <item quantity="other">%1$d świec Hanukowy</item>
+        <item quantity="one">%1$d świeca Hanukkowy</item>
+        <item quantity="few">%1$d świece Hanukkowy</item>
+        <item quantity="many">%1$d świec Hanukkowy</item>
+        <item quantity="other">%1$d świec Hanukkowy</item>
     </plurals>
 
     <!-- Sunset -->

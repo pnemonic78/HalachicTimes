@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">הדלקת נרות</string>
+    <string name="chanukka">חנוכה</string>
 
     <plurals name="candles_summary">
         <item quantity="one">דקה %1$d לפני השקיעה</item>

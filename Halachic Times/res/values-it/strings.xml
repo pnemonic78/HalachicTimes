@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Candela illuminazione</string>
+    <string name="chanukka">Chanukkà</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minuto prima del tramonto</item>

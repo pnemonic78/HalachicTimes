@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Acendimento das velas</string>
+    <string name="chanukka">Hanucá</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minuto antes da pôr do sol</item>

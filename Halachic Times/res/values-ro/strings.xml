@@ -74,6 +74,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Lumânare de iluminat</string>
+    <string name="chanukka">Chanuka</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d minute înainte de apus</item>

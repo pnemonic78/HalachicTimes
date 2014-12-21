@@ -72,6 +72,7 @@
 
     <!-- Candle lighting -->
     <string name="candles">Осветление на свещи</string>
+    <string name="chanukka">Ханука</string>
 
     <plurals name="candles_summary">
         <item quantity="one">%1$d минута преди да залез</item>
