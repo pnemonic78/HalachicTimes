@@ -5,7 +5,7 @@
         android:id="@+id/menu_compass"
         android:icon="@android:drawable/ic_menu_compass"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/menu_compass"/>
     <item
         android:id="@+id/menu_date"
@@ -15,7 +15,7 @@
         android:title="@string/menu_date"/>
     <item
         android:id="@+id/menu_location"
-        android:icon="@android:drawable/ic_menu_mylocation"
+        android:icon="@android:drawable/ic_menu_myplaces"
         android:orderInCategory="200"
         android:showAsAction="ifRoom"
         android:title="@string/menu_location"/>
