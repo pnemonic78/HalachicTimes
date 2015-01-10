@@ -133,8 +133,9 @@ public class SunTimesCalculator extends AstronomicalCalculator {
 	private static double getApproxTimeDays(int dayOfYear, double hoursFromMeridian, boolean isSunrise) {
 		if (isSunrise) {
 			return dayOfYear + ((6.0 - hoursFromMeridian) / 24);
+		} else { // sunset
+			return dayOfYear + ((18.0 - hoursFromMeridian) / 24);
 		}
-		return dayOfYear + ((18.0 - hoursFromMeridian) / 24);
 	}
 
 	/**

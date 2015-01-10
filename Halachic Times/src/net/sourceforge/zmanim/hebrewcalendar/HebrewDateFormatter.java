@@ -1,6 +1,6 @@
 /*
  * Zmanim Java API
- * Copyright (C) 2011 Eliyahu Hershfeld
+ * Copyright (C) 2011 - 2014 Eliyahu Hershfeld
  * Copyright (C) September 2002 Avrom Finkelstien 
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General
@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
  * @see net.sourceforge.zmanim.hebrewcalendar.JewishDate
  * @see net.sourceforge.zmanim.hebrewcalendar.JewishCalendar
  * 
- * @author &copy; Eliyahu Hershfeld 2011
+ * @author &copy; Eliyahu Hershfeld 2011 - 2014
  * @version 0.3
  */
 public class HebrewDateFormatter {
@@ -170,7 +170,7 @@ public class HebrewDateFormatter {
 	/**
 	 * Formats the Yom Tov (holiday) in Hebrew or transliterated Latin characters.
 	 * 
-	 * @param jewishCalendar
+	 * @param jewishCalendar the JewishCalendar
 	 * @return the formatted holiday or an empty String if the day is not a holiday.
 	 * @see #isHebrewFormat()
 	 */
@@ -191,10 +191,10 @@ public class HebrewDateFormatter {
 		String formattedRoshChodesh = "";
 		int month = jewishCalendar.getJewishMonth();
 		if (jewishCalendar.getJewishDayOfMonth() == 30) {
-			if (month < JewishDate.ADAR || (month == JewishDate.ADAR && jewishCalendar.isJewishLeapYear())) {
+			if (month < JewishCalendar.ADAR || (month == JewishCalendar.ADAR && jewishCalendar.isJewishLeapYear())) {
 				month++;
 			} else { // roll to Nissan
-				month = JewishDate.NISSAN;
+				month = JewishCalendar.NISSAN;
 			}
 		}
 
@@ -387,7 +387,7 @@ public class HebrewDateFormatter {
 	 * &#x05E8;&#x05D0;&#x05E9;&#x05D5;&#x05DF; etc. If Hebrew formatting is not in use it will return it in the format
 	 * of Sunday etc. There are various formatting options that will affect the output.
 	 * 
-	 * @param jewishDate
+	 * @param jewishDate the JewishDate Object
 	 * @return the formatted day of week
 	 * @see #isHebrewFormat()
 	 * @see #isLongWeekFormat()
@@ -398,9 +398,10 @@ public class HebrewDateFormatter {
 			sb.append(longWeekFormat ? hebrewDaysOfWeek[jewishDate.getDayOfWeek() - 1] : formatHebrewNumber(jewishDate
 					.getDayOfWeek()));
 			return sb.toString();
+		} else {
+			return jewishDate.getDayOfWeek() == 7 ? getTransliteratedShabbosDayOfWeek() : new SimpleDateFormat("EEEE")
+					.format(jewishDate.getTime());
 		}
-		return jewishDate.getDayOfWeek() == 7 ? getTransliteratedShabbosDayOfWeek() : new SimpleDateFormat("EEEE")
-				.format(jewishDate.getTime());
 	}
 
 	/**
@@ -410,7 +411,7 @@ public class HebrewDateFormatter {
 	 * of the parsha(ios) transliterated into Latin chars. The default uses Ashkenazi pronunciation in typical American
 	 * English spelling, for example Bereshis or Nitzavim Vayeilech or an empty string if there are none.
 	 * 
-	 * @param jewishCalendar
+	 * @param jewishCalendar the JewishCalendar Object
 	 * @return today's parsha(ios) in Hebrew for example, if the formatter is set to format in Hebrew, returns a string
 	 *         of the current parsha(ios) in Hebrew for example &#x05D1;&#x05E8;&#x05D0;&#x05E9;&#x05D9;&#x05EA; or
 	 *         &#x05E0;&#x05D9;&#x05E6;&#x05D1;&#x05D9;&#x05DD; &#x05D5;&#x05D9;&#x05DC;&#x05DA; or an empty string if
@@ -428,7 +429,7 @@ public class HebrewDateFormatter {
 	 * typical American English spelling, for example Bereshis or Nitzavim Vayeilech or an empty string if there are
 	 * none.
 	 * 
-	 * @param jewishCalendar
+	 * @param jewishCalendar the JewishCalendar Object
 	 * @return a string of the parsha(ios) transliterated into Latin chars. The default uses Ashkenazi pronunciation in
 	 *         typical American English spelling, for example Bereshis or Nitzavim Vayeilech or an empty string if there
 	 *         are none.
@@ -440,7 +441,7 @@ public class HebrewDateFormatter {
 	/**
 	 * Returns whether the class is set to use the Geresh &#x5F3; and Gershayim &#x5F4; in formatting Hebrew dates and
 	 * numbers. When true and output would look like &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
-	 * &#x5EA;&#x5E9;&#x5DA;&#x5F3;. When set to false, this output would display as &#x5DB&#x5D0; &#x5E9;&#x5D1;&#x5D8;
+	 * &#x5EA;&#x5E9;&#x5DA;&#x5F3;. When set to false, this output would display as &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
 	 * &#x5EA;&#x5E9;&#x5DA;.
 	 * 
 	 * @return true if set to use the Geresh &#x5F3; and Gershayim &#x5F4; in formatting Hebrew dates and numbers.
@@ -452,7 +453,7 @@ public class HebrewDateFormatter {
 	/**
 	 * Sets whether to use the Geresh &#x5F3; and Gershayim &#x5F4; in formatting Hebrew dates and numbers. The default
 	 * value is true and output would look like &#x5DB;&#x5F4;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
-	 * &#x5EA;&#x5E9;&#x5DA;&#x5F3;. When set to false, this output would display as &#x5DB&#x5D0; &#x5E9;&#x5D1;&#x5D8;
+	 * &#x5EA;&#x5E9;&#x5DA;&#x5F3;. When set to false, this output would display as &#x5DB;&#x5D0; &#x5E9;&#x5D1;&#x5D8;
 	 * &#x5EA;&#x5E9;&#x5DA;.
 	 * 
 	 * @param useGershGershayim
@@ -502,8 +503,9 @@ public class HebrewDateFormatter {
 		if (isHebrewFormat()) {
 			return formatHebrewNumber(jewishDate.getJewishDayOfMonth()) + " " + formatMonth(jewishDate) + " "
 					+ formatHebrewNumber(jewishDate.getJewishYear());
+		} else {
+			return jewishDate.getJewishDayOfMonth() + " " + formatMonth(jewishDate) + ", " + jewishDate.getJewishYear();
 		}
-		return jewishDate.getJewishDayOfMonth() + " " + formatMonth(jewishDate) + ", " + jewishDate.getJewishYear();
 	}
 
 	/**
@@ -528,16 +530,21 @@ public class HebrewDateFormatter {
 			} else {
 				return hebrewMonths[month - 1];
 			}
+		} else {
+			if (jewishDate.isJewishLeapYear() && month == JewishDate.ADAR) {
+				return transliteratedMonths[13]; // return Adar I, not Adar in a leap year
+			} else {
+				return transliteratedMonths[month - 1];
+			}
 		}
-		if (jewishDate.isJewishLeapYear() && month == JewishDate.ADAR) {
-			return transliteratedMonths[13]; // return Adar I, not Adar in a leap year
-		}
-		return transliteratedMonths[month - 1];
 	}
 
 	/**
 	 * Returns a String of the Omer day in the form &#x5DC;&#x5F4;&#x5D2; &#x5D1;&#x05E2;&#x05D5;&#x05DE;&#x5E8; if
 	 * Hebrew Format is set, or "Omer X" or "Lag BaOmer" if not. An empty string if there is no Omer this day.
+	 * 
+	 * @param jewishCalendar
+	 *            the JewishCalendar to be formatted
 	 * 
 	 * @return a String of the Omer day in the form or an empty string if there is no Omer this day. The default
 	 *         formatting has a &#x5D1;&#x5F3; prefix that would output &#x5D1;&#x05E2;&#x05D5;&#x05DE;&#x5E8;, but this
@@ -554,11 +561,13 @@ public class HebrewDateFormatter {
 		}
 		if (hebrewFormat) {
 			return formatHebrewNumber(omer) + " " + hebrewOmerPrefix + "\u05E2\u05D5\u05DE\u05E8";
+		} else {
+			if (omer == 33) { // if lag b'omer
+				return "Lag BaOmer";
+			} else {
+				return "Omer " + omer;
+			}
 		}
-		if (omer == 33) { // if lag b'omer
-			return "Lag BaOmer";
-		}
-		return "Omer " + omer;
 	}
 
 	/**
@@ -618,8 +627,9 @@ public class HebrewDateFormatter {
 	public String formatDafYomiBavli(Daf daf) {
 		if (hebrewFormat) {
 			return daf.getMasechta() + " " + formatHebrewNumber(daf.getDaf());
+		} else {
+			return daf.getMasechtaTransliterated() + " " + daf.getDaf();
 		}
-		return daf.getMasechtaTransliterated() + " " + daf.getDaf();
 	}
 
 	/**
@@ -638,7 +648,7 @@ public class HebrewDateFormatter {
 	 * </ul>
 	 * 
 	 * @param number
-	 *            the number to be formatted. It will trow an IllegalArgumentException if the number is < 0 or > 9999.
+	 *            the number to be formatted. It will trow an IllegalArgumentException if the number is &lt; 0 or &gt; 9999.
 	 * @return the Hebrew formatted number such as &#x5EA;&#x5E9;&#x5DB;&#x5F4;&#x5D8;
 	 * 
 	 */
