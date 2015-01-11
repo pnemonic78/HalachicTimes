@@ -84,8 +84,18 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	private static final String TZ_JERUSALEM = "Asia/Jerusalem";
 	/** Time zone ID for Israeli Standard Time. */
 	private static final String TZ_IST = "IST";
+	/** Time zone ID for Israeli Daylight Time. */
+	private static final String TZ_IDT = "IDT";
+	/** Time zone ID for Jerusalem Standard Time. */
+	private static final String TZ_JST = "JST";
 	/** Time zone ID for Beirut (patch for Israeli law of DST 2013). */
 	private static final String TZ_BEIRUT = "Asia/Beirut";
+	/**
+	 * The offset in milliseconds from UTC of Israeli time zone's standard time.
+	 */
+	private static final int TZ_OFFSET_ISRAEL = (int) (2 * DateUtils.HOUR_IN_MILLIS);
+	/** Israeli time zone offset with daylight savings time. */
+	private static final int TZ_OFFSET_DST_ISRAEL = (int) (TZ_OFFSET_ISRAEL + DateUtils.HOUR_IN_MILLIS);
 
 	/** Northern-most latitude for Israel. */
 	private static final double ISRAEL_NORTH = 33.289212;
@@ -465,8 +475,15 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			if (timeZone == null)
 				timeZone = mTimeZone;
 			String id = timeZone.getID();
-			if (TZ_JERUSALEM.equals(id) || TZ_IST.equals(id) || TZ_BEIRUT.equals(id))
+			if (TZ_JERUSALEM.equals(id) || TZ_BEIRUT.equals(id))
 				return true;
+			// Check offsets because "IST" could be "Ireland ST", "JST" could be
+			// "Japan ST".
+			int offset = timeZone.getRawOffset() + timeZone.getDSTSavings();
+			if ((offset >= TZ_OFFSET_ISRAEL) && (offset <= TZ_OFFSET_DST_ISRAEL)) {
+				if (TZ_IDT.equals(id) || TZ_IST.equals(id) || TZ_JST.equals(id))
+					return true;
+			}
 			return false;
 		}
 
