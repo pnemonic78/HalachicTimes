@@ -152,6 +152,7 @@
     <string name="animations">Анимации</string>
     <string name="animations_enabled">Анимации са разрешити</string>
     <string name="animations_disabled">Анимации са инвалиди</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Будилник"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>

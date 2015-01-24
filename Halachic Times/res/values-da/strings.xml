@@ -154,6 +154,7 @@
     <string name="animations">Animationer</string>
     <string name="animations_enabled">Animationer er aktiveret</string>
     <string name="animations_disabled">Animationer er deaktiveret</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dato</string>

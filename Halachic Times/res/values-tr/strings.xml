@@ -154,6 +154,7 @@
     <string name="animations">Animasyonlar</string>
     <string name="animations_enabled">Animasyonlar etkindir</string>
     <string name="animations_disabled">Animasyonlar devre dışı</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Tarih</string>

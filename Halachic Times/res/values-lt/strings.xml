@@ -156,6 +156,7 @@
     <string name="animations">Animacijos</string>
     <string name="animations_enabled">Animations yra įgalinta</string>
     <string name="animations_disabled">Animations yra išjungta</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Signalas"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

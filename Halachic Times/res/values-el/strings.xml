@@ -154,6 +154,7 @@
     <string name="animations">Κινούμενες εικόνες</string>
     <string name="animations_enabled">Κινούμενες εικόνες είναι ενεργοποιημένη</string>
     <string name="animations_disabled">Κινούμενες εικόνες είναι ανενεργό.</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Ξυπνητήρι"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Ημερομηνία</string>

@@ -154,6 +154,7 @@
     <string name="animations">Animatsioonid</string>
     <string name="animations_enabled">Animatsioonid on lubatud</string>
     <string name="animations_disabled">Animatsioonid on keelatud</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Äratus"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>

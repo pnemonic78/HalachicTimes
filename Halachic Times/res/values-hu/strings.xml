@@ -154,6 +154,7 @@
     <string name="animations">Animációk</string>
     <string name="animations_enabled">Animációk engedélyezve</string>
     <string name="animations_disabled">Animációk vannak tiltva</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Ébresztő"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dátum</string>
