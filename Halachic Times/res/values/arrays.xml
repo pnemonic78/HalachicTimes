@@ -357,5 +357,13 @@
         <item>Adar II</item>
         <item>Adar I</item>
     </string-array>
+    <string-array name="alarm_stream_values" translatable="false">
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="alarm_stream_entries" translatable="false">
+        <item>@string/alarm_stream_alarm</item>
+        <item>@string/alarm_stream_notification</item>
+    </string-array>
 
 </resources>

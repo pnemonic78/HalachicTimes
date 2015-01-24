@@ -39,7 +39,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -155,7 +154,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 			if ((before >= 0L) && (item.time != null)) {
 				when = item.time.getTime() - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-					notifyNow(context, item);
+					notifyNow(context, settings, item);
 					settings.setLatestReminder(now);
 					needToday = false;
 				}
@@ -191,7 +190,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 				if ((before >= 0L) && (item.time != null)) {
 					when = item.time.getTime() - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-						notifyNow(context, item);
+						notifyNow(context, settings, item);
 						settings.setLatestReminder(now);
 						needToday = false;
 					}
@@ -273,15 +272,17 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * 
 	 * @param context
 	 *            the context.
+	 * @param settings
+	 *            the settings.
 	 * @param item
 	 *            the zmanim item to notify about.
 	 */
 	@SuppressLint("NewApi")
-	private void notifyNow(Context context, ZmanimItem item) {
+	private void notifyNow(Context context, ZmanimSettings settings, ZmanimItem item) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			notifyNowHoneycomb(context, item);
+			notifyNowHoneycomb(context, settings, item);
 		} else {
-			notifyNowEclair(context, item);
+			notifyNowEclair(context, settings, item);
 		}
 	}
 
@@ -373,7 +374,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "Wakelock", "NewApi" })
-	private void notifyNowEclair(Context context, ZmanimItem item) {
+	private void notifyNowEclair(Context context, ZmanimSettings settings, ZmanimItem item) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
 		Log.i(TAG, "notify now [" + contentTitle + "]");
@@ -383,7 +384,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		Notification notification = new Notification();
-		notification.audioStreamType = AudioManager.STREAM_ALARM;
+		notification.audioStreamType = settings.getAlarmStream();
 		notification.icon = R.drawable.stat_notify_time;
 		notification.defaults = Notification.DEFAULT_ALL;
 		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
@@ -407,7 +408,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	@SuppressWarnings("deprecation")
 	@SuppressLint({ "Wakelock", "NewApi" })
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void notifyNowHoneycomb(Context context, ZmanimItem item) {
+	private void notifyNowHoneycomb(Context context, ZmanimSettings settings, ZmanimItem item) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
 		Log.i(TAG, "notify now [" + contentTitle + "]");
@@ -424,7 +425,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
 		builder.setLights(Color.YELLOW, 1, 0);
 		builder.setSmallIcon(R.drawable.stat_notify_time);
-		builder.setSound(sound, AudioManager.STREAM_ALARM);
+		builder.setSound(sound, settings.getAlarmStream());
 		builder.setWhen(item.time.getTime());// When the zman is supposed to
 												// occur.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {

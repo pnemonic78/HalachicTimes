@@ -237,6 +237,9 @@
     <string name="animations">Animations</string>
     <string name="animations_enabled">Animations are enabled</string>
     <string name="animations_disabled">Animations are disabled</string>
+    <string name="alarm_stream_title">Alarm audio stream type</string>
+    <string name="alarm_stream_alarm">Alarm</string>
+    <string name="alarm_stream_notification">Notification</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

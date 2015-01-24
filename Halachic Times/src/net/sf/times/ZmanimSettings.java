@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
+import android.media.AudioManager;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -58,6 +59,8 @@ public class ZmanimSettings {
 	public static final String KEY_BG_GRADIENT = "gradient";
 	/** Preference name for the latest reminder. */
 	private static final String KEY_REMINDER_LATEST = "reminder";
+	/** Preference name for the alarm audio stream type. */
+	public static final String KEY_ALARM_STREAM = "alarm.stream";
 
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
@@ -566,5 +569,16 @@ public class ZmanimSettings {
 	 */
 	public boolean isCandlesAnimated() {
 		return mPrefs.getBoolean(KEY_ANIM_CANDLES, true);
+	}
+
+	/**
+	 * Get the alarm audio stream type.
+	 * 
+	 * @return the stream type.
+	 * @see AudioManager#STREAM_ALARM
+	 * @see AudioManager#STREAM_NOTIFICATION
+	 */
+	public int getAlarmStream() {
+		return Integer.parseInt(mPrefs.getString(KEY_ALARM_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
 	}
 }
