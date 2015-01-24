@@ -68,7 +68,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		addPreferencesFromResource(R.xml.preferences);
 
-		initList(ZmanimSettings.KEY_ALARM_STREAM);
+		initList(ZmanimSettings.KEY_REMIDER_STREAM);
 
 		mCandles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
 		mCandles.setSummary(R.plurals.candles_summary);

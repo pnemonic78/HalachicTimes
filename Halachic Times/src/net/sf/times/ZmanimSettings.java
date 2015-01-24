@@ -59,8 +59,8 @@ public class ZmanimSettings {
 	public static final String KEY_BG_GRADIENT = "gradient";
 	/** Preference name for the latest reminder. */
 	private static final String KEY_REMINDER_LATEST = "reminder";
-	/** Preference name for the alarm audio stream type. */
-	public static final String KEY_ALARM_STREAM = "alarm.stream";
+	/** Preference name for the reminder audio stream type. */
+	public static final String KEY_REMIDER_STREAM = "reminder.stream";
 
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
@@ -572,13 +572,13 @@ public class ZmanimSettings {
 	}
 
 	/**
-	 * Get the alarm audio stream type.
+	 * Get the reminder audio stream type.
 	 * 
 	 * @return the stream type.
 	 * @see AudioManager#STREAM_ALARM
 	 * @see AudioManager#STREAM_NOTIFICATION
 	 */
-	public int getAlarmStream() {
-		return Integer.parseInt(mPrefs.getString(KEY_ALARM_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
+	public int getReminderStream() {
+		return Integer.parseInt(mPrefs.getString(KEY_REMIDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
 	}
 }

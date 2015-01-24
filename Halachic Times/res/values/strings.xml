@@ -237,9 +237,11 @@
     <string name="animations">Animations</string>
     <string name="animations_enabled">Animations are enabled</string>
     <string name="animations_disabled">Animations are disabled</string>
-    <string name="alarm_stream_title">Alarm audio stream type</string>
-    <string name="alarm_stream_alarm">Alarm</string>
-    <string name="alarm_stream_notification">Notification</string>
+    <string name="reminder_stream_title">Reminder audio stream type</string>
+    <string name="alarm_volume_title">Alarm</string>
+    <string name="notification_volume_title">Notification</string>
+    <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
+    <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

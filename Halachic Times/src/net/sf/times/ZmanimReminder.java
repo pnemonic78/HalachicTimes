@@ -384,7 +384,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		Notification notification = new Notification();
-		notification.audioStreamType = settings.getAlarmStream();
+		notification.audioStreamType = settings.getReminderStream();
 		notification.icon = R.drawable.stat_notify_time;
 		notification.defaults = Notification.DEFAULT_ALL;
 		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
@@ -425,7 +425,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
 		builder.setLights(Color.YELLOW, 1, 0);
 		builder.setSmallIcon(R.drawable.stat_notify_time);
-		builder.setSound(sound, settings.getAlarmStream());
+		builder.setSound(sound, settings.getReminderStream());
 		builder.setWhen(item.time.getTime());// When the zman is supposed to
 												// occur.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
