@@ -155,6 +155,7 @@
     <string name="animations_enabled">Animaatiot ovat käytössä</string>
     <string name="animations_disabled">Animaatiot ovat pois käytöstä</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Hälytys"</string>
+    <string name="notification_volume_title" msgid="2012640760341080408">"Ilmoitus"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Päivämäärä</string>
