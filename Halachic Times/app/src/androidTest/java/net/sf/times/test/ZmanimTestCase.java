@@ -21,7 +21,7 @@ package net.sf.times.test;
 
 import java.util.TimeZone;
 
-import net.sf.times.ZmanimLocations;
+import net.sf.times.location.ZmanimLocations;
 import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.location.Location;
@@ -42,7 +42,7 @@ public class ZmanimTestCase extends AndroidTestCase {
 		Context context = getContext();
 		assertNotNull(context);
 		assertEquals("net.sf.times", context.getPackageName());
-		ZmanimLocations locations = ZmanimLocations.getInstance(context);
+		ZmanimLocations locations = new ZmanimLocations(context);
 		assertNotNull(locations);
 
 		String[] ids = TimeZone.getAvailableIDs();
