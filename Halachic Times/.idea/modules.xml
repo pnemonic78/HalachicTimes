@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Halachic Times.iml" filepath="$PROJECT_DIR$/Halachic Times.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KosherJava/KosherJava.iml" filepath="$PROJECT_DIR$/KosherJava/KosherJava.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
