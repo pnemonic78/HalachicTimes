@@ -377,7 +377,7 @@ public class GeoLocation implements Cloneable {
 			cosSqAlpha = 1 - sinAlpha * sinAlpha;
 			cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cosSqAlpha;
 			if (Double.isNaN(cos2SigmaM))
-				cos2SigmaM = 0; // equatorial line: cosSqAlpha=0 (§6)
+				cos2SigmaM = 0; // equatorial line: cosSqAlpha=0 (Â§6)
 			C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
 			lambdaP = lambda;
 			lambda = L + (1 - C) * f * sinAlpha
@@ -444,7 +444,7 @@ public class GeoLocation implements Cloneable {
 		double dPhi = Math.log(Math.tan(Math.toRadians(location.getLongitude()) / 2 + Math.PI / 4)
 				/ Math.tan(Math.toRadians(getLatitude()) / 2 + Math.PI / 4));
 		double q = (Math.abs(dLat) > 1e-10) ? dLat / dPhi : Math.cos(Math.toRadians(getLatitude()));
-		// if dLon over 180° take shorter rhumb across 180° meridian:
+		// if dLon over 180Â° take shorter rhumb across 180Â° meridian:
 		if (dLon > Math.PI)
 			dLon = 2 * Math.PI - dLon;
 		double d = Math.sqrt(dLat * dLat + q * q * dLon * dLon);
@@ -531,8 +531,8 @@ public class GeoLocation implements Cloneable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\nLocation Name:\t\t\t").append(getLocationName());
-		sb.append("\nLatitude:\t\t\t").append(getLatitude()).append("°");
-		sb.append("\nLongitude:\t\t\t").append(getLongitude()).append("°");
+		sb.append("\nLatitude:\t\t\t").append(getLatitude()).append("\u00B0");
+		sb.append("\nLongitude:\t\t\t").append(getLongitude()).append("\u00B0");
 		sb.append("\nElevation:\t\t\t").append(getElevation()).append(" Meters");
 		sb.append("\nTimezone Name:\t\t\t").append(getTimeZone().getID());
 		/*
