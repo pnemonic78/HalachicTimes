@@ -19,16 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
-
-import net.sf.app.TodayDatePickerDialog;
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.LocationActivity;
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocation;
-import net.sf.times.location.ZmanimLocationListener;
-import net.sf.times.location.ZmanimLocations;
-import net.sf.view.animation.LayoutWeightAnimation;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -60,9 +50,20 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import net.sf.app.TodayDatePickerDialog;
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.LocationActivity;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocation;
+import net.sf.times.location.ZmanimLocationListener;
+import net.sf.times.location.ZmanimLocations;
+import net.sf.view.animation.LayoutWeightAnimation;
+
+import java.util.Calendar;
+
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener {
@@ -137,42 +138,42 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case WHAT_TOGGLE_DETAILS:
-				toggleDetails(msg.arg1);
-				break;
-			case WHAT_COMPASS:
-				startActivity(new Intent(ZmanimActivity.this, CompassActivity.class));
-				break;
-			case WHAT_DATE:
-				final int year = mDate.get(Calendar.YEAR);
-				final int month = mDate.get(Calendar.MONTH);
-				final int day = mDate.get(Calendar.DAY_OF_MONTH);
-				if (mDatePicker == null) {
-					mDatePicker = new TodayDatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
-				} else {
-					mDatePicker.updateDate(year, month, day);
-				}
-				mDatePicker.show();
-				break;
-			case WHAT_LOCATION:
-				Location loc = mLocations.getLocation();
-				// Have we been destroyed?
-				if (loc == null)
+				case WHAT_TOGGLE_DETAILS:
+					toggleDetails(msg.arg1);
 					break;
+				case WHAT_COMPASS:
+					startActivity(new Intent(ZmanimActivity.this, CompassActivity.class));
+					break;
+				case WHAT_DATE:
+					final int year = mDate.get(Calendar.YEAR);
+					final int month = mDate.get(Calendar.MONTH);
+					final int day = mDate.get(Calendar.DAY_OF_MONTH);
+					if (mDatePicker == null) {
+						mDatePicker = new TodayDatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
+					} else {
+						mDatePicker.updateDate(year, month, day);
+					}
+					mDatePicker.show();
+					break;
+				case WHAT_LOCATION:
+					Location loc = mLocations.getLocation();
+					// Have we been destroyed?
+					if (loc == null)
+						break;
 
-				Intent intent = new Intent(ZmanimActivity.this, LocationActivity.class);
-				intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-				startActivityForResult(intent, ACTIVITY_LOCATIONS);
-				break;
-			case WHAT_SETTINGS:
-				startActivity(new Intent(ZmanimActivity.this, ZmanimPreferences.class));
-				break;
-			case WHAT_TODAY:
-				setDate(System.currentTimeMillis());
-				mMasterFragment.populateTimes(mDate);
-				mDetailsListFragment.populateTimes(mDate);
-				mCandesFragment.populateTimes(mDate);
-				break;
+					Intent intent = new Intent(ZmanimActivity.this, LocationActivity.class);
+					intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
+					startActivityForResult(intent, ACTIVITY_LOCATIONS);
+					break;
+				case WHAT_SETTINGS:
+					startActivity(new Intent(ZmanimActivity.this, ZmanimPreferences.class));
+					break;
+				case WHAT_TODAY:
+					setDate(System.currentTimeMillis());
+					mMasterFragment.populateTimes(mDate);
+					mDetailsListFragment.populateTimes(mDate);
+					mCandesFragment.populateTimes(mDate);
+					break;
 			}
 		}
 	};
@@ -214,14 +215,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		setDate(savedInstanceState.getLong(PARAMETER_DATE));
-		final int itemId = savedInstanceState.getInt(PARAMETER_DETAILS, 0);
-
-		if (itemId != 0) {
-			// We need to wait for the list rows to get their default
-			// backgrounds before we can highlight any row.
-			Message msg = mHandler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
-			mHandler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
-		}
+		mSelectedId = savedInstanceState.getInt(PARAMETER_DETAILS, mSelectedId);
 	}
 
 	@Override
@@ -232,6 +226,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 			mReminder = createReminder();
 		if (mReminder != null)
 			mReminder.cancel();
+		if (mSelectedId != 0) {
+			// We need to wait for the list rows to get their default
+			// backgrounds before we can highlight any row.
+			Message msg = mHandler.obtainMessage(WHAT_TOGGLE_DETAILS, mSelectedId, 0);
+			mHandler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
+		}
 	}
 
 	@Override
@@ -245,6 +245,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 				}
 			}.start();
 		}
+		int itemId = mSelectedId;
+		hideDetails();
+		mSelectedId = itemId;
 	}
 
 	@Override
@@ -306,7 +309,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Set the date for the list.
-	 * 
+	 *
 	 * @param date
 	 *            the date.
 	 */
@@ -326,7 +329,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Set the date for the list.
-	 * 
+	 *
 	 * @param year
 	 *            the year.
 	 * @param monthOfYear
@@ -382,7 +385,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Is the list background painted?
-	 * 
+	 *
 	 * @return {@code true} for non-transparent background.
 	 */
 	protected boolean isBackgroundDrawable() {
@@ -429,21 +432,21 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_compass:
-			mHandler.sendEmptyMessage(WHAT_COMPASS);
-			return true;
-		case R.id.menu_date:
-			mHandler.sendEmptyMessage(WHAT_DATE);
-			return true;
-		case R.id.menu_location:
-			mHandler.sendEmptyMessage(WHAT_LOCATION);
-			return true;
-		case R.id.menu_settings:
-			mHandler.sendEmptyMessage(WHAT_SETTINGS);
-			return true;
-		case R.id.menu_today:
-			mHandler.sendEmptyMessage(WHAT_TODAY);
-			return true;
+			case R.id.menu_compass:
+				mHandler.sendEmptyMessage(WHAT_COMPASS);
+				return true;
+			case R.id.menu_date:
+				mHandler.sendEmptyMessage(WHAT_DATE);
+				return true;
+			case R.id.menu_location:
+				mHandler.sendEmptyMessage(WHAT_LOCATION);
+				return true;
+			case R.id.menu_settings:
+				mHandler.sendEmptyMessage(WHAT_SETTINGS);
+				return true;
+			case R.id.menu_today:
+				mHandler.sendEmptyMessage(WHAT_TODAY);
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -476,7 +479,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Format the address for the current location.
-	 * 
+	 *
 	 * @return the formatted address.
 	 */
 	private String formatAddress() {
@@ -487,7 +490,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Show/hide the details list.
-	 * 
+	 *
 	 * @param item
 	 *            the master item.
 	 * @param view
@@ -501,7 +504,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Show/hide the details list.
-	 * 
+	 *
 	 * @param itemId
 	 *            the master item id.
 	 */
@@ -575,6 +578,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		} else {
 			mDetailsFragment.startAnimation(mDetailsShrink);
 		}
+		mSelectedId = 0;
 	}
 
 	protected void showDetails() {
@@ -702,7 +706,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Slide the view in from right to left.
-	 * 
+	 *
 	 * @param view
 	 *            the view to animate.
 	 */
@@ -712,7 +716,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/**
 	 * Slide the view in from left to right.
-	 * 
+	 *
 	 * @param view
 	 *            the view to animate.
 	 */
