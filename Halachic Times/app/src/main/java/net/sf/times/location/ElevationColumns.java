@@ -23,7 +23,7 @@ import android.provider.BaseColumns;
 
 /**
  * Elevation table columns.
- * 
+ *
  * @author Moshe Waisberg
  */
 public interface ElevationColumns extends BaseColumns {

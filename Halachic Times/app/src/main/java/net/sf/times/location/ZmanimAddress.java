@@ -19,17 +19,17 @@
  */
 package net.sf.times.location;
 
-import java.util.Locale;
-
 import android.location.Address;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import java.util.Locale;
+
 /**
  * Address that is stored in the local database.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> {
@@ -58,9 +58,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Constructs a new address.
-	 * 
+	 *
 	 * @param locale
-	 *            the locale.
+	 * 		the locale.
 	 */
 	public ZmanimAddress(Locale locale) {
 		super(locale);
@@ -68,9 +68,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Constructs a new address.
-	 * 
+	 *
 	 * @param address
-	 *            the source address.
+	 * 		the source address.
 	 */
 	public ZmanimAddress(Address address) {
 		super(address.getLocale());
@@ -102,7 +102,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Get the id.
-	 * 
+	 *
 	 * @return the id
 	 */
 	public long getId() {
@@ -111,9 +111,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Set the id.
-	 * 
+	 *
 	 * @param id
-	 *            the id.
+	 * 		the id.
 	 */
 	public void setId(long id) {
 		this.mId = id;
@@ -121,7 +121,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Get the formatted address.
-	 * 
+	 *
 	 * @return the address
 	 */
 	public String getFormatted() {
@@ -132,9 +132,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Set the formatted address.
-	 * 
+	 *
 	 * @param formatted
-	 *            the address.
+	 * 		the address.
 	 */
 	public void setFormatted(String formatted) {
 		mFormatted = formatted;
@@ -142,7 +142,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Is favourite address?
-	 * 
+	 *
 	 * @return {@code true} if favourite.
 	 */
 	public boolean isFavorite() {
@@ -151,9 +151,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Mark the address as a favourite.
-	 * 
+	 *
 	 * @param favorite
-	 *            is favourite?
+	 * 		is favourite?
 	 */
 	public void setFavorite(boolean favorite) {
 		mFavorite = favorite;
@@ -161,9 +161,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Set the elevation.
-	 * 
+	 *
 	 * @param elevation
-	 *            the elevation in metres.
+	 * 		the elevation in metres.
 	 */
 	public void setElevation(double elevation) {
 		mElevation = elevation;
@@ -172,7 +172,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Get the elevation.
-	 * 
+	 *
 	 * @return the elevation in metres.
 	 */
 	public double getElevation() {
@@ -192,7 +192,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
 	/**
 	 * Format the address.
-	 * 
+	 *
 	 * @return the formatted address.
 	 */
 	protected String format() {

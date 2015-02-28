@@ -19,17 +19,17 @@
  */
 package net.sf.net;
 
+import net.sf.io.StreamUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import net.sf.io.StreamUtils;
-
 /**
  * HTTP reader.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class HTTPReader {
@@ -39,7 +39,7 @@ public class HTTPReader {
 	/** Content type that is XML text. */
 	public static final String CONTENT_TEXT_XML = "text/xml";
 	/** Content type that is XML text. */
-	public static final String[] CONTENT_XML = { CONTENT_APP_XML, CONTENT_TEXT_XML };
+	public static final String[] CONTENT_XML = {CONTENT_APP_XML, CONTENT_TEXT_XML};
 
 	/** Creates a new reader. */
 	public HTTPReader() {
@@ -48,12 +48,12 @@ public class HTTPReader {
 
 	/**
 	 * Read bytes from the network.
-	 * 
+	 *
 	 * @param url
-	 *            the URL.
+	 * 		the URL.
 	 * @return the data - {@code null} otherwise.
 	 * @throws IOException
-	 *             if an I/O error occurs.
+	 * 		if an I/O error occurs.
 	 */
 	public static byte[] read(URL url) throws IOException {
 		return read(url, (String[]) null);
@@ -61,29 +61,29 @@ public class HTTPReader {
 
 	/**
 	 * Read bytes from the network.
-	 * 
+	 *
 	 * @param url
-	 *            the URL.
+	 * 		the URL.
 	 * @param contentTypeExpected
-	 *            the expected content type.
+	 * 		the expected content type.
 	 * @return the data - {@code null} otherwise.
 	 * @throws IOException
-	 *             if an I/O error occurs.
+	 * 		if an I/O error occurs.
 	 */
 	public static byte[] read(URL url, String contentTypeExpected) throws IOException {
-		return read(url, new String[] { contentTypeExpected });
+		return read(url, new String[]{contentTypeExpected});
 	}
 
 	/**
 	 * Read bytes from the network.
-	 * 
+	 *
 	 * @param url
-	 *            the URL.
+	 * 		the URL.
 	 * @param contentTypesExpected
-	 *            the expected content types.
+	 * 		the expected content types.
 	 * @return the data - {@code null} otherwise.
 	 * @throws IOException
-	 *             if an I/O error occurs.
+	 * 		if an I/O error occurs.
 	 */
 	public static byte[] read(URL url, String[] contentTypesExpected) throws IOException {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();

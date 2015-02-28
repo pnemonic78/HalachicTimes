@@ -24,7 +24,7 @@ import android.database.Cursor;
 /**
  * An interface for filtering {@link Cursor} objects based on their columns or
  * other information.
- * 
+ *
  * @author Moshe Waisberg
  */
 public interface CursorFilter {
@@ -32,11 +32,11 @@ public interface CursorFilter {
 	/**
 	 * Indicating whether a specific database cursor should be included in a
 	 * query list.
-	 * 
+	 *
 	 * @param cursor
-	 *            the cursor to check.
+	 * 		the cursor to check.
 	 * @return {@code true} if the current cursor should be included,
-	 *         {@code false} otherwise.
+	 * {@code false} otherwise.
 	 */
 	public abstract boolean accept(Cursor cursor);
 }

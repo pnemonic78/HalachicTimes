@@ -19,16 +19,6 @@
  */
 package net.sf.times.location;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import net.sf.times.R;
-import net.sf.times.ZmanimActivity;
-import net.sf.times.ZmanimApplication;
-import net.sf.times.location.LocationAdapter.LocationItem;
-import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.app.TabActivity;
@@ -56,9 +46,20 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import net.sf.times.R;
+import net.sf.times.ZmanimActivity;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.location.LocationAdapter.LocationItem;
+import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Pick a city from the list.
- * 
+ *
  * @author Moshe Waisberg
  */
 @SuppressWarnings("deprecation")
@@ -158,11 +159,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	/**
 	 * Do the search.
-	 * 
+	 *
 	 * @param query
-	 *            the query.
+	 * 		the query.
 	 * @param loc
-	 *            the location.
+	 * 		the location.
 	 */
 	protected void search(CharSequence query, Location loc) {
 		populateLists();
@@ -234,12 +235,12 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	public void onItemClick(AdapterView<?> l, View view, int position, long id) {
 		LocationAdapter adapter = mAdapterAll;
 		switch (l.getId()) {
-		case R.id.list_favorites:
-			adapter = mAdapterFavorites;
-			break;
-		case R.id.list_history:
-			adapter = mAdapterHistory;
-			break;
+			case R.id.list_favorites:
+				adapter = mAdapterFavorites;
+				break;
+			case R.id.list_history:
+				adapter = mAdapterHistory;
+				break;
 		}
 		LocationItem item = adapter.getItem(position);
 		ZmanimAddress addr = item.getAddress();
@@ -280,16 +281,16 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		// Maybe user typed "latitude,longitude"?
 		boolean submit = false;
 		switch (actionId) {
-		case 5:
-		case 6:
-			submit = true;
-		case 0:
-			if (event != null) {
-				switch (event.getKeyCode()) {
-				case KeyEvent.KEYCODE_ENTER:
-					submit = true;
+			case 5:
+			case 6:
+				submit = true;
+			case 0:
+				if (event != null) {
+					switch (event.getKeyCode()) {
+						case KeyEvent.KEYCODE_ENTER:
+							submit = true;
+					}
 				}
-			}
 		}
 		if (submit) {
 			CharSequence text = v.getText();
@@ -324,9 +325,9 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	/**
 	 * Set the result location and close the activity.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 */
 	protected void setAddress(Location location) {
 		Intent data = new Intent();
@@ -356,22 +357,22 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case WHAT_FAVORITE:
-				ZmanimAddress address = (ZmanimAddress) msg.obj;
-				long id = address.getId();
-				ZmanimApplication app = (ZmanimApplication) getApplication();
-				AddressProvider provider = app.getAddresses();
-				if (id < 0L) {
-					provider.insertOrUpdateCity(address);
-				} else {
-					provider.insertOrUpdateAddress(null, address);
-				}
+				case WHAT_FAVORITE:
+					ZmanimAddress address = (ZmanimAddress) msg.obj;
+					long id = address.getId();
+					ZmanimApplication app = (ZmanimApplication) getApplication();
+					AddressProvider provider = app.getAddresses();
+					if (id < 0L) {
+						provider.insertOrUpdateCity(address);
+					} else {
+						provider.insertOrUpdateAddress(null, address);
+					}
 
-				mAdapterAll.notifyDataSetChanged();
-				mAdapterFavorites.notifyDataSetChanged();
-				mAdapterHistory.notifyDataSetChanged();
+					mAdapterAll.notifyDataSetChanged();
+					mAdapterFavorites.notifyDataSetChanged();
+					mAdapterHistory.notifyDataSetChanged();
 
-				break;
+					break;
 			}
 		}
 	};

@@ -19,15 +19,16 @@
  */
 package net.sf.app;
 
-import net.sf.times.R;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.format.Time;
 
+import net.sf.times.R;
+
 /**
  * Date picker dialog with a "Today" button.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class TodayDatePickerDialog extends DatePickerDialog {

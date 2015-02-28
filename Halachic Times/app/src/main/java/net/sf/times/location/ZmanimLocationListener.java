@@ -36,19 +36,19 @@ public interface ZmanimLocationListener extends LocationListener {
 
 	/**
 	 * Called when an address is found.
-	 * 
+	 *
 	 * @param location
-	 *            the requested location.
+	 * 		the requested location.
 	 * @param address
-	 *            the address for the location.
+	 * 		the address for the location.
 	 */
 	public void onAddressChanged(Location location, ZmanimAddress address);
 
 	/**
 	 * Called when an address is found.
-	 * 
+	 *
 	 * @param location
-	 *            the location with elevation.
+	 * 		the location with elevation.
 	 */
 	public void onElevationChanged(Location location);
 }

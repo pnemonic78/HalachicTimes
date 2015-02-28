@@ -19,17 +19,18 @@
  */
 package net.sf.times.location;
 
-import net.sf.times.ZmanimApplication;
-import net.sf.times.location.AddressProvider.OnFindAddressListener;
 import android.app.IntentService;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 
+import net.sf.times.ZmanimApplication;
+import net.sf.times.location.AddressProvider.OnFindAddressListener;
+
 /**
  * Service to find an address.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class AddressService extends IntentService implements OnFindAddressListener {
@@ -45,9 +46,9 @@ public class AddressService extends IntentService implements OnFindAddressListen
 
 	/**
 	 * Constructs a new service.
-	 * 
+	 *
 	 * @param name
-	 *            the worker thread name.
+	 * 		the worker thread name.
 	 */
 	public AddressService(String name) {
 		super(name);

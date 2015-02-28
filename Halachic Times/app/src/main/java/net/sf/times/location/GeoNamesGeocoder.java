@@ -19,10 +19,10 @@
  */
 package net.sf.times.location;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Locale;
+import android.content.Context;
+import android.location.Address;
+import android.text.TextUtils;
+import android.util.Log;
 
 import net.sf.net.HTTPReader;
 
@@ -31,19 +31,19 @@ import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.content.Context;
-import android.location.Address;
-import android.text.TextUtils;
-import android.util.Log;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * GeoNames WebServices API.
- * <p>
+ * <p/>
  * <a
  * href="http://www.geonames.org/export/web-services.html">http://www.geonames
  * .org/export/web-services.html</a>
- * 
+ *
  * @author Moshe Waisberg
  */
 public class GeoNamesGeocoder extends GeocoderBase {
@@ -77,9 +77,9 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
 	/**
 	 * Creates a new GeoNames geocoder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public GeoNamesGeocoder(Context context) {
 		super(context);
@@ -87,11 +87,11 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
 	/**
 	 * Creates a new GeoNames geocoder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param locale
-	 *            the locale.
+	 * 		the locale.
 	 */
 	public GeoNamesGeocoder(Context context, Locale locale) {
 		super(context, locale);
@@ -114,7 +114,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
 	/**
 	 * Handler for parsing the XML response.
-	 * 
+	 *
 	 * @author Moshe
 	 */
 	protected static class AddressResponseHandler extends DefaultHandler2 {
@@ -122,7 +122,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 		/** Parse state. */
 		private enum State {
 			START, ROOT, GEONAME, TOPONYM, TOPONYM_NAME, COUNTRY_CODE, COUNTRY, LATITUDE, LONGITUDE, STREET, STREET_NUMBER, MTFCC, LOCALITY, POSTAL_CODE, ADMIN_CODE, ADMIN, SUBADMIN_CODE, SUBADMIN, FINISH
-		};
+		}
 
 		private static final String TAG_ROOT = "geonames";
 		private static final String TAG_LATITUDE = "lat";
@@ -153,11 +153,11 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
 		/**
 		 * Constructs a new parse handler.
-		 * 
+		 *
 		 * @param results
-		 *            the destination results.
+		 * 		the destination results.
 		 * @param maxResults
-		 *            the maximum number of results.
+		 * 		the maximum number of results.
 		 */
 		public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 			super();
@@ -173,57 +173,57 @@ public class GeoNamesGeocoder extends GeocoderBase {
 				localName = qName;
 
 			switch (mState) {
-			case START:
-				if (TAG_ROOT.equals(localName))
-					mState = State.ROOT;
-				else
-					throw new SAXException("Unexpected root element " + localName);
-				break;
-			case ROOT:
-				if (TAG_GEONAME.equals(localName)) {
-					mState = State.GEONAME;
-					mAddress = new Address(mLocale);
-				} else if (TAG_ADDRESS.equals(localName)) {
-					mState = State.GEONAME;
-					mAddress = new Address(mLocale);
-				}
-				break;
-			case GEONAME:
-				if (TAG_TOPONYM.equals(localName))
-					mState = State.TOPONYM;
-				else if (TAG_NAME.equals(localName))
-					mState = State.TOPONYM_NAME;
-				else if (TAG_LATITUDE.equals(localName))
-					mState = State.LATITUDE;
-				else if (TAG_LONGITUDE.equals(localName))
-					mState = State.LONGITUDE;
-				else if (TAG_CC.equals(localName))
-					mState = State.COUNTRY_CODE;
-				else if (TAG_COUNTRY.equals(localName))
-					mState = State.COUNTRY;
-				else if (TAG_STREET.equals(localName))
-					mState = State.STREET;
-				else if (TAG_MTFCC.equals(localName))
-					mState = State.MTFCC;
-				else if (TAG_STREET_NUMBER.equals(localName))
-					mState = State.STREET_NUMBER;
-				else if (TAG_POSTAL_CODE.equals(localName))
-					mState = State.POSTAL_CODE;
-				else if (TAG_LOCALITY.equals(localName))
-					mState = State.LOCALITY;
-				else if (TAG_ADMIN.equals(localName))
-					mState = State.ADMIN;
-				else if (TAG_ADMIN_CODE.equals(localName))
-					mState = State.ADMIN_CODE;
-				else if (TAG_SUBADMIN.equals(localName))
-					mState = State.SUBADMIN;
-				else if (TAG_SUBADMIN_CODE.equals(localName))
-					mState = State.SUBADMIN_CODE;
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+				case START:
+					if (TAG_ROOT.equals(localName))
+						mState = State.ROOT;
+					else
+						throw new SAXException("Unexpected root element " + localName);
+					break;
+				case ROOT:
+					if (TAG_GEONAME.equals(localName)) {
+						mState = State.GEONAME;
+						mAddress = new Address(mLocale);
+					} else if (TAG_ADDRESS.equals(localName)) {
+						mState = State.GEONAME;
+						mAddress = new Address(mLocale);
+					}
+					break;
+				case GEONAME:
+					if (TAG_TOPONYM.equals(localName))
+						mState = State.TOPONYM;
+					else if (TAG_NAME.equals(localName))
+						mState = State.TOPONYM_NAME;
+					else if (TAG_LATITUDE.equals(localName))
+						mState = State.LATITUDE;
+					else if (TAG_LONGITUDE.equals(localName))
+						mState = State.LONGITUDE;
+					else if (TAG_CC.equals(localName))
+						mState = State.COUNTRY_CODE;
+					else if (TAG_COUNTRY.equals(localName))
+						mState = State.COUNTRY;
+					else if (TAG_STREET.equals(localName))
+						mState = State.STREET;
+					else if (TAG_MTFCC.equals(localName))
+						mState = State.MTFCC;
+					else if (TAG_STREET_NUMBER.equals(localName))
+						mState = State.STREET_NUMBER;
+					else if (TAG_POSTAL_CODE.equals(localName))
+						mState = State.POSTAL_CODE;
+					else if (TAG_LOCALITY.equals(localName))
+						mState = State.LOCALITY;
+					else if (TAG_ADMIN.equals(localName))
+						mState = State.ADMIN;
+					else if (TAG_ADMIN_CODE.equals(localName))
+						mState = State.ADMIN_CODE;
+					else if (TAG_SUBADMIN.equals(localName))
+						mState = State.SUBADMIN;
+					else if (TAG_SUBADMIN_CODE.equals(localName))
+						mState = State.SUBADMIN_CODE;
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 
@@ -234,96 +234,96 @@ public class GeoNamesGeocoder extends GeocoderBase {
 				localName = qName;
 
 			switch (mState) {
-			case ROOT:
-				if (TAG_ROOT.equals(localName))
-					mState = State.FINISH;
-				break;
-			case GEONAME:
-				if (TAG_GEONAME.equals(localName)) {
-					mState = State.ROOT;
-					if (mAddress != null) {
-						if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
-							mResults.add(mAddress);
-						else
-							mState = State.FINISH;
-						mAddress = null;
+				case ROOT:
+					if (TAG_ROOT.equals(localName))
+						mState = State.FINISH;
+					break;
+				case GEONAME:
+					if (TAG_GEONAME.equals(localName)) {
+						mState = State.ROOT;
+						if (mAddress != null) {
+							if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
+								mResults.add(mAddress);
+							else
+								mState = State.FINISH;
+							mAddress = null;
+						}
+					} else if (TAG_ADDRESS.equals(localName)) {
+						mState = State.ROOT;
+						if (mAddress != null) {
+							if (mResults.size() < mMaxResults)
+								mResults.add(mAddress);
+							else
+								mState = State.FINISH;
+							mAddress = null;
+						}
+						mState = State.ROOT;
 					}
-				} else if (TAG_ADDRESS.equals(localName)) {
-					mState = State.ROOT;
-					if (mAddress != null) {
-						if (mResults.size() < mMaxResults)
-							mResults.add(mAddress);
-						else
-							mState = State.FINISH;
-						mAddress = null;
-					}
-					mState = State.ROOT;
-				}
-				break;
-			case ADMIN:
-				if (TAG_ADMIN.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case ADMIN_CODE:
-				if (TAG_ADMIN_CODE.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case COUNTRY:
-				if (TAG_COUNTRY.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case COUNTRY_CODE:
-				if (TAG_CC.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case LATITUDE:
-				if (TAG_LATITUDE.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case LOCALITY:
-				if (TAG_LOCALITY.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case LONGITUDE:
-				if (TAG_LONGITUDE.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case MTFCC:
-				if (TAG_MTFCC.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case POSTAL_CODE:
-				if (TAG_POSTAL_CODE.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case STREET:
-				if (TAG_STREET.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case STREET_NUMBER:
-				if (TAG_STREET_NUMBER.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case SUBADMIN:
-				if (TAG_SUBADMIN.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case SUBADMIN_CODE:
-				if (TAG_SUBADMIN_CODE.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case TOPONYM:
-				if (TAG_TOPONYM.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case TOPONYM_NAME:
-				if (TAG_NAME.equals(localName))
-					mState = State.GEONAME;
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+					break;
+				case ADMIN:
+					if (TAG_ADMIN.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case ADMIN_CODE:
+					if (TAG_ADMIN_CODE.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case COUNTRY:
+					if (TAG_COUNTRY.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case COUNTRY_CODE:
+					if (TAG_CC.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case LATITUDE:
+					if (TAG_LATITUDE.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case LOCALITY:
+					if (TAG_LOCALITY.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case LONGITUDE:
+					if (TAG_LONGITUDE.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case MTFCC:
+					if (TAG_MTFCC.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case POSTAL_CODE:
+					if (TAG_POSTAL_CODE.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case STREET:
+					if (TAG_STREET.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case STREET_NUMBER:
+					if (TAG_STREET_NUMBER.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case SUBADMIN:
+					if (TAG_SUBADMIN.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case SUBADMIN_CODE:
+					if (TAG_SUBADMIN_CODE.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case TOPONYM:
+					if (TAG_TOPONYM.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case TOPONYM_NAME:
+					if (TAG_NAME.equals(localName))
+						mState = State.GEONAME;
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 
@@ -338,81 +338,81 @@ public class GeoNamesGeocoder extends GeocoderBase {
 				return;
 
 			switch (mState) {
-			case LATITUDE:
-				if (mAddress != null) {
-					try {
-						mAddress.setLatitude(Double.parseDouble(s));
-					} catch (NumberFormatException nfe) {
-						throw new SAXException(nfe);
+				case LATITUDE:
+					if (mAddress != null) {
+						try {
+							mAddress.setLatitude(Double.parseDouble(s));
+						} catch (NumberFormatException nfe) {
+							throw new SAXException(nfe);
+						}
 					}
-				}
-				break;
-			case LONGITUDE:
-				if (mAddress != null) {
-					try {
-						mAddress.setLongitude(Double.parseDouble(s));
-					} catch (NumberFormatException nfe) {
-						throw new SAXException(nfe);
+					break;
+				case LONGITUDE:
+					if (mAddress != null) {
+						try {
+							mAddress.setLongitude(Double.parseDouble(s));
+						} catch (NumberFormatException nfe) {
+							throw new SAXException(nfe);
+						}
 					}
-				}
-				break;
-			case ADMIN:
-				if (mAddress != null)
-					mAddress.setAdminArea(s);
-				break;
-			case ADMIN_CODE:
-				if ((mAddress != null) && (mAddress.getAdminArea() == null))
-					mAddress.setAdminArea(s);
-				break;
-			case COUNTRY:
-				if (mAddress != null)
-					mAddress.setCountryName(s);
-				break;
-			case COUNTRY_CODE:
-				if (mAddress != null) {
-					mAddress.setCountryCode(s);
-					if (mAddress.getCountryName() == null)
-						mAddress.setCountryName(new Locale(mLocale.getLanguage(), s).getDisplayCountry());
-				}
-				break;
-			case LOCALITY:
-				if (mAddress != null)
-					mAddress.setLocality(s);
-				break;
-			case MTFCC:
-				break;
-			case POSTAL_CODE:
-				if (mAddress != null)
-					mAddress.setPostalCode(s);
-				break;
-			case STREET:
-				if (mAddress != null)
-					mAddress.setAddressLine(1, s);
-				break;
-			case STREET_NUMBER:
-				if (mAddress != null)
-					mAddress.setAddressLine(0, s);
-				break;
-			case SUBADMIN:
-				if (mAddress != null)
-					mAddress.setSubAdminArea(s);
-				break;
-			case SUBADMIN_CODE:
-				if ((mAddress != null) && (mAddress.getSubAdminArea() == null))
-					mAddress.setSubAdminArea(s);
-				break;
-			case TOPONYM:
-				if ((mAddress != null) && (mAddress.getFeatureName() == null))
-					mAddress.setFeatureName(s);
-				break;
-			case TOPONYM_NAME:
-				if (mAddress != null)
-					mAddress.setFeatureName(s);
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+					break;
+				case ADMIN:
+					if (mAddress != null)
+						mAddress.setAdminArea(s);
+					break;
+				case ADMIN_CODE:
+					if ((mAddress != null) && (mAddress.getAdminArea() == null))
+						mAddress.setAdminArea(s);
+					break;
+				case COUNTRY:
+					if (mAddress != null)
+						mAddress.setCountryName(s);
+					break;
+				case COUNTRY_CODE:
+					if (mAddress != null) {
+						mAddress.setCountryCode(s);
+						if (mAddress.getCountryName() == null)
+							mAddress.setCountryName(new Locale(mLocale.getLanguage(), s).getDisplayCountry());
+					}
+					break;
+				case LOCALITY:
+					if (mAddress != null)
+						mAddress.setLocality(s);
+					break;
+				case MTFCC:
+					break;
+				case POSTAL_CODE:
+					if (mAddress != null)
+						mAddress.setPostalCode(s);
+					break;
+				case STREET:
+					if (mAddress != null)
+						mAddress.setAddressLine(1, s);
+					break;
+				case STREET_NUMBER:
+					if (mAddress != null)
+						mAddress.setAddressLine(0, s);
+					break;
+				case SUBADMIN:
+					if (mAddress != null)
+						mAddress.setSubAdminArea(s);
+					break;
+				case SUBADMIN_CODE:
+					if ((mAddress != null) && (mAddress.getSubAdminArea() == null))
+						mAddress.setSubAdminArea(s);
+					break;
+				case TOPONYM:
+					if ((mAddress != null) && (mAddress.getFeatureName() == null))
+						mAddress.setFeatureName(s);
+					break;
+				case TOPONYM_NAME:
+					if (mAddress != null)
+						mAddress.setFeatureName(s);
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 	}

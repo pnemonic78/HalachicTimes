@@ -19,17 +19,18 @@
  */
 package net.sf.times;
 
-import java.util.Date;
-
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+
+import java.util.Date;
+
 /**
  * Adapter for all opinions of an halachic time.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimDetailsAdapter extends ZmanimAdapter {

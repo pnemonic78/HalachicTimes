@@ -33,7 +33,7 @@ import android.view.View;
 
 /**
  * Compass view.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class CompassView extends View {
@@ -72,9 +72,9 @@ public class CompassView extends View {
 
 	/**
 	 * Constructs a new compass view.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public CompassView(Context context) {
 		super(context);
@@ -83,11 +83,11 @@ public class CompassView extends View {
 
 	/**
 	 * Constructs a new compass view.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the attributes.
+	 * 		the attributes.
 	 */
 	public CompassView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -96,13 +96,13 @@ public class CompassView extends View {
 
 	/**
 	 * Constructs a new compass view.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the attributes.
+	 * 		the attributes.
 	 * @param defStyle
-	 *            the default style.
+	 * 		the default style.
 	 */
 	public CompassView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -224,9 +224,9 @@ public class CompassView extends View {
 
 	/**
 	 * Set the azimuth to magnetic North pole.
-	 * 
+	 *
 	 * @param bearing
-	 *            the bearing in radians.
+	 * 		the bearing in radians.
 	 */
 	public void setAzimuth(float bearing) {
 		mNorth = (float) Math.toDegrees(-bearing);
@@ -235,9 +235,9 @@ public class CompassView extends View {
 
 	/**
 	 * Set the bearing to the Holy of Holies.
-	 * 
+	 *
 	 * @param bearing
-	 *            the bearing in degrees.
+	 * 		the bearing in degrees.
 	 */
 	public void setHoliest(float bearing) {
 		mHoliest = bearing;

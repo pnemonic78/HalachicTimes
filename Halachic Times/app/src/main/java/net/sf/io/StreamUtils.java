@@ -14,12 +14,12 @@ public class StreamUtils {
 
 	/**
 	 * Read all the bytes from the input stream.
-	 * 
+	 *
 	 * @param in
-	 *            the input.
+	 * 		the input.
 	 * @return the array of bytes.
 	 * @throws IOException
-	 *             if an I/O error occurs.
+	 * 		if an I/O error occurs.
 	 */
 	public static ByteArrayOutputStream readFully(InputStream in) throws IOException {
 		in = new BufferedInputStream(in);
@@ -28,14 +28,14 @@ public class StreamUtils {
 
 	/**
 	 * Read all the bytes from the input stream.
-	 * 
+	 *
 	 * @param in
-	 *            the input.
+	 * 		the input.
 	 * @param size
-	 *            the initial buffer size.
+	 * 		the initial buffer size.
 	 * @return the array of bytes.
 	 * @throws IOException
-	 *             if an I/O error occurs.
+	 * 		if an I/O error occurs.
 	 */
 	public static ByteArrayOutputStream readFully(InputStream in, int size) throws IOException {
 		size = Math.max(size, 32);

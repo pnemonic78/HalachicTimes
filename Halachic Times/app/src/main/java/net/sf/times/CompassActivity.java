@@ -19,10 +19,6 @@
  */
 package net.sf.times;
 
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocation;
-import net.sf.times.location.ZmanimLocationListener;
-import net.sf.times.location.ZmanimLocations;
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -34,10 +30,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocation;
+import net.sf.times.location.ZmanimLocationListener;
+import net.sf.times.location.ZmanimLocations;
+
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
  * Jerusalem in Israel.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class CompassActivity extends Activity implements ZmanimLocationListener, SensorEventListener {
@@ -170,14 +171,14 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		switch (event.sensor.getType()) {
-		case Sensor.TYPE_ACCELEROMETER:
-			System.arraycopy(event.values, 0, mGravity, 0, 3);
-			break;
-		case Sensor.TYPE_MAGNETIC_FIELD:
-			System.arraycopy(event.values, 0, mGeomagnetic, 0, 3);
-			break;
-		default:
-			return;
+			case Sensor.TYPE_ACCELEROMETER:
+				System.arraycopy(event.values, 0, mGravity, 0, 3);
+				break;
+			case Sensor.TYPE_MAGNETIC_FIELD:
+				System.arraycopy(event.values, 0, mGeomagnetic, 0, 3);
+				break;
+			default:
+				return;
 		}
 		if (SensorManager.getRotationMatrix(matrixR, null, mGravity, mGeomagnetic)) {
 			SensorManager.getOrientation(matrixR, mOrientation);
@@ -205,7 +206,7 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 
 	/**
 	 * Format the address for the current location.
-	 * 
+	 *
 	 * @return the formatted address.
 	 */
 	private String formatAddress() {

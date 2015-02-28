@@ -19,9 +19,6 @@
  */
 package net.sf.preference;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -36,9 +33,12 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * SeekBar preference.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
@@ -58,9 +58,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Creates a new seek bar preference.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public SeekBarPreference(Context context) {
 		super(context);
@@ -69,11 +69,11 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Creates a new seek bar preference.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the attributes.
+	 * 		the attributes.
 	 */
 	public SeekBarPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -83,13 +83,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Creates a new seek bar preference.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the attributes.
+	 * 		the attributes.
 	 * @param defStyle
-	 *            the default style.
+	 * 		the default style.
 	 */
 	public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -138,9 +138,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Set the progress state and saves it to the {@link SharedPreferences}.
-	 * 
+	 *
 	 * @param progress
-	 *            the progress.
+	 * 		the progress.
 	 */
 	public void setProgress(int progress) {
 		if (mSeekBar == null) {
@@ -158,9 +158,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Set the range of the progress bar to {@code 0}...{@code max}.
-	 * 
+	 *
 	 * @param max
-	 *            the upper range of this progress bar.
+	 * 		the upper range of this progress bar.
 	 */
 	public void setMax(int max) {
 		mMax = max;
@@ -174,9 +174,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Set the progress state and saves it to the {@link SharedPreferences}.
-	 * 
+	 *
 	 * @param progress
-	 *            the progress.
+	 * 		the progress.
 	 */
 	protected void persistProgress(int progress) {
 		mProgress = progress;
@@ -215,7 +215,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	/**
 	 * Timed task to persist the preference.
-	 * 
+	 *
 	 * @author Moshe
 	 */
 	private class PersistTask extends TimerTask {
@@ -224,9 +224,9 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 		/**
 		 * Constructs a new task.
-		 * 
+		 *
 		 * @param progress
-		 *            the progress to save.
+		 * 		the progress to save.
 		 */
 		public PersistTask(int progress) {
 			super();

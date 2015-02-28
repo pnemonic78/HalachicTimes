@@ -1,12 +1,5 @@
 package net.sf.times;
 
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocationListener;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +10,17 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocationListener;
+import net.sf.times.location.ZmanimLocations;
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
+
 /**
  * Factory to create views for list widget.
- * 
+ *
  * @author Moshe
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -188,13 +189,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	/**
 	 * Bind the item to the remote view.
-	 * 
+	 *
 	 * @param row
-	 *            the remote list row.
+	 * 		the remote list row.
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @param item
-	 *            the zman item.
+	 * 		the zman item.
 	 */
 	private void bindView(RemoteViews row, int position, ZmanimItem item) {
 		row.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
@@ -216,13 +217,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	/**
 	 * Bind the date group header to a list.
-	 * 
+	 *
 	 * @param row
-	 *            the remote list row.
+	 * 		the remote list row.
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @param label
-	 *            the formatted Hebrew date label.
+	 * 		the formatted Hebrew date label.
 	 */
 	private void bindViewGrouping(RemoteViews row, int position, CharSequence label) {
 		row.setTextViewText(R.id.date_hebrew, label);

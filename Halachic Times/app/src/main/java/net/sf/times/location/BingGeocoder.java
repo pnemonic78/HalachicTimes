@@ -19,27 +19,27 @@
  */
 package net.sf.times.location;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import android.content.Context;
+import android.location.Address;
+import android.os.Bundle;
+import android.text.TextUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.content.Context;
-import android.location.Address;
-import android.os.Bundle;
-import android.text.TextUtils;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * Microsoft Bing API.
- * <p>
+ * <p/>
  * <a href="http://msdn.microsoft.com/en-us/library/ff701710.aspx">http://msdn.
  * microsoft.com/en-us/library/ff701710.aspx</a>
- * 
+ *
  * @author Moshe Waisberg
  */
 public class BingGeocoder extends GeocoderBase {
@@ -57,9 +57,9 @@ public class BingGeocoder extends GeocoderBase {
 
 	/**
 	 * Creates a new Bing geocoder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public BingGeocoder(Context context) {
 		super(context);
@@ -67,11 +67,11 @@ public class BingGeocoder extends GeocoderBase {
 
 	/**
 	 * Creates a new Bing geocoder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param locale
-	 *            the locale.
+	 * 		the locale.
 	 */
 	public BingGeocoder(Context context, Locale locale) {
 		super(context, locale);
@@ -94,7 +94,7 @@ public class BingGeocoder extends GeocoderBase {
 
 	/**
 	 * Handler for parsing the XML response.
-	 * 
+	 *
 	 * @author Moshe
 	 */
 	protected static class AddressResponseHandler extends DefaultHandler2 {
@@ -102,7 +102,7 @@ public class BingGeocoder extends GeocoderBase {
 		/** Parse state. */
 		private enum State {
 			START, ROOT, STATUS, RESOURCE_SETS, RESOURCE_SET, RESOURCES, LOCATION, POINT, ADDRESS, FINISH
-		};
+		}
 
 		private static final String STATUS_OK = "200";
 
@@ -132,11 +132,11 @@ public class BingGeocoder extends GeocoderBase {
 
 		/**
 		 * Constructs a new parse handler.
-		 * 
+		 *
 		 * @param results
-		 *            the destination results.
+		 * 		the destination results.
 		 * @param maxResults
-		 *            the maximum number of results.
+		 * 		the maximum number of results.
 		 */
 		public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
 			super();
@@ -154,46 +154,46 @@ public class BingGeocoder extends GeocoderBase {
 			mTag = localName;
 
 			switch (mState) {
-			case START:
-				if (TAG_ROOT.equals(localName))
-					mState = State.ROOT;
-				else
-					throw new SAXException("Unexpected root element " + localName);
-				break;
-			case ROOT:
-				if (TAG_STATUS.equals(localName))
-					mState = State.STATUS;
-				else if (TAG_RESOURCE_SETS.equals(localName))
-					mState = State.RESOURCE_SETS;
-				break;
-			case RESOURCE_SETS:
-				if (TAG_RESOURCE_SET.equals(localName))
-					mState = State.RESOURCE_SET;
-				break;
-			case RESOURCE_SET:
-				if (TAG_RESOURCES.equals(localName))
-					mState = State.RESOURCES;
-				break;
-			case RESOURCES:
-				if (TAG_LOCATION.equals(localName)) {
-					mState = State.LOCATION;
-					mAddress = new ZmanimAddress(mLocale);
-				}
-				break;
-			case LOCATION:
-				if (TAG_POINT.equals(localName))
-					mState = State.POINT;
-				else if (TAG_ADDRESS.equals(localName))
-					mState = State.ADDRESS;
-				break;
-			case POINT:
-				break;
-			case ADDRESS:
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+				case START:
+					if (TAG_ROOT.equals(localName))
+						mState = State.ROOT;
+					else
+						throw new SAXException("Unexpected root element " + localName);
+					break;
+				case ROOT:
+					if (TAG_STATUS.equals(localName))
+						mState = State.STATUS;
+					else if (TAG_RESOURCE_SETS.equals(localName))
+						mState = State.RESOURCE_SETS;
+					break;
+				case RESOURCE_SETS:
+					if (TAG_RESOURCE_SET.equals(localName))
+						mState = State.RESOURCE_SET;
+					break;
+				case RESOURCE_SET:
+					if (TAG_RESOURCES.equals(localName))
+						mState = State.RESOURCES;
+					break;
+				case RESOURCES:
+					if (TAG_LOCATION.equals(localName)) {
+						mState = State.LOCATION;
+						mAddress = new ZmanimAddress(mLocale);
+					}
+					break;
+				case LOCATION:
+					if (TAG_POINT.equals(localName))
+						mState = State.POINT;
+					else if (TAG_ADDRESS.equals(localName))
+						mState = State.ADDRESS;
+					break;
+				case POINT:
+					break;
+				case ADDRESS:
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 
@@ -206,50 +206,50 @@ public class BingGeocoder extends GeocoderBase {
 			mTag = localName;
 
 			switch (mState) {
-			case ROOT:
-				if (TAG_ROOT.equals(localName))
-					mState = State.FINISH;
-				break;
-			case STATUS:
-				if (TAG_STATUS.equals(localName))
-					mState = State.ROOT;
-				break;
-			case RESOURCE_SETS:
-				if (TAG_RESOURCE_SETS.equals(localName))
-					mState = State.ROOT;
-				break;
-			case RESOURCE_SET:
-				if (TAG_RESOURCE_SET.equals(localName))
-					mState = State.RESOURCE_SETS;
-				break;
-			case RESOURCES:
-				if (TAG_RESOURCES.equals(localName))
-					mState = State.RESOURCE_SET;
-				break;
-			case LOCATION:
-				if (TAG_LOCATION.equals(localName)) {
-					if (mAddress != null) {
-						if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
-							mResults.add(mAddress);
-						else
-							mState = State.FINISH;
-						mAddress = null;
+				case ROOT:
+					if (TAG_ROOT.equals(localName))
+						mState = State.FINISH;
+					break;
+				case STATUS:
+					if (TAG_STATUS.equals(localName))
+						mState = State.ROOT;
+					break;
+				case RESOURCE_SETS:
+					if (TAG_RESOURCE_SETS.equals(localName))
+						mState = State.ROOT;
+					break;
+				case RESOURCE_SET:
+					if (TAG_RESOURCE_SET.equals(localName))
+						mState = State.RESOURCE_SETS;
+					break;
+				case RESOURCES:
+					if (TAG_RESOURCES.equals(localName))
+						mState = State.RESOURCE_SET;
+					break;
+				case LOCATION:
+					if (TAG_LOCATION.equals(localName)) {
+						if (mAddress != null) {
+							if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
+								mResults.add(mAddress);
+							else
+								mState = State.FINISH;
+							mAddress = null;
+						}
+						mState = State.RESOURCES;
 					}
-					mState = State.RESOURCES;
-				}
-				break;
-			case POINT:
-				if (TAG_POINT.equals(localName))
-					mState = State.LOCATION;
-				break;
-			case ADDRESS:
-				if (TAG_ADDRESS.equals(localName))
-					mState = State.LOCATION;
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+					break;
+				case POINT:
+					if (TAG_POINT.equals(localName))
+						mState = State.LOCATION;
+					break;
+				case ADDRESS:
+					if (TAG_ADDRESS.equals(localName))
+						mState = State.LOCATION;
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 
@@ -265,64 +265,64 @@ public class BingGeocoder extends GeocoderBase {
 			String prev;
 
 			switch (mState) {
-			case STATUS:
-				if (!STATUS_OK.equals(s))
-					mState = State.FINISH;
-				break;
-			case LOCATION:
-				if (mAddress != null) {
-					if (TAG_NAME.equals(mTag)) {
-						prev = mAddress.getFeatureName();
-						mAddress.setFeatureName((prev == null) ? s : prev + s);
-					}
-				}
-			case POINT:
-				if (mAddress != null) {
-					if (TAG_LATITUDE.equals(mTag)) {
-						try {
-							mAddress.setLatitude(Double.parseDouble(s));
-						} catch (NumberFormatException nfe) {
-							throw new SAXException(nfe);
-						}
-					} else if (TAG_LONGITUDE.equals(mTag)) {
-						try {
-							mAddress.setLongitude(Double.parseDouble(s));
-						} catch (NumberFormatException nfe) {
-							throw new SAXException(nfe);
+				case STATUS:
+					if (!STATUS_OK.equals(s))
+						mState = State.FINISH;
+					break;
+				case LOCATION:
+					if (mAddress != null) {
+						if (TAG_NAME.equals(mTag)) {
+							prev = mAddress.getFeatureName();
+							mAddress.setFeatureName((prev == null) ? s : prev + s);
 						}
 					}
-				}
-				break;
-			case ADDRESS:
-				if (mAddress != null) {
-					if (TAG_ADDRESS_LINE.equals(mTag)) {
-						prev = mAddress.getAddressLine(0);
-						mAddress.setAddressLine(0, (prev == null) ? s : prev + s);
-					} else if (TAG_ADDRESS_DISTRICT.equals(mTag)) {
-						prev = mAddress.getAdminArea();
-						mAddress.setAdminArea((prev == null) ? s : prev + s);
-					} else if (TAG_ADDRESS_COUNTRY.equals(mTag)) {
-						prev = mAddress.getCountryName();
-						mAddress.setCountryName((prev == null) ? s : prev + s);
-					} else if (TAG_FORMATTED.equals(mTag)) {
-						Bundle extras = mAddress.getExtras();
-						if (extras == null) {
-							extras = new Bundle();
-							mAddress.setExtras(extras);
-							extras = mAddress.getExtras();
+				case POINT:
+					if (mAddress != null) {
+						if (TAG_LATITUDE.equals(mTag)) {
+							try {
+								mAddress.setLatitude(Double.parseDouble(s));
+							} catch (NumberFormatException nfe) {
+								throw new SAXException(nfe);
+							}
+						} else if (TAG_LONGITUDE.equals(mTag)) {
+							try {
+								mAddress.setLongitude(Double.parseDouble(s));
+							} catch (NumberFormatException nfe) {
+								throw new SAXException(nfe);
+							}
 						}
-						prev = extras.getString(ZmanimAddress.KEY_FORMATTED);
-						extras.putString(ZmanimAddress.KEY_FORMATTED, (prev == null) ? s : prev + s);
-					} else if (TAG_LOCALITY.equals(mTag)) {
-						prev = mAddress.getLocality();
-						mAddress.setLocality((prev == null) ? s : prev + s);
 					}
-				}
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+					break;
+				case ADDRESS:
+					if (mAddress != null) {
+						if (TAG_ADDRESS_LINE.equals(mTag)) {
+							prev = mAddress.getAddressLine(0);
+							mAddress.setAddressLine(0, (prev == null) ? s : prev + s);
+						} else if (TAG_ADDRESS_DISTRICT.equals(mTag)) {
+							prev = mAddress.getAdminArea();
+							mAddress.setAdminArea((prev == null) ? s : prev + s);
+						} else if (TAG_ADDRESS_COUNTRY.equals(mTag)) {
+							prev = mAddress.getCountryName();
+							mAddress.setCountryName((prev == null) ? s : prev + s);
+						} else if (TAG_FORMATTED.equals(mTag)) {
+							Bundle extras = mAddress.getExtras();
+							if (extras == null) {
+								extras = new Bundle();
+								mAddress.setExtras(extras);
+								extras = mAddress.getExtras();
+							}
+							prev = extras.getString(ZmanimAddress.KEY_FORMATTED);
+							extras.putString(ZmanimAddress.KEY_FORMATTED, (prev == null) ? s : prev + s);
+						} else if (TAG_LOCALITY.equals(mTag)) {
+							prev = mAddress.getLocality();
+							mAddress.setLocality((prev == null) ? s : prev + s);
+						}
+					}
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 	}
@@ -349,7 +349,7 @@ public class BingGeocoder extends GeocoderBase {
 
 	/**
 	 * Handler for parsing the XML response.
-	 * 
+	 *
 	 * @author Moshe
 	 */
 	protected static class ElevationResponseHandler extends DefaultHandler2 {
@@ -357,7 +357,7 @@ public class BingGeocoder extends GeocoderBase {
 		/** Parse state. */
 		private enum State {
 			START, ROOT, STATUS, RESOURCE_SETS, RESOURCE_SET, RESOURCES, ELEVATION_DATA, ELEVATION, FINISH
-		};
+		}
 
 		private static final String STATUS_OK = "200";
 
@@ -377,9 +377,9 @@ public class BingGeocoder extends GeocoderBase {
 
 		/**
 		 * Constructs a new parse handler.
-		 * 
+		 *
 		 * @param results
-		 *            the destination results.
+		 * 		the destination results.
 		 */
 		public ElevationResponseHandler(List<ZmanimLocation> results) {
 			super();
@@ -395,43 +395,43 @@ public class BingGeocoder extends GeocoderBase {
 			mTag = localName;
 
 			switch (mState) {
-			case START:
-				if (TAG_ROOT.equals(localName))
-					mState = State.ROOT;
-				else
-					throw new SAXException("Unexpected root element " + localName);
-				break;
-			case ROOT:
-				if (TAG_STATUS.equals(localName))
-					mState = State.STATUS;
-				else if (TAG_RESOURCE_SETS.equals(localName))
-					mState = State.RESOURCE_SETS;
-				break;
-			case RESOURCE_SETS:
-				if (TAG_RESOURCE_SET.equals(localName))
-					mState = State.RESOURCE_SET;
-				break;
-			case RESOURCE_SET:
-				if (TAG_RESOURCES.equals(localName))
-					mState = State.RESOURCES;
-				break;
-			case RESOURCES:
-				if (TAG_ELEVATION_DATA.equals(localName)) {
-					mState = State.ELEVATION_DATA;
-					mLocation = new ZmanimLocation(USER_PROVIDER);
-					mLocation.setTime(System.currentTimeMillis());
-				}
-				break;
-			case ELEVATION_DATA:
-				if (TAG_ELEVATIONS.equals(localName))
-					mState = State.ELEVATION;
-				break;
-			case ELEVATION:
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+				case START:
+					if (TAG_ROOT.equals(localName))
+						mState = State.ROOT;
+					else
+						throw new SAXException("Unexpected root element " + localName);
+					break;
+				case ROOT:
+					if (TAG_STATUS.equals(localName))
+						mState = State.STATUS;
+					else if (TAG_RESOURCE_SETS.equals(localName))
+						mState = State.RESOURCE_SETS;
+					break;
+				case RESOURCE_SETS:
+					if (TAG_RESOURCE_SET.equals(localName))
+						mState = State.RESOURCE_SET;
+					break;
+				case RESOURCE_SET:
+					if (TAG_RESOURCES.equals(localName))
+						mState = State.RESOURCES;
+					break;
+				case RESOURCES:
+					if (TAG_ELEVATION_DATA.equals(localName)) {
+						mState = State.ELEVATION_DATA;
+						mLocation = new ZmanimLocation(USER_PROVIDER);
+						mLocation.setTime(System.currentTimeMillis());
+					}
+					break;
+				case ELEVATION_DATA:
+					if (TAG_ELEVATIONS.equals(localName))
+						mState = State.ELEVATION;
+					break;
+				case ELEVATION:
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 
@@ -444,46 +444,46 @@ public class BingGeocoder extends GeocoderBase {
 			mTag = localName;
 
 			switch (mState) {
-			case ROOT:
-				if (TAG_ROOT.equals(localName))
-					mState = State.FINISH;
-				break;
-			case STATUS:
-				if (TAG_STATUS.equals(localName))
-					mState = State.ROOT;
-				break;
-			case RESOURCE_SETS:
-				if (TAG_RESOURCE_SETS.equals(localName))
-					mState = State.ROOT;
-				break;
-			case RESOURCE_SET:
-				if (TAG_RESOURCE_SET.equals(localName))
-					mState = State.RESOURCE_SETS;
-				break;
-			case RESOURCES:
-				if (TAG_RESOURCES.equals(localName))
-					mState = State.RESOURCE_SET;
-				break;
-			case ELEVATION_DATA:
-				if (TAG_ELEVATION_DATA.equals(localName)) {
-					if (mLocation != null) {
-						if (mLocation.hasAltitude())
-							mResults.add(mLocation);
-						else
-							mState = State.FINISH;
-						mLocation = null;
+				case ROOT:
+					if (TAG_ROOT.equals(localName))
+						mState = State.FINISH;
+					break;
+				case STATUS:
+					if (TAG_STATUS.equals(localName))
+						mState = State.ROOT;
+					break;
+				case RESOURCE_SETS:
+					if (TAG_RESOURCE_SETS.equals(localName))
+						mState = State.ROOT;
+					break;
+				case RESOURCE_SET:
+					if (TAG_RESOURCE_SET.equals(localName))
+						mState = State.RESOURCE_SETS;
+					break;
+				case RESOURCES:
+					if (TAG_RESOURCES.equals(localName))
+						mState = State.RESOURCE_SET;
+					break;
+				case ELEVATION_DATA:
+					if (TAG_ELEVATION_DATA.equals(localName)) {
+						if (mLocation != null) {
+							if (mLocation.hasAltitude())
+								mResults.add(mLocation);
+							else
+								mState = State.FINISH;
+							mLocation = null;
+						}
+						mState = State.RESOURCES;
 					}
-					mState = State.RESOURCES;
-				}
-				break;
-			case ELEVATION:
-				if (TAG_ELEVATIONS.equals(localName))
-					mState = State.ELEVATION_DATA;
-				break;
-			case FINISH:
-				return;
-			default:
-				break;
+					break;
+				case ELEVATION:
+					if (TAG_ELEVATIONS.equals(localName))
+						mState = State.ELEVATION_DATA;
+					break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 
@@ -498,24 +498,24 @@ public class BingGeocoder extends GeocoderBase {
 				return;
 
 			switch (mState) {
-			case STATUS:
-				if (!STATUS_OK.equals(s))
-					mState = State.FINISH;
-				break;
-			case ELEVATION:
-				if (mLocation != null) {
-					if (TAG_ELEVATION.equals(mTag)) {
-						try {
-							mLocation.setAltitude(Double.parseDouble(s));
-						} catch (NumberFormatException nfe) {
-							throw new SAXException(nfe);
+				case STATUS:
+					if (!STATUS_OK.equals(s))
+						mState = State.FINISH;
+					break;
+				case ELEVATION:
+					if (mLocation != null) {
+						if (TAG_ELEVATION.equals(mTag)) {
+							try {
+								mLocation.setAltitude(Double.parseDouble(s));
+							} catch (NumberFormatException nfe) {
+								throw new SAXException(nfe);
+							}
 						}
 					}
-				}
-			case FINISH:
-				return;
-			default:
-				break;
+				case FINISH:
+					return;
+				default:
+					break;
 			}
 		}
 	}

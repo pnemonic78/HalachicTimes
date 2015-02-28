@@ -19,13 +19,13 @@
  */
 package net.sf.times.location;
 
-import java.util.List;
-
 import android.content.Context;
+
+import java.util.List;
 
 /**
  * Location adapter for "favorite" locations.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class FavoritesLocationAdapter extends SpecificLocationAdapter {

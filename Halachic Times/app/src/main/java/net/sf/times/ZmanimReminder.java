@@ -19,14 +19,6 @@
  */
 package net.sf.times;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -48,9 +40,18 @@ import android.os.PowerManager.WakeLock;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimLocations;
+import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimReminder extends BroadcastReceiver {
@@ -75,9 +76,9 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	/**
 	 * Creates a new reminder manager.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public ZmanimReminder(Context context) {
 		mContext = context;
@@ -89,11 +90,11 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	/**
 	 * Setup the first reminder for today.
-	 * 
+	 *
 	 * @param settings
-	 *            the settings.
+	 * 		the settings.
 	 * @param locations
-	 *            the locations provider.
+	 * 		the locations provider.
 	 */
 	public void remind(ZmanimSettings settings) {
 		final Context context = mContext;
@@ -119,11 +120,11 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	/**
 	 * Setup the first reminder for today.
-	 * 
+	 *
 	 * @param settings
-	 *            the settings.
+	 * 		the settings.
 	 * @param adapter
-	 *            the populated adapter.
+	 * 		the populated adapter.
 	 */
 	private void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
 		Log.i(TAG, "remind");
@@ -269,13 +270,13 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	/**
 	 * Notify now.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param settings
-	 *            the settings.
+	 * 		the settings.
 	 * @param item
-	 *            the zmanim item to notify about.
+	 * 		the zmanim item to notify about.
 	 */
 	@SuppressLint("NewApi")
 	private void notifyNow(Context context, ZmanimSettings settings, ZmanimItem item) {
@@ -288,11 +289,11 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	/**
 	 * Set alarm manager to alert us for the next reminder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param when
-	 *            the upcoming reminder.
+	 * 		the upcoming reminder.
 	 */
 	private void notifyFuture(Context context, long when) {
 		Log.i(TAG, "notify future [" + formatDateTime(when) + "]");
@@ -348,9 +349,9 @@ public class ZmanimReminder extends BroadcastReceiver {
 	/**
 	 * Format the date and time with seconds.<br>
 	 * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
-	 * 
+	 *
 	 * @param time
-	 *            the time to format.
+	 * 		the time to format.
 	 * @return the formatted time.
 	 */
 	private String formatDateTime(Date time) {
@@ -362,9 +363,9 @@ public class ZmanimReminder extends BroadcastReceiver {
 
 	/**
 	 * Format the date and time with seconds.
-	 * 
+	 *
 	 * @param time
-	 *            the time to format.
+	 * 		the time to format.
 	 * @return the formatted time.
 	 * @see #formatDateTime(Date)
 	 */
@@ -373,7 +374,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	}
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint({ "Wakelock", "NewApi" })
+	@SuppressLint({"Wakelock", "NewApi"})
 	private void notifyNowEclair(Context context, ZmanimSettings settings, ZmanimItem item) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
@@ -392,7 +393,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		notification.ledOffMS = 0;
 		notification.ledOnMS = 1;
 		notification.when = item.time.getTime();// When the zman is supposed
-												// to occur.
+		// to occur.
 		notification.sound = sound;
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
@@ -406,7 +407,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	}
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint({ "Wakelock", "NewApi" })
+	@SuppressLint({"Wakelock", "NewApi"})
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void notifyNowHoneycomb(Context context, ZmanimSettings settings, ZmanimItem item) {
 		CharSequence contentTitle = context.getText(item.titleId);
@@ -427,7 +428,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		builder.setSmallIcon(R.drawable.stat_notify_time);
 		builder.setSound(sound, settings.getReminderStream());
 		builder.setWhen(item.time.getTime());// When the zman is supposed to
-												// occur.
+		// occur.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			builder.setShowWhen(true);
 		}

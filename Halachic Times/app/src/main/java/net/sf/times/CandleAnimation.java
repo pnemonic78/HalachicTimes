@@ -19,8 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Random;
-
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,9 +30,11 @@ import android.os.Handler;
 import android.text.format.DateUtils;
 import android.widget.ImageView;
 
+import java.util.Random;
+
 /**
  * Flicker animation for 1 candle.
- * 
+ *
  * @author Moshe W
  */
 public class CandleAnimation implements Runnable {
@@ -51,11 +51,11 @@ public class CandleAnimation implements Runnable {
 
 	/**
 	 * Create a new animation.
-	 * 
+	 *
 	 * @param handler
-	 *            the timer.
+	 * 		the timer.
 	 * @param view
-	 *            the image view.
+	 * 		the image view.
 	 */
 	public CandleAnimation(Handler handler, ImageView view) {
 		this(handler, view, null);
@@ -63,13 +63,13 @@ public class CandleAnimation implements Runnable {
 
 	/**
 	 * Create a new animation.
-	 * 
+	 *
 	 * @param handler
-	 *            the timer.
+	 * 		the timer.
 	 * @param view
-	 *            the image view.
+	 * 		the image view.
 	 * @param random
-	 *            the delay randomizer.
+	 * 		the delay randomizer.
 	 */
 	public CandleAnimation(Handler handler, ImageView view, Random random) {
 		mHandler = handler;

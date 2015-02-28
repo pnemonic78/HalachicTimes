@@ -19,15 +19,6 @@
  */
 package net.sf.times.location;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import net.sf.times.database.CursorFilter;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -40,10 +31,20 @@ import android.location.Location;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import net.sf.times.database.CursorFilter;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 /**
  * Address provider.<br>
  * Fetches addresses from various Internet providers, such as Google Maps.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class AddressProvider {
@@ -53,25 +54,25 @@ public class AddressProvider {
 
 		/**
 		 * Called when an address is found.
-		 * 
+		 *
 		 * @param provider
-		 *            the address provider.
+		 * 		the address provider.
 		 * @param location
-		 *            the requested location.
+		 * 		the requested location.
 		 * @param address
-		 *            the found address.
+		 * 		the found address.
 		 */
 		public void onFindAddress(AddressProvider provider, Location location, Address address);
 
 		/**
 		 * Called when a location with an elevation is found.
-		 * 
+		 *
 		 * @param provider
-		 *            the address provider.
+		 * 		the address provider.
 		 * @param location
-		 *            the requested location.
+		 * 		the requested location.
 		 * @param elevated
-		 *            the location with elevation.
+		 * 		the location with elevation.
 		 */
 		public void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated);
 
@@ -80,8 +81,8 @@ public class AddressProvider {
 	/** Database provider. */
 	public static final String DB_PROVIDER = "db";
 
-	private static final String[] COLUMNS = { BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
-			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE };
+	private static final String[] COLUMNS = {BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
+			AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE};
 	static final int INDEX_ID = 0;
 	static final int INDEX_LOCATION_LATITUDE = 1;
 	static final int INDEX_LOCATION_LONGITUDE = 2;
@@ -91,15 +92,15 @@ public class AddressProvider {
 	static final int INDEX_LANGUAGE = 6;
 	static final int INDEX_FAVORITE = 7;
 
-	private static final String[] COLUMNS_ELEVATIONS = { BaseColumns._ID, ElevationColumns.LATITUDE, ElevationColumns.LONGITUDE, ElevationColumns.ELEVATION,
-			ElevationColumns.TIMESTAMP };
+	private static final String[] COLUMNS_ELEVATIONS = {BaseColumns._ID, ElevationColumns.LATITUDE, ElevationColumns.LONGITUDE, ElevationColumns.ELEVATION,
+			ElevationColumns.TIMESTAMP};
 	static final int INDEX_ELEVATIONS_ID = 0;
 	static final int INDEX_ELEVATIONS_LATITUDE = 1;
 	static final int INDEX_ELEVATIONS_LONGITUDE = 2;
 	static final int INDEX_ELEVATIONS_ELEVATION = 3;
 	static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
 
-	private static final String[] COLUMNS_CITIES = { BaseColumns._ID, CitiesColumns.TIMESTAMP, CitiesColumns.FAVORITE };
+	private static final String[] COLUMNS_CITIES = {BaseColumns._ID, CitiesColumns.TIMESTAMP, CitiesColumns.FAVORITE};
 	static final int INDEX_CITIES_ID = 0;
 	static final int INDEX_CITIES_TIMESTAMP = 1;
 	static final int INDEX_CITIES_FAVORITE = 2;
@@ -119,9 +120,9 @@ public class AddressProvider {
 
 	/**
 	 * Constructs a new provider.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public AddressProvider(Context context) {
 		this(context, Locale.getDefault());
@@ -129,11 +130,11 @@ public class AddressProvider {
 
 	/**
 	 * Constructs a new provider.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param locale
-	 *            the locale.
+	 * 		the locale.
 	 */
 	public AddressProvider(Context context, Locale locale) {
 		super();
@@ -144,11 +145,11 @@ public class AddressProvider {
 
 	/**
 	 * Find the nearest address of the location.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @param listener
-	 *            the listener.
+	 * 		the listener.
 	 * @return the address - {@code null} otherwise.
 	 */
 	public Address findNearestAddress(Location location, OnFindAddressListener listener) {
@@ -223,11 +224,11 @@ public class AddressProvider {
 	/**
 	 * Find addresses that are known to describe the area immediately
 	 * surrounding the given latitude and longitude.
-	 * <p>
+	 * <p/>
 	 * Uses the built-in Android {@link Geocoder} API.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses.
 	 */
 	private List<Address> findNearestAddressGeocoder(Location location) {
@@ -250,11 +251,11 @@ public class AddressProvider {
 	/**
 	 * Find addresses that are known to describe the area immediately
 	 * surrounding the given latitude and longitude.
-	 * <p>
+	 * <p/>
 	 * Uses the Google Maps API.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses.
 	 */
 	private List<Address> findNearestAddressGoogle(Location location) {
@@ -276,11 +277,11 @@ public class AddressProvider {
 
 	/**
 	 * Finds the nearest street and address for a given lat/lng pair.
-	 * <p>
+	 * <p/>
 	 * Uses the GeoNames API.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses.
 	 */
 	private List<Address> findNearestAddressGeoNames(Location location) {
@@ -302,11 +303,11 @@ public class AddressProvider {
 
 	/**
 	 * Finds the nearest street and address for a given lat/lng pair.
-	 * <p>
+	 * <p/>
 	 * Uses the Bing API.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses.
 	 */
 	private List<Address> findNearestAddressBing(Location location) {
@@ -328,11 +329,11 @@ public class AddressProvider {
 
 	/**
 	 * Find the best address by checking relevant fields.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @param addresses
-	 *            the list of addresses.
+	 * 		the list of addresses.
 	 * @return the best address - {@code null} otherwise.
 	 */
 	private Address findBestAddress(Location location, List<Address> addresses) {
@@ -341,13 +342,13 @@ public class AddressProvider {
 
 	/**
 	 * Find the best address by checking relevant fields.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @param addresses
-	 *            the list of addresses.
+	 * 		the list of addresses.
 	 * @param radius
-	 *            the maximum radius.
+	 * 		the maximum radius.
 	 * @return the best address - {@code null} otherwise.
 	 */
 	private Address findBestAddress(Location location, List<Address> addresses, float radius) {
@@ -412,9 +413,9 @@ public class AddressProvider {
 
 	/**
 	 * Format the address.
-	 * 
+	 *
 	 * @param a
-	 *            the address.
+	 * 		the address.
 	 * @return the formatted address name.
 	 */
 	public static String formatAddress(ZmanimAddress a) {
@@ -424,11 +425,11 @@ public class AddressProvider {
 	/**
 	 * Find addresses that are known to describe the area immediately
 	 * surrounding the given latitude and longitude.
-	 * <p>
+	 * <p/>
 	 * Uses the local database.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses.
 	 */
 	private List<Address> findNearestAddressDatabase(Location location) {
@@ -450,7 +451,7 @@ public class AddressProvider {
 
 	/**
 	 * Get the readable addresses database.
-	 * 
+	 *
 	 * @return the database - {@code null} otherwise.
 	 */
 	private SQLiteDatabase getReadableDatabase() {
@@ -466,7 +467,7 @@ public class AddressProvider {
 
 	/**
 	 * Get the writable addresses database.
-	 * 
+	 *
 	 * @return the database - {@code null} otherwise.
 	 */
 	private SQLiteDatabase getWritableDatabase() {
@@ -483,11 +484,11 @@ public class AddressProvider {
 	/**
 	 * Insert or update the address in the local database. The local database is
 	 * supposed to reduce redundant network requests.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @param address
-	 *            the address.
+	 * 		the address.
 	 */
 	public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
 		if (address == null)
@@ -521,7 +522,7 @@ public class AddressProvider {
 			id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
 			address.setId(id);
 		} else {
-			String[] whereArgs = { Long.toString(id) };
+			String[] whereArgs = {Long.toString(id)};
 			db.update(AddressOpenHelper.TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
 		}
 	}
@@ -534,11 +535,11 @@ public class AddressProvider {
 
 	/**
 	 * Find the nearest country to the latitude and longitude.
-	 * <p>
+	 * <p/>
 	 * Uses the pre-compiled array of countries from GeoNames.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses with at most 1 entry.
 	 */
 	private List<Address> findNearestCountry(Location location) {
@@ -553,11 +554,11 @@ public class AddressProvider {
 
 	/**
 	 * Find the nearest city to the latitude and longitude.
-	 * <p>
+	 * <p/>
 	 * Uses the pre-compiled array of cities from GeoNames.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the list of addresses with at most 1 entry.
 	 */
 	private List<Address> findNearestCity(Location location) {
@@ -575,9 +576,9 @@ public class AddressProvider {
 
 	/**
 	 * Fetch addresses from the database.
-	 * 
+	 *
 	 * @param filter
-	 *            a cursor filter.
+	 * 		a cursor filter.
 	 * @return the list of addresses.
 	 */
 	public List<ZmanimAddress> query(CursorFilter filter) {
@@ -641,11 +642,11 @@ public class AddressProvider {
 
 	/**
 	 * Find the elevation (altitude).
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @param listener
-	 *            the listener.
+	 * 		the listener.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
 	public Location findElevation(Location location, OnFindAddressListener listener) {
@@ -707,9 +708,9 @@ public class AddressProvider {
 	/**
 	 * Find elevation of nearest cities. Calculates the average elevation of
 	 * neighbouring cities if more than {@code 1} is found.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
 	private ZmanimLocation findElevationCities(Location location) {
@@ -725,9 +726,9 @@ public class AddressProvider {
 
 	/**
 	 * Find elevation according to Google Maps.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the location with elevation - {@code null} otherwise.
 	 */
 	private ZmanimLocation findElevationGoogle(Location location) {
@@ -748,9 +749,9 @@ public class AddressProvider {
 
 	/**
 	 * Find elevation according to GeoNames.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
 	private ZmanimLocation findElevationGeoNames(Location location) {
@@ -771,9 +772,9 @@ public class AddressProvider {
 
 	/**
 	 * Find elevation according to Bing.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
 	private ZmanimLocation findElevationBing(Location location) {
@@ -796,9 +797,9 @@ public class AddressProvider {
 	 * Find elevation of nearest locations cached in the database. Calculates
 	 * the average elevation of neighbouring locations if more than {@code 1} is
 	 * found.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the elevated location - {@code null} otherwise.
 	 */
 	private ZmanimLocation findElevationDatabase(Location location) {
@@ -820,9 +821,9 @@ public class AddressProvider {
 	/**
 	 * Insert or update the location with elevation in the local database. The
 	 * local database is supposed to reduce redundant network requests.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 */
 	public void insertOrUpdateElevation(ZmanimLocation location) {
 		if ((location == null) || !location.hasAltitude())
@@ -844,16 +845,16 @@ public class AddressProvider {
 			id = db.insert(AddressOpenHelper.TABLE_ELEVATIONS, null, values);
 			location.setId(id);
 		} else {
-			String[] whereArgs = { Long.toString(id) };
+			String[] whereArgs = {Long.toString(id)};
 			db.update(AddressOpenHelper.TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
 		}
 	}
 
 	/**
 	 * Fetch elevations from the database.
-	 * 
+	 *
 	 * @param filter
-	 *            a cursor filter.
+	 * 		a cursor filter.
 	 * @return the list of locations with elevations.
 	 */
 	public List<ZmanimLocation> queryElevations(CursorFilter filter) {
@@ -894,9 +895,9 @@ public class AddressProvider {
 
 	/**
 	 * Populate the cities with data from the table.
-	 * 
+	 *
 	 * @param cities
-	 *            the list of cities to populate.
+	 * 		the list of cities to populate.
 	 */
 	public void populateCities(Collection<ZmanimAddress> cities) {
 		SQLiteDatabase db = getReadableDatabase();
@@ -936,9 +937,9 @@ public class AddressProvider {
 
 	/**
 	 * Insert or update the city in the local database.
-	 * 
+	 *
 	 * @param city
-	 *            the city.
+	 * 		the city.
 	 */
 	public void insertOrUpdateCity(ZmanimAddress city) {
 		if (city == null)
@@ -956,7 +957,7 @@ public class AddressProvider {
 		SQLiteDatabase db = getWritableDatabase();
 		if (db == null)
 			return;
-		String[] whereArgs = { Long.toString(id) };
+		String[] whereArgs = {Long.toString(id)};
 		db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
 	}
 

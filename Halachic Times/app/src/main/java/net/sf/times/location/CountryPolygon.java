@@ -25,9 +25,9 @@ import android.graphics.Region;
 /**
  * Country borders as a simplified polygon.<br>
  * Loosely based on {@code java.awt.Polygon}.
- * <p>
+ * <p/>
  * <em>{@link Region} has bug with large areas.</em>
- * 
+ *
  * @author Moshe Waisberg
  */
 public class CountryPolygon {
@@ -49,9 +49,9 @@ public class CountryPolygon {
 
 	/**
 	 * Constructs a new country.
-	 * 
+	 *
 	 * @param countryCode
-	 *            the country code.
+	 * 		the country code.
 	 */
 	public CountryPolygon(String countryCode) {
 		super();
@@ -62,22 +62,22 @@ public class CountryPolygon {
 
 	/**
 	 * Constructs a new country.
-	 * 
+	 *
 	 * @param countryCode
-	 *            the country code.
+	 * 		the country code.
 	 * @param latitudes
-	 *            an array of latitudes.
+	 * 		an array of latitudes.
 	 * @param longitudes
-	 *            an array of longitudes.
+	 * 		an array of longitudes.
 	 * @param npoints
-	 *            the total number of points.
+	 * 		the total number of points.
 	 * @throws NegativeArraySizeException
-	 *             if the value of {@code npoints} is negative.
+	 * 		if the value of {@code npoints} is negative.
 	 * @throws IndexOutOfBoundsException
-	 *             if {@code npoints} is greater than the length of
-	 *             {@code latitudes} or the length of {@code longitudes}.
+	 * 		if {@code npoints} is greater than the length of
+	 * 		{@code latitudes} or the length of {@code longitudes}.
 	 * @throws NullPointerException
-	 *             if {@code latitudes} or {@code longitudes} is {@code null}.
+	 * 		if {@code latitudes} or {@code longitudes} is {@code null}.
 	 */
 	public CountryPolygon(String countryCode, int[] latitudes, int[] longitudes, int npoints) {
 		super();
@@ -98,13 +98,13 @@ public class CountryPolygon {
 	/**
 	 * Tests if the specified coordinates are inside the bounding box of the
 	 * country.
-	 * 
+	 *
 	 * @param latitude
-	 *            the latitude to be tested.
+	 * 		the latitude to be tested.
 	 * @param longitude
-	 *            the longitude to be tested.
+	 * 		the longitude to be tested.
 	 * @return {@code true} if the specified coordinates are inside the country
-	 *         boundary; {@code false} otherwise.
+	 * boundary; {@code false} otherwise.
 	 */
 	public boolean containsBox(int latitude, int longitude) {
 		return (latitude >= mMinLatitude) && (latitude <= mMaxLatitude) && (longitude >= mMinLongitude) && (longitude <= mMaxLongitude);
@@ -113,11 +113,11 @@ public class CountryPolygon {
 	/**
 	 * Tests if the specified country is inside the bounding box of this
 	 * country.
-	 * 
+	 *
 	 * @param other
-	 *            the other country to be tested.
+	 * 		the other country to be tested.
 	 * @return {@code true} if the specified country is inside this country
-	 *         boundary; {@code false} otherwise.
+	 * boundary; {@code false} otherwise.
 	 */
 	public boolean containsBox(CountryPolygon other) {
 		return (other.mMinLatitude >= this.mMinLatitude) && (other.mMinLongitude >= this.mMinLongitude) && (other.mMaxLatitude <= this.mMaxLatitude)
@@ -126,15 +126,15 @@ public class CountryPolygon {
 
 	/**
 	 * Tests if the specified coordinates are inside the borders of the country.
-	 * <p>
+	 * <p/>
 	 * Uses the ray casting algorithm.
-	 * 
+	 *
 	 * @param latitude
-	 *            the latitude to be tested.
+	 * 		the latitude to be tested.
 	 * @param longitude
-	 *            the longitude to be tested.
+	 * 		the longitude to be tested.
 	 * @return {@code true} if the specified coordinates are inside the country
-	 *         boundary; {@code false} otherwise.
+	 * boundary; {@code false} otherwise.
 	 */
 	public boolean contains(int latitude, int longitude) {
 		int j = npoints - 1;
@@ -161,12 +161,12 @@ public class CountryPolygon {
 
 	/**
 	 * Appends the specified coordinates to this country.
-	 * <p>
-	 * 
+	 * <p/>
+	 *
 	 * @param latitude
-	 *            the specified latitude (Y coordinate).
+	 * 		the specified latitude (Y coordinate).
 	 * @param longitude
-	 *            the specified longitude (X coordinate).
+	 * 		the specified longitude (X coordinate).
 	 */
 	public void addPoint(int latitude, int longitude) {
 		if (npoints >= latitudes.length || npoints >= longitudes.length) {
@@ -194,11 +194,11 @@ public class CountryPolygon {
 
 	/**
 	 * Update the rectangular boundary.
-	 * 
+	 *
 	 * @param latitude
-	 *            the latitude.
+	 * 		the latitude.
 	 * @param longitude
-	 *            the longitude.
+	 * 		the longitude.
 	 */
 	private void updateBounds(int latitude, int longitude) {
 		if (latitude < mMinLatitude)
@@ -213,17 +213,17 @@ public class CountryPolygon {
 
 	/**
 	 * Calculate the distance from a point to a line.
-	 * 
+	 *
 	 * @param a
-	 *            a point on the line.
+	 * 		a point on the line.
 	 * @param b
-	 *            another point on the line.
+	 * 		another point on the line.
 	 * @param p
-	 *            the point, not on the line.
+	 * 		the point, not on the line.
 	 * @return the distance.
 	 * @see <a
-	 *      href="http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line">Distance
-	 *      from a point to a line</a>
+	 * href="http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line">Distance
+	 * from a point to a line</a>
 	 */
 	public static double pointToLineDistance(Point a, Point b, Point p) {
 		return pointToLineDistance(a.x, a.y, b.x, b.y, p.x, p.y);
@@ -231,23 +231,23 @@ public class CountryPolygon {
 
 	/**
 	 * Calculate the distance from a point to a line.
-	 * 
+	 *
 	 * @param ax
-	 *            X coordinate of a point on the line.
+	 * 		X coordinate of a point on the line.
 	 * @param ay
-	 *            Y coordinate of a point on the line.
+	 * 		Y coordinate of a point on the line.
 	 * @param bx
-	 *            X coordinate of another point on the line.
+	 * 		X coordinate of another point on the line.
 	 * @param by
-	 *            Y coordinate of another point on the line.
+	 * 		Y coordinate of another point on the line.
 	 * @param px
-	 *            X coordinate of the point, not on the line.
+	 * 		X coordinate of the point, not on the line.
 	 * @param py
-	 *            Y coordinate of the point, not on the line.
+	 * 		Y coordinate of the point, not on the line.
 	 * @return the distance.
 	 * @see <a
-	 *      href="http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line">Distance
-	 *      from a point to a line</a>
+	 * href="http://en.wikipedia.org/wiki/Distance_from_a_point_to_a_line">Distance
+	 * from a point to a line</a>
 	 */
 	public static double pointToLineDistance(double ax, double ay, double bx, double by, double px, double py) {
 		final double dxAB = bx - ax;
@@ -258,11 +258,11 @@ public class CountryPolygon {
 
 	/**
 	 * Find the minimum distance to any of the borders.
-	 * 
+	 *
 	 * @param latitude
-	 *            the latitude of the point.
+	 * 		the latitude of the point.
 	 * @param longitude
-	 *            the longitude of the point.
+	 * 		the longitude of the point.
 	 * @return the distance.
 	 */
 	public double minimumDistanceToBorders(int latitude, int longitude) {

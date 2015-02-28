@@ -19,7 +19,6 @@
  */
 package net.sf.times.location;
 
-import net.sf.times.R;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
@@ -28,10 +27,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.text.format.DateUtils;
 
+import net.sf.times.R;
+
 /**
  * A helper class to manage database creation and version management for
  * addresses and elevations.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class AddressOpenHelper extends SQLiteOpenHelper {
@@ -51,9 +52,9 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 
 	/**
 	 * Constructs a new helper.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public AddressOpenHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
@@ -120,9 +121,9 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 
 	/**
 	 * Fill the cities table with empty rows.
-	 * 
+	 *
 	 * @param db
-	 *            the database.
+	 * 		the database.
 	 */
 	private void fillCities(SQLiteDatabase db) {
 		Resources res = mContext.getResources();

@@ -1,10 +1,5 @@
 package net.sf.times;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -15,10 +10,16 @@ import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
 import android.widget.RemoteViews;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * Clock widget with hour and title underneath.<br>
  * Based on the default Android digital clock widget.
- * 
+ *
  * @author Moshe
  */
 public class ClockWidget extends ZmanimWidget {

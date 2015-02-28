@@ -30,7 +30,7 @@ import android.text.format.DateUtils;
 
 /**
  * Application settings.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimSettings {
@@ -147,9 +147,9 @@ public class ZmanimSettings {
 
 	/**
 	 * Constructs a new settings.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public ZmanimSettings(Context context) {
 		super();
@@ -161,7 +161,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the data.
-	 * 
+	 *
 	 * @return the shared preferences.
 	 */
 	public SharedPreferences getData() {
@@ -170,7 +170,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the editor to modify the preferences data.
-	 * 
+	 *
 	 * @return the editor.
 	 */
 	public SharedPreferences.Editor edit() {
@@ -179,7 +179,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the location.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocation() {
@@ -209,7 +209,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Set the location.
-	 * 
+	 *
 	 * @return the location.
 	 */
 	public void putLocation(Location location) {
@@ -224,7 +224,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Are coordinates visible?
-	 * 
+	 *
 	 * @return {@code true} to show coordinates.
 	 */
 	public boolean isCoordinates() {
@@ -233,7 +233,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the notation of latitude and longitude.
-	 * 
+	 *
 	 * @return the format.
 	 */
 	public String getCoordinatesFormat() {
@@ -242,7 +242,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Format times with seconds?
-	 * 
+	 *
 	 * @return {@code true} to show seconds.
 	 */
 	public boolean isSeconds() {
@@ -251,7 +251,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Are summaries visible?
-	 * 
+	 *
 	 * @return {@code true} to show summaries.
 	 */
 	public boolean isSummaries() {
@@ -260,7 +260,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Are past times enabled?
-	 * 
+	 *
 	 * @return {@code true} if older times are not grayed.
 	 */
 	public boolean isPast() {
@@ -269,7 +269,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Is background gradient visible?
-	 * 
+	 *
 	 * @return {@code true} to show gradient.
 	 */
 	public boolean isBackgroundGradient() {
@@ -279,7 +279,7 @@ public class ZmanimSettings {
 	/**
 	 * Get the offset in minutes before sunset which is used in calculating
 	 * candle lighting time.
-	 * 
+	 *
 	 * @return the number of minutes.
 	 */
 	public int getCandleLightingOffset() {
@@ -288,7 +288,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for Chanukka candle lighting time.
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getChanukkaCandles() {
@@ -297,7 +297,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for dawn (<em>alos</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getDawn() {
@@ -306,7 +306,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for earliest tallis &amp; tefillin (<em>misheyakir</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getTallis() {
@@ -315,7 +315,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for sunrise.
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getSunrise() {
@@ -324,7 +324,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for the last shema (<em>sof zman shma</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getLastShema() {
@@ -333,7 +333,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for the last morning prayers (<em>sof zman tfila</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getLastTfila() {
@@ -342,7 +342,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for burning chametz (<em>biur chametz</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getBurnChametz() {
@@ -351,7 +351,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for noon (<em>chatzos</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getMidday() {
@@ -360,7 +360,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for earliest afternoon prayers (<em>mincha gedola</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getEarliestMincha() {
@@ -369,7 +369,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for afternoon prayers (<em>mincha ketana</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getMincha() {
@@ -378,7 +378,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for afternoon prayers (<em>plag hamincha</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getPlugHamincha() {
@@ -387,7 +387,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for sunset.
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getSunset() {
@@ -396,7 +396,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for twilight (dusk).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getTwilight() {
@@ -405,7 +405,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for nightfall.
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getNightfall() {
@@ -414,7 +414,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for midnight (<em>chatzos layla</em>).
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getMidnight() {
@@ -423,7 +423,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for earliest kiddush levana.
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getEarliestKiddushLevana() {
@@ -432,7 +432,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion for latest kiddush levana.
-	 * 
+	 *
 	 * @return the opinion.
 	 */
 	public String getLatestKiddushLevana() {
@@ -441,9 +441,9 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the opinion.
-	 * 
+	 *
 	 * @param id
-	 *            the time id.
+	 * 		the time id.
 	 * @return the opinion.
 	 */
 	public String getOpinion(int id) {
@@ -483,11 +483,11 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the reminder.
-	 * 
+	 *
 	 * @param id
-	 *            the time id.
+	 * 		the time id.
 	 * @return the number of minutes before the prayer, in milliseconds -
-	 *         positive value when no reminder.
+	 * positive value when no reminder.
 	 */
 	public long getReminder(int id) {
 		if ((id == R.id.dawn_row) || (id == R.string.dawn))
@@ -528,11 +528,11 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the reminder.
-	 * 
+	 *
 	 * @param key
-	 *            the key.
+	 * 		the key.
 	 * @return the number of minutes before the prayer, in milliseconds -
-	 *         positive value when no reminder.
+	 * positive value when no reminder.
 	 */
 	public long getReminder(String key) {
 		String value = mPrefs.getString(key, null);
@@ -543,7 +543,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the time that was used for the latest reminder.
-	 * 
+	 *
 	 * @return the time.
 	 */
 	public long getLatestReminder() {
@@ -552,9 +552,9 @@ public class ZmanimSettings {
 
 	/**
 	 * Set the time that was used for the latest reminder to now.
-	 * 
+	 *
 	 * @param time
-	 *            the time.
+	 * 		the time.
 	 */
 	public void setLatestReminder(long time) {
 		Editor editor = mPrefs.edit();
@@ -564,7 +564,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Are the candles animated?
-	 * 
+	 *
 	 * @return {@code true} if candles animations enabled.
 	 */
 	public boolean isCandlesAnimated() {
@@ -573,7 +573,7 @@ public class ZmanimSettings {
 
 	/**
 	 * Get the reminder audio stream type.
-	 * 
+	 *
 	 * @return the stream type.
 	 * @see AudioManager#STREAM_ALARM
 	 * @see AudioManager#STREAM_NOTIFICATION

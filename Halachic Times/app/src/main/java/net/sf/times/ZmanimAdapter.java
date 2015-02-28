@@ -19,20 +19,6 @@
  */
 package net.sf.times;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Locale;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
@@ -42,12 +28,27 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimLocations;
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Adapter for halachic times list.
- * <p>
+ * <p/>
  * See also Wikipedia article on <a
  * href="http://en.wikipedia.org/wiki/Zmanim">Zmanim</a>.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
@@ -201,11 +202,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Creates a new adapter.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param settings
-	 *            the application settings.
+	 * 		the application settings.
 	 */
 	public ZmanimAdapter(Context context, ZmanimSettings settings) {
 		super(context, R.layout.times_item, 0);
@@ -224,7 +225,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Get the calendar.
-	 * 
+	 *
 	 * @return the calendar.
 	 */
 	public ComplexZmanimCalendar getCalendar() {
@@ -238,15 +239,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Bind the item to the view.
-	 * 
+	 *
 	 * @param position
-	 *            the row index.
+	 * 		the row index.
 	 * @param convertView
-	 *            the view.
+	 * 		the view.
 	 * @param parent
-	 *            the parent view.
+	 * 		the parent view.
 	 * @param resource
-	 *            the resource layout.
+	 * 		the resource layout.
 	 * @return the item view.
 	 */
 	protected View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
@@ -295,13 +296,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Adds the item to the array for a valid time.
-	 * 
+	 *
 	 * @param titleId
-	 *            the title label id.
+	 * 		the title label id.
 	 * @param summaryId
-	 *            the summary label id.
+	 * 		the summary label id.
 	 * @param time
-	 *            the time.
+	 * 		the time.
 	 */
 	public void add(int titleId, int summaryId, Date time) {
 		add(titleId, (summaryId == 0) ? (CharSequence) null : getContext().getText(summaryId), time);
@@ -309,13 +310,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Adds the item to the array for a valid time.
-	 * 
+	 *
 	 * @param titleId
-	 *            the title label id.
+	 * 		the title label id.
 	 * @param summary
-	 *            the summary label.
+	 * 		the summary label.
 	 * @param time
-	 *            the time in milliseconds.
+	 * 		the time in milliseconds.
 	 */
 	public void add(int titleId, CharSequence summary, Date time) {
 		add(0, titleId, summary, titleId, time);
@@ -323,15 +324,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Adds the item to the array for a valid date.
-	 * 
+	 *
 	 * @param rowId
-	 *            the row id for remote views?
+	 * 		the row id for remote views?
 	 * @param titleId
-	 *            the row layout id.
+	 * 		the row layout id.
 	 * @param timeId
-	 *            the time text id to set for remote views.
+	 * 		the time text id to set for remote views.
 	 * @param time
-	 *            the time.
+	 * 		the time.
 	 */
 	public void add(int rowId, int titleId, int timeId, Date time) {
 		add(rowId, titleId, null, timeId, time);
@@ -339,17 +340,17 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Adds the item to the array for a valid date.
-	 * 
+	 *
 	 * @param rowId
-	 *            the row id for remote views?
+	 * 		the row id for remote views?
 	 * @param titleId
-	 *            the row layout id.
+	 * 		the row layout id.
 	 * @param summary
-	 *            the summary label.
+	 * 		the summary label.
 	 * @param timeId
-	 *            the time text id to set for remote views.
+	 * 		the time text id to set for remote views.
 	 * @param time
-	 *            the time.
+	 * 		the time.
 	 */
 	private void add(int rowId, int titleId, CharSequence summary, int timeId, Date time) {
 		ZmanimItem item = new ZmanimItem();
@@ -398,9 +399,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Populate the list of times.
-	 * 
+	 *
 	 * @param remote
-	 *            is for remote views?
+	 * 		is for remote views?
 	 */
 	public void populate(boolean remote) {
 		prePopulate();
@@ -997,11 +998,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Get the number of candles to light.
-	 * 
+	 *
 	 * @param cal
-	 *            the Gregorian date.
+	 * 		the Gregorian date.
 	 * @param inIsrael
-	 *            is in Israel?
+	 * 		is in Israel?
 	 * @return the number of candles to light, the holiday, and when to light.
 	 */
 	protected int getCandles(JewishCalendar jcal) {
@@ -1016,67 +1017,67 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int flags = BEFORE_SUNSET;
 
 		switch (holidayTomorrow) {
-		case JewishCalendar.ROSH_HASHANA:
-		case JewishCalendar.SUCCOS:
-		case JewishCalendar.SHEMINI_ATZERES:
-		case JewishCalendar.SIMCHAS_TORAH:
-		case JewishCalendar.PESACH:
-		case JewishCalendar.SHAVUOS:
-			count = CANDLES_FESTIVAL;
-			break;
-		case JewishCalendar.YOM_KIPPUR:
-			count = CANDLES_YOM_KIPPUR;
-			break;
-		case JewishCalendar.CHANUKAH:
-			count = jcal.getDayOfChanukah();
-			if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY)) {
-				String opinion = mSettings.getChanukkaCandles();
-				if (OPINION_TWILIGHT.equals(opinion)) {
-					flags = AT_TWILIGHT;
-				} else if (OPINION_NIGHT.equals(opinion)) {
-					flags = AT_NIGHT;
-				} else {
-					flags = AT_SUNSET;
-				}
-			}
-			break;
-		default:
-			if (dayOfWeek == Calendar.FRIDAY) {
-				holidayTomorrow = SHABBATH;
-				count = CANDLES_SHABBATH;
-			}
-			break;
-		}
-
-		// Forbidden to light candles during Shabbath.
-		switch (dayOfWeek) {
-		case Calendar.FRIDAY:
-			// Probably never happens that Yom Kippurim falls on a Friday.
-			// Prohibited to light candles on Yom Kippurim for Shabbath.
-			if (holidayToday == JewishCalendar.YOM_KIPPUR) {
-				count = CANDLES_NONE;
-			}
-			break;
-		case Calendar.SATURDAY:
-			if (holidayToday == -1) {
-				holidayToday = SHABBATH;
-			}
-			flags = MOTZE_SHABBATH;
-			break;
-		default:
-			// During a holiday, we can light for the next day from an existing
-			// flame.
-			switch (holidayToday) {
 			case JewishCalendar.ROSH_HASHANA:
 			case JewishCalendar.SUCCOS:
 			case JewishCalendar.SHEMINI_ATZERES:
 			case JewishCalendar.SIMCHAS_TORAH:
 			case JewishCalendar.PESACH:
 			case JewishCalendar.SHAVUOS:
-				flags = AT_SUNSET;
+				count = CANDLES_FESTIVAL;
 				break;
-			}
-			break;
+			case JewishCalendar.YOM_KIPPUR:
+				count = CANDLES_YOM_KIPPUR;
+				break;
+			case JewishCalendar.CHANUKAH:
+				count = jcal.getDayOfChanukah();
+				if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY)) {
+					String opinion = mSettings.getChanukkaCandles();
+					if (OPINION_TWILIGHT.equals(opinion)) {
+						flags = AT_TWILIGHT;
+					} else if (OPINION_NIGHT.equals(opinion)) {
+						flags = AT_NIGHT;
+					} else {
+						flags = AT_SUNSET;
+					}
+				}
+				break;
+			default:
+				if (dayOfWeek == Calendar.FRIDAY) {
+					holidayTomorrow = SHABBATH;
+					count = CANDLES_SHABBATH;
+				}
+				break;
+		}
+
+		// Forbidden to light candles during Shabbath.
+		switch (dayOfWeek) {
+			case Calendar.FRIDAY:
+				// Probably never happens that Yom Kippurim falls on a Friday.
+				// Prohibited to light candles on Yom Kippurim for Shabbath.
+				if (holidayToday == JewishCalendar.YOM_KIPPUR) {
+					count = CANDLES_NONE;
+				}
+				break;
+			case Calendar.SATURDAY:
+				if (holidayToday == -1) {
+					holidayToday = SHABBATH;
+				}
+				flags = MOTZE_SHABBATH;
+				break;
+			default:
+				// During a holiday, we can light for the next day from an existing
+				// flame.
+				switch (holidayToday) {
+					case JewishCalendar.ROSH_HASHANA:
+					case JewishCalendar.SUCCOS:
+					case JewishCalendar.SHEMINI_ATZERES:
+					case JewishCalendar.SIMCHAS_TORAH:
+					case JewishCalendar.PESACH:
+					case JewishCalendar.SHAVUOS:
+						flags = AT_SUNSET;
+						break;
+				}
+				break;
 		}
 
 		return flags | ((holidayToday & HOLIDAY_MASK) << 12) | ((holidayTomorrow & HOLIDAY_MASK) << 4) | (count & CANDLES_MASK);
@@ -1094,7 +1095,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * View holder for zman row item.
-	 * 
+	 *
 	 * @author Moshe W
 	 */
 	private static class ViewHolder {
@@ -1161,9 +1162,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Set the calendar.
-	 * 
+	 *
 	 * @param calendar
-	 *            the calendar.
+	 * 		the calendar.
 	 */
 	public void setCalendar(Calendar calendar) {
 		this.mCalendar.setCalendar(calendar);
@@ -1171,9 +1172,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Set the calendar time.
-	 * 
+	 *
 	 * @param time
-	 *            the time in milliseconds.
+	 * 		the time in milliseconds.
 	 */
 	public void setCalendar(long time) {
 		Calendar cal = mCalendar.getCalendar();
@@ -1182,9 +1183,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Sets the {@link GeoLocation}.
-	 * 
+	 *
 	 * @param geoLocation
-	 *            the location.
+	 * 		the location.
 	 */
 	public void setGeoLocation(GeoLocation geoLocation) {
 		this.mCalendar.setGeoLocation(geoLocation);
@@ -1192,9 +1193,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 	/**
 	 * Sets whether to use Israel holiday scheme or not.
-	 * 
+	 *
 	 * @param inIsrael
-	 *            set to {@code true} for calculations for Israel.
+	 * 		set to {@code true} for calculations for Israel.
 	 */
 	public void setInIsrael(boolean inIsrael) {
 		this.mInIsrael = inIsrael;

@@ -19,13 +19,13 @@
  */
 package net.sf.times.location;
 
-import java.util.List;
-
 import android.content.Context;
+
+import java.util.List;
 
 /**
  * Location adapter for locations the user has "previously visited".
- * 
+ *
  * @author Moshe Waisberg
  */
 public class HistoryLocationAdapter extends SpecificLocationAdapter {

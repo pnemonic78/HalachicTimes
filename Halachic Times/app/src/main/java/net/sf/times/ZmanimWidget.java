@@ -19,14 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocationListener;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -49,9 +41,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocationListener;
+import net.sf.times.location.ZmanimLocations;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.util.Calendar;
+
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationListener {
@@ -133,14 +134,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Populate the list with times.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param appWidgetManager
-	 *            the widget manager.
+	 * 		the widget manager.
 	 * @param appWidgetIds
-	 *            the widget ids for which an update is needed - {@code null} to
-	 *            get ids from the manager.
+	 * 		the widget ids for which an update is needed - {@code null} to
+	 * 		get ids from the manager.
 	 */
 	@SuppressLint("NewApi")
 	protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -207,9 +208,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Populate the list with times.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	protected void populateTimes(Context context) {
 		populateTimes(context, AppWidgetManager.getInstance(context), null);
@@ -257,11 +258,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Schedule an update for midnight to populate the new day's list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param appWidgetIds
-	 *            the widget ids for which an update is needed.
+	 * 		the widget ids for which an update is needed.
 	 */
 	private void scheduleForMidnight(Context context, int[] appWidgetIds) {
 		Calendar midnight = Calendar.getInstance();
@@ -280,11 +281,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Bind the times to remote views.
-	 * 
+	 *
 	 * @param list
-	 *            the remote views.
+	 * 		the remote views.
 	 * @param adapter
-	 *            the list adapter.
+	 * 		the list adapter.
 	 */
 	protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
 		final int count = adapter.getCount();
@@ -316,13 +317,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Bind the item to remote views.
-	 * 
+	 *
 	 * @param list
-	 *            the remote list.
+	 * 		the remote list.
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @param item
-	 *            the zmanim item.
+	 * 		the zmanim item.
 	 */
 	protected void bindView(RemoteViews list, int position, ZmanimItem item) {
 		if (item.elapsed || (item.time == null) || (item.timeLabel == null)) {
@@ -335,9 +336,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Is the device made by Nokia?
-	 * 
+	 *
 	 * @return {@code true} if either the brand or manufacturer start with
-	 *         {@code "Nokia"}.
+	 * {@code "Nokia"}.
 	 */
 	protected boolean isDeviceNokia() {
 		return Build.BRAND.startsWith("Nokia") || Build.MANUFACTURER.startsWith("Nokia");
@@ -345,7 +346,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Get the layout.
-	 * 
+	 *
 	 * @return the layout id.
 	 */
 	protected int getLayoutId() {
@@ -358,7 +359,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Get the view for the intent click.
-	 * 
+	 *
 	 * @return the view id.
 	 */
 	protected int getIntentViewId() {
@@ -367,7 +368,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Is the widget a list with remote adapter?
-	 * 
+	 *
 	 * @return {@code true} if remote list.
 	 */
 	protected boolean isRemoteList() {
@@ -376,11 +377,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Bind the times to remote list view.
-	 * 
+	 *
 	 * @param appWidgetId
-	 *            the app widget id.
+	 * 		the app widget id.
 	 * @param list
-	 *            the remote list.
+	 * 		the remote list.
 	 */
 	@SuppressWarnings("deprecation")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -408,17 +409,17 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
 	/**
 	 * Bind the date group header to a list.
-	 * 
+	 *
 	 * @param list
-	 *            the list.
+	 * 		the list.
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @param rowId
-	 *            the row id.
+	 * 		the row id.
 	 * @param textId
-	 *            the text id.
+	 * 		the text id.
 	 * @param label
-	 *            the formatted Hebrew date label.
+	 * 		the formatted Hebrew date label.
 	 */
 	protected void bindViewGrouping(RemoteViews list, int position, int rowId, int textId, CharSequence label) {
 		if ((position < 0) || (label == null)) {

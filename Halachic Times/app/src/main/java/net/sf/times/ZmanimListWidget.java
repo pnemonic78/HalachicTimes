@@ -25,7 +25,7 @@ import android.os.Build;
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a
  * widget.
- * 
+ *
  * @author Moshe Waisberg
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)

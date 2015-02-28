@@ -19,11 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
-import java.util.Random;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -33,16 +28,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+
+import java.util.Calendar;
+import java.util.Random;
+
 /**
  * Shows candle images.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class CandlesFragment extends ZmanimFragment {
 
-	private static final int[] SHABBAT_CANDLES = { R.id.candle_1, R.id.candle_2 };
-	private static final int[] YOM_KIPPURIM_CANDLES = { R.id.candle_1 };
-	private static final int[] CHANNUKA_CANDLES = { R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8 };
+	private static final int[] SHABBAT_CANDLES = {R.id.candle_1, R.id.candle_2};
+	private static final int[] YOM_KIPPURIM_CANDLES = {R.id.candle_1};
+	private static final int[] CHANNUKA_CANDLES = {R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8};
 
 	/** The candles view for Shabbat. */
 	private ViewGroup mCandlesShabbat;
@@ -59,13 +60,13 @@ public class CandlesFragment extends ZmanimFragment {
 
 	/**
 	 * Constructs a new candles view.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the XMl attributes.
+	 * 		the XMl attributes.
 	 * @param defStyle
-	 *            the default style.
+	 * 		the default style.
 	 */
 	public CandlesFragment(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -73,11 +74,11 @@ public class CandlesFragment extends ZmanimFragment {
 
 	/**
 	 * Constructs a new candles view.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the XML attributes.
+	 * 		the XML attributes.
 	 */
 	public CandlesFragment(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -85,9 +86,9 @@ public class CandlesFragment extends ZmanimFragment {
 
 	/**
 	 * Constructs a new candles view.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public CandlesFragment(Context context) {
 		super(context);
@@ -120,84 +121,84 @@ public class CandlesFragment extends ZmanimFragment {
 		ImageView view;
 
 		switch (holiday) {
-		case JewishCalendar.YOM_KIPPUR:
-			if (mCandlesKippurim == null) {
-				ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_kippurim, null);
-				addView(group);
-				mCandlesKippurim = group;
+			case JewishCalendar.YOM_KIPPUR:
+				if (mCandlesKippurim == null) {
+					ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_kippurim, null);
+					addView(group);
+					mCandlesKippurim = group;
 
-				// assert candlesCount == YOM_KIPPURIM_CANDLES.length;
-				mAnimations = new CandleAnimation[candlesCount];
+					// assert candlesCount == YOM_KIPPURIM_CANDLES.length;
+					mAnimations = new CandleAnimation[candlesCount];
+					for (int i = 0; i < candlesCount; i++) {
+						view = (ImageView) group.findViewById(YOM_KIPPURIM_CANDLES[i]);
+						mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
+					}
+				}
+				if (mCandlesShabbat != null)
+					mCandlesShabbat.setVisibility(View.GONE);
+				if (mCandlesChannuka != null)
+					mCandlesChannuka.setVisibility(View.GONE);
+				mCandlesKippurim.setVisibility(View.VISIBLE);
+				break;
+			case JewishCalendar.CHANUKAH:
+				if (mCandlesChannuka == null) {
+					ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_channuka, null);
+					addView(group);
+					mCandlesChannuka = group;
+
+					// create all candles in case user navigates to future day.
+					final int allCandlesCount = CHANNUKA_CANDLES.length;
+					// assert candlesCount <= allCandlesCount;
+					mAnimations = new CandleAnimation[allCandlesCount + 1];
+					for (int i = 0; i < allCandlesCount; i++) {
+						view = (ImageView) group.findViewById(CHANNUKA_CANDLES[i]);
+						mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
+					}
+					view = (ImageView) group.findViewById(R.id.candle_shamash);
+					mAnimations[allCandlesCount] = new CandleAnimation(mHandler, view, mRandom);
+				}
+				// Only show relevant candles.
 				for (int i = 0; i < candlesCount; i++) {
-					view = (ImageView) group.findViewById(YOM_KIPPURIM_CANDLES[i]);
-					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
+					mCandlesChannuka.findViewById(CHANNUKA_CANDLES[i]).setVisibility(View.VISIBLE);
 				}
-			}
-			if (mCandlesShabbat != null)
-				mCandlesShabbat.setVisibility(View.GONE);
-			if (mCandlesChannuka != null)
-				mCandlesChannuka.setVisibility(View.GONE);
-			mCandlesKippurim.setVisibility(View.VISIBLE);
-			break;
-		case JewishCalendar.CHANUKAH:
-			if (mCandlesChannuka == null) {
-				ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_channuka, null);
-				addView(group);
-				mCandlesChannuka = group;
-
-				// create all candles in case user navigates to future day.
-				final int allCandlesCount = CHANNUKA_CANDLES.length;
-				// assert candlesCount <= allCandlesCount;
-				mAnimations = new CandleAnimation[allCandlesCount + 1];
-				for (int i = 0; i < allCandlesCount; i++) {
-					view = (ImageView) group.findViewById(CHANNUKA_CANDLES[i]);
-					mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
+				for (int i = candlesCount; i < CHANNUKA_CANDLES.length; i++) {
+					mCandlesChannuka.findViewById(CHANNUKA_CANDLES[i]).setVisibility(View.INVISIBLE);
 				}
-				view = (ImageView) group.findViewById(R.id.candle_shamash);
-				mAnimations[allCandlesCount] = new CandleAnimation(mHandler, view, mRandom);
-			}
-			// Only show relevant candles.
-			for (int i = 0; i < candlesCount; i++) {
-				mCandlesChannuka.findViewById(CHANNUKA_CANDLES[i]).setVisibility(View.VISIBLE);
-			}
-			for (int i = candlesCount; i < CHANNUKA_CANDLES.length; i++) {
-				mCandlesChannuka.findViewById(CHANNUKA_CANDLES[i]).setVisibility(View.INVISIBLE);
-			}
-			if (mCandlesShabbat != null)
-				mCandlesShabbat.setVisibility(View.GONE);
-			if (mCandlesKippurim != null)
-				mCandlesKippurim.setVisibility(View.GONE);
-			mCandlesChannuka.setVisibility(View.VISIBLE);
-			break;
-		default:
-			if (candlesCount == 0) {
-				// Should never happen!
 				if (mCandlesShabbat != null)
 					mCandlesShabbat.setVisibility(View.GONE);
 				if (mCandlesKippurim != null)
 					mCandlesKippurim.setVisibility(View.GONE);
-				if (mCandlesChannuka != null)
-					mCandlesChannuka.setVisibility(View.GONE);
-			} else {
-				if (mCandlesShabbat == null) {
-					ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_shabbat, null);
-					addView(group);
-					mCandlesShabbat = group;
+				mCandlesChannuka.setVisibility(View.VISIBLE);
+				break;
+			default:
+				if (candlesCount == 0) {
+					// Should never happen!
+					if (mCandlesShabbat != null)
+						mCandlesShabbat.setVisibility(View.GONE);
+					if (mCandlesKippurim != null)
+						mCandlesKippurim.setVisibility(View.GONE);
+					if (mCandlesChannuka != null)
+						mCandlesChannuka.setVisibility(View.GONE);
+				} else {
+					if (mCandlesShabbat == null) {
+						ViewGroup group = (ViewGroup) mInflater.inflate(R.layout.candles_shabbat, null);
+						addView(group);
+						mCandlesShabbat = group;
 
-					// assert candlesCount == SHABBAT_CANDLES.length;
-					mAnimations = new CandleAnimation[candlesCount];
-					for (int i = 0; i < candlesCount; i++) {
-						view = (ImageView) group.findViewById(SHABBAT_CANDLES[i]);
-						mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
+						// assert candlesCount == SHABBAT_CANDLES.length;
+						mAnimations = new CandleAnimation[candlesCount];
+						for (int i = 0; i < candlesCount; i++) {
+							view = (ImageView) group.findViewById(SHABBAT_CANDLES[i]);
+							mAnimations[i] = new CandleAnimation(mHandler, view, mRandom);
+						}
 					}
+					if (mCandlesKippurim != null)
+						mCandlesKippurim.setVisibility(View.GONE);
+					if (mCandlesChannuka != null)
+						mCandlesChannuka.setVisibility(View.GONE);
+					mCandlesShabbat.setVisibility(View.VISIBLE);
 				}
-				if (mCandlesKippurim != null)
-					mCandlesKippurim.setVisibility(View.GONE);
-				if (mCandlesChannuka != null)
-					mCandlesChannuka.setVisibility(View.GONE);
-				mCandlesShabbat.setVisibility(View.VISIBLE);
-			}
-			break;
+				break;
 		}
 
 		if (animate)

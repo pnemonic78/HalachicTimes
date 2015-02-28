@@ -19,17 +19,18 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
-
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+
+import java.util.Calendar;
+
 /**
  * Adapter for candles.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class CandlesAdapter extends ZmanimAdapter {
@@ -61,7 +62,7 @@ public class CandlesAdapter extends ZmanimAdapter {
 
 	/**
 	 * Get the candles count.
-	 * 
+	 *
 	 * @return the number of candles.
 	 */
 	public int getCandlesCount() {
@@ -70,7 +71,7 @@ public class CandlesAdapter extends ZmanimAdapter {
 
 	/**
 	 * Get the occasion for lighting candles.
-	 * 
+	 *
 	 * @return the candles holiday.
 	 */
 	public int getCandlesHoliday() {

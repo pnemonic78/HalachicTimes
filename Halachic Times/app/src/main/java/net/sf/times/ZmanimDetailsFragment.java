@@ -19,9 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -29,9 +26,13 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+
+import java.util.Calendar;
+
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends ZmanimFragment<A> {
@@ -41,13 +42,13 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 
 	/**
 	 * Constructs a new details list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the XMl attributes.
+	 * 		the XMl attributes.
 	 * @param defStyle
-	 *            the default style.
+	 * 		the default style.
 	 */
 	public ZmanimDetailsFragment(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -55,11 +56,11 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 
 	/**
 	 * Constructs a new details list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the XML attributes.
+	 * 		the XML attributes.
 	 */
 	public ZmanimDetailsFragment(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -67,9 +68,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 
 	/**
 	 * Constructs a new details list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public ZmanimDetailsFragment(Context context) {
 		super(context);
@@ -77,7 +78,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 
 	/**
 	 * Get the master id for populating the details.
-	 * 
+	 *
 	 * @return the master id.
 	 */
 	public int getMasterId() {
@@ -100,11 +101,11 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 
 	/**
 	 * Populate the list with detailed times.
-	 * 
+	 *
 	 * @param date
-	 *            the date.
+	 * 		the date.
 	 * @param id
-	 *            the time id.
+	 * 		the time id.
 	 */
 	@SuppressWarnings("deprecation")
 	public A populateTimes(Calendar date, int id) {

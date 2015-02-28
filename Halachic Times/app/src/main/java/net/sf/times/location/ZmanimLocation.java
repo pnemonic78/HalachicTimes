@@ -25,7 +25,7 @@ import android.os.Parcelable;
 
 /**
  * Location that is partially stored in the local database.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimLocation extends Location {
@@ -37,9 +37,9 @@ public class ZmanimLocation extends Location {
 
 	/**
 	 * Constructs a new location.
-	 * 
+	 *
 	 * @param provider
-	 *            the name of the provider that generated this location.
+	 * 		the name of the provider that generated this location.
 	 */
 	public ZmanimLocation(String provider) {
 		super(provider);
@@ -47,9 +47,9 @@ public class ZmanimLocation extends Location {
 
 	/**
 	 * Construct a new location that is copied from an existing one.
-	 * 
+	 *
 	 * @param location
-	 *            the source location.
+	 * 		the source location.
 	 */
 	public ZmanimLocation(Location location) {
 		super(location);
@@ -57,7 +57,7 @@ public class ZmanimLocation extends Location {
 
 	/**
 	 * Get the id.
-	 * 
+	 *
 	 * @return the id
 	 */
 	public long getId() {
@@ -66,9 +66,9 @@ public class ZmanimLocation extends Location {
 
 	/**
 	 * Set the id.
-	 * 
+	 *
 	 * @param id
-	 *            the id.
+	 * 		the id.
 	 */
 	public void setId(long id) {
 		this.mId = id;
@@ -97,11 +97,11 @@ public class ZmanimLocation extends Location {
 
 	/**
 	 * Compare two locations by latitude and longitude only.
-	 * 
+	 *
 	 * @param l1
-	 *            the first location.
+	 * 		the first location.
 	 * @param l2
-	 *            the second location.
+	 * 		the second location.
 	 * @return the comparison as per {@link Comparable}.
 	 */
 	public static int compareTo(Location l1, Location l2) {
@@ -138,11 +138,11 @@ public class ZmanimLocation extends Location {
 	/**
 	 * Compare two locations by latitude and then longitude, and then altitude,
 	 * and then time.
-	 * 
+	 *
 	 * @param l1
-	 *            the first location.
+	 * 		the first location.
 	 * @param l2
-	 *            the second location.
+	 * 		the second location.
 	 * @return the comparison as per {@link Comparable}.
 	 */
 	public static int compareAll(Location l1, Location l2) {

@@ -8,7 +8,7 @@ import android.widget.RemoteViewsService;
 /**
  * Service that provides the list of halachic times (<em>zmanim</em>) items for
  * the scrollable widget.
- * 
+ *
  * @author Moshe
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)

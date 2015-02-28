@@ -19,15 +19,6 @@
  */
 package net.sf.times.location;
 
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
-
-import net.sf.times.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
@@ -40,9 +31,19 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import net.sf.times.R;
+
+import java.text.Collator;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Location adapter.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> implements OnClickListener {
@@ -57,11 +58,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * Constructs a new adapter.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param items
-	 *            the list of addresses' items.
+	 * 		the list of addresses' items.
 	 */
 	public LocationAdapter(Context context, List<LocationItem> items) {
 		super(context, R.layout.location, android.R.id.title, items);
@@ -83,9 +84,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * Get the location item.
-	 * 
+	 *
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @return the item.
 	 */
 	protected LocationItem getLocationItem(int position) {
@@ -192,9 +193,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * Sort without notification.
-	 * 
+	 *
 	 * @param the
-	 *            comparator used to sort the objects contained in this adapter.
+	 * 		comparator used to sort the objects contained in this adapter.
 	 */
 	protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
 		// Remove duplicate locations.
@@ -234,7 +235,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * View holder for location row item.
-	 * 
+	 *
 	 * @author Moshe W
 	 */
 	private static class ViewHolder {
@@ -253,7 +254,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	/**
 	 * Filter the list of locations to match cities' names that contain the
 	 * constraint.
-	 * 
+	 *
 	 * @author Moshe Waisberg
 	 */
 	protected class LocationsFilter extends Filter {
@@ -320,11 +321,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Does the first string contain the other string?
-		 * 
+		 *
 		 * @param s
-		 *            the source string.
+		 * 		the source string.
 		 * @param search
-		 *            the character sequence to search for.
+		 * 		the character sequence to search for.
 		 * @return {@code true} if {@code s} contains {@code search}.
 		 */
 		private boolean contains(String s, String search) {
@@ -364,7 +365,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * Location item.
-	 * 
+	 *
 	 * @author Moshe Waisberg
 	 */
 	protected static class LocationItem {
@@ -378,9 +379,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Constructs a new item.
-		 * 
+		 *
 		 * @param address
-		 *            the address.
+		 * 		the address.
 		 */
 		public LocationItem(ZmanimAddress address, ZmanimLocations locations) {
 			super();
@@ -394,7 +395,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Get the source address.
-		 * 
+		 *
 		 * @return the address.
 		 */
 		public ZmanimAddress getAddress() {
@@ -403,7 +404,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Get the label.
-		 * 
+		 *
 		 * @return the label.
 		 */
 		public String getLabel() {
@@ -412,7 +413,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Get the label in lower casing.
-		 * 
+		 *
 		 * @return the label.
 		 */
 		public String getLabelLower() {
@@ -421,7 +422,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Get the formatted latitude.
-		 * 
+		 *
 		 * @return the latitude.
 		 */
 		public String getFormatLatitude() {
@@ -430,7 +431,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Get the formatted longitude.
-		 * 
+		 *
 		 * @return the longitude.
 		 */
 		public String getFormatLongitude() {
@@ -439,7 +440,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Get the formatted coordinates.
-		 * 
+		 *
 		 * @return the coordinates.
 		 */
 		public String getCoordinates() {
@@ -448,7 +449,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 		/**
 		 * Is location a favourite?
-		 * 
+		 *
 		 * @return {@code true} if a favourite.
 		 */
 		public boolean isFavorite() {
@@ -470,7 +471,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	/**
 	 * Compare two locations by their locations, then by their names, then their
 	 * ids.
-	 * 
+	 *
 	 * @author Moshe Waisberg
 	 */
 	protected class LocationComparator implements Comparator<LocationItem> {
@@ -528,7 +529,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	/**
 	 * Interface definition for a callback to be invoked when a "favorite"
 	 * checkbox in this list has been clicked.
-	 * 
+	 *
 	 * @author Moshe W
 	 */
 	public interface OnFavoriteClickListener {
@@ -539,7 +540,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * Get the listener for "favorite" clicked callbacks.
-	 * 
+	 *
 	 * @return the listener.
 	 */
 	public OnFavoriteClickListener getOnFavoriteClickListener() {
@@ -548,9 +549,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	/**
 	 * Set the listener for "favorite" clicked callbacks.
-	 * 
+	 *
 	 * @param listener
-	 *            the listener.
+	 * 		the listener.
 	 */
 	public void setOnFavoriteClickListener(OnFavoriteClickListener listener) {
 		this.mOnFavoriteClickListener = listener;

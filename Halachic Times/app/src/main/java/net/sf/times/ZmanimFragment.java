@@ -19,12 +19,6 @@
  */
 package net.sf.times;
 
-import java.util.Calendar;
-
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -38,9 +32,16 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.location.ZmanimLocations;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.util.Calendar;
+
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
@@ -75,13 +76,13 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Constructs a new list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the XMl attributes.
+	 * 		the XMl attributes.
 	 * @param defStyle
-	 *            the default style.
+	 * 		the default style.
 	 */
 	public ZmanimFragment(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -91,11 +92,11 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Constructs a new list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param attrs
-	 *            the XML attributes.
+	 * 		the XML attributes.
 	 */
 	public ZmanimFragment(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -105,9 +106,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Constructs a new list.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public ZmanimFragment(Context context) {
 		super(context);
@@ -132,7 +133,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Create a new times adapter.
-	 * 
+	 *
 	 * @return the adapter.
 	 */
 	@SuppressWarnings("unchecked")
@@ -142,7 +143,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Get the times adapter.
-	 * 
+	 *
 	 * @return the adapter.
 	 */
 	protected A getAdapter() {
@@ -156,9 +157,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Populate the list with times.
-	 * 
+	 *
 	 * @param date
-	 *            the date.
+	 * 		the date.
 	 */
 	@SuppressWarnings("deprecation")
 	public A populateTimes(Calendar date) {
@@ -187,7 +188,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Get the list background.
-	 * 
+	 *
 	 * @return the background - {@code null} otherwise.
 	 */
 	protected Drawable getListBackground() {
@@ -201,11 +202,11 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Bind the times to a list.
-	 * 
+	 *
 	 * @param list
-	 *            the list.
+	 * 		the list.
 	 * @param adapter
-	 *            the list adapter.
+	 * 		the list adapter.
 	 */
 	protected void bindViews(ViewGroup list, A adapter) {
 		if (list == null)
@@ -238,15 +239,15 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Bind the time to a list.
-	 * 
+	 *
 	 * @param list
-	 *            the list.
+	 * 		the list.
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @param view
-	 *            the row view.
+	 * 		the row view.
 	 * @param item
-	 *            the item.
+	 * 		the item.
 	 */
 	protected void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
 		setOnClickListener(row, item);
@@ -256,13 +257,13 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Bind the date group header to a list.
-	 * 
+	 *
 	 * @param list
-	 *            the list.
+	 * 		the list.
 	 * @param position
-	 *            the position index.
+	 * 		the position index.
 	 * @param label
-	 *            the formatted Hebrew date label.
+	 * 		the formatted Hebrew date label.
 	 */
 	@SuppressLint("InflateParams")
 	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
@@ -288,7 +289,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Get the background for the selected item.
-	 * 
+	 *
 	 * @return the background.
 	 */
 	private Drawable getSelectedBackground() {
@@ -307,9 +308,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Mark the row as unselected.
-	 * 
+	 *
 	 * @param view
-	 *            the row view.
+	 * 		the row view.
 	 */
 	@SuppressWarnings("deprecation")
 	private void unhighlight(View view) {
@@ -327,9 +328,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Mark the row as selected.
-	 * 
+	 *
 	 * @param itemId
-	 *            the row id.
+	 * 		the row id.
 	 */
 	@SuppressWarnings("deprecation")
 	public void highlight(int itemId) {
@@ -381,9 +382,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	/**
 	 * Set the gesture detector.
-	 * 
+	 *
 	 * @param gestureDetector
-	 *            the gesture detector.
+	 * 		the gesture detector.
 	 */
 	public void setGestureDetector(GestureDetector gestureDetector) {
 		mGestureDetector = gestureDetector;

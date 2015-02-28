@@ -19,14 +19,15 @@
  */
 package net.sf.times;
 
-import net.sf.times.location.AddressProvider;
-import net.sf.times.location.ZmanimLocations;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import net.sf.times.location.AddressProvider;
+import net.sf.times.location.ZmanimLocations;
+
 /**
  * Zmanim application.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimApplication extends Application {
@@ -45,7 +46,7 @@ public class ZmanimApplication extends Application {
 
 	/**
 	 * Get the locations provider instance.
-	 * 
+	 *
 	 * @return the provider.
 	 */
 	public ZmanimLocations getLocations() {
@@ -57,7 +58,7 @@ public class ZmanimApplication extends Application {
 
 	/**
 	 * Get the addresses provider instance.
-	 * 
+	 *
 	 * @return the provider.
 	 */
 	public AddressProvider getAddresses() {

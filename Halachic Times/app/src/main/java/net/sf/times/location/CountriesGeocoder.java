@@ -19,25 +19,25 @@
  */
 package net.sf.times.location;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import net.sf.times.R;
-
-import org.xml.sax.helpers.DefaultHandler;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.location.Address;
 import android.location.Location;
 import android.text.format.DateUtils;
 
+import net.sf.times.R;
+
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * Maintains the lists of countries.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class CountriesGeocoder extends GeocoderBase {
@@ -68,9 +68,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Constructs a new cities provider.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public CountriesGeocoder(Context context) {
 		super(context);
@@ -78,11 +78,11 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Constructs a new cities provider.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param locale
-	 *            the locale.
+	 * 		the locale.
 	 */
 	public CountriesGeocoder(Context context, Locale locale) {
 		super(context, locale);
@@ -129,9 +129,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Find the nearest city to the location.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the city - {@code null} otherwise.
 	 */
 	public Address findCountry(Location location) {
@@ -140,11 +140,11 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Find the nearest city to the location.
-	 * 
+	 *
 	 * @param latitude
-	 *            the latitude.
+	 * 		the latitude.
 	 * @param longitude
-	 *            the longitude.
+	 * 		the longitude.
 	 * @return the city - {@code null} otherwise.
 	 */
 	public Address findCountry(double latitude, double longitude) {
@@ -238,9 +238,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Find the first corresponding location for the time zone.
-	 * 
+	 *
 	 * @param tz
-	 *            the time zone.
+	 * 		the time zone.
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location findLocation(TimeZone tz) {
@@ -255,9 +255,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Find the nearest valid city for the location.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the city - {@code null} otherwise.
 	 */
 	public Address findCity(Location location) {
@@ -301,7 +301,7 @@ public class CountriesGeocoder extends GeocoderBase {
 
 	/**
 	 * Get the list of cities.
-	 * 
+	 *
 	 * @return the list of addresses.
 	 */
 	public List<ZmanimAddress> getCities() {

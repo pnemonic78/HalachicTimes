@@ -64,7 +64,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	/**
 	 * Gets the progress from the {@link SharedPreferences}.
-	 * 
+	 *
 	 * @return the progress.
 	 */
 	public int getProgress() {
@@ -73,9 +73,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	/**
 	 * Set the range of the progress bar to {@code 0}...{@code max}.
-	 * 
+	 *
 	 * @param max
-	 *            the upper range of this progress bar.
+	 * 		the upper range of this progress bar.
 	 */
 	public void setMax(int max) {
 		mMax = max;
@@ -85,7 +85,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	/**
 	 * Get the maximum progress.
-	 * 
+	 *
 	 * @return the upper range of this progress bar.
 	 */
 	public int getMax() {
@@ -94,9 +94,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	/**
 	 * Saves the progress to the {@link SharedPreferences}.
-	 * 
+	 *
 	 * @param progress
-	 *            the progress.
+	 * 		the progress.
 	 */
 	public void setProgress(int progress) {
 		// Always persist/notify the first time; don't assume the field's
@@ -162,9 +162,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	/**
 	 * Set the summary format.
-	 * 
+	 *
 	 * @param pluralId
-	 *            the plural id for quantity.
+	 * 		the plural id for quantity.
 	 */
 	public void setSummary(int pluralId) {
 		mSummaryFormat = pluralId;

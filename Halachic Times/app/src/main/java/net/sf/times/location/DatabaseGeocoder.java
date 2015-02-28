@@ -19,34 +19,34 @@
  */
 package net.sf.times.location;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import android.content.Context;
+import android.database.Cursor;
+import android.location.Address;
+import android.location.Location;
 
 import net.sf.times.ZmanimApplication;
 import net.sf.times.database.CursorFilter;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.location.Address;
-import android.location.Location;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * Android SQLite database.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class DatabaseGeocoder extends GeocoderBase {
 
 	/**
 	 * Creates a new database geocoder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public DatabaseGeocoder(Context context) {
 		super(context);
@@ -54,11 +54,11 @@ public class DatabaseGeocoder extends GeocoderBase {
 
 	/**
 	 * Creates a new database geocoder.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 * @param locale
-	 *            the locale.
+	 * 		the locale.
 	 */
 	public DatabaseGeocoder(Context context, Locale locale) {
 		super(context, locale);

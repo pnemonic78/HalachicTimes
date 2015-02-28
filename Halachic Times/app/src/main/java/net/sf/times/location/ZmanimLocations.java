@@ -19,14 +19,6 @@
  */
 package net.sf.times.location;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
-import net.sf.times.R;
-import net.sf.times.ZmanimSettings;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -45,9 +37,18 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import net.sf.times.R;
+import net.sf.times.ZmanimSettings;
+import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 /**
  * Location provider.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimLocations implements ZmanimLocationListener {
@@ -159,9 +160,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Constructs a new provider.
-	 * 
+	 *
 	 * @param context
-	 *            the context.
+	 * 		the context.
 	 */
 	public ZmanimLocations(Context context) {
 		super();
@@ -208,9 +209,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Add a location listener.
-	 * 
+	 *
 	 * @param listener
-	 *            the listener.
+	 * 		the listener.
 	 */
 	private void addLocationListener(ZmanimLocationListener listener) {
 		if (!mLocationListeners.contains(listener) && (listener != this)) {
@@ -221,9 +222,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Remove a location listener.
-	 * 
+	 *
 	 * @param listener
-	 *            the listener.
+	 * 		the listener.
 	 */
 	private void removeLocationListener(ZmanimLocationListener listener) {
 		mLocationListeners.remove(listener);
@@ -302,7 +303,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get a location from GPS.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationGPS() {
@@ -318,7 +319,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get a location from the GSM network.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationNetwork() {
@@ -334,7 +335,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get a passive location from other application's GPS.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	@TargetApi(Build.VERSION_CODES.FROYO)
@@ -353,7 +354,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get a location from the time zone.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ() {
@@ -362,9 +363,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get a location from the time zone.
-	 * 
+	 *
 	 * @param timeZone
-	 *            the time zone.
+	 * 		the time zone.
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ(TimeZone timeZone) {
@@ -373,7 +374,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get a location from the saved preferences.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationSaved() {
@@ -382,7 +383,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get the best location.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocation() {
@@ -407,9 +408,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Is the location valid?
-	 * 
+	 *
 	 * @param location
-	 *            the location to check.
+	 * 		the location to check.
 	 * @return {@code false} if location is invalid.
 	 */
 	public boolean isValid(Location location) {
@@ -426,9 +427,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Stop listening.
-	 * 
+	 *
 	 * @param listener
-	 *            the listener who wants to stop listening.
+	 * 		the listener who wants to stop listening.
 	 */
 	public void stop(ZmanimLocationListener listener) {
 		if (listener != null)
@@ -442,9 +443,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Start or resume listening.
-	 * 
+	 *
 	 * @param listener
-	 *            the listener who wants to resume listening.
+	 * 		the listener who wants to resume listening.
 	 */
 	public void start(ZmanimLocationListener listener) {
 		if (listener != null)
@@ -463,11 +464,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	/**
 	 * Is the location in Israel?<br>
 	 * Used to determine if user is in diaspora for 2-day festivals.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @param timeZone
-	 *            the time zone.
+	 * 		the time zone.
 	 * @return {@code true} if user is in Israel - {@code false} otherwise.
 	 */
 	public boolean inIsrael(Location location, TimeZone timeZone) {
@@ -495,9 +496,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	/**
 	 * Is the current location in Israel?<br>
 	 * Used to determine if user is in diaspora for 2-day festivals.
-	 * 
+	 *
 	 * @param timeZone
-	 *            the time zone.
+	 * 		the time zone.
 	 * @return {@code true} if user is in Israel - {@code false} otherwise.
 	 */
 	public boolean inIsrael(TimeZone timeZone) {
@@ -507,7 +508,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	/**
 	 * Is the current location in Israel?<br>
 	 * Used to determine if user is in diaspora for 2-day festivals.
-	 * 
+	 *
 	 * @return {@code true} if user is in Israel - {@code false} otherwise.
 	 */
 	public boolean inIsrael() {
@@ -516,7 +517,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Format the coordinates.
-	 * 
+	 *
 	 * @return the coordinates text.
 	 */
 	public String formatCoordinates() {
@@ -525,9 +526,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Format the coordinates.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 * @return the coordinates text.
 	 */
 	public String formatCoordinates(Location location) {
@@ -538,9 +539,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Format the coordinates.
-	 * 
+	 *
 	 * @param address
-	 *            the address.
+	 * 		the address.
 	 * @return the coordinates text.
 	 */
 	public String formatCoordinates(Address address) {
@@ -551,11 +552,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Format the coordinates.
-	 * 
+	 *
 	 * @param latitude
-	 *            the latitude.
+	 * 		the latitude.
 	 * @param longitude
-	 *            the longitude.
+	 * 		the longitude.
 	 * @return the coordinates text.
 	 */
 	public String formatCoordinates(double latitude, double longitude) {
@@ -574,9 +575,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Format the coordinates.
-	 * 
+	 *
 	 * @param coord
-	 *            the coordinate.
+	 * 		the coordinate.
 	 * @return the coordinate text.
 	 */
 	public String formatCoordinate(double coord) {
@@ -589,9 +590,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get the location.
-	 * 
+	 *
 	 * @param timeZone
-	 *            the time zone.
+	 * 		the time zone.
 	 * @return the location - {@code null} otherwise.
 	 */
 	public GeoLocation getGeoLocation(TimeZone timeZone) {
@@ -608,7 +609,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get the location.
-	 * 
+	 *
 	 * @return the location - {@code null} otherwise.
 	 */
 	public GeoLocation getGeoLocation() {
@@ -617,7 +618,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Get the time zone.
-	 * 
+	 *
 	 * @return the time zone.
 	 */
 	public TimeZone getTimeZone() {
@@ -626,9 +627,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Set the location.
-	 * 
+	 *
 	 * @param location
-	 *            the location.
+	 * 		the location.
 	 */
 	public void setLocation(Location location) {
 		mLocation = null;
@@ -638,7 +639,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	/**
 	 * Is the default locale right-to-left?
-	 * 
+	 *
 	 * @return {@code true} if the locale is either Hebrew or Yiddish.
 	 */
 	public static boolean isLocaleRTL() {
@@ -707,30 +708,30 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			ZmanimAddress address = null;
 
 			switch (msg.what) {
-			case WHAT_START:
-				requestUpdates();
-				break;
-			case WHAT_STOP:
-				removeUpdates();
-				break;
-			case WHAT_CHANGED:
-				location = getLocation();
-				onLocationChanged(location);
-				break;
-			case WHAT_ADDRESS:
-				if (msg.obj instanceof ZmanimAddress) {
-					address = (ZmanimAddress) msg.obj;
-					if (address != null)
-						location = address.getExtras().getParcelable(PARAMETER_LOCATION);
-				} else {
+				case WHAT_START:
+					requestUpdates();
+					break;
+				case WHAT_STOP:
+					removeUpdates();
+					break;
+				case WHAT_CHANGED:
+					location = getLocation();
+					onLocationChanged(location);
+					break;
+				case WHAT_ADDRESS:
+					if (msg.obj instanceof ZmanimAddress) {
+						address = (ZmanimAddress) msg.obj;
+						if (address != null)
+							location = address.getExtras().getParcelable(PARAMETER_LOCATION);
+					} else {
+						location = (Location) msg.obj;
+					}
+					onAddressChanged(location, address);
+					break;
+				case WHAT_ELEVATION:
 					location = (Location) msg.obj;
-				}
-				onAddressChanged(location, address);
-				break;
-			case WHAT_ELEVATION:
-				location = (Location) msg.obj;
-				onElevationChanged(location);
-				break;
+					onElevationChanged(location);
+					break;
 			}
 		}
 	}

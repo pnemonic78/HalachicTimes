@@ -19,8 +19,6 @@
  */
 package net.sf.times;
 
-import net.sf.preference.SeekBarDialogPreference;
-import net.sf.times.location.AddressProvider;
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -38,9 +36,12 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import net.sf.preference.SeekBarDialogPreference;
+import net.sf.times.location.AddressProvider;
+
 /**
  * Application preferences that populate the settings.
- * 
+ *
  * @author Moshe Waisberg
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
@@ -173,11 +174,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	/**
 	 * Find the summary that was selected from the list.
-	 * 
+	 *
 	 * @param preference
-	 *            the preference.
+	 * 		the preference.
 	 * @param newValue
-	 *            the new value.
+	 * 		the new value.
 	 */
 	private void updateSummary(ListPreference preference, String newValue) {
 		preference.setValue(newValue);

@@ -311,7 +311,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * Set the date for the list.
 	 *
 	 * @param date
-	 *            the date.
+	 * 		the date.
 	 */
 	private void setDate(long date) {
 		mDate.setTimeInMillis(date);
@@ -331,11 +331,11 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * Set the date for the list.
 	 *
 	 * @param year
-	 *            the year.
+	 * 		the year.
 	 * @param monthOfYear
-	 *            the month of the year.
+	 * 		the month of the year.
 	 * @param dayOfMonth
-	 *            the day of the month.
+	 * 		the day of the month.
 	 */
 	private void setDate(int year, int monthOfYear, int dayOfMonth) {
 		mDate.set(Calendar.YEAR, year);
@@ -492,9 +492,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * Show/hide the details list.
 	 *
 	 * @param item
-	 *            the master item.
+	 * 		the master item.
 	 * @param view
-	 *            the master row view that was clicked.
+	 * 		the master row view that was clicked.
 	 */
 	protected void toggleDetails(ZmanimItem item, View view) {
 		if (item == null)
@@ -506,7 +506,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * Show/hide the details list.
 	 *
 	 * @param itemId
-	 *            the master item id.
+	 * 		the master item id.
 	 */
 	protected void toggleDetails(int itemId) {
 		if ((itemId == 0) || (itemId == R.string.fast_begins) || (itemId == R.string.fast_ends))
@@ -708,7 +708,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * Slide the view in from right to left.
 	 *
 	 * @param view
-	 *            the view to animate.
+	 * 		the view to animate.
 	 */
 	protected void slideLeft(View view) {
 		view.startAnimation(mSlideRightToLeft);
@@ -718,7 +718,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * Slide the view in from left to right.
 	 *
 	 * @param view
-	 *            the view to animate.
+	 * 		the view to animate.
 	 */
 	protected void slideRight(View view) {
 		view.startAnimation(mSlideLeftToRight);

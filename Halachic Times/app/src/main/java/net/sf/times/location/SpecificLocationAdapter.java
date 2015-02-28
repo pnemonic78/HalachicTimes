@@ -19,14 +19,14 @@
  */
 package net.sf.times.location;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-
 /**
  * Location adapter for specific type of locations.
- * 
+ *
  * @author Moshe Waisberg
  */
 public abstract class SpecificLocationAdapter extends LocationAdapter {
@@ -51,9 +51,9 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 
 	/**
 	 * Is the address specific to this adapter?
-	 * 
+	 *
 	 * @param address
-	 *            the address.
+	 * 		the address.
 	 * @return {@code true} to include the address.
 	 */
 	protected abstract boolean isSpecific(ZmanimAddress address);
