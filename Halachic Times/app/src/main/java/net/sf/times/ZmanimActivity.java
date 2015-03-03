@@ -222,14 +222,17 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	protected void onResume() {
 		super.onResume();
 		mLocations.start(this);
-		if (mReminder == null)
-			mReminder = createReminder();
-		if (mReminder != null)
-			mReminder.cancel();
-		if (mSelectedId != 0) {
+		ZmanimReminder reminder = mReminder;
+		if (reminder == null) {
+			reminder = createReminder();
+			mReminder = reminder;
+		}
+		reminder.cancel();
+		int itemId = mSelectedId;
+		if (itemId != 0) {
 			// We need to wait for the list rows to get their default
 			// backgrounds before we can highlight any row.
-			Message msg = mHandler.obtainMessage(WHAT_TOGGLE_DETAILS, mSelectedId, 0);
+			Message msg = mHandler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
 			mHandler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
 		}
 	}
@@ -246,8 +249,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 			}.start();
 		}
 		int itemId = mSelectedId;
-		hideDetails();
-		mSelectedId = itemId;
+		if (itemId != 0) {
+			hideDetails();
+			mSelectedId = itemId;
+		}
 	}
 
 	@Override
