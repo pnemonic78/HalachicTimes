@@ -93,8 +93,6 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 *
 	 * @param settings
 	 * 		the settings.
-	 * @param locations
-	 * 		the locations provider.
 	 */
 	public void remind(ZmanimSettings settings) {
 		final Context context = mContext;
@@ -392,15 +390,14 @@ public class ZmanimReminder extends BroadcastReceiver {
 		notification.ledARGB = Color.YELLOW;
 		notification.ledOffMS = 0;
 		notification.ledOnMS = 1;
-		notification.when = item.time.getTime();// When the zman is supposed
-		// to occur.
+		notification.when = item.time.getTime();// When the zman is supposed to occur.
 		notification.sound = sound;
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
 		// Wake up the device to notify the user.
 		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-		wake.acquire(3000L);// enough time to also hear an alarm tone
+		wake.acquire(2500L);// enough time to also hear an alarm tone
 
 		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.notify(ID_NOTIFY, notification);
@@ -427,12 +424,11 @@ public class ZmanimReminder extends BroadcastReceiver {
 		builder.setLights(Color.YELLOW, 1, 0);
 		builder.setSmallIcon(R.drawable.stat_notify_time);
 		builder.setSound(sound, settings.getReminderStream());
-		builder.setWhen(item.time.getTime());// When the zman is supposed to
-		// occur.
+		builder.setWhen(item.time.getTime());// When the zman is supposed to occur.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			builder.setShowWhen(true);
 		}
-		Notification notification = null;
+		Notification notification;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			notification = builder.build();
 		} else {
@@ -442,7 +438,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		// Wake up the device to notify the user.
 		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-		wake.acquire(3000L);// enough time to also hear an alarm tone
+		wake.acquire(2500L);// enough time to also hear an alarm tone
 
 		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.notify(ID_NOTIFY, notification);
