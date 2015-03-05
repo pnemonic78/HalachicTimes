@@ -123,12 +123,12 @@ public class BingGeocoder extends GeocoderBase {
 		private static final String TAG_LATITUDE = "Latitude";
 		private static final String TAG_LONGITUDE = "Longitude";
 
-		private State mState = State.START;
-		private final List<Address> mResults;
-		private final int mMaxResults;
-		private final Locale mLocale;
-		private Address mAddress;
-		private String mTag;
+		private State state = State.START;
+		private final List<Address> results;
+		private final int maxResults;
+		private final Locale locale;
+		private Address address;
+		private String tag;
 
 		/**
 		 * Constructs a new parse handler.
@@ -139,10 +139,9 @@ public class BingGeocoder extends GeocoderBase {
 		 * 		the maximum number of results.
 		 */
 		public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-			super();
-			mResults = results;
-			mMaxResults = maxResults;
-			mLocale = locale;
+			this.results = results;
+			this.maxResults = maxResults;
+			this.locale = locale;
 		}
 
 		@Override
@@ -151,40 +150,40 @@ public class BingGeocoder extends GeocoderBase {
 			if (TextUtils.isEmpty(localName))
 				localName = qName;
 
-			mTag = localName;
+			tag = localName;
 
-			switch (mState) {
+			switch (state) {
 				case START:
 					if (TAG_ROOT.equals(localName))
-						mState = State.ROOT;
+						state = State.ROOT;
 					else
 						throw new SAXException("Unexpected root element " + localName);
 					break;
 				case ROOT:
 					if (TAG_STATUS.equals(localName))
-						mState = State.STATUS;
+						state = State.STATUS;
 					else if (TAG_RESOURCE_SETS.equals(localName))
-						mState = State.RESOURCE_SETS;
+						state = State.RESOURCE_SETS;
 					break;
 				case RESOURCE_SETS:
 					if (TAG_RESOURCE_SET.equals(localName))
-						mState = State.RESOURCE_SET;
+						state = State.RESOURCE_SET;
 					break;
 				case RESOURCE_SET:
 					if (TAG_RESOURCES.equals(localName))
-						mState = State.RESOURCES;
+						state = State.RESOURCES;
 					break;
 				case RESOURCES:
 					if (TAG_LOCATION.equals(localName)) {
-						mState = State.LOCATION;
-						mAddress = new ZmanimAddress(mLocale);
+						state = State.LOCATION;
+						address = new ZmanimAddress(locale);
 					}
 					break;
 				case LOCATION:
 					if (TAG_POINT.equals(localName))
-						mState = State.POINT;
+						state = State.POINT;
 					else if (TAG_ADDRESS.equals(localName))
-						mState = State.ADDRESS;
+						state = State.ADDRESS;
 					break;
 				case POINT:
 					break;
@@ -203,48 +202,48 @@ public class BingGeocoder extends GeocoderBase {
 			if (TextUtils.isEmpty(localName))
 				localName = qName;
 
-			mTag = localName;
+			tag = localName;
 
-			switch (mState) {
+			switch (state) {
 				case ROOT:
 					if (TAG_ROOT.equals(localName))
-						mState = State.FINISH;
+						state = State.FINISH;
 					break;
 				case STATUS:
 					if (TAG_STATUS.equals(localName))
-						mState = State.ROOT;
+						state = State.ROOT;
 					break;
 				case RESOURCE_SETS:
 					if (TAG_RESOURCE_SETS.equals(localName))
-						mState = State.ROOT;
+						state = State.ROOT;
 					break;
 				case RESOURCE_SET:
 					if (TAG_RESOURCE_SET.equals(localName))
-						mState = State.RESOURCE_SETS;
+						state = State.RESOURCE_SETS;
 					break;
 				case RESOURCES:
 					if (TAG_RESOURCES.equals(localName))
-						mState = State.RESOURCE_SET;
+						state = State.RESOURCE_SET;
 					break;
 				case LOCATION:
 					if (TAG_LOCATION.equals(localName)) {
-						if (mAddress != null) {
-							if ((mResults.size() < mMaxResults) && mAddress.hasLatitude() && mAddress.hasLongitude())
-								mResults.add(mAddress);
+						if (address != null) {
+							if ((results.size() < maxResults) && address.hasLatitude() && address.hasLongitude())
+								results.add(address);
 							else
-								mState = State.FINISH;
-							mAddress = null;
+								state = State.FINISH;
+							address = null;
 						}
-						mState = State.RESOURCES;
+						state = State.RESOURCES;
 					}
 					break;
 				case POINT:
 					if (TAG_POINT.equals(localName))
-						mState = State.LOCATION;
+						state = State.LOCATION;
 					break;
 				case ADDRESS:
 					if (TAG_ADDRESS.equals(localName))
-						mState = State.LOCATION;
+						state = State.LOCATION;
 					break;
 				case FINISH:
 					return;
@@ -264,29 +263,29 @@ public class BingGeocoder extends GeocoderBase {
 				return;
 			String prev;
 
-			switch (mState) {
+			switch (state) {
 				case STATUS:
 					if (!STATUS_OK.equals(s))
-						mState = State.FINISH;
+						state = State.FINISH;
 					break;
 				case LOCATION:
-					if (mAddress != null) {
-						if (TAG_NAME.equals(mTag)) {
-							prev = mAddress.getFeatureName();
-							mAddress.setFeatureName((prev == null) ? s : prev + s);
+					if (address != null) {
+						if (TAG_NAME.equals(tag)) {
+							prev = address.getFeatureName();
+							address.setFeatureName((prev == null) ? s : prev + s);
 						}
 					}
 				case POINT:
-					if (mAddress != null) {
-						if (TAG_LATITUDE.equals(mTag)) {
+					if (address != null) {
+						if (TAG_LATITUDE.equals(tag)) {
 							try {
-								mAddress.setLatitude(Double.parseDouble(s));
+								address.setLatitude(Double.parseDouble(s));
 							} catch (NumberFormatException nfe) {
 								throw new SAXException(nfe);
 							}
-						} else if (TAG_LONGITUDE.equals(mTag)) {
+						} else if (TAG_LONGITUDE.equals(tag)) {
 							try {
-								mAddress.setLongitude(Double.parseDouble(s));
+								address.setLongitude(Double.parseDouble(s));
 							} catch (NumberFormatException nfe) {
 								throw new SAXException(nfe);
 							}
@@ -294,28 +293,28 @@ public class BingGeocoder extends GeocoderBase {
 					}
 					break;
 				case ADDRESS:
-					if (mAddress != null) {
-						if (TAG_ADDRESS_LINE.equals(mTag)) {
-							prev = mAddress.getAddressLine(0);
-							mAddress.setAddressLine(0, (prev == null) ? s : prev + s);
-						} else if (TAG_ADDRESS_DISTRICT.equals(mTag)) {
-							prev = mAddress.getAdminArea();
-							mAddress.setAdminArea((prev == null) ? s : prev + s);
-						} else if (TAG_ADDRESS_COUNTRY.equals(mTag)) {
-							prev = mAddress.getCountryName();
-							mAddress.setCountryName((prev == null) ? s : prev + s);
-						} else if (TAG_FORMATTED.equals(mTag)) {
-							Bundle extras = mAddress.getExtras();
+					if (address != null) {
+						if (TAG_ADDRESS_LINE.equals(tag)) {
+							prev = address.getAddressLine(0);
+							address.setAddressLine(0, (prev == null) ? s : prev + s);
+						} else if (TAG_ADDRESS_DISTRICT.equals(tag)) {
+							prev = address.getAdminArea();
+							address.setAdminArea((prev == null) ? s : prev + s);
+						} else if (TAG_ADDRESS_COUNTRY.equals(tag)) {
+							prev = address.getCountryName();
+							address.setCountryName((prev == null) ? s : prev + s);
+						} else if (TAG_FORMATTED.equals(tag)) {
+							Bundle extras = address.getExtras();
 							if (extras == null) {
 								extras = new Bundle();
-								mAddress.setExtras(extras);
-								extras = mAddress.getExtras();
+								address.setExtras(extras);
+								extras = address.getExtras();
 							}
 							prev = extras.getString(ZmanimAddress.KEY_FORMATTED);
 							extras.putString(ZmanimAddress.KEY_FORMATTED, (prev == null) ? s : prev + s);
-						} else if (TAG_LOCALITY.equals(mTag)) {
-							prev = mAddress.getLocality();
-							mAddress.setLocality((prev == null) ? s : prev + s);
+						} else if (TAG_LOCALITY.equals(tag)) {
+							prev = address.getLocality();
+							address.setLocality((prev == null) ? s : prev + s);
 						}
 					}
 					break;
@@ -382,7 +381,6 @@ public class BingGeocoder extends GeocoderBase {
 		 * 		the destination results.
 		 */
 		public ElevationResponseHandler(List<ZmanimLocation> results) {
-			super();
 			mResults = results;
 		}
 

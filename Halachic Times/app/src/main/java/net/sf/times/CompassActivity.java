@@ -51,105 +51,105 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 	private static final double HOLIEST_ELEVATION = 744.5184937;
 
 	/** The sensor manager. */
-	private SensorManager mSensorManager;
+	private SensorManager sensorManager;
 	/** The accelerometer sensor. */
-	private Sensor mAccel;
+	private Sensor accelerometer;
 	/** The magnetic field sensor. */
-	private Sensor mMagnetic;
+	private Sensor magnetic;
 	/** Provider for locations. */
-	private ZmanimLocations mLocations;
+	private ZmanimLocations locations;
 	/** Location of the Holy of Holies. */
-	private Location mHoliest;
+	private Location holiest;
 	/** The main view. */
-	private CompassView mView;
+	private CompassView view;
 	/** The gravity values. */
-	private final float[] mGravity = new float[3];
+	private final float[] gravity = new float[3];
 	/** The geomagnetic field. */
-	private final float[] mGeomagnetic = new float[3];
+	private final float[] geomagnetic = new float[3];
 	/** Rotation matrix. */
 	private final float[] matrixR = new float[9];
 	/** Orientation matrix. */
-	private final float[] mOrientation = new float[3];
+	private final float[] orientation = new float[3];
 	/** The settings and preferences. */
-	private ZmanimSettings mSettings;
+	private ZmanimSettings settings;
 	/** The address location. */
-	private Location mAddressLocation;
+	private Location addressLocation;
 	/** The address. */
-	private ZmanimAddress mAddress;
+	private ZmanimAddress address;
 	/** Populate the header in UI thread. */
-	private Runnable mPopulateHeader;
+	private Runnable populateHeader;
 	/** Update the location in UI thread. */
-	private Runnable mUpdateLocation;
+	private Runnable updateLocation;
 
 	/**
 	 * Constructs a new compass.
 	 */
 	public CompassActivity() {
-		mHoliest = new Location(LocationManager.GPS_PROVIDER);
-		mHoliest.setLatitude(HOLIEST_LATITUDE);
-		mHoliest.setLongitude(HOLIEST_LONGITUDE);
-		mHoliest.setAltitude(HOLIEST_ELEVATION);
+		holiest = new Location(LocationManager.GPS_PROVIDER);
+		holiest.setLatitude(HOLIEST_LATITUDE);
+		holiest.setLongitude(HOLIEST_LONGITUDE);
+		holiest.setAltitude(HOLIEST_ELEVATION);
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.compass);
-		mView = (CompassView) findViewById(R.id.compass);
+		view = (CompassView) findViewById(R.id.compass);
 
-		mSettings = new ZmanimSettings(this);
-		if (!mSettings.isSummaries()) {
+		settings = new ZmanimSettings(this);
+		if (!settings.isSummaries()) {
 			View summary = findViewById(android.R.id.summary);
 			summary.setVisibility(View.GONE);
 		}
 
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		mLocations = app.getLocations();
-		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		mMagnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+		locations = app.getLocations();
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		magnetic = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		mSensorManager.unregisterListener(this);
+		sensorManager.unregisterListener(this);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mLocations.start(this);
-		mSensorManager.registerListener(this, mAccel, SensorManager.SENSOR_DELAY_UI);
-		mSensorManager.registerListener(this, mMagnetic, SensorManager.SENSOR_DELAY_UI);
+		locations.start(this);
+		sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+		sensorManager.registerListener(this, magnetic, SensorManager.SENSOR_DELAY_UI);
 	}
 
 	@Override
 	protected void onStop() {
-		mLocations.stop(this);
+		locations.stop(this);
 		super.onStop();
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if (ZmanimLocation.compareTo(mAddressLocation, location) != 0) {
-			mAddress = null;
+		if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
+			address = null;
 		}
-		mAddressLocation = location;
-		if (mUpdateLocation == null) {
-			mUpdateLocation = new Runnable() {
+		addressLocation = location;
+		if (updateLocation == null) {
+			updateLocation = new Runnable() {
 				@Override
 				public void run() {
 					// Have we been destroyed?
-					Location loc = mAddressLocation;
+					Location loc = addressLocation;
 					if (loc == null)
 						return;
 					populateHeader();
-					mView.setHoliest(loc.bearingTo(mHoliest));
+					view.setHoliest(loc.bearingTo(holiest));
 				}
 			};
 		}
-		runOnUiThread(mUpdateLocation);
+		runOnUiThread(updateLocation);
 	}
 
 	@Override
@@ -172,28 +172,28 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 	public void onSensorChanged(SensorEvent event) {
 		switch (event.sensor.getType()) {
 			case Sensor.TYPE_ACCELEROMETER:
-				System.arraycopy(event.values, 0, mGravity, 0, 3);
+				System.arraycopy(event.values, 0, gravity, 0, 3);
 				break;
 			case Sensor.TYPE_MAGNETIC_FIELD:
-				System.arraycopy(event.values, 0, mGeomagnetic, 0, 3);
+				System.arraycopy(event.values, 0, geomagnetic, 0, 3);
 				break;
 			default:
 				return;
 		}
-		if (SensorManager.getRotationMatrix(matrixR, null, mGravity, mGeomagnetic)) {
-			SensorManager.getOrientation(matrixR, mOrientation);
-			mView.setAzimuth(mOrientation[0]);
+		if (SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic)) {
+			SensorManager.getOrientation(matrixR, orientation);
+			view.setAzimuth(orientation[0]);
 		}
 	}
 
 	/** Populate the header item. */
 	private void populateHeader() {
 		// Have we been destroyed?
-		Location loc = (mAddressLocation == null) ? mLocations.getLocation() : mAddressLocation;
+		Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
 		if (loc == null)
 			return;
 
-		final String coordsText = mLocations.formatCoordinates(loc);
+		final String coordsText = locations.formatCoordinates(loc);
 		final String locationName = formatAddress();
 
 		// Update the location.
@@ -201,7 +201,7 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 		address.setText(locationName);
 		TextView coordinates = (TextView) findViewById(R.id.coordinates);
 		coordinates.setText(coordsText);
-		coordinates.setVisibility(mSettings.isCoordinates() ? View.VISIBLE : View.GONE);
+		coordinates.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
 	}
 
 	/**
@@ -210,24 +210,24 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 	 * @return the formatted address.
 	 */
 	private String formatAddress() {
-		if (mAddress != null)
-			return mAddress.getFormatted();
+		if (address != null)
+			return address.getFormatted();
 		return getString(R.string.location_unknown);
 	}
 
 	@Override
 	public void onAddressChanged(Location location, ZmanimAddress address) {
-		mAddressLocation = location;
-		mAddress = address;
-		if (mPopulateHeader == null) {
-			mPopulateHeader = new Runnable() {
+		addressLocation = location;
+		this.address = address;
+		if (populateHeader == null) {
+			populateHeader = new Runnable() {
 				@Override
 				public void run() {
 					populateHeader();
 				}
 			};
 		}
-		runOnUiThread(mPopulateHeader);
+		runOnUiThread(populateHeader);
 	}
 
 	@Override

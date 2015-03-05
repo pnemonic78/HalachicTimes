@@ -35,21 +35,21 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	/** Android namespace. */
 	private static final String NS_ANDROID = "http://schemas.android.com/apk/res/android";
 
-	private int mProgress;
-	private int mMax;
-	private boolean mProgressSet;
-	private int mSummaryFormat;
-	private SeekBar mSeekBar;
-	private TextView mSummaryView;
+	private int progress;
+	private int max;
+	private boolean progressSet;
+	private int summaryFormat;
+	private SeekBar seekBar;
+	private TextView summaryView;
 
 	public SeekBarDialogPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+		max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
 	}
 
 	public SeekBarDialogPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+		max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	@Override
 	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-		setProgress(restoreValue ? getPersistedInt(mProgress) : (Integer) defaultValue);
+		setProgress(restoreValue ? getPersistedInt(progress) : (Integer) defaultValue);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	 * @return the progress.
 	 */
 	public int getProgress() {
-		return mProgress;
+		return progress;
 	}
 
 	/**
@@ -78,9 +78,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	 * 		the upper range of this progress bar.
 	 */
 	public void setMax(int max) {
-		mMax = max;
-		if (mSeekBar != null)
-			mSeekBar.setMax(max);
+		this.max = max;
+		if (seekBar != null)
+			seekBar.setMax(max);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	 * @return the upper range of this progress bar.
 	 */
 	public int getMax() {
-		return mMax;
+		return max;
 	}
 
 	/**
@@ -101,10 +101,10 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	public void setProgress(int progress) {
 		// Always persist/notify the first time; don't assume the field's
 		// default value.
-		final boolean changed = mProgress != progress;
-		if (changed || !mProgressSet) {
-			mProgress = progress;
-			mProgressSet = true;
+		final boolean changed = this.progress != progress;
+		if (changed || !progressSet) {
+			this.progress = progress;
+			progressSet = true;
 			persistInt(progress);
 			if (changed) {
 				notifyDependencyChange(shouldDisableDependents());
@@ -118,11 +118,11 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 		super.onBindDialogView(view);
 
 		SeekBar seek = (SeekBar) view.findViewById(android.R.id.edit);
-		seek.setMax(mMax);
+		seek.setMax(max);
 		seek.setOnSeekBarChangeListener(this);
-		mSeekBar = seek;
+		seekBar = seek;
 
-		mSummaryView = (TextView) view.findViewById(android.R.id.summary);
+		summaryView = (TextView) view.findViewById(android.R.id.summary);
 
 		seek.setProgress(getProgress());
 	}
@@ -132,10 +132,10 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 		super.onDialogClosed(positiveResult);
 
 		if (positiveResult) {
-			int progress = mSeekBar.getProgress();
-			if (callChangeListener(progress) && (mSummaryFormat != 0)) {
+			int progress = seekBar.getProgress();
+			if (callChangeListener(progress) && (summaryFormat != 0)) {
 				Resources res = getContext().getResources();
-				CharSequence summary = res.getQuantityString(mSummaryFormat, progress, progress);
+				CharSequence summary = res.getQuantityString(summaryFormat, progress, progress);
 				setSummary(summary);
 
 				setProgress(progress);
@@ -145,10 +145,10 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		if ((mSeekBar == seekBar) && (mSummaryFormat != 0)) {
+		if ((this.seekBar == seekBar) && (summaryFormat != 0)) {
 			Resources res = getContext().getResources();
-			CharSequence summary = res.getQuantityString(mSummaryFormat, progress, progress);
-			mSummaryView.setText(summary);
+			CharSequence summary = res.getQuantityString(summaryFormat, progress, progress);
+			summaryView.setText(summary);
 		}
 	}
 
@@ -167,6 +167,6 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 	 * 		the plural id for quantity.
 	 */
 	public void setSummary(int pluralId) {
-		mSummaryFormat = pluralId;
+		summaryFormat = pluralId;
 	}
 }

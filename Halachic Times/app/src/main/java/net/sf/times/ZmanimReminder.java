@@ -69,10 +69,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 	private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
 	private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
 
-	private Context mContext;
-	private SimpleDateFormat mFormat;
+	private Context context;
+	private SimpleDateFormat dateFormat;
 	/** The adapter. */
-	private ZmanimAdapter mAdapter;
+	private ZmanimAdapter adapter;
 
 	/**
 	 * Creates a new reminder manager.
@@ -81,7 +81,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * 		the context.
 	 */
 	public ZmanimReminder(Context context) {
-		mContext = context;
+		this.context = context;
 	}
 
 	/** No-argument constructor for broadcast receiver. */
@@ -95,7 +95,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * 		the settings.
 	 */
 	public void remind(ZmanimSettings settings) {
-		final Context context = mContext;
+		final Context context = this.context;
 		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 		ZmanimLocations locations = app.getLocations();
 		GeoLocation gloc = locations.getGeoLocation();
@@ -103,10 +103,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 		if (gloc == null)
 			return;
 
-		ZmanimAdapter adapter = mAdapter;
+		ZmanimAdapter adapter = this.adapter;
 		if (adapter == null) {
 			adapter = new ZmanimAdapter(context, settings);
-			mAdapter = adapter;
+			this.adapter = adapter;
 		}
 		adapter.setCalendar(System.currentTimeMillis());
 		adapter.setGeoLocation(gloc);
@@ -128,7 +128,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		Log.i(TAG, "remind");
 		cancel();
 
-		final Context context = mContext;
+		final Context context = this.context;
 		final long now = System.currentTimeMillis();
 		final long latest = settings.getLatestReminder();
 		Log.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
@@ -257,7 +257,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 */
 	public void cancel() {
 		Log.i(TAG, "cancel");
-		final Context context = mContext;
+		final Context context = this.context;
 		AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		PendingIntent alarmIntent = createAlarmIntent(context);
 		alarms.cancel(alarmIntent);
@@ -319,7 +319,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		String nowFormat = formatDateTime(System.currentTimeMillis());
 		Log.i(TAG, "onReceive " + intent + " [" + nowFormat + "]");
 
-		mContext = context;
+		this.context = context;
 		boolean update = false;
 
 		String action = intent.getAction();
@@ -353,10 +353,10 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * @return the formatted time.
 	 */
 	private String formatDateTime(Date time) {
-		if (mFormat == null) {
-			mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+		if (dateFormat == null) {
+			dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
 		}
-		return mFormat.format(time);
+		return dateFormat.format(time);
 	}
 
 	/**

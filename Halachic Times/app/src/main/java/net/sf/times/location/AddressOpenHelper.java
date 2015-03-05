@@ -48,7 +48,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	/** Database table for cities. */
 	public static final String TABLE_CITIES = "cities";
 
-	private final Context mContext;
+	private final Context context;
 
 	/**
 	 * Constructs a new helper.
@@ -58,7 +58,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	 */
 	public AddressOpenHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
-		mContext = context;
+		this.context = context;
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 	 * 		the database.
 	 */
 	private void fillCities(SQLiteDatabase db) {
-		Resources res = mContext.getResources();
+		Resources res = context.getResources();
 		String[] citiesCountries = res.getStringArray(R.array.cities_countries);
 		int citiesCount = citiesCountries.length;
 

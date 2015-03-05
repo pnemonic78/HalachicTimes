@@ -27,27 +27,27 @@ import net.sourceforge.zmanim.util.GeoLocation;
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
 
 	/** The context. */
-	private final Context mContext;
+	private final Context context;
 	/** Provider for locations. */
-	private ZmanimLocations mLocations;
+	private ZmanimLocations locations;
 	/** The settings and preferences. */
-	private ZmanimSettings mSettings;
+	private ZmanimSettings settings;
 	/** The adapter. */
-	private ZmanimAdapter mAdapter;
+	private ZmanimAdapter adapter;
 	/** Position index of today's Hebrew day. */
-	private int mPositionToday;
+	private int positionToday;
 	/** Position index of next Hebrew day. */
-	private int mPositionTomorrow;
-	private int mColorDisabled = Color.DKGRAY;
-	private int mColorEnabled = Color.WHITE;
+	private int positionTomorrow;
+	private int colorDisabled = Color.DKGRAY;
+	private int colorEnabled = Color.WHITE;
 
 	public ZmanimWidgetViewsFactory(Context context, Intent intent) {
-		mContext = context;
+		this.context = context;
 	}
 
 	@Override
 	public int getCount() {
-		return (mAdapter == null) ? 0 : (mPositionToday >= 0 ? 1 : 0) + mAdapter.getCount() + (mPositionTomorrow > 0 ? 1 : 0);
+		return (adapter == null) ? 0 : (positionToday >= 0 ? 1 : 0) + adapter.getCount() + (positionTomorrow > 0 ? 1 : 0);
 	}
 
 	@Override
@@ -62,14 +62,14 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	@Override
 	public RemoteViews getViewAt(int position) {
-		String pkg = mContext.getPackageName();
-		ZmanimAdapter adapter = mAdapter;
+		String pkg = context.getPackageName();
+		ZmanimAdapter adapter = this.adapter;
 		RemoteViews view;
 
-		if ((position == mPositionToday) || (position == mPositionTomorrow)) {
+		if ((position == positionToday) || (position == positionTomorrow)) {
 			ComplexZmanimCalendar zmanCal = adapter.getCalendar();
 			JewishDate jewishDate = new JewishDate(zmanCal.getCalendar());
-			if (position == mPositionTomorrow) {
+			if (position == positionTomorrow) {
 				jewishDate.forward();
 			}
 			CharSequence dateHebrew = adapter.formatDate(jewishDate);
@@ -82,7 +82,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 		// discount for "today" row.
 		position--;
 		// discount for "tomorrow" row.
-		if ((mPositionTomorrow > 0) && (position >= mPositionTomorrow))
+		if ((positionTomorrow > 0) && (position >= positionTomorrow))
 			position--;
 
 		if ((position < 0) || (position >= adapter.getCount())) {
@@ -97,7 +97,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	@Override
 	public int getViewTypeCount() {
-		return 1 + ((mAdapter == null) ? 0 : mAdapter.getViewTypeCount());
+		return 1 + ((adapter == null) ? 0 : adapter.getViewTypeCount());
 	}
 
 	@Override
@@ -107,8 +107,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	@Override
 	public void onCreate() {
-		if (mLocations != null)
-			mLocations.start(this);
+		if (locations != null)
+			locations.start(this);
 	}
 
 	@Override
@@ -118,8 +118,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
 	@Override
 	public void onDestroy() {
-		if (mLocations != null)
-			mLocations.stop(this);
+		if (locations != null)
+			locations.stop(this);
 	}
 
 	@Override
@@ -150,38 +150,38 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 	}
 
 	private void populateAdapter() {
-		Context context = mContext;
+		Context context = this.context;
 
-		if (mSettings == null)
-			mSettings = new ZmanimSettings(context);
+		if (settings == null)
+			settings = new ZmanimSettings(context);
 
-		ZmanimLocations locations = mLocations;
+		ZmanimLocations locations = this.locations;
 		if (locations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 			locations = app.getLocations();
 			locations.start(this);
-			mLocations = locations;
+			this.locations = locations;
 		}
 		GeoLocation gloc = locations.getGeoLocation();
 		if (gloc == null)
 			return;
 
 		// Always create new adapter to avoid concurrency bugs.
-		ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings);
+		ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
 		adapter.setCalendar(System.currentTimeMillis());
 		adapter.setGeoLocation(gloc);
 		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
-		mAdapter = adapter;
+		this.adapter = adapter;
 
-		mPositionToday = 0;
-		mPositionTomorrow = -1;
+		positionToday = 0;
+		positionTomorrow = -1;
 		ZmanimItem item;
 		int count = adapter.getCount();
 		for (int i = 0; i < count; i++) {
 			item = adapter.getItem(i);
 			if (item.titleId == R.string.sunset) {
-				mPositionTomorrow = i + (mPositionToday >= 0 ? 1 : 0) + 1;
+				positionTomorrow = i + (positionToday >= 0 ? 1 : 0) + 1;
 				break;
 			}
 		}
@@ -198,18 +198,18 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 	 * 		the zman item.
 	 */
 	private void bindView(RemoteViews row, int position, ZmanimItem item) {
-		row.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
+		row.setTextViewText(android.R.id.title, context.getText(item.titleId));
 		row.setTextViewText(R.id.time, item.timeLabel);
 		// FIXME - the application must notify the widget that "past times" has
 		// changed.
 		if (item.elapsed) {
 			// Using {@code row.setBoolean(id, "setEnabled", enabled)} throws
 			// error.
-			row.setTextColor(android.R.id.title, mColorDisabled);
-			row.setTextColor(R.id.time, mColorDisabled);
+			row.setTextColor(android.R.id.title, colorDisabled);
+			row.setTextColor(R.id.time, colorDisabled);
 		} else {
-			row.setTextColor(android.R.id.title, mColorEnabled);
-			row.setTextColor(R.id.time, mColorEnabled);
+			row.setTextColor(android.R.id.title, colorEnabled);
+			row.setTextColor(R.id.time, colorEnabled);
 		}
 		// Enable clicking to open the main activity.
 		row.setOnClickFillInIntent(R.id.widget_item, new Intent());

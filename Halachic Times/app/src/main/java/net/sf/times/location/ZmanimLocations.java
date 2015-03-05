@@ -128,35 +128,35 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	private static final String FORMAT_DEGREES = "%1$.6f";
 
 	/** The context. */
-	private final Context mContext;
+	private final Context context;
 	/** The owner location listeners. */
-	private final List<ZmanimLocationListener> mLocationListeners = new ArrayList<ZmanimLocationListener>();
+	private final List<ZmanimLocationListener> locationListeners = new ArrayList<ZmanimLocationListener>();
 	/** The owner location listeners for dispatching events. */
-	private List<ZmanimLocationListener> mLocationListenersLoop = mLocationListeners;
+	private List<ZmanimLocationListener> locationListenersLoop = locationListeners;
 	/** Service provider for locations. */
-	private LocationManager mLocationManager;
+	private LocationManager locationManager;
 	/** The location. */
-	private Location mLocation;
+	private Location location;
 	/** The settings and preferences. */
-	private ZmanimSettings mSettings;
+	private ZmanimSettings settings;
 	/** The list of countries. */
-	private CountriesGeocoder mCountries;
+	private CountriesGeocoder countriesGeocoder;
 	/** The coordinates format. */
-	private String mCoordsFormat;
+	private String coordsFormat;
 	/** The time zone. */
-	private TimeZone mTimeZone;
+	private TimeZone timeZone;
 	/** The handler thread. */
-	private HandlerThread mHandlerThread;
+	private HandlerThread handlerThread;
 	/** The handler. */
-	private Handler mHandler;
+	private Handler handler;
 	/** The next time to start update locations. */
-	private long mStartTaskDelay = UPDATE_TIME_START;
+	private long startTaskDelay = UPDATE_TIME_START;
 	/** The next time to stop update locations. */
-	private final long mStopTaskDelay = UPDATE_DURATION;
+	private final long stopTaskDelay = UPDATE_DURATION;
 	/** The address receiver. */
-	private final BroadcastReceiver mAddressReceiver;
+	private final BroadcastReceiver addressReceiver;
 	/** The location is externally set? */
-	private boolean mManualLocation;
+	private boolean manualLocation;
 
 	/**
 	 * Constructs a new provider.
@@ -165,15 +165,14 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * 		the context.
 	 */
 	public ZmanimLocations(Context context) {
-		super();
-		mContext = context.getApplicationContext();
-		mSettings = new ZmanimSettings(context);
-		mCountries = new CountriesGeocoder(context);
-		mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-		mCoordsFormat = context.getString(R.string.location_coords);
-		mTimeZone = TimeZone.getDefault();
+		this.context = context.getApplicationContext();
+		settings = new ZmanimSettings(context);
+		countriesGeocoder = new CountriesGeocoder(context);
+		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		coordsFormat = context.getString(R.string.location_coords);
+		timeZone = TimeZone.getDefault();
 
-		mAddressReceiver = new BroadcastReceiver() {
+		addressReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				String action = intent.getAction();
@@ -187,24 +186,24 @@ public class ZmanimLocations implements ZmanimLocationListener {
 							address.setExtras(extras);
 						}
 						extras.putParcelable(PARAMETER_LOCATION, location);
-						mHandler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
+						handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
 					} else {
-						mHandler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
+						handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
 					}
 				} else if (ELEVATION_ACTION.equals(action)) {
 					Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
-					mHandler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
+					handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
 				}
 			}
 		};
 		IntentFilter filter = new IntentFilter(ADDRESS_ACTION);
-		context.registerReceiver(mAddressReceiver, filter);
+		context.registerReceiver(addressReceiver, filter);
 		filter = new IntentFilter(ELEVATION_ACTION);
-		context.registerReceiver(mAddressReceiver, filter);
+		context.registerReceiver(addressReceiver, filter);
 
-		mHandlerThread = new HandlerThread(TAG);
-		mHandlerThread.start();
-		mHandler = new UpdatesHandler(mHandlerThread.getLooper());
+		handlerThread = new HandlerThread(TAG);
+		handlerThread.start();
+		handler = new UpdatesHandler(handlerThread.getLooper());
 	}
 
 	/**
@@ -214,9 +213,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * 		the listener.
 	 */
 	private void addLocationListener(ZmanimLocationListener listener) {
-		if (!mLocationListeners.contains(listener) && (listener != this)) {
-			mLocationListeners.add(listener);
-			mLocationListenersLoop = new ArrayList<ZmanimLocationListener>(mLocationListeners);
+		if (!locationListeners.contains(listener) && (listener != this)) {
+			locationListeners.add(listener);
+			locationListenersLoop = new ArrayList<ZmanimLocationListener>(locationListeners);
 		}
 	}
 
@@ -227,8 +226,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * 		the listener.
 	 */
 	private void removeLocationListener(ZmanimLocationListener listener) {
-		mLocationListeners.remove(listener);
-		mLocationListenersLoop = new ArrayList<ZmanimLocationListener>(mLocationListeners);
+		locationListeners.remove(listener);
+		locationListenersLoop = new ArrayList<ZmanimLocationListener>(locationListeners);
 	}
 
 	@Override
@@ -241,24 +240,24 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			return;
 
 		boolean keepLocation = true;
-		if ((mLocation != null) && (ZmanimLocation.compareTo(mLocation, location) != 0)) {
+		if ((this.location != null) && (ZmanimLocation.compareTo(this.location, location) != 0)) {
 			// Ignore old locations.
-			if (mLocation.getTime() + LOCATION_EXPIRATION > location.getTime()) {
+			if (this.location.getTime() + LOCATION_EXPIRATION > location.getTime()) {
 				keepLocation = false;
 			}
 			// Ignore manual locations.
-			if (mManualLocation) {
-				location = mLocation;
+			if (manualLocation) {
+				location = this.location;
 				keepLocation = false;
 			}
 		}
 
 		if (keepLocation) {
-			mLocation = location;
-			mSettings.putLocation(location);
+			this.location = location;
+			settings.putLocation(location);
 		}
 
-		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		List<ZmanimLocationListener> listeners = locationListenersLoop;
 		for (ZmanimLocationListener listener : listeners)
 			listener.onLocationChanged(location);
 
@@ -270,28 +269,28 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		List<ZmanimLocationListener> listeners = locationListenersLoop;
 		for (ZmanimLocationListener listener : listeners)
 			listener.onProviderDisabled(provider);
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		List<ZmanimLocationListener> listeners = locationListenersLoop;
 		for (ZmanimLocationListener listener : listeners)
 			listener.onProviderEnabled(provider);
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		List<ZmanimLocationListener> listeners = locationListenersLoop;
 		for (ZmanimLocationListener listener : listeners)
 			listener.onStatusChanged(provider, status, extras);
 	}
 
 	@Override
 	public void onAddressChanged(Location location, ZmanimAddress address) {
-		List<ZmanimLocationListener> listeners = mLocationListenersLoop;
+		List<ZmanimLocationListener> listeners = locationListenersLoop;
 		for (ZmanimLocationListener listener : listeners)
 			listener.onAddressChanged(location, address);
 	}
@@ -307,10 +306,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationGPS() {
-		if (mLocationManager == null)
+		if (locationManager == null)
 			return null;
 		try {
-			return mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, "GPS: " + iae.getLocalizedMessage(), iae);
 		}
@@ -323,10 +322,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationNetwork() {
-		if (mLocationManager == null)
+		if (locationManager == null)
 			return null;
 		try {
-			return mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+			return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, "Network: " + iae.getLocalizedMessage(), iae);
 		}
@@ -342,10 +341,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	public Location getLocationPassive() {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO)
 			return null;
-		if (mLocationManager == null)
+		if (locationManager == null)
 			return null;
 		try {
-			return mLocationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+			return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, "Passive: " + iae.getLocalizedMessage(), iae);
 		}
@@ -358,7 +357,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ() {
-		return getLocationTZ(mTimeZone);
+		return getLocationTZ(timeZone);
 	}
 
 	/**
@@ -369,7 +368,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationTZ(TimeZone timeZone) {
-		return mCountries.findLocation(timeZone);
+		return countriesGeocoder.findLocation(timeZone);
 	}
 
 	/**
@@ -378,7 +377,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocationSaved() {
-		return mSettings.getLocation();
+		return settings.getLocation();
 	}
 
 	/**
@@ -387,7 +386,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocation() {
-		Location loc = mLocation;
+		Location loc = location;
 		if (isValid(loc))
 			return loc;
 		loc = getLocationGPS();
@@ -435,9 +434,9 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		if (listener != null)
 			removeLocationListener(listener);
 
-		if (mLocationListeners.isEmpty()) {
+		if (locationListeners.isEmpty()) {
 			removeUpdates();
-			mHandler.removeMessages(WHAT_START);
+			handler.removeMessages(WHAT_START);
 		}
 	}
 
@@ -451,13 +450,13 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		if (listener != null)
 			addLocationListener(listener);
 
-		mStartTaskDelay = UPDATE_TIME_START;
-		mHandler.sendEmptyMessage(WHAT_START);
+		startTaskDelay = UPDATE_TIME_START;
+		handler.sendEmptyMessage(WHAT_START);
 
 		// Give the listener our latest known location, and address.
 		if (listener != null) {
 			Location location = getLocation();
-			mHandler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+			handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
 		}
 	}
 
@@ -474,7 +473,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	public boolean inIsrael(Location location, TimeZone timeZone) {
 		if (location == null) {
 			if (timeZone == null)
-				timeZone = mTimeZone;
+				timeZone = this.timeZone;
 			String id = timeZone.getID();
 			if (TZ_JERUSALEM.equals(id) || TZ_BEIRUT.equals(id))
 				return true;
@@ -512,7 +511,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return {@code true} if user is in Israel - {@code false} otherwise.
 	 */
 	public boolean inIsrael() {
-		return inIsrael(mTimeZone);
+		return inIsrael(timeZone);
 	}
 
 	/**
@@ -560,7 +559,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the coordinates text.
 	 */
 	public String formatCoordinates(double latitude, double longitude) {
-		final String notation = mSettings.getCoordinatesFormat();
+		final String notation = settings.getCoordinatesFormat();
 		final String latitudeText;
 		final String longitudeText;
 		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
@@ -570,7 +569,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 			latitudeText = String.format(Locale.US, FORMAT_DEGREES, latitude);
 			longitudeText = String.format(Locale.US, FORMAT_DEGREES, longitude);
 		}
-		return String.format(Locale.US, mCoordsFormat, latitudeText, longitudeText);
+		return String.format(Locale.US, coordsFormat, latitudeText, longitudeText);
 	}
 
 	/**
@@ -581,7 +580,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the coordinate text.
 	 */
 	public String formatCoordinate(double coord) {
-		final String notation = mSettings.getCoordinatesFormat();
+		final String notation = settings.getCoordinatesFormat();
 		if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
 			return Location.convert(coord, Location.FORMAT_SECONDS);
 		}
@@ -613,7 +612,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public GeoLocation getGeoLocation() {
-		return getGeoLocation(mTimeZone);
+		return getGeoLocation(timeZone);
 	}
 
 	/**
@@ -622,7 +621,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * @return the time zone.
 	 */
 	public TimeZone getTimeZone() {
-		return mTimeZone;
+		return timeZone;
 	}
 
 	/**
@@ -632,8 +631,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * 		the location.
 	 */
 	public void setLocation(Location location) {
-		mLocation = null;
-		mManualLocation = location != null;
+		this.location = null;
+		manualLocation = location != null;
 		onLocationChanged(location);
 	}
 
@@ -654,27 +653,27 @@ public class ZmanimLocations implements ZmanimLocationListener {
 		criteria.setCostAllowed(true);
 		// criteria.setPowerRequirement(Criteria.POWER_LOW);
 
-		String provider = mLocationManager.getBestProvider(criteria, true);
+		String provider = locationManager.getBestProvider(criteria, true);
 		if (provider == null) {
 			Log.w(TAG, "No location provider");
 			return;
 		}
 		try {
-			mLocationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
+			locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
 		} catch (IllegalArgumentException iae) {
 			Log.e(TAG, "request updates: " + iae.getLocalizedMessage(), iae);
 		}
 
 		// Let the updates run for only a small while to save battery.
-		mHandler.sendEmptyMessageDelayed(WHAT_STOP, mStopTaskDelay);
-		mStartTaskDelay = Math.min(UPDATE_TIME_MAX, mStartTaskDelay << 1);
+		handler.sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
+		startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
 	}
 
 	private void removeUpdates() {
-		mLocationManager.removeUpdates(this);
+		locationManager.removeUpdates(this);
 
-		if (!mLocationListeners.isEmpty()) {
-			mHandler.sendEmptyMessageDelayed(WHAT_START, mStartTaskDelay);
+		if (!locationListeners.isEmpty()) {
+			handler.sendEmptyMessageDelayed(WHAT_START, startTaskDelay);
 		}
 	}
 
@@ -682,18 +681,18 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	 * Quit updating locations.
 	 */
 	public void quit() {
-		mManualLocation = false;
-		mLocationListeners.clear();
+		manualLocation = false;
+		locationListeners.clear();
 		removeUpdates();
-		mHandler.removeMessages(WHAT_START);
+		handler.removeMessages(WHAT_START);
 
-		mContext.unregisterReceiver(mAddressReceiver);
+		context.unregisterReceiver(addressReceiver);
 
-		Looper looper = mHandlerThread.getLooper();
+		Looper looper = handlerThread.getLooper();
 		if (looper != null) {
 			looper.quit();
 		}
-		mHandlerThread.interrupt();
+		handlerThread.interrupt();
 	}
 
 	private class UpdatesHandler extends Handler {
@@ -737,16 +736,16 @@ public class ZmanimLocations implements ZmanimLocationListener {
 	}
 
 	private void findAddress(Location location) {
-		Intent findAddress = new Intent(mContext, AddressService.class);
+		Intent findAddress = new Intent(context, AddressService.class);
 		findAddress.setAction(ADDRESS_ACTION);
 		findAddress.putExtra(PARAMETER_LOCATION, location);
-		mContext.startService(findAddress);
+		context.startService(findAddress);
 	}
 
 	private void findElevation(Location location) {
-		Intent findElevation = new Intent(mContext, AddressService.class);
+		Intent findElevation = new Intent(context, AddressService.class);
 		findElevation.setAction(ELEVATION_ACTION);
 		findElevation.putExtra(PARAMETER_LOCATION, location);
-		mContext.startService(findElevation);
+		context.startService(findElevation);
 	}
 }

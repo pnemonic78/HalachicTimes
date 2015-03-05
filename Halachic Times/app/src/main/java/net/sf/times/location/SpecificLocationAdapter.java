@@ -31,7 +31,7 @@ import java.util.List;
  */
 public abstract class SpecificLocationAdapter extends LocationAdapter {
 
-	private final List<LocationItem> mSpecific = new ArrayList<LocationItem>();
+	private final List<LocationItem> specific = new ArrayList<LocationItem>();
 
 	public SpecificLocationAdapter(Context context, List<LocationItem> items) {
 		super(context, items);
@@ -39,13 +39,13 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 	}
 
 	private void populateSpecific() {
-		mSpecific.clear();
+		specific.clear();
 
 		ZmanimAddress address;
-		for (LocationItem item : mObjects) {
+		for (LocationItem item : objects) {
 			address = item.getAddress();
 			if (isSpecific(address))
-				mSpecific.add(item);
+				specific.add(item);
 		}
 	}
 
@@ -60,20 +60,20 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 
 	@Override
 	public int getCount() {
-		return mSpecific.size();
+		return specific.size();
 	}
 
 	@Override
 	protected LocationItem getLocationItem(int position) {
-		return mSpecific.get(position);
+		return specific.get(position);
 	}
 
 	@Override
 	public int getPosition(LocationItem object) {
-		final int size = mSpecific.size();
+		final int size = specific.size();
 		LocationItem item;
 		for (int i = 0; i < size; i++) {
-			item = mSpecific.get(i);
+			item = specific.get(i);
 			if (item.equals(object))
 				return i;
 		}

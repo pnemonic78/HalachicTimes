@@ -59,12 +59,12 @@ public class CountriesGeocoder extends GeocoderBase {
 	/** Maximum radius for which a zman is the same (20 kilometres). */
 	private static final float CITY_RADIUS = 20000f;
 
-	private static CountryPolygon[] mCountryBorders;
-	private String[] mCitiesNames;
-	private static String[] mCitiesCountries;
-	private static double[] mCitiesLatitudes;
-	private static double[] mCitiesLongitudes;
-	private static double[] mCitiesElevations;
+	private static CountryPolygon[] countryBorders;
+	private String[] citiesNames;
+	private static String[] citiesCountries;
+	private static double[] citiesLatitudes;
+	private static double[] citiesLongitudes;
+	private static double[] citiesElevations;
 
 	/**
 	 * Constructs a new cities provider.
@@ -89,10 +89,10 @@ public class CountriesGeocoder extends GeocoderBase {
 
 		// Populate arrays from "countries.xml"
 		Resources res = context.getResources();
-		if (mCountryBorders == null) {
+		if (countryBorders == null) {
 			String[] countryCodes = res.getStringArray(R.array.countries);
 			int countriesCount = countryCodes.length;
-			mCountryBorders = new CountryPolygon[countriesCount];
+			countryBorders = new CountryPolygon[countriesCount];
 			int[] verticesCounts = res.getIntArray(R.array.vertices_count);
 			int[] latitudes = res.getIntArray(R.array.latitudes);
 			int[] longitudes = res.getIntArray(R.array.longitudes);
@@ -106,25 +106,25 @@ public class CountriesGeocoder extends GeocoderBase {
 				for (int v = 0; v < verticesCount; v++, i++) {
 					country.addPoint(latitudes[i], longitudes[i]);
 				}
-				mCountryBorders[c] = country;
+				countryBorders[c] = country;
 			}
 		}
-		if (mCitiesCountries == null) {
-			mCitiesCountries = res.getStringArray(R.array.cities_countries);
-			int citiesCount = mCitiesCountries.length;
+		if (citiesCountries == null) {
+			citiesCountries = res.getStringArray(R.array.cities_countries);
+			int citiesCount = citiesCountries.length;
 			String[] latitudes = res.getStringArray(R.array.cities_latitudes);
 			String[] longitudes = res.getStringArray(R.array.cities_longitudes);
 			String[] elevations = res.getStringArray(R.array.cities_elevations);
-			mCitiesLatitudes = new double[citiesCount];
-			mCitiesLongitudes = new double[citiesCount];
-			mCitiesElevations = new double[citiesCount];
+			citiesLatitudes = new double[citiesCount];
+			citiesLongitudes = new double[citiesCount];
+			citiesElevations = new double[citiesCount];
 			for (int i = 0; i < citiesCount; i++) {
-				mCitiesLatitudes[i] = Double.parseDouble(latitudes[i]);
-				mCitiesLongitudes[i] = Double.parseDouble(longitudes[i]);
-				mCitiesElevations[i] = Double.parseDouble(elevations[i]);
+				citiesLatitudes[i] = Double.parseDouble(latitudes[i]);
+				citiesLongitudes[i] = Double.parseDouble(longitudes[i]);
+				citiesElevations[i] = Double.parseDouble(elevations[i]);
 			}
 		}
-		mCitiesNames = res.getStringArray(R.array.cities);
+		citiesNames = res.getStringArray(R.array.cities);
 	}
 
 	/**
@@ -153,20 +153,20 @@ public class CountriesGeocoder extends GeocoderBase {
 		double distanceToBorder;
 		double distanceMin = Double.MAX_VALUE;
 		int found = -1;
-		final int countriesSize = mCountryBorders.length;
+		final int countriesSize = countryBorders.length;
 		CountryPolygon country;
 		int[] matches = new int[MAX_COUNTRIES_OVERLAP];
 		int matchesCount = 0;
 
 		for (int c = 0; (c < countriesSize) && (matchesCount < MAX_COUNTRIES_OVERLAP); c++) {
-			country = mCountryBorders[c];
+			country = countryBorders[c];
 			if (country.containsBox(fixedpointLatitude, fixedpointLongitude))
 				matches[matchesCount++] = c;
 		}
 		if (matchesCount == 0) {
 			// Find the nearest border.
 			for (int c = 0; c < countriesSize; c++) {
-				country = mCountryBorders[c];
+				country = countryBorders[c];
 				distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
 				if (distanceToBorder < distanceMin) {
 					distanceMin = distanceToBorder;
@@ -181,11 +181,11 @@ public class CountriesGeocoder extends GeocoderBase {
 		} else {
 			// Case 1: Smaller country inside a larger country.
 			CountryPolygon other;
-			country = mCountryBorders[matches[0]];
+			country = countryBorders[matches[0]];
 			int matchCountryIndex;
 			for (int m = 1; m < matchesCount; m++) {
 				matchCountryIndex = matches[m];
-				other = mCountryBorders[matchCountryIndex];
+				other = countryBorders[matchCountryIndex];
 				if (country.containsBox(other)) {
 					country = other;
 					found = matchCountryIndex;
@@ -200,7 +200,7 @@ public class CountriesGeocoder extends GeocoderBase {
 				// inside the defined borders.
 				for (int m = 0; m < matchesCount; m++) {
 					matchCountryIndex = matches[m];
-					country = mCountryBorders[matchCountryIndex];
+					country = countryBorders[matchCountryIndex];
 					if (country.contains(fixedpointLatitude, fixedpointLongitude)) {
 						distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
 						if (distanceToBorder < distanceMin) {
@@ -214,7 +214,7 @@ public class CountriesGeocoder extends GeocoderBase {
 					// Find the nearest border.
 					for (int m = 0; m < matchesCount; m++) {
 						matchCountryIndex = matches[m];
-						country = mCountryBorders[matchCountryIndex];
+						country = countryBorders[matchCountryIndex];
 						distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
 						if (distanceToBorder < distanceMin) {
 							distanceMin = distanceToBorder;
@@ -225,7 +225,7 @@ public class CountriesGeocoder extends GeocoderBase {
 			}
 		}
 
-		Locale locale = new Locale(getLanguage(), mCountryBorders[found].countryCode);
+		Locale locale = new Locale(getLanguage(), countryBorders[found].countryCode);
 		ZmanimAddress city = new ZmanimAddress(locale);
 		city.setId(-found);
 		city.setLatitude(latitude);
@@ -262,7 +262,7 @@ public class CountriesGeocoder extends GeocoderBase {
 	 */
 	public Address findCity(Location location) {
 		ZmanimAddress city = null;
-		final int citiesCount = mCitiesNames.length;
+		final int citiesCount = citiesNames.length;
 		double searchLatitude = location.getLatitude();
 		double searchLongitude = location.getLongitude();
 		double latitude;
@@ -273,8 +273,8 @@ public class CountriesGeocoder extends GeocoderBase {
 		int nearestCityIndex = -1;
 
 		for (int i = 0; i < citiesCount; i++) {
-			latitude = mCitiesLatitudes[i];
-			longitude = mCitiesLongitudes[i];
+			latitude = citiesLatitudes[i];
+			longitude = citiesLongitudes[i];
 			Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
 			if (distances[0] <= distanceMin) {
 				distanceMin = distances[0];
@@ -284,16 +284,16 @@ public class CountriesGeocoder extends GeocoderBase {
 			}
 		}
 		if (nearestCityIndex >= 0) {
-			cityLocale = new Locale(getLanguage(), mCitiesCountries[nearestCityIndex]);
+			cityLocale = new Locale(getLanguage(), citiesCountries[nearestCityIndex]);
 
-			city = new ZmanimAddress(mLocale);
+			city = new ZmanimAddress(locale);
 			city.setId(-nearestCityIndex - 1);
-			city.setLatitude(mCitiesLatitudes[nearestCityIndex]);
-			city.setLongitude(mCitiesLongitudes[nearestCityIndex]);
-			city.setElevation(mCitiesElevations[nearestCityIndex]);
+			city.setLatitude(citiesLatitudes[nearestCityIndex]);
+			city.setLongitude(citiesLongitudes[nearestCityIndex]);
+			city.setElevation(citiesElevations[nearestCityIndex]);
 			city.setCountryCode(cityLocale.getCountry());
 			city.setCountryName(cityLocale.getDisplayCountry());
-			city.setLocality(mCitiesNames[nearestCityIndex]);
+			city.setLocality(citiesNames[nearestCityIndex]);
 		}
 
 		return city;
@@ -305,23 +305,23 @@ public class CountriesGeocoder extends GeocoderBase {
 	 * @return the list of addresses.
 	 */
 	public List<ZmanimAddress> getCities() {
-		final int citiesCount = mCitiesNames.length;
+		final int citiesCount = citiesNames.length;
 		List<ZmanimAddress> cities = new ArrayList<ZmanimAddress>(citiesCount);
 		double latitude;
 		double longitude;
 		double elevation;
 		String cityName;
-		Locale locale = mLocale;
+		Locale locale = this.locale;
 		Locale cityLocale;
 		String languageCode = locale.getLanguage();
 		ZmanimAddress city;
 
 		for (int i = 0, j = -1; i < citiesCount; i++, j--) {
-			latitude = mCitiesLatitudes[i];
-			longitude = mCitiesLongitudes[i];
-			elevation = mCitiesElevations[i];
-			cityName = mCitiesNames[i];
-			cityLocale = new Locale(languageCode, mCitiesCountries[i]);
+			latitude = citiesLatitudes[i];
+			longitude = citiesLongitudes[i];
+			elevation = citiesElevations[i];
+			cityName = citiesNames[i];
+			cityLocale = new Locale(languageCode, citiesCountries[i]);
 
 			city = new ZmanimAddress(locale);
 			city.setId(j);
@@ -347,27 +347,27 @@ public class CountriesGeocoder extends GeocoderBase {
 
 		List<Address> cities = new ArrayList<Address>(maxResults);
 		ZmanimAddress city = null;
-		final int citiesCount = mCitiesNames.length;
+		final int citiesCount = citiesNames.length;
 		double cityLatitude;
 		double cityLongitude;
 		float[] distances = new float[1];
 		Locale cityLocale;
 
 		for (int i = 0; i < citiesCount; i++) {
-			cityLatitude = mCitiesLatitudes[i];
-			cityLongitude = mCitiesLongitudes[i];
+			cityLatitude = citiesLatitudes[i];
+			cityLongitude = citiesLongitudes[i];
 			Location.distanceBetween(latitude, longitude, cityLatitude, cityLongitude, distances);
 			if (distances[0] <= CITY_RADIUS) {
-				cityLocale = new Locale(getLanguage(), mCitiesCountries[i]);
+				cityLocale = new Locale(getLanguage(), citiesCountries[i]);
 
-				city = new ZmanimAddress(mLocale);
+				city = new ZmanimAddress(locale);
 				city.setId(-i - 1);
 				city.setLatitude(cityLatitude);
 				city.setLongitude(cityLongitude);
-				city.setElevation(mCitiesElevations[i]);
+				city.setElevation(citiesElevations[i]);
 				city.setCountryCode(cityLocale.getCountry());
 				city.setCountryName(cityLocale.getDisplayCountry());
-				city.setLocality(mCitiesNames[i]);
+				city.setLocality(citiesNames[i]);
 
 				cities.add(city);
 			}

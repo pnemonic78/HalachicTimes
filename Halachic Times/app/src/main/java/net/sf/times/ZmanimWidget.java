@@ -60,16 +60,16 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	private static final String TAG = "ZmanimWidget";
 
 	/** The context. */
-	protected Context mContext;
+	protected Context context;
 	/** Provider for locations. */
-	private ZmanimLocations mLocations;
+	private ZmanimLocations locations;
 	/** The settings and preferences. */
-	private ZmanimSettings mSettings;
+	private ZmanimSettings settings;
 
-	private final ContentObserver mFormatChangeObserver = new ContentObserver(new Handler()) {
+	private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
 		@Override
 		public void onChange(boolean selfChange) {
-			notifyAppWidgetViewDataChanged(mContext);
+			notifyAppWidgetViewDataChanged(context);
 		}
 	};
 
@@ -77,13 +77,12 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * Constructs a new widget.
 	 */
 	public ZmanimWidget() {
-		super();
 	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		super.onReceive(context, intent);
-		mContext = context;
+		this.context = context;
 
 		final String action = intent.getAction();
 		if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
@@ -99,13 +98,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			app.registerReceiver(this, tzChanged);
 
 			ContentResolver resolver = context.getContentResolver();
-			resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, mFormatChangeObserver);
+			resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
 		} else if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
 			Context app = context.getApplicationContext();
 			ContentResolver resolver = context.getContentResolver();
 			try {
 				app.unregisterReceiver(this);
-				resolver.unregisterContentObserver(mFormatChangeObserver);
+				resolver.unregisterContentObserver(formatChangeObserver);
 			} catch (IllegalArgumentException e) {
 				Log.e(TAG, "unregister receiver: " + e.getLocalizedMessage(), e);
 			}
@@ -122,12 +121,12 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-		mContext = context;
-		if (mLocations == null) {
+		this.context = context;
+		if (locations == null) {
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-			mLocations = app.getLocations();
+			locations = app.getLocations();
 		}
-		mLocations.start(this);
+		locations.start(this);
 
 		populateTimes(context, appWidgetManager, appWidgetIds);
 	}
@@ -178,21 +177,21 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			} else {
 				views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
-				if (mSettings == null)
-					mSettings = new ZmanimSettings(context);
+				if (settings == null)
+					settings = new ZmanimSettings(context);
 
-				ZmanimLocations locations = mLocations;
+				ZmanimLocations locations = this.locations;
 				if (locations == null) {
 					ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 					locations = app.getLocations();
 					locations.start(this);
-					mLocations = locations;
+					this.locations = locations;
 				}
 				GeoLocation gloc = locations.getGeoLocation();
 				if (gloc == null)
 					return;
 
-				ZmanimAdapter adapter = new ZmanimAdapter(context, mSettings);
+				ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
 				adapter.setCalendar(now);
 				adapter.setGeoLocation(gloc);
 				adapter.setInIsrael(locations.inIsrael());
@@ -219,20 +218,20 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	@Override
 	public void onDisabled(Context context) {
 		super.onDisabled(context);
-		if (mLocations != null)
-			mLocations.stop(this);
+		if (locations != null)
+			locations.stop(this);
 	}
 
 	@Override
 	public void onEnabled(Context context) {
 		super.onEnabled(context);
-		if (mLocations != null)
-			mLocations.start(this);
+		if (locations != null)
+			locations.start(this);
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
-		notifyAppWidgetViewDataChanged(mContext);
+		notifyAppWidgetViewDataChanged(context);
 	}
 
 	@Override
@@ -386,7 +385,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	@SuppressWarnings("deprecation")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void bindListView(int appWidgetId, RemoteViews list) {
-		Intent service = new Intent(mContext, ZmanimWidgetService.class);
+		Intent service = new Intent(context, ZmanimWidgetService.class);
 		service.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		service.setData(Uri.parse(service.toUri(Intent.URI_INTENT_SCHEME)));
 		list.setRemoteAdapter(appWidgetId, android.R.id.list, service);

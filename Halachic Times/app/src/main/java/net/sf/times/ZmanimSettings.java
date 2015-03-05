@@ -143,7 +143,7 @@ public class ZmanimSettings {
 	/** Format the coordinates in sexagesimal notation. */
 	public static final String FORMAT_SEXIGESIMAL = "sexagesimal";
 
-	private final SharedPreferences mPrefs;
+	private final SharedPreferences preferences;
 
 	/**
 	 * Constructs a new settings.
@@ -152,11 +152,10 @@ public class ZmanimSettings {
 	 * 		the context.
 	 */
 	public ZmanimSettings(Context context) {
-		super();
 		Context app = context.getApplicationContext();
 		if (app != null)
 			context = app;
-		mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 	/**
@@ -165,7 +164,7 @@ public class ZmanimSettings {
 	 * @return the shared preferences.
 	 */
 	public SharedPreferences getData() {
-		return mPrefs;
+		return preferences;
 	}
 
 	/**
@@ -174,7 +173,7 @@ public class ZmanimSettings {
 	 * @return the editor.
 	 */
 	public SharedPreferences.Editor edit() {
-		return mPrefs.edit();
+		return preferences.edit();
 	}
 
 	/**
@@ -183,27 +182,27 @@ public class ZmanimSettings {
 	 * @return the location - {@code null} otherwise.
 	 */
 	public Location getLocation() {
-		if (!mPrefs.contains(KEY_LATITUDE))
+		if (!preferences.contains(KEY_LATITUDE))
 			return null;
-		if (!mPrefs.contains(KEY_LONGITUDE))
+		if (!preferences.contains(KEY_LONGITUDE))
 			return null;
 		double latitude;
 		double longitude;
 		double elevation;
 		try {
-			latitude = Double.parseDouble(mPrefs.getString(KEY_LATITUDE, "0"));
-			longitude = Double.parseDouble(mPrefs.getString(KEY_LONGITUDE, "0"));
-			elevation = Double.parseDouble(mPrefs.getString(KEY_ELEVATION, "0"));
+			latitude = Double.parseDouble(preferences.getString(KEY_LATITUDE, "0"));
+			longitude = Double.parseDouble(preferences.getString(KEY_LONGITUDE, "0"));
+			elevation = Double.parseDouble(preferences.getString(KEY_ELEVATION, "0"));
 		} catch (NumberFormatException nfe) {
 			nfe.printStackTrace();
 			return null;
 		}
-		String provider = mPrefs.getString(KEY_PROVIDER, "");
+		String provider = preferences.getString(KEY_PROVIDER, "");
 		Location location = new Location(provider);
 		location.setLatitude(latitude);
 		location.setLongitude(longitude);
 		location.setAltitude(elevation);
-		location.setTime(mPrefs.getLong(KEY_TIME, 0));
+		location.setTime(preferences.getLong(KEY_TIME, 0));
 		return location;
 	}
 
@@ -213,7 +212,7 @@ public class ZmanimSettings {
 	 * @return the location.
 	 */
 	public void putLocation(Location location) {
-		Editor editor = mPrefs.edit();
+		Editor editor = preferences.edit();
 		editor.putString(KEY_PROVIDER, location.getProvider());
 		editor.putString(KEY_LATITUDE, Double.toString(location.getLatitude()));
 		editor.putString(KEY_LONGITUDE, Double.toString(location.getLongitude()));
@@ -228,7 +227,7 @@ public class ZmanimSettings {
 	 * @return {@code true} to show coordinates.
 	 */
 	public boolean isCoordinates() {
-		return mPrefs.getBoolean(KEY_COORDS, true);
+		return preferences.getBoolean(KEY_COORDS, true);
 	}
 
 	/**
@@ -237,7 +236,7 @@ public class ZmanimSettings {
 	 * @return the format.
 	 */
 	public String getCoordinatesFormat() {
-		return mPrefs.getString(KEY_COORDS_FORMAT, FORMAT_DECIMAL);
+		return preferences.getString(KEY_COORDS_FORMAT, FORMAT_DECIMAL);
 	}
 
 	/**
@@ -246,7 +245,7 @@ public class ZmanimSettings {
 	 * @return {@code true} to show seconds.
 	 */
 	public boolean isSeconds() {
-		return mPrefs.getBoolean(KEY_SECONDS, false);
+		return preferences.getBoolean(KEY_SECONDS, false);
 	}
 
 	/**
@@ -255,7 +254,7 @@ public class ZmanimSettings {
 	 * @return {@code true} to show summaries.
 	 */
 	public boolean isSummaries() {
-		return mPrefs.getBoolean(KEY_SUMMARIES, true);
+		return preferences.getBoolean(KEY_SUMMARIES, true);
 	}
 
 	/**
@@ -264,7 +263,7 @@ public class ZmanimSettings {
 	 * @return {@code true} if older times are not grayed.
 	 */
 	public boolean isPast() {
-		return mPrefs.getBoolean(KEY_PAST, true);
+		return preferences.getBoolean(KEY_PAST, true);
 	}
 
 	/**
@@ -273,7 +272,7 @@ public class ZmanimSettings {
 	 * @return {@code true} to show gradient.
 	 */
 	public boolean isBackgroundGradient() {
-		return mPrefs.getBoolean(KEY_BG_GRADIENT, true);
+		return preferences.getBoolean(KEY_BG_GRADIENT, true);
 	}
 
 	/**
@@ -283,7 +282,7 @@ public class ZmanimSettings {
 	 * @return the number of minutes.
 	 */
 	public int getCandleLightingOffset() {
-		return mPrefs.getInt(KEY_OPINION_CANDLES, 22);
+		return preferences.getInt(KEY_OPINION_CANDLES, 22);
 	}
 
 	/**
@@ -292,7 +291,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getChanukkaCandles() {
-		return mPrefs.getString(KEY_OPINION_CANDLES_CHANUKKA, "");
+		return preferences.getString(KEY_OPINION_CANDLES_CHANUKKA, "");
 	}
 
 	/**
@@ -301,7 +300,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getDawn() {
-		return mPrefs.getString(KEY_OPINION_DAWN, "16.1");
+		return preferences.getString(KEY_OPINION_DAWN, "16.1");
 	}
 
 	/**
@@ -310,7 +309,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getTallis() {
-		return mPrefs.getString(KEY_OPINION_TALLIS, "");
+		return preferences.getString(KEY_OPINION_TALLIS, "");
 	}
 
 	/**
@@ -319,7 +318,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getSunrise() {
-		return mPrefs.getString(KEY_OPINION_SUNRISE, "");
+		return preferences.getString(KEY_OPINION_SUNRISE, "");
 	}
 
 	/**
@@ -328,7 +327,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getLastShema() {
-		return mPrefs.getString(KEY_OPINION_SHEMA, "MGA");
+		return preferences.getString(KEY_OPINION_SHEMA, "MGA");
 	}
 
 	/**
@@ -337,7 +336,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getLastTfila() {
-		return mPrefs.getString(KEY_OPINION_TFILA, "MGA");
+		return preferences.getString(KEY_OPINION_TFILA, "MGA");
 	}
 
 	/**
@@ -346,7 +345,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getBurnChametz() {
-		return mPrefs.getString(KEY_OPINION_BURN, "GRA");
+		return preferences.getString(KEY_OPINION_BURN, "GRA");
 	}
 
 	/**
@@ -355,7 +354,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getMidday() {
-		return mPrefs.getString(KEY_OPINION_NOON, "");
+		return preferences.getString(KEY_OPINION_NOON, "");
 	}
 
 	/**
@@ -364,7 +363,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getEarliestMincha() {
-		return mPrefs.getString(KEY_OPINION_EARLIEST_MINCHA, "");
+		return preferences.getString(KEY_OPINION_EARLIEST_MINCHA, "");
 	}
 
 	/**
@@ -373,7 +372,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getMincha() {
-		return mPrefs.getString(KEY_OPINION_MINCHA, "");
+		return preferences.getString(KEY_OPINION_MINCHA, "");
 	}
 
 	/**
@@ -382,7 +381,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getPlugHamincha() {
-		return mPrefs.getString(KEY_OPINION_PLUG_MINCHA, "");
+		return preferences.getString(KEY_OPINION_PLUG_MINCHA, "");
 	}
 
 	/**
@@ -391,7 +390,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getSunset() {
-		return mPrefs.getString(KEY_OPINION_SUNSET, "");
+		return preferences.getString(KEY_OPINION_SUNSET, "");
 	}
 
 	/**
@@ -400,7 +399,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getTwilight() {
-		return mPrefs.getString(KEY_OPINION_TWILIGHT, "");
+		return preferences.getString(KEY_OPINION_TWILIGHT, "");
 	}
 
 	/**
@@ -409,7 +408,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getNightfall() {
-		return mPrefs.getString(KEY_OPINION_NIGHTFALL, "");
+		return preferences.getString(KEY_OPINION_NIGHTFALL, "");
 	}
 
 	/**
@@ -418,7 +417,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getMidnight() {
-		return mPrefs.getString(KEY_OPINION_MIDNIGHT, "");
+		return preferences.getString(KEY_OPINION_MIDNIGHT, "");
 	}
 
 	/**
@@ -427,7 +426,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getEarliestKiddushLevana() {
-		return mPrefs.getString(KEY_OPINION_EARLIEST_LEVANA, "");
+		return preferences.getString(KEY_OPINION_EARLIEST_LEVANA, "");
 	}
 
 	/**
@@ -436,7 +435,7 @@ public class ZmanimSettings {
 	 * @return the opinion.
 	 */
 	public String getLatestKiddushLevana() {
-		return mPrefs.getString(KEY_OPINION_LATEST_LEVANA, "");
+		return preferences.getString(KEY_OPINION_LATEST_LEVANA, "");
 	}
 
 	/**
@@ -535,7 +534,7 @@ public class ZmanimSettings {
 	 * positive value when no reminder.
 	 */
 	public long getReminder(String key) {
-		String value = mPrefs.getString(key, null);
+		String value = preferences.getString(key, null);
 		if (!TextUtils.isEmpty(value))
 			return Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
 		return Long.MAX_VALUE;
@@ -547,7 +546,7 @@ public class ZmanimSettings {
 	 * @return the time.
 	 */
 	public long getLatestReminder() {
-		return mPrefs.getLong(KEY_REMINDER_LATEST, 0L);
+		return preferences.getLong(KEY_REMINDER_LATEST, 0L);
 	}
 
 	/**
@@ -557,7 +556,7 @@ public class ZmanimSettings {
 	 * 		the time.
 	 */
 	public void setLatestReminder(long time) {
-		Editor editor = mPrefs.edit();
+		Editor editor = preferences.edit();
 		editor.putLong(KEY_REMINDER_LATEST, time);
 		editor.commit();
 	}
@@ -568,7 +567,7 @@ public class ZmanimSettings {
 	 * @return {@code true} if candles animations enabled.
 	 */
 	public boolean isCandlesAnimated() {
-		return mPrefs.getBoolean(KEY_ANIM_CANDLES, true);
+		return preferences.getBoolean(KEY_ANIM_CANDLES, true);
 	}
 
 	/**
@@ -579,6 +578,6 @@ public class ZmanimSettings {
 	 * @see AudioManager#STREAM_NOTIFICATION
 	 */
 	public int getReminderStream() {
-		return Integer.parseInt(mPrefs.getString(KEY_REMIDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
+		return Integer.parseInt(preferences.getString(KEY_REMIDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
 	}
 }

@@ -135,18 +135,18 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/** The year as a decimal number including the century. */
 	private static final String YEAR_VAR = "%Y";
 
-	protected final LayoutInflater mInflater;
-	protected final ZmanimSettings mSettings;
-	protected final ComplexZmanimCalendar mCalendar;
-	protected boolean mInIsrael;
-	protected long mNow = System.currentTimeMillis();
-	protected boolean mSummaries;
-	protected boolean mElapsed;
-	private DateFormat mTimeFormat;
-	private Comparator<ZmanimItem> mComparator;
-	private HebrewDateFormatter mHebrewDateFormatter;
-	private String[] mMonthNames;
-	private String mMonthDayYear;
+	protected final LayoutInflater inflater;
+	protected final ZmanimSettings settings;
+	protected final ComplexZmanimCalendar calendar;
+	protected boolean inIsrael;
+	protected long now = System.currentTimeMillis();
+	protected boolean summaries;
+	protected boolean elapsed;
+	private DateFormat timeFormat;
+	private Comparator<ZmanimItem> comparator;
+	private HebrewDateFormatter hebrewDateFormatter;
+	private String[] monthNames;
+	private String monthDayYear;
 
 	/**
 	 * Time row item.
@@ -172,7 +172,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		 * Creates a new row item.
 		 */
 		public ZmanimItem() {
-			super();
 		}
 
 		@Override
@@ -210,16 +209,16 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 */
 	public ZmanimAdapter(Context context, ZmanimSettings settings) {
 		super(context, R.layout.times_item, 0);
-		mInflater = LayoutInflater.from(context);
-		mSettings = settings;
-		mCalendar = new ComplexZmanimCalendar();
+		inflater = LayoutInflater.from(context);
+		this.settings = settings;
+		calendar = new ComplexZmanimCalendar();
 
 		if (settings.isSeconds()) {
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
 			String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
-			mTimeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+			timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
 		} else {
-			mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
+			timeFormat = android.text.format.DateFormat.getTimeFormat(context);
 		}
 	}
 
@@ -229,7 +228,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @return the calendar.
 	 */
 	public ComplexZmanimCalendar getCalendar() {
-		return mCalendar;
+		return calendar;
 	}
 
 	@Override
@@ -261,7 +260,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		TextView time;
 
 		if (view == null) {
-			view = mInflater.inflate(resource, parent, false);
+			view = inflater.inflate(resource, parent, false);
 
 			title = (TextView) view.findViewById(android.R.id.title);
 			summary = (TextView) view.findViewById(android.R.id.summary);
@@ -284,7 +283,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		if (summary != null) {
 			summary.setText(item.summary);
 			summary.setEnabled(enabled);
-			if (!mSummaries || (item.summary == null))
+			if (!summaries || (item.summary == null))
 				summary.setVisibility(View.GONE);
 		}
 
@@ -365,11 +364,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			item.elapsed = true;
 		} else {
 			long t = time.getTime();
-			item.timeLabel = mTimeFormat.format(time);
+			item.timeLabel = timeFormat.format(time);
 			if (rowId != 0)
-				item.elapsed = (t < mNow);
+				item.elapsed = (t < now);
 			else
-				item.elapsed = mElapsed ? false : (t < mNow);
+				item.elapsed = elapsed ? false : (t < now);
 		}
 
 		if ((time != null) || (rowId != 0)) {
@@ -380,21 +379,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected void prePopulate() {
 		clear();
 
-		ZmanimSettings settings = mSettings;
+		ZmanimSettings settings = this.settings;
 
-		mSummaries = settings.isSummaries();
-		mElapsed = settings.isPast();
+		summaries = settings.isSummaries();
+		elapsed = settings.isPast();
 
 		Context context = getContext();
 		if (settings.isSeconds()) {
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
 			String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
-			mTimeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+			timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
 		} else {
-			mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
+			timeFormat = android.text.format.DateFormat.getTimeFormat(context);
 		}
 
-		mNow = System.currentTimeMillis();
+		now = System.currentTimeMillis();
 	}
 
 	/**
@@ -406,11 +405,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	public void populate(boolean remote) {
 		prePopulate();
 
-		ComplexZmanimCalendar cal = mCalendar;
+		ComplexZmanimCalendar cal = calendar;
 		Calendar gcal = cal.getCalendar();
 		JewishCalendar jcal = new JewishCalendar(gcal);
-		jcal.setInIsrael(mInIsrael);
-		int candlesOffset = mSettings.getCandleLightingOffset();
+		jcal.setInIsrael(inIsrael);
+		int candlesOffset = settings.getCandleLightingOffset();
 		int candles = getCandles(jcal);
 		int candlesCount = candles & CANDLES_MASK;
 		boolean hasCandles = candlesCount > 0;
@@ -424,7 +423,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		String opinion;
 		final Resources res = getContext().getResources();
 
-		opinion = mSettings.getDawn();
+		opinion = settings.getDawn();
 		if (OPINION_19_8.equals(opinion)) {
 			date = cal.getAlos19Point8Degrees();
 			summary = R.string.dawn_19;
@@ -481,7 +480,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.fast_begins, null, date);
 		}
 
-		opinion = mSettings.getTallis();
+		opinion = settings.getTallis();
 		if (OPINION_10_2.equals(opinion)) {
 			date = cal.getMisheyakir10Point2Degrees();
 			summary = R.string.tallis_10;
@@ -497,7 +496,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.tallis, summary, date);
 
-		opinion = mSettings.getSunrise();
+		opinion = settings.getSunrise();
 		if (OPINION_SEA.equals(opinion)) {
 			date = cal.getSeaLevelSunrise();
 			summary = R.string.sunrise_sea;
@@ -510,7 +509,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.sunrise, summary, date);
 
-		opinion = mSettings.getLastShema();
+		opinion = settings.getLastShema();
 		if (OPINION_16_1_SUNSET.equals(opinion)) {
 			date = cal.getSofZmanShmaAlos16Point1ToSunset();
 			summary = R.string.shema_16_sunset;
@@ -571,7 +570,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.shema, summary, date);
 
-		opinion = mSettings.getLastTfila();
+		opinion = settings.getLastTfila();
 		if (OPINION_120.equals(opinion)) {
 			date = cal.getSofZmanTfilaMGA120Minutes();
 			summary = R.string.prayers_120;
@@ -627,7 +626,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		}
 
 		if (!remote && (holidayToday == JewishCalendar.EREV_PESACH)) {
-			opinion = mSettings.getBurnChametz();
+			opinion = settings.getBurnChametz();
 			if (OPINION_16_1.equals(opinion)) {
 				date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
 				summary = R.string.burn_chametz_16;
@@ -641,7 +640,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.burn_chametz, summary, date);
 		}
 
-		opinion = mSettings.getMidday();
+		opinion = settings.getMidday();
 		if (OPINION_FIXED.equals(opinion)) {
 			date = cal.getFixedLocalChatzos();
 			summary = R.string.midday_fixed;
@@ -655,7 +654,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.midday, summary, date);
 		Date midday = date;
 
-		opinion = mSettings.getEarliestMincha();
+		opinion = settings.getEarliestMincha();
 		if (OPINION_16_1.equals(opinion)) {
 			date = cal.getMinchaGedola16Point1Degrees();
 			summary = R.string.earliest_mincha_16;
@@ -677,7 +676,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.earliest_mincha, summary, date);
 
-		opinion = mSettings.getMincha();
+		opinion = settings.getMincha();
 		if (OPINION_16_1.equals(opinion)) {
 			date = cal.getMinchaKetana16Point1Degrees();
 			summary = R.string.mincha_16;
@@ -696,7 +695,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.mincha, summary, date);
 
-		opinion = mSettings.getPlugHamincha();
+		opinion = settings.getPlugHamincha();
 		if (OPINION_16_1_SUNSET.equals(opinion)) {
 			date = cal.getPlagAlosToSunset();
 			summary = R.string.plug_hamincha_16_sunset;
@@ -754,7 +753,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.plug_hamincha, summary, date);
 
-		opinion = mSettings.getSunset();
+		opinion = settings.getSunset();
 		if (OPINION_LEVEL.equals(opinion)) {
 			date = cal.getSunset();
 			summary = R.string.sunset_summary;
@@ -799,7 +798,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		else
 			add(R.string.sunset, summary, date);
 
-		opinion = mSettings.getTwilight();
+		opinion = settings.getTwilight();
 		if (OPINION_7_083.equals(opinion)) {
 			date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
 			summary = R.string.twilight_7_083;
@@ -836,7 +835,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.string.fast_ends, null, date);
 		}
 
-		opinion = mSettings.getNightfall();
+		opinion = settings.getNightfall();
 		if (OPINION_120.equals(opinion)) {
 			date = cal.getTzais120();
 			summary = R.string.nightfall_120;
@@ -930,7 +929,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			add(R.id.candles_nightfall_row, R.string.nightfall, R.id.candles_nightfall_time, null);
 		}
 
-		opinion = mSettings.getMidnight();
+		opinion = settings.getMidnight();
 		if (OPINION_12.equals(opinion)) {
 			date = midday;
 			if (date != null)
@@ -969,7 +968,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			}
 			// First Kiddush Levana.
 			else if ((jDayOfMonth >= 2) && (jDayOfMonth <= 8)) {
-				opinion = mSettings.getEarliestKiddushLevana();
+				opinion = settings.getEarliestKiddushLevana();
 				if (OPINION_7.equals(opinion)) {
 					date = cal.getTchilasZmanKidushLevana7Days();
 					summary = R.string.levana_7;
@@ -981,7 +980,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			}
 			// Last Kiddush Levana.
 			else if ((jDayOfMonth > 10) && (jDayOfMonth < 20)) {
-				opinion = mSettings.getLatestKiddushLevana();
+				opinion = settings.getLatestKiddushLevana();
 				if (OPINION_15.equals(opinion)) {
 					date = cal.getSofZmanKidushLevana15Days();
 					summary = R.string.levana_15;
@@ -1031,7 +1030,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			case JewishCalendar.CHANUKAH:
 				count = jcal.getDayOfChanukah();
 				if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY)) {
-					String opinion = mSettings.getChanukkaCandles();
+					String opinion = settings.getChanukkaCandles();
 					if (OPINION_TWILIGHT.equals(opinion)) {
 						flags = AT_TWILIGHT;
 					} else if (OPINION_NIGHT.equals(opinion)) {
@@ -1087,10 +1086,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * Sort.
 	 */
 	protected void sort() {
-		if (mComparator == null) {
-			mComparator = new ZmanimComparator();
+		if (comparator == null) {
+			comparator = new ZmanimComparator();
 		}
-		sort(mComparator);
+		sort(comparator);
 	}
 
 	/**
@@ -1119,15 +1118,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			jewishMonth = 14; // return Adar I, not Adar in a leap year
 		}
 
-		String[] monthNames = mMonthNames;
+		String[] monthNames = this.monthNames;
 		if (monthNames == null) {
 			monthNames = getContext().getResources().getStringArray(R.array.hebrew_months);
-			mMonthNames = monthNames;
+			this.monthNames = monthNames;
 		}
-		String format = mMonthDayYear;
+		String format = monthDayYear;
 		if (format == null) {
 			format = getContext().getString(R.string.month_day_year);
-			mMonthDayYear = format;
+			monthDayYear = format;
 		}
 
 		String yearStr = null;
@@ -1136,11 +1135,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		String dayPadded = null;
 
 		if (ZmanimLocations.isLocaleRTL()) {
-			HebrewDateFormatter formatter = mHebrewDateFormatter;
+			HebrewDateFormatter formatter = hebrewDateFormatter;
 			if (formatter == null) {
 				formatter = new HebrewDateFormatter();
 				formatter.setHebrewFormat(true);
-				mHebrewDateFormatter = formatter;
+				hebrewDateFormatter = formatter;
 			}
 
 			yearStr = formatter.formatHebrewNumber(jewishYear);
@@ -1167,7 +1166,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		the calendar.
 	 */
 	public void setCalendar(Calendar calendar) {
-		this.mCalendar.setCalendar(calendar);
+		this.calendar.setCalendar(calendar);
 	}
 
 	/**
@@ -1177,7 +1176,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		the time in milliseconds.
 	 */
 	public void setCalendar(long time) {
-		Calendar cal = mCalendar.getCalendar();
+		Calendar cal = calendar.getCalendar();
 		cal.setTimeInMillis(time);
 	}
 
@@ -1188,7 +1187,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		the location.
 	 */
 	public void setGeoLocation(GeoLocation geoLocation) {
-		this.mCalendar.setGeoLocation(geoLocation);
+		this.calendar.setGeoLocation(geoLocation);
 	}
 
 	/**
@@ -1198,6 +1197,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		set to {@code true} for calculations for Israel.
 	 */
 	public void setInIsrael(boolean inIsrael) {
-		this.mInIsrael = inIsrael;
+		this.inIsrael = inIsrael;
 	}
 }

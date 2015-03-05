@@ -42,10 +42,10 @@ public class CountryPolygon {
 	public int[] latitudes;
 	/** The array of longitudes (X coordinates). */
 	public int[] longitudes;
-	private int mMinLatitude = Integer.MAX_VALUE;
-	private int mMinLongitude = Integer.MAX_VALUE;
-	private int mMaxLatitude = Integer.MIN_VALUE;
-	private int mMaxLongitude = Integer.MIN_VALUE;
+	private int minLatitude = Integer.MAX_VALUE;
+	private int minLongitude = Integer.MAX_VALUE;
+	private int maxLatitude = Integer.MIN_VALUE;
+	private int maxLongitude = Integer.MIN_VALUE;
 
 	/**
 	 * Constructs a new country.
@@ -54,7 +54,6 @@ public class CountryPolygon {
 	 * 		the country code.
 	 */
 	public CountryPolygon(String countryCode) {
-		super();
 		this.countryCode = countryCode;
 		this.latitudes = new int[MIN_LENGTH];
 		this.longitudes = new int[MIN_LENGTH];
@@ -80,7 +79,6 @@ public class CountryPolygon {
 	 * 		if {@code latitudes} or {@code longitudes} is {@code null}.
 	 */
 	public CountryPolygon(String countryCode, int[] latitudes, int[] longitudes, int npoints) {
-		super();
 		this.countryCode = countryCode;
 		if (npoints > longitudes.length || npoints > latitudes.length) {
 			throw new IndexOutOfBoundsException("npoints > longitutes.length || " + "npoints > latitudes.length");
@@ -107,7 +105,7 @@ public class CountryPolygon {
 	 * boundary; {@code false} otherwise.
 	 */
 	public boolean containsBox(int latitude, int longitude) {
-		return (latitude >= mMinLatitude) && (latitude <= mMaxLatitude) && (longitude >= mMinLongitude) && (longitude <= mMaxLongitude);
+		return (latitude >= minLatitude) && (latitude <= maxLatitude) && (longitude >= minLongitude) && (longitude <= maxLongitude);
 	}
 
 	/**
@@ -120,8 +118,8 @@ public class CountryPolygon {
 	 * boundary; {@code false} otherwise.
 	 */
 	public boolean containsBox(CountryPolygon other) {
-		return (other.mMinLatitude >= this.mMinLatitude) && (other.mMinLongitude >= this.mMinLongitude) && (other.mMaxLatitude <= this.mMaxLatitude)
-				&& (other.mMaxLongitude <= this.mMaxLongitude);
+		return (other.minLatitude >= this.minLatitude) && (other.minLongitude >= this.minLongitude) && (other.maxLatitude <= this.maxLatitude)
+				&& (other.maxLongitude <= this.maxLongitude);
 	}
 
 	/**
@@ -201,14 +199,14 @@ public class CountryPolygon {
 	 * 		the longitude.
 	 */
 	private void updateBounds(int latitude, int longitude) {
-		if (latitude < mMinLatitude)
-			mMinLatitude = latitude;
-		if (latitude > mMaxLatitude)
-			mMaxLatitude = latitude;
-		if (longitude < mMinLongitude)
-			mMinLongitude = longitude;
-		if (longitude > mMaxLongitude)
-			mMaxLongitude = longitude;
+		if (latitude < minLatitude)
+			minLatitude = latitude;
+		if (latitude > maxLatitude)
+			maxLatitude = latitude;
+		if (longitude < minLongitude)
+			minLongitude = longitude;
+		if (longitude > maxLongitude)
+			maxLongitude = longitude;
 	}
 
 	/**

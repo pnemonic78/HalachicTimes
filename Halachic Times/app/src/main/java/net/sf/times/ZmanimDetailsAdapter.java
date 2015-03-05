@@ -35,15 +35,15 @@ import java.util.Date;
  */
 public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
-	private int mItemId;
+	private int itemId;
 
 	public ZmanimDetailsAdapter(Context context, ZmanimSettings settings, int itemId) {
 		super(context, settings);
-		mItemId = itemId;
+		this.itemId = itemId;
 	}
 
 	public void setItemId(int itemId) {
-		this.mItemId = itemId;
+		this.itemId = itemId;
 	}
 
 	@Override
@@ -55,41 +55,41 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 	public void populate(boolean remote) {
 		prePopulate();
 
-		final int id = mItemId;
+		final int id = itemId;
 		if (id == R.string.dawn) {
-			populateDawn(mCalendar);
+			populateDawn(calendar);
 		} else if (id == R.string.tallis) {
-			populateTallis(mCalendar);
+			populateTallis(calendar);
 		} else if (id == R.string.sunrise) {
-			populateSunrise(mCalendar);
+			populateSunrise(calendar);
 		} else if (id == R.string.shema) {
-			populateShema(mCalendar);
+			populateShema(calendar);
 		} else if (id == R.string.prayers) {
-			populatePrayers(mCalendar);
+			populatePrayers(calendar);
 		} else if (id == R.string.midday) {
-			populateMidday(mCalendar);
+			populateMidday(calendar);
 		} else if (id == R.string.earliest_mincha) {
-			populateEarliestMincha(mCalendar);
+			populateEarliestMincha(calendar);
 		} else if (id == R.string.mincha) {
-			populateMincha(mCalendar);
+			populateMincha(calendar);
 		} else if (id == R.string.plug_hamincha) {
-			populatePlugHamincha(mCalendar);
+			populatePlugHamincha(calendar);
 		} else if (id == R.string.sunset) {
-			populateSunset(mCalendar);
+			populateSunset(calendar);
 		} else if (id == R.string.twilight) {
-			populateTwilight(mCalendar);
+			populateTwilight(calendar);
 		} else if (id == R.string.nightfall) {
-			populateNightfall(mCalendar);
+			populateNightfall(calendar);
 		} else if (id == R.string.midnight) {
-			populateMidnight(mCalendar);
+			populateMidnight(calendar);
 		} else if (id == R.string.levana_earliest) {
-			populateEarliestKiddushLevana(mCalendar);
+			populateEarliestKiddushLevana(calendar);
 		} else if (id == R.string.levana_latest) {
-			populateLatestKiddushLevana(mCalendar);
+			populateLatestKiddushLevana(calendar);
 		} else if (id == R.string.eat_chametz) {
-			populateEatChametz(mCalendar);
+			populateEatChametz(calendar);
 		} else if (id == R.string.burn_chametz) {
-			populateBurnChametz(mCalendar);
+			populateBurnChametz(calendar);
 		}
 		sort();
 	}
@@ -592,7 +592,7 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 		String opinion;
 
 		Date midday = null;
-		opinion = mSettings.getMidday();
+		opinion = settings.getMidday();
 		if (OPINION_FIXED.equals(opinion)) {
 			midday = cal.getFixedLocalChatzos();
 		} else {

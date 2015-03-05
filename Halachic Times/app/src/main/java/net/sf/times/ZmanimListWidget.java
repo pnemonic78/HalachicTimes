@@ -35,7 +35,6 @@ public class ZmanimListWidget extends ZmanimWidget {
 	 * Constructs a new widget.
 	 */
 	public ZmanimListWidget() {
-		super();
 	}
 
 	@Override

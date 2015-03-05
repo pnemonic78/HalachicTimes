@@ -48,13 +48,13 @@ import java.util.TreeSet;
  */
 public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> implements OnClickListener {
 
-	protected List<LocationItem> mObjects;
-	private List<LocationItem> mOriginalValues;
-	private LocationComparator mComparator;
-	private LocationsFilter mFilter;
-	private Collator mCollator;
-	private final Locale mLocale = Locale.getDefault();
-	private OnFavoriteClickListener mOnFavoriteClickListener;
+	protected List<LocationItem> objects;
+	private List<LocationItem> originalValues;
+	private LocationComparator comparator;
+	private LocationsFilter filter;
+	private Collator collator;
+	private final Locale locale = Locale.getDefault();
+	private OnFavoriteClickListener onFavoriteClickListener;
 
 	/**
 	 * Constructs a new adapter.
@@ -66,15 +66,15 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	 */
 	public LocationAdapter(Context context, List<LocationItem> items) {
 		super(context, R.layout.location, android.R.id.title, items);
-		mObjects = new ArrayList<LocationItem>(items);
-		mCollator = Collator.getInstance();
-		mCollator.setStrength(Collator.PRIMARY);
+		objects = new ArrayList<LocationItem>(items);
+		collator = Collator.getInstance();
+		collator.setStrength(Collator.PRIMARY);
 		sortNoNotify();
 	}
 
 	@Override
 	public int getCount() {
-		return mObjects.size();
+		return objects.size();
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	 * @return the item.
 	 */
 	protected LocationItem getLocationItem(int position) {
-		return mObjects.get(position);
+		return objects.get(position);
 	}
 
 	@Override
@@ -100,10 +100,10 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	@Override
 	public int getPosition(LocationItem object) {
-		final int size = mObjects.size();
+		final int size = objects.size();
 		LocationItem item;
 		for (int i = 0; i < size; i++) {
-			item = mObjects.get(i);
+			item = objects.get(i);
 			if (item.equals(object))
 				return i;
 		}
@@ -143,40 +143,40 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	@Override
 	public void add(LocationItem object) {
-		if (mOriginalValues != null) {
-			mOriginalValues.add(object);
+		if (originalValues != null) {
+			originalValues.add(object);
 		} else {
-			mObjects.add(object);
+			objects.add(object);
 		}
 		super.add(object);
 	}
 
 	@Override
 	public void insert(LocationItem object, int index) {
-		if (mOriginalValues != null) {
-			mOriginalValues.add(index, object);
+		if (originalValues != null) {
+			originalValues.add(index, object);
 		} else {
-			mObjects.add(index, object);
+			objects.add(index, object);
 		}
 		super.insert(object, index);
 	}
 
 	@Override
 	public void remove(LocationItem object) {
-		if (mOriginalValues != null) {
-			mOriginalValues.remove(object);
+		if (originalValues != null) {
+			originalValues.remove(object);
 		} else {
-			mObjects.remove(object);
+			objects.remove(object);
 		}
 		super.remove(object);
 	}
 
 	@Override
 	public void clear() {
-		if (mOriginalValues != null) {
-			mOriginalValues.clear();
+		if (originalValues != null) {
+			originalValues.clear();
 		} else {
-			mObjects.clear();
+			objects.clear();
 		}
 		super.clear();
 	}
@@ -185,29 +185,29 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	 * Sort without notification.
 	 */
 	protected void sortNoNotify() {
-		if (mComparator == null) {
-			mComparator = new LocationComparator();
+		if (comparator == null) {
+			comparator = new LocationComparator();
 		}
-		sortNoNotify(mComparator);
+		sortNoNotify(comparator);
 	}
 
 	/**
 	 * Sort without notification.
 	 *
-	 * @param the
+	 * @param comparator
 	 * 		comparator used to sort the objects contained in this adapter.
 	 */
 	protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
 		// Remove duplicate locations.
 		Set<LocationItem> items = new TreeSet<LocationItem>(comparator);
-		if (mOriginalValues != null) {
-			items.addAll(mOriginalValues);
-			mOriginalValues.clear();
-			mOriginalValues.addAll(items);
+		if (originalValues != null) {
+			items.addAll(originalValues);
+			originalValues.clear();
+			originalValues.addAll(items);
 		} else {
-			items.addAll(mObjects);
-			mObjects.clear();
-			mObjects.addAll(items);
+			items.addAll(objects);
+			objects.clear();
+			objects.addAll(items);
 		}
 	}
 
@@ -227,10 +227,10 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
 	@Override
 	public Filter getFilter() {
-		if (mFilter == null) {
-			mFilter = new LocationsFilter();
+		if (filter == null) {
+			filter = new LocationsFilter();
 		}
-		return mFilter;
+		return filter;
 	}
 
 	/**
@@ -263,25 +263,24 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 		 * Constructs a new filter.
 		 */
 		public LocationsFilter() {
-			super();
 		}
 
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
 
-			if (mOriginalValues == null) {
-				mOriginalValues = new ArrayList<LocationItem>(mObjects);
+			if (originalValues == null) {
+				originalValues = new ArrayList<LocationItem>(objects);
 			}
 
-			final List<LocationItem> values = new ArrayList<LocationItem>(mOriginalValues);
+			final List<LocationItem> values = new ArrayList<LocationItem>(originalValues);
 			final int count = values.size();
 
 			if (TextUtils.isEmpty(constraint)) {
 				results.values = values;
 				results.count = values.size();
 			} else {
-				final Locale locale = mLocale;
+				final Locale locale = LocationAdapter.this.locale;
 				final String constraintString = constraint.toString().toLowerCase(locale);
 				String latitude;
 				String longitude;
@@ -311,7 +310,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 		@SuppressWarnings("unchecked")
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
-			mObjects = (List<LocationItem>) results.values;
+			objects = (List<LocationItem>) results.values;
 			if (results.count > 0) {
 				notifyDataSetChanged();
 			} else {
@@ -335,7 +334,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 			if (len1 < len2)
 				return false;
 
-			final Collator collator = mCollator;
+			final Collator collator = LocationAdapter.this.collator;
 
 			if (len1 == len2) {
 				if (s.equals(search) || collator.equals(s, search))
@@ -384,7 +383,6 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 		 * 		the address.
 		 */
 		public LocationItem(ZmanimAddress address, ZmanimLocations locations) {
-			super();
 			this.mAddress = address;
 			this.mLabel = address.getFormatted();
 			this.mLabelLower = mLabel.toLowerCase(address.getLocale());
@@ -485,7 +483,6 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 		 * Constructs a new comparator.
 		 */
 		public LocationComparator() {
-			super();
 			mCollator = Collator.getInstance();
 			mCollator.setStrength(Collator.PRIMARY);
 		}
@@ -544,7 +541,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	 * @return the listener.
 	 */
 	public OnFavoriteClickListener getOnFavoriteClickListener() {
-		return mOnFavoriteClickListener;
+		return onFavoriteClickListener;
 	}
 
 	/**
@@ -554,7 +551,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 	 * 		the listener.
 	 */
 	public void setOnFavoriteClickListener(OnFavoriteClickListener listener) {
-		this.mOnFavoriteClickListener = listener;
+		this.onFavoriteClickListener = listener;
 	}
 
 	@Override
@@ -565,8 +562,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 			CompoundButton buttonView = (CompoundButton) v;
 			ZmanimAddress address = (ZmanimAddress) buttonView.getTag();
 
-			if ((address != null) && (mOnFavoriteClickListener != null)) {
-				mOnFavoriteClickListener.onFavoriteClick(LocationAdapter.this, buttonView, address);
+			if ((address != null) && (onFavoriteClickListener != null)) {
+				onFavoriteClickListener.onFavoriteClick(LocationAdapter.this, buttonView, address);
 			}
 		}
 	}

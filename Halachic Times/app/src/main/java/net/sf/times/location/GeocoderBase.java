@@ -72,10 +72,10 @@ public abstract class GeocoderBase {
 	 */
 	protected static final float SAME_PLANET = 5000000f;// 5000 kilometres.
 
-	protected final Context mContext;
-	protected final Locale mLocale;
-	private static SAXParserFactory mParserFactory;
-	private static SAXParser mParser;
+	protected final Context context;
+	protected final Locale locale;
+	private static SAXParserFactory parserFactory;
+	private static SAXParser parser;
 
 	/**
 	 * Creates a new geocoder.
@@ -96,21 +96,20 @@ public abstract class GeocoderBase {
 	 * 		the locale.
 	 */
 	public GeocoderBase(Context context, Locale locale) {
-		super();
-		mContext = context;
-		mLocale = locale;
+		this.context = context;
+		this.locale = locale;
 	}
 
 	protected SAXParserFactory getParserFactory() {
-		if (mParserFactory == null)
-			mParserFactory = SAXParserFactory.newInstance();
-		return mParserFactory;
+		if (parserFactory == null)
+			parserFactory = SAXParserFactory.newInstance();
+		return parserFactory;
 	}
 
 	protected SAXParser getParser() throws ParserConfigurationException, SAXException {
-		if (mParser == null)
-			mParser = getParserFactory().newSAXParser();
-		return mParser;
+		if (parser == null)
+			parser = getParserFactory().newSAXParser();
+		return parser;
 	}
 
 	/**
@@ -259,7 +258,7 @@ public abstract class GeocoderBase {
 		List<Address> results = new ArrayList<Address>(maxResults);
 		InputStream in = new ByteArrayInputStream(data);
 		SAXParser parser = getParser();
-		DefaultHandler handler = createAddressResponseHandler(results, maxResults, mLocale);
+		DefaultHandler handler = createAddressResponseHandler(results, maxResults, locale);
 		parser.parse(in, handler);
 
 		return results;
@@ -284,7 +283,7 @@ public abstract class GeocoderBase {
 	 * @return the language code.
 	 */
 	protected String getLanguage() {
-		String language = mLocale.getLanguage();
+		String language = locale.getLanguage();
 		if ("in".equals(language))
 			return "id";
 		if ("iw".equals(language))

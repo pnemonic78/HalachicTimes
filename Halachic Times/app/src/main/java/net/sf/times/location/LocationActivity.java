@@ -87,17 +87,16 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	private static final int WHAT_FAVORITE = 1;
 
-	private EditText mSearchText;
-	private CountriesGeocoder mCountries;
-	private LocationAdapter mAdapterAll;
-	private LocationAdapter mAdapterFavorites;
-	private LocationAdapter mAdapterHistory;
+	private EditText searchText;
+	private CountriesGeocoder countriesGeocoder;
+	private LocationAdapter adapterAll;
+	private LocationAdapter adapterFavorites;
+	private LocationAdapter adapterHistory;
 
 	/**
 	 * Constructs a new activity.
 	 */
 	public LocationActivity() {
-		super();
 	}
 
 	@Override
@@ -111,7 +110,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		View searchTextParent = (View) searchText.getParent();
 		searchTextParent.setBackgroundDrawable(searchText.getBackground());
 		searchText.setBackgroundDrawable(null);
-		mSearchText = searchText;
+		this.searchText = searchText;
 
 		ImageView searchClear = (ImageView) findViewById(R.id.search_close_btn);
 		searchClear.setOnClickListener(this);
@@ -137,7 +136,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		tabHistory.setContent(R.id.list_history);
 		tabs.addTab(tabHistory);
 
-		mCountries = new CountriesGeocoder(this, Locale.getDefault());
+		countriesGeocoder = new CountriesGeocoder(this, Locale.getDefault());
 
 		Intent intent = getIntent();
 		String query = intent.getStringExtra(SearchManager.QUERY);
@@ -152,7 +151,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		search(query, loc);
 
 		// Switch to the first non-empty tab.
-		if (mAdapterFavorites.getCount() == 0) {
+		if (adapterFavorites.getCount() == 0) {
 			tabs.setCurrentTab(1);
 		}
 	}
@@ -168,7 +167,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 	protected void search(CharSequence query, Location loc) {
 		populateLists();
 
-		EditText searchText = mSearchText;
+		EditText searchText = this.searchText;
 		searchText.requestFocus();
 		searchText.setText(query);
 		if (!TextUtils.isEmpty(query))
@@ -180,7 +179,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		final int id = view.getId();
 
 		if (id == R.id.search_close_btn) {
-			mSearchText.setText(null);
+			searchText.setText(null);
 		} else if (id == R.id.my_location) {
 			gotoHere();
 		}
@@ -194,7 +193,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 		AddressProvider provider = app.getAddresses();
 		ZmanimLocations locations = app.getLocations();
 		List<ZmanimAddress> addresses = provider.query(null);
-		List<ZmanimAddress> cities = mCountries.getCities();
+		List<ZmanimAddress> cities = countriesGeocoder.getCities();
 
 		provider.populateCities(cities);
 
@@ -211,21 +210,21 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 		LocationAdapter adapter = new LocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
-		mAdapterAll = adapter;
+		adapterAll = adapter;
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
 		adapter = new HistoryLocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
-		mAdapterHistory = adapter;
+		adapterHistory = adapter;
 		list = (ListView) findViewById(R.id.list_history);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
 
 		adapter = new FavoritesLocationAdapter(this, items);
 		adapter.setOnFavoriteClickListener(this);
-		mAdapterFavorites = adapter;
+		adapterFavorites = adapter;
 		list = (ListView) findViewById(R.id.list_favorites);
 		list.setOnItemClickListener(this);
 		list.setAdapter(adapter);
@@ -233,13 +232,13 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	@Override
 	public void onItemClick(AdapterView<?> l, View view, int position, long id) {
-		LocationAdapter adapter = mAdapterAll;
+		LocationAdapter adapter = adapterAll;
 		switch (l.getId()) {
 			case R.id.list_favorites:
-				adapter = mAdapterFavorites;
+				adapter = adapterFavorites;
 				break;
 			case R.id.list_history:
-				adapter = mAdapterHistory;
+				adapter = adapterHistory;
 				break;
 		}
 		LocationItem item = adapter.getItem(position);
@@ -255,16 +254,16 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		if (mAdapterAll != null) {
-			mAdapterAll.getFilter().filter(s);
+		if (adapterAll != null) {
+			adapterAll.getFilter().filter(s);
 		}
 
-		if (mAdapterFavorites != null) {
-			mAdapterFavorites.getFilter().filter(s);
+		if (adapterFavorites != null) {
+			adapterFavorites.getFilter().filter(s);
 		}
 
-		if (mAdapterHistory != null) {
-			mAdapterHistory.getFilter().filter(s);
+		if (adapterHistory != null) {
+			adapterHistory.getFilter().filter(s);
 		}
 	}
 
@@ -368,9 +367,9 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
 						provider.insertOrUpdateAddress(null, address);
 					}
 
-					mAdapterAll.notifyDataSetChanged();
-					mAdapterFavorites.notifyDataSetChanged();
-					mAdapterHistory.notifyDataSetChanged();
+					adapterAll.notifyDataSetChanged();
+					adapterFavorites.notifyDataSetChanged();
+					adapterHistory.notifyDataSetChanged();
 
 					break;
 			}

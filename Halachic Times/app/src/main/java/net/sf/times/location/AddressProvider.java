@@ -107,16 +107,16 @@ public class AddressProvider {
 
 	private static final String WHERE_ID = BaseColumns._ID + "=?";
 
-	private final Context mContext;
-	private final Locale mLocale;
-	private SQLiteOpenHelper mOpenHelper;
+	private final Context context;
+	private final Locale locale;
+	private SQLiteOpenHelper openHelper;
 	/** The list of countries. */
-	private CountriesGeocoder mCountriesGeocoder;
-	private Geocoder mGeocoder;
-	private GeocoderBase mGoogleGeocoder;
-	private GeocoderBase mBingGeocoder;
-	private GeocoderBase mGeoNamesGeocoder;
-	private GeocoderBase mDatabaseGeocoder;
+	private CountriesGeocoder countriesGeocoder;
+	private Geocoder geocoder;
+	private GeocoderBase googleGeocoder;
+	private GeocoderBase bingGeocoder;
+	private GeocoderBase geonamesGeocoder;
+	private GeocoderBase databaseGeocoder;
 
 	/**
 	 * Constructs a new provider.
@@ -137,10 +137,9 @@ public class AddressProvider {
 	 * 		the locale.
 	 */
 	public AddressProvider(Context context, Locale locale) {
-		super();
-		mContext = context;
-		mLocale = locale;
-		mCountriesGeocoder = new CountriesGeocoder(context, locale);
+		this.context = context;
+		this.locale = locale;
+		countriesGeocoder = new CountriesGeocoder(context, locale);
 	}
 
 	/**
@@ -235,10 +234,10 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		Geocoder geocoder = mGeocoder;
+		Geocoder geocoder = this.geocoder;
 		if (geocoder == null) {
-			geocoder = new Geocoder(mContext);
-			mGeocoder = geocoder;
+			geocoder = new Geocoder(context);
+			this.geocoder = geocoder;
 		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
@@ -262,10 +261,10 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = mGoogleGeocoder;
+		GeocoderBase geocoder = googleGeocoder;
 		if (geocoder == null) {
-			geocoder = new GoogleGeocoder(mContext, mLocale);
-			mGoogleGeocoder = geocoder;
+			geocoder = new GoogleGeocoder(context, locale);
+			googleGeocoder = geocoder;
 		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
@@ -288,10 +287,10 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = mGeoNamesGeocoder;
+		GeocoderBase geocoder = geonamesGeocoder;
 		if (geocoder == null) {
-			geocoder = new GeoNamesGeocoder(mContext, mLocale);
-			mGeoNamesGeocoder = geocoder;
+			geocoder = new GeoNamesGeocoder(context, locale);
+			geonamesGeocoder = geocoder;
 		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
@@ -314,10 +313,10 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = mBingGeocoder;
+		GeocoderBase geocoder = bingGeocoder;
 		if (geocoder == null) {
-			geocoder = new BingGeocoder(mContext, mLocale);
-			mBingGeocoder = geocoder;
+			geocoder = new BingGeocoder(context, locale);
+			bingGeocoder = geocoder;
 		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 5);
@@ -436,10 +435,10 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = mDatabaseGeocoder;
+		GeocoderBase geocoder = databaseGeocoder;
 		if (geocoder == null) {
-			geocoder = new DatabaseGeocoder(mContext, mLocale);
-			mDatabaseGeocoder = geocoder;
+			geocoder = new DatabaseGeocoder(context, locale);
+			databaseGeocoder = geocoder;
 		}
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
@@ -455,10 +454,10 @@ public class AddressProvider {
 	 * @return the database - {@code null} otherwise.
 	 */
 	private SQLiteDatabase getReadableDatabase() {
-		if (mOpenHelper == null)
-			mOpenHelper = new AddressOpenHelper(mContext);
+		if (openHelper == null)
+			openHelper = new AddressOpenHelper(context);
 		try {
-			return mOpenHelper.getReadableDatabase();
+			return openHelper.getReadableDatabase();
 		} catch (SQLiteException e) {
 			Log.e(TAG, "no readable db", e);
 		}
@@ -471,10 +470,10 @@ public class AddressProvider {
 	 * @return the database - {@code null} otherwise.
 	 */
 	private SQLiteDatabase getWritableDatabase() {
-		if (mOpenHelper == null)
-			mOpenHelper = new AddressOpenHelper(mContext);
+		if (openHelper == null)
+			openHelper = new AddressOpenHelper(context);
 		try {
-			return mOpenHelper.getWritableDatabase();
+			return openHelper.getWritableDatabase();
 		} catch (SQLiteException e) {
 			Log.e(TAG, "no writable db", e);
 		}
@@ -529,8 +528,8 @@ public class AddressProvider {
 
 	/** Close database resources. */
 	public void close() {
-		if (mOpenHelper != null)
-			mOpenHelper.close();
+		if (openHelper != null)
+			openHelper.close();
 	}
 
 	/**
@@ -544,7 +543,7 @@ public class AddressProvider {
 	 */
 	private List<Address> findNearestCountry(Location location) {
 		List<Address> countries = null;
-		Address country = mCountriesGeocoder.findCountry(location);
+		Address country = countriesGeocoder.findCountry(location);
 		if (country != null) {
 			countries = new ArrayList<Address>();
 			countries.add(country);
@@ -565,7 +564,7 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		List<Address> addresses = null;
-		GeocoderBase geocoder = mCountriesGeocoder;
+		GeocoderBase geocoder = countriesGeocoder;
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 10);
 		} catch (IOException e) {
@@ -582,8 +581,8 @@ public class AddressProvider {
 	 * @return the list of addresses.
 	 */
 	public List<ZmanimAddress> query(CursorFilter filter) {
-		final String language = mLocale.getLanguage();
-		final String country = mLocale.getCountry();
+		final String language = locale.getLanguage();
+		final String country = locale.getCountry();
 
 		List<ZmanimAddress> addresses = new ArrayList<ZmanimAddress>();
 		SQLiteDatabase db = getReadableDatabase();
@@ -617,7 +616,7 @@ public class AddressProvider {
 						formatted = cursor.getString(INDEX_ADDRESS);
 						favorite = cursor.getShort(INDEX_FAVORITE) != 0;
 						if (locationLanguage == null)
-							locale = mLocale;
+							locale = this.locale;
 						else
 							locale = new Locale(locationLanguage, country);
 
@@ -717,7 +716,7 @@ public class AddressProvider {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
 		try {
-			return mCountriesGeocoder.getElevation(latitude, longitude);
+			return countriesGeocoder.getElevation(latitude, longitude);
 		} catch (IOException e) {
 			Log.e(TAG, "Countries geocoder: " + e.getLocalizedMessage(), e);
 		}
@@ -734,10 +733,10 @@ public class AddressProvider {
 	private ZmanimLocation findElevationGoogle(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		GeocoderBase geocoder = mGoogleGeocoder;
+		GeocoderBase geocoder = googleGeocoder;
 		if (geocoder == null) {
-			geocoder = new GoogleGeocoder(mContext, mLocale);
-			mGoogleGeocoder = geocoder;
+			geocoder = new GoogleGeocoder(context, locale);
+			googleGeocoder = geocoder;
 		}
 		try {
 			return geocoder.getElevation(latitude, longitude);
@@ -757,10 +756,10 @@ public class AddressProvider {
 	private ZmanimLocation findElevationGeoNames(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		GeocoderBase geocoder = mGeoNamesGeocoder;
+		GeocoderBase geocoder = geonamesGeocoder;
 		if (geocoder == null) {
-			geocoder = new GeoNamesGeocoder(mContext, mLocale);
-			mGeoNamesGeocoder = geocoder;
+			geocoder = new GeoNamesGeocoder(context, locale);
+			geonamesGeocoder = geocoder;
 		}
 		try {
 			return geocoder.getElevation(latitude, longitude);
@@ -780,10 +779,10 @@ public class AddressProvider {
 	private ZmanimLocation findElevationBing(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		GeocoderBase geocoder = mBingGeocoder;
+		GeocoderBase geocoder = bingGeocoder;
 		if (geocoder == null) {
-			geocoder = new BingGeocoder(mContext, mLocale);
-			mBingGeocoder = geocoder;
+			geocoder = new BingGeocoder(context, locale);
+			bingGeocoder = geocoder;
 		}
 		try {
 			return geocoder.getElevation(latitude, longitude);
@@ -805,10 +804,10 @@ public class AddressProvider {
 	private ZmanimLocation findElevationDatabase(Location location) {
 		final double latitude = location.getLatitude();
 		final double longitude = location.getLongitude();
-		GeocoderBase geocoder = mDatabaseGeocoder;
+		GeocoderBase geocoder = databaseGeocoder;
 		if (geocoder == null) {
-			geocoder = new DatabaseGeocoder(mContext, mLocale);
-			mDatabaseGeocoder = geocoder;
+			geocoder = new DatabaseGeocoder(context, locale);
+			databaseGeocoder = geocoder;
 		}
 		try {
 			return geocoder.getElevation(latitude, longitude);

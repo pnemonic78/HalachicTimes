@@ -46,33 +46,33 @@ import java.util.Calendar;
  */
 public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
-	protected final Context mContext;
-	protected LayoutInflater mInflater;
-	private OnClickListener mOnClickListener;
+	protected final Context context;
+	protected LayoutInflater inflater;
+	private OnClickListener onClickListener;
 	/** The main list view. */
-	protected ViewGroup mView;
+	protected ViewGroup view;
 	/** The list. */
-	protected ViewGroup mList;
+	protected ViewGroup list;
 	/** Provider for locations. */
-	protected ZmanimLocations mLocations;
+	protected ZmanimLocations locations;
 	/** The settings and preferences. */
-	protected ZmanimSettings mSettings;
+	protected ZmanimSettings settings;
 	/** The gradient background. */
-	private Drawable mBackground;
+	private Drawable background;
 	/** The master item selected row. */
-	private View mHighlightRow;
+	private View highlightRow;
 	/** The master item background that is selected. */
-	private Drawable mHighlightBackground;
+	private Drawable highlightBackground;
 	/** The master item background that is not selected. */
-	private Drawable mUnhighlightBackground;
-	private int mPaddingLeft;
-	private int mPaddingTop;
-	private int mPaddingRight;
-	private int mPaddingBottom;
+	private Drawable unhighlightBackground;
+	private int paddingLeft;
+	private int paddingTop;
+	private int paddingRight;
+	private int paddingBottom;
 	/** The adapter. */
-	private A mAdapter;
+	private A adapter;
 	/** The gesture detector. */
-	private GestureDetector mGestureDetector;
+	private GestureDetector gestureDetector;
 
 	/**
 	 * Constructs a new list.
@@ -86,7 +86,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 */
 	public ZmanimFragment(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		mContext = context;
+		this.context = context;
 		init(context);
 	}
 
@@ -100,7 +100,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 */
 	public ZmanimFragment(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mContext = context;
+		this.context = context;
 		init(context);
 	}
 
@@ -112,7 +112,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 */
 	public ZmanimFragment(Context context) {
 		super(context);
-		mContext = context;
+		this.context = context;
 		init(context);
 	}
 
@@ -120,15 +120,15 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	@SuppressLint("InflateParams")
 	private void init(Context context) {
 		if (!isInEditMode()) {
-			mSettings = new ZmanimSettings(context);
+			settings = new ZmanimSettings(context);
 			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-			mLocations = app.getLocations();
+			locations = app.getLocations();
 		}
 
-		mInflater = LayoutInflater.from(context);
-		mView = (ViewGroup) mInflater.inflate(R.layout.times_list, null);
-		addView(mView);
-		mList = (ViewGroup) mView.findViewById(android.R.id.list);
+		inflater = LayoutInflater.from(context);
+		view = (ViewGroup) inflater.inflate(R.layout.times_list, null);
+		addView(view);
+		list = (ViewGroup) view.findViewById(android.R.id.list);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 */
 	@SuppressWarnings("unchecked")
 	protected A createAdapter() {
-		return (A) new ZmanimAdapter(mContext, mSettings);
+		return (A) new ZmanimAdapter(context, settings);
 	}
 
 	/**
@@ -147,10 +147,10 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 * @return the adapter.
 	 */
 	protected A getAdapter() {
-		A adapter = mAdapter;
+		A adapter = this.adapter;
 		if (adapter == null) {
 			adapter = createAdapter();
-			mAdapter = adapter;
+			this.adapter = adapter;
 		}
 		return adapter;
 	}
@@ -164,7 +164,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	@SuppressWarnings("deprecation")
 	public A populateTimes(Calendar date) {
 		// Called before attached to activity?
-		ZmanimLocations locations = mLocations;
+		ZmanimLocations locations = this.locations;
 		if (locations == null)
 			return null;
 		GeoLocation gloc = locations.getGeoLocation();
@@ -178,7 +178,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 		adapter.setInIsrael(locations.inIsrael());
 		adapter.populate(false);
 
-		ViewGroup list = mList;
+		ViewGroup list = this.list;
 		if (list == null)
 			return adapter;
 		list.setBackgroundDrawable(getListBackground());
@@ -192,10 +192,10 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 * @return the background - {@code null} otherwise.
 	 */
 	protected Drawable getListBackground() {
-		if (mSettings.isBackgroundGradient()) {
-			if (mBackground == null)
-				mBackground = getResources().getDrawable(R.drawable.list_gradient);
-			return mBackground;
+		if (settings.isBackgroundGradient()) {
+			if (background == null)
+				background = getResources().getDrawable(R.drawable.list_gradient);
+			return background;
 		}
 		return null;
 	}
@@ -251,7 +251,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 */
 	protected void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
 		setOnClickListener(row, item);
-		mInflater.inflate(R.layout.divider, list);
+		inflater.inflate(R.layout.divider, list);
 		list.addView(row);
 	}
 
@@ -268,8 +268,8 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	@SuppressLint("InflateParams")
 	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
 		if (position > 0)
-			mInflater.inflate(R.layout.divider, list);
-		ViewGroup row = (ViewGroup) mInflater.inflate(R.layout.date_group, null);
+			inflater.inflate(R.layout.divider, list);
+		ViewGroup row = (ViewGroup) inflater.inflate(R.layout.date_group, null);
 		TextView text = (TextView) row.findViewById(R.id.date_hebrew);
 		text.setText(label);
 		list.addView(row);
@@ -278,13 +278,13 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	protected void setOnClickListener(View view, ZmanimItem item) {
 		final int id = item.titleId;
 		boolean clickable = view.isEnabled() && (id != R.string.molad);
-		view.setOnClickListener(clickable ? mOnClickListener : null);
+		view.setOnClickListener(clickable ? onClickListener : null);
 		view.setClickable(clickable);
 	}
 
 	@Override
 	public void setOnClickListener(OnClickListener listener) {
-		mOnClickListener = listener;
+		onClickListener = listener;
 	}
 
 	/**
@@ -293,17 +293,17 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 * @return the background.
 	 */
 	private Drawable getSelectedBackground() {
-		if (mHighlightBackground == null) {
-			mHighlightBackground = getResources().getDrawable(R.drawable.list_selected);
+		if (highlightBackground == null) {
+			highlightBackground = getResources().getDrawable(R.drawable.list_selected);
 		}
-		return mHighlightBackground;
+		return highlightBackground;
 	}
 
 	/**
 	 * Mark the selected row as unselected.
 	 */
 	public void unhighlight() {
-		unhighlight(mHighlightRow);
+		unhighlight(highlightRow);
 	}
 
 	/**
@@ -314,7 +314,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 */
 	@SuppressWarnings("deprecation")
 	private void unhighlight(View view) {
-		Drawable bg = mUnhighlightBackground;
+		Drawable bg = unhighlightBackground;
 		if ((view == null) || (bg == null))
 			return;
 
@@ -322,8 +322,8 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 		if (bg instanceof StateListDrawable)
 			bg = bg.getConstantState().newDrawable();
 		view.setBackgroundDrawable(bg);
-		view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
-		mUnhighlightBackground = null;
+		view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+		unhighlightBackground = null;
 	}
 
 	/**
@@ -335,10 +335,10 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	@SuppressWarnings("deprecation")
 	public void highlight(int itemId) {
 		// Find the view that matches the item id (the view that was clicked).
-		final A adapter = mAdapter;
+		final A adapter = this.adapter;
 		if (adapter == null)
 			return;
-		final ViewGroup list = mList;
+		final ViewGroup list = this.list;
 		if (list == null)
 			return;
 		View view = null;
@@ -359,14 +359,14 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 		if (view == null)
 			return;
 
-		mUnhighlightBackground = view.getBackground();
-		mPaddingLeft = view.getPaddingLeft();
-		mPaddingTop = view.getPaddingTop();
-		mPaddingRight = view.getPaddingRight();
-		mPaddingBottom = view.getPaddingBottom();
+		unhighlightBackground = view.getBackground();
+		paddingLeft = view.getPaddingLeft();
+		paddingTop = view.getPaddingTop();
+		paddingRight = view.getPaddingRight();
+		paddingBottom = view.getPaddingBottom();
 		view.setBackgroundDrawable(getSelectedBackground());
-		view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom);
-		mHighlightRow = view;
+		view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+		highlightRow = view;
 	}
 
 	public boolean isVisible() {
@@ -375,7 +375,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent event) {
-		if ((mGestureDetector != null) && mGestureDetector.onTouchEvent(event))
+		if ((gestureDetector != null) && gestureDetector.onTouchEvent(event))
 			return true;
 		return super.onInterceptTouchEvent(event);
 	}
@@ -387,7 +387,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 * 		the gesture detector.
 	 */
 	public void setGestureDetector(GestureDetector gestureDetector) {
-		mGestureDetector = gestureDetector;
+		this.gestureDetector = gestureDetector;
 	}
 
 }

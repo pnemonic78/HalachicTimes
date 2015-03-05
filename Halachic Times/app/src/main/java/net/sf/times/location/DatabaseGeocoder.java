@@ -89,7 +89,7 @@ public class DatabaseGeocoder extends GeocoderBase {
 				return (mDistance[0] <= SAME_LOCATION);
 			}
 		};
-		ZmanimApplication app = (ZmanimApplication) mContext.getApplicationContext();
+		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 		AddressProvider provider = app.getAddresses();
 		List<ZmanimAddress> q = provider.query(filter);
 		List<Address> addresses = new ArrayList<Address>(q);
@@ -121,7 +121,7 @@ public class DatabaseGeocoder extends GeocoderBase {
 				return (mDistance[0] <= SAME_PLATEAU);
 			}
 		};
-		ZmanimApplication app = (ZmanimApplication) mContext.getApplicationContext();
+		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
 		AddressProvider provider = app.getAddresses();
 		List<ZmanimLocation> locations = provider.queryElevations(filter);
 

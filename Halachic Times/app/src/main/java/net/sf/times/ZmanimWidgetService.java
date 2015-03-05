@@ -14,17 +14,17 @@ import android.widget.RemoteViewsService;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimWidgetService extends RemoteViewsService {
 
-	private ZmanimWidgetViewsFactory mFactory;
+	private ZmanimWidgetViewsFactory factory;
 
 	public ZmanimWidgetService() {
 	}
 
 	@Override
 	public RemoteViewsFactory onGetViewFactory(Intent intent) {
-		if (mFactory == null) {
-			mFactory = new ZmanimWidgetViewsFactory(this, intent);
+		if (factory == null) {
+			factory = new ZmanimWidgetViewsFactory(this, intent);
 		}
-		return mFactory;
+		return factory;
 	}
 
 }

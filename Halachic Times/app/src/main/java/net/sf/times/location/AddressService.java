@@ -42,7 +42,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
 
 	private static final String NAME = "AddressService";
 
-	private AddressProvider mAddressProvider;
+	private AddressProvider addressProvider;
 
 	/**
 	 * Constructs a new service.
@@ -72,7 +72,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
 		if (location == null)
 			return;
 
-		final AddressProvider provider = mAddressProvider;
+		final AddressProvider provider = addressProvider;
 		if (provider == null)
 			return;
 		String action = intent.getAction();
@@ -107,7 +107,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
 	public void onCreate() {
 		super.onCreate();
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		mAddressProvider = app.getAddresses();
+		addressProvider = app.getAddresses();
 	}
 
 	@Override

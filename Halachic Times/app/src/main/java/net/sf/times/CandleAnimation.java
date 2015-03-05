@@ -43,11 +43,11 @@ public class CandleAnimation implements Runnable {
 	private static final long PERIOD = DateUtils.SECOND_IN_MILLIS >> 1;
 	private static final int PERIOD_INT = (int) PERIOD;
 
-	private final Handler mHandler;
-	private Drawable mCandle;
+	private final Handler handler;
+	private Drawable candle;
 	/** Randomizer. */
-	private final Random mRandom;
-	private static Drawable[] mSprites;
+	private final Random random;
+	private static Drawable[] sprites;
 
 	/**
 	 * Create a new animation.
@@ -72,14 +72,14 @@ public class CandleAnimation implements Runnable {
 	 * 		the delay randomizer.
 	 */
 	public CandleAnimation(Handler handler, ImageView view, Random random) {
-		mHandler = handler;
+		this.handler = handler;
 		if (view == null)
 			throw new IllegalArgumentException("view required");
-		mRandom = random;
+		this.random = random;
 
 		// Cache the images to avoid "bitmap size exceeds VM budget".
-		if (mSprites == null) {
-			mSprites = new Drawable[LEVELS];
+		if (sprites == null) {
+			sprites = new Drawable[LEVELS];
 
 			Resources res = view.getResources();
 			Options opts = new Options();
@@ -88,33 +88,33 @@ public class CandleAnimation implements Runnable {
 			Bitmap bmp1 = BitmapFactory.decodeResource(res, R.drawable.candle_1, opts);
 			Bitmap bmp2 = BitmapFactory.decodeResource(res, R.drawable.candle_2, opts);
 			Bitmap bmp3 = BitmapFactory.decodeResource(res, R.drawable.candle_3, opts);
-			mSprites[0] = new BitmapDrawable(res, bmp0);
-			mSprites[1] = new BitmapDrawable(res, bmp1);
-			mSprites[2] = new BitmapDrawable(res, bmp2);
-			mSprites[3] = new BitmapDrawable(res, bmp3);
-			mSprites[4] = mSprites[2];
-			mSprites[5] = mSprites[1];
+			sprites[0] = new BitmapDrawable(res, bmp0);
+			sprites[1] = new BitmapDrawable(res, bmp1);
+			sprites[2] = new BitmapDrawable(res, bmp2);
+			sprites[3] = new BitmapDrawable(res, bmp3);
+			sprites[4] = sprites[2];
+			sprites[5] = sprites[1];
 		}
 
 		LevelListDrawable candle = new LevelListDrawable();
 		for (int i = 0; i < LEVELS; i++)
-			candle.addLevel(0, i, mSprites[i]);
+			candle.addLevel(0, i, sprites[i]);
 		view.setImageDrawable(candle);
-		mCandle = candle;
+		this.candle = candle;
 	}
 
 	@Override
 	public void run() {
-		int level = mCandle.getLevel();
+		int level = candle.getLevel();
 		level++;
 		if (level >= LEVELS)
 			level = 0;
-		mCandle.setLevel(level);
+		candle.setLevel(level);
 
-		if (mRandom == null)
-			mHandler.postDelayed(this, PERIOD);
+		if (random == null)
+			handler.postDelayed(this, PERIOD);
 		else
-			mHandler.postDelayed(this, mRandom.nextInt(PERIOD_INT));
+			handler.postDelayed(this, random.nextInt(PERIOD_INT));
 	}
 
 }

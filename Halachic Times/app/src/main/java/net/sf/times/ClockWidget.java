@@ -24,7 +24,7 @@ import java.util.Locale;
  */
 public class ClockWidget extends ZmanimWidget {
 
-	private DateFormat mTimeFormat;
+	private DateFormat timeFormat;
 
 	/**
 	 * Constructs a new widget.
@@ -58,20 +58,20 @@ public class ClockWidget extends ZmanimWidget {
 
 	@Override
 	protected void bindView(RemoteViews list, int position, ZmanimItem item) {
-		if (mTimeFormat == null) {
-			Context context = mContext;
+		if (timeFormat == null) {
+			Context context = this.context;
 			boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
 			String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
-			mTimeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+			timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
 		}
 
-		CharSequence label = mTimeFormat.format(item.time);
+		CharSequence label = timeFormat.format(item.time);
 		SpannableStringBuilder spans = new SpannableStringBuilder(label);
 		int indexMinutes = TextUtils.indexOf(label, ':');
 		spans.setSpan(new TypefaceSpan("sans-serif"), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		spans.setSpan(new StyleSpan(Typeface.BOLD), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 		list.setTextViewText(R.id.time, spans);
-		list.setTextViewText(android.R.id.title, mContext.getText(item.titleId));
+		list.setTextViewText(android.R.id.title, context.getText(item.titleId));
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class ClockWidget extends ZmanimWidget {
 	@Override
 	@SuppressLint("NewApi")
 	protected void notifyAppWidgetViewDataChanged(Context context) {
-		mTimeFormat = null;
+		timeFormat = null;
 		super.notifyAppWidgetViewDataChanged(context);
 	}
 }

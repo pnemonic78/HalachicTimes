@@ -48,17 +48,16 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	private static final String TAG = "ZmanimPreferences";
 
-	private SeekBarDialogPreference mCandles;
-	private ZmanimSettings mSettings;
-	private ZmanimReminder mReminder;
-	private Preference mClearHistory;
-	private Preference mAboutKosherJava;
+	private SeekBarDialogPreference candles;
+	private ZmanimSettings settings;
+	private ZmanimReminder reminder;
+	private Preference clearHistory;
+	private Preference aboutKosherJava;
 
 	/**
 	 * Constructs a new preferences.
 	 */
 	public ZmanimPreferences() {
-		super();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -71,10 +70,10 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 		initList(ZmanimSettings.KEY_REMIDER_STREAM);
 
-		mCandles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
-		mCandles.setSummary(R.plurals.candles_summary);
-		mCandles.setOnPreferenceChangeListener(this);
-		onCandlesPreferenceChange(mCandles, null);
+		candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+		candles.setSummary(R.plurals.candles_summary);
+		candles.setOnPreferenceChangeListener(this);
+		onCandlesPreferenceChange(candles, null);
 
 		initList(ZmanimSettings.KEY_OPINION_DAWN);
 		initList(ZmanimSettings.KEY_OPINION_TALLIS);
@@ -109,8 +108,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		initList(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
 		initList(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
 
-		mClearHistory = findPreference("clear_history");
-		mClearHistory.setOnPreferenceClickListener(this);
+		clearHistory = findPreference("clear_history");
+		clearHistory.setOnPreferenceClickListener(this);
 
 		Preference version = findPreference("about.version");
 		try {
@@ -118,8 +117,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 		} catch (NameNotFoundException e) {
 			// Never should happen with our own package!
 		}
-		mAboutKosherJava = findPreference("about.kosherjava");
-		mAboutKosherJava.setOnPreferenceClickListener(this);
+		aboutKosherJava = findPreference("about.kosherjava");
+		aboutKosherJava.setOnPreferenceClickListener(this);
 
 		// Other preferences that affect the app widget.
 		findPreference(ZmanimSettings.KEY_PAST).setOnPreferenceChangeListener(this);
@@ -135,7 +134,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		if (preference == mCandles) {
+		if (preference == candles) {
 			onCandlesPreferenceChange(preference, newValue);
 			return true;
 		}
@@ -151,9 +150,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	private void onCandlesPreferenceChange(Preference preference, Object newValue) {
 		Resources res = getResources();
-		int minutes = mCandles.getProgress();
+		int minutes = candles.getProgress();
 		CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
-		mCandles.setSummary(summary);
+		candles.setSummary(summary);
 	}
 
 	private void onListPreferenceChange(ListPreference preference, Object newValue) {
@@ -163,11 +162,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 		if (!oldValue.equals(newValue)) {
 			if (preference.getKey().endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
-				if (mSettings == null)
-					mSettings = new ZmanimSettings(this);
-				if (mReminder == null)
-					mReminder = new ZmanimReminder(this);
-				mReminder.remind(mSettings);
+				if (settings == null)
+					settings = new ZmanimSettings(this);
+				if (reminder == null)
+					reminder = new ZmanimReminder(this);
+				reminder.remind(settings);
 			}
 		}
 	}
@@ -198,13 +197,13 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
 	@Override
 	public boolean onPreferenceClick(Preference preference) {
-		if (preference == mClearHistory) {
+		if (preference == clearHistory) {
 			preference.setEnabled(false);
 			deleteHistory();
 			preference.setEnabled(true);
 			return true;
 		}
-		if (preference == mAboutKosherJava) {
+		if (preference == aboutKosherJava) {
 			preference.setEnabled(false);
 			gotoKosherJava();
 			preference.setEnabled(true);

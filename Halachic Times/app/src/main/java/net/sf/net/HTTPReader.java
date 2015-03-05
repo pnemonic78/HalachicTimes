@@ -42,8 +42,7 @@ public class HTTPReader {
 	public static final String[] CONTENT_XML = {CONTENT_APP_XML, CONTENT_TEXT_XML};
 
 	/** Creates a new reader. */
-	public HTTPReader() {
-		super();
+	private HTTPReader() {
 	}
 
 	/**

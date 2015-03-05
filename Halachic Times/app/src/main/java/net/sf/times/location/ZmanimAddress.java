@@ -50,11 +50,11 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	/** Double subtraction error. */
 	private static final double EPSILON = 1e-6;
 
-	private long mId;
-	private double mElevation;
-	private boolean mHasElevation;
-	private String mFormatted;
-	private boolean mFavorite;
+	private long id;
+	private double elevation;
+	private boolean hasElevation;
+	private String formatted;
+	private boolean favorite;
 
 	/**
 	 * Constructs a new address.
@@ -106,7 +106,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * @return the id
 	 */
 	public long getId() {
-		return mId;
+		return id;
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * 		the id.
 	 */
 	public void setId(long id) {
-		this.mId = id;
+		this.id = id;
 	}
 
 	/**
@@ -125,9 +125,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * @return the address
 	 */
 	public String getFormatted() {
-		if (mFormatted == null)
-			mFormatted = format();
-		return mFormatted;
+		if (formatted == null)
+			formatted = format();
+		return formatted;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * 		the address.
 	 */
 	public void setFormatted(String formatted) {
-		mFormatted = formatted;
+		this.formatted = formatted;
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * @return {@code true} if favourite.
 	 */
 	public boolean isFavorite() {
-		return mFavorite;
+		return favorite;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * 		is favourite?
 	 */
 	public void setFavorite(boolean favorite) {
-		mFavorite = favorite;
+		this.favorite = favorite;
 	}
 
 	/**
@@ -166,8 +166,8 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * 		the elevation in metres.
 	 */
 	public void setElevation(double elevation) {
-		mElevation = elevation;
-		mHasElevation = true;
+		this.elevation = elevation;
+		hasElevation = true;
 	}
 
 	/**
@@ -176,8 +176,8 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * @return the elevation in metres.
 	 */
 	public double getElevation() {
-		if (mHasElevation) {
-			return mElevation;
+		if (hasElevation) {
+			return elevation;
 		}
 		throw new IllegalStateException();
 	}
@@ -187,7 +187,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	 * otherwise.
 	 */
 	public boolean hasElevation() {
-		return mHasElevation;
+		return hasElevation;
 	}
 
 	/**
@@ -286,10 +286,10 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
 		super.writeToParcel(parcel, flags);
-		parcel.writeLong(mId);
-		parcel.writeDouble(mElevation);
-		parcel.writeString(mFormatted);
-		parcel.writeInt(mFavorite ? 1 : 0);
+		parcel.writeLong(id);
+		parcel.writeDouble(elevation);
+		parcel.writeString(formatted);
+		parcel.writeInt(favorite ? 1 : 0);
 	}
 
 	public static final Parcelable.Creator<ZmanimAddress> CREATOR = new Parcelable.Creator<ZmanimAddress>() {
@@ -297,10 +297,10 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 		public ZmanimAddress createFromParcel(Parcel source) {
 			Address a = Address.CREATOR.createFromParcel(source);
 			ZmanimAddress za = new ZmanimAddress(a);
-			za.mId = source.readLong();
-			za.mElevation = source.readDouble();
-			za.mFormatted = source.readString();
-			za.mFavorite = source.readInt() == 0 ? false : true;
+			za.id = source.readLong();
+			za.elevation = source.readDouble();
+			za.formatted = source.readString();
+			za.favorite = source.readInt() == 0 ? false : true;
 			return za;
 		}
 

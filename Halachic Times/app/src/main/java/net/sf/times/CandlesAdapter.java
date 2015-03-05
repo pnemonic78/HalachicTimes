@@ -35,7 +35,7 @@ import java.util.Calendar;
  */
 public class CandlesAdapter extends ZmanimAdapter {
 
-	private int mCandles;
+	private int candles;
 
 	public CandlesAdapter(Context context, ZmanimSettings settings) {
 		super(context, settings);
@@ -50,14 +50,14 @@ public class CandlesAdapter extends ZmanimAdapter {
 	public void populate(boolean remote) {
 		prePopulate();
 
-		populateCandles(mCalendar);
+		populateCandles(calendar);
 	}
 
 	private void populateCandles(ComplexZmanimCalendar cal) {
 		Calendar gcal = cal.getCalendar();
 		JewishCalendar jcal = new JewishCalendar(gcal);
-		jcal.setInIsrael(mInIsrael);
-		mCandles = getCandles(jcal);
+		jcal.setInIsrael(inIsrael);
+		candles = getCandles(jcal);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class CandlesAdapter extends ZmanimAdapter {
 	 * @return the number of candles.
 	 */
 	public int getCandlesCount() {
-		return mCandles & CANDLES_MASK;
+		return candles & CANDLES_MASK;
 	}
 
 	/**
@@ -75,6 +75,6 @@ public class CandlesAdapter extends ZmanimAdapter {
 	 * @return the candles holiday.
 	 */
 	public int getCandlesHoliday() {
-		return (mCandles >> 4) & HOLIDAY_MASK;
+		return (candles >> 4) & HOLIDAY_MASK;
 	}
 }

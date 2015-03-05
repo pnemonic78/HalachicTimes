@@ -28,21 +28,20 @@ import android.widget.LinearLayout;
 
 public class LayoutWeightAnimation extends Animation {
 
-	private View mView;
-	private float mFromWeight;
-	private float mToWeight;
-	private boolean mIncrease;
+	private View view;
+	private float fromWeight;
+	private float toWeight;
+	private boolean increase;
 
 	public LayoutWeightAnimation(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
 
 	public LayoutWeightAnimation(View view, float fromWeight, float toWeight) {
-		super();
-		mView = view;
-		mFromWeight = fromWeight;
-		mToWeight = toWeight;
-		mIncrease = toWeight >= fromWeight;
+		this.view = view;
+		this.fromWeight = fromWeight;
+		this.toWeight = toWeight;
+		increase = toWeight >= fromWeight;
 	}
 
 	@Override
@@ -57,11 +56,11 @@ public class LayoutWeightAnimation extends Animation {
 
 	@Override
 	protected void applyTransformation(float interpolatedTime, Transformation t) {
-		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mView.getLayoutParams();
-		if (mIncrease)
-			lp.weight = (mToWeight - mFromWeight) * interpolatedTime;
+		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
+		if (increase)
+			lp.weight = (toWeight - fromWeight) * interpolatedTime;
 		else
-			lp.weight = (mFromWeight - mToWeight) * (1f - interpolatedTime);
-		mView.setLayoutParams(lp);
+			lp.weight = (fromWeight - toWeight) * (1f - interpolatedTime);
+		view.setLayoutParams(lp);
 	}
 }

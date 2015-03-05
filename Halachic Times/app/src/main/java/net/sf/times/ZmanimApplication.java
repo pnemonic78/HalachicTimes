@@ -33,15 +33,14 @@ import net.sf.times.location.ZmanimLocations;
 public class ZmanimApplication extends Application {
 
 	/** Provider for locations. */
-	private ZmanimLocations mLocations;
+	private ZmanimLocations locations;
 	/** Provider for addresses. */
-	private AddressProvider mAddressProvider;
+	private AddressProvider addressProvider;
 
 	/**
 	 * Constructs a new application.
 	 */
 	public ZmanimApplication() {
-		super();
 	}
 
 	/**
@@ -50,10 +49,10 @@ public class ZmanimApplication extends Application {
 	 * @return the provider.
 	 */
 	public ZmanimLocations getLocations() {
-		if (mLocations == null) {
-			mLocations = new ZmanimLocations(this);
+		if (locations == null) {
+			locations = new ZmanimLocations(this);
 		}
-		return mLocations;
+		return locations;
 	}
 
 	/**
@@ -62,10 +61,10 @@ public class ZmanimApplication extends Application {
 	 * @return the provider.
 	 */
 	public AddressProvider getAddresses() {
-		if (mAddressProvider == null) {
-			mAddressProvider = new AddressProvider(this);
+		if (addressProvider == null) {
+			addressProvider = new AddressProvider(this);
 		}
-		return mAddressProvider;
+		return addressProvider;
 	}
 
 	@Override
@@ -81,11 +80,11 @@ public class ZmanimApplication extends Application {
 
 	@Override
 	public void onTerminate() {
-		if (mAddressProvider != null) {
-			mAddressProvider.close();
+		if (addressProvider != null) {
+			addressProvider.close();
 		}
-		if (mLocations != null) {
-			mLocations.quit();
+		if (locations != null) {
+			locations.quit();
 		}
 		super.onTerminate();
 	}

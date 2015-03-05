@@ -33,7 +33,7 @@ public class ZmanimLocation extends Location {
 	/** Double subtraction error. */
 	private static final double EPSILON = 1e-6;
 
-	private long mId;
+	private long id;
 
 	/**
 	 * Constructs a new location.
@@ -61,7 +61,7 @@ public class ZmanimLocation extends Location {
 	 * @return the id
 	 */
 	public long getId() {
-		return mId;
+		return id;
 	}
 
 	/**
@@ -71,13 +71,13 @@ public class ZmanimLocation extends Location {
 	 * 		the id.
 	 */
 	public void setId(long id) {
-		this.mId = id;
+		this.id = id;
 	}
 
 	@Override
 	public void writeToParcel(Parcel parcel, int flags) {
 		super.writeToParcel(parcel, flags);
-		parcel.writeLong(mId);
+		parcel.writeLong(id);
 	}
 
 	public static final Parcelable.Creator<ZmanimLocation> CREATOR = new Parcelable.Creator<ZmanimLocation>() {
@@ -85,7 +85,7 @@ public class ZmanimLocation extends Location {
 		public ZmanimLocation createFromParcel(Parcel source) {
 			Location l = Location.CREATOR.createFromParcel(source);
 			ZmanimLocation zl = new ZmanimLocation(l);
-			zl.mId = source.readLong();
+			zl.id = source.readLong();
 			return zl;
 		}
 

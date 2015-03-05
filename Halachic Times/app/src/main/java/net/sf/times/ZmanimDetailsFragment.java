@@ -38,7 +38,7 @@ import java.util.Calendar;
 public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends ZmanimFragment<A> {
 
 	/** The master id. */
-	private int mMasterId;
+	private int masterId;
 
 	/**
 	 * Constructs a new details list.
@@ -82,21 +82,21 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 	 * @return the master id.
 	 */
 	public int getMasterId() {
-		return mMasterId;
+		return masterId;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected A createAdapter() {
-		if (mMasterId == 0)
+		if (masterId == 0)
 			return null;
 
-		return (A) new ZmanimDetailsAdapter(mContext, mSettings, mMasterId);
+		return (A) new ZmanimDetailsAdapter(context, settings, masterId);
 	}
 
 	@Override
 	public A populateTimes(Calendar date) {
-		return populateTimes(date, mMasterId);
+		return populateTimes(date, masterId);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 	 */
 	@SuppressWarnings("deprecation")
 	public A populateTimes(Calendar date, int id) {
-		mMasterId = id;
+		masterId = id;
 
 		A adapter = getAdapter();
 		if (adapter != null) {
@@ -117,7 +117,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 			super.populateTimes(date);
 		}
 
-		if (mSettings.isBackgroundGradient()) {
+		if (settings.isBackgroundGradient()) {
 			Resources res = getResources();
 
 			if (id == R.string.dawn) {
@@ -170,7 +170,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
 		if (position >= 0)
 			return;
-		super.bindViewGrouping(list, position, getResources().getText(mMasterId));
+		super.bindViewGrouping(list, position, getResources().getText(masterId));
 	}
 
 }

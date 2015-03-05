@@ -48,13 +48,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	/** Delay in milliseconds to wait for user to finish changing the seek bar. */
 	private static final long PERSIST_DELAY = 650;
 
-	private final Context mContext;
-	private SeekBar mSeekBar;
-	private int mProgress;
-	private int mMax = 100;
-	private Timer mTimer;
-	private PersistTask mTask;
-	private Toast mToast;
+	private final Context context;
+	private SeekBar seekBar;
+	private int progress;
+	private int max = 100;
+	private Timer timer;
+	private PersistTask task;
+	private Toast toast;
 
 	/**
 	 * Creates a new seek bar preference.
@@ -64,7 +64,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 */
 	public SeekBarPreference(Context context) {
 		super(context);
-		mContext = context;
+		this.context = context;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 */
 	public SeekBarPreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		mContext = context;
-		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+		this.context = context;
+		max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
 	}
 
 	/**
@@ -93,8 +93,8 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 */
 	public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		mContext = context;
-		mMax = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+		this.context = context;
+		max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
 	}
 
 	@Override
@@ -104,11 +104,11 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 		TextView title = (TextView) view.findViewById(android.R.id.title);
 		RelativeLayout host = (RelativeLayout) title.getParent();
 
-		mSeekBar = new SeekBar(getContext());
+		seekBar = new SeekBar(getContext());
 		RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		lp.alignWithParent = true;
 		lp.addRule(RelativeLayout.BELOW, android.R.id.summary);
-		host.addView(mSeekBar, lp);
+		host.addView(seekBar, lp);
 
 		return view;
 	}
@@ -117,13 +117,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	protected void onBindView(View view) {
 		super.onBindView(view);
 
-		final int max = mMax;
-		final int progress = mProgress;
-		if (max != mSeekBar.getMax())
-			mSeekBar.setMax(max);
-		mSeekBar.setOnSeekBarChangeListener(this);
-		if (progress != mSeekBar.getProgress())
-			mSeekBar.setProgress(progress);
+		final int max = this.max;
+		final int progress = this.progress;
+		if (max != seekBar.getMax())
+			seekBar.setMax(max);
+		seekBar.setOnSeekBarChangeListener(this);
+		if (progress != seekBar.getProgress())
+			seekBar.setProgress(progress);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
 	@Override
 	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-		setProgress(restoreValue ? getPersistedInt(mProgress) : (Integer) defaultValue);
+		setProgress(restoreValue ? getPersistedInt(progress) : (Integer) defaultValue);
 	}
 
 	/**
@@ -143,17 +143,17 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 * 		the progress.
 	 */
 	public void setProgress(int progress) {
-		if (mSeekBar == null) {
+		if (seekBar == null) {
 			// Save this for when the seek bar is created.
-			mProgress = progress;
+			this.progress = progress;
 		} else {
 			// Calls onProgressChanged -> persistProgress
-			mSeekBar.setProgress(progress);
+			seekBar.setProgress(progress);
 		}
 	}
 
 	public int getProgress() {
-		return mProgress;
+		return progress;
 	}
 
 	/**
@@ -163,13 +163,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 * 		the upper range of this progress bar.
 	 */
 	public void setMax(int max) {
-		mMax = max;
-		if (mSeekBar != null)
-			mSeekBar.setMax(max);
+		this.max = max;
+		if (seekBar != null)
+			seekBar.setMax(max);
 	}
 
 	public int getMax() {
-		return mSeekBar.getMax();
+		return seekBar.getMax();
 	}
 
 	/**
@@ -179,26 +179,26 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	 * 		the progress.
 	 */
 	protected void persistProgress(int progress) {
-		mProgress = progress;
+		this.progress = progress;
 		// Postpone persisting until user finished dragging.
-		if (mTask != null)
-			mTask.cancel();
-		mTask = new PersistTask(progress);
-		if (mTimer == null)
-			mTimer = new Timer();
-		mTimer.schedule(mTask, PERSIST_DELAY);
+		if (task != null)
+			task.cancel();
+		task = new PersistTask(progress);
+		if (timer == null)
+			timer = new Timer();
+		timer.schedule(task, PERSIST_DELAY);
 	}
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		if (mSeekBar == seekBar) {
-			if (mProgress != progress) {
+		if (this.seekBar == seekBar) {
+			if (this.progress != progress) {
 				// FIXME print the progress on the bar instead of toasting.
-				if (mToast == null)
-					mToast = Toast.makeText(mContext, String.valueOf(progress), Toast.LENGTH_SHORT);
+				if (toast == null)
+					toast = Toast.makeText(context, String.valueOf(progress), Toast.LENGTH_SHORT);
 				else {
-					mToast.setText(String.valueOf(progress));
-					mToast.show();
+					toast.setText(String.valueOf(progress));
+					toast.show();
 				}
 				persistProgress(progress);
 			}
@@ -229,7 +229,6 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 		 * 		the progress to save.
 		 */
 		public PersistTask(int progress) {
-			super();
 			mProgress = progress;
 		}
 
