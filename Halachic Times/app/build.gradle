@@ -15,10 +15,20 @@ android {
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file("release.keystore")
+            storePassword project.STORE_PASSWORD_RELEASE
+            keyAlias "release"
+            keyPassword project.KEY_PASSWORD_RELEASE
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
         }
     }
 }
