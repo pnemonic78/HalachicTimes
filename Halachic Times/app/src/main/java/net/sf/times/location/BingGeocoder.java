@@ -24,6 +24,8 @@ import android.location.Address;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import net.sf.times.BuildConfig;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
@@ -45,7 +47,7 @@ import java.util.Locale;
 public class BingGeocoder extends GeocoderBase {
 
 	/** Bing API key. */
-	private static final String API_KEY = "BingMapsKey";
+	private static final String API_KEY = BuildConfig.BING_API_KEY;
 
 	/** URL that accepts latitude and longitude coordinates as parameters. */
 	private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";

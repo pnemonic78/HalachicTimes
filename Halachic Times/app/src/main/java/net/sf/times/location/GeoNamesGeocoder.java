@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import net.sf.net.HTTPReader;
+import net.sf.times.BuildConfig;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -51,7 +52,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 	private static final String TAG = "GeoNamesGeocoder";
 
 	/** GeoNames user name. */
-	private static final String USERNAME = "pnemonic";
+	private static final String USERNAME = BuildConfig.GEONAMES_USERNAME;
 
 	/** URL that accepts latitude and longitude coordinates as parameters. */
 	private static final String URL_LATLNG = "http://api.geonames.org/extendedFindNearby?lat=%f&lng=%f&lang=%s&username=%s";

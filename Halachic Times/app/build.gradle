@@ -11,6 +11,9 @@ android {
         versionCode 33
         versionName "4.7"
 
+        buildConfigField "String", "BING_API_KEY", '"' + project.BING_API_KEY + '"'
+        buildConfigField "String", "GEONAMES_USERNAME", '"' + project.GEONAMES_USERNAME + '"'
+
         testApplicationId "net.sf.times.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
