@@ -100,6 +100,7 @@ public class ZmanimSettings {
 	public static final String KEY_OPINION_LATEST_LEVANA = "levana_latest";
 
 	static final String REMINDER_SUFFIX = ".reminder";
+	private static final String EMPHASIS_SUFFIX = ".emphasis";
 	private static final String ANIM_SUFFIX = ".anim";
 
 	/** Preference name for Alos reminder. */
@@ -489,39 +490,9 @@ public class ZmanimSettings {
 	 * positive value when no reminder.
 	 */
 	public long getReminder(int id) {
-		if ((id == R.id.dawn_row) || (id == R.string.dawn))
-			return getReminder(KEY_REMINDER_DAWN);
-		if ((id == R.id.tallis_row) || (id == R.string.tallis))
-			return getReminder(KEY_REMINDER_TALLIS);
-		if ((id == R.id.sunrise_row) || (id == R.string.sunrise))
-			return getReminder(KEY_REMINDER_SUNRISE);
-		if ((id == R.id.shema_row) || (id == R.string.shema))
-			return getReminder(KEY_REMINDER_SHEMA);
-		if ((id == R.id.prayers_row) || (id == R.string.prayers))
-			return getReminder(KEY_REMINDER_TFILA);
-		if ((id == R.id.midday_row) || (id == R.string.midday))
-			return getReminder(KEY_REMINDER_NOON);
-		if ((id == R.id.earliest_mincha_row) || (id == R.string.earliest_mincha))
-			return getReminder(KEY_REMINDER_EARLIEST_MINCHA);
-		if ((id == R.id.mincha_row) || (id == R.string.mincha))
-			return getReminder(KEY_REMINDER_MINCHA);
-		if ((id == R.id.plug_hamincha_row) || (id == R.string.plug_hamincha))
-			return getReminder(KEY_REMINDER_PLUG_MINCHA);
-		if ((id == R.id.candles_row) || (id == R.string.candles))
-			return getReminder(KEY_REMINDER_CANDLES);
-		if ((id == R.id.sunset_row) || (id == R.string.sunset))
-			return getReminder(KEY_REMINDER_SUNSET);
-		if ((id == R.id.twilight_row) || (id == R.string.twilight) || (id == R.id.candles_twilight_row))
-			return getReminder(KEY_REMINDER_TWILIGHT);
-		if ((id == R.id.nightfall_row) || (id == R.string.nightfall) || (id == R.id.candles_nightfall_row))
-			return getReminder(KEY_REMINDER_NIGHTFALL);
-		if ((id == R.id.midnight_row) || (id == R.string.midnight))
-			return getReminder(KEY_REMINDER_MIDNIGHT);
-		if (id == R.string.levana_earliest)
-			return getReminder(KEY_REMINDER_EARLIEST_LEVANA);
-		if (id == R.string.levana_latest)
-			return getReminder(KEY_REMINDER_LATEST_LEVANA);
-
+		String key = getKey(id);
+		if (key != null)
+			return getReminder(key + REMINDER_SUFFIX);
 		return Long.MAX_VALUE;
 	}
 
@@ -579,5 +550,63 @@ public class ZmanimSettings {
 	 */
 	public int getReminderStream() {
 		return Integer.parseInt(preferences.getString(KEY_REMIDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
+	}
+
+	/**
+	 * Is the time emphasized?
+	 *
+	 * @param id
+	 * 		the time id.
+	 * @return {@code true} for emphasis.
+	 */
+	public boolean isEmphasis(int id) {
+		String key = getKey(id);
+		if (key != null)
+			return preferences.getBoolean(key + EMPHASIS_SUFFIX, false);
+		return false;
+	}
+
+	/**
+	 * Get the preference key name.
+	 *
+	 * @param id
+	 * 		the time id.
+	 * @return the key - {@code null} otherwise.
+	 */
+	protected String getKey(int id) {
+		if ((id == R.id.dawn_row) || (id == R.string.dawn))
+			return KEY_OPINION_DAWN;
+		if ((id == R.id.tallis_row) || (id == R.string.tallis))
+			return (KEY_OPINION_TALLIS);
+		if ((id == R.id.sunrise_row) || (id == R.string.sunrise))
+			return (KEY_OPINION_SUNRISE);
+		if ((id == R.id.shema_row) || (id == R.string.shema))
+			return (KEY_OPINION_SHEMA);
+		if ((id == R.id.prayers_row) || (id == R.string.prayers))
+			return (KEY_OPINION_TFILA);
+		if ((id == R.id.midday_row) || (id == R.string.midday))
+			return (KEY_OPINION_NOON);
+		if ((id == R.id.earliest_mincha_row) || (id == R.string.earliest_mincha))
+			return (KEY_OPINION_EARLIEST_MINCHA);
+		if ((id == R.id.mincha_row) || (id == R.string.mincha))
+			return (KEY_OPINION_MINCHA);
+		if ((id == R.id.plug_hamincha_row) || (id == R.string.plug_hamincha))
+			return (KEY_OPINION_PLUG_MINCHA);
+		if ((id == R.id.candles_row) || (id == R.string.candles))
+			return (KEY_OPINION_CANDLES);
+		if ((id == R.id.sunset_row) || (id == R.string.sunset))
+			return (KEY_OPINION_SUNSET);
+		if ((id == R.id.twilight_row) || (id == R.string.twilight) || (id == R.id.candles_twilight_row))
+			return (KEY_OPINION_TWILIGHT);
+		if ((id == R.id.nightfall_row) || (id == R.string.nightfall) || (id == R.id.candles_nightfall_row))
+			return (KEY_OPINION_NIGHTFALL);
+		if ((id == R.id.midnight_row) || (id == R.string.midnight))
+			return (KEY_OPINION_MIDNIGHT);
+		if (id == R.string.levana_earliest)
+			return KEY_OPINION_EARLIEST_LEVANA;
+		if (id == R.string.levana_latest)
+			return KEY_OPINION_LATEST_LEVANA;
+
+		return null;
 	}
 }

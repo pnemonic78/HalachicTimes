@@ -217,6 +217,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="category_general">General</string>
+    <string name="category_appearance">Appearance</string>
     <string name="coords_title">Coordinates</string>
     <string name="coords_hidden">Coordinates are hidden</string>
     <string name="coords_visible">Coordinates are visible</string>
@@ -242,6 +243,9 @@
     <string name="notification_volume_title">Notification</string>
     <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
     <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
+    <string name="emphasis_title">Emphasis</string>
+    <string name="emphasis_enabled">Emphasize</string>
+    <string name="emphasis_disabled">No emphasis</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

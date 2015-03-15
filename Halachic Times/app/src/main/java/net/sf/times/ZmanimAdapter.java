@@ -21,6 +21,7 @@ package net.sf.times;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -167,10 +168,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		public CharSequence timeLabel;
 		/** Has the time elapsed? */
 		public boolean elapsed;
+		/** Emphasize? */
+		public boolean emphasis;
 
-		/**
-		 * Creates a new row item.
-		 */
+		/** Creates a new row item. */
 		public ZmanimItem() {
 		}
 
@@ -279,6 +280,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		title.setText(item.titleId);
 		title.setEnabled(enabled);
+		if (item.emphasis) {
+			title.setTypeface(title.getTypeface(), Typeface.BOLD);
+			title.setTextSize(title.getTextSize() * 1.75f);
+		}
 
 		if (summary != null) {
 			summary.setText(item.summary);
@@ -358,6 +363,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		item.summary = summary;
 		item.timeId = timeId;
 		item.time = time;
+		item.emphasis = settings.isEmphasis(titleId);
 
 		if (time == null) {
 			item.timeLabel = null;
@@ -998,17 +1004,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/**
 	 * Get the number of candles to light.
 	 *
-	 * @param cal
-	 * 		the Gregorian date.
-	 * @param inIsrael
-	 * 		is in Israel?
+	 * @param jcal
+	 * 		the Jewish calendar.
 	 * @return the number of candles to light, the holiday, and when to light.
 	 */
 	protected int getCandles(JewishCalendar jcal) {
 		final int dayOfWeek = jcal.getDayOfWeek();
 
-		// Check if the following day is special, because we can't check
-		// EREV_CHANUKAH.
+		// Check if the following day is special, because we can't check EREV_CHANUKAH.
 		int holidayToday = jcal.getYomTovIndex();
 		jcal.forward();
 		int holidayTomorrow = jcal.getYomTovIndex();
@@ -1129,10 +1132,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			monthDayYear = format;
 		}
 
-		String yearStr = null;
+		String yearStr;
 		String monthStr = monthNames[jewishMonth - 1];
-		String dayStr = null;
-		String dayPadded = null;
+		String dayStr;
+		String dayPadded;
 
 		if (ZmanimLocations.isLocaleRTL()) {
 			HebrewDateFormatter formatter = hebrewDateFormatter;
