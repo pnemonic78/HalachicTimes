@@ -35,4 +35,13 @@
     <color name="compass_arrow">#ff00ff</color>
     <color name="compass_arrow_bg">#80400040</color>
 
+    <!-- Text. -->
+    <color name="bright_foreground_dark">@android:color/background_light</color>
+    <color name="bright_foreground_light">@android:color/background_dark</color>
+    <color name="bright_foreground_dark_disabled">#80ffffff</color>
+    <color name="bright_foreground_dark_inverse">@color/bright_foreground_light</color>
+    <color name="background_holo_light">#fff3f3f3</color>
+    <color name="bright_foreground_holo_dark">@color/background_holo_light</color>
+    <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+
 </resources>
