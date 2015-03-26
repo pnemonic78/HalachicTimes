@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text. -->
+    <color name="primary_text">@color/primary_text_holo_dark</color>
+
+</resources>
