@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="hour_values" translatable="false">
+        <item>GRA</item>
+        <item>MGA</item>
+    </string-array>
+    <string-array name="hour_entries" translatable="false">
+        <item>@string/hour_gra</item>
+        <item>@string/hour_mga</item>
+    </string-array>
     <string-array name="dawn_values" translatable="false">
         <item>19.8</item>
         <item>120</item>

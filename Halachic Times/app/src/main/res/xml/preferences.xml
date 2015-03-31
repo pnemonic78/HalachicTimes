@@ -51,6 +51,22 @@
             android:title="@string/gradient_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_activity_zmanim">
+        <PreferenceScreen android:title="@string/hour">
+            <ListPreference
+                android:defaultValue="GRA"
+                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:entries="@array/hour_entries"
+                android:entryValues="@array/hour_values"
+                android:icon="@drawable/ic_opinion"
+                android:key="hour"
+                android:title="@string/opinion"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="hour.emphasis"
+                android:summaryOff="@string/emphasis_disabled"
+                android:summaryOn="@string/emphasis_enabled"
+                android:title="@string/emphasis_title"/>
+        </PreferenceScreen>
         <PreferenceScreen android:title="@string/dawn">
             <ListPreference
                 android:defaultValue="16.1"

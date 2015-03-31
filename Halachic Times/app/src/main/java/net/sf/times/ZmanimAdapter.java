@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.text.format.DateUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -282,7 +283,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		title.setEnabled(enabled);
 		if (item.emphasis) {
 			title.setTypeface(title.getTypeface(), Typeface.BOLD);
-			title.setTextSize(title.getTextSize() * 1.75f);
+			title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.getTextSize() * 1.25f);
 		}
 
 		if (summary != null) {
@@ -445,12 +446,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				summary = R.string.hour_gra;
 			}
 			if (time > 0L) {
-				Calendar c = Calendar.getInstance();
+				Calendar c = gcal;
 				c.set(Calendar.HOUR_OF_DAY, 0);
 				c.set(Calendar.MINUTE, 0);
 				c.set(Calendar.SECOND, 0);
-				c.set(Calendar.MILLISECOND, 0);
-				c.add(Calendar.MILLISECOND, (int) time);
+				c.set(Calendar.MILLISECOND, (int) time);
 				add(R.string.hour, summary, c.getTime());
 			}
 		}

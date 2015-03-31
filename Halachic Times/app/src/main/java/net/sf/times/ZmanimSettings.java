@@ -452,48 +452,6 @@ public class ZmanimSettings {
 	}
 
 	/**
-	 * Get the opinion.
-	 *
-	 * @param id
-	 * 		the time id.
-	 * @return the opinion.
-	 */
-	public String getOpinion(int id) {
-		if ((id == R.id.dawn_row) || (id == R.string.dawn))
-			return getDawn();
-		if ((id == R.id.tallis_row) || (id == R.string.tallis))
-			return getTallis();
-		if ((id == R.id.sunrise_row) || (id == R.string.sunrise))
-			return getSunrise();
-		if ((id == R.id.shema_row) || (id == R.string.shema))
-			return getLastShema();
-		if ((id == R.id.prayers_row) || (id == R.string.prayers))
-			return getLastTfila();
-		if ((id == R.id.midday_row) || (id == R.string.midday))
-			return getMidday();
-		if ((id == R.id.earliest_mincha_row) || (id == R.string.earliest_mincha))
-			return getEarliestMincha();
-		if ((id == R.id.mincha_row) || (id == R.string.mincha))
-			return getMincha();
-		if ((id == R.id.plug_hamincha_row) || (id == R.string.plug_hamincha))
-			return getPlugHamincha();
-		if ((id == R.id.sunset_row) || (id == R.string.sunset))
-			return getSunset();
-		if ((id == R.id.twilight_row) || (id == R.string.twilight) || (id == R.id.candles_twilight_row))
-			return getTwilight();
-		if ((id == R.id.nightfall_row) || (id == R.string.nightfall) || (id == R.id.candles_nightfall_row))
-			return getNightfall();
-		if ((id == R.id.midnight_row) || (id == R.string.midnight))
-			return getMidnight();
-		if (id == R.string.levana_earliest)
-			return getEarliestKiddushLevana();
-		if (id == R.string.levana_latest)
-			return getLatestKiddushLevana();
-
-		return null;
-	}
-
-	/**
 	 * Get the reminder.
 	 *
 	 * @param id
@@ -586,6 +544,8 @@ public class ZmanimSettings {
 	 * @return the key - {@code null} otherwise.
 	 */
 	protected String getKey(int id) {
+		if (id == R.string.hour)
+			return KEY_OPINION_HOUR;
 		if ((id == R.id.dawn_row) || (id == R.string.dawn))
 			return KEY_OPINION_DAWN;
 		if ((id == R.id.tallis_row) || (id == R.string.tallis))

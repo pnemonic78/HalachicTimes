@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -56,7 +57,9 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 		prePopulate();
 
 		final int id = itemId;
-		if (id == R.string.dawn) {
+		if (id == R.string.hour) {
+			populateHour(calendar);
+		} else if (id == R.string.dawn) {
 			populateDawn(calendar);
 		} else if (id == R.string.tallis) {
 			populateTallis(calendar);
@@ -92,6 +95,33 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 			populateBurnChametz(calendar);
 		}
 		sort();
+	}
+
+	private void populateHour(ComplexZmanimCalendar cal) {
+		int title;
+		long time;
+
+		Calendar c = cal.getCalendar();
+
+		time = cal.getShaahZmanisGra();
+		if (time >= 0L) {
+			c.set(Calendar.HOUR_OF_DAY, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MILLISECOND, (int) time);
+			title = R.string.hour_gra;
+			add(title, 0, c.getTime());
+		}
+
+		time = cal.getShaahZmanisMGA();
+		if (time >= 0L) {
+			c.set(Calendar.HOUR_OF_DAY, 0);
+			c.set(Calendar.MINUTE, 0);
+			c.set(Calendar.SECOND, 0);
+			c.set(Calendar.MILLISECOND, (int) time);
+			title = R.string.hour_mga;
+			add(title, 0, c.getTime());
+		}
 	}
 
 	private void populateDawn(ComplexZmanimCalendar cal) {
