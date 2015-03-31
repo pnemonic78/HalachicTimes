@@ -309,7 +309,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		the time.
 	 */
 	public void add(int titleId, int summaryId, Date time) {
-		add(titleId, (summaryId == 0) ? (CharSequence) null : getContext().getText(summaryId), time);
+		add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time);
 	}
 
 	/**
@@ -370,11 +370,16 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			item.elapsed = true;
 		} else {
 			long t = time.getTime();
-			item.timeLabel = timeFormat.format(time);
-			if (rowId != 0)
-				item.elapsed = (t < now);
-			else
-				item.elapsed = elapsed ? false : (t < now);
+			if (t == Long.MIN_VALUE) {
+				item.timeLabel = null;
+				item.elapsed = true;
+			} else {
+				item.timeLabel = timeFormat.format(time);
+				if (rowId != 0)
+					item.elapsed = (t < now);
+				else
+					item.elapsed = elapsed ? false : (t < now);
+			}
 		}
 
 		if ((time != null) || (rowId != 0)) {
@@ -428,6 +433,27 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int summary;
 		String opinion;
 		final Resources res = getContext().getResources();
+		long time;
+
+		if (!remote) {
+			opinion = settings.getHour();
+			if (OPINION_MGA.equals(opinion)) {
+				time = cal.getShaahZmanisMGA();
+				summary = R.string.hour_mga;
+			} else {
+				time = cal.getShaahZmanisGra();
+				summary = R.string.hour_gra;
+			}
+			if (time > 0L) {
+				Calendar c = Calendar.getInstance();
+				c.set(Calendar.HOUR_OF_DAY, 0);
+				c.set(Calendar.MINUTE, 0);
+				c.set(Calendar.SECOND, 0);
+				c.set(Calendar.MILLISECOND, 0);
+				c.add(Calendar.MILLISECOND, (int) time);
+				add(R.string.hour, summary, c.getTime());
+			}
+		}
 
 		opinion = settings.getDawn();
 		if (OPINION_19_8.equals(opinion)) {

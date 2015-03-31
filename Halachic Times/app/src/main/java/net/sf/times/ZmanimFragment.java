@@ -221,9 +221,20 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 		JewishDate jewishDate = new JewishDate(date);
 		CharSequence dateHebrew = adapter.formatDate(jewishDate);
 
-		bindViewGrouping(list, -1, dateHebrew);
+		int position = 0;
 
-		for (int position = 0; position < count; position++) {
+		if (position < count) {
+			item = adapter.getItem(position);
+			if (item.titleId == R.string.hour) {
+				row = adapter.getView(position, null, list);
+				bindView(list, position, row, item);
+				position++;
+			}
+		}
+
+		bindViewGrouping(list, position, dateHebrew);
+
+		while (position < count) {
 			item = adapter.getItem(position);
 			row = adapter.getView(position, null, list);
 			bindView(list, position, row, item);
@@ -234,6 +245,8 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 				dateHebrew = adapter.formatDate(jewishDate);
 				bindViewGrouping(list, position, dateHebrew);
 			}
+
+			position++;
 		}
 	}
 
@@ -244,7 +257,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 	 * 		the list.
 	 * @param position
 	 * 		the position index.
-	 * @param view
+	 * @param row
 	 * 		the row view.
 	 * @param item
 	 * 		the item.

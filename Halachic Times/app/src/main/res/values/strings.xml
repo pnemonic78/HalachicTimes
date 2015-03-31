@@ -30,6 +30,11 @@
     <string name="opinion_mga">According to Magen Avraham</string>
     <string name="opinion_tam">According to Rabbeinu Tam</string>
 
+    <!-- Daily hour -->
+    <string name="hour">Temporal hour</string>
+    <string name="hour_mga" translatable="false">@string/opinion_mga</string>
+    <string name="hour_gra" translatable="false">@string/opinion_gra</string>
+
     <!-- List -->
     <string name="dawn">Dawn</string>
     <string name="dawn_19" translatable="false">@string/opinion_19</string>

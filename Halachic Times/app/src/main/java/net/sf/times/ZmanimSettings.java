@@ -62,6 +62,8 @@ public class ZmanimSettings {
 	/** Preference name for the reminder audio stream type. */
 	public static final String KEY_REMIDER_STREAM = "reminder.stream";
 
+	/** Preference name for hour type. */
+	private static final String KEY_OPINION_HOUR = "hour";
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
 	/** Preference name for earliest tallis type. */
@@ -293,6 +295,16 @@ public class ZmanimSettings {
 	 */
 	public String getChanukkaCandles() {
 		return preferences.getString(KEY_OPINION_CANDLES_CHANUKKA, "");
+	}
+
+
+	/**
+	 * Get the opinion for temporal hour (<em>shaah zmanis</em>).
+	 *
+	 * @return the opinion.
+	 */
+	public String getHour() {
+		return preferences.getString(KEY_OPINION_HOUR, "GRA");
 	}
 
 	/**
