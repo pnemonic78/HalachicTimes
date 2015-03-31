@@ -436,7 +436,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		final Resources res = getContext().getResources();
 		long time;
 
-		if (!remote) {
+		if (!remote && settings.isHour()) {
 			opinion = settings.getHour();
 			if (OPINION_MGA.equals(opinion)) {
 				time = cal.getShaahZmanisMGA();

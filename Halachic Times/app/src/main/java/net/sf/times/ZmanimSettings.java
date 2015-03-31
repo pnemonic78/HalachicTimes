@@ -61,8 +61,10 @@ public class ZmanimSettings {
 	private static final String KEY_REMINDER_LATEST = "reminder";
 	/** Preference name for the reminder audio stream type. */
 	public static final String KEY_REMIDER_STREAM = "reminder.stream";
+	/** Preference name for the temporal hour visibility. */
+	public static final String KEY_HOUR = "hour.visible";
 
-	/** Preference name for hour type. */
+	/** Preference name for temporal hour type. */
 	private static final String KEY_OPINION_HOUR = "hour";
 	/** Preference name for Alos type. */
 	public static final String KEY_OPINION_DAWN = "dawn";
@@ -276,6 +278,15 @@ public class ZmanimSettings {
 	 */
 	public boolean isBackgroundGradient() {
 		return preferences.getBoolean(KEY_BG_GRADIENT, true);
+	}
+
+	/**
+	 * Is temporal hour visible?
+	 *
+	 * @return {@code true} to show hour.
+	 */
+	public boolean isHour() {
+		return preferences.getBoolean(KEY_HOUR, false);
 	}
 
 	/**

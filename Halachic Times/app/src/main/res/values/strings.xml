@@ -34,6 +34,9 @@
     <string name="hour">Temporal hour</string>
     <string name="hour_mga" translatable="false">@string/opinion_mga</string>
     <string name="hour_gra" translatable="false">@string/opinion_gra</string>
+    <string name="hour_title" translatable="false">@string/hour</string>
+    <string name="hour_hidden">Temporal hour is hidden</string>
+    <string name="hour_visible">Temporal hour is visible</string>
 
     <!-- List -->
     <string name="dawn">Dawn</string>

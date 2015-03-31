@@ -230,23 +230,23 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
 				bindView(list, position, row, item);
 				position++;
 			}
-		}
 
-		bindViewGrouping(list, position, dateHebrew);
+			bindViewGrouping(list, position, dateHebrew);
 
-		while (position < count) {
-			item = adapter.getItem(position);
-			row = adapter.getView(position, null, list);
-			bindView(list, position, row, item);
+			while (position < count) {
+				item = adapter.getItem(position);
+				row = adapter.getView(position, null, list);
+				bindView(list, position, row, item);
 
-			// New Hebrew day.
-			if (item.titleId == R.string.sunset) {
-				jewishDate.forward();
-				dateHebrew = adapter.formatDate(jewishDate);
-				bindViewGrouping(list, position, dateHebrew);
+				// New Hebrew day.
+				if (item.titleId == R.string.sunset) {
+					jewishDate.forward();
+					dateHebrew = adapter.formatDate(jewishDate);
+					bindViewGrouping(list, position, dateHebrew);
+				}
+
+				position++;
 			}
-
-			position++;
 		}
 	}
 
