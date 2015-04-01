@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Path;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
@@ -64,6 +65,7 @@ public class CompassView extends View {
 	private float widthHalf;
 	private float heightHalf;
 	private float radius;
+	private final Path pathArrowHoliest = new Path();
 
 	private String labelNorth;
 	private String labelEast;
@@ -152,7 +154,7 @@ public class CompassView extends View {
 		paintNE.setColor(res.getColor(R.color.compass_label2));
 
 		paintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paintHoliest.setStyle(Paint.Style.STROKE);
+		paintHoliest.setStyle(Paint.Style.FILL_AND_STROKE);
 		paintHoliest.setStrokeWidth(HOLIEST_THICKNESS);
 		paintHoliest.setColor(res.getColor(R.color.compass_arrow));
 
@@ -171,10 +173,12 @@ public class CompassView extends View {
 		final float w2 = widthHalf;
 		final float h2 = heightHalf;
 		final float r = radius;
-		final float r5 = r / 2f;
-		final float r7 = (r * 7f) / 10f;
-		final float r8 = (r * 8f) / 10f;
-		final float r9 = (r * 9f) / 10f;
+		final float r1 = r * 0.1f;
+		final float r2 = r * 0.2f;
+		final float r5 = r * 0.5f;
+		final float r7 = r * 0.7f;
+		final float r8 = r * 0.8f;
+		final float r9 = r * 0.9f;
 		final float h2r5 = h2 - r5;
 		final float h2r7 = h2 - r7;
 		final float h2r8 = h2 - r8;
@@ -217,6 +221,13 @@ public class CompassView extends View {
 
 		canvas.rotate(45 + holiest, w2, h2);
 		canvas.drawLine(w2, h2, w2, h2 - r, paintHoliest);
+		pathArrowHoliest.reset();
+		pathArrowHoliest.moveTo(w2, h2 - r);
+		pathArrowHoliest.quadTo(w2, h2r9, w2 - r1, h2r7);
+		pathArrowHoliest.quadTo(w2, h2r9, w2 + r1, h2r7);
+		pathArrowHoliest.quadTo(w2, h2r9, w2, h2 - r);
+		pathArrowHoliest.close();
+		canvas.drawPath(pathArrowHoliest, paintHoliest);
 
 		canvas.drawCircle(w2, h2, r, paintFrame);
 		canvas.drawCircle(w2, h2, PIVOT_RADIUS, paintPivot);
