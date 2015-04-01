@@ -69,13 +69,13 @@ import java.util.Calendar;
 public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener {
 
 	/** The date parameter. */
-	public static final String PARAMETER_DATE = "date";
+	public static final String EXTRA_DATE = "date";
 	/** The time parameter. */
-	public static final String PARAMETER_TIME = "time";
-	/** The details list parameter. */
-	public static final String PARAMETER_DETAILS = "details";
+	public static final String EXTRA_TIME = "time";
 	/** The location parameter. */
-	public static final String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
+	public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
+	/** The details list parameter. */
+	private static final String PARAMETER_DETAILS = "details";
 
 	/** Activity id for searching locations. */
 	private static final int ACTIVITY_LOCATIONS = 1;
@@ -191,15 +191,15 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		initLocation();
 
 		Intent intent = getIntent();
-		long date = intent.getLongExtra(PARAMETER_DATE, 0L);
+		long date = intent.getLongExtra(EXTRA_DATE, 0L);
 		if (date == 0L) {
-			date = intent.getLongExtra(PARAMETER_TIME, 0L);
+			date = intent.getLongExtra(EXTRA_TIME, 0L);
 			if (date == 0L)
 				date = System.currentTimeMillis();
 		}
 		setDate(date);
 
-		Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
+		Location location = intent.getParcelableExtra(EXTRA_LOCATION);
 		if (location != null)
 			mLocations.setLocation(location);
 	}
@@ -207,14 +207,14 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putLong(PARAMETER_DATE, mDate.getTimeInMillis());
+		outState.putLong(EXTRA_DATE, mDate.getTimeInMillis());
 		outState.putInt(PARAMETER_DETAILS, mSelectedId);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		setDate(savedInstanceState.getLong(PARAMETER_DATE));
+		setDate(savedInstanceState.getLong(EXTRA_DATE));
 		mSelectedId = savedInstanceState.getInt(PARAMETER_DETAILS, mSelectedId);
 	}
 
