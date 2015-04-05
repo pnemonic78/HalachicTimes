@@ -276,7 +276,6 @@ public class ZmanimReminder extends BroadcastReceiver {
 	 * @param item
 	 * 		the zmanim item to notify about.
 	 */
-	@SuppressLint("NewApi")
 	private void notifyNow(Context context, ZmanimSettings settings, ZmanimItem item) {
 		// Clicking on the item will launch the main activity.
 		PendingIntent contentIntent = createActivityIntent(context);
@@ -378,7 +377,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 	}
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint({"Wakelock", "NewApi"})
+	@SuppressLint({"Wakelock"})
 	private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
