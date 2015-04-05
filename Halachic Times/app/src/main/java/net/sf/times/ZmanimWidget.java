@@ -368,19 +368,23 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		list.setRemoteAdapter(appWidgetId, android.R.id.list, service);
 	}
 
-	@SuppressLint("NewApi")
 	protected void notifyAppWidgetViewDataChanged(Context context) {
 		if (isRemoteList()) {
-			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-			final Class<?> clazz = getClass();
-			ComponentName provider = new ComponentName(context, clazz);
-			int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-			if ((appWidgetIds == null) || (appWidgetIds.length == 0))
-				return;
-			appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
+			notifyAppWidgetViewDataChanged11(context);
 		} else {
 			populateTimes(context);
 		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	protected void notifyAppWidgetViewDataChanged11(Context context) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		final Class<?> clazz = getClass();
+		ComponentName provider = new ComponentName(context, clazz);
+		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
+		if ((appWidgetIds == null) || (appWidgetIds.length == 0))
+			return;
+		appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
 	}
 
 	/**
