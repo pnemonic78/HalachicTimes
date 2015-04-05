@@ -362,7 +362,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	@SuppressWarnings("deprecation")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void bindListView(int appWidgetId, RemoteViews list) {
-		Intent service = new Intent(context, ZmanimWidgetService.class);
+		Intent service = new Intent();
+		service.setClassName(context, "net.sf.times.ZmanimWidgetService");
 		service.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		service.setData(Uri.parse(service.toUri(Intent.URI_INTENT_SCHEME)));
 		list.setRemoteAdapter(appWidgetId, android.R.id.list, service);
