@@ -39,7 +39,7 @@ public class ZmanimListWidget extends ZmanimWidget {
 
 	@Override
 	protected boolean isRemoteList() {
-		return true;
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
 	}
 
 }

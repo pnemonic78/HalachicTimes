@@ -142,7 +142,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * 		the widget ids for which an update is needed - {@code null} to
 	 * 		get ids from the manager.
 	 */
-	@SuppressLint("NewApi")
 	protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		final Class<?> clazz = getClass();
 		ComponentName provider = new ComponentName(context, clazz);
@@ -167,36 +166,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 		for (int appWidgetId : appWidgetIds) {
 			activityIntent = new Intent(context, ZmanimActivity.class);
 			activityIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-			activityPendingIntent = PendingIntent.getActivity(context, 0, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			views = new RemoteViews(packageName, layoutId);
 
 			if (isRemoteList()) {
-				views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
-				bindListView(appWidgetId, views);
+				populateRemoteTimes(appWidgetId, views, activityPendingIntent);
 			} else {
-				views.setOnClickPendingIntent(viewId, activityPendingIntent);
-
-				if (settings == null)
-					settings = new ZmanimSettings(context);
-
-				ZmanimLocations locations = this.locations;
-				if (locations == null) {
-					ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-					locations = app.getLocations();
-					locations.start(this);
-					this.locations = locations;
-				}
-				GeoLocation gloc = locations.getGeoLocation();
-				if (gloc == null)
-					return;
-
-				ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
-				adapter.setCalendar(now);
-				adapter.setGeoLocation(gloc);
-				adapter.setInIsrael(locations.inIsrael());
-				adapter.populate(true);
-				bindViews(views, adapter);
+				populateRegularTimes(appWidgetId, views, activityPendingIntent, viewId, now);
 			}
 
 			appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -427,5 +404,36 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			list.setViewVisibility(rowId, View.VISIBLE);
 			list.setTextViewText(textId, label);
 		}
+	}
+
+	protected void populateRegularTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+		views.setOnClickPendingIntent(viewId, activityPendingIntent);
+
+		if (settings == null)
+			settings = new ZmanimSettings(context);
+
+		ZmanimLocations locations = this.locations;
+		if (locations == null) {
+			ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+			locations = app.getLocations();
+			locations.start(this);
+			this.locations = locations;
+		}
+		GeoLocation gloc = locations.getGeoLocation();
+		if (gloc == null)
+			return;
+
+		ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
+		adapter.setCalendar(now);
+		adapter.setGeoLocation(gloc);
+		adapter.setInIsrael(locations.inIsrael());
+		adapter.populate(true);
+		bindViews(views, adapter);
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	protected void populateRemoteTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
+		views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
+		bindListView(appWidgetId, views);
 	}
 }
