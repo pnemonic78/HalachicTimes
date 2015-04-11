@@ -49,7 +49,7 @@ public class ClockWidget extends ZmanimWidget {
 
 		for (int position = 0; position < count; position++) {
 			item = adapter.getItem(position);
-			if (item.elapsed || (item.time == null) || (item.timeLabel == null))
+			if (item.elapsed || (item.time == ZmanimAdapter.UNKNOWN) || (item.timeLabel == null))
 				continue;
 			bindView(list, position, item);
 			break;

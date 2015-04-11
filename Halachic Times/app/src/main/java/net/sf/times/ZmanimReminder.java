@@ -150,8 +150,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 			id = item.titleId;
 			before = settings.getReminder(id);
 
-			if ((before >= 0L) && (item.time != null)) {
-				when = item.time.getTime() - before;
+			if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+				when = item.time - before;
 				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 					notifyNow(context, settings, item);
 					settings.setLatestReminder(now);
@@ -186,8 +186,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 				item = adapter.getItem(i);
 				id = item.titleId;
 				before = settings.getReminder(id);
-				if ((before >= 0L) && (item.time != null)) {
-					when = item.time.getTime() - before;
+				if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+					when = item.time - before;
 					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
 						notifyNow(context, settings, item);
 						settings.setLatestReminder(now);
@@ -234,8 +234,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 				if ((id != R.id.candles_row) && (id != R.string.candles))
 					continue;
 				before = settings.getReminder(id);
-				if ((before >= 0L) && (item.time != null)) {
-					when = item.time.getTime() - before;
+				if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+					when = item.time - before;
 					if ((now < when) && (when < whenFirst)) {
 						itemFirst = item;
 						whenFirst = when;
@@ -392,7 +392,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		notification.ledARGB = Color.YELLOW;
 		notification.ledOffMS = 0;
 		notification.ledOnMS = 1;
-		notification.when = item.time.getTime();// When the zman is supposed to occur.
+		notification.when = item.time;// When the zman is supposed to occur.
 		notification.sound = sound;
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
@@ -417,7 +417,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		builder.setLights(Color.YELLOW, 1, 0);
 		builder.setSmallIcon(R.drawable.stat_notify_time);
 		builder.setSound(sound, settings.getReminderStream());
-		builder.setWhen(item.time.getTime());// When the zman is supposed to occur.
+		builder.setWhen(item.time);// When the zman is supposed to occur.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			builder.setShowWhen(true);
 		}

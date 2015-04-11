@@ -273,7 +273,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 			item = adapter.getItem(position);
 			bindView(list, position, item);
 
-			if ((item.titleId <= R.string.sunset) && !(item.elapsed || (item.time == null) || (item.timeLabel == null))) {
+			if ((item.titleId <= R.string.sunset) && !(item.elapsed || (item.time == ZmanimAdapter.UNKNOWN) || (item.timeLabel == null))) {
 				positionToday = position;
 			}
 		}
@@ -302,7 +302,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 	 * 		the zmanim item.
 	 */
 	protected void bindView(RemoteViews list, int position, ZmanimItem item) {
-		if (item.elapsed || (item.time == null) || (item.timeLabel == null)) {
+		if (item.elapsed || (item.time == ZmanimAdapter.UNKNOWN) || (item.timeLabel == null)) {
 			list.setViewVisibility(item.rowId, View.GONE);
 		} else {
 			list.setViewVisibility(item.rowId, View.VISIBLE);

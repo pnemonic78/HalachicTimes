@@ -137,6 +137,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	/** The year as a decimal number including the century. */
 	private static final String YEAR_VAR = "%Y";
 
+	/** Unknown date. */
+	public static final long UNKNOWN = Long.MIN_VALUE;
+
 	protected final LayoutInflater inflater;
 	protected final ZmanimSettings settings;
 	protected final ComplexZmanimCalendar calendar;
@@ -164,7 +167,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		/** The time text id. */
 		public int timeId;
 		/** The time. */
-		public Date time;
+		public long time;
 		/** The time label. */
 		public CharSequence timeLabel;
 		/** Has the time elapsed? */
@@ -178,10 +181,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
 		@Override
 		public int compareTo(ZmanimItem that) {
-			Date time1 = this.time;
-			Date time2 = that.time;
-			long t1 = (time1 == null) ? 0 : time1.getTime();
-			long t2 = (time2 == null) ? 0 : time2.getTime();
+			long t1 = this.time;
+			long t2 = that.time;
 			if (t1 != t2)
 				return (t1 < t2) ? -1 : +1;
 			int c = this.rowId - that.rowId;
@@ -310,7 +311,35 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		the time.
 	 */
 	public void add(int titleId, int summaryId, Date time) {
+		add(titleId, summaryId, time == null ? UNKNOWN : time.getTime());
+	}
+
+	/**
+	 * Adds the item to the array for a valid time.
+	 *
+	 * @param titleId
+	 * 		the title label id.
+	 * @param summaryId
+	 * 		the summary label id.
+	 * @param time
+	 * 		the time in milliseconds..
+	 */
+	public void add(int titleId, int summaryId, long time) {
 		add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time);
+	}
+
+	/**
+	 * Adds the item to the array for a valid time.
+	 *
+	 * @param titleId
+	 * 		the title label id.
+	 * @param summary
+	 * 		the summary label.
+	 * @param time
+	 * 		the time
+	 */
+	public void add(int titleId, CharSequence summary, Date time) {
+		add(titleId, summary, time == null ? UNKNOWN : time.getTime());
 	}
 
 	/**
@@ -323,7 +352,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @param time
 	 * 		the time in milliseconds.
 	 */
-	public void add(int titleId, CharSequence summary, Date time) {
+	public void add(int titleId, CharSequence summary, long time) {
 		add(0, titleId, summary, titleId, time);
 	}
 
@@ -340,6 +369,22 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * 		the time.
 	 */
 	public void add(int rowId, int titleId, int timeId, Date time) {
+		add(rowId, titleId, timeId, time == null ? UNKNOWN : time.getTime());
+	}
+
+	/**
+	 * Adds the item to the array for a valid date.
+	 *
+	 * @param rowId
+	 * 		the row id for remote views?
+	 * @param titleId
+	 * 		the row layout id.
+	 * @param timeId
+	 * 		the time text id to set for remote views.
+	 * @param time
+	 * 		the time in milliseconds..
+	 */
+	public void add(int rowId, int titleId, int timeId, long time) {
 		add(rowId, titleId, null, timeId, time);
 	}
 
@@ -355,9 +400,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 * @param timeId
 	 * 		the time text id to set for remote views.
 	 * @param time
-	 * 		the time.
+	 * 		the time in milliseconds..
 	 */
-	private void add(int rowId, int titleId, CharSequence summary, int timeId, Date time) {
+	private void add(int rowId, int titleId, CharSequence summary, int timeId, long time) {
 		ZmanimItem item = new ZmanimItem();
 		item.rowId = rowId;
 		item.titleId = titleId;
@@ -366,24 +411,18 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		item.time = time;
 		item.emphasis = settings.isEmphasis(titleId);
 
-		if (time == null) {
+		if (time == UNKNOWN) {
 			item.timeLabel = null;
 			item.elapsed = true;
 		} else {
-			long t = time.getTime();
-			if (t == Long.MIN_VALUE) {
-				item.timeLabel = null;
-				item.elapsed = true;
-			} else {
-				item.timeLabel = timeFormat.format(time);
-				if (rowId != 0)
-					item.elapsed = (t < now);
-				else
-					item.elapsed = elapsed ? false : (t < now);
-			}
+			item.timeLabel = timeFormat.format(time);
+			if (rowId != 0)
+				item.elapsed = (time < now);
+			else
+				item.elapsed = elapsed ? false : (time < now);
 		}
 
-		if ((time != null) || (rowId != 0)) {
+		if ((time != UNKNOWN) || (rowId != 0)) {
 			add(item);
 		}
 	}
@@ -445,14 +484,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				time = cal.getShaahZmanisGra();
 				summary = R.string.hour_gra;
 			}
-			if (time > 0L) {
-				Calendar c = gcal;
-				c.set(Calendar.HOUR_OF_DAY, 0);
-				c.set(Calendar.MINUTE, 0);
-				c.set(Calendar.SECOND, 0);
-				c.set(Calendar.MILLISECOND, (int) time);
-				add(R.string.hour, summary, c.getTime());
-			}
+			add(R.string.hour, summary, time);
 		}
 
 		opinion = settings.getDawn();

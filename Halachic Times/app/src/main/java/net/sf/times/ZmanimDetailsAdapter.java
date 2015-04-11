@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -98,30 +97,16 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 	}
 
 	private void populateHour(ComplexZmanimCalendar cal) {
-		int title;
 		long time;
-
-		Calendar c = cal.getCalendar();
+		int title;
 
 		time = cal.getShaahZmanisGra();
-		if (time >= 0L) {
-			c.set(Calendar.HOUR_OF_DAY, 0);
-			c.set(Calendar.MINUTE, 0);
-			c.set(Calendar.SECOND, 0);
-			c.set(Calendar.MILLISECOND, (int) time);
-			title = R.string.hour_gra;
-			add(title, 0, c.getTime());
-		}
+		title = R.string.hour_gra;
+		add(title, 0, time);
 
 		time = cal.getShaahZmanisMGA();
-		if (time >= 0L) {
-			c.set(Calendar.HOUR_OF_DAY, 0);
-			c.set(Calendar.MINUTE, 0);
-			c.set(Calendar.SECOND, 0);
-			c.set(Calendar.MILLISECOND, (int) time);
-			title = R.string.hour_mga;
-			add(title, 0, c.getTime());
-		}
+		title = R.string.hour_mga;
+		add(title, 0, time);
 	}
 
 	private void populateDawn(ComplexZmanimCalendar cal) {
