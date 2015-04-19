@@ -473,11 +473,53 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		int summary;
 		String opinion;
 		final Resources res = getContext().getResources();
-		long time;
 
 		if (!remote && settings.isHour()) {
+			long time;
 			opinion = settings.getHour();
-			if (OPINION_MGA.equals(opinion)) {
+			if (OPINION_19_8.equals(opinion)) {
+				time = cal.getShaahZmanis19Point8Degrees();
+				summary = R.string.hour_19;
+			} else if (OPINION_120.equals(opinion)) {
+				time = cal.getShaahZmanis120Minutes();
+				summary = R.string.hour_120;
+			} else if (OPINION_120_ZMANIS.equals(opinion)) {
+				time = cal.getShaahZmanis120MinutesZmanis();
+				summary = R.string.hour_120_zmanis;
+			} else if (OPINION_18.equals(opinion)) {
+				time = cal.getShaahZmanis18Degrees();
+				summary = R.string.hour_18;
+			} else if (OPINION_26.equals(opinion)) {
+				time = cal.getShaahZmanis26Degrees();
+				summary = R.string.hour_26;
+			} else if (OPINION_16_1.equals(opinion)) {
+				time = cal.getShaahZmanis16Point1Degrees();
+				summary = R.string.hour_16;
+			} else if (OPINION_96.equals(opinion)) {
+				time = cal.getShaahZmanis96Minutes();
+				summary = R.string.hour_96;
+			} else if (OPINION_96_ZMANIS.equals(opinion)) {
+				time = cal.getShaahZmanis96MinutesZmanis();
+				summary = R.string.hour_96_zmanis;
+			} else if (OPINION_90.equals(opinion)) {
+				time = cal.getShaahZmanis90Minutes();
+				summary = R.string.hour_90;
+			} else if (OPINION_90_ZMANIS.equals(opinion)) {
+				time = cal.getShaahZmanis90MinutesZmanis();
+				summary = R.string.hour_90_zmanis;
+			} else if (OPINION_72.equals(opinion)) {
+				time = cal.getShaahZmanis72Minutes();
+				summary = R.string.hour_72;
+			} else if (OPINION_72_ZMANIS.equals(opinion)) {
+				time = cal.getShaahZmanis72MinutesZmanis();
+				summary = R.string.hour_72_zmanis;
+			} else if (OPINION_60.equals(opinion)) {
+				time = cal.getShaahZmanis60Minutes();
+				summary = R.string.hour_60;
+			} else if (OPINION_ATERET.equals(opinion)) {
+				time = cal.getShaahZmanisAteretTorah();
+				summary = R.string.hour_ateret;
+			} else if (OPINION_MGA.equals(opinion)) {
 				time = cal.getShaahZmanisMGA();
 				summary = R.string.hour_mga;
 			} else {

@@ -100,6 +100,62 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 		long time;
 		int title;
 
+		time = cal.getShaahZmanis120Minutes();
+		title = R.string.hour_120;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis120MinutesZmanis();
+		title = R.string.hour_120_zmanis;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis16Point1Degrees();
+		title = R.string.hour_16;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis18Degrees();
+		title = R.string.hour_18;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis19Point8Degrees();
+		title = R.string.hour_19;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis26Degrees();
+		title = R.string.hour_26;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis60Minutes();
+		title = R.string.hour_60;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis72Minutes();
+		title = R.string.hour_72;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis72MinutesZmanis();
+		title = R.string.hour_72_zmanis;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis90Minutes();
+		title = R.string.hour_90;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis90MinutesZmanis();
+		title = R.string.hour_90_zmanis;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis96Minutes();
+		title = R.string.hour_96;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanis96MinutesZmanis();
+		title = R.string.hour_96_zmanis;
+		add(title, 0, time);
+
+		time = cal.getShaahZmanisAteretTorah();
+		title = R.string.hour_ateret;
+		add(title, 0, time);
+
 		time = cal.getShaahZmanisGra();
 		title = R.string.hour_gra;
 		add(title, 0, time);

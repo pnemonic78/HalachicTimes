@@ -34,6 +34,20 @@
     <string name="hour">Temporal hour</string>
     <string name="hour_mga" translatable="false">@string/opinion_mga</string>
     <string name="hour_gra" translatable="false">@string/opinion_gra</string>
+    <string name="hour_120" translatable="false">@string/opinion_120</string>
+    <string name="hour_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
+    <string name="hour_16" translatable="false">@string/opinion_16</string>
+    <string name="hour_18" translatable="false">@string/opinion_18</string>
+    <string name="hour_19" translatable="false">@string/opinion_19</string>
+    <string name="hour_26" translatable="false">@string/opinion_26</string>
+    <string name="hour_60" translatable="false">@string/opinion_60</string>
+    <string name="hour_72" translatable="false">@string/opinion_72</string>
+    <string name="hour_72_zmanis" translatable="false">@string/opinion_72_zmanis</string>
+    <string name="hour_90" translatable="false">@string/opinion_90</string>
+    <string name="hour_90_zmanis" translatable="false">@string/opinion_90_zmanis</string>
+    <string name="hour_96" translatable="false">@string/opinion_96</string>
+    <string name="hour_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
+    <string name="hour_ateret">@string/opinion_ateret</string>
     <string name="hour_title" translatable="false">@string/hour</string>
     <string name="hour_hidden">Temporal hour is hidden</string>
     <string name="hour_visible">Temporal hour is visible</string>

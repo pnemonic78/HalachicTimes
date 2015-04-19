@@ -3,11 +3,39 @@
 
     <string-array name="hour_values" translatable="false">
         <item>GRA</item>
+        <item>AT</item>
+        <item>60</item>
+        <item>72</item>
+        <item>72_zmanis</item>
         <item>MGA</item>
+        <item>16.1</item>
+        <item>18</item>
+        <item>19.8</item>
+        <item>90</item>
+        <item>90_zmanis</item>
+        <item>96</item>
+        <item>96_zmanis</item>
+        <item>26</item>
+        <item>120</item>
+        <item>120_zmanis</item>
     </string-array>
     <string-array name="hour_entries" translatable="false">
         <item>@string/hour_gra</item>
+        <item>@string/hour_ateret</item>
+        <item>@string/hour_60</item>
+        <item>@string/hour_72</item>
+        <item>@string/hour_72_zmanis</item>
         <item>@string/hour_mga</item>
+        <item>@string/hour_16</item>
+        <item>@string/hour_18</item>
+        <item>@string/hour_19</item>
+        <item>@string/hour_90</item>
+        <item>@string/hour_90_zmanis</item>
+        <item>@string/hour_96</item>
+        <item>@string/hour_96_zmanis</item>
+        <item>@string/hour_26</item>
+        <item>@string/hour_120</item>
+        <item>@string/hour_120_zmanis</item>
     </string-array>
     <string-array name="dawn_values" translatable="false">
         <item>19.8</item>
