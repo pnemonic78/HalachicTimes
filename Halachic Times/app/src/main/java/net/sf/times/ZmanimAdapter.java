@@ -526,7 +526,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 				time = cal.getShaahZmanisGra();
 				summary = R.string.hour_gra;
 			}
-			add(R.string.hour, summary, time);
+			// Offset is added back when formatted.
+			add(R.string.hour, summary, time - gcal.getTimeZone().getRawOffset());
 		}
 
 		opinion = settings.getDawn();
