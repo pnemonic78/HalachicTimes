@@ -419,7 +419,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			if (rowId != 0)
 				item.elapsed = (time < now);
 			else
-				item.elapsed = elapsed ? false : (time < now);
+				item.elapsed = (elapsed || (titleId == R.string.hour)) ? false : (time < now);
 		}
 
 		if ((time != UNKNOWN) || (rowId != 0)) {
