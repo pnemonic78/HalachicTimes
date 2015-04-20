@@ -135,25 +135,13 @@
     <string name="menu_settings">Seaded</string>
     <string name="category_general">Üldine</string>
     <string name="coords_title">Koordinaadid</string>
-    <string name="coords_hidden">Koordinaadid on peidetud</string>
-    <string name="coords_visible">Koordinaadid on nähtavad</string>
     <string name="coords_format_title">Koordinaadid formaat</string>
     <string name="coords_format_summary">Märge laius-ja pikkuskraadi</string>
     <string name="past_title">Ajad mis on möödunud</string>
-    <string name="past_enabled">Möödunud ajad on lubatud</string>
-    <string name="past_disabled">Möödunud ajad on keelatud</string>
     <string name="seconds_title">Sekundit</string>
-    <string name="seconds_hidden">Sekundit on peidetud</string>
-    <string name="seconds_visible">Sekundit on nähtavad</string>
     <string name="summaries_title">Kokkuvõtted</string>
-    <string name="summaries_hidden">Kokkuvõtted on peidetud</string>
-    <string name="summaries_visible">Kokkuvõtted on nähtavad</string>
     <string name="gradient_title">Gradiendi tausta</string>
-    <string name="gradient_hidden">Gradiendi on peidetud</string>
-    <string name="gradient_visible">Gradiendi on nähtav</string>
     <string name="animations">Animatsioonid</string>
-    <string name="animations_enabled">Animatsioonid on lubatud</string>
-    <string name="animations_disabled">Animatsioonid on keelatud</string>
     <string name="reminder_stream_title">Tüüp meeldetuletus</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Äratus"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Teatis"</string>

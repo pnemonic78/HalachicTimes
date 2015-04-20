@@ -135,25 +135,13 @@
     <string name="menu_settings">Instellingen</string>
     <string name="category_general">Algemeen</string>
     <string name="coords_title">Coordinates</string>
-    <string name="coords_hidden">Coördinaten zijn verborgen</string>
-    <string name="coords_visible">Coördinaten zijn zichtbaar</string>
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_summary">Notatie van breedtegraad en lengtegraad</string>
     <string name="past_title">Tijden dat verstreken is</string>
-    <string name="past_enabled">Vroegere tijden zijn ingeschakeld</string>
-    <string name="past_disabled">Vroegere tijden zijn uitgeschakeld</string>
     <string name="seconds_title">Seconden</string>
-    <string name="seconds_hidden">Seconden zijn verborgen</string>
-    <string name="seconds_visible">Seconden zijn zichtbaar</string>
     <string name="summaries_title">Samenvattingen</string>
-    <string name="summaries_hidden">Samenvattingen zijn verborgen</string>
-    <string name="summaries_visible">Samenvattingen zijn zichtbaar</string>
     <string name="gradient_title">Gradiënt achtergrond</string>
-    <string name="gradient_hidden">Gradiënt is verborgen</string>
-    <string name="gradient_visible">Gradiënt is zichtbaar</string>
     <string name="animations">Animaties</string>
-    <string name="animations_enabled">Animaties zijn ingeschakeld</string>
-    <string name="animations_disabled">Animaties zijn uitgeschakeld</string>
     <string name="reminder_stream_title">Soort herinnering</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Melding"</string>

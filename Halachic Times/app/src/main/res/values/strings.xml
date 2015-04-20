@@ -47,10 +47,8 @@
     <string name="hour_90_zmanis" translatable="false">@string/opinion_90_zmanis</string>
     <string name="hour_96" translatable="false">@string/opinion_96</string>
     <string name="hour_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
-    <string name="hour_ateret">@string/opinion_ateret</string>
+    <string name="hour_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="hour_title" translatable="false">@string/hour</string>
-    <string name="hour_hidden">Temporal hour is hidden</string>
-    <string name="hour_visible">Temporal hour is visible</string>
 
     <!-- List -->
     <string name="dawn">Dawn</string>
@@ -241,33 +239,19 @@
     <string name="category_general">General</string>
     <string name="category_appearance">Appearance</string>
     <string name="coords_title">Coordinates</string>
-    <string name="coords_hidden">Coordinates are hidden</string>
-    <string name="coords_visible">Coordinates are visible</string>
     <string name="coords_format_title">Coordinates format</string>
     <string name="coords_format_summary">Notation of latitude and longitude</string>
     <string name="past_title">Times that have elapsed</string>
-    <string name="past_enabled">Past times are enabled</string>
-    <string name="past_disabled">Past times are disabled</string>
     <string name="seconds_title">Seconds</string>
-    <string name="seconds_hidden">Seconds are hidden</string>
-    <string name="seconds_visible">Seconds are visible</string>
     <string name="summaries_title">Summaries</string>
-    <string name="summaries_hidden">Summaries are hidden</string>
-    <string name="summaries_visible">Summaries are visible</string>
     <string name="gradient_title">Gradient background</string>
-    <string name="gradient_hidden">Gradient is hidden</string>
-    <string name="gradient_visible">Gradient is visible</string>
     <string name="animations">Animations</string>
-    <string name="animations_enabled">Animations are enabled</string>
-    <string name="animations_disabled">Animations are disabled</string>
     <string name="reminder_stream_title">Reminder type</string>
     <string name="alarm_volume_title">Alarm</string>
     <string name="notification_volume_title">Notification</string>
     <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
     <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
     <string name="emphasis_title">Emphasis</string>
-    <string name="emphasis_enabled">Emphasize</string>
-    <string name="emphasis_disabled">No emphasis</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

@@ -5,8 +5,6 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="past"
-            android:summaryOff="@string/past_disabled"
-            android:summaryOn="@string/past_enabled"
             android:title="@string/past_title"/>
         <ListPreference
             android:defaultValue="4"
@@ -28,26 +26,18 @@
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="coords.visible"
-            android:summaryOff="@string/coords_hidden"
-            android:summaryOn="@string/coords_visible"
             android:title="@string/coords_title"/>
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="seconds.visible"
-            android:summaryOff="@string/seconds_hidden"
-            android:summaryOn="@string/seconds_visible"
             android:title="@string/seconds_title"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="summaries.visible"
-            android:summaryOff="@string/summaries_hidden"
-            android:summaryOn="@string/summaries_visible"
             android:title="@string/summaries_title"/>
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="gradient"
-            android:summaryOff="@string/gradient_hidden"
-            android:summaryOn="@string/gradient_visible"
             android:title="@string/gradient_title"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/title_activity_zmanim">
@@ -63,14 +53,10 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="hour.visible"
-                android:summaryOff="@string/hour_hidden"
-                android:summaryOn="@string/hour_visible"
                 android:title="@string/hour_title"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="hour.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/dawn">
@@ -93,8 +79,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="dawn.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/tallis">
@@ -117,8 +101,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tallis.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/sunrise">
@@ -141,8 +123,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="sunrise.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/shema">
@@ -165,8 +145,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="shema.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/prayers">
@@ -189,8 +167,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="prayers.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/burn_chametz">
@@ -213,8 +189,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="burn_chametz.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/midday">
@@ -237,8 +211,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="midday.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/earliest_mincha">
@@ -261,8 +233,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="earliest_mincha.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/mincha">
@@ -285,8 +255,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="mincha.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/plug_hamincha">
@@ -309,8 +277,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="plug_hamincha.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/candles">
@@ -348,14 +314,10 @@
                 android:defaultValue="true"
                 android:icon="@android:drawable/ic_media_play"
                 android:key="candles.anim"
-                android:summaryOff="@string/animations_disabled"
-                android:summaryOn="@string/animations_enabled"
                 android:title="@string/animations"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="candles.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/sunset">
@@ -378,8 +340,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="sunset.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/twilight">
@@ -402,8 +362,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="twilight.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/nightfall">
@@ -426,8 +384,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="nightfall.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/midnight">
@@ -450,8 +406,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="midnight.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/levana_earliest">
@@ -474,8 +428,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="levana_earliest.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/levana_latest">
@@ -498,8 +450,6 @@
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="levana_latest.emphasis"
-                android:summaryOff="@string/emphasis_disabled"
-                android:summaryOn="@string/emphasis_enabled"
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
     </PreferenceCategory>

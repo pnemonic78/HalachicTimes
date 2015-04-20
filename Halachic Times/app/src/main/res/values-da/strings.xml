@@ -135,25 +135,13 @@
     <string name="menu_settings">Indstillinger</string>
     <string name="category_general">Generelt</string>
     <string name="coords_title">Koordinater</string>
-    <string name="coords_hidden">Koordinater er skjulte</string>
-    <string name="coords_visible">Koordinater er synlige</string>
     <string name="coords_format_title">Koordinater format</string>
     <string name="coords_format_summary">Notation af bredde-og længdegrader</string>
     <string name="past_title">Tider der er gået</string>
-    <string name="past_enabled">Tidligere tider er aktiveret</string>
-    <string name="past_disabled">Tidligere tider er deaktiveret</string>
     <string name="seconds_title">Sekunder</string>
-    <string name="seconds_hidden">Sekunder er skjulte</string>
-    <string name="seconds_visible">Sekunder er synlige</string>
     <string name="summaries_title">Sammenfatninger</string>
-    <string name="summaries_hidden">Sammenfatninger er skjulte</string>
-    <string name="summaries_visible">Sammenfatninger er synlige</string>
     <string name="gradient_title">Gradienten baggrund</string>
-    <string name="gradient_hidden">Gradienten er skjult</string>
-    <string name="gradient_visible">Gradienten er synlig</string>
     <string name="animations">Animationer</string>
-    <string name="animations_enabled">Animationer er aktiveret</string>
-    <string name="animations_disabled">Animationer er deaktiveret</string>
     <string name="reminder_stream_title">Påmindelse typen</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Underretning"</string>

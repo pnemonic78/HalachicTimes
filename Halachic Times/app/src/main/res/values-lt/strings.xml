@@ -137,25 +137,13 @@
     <string name="menu_settings">Nustatymai</string>
     <string name="category_general">Bendras</string>
     <string name="coords_title">Koordinatės</string>
-    <string name="coords_hidden">Koordinatės yra paslėpti</string>
-    <string name="coords_visible">Koordinatės yra matomi</string>
     <string name="coords_format_title">Koordinačių formatą,</string>
     <string name="coords_format_summary">Notacija platumos ir ilgumos</string>
     <string name="past_title">Kartų didesnis praėjo</string>
-    <string name="past_enabled">Ankstesni datos yra įgalinta</string>
-    <string name="past_disabled">Ankstesni datos yra išjungta</string>
     <string name="seconds_title">Sekundės</string>
-    <string name="seconds_hidden">Sekundės paslėptas</string>
-    <string name="seconds_visible">Sekundės matomi</string>
     <string name="summaries_title">Santraukas</string>
-    <string name="summaries_hidden">Santraukos paslėptas</string>
-    <string name="summaries_visible">Santraukos matomi</string>
     <string name="gradient_title">Gradientas fone</string>
-    <string name="gradient_hidden">Gradientas yra paslėptas</string>
-    <string name="gradient_visible">Gradientas yra matomas</string>
     <string name="animations">Animacijos</string>
-    <string name="animations_enabled">Animations yra įgalinta</string>
-    <string name="animations_disabled">Animations yra išjungta</string>
     <string name="reminder_stream_title">Tipas priminimas</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Signalas"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Pranešimas"</string>

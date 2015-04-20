@@ -135,25 +135,13 @@
     <string name="menu_settings">Einstellungen</string>
     <string name="category_general">Allgemein</string>
     <string name="coords_title">Coordinates</string>
-    <string name="coords_hidden">Koordinaten sind versteckt</string>
-    <string name="coords_visible">Koordinaten sind sichtbar</string>
     <string name="coords_format_title">Koordinaten-format</string>
     <string name="coords_format_summary">Notation der breiten-und längengrad</string>
     <string name="past_title">Vergangenen zeiten</string>
-    <string name="past_enabled">Ältere zeiten sind aktiviert</string>
-    <string name="past_disabled">Ältere zeiten sind deaktiviert</string>
     <string name="seconds_title">Sekunden</string>
-    <string name="seconds_hidden">Sekunden sind versteckt</string>
-    <string name="seconds_visible">Sekunden sind sichtbar</string>
     <string name="summaries_title">Zusammenfassungen</string>
-    <string name="summaries_hidden">Zusammenfassungen sind versteckt</string>
-    <string name="summaries_visible">Zusammenfassungen sind sichtbar</string>
     <string name="gradient_title">Hintergrund mit Farbverlauf</string>
-    <string name="gradient_hidden">Gradient ist versteckt</string>
-    <string name="gradient_visible">Gradient ist sichtbar</string>
     <string name="animations">Animationen</string>
-    <string name="animations_enabled">Animationen sind aktiviert</string>
-    <string name="animations_disabled">Animationen sind deaktiviert</string>
     <string name="reminder_stream_title">Art der Erinnerung</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Wecker"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Benachrichtigung"</string>

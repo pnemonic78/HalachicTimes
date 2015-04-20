@@ -135,25 +135,13 @@
     <string name="menu_settings">Asetukset</string>
     <string name="category_general">Yleiset</string>
     <string name="coords_title">Koordinaatit</string>
-    <string name="coords_hidden">Koordinaatit ovat piilossa</string>
-    <string name="coords_visible">Koordinaatit ovat näkyvä</string>
     <string name="coords_format_title">Koordinaatit formaatti</string>
     <string name="coords_format_summary">Notaatio leveyttä ja pituuspiirin</string>
     <string name="past_title">Ajat että kulunut</string>
-    <string name="past_enabled">Menneiden aikojen ovat käytössä</string>
-    <string name="past_disabled">Menneiden aikojen ovat pois käytöstä</string>
     <string name="seconds_title">Sekuntia</string>
-    <string name="seconds_hidden">Sekuntia ovat piilossa</string>
-    <string name="seconds_visible">Sekuntia ovat näkyvä</string>
     <string name="summaries_title">Yhteenvedot</string>
-    <string name="summaries_hidden">Yhteenvedot ovat piilossa</string>
-    <string name="summaries_visible">Yhteenvedot ovat näkyvä</string>
     <string name="gradient_title">Gradientin tausta</string>
-    <string name="gradient_hidden">Gradientti on piilossa</string>
-    <string name="gradient_visible">Gradientti on näkyvissä</string>
     <string name="animations">Animaatiot</string>
-    <string name="animations_enabled">Animaatiot ovat käytössä</string>
-    <string name="animations_disabled">Animaatiot ovat pois käytöstä</string>
     <string name="reminder_stream_title">Tyyppi muistutus</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Hälytys"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Ilmoitus"</string>

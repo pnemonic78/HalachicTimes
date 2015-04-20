@@ -137,25 +137,13 @@
     <string name="menu_settings">Nastavení</string>
     <string name="category_general">Obecné</string>
     <string name="coords_title">Souřadnice</string>
-    <string name="coords_hidden">Souřadnice jsou skryté</string>
-    <string name="coords_visible">Souřadnice jsou viditelné</string>
     <string name="coords_format_title">Souřadnice formát</string>
     <string name="coords_format_summary">Zápis zeměpisné šířky a délky</string>
     <string name="past_title">Časy, které uplynuly</string>
-    <string name="past_enabled">Minulé časy jsou povoleny</string>
-    <string name="past_disabled">Minulé časy jsou vypnuté</string>
     <string name="seconds_title">Sekundy</string>
-    <string name="seconds_hidden">Sekundy jsou skryté</string>
-    <string name="seconds_visible">Sekundy jsou viditelné</string>
     <string name="summaries_title">Souhrny</string>
-    <string name="summaries_hidden">Souhrny jsou skryté</string>
-    <string name="summaries_visible">Souhrny jsou viditelné</string>
     <string name="gradient_title">Gradient pozadí</string>
-    <string name="gradient_hidden">Gradient je skryta</string>
-    <string name="gradient_visible">Gradient je vidět</string>
     <string name="animations">Animace</string>
-    <string name="animations_enabled">Animace jsou povoleny</string>
-    <string name="animations_disabled">Animace jsou vypnuté</string>
     <string name="reminder_stream_title">Typ připomenutí</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Budík"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Oznámení"</string>

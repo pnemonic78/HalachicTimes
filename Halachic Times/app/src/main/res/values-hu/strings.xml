@@ -135,25 +135,13 @@
     <string name="menu_settings">Beállítások</string>
     <string name="category_general">Általános</string>
     <string name="coords_title">Koordináták</string>
-    <string name="coords_hidden">Koordináták rejtve</string>
-    <string name="coords_visible">Koordináták látható</string>
     <string name="coords_format_title">Koordináták formátum</string>
     <string name="coords_format_summary">Jelölések a szélességi és hosszúsági</string>
     <string name="past_title">Szor hogy az eltelt</string>
-    <string name="past_enabled">Elmúlt idők engedélyezve</string>
-    <string name="past_disabled">Elmúlt idők vannak tiltva</string>
     <string name="seconds_title">Másodperc</string>
-    <string name="seconds_hidden">Másodperc rejtve</string>
-    <string name="seconds_visible">Másodperc látható</string>
     <string name="summaries_title">Összefoglalók</string>
-    <string name="summaries_hidden">Összefoglalók rejtve</string>
-    <string name="summaries_visible">Összefoglalók látható</string>
     <string name="gradient_title">Gradient háttér</string>
-    <string name="gradient_hidden">Gradient rejtve</string>
-    <string name="gradient_visible">Gradient látható</string>
     <string name="animations">Animációk</string>
-    <string name="animations_enabled">Animációk engedélyezve</string>
-    <string name="animations_disabled">Animációk vannak tiltva</string>
     <string name="reminder_stream_title">Emlékeztető típusát</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Ébresztő"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Értesítés"</string>
