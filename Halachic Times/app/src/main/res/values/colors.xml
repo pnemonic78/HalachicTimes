@@ -28,6 +28,8 @@
     <color name="compass">#ffffff</color>
     <color name="compass_gradient">#cc9933</color>
     <color name="compass_frame">#cc9933</color>
+    <color name="compass_frame_highlight">#ffcc66</color>
+    <color name="compass_frame_shadow">#aa7711</color>
     <color name="compass_label">#c0c0c0</color>
     <color name="compass_label_dark">#808080</color>
     <color name="compass_label2">#e0e0e0</color>

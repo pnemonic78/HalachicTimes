@@ -22,6 +22,7 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -45,6 +46,9 @@ public class CompassView extends View {
 
 	private Paint paintCircle;
 	private Paint paintFrame;
+	private Paint paintFrameHighlight;
+	private Paint paintFrameShadow;
+	private Paint paintFrameThin;
 	private Paint paintNorth;
 	private Paint paintEast;
 	private Paint paintSouth;
@@ -62,6 +66,8 @@ public class CompassView extends View {
 	private final Path pathArrowHoliest = new Path();
 	private final Path pathArrowBig = new Path();
 	private final Path pathArrowSmall = new Path();
+	private final RectF rectFrameOuter = new RectF();
+	private final RectF rectFrameInner = new RectF();
 
 	private String labelNorth;
 	private String labelEast;
@@ -125,6 +131,19 @@ public class CompassView extends View {
 		paintFrame.setStrokeWidth(res.getDimension(R.dimen.circle_thickness));
 		paintFrame.setColor(res.getColor(R.color.compass_frame));
 
+		paintFrameThin = new Paint(paintFrame);
+		paintFrameThin.setStrokeWidth(res.getDimension(R.dimen.circle_highlight_thickness));
+
+		paintFrameHighlight = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintFrameHighlight.setStyle(Paint.Style.STROKE);
+		paintFrameHighlight.setStrokeWidth(res.getDimension(R.dimen.circle_highlight_thickness));
+		paintFrameHighlight.setColor(res.getColor(R.color.compass_frame_highlight));
+
+		paintFrameShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintFrameShadow.setStyle(Paint.Style.STROKE);
+		paintFrameShadow.setStrokeWidth(res.getDimension(R.dimen.circle_highlight_thickness));
+		paintFrameShadow.setColor(res.getColor(R.color.compass_frame_shadow));
+
 		paintPivot = new Paint(Paint.DITHER_FLAG);
 		paintPivot.setStyle(Paint.Style.FILL);
 		paintPivot.setColor(res.getColor(R.color.compass_pivot));
@@ -174,32 +193,13 @@ public class CompassView extends View {
 		final float w2 = widthHalf;
 		final float h2 = heightHalf;
 		final float r = radius;
-		final float r75 = r * 0.075f;
 		final float r1 = r * 0.1f;
-		final float r2 = r * 0.2f;
-		final float r3 = r * 0.3f;
-		final float r4 = r * 0.4f;
 		final float r5 = r * 0.5f;
-		final float r6 = r * 0.6f;
 		final float r7 = r * 0.7f;
 		final float r8 = r * 0.8f;
 		final float r9 = r * 0.9f;
-		final float h2r5 = h2 - r5;
 		final float h2r7 = h2 - r7;
-		final float h2r8 = h2 - r8;
 		final float h2r9 = h2 - r9;
-
-		pathArrowBig.reset();
-		pathArrowBig.moveTo(w2 - r75, h2);
-		pathArrowBig.lineTo(w2 + r75, h2);
-		pathArrowBig.lineTo(w2, h2 - r6);
-		pathArrowBig.close();
-
-		pathArrowSmall.reset();
-		pathArrowSmall.moveTo(w2 - r75, h2);
-		pathArrowSmall.lineTo(w2 + r75, h2);
-		pathArrowSmall.lineTo(w2, h2 - r4);
-		pathArrowSmall.close();
 
 		canvas.drawCircle(w2, h2, r, paintCircle);
 
@@ -248,6 +248,14 @@ public class CompassView extends View {
 
 		canvas.drawCircle(w2, h2, r, paintFrame);
 
+		canvas.rotate(-holiest, w2, h2);
+		canvas.drawArc(rectFrameOuter, 0f, 360f, false, paintFrameThin);
+		canvas.drawArc(rectFrameInner, 0, 360f, false, paintFrameThin);
+		canvas.drawArc(rectFrameInner, -22.5f, 135f, false, paintFrameHighlight);
+		canvas.drawArc(rectFrameOuter, -45f, 180f, false, paintFrameShadow);
+		canvas.drawArc(rectFrameOuter, 157.5f, 135f, false, paintFrameHighlight);
+		canvas.drawArc(rectFrameInner, 180f, 90f, false, paintFrameShadow);
+
 		canvas.drawCircle(w2, h2, radiusPivot, paintPivot);
 	}
 
@@ -283,8 +291,11 @@ public class CompassView extends View {
 		final int h2 = h / 2;
 		final float boundary = res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness);
 		final float r = Math.max(0, Math.min(w2, h2) - (boundary * 2f));
+		final float r75 = r * 0.075f;
 		final float r2 = r * 0.2f;
+		final float r4 = r * 0.4f;
 		final float r5 = r * 0.5f;
+		final float r6 = r * 0.6f;
 
 		widthHalf = w2;
 		heightHalf = h2;
@@ -322,5 +333,28 @@ public class CompassView extends View {
 		rectFill.right = w2 + r5;
 		rectFill.bottom = h2 + r5;
 		paintFill.setStrokeWidth(r);
+
+		float frameThicknessHalf = paintFrame.getStrokeWidth() / 2f;
+		rectFrameOuter.left = w2 - r - frameThicknessHalf;
+		rectFrameOuter.top = h2 - r - frameThicknessHalf;
+		rectFrameOuter.right = w2 + r + frameThicknessHalf;
+		rectFrameOuter.bottom = h2 + r + frameThicknessHalf;
+
+		rectFrameInner.left = w2 - r + frameThicknessHalf;
+		rectFrameInner.top = h2 - r + frameThicknessHalf;
+		rectFrameInner.right = w2 + r - frameThicknessHalf;
+		rectFrameInner.bottom = h2 + r - frameThicknessHalf;
+
+		pathArrowBig.reset();
+		pathArrowBig.moveTo(w2 - r75, h2);
+		pathArrowBig.lineTo(w2 + r75, h2);
+		pathArrowBig.lineTo(w2, h2 - r6);
+		pathArrowBig.close();
+
+		pathArrowSmall.reset();
+		pathArrowSmall.moveTo(w2 - r75, h2);
+		pathArrowSmall.lineTo(w2 + r75, h2);
+		pathArrowSmall.lineTo(w2, h2 - r4);
+		pathArrowSmall.close();
 	}
 }
