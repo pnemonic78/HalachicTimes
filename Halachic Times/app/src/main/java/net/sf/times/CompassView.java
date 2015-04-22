@@ -22,6 +22,7 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
@@ -52,12 +53,15 @@ public class CompassView extends View {
 	private Paint paintHoliest;
 	private Paint paintFill;
 	private Paint paintPivot;
+	private Paint paintArrow;
 	private final RectF rectFill = new RectF();
 	private float widthHalf;
 	private float heightHalf;
 	private float radius;
 	private float radiusPivot;
 	private final Path pathArrowHoliest = new Path();
+	private final Path pathArrowBig = new Path();
+	private final Path pathArrowSmall = new Path();
 
 	private String labelNorth;
 	private String labelEast;
@@ -125,10 +129,13 @@ public class CompassView extends View {
 		paintPivot.setStyle(Paint.Style.FILL);
 		paintPivot.setColor(res.getColor(R.color.compass_pivot));
 
+		paintArrow = new Paint(Paint.DITHER_FLAG);
+		paintArrow.setStyle(Paint.Style.FILL);
+
 		paintNorth = new TextPaint(Paint.ANTI_ALIAS_FLAG);
 		paintNorth.setStyle(Paint.Style.FILL_AND_STROKE);
 		paintNorth.setStrokeWidth(res.getDimension(R.dimen.north_thickness));
-		paintNorth.setTextSize(18);
+		paintNorth.setTextSize(res.getDimension(R.dimen.label_size));
 		paintNorth.setTextAlign(Align.CENTER);
 		paintNorth.setColor(res.getColor(R.color.compass_north));
 
@@ -138,9 +145,10 @@ public class CompassView extends View {
 
 		paintEast = new TextPaint(paintSouth);
 		paintEast.setStrokeWidth(res.getDimension(R.dimen.label_thickness));
-		paintEast.setColor(res.getColor(R.color.compass_label));
+		paintEast.setColor(res.getColor(R.color.compass_east));
 
 		paintWest = new TextPaint(paintEast);
+		paintEast.setColor(res.getColor(R.color.compass_west));
 
 		paintNE = new Paint(paintEast);
 		paintNE.setStrokeWidth(res.getDimension(R.dimen.label2_thickness));
@@ -149,7 +157,7 @@ public class CompassView extends View {
 		paintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintHoliest.setStyle(Paint.Style.FILL_AND_STROKE);
 		paintHoliest.setStrokeWidth(res.getDimension(R.dimen.holiest_thickness));
-		paintHoliest.setColor(res.getColor(R.color.compass_arrow));
+		paintHoliest.setColor(res.getColor(R.color.compass_holiest));
 
 		paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintFill.setColor(res.getColor(R.color.compass_arrow_bg));
@@ -166,9 +174,13 @@ public class CompassView extends View {
 		final float w2 = widthHalf;
 		final float h2 = heightHalf;
 		final float r = radius;
+		final float r75 = r * 0.075f;
 		final float r1 = r * 0.1f;
 		final float r2 = r * 0.2f;
+		final float r3 = r * 0.3f;
+		final float r4 = r * 0.4f;
 		final float r5 = r * 0.5f;
+		final float r6 = r * 0.6f;
 		final float r7 = r * 0.7f;
 		final float r8 = r * 0.8f;
 		final float r9 = r * 0.9f;
@@ -177,40 +189,52 @@ public class CompassView extends View {
 		final float h2r8 = h2 - r8;
 		final float h2r9 = h2 - r9;
 
+		pathArrowBig.reset();
+		pathArrowBig.moveTo(w2 - r75, h2);
+		pathArrowBig.lineTo(w2 + r75, h2);
+		pathArrowBig.lineTo(w2, h2 - r6);
+		pathArrowBig.close();
+
+		pathArrowSmall.reset();
+		pathArrowSmall.moveTo(w2 - r75, h2);
+		pathArrowSmall.lineTo(w2 + r75, h2);
+		pathArrowSmall.lineTo(w2, h2 - r4);
+		pathArrowSmall.close();
+
 		canvas.drawCircle(w2, h2, r, paintCircle);
+
+		canvas.rotate(north, w2, h2);
+		canvas.drawPath(pathArrowBig, paintNorth);
+		canvas.drawText(labelNorth, w2, h2r7, paintNorth);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowSmall, paintNE);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowBig, paintEast);
+		canvas.drawText(labelEast, w2, h2r7, paintEast);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowSmall, paintNE);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowBig, paintSouth);
+		canvas.drawText(labelSouth, w2, h2r7, paintSouth);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowSmall, paintNE);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowBig, paintWest);
+		canvas.drawText(labelWest, w2, h2r7, paintWest);
+
+		canvas.rotate(45, w2, h2);
+		canvas.drawPath(pathArrowSmall, paintNE);
 
 		float sweepAngle = north + holiest;
 		if (sweepAngle > 180f)
 			sweepAngle -= 360f;
-		canvas.drawArc(rectFill, -90f, sweepAngle, false, paintFill);
-
-		canvas.rotate(north, w2, h2);
-		canvas.drawLine(w2, h2r7, w2, h2r9, paintNorth);
-		canvas.drawText(labelNorth, w2, h2r5, paintNorth);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r8, w2, h2r9, paintNE);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r7, w2, h2r9, paintEast);
-		canvas.drawText(labelEast, w2, h2r5, paintEast);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r8, w2, h2r9, paintNE);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r7, w2, h2r9, paintSouth);
-		canvas.drawText(labelSouth, w2, h2r5, paintSouth);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r8, w2, h2r9, paintNE);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r7, w2, h2r9, paintWest);
-		canvas.drawText(labelWest, w2, h2r5, paintWest);
-
-		canvas.rotate(45, w2, h2);
-		canvas.drawLine(w2, h2r8, w2, h2r9, paintNE);
+		canvas.drawArc(rectFill, -45f, sweepAngle, false, paintFill);
 
 		canvas.rotate(45 + holiest, w2, h2);
 		canvas.drawLine(w2, h2, w2, h2 - r, paintHoliest);
@@ -265,14 +289,26 @@ public class CompassView extends View {
 		widthHalf = w2;
 		heightHalf = h2;
 		radius = r;
-		radiusPivot = res.getDimension(R.dimen.pivot_radius);
+		radiusPivot = r * 0.15f;
 
 		if (r > 0) {
 			RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient), Shader.TileMode.CLAMP);
 			paintCircle.setShader(gradientCircle);
 
-			RadialGradient gradientPivot = new RadialGradient(w2, h2, radiusPivot * 2, res.getColor(R.color.compass_pivot), res.getColor(R.color.compass_frame), Shader.TileMode.CLAMP);
+			RadialGradient gradientPivot = new RadialGradient(w2, h2, radiusPivot, res.getColor(R.color.compass_pivot), res.getColor(R.color.compass_pivot_dark), Shader.TileMode.CLAMP);
 			paintPivot.setShader(gradientPivot);
+
+			LinearGradient gradientNorth = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_north), res.getColor(R.color.compass_north_dark), Shader.TileMode.CLAMP);
+			paintNorth.setShader(gradientNorth);
+
+			LinearGradient gradientEast = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_east), res.getColor(R.color.compass_east_dark), Shader.TileMode.CLAMP);
+			paintEast.setShader(gradientEast);
+
+			LinearGradient gradientSouth = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_south), res.getColor(R.color.compass_south_dark), Shader.TileMode.CLAMP);
+			paintSouth.setShader(gradientSouth);
+
+			LinearGradient gradientWest = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_west), res.getColor(R.color.compass_west_dark), Shader.TileMode.CLAMP);
+			paintWest.setShader(gradientWest);
 		}
 
 		final float sizeDirections = r2;

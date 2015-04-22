@@ -16,6 +16,6 @@
         android:ellipsize="marquee"
         android:text="@string/compass_summary"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/compass_arrow"/>
+        android:textColor="@color/compass_holiest"/>
 
 </LinearLayout>
