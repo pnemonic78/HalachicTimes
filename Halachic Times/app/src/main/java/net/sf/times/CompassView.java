@@ -22,7 +22,6 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -30,6 +29,7 @@ import android.graphics.Path;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -46,9 +46,8 @@ public class CompassView extends View {
 
 	private Paint paintCircle;
 	private Paint paintFrame;
-	private Paint paintFrameHighlight;
-	private Paint paintFrameShadow;
-	private Paint paintFrameThin;
+	private Paint paintFrameOuter;
+	private Paint paintFrameInner;
 	private Paint paintNorth;
 	private Paint paintEast;
 	private Paint paintSouth;
@@ -131,18 +130,15 @@ public class CompassView extends View {
 		paintFrame.setStrokeWidth(res.getDimension(R.dimen.circle_thickness));
 		paintFrame.setColor(res.getColor(R.color.compass_frame));
 
-		paintFrameThin = new Paint(paintFrame);
-		paintFrameThin.setStrokeWidth(res.getDimension(R.dimen.circle_highlight_thickness));
+		paintFrameOuter = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintFrameOuter.setStyle(Paint.Style.STROKE);
+		paintFrameOuter.setStrokeWidth(res.getDimension(R.dimen.circle_bevel_thickness));
+		paintFrameOuter.setColor(res.getColor(R.color.compass_frame));
 
-		paintFrameHighlight = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paintFrameHighlight.setStyle(Paint.Style.STROKE);
-		paintFrameHighlight.setStrokeWidth(res.getDimension(R.dimen.circle_highlight_thickness));
-		paintFrameHighlight.setColor(res.getColor(R.color.compass_frame_highlight));
-
-		paintFrameShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
-		paintFrameShadow.setStyle(Paint.Style.STROKE);
-		paintFrameShadow.setStrokeWidth(res.getDimension(R.dimen.circle_highlight_thickness));
-		paintFrameShadow.setColor(res.getColor(R.color.compass_frame_shadow));
+		paintFrameInner = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintFrameInner.setStyle(Paint.Style.STROKE);
+		paintFrameInner.setStrokeWidth(res.getDimension(R.dimen.circle_bevel_thickness));
+		paintFrameInner.setColor(res.getColor(R.color.compass_frame));
 
 		paintPivot = new Paint(Paint.DITHER_FLAG);
 		paintPivot.setStyle(Paint.Style.FILL);
@@ -249,12 +245,8 @@ public class CompassView extends View {
 		canvas.drawCircle(w2, h2, r, paintFrame);
 
 		canvas.rotate(-holiest, w2, h2);
-		canvas.drawArc(rectFrameOuter, 0f, 360f, false, paintFrameThin);
-		canvas.drawArc(rectFrameInner, 0, 360f, false, paintFrameThin);
-		canvas.drawArc(rectFrameInner, -22.5f, 135f, false, paintFrameHighlight);
-		canvas.drawArc(rectFrameOuter, -45f, 180f, false, paintFrameShadow);
-		canvas.drawArc(rectFrameOuter, 157.5f, 135f, false, paintFrameHighlight);
-		canvas.drawArc(rectFrameInner, 180f, 90f, false, paintFrameShadow);
+		canvas.drawArc(rectFrameOuter, 0f, 360f, false, paintFrameOuter);
+		canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
 		canvas.drawCircle(w2, h2, radiusPivot, paintPivot);
 	}
@@ -320,6 +312,20 @@ public class CompassView extends View {
 
 			LinearGradient gradientWest = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_west), res.getColor(R.color.compass_west_dark), Shader.TileMode.CLAMP);
 			paintWest.setShader(gradientWest);
+
+			int colorFrame = res.getColor(R.color.compass_frame);
+			int colorFrameHighlight = res.getColor(R.color.compass_frame_highlight);
+			int colorFrameShadow = res.getColor(R.color.compass_frame_shadow);
+
+			int[] colorsFrameOuter = {colorFrame, colorFrameShadow, colorFrame, colorFrame, colorFrameHighlight, colorFrameHighlight, colorFrameHighlight, colorFrame};
+			float[] positionsFrameOuter = {0f, 0.125f, 0.250f, 0.375f, 0.500f, 0.625f, 0.750f, 0.875f};
+			SweepGradient gradientFrameOuter = new SweepGradient(w2, h2, colorsFrameOuter, positionsFrameOuter);
+			paintFrameOuter.setShader(gradientFrameOuter);
+
+			int[] colorsFrameInner = {colorFrameHighlight, colorFrameHighlight, colorFrame, colorFrame, colorFrameShadow, colorFrameShadow, colorFrameShadow, colorFrame};
+			float[] positionsFrameInner = positionsFrameOuter;
+			SweepGradient gradientFrameInner = new SweepGradient(w2, h2, colorsFrameInner, positionsFrameInner);
+			paintFrameInner.setShader(gradientFrameInner);
 		}
 
 		final float sizeDirections = r2;
