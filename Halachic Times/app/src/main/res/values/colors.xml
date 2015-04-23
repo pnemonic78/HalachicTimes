@@ -30,9 +30,9 @@
     <color name="compass_frame">#cc9933</color>
     <color name="compass_frame_highlight">#ffdd77</color>
     <color name="compass_frame_shadow">#aa6600</color>
-    <color name="compass_label">#c0c0c0</color>
-    <color name="compass_label_dark">#808080</color>
-    <color name="compass_label2">#e0e0e0</color>
+    <color name="compass_label">#dddddd</color>
+    <color name="compass_label_dark">#cccccc</color>
+    <color name="compass_label2">#dddddd</color>
     <color name="compass_north">#ff0000</color>
     <color name="compass_north_dark">#800000</color>
     <color name="compass_south">#0000ff</color>

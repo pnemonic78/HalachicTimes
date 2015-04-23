@@ -189,10 +189,7 @@ public class CompassView extends View {
 		final float w2 = widthHalf;
 		final float h2 = heightHalf;
 		final float r = radius;
-		final float r1 = r * 0.1f;
-		final float r5 = r * 0.5f;
 		final float r7 = r * 0.7f;
-		final float r8 = r * 0.8f;
 		final float r9 = r * 0.9f;
 		final float h2r7 = h2 - r7;
 		final float h2r9 = h2 - r9;
@@ -233,13 +230,7 @@ public class CompassView extends View {
 		canvas.drawArc(rectFill, -45f, sweepAngle, false, paintFill);
 
 		canvas.rotate(45 + holiest, w2, h2);
-		canvas.drawLine(w2, h2, w2, h2 - r, paintHoliest);
-		pathArrowHoliest.reset();
-		pathArrowHoliest.moveTo(w2, h2 - r);
-		pathArrowHoliest.quadTo(w2, h2r9, w2 - r1, h2r7);
-		pathArrowHoliest.quadTo(w2, h2r9, w2 + r1, h2r7);
-		pathArrowHoliest.quadTo(w2, h2r9, w2, h2 - r);
-		pathArrowHoliest.close();
+		canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
 		canvas.drawPath(pathArrowHoliest, paintHoliest);
 
 		canvas.drawCircle(w2, h2, r, paintFrame);
@@ -284,10 +275,16 @@ public class CompassView extends View {
 		final float boundary = res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness);
 		final float r = Math.max(0, Math.min(w2, h2) - (boundary * 2f));
 		final float r75 = r * 0.075f;
+		final float r1 = r * 0.1f;
 		final float r2 = r * 0.2f;
 		final float r4 = r * 0.4f;
 		final float r5 = r * 0.5f;
 		final float r6 = r * 0.6f;
+		final float r9 = r * 0.9f;
+		final float r95 = r * 0.95f;
+		final float h2r6 = h2 - r6;
+		final float h2r9 = h2 - r9;
+		final float h2r95 = h2 - r95;
 
 		widthHalf = w2;
 		heightHalf = h2;
@@ -312,20 +309,6 @@ public class CompassView extends View {
 
 			LinearGradient gradientWest = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_west), res.getColor(R.color.compass_west_dark), Shader.TileMode.CLAMP);
 			paintWest.setShader(gradientWest);
-
-			int colorFrame = res.getColor(R.color.compass_frame);
-			int colorFrameHighlight = res.getColor(R.color.compass_frame_highlight);
-			int colorFrameShadow = res.getColor(R.color.compass_frame_shadow);
-
-			int[] colorsFrameOuter = {colorFrame, colorFrameShadow, colorFrame, colorFrame, colorFrameHighlight, colorFrameHighlight, colorFrameHighlight, colorFrame};
-			float[] positionsFrameOuter = {0f, 0.125f, 0.250f, 0.375f, 0.500f, 0.625f, 0.750f, 0.875f};
-			SweepGradient gradientFrameOuter = new SweepGradient(w2, h2, colorsFrameOuter, positionsFrameOuter);
-			paintFrameOuter.setShader(gradientFrameOuter);
-
-			int[] colorsFrameInner = {colorFrameHighlight, colorFrameHighlight, colorFrame, colorFrame, colorFrameShadow, colorFrameShadow, colorFrameShadow, colorFrame};
-			float[] positionsFrameInner = positionsFrameOuter;
-			SweepGradient gradientFrameInner = new SweepGradient(w2, h2, colorsFrameInner, positionsFrameInner);
-			paintFrameInner.setShader(gradientFrameInner);
 		}
 
 		final float sizeDirections = r2;
@@ -351,6 +334,20 @@ public class CompassView extends View {
 		rectFrameInner.right = w2 + r - frameThicknessHalf;
 		rectFrameInner.bottom = h2 + r - frameThicknessHalf;
 
+		int colorFrame = res.getColor(R.color.compass_frame);
+		int colorFrameHighlight = res.getColor(R.color.compass_frame_highlight);
+		int colorFrameShadow = res.getColor(R.color.compass_frame_shadow);
+
+		int[] colorsFrameOuter = {colorFrameShadow, colorFrameShadow, colorFrame, colorFrame, colorFrameHighlight, colorFrameHighlight, colorFrameHighlight, colorFrame, colorFrameShadow};
+		float[] positionsFrameOuter = {0f, 0.125f, 0.250f, 0.375f, 0.500f, 0.625f, 0.750f, 0.875f, 1f};
+		SweepGradient gradientFrameOuter = new SweepGradient(w2, h2, colorsFrameOuter, positionsFrameOuter);
+		paintFrameOuter.setShader(gradientFrameOuter);
+
+		int[] colorsFrameInner = {colorFrameHighlight, colorFrameHighlight, colorFrame, colorFrame, colorFrameShadow, colorFrameShadow, colorFrameShadow, colorFrame, colorFrameHighlight};
+		float[] positionsFrameInner = positionsFrameOuter;
+		SweepGradient gradientFrameInner = new SweepGradient(w2, h2, colorsFrameInner, positionsFrameInner);
+		paintFrameInner.setShader(gradientFrameInner);
+
 		pathArrowBig.reset();
 		pathArrowBig.moveTo(w2 - r75, h2);
 		pathArrowBig.lineTo(w2 + r75, h2);
@@ -362,5 +359,11 @@ public class CompassView extends View {
 		pathArrowSmall.lineTo(w2 + r75, h2);
 		pathArrowSmall.lineTo(w2, h2 - r4);
 		pathArrowSmall.close();
+
+		pathArrowHoliest.reset();
+		pathArrowHoliest.moveTo(w2, h2r95);
+		pathArrowHoliest.lineTo(w2 - r1, h2r6);
+		pathArrowHoliest.quadTo(w2, h2r9, w2 + r1, h2r6);
+		pathArrowHoliest.close();
 	}
 }
