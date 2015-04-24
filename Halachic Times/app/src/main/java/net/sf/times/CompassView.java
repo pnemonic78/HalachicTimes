@@ -22,6 +22,7 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -276,6 +277,8 @@ public class CompassView extends View {
 		final float r = Math.max(0, Math.min(w2, h2) - (boundary * 2f));
 		final float r75 = r * 0.075f;
 		final float r1 = r * 0.1f;
+		final float r15 = r * 0.15f;
+		final float r150 = r * 1.5f;
 		final float r2 = r * 0.2f;
 		final float r4 = r * 0.4f;
 		final float r5 = r * 0.5f;
@@ -289,7 +292,7 @@ public class CompassView extends View {
 		widthHalf = w2;
 		heightHalf = h2;
 		radius = r;
-		radiusPivot = r * 0.15f;
+		radiusPivot = r15;
 
 		if (r > 0) {
 			RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient), Shader.TileMode.CLAMP);
@@ -297,19 +300,19 @@ public class CompassView extends View {
 
 			RadialGradient gradientPivot = new RadialGradient(w2, h2, radiusPivot, res.getColor(R.color.compass_pivot), res.getColor(R.color.compass_pivot_dark), Shader.TileMode.CLAMP);
 			paintPivot.setShader(gradientPivot);
-
-			LinearGradient gradientNorth = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_north), res.getColor(R.color.compass_north_dark), Shader.TileMode.CLAMP);
-			paintNorth.setShader(gradientNorth);
-
-			LinearGradient gradientEast = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_east), res.getColor(R.color.compass_east_dark), Shader.TileMode.CLAMP);
-			paintEast.setShader(gradientEast);
-
-			LinearGradient gradientSouth = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_south), res.getColor(R.color.compass_south_dark), Shader.TileMode.CLAMP);
-			paintSouth.setShader(gradientSouth);
-
-			LinearGradient gradientWest = new LinearGradient(0, 0, 0, r * 1.5f, res.getColor(R.color.compass_west), res.getColor(R.color.compass_west_dark), Shader.TileMode.CLAMP);
-			paintWest.setShader(gradientWest);
 		}
+
+		LinearGradient gradientNorth = new LinearGradient(0, 0, 0, r150, res.getColor(R.color.compass_north_dark), res.getColor(R.color.compass_north), Shader.TileMode.CLAMP);
+		paintNorth.setShader(gradientNorth);
+
+		LinearGradient gradientEast = new LinearGradient(0, 0, 0, r150, res.getColor(R.color.compass_east_dark), res.getColor(R.color.compass_east), Shader.TileMode.CLAMP);
+		paintEast.setShader(gradientEast);
+
+		LinearGradient gradientSouth = new LinearGradient(0, 0, 0, r150, res.getColor(R.color.compass_south_dark), res.getColor(R.color.compass_south), Shader.TileMode.CLAMP);
+		paintSouth.setShader(gradientSouth);
+
+		LinearGradient gradientWest = new LinearGradient(0, 0, 0, r150, res.getColor(R.color.compass_west_dark), res.getColor(R.color.compass_west), Shader.TileMode.CLAMP);
+		paintWest.setShader(gradientWest);
 
 		final float sizeDirections = r2;
 		paintNorth.setTextSize(sizeDirections);

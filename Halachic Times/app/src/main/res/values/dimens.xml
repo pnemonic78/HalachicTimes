@@ -16,7 +16,7 @@
 
     <!-- Compass. -->
     <dimen name="padding">0dp</dimen>
-    <dimen name="circle_thickness">3dp</dimen>
+    <dimen name="circle_thickness">5dp</dimen>
     <dimen name="circle_bevel_thickness">1dp</dimen>
     <dimen name="holiest_thickness">4dp</dimen>
     <dimen name="north_thickness">2dp</dimen>
