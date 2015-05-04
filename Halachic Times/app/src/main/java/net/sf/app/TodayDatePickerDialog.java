@@ -35,17 +35,16 @@ public class TodayDatePickerDialog extends DatePickerDialog {
 
 	public TodayDatePickerDialog(Context context, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
 		super(context, callBack, year, monthOfYear, dayOfMonth);
-		init();
+		init(context);
 	}
 
 	public TodayDatePickerDialog(Context context, int theme, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
 		super(context, theme, callBack, year, monthOfYear, dayOfMonth);
-		init();
+		init(context);
 	}
 
-	private void init() {
-		Context themeContext = getContext();
-		setButton(BUTTON_NEUTRAL, themeContext.getText(R.string.today), this);
+	private void init(Context context) {
+		setButton(BUTTON_NEUTRAL, context.getText(R.string.today), this);
 	}
 
 	@Override

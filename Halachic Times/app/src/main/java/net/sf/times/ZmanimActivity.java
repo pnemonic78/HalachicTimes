@@ -88,53 +88,53 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	private static final int WHAT_TODAY = 5;
 
 	/** The date. */
-	private final Calendar mDate = Calendar.getInstance();
+	private final Calendar date = Calendar.getInstance();
 	/** The location header. */
-	private View mHeader;
+	private View header;
 	/** Provider for locations. */
-	private ZmanimLocations mLocations;
+	private ZmanimLocations locations;
 	/** The settings and preferences. */
-	protected ZmanimSettings mSettings;
+	protected ZmanimSettings settings;
 	/** The date picker. */
-	private DatePickerDialog mDatePicker;
+	private DatePickerDialog datePicker;
 	/** The address location. */
-	private Location mAddressLocation;
+	private Location addressLocation;
 	/** The address. */
-	private ZmanimAddress mAddress;
+	private ZmanimAddress address;
 	/** Populate the header in UI thread. */
-	private Runnable mPopulateHeader;
+	private Runnable populateHeader;
 	/** Update the location in UI thread. */
-	private Runnable mUpdateLocation;
-	private ZmanimReminder mReminder;
-	protected LayoutInflater mInflater;
+	private Runnable updateLocation;
+	private ZmanimReminder reminder;
+	protected LayoutInflater inflater;
 	/** The master fragment. */
-	private ZmanimFragment<ZmanimAdapter> mMasterFragment;
+	private ZmanimFragment<ZmanimAdapter> masterFragment;
 	/** The details fragment switcher. */
-	private ViewSwitcher mDetailsFragment;
+	private ViewSwitcher detailsFragment;
 	/** The details fragment. */
-	private ZmanimDetailsFragment mDetailsListFragment;
+	private ZmanimDetailsFragment detailsListFragment;
 	/** The candles fragment. */
-	private CandlesFragment mCandesFragment;
+	private CandlesFragment candlesFragment;
 	/** Is master fragment switched with details fragment? */
-	private ViewSwitcher mSwitcher;
+	private ViewSwitcher viewSwitcher;
 	/** The master item selected id. */
-	private int mSelectedId;
+	private int selectedId;
 	/** The gesture detector. */
-	private GestureDetector mGestureDetector;
+	private GestureDetector gestureDetector;
 	/** Is locale RTL? */
-	private boolean mLocaleRTL;
+	private boolean localeRTL;
 	/** Slide left-to-right animation. */
-	private Animation mSlideLeftToRight;
+	private Animation slideLeftToRight;
 	/** Slide right-to-left animation. */
-	private Animation mSlideRightToLeft;
+	private Animation slideRightToLeft;
 	/** Grow details animation. */
-	private Animation mDetailsGrow;
+	private Animation detailsGrow;
 	/** Shrink details animation. */
-	private Animation mDetailsShrink;
+	private Animation detailsShrink;
 
 	/** The handler. */
 	@SuppressLint("HandlerLeak")
-	private final Handler mHandler = new Handler() {
+	private final Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -145,18 +145,18 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 					startActivity(new Intent(ZmanimActivity.this, CompassActivity.class));
 					break;
 				case WHAT_DATE:
-					final int year = mDate.get(Calendar.YEAR);
-					final int month = mDate.get(Calendar.MONTH);
-					final int day = mDate.get(Calendar.DAY_OF_MONTH);
-					if (mDatePicker == null) {
-						mDatePicker = new TodayDatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
+					final int year = date.get(Calendar.YEAR);
+					final int month = date.get(Calendar.MONTH);
+					final int day = date.get(Calendar.DAY_OF_MONTH);
+					if (datePicker == null) {
+						datePicker = new TodayDatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
 					} else {
-						mDatePicker.updateDate(year, month, day);
+						datePicker.updateDate(year, month, day);
 					}
-					mDatePicker.show();
+					datePicker.show();
 					break;
 				case WHAT_LOCATION:
-					Location loc = mLocations.getLocation();
+					Location loc = locations.getLocation();
 					// Have we been destroyed?
 					if (loc == null)
 						break;
@@ -170,9 +170,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 					break;
 				case WHAT_TODAY:
 					setDate(System.currentTimeMillis());
-					mMasterFragment.populateTimes(mDate);
-					mDetailsListFragment.populateTimes(mDate);
-					mCandesFragment.populateTimes(mDate);
+					masterFragment.populateTimes(date);
+					detailsListFragment.populateTimes(date);
+					candlesFragment.populateTimes(date);
 					break;
 			}
 		}
@@ -201,115 +201,115 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 		Location location = intent.getParcelableExtra(EXTRA_LOCATION);
 		if (location != null)
-			mLocations.setLocation(location);
+			locations.setLocation(location);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putLong(EXTRA_DATE, mDate.getTimeInMillis());
-		outState.putInt(PARAMETER_DETAILS, mSelectedId);
+		outState.putLong(EXTRA_DATE, date.getTimeInMillis());
+		outState.putInt(PARAMETER_DETAILS, selectedId);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
 		setDate(savedInstanceState.getLong(EXTRA_DATE));
-		mSelectedId = savedInstanceState.getInt(PARAMETER_DETAILS, mSelectedId);
+		selectedId = savedInstanceState.getInt(PARAMETER_DETAILS, selectedId);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mLocations.start(this);
-		ZmanimReminder reminder = mReminder;
+		locations.start(this);
+		ZmanimReminder reminder = this.reminder;
 		if (reminder == null) {
 			reminder = createReminder();
-			mReminder = reminder;
+			this.reminder = reminder;
 		}
 		reminder.cancel();
-		int itemId = mSelectedId;
+		int itemId = selectedId;
 		if (itemId != 0) {
 			// We need to wait for the list rows to get their default
 			// backgrounds before we can highlight any row.
-			Message msg = mHandler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
-			mHandler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
+			Message msg = handler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
+			handler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
 		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (mReminder != null) {
+		if (reminder != null) {
 			// Don't run on UI thread.
 			new Thread() {
 				public void run() {
-					mReminder.remind(mSettings);
+					reminder.remind(settings);
 				}
 			}.start();
 		}
-		int itemId = mSelectedId;
+		int itemId = selectedId;
 		if (itemId != 0) {
 			hideDetails();
-			mSelectedId = itemId;
+			selectedId = itemId;
 		}
 	}
 
 	@Override
 	protected void onStop() {
-		mLocations.stop(this);
+		locations.stop(this);
 		super.onStop();
 	}
 
 	/** Initialise. */
 	@SuppressWarnings("unchecked")
 	private void init() {
-		mSettings = new ZmanimSettings(this);
+		settings = new ZmanimSettings(this);
 
-		mInflater = LayoutInflater.from(this);
-		ViewGroup view = (ViewGroup) mInflater.inflate(R.layout.times, null);
+		inflater = LayoutInflater.from(this);
+		ViewGroup view = (ViewGroup) inflater.inflate(R.layout.times, null);
 
 		setContentView(view);
 
-		mGestureDetector = new GestureDetector(this, this);
-		mGestureDetector.setIsLongpressEnabled(false);
+		gestureDetector = new GestureDetector(this, this);
+		gestureDetector.setIsLongpressEnabled(false);
 
-		mHeader = view.findViewById(R.id.header);
-		mMasterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
-		mMasterFragment.setOnClickListener(this);
-		mMasterFragment.setGestureDetector(mGestureDetector);
-		mDetailsFragment = (ViewSwitcher) view.findViewById(R.id.details_fragment);
-		mDetailsListFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_list_fragment);
-		mDetailsListFragment.setGestureDetector(mGestureDetector);
-		mCandesFragment = (CandlesFragment) view.findViewById(R.id.candles_fragment);
+		header = view.findViewById(R.id.header);
+		masterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
+		masterFragment.setOnClickListener(this);
+		masterFragment.setGestureDetector(gestureDetector);
+		detailsFragment = (ViewSwitcher) view.findViewById(R.id.details_fragment);
+		detailsListFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_list_fragment);
+		detailsListFragment.setGestureDetector(gestureDetector);
+		candlesFragment = (CandlesFragment) view.findViewById(R.id.candles_fragment);
 
-		mSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
-		if (mSwitcher != null) {
+		viewSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
+		if (viewSwitcher != null) {
 			Animation inAnim = AnimationUtils.makeInAnimation(this, false);
 			inAnim.setDuration(400);
-			mSwitcher.setInAnimation(inAnim);
+			viewSwitcher.setInAnimation(inAnim);
 			Animation outAnim = AnimationUtils.makeOutAnimation(this, true);
 			outAnim.setDuration(400);
-			mSwitcher.setOutAnimation(outAnim);
+			viewSwitcher.setOutAnimation(outAnim);
 		}
 
-		mSlideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+		slideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
 				Animation.RELATIVE_TO_SELF, 0.0f);
-		mSlideRightToLeft.setDuration(400);
-		mSlideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+		slideRightToLeft.setDuration(400);
+		slideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
 				Animation.RELATIVE_TO_SELF, 0.0f);
-		mSlideLeftToRight.setDuration(400);
-		mDetailsGrow = new LayoutWeightAnimation(mDetailsFragment, 0f, 2f);
-		mDetailsGrow.setDuration(500);
-		mDetailsShrink = new LayoutWeightAnimation(mDetailsFragment, 2f, 0f);
-		mDetailsShrink.setDuration(500);
+		slideLeftToRight.setDuration(400);
+		detailsGrow = new LayoutWeightAnimation(detailsFragment, 0f, 2f);
+		detailsGrow.setDuration(500);
+		detailsShrink = new LayoutWeightAnimation(detailsFragment, 2f, 0f);
+		detailsShrink.setDuration(500);
 	}
 
 	/** Initialise the location providers. */
 	private void initLocation() {
 		ZmanimApplication app = (ZmanimApplication) getApplication();
-		mLocations = app.getLocations();
-		mLocaleRTL = ZmanimLocations.isLocaleRTL();
+		locations = app.getLocations();
+		localeRTL = ZmanimLocations.isLocaleRTL();
 	}
 
 	/**
@@ -319,14 +319,14 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * 		the date.
 	 */
 	private void setDate(long date) {
-		mDate.setTimeInMillis(date);
-		mDate.setTimeZone(mLocations.getTimeZone());
+		this.date.setTimeInMillis(date);
+		this.date.setTimeZone(locations.getTimeZone());
 
-		View header = mHeader;
+		View header = this.header;
 		// Have we been destroyed?
 		if (header == null)
 			return;
-		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+		CharSequence dateGregorian = DateUtils.formatDateTime(this, this.date.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
 				| DateUtils.FORMAT_SHOW_WEEKDAY);
 		TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
 		textGregorian.setText(dateGregorian);
@@ -343,16 +343,16 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * 		the day of the month.
 	 */
 	private void setDate(int year, int monthOfYear, int dayOfMonth) {
-		mDate.set(Calendar.YEAR, year);
-		mDate.set(Calendar.MONTH, monthOfYear);
-		mDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-		mDate.setTimeZone(mLocations.getTimeZone());
+		date.set(Calendar.YEAR, year);
+		date.set(Calendar.MONTH, monthOfYear);
+		date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+		date.setTimeZone(locations.getTimeZone());
 
-		View header = mHeader;
+		View header = this.header;
 		// Have we been destroyed?
 		if (header == null)
 			return;
-		CharSequence dateGregorian = DateUtils.formatDateTime(this, mDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+		CharSequence dateGregorian = DateUtils.formatDateTime(this, date.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
 				| DateUtils.FORMAT_SHOW_WEEKDAY);
 		TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
 		textGregorian.setText(dateGregorian);
@@ -360,20 +360,20 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if (ZmanimLocation.compareTo(mAddressLocation, location) != 0) {
-			mAddress = null;
+		if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
+			address = null;
 		}
-		mAddressLocation = location;
-		if (mUpdateLocation == null) {
-			mUpdateLocation = new Runnable() {
+		addressLocation = location;
+		if (updateLocation == null) {
+			updateLocation = new Runnable() {
 				@Override
 				public void run() {
 					populateHeader();
-					populateFragments(mDate);
+					populateFragments(date);
 				}
 			};
 		}
-		runOnUiThread(mUpdateLocation);
+		runOnUiThread(updateLocation);
 	}
 
 	@Override
@@ -403,22 +403,22 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	/** Populate the header item. */
 	private void populateHeader() {
-		View header = mHeader;
+		View header = this.header;
 		// Have we been destroyed?
 		if (header == null)
 			return;
-		Location loc = (mAddressLocation == null) ? mLocations.getLocation() : mAddressLocation;
+		Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
 		// Have we been destroyed?
 		if (loc == null)
 			return;
 
-		final String coordsText = mLocations.formatCoordinates(loc);
+		final String coordsText = locations.formatCoordinates(loc);
 		final String locationName = formatAddress();
 
 		// Update the location.
 		TextView coordinates = (TextView) header.findViewById(R.id.coordinates);
 		coordinates.setText(coordsText);
-		coordinates.setVisibility(mSettings.isCoordinates() ? View.VISIBLE : View.GONE);
+		coordinates.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
 		TextView address = (TextView) header.findViewById(R.id.address);
 		address.setText(locationName);
 	}
@@ -438,19 +438,19 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_compass:
-				mHandler.sendEmptyMessage(WHAT_COMPASS);
+				handler.sendEmptyMessage(WHAT_COMPASS);
 				return true;
 			case R.id.menu_date:
-				mHandler.sendEmptyMessage(WHAT_DATE);
+				handler.sendEmptyMessage(WHAT_DATE);
 				return true;
 			case R.id.menu_location:
-				mHandler.sendEmptyMessage(WHAT_LOCATION);
+				handler.sendEmptyMessage(WHAT_LOCATION);
 				return true;
 			case R.id.menu_settings:
-				mHandler.sendEmptyMessage(WHAT_SETTINGS);
+				handler.sendEmptyMessage(WHAT_SETTINGS);
 				return true;
 			case R.id.menu_today:
-				mHandler.sendEmptyMessage(WHAT_TODAY);
+				handler.sendEmptyMessage(WHAT_TODAY);
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -459,22 +459,22 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		setDate(year, monthOfYear, dayOfMonth);
-		populateFragments(mDate);
+		populateFragments(date);
 	}
 
 	@Override
 	public void onAddressChanged(Location location, ZmanimAddress address) {
-		mAddressLocation = location;
-		mAddress = address;
-		if (mPopulateHeader == null) {
-			mPopulateHeader = new Runnable() {
+		addressLocation = location;
+		this.address = address;
+		if (populateHeader == null) {
+			populateHeader = new Runnable() {
 				@Override
 				public void run() {
 					populateHeader();
 				}
 			};
 		}
-		runOnUiThread(mPopulateHeader);
+		runOnUiThread(populateHeader);
 	}
 
 	@Override
@@ -488,8 +488,8 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * @return the formatted address.
 	 */
 	private String formatAddress() {
-		if (mAddress != null)
-			return mAddress.getFormatted();
+		if (address != null)
+			return address.getFormatted();
 		return getString(R.string.location_unknown);
 	}
 
@@ -517,34 +517,34 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 		if ((itemId == 0) || (itemId == R.string.fast_begins) || (itemId == R.string.fast_ends))
 			return;
 
-		if (mSwitcher != null) {
+		if (viewSwitcher != null) {
 			if (itemId == R.string.candles) {
-				mCandesFragment.populateTimes(mDate);
-				mDetailsFragment.setDisplayedChild(1);
+				candlesFragment.populateTimes(date);
+				detailsFragment.setDisplayedChild(1);
 			} else {
-				mDetailsListFragment.populateTimes(mDate, itemId);
-				mDetailsFragment.setDisplayedChild(0);
+				detailsListFragment.populateTimes(date, itemId);
+				detailsFragment.setDisplayedChild(0);
 			}
 			if (isDetailsShowing())
 				hideDetails();
 			else
 				showDetails();
-			mSelectedId = itemId;
-		} else if ((mSelectedId == itemId) && isDetailsShowing()) {
+			selectedId = itemId;
+		} else if ((selectedId == itemId) && isDetailsShowing()) {
 			hideDetails();
-			mMasterFragment.unhighlight();
+			masterFragment.unhighlight();
 		} else {
 			if (itemId == R.string.candles) {
-				mDetailsFragment.setDisplayedChild(1);
+				detailsFragment.setDisplayedChild(1);
 			} else {
-				mDetailsListFragment.populateTimes(mDate, itemId);
-				mDetailsFragment.setDisplayedChild(0);
+				detailsListFragment.populateTimes(date, itemId);
+				detailsFragment.setDisplayedChild(0);
 			}
-			mMasterFragment.unhighlight();
-			mMasterFragment.highlight(itemId);
+			masterFragment.unhighlight();
+			masterFragment.highlight(itemId);
 			if (!isDetailsShowing())
 				showDetails();
-			mSelectedId = itemId;
+			selectedId = itemId;
 		}
 	}
 
@@ -552,8 +552,8 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (mMasterFragment != null) {
-				mMasterFragment.unhighlight();
+			if (masterFragment != null) {
+				masterFragment.unhighlight();
 
 				if (isDetailsShowing()) {
 					hideDetails();
@@ -571,42 +571,42 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	}
 
 	protected void hideDetails() {
-		if (mSwitcher != null) {
-			mSwitcher.showPrevious();
+		if (viewSwitcher != null) {
+			viewSwitcher.showPrevious();
 
 			// Not enough to hide the details switcher = must also hide its
 			// children otherwise visible when sliding dates.
-			if (mDetailsListFragment != null)
-				mDetailsListFragment.setVisibility(View.INVISIBLE);
-			if (mCandesFragment != null)
-				mCandesFragment.setVisibility(View.INVISIBLE);
+			if (detailsListFragment != null)
+				detailsListFragment.setVisibility(View.INVISIBLE);
+			if (candlesFragment != null)
+				candlesFragment.setVisibility(View.INVISIBLE);
 		} else {
-			mDetailsFragment.startAnimation(mDetailsShrink);
+			detailsFragment.startAnimation(detailsShrink);
 		}
-		mSelectedId = 0;
+		selectedId = 0;
 	}
 
 	protected void showDetails() {
-		if (mSwitcher != null) {
-			mSwitcher.showNext();
+		if (viewSwitcher != null) {
+			viewSwitcher.showNext();
 		} else {
-			mDetailsFragment.startAnimation(mDetailsGrow);
+			detailsFragment.startAnimation(detailsGrow);
 		}
 	}
 
 	protected boolean isDetailsShowing() {
-		if ((mDetailsFragment == null) || (mDetailsFragment.getVisibility() != View.VISIBLE))
+		if ((detailsFragment == null) || (detailsFragment.getVisibility() != View.VISIBLE))
 			return false;
-		if (mSwitcher == null) {
-			LinearLayout.LayoutParams lp = (LayoutParams) mDetailsFragment.getLayoutParams();
+		if (viewSwitcher == null) {
+			LinearLayout.LayoutParams lp = (LayoutParams) detailsFragment.getLayoutParams();
 			return (lp.weight > 0);
 		}
-		return (mSwitcher.getCurrentView() == mDetailsFragment);
+		return (viewSwitcher.getCurrentView() == detailsFragment);
 	}
 
 	@Override
 	public boolean onSearchRequested() {
-		Location loc = mLocations.getLocation();
+		Location loc = locations.getLocation();
 		// Have we been destroyed?
 		if (loc == null)
 			return false;
@@ -625,10 +625,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 			if (resultCode == RESULT_OK) {
 				Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
 				if (loc == null) {
-					mLocations.setLocation(null);
-					loc = mLocations.getLocation();
+					locations.setLocation(null);
+					loc = locations.getLocation();
 				}
-				mLocations.setLocation(loc);
+				locations.setLocation(loc);
 			}
 		}
 	}
@@ -659,34 +659,34 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 		// Disable fling if showing candles to avoid showing no candles.
-		if (isDetailsShowing() && (mDetailsFragment.getDisplayedChild() != 0))
+		if (isDetailsShowing() && (detailsFragment.getDisplayedChild() != 0))
 			return false;
 
 		// Go to date?
 		float dX = e2.getX() - e1.getX();
 		float dY = e2.getY() - e1.getY();
 		if (Math.abs(dX) > Math.abs(dY)) {
-			Calendar date = mDate;
+			Calendar date = this.date;
 			int day = date.get(Calendar.DATE);
 			if (dX < 0) {
-				if (mLocaleRTL) {
+				if (localeRTL) {
 					date.set(Calendar.DATE, day - 1);
-					slideRight(mMasterFragment);
-					slideRight(mDetailsFragment);
+					slideRight(masterFragment);
+					slideRight(detailsFragment);
 				} else {
 					date.set(Calendar.DATE, day + 1);
-					slideLeft(mMasterFragment);
-					slideLeft(mDetailsFragment);
+					slideLeft(masterFragment);
+					slideLeft(detailsFragment);
 				}
 			} else {
-				if (mLocaleRTL) {
+				if (localeRTL) {
 					date.set(Calendar.DATE, day + 1);
-					slideLeft(mMasterFragment);
-					slideLeft(mDetailsFragment);
+					slideLeft(masterFragment);
+					slideLeft(detailsFragment);
 				} else {
 					date.set(Calendar.DATE, day - 1);
-					slideRight(mMasterFragment);
-					slideRight(mDetailsFragment);
+					slideRight(masterFragment);
+					slideRight(detailsFragment);
 				}
 			}
 			setDate(date.getTimeInMillis());
@@ -698,7 +698,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (mGestureDetector.onTouchEvent(event))
+		if (gestureDetector.onTouchEvent(event))
 			return true;
 		return super.onTouchEvent(event);
 	}
@@ -706,7 +706,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		mLocaleRTL = ZmanimLocations.isLocaleRTL();
+		localeRTL = ZmanimLocations.isLocaleRTL();
 	}
 
 	/**
@@ -716,7 +716,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * 		the view to animate.
 	 */
 	protected void slideLeft(View view) {
-		view.startAnimation(mSlideRightToLeft);
+		view.startAnimation(slideRightToLeft);
 	}
 
 	/**
@@ -726,12 +726,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	 * 		the view to animate.
 	 */
 	protected void slideRight(View view) {
-		view.startAnimation(mSlideLeftToRight);
+		view.startAnimation(slideLeftToRight);
 	}
 
 	private void populateFragments(Calendar date) {
-		mMasterFragment.populateTimes(mDate);
-		mDetailsListFragment.populateTimes(mDate);
-		mCandesFragment.populateTimes(mDate);
+		masterFragment.populateTimes(this.date);
+		detailsListFragment.populateTimes(this.date);
+		candlesFragment.populateTimes(this.date);
 	}
 }
