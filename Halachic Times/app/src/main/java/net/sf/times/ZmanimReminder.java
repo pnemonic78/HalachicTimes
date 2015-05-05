@@ -31,6 +31,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -377,21 +378,26 @@ public class ZmanimReminder extends BroadcastReceiver {
 	}
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint({"Wakelock"})
 	private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
 		Log.i(TAG, "notify now [" + contentTitle + "]");
 
-		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		int audioStreamType = settings.getReminderStream();
+		Uri sound;
+		if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		} else {
+			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		}
 		Notification notification = new Notification();
-		notification.audioStreamType = settings.getReminderStream();
+		notification.audioStreamType = audioStreamType;
 		notification.icon = R.drawable.stat_notify_time;
-		notification.defaults = Notification.DEFAULT_ALL;
+		notification.defaults = Notification.DEFAULT_VIBRATE;
 		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
 		notification.ledARGB = Color.YELLOW;
-		notification.ledOffMS = 0;
-		notification.ledOnMS = 1;
+		notification.ledOffMS = 250;
+		notification.ledOnMS = 500;
 		notification.when = item.time;// When the zman is supposed to occur.
 		notification.sound = sound;
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
@@ -400,23 +406,29 @@ public class ZmanimReminder extends BroadcastReceiver {
 	}
 
 	@SuppressWarnings("deprecation")
-	@SuppressLint({"Wakelock", "NewApi"})
+	@SuppressLint("NewApi")
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private Notification createNotification(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
 		CharSequence contentTitle = context.getText(item.titleId);
 		CharSequence contentText = item.summary;
 		Log.i(TAG, "notify now [" + contentTitle + "]");
 
-		Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		int audioStreamType = settings.getReminderStream();
+		Uri sound;
+		if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		} else {
+			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		}
 		Notification.Builder builder = new Notification.Builder(context);
 		builder.setContentIntent(contentIntent);
 		builder.setContentText(contentText);
 		builder.setContentTitle(contentTitle);
-		builder.setDefaults(Notification.DEFAULT_ALL);
+		builder.setDefaults(Notification.DEFAULT_VIBRATE);
 		builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
-		builder.setLights(Color.YELLOW, 1, 0);
+		builder.setLights(Color.YELLOW, 500, 250);
 		builder.setSmallIcon(R.drawable.stat_notify_time);
-		builder.setSound(sound, settings.getReminderStream());
+		builder.setSound(sound, audioStreamType);
 		builder.setWhen(item.time);// When the zman is supposed to occur.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 			builder.setShowWhen(true);
@@ -430,6 +442,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 		return notification;
 	}
 
+	@SuppressLint("Wakelock")
 	private void postNotification(Notification notification) {
 		// Wake up the device to notify the user.
 		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
