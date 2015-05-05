@@ -23,9 +23,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -51,7 +53,9 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import net.sf.app.TodayDatePickerDialog;
+import net.sf.content.ContextResourcesWrapper;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.content.res.ZmanimResources;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
@@ -149,7 +153,11 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 					final int month = date.get(Calendar.MONTH);
 					final int day = date.get(Calendar.DAY_OF_MONTH);
 					if (datePicker == null) {
-						datePicker = new TodayDatePickerDialog(ZmanimActivity.this, ZmanimActivity.this, year, month, day);
+						Context context = ZmanimActivity.this;
+						Resources res = context.getResources();
+						res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
+						context = new ContextResourcesWrapper(context, res);
+						datePicker = new TodayDatePickerDialog(context, ZmanimActivity.this, year, month, day);
 					} else {
 						datePicker.updateDate(year, month, day);
 					}
