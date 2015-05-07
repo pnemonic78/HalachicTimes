@@ -30,6 +30,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -154,9 +155,11 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 					final int day = date.get(Calendar.DAY_OF_MONTH);
 					if (datePicker == null) {
 						Context context = ZmanimActivity.this;
-						Resources res = context.getResources();
-						res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
-						context = new ContextResourcesWrapper(context, res);
+						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+							Resources res = context.getResources();
+							res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
+							context = new ContextResourcesWrapper(context, res);
+						}
 						datePicker = new TodayDatePickerDialog(context, ZmanimActivity.this, year, month, day);
 					} else {
 						datePicker.updateDate(year, month, day);
