@@ -212,6 +212,7 @@
     <string name="midnight">Midnight (chatzos)</string>
     <string name="midnight_summary">Solar midnight</string>
     <string name="midnight_12">12 hours after midday</string>
+    <string name="midnight_6">6 hours after nightfall</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Latest time to eat chametz</string>

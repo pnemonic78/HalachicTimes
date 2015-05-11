@@ -662,20 +662,17 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
 	private void populateMidnight(ComplexZmanimCalendar cal) {
 		Date date;
 		int title;
-		String opinion;
 
-		Date midday = null;
-		opinion = settings.getMidday();
-		if (OPINION_FIXED.equals(opinion)) {
-			midday = cal.getFixedLocalChatzos();
-		} else {
-			midday = cal.getChatzos();
-		}
-
-		date = midday;
+		date = getMidday(cal);
 		if (date != null)
 			date.setTime(date.getTime() + TWELVE_HOURS);
 		title = R.string.midnight_12;
+		add(title, 0, date);
+
+		date = getNightfall(cal);
+		if (date != null)
+			date.setTime(date.getTime() + SIX_HOURS);
+		title = R.string.midnight_6;
 		add(title, 0, date);
 
 		date = cal.getSolarMidnight();

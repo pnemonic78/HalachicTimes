@@ -312,10 +312,12 @@
     <string-array name="midnight_values" translatable="false">
         <item></item>
         <item>12</item>
+        <item>6</item>
     </string-array>
     <string-array name="midnight_entries" translatable="false">
         <item>@string/midnight_summary</item>
         <item>@string/midnight_12</item>
+        <item>@string/midnight_6</item>
     </string-array>
     <string-array name="candles_chanukka_values" translatable="false">
         <item></item>

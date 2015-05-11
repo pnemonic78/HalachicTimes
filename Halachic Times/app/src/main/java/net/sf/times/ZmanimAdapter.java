@@ -55,8 +55,10 @@ import java.util.Locale;
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
-	/** 12 hours (half a full day). */
+	/** 12 hours (half of a full day). */
 	protected static final long TWELVE_HOURS = DateUtils.DAY_IN_MILLIS >> 1;
+	/** 6 hours (quarter of a full day). */
+	protected static final long SIX_HOURS = DateUtils.DAY_IN_MILLIS >> 2;
 
 	/** Holiday id for Shabbath. */
 	public static final int SHABBATH = 100;
@@ -85,46 +87,47 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	protected static final int HOLIDAY_MASK = 0x000000FF;
 	protected static final int MOTZE_MASK = 0xF0000000;
 
-	private static final String OPINION_10_2 = "10.2";
-	private static final String OPINION_11 = "11";
-	private static final String OPINION_12 = "12";
-	private static final String OPINION_120 = "120";
-	private static final String OPINION_120_ZMANIS = "120_zmanis";
-	private static final Object OPINION_13 = "13.24";
-	private static final String OPINION_15 = "15";
-	private static final String OPINION_16_1 = "16.1";
-	private static final String OPINION_16_1_ALOS = "16.1_alos";
-	private static final String OPINION_16_1_SUNSET = "16.1_sunset";
-	private static final String OPINION_18 = "18";
-	private static final String OPINION_19_8 = "19.8";
-	private static final String OPINION_2 = "2";
-	private static final String OPINION_26 = "26";
-	private static final String OPINION_3 = "3";
-	private static final String OPINION_3_65 = "3.65";
-	private static final String OPINION_3_676 = "3.676";
-	private static final String OPINION_30 = "30";
-	private static final String OPINION_4_37 = "4.37";
-	private static final String OPINION_4_61 = "4.61";
-	private static final String OPINION_4_8 = "4.8";
-	private static final String OPINION_5_88 = "5.88";
-	private static final String OPINION_5_95 = "5.95";
-	private static final Object OPINION_58 = "58.5";
-	private static final String OPINION_60 = "60";
-	private static final String OPINION_7 = "7";
-	private static final String OPINION_7_083 = "7.083";
-	private static final String OPINION_72 = "72";
-	private static final String OPINION_72_ZMANIS = "72_zmanis";
-	private static final String OPINION_8_5 = "8.5";
-	private static final String OPINION_90 = "90";
-	private static final String OPINION_90_ZMANIS = "90_zmanis";
-	private static final String OPINION_96 = "96";
-	private static final String OPINION_96_ZMANIS = "96_zmanis";
-	private static final String OPINION_ATERET = "AT";
-	private static final String OPINION_GRA = "GRA";
-	private static final String OPINION_MGA = "MGA";
+	protected static final String OPINION_10_2 = "10.2";
+	protected static final String OPINION_11 = "11";
+	protected static final String OPINION_12 = "12";
+	protected static final String OPINION_120 = "120";
+	protected static final String OPINION_120_ZMANIS = "120_zmanis";
+	protected static final Object OPINION_13 = "13.24";
+	protected static final String OPINION_15 = "15";
+	protected static final String OPINION_16_1 = "16.1";
+	protected static final String OPINION_16_1_ALOS = "16.1_alos";
+	protected static final String OPINION_16_1_SUNSET = "16.1_sunset";
+	protected static final String OPINION_18 = "18";
+	protected static final String OPINION_19_8 = "19.8";
+	protected static final String OPINION_2 = "2";
+	protected static final String OPINION_26 = "26";
+	protected static final String OPINION_3 = "3";
+	protected static final String OPINION_3_65 = "3.65";
+	protected static final String OPINION_3_676 = "3.676";
+	protected static final String OPINION_30 = "30";
+	protected static final String OPINION_4_37 = "4.37";
+	protected static final String OPINION_4_61 = "4.61";
+	protected static final String OPINION_4_8 = "4.8";
+	protected static final String OPINION_5_88 = "5.88";
+	protected static final String OPINION_5_95 = "5.95";
+	protected static final Object OPINION_58 = "58.5";
+	protected static final String OPINION_6 = "6";
+	protected static final String OPINION_60 = "60";
+	protected static final String OPINION_7 = "7";
+	protected static final String OPINION_7_083 = "7.083";
+	protected static final String OPINION_72 = "72";
+	protected static final String OPINION_72_ZMANIS = "72_zmanis";
+	protected static final String OPINION_8_5 = "8.5";
+	protected static final String OPINION_90 = "90";
+	protected static final String OPINION_90_ZMANIS = "90_zmanis";
+	protected static final String OPINION_96 = "96";
+	protected static final String OPINION_96_ZMANIS = "96_zmanis";
+	protected static final String OPINION_ATERET = "AT";
+	protected static final String OPINION_GRA = "GRA";
+	protected static final String OPINION_MGA = "MGA";
 	protected static final String OPINION_FIXED = "fixed";
-	private static final String OPINION_LEVEL = "level";
-	private static final String OPINION_SEA = "sea";
+	protected static final String OPINION_LEVEL = "level";
+	protected static final String OPINION_SEA = "sea";
 	private static final String OPINION_TWILIGHT = "twilight";
 	private static final String OPINION_NIGHT = "nightfall";
 
@@ -1035,6 +1038,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 		} else if (remote) {
 			add(R.id.candles_nightfall_row, R.string.nightfall, R.id.candles_nightfall_time, null);
 		}
+		Date nightfall = date;
 
 		opinion = settings.getMidnight();
 		if (OPINION_12.equals(opinion)) {
@@ -1042,6 +1046,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 			if (date != null)
 				date.setTime(date.getTime() + TWELVE_HOURS);
 			summary = R.string.midnight_12;
+		} else if (OPINION_6.equals(opinion)) {
+			date = nightfall;
+			if (date != null)
+				date.setTime(date.getTime() + SIX_HOURS);
+			summary = R.string.midnight_6;
 		} else {
 			date = cal.getSolarMidnight();
 			summary = R.string.midnight_summary;
@@ -1302,5 +1311,72 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 	 */
 	public void setInIsrael(boolean inIsrael) {
 		this.inIsrael = inIsrael;
+	}
+
+	protected Date getMidday(ComplexZmanimCalendar cal) {
+		Date date;
+		String opinion = settings.getMidday();
+		if (OPINION_FIXED.equals(opinion)) {
+			date = cal.getFixedLocalChatzos();
+		} else {
+			date = cal.getChatzos();
+		}
+		return date;
+	}
+
+	protected Date getNightfall(ComplexZmanimCalendar cal) {
+		Date date;
+		String opinion =settings.getNightfall();
+		if (OPINION_120.equals(opinion)) {
+			date = cal.getTzais120();
+		} else if (OPINION_120_ZMANIS.equals(opinion)) {
+			date = cal.getTzais120Zmanis();
+		} else if (OPINION_16_1.equals(opinion)) {
+			date = cal.getTzais16Point1Degrees();
+		} else if (OPINION_18.equals(opinion)) {
+			date = cal.getTzais18Degrees();
+		} else if (OPINION_19_8.equals(opinion)) {
+			date = cal.getTzais19Point8Degrees();
+		} else if (OPINION_26.equals(opinion)) {
+			date = cal.getTzais26Degrees();
+		} else if (OPINION_60.equals(opinion)) {
+			date = cal.getTzais60();
+		} else if (OPINION_72.equals(opinion)) {
+			date = cal.getTzais72();
+		} else if (OPINION_72_ZMANIS.equals(opinion)) {
+			date = cal.getTzais72Zmanis();
+		} else if (OPINION_90.equals(opinion)) {
+			date = cal.getTzais90();
+		} else if (OPINION_90_ZMANIS.equals(opinion)) {
+			date = cal.getTzais90Zmanis();
+		} else if (OPINION_96.equals(opinion)) {
+			date = cal.getTzais96();
+		} else if (OPINION_96_ZMANIS.equals(opinion)) {
+			date = cal.getTzais96Zmanis();
+		} else if (OPINION_ATERET.equals(opinion)) {
+			date = cal.getTzaisAteretTorah();
+		} else if (OPINION_3_65.equals(opinion)) {
+			date = cal.getTzaisGeonim3Point65Degrees();
+		} else if (OPINION_3_676.equals(opinion)) {
+			date = cal.getTzaisGeonim3Point676Degrees();
+		} else if (OPINION_4_37.equals(opinion)) {
+			date = cal.getTzaisGeonim4Point37Degrees();
+		} else if (OPINION_4_61.equals(opinion)) {
+			date = cal.getTzaisGeonim4Point61Degrees();
+		} else if (OPINION_4_8.equals(opinion)) {
+			date = cal.getTzaisGeonim4Point8Degrees();
+		} else if (OPINION_5_88.equals(opinion)) {
+			date = cal.getTzaisGeonim5Point88Degrees();
+		} else if (OPINION_5_95.equals(opinion)) {
+			date = cal.getTzaisGeonim5Point95Degrees();
+		} else if (OPINION_7_083.equals(opinion)) {
+			date = cal.getTzaisGeonim7Point083Degrees();
+		} else if (OPINION_8_5.equals(opinion)) {
+			date = cal.getTzaisGeonim8Point5Degrees();
+		} else {
+			date = cal.getTzais();
+		}
+
+		return date;
 	}
 }
