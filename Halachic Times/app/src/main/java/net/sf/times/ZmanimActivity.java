@@ -181,9 +181,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 					break;
 				case WHAT_TODAY:
 					setDate(System.currentTimeMillis());
-					masterFragment.populateTimes(date);
-					detailsListFragment.populateTimes(date);
-					candlesFragment.populateTimes(date);
+					populateFragments(date);
 					break;
 			}
 		}
@@ -669,10 +667,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-		// Disable fling if showing candles to avoid showing no candles.
-		if (isDetailsShowing() && (detailsFragment.getDisplayedChild() != 0))
-			return false;
-
 		// Go to date?
 		float dX = e2.getX() - e1.getX();
 		float dY = e2.getY() - e1.getY();
@@ -741,8 +735,44 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 	}
 
 	private void populateFragments(Calendar date) {
-		masterFragment.populateTimes(this.date);
-		detailsListFragment.populateTimes(this.date);
-		candlesFragment.populateTimes(this.date);
+		masterFragment.populateTimes(date);
+		detailsListFragment.populateTimes(date);
+		candlesFragment.populateTimes(date);
+
+		if (!isValidDetailsShowing())
+			hideDetails();
+	}
+
+	/**
+	 * Is the details list populated for a valid date?<br>
+	 * For example, candle lighting for a Friday or Erev Chag.
+	 *
+	 * @return {@code true} if valid.
+	 */
+	private boolean isValidDetailsShowing() {
+		if (!isDetailsShowing())
+			return true;
+
+		if (candlesFragment.isVisible()) {
+			ZmanimAdapter candlesAdapter = candlesFragment.getAdapter();
+			if (candlesAdapter.isEmpty())
+				return false;
+			return true;
+		}
+
+		if (detailsListFragment.isVisible()) {
+			int masterId = detailsListFragment.getMasterId();
+			ZmanimAdapter masterAdapter = masterFragment.getAdapter();
+			int count = masterAdapter.getCount();
+			ZmanimItem item;
+			for (int i = 0; i < count; i++) {
+				item = masterAdapter.getItem(i);
+				if (item.titleId == masterId)
+					return true;
+			}
+			return false;
+		}
+
+		return false;
 	}
 }
