@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachinen Ajat Kello</string>
+    <string name="category_appearance">Ulkonäkö</string>
+    <string name="hour">Kausiluonteinen tunti</string>
+    <string name="emphasis_title">Painotus</string>
 
 </resources>

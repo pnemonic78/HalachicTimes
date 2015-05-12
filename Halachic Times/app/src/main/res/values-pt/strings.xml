@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Horários Haláchicos Relógio</string>
+    <string name="category_appearance">Aparência</string>
+    <string name="hour">Hora sazonal</string>
+    <string name="emphasis_title">Ênfase</string>
 
 </resources>

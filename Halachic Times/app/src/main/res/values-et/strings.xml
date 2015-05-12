@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiline Ajad Kell</string>
+    <string name="category_appearance">Välimus</string>
+    <string name="emphasis_title">Rõhk</string>
+    <string name="hour">Hooajaline tund</string>
 
 </resources>

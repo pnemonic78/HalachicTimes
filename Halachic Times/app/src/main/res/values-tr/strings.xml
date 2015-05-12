@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachik Vakitleri Saat</string>
+    <string name="category_appearance">Görünüş</string>
+    <string name="hour">Mevsimlik saat</string>
+    <string name="emphasis_title">Önem</string>
 
 </resources>

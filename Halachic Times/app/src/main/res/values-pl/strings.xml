@@ -183,5 +183,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiczny Czasy Zegar</string>
+    <string name="category_appearance">Wygląd</string>
+    <string name="hour">Sezonowy godzin</string>
+    <string name="emphasis_title">Akcent</string>
 
 </resources>

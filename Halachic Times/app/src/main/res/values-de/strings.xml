@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Zeiten Uhr</string>
+    <string name="category_appearance">Darstellung</string>
+    <string name="emphasis_title">Betonung</string>
+    <string name="hour">Saison Stunde</string>
 
 </resources>

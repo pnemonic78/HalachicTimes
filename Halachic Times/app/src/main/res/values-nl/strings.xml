@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Tijden Klok</string>
+    <string name="category_appearance">Uiterlijk</string>
+    <string name="hour">Seizoensgebonden uur</string>
+    <string name="emphasis_title">Klemtoon</string>
 
 </resources>

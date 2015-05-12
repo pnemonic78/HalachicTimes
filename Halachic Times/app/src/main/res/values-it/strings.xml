@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Tempi Halachiche Orologio</string>
+    <string name="category_appearance">Apparenza</string>
+    <string name="hour">Ora stagionale</string>
+    <string name="emphasis_title">Enfasi</string>
 
 </resources>

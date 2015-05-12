@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiska Tider Klocka</string>
+    <string name="category_appearance">Utseende</string>
+    <string name="hour">Säsongs timme</string>
+    <string name="emphasis_title">Betoning</string>
 
 </resources>

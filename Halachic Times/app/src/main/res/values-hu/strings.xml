@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachikus Szor Óra</string>
+    <string name="category_appearance">Megjelenés</string>
+    <string name="hour">Szezonális óra</string>
+    <string name="emphasis_title">Hangsúly</string>
 
 </resources>

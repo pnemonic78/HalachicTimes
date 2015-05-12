@@ -181,5 +181,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Ori Halachic Ceas</string>
+    <string name="category_appearance">Aparenţă</string>
+    <string name="hour">Oră de sezon</string>
+    <string name="emphasis_title">Accent</string>
 
 </resources>

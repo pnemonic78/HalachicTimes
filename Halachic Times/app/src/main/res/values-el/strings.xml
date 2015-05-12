@@ -179,5 +179,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Ήαλαχικός Φορές Ρολόι</string>
+    <string name="category_appearance">Παρουσιαστικό</string>
+    <string name="emphasis_title">Έμφαση</string>
+    <string name="hour">Εποχιακές ώρα</string>
 
 </resources>

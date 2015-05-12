@@ -183,5 +183,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Галахических Разів Годинник</string>
+    <string name="category_appearance">Вигляд</string>
+    <string name="hour">Сезонний годину</string>
+    <string name="emphasis_title">Акцент</string>
 
 </resources>

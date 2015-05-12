@@ -181,5 +181,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachinis Kartų Laikrodis</string>
+    <string name="category_appearance">Išvaizda</string>
+    <string name="hour">Sezoninis valandą</string>
+    <string name="emphasis_title">Emfazė</string>
 
 </resources>

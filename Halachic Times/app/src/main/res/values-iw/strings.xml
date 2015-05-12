@@ -183,5 +183,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">שעון זמנים הלכתיים</string>
+    <string name="category_appearance">מראה</string>
+    <string name="emphasis_title">הדגשה</string>
+    <string name="hour">שעה זמנית</string>
 
 </resources>

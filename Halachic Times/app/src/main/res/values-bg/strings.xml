@@ -177,5 +177,8 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Халахичен Време Часовник</string>
+    <string name="category_appearance">появяване</string>
+    <string name="emphasis_title">Емфаза</string>
+    <string name="hour">Сезонна часа</string>
 
 </resources>
