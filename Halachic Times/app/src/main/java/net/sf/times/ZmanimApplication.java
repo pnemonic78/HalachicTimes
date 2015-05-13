@@ -32,60 +32,60 @@ import net.sf.times.location.ZmanimLocations;
  */
 public class ZmanimApplication extends Application {
 
-	/** Provider for locations. */
-	private ZmanimLocations locations;
-	/** Provider for addresses. */
-	private AddressProvider addressProvider;
+    /** Provider for locations. */
+    private ZmanimLocations locations;
+    /** Provider for addresses. */
+    private AddressProvider addressProvider;
 
-	/**
-	 * Constructs a new application.
-	 */
-	public ZmanimApplication() {
-	}
+    /**
+     * Constructs a new application.
+     */
+    public ZmanimApplication() {
+    }
 
-	/**
-	 * Get the locations provider instance.
-	 *
-	 * @return the provider.
-	 */
-	public ZmanimLocations getLocations() {
-		if (locations == null) {
-			locations = new ZmanimLocations(this);
-		}
-		return locations;
-	}
+    /**
+     * Get the locations provider instance.
+     *
+     * @return the provider.
+     */
+    public ZmanimLocations getLocations() {
+        if (locations == null) {
+            locations = new ZmanimLocations(this);
+        }
+        return locations;
+    }
 
-	/**
-	 * Get the addresses provider instance.
-	 *
-	 * @return the provider.
-	 */
-	public AddressProvider getAddresses() {
-		if (addressProvider == null) {
-			addressProvider = new AddressProvider(this);
-		}
-		return addressProvider;
-	}
+    /**
+     * Get the addresses provider instance.
+     *
+     * @return the provider.
+     */
+    public AddressProvider getAddresses() {
+        if (addressProvider == null) {
+            addressProvider = new AddressProvider(this);
+        }
+        return addressProvider;
+    }
 
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-		SQLiteDatabase.releaseMemory();
-	}
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        SQLiteDatabase.releaseMemory();
+    }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-	}
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 
-	@Override
-	public void onTerminate() {
-		if (addressProvider != null) {
-			addressProvider.close();
-		}
-		if (locations != null) {
-			locations.quit();
-		}
-		super.onTerminate();
-	}
+    @Override
+    public void onTerminate() {
+        if (addressProvider != null) {
+            addressProvider.close();
+        }
+        if (locations != null) {
+            locations.quit();
+        }
+        super.onTerminate();
+    }
 }

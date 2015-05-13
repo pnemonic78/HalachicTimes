@@ -35,89 +35,89 @@ import net.sf.times.location.AddressProvider.OnFindAddressListener;
  */
 public class AddressService extends IntentService implements OnFindAddressListener {
 
-	private static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
-	private static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
-	private static final String ADDRESS_ACTION = ZmanimLocationListener.ADDRESS_ACTION;
-	private static final String ELEVATION_ACTION = ZmanimLocationListener.ELEVATION_ACTION;
+    private static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
+    private static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
+    private static final String ADDRESS_ACTION = ZmanimLocationListener.ADDRESS_ACTION;
+    private static final String ELEVATION_ACTION = ZmanimLocationListener.ELEVATION_ACTION;
 
-	private static final String NAME = "AddressService";
+    private static final String NAME = "AddressService";
 
-	private AddressProvider addressProvider;
+    private AddressProvider addressProvider;
 
-	/**
-	 * Constructs a new service.
-	 *
-	 * @param name
-	 * 		the worker thread name.
-	 */
-	public AddressService(String name) {
-		super(name);
-	}
+    /**
+     * Constructs a new service.
+     *
+     * @param name
+     *         the worker thread name.
+     */
+    public AddressService(String name) {
+        super(name);
+    }
 
-	/**
-	 * Constructs a new service.
-	 */
-	public AddressService() {
-		this(NAME);
-	}
+    /**
+     * Constructs a new service.
+     */
+    public AddressService() {
+        this(NAME);
+    }
 
-	@Override
-	protected void onHandleIntent(Intent intent) {
-		if (intent == null)
-			return;
-		Bundle extras = intent.getExtras();
-		if (extras == null)
-			return;
-		Location location = extras.getParcelable(PARAMETER_LOCATION);
-		if (location == null)
-			return;
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        if (intent == null)
+            return;
+        Bundle extras = intent.getExtras();
+        if (extras == null)
+            return;
+        Location location = extras.getParcelable(PARAMETER_LOCATION);
+        if (location == null)
+            return;
 
-		final AddressProvider provider = addressProvider;
-		if (provider == null)
-			return;
-		String action = intent.getAction();
-		if (ADDRESS_ACTION.equals(action)) {
-			provider.findNearestAddress(location, this);
-		} else if (ELEVATION_ACTION.equals(action)) {
-			provider.findElevation(location, this);
-		}
-	}
+        final AddressProvider provider = addressProvider;
+        if (provider == null)
+            return;
+        String action = intent.getAction();
+        if (ADDRESS_ACTION.equals(action)) {
+            provider.findNearestAddress(location, this);
+        } else if (ELEVATION_ACTION.equals(action)) {
+            provider.findElevation(location, this);
+        }
+    }
 
-	@Override
-	public void onFindAddress(AddressProvider provider, Location location, Address address) {
-		ZmanimAddress addr = null;
-		if (address != null) {
-			if (address instanceof ZmanimAddress) {
-				addr = (ZmanimAddress) address;
-			} else {
-				addr = new ZmanimAddress(address);
-				if (location.hasAltitude())
-					addr.setElevation(location.getAltitude());
-			}
-			provider.insertOrUpdateAddress(location, addr);
-		}
+    @Override
+    public void onFindAddress(AddressProvider provider, Location location, Address address) {
+        ZmanimAddress addr = null;
+        if (address != null) {
+            if (address instanceof ZmanimAddress) {
+                addr = (ZmanimAddress) address;
+            } else {
+                addr = new ZmanimAddress(address);
+                if (location.hasAltitude())
+                    addr.setElevation(location.getAltitude());
+            }
+            provider.insertOrUpdateAddress(location, addr);
+        }
 
-		Intent result = new Intent(ADDRESS_ACTION);
-		result.putExtra(PARAMETER_LOCATION, location);
-		result.putExtra(PARAMETER_ADDRESS, addr);
-		sendBroadcast(result);
-	}
+        Intent result = new Intent(ADDRESS_ACTION);
+        result.putExtra(PARAMETER_LOCATION, location);
+        result.putExtra(PARAMETER_ADDRESS, addr);
+        sendBroadcast(result);
+    }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		ZmanimApplication app = (ZmanimApplication) getApplication();
-		addressProvider = app.getAddresses();
-	}
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ZmanimApplication app = (ZmanimApplication) getApplication();
+        addressProvider = app.getAddresses();
+    }
 
-	@Override
-	public void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated) {
-		if (elevated != null) {
-			provider.insertOrUpdateElevation(elevated);
+    @Override
+    public void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated) {
+        if (elevated != null) {
+            provider.insertOrUpdateElevation(elevated);
 
-			Intent result = new Intent(ELEVATION_ACTION);
-			result.putExtra(PARAMETER_LOCATION, elevated);
-			sendBroadcast(result);
-		}
-	}
+            Intent result = new Intent(ELEVATION_ACTION);
+            result.putExtra(PARAMETER_LOCATION, elevated);
+            sendBroadcast(result);
+        }
+    }
 }

@@ -33,35 +33,35 @@ import net.sf.times.R;
  */
 public class TodayDatePickerDialog extends DatePickerDialog {
 
-	public TodayDatePickerDialog(Context context, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
-		super(context, callBack, year, monthOfYear, dayOfMonth);
-		init(context);
-	}
+    public TodayDatePickerDialog(Context context, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
+        super(context, callBack, year, monthOfYear, dayOfMonth);
+        init(context);
+    }
 
-	public TodayDatePickerDialog(Context context, int theme, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
-		super(context, theme, callBack, year, monthOfYear, dayOfMonth);
-		init(context);
-	}
+    public TodayDatePickerDialog(Context context, int theme, OnDateSetListener callBack, int year, int monthOfYear, int dayOfMonth) {
+        super(context, theme, callBack, year, monthOfYear, dayOfMonth);
+        init(context);
+    }
 
-	private void init(Context context) {
-		setButton(BUTTON_NEUTRAL, context.getText(R.string.today), this);
-	}
+    private void init(Context context) {
+        setButton(BUTTON_NEUTRAL, context.getText(R.string.today), this);
+    }
 
-	@Override
-	public void onClick(DialogInterface dialog, int which) {
-		if (which == BUTTON_NEUTRAL) {
-			setToday();
-		}
-		super.onClick(dialog, which);
-	}
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (which == BUTTON_NEUTRAL) {
+            setToday();
+        }
+        super.onClick(dialog, which);
+    }
 
-	private void setToday() {
-		// "Time" object is cheaper than "Calendar".
-		Time today = new Time();
-		today.setToNow();
-		int year = today.year;
-		int monthOfYear = today.month;
-		int dayOfMonth = today.monthDay;
-		updateDate(year, monthOfYear, dayOfMonth);
-	}
+    private void setToday() {
+        // "Time" object is cheaper than "Calendar".
+        Time today = new Time();
+        today.setToNow();
+        int year = today.year;
+        int monthOfYear = today.month;
+        int dayOfMonth = today.monthDay;
+        updateDate(year, monthOfYear, dayOfMonth);
+    }
 }

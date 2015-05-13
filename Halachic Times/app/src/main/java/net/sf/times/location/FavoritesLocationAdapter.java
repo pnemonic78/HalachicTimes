@@ -30,12 +30,12 @@ import java.util.List;
  */
 public class FavoritesLocationAdapter extends SpecificLocationAdapter {
 
-	public FavoritesLocationAdapter(Context context, List<LocationItem> items) {
-		super(context, items);
-	}
+    public FavoritesLocationAdapter(Context context, List<LocationItem> items) {
+        super(context, items);
+    }
 
-	@Override
-	protected boolean isSpecific(ZmanimAddress address) {
-		return address.isFavorite();
-	}
+    @Override
+    protected boolean isSpecific(ZmanimAddress address) {
+        return address.isFavorite();
+    }
 }

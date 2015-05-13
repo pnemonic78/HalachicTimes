@@ -28,39 +28,39 @@ import android.widget.LinearLayout;
 
 public class LayoutWeightAnimation extends Animation {
 
-	private View view;
-	private float fromWeight;
-	private float toWeight;
-	private boolean increase;
+    private View view;
+    private float fromWeight;
+    private float toWeight;
+    private boolean increase;
 
-	public LayoutWeightAnimation(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public LayoutWeightAnimation(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public LayoutWeightAnimation(View view, float fromWeight, float toWeight) {
-		this.view = view;
-		this.fromWeight = fromWeight;
-		this.toWeight = toWeight;
-		increase = toWeight >= fromWeight;
-	}
+    public LayoutWeightAnimation(View view, float fromWeight, float toWeight) {
+        this.view = view;
+        this.fromWeight = fromWeight;
+        this.toWeight = toWeight;
+        increase = toWeight >= fromWeight;
+    }
 
-	@Override
-	public boolean willChangeBounds() {
-		return true;
-	}
+    @Override
+    public boolean willChangeBounds() {
+        return true;
+    }
 
-	@Override
-	public boolean willChangeTransformationMatrix() {
-		return false;
-	}
+    @Override
+    public boolean willChangeTransformationMatrix() {
+        return false;
+    }
 
-	@Override
-	protected void applyTransformation(float interpolatedTime, Transformation t) {
-		LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
-		if (increase)
-			lp.weight = (toWeight - fromWeight) * interpolatedTime;
-		else
-			lp.weight = (fromWeight - toWeight) * (1f - interpolatedTime);
-		view.setLayoutParams(lp);
-	}
+    @Override
+    protected void applyTransformation(float interpolatedTime, Transformation t) {
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) view.getLayoutParams();
+        if (increase)
+            lp.weight = (toWeight - fromWeight) * interpolatedTime;
+        else
+            lp.weight = (fromWeight - toWeight) * (1f - interpolatedTime);
+        view.setLayoutParams(lp);
+    }
 }

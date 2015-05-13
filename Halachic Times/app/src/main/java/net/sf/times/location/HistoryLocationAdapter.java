@@ -30,13 +30,13 @@ import java.util.List;
  */
 public class HistoryLocationAdapter extends SpecificLocationAdapter {
 
-	public HistoryLocationAdapter(Context context, List<LocationItem> items) {
-		super(context, items);
-	}
+    public HistoryLocationAdapter(Context context, List<LocationItem> items) {
+        super(context, items);
+    }
 
-	@Override
-	protected boolean isSpecific(ZmanimAddress address) {
-		return address.getId() > 0L;
-	}
+    @Override
+    protected boolean isSpecific(ZmanimAddress address) {
+        return address.getId() > 0L;
+    }
 
 }

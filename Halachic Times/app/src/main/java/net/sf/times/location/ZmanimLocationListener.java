@@ -25,30 +25,30 @@ import android.location.LocationManager;
 
 public interface ZmanimLocationListener extends LocationListener {
 
-	/** The location parameter. */
-	public static final String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-	/** The address parameter. */
-	public static final String PARAMETER_ADDRESS = "address";
-	/** The intent action for an address that was found. */
-	public static final String ADDRESS_ACTION = "net.sf.times.location.ADDRESS";
-	/** The intent action for a location with elevation that was found. */
-	public static final String ELEVATION_ACTION = "net.sf.times.location.ELEVATION";
+    /** The location parameter. */
+    String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
+    /** The address parameter. */
+    String PARAMETER_ADDRESS = "address";
+    /** The intent action for an address that was found. */
+    String ADDRESS_ACTION = "net.sf.times.location.ADDRESS";
+    /** The intent action for a location with elevation that was found. */
+    String ELEVATION_ACTION = "net.sf.times.location.ELEVATION";
 
-	/**
-	 * Called when an address is found.
-	 *
-	 * @param location
-	 * 		the requested location.
-	 * @param address
-	 * 		the address for the location.
-	 */
-	public void onAddressChanged(Location location, ZmanimAddress address);
+    /**
+     * Called when an address is found.
+     *
+     * @param location
+     *         the requested location.
+     * @param address
+     *         the address for the location.
+     */
+    void onAddressChanged(Location location, ZmanimAddress address);
 
-	/**
-	 * Called when an address is found.
-	 *
-	 * @param location
-	 * 		the location with elevation.
-	 */
-	public void onElevationChanged(Location location);
+    /**
+     * Called when an address is found.
+     *
+     * @param location
+     *         the location with elevation.
+     */
+    void onElevationChanged(Location location);
 }

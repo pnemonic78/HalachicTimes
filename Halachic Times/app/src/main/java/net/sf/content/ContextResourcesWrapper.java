@@ -9,15 +9,15 @@ import android.content.res.Resources;
  */
 public class ContextResourcesWrapper extends ContextWrapper {
 
-	private final Resources resources;
+    private final Resources resources;
 
-	public ContextResourcesWrapper(Context base, Resources resources) {
-		super(base);
-		this.resources = resources;
-	}
+    public ContextResourcesWrapper(Context base, Resources resources) {
+        super(base);
+        this.resources = resources;
+    }
 
-	@Override
-	public Resources getResources() {
-		return resources;
-	}
+    @Override
+    public Resources getResources() {
+        return resources;
+    }
 }

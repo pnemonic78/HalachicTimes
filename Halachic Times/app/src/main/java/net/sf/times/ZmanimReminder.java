@@ -57,399 +57,399 @@ import java.util.Locale;
  */
 public class ZmanimReminder extends BroadcastReceiver {
 
-	private static final String TAG = "ZmanimReminder";
+    private static final String TAG = "ZmanimReminder";
 
-	/**
-	 * Reminder id for all notifications.<br>
-	 * Newer notifications will override current notifications.
-	 */
-	private static final int ID_NOTIFY = 1;
-	/** Reminder id for alarms. */
-	private static final int ID_ALARM = 2;
+    /**
+     * Reminder id for all notifications.<br>
+     * Newer notifications will override current notifications.
+     */
+    private static final int ID_NOTIFY = 1;
+    /** Reminder id for alarms. */
+    private static final int ID_ALARM = 2;
 
-	private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
-	private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
+    private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
+    private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
 
-	private Context context;
-	private SimpleDateFormat dateFormat;
-	/** The adapter. */
-	private ZmanimAdapter adapter;
+    private Context context;
+    private SimpleDateFormat dateFormat;
+    /** The adapter. */
+    private ZmanimAdapter adapter;
 
-	/**
-	 * Creates a new reminder manager.
-	 *
-	 * @param context
-	 * 		the context.
-	 */
-	public ZmanimReminder(Context context) {
-		this.context = context;
-	}
+    /**
+     * Creates a new reminder manager.
+     *
+     * @param context
+     *         the context.
+     */
+    public ZmanimReminder(Context context) {
+        this.context = context;
+    }
 
-	/** No-argument constructor for broadcast receiver. */
-	public ZmanimReminder() {
-	}
+    /** No-argument constructor for broadcast receiver. */
+    public ZmanimReminder() {
+    }
 
-	/**
-	 * Setup the first reminder for today.
-	 *
-	 * @param settings
-	 * 		the settings.
-	 */
-	public void remind(ZmanimSettings settings) {
-		final Context context = this.context;
-		ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-		ZmanimLocations locations = app.getLocations();
-		GeoLocation gloc = locations.getGeoLocation();
-		// Have we been destroyed?
-		if (gloc == null)
-			return;
+    /**
+     * Setup the first reminder for today.
+     *
+     * @param settings
+     *         the settings.
+     */
+    public void remind(ZmanimSettings settings) {
+        final Context context = this.context;
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        ZmanimLocations locations = app.getLocations();
+        GeoLocation gloc = locations.getGeoLocation();
+        // Have we been destroyed?
+        if (gloc == null)
+            return;
 
-		ZmanimAdapter adapter = this.adapter;
-		if (adapter == null) {
-			adapter = new ZmanimAdapter(context, settings);
-			this.adapter = adapter;
-		}
-		adapter.setCalendar(System.currentTimeMillis());
-		adapter.setGeoLocation(gloc);
-		adapter.setInIsrael(locations.inIsrael());
-		adapter.populate(false);
+        ZmanimAdapter adapter = this.adapter;
+        if (adapter == null) {
+            adapter = new ZmanimAdapter(context, settings);
+            this.adapter = adapter;
+        }
+        adapter.setCalendar(System.currentTimeMillis());
+        adapter.setGeoLocation(gloc);
+        adapter.setInIsrael(locations.inIsrael());
+        adapter.populate(false);
 
-		remind(settings, adapter);
-	}
+        remind(settings, adapter);
+    }
 
-	/**
-	 * Setup the first reminder for today.
-	 *
-	 * @param settings
-	 * 		the settings.
-	 * @param adapter
-	 * 		the populated adapter.
-	 */
-	private void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
-		Log.i(TAG, "remind");
-		cancel();
+    /**
+     * Setup the first reminder for today.
+     *
+     * @param settings
+     *         the settings.
+     * @param adapter
+     *         the populated adapter.
+     */
+    private void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
+        Log.i(TAG, "remind");
+        cancel();
 
-		final Context context = this.context;
-		final long now = System.currentTimeMillis();
-		final long latest = settings.getLatestReminder();
-		Log.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
-		final long was = now - WAS_DELTA;
-		final long soon = now + SOON_DELTA;
-		ZmanimItem item;
-		ZmanimItem itemFirst = null;
-		long before;
-		long when;
-		long whenFirst = Long.MAX_VALUE;
-		boolean needToday = true;
-		boolean needTomorrow = true;
-		boolean needWeek = true;
-		int id;
+        final Context context = this.context;
+        final long now = System.currentTimeMillis();
+        final long latest = settings.getLatestReminder();
+        Log.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
+        final long was = now - WAS_DELTA;
+        final long soon = now + SOON_DELTA;
+        ZmanimItem item;
+        ZmanimItem itemFirst = null;
+        long before;
+        long when;
+        long whenFirst = Long.MAX_VALUE;
+        boolean needToday = true;
+        boolean needTomorrow = true;
+        boolean needWeek = true;
+        int id;
 
-		int count = adapter.getCount();
-		for (int i = 0; i < count; i++) {
-			item = adapter.getItem(i);
-			id = item.titleId;
-			before = settings.getReminder(id);
+        int count = adapter.getCount();
+        for (int i = 0; i < count; i++) {
+            item = adapter.getItem(i);
+            id = item.titleId;
+            before = settings.getReminder(id);
 
-			if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
-				when = item.time - before;
-				if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-					notifyNow(context, settings, item);
-					settings.setLatestReminder(now);
-					needToday = false;
-				}
-				if ((now < when) && (when < whenFirst)) {
-					itemFirst = item;
-					whenFirst = when;
-				}
-			}
-		}
-		if (itemFirst != null) {
-			String whenFormat = formatDateTime(whenFirst);
-			String timeFormat = formatDateTime(itemFirst.time);
-			Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
+            if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+                when = item.time - before;
+                if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
+                    notifyNow(context, settings, item);
+                    settings.setLatestReminder(now);
+                    needToday = false;
+                }
+                if ((now < when) && (when < whenFirst)) {
+                    itemFirst = item;
+                    whenFirst = when;
+                }
+            }
+        }
+        if (itemFirst != null) {
+            String whenFormat = formatDateTime(whenFirst);
+            String timeFormat = formatDateTime(itemFirst.time);
+            Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
 
-			notifyFuture(context, whenFirst);
-			needTomorrow = false;
-			needWeek = false;
-		}
+            notifyFuture(context, whenFirst);
+            needTomorrow = false;
+            needWeek = false;
+        }
 
-		Calendar cal = adapter.getCalendar().getCalendar();
-		if (needTomorrow) {
-			// Populate the adapter with tomorrow's times.
-			cal.add(Calendar.DAY_OF_MONTH, 1);
-			adapter.populate(false);
-			itemFirst = null;
-			whenFirst = Long.MAX_VALUE;
+        Calendar cal = adapter.getCalendar().getCalendar();
+        if (needTomorrow) {
+            // Populate the adapter with tomorrow's times.
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+            adapter.populate(false);
+            itemFirst = null;
+            whenFirst = Long.MAX_VALUE;
 
-			count = adapter.getCount();
-			for (int i = 0; i < count; i++) {
-				item = adapter.getItem(i);
-				id = item.titleId;
-				before = settings.getReminder(id);
-				if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
-					when = item.time - before;
-					if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
-						notifyNow(context, settings, item);
-						settings.setLatestReminder(now);
-						needToday = false;
-					}
-					if ((now < when) && (when < whenFirst)) {
-						itemFirst = item;
-						whenFirst = when;
-					}
-				}
-			}
-			if (itemFirst != null) {
-				String whenFormat = formatDateTime(whenFirst);
-				String timeFormat = formatDateTime(itemFirst.time);
-				Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
+            count = adapter.getCount();
+            for (int i = 0; i < count; i++) {
+                item = adapter.getItem(i);
+                id = item.titleId;
+                before = settings.getReminder(id);
+                if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+                    when = item.time - before;
+                    if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
+                        notifyNow(context, settings, item);
+                        settings.setLatestReminder(now);
+                        needToday = false;
+                    }
+                    if ((now < when) && (when < whenFirst)) {
+                        itemFirst = item;
+                        whenFirst = when;
+                    }
+                }
+            }
+            if (itemFirst != null) {
+                String whenFormat = formatDateTime(whenFirst);
+                String timeFormat = formatDateTime(itemFirst.time);
+                Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
 
-				notifyFuture(context, whenFirst);
-				needWeek = false;
-			}
-		}
+                notifyFuture(context, whenFirst);
+                needWeek = false;
+            }
+        }
 
-		if (needWeek) {
-			// Populate the adapter with week's worth of times to check
-			// "Candle lighting".
-			int daysUntilFriday = Calendar.FRIDAY - cal.get(Calendar.DAY_OF_WEEK);
-			if ((daysUntilFriday == -1) || (daysUntilFriday == 0) || (daysUntilFriday == 1)) {
-				// We already checked a Friday above.
-				return;
-			}
-			adapter.clear();
-			for (int d = 1; d <= 5; d++) {
-				cal.add(Calendar.DAY_OF_MONTH, 1);
-				adapter.populate(false);
-			}
-			itemFirst = null;
-			whenFirst = Long.MAX_VALUE;
+        if (needWeek) {
+            // Populate the adapter with week's worth of times to check
+            // "Candle lighting".
+            int daysUntilFriday = Calendar.FRIDAY - cal.get(Calendar.DAY_OF_WEEK);
+            if ((daysUntilFriday == -1) || (daysUntilFriday == 0) || (daysUntilFriday == 1)) {
+                // We already checked a Friday above.
+                return;
+            }
+            adapter.clear();
+            for (int d = 1; d <= 5; d++) {
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                adapter.populate(false);
+            }
+            itemFirst = null;
+            whenFirst = Long.MAX_VALUE;
 
-			count = adapter.getCount();
-			for (int i = 0; i < count; i++) {
-				item = adapter.getItem(i);
-				id = item.titleId;
-				// All non-candle times were checked "today" and "tomorrow"
-				// above.
-				if ((id != R.id.candles_row) && (id != R.string.candles))
-					continue;
-				before = settings.getReminder(id);
-				if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
-					when = item.time - before;
-					if ((now < when) && (when < whenFirst)) {
-						itemFirst = item;
-						whenFirst = when;
-					}
-				}
-			}
-			if (itemFirst != null) {
-				String whenFormat = formatDateTime(whenFirst);
-				String timeFormat = formatDateTime(itemFirst.time);
-				Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
+            count = adapter.getCount();
+            for (int i = 0; i < count; i++) {
+                item = adapter.getItem(i);
+                id = item.titleId;
+                // All non-candle times were checked "today" and "tomorrow"
+                // above.
+                if ((id != R.id.candles_row) && (id != R.string.candles))
+                    continue;
+                before = settings.getReminder(id);
+                if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+                    when = item.time - before;
+                    if ((now < when) && (when < whenFirst)) {
+                        itemFirst = item;
+                        whenFirst = when;
+                    }
+                }
+            }
+            if (itemFirst != null) {
+                String whenFormat = formatDateTime(whenFirst);
+                String timeFormat = formatDateTime(itemFirst.time);
+                Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
 
-				notifyFuture(context, whenFirst);
-			}
-		}
-	}
+                notifyFuture(context, whenFirst);
+            }
+        }
+    }
 
-	/**
-	 * Cancel all reminders.
-	 */
-	public void cancel() {
-		Log.i(TAG, "cancel");
-		final Context context = this.context;
-		AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent alarmIntent = createAlarmIntent(context);
-		alarms.cancel(alarmIntent);
+    /**
+     * Cancel all reminders.
+     */
+    public void cancel() {
+        Log.i(TAG, "cancel");
+        final Context context = this.context;
+        AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent alarmIntent = createAlarmIntent(context);
+        alarms.cancel(alarmIntent);
 
-		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		nm.cancelAll();
-	}
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.cancelAll();
+    }
 
-	/**
-	 * Notify now.
-	 *
-	 * @param context
-	 * 		the context.
-	 * @param settings
-	 * 		the settings.
-	 * @param item
-	 * 		the zmanim item to notify about.
-	 */
-	private void notifyNow(Context context, ZmanimSettings settings, ZmanimItem item) {
-		// Clicking on the item will launch the main activity.
-		PendingIntent contentIntent = createActivityIntent(context);
+    /**
+     * Notify now.
+     *
+     * @param context
+     *         the context.
+     * @param settings
+     *         the settings.
+     * @param item
+     *         the zmanim item to notify about.
+     */
+    private void notifyNow(Context context, ZmanimSettings settings, ZmanimItem item) {
+        // Clicking on the item will launch the main activity.
+        PendingIntent contentIntent = createActivityIntent(context);
 
-		Notification notification;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			notification = createNotification(context, settings, item, contentIntent);
-		} else {
-			notification = createNotificationEclair(context, settings, item, contentIntent);
-		}
+        Notification notification;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            notification = createNotification(context, settings, item, contentIntent);
+        } else {
+            notification = createNotificationEclair(context, settings, item, contentIntent);
+        }
 
-		postNotification(notification);
-	}
+        postNotification(notification);
+    }
 
-	/**
-	 * Set alarm manager to alert us for the next reminder.
-	 *
-	 * @param context
-	 * 		the context.
-	 * @param when
-	 * 		the upcoming reminder.
-	 */
-	private void notifyFuture(Context context, long when) {
-		Log.i(TAG, "notify future [" + formatDateTime(when) + "]");
-		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		PendingIntent alarmIntent = createAlarmIntent(context);
-		manager.set(AlarmManager.RTC_WAKEUP, when, alarmIntent);
-	}
+    /**
+     * Set alarm manager to alert us for the next reminder.
+     *
+     * @param context
+     *         the context.
+     * @param when
+     *         the upcoming reminder.
+     */
+    private void notifyFuture(Context context, long when) {
+        Log.i(TAG, "notify future [" + formatDateTime(when) + "]");
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent alarmIntent = createAlarmIntent(context);
+        manager.set(AlarmManager.RTC_WAKEUP, when, alarmIntent);
+    }
 
-	private PendingIntent createActivityIntent(Context context) {
-		PackageManager pkg = context.getPackageManager();
-		Intent intent = pkg.getLaunchIntentForPackage(context.getPackageName());
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		PendingIntent pendingIntent = PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		return pendingIntent;
-	}
+    private PendingIntent createActivityIntent(Context context) {
+        PackageManager pkg = context.getPackageManager();
+        Intent intent = pkg.getLaunchIntentForPackage(context.getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
 
-	private PendingIntent createAlarmIntent(Context context) {
-		Intent intent = new Intent(context, ZmanimReminder.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		return pendingIntent;
-	}
+    private PendingIntent createAlarmIntent(Context context) {
+        Intent intent = new Intent(context, ZmanimReminder.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
 
-	@Override
-	public void onReceive(Context context, Intent intent) {
-		String nowFormat = formatDateTime(System.currentTimeMillis());
-		Log.i(TAG, "onReceive " + intent + " [" + nowFormat + "]");
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String nowFormat = formatDateTime(System.currentTimeMillis());
+        Log.i(TAG, "onReceive " + intent + " [" + nowFormat + "]");
 
-		this.context = context;
-		boolean update = false;
+        this.context = context;
+        boolean update = false;
 
-		String action = intent.getAction();
-		if (Intent.ACTION_BOOT_COMPLETED.equals(action))
-			update = true;
-		else if (Intent.ACTION_DATE_CHANGED.equals(action))
-			update = true;
-		else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action))
-			update = true;
-		else if (Intent.ACTION_TIME_CHANGED.equals(action))
-			update = true;
-		else {
-			Bundle extras = intent.getExtras();
-			if (extras != null) {
-				update = (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0);
-			}
-		}
+        String action = intent.getAction();
+        if (Intent.ACTION_BOOT_COMPLETED.equals(action))
+            update = true;
+        else if (Intent.ACTION_DATE_CHANGED.equals(action))
+            update = true;
+        else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action))
+            update = true;
+        else if (Intent.ACTION_TIME_CHANGED.equals(action))
+            update = true;
+        else {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                update = (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0);
+            }
+        }
 
-		if (update) {
-			ZmanimSettings settings = new ZmanimSettings(context);
-			remind(settings);
-		}
-	}
+        if (update) {
+            ZmanimSettings settings = new ZmanimSettings(context);
+            remind(settings);
+        }
+    }
 
-	/**
-	 * Format the date and time with seconds.<br>
-	 * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
-	 *
-	 * @param time
-	 * 		the time to format.
-	 * @return the formatted time.
-	 */
-	private String formatDateTime(Date time) {
-		if (dateFormat == null) {
-			dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
-		}
-		return dateFormat.format(time);
-	}
+    /**
+     * Format the date and time with seconds.<br>
+     * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
+     *
+     * @param time
+     *         the time to format.
+     * @return the formatted time.
+     */
+    private String formatDateTime(Date time) {
+        if (dateFormat == null) {
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+        }
+        return dateFormat.format(time);
+    }
 
-	/**
-	 * Format the date and time with seconds.
-	 *
-	 * @param time
-	 * 		the time to format.
-	 * @return the formatted time.
-	 * @see #formatDateTime(Date)
-	 */
-	private String formatDateTime(long time) {
-		return formatDateTime(new Date(time));
-	}
+    /**
+     * Format the date and time with seconds.
+     *
+     * @param time
+     *         the time to format.
+     * @return the formatted time.
+     * @see #formatDateTime(Date)
+     */
+    private String formatDateTime(long time) {
+        return formatDateTime(new Date(time));
+    }
 
-	@SuppressWarnings("deprecation")
-	private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
-		CharSequence contentTitle = context.getText(item.titleId);
-		CharSequence contentText = item.summary;
-		Log.i(TAG, "notify now [" + contentTitle + "]");
+    @SuppressWarnings("deprecation")
+    private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
+        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentText = item.summary;
+        Log.i(TAG, "notify now [" + contentTitle + "]");
 
-		int audioStreamType = settings.getReminderStream();
-		Uri sound;
-		if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		} else {
-			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-		}
-		Notification notification = new Notification();
-		notification.audioStreamType = audioStreamType;
-		notification.icon = R.drawable.stat_notify_time;
-		notification.defaults = Notification.DEFAULT_VIBRATE;
-		notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-		notification.ledARGB = Color.YELLOW;
-		notification.ledOffMS = 250;
-		notification.ledOnMS = 500;
-		notification.when = item.time;// When the zman is supposed to occur.
-		notification.sound = sound;
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        int audioStreamType = settings.getReminderStream();
+        Uri sound;
+        if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        } else {
+            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        }
+        Notification notification = new Notification();
+        notification.audioStreamType = audioStreamType;
+        notification.icon = R.drawable.stat_notify_time;
+        notification.defaults = Notification.DEFAULT_VIBRATE;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
+        notification.ledARGB = Color.YELLOW;
+        notification.ledOffMS = 250;
+        notification.ledOnMS = 500;
+        notification.when = item.time;// When the zman is supposed to occur.
+        notification.sound = sound;
+        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
-		return notification;
-	}
+        return notification;
+    }
 
-	@SuppressWarnings("deprecation")
-	@SuppressLint("NewApi")
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private Notification createNotification(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
-		CharSequence contentTitle = context.getText(item.titleId);
-		CharSequence contentText = item.summary;
-		Log.i(TAG, "notify now [" + contentTitle + "]");
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private Notification createNotification(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
+        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentText = item.summary;
+        Log.i(TAG, "notify now [" + contentTitle + "]");
 
-		int audioStreamType = settings.getReminderStream();
-		Uri sound;
-		if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-		} else {
-			sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-		}
-		Notification.Builder builder = new Notification.Builder(context);
-		builder.setContentIntent(contentIntent);
-		builder.setContentText(contentText);
-		builder.setContentTitle(contentTitle);
-		builder.setDefaults(Notification.DEFAULT_VIBRATE);
-		builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
-		builder.setLights(Color.YELLOW, 500, 250);
-		builder.setSmallIcon(R.drawable.stat_notify_time);
-		builder.setSound(sound, audioStreamType);
-		builder.setWhen(item.time);// When the zman is supposed to occur.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			builder.setShowWhen(true);
-		}
-		Notification notification;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			notification = builder.build();
-		} else {
-			notification = builder.getNotification();
-		}
-		return notification;
-	}
+        int audioStreamType = settings.getReminderStream();
+        Uri sound;
+        if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        } else {
+            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        }
+        Notification.Builder builder = new Notification.Builder(context);
+        builder.setContentIntent(contentIntent);
+        builder.setContentText(contentText);
+        builder.setContentTitle(contentTitle);
+        builder.setDefaults(Notification.DEFAULT_VIBRATE);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
+        builder.setLights(Color.YELLOW, 500, 250);
+        builder.setSmallIcon(R.drawable.stat_notify_time);
+        builder.setSound(sound, audioStreamType);
+        builder.setWhen(item.time);// When the zman is supposed to occur.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            builder.setShowWhen(true);
+        }
+        Notification notification;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            notification = builder.build();
+        } else {
+            notification = builder.getNotification();
+        }
+        return notification;
+    }
 
-	@SuppressLint("Wakelock")
-	private void postNotification(Notification notification) {
-		// Wake up the device to notify the user.
-		PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-		WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-		wake.acquire(5000L);// enough time to also hear an alarm tone
+    @SuppressLint("Wakelock")
+    private void postNotification(Notification notification) {
+        // Wake up the device to notify the user.
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
+        wake.acquire(5000L);// enough time to also hear an alarm tone
 
-		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		nm.notify(ID_NOTIFY, notification);
-	}
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(ID_NOTIFY, notification);
+    }
 }

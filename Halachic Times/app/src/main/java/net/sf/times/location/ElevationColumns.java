@@ -28,13 +28,13 @@ import android.provider.BaseColumns;
  */
 public interface ElevationColumns extends BaseColumns {
 
-	/** The latitude. */
-	public static final String LATITUDE = "latitude";
-	/** The longitude. */
-	public static final String LONGITUDE = "longitude";
-	/** The elevation / altitude. */
-	public static final String ELEVATION = "elevation";
-	/** The timestamp. */
-	public static final String TIMESTAMP = "timestamp";
+    /** The latitude. */
+    String LATITUDE = "latitude";
+    /** The longitude. */
+    String LONGITUDE = "longitude";
+    /** The elevation / altitude. */
+    String ELEVATION = "elevation";
+    /** The timestamp. */
+    String TIMESTAMP = "timestamp";
 
 }

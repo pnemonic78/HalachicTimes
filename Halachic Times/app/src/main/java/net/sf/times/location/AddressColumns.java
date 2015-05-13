@@ -28,21 +28,21 @@ import android.provider.BaseColumns;
  */
 public interface AddressColumns extends BaseColumns {
 
-	/** The location's latitude. */
-	public static final String LOCATION_LATITUDE = "loc_latitude";
-	/** The location's longitude. */
-	public static final String LOCATION_LONGITUDE = "loc_longitude";
-	/** The latitude. */
-	public static final String LATITUDE = "latitude";
-	/** The longitude. */
-	public static final String LONGITUDE = "longitude";
-	/** The formatted name. */
-	public static final String ADDRESS = "address";
-	/** The language. */
-	public static final String LANGUAGE = "language";
-	/** The timestamp. */
-	public static final String TIMESTAMP = "timestamp";
-	/** Is favourite address? */
-	public static final String FAVORITE = "favorite";
+    /** The location's latitude. */
+    String LOCATION_LATITUDE = "loc_latitude";
+    /** The location's longitude. */
+    String LOCATION_LONGITUDE = "loc_longitude";
+    /** The latitude. */
+    String LATITUDE = "latitude";
+    /** The longitude. */
+    String LONGITUDE = "longitude";
+    /** The formatted name. */
+    String ADDRESS = "address";
+    /** The language. */
+    String LANGUAGE = "language";
+    /** The timestamp. */
+    String TIMESTAMP = "timestamp";
+    /** Is favourite address? */
+    String FAVORITE = "favorite";
 
 }

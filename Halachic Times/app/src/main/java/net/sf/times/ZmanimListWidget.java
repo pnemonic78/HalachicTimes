@@ -31,15 +31,15 @@ import android.os.Build;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimListWidget extends ZmanimWidget {
 
-	/**
-	 * Constructs a new widget.
-	 */
-	public ZmanimListWidget() {
-	}
+    /**
+     * Constructs a new widget.
+     */
+    public ZmanimListWidget() {
+    }
 
-	@Override
-	protected boolean isRemoteList() {
-		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-	}
+    @Override
+    protected boolean isRemoteList() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
 
 }

@@ -35,46 +35,46 @@ import java.util.Calendar;
  */
 public class CandlesAdapter extends ZmanimAdapter {
 
-	private int candles;
+    private int candles;
 
-	public CandlesAdapter(Context context, ZmanimSettings settings) {
-		super(context, settings);
-	}
+    public CandlesAdapter(Context context, ZmanimSettings settings) {
+        super(context, settings);
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		return null;
-	}
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        return null;
+    }
 
-	@Override
-	public void populate(boolean remote) {
-		prePopulate();
+    @Override
+    public void populate(boolean remote) {
+        prePopulate();
 
-		populateCandles(calendar);
-	}
+        populateCandles(calendar);
+    }
 
-	private void populateCandles(ComplexZmanimCalendar cal) {
-		Calendar gcal = cal.getCalendar();
-		JewishCalendar jcal = new JewishCalendar(gcal);
-		jcal.setInIsrael(inIsrael);
-		candles = getCandles(jcal);
-	}
+    private void populateCandles(ComplexZmanimCalendar cal) {
+        Calendar gcal = cal.getCalendar();
+        JewishCalendar jcal = new JewishCalendar(gcal);
+        jcal.setInIsrael(inIsrael);
+        candles = getCandles(jcal);
+    }
 
-	/**
-	 * Get the candles count.
-	 *
-	 * @return the number of candles.
-	 */
-	public int getCandlesCount() {
-		return candles & CANDLES_MASK;
-	}
+    /**
+     * Get the candles count.
+     *
+     * @return the number of candles.
+     */
+    public int getCandlesCount() {
+        return candles & CANDLES_MASK;
+    }
 
-	/**
-	 * Get the occasion for lighting candles.
-	 *
-	 * @return the candles holiday.
-	 */
-	public int getCandlesHoliday() {
-		return (candles >> 4) & HOLIDAY_MASK;
-	}
+    /**
+     * Get the occasion for lighting candles.
+     *
+     * @return the candles holiday.
+     */
+    public int getCandlesHoliday() {
+        return (candles >> 4) & HOLIDAY_MASK;
+    }
 }

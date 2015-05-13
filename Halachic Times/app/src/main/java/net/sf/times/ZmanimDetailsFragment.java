@@ -37,140 +37,140 @@ import java.util.Calendar;
  */
 public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends ZmanimFragment<A> {
 
-	/** The master id. */
-	private int masterId;
+    /** The master id. */
+    private int masterId;
 
-	/**
-	 * Constructs a new details list.
-	 *
-	 * @param context
-	 * 		the context.
-	 * @param attrs
-	 * 		the XMl attributes.
-	 * @param defStyle
-	 * 		the default style.
-	 */
-	public ZmanimDetailsFragment(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
+    /**
+     * Constructs a new details list.
+     *
+     * @param context
+     *         the context.
+     * @param attrs
+     *         the XMl attributes.
+     * @param defStyle
+     *         the default style.
+     */
+    public ZmanimDetailsFragment(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
 
-	/**
-	 * Constructs a new details list.
-	 *
-	 * @param context
-	 * 		the context.
-	 * @param attrs
-	 * 		the XML attributes.
-	 */
-	public ZmanimDetailsFragment(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    /**
+     * Constructs a new details list.
+     *
+     * @param context
+     *         the context.
+     * @param attrs
+     *         the XML attributes.
+     */
+    public ZmanimDetailsFragment(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	/**
-	 * Constructs a new details list.
-	 *
-	 * @param context
-	 * 		the context.
-	 */
-	public ZmanimDetailsFragment(Context context) {
-		super(context);
-	}
+    /**
+     * Constructs a new details list.
+     *
+     * @param context
+     *         the context.
+     */
+    public ZmanimDetailsFragment(Context context) {
+        super(context);
+    }
 
-	/**
-	 * Get the master id for populating the details.
-	 *
-	 * @return the master id.
-	 */
-	public int getMasterId() {
-		return masterId;
-	}
+    /**
+     * Get the master id for populating the details.
+     *
+     * @return the master id.
+     */
+    public int getMasterId() {
+        return masterId;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected A createAdapter() {
-		if (masterId == 0)
-			return null;
+    @SuppressWarnings("unchecked")
+    @Override
+    protected A createAdapter() {
+        if (masterId == 0)
+            return null;
 
-		return (A) new ZmanimDetailsAdapter(context, settings, masterId);
-	}
+        return (A) new ZmanimDetailsAdapter(context, settings, masterId);
+    }
 
-	@Override
-	public A populateTimes(Calendar date) {
-		return populateTimes(date, masterId);
-	}
+    @Override
+    public A populateTimes(Calendar date) {
+        return populateTimes(date, masterId);
+    }
 
-	/**
-	 * Populate the list with detailed times.
-	 *
-	 * @param date
-	 * 		the date.
-	 * @param id
-	 * 		the time id.
-	 */
-	@SuppressWarnings("deprecation")
-	public A populateTimes(Calendar date, int id) {
-		masterId = id;
+    /**
+     * Populate the list with detailed times.
+     *
+     * @param date
+     *         the date.
+     * @param id
+     *         the time id.
+     */
+    @SuppressWarnings("deprecation")
+    public A populateTimes(Calendar date, int id) {
+        masterId = id;
 
-		A adapter = getAdapter();
-		if (adapter != null) {
-			adapter.setItemId(id);
-			super.populateTimes(date);
-		}
+        A adapter = getAdapter();
+        if (adapter != null) {
+            adapter.setItemId(id);
+            super.populateTimes(date);
+        }
 
-		if (settings.isBackgroundGradient()) {
-			Resources res = getResources();
+        if (settings.isBackgroundGradient()) {
+            Resources res = getResources();
 
-			if (id == R.string.dawn) {
-				setBackgroundColor(res.getColor(R.color.dawn));
-			} else if (id == R.string.tallis) {
-				setBackgroundColor(res.getColor(R.color.tallis));
-			} else if (id == R.string.sunrise) {
-				setBackgroundColor(res.getColor(R.color.sunrise));
-			} else if (id == R.string.shema) {
-				setBackgroundColor(res.getColor(R.color.shema));
-			} else if (id == R.string.prayers) {
-				setBackgroundColor(res.getColor(R.color.prayers));
-			} else if (id == R.string.midday) {
-				setBackgroundColor(res.getColor(R.color.midday));
-			} else if (id == R.string.earliest_mincha) {
-				setBackgroundColor(res.getColor(R.color.earliest_mincha));
-			} else if (id == R.string.mincha) {
-				setBackgroundColor(res.getColor(R.color.mincha));
-			} else if (id == R.string.plug_hamincha) {
-				setBackgroundColor(res.getColor(R.color.plug_hamincha));
-			} else if (id == R.string.sunset) {
-				setBackgroundColor(res.getColor(R.color.sunset));
-			} else if (id == R.string.twilight) {
-				setBackgroundColor(res.getColor(R.color.twilight));
-			} else if (id == R.string.nightfall) {
-				setBackgroundColor(res.getColor(R.color.nightfall));
-			} else if (id == R.string.midnight) {
-				setBackgroundColor(res.getColor(R.color.midnight));
-			} else {
-				setBackgroundDrawable(null);
-			}
-		} else {
-			setBackgroundDrawable(null);
-		}
+            if (id == R.string.dawn) {
+                setBackgroundColor(res.getColor(R.color.dawn));
+            } else if (id == R.string.tallis) {
+                setBackgroundColor(res.getColor(R.color.tallis));
+            } else if (id == R.string.sunrise) {
+                setBackgroundColor(res.getColor(R.color.sunrise));
+            } else if (id == R.string.shema) {
+                setBackgroundColor(res.getColor(R.color.shema));
+            } else if (id == R.string.prayers) {
+                setBackgroundColor(res.getColor(R.color.prayers));
+            } else if (id == R.string.midday) {
+                setBackgroundColor(res.getColor(R.color.midday));
+            } else if (id == R.string.earliest_mincha) {
+                setBackgroundColor(res.getColor(R.color.earliest_mincha));
+            } else if (id == R.string.mincha) {
+                setBackgroundColor(res.getColor(R.color.mincha));
+            } else if (id == R.string.plug_hamincha) {
+                setBackgroundColor(res.getColor(R.color.plug_hamincha));
+            } else if (id == R.string.sunset) {
+                setBackgroundColor(res.getColor(R.color.sunset));
+            } else if (id == R.string.twilight) {
+                setBackgroundColor(res.getColor(R.color.twilight));
+            } else if (id == R.string.nightfall) {
+                setBackgroundColor(res.getColor(R.color.nightfall));
+            } else if (id == R.string.midnight) {
+                setBackgroundColor(res.getColor(R.color.midnight));
+            } else {
+                setBackgroundDrawable(null);
+            }
+        } else {
+            setBackgroundDrawable(null);
+        }
 
-		return adapter;
-	}
+        return adapter;
+    }
 
-	@Override
-	protected Drawable getListBackground() {
-		return null;
-	}
+    @Override
+    protected Drawable getListBackground() {
+        return null;
+    }
 
-	@Override
-	protected void setOnClickListener(View view, ZmanimItem item) {
-		// No clicking allowed.
-	}
+    @Override
+    protected void setOnClickListener(View view, ZmanimItem item) {
+        // No clicking allowed.
+    }
 
-	@Override
-	protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
-		if (position >= 0)
-			return;
-		super.bindViewGrouping(list, position, getResources().getText(masterId));
-	}
+    @Override
+    protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
+        if (position >= 0)
+            return;
+        super.bindViewGrouping(list, position, getResources().getText(masterId));
+    }
 
 }

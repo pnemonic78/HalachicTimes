@@ -31,65 +31,65 @@ import java.util.List;
  */
 public abstract class SpecificLocationAdapter extends LocationAdapter {
 
-	private final List<LocationItem> specific = new ArrayList<LocationItem>();
+    private final List<LocationItem> specific = new ArrayList<LocationItem>();
 
-	public SpecificLocationAdapter(Context context, List<LocationItem> items) {
-		super(context, items);
-		populateSpecific();
-	}
+    public SpecificLocationAdapter(Context context, List<LocationItem> items) {
+        super(context, items);
+        populateSpecific();
+    }
 
-	private void populateSpecific() {
-		specific.clear();
+    private void populateSpecific() {
+        specific.clear();
 
-		ZmanimAddress address;
-		for (LocationItem item : objects) {
-			address = item.getAddress();
-			if (isSpecific(address))
-				specific.add(item);
-		}
-	}
+        ZmanimAddress address;
+        for (LocationItem item : objects) {
+            address = item.getAddress();
+            if (isSpecific(address))
+                specific.add(item);
+        }
+    }
 
-	/**
-	 * Is the address specific to this adapter?
-	 *
-	 * @param address
-	 * 		the address.
-	 * @return {@code true} to include the address.
-	 */
-	protected abstract boolean isSpecific(ZmanimAddress address);
+    /**
+     * Is the address specific to this adapter?
+     *
+     * @param address
+     *         the address.
+     * @return {@code true} to include the address.
+     */
+    protected abstract boolean isSpecific(ZmanimAddress address);
 
-	@Override
-	public int getCount() {
-		return specific.size();
-	}
+    @Override
+    public int getCount() {
+        return specific.size();
+    }
 
-	@Override
-	protected LocationItem getLocationItem(int position) {
-		return specific.get(position);
-	}
+    @Override
+    protected LocationItem getLocationItem(int position) {
+        return specific.get(position);
+    }
 
-	@Override
-	public int getPosition(LocationItem object) {
-		final int size = specific.size();
-		LocationItem item;
-		for (int i = 0; i < size; i++) {
-			item = specific.get(i);
-			if (item.equals(object))
-				return i;
-		}
-		return super.getPosition(object);
-	}
+    @Override
+    public int getPosition(LocationItem object) {
+        final int size = specific.size();
+        LocationItem item;
+        for (int i = 0; i < size; i++) {
+            item = specific.get(i);
+            if (item.equals(object))
+                return i;
+        }
+        return super.getPosition(object);
+    }
 
-	@Override
-	public void notifyDataSetChanged() {
-		populateSpecific();
-		super.notifyDataSetChanged();
-	}
+    @Override
+    public void notifyDataSetChanged() {
+        populateSpecific();
+        super.notifyDataSetChanged();
+    }
 
-	@Override
-	public void notifyDataSetInvalidated() {
-		populateSpecific();
-		super.notifyDataSetInvalidated();
-	}
+    @Override
+    public void notifyDataSetInvalidated() {
+        populateSpecific();
+        super.notifyDataSetInvalidated();
+    }
 
 }

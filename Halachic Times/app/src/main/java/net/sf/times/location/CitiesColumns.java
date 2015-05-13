@@ -28,9 +28,9 @@ import android.provider.BaseColumns;
  */
 public interface CitiesColumns extends BaseColumns {
 
-	/** The timestamp. */
-	public static final String TIMESTAMP = "timestamp";
-	/** Is favourite address? */
-	public static final String FAVORITE = "favorite";
+    /** The timestamp. */
+    String TIMESTAMP = "timestamp";
+    /** Is favourite address? */
+    String FAVORITE = "favorite";
 
 }
