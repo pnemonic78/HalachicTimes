@@ -182,5 +182,6 @@
     <string name="category_appearance">Uiterlijk</string>
     <string name="hour">Seizoensgebonden uur</string>
     <string name="emphasis_title">Klemtoon</string>
+    <string name="midnight_6">6 uur na de nacht</string>
 
 </resources>

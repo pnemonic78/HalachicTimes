@@ -184,5 +184,6 @@
     <string name="category_appearance">Aparenţă</string>
     <string name="hour">Oră de sezon</string>
     <string name="emphasis_title">Accent</string>
+    <string name="midnight_6">6 ore după căderea nopții</string>
 
 </resources>

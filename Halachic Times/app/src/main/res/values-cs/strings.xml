@@ -184,5 +184,6 @@
     <string name="category_appearance">Vzhled</string>
     <string name="emphasis_title">Důraz</string>
     <string name="hour">Sezónní hodina</string>
+    <string name="midnight_6">6 hodin po setmění</string>
 
 </resources>

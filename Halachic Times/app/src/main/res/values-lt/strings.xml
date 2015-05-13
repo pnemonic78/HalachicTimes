@@ -184,5 +184,6 @@
     <string name="category_appearance">Išvaizda</string>
     <string name="hour">Sezoninis valandą</string>
     <string name="emphasis_title">Emfazė</string>
+    <string name="midnight_6">6 valandų po ateinančio naktys</string>
 
 </resources>

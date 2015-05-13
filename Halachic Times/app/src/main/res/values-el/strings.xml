@@ -111,7 +111,7 @@
     <!-- Midnight -->
     <string name="midnight">Μεσάνυχτα (χαζοτ)</string>
     <string name="midnight_summary">Ηλιακό μεσάνυχτα</string>
-    <string name="midnight_12">2 ώρες μετά το μεσημέρι</string>
+    <string name="midnight_12">12 ώρες μετά το μεσημέρι</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Τελευταία στιγμή για να φάει χαμεζ</string>
@@ -182,5 +182,6 @@
     <string name="category_appearance">Παρουσιαστικό</string>
     <string name="emphasis_title">Έμφαση</string>
     <string name="hour">Εποχιακές ώρα</string>
+    <string name="midnight_6">6 ώρες μετά το σούρουπο</string>
 
 </resources>

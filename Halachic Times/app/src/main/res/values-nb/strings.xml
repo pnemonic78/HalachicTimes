@@ -182,5 +182,6 @@
     <string name="category_appearance">Utseende</string>
     <string name="hour">Sesongåpent</string>
     <string name="emphasis_title">Vektlegging</string>
+    <string name="midnight_6">6 timer etter mørkningen</string>
 
 </resources>

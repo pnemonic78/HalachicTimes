@@ -186,5 +186,6 @@
     <string name="category_appearance">Wygląd</string>
     <string name="hour">Sezonowy godzin</string>
     <string name="emphasis_title">Akcent</string>
+    <string name="midnight_6">6 godziny po zmrok</string>
 
 </resources>

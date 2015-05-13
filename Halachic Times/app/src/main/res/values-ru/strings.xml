@@ -186,5 +186,6 @@
     <string name="category_appearance">Внешность</string>
     <string name="hour">Сезонный час</string>
     <string name="emphasis_title">Акцент</string>
+    <string name="midnight_6">6 часа после наступление темноты</string>
 
 </resources>

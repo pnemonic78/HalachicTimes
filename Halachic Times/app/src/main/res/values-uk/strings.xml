@@ -115,7 +115,7 @@
     <!-- Midnight -->
     <string name="midnight">Опівночі (хацот)</string>
     <string name="midnight_summary">Сонячна опівночі</string>
-    <string name="midnight_12">12 годин після полудня</string>
+    <string name="midnight_12">12 годин після полудень</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Останній час їсти хамец</string>
@@ -186,5 +186,6 @@
     <string name="category_appearance">Вигляд</string>
     <string name="hour">Сезонний годину</string>
     <string name="emphasis_title">Акцент</string>
+    <string name="midnight_6">6 годин після настання ночі</string>
 
 </resources>

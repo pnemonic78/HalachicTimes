@@ -186,5 +186,6 @@
     <string name="category_appearance">מראה</string>
     <string name="emphasis_title">הדגשה</string>
     <string name="hour">שעה זמנית</string>
+    <string name="midnight_6">6 שעות לאחר לילה</string>
 
 </resources>

@@ -180,5 +180,6 @@
     <string name="category_appearance">появяване</string>
     <string name="emphasis_title">Емфаза</string>
     <string name="hour">Сезонна часа</string>
+    <string name="midnight_6">6 часа след свечеряване</string>
 
 </resources>

@@ -182,5 +182,6 @@
     <string name="category_appearance">Aparência</string>
     <string name="hour">Hora sazonal</string>
     <string name="emphasis_title">Ênfase</string>
+    <string name="midnight_6">6 horas após de anoitecer</string>
 
 </resources>

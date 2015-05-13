@@ -182,5 +182,6 @@
     <string name="category_appearance">Utseende</string>
     <string name="hour">Säsongs timme</string>
     <string name="emphasis_title">Betoning</string>
+    <string name="midnight_6">6 timmar efter nattens inbrott</string>
 
 </resources>

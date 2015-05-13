@@ -96,7 +96,7 @@
     <string name="twilight_13">Päike on 13,24° allpool horisonti</string>
 
     <!-- Nightfall -->
-    <string name="nightfall">Öö</string>
+    <string name="nightfall">Videvik</string>
     <string name="nightfall_3stars">3 tärni nähtav</string>
     <string name="nightfall_3_65">Päike on 3,65° allpool merepinda</string>
     <string name="nightfall_3_676">Päike on 3,676° allpool merepinda</string>
@@ -182,5 +182,6 @@
     <string name="category_appearance">Välimus</string>
     <string name="emphasis_title">Rõhk</string>
     <string name="hour">Hooajaline tund</string>
+    <string name="midnight_6">6 tundi pärast videvik</string>
 
 </resources>

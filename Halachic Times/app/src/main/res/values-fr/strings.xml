@@ -182,5 +182,6 @@
     <string name="category_appearance">Apparence</string>
     <string name="hour">Heure saisonnière</string>
     <string name="emphasis_title">Emphase</string>
+    <string name="midnight_6">6 heures après tombée de la nuit</string>
 
 </resources>

@@ -182,5 +182,6 @@
     <string name="category_appearance">Apparenza</string>
     <string name="hour">Ora stagionale</string>
     <string name="emphasis_title">Enfasi</string>
+    <string name="midnight_6">6 ore dopo imbrunire</string>
 
 </resources>

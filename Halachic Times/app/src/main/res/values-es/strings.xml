@@ -182,5 +182,6 @@
     <string name="category_appearance">Apariencia</string>
     <string name="emphasis_title">Énfasis</string>
     <string name="hour">Horas estacional</string>
+    <string name="midnight_6">6 horas después de anochecer</string>
 
 </resources>

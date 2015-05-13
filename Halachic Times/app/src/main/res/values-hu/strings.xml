@@ -182,5 +182,6 @@
     <string name="category_appearance">Megjelenés</string>
     <string name="hour">Szezonális óra</string>
     <string name="emphasis_title">Hangsúly</string>
+    <string name="midnight_6">6 órával azután alkony</string>
 
 </resources>
