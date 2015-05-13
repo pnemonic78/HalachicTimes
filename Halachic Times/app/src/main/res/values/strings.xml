@@ -30,7 +30,7 @@
     <string name="opinion_mga">According to Magen Avraham</string>
     <string name="opinion_tam">According to Rabbeinu Tam</string>
 
-    <!-- Daily hour -->
+    <!-- Temporal hour -->
     <string name="hour">Seasonal hour</string>
     <string name="hour_mga" translatable="false">@string/opinion_mga</string>
     <string name="hour_gra" translatable="false">@string/opinion_gra</string>

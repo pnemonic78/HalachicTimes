@@ -30,6 +30,9 @@
     <string name="opinion_mga">Ifølge Magen Avraham</string>
     <string name="opinion_tam">Ifølge Rabbeinu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Sesongåpent</string>
+
     <!-- List -->
     <string name="dawn">Daggry</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Midnatt (chatzos)</string>
     <string name="midnight_summary">Solens midnatt</string>
     <string name="midnight_12">12 timer etter middag</string>
+    <string name="midnight_6">6 timer etter mørkningen</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Siste tid til å spise chametz</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Innstillinger</string>
     <string name="category_general">Generelt</string>
+    <string name="category_appearance">Utseende</string>
     <string name="coords_title">Koordinerer</string>
     <string name="coords_format_title">Koordinerer format</string>
     <string name="coords_format_summary">Notasjon av breddegrad og lengdegrad</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Type påminnelse</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Varsel"</string>
+    <string name="emphasis_title">Vektlegging</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dato</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachisk Tider Klokke</string>
-    <string name="category_appearance">Utseende</string>
-    <string name="hour">Sesongåpent</string>
-    <string name="emphasis_title">Vektlegging</string>
-    <string name="midnight_6">6 timer etter mørkningen</string>
 
 </resources>

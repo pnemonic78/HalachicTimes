@@ -30,6 +30,9 @@
     <string name="opinion_mga">Magen Avraham göre</string>
     <string name="opinion_tam">Rabbeinu Tam göre</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Mevsimlik saat</string>
+
     <!-- List -->
     <string name="dawn">Şafak</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Gece yarısı (chatzot)</string>
     <string name="midnight_summary">Güneş geceyarısı</string>
     <string name="midnight_12">12 saat sonra öğlen</string>
+    <string name="midnight_6">6 saat sonra akşam vakti</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Chametz yemek için son kez</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Ayarlar</string>
     <string name="category_general">Genel</string>
+    <string name="category_appearance">Görünüş</string>
     <string name="coords_title">Koordinatlar</string>
     <string name="coords_format_title">Koordinatlar biçimi</string>
     <string name="coords_format_summary">Enlem ve boylam notasyon</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Hatırlatma türü</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Bildirim"</string>
+    <string name="emphasis_title">Önem</string>
 
     <!-- Go to date -->
     <string name="menu_date">Tarih</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachik Vakitleri Saat</string>
-    <string name="category_appearance">Görünüş</string>
-    <string name="hour">Mevsimlik saat</string>
-    <string name="emphasis_title">Önem</string>
-    <string name="midnight_6">6 saat sonra akşam vakti</string>
 
 </resources>

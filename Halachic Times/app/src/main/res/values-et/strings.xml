@@ -30,6 +30,9 @@
     <string name="opinion_mga">Vastavalt Magen Avraham</string>
     <string name="opinion_tam">Vastavalt Rabbeinu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Hooajaline tund</string>
+
     <!-- List -->
     <string name="dawn">Koit</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Kesköö (chatsos)</string>
     <string name="midnight_summary">Päikese keskööd</string>
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
+    <string name="midnight_6">6 tundi pärast videvik</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Viimane aeg süüa chamets</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>
     <string name="category_general">Üldine</string>
+    <string name="category_appearance">Välimus</string>
     <string name="coords_title">Koordinaadid</string>
     <string name="coords_format_title">Koordinaadid formaat</string>
     <string name="coords_format_summary">Märge laius-ja pikkuskraadi</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Tüüp meeldetuletus</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Äratus"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Teatis"</string>
+    <string name="emphasis_title">Rõhk</string>
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiline Ajad Kell</string>
-    <string name="category_appearance">Välimus</string>
-    <string name="emphasis_title">Rõhk</string>
-    <string name="hour">Hooajaline tund</string>
-    <string name="midnight_6">6 tundi pärast videvik</string>
 
 </resources>

@@ -30,6 +30,9 @@
     <string name="opinion_mga">Zgodnie z Magen Abrahama</string>
     <string name="opinion_tam">Zgodnie z Rabbeinu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Sezonowy godzin</string>
+
     <!-- List -->
     <string name="dawn">Świt</string>
 
@@ -116,6 +119,7 @@
     <string name="midnight">Północ (chatzos)</string>
     <string name="midnight_summary">Słoneczne północ</string>
     <string name="midnight_12">12 godziny po południa</string>
+    <string name="midnight_6">6 godziny po zmrok</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Ostatni czas zjeść chamec</string>
@@ -138,6 +142,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>
     <string name="category_general">Ogólne</string>
+    <string name="category_appearance">Wygląd</string>
     <string name="coords_title">Współrzędne</string>
     <string name="coords_format_title">Format współrzędne</string>
     <string name="coords_format_summary">Notacja długości i szerokości geograficznej</string>
@@ -149,6 +154,7 @@
     <string name="reminder_stream_title">Rodzaj przypomnienia</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Powiadomienie"</string>
+    <string name="emphasis_title">Akcent</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>
@@ -183,9 +189,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiczny Czasy Zegar</string>
-    <string name="category_appearance">Wygląd</string>
-    <string name="hour">Sezonowy godzin</string>
-    <string name="emphasis_title">Akcent</string>
-    <string name="midnight_6">6 godziny po zmrok</string>
 
 </resources>

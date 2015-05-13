@@ -30,6 +30,9 @@
     <string name="opinion_mga">Відповідно до Маген Авраам</string>
     <string name="opinion_tam">Відповідно до Рабейну Там</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Сезонний годину</string>
+
     <!-- List -->
     <string name="dawn">Світанок</string>
 
@@ -116,6 +119,7 @@
     <string name="midnight">Опівночі (хацот)</string>
     <string name="midnight_summary">Сонячна опівночі</string>
     <string name="midnight_12">12 годин після полудень</string>
+    <string name="midnight_6">6 годин після настання ночі</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Останній час їсти хамец</string>
@@ -138,6 +142,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Налаштування</string>
     <string name="category_general">Загальні</string>
+    <string name="category_appearance">Вигляд</string>
     <string name="coords_title">Координати</string>
     <string name="coords_format_title">Координати форматі</string>
     <string name="coords_format_summary">Позначення широти і довготи</string>
@@ -149,6 +154,7 @@
     <string name="reminder_stream_title">Тип нагадування</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Сповіщ."</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Сповіщення"</string>
+    <string name="emphasis_title">Акцент</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>
@@ -183,9 +189,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Галахических Разів Годинник</string>
-    <string name="category_appearance">Вигляд</string>
-    <string name="hour">Сезонний годину</string>
-    <string name="emphasis_title">Акцент</string>
-    <string name="midnight_6">6 годин після настання ночі</string>
 
 </resources>

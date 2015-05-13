@@ -30,6 +30,9 @@
     <string name="opinion_mga">Volgens Magen Awraham</string>
     <string name="opinion_tam">Volgens Rabbeinoe Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Seizoensgebonden uur</string>
+
     <!-- List -->
     <string name="dawn">Dageraad</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Middernacht (chatsos)</string>
     <string name="midnight_summary">Zonne-middernacht</string>
     <string name="midnight_12">12 uur na de middag</string>
+    <string name="midnight_6">6 uur na de nacht</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Laatste tijd om chameets te eten</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>
     <string name="category_general">Algemeen</string>
+    <string name="category_appearance">Uiterlijk</string>
     <string name="coords_title">Coordinates</string>
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_summary">Notatie van breedtegraad en lengtegraad</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Soort herinnering</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarm"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Melding"</string>
+    <string name="emphasis_title">Klemtoon</string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Tijden Klok</string>
-    <string name="category_appearance">Uiterlijk</string>
-    <string name="hour">Seizoensgebonden uur</string>
-    <string name="emphasis_title">Klemtoon</string>
-    <string name="midnight_6">6 uur na de nacht</string>
 
 </resources>

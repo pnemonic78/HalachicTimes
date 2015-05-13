@@ -30,6 +30,9 @@
     <string name="opinion_mga">Nach Magen Avraham</string>
     <string name="opinion_tam">Nach Rabbenu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Saison Stunde</string>
+
     <!-- List -->
     <string name="dawn">Morgendämmerung</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Mitternacht (chatzos)</string>
     <string name="midnight_summary">Solar Mitternacht</string>
     <string name="midnight_12">12 stunden nach der Mittag</string>
+    <string name="midnight_6">6 stunden nach Einbruch der Nacht</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Letzte Zeit zu essen chametz</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>
     <string name="category_general">Allgemein</string>
+    <string name="category_appearance">Darstellung</string>
     <string name="coords_title">Koordinaten</string>
     <string name="coords_format_title">Koordinaten-Format</string>
     <string name="coords_format_summary">Notation von Breiten-und Längengrad</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Art der Erinnerung</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Wecker"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Benachrichtigung"</string>
+    <string name="emphasis_title">Betonung</string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Zeiten Uhr</string>
-    <string name="category_appearance">Darstellung</string>
-    <string name="emphasis_title">Betonung</string>
-    <string name="hour">Saison Stunde</string>
-    <string name="midnight_6">6 stunden nach Einbruch der Nacht</string>
 
 </resources>

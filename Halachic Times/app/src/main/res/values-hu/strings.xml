@@ -30,6 +30,9 @@
     <string name="opinion_mga">Szerint Magen Avraham</string>
     <string name="opinion_tam">Szerint Rabbénu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Szezonális óra</string>
+
     <!-- List -->
     <string name="dawn">Hajnal</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Éjfél (chatzos)</string>
     <string name="midnight_summary">Szolár éjfél</string>
     <string name="midnight_12">12 órával azután dél</string>
+    <string name="midnight_6">6 órával azután alkony</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Legutóbbi ideje enni chametz</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Beállítások</string>
     <string name="category_general">Általános</string>
+    <string name="category_appearance">Megjelenés</string>
     <string name="coords_title">Koordináták</string>
     <string name="coords_format_title">Koordináták formátum</string>
     <string name="coords_format_summary">Jelölések a szélességi és hosszúsági</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Emlékeztető típusát</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Ébresztő"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Értesítés"</string>
+    <string name="emphasis_title">Hangsúly</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dátum</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachikus Szor Óra</string>
-    <string name="category_appearance">Megjelenés</string>
-    <string name="hour">Szezonális óra</string>
-    <string name="emphasis_title">Hangsúly</string>
-    <string name="midnight_6">6 órával azután alkony</string>
 
 </resources>

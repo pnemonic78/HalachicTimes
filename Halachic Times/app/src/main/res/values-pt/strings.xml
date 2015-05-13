@@ -30,6 +30,9 @@
     <string name="opinion_mga">Acordo com a Maguen Avraham</string>
     <string name="opinion_tam">Acordo com a Rabbeinu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Hora sazonal</string>
+
     <!-- List -->
     <string name="dawn">Alvorecer</string>
 
@@ -112,6 +115,7 @@
     <string name="midnight">Meia-noite (rraçòz)</string>
     <string name="midnight_summary">Solares da meia-noite</string>
     <string name="midnight_12">12 horas após de meio-dia</string>
+    <string name="midnight_6">6 horas após de anoitecer</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Última hora de comer chametz</string>
@@ -134,6 +138,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Configurações</string>
     <string name="category_general">Geral</string>
+    <string name="category_appearance">Aparência</string>
     <string name="coords_title">Coordenadas</string>
     <string name="coords_format_title">Formato de coordenadas</string>
     <string name="coords_format_summary">Notação de latitude e longitude</string>
@@ -145,6 +150,7 @@
     <string name="reminder_stream_title">Tipo lembrete</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarme"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Notificação"</string>
+    <string name="emphasis_title">Ênfase</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>
@@ -179,9 +185,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Horários Haláchicos Relógio</string>
-    <string name="category_appearance">Aparência</string>
-    <string name="hour">Hora sazonal</string>
-    <string name="emphasis_title">Ênfase</string>
-    <string name="midnight_6">6 horas após de anoitecer</string>
 
 </resources>

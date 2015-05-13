@@ -30,6 +30,9 @@
     <string name="opinion_mga">În conformitate cu Magen Avraham</string>
     <string name="opinion_tam">În conformitate cu Rabbeinu Tam</string>
 
+    <!-- Temporal hour -->
+    <string name="hour">Oră de sezon</string>
+
     <!-- List -->
     <string name="dawn">Zori de zi</string>
 
@@ -114,6 +117,7 @@
     <string name="midnight">Miezul nopții (chaţos)</string>
     <string name="midnight_summary">Solar miezul nopții</string>
     <string name="midnight_12">12 ore după amiază</string>
+    <string name="midnight_6">6 ore după căderea nopții</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Ultima moment a manca chametz</string>
@@ -136,6 +140,7 @@
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
     <string name="category_general">General</string>
+    <string name="category_appearance">Aparenţă</string>
     <string name="coords_title">Coordonează</string>
     <string name="coords_format_title">Coordonează format</string>
     <string name="coords_format_summary">Notația de latitudine și longitudine</string>
@@ -147,6 +152,7 @@
     <string name="reminder_stream_title">Tipul memento</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Alarmă"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Notificare"</string>
+    <string name="emphasis_title">Accent</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>
@@ -181,9 +187,5 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Ori Halachic Ceas</string>
-    <string name="category_appearance">Aparenţă</string>
-    <string name="hour">Oră de sezon</string>
-    <string name="emphasis_title">Accent</string>
-    <string name="midnight_6">6 ore după căderea nopții</string>
 
 </resources>
