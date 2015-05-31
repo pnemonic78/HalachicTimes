@@ -14,6 +14,8 @@ android {
         buildConfigField "String", "BING_API_KEY", '"' + project.BING_API_KEY + '"'
         buildConfigField "String", "GEONAMES_USERNAME", '"' + project.GEONAMES_USERNAME + '"'
 
+        resValue "string", "google_backup_api_key", project.GOOGLE_BACKUP_API_KEY
+
         testApplicationId "net.sf.times.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
