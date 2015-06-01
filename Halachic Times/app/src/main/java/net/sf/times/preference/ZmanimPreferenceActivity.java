@@ -19,6 +19,7 @@
  */
 package net.sf.times.preference;
 
+import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -27,6 +28,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -48,9 +50,10 @@ import net.sf.times.location.AddressProvider;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class ZmanimPreferenceActivity extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
-    private static final String TAG = "ZmanimPreferences";
+    private static final String TAG = "ZmanimPreferenceActivity";
 
     private SeekBarDialogPreference candles;
     private ZmanimSettings settings;
@@ -61,7 +64,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     /**
      * Constructs a new preferences.
      */
-    public ZmanimPreferences() {
+    public ZmanimPreferenceActivity() {
     }
 
     @SuppressWarnings("deprecation")

@@ -48,6 +48,11 @@
             android:parentActivityName=".ZmanimActivity">
         </activity>
         <activity
+            android:name="net.sf.times.preference.ZmanimPreferenceActivity"
+            android:label="@string/menu_settings"
+            android:parentActivityName=".ZmanimActivity">
+        </activity>
+        <activity
             android:name="net.sf.times.CompassActivity"
             android:label="@string/title_activity_compass"
             android:parentActivityName=".ZmanimActivity">
