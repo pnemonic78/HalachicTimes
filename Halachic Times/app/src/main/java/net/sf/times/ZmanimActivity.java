@@ -62,6 +62,8 @@ import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.ZmanimPreferences;
+import net.sf.times.preference.ZmanimSettings;
 import net.sf.view.animation.LayoutWeightAnimation;
 
 import java.util.Calendar;

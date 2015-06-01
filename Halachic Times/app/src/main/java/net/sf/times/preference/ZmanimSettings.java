@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,6 +27,8 @@ import android.media.AudioManager;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+
+import net.sf.times.R;
 
 /**
  * Application settings.

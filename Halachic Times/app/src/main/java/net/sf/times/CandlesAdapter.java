@@ -23,6 +23,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 

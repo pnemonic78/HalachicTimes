@@ -38,7 +38,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import net.sf.times.R;
-import net.sf.times.ZmanimSettings;
+import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.ArrayList;

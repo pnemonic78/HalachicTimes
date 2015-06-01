@@ -34,6 +34,7 @@ import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.ZmanimSettings;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in

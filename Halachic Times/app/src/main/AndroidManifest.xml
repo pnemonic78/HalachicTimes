@@ -43,7 +43,7 @@
                 android:value=".LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.ZmanimPreferences"
+            android:name="net.sf.times.preference.ZmanimPreferences"
             android:label="@string/menu_settings"
             android:parentActivityName=".ZmanimActivity">
         </activity>

@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.preference;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ActivityNotFoundException;
@@ -37,6 +37,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import net.sf.preference.SeekBarDialogPreference;
+import net.sf.times.R;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.ZmanimReminder;
+import net.sf.times.ZmanimWidget;
 import net.sf.times.location.AddressProvider;
 
 /**
