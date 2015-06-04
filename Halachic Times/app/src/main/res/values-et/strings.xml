@@ -137,8 +137,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>
-    <string name="category_general">Üldine</string>
-    <string name="category_appearance">Välimus</string>
+    <string name="pref_general_title">Üldine</string>
+    <string name="pref_appearance_title">Välimus</string>
     <string name="coords_title">Koordinaadid</string>
     <string name="coords_format_title">Koordinaadid formaat</string>
     <string name="coords_format_summary">Märge laius-ja pikkuskraadi</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Kustuta ajalugu</string>
 
     <!-- About -->
-    <string name="category_about">Kohta</string>
+    <string name="pref_about_title">Kohta</string>
     <string name="version">Rakenduse versioon</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Autoriõigus \u00A9 2004–2011 Eelija Hershfeld</string>

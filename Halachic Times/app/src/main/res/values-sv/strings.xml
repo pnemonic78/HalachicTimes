@@ -137,8 +137,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Inställningar</string>
-    <string name="category_general">Allmänt</string>
-    <string name="category_appearance">Utseende</string>
+    <string name="pref_general_title">Allmänt</string>
+    <string name="pref_appearance_title">Utseende</string>
     <string name="coords_title">Koordinater</string>
     <string name="coords_format_title">Koordinater format</string>
     <string name="coords_format_summary">Notskrift av latitud och longitud</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Rensa historik</string>
 
     <!-- About -->
-    <string name="category_about">Om</string>
+    <string name="pref_about_title">Om</string>
     <string name="version">Applen versionen</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Upphovsrätt \u00A9 2004–2011 Eliyahu Hershfeld</string>

@@ -137,8 +137,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>
-    <string name="category_general">Allgemein</string>
-    <string name="category_appearance">Darstellung</string>
+    <string name="pref_general_title">Allgemein</string>
+    <string name="pref_appearance_title">Darstellung</string>
     <string name="coords_title">Koordinaten</string>
     <string name="coords_format_title">Koordinaten-Format</string>
     <string name="coords_format_summary">Notation von Breiten-und Längengrad</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Verlauf löschen</string>
 
     <!-- About -->
-    <string name="category_about">Über</string>
+    <string name="pref_about_title">Über</string>
     <string name="version">Anwendungsversion</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Urheberrecht \u00A9 2004–2011 Eliyahu Hershfeld</string>

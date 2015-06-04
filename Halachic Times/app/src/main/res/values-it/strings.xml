@@ -137,8 +137,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Impostazioni</string>
-    <string name="category_general">Generali</string>
-    <string name="category_appearance">Apparenza</string>
+    <string name="pref_general_title">Generali</string>
+    <string name="pref_appearance_title">Apparenza</string>
     <string name="coords_title">Coordinate</string>
     <string name="coords_format_title">Coordinate formato</string>
     <string name="coords_format_summary">Notazione di latitudine e longitudine</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Clear history</string>
 
     <!-- About -->
-    <string name="category_about">Su</string>
+    <string name="pref_about_title">Su</string>
     <string name="version">Versione di applicazione</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2011 Elia Hershfeld</string>

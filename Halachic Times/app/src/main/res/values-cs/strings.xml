@@ -139,8 +139,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Nastavení</string>
-    <string name="category_general">Obecné</string>
-    <string name="category_appearance">Vzhled</string>
+    <string name="pref_general_title">Obecné</string>
+    <string name="pref_appearance_title">Vzhled</string>
     <string name="coords_title">Souřadnice</string>
     <string name="coords_format_title">Souřadnice formát</string>
     <string name="coords_format_summary">Zápis zeměpisné šířky a délky</string>
@@ -180,7 +180,7 @@
     <string name="pref_privacy_clear_history">Vymazat historii</string>
 
     <!-- About -->
-    <string name="category_about">Info o</string>
+    <string name="pref_about_title">Info o</string>
     <string name="version">Verze aplikace</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Autorská práva \u00A9 2004–2011 Eliyahu Hershfeld</string>

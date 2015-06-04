@@ -141,8 +141,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
-    <string name="category_general">Общие</string>
-    <string name="category_appearance">Внешность</string>
+    <string name="pref_general_title">Общие</string>
+    <string name="pref_appearance_title">Внешность</string>
     <string name="coords_title">Координаты</string>
     <string name="coords_format_title">Формат координатов</string>
     <string name="coords_format_summary">Пометка широты и долготы</string>
@@ -182,7 +182,7 @@
     <string name="pref_privacy_clear_history">Очистить историю</string>
 
     <!-- About -->
-    <string name="category_about">Инфо</string>
+    <string name="pref_about_title">Инфо</string>
     <string name="version">Версия приложения</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Авторские права \u00A9 2004–2011 Элиягу Хиршфельд</string>

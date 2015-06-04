@@ -135,8 +135,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
-    <string name="category_general">Общи</string>
-    <string name="category_appearance">появяване</string>
+    <string name="pref_general_title">Общи</string>
+    <string name="pref_appearance_title">появяване</string>
     <string name="coords_title">Координати</string>
     <string name="coords_format_title">Координати формат</string>
     <string name="coords_format_summary">Нотация на географска ширина и дължина</string>
@@ -176,7 +176,7 @@
     <string name="pref_privacy_clear_history">Изчистване на историята</string>
 
     <!-- About -->
-    <string name="category_about">За</string>
+    <string name="pref_about_title">За</string>
     <string name="version">Версия на приложението</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Авторски права \u00A9 2004–2011 Илия Хиршфелд</string>

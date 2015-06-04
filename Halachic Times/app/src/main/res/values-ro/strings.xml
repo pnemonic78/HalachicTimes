@@ -139,8 +139,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
-    <string name="category_general">General</string>
-    <string name="category_appearance">Aparenţă</string>
+    <string name="pref_general_title">General</string>
+    <string name="pref_appearance_title">Aparenţă</string>
     <string name="coords_title">Coordonează</string>
     <string name="coords_format_title">Coordonează format</string>
     <string name="coords_format_summary">Notația de latitudine și longitudine</string>
@@ -180,7 +180,7 @@
     <string name="pref_privacy_clear_history">Ștergeţi istoricul</string>
 
     <!-- About -->
-    <string name="category_about">Despre</string>
+    <string name="pref_about_title">Despre</string>
     <string name="version">Versiunea aplicație</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Drept de autor \u00A9 2004–2011 Ilie Hershfeld</string>

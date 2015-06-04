@@ -237,8 +237,9 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
-    <string name="category_general">General</string>
-    <string name="category_appearance">Appearance</string>
+    <string name="pref_general_title">General</string>
+    <string name="pref_appearance_title">Appearance</string>
+    <string name="pref_zmanim_title" translatable="false">@string/title_activity_zmanim</string>
     <string name="coords_title">Coordinates</string>
     <string name="coords_format_title">Coordinates format</string>
     <string name="coords_format_summary">Notation of latitude and longitude</string>
@@ -280,7 +281,7 @@
     <string name="pref_privacy_clear_history">Clear history</string>
 
     <!-- About -->
-    <string name="category_about">About</string>
+    <string name="pref_about_title">About</string>
     <string name="version">Application version</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2011 Eliyahu Hershfeld</string>

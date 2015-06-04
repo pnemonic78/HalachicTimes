@@ -137,8 +137,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>
-    <string name="category_general">Algemeen</string>
-    <string name="category_appearance">Uiterlijk</string>
+    <string name="pref_general_title">Algemeen</string>
+    <string name="pref_appearance_title">Uiterlijk</string>
     <string name="coords_title">Coordinates</string>
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_summary">Notatie van breedtegraad en lengtegraad</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Geschiedenis wissen</string>
 
     <!-- About -->
-    <string name="category_about">Over</string>
+    <string name="pref_about_title">Over</string>
     <string name="version">App versie</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Auteursrecht \u00A9 2004–2011 Elijahoe Hershfeld</string>

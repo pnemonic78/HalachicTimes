@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/category_general">
+    <PreferenceCategory android:title="@string/pref_general_title">
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="past"
@@ -15,7 +15,7 @@
             android:summary="@string/reminder_stream_alarm"
             android:title="@string/reminder_stream_title"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_appearance">
+    <PreferenceCategory android:title="@string/pref_appearance_title">
         <ListPreference
             android:defaultValue="decimal"
             android:entries="@array/coords_format_entries"
@@ -40,7 +40,7 @@
             android:key="gradient"
             android:title="@string/gradient_title"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/title_activity_zmanim">
+    <PreferenceCategory android:title="@string/pref_zmanim_title">
         <PreferenceScreen android:title="@string/hour">
             <ListPreference
                 android:defaultValue="GRA"
@@ -459,7 +459,7 @@
             android:key="clear_history"
             android:title="@string/pref_privacy_clear_history"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/category_about">
+    <PreferenceCategory android:title="@string/pref_about_title">
         <Preference
             android:key="about.version"
             android:title="@string/version"/>

@@ -137,8 +137,8 @@
 
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
-    <string name="category_general">Yleiset</string>
-    <string name="category_appearance">Ulkonäkö</string>
+    <string name="pref_general_title">Yleiset</string>
+    <string name="pref_appearance_title">Ulkonäkö</string>
     <string name="coords_title">Koordinaatit</string>
     <string name="coords_format_title">Koordinaatit formaatti</string>
     <string name="coords_format_summary">Notaatio leveyttä ja pituuspiirin</string>
@@ -178,7 +178,7 @@
     <string name="pref_privacy_clear_history">Tyhjennä historia</string>
 
     <!-- About -->
-    <string name="category_about">Tietoja</string>
+    <string name="pref_about_title">Tietoja</string>
     <string name="version">Sovellusversio </string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004–2011 Elia Hirschfeldin</string>
