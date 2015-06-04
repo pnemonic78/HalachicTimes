@@ -2,7 +2,6 @@ package net.sf.times.preference;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.os.Bundle;
 
 import net.sf.times.R;
 
@@ -13,8 +12,7 @@ import net.sf.times.R;
 public class GeneralPreferenceFragment extends DefaultPreferenceFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.general_preferences);
+    protected int getPreferencesXml() {
+        return R.xml.general_preferences;
     }
 }
