@@ -250,7 +250,6 @@
             android:max="40"
             android:negativeButtonText="@android:string/cancel"
             android:positiveButtonText="@android:string/ok"
-            android:summary="@plurals/candles_summary"
             android:title="@string/opinion"/>
 
         <ListPreference
