@@ -9,7 +9,7 @@ import net.sf.times.R;
  * This fragment shows the preferences for the Appearance header.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class AppearancePreferenceFragment extends DefaultPreferenceFragment {
+public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {

@@ -9,7 +9,7 @@ import net.sf.times.R;
  * This fragment shows the preferences for the Zmanim header.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ZmanimPreferenceFragment extends DefaultPreferenceFragment {
+public class ZmanimPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {

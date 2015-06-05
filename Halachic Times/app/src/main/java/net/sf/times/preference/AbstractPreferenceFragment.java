@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
  * This fragment shows the preferences for a header.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public abstract class DefaultPreferenceFragment extends PreferenceFragment {
+public abstract class AbstractPreferenceFragment extends PreferenceFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
