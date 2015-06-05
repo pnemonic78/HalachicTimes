@@ -249,6 +249,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         Intent intent = new Intent(context, ZmanimWidget.class);
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        sendBroadcast(intent);
+        context.sendBroadcast(intent);
     }
 }
