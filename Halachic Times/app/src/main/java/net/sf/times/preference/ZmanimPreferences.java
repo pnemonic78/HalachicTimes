@@ -75,6 +75,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         candles.setOnPreferenceChangeListener(this);
         onCandlesPreferenceChange(candles, null);
 
+        initList(ZmanimSettings.KEY_OPINION_HOUR);
         initList(ZmanimSettings.KEY_OPINION_DAWN);
         initList(ZmanimSettings.KEY_OPINION_TALLIS);
         initList(ZmanimSettings.KEY_OPINION_SUNRISE);

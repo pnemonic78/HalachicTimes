@@ -33,8 +33,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 
     protected void initList(String name) {
         ListPreference list = (ListPreference) findPreference(name);
-        list.setOnPreferenceChangeListener(this);
-        onListPreferenceChange(list, list.getValue());
+        if (list != null) {
+            list.setOnPreferenceChangeListener(this);
+            onListPreferenceChange(list, list.getValue());
+        }
     }
 
     protected void onListPreferenceChange(ListPreference preference, Object newValue) {

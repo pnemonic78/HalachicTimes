@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceScreen android:title="@string/hour">
-        <ListPreference
-            android:defaultValue="GRA"
-            android:dialogIcon="@android:drawable/ic_dialog_info"
-            android:entries="@array/hour_entries"
-            android:entryValues="@array/hour_values"
-            android:icon="@drawable/ic_opinion"
-            android:key="hour"
-            android:title="@string/opinion"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="hour.visible"
-            android:title="@string/hour_title"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="hour.emphasis"
-            android:title="@string/emphasis_title"/>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:title="@string/hour">
+        <extra
+            android:name="xml"
+            android:value="zman_hour_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="hour"/>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/dawn">
         <ListPreference

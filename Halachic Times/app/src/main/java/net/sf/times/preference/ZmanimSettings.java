@@ -67,7 +67,7 @@ public class ZmanimSettings {
     public static final String KEY_HOUR = "hour.visible";
 
     /** Preference name for temporal hour type. */
-    private static final String KEY_OPINION_HOUR = "hour";
+    public static final String KEY_OPINION_HOUR = "hour";
     /** Preference name for Alos type. */
     public static final String KEY_OPINION_DAWN = "dawn";
     /** Preference name for earliest tallis type. */
