@@ -18,7 +18,7 @@ import net.sf.times.ZmanimWidget;
  * This fragment shows the preferences for a header.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
+public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,5 +91,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         context.sendBroadcast(intent);
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        return false;
     }
 }

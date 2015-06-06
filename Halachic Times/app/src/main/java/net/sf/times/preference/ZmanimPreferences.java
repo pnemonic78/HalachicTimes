@@ -50,8 +50,6 @@ import net.sf.times.location.AddressProvider;
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
-    private static final String TAG = "ZmanimPreferences";
-
     private SeekBarDialogPreference candles;
     private ZmanimSettings settings;
     private ZmanimReminder reminder;
