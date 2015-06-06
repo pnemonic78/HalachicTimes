@@ -269,7 +269,7 @@
             android:key="candles.reminder"
             android:title="@string/reminder"/>
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:icon="@android:drawable/ic_media_play"
             android:key="candles.anim"
