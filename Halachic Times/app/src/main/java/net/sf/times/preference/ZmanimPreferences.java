@@ -56,7 +56,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     private ZmanimSettings settings;
     private ZmanimReminder reminder;
     private Preference clearHistory;
-    private Preference aboutKosherJava;
 
     /**
      * Constructs a new preferences.
@@ -120,8 +119,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         } catch (NameNotFoundException e) {
             // Never should happen with our own package!
         }
-        aboutKosherJava = findPreference("about.kosherjava");
-        aboutKosherJava.setOnPreferenceClickListener(this);
 
         // Other preferences that affect the app widget.
         findPreference(ZmanimSettings.KEY_PAST).setOnPreferenceChangeListener(this);
@@ -206,26 +203,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             preference.setEnabled(true);
             return true;
         }
-        if (preference == aboutKosherJava) {
-            preference.setEnabled(false);
-            gotoKosherJava();
-            preference.setEnabled(true);
-            return true;
-        }
         return false;
-    }
-
-    /**
-     * Navigate to the KosherJava page.
-     */
-    private void gotoKosherJava() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(getString(R.string.kosherjava_url)));
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Log.e(TAG, "Cannot view KosherJava", e);
-        }
     }
 
     /**

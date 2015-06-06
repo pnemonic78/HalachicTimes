@@ -465,7 +465,11 @@
         <Preference
             android:key="about.kosherjava"
             android:summary="@string/kosherjava_version"
-            android:title="@string/kosherjava"/>
+            android:title="@string/kosherjava">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/kosherjava_url"/>
+        </Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>
