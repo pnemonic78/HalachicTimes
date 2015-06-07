@@ -36,8 +36,6 @@ import java.util.List;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimPreferenceActivity extends PreferenceActivity {
 
-    private static final String TAG = "ZmanimPreferenceA";
-
     private final String packageName;
 
     /**

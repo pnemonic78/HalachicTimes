@@ -11,8 +11,9 @@ import android.os.Bundle;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
-    protected static final String EXTRA_XML = "xml";
-    protected static final String EXTRA_OPINION = "opinion";
+    public static final String EXTRA_XML = "xml";
+    public static final String EXTRA_OPINION = "opinion";
+    public static final String EXTRA_REMINDER = "reminder";
 
     private int xmlId;
 
@@ -20,13 +21,16 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         Bundle args = getArguments();
         String xmlName = args.getString(EXTRA_XML);
+        xmlName = xmlName.replace("res/", "").replace(".xml", "");
         Resources res = getResources();
-        this.xmlId = res.getIdentifier(xmlName, "xml", getActivity().getPackageName());
+        this.xmlId = res.getIdentifier(xmlName, null, getActivity().getPackageName());
         String opinion = args.getString(EXTRA_OPINION);
+        String reminder = args.getString(EXTRA_REMINDER);
 
         super.onCreate(savedInstanceState);
 
         initList(opinion);
+        initList(reminder);
     }
 
     @Override

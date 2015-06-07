@@ -11,6 +11,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 
 import net.sf.times.ZmanimWidget;
 
@@ -32,8 +33,13 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     protected abstract int getPreferencesXml();
 
     protected void initList(String name) {
-        ListPreference list = (ListPreference) findPreference(name);
-        if (list != null) {
+        if (TextUtils.isEmpty(name)) {
+            return;
+        }
+
+        Preference pref = findPreference(name);
+        if (pref != null) {
+            ListPreference list = (ListPreference) pref;
             list.setOnPreferenceChangeListener(this);
             onListPreferenceChange(list, list.getValue());
         }

@@ -1,45 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceScreen android:title="@string/hour">
-        <ListPreference
-            android:defaultValue="GRA"
-            android:dialogIcon="@android:drawable/ic_dialog_info"
-            android:entries="@array/hour_entries"
-            android:entryValues="@array/hour_values"
-            android:icon="@drawable/ic_opinion"
-            android:key="hour"
-            android:title="@string/opinion"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="hour.visible"
-            android:title="@string/hour_title"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="hour.emphasis"
-            android:title="@string/emphasis_title"/>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:title="@string/hour">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_hour_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="hour"/>
     </PreferenceScreen>
-    <PreferenceScreen android:title="@string/dawn">
-        <ListPreference
-            android:defaultValue="16.1"
-            android:dialogIcon="@android:drawable/ic_dialog_info"
-            android:entries="@array/dawn_entries"
-            android:entryValues="@array/dawn_values"
-            android:icon="@drawable/ic_opinion"
-            android:key="dawn"
-            android:title="@string/opinion"/>
-        <ListPreference
-            android:defaultValue=""
-            android:dialogIcon="@android:drawable/ic_dialog_alert"
-            android:entries="@array/reminder_entries"
-            android:entryValues="@array/reminder_values"
-            android:icon="@drawable/ic_alarm"
-            android:key="dawn.reminder"
-            android:title="@string/reminder"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="dawn.emphasis"
-            android:title="@string/emphasis_title"/>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:title="@string/dawn">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_dawn_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="dawn"/>
+        <extra
+            android:name="reminder"
+            android:value="dawn.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen android:title="@string/tallis">
         <ListPreference
