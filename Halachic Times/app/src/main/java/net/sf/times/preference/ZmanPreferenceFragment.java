@@ -21,9 +21,8 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         Bundle args = getArguments();
         String xmlName = args.getString(EXTRA_XML);
-        xmlName = xmlName.replace("res/", "").replace(".xml", "");
         Resources res = getResources();
-        this.xmlId = res.getIdentifier(xmlName, null, getActivity().getPackageName());
+        this.xmlId = res.getIdentifier(xmlName, "xml", getActivity().getPackageName());
         String opinion = args.getString(EXTRA_OPINION);
         String reminder = args.getString(EXTRA_REMINDER);
 
