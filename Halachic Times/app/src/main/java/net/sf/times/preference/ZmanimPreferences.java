@@ -72,6 +72,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_REMIDER_STREAM);
 
         candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+        candles.setSummary(R.plurals.candles_summary);
         candles.setOnPreferenceChangeListener(this);
         onCandlesPreferenceChange(candles, null);
 
@@ -134,7 +135,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == candles) {
-            onCandlesPreferenceChange(preference, newValue);
+            onCandlesPreferenceChange(candles, newValue);
             return true;
         }
         if (preference instanceof ListPreference) {
@@ -147,11 +148,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         return true;
     }
 
-    private void onCandlesPreferenceChange(Preference preference, Object newValue) {
+    private void onCandlesPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
+        int minutes = preference.getProgress();
         Resources res = getResources();
-        int minutes = candles.getProgress();
         CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
-        candles.setSummary(summary);
+        preference.setSummary(summary);
     }
 
     private void onListPreferenceChange(ListPreference preference, Object newValue) {

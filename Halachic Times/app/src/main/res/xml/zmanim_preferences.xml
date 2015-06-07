@@ -142,7 +142,7 @@
             android:value="plug_hamincha.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="net.sf.times.preference.ZmanCandlesPreferenceFragment"
         android:title="@string/candles">
         <extra
             android:name="xml"
