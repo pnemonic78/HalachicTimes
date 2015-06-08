@@ -228,15 +228,16 @@ public class CompassView extends View {
         float sweepAngle = north + holiest;
         if (sweepAngle > 180f)
             sweepAngle -= 360f;
-        canvas.drawArc(rectFill, -45f, sweepAngle, false, paintFill);
+        else if (sweepAngle < -180f)
+            sweepAngle += 360f;
+        canvas.drawArc(rectFill, 315 - north, sweepAngle, false, paintFill);
 
         canvas.rotate(45 + holiest, w2, h2);
         canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
         canvas.drawPath(pathArrowHoliest, paintHoliest);
+        canvas.rotate(-holiest, w2, h2);
 
         canvas.drawCircle(w2, h2, r, paintFrame);
-
-        canvas.rotate(-holiest, w2, h2);
         canvas.drawArc(rectFrameOuter, 0f, 360f, false, paintFrameOuter);
         canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
