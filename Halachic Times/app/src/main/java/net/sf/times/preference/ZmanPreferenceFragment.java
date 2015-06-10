@@ -1,7 +1,6 @@
 package net.sf.times.preference;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,12 +50,11 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         super.onListPreferenceChange(preference, newValue);
 
         if (!oldValue.equals(newValue)) {
-            if (preference.getKey().equals(reminderKey)) {
-                Context context = getActivity();
+            if (preference.getKey().equals(reminderKey) && (activity != null)) {
                 if (settings == null)
-                    settings = new ZmanimSettings(context);
+                    settings = new ZmanimSettings(activity);
                 if (reminder == null)
-                    reminder = new ZmanimReminder(context);
+                    reminder = new ZmanimReminder(activity);
                 reminder.remind(settings);
             }
         }

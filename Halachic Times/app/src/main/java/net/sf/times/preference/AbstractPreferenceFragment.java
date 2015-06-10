@@ -1,6 +1,7 @@
 package net.sf.times.preference;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,6 +21,14 @@ import net.sf.times.ZmanimWidget;
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+
+    protected Activity activity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
