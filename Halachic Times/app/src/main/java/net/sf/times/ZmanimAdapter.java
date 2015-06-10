@@ -300,6 +300,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         time.setText(item.timeLabel);
         time.setEnabled(enabled);
+        if (item.emphasis) {
+            time.setTypeface(time.getTypeface(), Typeface.BOLD);
+            time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.getTextSize() * 1.25f);
+        }
 
         return view;
     }
