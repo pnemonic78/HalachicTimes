@@ -46,7 +46,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -285,14 +284,15 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     /** Initialise. */
     @SuppressWarnings("unchecked")
     private void init() {
-        settings = new ZmanimSettings(this);
+        Context context = this;
+        settings = new ZmanimSettings(context);
 
-        inflater = LayoutInflater.from(this);
+        inflater = LayoutInflater.from(context);
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.times, null);
 
         setContentView(view);
 
-        gestureDetector = new GestureDetector(this, this);
+        gestureDetector = new GestureDetector(context, this);
         gestureDetector.setIsLongpressEnabled(false);
 
         masterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
@@ -305,30 +305,13 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
         viewSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
         if (viewSwitcher != null) {
-            Animation inAnim = AnimationUtils.makeInAnimation(this, false);
+            Animation inAnim = AnimationUtils.makeInAnimation(context, false);
             inAnim.setDuration(400L);
             viewSwitcher.setInAnimation(inAnim);
-            Animation outAnim = AnimationUtils.makeOutAnimation(this, true);
+            Animation outAnim = AnimationUtils.makeOutAnimation(context, true);
             outAnim.setDuration(400L);
             viewSwitcher.setOutAnimation(outAnim);
         }
-
-        slideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f);
-        slideRightToLeft.setDuration(400L);
-        slideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f);
-        slideLeftToRight.setDuration(400L);
-        detailsGrow = new LayoutWeightAnimation(detailsFragment, 0f, 2f);
-        detailsGrow.setDuration(500L);
-        detailsShrink = new LayoutWeightAnimation(detailsFragment, 2f, 0f);
-        detailsShrink.setDuration(500L);
-
-        Context context = this;
-        hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
-        hideNavigation.setAnimationListener(this);
-        showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav);
-        showNavigation.setAnimationListener(this);
 
         header = view.findViewById(R.id.header);
         header.setOnClickListener(this);
@@ -340,6 +323,17 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         iconBack.setOnClickListener(this);
         View iconForward = navigationBar.findViewById(R.id.action_forward);
         iconForward.setOnClickListener(this);
+
+        slideRightToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
+        slideLeftToRight = AnimationUtils.loadAnimation(context, R.anim.slide_left_to_right);
+        detailsGrow = new LayoutWeightAnimation(detailsFragment, 0f, 2f);
+        detailsGrow.setDuration(500L);
+        detailsShrink = new LayoutWeightAnimation(detailsFragment, 2f, 0f);
+        detailsShrink.setDuration(500L);
+        hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
+        hideNavigation.setAnimationListener(this);
+        showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav);
+        showNavigation.setAnimationListener(this);
     }
 
     /** Initialise the location providers. */
