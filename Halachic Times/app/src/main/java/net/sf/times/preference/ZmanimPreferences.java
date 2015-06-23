@@ -77,7 +77,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_REMINDER_STREAM);
 
         candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
-        candles.setSummary(R.plurals.candles_summary);
+        candles.setSummaryFormat(R.plurals.candles_summary);
         candles.setOnPreferenceChangeListener(this);
         onCandlesPreferenceChange(candles, null);
 

@@ -3,7 +3,7 @@
 
     <ListPreference
         android:defaultValue="MGA"
-        android:dialogIcon="@android:drawable/ic_dialog_info"
+        android:dialogIcon="@drawable/ic_opinion"
         android:entries="@array/shema_entries"
         android:entryValues="@array/shema_values"
         android:icon="@drawable/ic_opinion"

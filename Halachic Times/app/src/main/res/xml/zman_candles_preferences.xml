@@ -3,7 +3,7 @@
 
     <net.sf.preference.SeekBarDialogPreference
         android:defaultValue="22"
-        android:dialogIcon="@android:drawable/ic_dialog_info"
+        android:dialogIcon="@drawable/ic_opinion"
         android:dialogLayout="@layout/candles_seek"
         android:dialogTitle="@string/opinion"
         android:icon="@drawable/ic_opinion"
@@ -15,7 +15,7 @@
 
     <ListPreference
         android:defaultValue=""
-        android:dialogIcon="@android:drawable/ic_dialog_info"
+        android:dialogIcon="@drawable/ic_opinion"
         android:entries="@array/candles_chanukka_entries"
         android:entryValues="@array/candles_chanukka_values"
         android:icon="@drawable/ic_opinion"

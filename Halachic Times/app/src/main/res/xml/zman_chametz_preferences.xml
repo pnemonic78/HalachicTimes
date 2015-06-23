@@ -3,7 +3,7 @@
 
     <ListPreference
         android:defaultValue="GRA"
-        android:dialogIcon="@android:drawable/ic_dialog_info"
+        android:dialogIcon="@drawable/ic_opinion"
         android:entries="@array/burn_chametz_entries"
         android:entryValues="@array/burn_chametz_values"
         android:icon="@drawable/ic_opinion"

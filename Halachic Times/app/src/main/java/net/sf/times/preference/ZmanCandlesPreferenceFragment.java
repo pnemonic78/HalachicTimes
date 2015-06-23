@@ -41,7 +41,7 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
-        candles.setSummary(R.plurals.candles_summary);
+        candles.setSummaryFormat(R.plurals.candles_summary);
         candles.setOnPreferenceChangeListener(this);
         onCandlesPreferenceChange(candles, null);
     }

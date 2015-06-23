@@ -3,7 +3,7 @@
 
     <ListPreference
         android:defaultValue="GRA"
-        android:dialogIcon="@android:drawable/ic_dialog_info"
+        android:dialogIcon="@drawable/ic_opinion"
         android:entries="@array/hour_entries"
         android:entryValues="@array/hour_values"
         android:icon="@drawable/ic_opinion"

@@ -166,7 +166,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
      * @param pluralId
      *         the plural id for quantity.
      */
-    public void setSummary(int pluralId) {
+    public void setSummaryFormat(int pluralId) {
         summaryFormat = pluralId;
     }
 }

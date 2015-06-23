@@ -50,7 +50,7 @@
         <PreferenceScreen android:title="@string/hour">
             <ListPreference
                 android:defaultValue="GRA"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/hour_entries"
                 android:entryValues="@array/hour_values"
                 android:icon="@drawable/ic_opinion"
@@ -68,7 +68,7 @@
         <PreferenceScreen android:title="@string/dawn">
             <ListPreference
                 android:defaultValue="16.1"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/dawn_entries"
                 android:entryValues="@array/dawn_values"
                 android:icon="@drawable/ic_opinion"
@@ -90,7 +90,7 @@
         <PreferenceScreen android:title="@string/tallis">
             <ListPreference
                 android:defaultValue="11.5"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/tallis_entries"
                 android:entryValues="@array/tallis_values"
                 android:icon="@drawable/ic_opinion"
@@ -112,7 +112,7 @@
         <PreferenceScreen android:title="@string/sunrise">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/sunrise_entries"
                 android:entryValues="@array/sunrise_values"
                 android:icon="@drawable/ic_opinion"
@@ -134,7 +134,7 @@
         <PreferenceScreen android:title="@string/shema">
             <ListPreference
                 android:defaultValue="MGA"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/shema_entries"
                 android:entryValues="@array/shema_values"
                 android:icon="@drawable/ic_opinion"
@@ -156,7 +156,7 @@
         <PreferenceScreen android:title="@string/prayers">
             <ListPreference
                 android:defaultValue="MGA"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/prayers_entries"
                 android:entryValues="@array/prayers_values"
                 android:icon="@drawable/ic_opinion"
@@ -178,7 +178,7 @@
         <PreferenceScreen android:title="@string/burn_chametz">
             <ListPreference
                 android:defaultValue="GRA"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/burn_chametz_entries"
                 android:entryValues="@array/burn_chametz_values"
                 android:icon="@drawable/ic_opinion"
@@ -200,7 +200,7 @@
         <PreferenceScreen android:title="@string/midday">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/midday_entries"
                 android:entryValues="@array/midday_values"
                 android:icon="@drawable/ic_opinion"
@@ -222,7 +222,7 @@
         <PreferenceScreen android:title="@string/earliest_mincha">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/earliest_mincha_entries"
                 android:entryValues="@array/earliest_mincha_values"
                 android:icon="@drawable/ic_opinion"
@@ -244,7 +244,7 @@
         <PreferenceScreen android:title="@string/mincha">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/mincha_entries"
                 android:entryValues="@array/mincha_values"
                 android:icon="@drawable/ic_opinion"
@@ -266,7 +266,7 @@
         <PreferenceScreen android:title="@string/plug_hamincha">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/plug_hamincha_entries"
                 android:entryValues="@array/plug_hamincha_values"
                 android:icon="@drawable/ic_opinion"
@@ -288,7 +288,7 @@
         <PreferenceScreen android:title="@string/candles">
             <net.sf.preference.SeekBarDialogPreference
                 android:defaultValue="22"
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:dialogLayout="@layout/candles_seek"
                 android:dialogTitle="@string/opinion"
                 android:icon="@drawable/ic_opinion"
@@ -300,7 +300,7 @@
 
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/candles_chanukka_entries"
                 android:entryValues="@array/candles_chanukka_values"
                 android:icon="@drawable/ic_opinion"
@@ -328,7 +328,7 @@
         <PreferenceScreen android:title="@string/sunset">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/sunset_entries"
                 android:entryValues="@array/sunset_values"
                 android:icon="@drawable/ic_opinion"
@@ -350,7 +350,7 @@
         <PreferenceScreen android:title="@string/twilight">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/twilight_entries"
                 android:entryValues="@array/twilight_values"
                 android:icon="@drawable/ic_opinion"
@@ -372,7 +372,7 @@
         <PreferenceScreen android:title="@string/nightfall">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/nightfall_entries"
                 android:entryValues="@array/nightfall_values"
                 android:icon="@drawable/ic_opinion"
@@ -394,7 +394,7 @@
         <PreferenceScreen android:title="@string/midnight">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/midnight_entries"
                 android:entryValues="@array/midnight_values"
                 android:icon="@drawable/ic_opinion"
@@ -416,7 +416,7 @@
         <PreferenceScreen android:title="@string/levana_earliest">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/levana_earliest_entries"
                 android:entryValues="@array/levana_earliest_values"
                 android:icon="@drawable/ic_opinion"
@@ -438,7 +438,7 @@
         <PreferenceScreen android:title="@string/levana_latest">
             <ListPreference
                 android:defaultValue=""
-                android:dialogIcon="@android:drawable/ic_dialog_info"
+                android:dialogIcon="@drawable/ic_opinion"
                 android:entries="@array/levana_latest_entries"
                 android:entryValues="@array/levana_latest_values"
                 android:icon="@drawable/ic_opinion"

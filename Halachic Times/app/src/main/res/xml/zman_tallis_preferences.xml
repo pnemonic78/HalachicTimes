@@ -3,7 +3,7 @@
 
     <ListPreference
         android:defaultValue="11.5"
-        android:dialogIcon="@android:drawable/ic_dialog_info"
+        android:dialogIcon="@drawable/ic_opinion"
         android:entries="@array/tallis_entries"
         android:entryValues="@array/tallis_values"
         android:icon="@drawable/ic_opinion"
