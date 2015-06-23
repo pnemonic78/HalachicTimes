@@ -318,6 +318,11 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         detailsGrow.setDuration(500);
         detailsShrink = new LayoutWeightAnimation(detailsFragment, 2f, 0f);
         detailsShrink.setDuration(500);
+
+        View iconBack = header.findViewById(R.id.action_back);
+        iconBack.setOnClickListener(this);
+        View iconForward = header.findViewById(R.id.action_forward);
+        iconForward.setOnClickListener(this);
     }
 
     /** Initialise the location providers. */
@@ -581,8 +586,18 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     public void onClick(View view) {
-        ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
-        toggleDetails(item, view);
+        switch (view.getId()) {
+            case R.id.action_back:
+                navigateYesterday();
+                break;
+            case R.id.action_forward:
+                navigateTomorrow();
+                break;
+            default:
+                ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
+                toggleDetails(item, view);
+                break;
+        }
     }
 
     protected void hideDetails() {
@@ -677,31 +692,19 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         float dX = e2.getX() - e1.getX();
         float dY = e2.getY() - e1.getY();
         if (Math.abs(dX) > Math.abs(dY)) {
-            Calendar date = this.date;
-            int day = date.get(Calendar.DATE);
             if (dX < 0) {
                 if (localeRTL) {
-                    date.set(Calendar.DATE, day - 1);
-                    slideRight(masterFragment);
-                    slideRight(detailsFragment);
+                    navigateYesterday();
                 } else {
-                    date.set(Calendar.DATE, day + 1);
-                    slideLeft(masterFragment);
-                    slideLeft(detailsFragment);
+                    navigateTomorrow();
                 }
             } else {
                 if (localeRTL) {
-                    date.set(Calendar.DATE, day + 1);
-                    slideLeft(masterFragment);
-                    slideLeft(detailsFragment);
+                    navigateTomorrow();
                 } else {
-                    date.set(Calendar.DATE, day - 1);
-                    slideRight(masterFragment);
-                    slideRight(detailsFragment);
+                    navigateYesterday();
                 }
             }
-            setDate(date.getTimeInMillis());
-            populateFragments(date);
             return true;
         }
         return false;
@@ -780,5 +783,37 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         }
 
         return false;
+    }
+
+    private void navigateYesterday() {
+        Calendar date = this.date;
+        date.add(Calendar.DATE, -1);
+
+        if (localeRTL) {
+            slideLeft(masterFragment);
+            slideLeft(detailsFragment);
+        } else {
+            slideRight(masterFragment);
+            slideRight(detailsFragment);
+        }
+
+        setDate(date.getTimeInMillis());
+        populateFragments(date);
+    }
+
+    private void navigateTomorrow() {
+        Calendar date = this.date;
+        date.add(Calendar.DATE, +1);
+
+        if (localeRTL) {
+            slideRight(masterFragment);
+            slideRight(detailsFragment);
+        } else {
+            slideLeft(masterFragment);
+            slideLeft(detailsFragment);
+        }
+
+        setDate(date.getTimeInMillis());
+        populateFragments(date);
     }
 }

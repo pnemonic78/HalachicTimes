@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:gravity="right"
-    android:orientation="vertical"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content">
 
-    <include layout="@layout/times_date"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
 
-    <include layout="@layout/times_location"/>
+        <include layout="@layout/times_date"/>
 
-</LinearLayout>
+        <include layout="@layout/times_location"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/navigation"/>
+</FrameLayout>

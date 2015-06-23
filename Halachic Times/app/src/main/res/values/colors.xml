@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="black_50">#80000000</color>
+
     <color name="dawn">#90fbf2db</color>
     <color name="tallis">#60eac599</color>
     <color name="sunrise">#60d99058</color>
