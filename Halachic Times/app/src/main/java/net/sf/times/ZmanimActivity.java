@@ -319,9 +319,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         navigationBar = header.findViewById(R.id.navigation_bar);
         navigationBar.setOnClickListener(this);
 
-        View iconBack = navigationBar.findViewById(R.id.action_back);
+        View iconBack = navigationBar.findViewById(R.id.nav_yesterday);
         iconBack.setOnClickListener(this);
-        View iconForward = navigationBar.findViewById(R.id.action_forward);
+        View iconForward = navigationBar.findViewById(R.id.nav_tomorrow);
         iconForward.setOnClickListener(this);
 
         slideRightToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
@@ -609,10 +609,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
                     }
                 }
                 break;
-            case R.id.action_back:
+            case R.id.nav_yesterday:
                 navigateYesterday();
                 break;
-            case R.id.action_forward:
+            case R.id.nav_tomorrow:
                 navigateTomorrow();
                 break;
             default:
