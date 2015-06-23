@@ -20,12 +20,14 @@
 package net.sf.times.preference;
 
 import android.appwidget.AppWidgetManager;
-import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -34,7 +36,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.preference.RingtonePreference;
+import android.text.TextUtils;
 
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
@@ -54,6 +57,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     private ZmanimSettings settings;
     private ZmanimReminder reminder;
     private Preference clearHistory;
+    private RingtonePreference reminderRingtonePreference;
 
     /**
      * Constructs a new preferences.
@@ -69,7 +73,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         addPreferencesFromResource(R.xml.preferences);
 
-        initList(ZmanimSettings.KEY_REMIDER_STREAM);
+        reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
+        initList(ZmanimSettings.KEY_REMINDER_STREAM);
 
         candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
         candles.setSummary(R.plurals.candles_summary);
@@ -126,10 +131,35 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     }
 
     @SuppressWarnings("deprecation")
-    private void initList(String name) {
-        ListPreference list = (ListPreference) findPreference(name);
-        list.setOnPreferenceChangeListener(this);
-        onListPreferenceChange(list, list.getValue());
+    protected ListPreference initList(String name) {
+        if (TextUtils.isEmpty(name)) {
+            return null;
+        }
+
+        Preference pref = findPreference(name);
+        if (pref != null) {
+            ListPreference list = (ListPreference) pref;
+            list.setOnPreferenceChangeListener(this);
+            onListPreferenceChange(list, list.getValue());
+            return list;
+        }
+        return null;
+    }
+
+    @SuppressWarnings("deprecation")
+    protected RingtonePreference initRingtone(String name) {
+        if (TextUtils.isEmpty(name)) {
+            return null;
+        }
+
+        Preference pref = findPreference(name);
+        if (pref != null) {
+            RingtonePreference ring = (RingtonePreference) pref;
+            ring.setOnPreferenceChangeListener(this);
+            onRingtonePreferenceChange(ring, ring.getSharedPreferences().getString(name, null));
+            return ring;
+        }
+        return null;
     }
 
     @Override
@@ -143,6 +173,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             onListPreferenceChange(list, newValue);
             notifyAppWidgets();
             return false;
+        }
+        if (preference instanceof RingtonePreference) {
+            RingtonePreference ring = (RingtonePreference) preference;
+            onRingtonePreferenceChange(ring, newValue);
+            return true;
         }
         notifyAppWidgets();
         return true;
@@ -161,7 +196,12 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         updateSummary(preference, value);
 
         if (!oldValue.equals(newValue)) {
-            if (preference.getKey().endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
+            String key = preference.getKey();
+
+            if (ZmanimSettings.KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
+                int streamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
+                reminderRingtonePreference.setRingtoneType(streamType);
+            } else if (key.endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
                 if (settings == null)
                     settings = new ZmanimSettings(this);
                 if (reminder == null)
@@ -171,8 +211,13 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         }
     }
 
+    protected void onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
+        String value = (newValue == null) ? null : newValue.toString();
+        updateSummary(preference, value);
+    }
+
     /**
-     * Find the summary that was selected from the list.
+     * Update the summary that was selected from the list.
      *
      * @param preference
      *         the preference.
@@ -193,6 +238,34 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             }
         }
         preference.setSummary(null);
+    }
+
+    /**
+     * Update the summary that was selected from the list.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     */
+    private void updateSummary(RingtonePreference preference, String newValue) {
+        Uri ringtoneUri;
+        if (newValue == null) {
+            ringtoneUri = RingtoneManager.getDefaultUri(preference.getRingtoneType());
+        } else if (TextUtils.isEmpty(newValue)) {
+            ringtoneUri = Uri.EMPTY;
+        } else {
+            ringtoneUri = Uri.parse(newValue);
+        }
+
+        Context context = this;
+        Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
+        if (ringtone != null) {
+            String title = ringtone.getTitle(context);
+            preference.setSummary(title);
+        } else {
+            preference.setSummary(null);
+        }
     }
 
     @Override

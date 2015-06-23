@@ -385,12 +385,8 @@ public class ZmanimReminder extends BroadcastReceiver {
         Log.i(TAG, "notify now [" + contentTitle + "]");
 
         int audioStreamType = settings.getReminderStream();
-        Uri sound;
-        if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        } else {
-            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        }
+        Uri sound = settings.getReminderRingtone();
+
         Notification notification = new Notification();
         notification.audioStreamType = audioStreamType;
         notification.icon = R.drawable.stat_notify_time;
@@ -415,12 +411,8 @@ public class ZmanimReminder extends BroadcastReceiver {
         Log.i(TAG, "notify now [" + contentTitle + "]");
 
         int audioStreamType = settings.getReminderStream();
-        Uri sound;
-        if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        } else {
-            sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        }
+        Uri sound = settings.getReminderRingtone();
+
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentIntent(contentIntent);
         builder.setContentText(contentText);

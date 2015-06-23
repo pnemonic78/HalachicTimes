@@ -254,6 +254,7 @@
     <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
     <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
     <string name="emphasis_title">Emphasis</string>
+    <string name="reminder_tone">Reminder ringtone</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

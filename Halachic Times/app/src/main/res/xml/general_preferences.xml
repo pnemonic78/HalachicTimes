@@ -13,5 +13,11 @@
         android:key="reminder.stream"
         android:summary="@string/reminder_stream_alarm"
         android:title="@string/reminder_stream_title"/>
+    <RingtonePreference
+        android:key="reminder.ringtone"
+        android:ringtoneType="alarm"
+        android:showDefault="true"
+        android:showSilent="true"
+        android:title="@string/reminder_tone"/>
 
 </PreferenceScreen>

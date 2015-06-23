@@ -24,6 +24,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -62,7 +64,9 @@ public class ZmanimSettings {
     /** Preference name for the latest reminder. */
     private static final String KEY_REMINDER_LATEST = "reminder";
     /** Preference name for the reminder audio stream type. */
-    public static final String KEY_REMIDER_STREAM = "reminder.stream";
+    public static final String KEY_REMINDER_STREAM = "reminder.stream";
+    /** Preference name for the reminder ringtone. */
+    public static final String KEY_REMINDER_RINGTONE = "reminder.ringtone";
     /** Preference name for the temporal hour visibility. */
     public static final String KEY_HOUR = "hour.visible";
 
@@ -532,7 +536,7 @@ public class ZmanimSettings {
      * @see AudioManager#STREAM_NOTIFICATION
      */
     public int getReminderStream() {
-        return Integer.parseInt(preferences.getString(KEY_REMIDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
+        return Integer.parseInt(preferences.getString(KEY_REMINDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
     }
 
     /**
@@ -593,5 +597,26 @@ public class ZmanimSettings {
             return KEY_OPINION_LATEST_LEVANA;
 
         return null;
+    }
+
+    /**
+     * Get the reminder ringtone.
+     *
+     * @return the ringtone.
+     * @see RingtoneManager#getDefaultUri(int)
+     */
+    public Uri getReminderRingtone() {
+        String path = preferences.getString(KEY_REMINDER_RINGTONE, null);
+        if (path == null) {
+            int audioStreamType = getReminderStream();
+            if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+                return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            }
+            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        }
+        if (TextUtils.isEmpty(path)) {
+            return Uri.EMPTY;
+        }
+        return Uri.parse(path);
     }
 }
