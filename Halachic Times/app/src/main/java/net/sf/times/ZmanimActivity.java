@@ -74,7 +74,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener {
+public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener, Animation.AnimationListener {
 
     /** The date parameter. */
     public static final String EXTRA_DATE = "date";
@@ -99,6 +99,8 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private final Calendar date = Calendar.getInstance();
     /** The location header. */
     private View header;
+    /** The navigation bar. */
+    private View navigationBar;
     /** Provider for locations. */
     private ZmanimLocations locations;
     /** The settings and preferences. */
@@ -139,6 +141,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private Animation detailsGrow;
     /** Shrink details animation. */
     private Animation detailsShrink;
+    /** Hide navigation bar animation. */
+    private Animation hideNavigation;
+    /** Show navigation bar animation. */
+    private Animation showNavigation;
 
     /** The handler. */
     @SuppressLint("HandlerLeak")
@@ -289,7 +295,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         gestureDetector = new GestureDetector(this, this);
         gestureDetector.setIsLongpressEnabled(false);
 
-        header = view.findViewById(R.id.header);
         masterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
         masterFragment.setGestureDetector(gestureDetector);
@@ -301,27 +306,39 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         viewSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
         if (viewSwitcher != null) {
             Animation inAnim = AnimationUtils.makeInAnimation(this, false);
-            inAnim.setDuration(400);
+            inAnim.setDuration(400L);
             viewSwitcher.setInAnimation(inAnim);
             Animation outAnim = AnimationUtils.makeOutAnimation(this, true);
-            outAnim.setDuration(400);
+            outAnim.setDuration(400L);
             viewSwitcher.setOutAnimation(outAnim);
         }
 
         slideRightToLeft = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f);
-        slideRightToLeft.setDuration(400);
+        slideRightToLeft.setDuration(400L);
         slideLeftToRight = new TranslateAnimation(Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f);
-        slideLeftToRight.setDuration(400);
+        slideLeftToRight.setDuration(400L);
         detailsGrow = new LayoutWeightAnimation(detailsFragment, 0f, 2f);
-        detailsGrow.setDuration(500);
+        detailsGrow.setDuration(500L);
         detailsShrink = new LayoutWeightAnimation(detailsFragment, 2f, 0f);
-        detailsShrink.setDuration(500);
+        detailsShrink.setDuration(500L);
 
-        View iconBack = header.findViewById(R.id.action_back);
+        Context context = this;
+        hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
+        hideNavigation.setAnimationListener(this);
+        showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav);
+        showNavigation.setAnimationListener(this);
+
+        header = view.findViewById(R.id.header);
+        header.setOnClickListener(this);
+
+        navigationBar = header.findViewById(R.id.navigation_bar);
+        navigationBar.setOnClickListener(this);
+
+        View iconBack = navigationBar.findViewById(R.id.action_back);
         iconBack.setOnClickListener(this);
-        View iconForward = header.findViewById(R.id.action_forward);
+        View iconForward = navigationBar.findViewById(R.id.action_forward);
         iconForward.setOnClickListener(this);
     }
 
@@ -587,6 +604,17 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.header:
+            case R.id.navigation_bar:
+                Animation anim = navigationBar.getAnimation();
+                if ((anim == null) || anim.hasEnded()) {
+                    if (navigationBar.getVisibility() == View.VISIBLE) {
+                        navigationBar.startAnimation(hideNavigation);
+                    } else {
+                        navigationBar.startAnimation(showNavigation);
+                    }
+                }
+                break;
             case R.id.action_back:
                 navigateYesterday();
                 break;
@@ -815,5 +843,26 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
         setDate(date.getTimeInMillis());
         populateFragments(date);
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        if (navigationBar != null) {
+            if (animation == hideNavigation) {
+                navigationBar.setVisibility(View.INVISIBLE);
+                navigationBar.setEnabled(false);
+            } else if (animation == showNavigation) {
+                navigationBar.setVisibility(View.VISIBLE);
+                navigationBar.setEnabled(true);
+            }
+        }
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
     }
 }
