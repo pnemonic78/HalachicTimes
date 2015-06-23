@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="black_50">#80000000</color>
-
     <color name="dawn">#90fbf2db</color>
     <color name="tallis">#60eac599</color>
     <color name="sunrise">#60d99058</color>
@@ -57,5 +55,10 @@
     <color name="bright_foreground_holo_dark">@color/background_holo_light</color>
     <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
     <color name="primary_text">@color/primary_text_dark</color>
+
+    <!-- Buttons. -->
+    <color name="btn_navigation_pressed">#ccffff00</color>
+    <color name="btn_navigation_selected">#a6808000</color>
+    <color name="btn_navigation_default">#80000000</color>
 
 </resources>
