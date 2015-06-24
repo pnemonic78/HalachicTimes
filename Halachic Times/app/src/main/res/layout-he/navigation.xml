@@ -26,6 +26,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="right"
         android:background="@drawable/btn_navigation"
-        android:src="@drawable/ic_yesterday"/>
+        android:scaleX="-1"
+        android:src="@drawable/ic_tomorrow"/>
 
 </RelativeLayout>
