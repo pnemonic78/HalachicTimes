@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -73,7 +74,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener, Animation.AnimationListener {
+public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener, GestureDetector.OnDoubleTapListener, Animation.AnimationListener {
 
     /** The date parameter. */
     public static final String EXTRA_DATE = "date";
@@ -98,6 +99,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private final Calendar date = Calendar.getInstance();
     /** The location header. */
     private View header;
+    private final Rect headerRect = new Rect();
     /** The navigation bar. */
     private View navigationBar;
     /** Provider for locations. */
@@ -292,7 +294,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
         setContentView(view);
 
-        gestureDetector = new GestureDetector(context, this);
+        gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
 
         masterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
@@ -314,10 +316,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         }
 
         header = view.findViewById(R.id.header);
-        header.setOnClickListener(this);
-
         navigationBar = header.findViewById(R.id.navigation_bar);
-        navigationBar.setOnClickListener(this);
 
         View iconBack = navigationBar.findViewById(R.id.nav_yesterday);
         iconBack.setOnClickListener(this);
@@ -729,6 +728,31 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             }
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        View header = this.header;
+        if (header != null) {
+            int x = (int) e.getX();
+            int y = (int) e.getY();
+            header.getGlobalVisibleRect(headerRect);
+            if (headerRect.contains(x, y)) {
+                onClick(header);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
         return false;
     }
 
