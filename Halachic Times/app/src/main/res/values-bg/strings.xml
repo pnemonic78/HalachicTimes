@@ -146,6 +146,7 @@
     <string name="gradient_title">Градиентна фона</string>
     <string name="animations">Анимации</string>
     <string name="reminder_stream_title">Тип на напомняне</string>
+    <string name="reminder_tone"> Напомняне мелодия</string>
     <string name="alarm_volume_title" msgid="2285597478377758706">"Будилник"</string>
     <string name="notification_volume_title" msgid="2012640760341080408">"Известие"</string>
     <string name="emphasis_title">Емфаза</string>
