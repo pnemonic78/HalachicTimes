@@ -158,6 +158,8 @@
     <!-- Go to date -->
     <string name="menu_date">Data</string>
     <string name="today">Azi</string>
+    <string name="yesterday">Ieri</string>
+    <string name="tomorrow">Mâine</string>
 
     <!-- Compass -->
     <string name="menu_compass">Busolă</string>

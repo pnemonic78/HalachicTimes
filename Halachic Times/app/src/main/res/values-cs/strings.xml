@@ -158,6 +158,8 @@
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
     <string name="today">Dnes</string>
+    <string name="yesterday">Včera</string>
+    <string name="tomorrow">Zítra</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>

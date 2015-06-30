@@ -16,6 +16,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@drawable/btn_navigation"
+        android:contentDescription="@string/yesterday"
         android:src="@drawable/ic_tomorrow"/>
 
     <ImageButton
@@ -26,6 +27,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="right"
         android:background="@drawable/btn_navigation"
+        android:contentDescription="@string/tomorrow"
         android:scaleX="-1"
         android:src="@drawable/ic_tomorrow"/>
 

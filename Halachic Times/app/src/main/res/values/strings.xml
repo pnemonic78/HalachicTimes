@@ -259,6 +259,8 @@
     <!-- Go to date -->
     <string name="menu_date">Date</string>
     <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="tomorrow">Tomorrow</string>
 
     <!-- Compass -->
     <string name="menu_compass">Compass</string>

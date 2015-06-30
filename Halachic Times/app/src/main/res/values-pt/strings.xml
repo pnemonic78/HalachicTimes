@@ -156,6 +156,8 @@
     <!-- Go to date -->
     <string name="menu_date">Data</string>
     <string name="today">Hoje</string>
+    <string name="yesterday">Ontem</string>
+    <string name="tomorrow">Amanhã</string>
 
     <!-- Compass -->
     <string name="menu_compass">Bússola</string>

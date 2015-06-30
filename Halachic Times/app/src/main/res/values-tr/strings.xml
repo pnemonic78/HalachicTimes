@@ -156,6 +156,8 @@
     <!-- Go to date -->
     <string name="menu_date">Tarih</string>
     <string name="today">Bugün</string>
+    <string name="yesterday">Dün</string>
+    <string name="tomorrow">Yarın</string>
 
     <!-- Compass -->
     <string name="menu_compass">Pusula</string>

@@ -156,6 +156,8 @@
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
     <string name="today">I dag</string>
+    <string name="yesterday">i Går</string>
+    <string name="tomorrow">i Morgon</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>

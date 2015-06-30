@@ -156,6 +156,8 @@
     <!-- Go to date -->
     <string name="menu_date">Päivämäärä</string>
     <string name="today">Tänään</string>
+    <string name="yesterday">Eilen</string>
+    <string name="tomorrow">Huomenna</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompassi</string>

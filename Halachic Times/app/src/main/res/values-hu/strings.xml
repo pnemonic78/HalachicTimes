@@ -156,6 +156,8 @@
     <!-- Go to date -->
     <string name="menu_date">Dátum</string>
     <string name="today">Ma</string>
+    <string name="yesterday">Tegnap</string>
+    <string name="tomorrow">Holnap</string>
 
     <!-- Compass -->
     <string name="menu_compass">Iránytű</string>

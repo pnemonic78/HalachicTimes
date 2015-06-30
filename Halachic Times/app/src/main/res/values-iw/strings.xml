@@ -160,6 +160,8 @@
     <!-- Go to date -->
     <string name="menu_date">תאריך</string>
     <string name="today">היום</string>
+    <string name="yesterday">אתמול</string>
+    <string name="tomorrow">מחר</string>
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>

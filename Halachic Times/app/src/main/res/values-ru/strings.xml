@@ -160,6 +160,8 @@
     <!-- Go to date -->
     <string name="menu_date">Дата</string>
     <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="tomorrow">Завтра</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
