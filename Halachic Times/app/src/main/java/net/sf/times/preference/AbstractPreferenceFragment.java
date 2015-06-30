@@ -117,7 +117,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     }
 
     protected void onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
-        String value = newValue.toString();
+        String value = (newValue == null) ? null : newValue.toString();
         updateSummary(preference, value);
     }
 
