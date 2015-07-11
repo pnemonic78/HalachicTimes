@@ -145,8 +145,12 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
                     Location loc = addressLocation;
                     if (loc == null)
                         return;
+                    CompassView cv = view;
+                    if (cv == null)
+                        return;
+
                     populateHeader();
-                    view.setHoliest(loc.bearingTo(holiest));
+                    cv.setHoliest(loc.bearingTo(holiest));
                 }
             };
         }
