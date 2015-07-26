@@ -468,7 +468,11 @@
     <PreferenceCategory android:title="@string/pref_about_title">
         <Preference
             android:key="about.version"
-            android:title="@string/version"/>
+            android:title="@string/version">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/support_url"/>
+        </Preference>
         <Preference
             android:key="about.kosherjava"
             android:summary="@string/kosherjava_version"

@@ -286,6 +286,7 @@
     <!-- About -->
     <string name="pref_about_title">About</string>
     <string name="version">Application version</string>
+    <string name="support_url" translatable="false">https://sourceforge.net/projects/halachictimes/?source=navbar</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2011 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>
