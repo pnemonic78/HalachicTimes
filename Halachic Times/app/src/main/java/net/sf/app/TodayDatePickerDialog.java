@@ -22,9 +22,11 @@ package net.sf.app;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.format.Time;
+import android.os.Build;
 
 import net.sf.times.R;
+
+import java.util.Calendar;
 
 /**
  * Date picker dialog with a "Today" button.
@@ -51,17 +53,17 @@ public class TodayDatePickerDialog extends DatePickerDialog {
     public void onClick(DialogInterface dialog, int which) {
         if (which == BUTTON_NEUTRAL) {
             setToday();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                onClick(dialog, BUTTON_POSITIVE);
         }
         super.onClick(dialog, which);
     }
 
     private void setToday() {
-        // "Time" object is cheaper than "Calendar".
-        Time today = new Time();
-        today.setToNow();
-        int year = today.year;
-        int monthOfYear = today.month;
-        int dayOfMonth = today.monthDay;
+        Calendar today = Calendar.getInstance();
+        int year = today.get(Calendar.YEAR);
+        int monthOfYear = today.get(Calendar.MONTH);
+        int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
         updateDate(year, monthOfYear, dayOfMonth);
     }
 }
