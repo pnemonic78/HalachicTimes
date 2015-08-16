@@ -1,6 +1,5 @@
 package net.sf.times;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
@@ -49,7 +48,7 @@ public class ClockWidget extends ZmanimWidget {
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
-            if (item.elapsed || (item.time == ZmanimAdapter.UNKNOWN) || (item.timeLabel == null))
+            if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null))
                 continue;
             bindView(list, position, item);
             break;

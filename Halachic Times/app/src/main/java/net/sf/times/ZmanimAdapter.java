@@ -142,7 +142,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     private static final String YEAR_VAR = "%Y";
 
     /** Unknown date. */
-    public static final long UNKNOWN = Long.MIN_VALUE;
+    public static final long NEVER = Long.MIN_VALUE;
 
     protected final LayoutInflater inflater;
     protected final ZmanimSettings settings;
@@ -319,7 +319,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time.
      */
     public void add(int titleId, int summaryId, Date time) {
-        add(titleId, summaryId, time == null ? UNKNOWN : time.getTime());
+        add(titleId, summaryId, time == null ? NEVER : time.getTime());
     }
 
     /**
@@ -347,7 +347,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time
      */
     public void add(int titleId, CharSequence summary, Date time) {
-        add(titleId, summary, time == null ? UNKNOWN : time.getTime());
+        add(titleId, summary, time == null ? NEVER : time.getTime());
     }
 
     /**
@@ -377,7 +377,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time.
      */
     public void add(int rowId, int titleId, int timeId, Date time) {
-        add(rowId, titleId, timeId, time == null ? UNKNOWN : time.getTime());
+        add(rowId, titleId, timeId, time == null ? NEVER : time.getTime());
     }
 
     /**
@@ -419,7 +419,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         item.time = time;
         item.emphasis = settings.isEmphasis(titleId);
 
-        if (time == UNKNOWN) {
+        if (time == NEVER) {
             item.timeLabel = null;
             item.elapsed = true;
         } else {
@@ -430,7 +430,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
                 item.elapsed = (elapsed || (titleId == R.string.hour)) ? false : (time < now);
         }
 
-        if ((time != UNKNOWN) || (rowId != 0)) {
+        if ((time != NEVER) || (rowId != 0)) {
             add(item);
         }
     }

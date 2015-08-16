@@ -31,8 +31,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -156,7 +154,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             id = item.titleId;
             before = settings.getReminder(id);
 
-            if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+            if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                 when = item.time - before;
                 if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
                     notifyNow(context, settings, item);
@@ -192,7 +190,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 item = adapter.getItem(i);
                 id = item.titleId;
                 before = settings.getReminder(id);
-                if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+                if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                     when = item.time - before;
                     if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
                         notifyNow(context, settings, item);
@@ -240,7 +238,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 if ((id != R.id.candles_row) && (id != R.string.candles))
                     continue;
                 before = settings.getReminder(id);
-                if ((before >= 0L) && (item.time != ZmanimAdapter.UNKNOWN)) {
+                if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                     when = item.time - before;
                     if ((now < when) && (when < whenFirst)) {
                         itemFirst = item;
