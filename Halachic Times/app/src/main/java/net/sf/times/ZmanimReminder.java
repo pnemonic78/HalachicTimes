@@ -71,6 +71,10 @@ public class ZmanimReminder extends BroadcastReceiver {
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
 
+    private static final int LED_COLOR = Color.YELLOW;
+    private static final int LED_ON = 750;
+    private static final int LED_OFF = 500;
+
     private Context context;
     private SimpleDateFormat dateFormat;
     /** The adapter. */
@@ -392,9 +396,9 @@ public class ZmanimReminder extends BroadcastReceiver {
         notification.icon = R.drawable.stat_notify_time;
         notification.defaults = Notification.DEFAULT_VIBRATE;
         notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.ledARGB = Color.YELLOW;
-        notification.ledOffMS = 250;
-        notification.ledOnMS = 500;
+        notification.ledARGB = LED_COLOR;
+        notification.ledOffMS = LED_OFF;
+        notification.ledOnMS = LED_ON;
         notification.when = item.time;// When the zman is supposed to occur.
         notification.sound = sound;
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
@@ -419,7 +423,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         builder.setContentTitle(contentTitle);
         builder.setDefaults(Notification.DEFAULT_VIBRATE);
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
-        builder.setLights(Color.YELLOW, 500, 250);
+        builder.setLights(LED_COLOR, LED_ON, LED_OFF);
         builder.setSmallIcon(R.drawable.stat_notify_time);
         builder.setSound(sound, audioStreamType);
         builder.setWhen(item.time);// When the zman is supposed to occur.
