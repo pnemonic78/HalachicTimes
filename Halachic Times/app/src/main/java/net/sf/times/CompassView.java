@@ -181,6 +181,9 @@ public class CompassView extends View {
         paintFill.setStrokeCap(Paint.Cap.BUTT);
 
         setAzimuth(0f);
+        if (BuildConfig.DEBUG) {
+            setAzimuth(1f);
+        }
     }
 
     @Override
@@ -196,6 +199,9 @@ public class CompassView extends View {
         final float h2r9 = h2 - r9;
 
         canvas.drawCircle(w2, h2, r, paintCircle);
+        canvas.drawCircle(w2, h2, r, paintFrame);
+        canvas.drawArc(rectFrameOuter, 0f, 360f, false, paintFrameOuter);
+        canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
         canvas.rotate(north, w2, h2);
         canvas.drawPath(pathArrowBig, paintNorth);
@@ -235,11 +241,6 @@ public class CompassView extends View {
         canvas.rotate(45 + holiest, w2, h2);
         canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
         canvas.drawPath(pathArrowHoliest, paintHoliest);
-        canvas.rotate(-holiest, w2, h2);
-
-        canvas.drawCircle(w2, h2, r, paintFrame);
-        canvas.drawArc(rectFrameOuter, 0f, 360f, false, paintFrameOuter);
-        canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
         canvas.drawCircle(w2, h2, radiusPivot, paintPivot);
     }
@@ -321,13 +322,15 @@ public class CompassView extends View {
         paintSouth.setTextSize(sizeDirections);
         paintWest.setTextSize(sizeDirections);
 
+        float frameThickness = paintFrame.getStrokeWidth();
+        float frameInnerThickness = paintFrameInner.getStrokeWidth();
         rectFill.left = w2 - r5;
         rectFill.top = h2 - r5;
         rectFill.right = w2 + r5;
         rectFill.bottom = h2 + r5;
-        paintFill.setStrokeWidth(r);
+        paintFill.setStrokeWidth(r - frameThickness - frameInnerThickness);
 
-        float frameThicknessHalf = paintFrame.getStrokeWidth() / 2f;
+        float frameThicknessHalf = frameThickness / 2f;
         rectFrameOuter.left = w2 - r - frameThicknessHalf;
         rectFrameOuter.top = h2 - r - frameThicknessHalf;
         rectFrameOuter.right = w2 + r + frameThicknessHalf;
