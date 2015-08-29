@@ -284,14 +284,20 @@ public class ZmanimReminder extends BroadcastReceiver {
         // Clicking on the item will launch the main activity.
         PendingIntent contentIntent = createActivityIntent(context);
 
+        // FIXME Save to preferences for the alarm callback.
+        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentText = item.summary;
+        long when = item.time;
+        settings.setReminder(contentTitle, contentText, when);
+
         Notification notification;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            notification = createNotification(context, settings, item, contentIntent);
+            notification = createNotification(context, settings, contentIntent);
         } else {
-            notification = createNotificationEclair(context, settings, item, contentIntent);
+            notification = createNotificationEclair(context, settings, contentIntent);
         }
 
-        postNotification(notification);
+        postNotification(notification, settings);
     }
 
     /**
@@ -381,10 +387,11 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressWarnings("deprecation")
-    private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
-        CharSequence contentTitle = context.getText(item.titleId);
-        CharSequence contentText = item.summary;
-        Log.i(TAG, "notify now [" + contentTitle + "]");
+    private Notification createNotificationEclair(Context context, ZmanimSettings settings, PendingIntent contentIntent) {
+        CharSequence contentTitle = settings.getReminderTitle();
+        CharSequence contentText = settings.getReminderText();
+        long when = settings.getReminderTime();
+        Log.i(TAG, "notify now [" + contentTitle + "] for " + formatDateTime(when));
 
         int audioStreamType = settings.getReminderStream();
         Uri sound = settings.getReminderRingtone();
@@ -397,7 +404,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         notification.ledARGB = LED_COLOR;
         notification.ledOffMS = LED_OFF;
         notification.ledOnMS = LED_ON;
-        notification.when = item.time;// When the zman is supposed to occur.
+        notification.when = when;
         notification.sound = sound;
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 
@@ -407,10 +414,11 @@ public class ZmanimReminder extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private Notification createNotification(Context context, ZmanimSettings settings, ZmanimItem item, PendingIntent contentIntent) {
-        CharSequence contentTitle = context.getText(item.titleId);
-        CharSequence contentText = item.summary;
-        Log.i(TAG, "notify now [" + contentTitle + "]");
+    private Notification createNotification(Context context, ZmanimSettings settings, PendingIntent contentIntent) {
+        CharSequence contentTitle = settings.getReminderTitle();
+        CharSequence contentText = settings.getReminderText();
+        long when = settings.getReminderTime();
+        Log.i(TAG, "notify now [" + contentTitle + "] for " + formatDateTime(when));
 
         int audioStreamType = settings.getReminderStream();
         Uri sound = settings.getReminderRingtone();
@@ -424,7 +432,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         builder.setLights(LED_COLOR, LED_ON, LED_OFF);
         builder.setSmallIcon(R.drawable.stat_notify_time);
         builder.setSound(sound, audioStreamType);
-        builder.setWhen(item.time);// When the zman is supposed to occur.
+        builder.setWhen(when);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
         }
@@ -438,7 +446,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressLint("Wakelock")
-    private void postNotification(Notification notification) {
+    private void postNotification(Notification notification, ZmanimSettings settings) {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
@@ -446,5 +454,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(ID_NOTIFY, notification);
+
+        // Nothing else to notify.
+        settings.setReminder(null, null, 0L);
     }
 }

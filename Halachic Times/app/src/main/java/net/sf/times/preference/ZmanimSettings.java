@@ -61,12 +61,18 @@ public class ZmanimSettings {
     public static final String KEY_PAST = "past";
     /** Preference name for the background gradient. */
     public static final String KEY_BG_GRADIENT = "gradient";
-    /** Preference name for the latest reminder. */
+    /** Preference name for the last reminder. */
     private static final String KEY_REMINDER_LATEST = "reminder";
     /** Preference name for the reminder audio stream type. */
     public static final String KEY_REMINDER_STREAM = "reminder.stream";
     /** Preference name for the reminder ringtone. */
     public static final String KEY_REMINDER_RINGTONE = "reminder.ringtone";
+    /** Preference name for the reminder title. */
+    public static final String KEY_REMINDER_TITLE = "reminder.title";
+    /** Preference name for the reminder text. */
+    public static final String KEY_REMINDER_TEXT = "reminder.text";
+    /** Preference name for the reminder time. */
+    public static final String KEY_REMINDER_TIME = "reminder.time";
     /** Preference name for the temporal hour visibility. */
     public static final String KEY_HOUR = "hour.visible";
 
@@ -618,5 +624,56 @@ public class ZmanimSettings {
             return Uri.EMPTY;
         }
         return Uri.parse(path);
+    }
+
+    /**
+     * Get the reminder title.
+     *
+     * @return the title.
+     */
+    public CharSequence getReminderTitle() {
+        return preferences.getString(KEY_REMINDER_TITLE, null);
+    }
+
+    /**
+     * Get the reminder text.
+     *
+     * @return the summary.
+     */
+    public CharSequence getReminderText() {
+        return preferences.getString(KEY_REMINDER_TEXT, null);
+    }
+
+    /**
+     * Get the reminder time when the zman is supposed to occur.
+     *
+     * @return the time.
+     */
+    public long getReminderTime() {
+        return preferences.getLong(KEY_REMINDER_TIME, 0L);
+    }
+
+    /**
+     * Set the reminder notification.
+     *
+     * @param title
+     *         the content title.
+     * @param text
+     *         the content text.
+     * @param when
+     *         when the zman is supposed to occur.
+     */
+    public void setReminder(CharSequence title, CharSequence text, long when) {
+        Editor editor = preferences.edit();
+        if ((title == null) || (text == null) || (when == 0L)) {
+            editor.remove(KEY_REMINDER_TITLE);
+            editor.remove(KEY_REMINDER_TEXT);
+            editor.remove(KEY_REMINDER_TIME);
+        } else {
+            editor.putString(KEY_REMINDER_TITLE, title.toString());
+            editor.putString(KEY_REMINDER_TEXT, text.toString());
+            editor.putLong(KEY_REMINDER_TIME, when);
+        }
+        editor.commit();
     }
 }
