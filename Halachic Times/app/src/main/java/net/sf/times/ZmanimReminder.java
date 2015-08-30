@@ -158,7 +158,6 @@ public class ZmanimReminder extends BroadcastReceiver {
                 when = item.time - before;
                 if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
                     notifyNow(context, settings, item);
-                    settings.setLatestReminder(now);
                     needToday = false;
                 }
                 if ((now < when) && (when < whenFirst)) {
@@ -194,7 +193,6 @@ public class ZmanimReminder extends BroadcastReceiver {
                     when = item.time - before;
                     if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
                         notifyNow(context, settings, item);
-                        settings.setLatestReminder(now);
                         needToday = false;
                     }
                     if ((now < when) && (when < whenFirst)) {
@@ -362,25 +360,32 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         this.context = context;
         boolean update = false;
+        ZmanimSettings settings = new ZmanimSettings(context);
 
         String action = intent.getAction();
-        if (Intent.ACTION_BOOT_COMPLETED.equals(action))
+        if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
             update = true;
-        else if (Intent.ACTION_DATE_CHANGED.equals(action))
+        } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
             update = true;
-        else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action))
+        } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
             update = true;
-        else if (Intent.ACTION_TIME_CHANGED.equals(action))
+        } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
             update = true;
-        else {
+        } else {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                update = (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0);
+                if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
+                    ZmanimReminderItem reminderItem = settings.getReminderItem();
+                    if (reminderItem == null) {
+                        update = true;
+                    } else {
+                        notifyNow(context, settings, reminderItem);
+                    }
+                }
             }
         }
 
         if (update) {
-            ZmanimSettings settings = new ZmanimSettings(context);
             remind(settings);
         }
     }
@@ -482,6 +487,8 @@ public class ZmanimReminder extends BroadcastReceiver {
         nm.notify(ID_NOTIFY, notification);
 
         // Nothing else to notify.
+        final long now = System.currentTimeMillis();
+        settings.setLatestReminder(now);
         settings.setReminder(null);
     }
 }
