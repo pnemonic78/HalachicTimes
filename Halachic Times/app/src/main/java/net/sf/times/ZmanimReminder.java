@@ -172,7 +172,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             String timeFormat = formatDateTime(itemFirst.time);
             Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
 
-            notifyFuture(context, whenFirst);
+            notifyFuture(context, settings, itemFirst, whenFirst);
             needTomorrow = false;
             needWeek = false;
         }
@@ -208,7 +208,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
 
-                notifyFuture(context, whenFirst);
+                notifyFuture(context, settings, itemFirst, whenFirst);
                 needWeek = false;
             }
         }
@@ -251,7 +251,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
 
-                notifyFuture(context, whenFirst);
+                notifyFuture(context, settings, itemFirst, whenFirst);
             }
         }
     }
@@ -268,6 +268,9 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancelAll();
+
+        ZmanimSettings settings = new ZmanimSettings(context);
+        settings.setReminder(null);
     }
 
     /**
@@ -281,20 +284,33 @@ public class ZmanimReminder extends BroadcastReceiver {
      *         the zmanim item to notify about.
      */
     private void notifyNow(Context context, ZmanimSettings settings, ZmanimItem item) {
-        // Clicking on the item will launch the main activity.
-        PendingIntent contentIntent = createActivityIntent(context);
-
-        // FIXME Save to preferences for the alarm callback.
         CharSequence contentTitle = context.getText(item.titleId);
         CharSequence contentText = item.summary;
         long when = item.time;
-        settings.setReminder(contentTitle, contentText, when);
+        ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
+
+        notifyNow(context, settings, reminderItem);
+    }
+
+    /**
+     * Notify now.
+     *
+     * @param context
+     *         the context.
+     * @param settings
+     *         the settings.
+     * @param item
+     *         the reminder item.
+     */
+    private void notifyNow(Context context, ZmanimSettings settings, ZmanimReminderItem item) {
+        // Clicking on the item will launch the main activity.
+        PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            notification = createNotification(context, settings, contentIntent);
+            notification = createNotification(context, settings, item, contentIntent);
         } else {
-            notification = createNotificationEclair(context, settings, contentIntent);
+            notification = createNotificationEclair(context, settings, item, contentIntent);
         }
 
         postNotification(notification, settings);
@@ -305,14 +321,24 @@ public class ZmanimReminder extends BroadcastReceiver {
      *
      * @param context
      *         the context.
-     * @param when
+     * @param settings
+     *         the settings.
+     * @param item
+     *         the zmanim item to notify about.
+     * @param triggerAt
      *         the upcoming reminder.
      */
-    private void notifyFuture(Context context, long when) {
-        Log.i(TAG, "notify future [" + formatDateTime(when) + "]");
+    private void notifyFuture(Context context, ZmanimSettings settings, ZmanimItem item, long triggerAt) {
+        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentText = item.summary;
+        long when = item.time;
+
+        Log.i(TAG, "notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for " + formatDateTime(when));
+        settings.setReminder(contentTitle, contentText, when);
+
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = createAlarmIntent(context);
-        manager.set(AlarmManager.RTC_WAKEUP, when, alarmIntent);
+        manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
     private PendingIntent createActivityIntent(Context context) {
@@ -387,10 +413,10 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressWarnings("deprecation")
-    private Notification createNotificationEclair(Context context, ZmanimSettings settings, PendingIntent contentIntent) {
-        CharSequence contentTitle = settings.getReminderTitle();
-        CharSequence contentText = settings.getReminderText();
-        long when = settings.getReminderTime();
+    private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
+        CharSequence contentTitle = item.getTitle();
+        CharSequence contentText = item.getText();
+        long when = item.getTime();
         Log.i(TAG, "notify now [" + contentTitle + "] for " + formatDateTime(when));
 
         int audioStreamType = settings.getReminderStream();
@@ -414,10 +440,10 @@ public class ZmanimReminder extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private Notification createNotification(Context context, ZmanimSettings settings, PendingIntent contentIntent) {
-        CharSequence contentTitle = settings.getReminderTitle();
-        CharSequence contentText = settings.getReminderText();
-        long when = settings.getReminderTime();
+    private Notification createNotification(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
+        CharSequence contentTitle = item.getTitle();
+        CharSequence contentText = item.getText();
+        long when = item.getTime();
         Log.i(TAG, "notify now [" + contentTitle + "] for " + formatDateTime(when));
 
         int audioStreamType = settings.getReminderStream();
@@ -456,6 +482,6 @@ public class ZmanimReminder extends BroadcastReceiver {
         nm.notify(ID_NOTIFY, notification);
 
         // Nothing else to notify.
-        settings.setReminder(null, null, 0L);
+        settings.setReminder(null);
     }
 }

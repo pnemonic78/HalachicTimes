@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import net.sf.times.R;
+import net.sf.times.ZmanimReminderItem;
 
 /**
  * Application settings.
@@ -627,30 +628,39 @@ public class ZmanimSettings {
     }
 
     /**
-     * Get the reminder title.
+     * Get the reminder item.
      *
-     * @return the title.
+     * @return the notification item.
      */
-    public CharSequence getReminderTitle() {
-        return preferences.getString(KEY_REMINDER_TITLE, null);
+    public ZmanimReminderItem getReminderItem() {
+        CharSequence title = preferences.getString(KEY_REMINDER_TITLE, null);
+        if (title == null)
+            return null;
+        CharSequence text = preferences.getString(KEY_REMINDER_TEXT, null);
+        if (text == null)
+            return null;
+        long time = preferences.getLong(KEY_REMINDER_TIME, 0L);
+        if (time == 0L)
+            return null;
+        return new ZmanimReminderItem(title, text, time);
     }
 
     /**
-     * Get the reminder text.
+     * Set the reminder notification item.
      *
-     * @return the summary.
+     * @param item
+     *         the notification item.
      */
-    public CharSequence getReminderText() {
-        return preferences.getString(KEY_REMINDER_TEXT, null);
-    }
-
-    /**
-     * Get the reminder time when the zman is supposed to occur.
-     *
-     * @return the time.
-     */
-    public long getReminderTime() {
-        return preferences.getLong(KEY_REMINDER_TIME, 0L);
+    public void setReminder(ZmanimReminderItem item) {
+        if (item == null) {
+            Editor editor = preferences.edit();
+            editor.remove(KEY_REMINDER_TITLE);
+            editor.remove(KEY_REMINDER_TEXT);
+            editor.remove(KEY_REMINDER_TIME);
+            editor.commit();
+        } else {
+            setReminder(item.getTitle(), item.getText(), item.getTime());
+        }
     }
 
     /**
