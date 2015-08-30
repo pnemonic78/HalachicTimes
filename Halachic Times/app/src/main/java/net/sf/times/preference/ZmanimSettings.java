@@ -31,7 +31,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import net.sf.times.R;
-import net.sf.times.ZmanimReminderItem;
 
 /**
  * Application settings.
@@ -68,12 +67,6 @@ public class ZmanimSettings {
     public static final String KEY_REMINDER_STREAM = "reminder.stream";
     /** Preference name for the reminder ringtone. */
     public static final String KEY_REMINDER_RINGTONE = "reminder.ringtone";
-    /** Preference name for the reminder title. */
-    public static final String KEY_REMINDER_TITLE = "reminder.title";
-    /** Preference name for the reminder text. */
-    public static final String KEY_REMINDER_TEXT = "reminder.text";
-    /** Preference name for the reminder time. */
-    public static final String KEY_REMINDER_TIME = "reminder.time";
     /** Preference name for the temporal hour visibility. */
     public static final String KEY_HOUR = "hour.visible";
 
@@ -625,65 +618,5 @@ public class ZmanimSettings {
             return Uri.EMPTY;
         }
         return Uri.parse(path);
-    }
-
-    /**
-     * Get the reminder item.
-     *
-     * @return the notification item.
-     */
-    public ZmanimReminderItem getReminderItem() {
-        CharSequence title = preferences.getString(KEY_REMINDER_TITLE, null);
-        if (title == null)
-            return null;
-        CharSequence text = preferences.getString(KEY_REMINDER_TEXT, null);
-        if (text == null)
-            return null;
-        long time = preferences.getLong(KEY_REMINDER_TIME, 0L);
-        if (time == 0L)
-            return null;
-        return new ZmanimReminderItem(title, text, time);
-    }
-
-    /**
-     * Set the reminder notification item.
-     *
-     * @param item
-     *         the notification item.
-     */
-    public void setReminder(ZmanimReminderItem item) {
-        if (item == null) {
-            Editor editor = preferences.edit();
-            editor.remove(KEY_REMINDER_TITLE);
-            editor.remove(KEY_REMINDER_TEXT);
-            editor.remove(KEY_REMINDER_TIME);
-            editor.commit();
-        } else {
-            setReminder(item.getTitle(), item.getText(), item.getTime());
-        }
-    }
-
-    /**
-     * Set the reminder notification.
-     *
-     * @param title
-     *         the content title.
-     * @param text
-     *         the content text.
-     * @param when
-     *         when the zman is supposed to occur.
-     */
-    public void setReminder(CharSequence title, CharSequence text, long when) {
-        Editor editor = preferences.edit();
-        if ((title == null) || (text == null) || (when == 0L)) {
-            editor.remove(KEY_REMINDER_TITLE);
-            editor.remove(KEY_REMINDER_TEXT);
-            editor.remove(KEY_REMINDER_TIME);
-        } else {
-            editor.putString(KEY_REMINDER_TITLE, title.toString());
-            editor.putString(KEY_REMINDER_TEXT, text.toString());
-            editor.putLong(KEY_REMINDER_TIME, when);
-        }
-        editor.commit();
     }
 }

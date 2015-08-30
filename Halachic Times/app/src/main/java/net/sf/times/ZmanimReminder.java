@@ -73,6 +73,13 @@ public class ZmanimReminder extends BroadcastReceiver {
     private static final int LED_ON = 750;
     private static final int LED_OFF = 500;
 
+    /** Extras name for the reminder title. */
+    private static final String EXTRA_REMINDER_TITLE = "reminder_title";
+    /** Extras name for the reminder text. */
+    private static final String EXTRA_REMINDER_TEXT = "reminder_text";
+    /** Extras name for the reminder time. */
+    private static final String EXTRA_REMINDER_TIME = "reminder_time";
+
     private Context context;
     private SimpleDateFormat dateFormat;
     /** The adapter. */
@@ -171,7 +178,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             String timeFormat = formatDateTime(itemFirst.time);
             Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
 
-            notifyFuture(context, settings, itemFirst, whenFirst);
+            notifyFuture(context, itemFirst, whenFirst);
             needTomorrow = false;
             needWeek = false;
         }
@@ -206,7 +213,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
 
-                notifyFuture(context, settings, itemFirst, whenFirst);
+                notifyFuture(context, itemFirst, whenFirst);
                 needWeek = false;
             }
         }
@@ -249,7 +256,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
 
-                notifyFuture(context, settings, itemFirst, whenFirst);
+                notifyFuture(context, itemFirst, whenFirst);
             }
         }
     }
@@ -261,14 +268,11 @@ public class ZmanimReminder extends BroadcastReceiver {
         Log.i(TAG, "cancel");
         final Context context = this.context;
         AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent alarmIntent = createAlarmIntent(context);
+        PendingIntent alarmIntent = createAlarmIntent(context, null);
         alarms.cancel(alarmIntent);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancelAll();
-
-        ZmanimSettings settings = new ZmanimSettings(context);
-        settings.setReminder(null);
     }
 
     /**
@@ -319,23 +323,19 @@ public class ZmanimReminder extends BroadcastReceiver {
      *
      * @param context
      *         the context.
-     * @param settings
-     *         the settings.
      * @param item
      *         the zmanim item to notify about.
      * @param triggerAt
      *         the upcoming reminder.
      */
-    private void notifyFuture(Context context, ZmanimSettings settings, ZmanimItem item, long triggerAt) {
+    private void notifyFuture(Context context, ZmanimItem item, long triggerAt) {
         CharSequence contentTitle = context.getText(item.titleId);
-        CharSequence contentText = item.summary;
         long when = item.time;
 
         Log.i(TAG, "notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for " + formatDateTime(when));
-        settings.setReminder(contentTitle, contentText, when);
 
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent alarmIntent = createAlarmIntent(context);
+        PendingIntent alarmIntent = createAlarmIntent(context, item);
         manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
@@ -347,8 +347,19 @@ public class ZmanimReminder extends BroadcastReceiver {
         return pendingIntent;
     }
 
-    private PendingIntent createAlarmIntent(Context context) {
+    private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
         Intent intent = new Intent(context, ZmanimReminder.class);
+
+        if (item != null) {
+            CharSequence contentTitle = context.getText(item.titleId);
+            CharSequence contentText = item.summary;
+            long when = item.time;
+
+            intent.putExtra(EXTRA_REMINDER_TITLE, contentTitle);
+            intent.putExtra(EXTRA_REMINDER_TEXT, contentText);
+            intent.putExtra(EXTRA_REMINDER_TIME, when);
+        }
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }
@@ -375,10 +386,14 @@ public class ZmanimReminder extends BroadcastReceiver {
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
-                    ZmanimReminderItem reminderItem = settings.getReminderItem();
-                    if (reminderItem == null) {
+                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
+                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
+                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
+
+                    if ((contentTitle == null) || (contentText == null) || (when == 0L)) {
                         update = true;
                     } else {
+                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
                         notifyNow(context, settings, reminderItem);
                     }
                 }
@@ -486,9 +501,8 @@ public class ZmanimReminder extends BroadcastReceiver {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(ID_NOTIFY, notification);
 
-        // Nothing else to notify.
+        // This was the last notification.
         final long now = System.currentTimeMillis();
         settings.setLatestReminder(now);
-        settings.setReminder(null);
     }
 }
