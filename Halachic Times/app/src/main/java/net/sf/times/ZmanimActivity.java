@@ -457,8 +457,8 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.zmanim, menu);
 
-        PackageManager pkg = getPackageManager();
-        if (!pkg.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS))
+        PackageManager pm = getPackageManager();
+        if (!pm.hasSystemFeature(PackageManager.FEATURE_SENSOR_COMPASS))
             menu.removeItem(R.id.menu_compass);
 
         return true;

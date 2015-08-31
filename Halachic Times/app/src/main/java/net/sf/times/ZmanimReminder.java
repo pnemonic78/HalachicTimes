@@ -44,6 +44,8 @@ import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -84,6 +86,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     private SimpleDateFormat dateFormat;
     /** The adapter. */
     private ZmanimAdapter adapter;
+    private Method setLatestEventInfo;
 
     /**
      * Creates a new reminder manager.
@@ -137,7 +140,6 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     private void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
         Log.i(TAG, "remind");
-        cancel();
 
         final Context context = this.context;
         final long now = System.currentTimeMillis();
@@ -340,8 +342,8 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     private PendingIntent createActivityIntent(Context context) {
-        PackageManager pkg = context.getPackageManager();
-        Intent intent = pkg.getLaunchIntentForPackage(context.getPackageName());
+        PackageManager pm = context.getPackageManager();
+        Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
@@ -432,6 +434,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressWarnings("deprecation")
+    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();
@@ -451,7 +454,24 @@ public class ZmanimReminder extends BroadcastReceiver {
         notification.ledOnMS = LED_ON;
         notification.when = when;
         notification.sound = sound;
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        // Notification#setLatestEventInfo removed in Marshmallow.
+        if (setLatestEventInfo == null) {
+            Class<?> clazz = notification.getClass();
+            try {
+                setLatestEventInfo = clazz.getDeclaredMethod("setLatestEventInfo", Context.class, CharSequence.class, CharSequence.class, PendingIntent.class);
+            } catch (NoSuchMethodException nsme) {
+                Log.e(TAG, "createNotificationEclair: " + nsme.getLocalizedMessage(), nsme);
+            }
+        }
+        if (setLatestEventInfo != null) {
+            try {
+                setLatestEventInfo.invoke(notification, context, contentTitle, contentText, contentIntent);
+            } catch (IllegalAccessException iae) {
+                Log.e(TAG, "createNotificationEclair: " + iae.getLocalizedMessage(), iae);
+            } catch (InvocationTargetException ite) {
+                Log.e(TAG, "createNotificationEclair: " + ite.getLocalizedMessage(), ite);
+            }
+        }
 
         return notification;
     }

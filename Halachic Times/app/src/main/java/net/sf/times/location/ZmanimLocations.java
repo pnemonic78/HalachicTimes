@@ -19,11 +19,13 @@
  */
 package net.sf.times.location;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Location;
@@ -63,9 +65,6 @@ public class ZmanimLocations implements ZmanimLocationListener {
     public static final String ISO639_YIDDISH_FORMER = "ji";
     /** ISO 639 language code for "Yiddish". */
     public static final String ISO639_YIDDISH = "yi";
-
-    /** 1 kilometre. */
-    // private static final int KILOMETRE = 1000;
 
     /** The minimum time interval between location updates, in milliseconds. */
     private static final long UPDATE_TIME = DateUtils.SECOND_IN_MILLIS;
@@ -165,7 +164,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
      *         the context.
      */
     public ZmanimLocations(Context context) {
-        this.context = context.getApplicationContext();
+        Context app = context.getApplicationContext();
+        if (app != null)
+            context = app;
+        this.context = context;
         settings = new ZmanimSettings(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -305,13 +307,40 @@ public class ZmanimLocations implements ZmanimLocationListener {
      *
      * @return the location - {@code null} otherwise.
      */
-    public Location getLocationGPS() {
+    public Location getLocationGPSEclair() {
         if (locationManager == null)
             return null;
+
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (IllegalArgumentException iae) {
             Log.e(TAG, "GPS: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "GPS: " + se.getLocalizedMessage(), se);
+        }
+        return null;
+    }
+
+    /**
+     * Get a location from GPS.
+     *
+     * @return the location - {@code null} otherwise.
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    public Location getLocationGPS() {
+        if (locationManager == null)
+            return null;
+
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+
+        try {
+            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "GPS: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "GPS: " + se.getLocalizedMessage(), se);
         }
         return null;
     }
@@ -321,13 +350,40 @@ public class ZmanimLocations implements ZmanimLocationListener {
      *
      * @return the location - {@code null} otherwise.
      */
-    public Location getLocationNetwork() {
+    public Location getLocationNetworkEclair() {
         if (locationManager == null)
             return null;
+
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (IllegalArgumentException iae) {
             Log.e(TAG, "Network: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "Network: " + se.getLocalizedMessage(), se);
+        }
+        return null;
+    }
+
+    /**
+     * Get a location from the GSM network.
+     *
+     * @return the location - {@code null} otherwise.
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    public Location getLocationNetwork() {
+        if (locationManager == null)
+            return null;
+
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+
+        try {
+            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "Network: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "Network: " + se.getLocalizedMessage(), se);
         }
         return null;
     }
@@ -338,7 +394,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
      * @return the location - {@code null} otherwise.
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public Location getLocationPassive() {
+    public Location getLocationPassiveFroyo() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO)
             return null;
         if (locationManager == null)
@@ -347,6 +403,32 @@ public class ZmanimLocations implements ZmanimLocationListener {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         } catch (IllegalArgumentException iae) {
             Log.e(TAG, "Passive: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "Passive: " + se.getLocalizedMessage(), se);
+        }
+        return null;
+    }
+
+    /**
+     * Get a passive location from other application's GPS.
+     *
+     * @return the location - {@code null} otherwise.
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    public Location getLocationPassive() {
+        if (locationManager == null)
+            return null;
+
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+
+        try {
+            return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "Passive: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "Passive: " + se.getLocalizedMessage(), se);
         }
         return null;
     }
@@ -389,15 +471,27 @@ public class ZmanimLocations implements ZmanimLocationListener {
         Location loc = location;
         if (isValid(loc))
             return loc;
-        loc = getLocationGPS();
-        if (isValid(loc))
-            return loc;
-        loc = getLocationNetwork();
-        if (isValid(loc))
-            return loc;
-        loc = getLocationPassive();
-        if (isValid(loc))
-            return loc;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            loc = getLocationGPSEclair();
+            if (isValid(loc))
+                return loc;
+            loc = getLocationNetworkEclair();
+            if (isValid(loc))
+                return loc;
+            loc = getLocationPassiveFroyo();
+            if (isValid(loc))
+                return loc;
+        } else {
+            loc = getLocationGPS();
+            if (isValid(loc))
+                return loc;
+            loc = getLocationNetwork();
+            if (isValid(loc))
+                return loc;
+            loc = getLocationPassive();
+            if (isValid(loc))
+                return loc;
+        }
         loc = getLocationSaved();
         if (isValid(loc))
             return loc;
@@ -646,12 +740,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
         return ISO639_HEBREW.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
     }
 
-    private void requestUpdates() {
+    private void requestUpdatesEclair() {
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         criteria.setAltitudeRequired(true);
         criteria.setCostAllowed(true);
-        // criteria.setPowerRequirement(Criteria.POWER_LOW);
 
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {
@@ -662,6 +755,38 @@ public class ZmanimLocations implements ZmanimLocationListener {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
         } catch (IllegalArgumentException iae) {
             Log.e(TAG, "request updates: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "request updates: " + se.getLocalizedMessage(), se);
+        }
+
+        // Let the updates run for only a small while to save battery.
+        handler.sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
+        startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void requestUpdates() {
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+        criteria.setAltitudeRequired(true);
+        criteria.setCostAllowed(true);
+
+        String provider = locationManager.getBestProvider(criteria, true);
+        if (provider == null) {
+            Log.w(TAG, "No location provider");
+            return;
+        }
+
+        if ((context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) && (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            return;
+        }
+
+        try {
+            locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
+        } catch (IllegalArgumentException iae) {
+            Log.e(TAG, "request updates: " + iae.getLocalizedMessage(), iae);
+        } catch (SecurityException se) {
+            Log.e(TAG, "request updates: " + se.getLocalizedMessage(), se);
         }
 
         // Let the updates run for only a small while to save battery.
@@ -708,7 +833,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
             switch (msg.what) {
                 case WHAT_START:
-                    requestUpdates();
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                        requestUpdatesEclair();
+                    } else {
+                        requestUpdates();
+                    }
                     break;
                 case WHAT_STOP:
                     removeUpdates();
