@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Udseende</string>
     <string name="coords_title">Koordinater</string>
     <string name="coords_format_title">Koordinater format</string>
-    <string name="coords_format_summary">Notation af bredde-og længdegrader</string>
+    <string name="coords_format_decimal">Decimal</string>
+    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="past_title">Tider der er gået</string>
     <string name="seconds_title">Sekunder</string>
     <string name="summaries_title">Sammenfatninger</string>

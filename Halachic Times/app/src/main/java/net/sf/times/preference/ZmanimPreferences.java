@@ -76,6 +76,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
         initList(ZmanimSettings.KEY_REMINDER_STREAM);
 
+        initList(ZmanimSettings.KEY_COORDS_FORMAT);
+
         candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
         candles.setSummaryFormat(R.plurals.candles_summary);
         candles.setOnPreferenceChangeListener(this);
@@ -192,7 +194,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
     private void onListPreferenceChange(ListPreference preference, Object newValue) {
         String oldValue = preference.getValue();
-        String value = newValue.toString();
+        String value = (newValue == null) ? null : newValue.toString();
         updateSummary(preference, value);
 
         if (!oldValue.equals(newValue)) {

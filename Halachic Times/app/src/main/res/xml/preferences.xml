@@ -28,7 +28,7 @@
             android:entries="@array/coords_format_entries"
             android:entryValues="@array/coords_format_values"
             android:key="coords.format"
-            android:summary="@string/coords_format_summary"
+            android:summary="@string/coords_format_decimal"
             android:title="@string/coords_format_title"/>
         <CheckBoxPreference
             android:defaultValue="true"

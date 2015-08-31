@@ -143,7 +143,8 @@
     <string name="pref_appearance_title">Vzhled</string>
     <string name="coords_title">Souřadnice</string>
     <string name="coords_format_title">Souřadnice formát</string>
-    <string name="coords_format_summary">Zápis zeměpisné šířky a délky</string>
+    <string name="coords_format_decimal">Desetinný</string>
+    <string name="coords_format_sexagesimal">Šedesátý</string>
     <string name="past_title">Časy, které uplynuly</string>
     <string name="seconds_title">Sekundy</string>
     <string name="summaries_title">Souhrny</string>

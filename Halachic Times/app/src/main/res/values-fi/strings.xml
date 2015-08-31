@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Ulkonäkö</string>
     <string name="coords_title">Koordinaatit</string>
     <string name="coords_format_title">Koordinaatit formaatti</string>
-    <string name="coords_format_summary">Notaatio leveyttä ja pituuspiirin</string>
+    <string name="coords_format_decimal">Desimaali</string>
+    <string name="coords_format_sexagesimal">Seksagesimaali</string>
     <string name="past_title">Ajat että kulunut</string>
     <string name="seconds_title">Sekuntia</string>
     <string name="summaries_title">Yhteenvedot</string>

@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Välimus</string>
     <string name="coords_title">Koordinaadid</string>
     <string name="coords_format_title">Koordinaadid formaat</string>
-    <string name="coords_format_summary">Märge laius-ja pikkuskraadi</string>
+    <string name="coords_format_decimal">Kümnend</string>
+    <string name="coords_format_sexagesimal">Seksagesimaalne</string>
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
     <string name="summaries_title">Kokkuvõtted</string>

@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Megjelenés</string>
     <string name="coords_title">Koordináták</string>
     <string name="coords_format_title">Koordináták formátum</string>
-    <string name="coords_format_summary">Jelölések a szélességi és hosszúsági</string>
+    <string name="coords_format_decimal">Decimális</string>
+    <string name="coords_format_sexagesimal">Hatvanas</string>
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="seconds_title">Másodperc</string>
     <string name="summaries_title">Összefoglalók</string>

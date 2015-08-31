@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Görünüş</string>
     <string name="coords_title">Koordinatlar</string>
     <string name="coords_format_title">Koordinatlar biçimi</string>
-    <string name="coords_format_summary">Enlem ve boylam notasyon</string>
+    <string name="coords_format_decimal">Ondalık</string>
+    <string name="coords_format_sexagesimal">Altmışlık</string>
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="seconds_title">Saniye</string>
     <string name="summaries_title">Özetler</string>

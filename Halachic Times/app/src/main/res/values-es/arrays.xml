@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="coords_format_entries">
-        <item>Decimal</item>
-        <item>Sexagésimo</item>
-    </string-array>
     <string-array name="reminder_entries">
         <item>Aapagado</item>
         <item>0 minutos antes</item>

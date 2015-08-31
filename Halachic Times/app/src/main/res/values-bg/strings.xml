@@ -139,7 +139,8 @@
     <string name="pref_appearance_title">появяване</string>
     <string name="coords_title">Координати</string>
     <string name="coords_format_title">Координати формат</string>
-    <string name="coords_format_summary">Нотация на географска ширина и дължина</string>
+    <string name="coords_format_decimal">Десетичен</string>
+    <string name="coords_format_sexagesimal">Шестдесетичен</string>
     <string name="past_title">Време са изминали</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описания</string>

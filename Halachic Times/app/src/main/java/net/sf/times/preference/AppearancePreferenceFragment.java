@@ -21,6 +21,7 @@ package net.sf.times.preference;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.os.Bundle;
 
 import net.sf.times.R;
 
@@ -33,5 +34,12 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     @Override
     protected int getPreferencesXml() {
         return R.xml.appearance_preferences;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        initList(ZmanimSettings.KEY_COORDS_FORMAT);
     }
 }

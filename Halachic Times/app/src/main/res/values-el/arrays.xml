@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="coords_format_entries">
-        <item>Δεκαδικός</item>
-        <item>Βάσης 60</item>
-    </string-array>
+
     <string-array name="reminder_entries">
         <item>Ανενεργό</item>
         <item>Έγκαιρα</item>

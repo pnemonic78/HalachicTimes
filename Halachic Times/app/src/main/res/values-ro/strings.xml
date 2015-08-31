@@ -143,7 +143,8 @@
     <string name="pref_appearance_title">Aparenţă</string>
     <string name="coords_title">Coordonează</string>
     <string name="coords_format_title">Coordonează format</string>
-    <string name="coords_format_summary">Notația de latitudine și longitudine</string>
+    <string name="coords_format_decimal">Zecimal</string>
+    <string name="coords_format_sexagesimal">Șaizecelea</string>
     <string name="past_title">Ori care s-au scurs</string>
     <string name="seconds_title">Secunde</string>
     <string name="summaries_title">Rezumatele</string>

@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Uiterlijk</string>
     <string name="coords_title">Coordinates</string>
     <string name="coords_format_title">Coördinaten formaat</string>
-    <string name="coords_format_summary">Notatie van breedtegraad en lengtegraad</string>
+    <string name="coords_format_decimal">Decimale</string>
+    <string name="coords_format_sexagesimal">Sexagesimale</string>
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="seconds_title">Seconden</string>
     <string name="summaries_title">Samenvattingen</string>

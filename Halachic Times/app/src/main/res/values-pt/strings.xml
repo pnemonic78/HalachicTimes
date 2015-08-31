@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Aparência</string>
     <string name="coords_title">Coordenadas</string>
     <string name="coords_format_title">Formato de coordenadas</string>
-    <string name="coords_format_summary">Notação de latitude e longitude</string>
+    <string name="coords_format_decimal">Decimal</string>
+    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="past_title">Tempos que transcorridos</string>
     <string name="seconds_title">Segundos</string>
     <string name="summaries_title">Sumários</string>

@@ -145,7 +145,8 @@
     <string name="pref_appearance_title">Внешность</string>
     <string name="coords_title">Координаты</string>
     <string name="coords_format_title">Формат координатов</string>
-    <string name="coords_format_summary">Пометка широты и долготы</string>
+    <string name="coords_format_decimal">Десятичный</string>
+    <string name="coords_format_sexagesimal">Шестидесятеричный</string>
     <string name="past_title">Прошедшие времена</string>
     <string name="seconds_title">Секунды</string>
     <string name="summaries_title">Описания</string>

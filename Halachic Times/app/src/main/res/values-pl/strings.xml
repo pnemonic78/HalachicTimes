@@ -145,7 +145,8 @@
     <string name="pref_appearance_title">Wygląd</string>
     <string name="coords_title">Współrzędne</string>
     <string name="coords_format_title">Format współrzędne</string>
-    <string name="coords_format_summary">Notacja długości i szerokości geograficznej</string>
+    <string name="coords_format_decimal">Dziesiętny</string>
+    <string name="coords_format_sexagesimal">Sześćdziesiątkowa</string>
     <string name="past_title">Czasy które upłynęły</string>
     <string name="seconds_title">Sekund</string>
     <string name="summaries_title">Podsumowań</string>

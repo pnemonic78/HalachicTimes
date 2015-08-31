@@ -141,7 +141,8 @@
     <string name="pref_appearance_title">Παρουσιαστικό</string>
     <string name="coords_title">Συντεταγμένες</string>
     <string name="coords_format_title">Συντεταγμένες μορφή</string>
-    <string name="coords_format_summary">Συμβολισμός του γεωγραφικού πλάτους και μήκους</string>
+    <string name="coords_format_decimal">Δεκαδικός</string>
+    <string name="coords_format_sexagesimal">Βάσης 60</string>
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="seconds_title">Δευτερόλεπτα</string>
     <string name="summaries_title">Περιγραφές</string>

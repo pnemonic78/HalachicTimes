@@ -349,9 +349,9 @@
         <item>decimal</item>
         <item>sexagesimal</item>
     </string-array>
-    <string-array name="coords_format_entries">
-        <item>Decimal</item>
-        <item>Sexagesimal</item>
+    <string-array name="coords_format_entries" translatable="false">
+        <item>@string/coords_format_decimal</item>
+        <item>@string/coords_format_sexagesimal</item>
     </string-array>
     <string-array name="reminder_values" translatable="false">
         <item/>

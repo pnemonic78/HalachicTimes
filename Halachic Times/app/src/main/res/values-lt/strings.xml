@@ -143,7 +143,8 @@
     <string name="pref_appearance_title">Išvaizda</string>
     <string name="coords_title">Koordinatės</string>
     <string name="coords_format_title">Koordinačių formatą,</string>
-    <string name="coords_format_summary">Notacija platumos ir ilgumos</string>
+    <string name="coords_format_decimal">Dešimtainis</string>
+    <string name="coords_format_sexagesimal">Šešiasdešimt dalis</string>
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
     <string name="summaries_title">Santraukas</string>
