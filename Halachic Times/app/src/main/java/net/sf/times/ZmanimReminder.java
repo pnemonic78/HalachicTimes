@@ -390,12 +390,11 @@ public class ZmanimReminder extends BroadcastReceiver {
                     CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
                     long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
 
-                    if ((contentTitle == null) || (contentText == null) || (when == 0L)) {
-                        update = true;
-                    } else {
+                    if ((contentTitle != null) && (contentText != null) && (when != 0L)) {
                         ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
                         notifyNow(context, settings, reminderItem);
                     }
+                    update = true;
                 }
             }
         }
