@@ -348,11 +348,11 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
     @Override
     public void onFavoriteClick(LocationAdapter adapter, CompoundButton button, ZmanimAddress address) {
         address.setFavorite(button.isChecked());
-        mHandler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
+        handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
     }
 
     @SuppressLint("HandlerLeak")
-    private final Handler mHandler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
