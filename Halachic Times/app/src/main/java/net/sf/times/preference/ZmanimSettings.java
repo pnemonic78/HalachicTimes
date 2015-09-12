@@ -540,6 +540,21 @@ public class ZmanimSettings {
     }
 
     /**
+     * Get the reminder ringtone type.
+     *
+     * @return the ringtone type.
+     * @see RingtoneManager#TYPE_ALARM
+     * @see RingtoneManager#TYPE_NOTIFICATION
+     */
+    public int getReminderType() {
+        int audioStreamType = getReminderStream();
+        if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+            return RingtoneManager.TYPE_NOTIFICATION;
+        }
+        return RingtoneManager.TYPE_ALARM;
+    }
+
+    /**
      * Is the time emphasized?
      *
      * @param id

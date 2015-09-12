@@ -313,10 +313,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "GPS: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "GPS: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -337,10 +335,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "GPS: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "GPS: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -356,10 +352,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Network: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "Network: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "Network: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -380,10 +374,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Network: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "Network: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "Network: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -401,10 +393,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
             return null;
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Passive: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "Passive: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -425,10 +415,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "Passive: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "Passive: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -753,10 +741,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
         }
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "request updates: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "request updates: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
         }
 
         // Let the updates run for only a small while to save battery.
@@ -783,10 +769,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
 
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
-        } catch (IllegalArgumentException iae) {
-            Log.e(TAG, "request updates: " + iae.getLocalizedMessage(), iae);
-        } catch (SecurityException se) {
-            Log.e(TAG, "request updates: " + se.getLocalizedMessage(), se);
+        } catch (IllegalArgumentException | SecurityException e) {
+            Log.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
         }
 
         // Let the updates run for only a small while to save battery.

@@ -1,1 +1,1 @@
-include ':app', ':KosherJava'
+include ':GeoNames', ':KosherJava', ':app'
