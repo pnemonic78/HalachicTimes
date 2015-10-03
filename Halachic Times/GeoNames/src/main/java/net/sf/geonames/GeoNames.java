@@ -30,101 +30,101 @@ import java.util.Collection;
 
 /**
  * List of geoname records.
- * 
+ *
  * @author Moshe
  */
 public class GeoNames {
 
-	public GeoNames() {
-		super();
-	}
+    public GeoNames() {
+        super();
+    }
 
-	public Collection<GeoName> parse(File file) throws IOException {
-		Collection<GeoName> records = null;
-		Reader reader = null;
-		FileInputStream in = null;
-		try {
-			in = new FileInputStream(file);
-			reader = new InputStreamReader(in, "UTF-8");
-			in = null;
-			records = parse(reader);
-		} finally {
-			if (in != null)
-				in.close();
-			if (reader != null)
-				reader.close();
-		}
-		return records;
-	}
+    public Collection<GeoName> parse(File file) throws IOException {
+        Collection<GeoName> records = null;
+        Reader reader = null;
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            reader = new InputStreamReader(in, "UTF-8");
+            in = null;
+            records = parse(reader);
+        } finally {
+            if (in != null)
+                in.close();
+            if (reader != null)
+                reader.close();
+        }
+        return records;
+    }
 
-	public Collection<GeoName> parse(Reader reader) throws IOException {
-		Collection<GeoName> records = new ArrayList<GeoName>();
-		GeoName record;
-		String line;
-		BufferedReader buf = new BufferedReader(reader);
-		String[] fields;
-		int column;
-		String field;
+    public Collection<GeoName> parse(Reader reader) throws IOException {
+        Collection<GeoName> records = new ArrayList<GeoName>();
+        GeoName record;
+        String line;
+        BufferedReader buf = new BufferedReader(reader);
+        String[] fields;
+        int column;
+        String field;
 
-		while (true) {
-			line = buf.readLine();
-			if (line == null)
-				break;
-			fields = line.split("\t");
-			record = new GeoName();
+        while (true) {
+            line = buf.readLine();
+            if (line == null)
+                break;
+            fields = line.split("\t");
+            record = new GeoName();
 
-			column = 0;
-			field = fields[column++];
-			record.setGeoNameId(Long.parseLong(field));
-			field = fields[column++];
-			record.setName(field);
-			field = fields[column++];
-			record.setAsciiName(field);
-			field = fields[column++];
-			record.setAlternateNames(field);
-			field = fields[column++];
-			record.setLatitude(Double.parseDouble(field));
-			field = fields[column++];
-			record.setLongitude(Double.parseDouble(field));
-			field = fields[column++];
-			record.setFeatureClass(field);
-			field = fields[column++];
-			record.setFeatureCode(field);
-			field = fields[column++];
-			record.setCountryCode(field);
-			field = fields[column++];
-			record.setCc2(field);
-			field = fields[column++];
-			record.setAdmin1(field);
-			field = fields[column++];
-			record.setAdmin2(field);
-			field = fields[column++];
-			record.setAdmin3(field);
-			field = fields[column++];
-			record.setAdmin4(field);
-			field = fields[column++];
-			record.setPopulation(Long.parseLong(field));
-			field = fields[column++];
-			if (field.length() > 0)
-				record.setElevation(Integer.parseInt(field));
-			field = fields[column++];
-			if (field.length() > 0)
-				record.setDem(Integer.parseInt(field));
-			field = fields[column++];
-			if (field.length() == 0) {
-				// throw new NullPointerException("time zone required for " +
-				// record.getGeoNameId());
-				System.err.println("time zone required for " + record.getGeoNameId());
-				System.err.println(line);
-				continue;
-			}
-			record.setTimeZone(field);
-			field = fields[column++];
-			record.setModification(field);
+            column = 0;
+            field = fields[column++];
+            record.setGeoNameId(Long.parseLong(field));
+            field = fields[column++];
+            record.setName(field);
+            field = fields[column++];
+            record.setAsciiName(field);
+            field = fields[column++];
+            record.setAlternateNames(field);
+            field = fields[column++];
+            record.setLatitude(Double.parseDouble(field));
+            field = fields[column++];
+            record.setLongitude(Double.parseDouble(field));
+            field = fields[column++];
+            record.setFeatureClass(field);
+            field = fields[column++];
+            record.setFeatureCode(field);
+            field = fields[column++];
+            record.setCountryCode(field);
+            field = fields[column++];
+            record.setCc2(field);
+            field = fields[column++];
+            record.setAdmin1(field);
+            field = fields[column++];
+            record.setAdmin2(field);
+            field = fields[column++];
+            record.setAdmin3(field);
+            field = fields[column++];
+            record.setAdmin4(field);
+            field = fields[column++];
+            record.setPopulation(Long.parseLong(field));
+            field = fields[column++];
+            if (field.length() > 0)
+                record.setElevation(Integer.parseInt(field));
+            field = fields[column++];
+            if (field.length() > 0)
+                record.setDem(Integer.parseInt(field));
+            field = fields[column++];
+            if (field.length() == 0) {
+                // throw new NullPointerException("time zone required for " +
+                // record.getGeoNameId());
+                System.err.println("time zone required for " + record.getGeoNameId());
+                System.err.println(line);
+                continue;
+            }
+            record.setTimeZone(field);
+            field = fields[column++];
+            record.setModification(field);
 
-			records.add(record);
-		}
+            records.add(record);
+        }
 
-		return records;
-	}
+        return records;
+    }
 }

@@ -23,41 +23,41 @@ import java.util.Comparator;
 
 public class LocationComparator implements Comparator<GeoName> {
 
-	public LocationComparator() {
-		super();
-	}
+    public LocationComparator() {
+        super();
+    }
 
-	@Override
-	public int compare(GeoName geo0, GeoName geo1) {
-		// West < East
-		double lng0 = geo0.getLongitude();
-		double lng1 = geo1.getLongitude();
-		if (lng0 > lng1)
-			return +1;
-		if (lng0 < lng1)
-			return -1;
+    @Override
+    public int compare(GeoName geo0, GeoName geo1) {
+        // West < East
+        double lng0 = geo0.getLongitude();
+        double lng1 = geo1.getLongitude();
+        if (lng0 > lng1)
+            return +1;
+        if (lng0 < lng1)
+            return -1;
 
-		// North < South
-		double lat0 = geo0.getLatitude();
-		double lat1 = geo1.getLatitude();
-		if (lat0 > lat1)
-			return +1;
-		if (lat0 < lat1)
-			return -1;
+        // North < South
+        double lat0 = geo0.getLatitude();
+        double lat1 = geo1.getLatitude();
+        if (lat0 > lat1)
+            return +1;
+        if (lat0 < lat1)
+            return -1;
 
-		int alt0 = geo0.getElevation();
-		int alt1 = geo1.getElevation();
-		int alt = alt0 - alt1;
-		if (alt != 0)
-			return alt;
+        int alt0 = geo0.getElevation();
+        int alt1 = geo1.getElevation();
+        int alt = alt0 - alt1;
+        if (alt != 0)
+            return alt;
 
-		String name0 = geo0.getName();
-		String name1 = geo1.getName();
-		int name = name0.compareTo(name1);
-		if (name != 0)
-			return name;
+        String name0 = geo0.getName();
+        String name1 = geo1.getName();
+        int name = name0.compareTo(name1);
+        if (name != 0)
+            return name;
 
-		return (int) (geo0.getGeoNameId() - geo1.getGeoNameId());
-	}
+        return (int) (geo0.getGeoNameId() - geo1.getGeoNameId());
+    }
 
 }

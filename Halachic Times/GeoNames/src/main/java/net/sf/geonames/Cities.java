@@ -46,278 +46,287 @@ import org.w3c.dom.Element;
 
 /**
  * Cities.
- * 
+ *
  * @author Moshe
  */
 public class Cities {
 
-	public static final String ANDROID_ATTRIBUTE_NAME = "name";
-	public static final String ANDROID_ATTRIBUTE_TRANSLATABLE = "translatable";
-	public static final String ANDROID_ELEMENT_RESOURCES = "resources";
-	public static final String ANDROID_ELEMENT_STRING_ARRAY = "string-array";
-	public static final String ANDROID_ELEMENT_INTEGER_ARRAY = "integer-array";
-	public static final String ANDROID_ELEMENT_ITEM = "item";
+    public static final String ANDROID_ATTRIBUTE_NAME = "name";
+    public static final String ANDROID_ATTRIBUTE_TRANSLATABLE = "translatable";
+    public static final String ANDROID_ELEMENT_RESOURCES = "resources";
+    public static final String ANDROID_ELEMENT_STRING_ARRAY = "string-array";
+    public static final String ANDROID_ELEMENT_INTEGER_ARRAY = "integer-array";
+    public static final String ANDROID_ELEMENT_ITEM = "item";
 
-	/**
-	 * Constructs a new cities.
-	 */
-	public Cities() {
-		super();
-	}
+    protected static final String APP_RES = "app/src/main/res";
 
-	public static void main(String[] args) {
-		String path = "res/cities1000.txt";
-		File res = new File(path);
-		Cities cities = new Cities();
-		Collection<GeoName> names;
-		Collection<GeoName> cityNames;
-		Collection<GeoName> capitals;
-		try {
-			names = cities.loadNames(res);
-			cityNames = cities.filterCity(names);
-			capitals = cities.filterCapitals(cityNames);
-			cities.toAndroidXML(capitals, null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Constructs a new cities.
+     */
+    public Cities() {
+        super();
+    }
 
-	/**
-	 * Load the list of names.
-	 * 
-	 * @param file
-	 *            the geonames file.
-	 * @return the sorted list of records.
-	 * @throws IOException
-	 *             if an I/O error occurs.
-	 */
-	public Collection<GeoName> loadNames(File file) throws IOException {
-		GeoNames parser = new GeoNames();
-		return parser.parse(file);
-	}
+    public static void main(String[] args) {
+        String path = "GeoNames/res/cities1000.txt";
+        File res = new File(path);
+        System.out.println(res);
+        System.out.println(res.getAbsolutePath());
+        try {
+            System.out.println(res.getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Cities cities = new Cities();
+        Collection<GeoName> names;
+        Collection<GeoName> cityNames;
+        Collection<GeoName> capitals;
+        try {
+            names = cities.loadNames(res);
+            cityNames = cities.filterCity(names);
+            capitals = cities.filterCapitals(cityNames);
+            cities.toAndroidXML(capitals, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Filter the list of names to find only cities.
-	 * 
-	 * @param names
-	 *            the list of all names.
-	 * @return the list of cities.
-	 */
-	public Collection<GeoName> filterCity(Collection<GeoName> names) {
-		Collection<GeoName> cities = new ArrayList<GeoName>();
+    /**
+     * Load the list of names.
+     *
+     * @param file
+     *         the geonames file.
+     * @return the sorted list of records.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> loadNames(File file) throws IOException {
+        GeoNames parser = new GeoNames();
+        return parser.parse(file);
+    }
 
-		for (GeoName name : names) {
-			if (GeoName.FEATURE_P.equals(name.getFeatureClass())) {
-				cities.add(name);
-			}
-		}
+    /**
+     * Filter the list of names to find only cities.
+     *
+     * @param names
+     *         the list of all names.
+     * @return the list of cities.
+     */
+    public Collection<GeoName> filterCity(Collection<GeoName> names) {
+        Collection<GeoName> cities = new ArrayList<GeoName>();
 
-		return cities;
-	}
+        for (GeoName name : names) {
+            if (GeoName.FEATURE_P.equals(name.getFeatureClass())) {
+                cities.add(name);
+            }
+        }
 
-	/**
-	 * Filter the list of names to find only capital cities.
-	 * 
-	 * @param names
-	 *            the list of all names.
-	 * @return the list of capitals.
-	 */
-	public Collection<GeoName> filterCapitals(Collection<GeoName> names) {
-		Collection<GeoName> capitals = new ArrayList<GeoName>();
-		Collection<String> countries = getCountries();
+        return cities;
+    }
 
-		for (GeoName name : names) {
-			if (GeoName.FEATURE_PPLC.equals(name.getFeatureCode())) {
-				capitals.add(name);
-				countries.remove(name.getCountryCode());
-			}
-		}
+    /**
+     * Filter the list of names to find only capital cities.
+     *
+     * @param names
+     *         the list of all names.
+     * @return the list of capitals.
+     */
+    public Collection<GeoName> filterCapitals(Collection<GeoName> names) {
+        Collection<GeoName> capitals = new ArrayList<GeoName>();
+        Collection<String> countries = getCountries();
 
-		// For all countries without capitals, find the next best matching city
-		// type.
-		if (!countries.isEmpty()) {
-			Map<String, GeoName> best = new TreeMap<String, GeoName>();
-			GeoName place;
-			String cc;
-			for (GeoName name : names) {
-				cc = name.getCountryCode();
+        for (GeoName name : names) {
+            if (GeoName.FEATURE_PPLC.equals(name.getFeatureCode())) {
+                capitals.add(name);
+                countries.remove(name.getCountryCode());
+            }
+        }
 
-				if (countries.contains(cc)) {
-					place = best.get(cc);
-					if (place == null) {
-						best.put(cc, name);
-						continue;
-					}
-					place = betterPlace(name, place);
-					best.put(cc, place);
-				}
-			}
-			capitals.addAll(best.values());
-		}
+        // For all countries without capitals, find the next best matching city
+        // type.
+        if (!countries.isEmpty()) {
+            Map<String, GeoName> best = new TreeMap<String, GeoName>();
+            GeoName place;
+            String cc;
+            for (GeoName name : names) {
+                cc = name.getCountryCode();
 
-		return capitals;
-	}
+                if (countries.contains(cc)) {
+                    place = best.get(cc);
+                    if (place == null) {
+                        best.put(cc, name);
+                        continue;
+                    }
+                    place = betterPlace(name, place);
+                    best.put(cc, place);
+                }
+            }
+            capitals.addAll(best.values());
+        }
 
-	/**
-	 * Get the better place by comparing its feature type as being more
-	 * populated.
-	 * 
-	 * @param name1
-	 *            a name.
-	 * @param name2
-	 *            a name.
-	 * @return the better name.
-	 */
-	private GeoName betterPlace(GeoName name1, GeoName name2) {
-		String feature1 = name1.getFeatureCode();
-		String feature2 = name2.getFeatureCode();
-		int rank1 = getFeatureCodeRank(feature1);
-		int rank2 = getFeatureCodeRank(feature2);
+        return capitals;
+    }
 
-		// Compare features.
-		if (rank1 < 0)
-			return name2;
-		if (rank2 < 0)
-			return (rank1 < rank2) ? name2 : name1;
-		// if (rank2 > rank1)
-		// return name2;
+    /**
+     * Get the better place by comparing its feature type as being more
+     * populated.
+     *
+     * @param name1
+     *         a name.
+     * @param name2
+     *         a name.
+     * @return the better name.
+     */
+    private GeoName betterPlace(GeoName name1, GeoName name2) {
+        String feature1 = name1.getFeatureCode();
+        String feature2 = name2.getFeatureCode();
+        int rank1 = getFeatureCodeRank(feature1);
+        int rank2 = getFeatureCodeRank(feature2);
 
-		// Compare populations.
-		// if (rank1 == rank2) {
-		long pop1 = name1.getPopulation();
-		long pop2 = name2.getPopulation();
-		if (pop2 > pop1)
-			return name2;
-		// }
+        // Compare features.
+        if (rank1 < 0)
+            return name2;
+        if (rank2 < 0)
+            return (rank1 < rank2) ? name2 : name1;
+        // if (rank2 > rank1)
+        // return name2;
 
-		return name1;
-	}
+        // Compare populations.
+        // if (rank1 == rank2) {
+        long pop1 = name1.getPopulation();
+        long pop2 = name2.getPopulation();
+        if (pop2 > pop1)
+            return name2;
+        // }
 
-	private Map<String, Integer> ranks;
+        return name1;
+    }
 
-	/**
-	 * Get the rank of the feature code.
-	 * 
-	 * @param code
-	 *            the feature code.
-	 * @return the rank.
-	 */
-	private int getFeatureCodeRank(String code) {
-		if (ranks == null) {
-			ranks = new TreeMap<String, Integer>();
-			int rank = -2;
-			ranks.put(GeoName.FEATURE_PPLW, rank++);
-			ranks.put(GeoName.FEATURE_PPLQ, rank++);
-			ranks.put(GeoName.FEATURE_P, rank++);
-			ranks.put(GeoName.FEATURE_PPLX, rank++);
-			ranks.put(GeoName.FEATURE_PPL, rank++);
-			ranks.put(GeoName.FEATURE_PPLS, rank++);
-			ranks.put(GeoName.FEATURE_PPLL, rank++);
-			ranks.put(GeoName.FEATURE_PPLF, rank++);
-			ranks.put(GeoName.FEATURE_PPLR, rank++);
-			ranks.put(GeoName.FEATURE_STLMT, rank++);
-			ranks.put(GeoName.FEATURE_PPLA4, rank++);
-			ranks.put(GeoName.FEATURE_PPLA3, rank++);
-			ranks.put(GeoName.FEATURE_PPLA2, rank++);
-			ranks.put(GeoName.FEATURE_PPLA, rank++);
-			ranks.put(GeoName.FEATURE_PPLG, rank++);
-			ranks.put(GeoName.FEATURE_PPLC, rank++);
-		}
-		return ranks.get(code);
-	}
+    private Map<String, Integer> ranks;
 
-	/**
-	 * Write the list of names as arrays in Android resource file format.
-	 * 
-	 * @param names
-	 *            the list of names.
-	 * @param language
-	 *            the language code.
-	 * @throws ParserConfigurationException
-	 *             if a DOM error occurs.
-	 * @throws TransformerException
-	 *             if a DOM error occurs.
-	 */
-	public void toAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
-		List<GeoName> sorted = null;
-		if (names instanceof List)
-			sorted = (List<GeoName>) names;
-		else
-			sorted = new ArrayList<GeoName>(names);
-		Collections.sort(sorted, new LocationComparator());
+    /**
+     * Get the rank of the feature code.
+     *
+     * @param code
+     *         the feature code.
+     * @return the rank.
+     */
+    private int getFeatureCodeRank(String code) {
+        if (ranks == null) {
+            ranks = new TreeMap<String, Integer>();
+            int rank = -2;
+            ranks.put(GeoName.FEATURE_PPLW, rank++);
+            ranks.put(GeoName.FEATURE_PPLQ, rank++);
+            ranks.put(GeoName.FEATURE_P, rank++);
+            ranks.put(GeoName.FEATURE_PPLX, rank++);
+            ranks.put(GeoName.FEATURE_PPL, rank++);
+            ranks.put(GeoName.FEATURE_PPLS, rank++);
+            ranks.put(GeoName.FEATURE_PPLL, rank++);
+            ranks.put(GeoName.FEATURE_PPLF, rank++);
+            ranks.put(GeoName.FEATURE_PPLR, rank++);
+            ranks.put(GeoName.FEATURE_STLMT, rank++);
+            ranks.put(GeoName.FEATURE_PPLA4, rank++);
+            ranks.put(GeoName.FEATURE_PPLA3, rank++);
+            ranks.put(GeoName.FEATURE_PPLA2, rank++);
+            ranks.put(GeoName.FEATURE_PPLA, rank++);
+            ranks.put(GeoName.FEATURE_PPLG, rank++);
+            ranks.put(GeoName.FEATURE_PPLC, rank++);
+        }
+        return ranks.get(code);
+    }
 
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = builderFactory.newDocumentBuilder();
-		Document doc = builder.newDocument();
-		TransformerFactory xformerFactory = TransformerFactory.newInstance();
-		Transformer xformer = xformerFactory.newTransformer();
-		File file;
-		if (language == null)
-			file = new File("../Halachic Times/res/values/cities.xml");
-		else
-			file = new File("../Halachic Times/res/values-" + language + "/cities.xml");
-		file.getParentFile().mkdirs();
+    /**
+     * Write the list of names as arrays in Android resource file format.
+     *
+     * @param names
+     *         the list of names.
+     * @param language
+     *         the language code.
+     * @throws ParserConfigurationException
+     *         if a DOM error occurs.
+     * @throws TransformerException
+     *         if a DOM error occurs.
+     */
+    public void toAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
+        List<GeoName> sorted = null;
+        if (names instanceof List)
+            sorted = (List<GeoName>) names;
+        else
+            sorted = new ArrayList<GeoName>(names);
+        Collections.sort(sorted, new LocationComparator());
 
-		Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
-		doc.appendChild(doc.createComment("Generated from geonames.org data."));
-		doc.appendChild(resources);
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = builderFactory.newDocumentBuilder();
+        Document doc = builder.newDocument();
+        TransformerFactory xformerFactory = TransformerFactory.newInstance();
+        Transformer xformer = xformerFactory.newTransformer();
+        File file;
+        if (language == null)
+            file = new File(APP_RES, "values/cities.xml");
+        else
+            file = new File(APP_RES, "values-" + language + "/cities.xml");
+        file.getParentFile().mkdirs();
 
-		Element citiesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-		citiesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities");
-		resources.appendChild(citiesElement);
-		Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-		countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "countries");
-		countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-		if (language == null)
-			resources.appendChild(countriesElement);
-		Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-		latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "latitudes");
-		latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-		if (language == null)
-			resources.appendChild(latitudesElement);
-		Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-		longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "longitudes");
-		longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-		if (language == null)
-			resources.appendChild(longitudesElement);
-		Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-		zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "timezones");
-		zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-		if (language == null)
-			resources.appendChild(zonesElement);
+        Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
+        doc.appendChild(doc.createComment("Generated from geonames.org data."));
+        doc.appendChild(resources);
 
-		Element country, latitude, longitude, zone;
+        Element citiesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        citiesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities");
+        resources.appendChild(citiesElement);
+        Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "countries");
+        countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
+        if (language == null)
+            resources.appendChild(countriesElement);
+        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "latitudes");
+        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
+        if (language == null)
+            resources.appendChild(latitudesElement);
+        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "longitudes");
+        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
+        if (language == null)
+            resources.appendChild(longitudesElement);
+        Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "timezones");
+        zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
+        if (language == null)
+            resources.appendChild(zonesElement);
 
-		for (GeoName capital : sorted) {
-			country = doc.createElement(ANDROID_ELEMENT_ITEM);
-			country.setTextContent(capital.getCountryCode());
-			latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-			latitude.setTextContent(String.valueOf(capital.getLatitude()));
-			longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-			longitude.setTextContent(String.valueOf(capital.getLongitude()));
-			zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-			zone.setTextContent(capital.getTimeZone());
+        Element country, latitude, longitude, zone;
 
-			countriesElement.appendChild(country);
-			latitudesElement.appendChild(latitude);
-			longitudesElement.appendChild(longitude);
-			zonesElement.appendChild(zone);
-		}
+        for (GeoName capital : sorted) {
+            country = doc.createElement(ANDROID_ELEMENT_ITEM);
+            country.setTextContent(capital.getCountryCode());
+            latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
+            latitude.setTextContent(String.valueOf(capital.getLatitude()));
+            longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
+            longitude.setTextContent(String.valueOf(capital.getLongitude()));
+            zone = doc.createElement(ANDROID_ELEMENT_ITEM);
+            zone.setTextContent(capital.getTimeZone());
 
-		Source src = new DOMSource(doc);
-		Result result = new StreamResult(file);
-		xformer.transform(src, result);
-	}
+            countriesElement.appendChild(country);
+            latitudesElement.appendChild(latitude);
+            longitudesElement.appendChild(longitude);
+            zonesElement.appendChild(zone);
+        }
 
-	/**
-	 * Get the list of country codes.
-	 * 
-	 * @return the list of countries.
-	 */
-	protected Collection<String> getCountries() {
-		Collection<String> countries = new TreeSet<String>();
-		for (String country : Locale.getISOCountries())
-			countries.add(country);
-		return countries;
-	}
+        Source src = new DOMSource(doc);
+        Result result = new StreamResult(file);
+        xformer.transform(src, result);
+    }
+
+    /**
+     * Get the list of country codes.
+     *
+     * @return the list of countries.
+     */
+    protected Collection<String> getCountries() {
+        Collection<String> countries = new TreeSet<String>();
+        for (String country : Locale.getISOCountries())
+            countries.add(country);
+        return countries;
+    }
 }
