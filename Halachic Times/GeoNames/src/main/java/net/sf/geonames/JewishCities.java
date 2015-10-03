@@ -190,7 +190,7 @@ public class JewishCities extends Cities {
     }
 
     public static void main(String[] args) {
-        String path = "res/cities1000.txt";
+        String path = "GeoNames/res/cities1000.txt";
         File res = new File(path);
         JewishCities cities = new JewishCities();
         Collection<GeoName> names;
@@ -250,9 +250,9 @@ public class JewishCities extends Cities {
         Transformer xformer = xformerFactory.newTransformer();
         File file;
         if (language == null)
-            file = new File("../Halachic Times/res/values/cities.xml");
+            file = new File(APP_RES, "/values/cities.xml");
         else
-            file = new File("../Halachic Times/res/values-" + language + "/cities.xml");
+            file = new File(APP_RES, "values-" + language + "/cities.xml");
         file.getParentFile().mkdirs();
 
         Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);

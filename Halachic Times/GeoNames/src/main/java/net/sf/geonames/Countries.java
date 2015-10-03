@@ -59,7 +59,7 @@ public class Countries extends Cities {
     }
 
     public static void main(String[] args) {
-        String path = "res/cities1000.txt";
+        String path = "GeoNames/res/cities1000.txt";
         File res = new File(path);
         Countries countries = new Countries();
         Collection<GeoName> names;
