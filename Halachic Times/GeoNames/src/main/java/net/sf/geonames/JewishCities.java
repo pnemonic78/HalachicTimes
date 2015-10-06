@@ -24,7 +24,7 @@ import org.w3c.dom.Element;
 public class JewishCities extends Cities {
 
     /**
-     * List of Jewish cities' GeoNamew IDs.
+     * List of Jewish cities' GeoName IDs.
      */
     private static final long[] JEWISH_CITIES = {
             // Addis Ababa, Ethiopia
@@ -102,7 +102,7 @@ public class JewishCities extends Cities {
             // Las Vegas, United States
             5475433,
             // London, United Kingdom
-            6058560,
+            2643741,
             // Los Angeles, United States
             3882428,
             // Lyon, France

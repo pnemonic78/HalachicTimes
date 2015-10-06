@@ -18,7 +18,6 @@
         <item>Cleveland</item>
         <item>Atlanta</item>
         <item>Detroit</item>
-        <item>London</item>
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
@@ -37,6 +36,7 @@
         <item>Casablanca</item>
         <item>Madrid</item>
         <item>Manchester</item>
+        <item>London</item>
         <item>Paris</item>
         <item>Brussels</item>
         <item>Lyon</item>
@@ -67,7 +67,7 @@
         <item>Eilat</item>
         <item>Haifa</item>
         <item>Beit Shemesh</item>
-        <item>Nahariyya</item>
+        <item>Nahariya</item>
         <item>Ariel</item>
         <item>Jerusalem</item>
         <item>Nazareth</item>
@@ -98,7 +98,6 @@
         <item>US</item>
         <item>US</item>
         <item>US</item>
-        <item>CA</item>
         <item>US</item>
         <item>US</item>
         <item>CA</item>
@@ -116,6 +115,7 @@
         <item>BR</item>
         <item>MA</item>
         <item>ES</item>
+        <item>GB</item>
         <item>GB</item>
         <item>FR</item>
         <item>BE</item>
@@ -178,17 +178,16 @@
         <item>33.99093</item>
         <item>33.749</item>
         <item>42.33143</item>
-        <item>42.98339</item>
         <item>25.77427</item>
         <item>40.44062</item>
         <item>43.70011</item>
         <item>38.89511</item>
         <item>39.29038</item>
-        <item>39.95234</item>
+        <item>39.95233</item>
         <item>4.60971</item>
         <item>40.71427</item>
         <item>45.50884</item>
-        <item>-37.46667</item>
+        <item>-37.46973</item>
         <item>42.35843</item>
         <item>43.66147</item>
         <item>-34.61315</item>
@@ -197,6 +196,7 @@
         <item>33.58831</item>
         <item>40.4165</item>
         <item>53.48095</item>
+        <item>51.51279</item>
         <item>48.85341</item>
         <item>50.85045</item>
         <item>45.74846</item>
@@ -206,7 +206,7 @@
         <item>43.70313</item>
         <item>47.36667</item>
         <item>48.13743</item>
-        <item>41.89474</item>
+        <item>41.89193</item>
         <item>52.52437</item>
         <item>48.20849</item>
         <item>59.33258</item>
@@ -216,27 +216,27 @@
         <item>60.16952</item>
         <item>-26.20227</item>
         <item>41.01384</item>
-        <item>59.89444</item>
+        <item>59.93863</item>
         <item>50.45466</item>
         <item>-29.8579</item>
         <item>31.66926</item>
-        <item>31.81667</item>
+        <item>31.79213</item>
         <item>32.08088</item>
         <item>31.25181</item>
-        <item>32.43645</item>
+        <item>32.44192</item>
         <item>29.55805</item>
         <item>32.81841</item>
-        <item>31.74959</item>
-        <item>33.00586</item>
+        <item>31.73072</item>
+        <item>33.01135</item>
         <item>32.1065</item>
         <item>31.76904</item>
         <item>32.69925</item>
-        <item>32.96564</item>
-        <item>32.7922</item>
+        <item>32.96465</item>
+        <item>32.79221</item>
         <item>55.75222</item>
         <item>9.02497</item>
         <item>19.07283</item>
-        <item>23.72444</item>
+        <item>23.72894</item>
         <item>-31.95224</item>
         <item>-37.814</item>
         <item>-33.86785</item>
@@ -258,7 +258,6 @@
         <item>-86.57749</item>
         <item>-84.38798</item>
         <item>-83.04575</item>
-        <item>-81.23304</item>
         <item>-80.19366</item>
         <item>-79.99589</item>
         <item>-79.4163</item>
@@ -268,7 +267,7 @@
         <item>-74.08175</item>
         <item>-74.00597</item>
         <item>-73.58781</item>
-        <item>-72.35</item>
+        <item>-72.35366</item>
         <item>-71.05977</item>
         <item>-70.25533</item>
         <item>-58.37723</item>
@@ -277,6 +276,7 @@
         <item>-7.61138</item>
         <item>-3.70256</item>
         <item>-2.23743</item>
+        <item>-0.09184</item>
         <item>2.3488</item>
         <item>4.34878</item>
         <item>4.84671</item>
@@ -286,7 +286,7 @@
         <item>7.26608</item>
         <item>8.55</item>
         <item>11.57549</item>
-        <item>12.4839</item>
+        <item>12.51133</item>
         <item>13.41053</item>
         <item>16.37208</item>
         <item>18.0649</item>
@@ -296,27 +296,27 @@
         <item>24.93545</item>
         <item>28.04363</item>
         <item>28.94966</item>
-        <item>30.26417</item>
+        <item>30.31413</item>
         <item>30.5238</item>
         <item>31.0292</item>
         <item>34.57149</item>
-        <item>34.65</item>
+        <item>34.64966</item>
         <item>34.78057</item>
         <item>34.7913</item>
-        <item>34.91956</item>
+        <item>34.9039</item>
         <item>34.94821</item>
         <item>34.9885</item>
-        <item>34.98877</item>
-        <item>35.09409</item>
+        <item>34.99293</item>
+        <item>35.09467</item>
         <item>35.18449</item>
         <item>35.21633</item>
         <item>35.30483</item>
-        <item>35.50049</item>
+        <item>35.496</item>
         <item>35.53124</item>
         <item>37.61556</item>
         <item>38.74689</item>
         <item>72.88261</item>
-        <item>92.7175</item>
+        <item>92.71791</item>
         <item>115.8614</item>
         <item>144.96332</item>
         <item>151.20732</item>
@@ -338,7 +338,6 @@
         <item>159</item>
         <item>305</item>
         <item>181</item>
-        <item>251</item>
         <item>2</item>
         <item>235</item>
         <item>173</item>
@@ -357,6 +356,7 @@
         <item>17</item>
         <item>638</item>
         <item>60</item>
+        <item>35</item>
         <item>30</item>
         <item>20</item>
         <item>173</item>
