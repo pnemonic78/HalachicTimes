@@ -69,11 +69,11 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         super.onListPreferenceChange(preference, newValue);
 
         if (!oldValue.equals(newValue)) {
-            if (preference.getKey().equals(reminderKey) && (activity != null)) {
+            if (preference.getKey().equals(reminderKey) && (context != null)) {
                 if (settings == null)
-                    settings = new ZmanimSettings(activity);
+                    settings = new ZmanimSettings(context);
                 if (reminder == null)
-                    reminder = new ZmanimReminder(activity);
+                    reminder = new ZmanimReminder(context);
                 reminder.remind(settings);
             }
         }

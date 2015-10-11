@@ -84,6 +84,41 @@
                 android:key="dawn.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="dawn.reminder"
+                android:key="dawn.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="dawn.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -105,6 +140,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="tallis.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="tallis.reminder"
+                android:key="tallis.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="tallis.emphasis"
@@ -128,6 +198,41 @@
                 android:key="sunrise.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="sunrise.reminder"
+                android:key="sunrise.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="sunrise.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -149,6 +254,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="shema.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="shema.reminder"
+                android:key="shema.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="shema.emphasis"
@@ -172,6 +312,41 @@
                 android:key="prayers.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="prayers.reminder"
+                android:key="prayers.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="prayers.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -193,6 +368,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="burn_chametz.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="burn_chametz.reminder"
+                android:key="burn_chametz.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="burn_chametz.emphasis"
@@ -216,6 +426,41 @@
                 android:key="midday.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="midday.reminder"
+                android:key="midday.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="midday.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -237,6 +482,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="earliest_mincha.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="earliest_mincha.reminder"
+                android:key="earliest_mincha.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="earliest_mincha.emphasis"
@@ -260,6 +540,41 @@
                 android:key="mincha.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="mincha.reminder"
+                android:key="mincha.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="mincha.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -281,6 +596,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="plug_hamincha.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="plug_hamincha.reminder"
+                android:key="plug_hamincha.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="plug_hamincha.emphasis"
@@ -315,6 +665,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="candles.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="candles.reminder"
+                android:key="candles.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
 
             <CheckBoxPreference
                 android:defaultValue="true"
@@ -344,6 +729,41 @@
                 android:key="sunset.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="sunset.reminder"
+                android:key="sunset.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="sunset.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -365,6 +785,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="twilight.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="twilight.reminder"
+                android:key="twilight.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="twilight.emphasis"
@@ -388,6 +843,41 @@
                 android:key="nightfall.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="nightfall.reminder"
+                android:key="nightfall.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="nightfall.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -409,6 +899,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="midnight.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="midnight.reminder"
+                android:key="midnight.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="midnight.emphasis"
@@ -432,6 +957,41 @@
                 android:key="levana_earliest.reminder"
                 android:title="@string/reminder"/>
             <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="levana_earliest.reminder"
+                android:key="levana_earliest.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
+            <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="levana_earliest.emphasis"
                 android:title="@string/emphasis_title"/>
@@ -453,6 +1013,41 @@
                 android:icon="@drawable/ic_alarm"
                 android:key="levana_latest.reminder"
                 android:title="@string/reminder"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.1"
+                android:title="@string/reminder_sunday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.2"
+                android:title="@string/reminder_monday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.3"
+                android:title="@string/reminder_tuesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.4"
+                android:title="@string/reminder_wednesday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.5"
+                android:title="@string/reminder_thursday"/>
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.6"
+                android:title="@string/reminder_friday"/>
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:dependency="levana_latest.reminder"
+                android:key="levana_latest.reminder.day.7"
+                android:title="@string/reminder_saturday"/>
             <CheckBoxPreference
                 android:defaultValue="false"
                 android:key="levana_latest.emphasis"

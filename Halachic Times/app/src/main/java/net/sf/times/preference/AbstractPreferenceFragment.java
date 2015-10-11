@@ -45,12 +45,12 @@ import net.sf.times.ZmanimWidget;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
-    protected Activity activity;
+    protected Context context;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = activity;
+        this.context = activity;
     }
 
     @Override
@@ -163,7 +163,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             ringtoneUri = Uri.parse(newValue);
         }
 
-        Context context = activity;
+        Context context = this.context;
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
         if (ringtone != null) {
             String title = ringtone.getTitle(context);
@@ -179,7 +179,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     }
 
     protected void notifyAppWidgets() {
-        Context context = activity;
+        Context context = this.context;
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final Class<?> clazz = ZmanimWidget.class;
         ComponentName provider = new ComponentName(context, clazz);

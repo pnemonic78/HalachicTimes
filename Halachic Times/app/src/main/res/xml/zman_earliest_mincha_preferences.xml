@@ -18,6 +18,41 @@
         android:key="earliest_mincha.reminder"
         android:title="@string/reminder"/>
     <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.1"
+        android:title="@string/reminder_sunday"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.2"
+        android:title="@string/reminder_monday"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.3"
+        android:title="@string/reminder_tuesday"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.4"
+        android:title="@string/reminder_wednesday"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.5"
+        android:title="@string/reminder_thursday"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.6"
+        android:title="@string/reminder_friday"/>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:dependency="earliest_mincha.reminder"
+        android:key="earliest_mincha.reminder.day.7"
+        android:title="@string/reminder_saturday"/>
+    <CheckBoxPreference
         android:defaultValue="false"
         android:key="earliest_mincha.emphasis"
         android:title="@string/emphasis_title"/>

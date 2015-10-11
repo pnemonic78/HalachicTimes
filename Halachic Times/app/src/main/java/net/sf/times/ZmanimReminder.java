@@ -165,7 +165,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
             if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                 when = item.time - before;
-                if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
+                if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, now, settings)) {
                     notifyNow(context, settings, item);
                     needToday = false;
                 }
@@ -175,7 +175,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 }
             }
         }
-        if (itemFirst != null) {
+        if ((itemFirst != null) && allowReminder(itemFirst, now, settings)) {
             String whenFormat = formatDateTime(whenFirst);
             String timeFormat = formatDateTime(itemFirst.time);
             Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
@@ -200,7 +200,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 before = settings.getReminder(id);
                 if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                     when = item.time - before;
-                    if (needToday && (latest < was) && (was <= when) && (when <= soon)) {
+                    if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, now, settings)) {
                         notifyNow(context, settings, item);
                         needToday = false;
                     }
@@ -210,7 +210,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                     }
                 }
             }
-            if (itemFirst != null) {
+            if ((itemFirst != null) && allowReminder(itemFirst, now, settings)) {
                 String whenFormat = formatDateTime(whenFirst);
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
@@ -253,7 +253,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                     }
                 }
             }
-            if (itemFirst != null) {
+            if ((itemFirst != null) && allowReminder(itemFirst, now, settings)) {
                 String whenFormat = formatDateTime(whenFirst);
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
@@ -523,5 +523,20 @@ public class ZmanimReminder extends BroadcastReceiver {
         // This was the last notification.
         final long now = System.currentTimeMillis();
         settings.setLatestReminder(now);
+    }
+
+    /**
+     * Allow the reminder to send a notification?
+     *
+     * @param item
+     *         the item that should be reminded.
+     * @param now
+     *         the time as of now.
+     * @param settings
+     *         the settings with reminder day flags.
+     * @return can the reminder be activated?
+     */
+    private boolean allowReminder(ZmanimItem item, long now, ZmanimSettings settings) {
+        return true;
     }
 }
