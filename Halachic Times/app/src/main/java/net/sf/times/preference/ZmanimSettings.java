@@ -483,8 +483,7 @@ public class ZmanimSettings {
      *
      * @param id
      *         the time id.
-     * @return the number of minutes before the prayer, in milliseconds -
-     * positive value when no reminder.
+     * @return the number of minutes before the prayer, in milliseconds - positive value when no reminder.
      */
     public long getReminder(int id) {
         String key = getKey(id);
@@ -498,8 +497,7 @@ public class ZmanimSettings {
      *
      * @param key
      *         the key.
-     * @return the number of minutes before the prayer, in milliseconds -
-     * positive value when no reminder.
+     * @return the number of minutes before the prayer, in milliseconds - positive value when no reminder.
      */
     public long getReminder(String key) {
         String value = preferences.getString(key, null);
@@ -643,5 +641,82 @@ public class ZmanimSettings {
             return Uri.EMPTY;
         }
         return Uri.parse(path);
+    }
+
+    public boolean isReminderSunday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_SUNDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
+    }
+
+    public boolean isReminderMonday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_MONDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
+    }
+
+    public boolean isReminderTuesday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_TUESDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
+    }
+
+    public boolean isReminderWednesday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_WEDNESDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
+    }
+
+    public boolean isReminderThursday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_THURSDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
+    }
+
+    public boolean isReminderFriday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_FRIDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
+    }
+
+    public boolean isReminderSaturday(int id) {
+        String key = getKey(id);
+        if (key != null) {
+            String keyDay = key + REMINDER_SUFFIX + REMINDER_SATURDAY_SUFFIX;
+            if (keyDay != null) {
+                return preferences.getBoolean(keyDay, true);
+            }
+        }
+        return true;
     }
 }

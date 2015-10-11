@@ -42,6 +42,7 @@ import android.util.Log;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimSettings;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.lang.reflect.InvocationTargetException;
@@ -142,7 +143,8 @@ public class ZmanimReminder extends BroadcastReceiver {
         Log.i(TAG, "remind");
 
         final Context context = this.context;
-        final long now = System.currentTimeMillis();
+        final Calendar gcal = Calendar.getInstance();
+        final long now = gcal.getTimeInMillis();
         final long latest = settings.getLatestReminder();
         Log.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
         final long was = now - WAS_DELTA;
@@ -157,6 +159,11 @@ public class ZmanimReminder extends BroadcastReceiver {
         boolean needWeek = true;
         int id;
 
+        JewishCalendar jcal = new JewishCalendar(gcal);
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        ZmanimLocations locations = app.getLocations();
+        jcal.setInIsrael(locations.inIsrael());
+
         int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
             item = adapter.getItem(i);
@@ -165,7 +172,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
             if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                 when = item.time - before;
-                if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, now, settings)) {
+                if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, jcal, settings)) {
                     notifyNow(context, settings, item);
                     needToday = false;
                 }
@@ -175,7 +182,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 }
             }
         }
-        if ((itemFirst != null) && allowReminder(itemFirst, now, settings)) {
+        if ((itemFirst != null) && allowReminder(itemFirst, jcal, settings)) {
             String whenFormat = formatDateTime(whenFirst);
             String timeFormat = formatDateTime(itemFirst.time);
             Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
@@ -200,7 +207,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 before = settings.getReminder(id);
                 if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
                     when = item.time - before;
-                    if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, now, settings)) {
+                    if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, jcal, settings)) {
                         notifyNow(context, settings, item);
                         needToday = false;
                     }
@@ -210,7 +217,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                     }
                 }
             }
-            if ((itemFirst != null) && allowReminder(itemFirst, now, settings)) {
+            if ((itemFirst != null) && allowReminder(itemFirst, jcal, settings)) {
                 String whenFormat = formatDateTime(whenFirst);
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
@@ -253,7 +260,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                     }
                 }
             }
-            if ((itemFirst != null) && allowReminder(itemFirst, now, settings)) {
+            if ((itemFirst != null) && allowReminder(itemFirst, jcal, settings)) {
                 String whenFormat = formatDateTime(whenFirst);
                 String timeFormat = formatDateTime(itemFirst.time);
                 Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
@@ -530,13 +537,46 @@ public class ZmanimReminder extends BroadcastReceiver {
      *
      * @param item
      *         the item that should be reminded.
-     * @param now
-     *         the time as of now.
+     * @param jcal
+     *         the Jewish calendar as of now.
      * @param settings
      *         the settings with reminder day flags.
      * @return can the reminder be activated?
      */
-    private boolean allowReminder(ZmanimItem item, long now, ZmanimSettings settings) {
+    private boolean allowReminder(ZmanimItem item, JewishCalendar jcal, ZmanimSettings settings) {
+        final int timeId = item.timeId;
+
+        int dayOfWeek = jcal.getDayOfWeek();
+        int holidayIndex = jcal.getYomTovIndex();
+        switch (holidayIndex) {
+            case JewishCalendar.PESACH:
+            case JewishCalendar.SHAVUOS:
+            case JewishCalendar.ROSH_HASHANA:
+            case JewishCalendar.YOM_KIPPUR:
+            case JewishCalendar.SUCCOS:
+            case JewishCalendar.SHEMINI_ATZERES:
+            case JewishCalendar.SIMCHAS_TORAH:
+                dayOfWeek = Calendar.SATURDAY;
+                break;
+        }
+
+        switch (dayOfWeek) {
+            case Calendar.SUNDAY:
+                return settings.isReminderSunday(timeId);
+            case Calendar.MONDAY:
+                return settings.isReminderMonday(timeId);
+            case Calendar.TUESDAY:
+                return settings.isReminderTuesday(timeId);
+            case Calendar.WEDNESDAY:
+                return settings.isReminderWednesday(timeId);
+            case Calendar.THURSDAY:
+                return settings.isReminderThursday(timeId);
+            case Calendar.FRIDAY:
+                return settings.isReminderFriday(timeId);
+            case Calendar.SATURDAY:
+                return settings.isReminderSaturday(timeId);
+        }
+
         return true;
     }
 }

@@ -27,6 +27,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.text.TextUtils;
+import android.view.View;
 
 import net.sf.times.ZmanimReminder;
 
@@ -51,6 +52,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     private String reminderKeySaturday;
     private ZmanimSettings settings;
     private ZmanimReminder reminder;
+    private Runnable remindRunner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,13 +139,30 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         return super.onCheckBoxPreferenceChange(preference, newValue);
     }
 
+    /**
+     * Run the reminder service.
+     * Tries to postpone the reminder until after any preferences have changed.
+     */
     private void remind() {
-        if (context != null) {
-            if (settings == null)
-                settings = new ZmanimSettings(context);
-            if (reminder == null)
-                reminder = new ZmanimReminder(context);
-            reminder.remind(settings);
+        if (remindRunner == null) {
+            remindRunner = new Runnable() {
+                @Override
+                public void run() {
+                    if (context != null) {
+                        if (settings == null)
+                            settings = new ZmanimSettings(context);
+                        if (reminder == null)
+                            reminder = new ZmanimReminder(context);
+                        reminder.remind(settings);
+                    }
+                }
+            };
+        }
+        View view = getView();
+        if (view == null) {
+            remindRunner.run();
+        } else {
+            view.post(remindRunner);
         }
     }
 }

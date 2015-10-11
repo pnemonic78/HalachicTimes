@@ -39,6 +39,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.view.View;
 
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
@@ -69,6 +70,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     private ZmanimReminder reminder;
     private Preference clearHistory;
     private RingtonePreference reminderRingtonePreference;
+    private Runnable remindRunner;
 
     /**
      * Constructs a new preferences.
@@ -375,13 +377,32 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         context.sendBroadcast(intent);
     }
 
+    /**
+     * Run the reminder service.
+     * Tries to postpone the reminder until after any preferences have changed.
+     */
     private void remind() {
-        Context context = this;
-        if (settings == null)
-            settings = new ZmanimSettings(context);
-        if (reminder == null)
-            reminder = new ZmanimReminder(context);
-        reminder.remind(settings);
+        if (remindRunner == null) {
+            remindRunner = new Runnable() {
+                @Override
+                public void run() {
+                    Context context = ZmanimPreferences.this;
+                    if (context != null) {
+                        if (settings == null)
+                            settings = new ZmanimSettings(context);
+                        if (reminder == null)
+                            reminder = new ZmanimReminder(context);
+                        reminder.remind(settings);
+                    }
+                }
+            };
+        }
+        View view = getWindow().getDecorView();
+        if (view == null) {
+            remindRunner.run();
+        } else {
+            view.post(remindRunner);
+        }
     }
 
     protected void initReminderDays(String reminderKey) {

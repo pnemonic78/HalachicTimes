@@ -464,7 +464,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     public void populate(boolean remote) {
         prePopulate();
 
-        ComplexZmanimCalendar cal = calendar;
+        ComplexZmanimCalendar cal = getCalendar();
         Calendar gcal = cal.getCalendar();
         JewishCalendar jcal = new JewishCalendar(gcal);
         jcal.setInIsrael(inIsrael);
@@ -1134,12 +1134,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         int flags = BEFORE_SUNSET;
 
         switch (holidayTomorrow) {
+            case JewishCalendar.PESACH:
+            case JewishCalendar.SHAVUOS:
             case JewishCalendar.ROSH_HASHANA:
             case JewishCalendar.SUCCOS:
             case JewishCalendar.SHEMINI_ATZERES:
             case JewishCalendar.SIMCHAS_TORAH:
-            case JewishCalendar.PESACH:
-            case JewishCalendar.SHAVUOS:
                 count = CANDLES_FESTIVAL;
                 break;
             case JewishCalendar.YOM_KIPPUR:
