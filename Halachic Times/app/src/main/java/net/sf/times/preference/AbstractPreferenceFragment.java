@@ -30,6 +30,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -64,12 +65,12 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 
     protected abstract int getPreferencesXml();
 
-    protected ListPreference initList(String name) {
-        if (TextUtils.isEmpty(name)) {
+    protected ListPreference initList(String key) {
+        if (TextUtils.isEmpty(key)) {
             return null;
         }
 
-        Preference pref = findPreference(name);
+        Preference pref = findPreference(key);
         if (pref != null) {
             ListPreference list = (ListPreference) pref;
             list.setOnPreferenceChangeListener(this);
@@ -79,16 +80,16 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         return null;
     }
 
-    protected RingtonePreference initRingtone(String name) {
-        if (TextUtils.isEmpty(name)) {
+    protected RingtonePreference initRingtone(String key) {
+        if (TextUtils.isEmpty(key)) {
             return null;
         }
 
-        Preference pref = findPreference(name);
+        Preference pref = findPreference(key);
         if (pref != null) {
             RingtonePreference ring = (RingtonePreference) pref;
             ring.setOnPreferenceChangeListener(this);
-            onRingtonePreferenceChange(ring, ring.getSharedPreferences().getString(name, null));
+            onRingtonePreferenceChange(ring, ring.getSharedPreferences().getString(key, null));
             return ring;
         }
         return null;
@@ -96,6 +97,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference instanceof CheckBoxPreference) {
+            CheckBoxPreference checkBox = (CheckBoxPreference) preference;
+            return onCheckBoxPreferenceChange(checkBox, newValue);
+        }
         if (preference instanceof ListPreference) {
             ListPreference list = (ListPreference) preference;
             onListPreferenceChange(list, newValue);
@@ -104,21 +109,53 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         }
         if (preference instanceof RingtonePreference) {
             RingtonePreference ring = (RingtonePreference) preference;
-            onRingtonePreferenceChange(ring, newValue);
-            return true;
+            return onRingtonePreferenceChange(ring, newValue);
         }
         notifyAppWidgets();
         return true;
     }
 
+    /**
+     * Called when a list preference has probably changed its value.
+     * <br>Updates the summary to the new value.
+     *
+     * @param preference
+     *         the  preference.
+     * @param newValue
+     *         the possibly new value.
+     */
     protected void onListPreferenceChange(ListPreference preference, Object newValue) {
         String value = (newValue == null) ? null : newValue.toString();
         updateSummary(preference, value);
     }
 
-    protected void onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
+    /**
+     * Called when a ringtone preference has changed its value.
+     * <br>Updates the summary to the new ringtone title.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     * @return {@code true} if the user value should be set as the preference value (and persisted).
+     */
+    protected boolean onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
         String value = (newValue == null) ? null : newValue.toString();
         updateSummary(preference, value);
+        return true;
+    }
+
+    /**
+     * Called when a check box preference has changed its value.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     * @return {@code true} if the user value should be set as the preference value (and persisted).
+     */
+    protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
+        return true;
     }
 
     /**

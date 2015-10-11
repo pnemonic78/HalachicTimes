@@ -47,18 +47,18 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     }
 
 
-    private void onCandlesPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
+    private boolean onCandlesPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
         int minutes = preference.getProgress();
         Resources res = getResources();
         CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
         preference.setSummary(summary);
+        return true;
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == candles) {
-            onCandlesPreferenceChange(candles, newValue);
-            return true;
+            return onCandlesPreferenceChange(candles, newValue);
         }
         return super.onPreferenceChange(preference, newValue);
     }

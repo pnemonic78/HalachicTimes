@@ -32,6 +32,8 @@ import android.text.format.DateUtils;
 
 import net.sf.times.R;
 
+import java.util.Calendar;
+
 /**
  * Application settings.
  *
@@ -110,6 +112,14 @@ public class ZmanimSettings {
     public static final String KEY_OPINION_LATEST_LEVANA = "levana_latest";
 
     static final String REMINDER_SUFFIX = ".reminder";
+    static final String REMINDER_SUNDAY_SUFFIX = ".day." + Calendar.SUNDAY;
+    static final String REMINDER_MONDAY_SUFFIX = ".day." + Calendar.MONDAY;
+    static final String REMINDER_TUESDAY_SUFFIX = ".day." + Calendar.TUESDAY;
+    static final String REMINDER_WEDNESDAY_SUFFIX = ".day." + Calendar.WEDNESDAY;
+    static final String REMINDER_THURSDAY_SUFFIX = ".day." + Calendar.THURSDAY;
+    static final String REMINDER_FRIDAY_SUFFIX = ".day." + Calendar.FRIDAY;
+    static final String REMINDER_SATURDAY_SUFFIX = ".day." + Calendar.SATURDAY;
+
     private static final String EMPHASIS_SUFFIX = ".emphasis";
     private static final String ANIM_SUFFIX = ".anim";
 

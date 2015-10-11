@@ -30,6 +30,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -46,12 +47,22 @@ import net.sf.times.ZmanimReminder;
 import net.sf.times.ZmanimWidget;
 import net.sf.times.location.AddressProvider;
 
+import java.util.Calendar;
+
 /**
  * Application preferences that populate the settings.
  *
  * @author Moshe Waisberg
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
+
+    private static final String REMINDER_SUNDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.SUNDAY;
+    private static final String REMINDER_MONDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.MONDAY;
+    private static final String REMINDER_TUESDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.TUESDAY;
+    private static final String REMINDER_WEDNESDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.WEDNESDAY;
+    private static final String REMINDER_THURSDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.THURSDAY;
+    private static final String REMINDER_FRIDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.FRIDAY;
+    private static final String REMINDER_SATURDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.SATURDAY;
 
     private SeekBarDialogPreference candles;
     private ZmanimSettings settings;
@@ -117,6 +128,23 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
         initList(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
 
+        initReminderDays(ZmanimSettings.KEY_REMINDER_DAWN);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_TALLIS);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_SUNRISE);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_SHEMA);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_TFILA);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_NOON);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_EARLIEST_MINCHA);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_MINCHA);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_PLUG_MINCHA);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_CANDLES);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_SUNSET);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_TWILIGHT);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
+        initReminderDays(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
+
         clearHistory = findPreference("clear_history");
         clearHistory.setOnPreferenceClickListener(this);
 
@@ -167,8 +195,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == candles) {
-            onCandlesPreferenceChange(candles, newValue);
-            return true;
+            return onCandlesPreferenceChange(candles, newValue);
+        }
+        if (preference instanceof CheckBoxPreference) {
+            CheckBoxPreference checkBox = (CheckBoxPreference) preference;
+            return onCheckBoxPreferenceChange(checkBox, newValue);
         }
         if (preference instanceof ListPreference) {
             ListPreference list = (ListPreference) preference;
@@ -178,20 +209,29 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         }
         if (preference instanceof RingtonePreference) {
             RingtonePreference ring = (RingtonePreference) preference;
-            onRingtonePreferenceChange(ring, newValue);
-            return true;
+            return onRingtonePreferenceChange(ring, newValue);
         }
         notifyAppWidgets();
         return true;
     }
 
-    private void onCandlesPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
+    private boolean onCandlesPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
         int minutes = preference.getProgress();
         Resources res = getResources();
         CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
         preference.setSummary(summary);
+        return true;
     }
 
+    /**
+     * Called when a list preference has probably changed its value.
+     * <br>Updates the summary to the new value.
+     *
+     * @param preference
+     *         the  preference.
+     * @param newValue
+     *         the possibly new value.
+     */
     private void onListPreferenceChange(ListPreference preference, Object newValue) {
         String oldValue = preference.getValue();
         String value = (newValue == null) ? null : newValue.toString();
@@ -204,18 +244,48 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
                 int streamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
                 reminderRingtonePreference.setRingtoneType(streamType);
             } else if (key.endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
-                if (settings == null)
-                    settings = new ZmanimSettings(this);
-                if (reminder == null)
-                    reminder = new ZmanimReminder(this);
-                reminder.remind(settings);
+                remind();
             }
         }
     }
 
-    protected void onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
+    /**
+     * Called when a ringtone preference has changed its value.
+     * <br>Updates the summary to the new ringtone title.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     * @return {@code true} if the user value should be set as the preference value (and persisted).
+     */
+    protected boolean onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
         String value = (newValue == null) ? null : newValue.toString();
         updateSummary(preference, value);
+        return true;
+    }
+
+    /**
+     * Called when a check box preference has changed its value.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     * @return {@code true} if the user value should be set as the preference value (and persisted).
+     */
+    protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
+        String key = preference.getKey();
+        if (key.endsWith(REMINDER_SUNDAY_SUFFIX)
+                || key.endsWith(REMINDER_MONDAY_SUFFIX)
+                || key.endsWith(REMINDER_TUESDAY_SUFFIX)
+                || key.endsWith(REMINDER_WEDNESDAY_SUFFIX)
+                || key.endsWith(REMINDER_THURSDAY_SUFFIX)
+                || key.endsWith(REMINDER_FRIDAY_SUFFIX)
+                || key.endsWith(REMINDER_SATURDAY_SUFFIX)) {
+            remind();
+        }
+        return true;
     }
 
     /**
@@ -303,5 +373,42 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
         context.sendBroadcast(intent);
+    }
+
+    private void remind() {
+        Context context = this;
+        if (settings == null)
+            settings = new ZmanimSettings(context);
+        if (reminder == null)
+            reminder = new ZmanimReminder(context);
+        reminder.remind(settings);
+    }
+
+    protected void initReminderDays(String reminderKey) {
+        if (TextUtils.isEmpty(reminderKey)) {
+            return;
+        }
+
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_SUNDAY_SUFFIX);
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_MONDAY_SUFFIX);
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_TUESDAY_SUFFIX);
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_WEDNESDAY_SUFFIX);
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_THURSDAY_SUFFIX);
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_FRIDAY_SUFFIX);
+        initReminderDay(reminderKey + ZmanimSettings.REMINDER_SATURDAY_SUFFIX);
+    }
+
+    protected CheckBoxPreference initReminderDay(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return null;
+        }
+
+        Preference pref = findPreference(key);
+        if (pref != null) {
+            CheckBoxPreference checkBox = (CheckBoxPreference) pref;
+            checkBox.setOnPreferenceChangeListener(this);
+            return checkBox;
+        }
+        return null;
     }
 }
