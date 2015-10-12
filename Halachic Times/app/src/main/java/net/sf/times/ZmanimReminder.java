@@ -132,7 +132,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     /**
-     * Setup the first reminder for today.
+     * Setup the first reminder for the week.
      *
      * @param settings
      *         the settings.
@@ -154,119 +154,49 @@ public class ZmanimReminder extends BroadcastReceiver {
         long before;
         long when;
         long whenFirst = Long.MAX_VALUE;
-        boolean needToday = true;
-        boolean needTomorrow = true;
-        boolean needWeek = true;
+        boolean nextDay = true;
         int id;
+        int count;
 
         JewishCalendar jcal = new JewishCalendar(gcal);
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         ZmanimLocations locations = app.getLocations();
         jcal.setInIsrael(locations.inIsrael());
-
-        int count = adapter.getCount();
-        for (int i = 0; i < count; i++) {
-            item = adapter.getItem(i);
-            id = item.titleId;
-            before = settings.getReminder(id);
-
-            if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
-                when = item.time - before;
-                if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, jcal, settings)) {
-                    notifyNow(context, settings, item);
-                    needToday = false;
-                }
-                if ((now < when) && (when < whenFirst)) {
-                    itemFirst = item;
-                    whenFirst = when;
-                }
-            }
-        }
-        if ((itemFirst != null) && allowReminder(itemFirst, jcal, settings)) {
-            String whenFormat = formatDateTime(whenFirst);
-            String timeFormat = formatDateTime(itemFirst.time);
-            Log.i(TAG, "notify today at [" + whenFormat + "] for [" + timeFormat + "]");
-
-            notifyFuture(context, itemFirst, whenFirst);
-            needTomorrow = false;
-            needWeek = false;
-        }
-
         Calendar cal = adapter.getCalendar().getCalendar();
-        if (needTomorrow) {
-            // Populate the adapter with tomorrow's times.
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-            adapter.populate(false);
-            itemFirst = null;
-            whenFirst = Long.MAX_VALUE;
 
-            count = adapter.getCount();
-            for (int i = 0; i < count; i++) {
-                item = adapter.getItem(i);
-                id = item.titleId;
-                before = settings.getReminder(id);
-                if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
-                    when = item.time - before;
-                    if (needToday && (latest < was) && (was <= when) && (when <= soon) && allowReminder(item, jcal, settings)) {
-                        notifyNow(context, settings, item);
-                        needToday = false;
-                    }
-                    if ((now < when) && (when < whenFirst)) {
-                        itemFirst = item;
-                        whenFirst = when;
-                    }
-                }
-            }
-            if ((itemFirst != null) && allowReminder(itemFirst, jcal, settings)) {
-                String whenFormat = formatDateTime(whenFirst);
-                String timeFormat = formatDateTime(itemFirst.time);
-                Log.i(TAG, "notify tomorrow at [" + whenFormat + "] for [" + timeFormat + "]");
-
-                notifyFuture(context, itemFirst, whenFirst);
-                needWeek = false;
-            }
-        }
-
-        if (needWeek) {
-            // Populate the adapter with week's worth of times to check
-            // "Candle lighting".
-            int daysUntilFriday = Calendar.FRIDAY - cal.get(Calendar.DAY_OF_WEEK);
-            if ((daysUntilFriday == -1) || (daysUntilFriday == 0) || (daysUntilFriday == 1)) {
-                // We already checked a Friday above.
-                return;
-            }
-            adapter.clear();
-            for (int d = 1; d <= 5; d++) {
+        // Find the first reminder in the upcoming week.
+        for (int day = 1; nextDay && (day <= 7); day++) {
+            if (day > 1) {
+                gcal.add(Calendar.DAY_OF_MONTH, 1);
+                jcal.setDate(gcal);
                 cal.add(Calendar.DAY_OF_MONTH, 1);
                 adapter.populate(false);
             }
-            itemFirst = null;
-            whenFirst = Long.MAX_VALUE;
 
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
-                id = item.titleId;
-                // All non-candle times were checked "today" and "tomorrow"
-                // above.
-                if ((id != R.id.candles_row) && (id != R.string.candles))
-                    continue;
+                id = item.timeId;
                 before = settings.getReminder(id);
-                if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER)) {
+
+                if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER) && allowReminder(item, jcal, settings)) {
                     when = item.time - before;
+                    if (nextDay && (latest < was) && (was <= when) && (when <= soon)) {
+                        notifyNow(context, settings, item);
+                        nextDay = false;
+                    }
                     if ((now < when) && (when < whenFirst)) {
                         itemFirst = item;
                         whenFirst = when;
                     }
                 }
             }
-            if ((itemFirst != null) && allowReminder(itemFirst, jcal, settings)) {
-                String whenFormat = formatDateTime(whenFirst);
-                String timeFormat = formatDateTime(itemFirst.time);
-                Log.i(TAG, "notify week at [" + whenFormat + "] for [" + timeFormat + "]");
-
-                notifyFuture(context, itemFirst, whenFirst);
-            }
+        }
+        if (itemFirst != null) {
+            String whenFormat = formatDateTime(whenFirst);
+            String timeFormat = formatDateTime(itemFirst.time);
+            Log.i(TAG, "notify at [" + whenFormat + "] for [" + timeFormat + "]");
+            notifyFuture(context, itemFirst, whenFirst);
         }
     }
 

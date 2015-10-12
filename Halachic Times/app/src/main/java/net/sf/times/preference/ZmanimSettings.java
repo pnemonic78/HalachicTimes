@@ -714,7 +714,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SATURDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, false);
             }
         }
         return true;
