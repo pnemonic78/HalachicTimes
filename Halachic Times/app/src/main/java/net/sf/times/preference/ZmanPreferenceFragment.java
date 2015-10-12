@@ -42,14 +42,14 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     public static final String EXTRA_REMINDER = "reminder";
 
     private int xmlId;
-    private String reminderKey;
-    private String reminderKeySunday;
-    private String reminderKeyMonday;
-    private String reminderKeyTuesday;
-    private String reminderKeyWednesday;
-    private String reminderKeyThursday;
-    private String reminderKeyFriday;
-    private String reminderKeySaturday;
+    private Preference preferenceReminder;
+    private Preference preferenceReminderSunday;
+    private Preference preferenceReminderMonday;
+    private Preference preferenceReminderTuesday;
+    private Preference preferenceReminderWednesday;
+    private Preference preferenceReminderThursday;
+    private Preference preferenceReminderFriday;
+    private Preference preferenceReminderSaturday;
     private ZmanimSettings settings;
     private ZmanimReminder reminder;
     private Runnable remindRunner;
@@ -61,22 +61,13 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         Resources res = getResources();
         this.xmlId = res.getIdentifier(xmlName, "xml", getActivity().getPackageName());
         String opinionKey = args.getString(EXTRA_OPINION);
-        this.reminderKey = args.getString(EXTRA_REMINDER);
-        if (!TextUtils.isEmpty(reminderKey)) {
-            this.reminderKeySunday = reminderKey + ZmanimSettings.REMINDER_SUNDAY_SUFFIX;
-            this.reminderKeyMonday = reminderKey + ZmanimSettings.REMINDER_MONDAY_SUFFIX;
-            this.reminderKeyTuesday = reminderKey + ZmanimSettings.REMINDER_TUESDAY_SUFFIX;
-            this.reminderKeyWednesday = reminderKey + ZmanimSettings.REMINDER_WEDNESDAY_SUFFIX;
-            this.reminderKeyThursday = reminderKey + ZmanimSettings.REMINDER_THURSDAY_SUFFIX;
-            this.reminderKeyFriday = reminderKey + ZmanimSettings.REMINDER_FRIDAY_SUFFIX;
-            this.reminderKeySaturday = reminderKey + ZmanimSettings.REMINDER_SATURDAY_SUFFIX;
-        }
+        String reminderKey = args.getString(EXTRA_REMINDER);
 
         super.onCreate(savedInstanceState);
 
         initList(opinionKey);
-        initList(reminderKey);
-        initReminderDays(reminderKey);
+        this.preferenceReminder = initList(reminderKey);
+        initReminderDays(preferenceReminder);
     }
 
     @Override
@@ -86,28 +77,27 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     protected void onListPreferenceChange(ListPreference preference, Object newValue) {
-        String key = preference.getKey();
         String oldValue = preference.getValue();
 
         super.onListPreferenceChange(preference, newValue);
 
-        if (!oldValue.equals(newValue) && key.equals(reminderKey)) {
+        if (!oldValue.equals(newValue) && (preference == preferenceReminder)) {
+            // Explicitly disable dependencies?
+            preference.notifyDependencyChange(TextUtils.isEmpty(newValue.toString()));
+
             remind();
         }
     }
 
-    protected void initReminderDays(String namePrefix) {
-        if (TextUtils.isEmpty(namePrefix)) {
-            return;
-        }
-
-        initReminderDay(reminderKeySunday);
-        initReminderDay(reminderKeyMonday);
-        initReminderDay(reminderKeyTuesday);
-        initReminderDay(reminderKeyWednesday);
-        initReminderDay(reminderKeyThursday);
-        initReminderDay(reminderKeyFriday);
-        initReminderDay(reminderKeySaturday);
+    protected void initReminderDays(Preference reminderTime) {
+        String namePrefix = reminderTime.getKey();
+        this.preferenceReminderSunday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_SUNDAY_SUFFIX);
+        this.preferenceReminderMonday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_MONDAY_SUFFIX);
+        this.preferenceReminderTuesday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_TUESDAY_SUFFIX);
+        this.preferenceReminderWednesday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_WEDNESDAY_SUFFIX);
+        this.preferenceReminderThursday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_THURSDAY_SUFFIX);
+        this.preferenceReminderFriday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_FRIDAY_SUFFIX);
+        this.preferenceReminderSaturday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_SATURDAY_SUFFIX);
     }
 
     protected CheckBoxPreference initReminderDay(String key) {
@@ -125,14 +115,13 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     }
 
     protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
-        String key = preference.getKey();
-        if (key.equals(reminderKeySunday)
-                || key.equals(reminderKeyMonday)
-                || key.equals(reminderKeyTuesday)
-                || key.equals(reminderKeyWednesday)
-                || key.equals(reminderKeyThursday)
-                || key.equals(reminderKeyFriday)
-                || key.equals(reminderKeySaturday)) {
+        if (preference.equals(preferenceReminderSunday)
+                || preference.equals(preferenceReminderMonday)
+                || preference.equals(preferenceReminderTuesday)
+                || preference.equals(preferenceReminderWednesday)
+                || preference.equals(preferenceReminderThursday)
+                || preference.equals(preferenceReminderFriday)
+                || preference.equals(preferenceReminderSaturday)) {
             remind();
         }
 

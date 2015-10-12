@@ -246,6 +246,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
                 int streamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
                 reminderRingtonePreference.setRingtoneType(streamType);
             } else if (key.endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
+                // Explicitly disable dependencies?
+                preference.notifyDependencyChange(TextUtils.isEmpty(newValue.toString()));
+
                 remind();
             }
         }
