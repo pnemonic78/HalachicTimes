@@ -3,7 +3,8 @@
 
     <style name="Zmanim" parent="android:Widget"/>
 
-    <style name="Zmanim.ListView" parent="android:Widget.ListView"/>
+    <style name="Zmanim.ListView" parent="android:Widget.ListView">
+    </style>
 
     <style name="Zmanim.ListDivider">
         <item name="android:background">@drawable/divider_horizontal_dark</item>
@@ -29,6 +30,18 @@
 
     <style name="WidgetBigThin" parent="BigThin">
         <item name="android:textSize">@dimen/widget_big_font_size</item>
+    </style>
+
+    <style name="Zmanim.ListView.Dark">
+        <item name="android:background">@drawable/list_gradient</item>
+    </style>
+
+    <style name="Zmanim.ListView.Light">
+        <item name="android:background">@drawable/list_gradient_light</item>
+    </style>
+
+    <style name="Zmanim.ListView.NoGradient">
+        <item name="android:background">@null</item>
     </style>
 
 </resources>

@@ -157,11 +157,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
     }
 
     @Override
-    protected Drawable getListBackground() {
-        return null;
-    }
-
-    @Override
     protected void setOnClickListener(View view, ZmanimItem item) {
         // No clicking allowed.
     }

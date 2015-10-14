@@ -24,6 +24,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -126,7 +127,14 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
             locations = app.getLocations();
         }
 
-        inflater = LayoutInflater.from(context);
+        int themeForList;
+        if (settings.isBackgroundGradient()) {
+            themeForList = R.style.Theme_Zmanim_Dark;
+        } else {
+            themeForList = R.style.Theme_Zmanim_NoGradient;
+        }
+        Context contextThemed = new ContextThemeWrapper(context, themeForList);
+        inflater = LayoutInflater.from(contextThemed);
         view = (ViewGroup) inflater.inflate(R.layout.times_list, null);
         addView(view);
         list = (ViewGroup) view.findViewById(android.R.id.list);
@@ -182,23 +190,8 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
         ViewGroup list = this.list;
         if (list == null)
             return adapter;
-        list.setBackgroundDrawable(getListBackground());
         bindViews(list, adapter);
         return adapter;
-    }
-
-    /**
-     * Get the list background.
-     *
-     * @return the background - {@code null} otherwise.
-     */
-    protected Drawable getListBackground() {
-        if (settings.isBackgroundGradient()) {
-            if (background == null)
-                background = getResources().getDrawable(R.drawable.list_gradient);
-            return background;
-        }
-        return null;
     }
 
     /**

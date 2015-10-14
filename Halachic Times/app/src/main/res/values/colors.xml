@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="dawn">#90fbf2db</color>
+    <color name="dawn">#60fbf2db</color>
     <color name="tallis">#60eac599</color>
     <color name="sunrise">#60d99058</color>
     <color name="shema">#60B9A78F</color>
     <color name="prayers">#60A8B4AE</color>
-    <color name="midday">#8087ceeb</color>
-    <color name="earliest_mincha">#808EC4DB</color>
-    <color name="mincha">#80B68D84</color>
-    <color name="plug_hamincha">#80C7765F</color>
-    <color name="sunset">#80d9603b</color>
-    <color name="twilight">#409966cc</color>
-    <color name="nightfall">#80200020</color>
-    <color name="midnight">#40000000</color>
+    <color name="midday">#6087ceeb</color>
+    <color name="earliest_mincha">#608EC4DB</color>
+    <color name="mincha">#60B68D84</color>
+    <color name="plug_hamincha">#60C7765F</color>
+    <color name="sunset">#60d9603b</color>
+    <color name="twilight">#609966cc</color>
+    <color name="nightfall">#60200020</color>
+    <color name="midnight">#c0000000</color>
+
+    <color name="dawn_solid">#fffbf2db</color>
+    <color name="tallis_solid">#ffeac599</color>
+    <color name="sunrise_solid">#ffd99058</color>
+    <color name="shema_solid">#ffB9A78F</color>
+    <color name="prayers_solid">#ffA8B4AE</color>
+    <color name="midday_solid">#ff87ceeb</color>
+    <color name="earliest_mincha_solid">#ff8EC4DB</color>
+    <color name="mincha_solid">#ffB68D84</color>
+    <color name="plug_hamincha_solid">#ffC7765F</color>
+    <color name="sunset_solid">#ffd9603b</color>
+    <color name="twilight_solid">#ff9966cc</color>
+    <color name="nightfall_solid">#ff200020</color>
+    <color name="midnight_solid">#80000000</color>
 
     <!-- Widget applet. -->
     <color name="bright">#10ffffff</color>

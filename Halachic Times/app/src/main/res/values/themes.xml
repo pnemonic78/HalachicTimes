@@ -4,4 +4,16 @@
     <style name="Theme.Zmanim" parent="android:Theme">
     </style>
 
+    <style name="Theme.Zmanim.Dark">
+        <item name="listZmanim">@style/Zmanim.ListView.Dark</item>
+    </style>
+
+    <style name="Theme.Zmanim.Light">
+        <item name="listZmanim">@style/Zmanim.ListView.Light</item>
+    </style>
+
+    <style name="Theme.Zmanim.NoGradient">
+        <item name="listZmanim">@style/Zmanim.ListView.NoGradient</item>
+    </style>
+
 </resources>

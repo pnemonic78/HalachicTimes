@@ -208,11 +208,6 @@ public class CandlesFragment extends ZmanimFragment {
     }
 
     @Override
-    protected Drawable getListBackground() {
-        return null;
-    }
-
-    @Override
     protected void setOnClickListener(View view, ZmanimItem item) {
         // No clicking allowed.
     }
