@@ -90,6 +90,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_REMINDER_STREAM);
 
         initList(ZmanimSettings.KEY_COORDS_FORMAT);
+        initList(ZmanimSettings.KEY_THEME_LIST);
 
         candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
         candles.setSummaryFormat(R.plurals.candles_summary);

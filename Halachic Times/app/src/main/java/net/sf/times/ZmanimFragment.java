@@ -127,12 +127,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
             locations = app.getLocations();
         }
 
-        int themeForList;
-        if (settings.isBackgroundGradient()) {
-            themeForList = R.style.Theme_Zmanim_Dark;
-        } else {
-            themeForList = R.style.Theme_Zmanim_NoGradient;
-        }
+        int themeForList = settings.getListTheme();
         Context contextThemed = new ContextThemeWrapper(context, themeForList);
         inflater = LayoutInflater.from(contextThemed);
         view = (ViewGroup) inflater.inflate(R.layout.times_list, null);

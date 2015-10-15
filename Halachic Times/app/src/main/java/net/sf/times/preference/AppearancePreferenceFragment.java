@@ -41,5 +41,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         initList(ZmanimSettings.KEY_COORDS_FORMAT);
+        initList(ZmanimSettings.KEY_THEME_LIST);
     }
 }

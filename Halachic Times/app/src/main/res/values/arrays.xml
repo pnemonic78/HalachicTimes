@@ -403,5 +403,15 @@
         <item>@string/reminder_stream_alarm</item>
         <item>@string/reminder_stream_notification</item>
     </string-array>
+    <string-array name="list_theme_values" translatable="false">
+        <item></item>
+        <item>dark</item>
+        <item>light</item>
+    </string-array>
+    <string-array name="list_theme_entries" translatable="false">
+        <item>@string/list_theme_none</item>
+        <item>@string/list_theme_dark</item>
+        <item>@string/list_theme_light</item>
+    </string-array>
 
 </resources>

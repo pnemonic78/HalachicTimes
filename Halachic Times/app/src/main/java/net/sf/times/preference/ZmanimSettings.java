@@ -63,6 +63,8 @@ public class ZmanimSettings {
     public static final String KEY_PAST = "past";
     /** Preference name for the background gradient. */
     public static final String KEY_BG_GRADIENT = "gradient";
+    /** Preference name for the background gradient. */
+    public static final String KEY_THEME_LIST = "list.theme";
     /** Preference name for the last reminder. */
     private static final String KEY_REMINDER_LATEST = "reminder";
     /** Preference name for the reminder audio stream type. */
@@ -163,6 +165,13 @@ public class ZmanimSettings {
     public static final String FORMAT_DECIMAL = "decimal";
     /** Format the coordinates in sexagesimal notation. */
     public static final String FORMAT_SEXIGESIMAL = "sexagesimal";
+
+    /** Show zmanim list without background. */
+    public static final String LIST_THEME_NONE = "";
+    /** Show zmanim list with dark gradient background. */
+    public static final String LIST_THEME_DARK = "dark";
+    /** Show zmanim list with light gradient background. */
+    public static final String LIST_THEME_LIGHT = "light";
 
     private final SharedPreferences preferences;
 
@@ -292,8 +301,25 @@ public class ZmanimSettings {
      *
      * @return {@code true} to show gradient.
      */
+    @Deprecated
     public boolean isBackgroundGradient() {
-        return preferences.getBoolean(KEY_BG_GRADIENT, true);
+        return preferences.getBoolean(KEY_BG_GRADIENT, true) || (getListTheme() != R.style.Theme_Zmanim_NoGradient);
+    }
+
+    /**
+     * Get the theme for the zmanim list.
+     *
+     * @return the theme resource id.
+     */
+    public int getListTheme() {
+        String value = preferences.getString(KEY_THEME_LIST, LIST_THEME_DARK);
+        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value)) {
+            return R.style.Theme_Zmanim_NoGradient;
+        }
+        if (LIST_THEME_LIGHT.equals(value)) {
+            return R.style.Theme_Zmanim_Light;
+        }
+        return R.style.Theme_Zmanim_Dark;
     }
 
     /**

@@ -20,9 +20,11 @@
         android:defaultValue="true"
         android:key="summaries.visible"
         android:title="@string/summaries_title"/>
-    <CheckBoxPreference
-        android:defaultValue="true"
-        android:key="gradient"
-        android:title="@string/gradient_title"/>
+    <ListPreference
+        android:defaultValue="dark"
+        android:entries="@array/list_theme_entries"
+        android:entryValues="@array/list_theme_values"
+        android:key="list.theme"
+        android:title="@string/list_theme_title"/>
 
 </PreferenceScreen>
