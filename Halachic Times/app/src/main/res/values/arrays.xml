@@ -409,9 +409,9 @@
         <item>light</item>
     </string-array>
     <string-array name="list_theme_entries" translatable="false">
-        <item>@string/list_theme_none</item>
-        <item>@string/list_theme_dark</item>
-        <item>@string/list_theme_light</item>
+        <item>@string/theme_none</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_light</item>
     </string-array>
 
 </resources>

@@ -48,7 +48,7 @@ import java.util.Locale;
 
 /**
  * Adapter for halachic times list.
- * <p/>
+ * <p>
  * See also Wikipedia article on <a
  * href="http://en.wikipedia.org/wiki/Zmanim">Zmanim</a>.
  *
@@ -215,17 +215,17 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the application settings.
      */
     public ZmanimAdapter(Context context, ZmanimSettings settings) {
-        super(context, R.layout.times_item, 0);
-        inflater = LayoutInflater.from(context);
+        super(context, R.layout.times_item);
+        this.inflater = LayoutInflater.from(context);
         this.settings = settings;
-        calendar = new ComplexZmanimCalendar();
+        this.calendar = new ComplexZmanimCalendar();
 
         if (settings.isSeconds()) {
             boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
             String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
-            timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+            this.timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         } else {
-            timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+            this.timeFormat = android.text.format.DateFormat.getTimeFormat(context);
         }
     }
 

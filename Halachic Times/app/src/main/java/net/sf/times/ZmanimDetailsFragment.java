@@ -21,8 +21,6 @@ package net.sf.times;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +118,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
 
         Resources res = getResources();
 
-        switch (settings.getListTheme()) {
+        switch (settings.getTheme()) {
             case R.style.Theme_Zmanim_Dark:
                 if (id == R.string.dawn) {
                     list.setBackgroundColor(res.getColor(R.color.dawn));

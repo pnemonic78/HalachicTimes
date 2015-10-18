@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Zmanim.ListItem"
+<LinearLayout
+    style="?listZman"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,30 +18,26 @@
 
         <TextView
             android:id="@android:id/title"
+            style="?listZmanTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ellipsize="marquee"
-            android:fadingEdge="horizontal"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_text"/>
+            tools:text="@string/dawn"/>
 
         <TextView
             android:id="@+id/time"
+            style="?listZmanTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_text"/>
+            tools:text="06:00"/>
     </LinearLayout>
 
     <TextView
         android:id="@android:id/summary"
+        style="?listZmanSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="3"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorSecondary"/>
+        tools:text="@string/dawn_120"/>
 
 </LinearLayout>

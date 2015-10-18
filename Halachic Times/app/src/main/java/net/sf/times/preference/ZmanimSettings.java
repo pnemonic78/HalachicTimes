@@ -64,12 +64,12 @@ public class ZmanimSettings {
     /**
      * Preference name for the background gradient.
      *
-     * @deprecated use #KEY_THEME_LIST
+     * @deprecated use #KEY_THEME
      */
     @Deprecated
     public static final String KEY_BG_GRADIENT = "gradient";
-    /** Preference name for the background gradient. */
-    public static final String KEY_THEME_LIST = "list.theme";
+    /** Preference name for the theme. */
+    public static final String KEY_THEME = "theme";
     /** Preference name for the last reminder. */
     private static final String KEY_REMINDER_LATEST = "reminder";
     /** Preference name for the reminder audio stream type. */
@@ -302,12 +302,12 @@ public class ZmanimSettings {
     }
 
     /**
-     * Get the theme for the zmanim list.
+     * Get the application theme.
      *
      * @return the theme resource id.
      */
-    public int getListTheme() {
-        String value = preferences.getString(KEY_THEME_LIST, LIST_THEME_DARK);
+    public int getTheme() {
+        String value = preferences.getString(KEY_THEME, LIST_THEME_DARK);
         if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value) || !preferences.getBoolean(KEY_BG_GRADIENT, true)) {
             return R.style.Theme_Zmanim_NoGradient;
         }

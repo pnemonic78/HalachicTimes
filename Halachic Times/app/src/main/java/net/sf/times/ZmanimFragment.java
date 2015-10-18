@@ -24,7 +24,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
-import android.view.ContextThemeWrapper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -127,9 +126,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
             locations = app.getLocations();
         }
 
-        int themeForList = settings.getListTheme();
-        Context contextThemed = new ContextThemeWrapper(context, themeForList);
-        inflater = LayoutInflater.from(contextThemed);
+        inflater = LayoutInflater.from(context);
         view = (ViewGroup) inflater.inflate(R.layout.times_list, null);
         addView(view);
         list = (ViewGroup) view.findViewById(android.R.id.list);
