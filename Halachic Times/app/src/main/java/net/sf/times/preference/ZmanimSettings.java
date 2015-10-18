@@ -61,7 +61,12 @@ public class ZmanimSettings {
     public static final String KEY_SUMMARIES = "summaries.visible";
     /** Preference name for enabling past times. */
     public static final String KEY_PAST = "past";
-    /** Preference name for the background gradient. */
+    /**
+     * Preference name for the background gradient.
+     *
+     * @deprecated use #KEY_THEME_LIST
+     */
+    @Deprecated
     public static final String KEY_BG_GRADIENT = "gradient";
     /** Preference name for the background gradient. */
     public static final String KEY_THEME_LIST = "list.theme";
@@ -297,23 +302,13 @@ public class ZmanimSettings {
     }
 
     /**
-     * Is background gradient visible?
-     *
-     * @return {@code true} to show gradient.
-     */
-    @Deprecated
-    public boolean isBackgroundGradient() {
-        return preferences.getBoolean(KEY_BG_GRADIENT, true) || (getListTheme() != R.style.Theme_Zmanim_NoGradient);
-    }
-
-    /**
      * Get the theme for the zmanim list.
      *
      * @return the theme resource id.
      */
     public int getListTheme() {
         String value = preferences.getString(KEY_THEME_LIST, LIST_THEME_DARK);
-        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value)) {
+        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value) || !preferences.getBoolean(KEY_BG_GRADIENT, true)) {
             return R.style.Theme_Zmanim_NoGradient;
         }
         if (LIST_THEME_LIGHT.equals(value)) {
