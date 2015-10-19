@@ -35,6 +35,8 @@
 
     <!-- List -->
     <string name="dawn">Зората</string>
+
+    <!-- Tallis and Tefillin -->
     <string name="tallis">Най-рано талис и тфилин (мишякир)</string>
     <string name="tallis_summary">Слънцето е 11,5° под хоризонта</string>
     <string name="tallis_11">Слънцето е 11° под хоризонта</string>
@@ -145,12 +147,9 @@
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описания</string>
     <string name="gradient_title">Градиентна фона</string>
-    <string name="animations">Анимации</string>
-    <string name="reminder_stream_title">Тип на напомняне</string>
-    <string name="reminder_tone"> Напомняне мелодия</string>
-    <string name="alarm_volume_title" msgid="2285597478377758706">"Будилник"</string>
-    <string name="notification_volume_title" msgid="2012640760341080408">"Известие"</string>
-    <string name="emphasis_title">Емфаза</string>
+    <string name="theme_dark">Тъмно</string>
+    <string name="theme_light">Светла</string>
+    <string name="theme_none">Никой</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>
@@ -169,7 +168,8 @@
 
     <!-- Setting per time -->
     <string name="opinion">Становище</string>
-    <string name="reminder">Напомняне</string>
+    <string name="emphasis_title">Емфаза</string>
+    <string name="animations">Анимации</string>
 
     <!-- Location -->
     <string name="menu_location">Място</string>
@@ -187,5 +187,19 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Халахичен Време Часовник</string>
+
+    <!-- Reminder -->
+    <string name="reminder">Напомняне</string>
+    <string name="reminder_stream_title">Тип на напомняне</string>
+    <string name="reminder_tone"> Напомняне мелодия</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Будилник"</string>
+    <string name="notification_volume_title" msgid="2012640760341080408">"Известие"</string>
+    <string name="reminder_friday">Напомни в петък</string>
+    <string name="reminder_monday">Напомни в понеделник</string>
+    <string name="reminder_saturday">Напомни в събота и Холидейз</string>
+    <string name="reminder_sunday">Напомни в неделя</string>
+    <string name="reminder_thursday">Напомни в четвъртък</string>
+    <string name="reminder_tuesday">Напомни в вторник</string>
+    <string name="reminder_wednesday">Напомни в сряда</string>
 
 </resources>

@@ -149,12 +149,9 @@
     <string name="seconds_title">Secunde</string>
     <string name="summaries_title">Rezumatele</string>
     <string name="gradient_title">Gradient de fundal</string>
-    <string name="animations">Animații</string>
-    <string name="reminder_stream_title">Tipul de memento</string>
-    <string name="reminder_tone">Ton de apel memento</string>
-    <string name="alarm_volume_title" msgid="2285597478377758706">"Alarmă"</string>
-    <string name="notification_volume_title" msgid="2012640760341080408">"Notificare"</string>
-    <string name="emphasis_title">Accent</string>
+    <string name="theme_dark">Întuneric</string>
+    <string name="theme_light">Lumina</string>
+    <string name="theme_none">Niciuna</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>
@@ -173,7 +170,8 @@
 
     <!-- Setting per time -->
     <string name="opinion">Opinie</string>
-    <string name="reminder">Memento</string>
+    <string name="emphasis_title">Accent</string>
+    <string name="animations">Animații</string>
 
     <!-- Location -->
     <string name="menu_location">Locație</string>
@@ -191,5 +189,19 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Ori Halachic Ceas</string>
+
+    <!-- Reminder -->
+    <string name="reminder">Memento</string>
+    <string name="reminder_stream_title">Tipul de memento</string>
+    <string name="reminder_tone">Ton de apel memento</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Alarmă"</string>
+    <string name="notification_volume_title" msgid="2012640760341080408">"Notificare"</string>
+    <string name="reminder_friday">Amintește vineri</string>
+    <string name="reminder_monday">Amintește luni</string>
+    <string name="reminder_saturday">Amintește sâmbătă și sărbătorile</string>
+    <string name="reminder_sunday">Amintește duminică</string>
+    <string name="reminder_thursday">Amintește joi</string>
+    <string name="reminder_tuesday">Amintește marți</string>
+    <string name="reminder_wednesday">Amintește miercuri</string>
 
 </resources>

@@ -252,8 +252,6 @@
     <string name="theme_none">None</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
-    <string name="animations">Animations</string>
-    <string name="emphasis_title">Emphasis</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>
@@ -272,7 +270,8 @@
 
     <!-- Setting per time -->
     <string name="opinion">Opinion</string>
-    <string name="reminder">Reminder</string>
+    <string name="emphasis_title">Emphasis</string>
+    <string name="animations">Animations</string>
 
     <!-- Location -->
     <string name="menu_location">Location</string>
@@ -297,18 +296,19 @@
     <string name="clock_24_hours_format" translatable="false">HH:mm</string>
 
     <!-- Reminder -->
+    <string name="reminder">Reminder</string>
+    <string name="reminder_stream_title">Reminder type</string>
+    <string name="reminder_tone">Reminder ringtone</string>
     <string name="alarm_volume_title">Alarm</string>
     <string name="notification_volume_title">Notification</string>
-    <string name="reminder_stream_title">Reminder type</string>
     <string name="reminder_stream_alarm" translatable="false">@string/alarm_volume_title</string>
     <string name="reminder_stream_notification" translatable="false">@string/notification_volume_title</string>
-    <string name="reminder_tone">Reminder ringtone</string>
-    <string name="reminder_sunday">Remind on Sunday</string>
+    <string name="reminder_friday">Remind on Friday</string>
     <string name="reminder_monday">Remind on Monday</string>
+    <string name="reminder_saturday">Remind on Saturday and Yom Tov</string>
+    <string name="reminder_sunday">Remind on Sunday</string>
+    <string name="reminder_thursday">Remind on Thursday</string>
     <string name="reminder_tuesday">Remind on Tuesday</string>
     <string name="reminder_wednesday">Remind on Wednesday</string>
-    <string name="reminder_thursday">Remind on Thursday</string>
-    <string name="reminder_friday">Remind on Friday</string>
-    <string name="reminder_saturday">Remind on Saturday and Yom Tov</string>
 
 </resources>

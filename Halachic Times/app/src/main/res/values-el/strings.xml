@@ -147,12 +147,9 @@
     <string name="seconds_title">Δευτερόλεπτα</string>
     <string name="summaries_title">Περιγραφές</string>
     <string name="gradient_title">Υπόβαθρο ντεγκραντέ</string>
-    <string name="animations">Κινούμενες εικόνες</string>
-    <string name="reminder_stream_title">Τύπος υπενθύμιση</string>
-    <string name="reminder_tone">ήχος κλήσης υπενθύμιση</string>
-    <string name="alarm_volume_title" msgid="2285597478377758706">"Ξυπνητήρι"</string>
-    <string name="notification_volume_title" msgid="2012640760341080408">"Ειδοποίηση"</string>
-    <string name="emphasis_title">Έμφαση</string>
+    <string name="theme_dark">Σκοτεινό</string>
+    <string name="theme_light">Φως</string>
+    <string name="theme_none">Κανένας</string>
 
     <!-- Go to date -->
     <string name="menu_date">Ημερομηνία</string>
@@ -171,7 +168,8 @@
 
     <!-- Setting per time -->
     <string name="opinion">Γνώμες</string>
-    <string name="reminder">Υπενθύμιση</string>
+    <string name="emphasis_title">Έμφαση</string>
+    <string name="animations">Κινούμενες εικόνες</string>
 
     <!-- Location -->
     <string name="menu_location">Τοποθεσία</string>
@@ -189,5 +187,19 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Ήαλαχικός Φορές Ρολόι</string>
+
+    <!-- Reminder -->
+    <string name="reminder">Υπενθύμιση</string>
+    <string name="reminder_stream_title">Τύπος υπενθύμιση</string>
+    <string name="reminder_tone">ήχος κλήσης υπενθύμιση</string>
+    <string name="alarm_volume_title" msgid="2285597478377758706">"Ξυπνητήρι"</string>
+    <string name="notification_volume_title" msgid="2012640760341080408">"Ειδοποίηση"</string>
+    <string name="reminder_friday">Θύμισε την Παρασκευή</string>
+    <string name="reminder_monday">Θύμισέ την Δευτέρα</string>
+    <string name="reminder_saturday">Θύμισέ το Σάββατο και Αργίες</string>
+    <string name="reminder_sunday">Θύμισε την Κυριακή</string>
+    <string name="reminder_thursday">Θύμισε την Πέμπτη</string>
+    <string name="reminder_tuesday">Θύμισε την Τρίτη</string>
+    <string name="reminder_wednesday">Θύμισε την Τετάρτη</string>
 
 </resources>
