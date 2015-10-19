@@ -71,6 +71,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
+    /** The number of days per week. */
+    private static final int DAYS_PER_WEEK = 7;
 
     private static final int LED_COLOR = Color.YELLOW;
     private static final int LED_ON = 750;
@@ -165,7 +167,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         Calendar cal = adapter.getCalendar().getCalendar();
 
         // Find the first reminder in the upcoming week.
-        for (int day = 1; nextDay && (day <= 7); day++) {
+        for (int day = 1; nextDay && (day <= DAYS_PER_WEEK); day++) {
             if (day > 1) {
                 gcal.add(Calendar.DAY_OF_MONTH, 1);
                 jcal.setDate(gcal);
