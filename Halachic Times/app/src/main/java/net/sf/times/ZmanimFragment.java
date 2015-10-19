@@ -35,6 +35,7 @@ import android.widget.TextView;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimSettings;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
@@ -206,6 +207,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
         CharSequence dateHebrew = adapter.formatDate(jewishDate);
+        JewishCalendar jcal = adapter.getJewishCalendar();
 
         int position = 0;
 
@@ -224,11 +226,20 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
                 row = adapter.getView(position, null, list);
                 bindView(list, position, row, item);
 
-                // New Hebrew day.
+                // Start of the next Hebrew day.
                 if (item.titleId == R.string.sunset) {
                     jewishDate.forward();
+                    jcal.forward();
+
                     dateHebrew = adapter.formatDate(jewishDate);
                     bindViewGrouping(list, position, dateHebrew);
+
+                    // Sefirat HaOmer?
+                    int omer = jcal.getDayOfOmer();
+                    if (omer >= 1) {
+                        CharSequence omerLabel = adapter.formatOmer(omer);
+                        bindViewGrouping(list, position, omerLabel);
+                    }
                 }
 
                 position++;
@@ -388,5 +399,4 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
     public void setGestureDetector(GestureDetector gestureDetector) {
         this.gestureDetector = gestureDetector;
     }
-
 }

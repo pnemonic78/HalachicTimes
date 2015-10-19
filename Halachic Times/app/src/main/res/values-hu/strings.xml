@@ -135,6 +135,10 @@
     <string name="fast_begins">Böjtölés kezdődik </string>
     <string name="fast_ends">Böjtölés véget ér</string>
 
+    <!-- Omer -->
+    <string name="omer_format">%1$s BaOmer</string>
+    <string name="omer_33">Lag BaOmer</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Beállítások</string>
     <string name="pref_general_title">Általános</string>

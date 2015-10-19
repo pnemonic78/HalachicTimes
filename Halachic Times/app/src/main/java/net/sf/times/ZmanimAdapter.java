@@ -156,6 +156,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     private HebrewDateFormatter hebrewDateFormatter;
     private String[] monthNames;
     private String monthDayYear;
+    private String omerFormat;
 
     /**
      * Time row item.
@@ -466,8 +467,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         ComplexZmanimCalendar cal = getCalendar();
         Calendar gcal = cal.getCalendar();
-        JewishCalendar jcal = new JewishCalendar(gcal);
-        jcal.setInIsrael(inIsrael);
+        JewishCalendar jcal = getJewishCalendar();
         int candlesOffset = settings.getCandleLightingOffset();
         int candles = getCandles(jcal);
         int candlesCount = candles & CANDLES_MASK;
@@ -1228,6 +1228,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         }
     }
 
+    /**
+     * Format the Hebrew date.
+     *
+     * @param jewishDate
+     *         the date.
+     * @return the formatted date.
+     */
     public CharSequence formatDate(JewishDate jewishDate) {
         int jewishDay = jewishDate.getJewishDayOfMonth();
         int jewishMonth = jewishDate.getJewishMonth();
@@ -1253,12 +1260,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         String dayPadded;
 
         if (ZmanimLocations.isLocaleRTL()) {
-            HebrewDateFormatter formatter = hebrewDateFormatter;
-            if (formatter == null) {
-                formatter = new HebrewDateFormatter();
-                formatter.setHebrewFormat(true);
-                hebrewDateFormatter = formatter;
-            }
+            HebrewDateFormatter formatter = getHebrewDateFormatter();
 
             yearStr = formatter.formatHebrewNumber(jewishYear);
             dayStr = formatter.formatHebrewNumber(jewishDay);
@@ -1383,5 +1385,62 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         }
 
         return date;
+    }
+
+
+    /**
+     * Get the Jewish calendar.
+     *
+     * @return the calendar.
+     */
+    public JewishCalendar getJewishCalendar() {
+        Calendar gcal = getCalendar().getCalendar();
+        JewishCalendar jcal = new JewishCalendar(gcal);
+        jcal.setInIsrael(inIsrael);
+        return jcal;
+    }
+
+    /**
+     * Format the number of omer days.
+     *
+     * @param days
+     *         the number of days.
+     * @return the formatted count.
+     */
+    public CharSequence formatOmer(int days) {
+        if (days <= 0) {
+            return null;
+        }
+        if (days == 33) {
+            return getContext().getText(R.string.omer_33);
+        }
+
+        String format = omerFormat;
+        if (format == null) {
+            format = getContext().getString(R.string.omer_format);
+            omerFormat = format;
+        }
+
+        String dayStr;
+
+        if (ZmanimLocations.isLocaleRTL()) {
+            HebrewDateFormatter formatter = getHebrewDateFormatter();
+
+            dayStr = formatter.formatHebrewNumber(days);
+        } else {
+            dayStr = String.valueOf(days);
+        }
+
+        return String.format(format, dayStr);
+    }
+
+    protected HebrewDateFormatter getHebrewDateFormatter() {
+        HebrewDateFormatter formatter = hebrewDateFormatter;
+        if (formatter == null) {
+            formatter = new HebrewDateFormatter();
+            formatter.setHebrewFormat(true);
+            hebrewDateFormatter = formatter;
+        }
+        return formatter;
     }
 }

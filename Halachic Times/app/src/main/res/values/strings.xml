@@ -235,6 +235,10 @@
     <string name="fast_begins">Fast begins</string>
     <string name="fast_ends">Fast ends</string>
 
+    <!-- Omer -->
+    <string name="omer_format">%1$s BaOmer</string>
+    <string name="omer_33">Lag BaOmer</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="pref_general_title">General</string>

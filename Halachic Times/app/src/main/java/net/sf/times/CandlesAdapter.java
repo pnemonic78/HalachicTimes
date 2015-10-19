@@ -50,15 +50,11 @@ public class CandlesAdapter extends ZmanimAdapter {
     @Override
     public void populate(boolean remote) {
         prePopulate();
-
-        populateCandles(calendar);
+        populateCandles();
     }
 
-    private void populateCandles(ComplexZmanimCalendar cal) {
-        Calendar gcal = cal.getCalendar();
-        JewishCalendar jcal = new JewishCalendar(gcal);
-        jcal.setInIsrael(inIsrael);
-        candles = getCandles(jcal);
+    private void populateCandles() {
+        candles = getCandles(getJewishCalendar());
     }
 
     /**

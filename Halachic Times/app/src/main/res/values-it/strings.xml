@@ -135,6 +135,10 @@
     <string name="fast_begins">Quaresima inizia</string>
     <string name="fast_ends">Quaresima finiture</string>
 
+    <!-- Omer -->
+    <string name="omer_format">%1$s BaOmer</string>
+    <string name="omer_33">Lag BaOmer</string>
+
     <!-- Preferences -->
     <string name="menu_settings">Impostazioni</string>
     <string name="pref_general_title">Generali</string>
