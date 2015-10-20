@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:baselineAligned="false"
+    android:layoutDirection="ltr"
     android:orientation="vertical">
 
     <include
@@ -23,15 +24,15 @@
 
             <view
                 android:id="@+id/details_list_fragment"
+                class="net.sf.times.ZmanimDetailsFragment"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                class="net.sf.times.ZmanimDetailsFragment"/>
+                android:layout_height="fill_parent"/>
 
             <view
                 android:id="@+id/candles_fragment"
+                class="net.sf.times.CandlesFragment"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                class="net.sf.times.CandlesFragment"/>
+                android:layout_height="fill_parent"/>
         </ViewSwitcher>
 
         <View
@@ -41,10 +42,10 @@
 
         <view
             android:id="@+id/list_fragment"
+            class="net.sf.times.ZmanimFragment"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
-            class="net.sf.times.ZmanimFragment"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </LinearLayout>

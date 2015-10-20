@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:gravity="center_vertical"
+    android:layoutDirection="ltr"
     android:orientation="horizontal">
 
     <ImageButton
