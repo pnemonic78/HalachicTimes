@@ -136,8 +136,8 @@
     <string name="fast_ends">Νηστεία άκρα</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer_format">%1$s BάΌμερ</string>
+    <string name="omer_33">λάγ BάΌμερ</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ρυθμίσεις</string>

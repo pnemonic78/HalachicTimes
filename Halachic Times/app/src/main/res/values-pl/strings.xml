@@ -140,8 +140,8 @@
     <string name="fast_ends">Post kończy</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer_format">%1$s ba-Omer</string>
+    <string name="omer_33">Lag ba-Omer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ustawienia</string>

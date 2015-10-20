@@ -136,8 +136,8 @@
     <string name="fast_ends">Fastenzeit endet</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer_format">%1$s baOmer</string>
+    <string name="omer_33">Lag baOmer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>

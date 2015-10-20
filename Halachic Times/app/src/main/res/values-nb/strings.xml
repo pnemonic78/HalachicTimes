@@ -136,8 +136,8 @@
     <string name="fast_ends">Faste ender</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer_format">%1$s ba‘ómer</string>
+    <string name="omer_33">Lag ba‘ómer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Innstillinger</string>

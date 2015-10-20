@@ -136,8 +136,8 @@
     <string name="fast_ends">Termina o jejum</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer_format">%1$s BaÔmer</string>
+    <string name="omer_33">Lag BaÔmer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Configurações</string>
