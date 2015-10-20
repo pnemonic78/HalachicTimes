@@ -273,6 +273,7 @@
         <item>AT</item>
         <item>60</item>
         <item>72</item>
+        <item>72_zmanis</item>
         <item>16.1</item>
         <item>18</item>
         <item>90</item>
@@ -298,6 +299,7 @@
         <item>@string/nightfall_ateret</item>
         <item>@string/nightfall_60</item>
         <item>@string/nightfall_72</item>
+        <item>@string/nightfall_72_zmanis</item>
         <item>@string/nightfall_16</item>
         <item>@string/nightfall_18</item>
         <item>@string/nightfall_90</item>

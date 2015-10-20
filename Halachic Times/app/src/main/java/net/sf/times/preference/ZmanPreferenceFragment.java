@@ -67,7 +67,9 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
         initList(opinionKey);
         this.preferenceReminder = initList(reminderKey);
-        initReminderDays(preferenceReminder);
+        if (preferenceReminder != null) {
+            initReminderDays(preferenceReminder);
+        }
     }
 
     @Override
