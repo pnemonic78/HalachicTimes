@@ -267,23 +267,33 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         final int count = adapter.getCount();
         ZmanimItem item;
 
+        int positionSunset = -1;
+
+        for (int position = 0; position < count; position++) {
+            item = adapter.getItem(position);
+
+            if (item.titleId == R.string.sunset) {
+                positionSunset = position;
+                break;
+            }
+        }
+
         int positionToday = -1;
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
             bindView(list, position, item);
 
-            if ((item.titleId <= R.string.sunset) && !(item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null))) {
+            if ((position <= positionSunset) && !item.elapsed && (item.time != ZmanimAdapter.NEVER) && (item.timeLabel != null)) {
                 positionToday = position;
             }
         }
 
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
-        CharSequence dateHebrew = null;
-        if (positionToday >= 0) {
-            dateHebrew = adapter.formatDate(jewishDate);
-        }
+
+        // If we are before sunset, then show "today" header.
+        CharSequence dateHebrew = (positionToday >= 0) ? adapter.formatDate(jewishDate) : null;
         bindViewGrouping(list, 0, R.id.today_row, R.id.today_date, dateHebrew);
 
         jewishDate.forward();
