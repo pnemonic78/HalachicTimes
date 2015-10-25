@@ -9,7 +9,7 @@
     <color name="bright_foreground_holo_light">@color/background_holo_dark</color>
     <color name="bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
     <color name="bright_foreground_disabled_holo_light">#ffb2b2b2</color>
-    <color name="bright_foreground_inverse_holo_dark">@color/bright_foreground_holo_light</color>
-    <color name="bright_foreground_inverse_holo_light">@color/bright_foreground_holo_dark</color>
+    <!--color name="bright_foreground_inverse_holo_dark">@color/bright_foreground_holo_light</color-->
+    <!--color name="bright_foreground_inverse_holo_light">@color/bright_foreground_holo_dark</color-->
 
 </resources>

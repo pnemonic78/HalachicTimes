@@ -67,7 +67,6 @@
     <color name="bright_foreground_light_disabled">#80000000</color>
     <color name="bright_foreground_dark_inverse">@color/bright_foreground_light</color>
     <color name="bright_foreground_light_inverse">@color/bright_foreground_dark</color>
-    <color name="primary_text">@color/primary_text_dark</color>
 
     <!-- Buttons. -->
     <color name="btn_navigation_pressed">#ccffff00</color>

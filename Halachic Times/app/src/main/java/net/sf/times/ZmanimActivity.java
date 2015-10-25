@@ -284,7 +284,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     }
 
     /** Initialise. */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         Context context = this;
         settings = new ZmanimSettings(context);
