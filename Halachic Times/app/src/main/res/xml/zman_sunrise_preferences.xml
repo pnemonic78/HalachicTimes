@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_opinion"
         android:key="sunrise"
         android:title="@string/opinion"/>
-    <ListPreference
+    <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue=""
         android:dialogIcon="@android:drawable/ic_dialog_alert"
         android:entries="@array/reminder_entries"

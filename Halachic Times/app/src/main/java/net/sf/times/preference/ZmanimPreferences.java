@@ -248,7 +248,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
                 reminderRingtonePreference.setRingtoneType(streamType);
             } else if (key.endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
                 // Explicitly disable dependencies?
-                preference.notifyDependencyChange(TextUtils.isEmpty(newValue.toString()));
+                preference.notifyDependencyChange(preference.shouldDisableDependents());
 
                 remind();
             }

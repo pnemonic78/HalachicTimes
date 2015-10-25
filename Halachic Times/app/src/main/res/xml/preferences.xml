@@ -77,7 +77,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="dawn"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -134,7 +134,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="tallis"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -191,7 +191,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="sunrise"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -248,7 +248,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="shema"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -305,7 +305,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="prayers"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -362,7 +362,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="burn_chametz"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -419,7 +419,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="midday"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -476,7 +476,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="earliest_mincha"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -533,7 +533,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="mincha"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -590,7 +590,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="plug_hamincha"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -659,7 +659,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="candles_chanukka"
                 android:title="@string/candles_chanukka_opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -722,7 +722,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="sunset"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -779,7 +779,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="twilight"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -836,7 +836,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="nightfall"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -893,7 +893,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="midnight"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -950,7 +950,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="levana_earliest"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"
@@ -1007,7 +1007,7 @@
                 android:icon="@drawable/ic_opinion"
                 android:key="levana_latest"
                 android:title="@string/opinion"/>
-            <ListPreference
+            <net.sf.times.preference.ZmanReminderPreference
                 android:defaultValue=""
                 android:dialogIcon="@android:drawable/ic_dialog_alert"
                 android:entries="@array/reminder_entries"

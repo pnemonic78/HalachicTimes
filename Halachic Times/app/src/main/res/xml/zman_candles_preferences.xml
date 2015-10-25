@@ -21,7 +21,7 @@
         android:icon="@drawable/ic_opinion"
         android:key="candles_chanukka"
         android:title="@string/candles_chanukka_opinion"/>
-    <ListPreference
+    <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue=""
         android:dialogIcon="@android:drawable/ic_dialog_alert"
         android:entries="@array/reminder_entries"

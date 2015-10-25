@@ -42,7 +42,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     public static final String EXTRA_REMINDER = "reminder";
 
     private int xmlId;
-    private Preference preferenceReminder;
+    private ZmanReminderPreference preferenceReminder;
     private Preference preferenceReminderSunday;
     private Preference preferenceReminderMonday;
     private Preference preferenceReminderTuesday;
@@ -66,7 +66,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         initList(opinionKey);
-        this.preferenceReminder = initList(reminderKey);
+        this.preferenceReminder = (ZmanReminderPreference) initList(reminderKey);
         if (preferenceReminder != null) {
             initReminderDays(preferenceReminder);
         }
@@ -85,7 +85,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
         if (!oldValue.equals(newValue) && (preference == preferenceReminder)) {
             // Explicitly disable dependencies?
-            preference.notifyDependencyChange(TextUtils.isEmpty(newValue.toString()));
+            preference.notifyDependencyChange(preference.shouldDisableDependents());
 
             remind();
         }
