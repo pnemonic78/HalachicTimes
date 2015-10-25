@@ -67,6 +67,7 @@ import net.sf.times.preference.ZmanimPreferences;
 import net.sf.times.preference.ZmanimSettings;
 import net.sf.view.animation.LayoutWeightAnimation;
 
+import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
 /**
@@ -146,64 +147,75 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private Animation hideNavigation;
     /** Show navigation bar animation. */
     private Animation showNavigation;
+    private final Handler handler;
 
     /** The handler. */
-    @SuppressLint("HandlerLeak")
-    private final Handler handler = new Handler() {
+    private static class ActivityHandler extends Handler {
+
+        private final WeakReference<ZmanimActivity> activityWeakReference;
+
+        public ActivityHandler(ZmanimActivity activity) {
+            this.activityWeakReference = new WeakReference<ZmanimActivity>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
+            ZmanimActivity activity = activityWeakReference.get();
+            Context context = activity;
+
             switch (msg.what) {
                 case WHAT_TOGGLE_DETAILS:
-                    toggleDetails(msg.arg1);
+                    activity.toggleDetails(msg.arg1);
                     break;
                 case WHAT_COMPASS:
-                    startActivity(new Intent(ZmanimActivity.this, CompassActivity.class));
+                    activity.startActivity(new Intent(context, CompassActivity.class));
                     break;
                 case WHAT_DATE:
+                    Calendar date = activity.date;
                     final int year = date.get(Calendar.YEAR);
                     final int month = date.get(Calendar.MONTH);
                     final int day = date.get(Calendar.DAY_OF_MONTH);
-                    if (datePicker == null) {
-                        Context context = ZmanimActivity.this;
+                    if (activity.datePicker == null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             Resources res = context.getResources();
                             res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
                             context = new ContextResourcesWrapper(context, res);
                         }
-                        datePicker = new TodayDatePickerDialog(context, ZmanimActivity.this, year, month, day);
+                        activity.datePicker = new TodayDatePickerDialog(context, activity, year, month, day);
                     } else {
-                        datePicker.updateDate(year, month, day);
+                        activity.datePicker.updateDate(year, month, day);
                     }
-                    datePicker.show();
+                    activity.datePicker.show();
                     break;
                 case WHAT_LOCATION:
-                    Location loc = locations.getLocation();
+                    Location loc = activity.locations.getLocation();
                     // Have we been destroyed?
                     if (loc == null)
                         break;
 
-                    Intent intent = new Intent(ZmanimActivity.this, LocationActivity.class);
+                    Intent intent = new Intent(context, LocationActivity.class);
                     intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-                    startActivityForResult(intent, ACTIVITY_LOCATIONS);
+                    activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
                     break;
                 case WHAT_SETTINGS:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                        startActivity(new Intent(ZmanimActivity.this, ZmanimPreferenceActivity.class));
+                        activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
                     else
-                        startActivity(new Intent(ZmanimActivity.this, ZmanimPreferences.class));
+                        activity.startActivity(new Intent(context, ZmanimPreferences.class));
                     break;
                 case WHAT_TODAY:
-                    setDate(System.currentTimeMillis());
-                    populateFragments(date);
+                    activity.setDate(System.currentTimeMillis());
+                    activity.populateFragments(activity.date);
                     break;
             }
         }
-    };
+    }
 
     /**
      * Creates a new activity.
      */
     public ZmanimActivity() {
+        this.handler = new ActivityHandler(this);
     }
 
     @Override

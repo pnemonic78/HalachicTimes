@@ -19,7 +19,6 @@
  */
 package net.sf.times.location;
 
-import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -52,6 +51,7 @@ import net.sf.times.ZmanimApplication;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,11 +92,13 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
     private LocationAdapter adapterHistory;
+    private final Handler handler;
 
     /**
      * Constructs a new activity.
      */
     public LocationActivity() {
+        this.handler = new ActivityHandler(this);
     }
 
     @Override
@@ -351,15 +353,22 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
         handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
     }
 
-    @SuppressLint("HandlerLeak")
-    private final Handler handler = new Handler() {
+    private static class ActivityHandler extends Handler {
+
+        private final WeakReference<LocationActivity> activityWeakReference;
+
+        public ActivityHandler(LocationActivity activity) {
+            this.activityWeakReference = new WeakReference<LocationActivity>(activity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     ZmanimAddress address = (ZmanimAddress) msg.obj;
                     long id = address.getId();
-                    ZmanimApplication app = (ZmanimApplication) getApplication();
+                    LocationActivity activity = activityWeakReference.get();
+                    ZmanimApplication app = (ZmanimApplication) activity.getApplication();
                     AddressProvider provider = app.getAddresses();
                     if (id < 0L) {
                         provider.insertOrUpdateCity(address);
@@ -367,14 +376,14 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
                         provider.insertOrUpdateAddress(null, address);
                     }
 
-                    adapterAll.notifyDataSetChanged();
-                    adapterFavorites.notifyDataSetChanged();
-                    adapterHistory.notifyDataSetChanged();
+                    activity.adapterAll.notifyDataSetChanged();
+                    activity.adapterFavorites.notifyDataSetChanged();
+                    activity.adapterHistory.notifyDataSetChanged();
 
                     break;
             }
         }
-    };
+    }
 
     /**
      * Set the location to "here".
@@ -385,5 +394,4 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
         setResult(RESULT_OK, data);
         finish();
     }
-
 }
