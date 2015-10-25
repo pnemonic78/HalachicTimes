@@ -9,6 +9,9 @@
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
 
+    <!-- Backup -->
+    <string name="google_backup_api_key" translatable="false">GoogleKey</string>
+
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
     <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>

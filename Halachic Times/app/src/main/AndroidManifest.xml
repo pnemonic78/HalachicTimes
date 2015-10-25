@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     package="net.sf.times"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -128,7 +129,8 @@
 
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="@string/google_backup_api_key"/>
+            android:value="@string/google_backup_api_key"
+            tools:node="replace"/>
     </application>
 
 </manifest>
