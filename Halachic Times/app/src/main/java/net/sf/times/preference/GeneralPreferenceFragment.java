@@ -21,6 +21,7 @@ package net.sf.times.preference;
 
 import android.annotation.TargetApi;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -58,8 +59,14 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         String key = preference.getKey();
         if (ZmanimSettings.KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
             String value = newValue.toString();
-            int streamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
-            reminderRingtonePreference.setRingtoneType(streamType);
+            int audioStreamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
+            int ringType;
+            if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+                ringType = RingtoneManager.TYPE_NOTIFICATION;
+            } else {
+                ringType = RingtoneManager.TYPE_ALARM;
+            }
+            reminderRingtonePreference.setRingtoneType(ringType);
         }
     }
 }
