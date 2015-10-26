@@ -137,8 +137,12 @@
     <string name="fast_ends">Böjtölés véget ér</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s báómer</string>
-    <string name="omer_33">Lág báómer</string>
+    <string name="omer">Ómer</string>
+    <string name="omer_format">%1$s %2$s</string>
+    <string name="omer_33">Lag %1$s</string>
+    <string name="omer_off">@string/off</string>
+    <string name="omer_b">báómer</string>
+    <string name="omer_l">láómer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Beállítások</string>

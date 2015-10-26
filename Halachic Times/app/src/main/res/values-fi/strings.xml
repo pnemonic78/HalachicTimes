@@ -137,8 +137,12 @@
     <string name="fast_ends">Paastota päät</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer">Omer</string>
+    <string name="omer_format">%1$s %2$s</string>
+    <string name="omer_33">Lag %1$s</string>
+    <string name="omer_off">@string/off</string>
+    <string name="omer_b">BaOmer</string>
+    <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
