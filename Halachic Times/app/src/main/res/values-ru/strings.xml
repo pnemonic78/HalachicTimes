@@ -8,6 +8,7 @@
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e %B %Y г.</string>
+    <string name="off">Выключено</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 минут до восхода / после заката</string>

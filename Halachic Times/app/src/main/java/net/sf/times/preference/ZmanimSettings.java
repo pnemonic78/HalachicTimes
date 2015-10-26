@@ -117,6 +117,8 @@ public class ZmanimSettings {
     public static final String KEY_OPINION_EARLIEST_LEVANA = "levana_earliest";
     /** Preference name for latest kiddush levana type. */
     public static final String KEY_OPINION_LATEST_LEVANA = "levana_latest";
+    /** Preference name for omer count suffix. */
+    public static final String KEY_OPINION_OMER = "omer";
 
     static final String REMINDER_SUFFIX = ".reminder";
     static final String REMINDER_SUNDAY_SUFFIX = ".day." + Calendar.SUNDAY;
@@ -177,6 +179,13 @@ public class ZmanimSettings {
     public static final String LIST_THEME_DARK = "dark";
     /** Show zmanim list with light gradient background. */
     public static final String LIST_THEME_LIGHT = "light";
+
+    /** No omer count. */
+    public static final String OMER_NONE = "";
+    /** Omer count has "BaOmer" suffix. */
+    public static final String OMER_B = "b";
+    /** Omer count has "LaOmer" suffix. */
+    public static final String OMER_L = "l";
 
     private final SharedPreferences preferences;
 
@@ -739,5 +748,14 @@ public class ZmanimSettings {
             }
         }
         return true;
+    }
+
+    /**
+     * Get the opinion for omer count suffix.
+     *
+     * @return the opinion.
+     */
+    public String getOmerSuffix() {
+        return preferences.getString(KEY_OPINION_OMER, OMER_B);
     }
 }

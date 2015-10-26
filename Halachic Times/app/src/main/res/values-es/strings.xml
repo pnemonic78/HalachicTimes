@@ -8,6 +8,7 @@
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e de %B de %Y</string>
+    <string name="off">Aapagado</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Día es 120 minutos antes salida / después de la puesta</string>

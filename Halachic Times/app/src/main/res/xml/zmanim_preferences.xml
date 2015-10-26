@@ -78,19 +78,6 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
-        android:title="@string/burn_chametz">
-        <extra
-            android:name="xml"
-            android:value="zman_chametz_preferences"/>
-        <extra
-            android:name="opinion"
-            android:value="burn_chametz"/>
-        <extra
-            android:name="reminder"
-            android:value="burn_chametz.reminder"/>
-    </PreferenceScreen>
-    <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
         android:title="@string/midday">
         <extra
             android:name="xml"
@@ -232,5 +219,24 @@
             android:name="reminder"
             android:value="levana_latest.reminder"/>
     </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:title="@string/burn_chametz">
+        <extra
+            android:name="xml"
+            android:value="zman_chametz_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="burn_chametz"/>
+        <extra
+            android:name="reminder"
+            android:value="burn_chametz.reminder"/>
+    </PreferenceScreen>
+    <ListPreference
+        android:defaultValue="b"
+        android:entries="@array/omer_entries"
+        android:entryValues="@array/omer_values"
+        android:key="omer"
+        android:title="@string/omer"/>
 
 </PreferenceScreen>

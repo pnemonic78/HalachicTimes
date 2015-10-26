@@ -22,6 +22,7 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -1231,11 +1232,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Format the Hebrew date.
      *
+     * @param context
+     *         the context.
      * @param jewishDate
      *         the date.
      * @return the formatted date.
      */
-    public CharSequence formatDate(JewishDate jewishDate) {
+    public CharSequence formatDate(Context context, JewishDate jewishDate) {
         int jewishDay = jewishDate.getJewishDayOfMonth();
         int jewishMonth = jewishDate.getJewishMonth();
         int jewishYear = jewishDate.getJewishYear();
@@ -1245,12 +1248,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         String[] monthNames = this.monthNames;
         if (monthNames == null) {
-            monthNames = getContext().getResources().getStringArray(R.array.hebrew_months);
+            monthNames = context.getResources().getStringArray(R.array.hebrew_months);
             this.monthNames = monthNames;
         }
         String format = monthDayYear;
         if (format == null) {
-            format = getContext().getString(R.string.month_day_year);
+            format = context.getString(R.string.month_day_year);
             monthDayYear = format;
         }
 
@@ -1403,21 +1406,35 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Format the number of omer days.
      *
+     * @param context
+     *         the context.
      * @param days
      *         the number of days.
      * @return the formatted count.
      */
-    public CharSequence formatOmer(int days) {
+    public CharSequence formatOmer(Context context, int days) {
         if (days <= 0) {
             return null;
         }
-        if (days == 33) {
-            return getContext().getText(R.string.omer_33);
+        String suffix = settings.getOmerSuffix();
+        if (TextUtils.isEmpty(suffix)) {
+            return null;
+        }
+        if (ZmanimSettings.OMER_B.equals(suffix)) {
+            suffix = context.getString(R.string.omer_b);
+        } else if (ZmanimSettings.OMER_L.equals(suffix)) {
+            suffix = context.getString(R.string.omer_l);
         }
 
-        String format = omerFormat;
+        String format;
+        if (days == 33) {
+            format = context.getString(R.string.omer_33);
+            return String.format(format, suffix);
+        }
+
+        format = omerFormat;
         if (format == null) {
-            format = getContext().getString(R.string.omer_format);
+            format = context.getString(R.string.omer_format);
             omerFormat = format;
         }
 
@@ -1431,7 +1448,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             dayStr = String.valueOf(days);
         }
 
-        return String.format(format, dayStr);
+        return String.format(format, dayStr, suffix);
     }
 
     protected HebrewDateFormatter getHebrewDateFormatter() {

@@ -301,8 +301,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         Context context = this;
         settings = new ZmanimSettings(context);
 
-        int themeForList = settings.getTheme();
-        setTheme(themeForList);
+        setTheme(settings.getTheme());
 
         inflater = LayoutInflater.from(context);
         ViewGroup view = (ViewGroup) inflater.inflate(R.layout.times, null);

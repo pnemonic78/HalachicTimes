@@ -264,6 +264,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the list adapter.
      */
     protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
+        Context context = this.context;
         final int count = adapter.getCount();
         ZmanimItem item;
 
@@ -293,11 +294,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         JewishDate jewishDate = new JewishDate(date);
 
         // If we are before sunset, then show "today" header.
-        CharSequence dateHebrew = (positionToday >= 0) ? adapter.formatDate(jewishDate) : null;
+        CharSequence dateHebrew = (positionToday >= 0) ? adapter.formatDate(context, jewishDate) : null;
         bindViewGrouping(list, 0, R.id.today_row, R.id.today_date, dateHebrew);
 
         jewishDate.forward();
-        dateHebrew = adapter.formatDate(jewishDate);
+        dateHebrew = adapter.formatDate(context, jewishDate);
         bindViewGrouping(list, 1, R.id.tomorrow_row, R.id.tomorrow_date, dateHebrew);
     }
 

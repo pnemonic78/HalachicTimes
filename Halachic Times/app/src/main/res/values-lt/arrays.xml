@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>Išjungta</item>
+        <item>@string/off</item>
         <item>Laiku</item>
         <item>1 minutę prieš</item>
         <item>5 minučių prieš</item>

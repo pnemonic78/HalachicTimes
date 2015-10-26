@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>Av</item>
+        <item>@string/off</item>
         <item>På tiden</item>
         <item>1 minutt før</item>
         <item>5 minutter før</item>

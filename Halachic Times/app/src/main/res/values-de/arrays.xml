@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>Aus</item>
+        <item>@string/off</item>
         <item>Pünktlich</item>
         <item>1 minute vor</item>
         <item>5 minuten vor</item>

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <string-array name="reminder_entries">
-        <item>Ανενεργό</item>
+        <item>@string/off</item>
         <item>Έγκαιρα</item>
         <item>1 λεπτό πριν</item>
         <item>5 λεπτά πριν</item>

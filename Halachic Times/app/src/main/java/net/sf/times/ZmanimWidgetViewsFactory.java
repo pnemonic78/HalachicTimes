@@ -63,6 +63,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public RemoteViews getViewAt(int position) {
+        Context context = this.context;
         String pkg = context.getPackageName();
         ZmanimAdapter adapter = this.adapter;
         RemoteViews view;
@@ -73,7 +74,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             if (position == positionTomorrow) {
                 jewishDate.forward();
             }
-            CharSequence dateHebrew = adapter.formatDate(jewishDate);
+            CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
 
             view = new RemoteViews(pkg, R.layout.widget_date);
             bindViewGrouping(view, position, dateHebrew);

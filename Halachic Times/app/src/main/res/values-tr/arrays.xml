@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>Kapalı</item>
+        <item>@string/off</item>
         <item>Zamanında</item>
         <item>1 dakika önce</item>
         <item>5 dakika önce</item>

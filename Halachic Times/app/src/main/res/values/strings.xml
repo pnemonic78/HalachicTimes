@@ -8,6 +8,7 @@
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
+    <string name="off">Off</string>
 
     <!-- Backup -->
     <string name="google_backup_api_key" translatable="false">GoogleKey</string>
@@ -239,8 +240,12 @@
     <string name="fast_ends">Fast ends</string>
 
     <!-- Omer -->
-    <string name="omer_format">%1$s BaOmer</string>
-    <string name="omer_33">Lag BaOmer</string>
+    <string name="omer">Omer</string>
+    <string name="omer_format">%1$s %2$s</string>
+    <string name="omer_33">Lag %1$s</string>
+    <string name="omer_off">@string/off</string>
+    <string name="omer_b">BaOmer</string>
+    <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>

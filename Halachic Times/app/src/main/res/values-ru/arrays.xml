@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="reminder_entries">
-        <item>Выключено</item>
+        <item>@string/off</item>
         <item>Вовремя</item>
         <item>За 1 минуту</item>
         <item>За 5 минут</item>

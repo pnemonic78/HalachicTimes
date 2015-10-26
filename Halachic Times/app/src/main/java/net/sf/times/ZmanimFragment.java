@@ -23,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -204,9 +205,10 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
         ZmanimItem item;
         View row;
 
+        Context context = getContext();
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
-        CharSequence dateHebrew = adapter.formatDate(jewishDate);
+        CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
         JewishCalendar jcal = adapter.getJewishCalendar();
 
         int position = 0;
@@ -231,14 +233,16 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
                     jewishDate.forward();
                     jcal.forward();
 
-                    dateHebrew = adapter.formatDate(jewishDate);
+                    dateHebrew = adapter.formatDate(context, jewishDate);
                     bindViewGrouping(list, position, dateHebrew);
 
                     // Sefirat HaOmer?
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
-                        CharSequence omerLabel = adapter.formatOmer(omer);
-                        bindViewGrouping(list, position, omerLabel);
+                        CharSequence omerLabel = adapter.formatOmer(context, omer);
+                        if (!TextUtils.isEmpty(omerLabel)) {
+                            bindViewGrouping(list, position, omerLabel);
+                        }
                     }
                 }
 

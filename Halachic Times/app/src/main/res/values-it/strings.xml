@@ -8,6 +8,7 @@
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%d %B %Y</string>
+    <string name="off">Non attivo</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Giorno è 120 minuti prima dell\'alba / dopo tramonto</string>
