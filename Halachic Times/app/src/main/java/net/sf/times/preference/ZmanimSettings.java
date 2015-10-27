@@ -168,6 +168,51 @@ public class ZmanimSettings {
     /** Preference name for candle lighting animations. */
     public static final String KEY_ANIM_CANDLES = KEY_OPINION_CANDLES + ANIM_SUFFIX;
 
+    public static final String OPINION_DEFAULT = "";
+    public static final String OPINION_10_2 = "10.2";
+    public static final String OPINION_11 = "11";
+    public static final String OPINION_12 = "12";
+    public static final String OPINION_120 = "120";
+    public static final String OPINION_120_ZMANIS = "120_zmanis";
+    public static final Object OPINION_13 = "13.24";
+    public static final String OPINION_15 = "15";
+    public static final String OPINION_16_1 = "16.1";
+    public static final String OPINION_16_1_ALOS = "16.1_alos";
+    public static final String OPINION_16_1_SUNSET = "16.1_sunset";
+    public static final String OPINION_18 = "18";
+    public static final String OPINION_19_8 = "19.8";
+    public static final String OPINION_2 = "2";
+    public static final String OPINION_26 = "26";
+    public static final String OPINION_3 = "3";
+    public static final String OPINION_3_65 = "3.65";
+    public static final String OPINION_3_676 = "3.676";
+    public static final String OPINION_30 = "30";
+    public static final String OPINION_4_37 = "4.37";
+    public static final String OPINION_4_61 = "4.61";
+    public static final String OPINION_4_8 = "4.8";
+    public static final String OPINION_5_88 = "5.88";
+    public static final String OPINION_5_95 = "5.95";
+    public static final Object OPINION_58 = "58.5";
+    public static final String OPINION_6 = "6";
+    public static final String OPINION_60 = "60";
+    public static final String OPINION_7 = "7";
+    public static final String OPINION_7_083 = "7.083";
+    public static final String OPINION_72 = "72";
+    public static final String OPINION_72_ZMANIS = "72_zmanis";
+    public static final String OPINION_8_5 = "8.5";
+    public static final String OPINION_90 = "90";
+    public static final String OPINION_90_ZMANIS = "90_zmanis";
+    public static final String OPINION_96 = "96";
+    public static final String OPINION_96_ZMANIS = "96_zmanis";
+    public static final String OPINION_ATERET = "AT";
+    public static final String OPINION_GRA = "GRA";
+    public static final String OPINION_MGA = "MGA";
+    public static final String OPINION_FIXED = "fixed";
+    public static final String OPINION_LEVEL = "level";
+    public static final String OPINION_SEA = "sea";
+    public static final String OPINION_TWILIGHT = "twilight";
+    public static final String OPINION_NIGHT = "nightfall";
+
     /** Format the coordinates in decimal notation. */
     public static final String FORMAT_DECIMAL = "decimal";
     /** Format the coordinates in sexagesimal notation. */
@@ -351,7 +396,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getChanukkaCandles() {
-        return preferences.getString(KEY_OPINION_CANDLES_CHANUKKA, "");
+        return preferences.getString(KEY_OPINION_CANDLES_CHANUKKA, OPINION_DEFAULT);
     }
 
 
@@ -361,7 +406,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getHour() {
-        return preferences.getString(KEY_OPINION_HOUR, "GRA");
+        return preferences.getString(KEY_OPINION_HOUR, OPINION_GRA);
     }
 
     /**
@@ -370,7 +415,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getDawn() {
-        return preferences.getString(KEY_OPINION_DAWN, "16.1");
+        return preferences.getString(KEY_OPINION_DAWN, OPINION_16_1);
     }
 
     /**
@@ -379,7 +424,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getTallis() {
-        return preferences.getString(KEY_OPINION_TALLIS, "");
+        return preferences.getString(KEY_OPINION_TALLIS, OPINION_DEFAULT);
     }
 
     /**
@@ -388,7 +433,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getSunrise() {
-        return preferences.getString(KEY_OPINION_SUNRISE, "");
+        return preferences.getString(KEY_OPINION_SUNRISE, OPINION_DEFAULT);
     }
 
     /**
@@ -397,7 +442,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getLastShema() {
-        return preferences.getString(KEY_OPINION_SHEMA, "MGA");
+        return preferences.getString(KEY_OPINION_SHEMA, OPINION_MGA);
     }
 
     /**
@@ -406,7 +451,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getLastTfila() {
-        return preferences.getString(KEY_OPINION_TFILA, "MGA");
+        return preferences.getString(KEY_OPINION_TFILA, OPINION_MGA);
     }
 
     /**
@@ -415,7 +460,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getBurnChametz() {
-        return preferences.getString(KEY_OPINION_BURN, "GRA");
+        return preferences.getString(KEY_OPINION_BURN, OPINION_GRA);
     }
 
     /**
@@ -424,7 +469,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getMidday() {
-        return preferences.getString(KEY_OPINION_NOON, "");
+        return preferences.getString(KEY_OPINION_NOON, OPINION_DEFAULT);
     }
 
     /**
@@ -433,7 +478,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getEarliestMincha() {
-        return preferences.getString(KEY_OPINION_EARLIEST_MINCHA, "");
+        return preferences.getString(KEY_OPINION_EARLIEST_MINCHA, OPINION_DEFAULT);
     }
 
     /**
@@ -442,7 +487,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getMincha() {
-        return preferences.getString(KEY_OPINION_MINCHA, "");
+        return preferences.getString(KEY_OPINION_MINCHA, OPINION_DEFAULT);
     }
 
     /**
@@ -451,7 +496,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getPlugHamincha() {
-        return preferences.getString(KEY_OPINION_PLUG_MINCHA, "");
+        return preferences.getString(KEY_OPINION_PLUG_MINCHA, OPINION_DEFAULT);
     }
 
     /**
@@ -460,7 +505,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getSunset() {
-        return preferences.getString(KEY_OPINION_SUNSET, "");
+        return preferences.getString(KEY_OPINION_SUNSET, OPINION_DEFAULT);
     }
 
     /**
@@ -469,7 +514,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getTwilight() {
-        return preferences.getString(KEY_OPINION_TWILIGHT, "");
+        return preferences.getString(KEY_OPINION_TWILIGHT, OPINION_DEFAULT);
     }
 
     /**
@@ -478,7 +523,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getNightfall() {
-        return preferences.getString(KEY_OPINION_NIGHTFALL, "");
+        return preferences.getString(KEY_OPINION_NIGHTFALL, OPINION_DEFAULT);
     }
 
     /**
@@ -487,7 +532,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getMidnight() {
-        return preferences.getString(KEY_OPINION_MIDNIGHT, "");
+        return preferences.getString(KEY_OPINION_MIDNIGHT, OPINION_DEFAULT);
     }
 
     /**
@@ -496,7 +541,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getEarliestKiddushLevana() {
-        return preferences.getString(KEY_OPINION_EARLIEST_LEVANA, "");
+        return preferences.getString(KEY_OPINION_EARLIEST_LEVANA, OPINION_DEFAULT);
     }
 
     /**
@@ -505,7 +550,7 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getLatestKiddushLevana() {
-        return preferences.getString(KEY_OPINION_LATEST_LEVANA, "");
+        return preferences.getString(KEY_OPINION_LATEST_LEVANA, OPINION_DEFAULT);
     }
 
     /**
