@@ -104,7 +104,7 @@ public class JewishCities extends Cities {
             // London, United Kingdom
             2643741,
             // Los Angeles, United States
-            3882428,
+            5344994,
             // Lyon, France
             2996944,
             // Madrid, Spain

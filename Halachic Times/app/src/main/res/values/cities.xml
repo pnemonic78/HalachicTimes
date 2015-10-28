@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generated from geonames.org data. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
-
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
         <item>Seattle</item>
+        <item>Los Angeles</item>
         <item>San Diego</item>
         <item>Phoenix</item>
         <item>Las Vegas</item>
@@ -27,7 +27,6 @@
         <item>Bogotá</item>
         <item>New York</item>
         <item>Montréal</item>
-        <item>Los Ángeles</item>
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
@@ -45,7 +44,7 @@
         <item>Genève</item>
         <item>Nice</item>
         <item>Zürich</item>
-        <item>München</item>
+        <item>Munich</item>
         <item>Rome</item>
         <item>Berlin</item>
         <item>Vienna</item>
@@ -66,7 +65,7 @@
         <item>Hadera</item>
         <item>Eilat</item>
         <item>Haifa</item>
-        <item>Beit Shemesh</item>
+        <item>Bet Shemesh</item>
         <item>Nahariya</item>
         <item>Ariel</item>
         <item>Jerusalem</item>
@@ -90,6 +89,7 @@
         <item>US</item>
         <item>US</item>
         <item>US</item>
+        <item>US</item>
         <item>MX</item>
         <item>US</item>
         <item>US</item>
@@ -107,7 +107,6 @@
         <item>CO</item>
         <item>US</item>
         <item>CA</item>
-        <item>CL</item>
         <item>US</item>
         <item>US</item>
         <item>AR</item>
@@ -166,6 +165,7 @@
         <item>49.24966</item>
         <item>37.77493</item>
         <item>47.60621</item>
+        <item>34.0239</item>
         <item>32.71533</item>
         <item>33.44838</item>
         <item>35.59393</item>
@@ -187,7 +187,6 @@
         <item>4.60971</item>
         <item>40.71427</item>
         <item>45.50884</item>
-        <item>-37.46973</item>
         <item>42.35843</item>
         <item>43.66147</item>
         <item>-34.61315</item>
@@ -246,6 +245,7 @@
         <item>-123.11934</item>
         <item>-122.41942</item>
         <item>-122.33207</item>
+        <item>-118.17202</item>
         <item>-117.15726</item>
         <item>-112.07404</item>
         <item>-105.2239</item>
@@ -267,7 +267,6 @@
         <item>-74.08175</item>
         <item>-74.00597</item>
         <item>-73.58781</item>
-        <item>-72.35366</item>
         <item>-71.05977</item>
         <item>-70.25533</item>
         <item>-58.37723</item>
@@ -326,6 +325,7 @@
         <item>63</item>
         <item>60</item>
         <item>60</item>
+        <item>71</item>
         <item>26</item>
         <item>343</item>
         <item>1977</item>
@@ -347,7 +347,6 @@
         <item>2621</item>
         <item>2</item>
         <item>119</item>
-        <item>137</item>
         <item>11</item>
         <item>4</item>
         <item>21</item>
@@ -402,5 +401,4 @@
         <item>1</item>
         <item>26</item>
     </string-array>
-
 </resources>
