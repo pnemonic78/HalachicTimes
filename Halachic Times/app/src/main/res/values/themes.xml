@@ -28,4 +28,7 @@
         <item name="listZmanSummary">@style/Zmanim.TextAppearance.Summary.NoGradient</item>
     </style>
 
+    <style name="Theme.Zmanim.Settings">
+    </style>
+
 </resources>
