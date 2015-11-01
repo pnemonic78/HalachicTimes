@@ -3,10 +3,10 @@
 
     <ListPreference
         android:defaultValue="MGA"
-        android:dialogIcon="@drawable/ic_opinion"
+        android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/prayers_entries"
         android:entryValues="@array/prayers_values"
-        android:icon="@drawable/ic_opinion"
+        android:icon="@drawable/ic_settings_opinion"
         android:key="prayers"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
@@ -14,7 +14,7 @@
         android:dialogIcon="@android:drawable/ic_dialog_alert"
         android:entries="@array/reminder_entries"
         android:entryValues="@array/reminder_values"
-        android:icon="@drawable/ic_alarm"
+        android:icon="@drawable/ic_settings_alarm"
         android:key="prayers.reminder"
         android:title="@string/reminder"/>
     <CheckBoxPreference

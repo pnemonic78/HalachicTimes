@@ -3,10 +3,10 @@
 
     <net.sf.preference.SeekBarDialogPreference
         android:defaultValue="22"
-        android:dialogIcon="@drawable/ic_opinion"
+        android:dialogIcon="@drawable/ic_settings_opinion"
         android:dialogLayout="@layout/candles_seek"
         android:dialogTitle="@string/opinion"
-        android:icon="@drawable/ic_opinion"
+        android:icon="@drawable/ic_settings_opinion"
         android:key="candles"
         android:max="40"
         android:negativeButtonText="@android:string/cancel"
@@ -15,10 +15,10 @@
 
     <ListPreference
         android:defaultValue=""
-        android:dialogIcon="@drawable/ic_opinion"
+        android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/candles_chanukka_entries"
         android:entryValues="@array/candles_chanukka_values"
-        android:icon="@drawable/ic_opinion"
+        android:icon="@drawable/ic_settings_opinion"
         android:key="candles_chanukka"
         android:title="@string/candles_chanukka_opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
@@ -26,7 +26,7 @@
         android:dialogIcon="@android:drawable/ic_dialog_alert"
         android:entries="@array/reminder_entries"
         android:entryValues="@array/reminder_values"
-        android:icon="@drawable/ic_alarm"
+        android:icon="@drawable/ic_settings_alarm"
         android:key="candles.reminder"
         android:title="@string/reminder"/>
     <CheckBoxPreference

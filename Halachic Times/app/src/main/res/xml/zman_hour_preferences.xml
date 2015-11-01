@@ -3,10 +3,10 @@
 
     <ListPreference
         android:defaultValue="GRA"
-        android:dialogIcon="@drawable/ic_opinion"
+        android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/hour_entries"
         android:entryValues="@array/hour_values"
-        android:icon="@drawable/ic_opinion"
+        android:icon="@drawable/ic_settings_opinion"
         android:key="hour"
         android:title="@string/opinion"/>
     <CheckBoxPreference
