@@ -16,6 +16,7 @@
             android:title="@string/reminder_stream_title"/>
         <RingtonePreference
             android:defaultValue="content://settings/system/alarm_alert"
+            android:icon="@drawable/ic_settings_tone"
             android:key="reminder.ringtone"
             android:ringtoneType="alarm"
             android:showDefault="true"
@@ -648,7 +649,7 @@
 
             <CheckBoxPreference
                 android:defaultValue="true"
-                android:icon="@android:drawable/ic_media_play"
+                android:icon="@drawable/ic_settings_anim"
                 android:key="candles.anim"
                 android:title="@string/animations"/>
             <CheckBoxPreference
@@ -1064,7 +1065,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_privacy_security_title">
         <Preference
-            android:icon="@android:drawable/ic_menu_recent_history"
+            android:icon="@drawable/ic_settings_history"
             android:key="clear_history"
             android:title="@string/pref_privacy_clear_history"/>
     </PreferenceCategory>
