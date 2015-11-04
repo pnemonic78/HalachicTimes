@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Самое раннее время для Талита и Тфилина (мишякир)</string>
+    <string name="tallis_only">Самое раннее время для Талита (мишякир)</string>
     <string name="tallis_summary">Солнце 11,5° ниже горизонта</string>
     <string name="tallis_11">Солнце 11° ниже горизонта</string>
     <string name="tallis_10">Солнце 10,2° ниже горизонта</string>

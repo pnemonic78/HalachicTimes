@@ -49,7 +49,7 @@ import java.util.Locale;
 
 /**
  * Adapter for halachic times list.
- * <p>
+ * <p/>
  * See also Wikipedia article on <a
  * href="http://en.wikipedia.org/wiki/Zmanim">Zmanim</a>.
  *
@@ -607,10 +607,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             date = cal.getMisheyakir11Point5Degrees();
             summary = R.string.tallis_summary;
         }
+        int tallisTitle = R.string.tallis;
+        if ((holidayToday == SHABBATH) || jcal.isYomTov() || jcal.isCholHamoed()) {
+            tallisTitle = R.string.tallis_only;
+        }
         if (remote)
-            add(R.id.tallis_row, R.string.tallis, R.id.tallis_time, date);
+            add(R.id.tallis_row, tallisTitle, R.id.tallis_time, date);
         else
-            add(R.string.tallis, summary, date);
+            add(tallisTitle, summary, date);
 
         opinion = settings.getSunrise();
         if (OPINION_SEA.equals(opinion)) {

@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Nástup na pobyt nejdřív tallis a tefillin (mišeyakir)</string>
+    <string name="tallis_only">Nástup na pobyt nejdřív tallis (mišeyakir)</string>
     <string name="tallis_summary">Slunce je 11,5° pod obzorem</string>
     <string name="tallis_11">Slunce je 11° pod obzorem</string>
     <string name="tallis_10">Slunce je 10.2° pod obzorem</string>

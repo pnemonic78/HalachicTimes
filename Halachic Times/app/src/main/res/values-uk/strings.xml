@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Перший талес і тфілін (мішякір)</string>
+    <string name="tallis_only">Перший талес (мішякір)</string>
     <string name="tallis_summary">Сонце 11,5° нижче обрію</string>
     <string name="tallis_11">Сонце 11° нижче обрію</string>
     <string name="tallis_10">Сонце 10,2° нижче обрію</string>

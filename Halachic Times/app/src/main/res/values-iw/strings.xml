@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">טלית ותפילין המוקדם ביותר (משיכיר)</string>
+    <string name="tallis_only">טלית המוקדם ביותר (משיכיר)</string>
     <string name="tallis_summary">שמש 11.5° מתחת לאופק</string>
     <string name="tallis_11">שמש 11° מתחת לאופק</string>
     <string name="tallis_10">שמש 10.2° מתחת לאופק</string>

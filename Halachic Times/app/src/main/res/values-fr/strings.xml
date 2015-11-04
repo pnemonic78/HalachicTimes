@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Mise du talit et téfilines au plus tôt (micheyakir)</string>
+    <string name="tallis_only">Mise du talit au plus tôt (micheyakir)</string>
     <string name="tallis_summary">Soleil est 11,5° sous l\'horizon</string>
     <string name="tallis_11">Soleil est 11° sous l\'horizon</string>
     <string name="tallis_10">Soleil est 10,2° sous l\'horizon</string>

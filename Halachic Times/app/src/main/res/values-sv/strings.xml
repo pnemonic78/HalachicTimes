@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Tidigast tallis och tefillin (mišeyakir)</string>
+    <string name="tallis_only">Tidigast tallis (mišeyakir)</string>
     <string name="tallis_summary">Solen är 11,5° under horisonten</string>
     <string name="tallis_11">Solen är 11° under horisonten</string>
     <string name="tallis_10">Solen är 10,2° under horisonten</string>

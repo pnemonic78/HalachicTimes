@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Früheste tallis und tefillin (misheyakir)</string>
+    <string name="tallis_only">Früheste tallis (misheyakir)</string>
     <string name="tallis_summary">Sonne ist 11,5° unter dem Horizont</string>
     <string name="tallis_11">Sonne ist 11° unter dem Horizont</string>
     <string name="tallis_10">Sonne ist 10,2° unter dem Horizont</string>

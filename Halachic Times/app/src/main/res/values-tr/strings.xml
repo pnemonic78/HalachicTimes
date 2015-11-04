@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">En erken tallis ve tefillin (mişeyakir)</string>
+    <string name="tallis_only">En erken tallis (mişeyakir)</string>
     <string name="tallis_summary">Güneş ufkun aşağıda 11,5°</string>
     <string name="tallis_11">Güneş ufkun aşağıda 11°</string>
     <string name="tallis_10">Güneş ufkun aşağıda 10,2°</string>

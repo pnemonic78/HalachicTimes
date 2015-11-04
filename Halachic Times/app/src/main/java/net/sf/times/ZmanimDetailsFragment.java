@@ -122,7 +122,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
             case R.style.Theme_Zmanim_Dark:
                 if (id == R.string.dawn) {
                     list.setBackgroundColor(res.getColor(R.color.dawn));
-                } else if (id == R.string.tallis) {
+                } else if ((id == R.string.tallis) || (id == R.string.tallis_only)) {
                     list.setBackgroundColor(res.getColor(R.color.tallis));
                 } else if (id == R.string.sunrise) {
                     list.setBackgroundColor(res.getColor(R.color.sunrise));
@@ -153,7 +153,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
             case R.style.Theme_Zmanim_Light:
                 if (id == R.string.dawn) {
                     list.setBackgroundColor(res.getColor(R.color.dawn_solid));
-                } else if (id == R.string.tallis) {
+                } else if ((id == R.string.tallis) || (id == R.string.tallis_only)) {
                     list.setBackgroundColor(res.getColor(R.color.tallis_solid));
                 } else if (id == R.string.sunrise) {
                     list.setBackgroundColor(res.getColor(R.color.sunrise_solid));

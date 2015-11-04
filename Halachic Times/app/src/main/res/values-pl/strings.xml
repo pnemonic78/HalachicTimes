@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Najwcześniejsze tallis i tefilin (miszejakir)</string>
+    <string name="tallis_only">Najwcześniejsze tallis (miszejakir)</string>
     <string name="tallis_summary">Słońce jest 11,5° poniżej horyzontu</string>
     <string name="tallis_11">Słońce jest 11° poniżej horyzontu</string>
     <string name="tallis_10">Słońce jest 10,2° poniżej horyzontu</string>

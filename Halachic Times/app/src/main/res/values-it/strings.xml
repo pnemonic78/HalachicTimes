@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Prima tallis e tefillin (misheyakir)</string>
+    <string name="tallis_only">Prima tallis (misheyakir)</string>
     <string name="tallis_summary">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="tallis_11">Sole è 11° sotto l\'orizzonte</string>
     <string name="tallis_10">Sole è 10,2° sotto l\'orizzonte</string>

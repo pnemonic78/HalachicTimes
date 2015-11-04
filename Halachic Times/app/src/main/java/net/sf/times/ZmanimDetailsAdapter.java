@@ -61,7 +61,7 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
             populateHour(calendar);
         } else if (id == R.string.dawn) {
             populateDawn(calendar);
-        } else if (id == R.string.tallis) {
+        } else if ((id == R.string.tallis) || (id == R.string.tallis_only)) {
             populateTallis(calendar);
         } else if (id == R.string.sunrise) {
             populateSunrise(calendar);

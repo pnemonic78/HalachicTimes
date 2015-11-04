@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Varaseim tallis ja tefillin (mišejakir)</string>
+    <string name="tallis_only">Varaseim tallis (mišejakir)</string>
     <string name="tallis_summary">Päike on 11,5° alla horisonti</string>
     <string name="tallis_11">Päike on 11° alla horisonti</string>
     <string name="tallis_10">Päike on 10,2° alla horisonti</string>

@@ -663,32 +663,32 @@ public class ZmanimSettings {
             return KEY_OPINION_HOUR;
         if ((id == R.id.dawn_row) || (id == R.string.dawn))
             return KEY_OPINION_DAWN;
-        if ((id == R.id.tallis_row) || (id == R.string.tallis))
-            return (KEY_OPINION_TALLIS);
+        if ((id == R.id.tallis_row) || (id == R.string.tallis) || (id == R.string.tallis_only))
+            return KEY_OPINION_TALLIS;
         if ((id == R.id.sunrise_row) || (id == R.string.sunrise))
-            return (KEY_OPINION_SUNRISE);
+            return KEY_OPINION_SUNRISE;
         if ((id == R.id.shema_row) || (id == R.string.shema))
-            return (KEY_OPINION_SHEMA);
+            return KEY_OPINION_SHEMA;
         if ((id == R.id.prayers_row) || (id == R.string.prayers))
-            return (KEY_OPINION_TFILA);
+            return KEY_OPINION_TFILA;
         if ((id == R.id.midday_row) || (id == R.string.midday))
-            return (KEY_OPINION_NOON);
+            return KEY_OPINION_NOON;
         if ((id == R.id.earliest_mincha_row) || (id == R.string.earliest_mincha))
-            return (KEY_OPINION_EARLIEST_MINCHA);
+            return KEY_OPINION_EARLIEST_MINCHA;
         if ((id == R.id.mincha_row) || (id == R.string.mincha))
-            return (KEY_OPINION_MINCHA);
+            return KEY_OPINION_MINCHA;
         if ((id == R.id.plug_hamincha_row) || (id == R.string.plug_hamincha))
-            return (KEY_OPINION_PLUG_MINCHA);
+            return KEY_OPINION_PLUG_MINCHA;
         if ((id == R.id.candles_row) || (id == R.string.candles))
-            return (KEY_OPINION_CANDLES);
+            return KEY_OPINION_CANDLES;
         if ((id == R.id.sunset_row) || (id == R.string.sunset))
-            return (KEY_OPINION_SUNSET);
+            return KEY_OPINION_SUNSET;
         if ((id == R.id.twilight_row) || (id == R.string.twilight) || (id == R.id.candles_twilight_row))
-            return (KEY_OPINION_TWILIGHT);
+            return KEY_OPINION_TWILIGHT;
         if ((id == R.id.nightfall_row) || (id == R.string.nightfall) || (id == R.id.candles_nightfall_row))
-            return (KEY_OPINION_NIGHTFALL);
+            return KEY_OPINION_NIGHTFALL;
         if ((id == R.id.midnight_row) || (id == R.string.midnight))
-            return (KEY_OPINION_MIDNIGHT);
+            return KEY_OPINION_MIDNIGHT;
         if (id == R.string.levana_earliest)
             return KEY_OPINION_EARLIEST_LEVANA;
         if (id == R.string.levana_latest)

@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Legkorábbi tallis és tfilint (misheyakir)</string>
+    <string name="tallis_only">Legkorábbi tallis (misheyakir)</string>
     <string name="tallis_summary">Nap 11,5° alatt horizont</string>
     <string name="tallis_11">Nap 11° alatt horizont</string>
     <string name="tallis_10">Nap 10,2° alatt horizont</string>

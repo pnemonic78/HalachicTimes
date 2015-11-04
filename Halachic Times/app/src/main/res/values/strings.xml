@@ -72,6 +72,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Earliest tallis and tefillin (misheyakir)</string>
+    <string name="tallis_only">Earliest tallis (misheyakir)</string>
     <string name="tallis_summary">Sun is 11.5° below horizon</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
     <string name="tallis_10">Sun is 10.2° below horizon</string>

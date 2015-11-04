@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Η πιο παλιά ταλιτ και τεφιλιν (μισεακιρ)</string>
+    <string name="tallis_only">Η πιο παλιά ταλιτ (μισεακιρ)</string>
     <string name="tallis_summary">Ήλιος είναι 11,5° κάτω από τον ορίζοντα</string>
     <string name="tallis_11">Ήλιος είναι 11° κάτω από τον ορίζοντα</string>
     <string name="tallis_10">Ήλιος είναι 10,2° κάτω από τον ορίζοντα</string>

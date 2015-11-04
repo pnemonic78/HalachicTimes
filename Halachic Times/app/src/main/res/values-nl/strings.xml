@@ -39,6 +39,7 @@
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Vroegste tallis en tefillin (mishejakir)</string>
+    <string name="tallis_only">Vroegste tallis (mishejakir)</string>
     <string name="tallis_summary">Zon is 11,5° onder de horizon</string>
     <string name="tallis_11">Zon is 11° onder de horizon</string>
     <string name="tallis_10">Zon is onder de horizon</string>
