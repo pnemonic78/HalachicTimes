@@ -340,8 +340,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if (isRemoteList())
             return R.layout.widget_list;
         if (isDeviceNokia())
-            return R.layout.times_widget_nokia;
-        return R.layout.times_widget;
+            return R.layout.widget_static_nokia;
+        return R.layout.widget_static;
     }
 
     /**
