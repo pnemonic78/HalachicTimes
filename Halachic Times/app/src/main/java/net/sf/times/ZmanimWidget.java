@@ -37,7 +37,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -69,6 +68,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
+            Context context = getContext();
             notifyAppWidgetViewDataChanged(context);
         }
     };
@@ -77,6 +77,15 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      * Constructs a new widget.
      */
     public ZmanimWidget() {
+    }
+
+    /**
+     * Get the context.
+     *
+     * @return the context.
+     */
+    protected Context getContext() {
+        return context;
     }
 
     @Override
@@ -208,6 +217,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     @Override
     public void onLocationChanged(Location location) {
+        Context context = getContext();
         notifyAppWidgetViewDataChanged(context);
     }
 
@@ -264,42 +274,47 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the list adapter.
      */
     protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
-        Context context = this.context;
+        Context context = getContext();
         final int count = adapter.getCount();
         ZmanimItem item;
 
         int positionSunset = -1;
+        list.removeAllViews(android.R.id.list);
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
-
+            if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
+                continue;
+            }
             if (item.titleId == R.string.sunset) {
                 positionSunset = position;
                 break;
             }
         }
 
-        int positionToday = -1;
+        int positionTomorrow = -1;
+        CharSequence dateHebrew;
+        Calendar date = adapter.getCalendar().getCalendar();
+        JewishDate jewishDate = new JewishDate(date);
+
+        // If we have a sunset, then show today's header.
+        if (positionSunset >= 0) {
+            dateHebrew = adapter.formatDate(context, jewishDate);
+            bindViewGrouping(list, 0, dateHebrew);
+        }
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
             bindView(list, position, item);
 
-            if ((position <= positionSunset) && !item.elapsed && (item.time != ZmanimAdapter.NEVER) && (item.timeLabel != null)) {
-                positionToday = position;
+            // Start of the next Hebrew day.
+            if ((position >= positionSunset) && (positionTomorrow < 0)) {
+                positionTomorrow = position;
+                jewishDate.forward();
+                dateHebrew = adapter.formatDate(context, jewishDate);
+                bindViewGrouping(list, position, dateHebrew);
             }
         }
-
-        Calendar date = adapter.getCalendar().getCalendar();
-        JewishDate jewishDate = new JewishDate(date);
-
-        // If we are before sunset, then show "today" header.
-        CharSequence dateHebrew = (positionToday >= 0) ? adapter.formatDate(context, jewishDate) : null;
-        bindViewGrouping(list, 0, R.id.today_row, R.id.date_hebrew, dateHebrew);
-
-        jewishDate.forward();
-        dateHebrew = adapter.formatDate(context, jewishDate);
-        bindViewGrouping(list, 1, R.id.tomorrow_row, R.id.tomorrow_date, dateHebrew);
     }
 
     /**
@@ -314,11 +329,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      */
     protected void bindView(RemoteViews list, int position, ZmanimItem item) {
         if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
-            list.setViewVisibility(item.rowId, View.GONE);
-        } else {
-            list.setViewVisibility(item.rowId, View.VISIBLE);
-            list.setTextViewText(item.timeId, item.timeLabel);
+            return;
         }
+        Context context = getContext();
+        String pkg = context.getPackageName();
+        RemoteViews row = new RemoteViews(pkg, getLayoutItemId());
+        row.setTextViewText(android.R.id.title, context.getText(item.titleId));
+        row.setTextViewText(R.id.time, item.timeLabel);
+        list.addView(android.R.id.list, row);
     }
 
     /**
@@ -332,7 +350,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     }
 
     /**
-     * Get the layout.
+     * Get the layout for the container.
      *
      * @return the layout id.
      */
@@ -373,6 +391,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected void bindListView(int appWidgetId, RemoteViews list) {
+        Context context = getContext();
         Intent service = new Intent();
         service.setClassName(context, "net.sf.times.ZmanimWidgetService");
         service.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -406,25 +425,24 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the list.
      * @param position
      *         the position index.
-     * @param rowId
-     *         the row id.
-     * @param textId
-     *         the text id.
      * @param label
      *         the formatted Hebrew date label.
      */
-    protected void bindViewGrouping(RemoteViews list, int position, int rowId, int textId, CharSequence label) {
+    protected void bindViewGrouping(RemoteViews list, int position, CharSequence label) {
         if ((position < 0) || (label == null)) {
-            list.setViewVisibility(rowId, View.GONE);
-        } else {
-            list.setViewVisibility(rowId, View.VISIBLE);
-            list.setTextViewText(textId, label);
+            return;
         }
+        Context context = getContext();
+        String pkg = context.getPackageName();
+        RemoteViews row = new RemoteViews(pkg, R.layout.widget_date);
+        row.setTextViewText(R.id.date_hebrew, label);
+        list.addView(android.R.id.list, row);
     }
 
     protected void populateRegularTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
+        Context context = getContext();
         if (settings == null)
             settings = new ZmanimSettings(context);
 
@@ -451,5 +469,16 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     protected void populateRemoteTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
         views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
         bindListView(appWidgetId, views);
+    }
+
+    /**
+     * Get the layout for the row item.
+     *
+     * @return the layout id.
+     */
+    protected int getLayoutItemId() {
+        if (isDeviceNokia())
+            return R.layout.widget_item;
+        return R.layout.widget_item;
     }
 }

@@ -2,6 +2,8 @@
 <resources>
 
     <style name="Theme.Zmanim" parent="android:Theme">
+        <item name="widgetZmanTitle">@style/Zmanim.TextAppearance.Title.Widget</item>
+        <item name="widgetZmanTime">@style/Zmanim.TextAppearance.Time.Widget</item>
     </style>
 
     <style name="Theme.Zmanim.Dark">

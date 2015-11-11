@@ -58,7 +58,7 @@ public class ClockWidget extends ZmanimWidget {
     @Override
     protected void bindView(RemoteViews list, int position, ZmanimItem item) {
         if (timeFormat == null) {
-            Context context = this.context;
+            Context context = getContext();
             boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
             String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
             timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());

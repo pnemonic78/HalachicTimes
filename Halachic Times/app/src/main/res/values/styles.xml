@@ -81,6 +81,9 @@
     <style name="Zmanim.TextAppearance.Title.NoGradient">
     </style>
 
+    <style name="Zmanim.TextAppearance.Title.Widget" parent="android:TextAppearance.Small">
+    </style>
+
     <style name="Zmanim.TextAppearance.Time.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
@@ -90,6 +93,9 @@
     </style>
 
     <style name="Zmanim.TextAppearance.Time.NoGradient">
+    </style>
+
+    <style name="Zmanim.TextAppearance.Time.Widget" parent="android:TextAppearance.Small">
     </style>
 
     <style name="Zmanim.TextAppearance.Summary.Dark">
