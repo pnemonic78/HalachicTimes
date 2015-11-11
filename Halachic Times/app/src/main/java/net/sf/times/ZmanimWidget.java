@@ -333,7 +333,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
         Context context = getContext();
         String pkg = context.getPackageName();
-        RemoteViews row = new RemoteViews(pkg, getLayoutItemId());
+        RemoteViews row = new RemoteViews(pkg, getLayoutItemId(position));
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
         list.addView(android.R.id.list, row);
@@ -474,11 +474,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     /**
      * Get the layout for the row item.
      *
+     * @param position
+     *         the position index.
      * @return the layout id.
      */
-    protected int getLayoutItemId() {
+    protected int getLayoutItemId(int position) {
+        boolean light = (position & 1) == 1;
         if (isDeviceNokia())
-            return R.layout.widget_item;
-        return R.layout.widget_item;
+            return light ? R.layout.widget_item_nokia_light : R.layout.widget_item_nokia;
+        return light ? R.layout.widget_item_light : R.layout.widget_item;
     }
 }
