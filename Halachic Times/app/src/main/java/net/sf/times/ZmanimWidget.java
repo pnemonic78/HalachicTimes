@@ -295,7 +295,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
         // If we are before sunset, then show "today" header.
         CharSequence dateHebrew = (positionToday >= 0) ? adapter.formatDate(context, jewishDate) : null;
-        bindViewGrouping(list, 0, R.id.today_row, R.id.today_date, dateHebrew);
+        bindViewGrouping(list, 0, R.id.today_row, R.id.date_hebrew, dateHebrew);
 
         jewishDate.forward();
         dateHebrew = adapter.formatDate(context, jewishDate);

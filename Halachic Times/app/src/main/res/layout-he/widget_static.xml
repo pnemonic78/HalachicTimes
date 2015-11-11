@@ -10,19 +10,11 @@
     android:orientation="vertical"
     android:padding="@dimen/widget_padding">
 
-    <LinearLayout
+    <include
         android:id="@+id/today_row"
+        layout="@layout/widget_date"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/today_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/dawn_row"
