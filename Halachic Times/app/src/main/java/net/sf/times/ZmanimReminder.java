@@ -178,7 +178,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
-                id = item.timeId;
+                id = item.titleId;
                 before = settings.getReminder(id);
 
                 if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER) && allowReminder(item, jcal, settings)) {
@@ -476,7 +476,7 @@ public class ZmanimReminder extends BroadcastReceiver {
      * @return can the reminder be activated?
      */
     private boolean allowReminder(ZmanimItem item, JewishCalendar jcal, ZmanimSettings settings) {
-        final int timeId = item.timeId;
+        final int timeId = item.titleId;
 
         int dayOfWeek = jcal.getDayOfWeek();
         int holidayIndex = jcal.getYomTovIndex();
