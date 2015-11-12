@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/time"
-        style="@style/WidgetBigThin"
+        style="@style/Widget.TextView.BigThin.Clock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"/>
