@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:id="@+id/date_gregorian"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/widget_margin"
@@ -9,18 +11,17 @@
 
     <TextView
         android:id="@+id/time"
-        style="@style/Widget.TextView.BigThin.Clock"
+        style="@style/Widget.TextView.Clock.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"/>
+        android:layout_marginBottom="-15dp"
+        tools:text="06:00"/>
 
     <TextView
         android:id="@android:id/title"
+        style="@style/Widget.TextView.Clock.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:fadingEdge="horizontal"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        tools:text="@string/dawn"/>
 
 </LinearLayout>
