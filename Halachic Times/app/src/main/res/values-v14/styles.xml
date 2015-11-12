@@ -7,24 +7,4 @@
 
     <style name="Widget.TextView" parent="android:Widget.DeviceDefault.TextView"/>
 
-    <style name="Zmanim.TextAppearance.Title" parent="android:TextAppearance.DeviceDefault.Medium">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="Zmanim.TextAppearance.Time" parent="android:TextAppearance.DeviceDefault.Medium">
-    </style>
-
-    <style name="Zmanim.TextAppearance.Summary" parent="android:TextAppearance.DeviceDefault.Small">
-        <item name="android:maxLines">3</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
-    </style>
-
-    <style name="Zmanim.TextAppearance.Title.Widget" parent="android:TextAppearance.DeviceDefault.Small">
-    </style>
-
-    <style name="Zmanim.TextAppearance.Time.Widget" parent="android:TextAppearance.DeviceDefault.Small">
-    </style>
-
 </resources>
