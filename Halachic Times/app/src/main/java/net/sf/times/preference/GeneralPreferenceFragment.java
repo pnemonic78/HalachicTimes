@@ -25,9 +25,9 @@ import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
-import android.preference.RingtonePreference;
 import android.text.TextUtils;
 
+import net.sf.preference.RingtonePreference;
 import net.sf.times.R;
 
 /**

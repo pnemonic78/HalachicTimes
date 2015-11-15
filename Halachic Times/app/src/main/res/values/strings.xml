@@ -9,6 +9,8 @@
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
     <string name="off">Off</string>
+    <string name="ok" translatable="false">@android:string/ok</string>
+    <string name="cancel" translatable="false">@android:string/cancel</string>
 
     <!-- Backup -->
     <string name="google_backup_api_key" translatable="false">GoogleKey</string>

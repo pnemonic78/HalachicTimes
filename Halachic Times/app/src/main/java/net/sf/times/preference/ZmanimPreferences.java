@@ -37,10 +37,10 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.View;
 
+import net.sf.preference.RingtonePreference;
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
 import net.sf.times.ZmanimApplication;

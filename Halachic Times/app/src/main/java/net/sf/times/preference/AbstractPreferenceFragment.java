@@ -35,9 +35,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
 import android.text.TextUtils;
 
+import net.sf.preference.RingtonePreference;
 import net.sf.times.ZmanimWidget;
 
 /**
