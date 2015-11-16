@@ -1,6 +1,7 @@
 package net.sf.preference;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.os.Build;
 import android.preference.DialogPreference;
 import android.preference.Preference;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -32,21 +34,49 @@ public class RingtonePreference extends DialogPreference {
     private boolean showDefault;
     private boolean showSilent;
     private Cursor entries;
-    private int clickedDialogEntryIndex = -1;
+    private int clickedDialogEntryIndex;
     private RingtoneManager ringtoneManager;
-    private Ringtone ringtone;
+
+    /** The position in the list of the 'Silent' item. */
+    private int mSilentPos = -1;
+
+    /** The position in the list of the 'Default' item. */
+    private int mDefaultRingtonePos = -1;
+
+    /** The position in the list of the last clicked item. */
+    private int mClickedPos = -1;
+
+    /** The position in the list of the ringtone to sample. */
+    private int mSampleRingtonePos = -1;
+
+    /** The number of static items in the list. */
+    private int mStaticItemCount;
+
+    /** The Uri to play when the 'Default' item is clicked. */
+    private Uri mUriForDefaultItem;
+
+    /**
+     * A Ringtone for the default ringtone. In most cases, the RingtoneManager
+     * will stop the previous ringtone. However, the RingtoneManager doesn't
+     * manage the default ringtone for us, so we should stop this one manually.
+     */
+    private Ringtone mDefaultRingtone;
 
     public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRS, defStyleAttr, defStyleRes);
-        ringtoneType = a.getInt(0, RingtoneManager.TYPE_RINGTONE);
-        showDefault = a.getBoolean(1, true);
-        showSilent = a.getBoolean(2, true);
+        int ringtoneType = a.getInt(0, RingtoneManager.TYPE_RINGTONE);
+        boolean showDefault = a.getBoolean(1, true);
+        boolean showSilent = a.getBoolean(2, true);
         a.recycle();
 
         ringtoneManager = new RingtoneManager(context);
-        ringtoneManager.setType(ringtoneType);
+        setRingtoneType(ringtoneType);
+        setShowDefault(showDefault);
+        setShowSilent(showSilent);
+
+        mUriForDefaultItem = Settings.System.DEFAULT_RINGTONE_URI;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -59,8 +89,19 @@ public class RingtonePreference extends DialogPreference {
     }
 
     public void setRingtoneType(int type) {
-        ringtoneManager.setType(type);
+        if (type != ringtoneType) {
+            if (entries != null) {
+                entries.close();
+                ringtoneManager = new RingtoneManager(getContext());
+                entries = null;
+            }
+            ringtoneManager.setType(type);
+        }
         ringtoneType = type;
+
+        // The volume keys will control the stream that we are choosing a ringtone for
+        Activity activity = (Activity) getContext();
+        activity.setVolumeControlStream(ringtoneManager.inferStreamType());
     }
 
     public int getRingtoneType() {
@@ -162,7 +203,8 @@ public class RingtonePreference extends DialogPreference {
     }
 
     private int getValueIndex() {
-        return -1;//TODO implement me!
+        Uri uri = onRestoreRingtone();
+        return ringtoneManager.getRingtonePosition(uri);
     }
 
     @Override
@@ -171,12 +213,6 @@ public class RingtonePreference extends DialogPreference {
 
         if (entries == null) {
             entries = getCursor();
-        }
-        if (showDefault) {
-            //TODO add to list
-        }
-        if (showSilent) {
-            //TODO add to list
         }
 
         clickedDialogEntryIndex = getValueIndex();
@@ -189,13 +225,12 @@ public class RingtonePreference extends DialogPreference {
     public void onClick(DialogInterface dialog, int which) {
         super.onClick(dialog, which);
 
+        // Save the position of most recently clicked item
+        mClickedPos = which;
+
         if (which >= 0) {
-            clickedDialogEntryIndex = which;
-            ringtone = ringtoneManager.getRingtone(which);
-            if (ringtone.isPlaying()) {
-                ringtone.stop();
-            }
-            ringtone.play();
+            // Play clip
+            playRingtone(which, 0);
         }
     }
 
@@ -215,12 +250,66 @@ public class RingtonePreference extends DialogPreference {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
 
-        if (ringtone != null) {
-            ringtone.stop();
-        }
+        stopAnyPlayingRingtone();
     }
 
     private Cursor getCursor() {
         return ringtoneManager.getCursor();
     }
+
+    private void playRingtone(int position, int delay) {
+        mSampleRingtonePos = position;
+        clickedDialogEntryIndex = position;
+
+        if (mSampleRingtonePos == mSilentPos) {
+            ringtoneManager.stopPreviousRingtone();
+            return;
+        }
+
+        /*
+         * Stop the default ringtone, if it's playing (other ringtones will be
+         * stopped by the RingtoneManager when we get another Ringtone from it.
+         */
+        if (mDefaultRingtone != null && mDefaultRingtone.isPlaying()) {
+            mDefaultRingtone.stop();
+            mDefaultRingtone = null;
+        }
+
+        Ringtone ringtone;
+        if (mSampleRingtonePos == mDefaultRingtonePos) {
+            if (mDefaultRingtone == null) {
+                mDefaultRingtone = RingtoneManager.getRingtone(getContext(), mUriForDefaultItem);
+            }
+            ringtone = mDefaultRingtone;
+
+            /*
+             * Normally the non-static RingtoneManager.getRingtone stops the
+             * previous ringtone, but we're getting the default ringtone outside
+             * of the RingtoneManager instance, so let's stop the previous
+             * ringtone manually.
+             */
+            ringtoneManager.stopPreviousRingtone();
+        } else {
+            ringtone = ringtoneManager.getRingtone(getRingtoneManagerPosition(mSampleRingtonePos));
+        }
+
+        if (ringtone != null) {
+            ringtone.play();
+        }
+    }
+
+    private void stopAnyPlayingRingtone() {
+        if (mDefaultRingtone != null && mDefaultRingtone.isPlaying()) {
+            mDefaultRingtone.stop();
+        }
+
+        if (ringtoneManager != null) {
+            ringtoneManager.stopPreviousRingtone();
+        }
+    }
+
+    private int getRingtoneManagerPosition(int listPos) {
+        return listPos - mStaticItemCount;
+    }
+
 }
