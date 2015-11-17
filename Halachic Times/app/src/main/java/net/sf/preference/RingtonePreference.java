@@ -13,8 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.DialogPreference;
 import android.preference.Preference;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -30,37 +28,34 @@ public class RingtonePreference extends DialogPreference {
 
     private static final int[] ATTRS = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
 
+    /** Maps to  MediaStore.Audio.Media.TITLE */
+    private static final int INDEX_TITLE = 1;
+
     private int ringtoneType;
     private boolean showDefault;
     private boolean showSilent;
-    private Cursor entries;
+    private CharSequence[] entries;
     private int clickedDialogEntryIndex;
     private RingtoneManager ringtoneManager;
 
     /** The position in the list of the 'Silent' item. */
-    private int mSilentPos = -1;
+    private int silentPos = -1;
 
     /** The position in the list of the 'Default' item. */
-    private int mDefaultRingtonePos = -1;
-
-    /** The position in the list of the last clicked item. */
-    private int mClickedPos = -1;
-
-    /** The position in the list of the ringtone to sample. */
-    private int mSampleRingtonePos = -1;
+    private int defaultRingtonePos = -1;
 
     /** The number of static items in the list. */
-    private int mStaticItemCount;
+    private int staticItemCount;
 
     /** The Uri to play when the 'Default' item is clicked. */
-    private Uri mUriForDefaultItem;
+    private Uri defaultRingtoneUri;
 
     /**
      * A Ringtone for the default ringtone. In most cases, the RingtoneManager
      * will stop the previous ringtone. However, the RingtoneManager doesn't
      * manage the default ringtone for us, so we should stop this one manually.
      */
-    private Ringtone mDefaultRingtone;
+    private Ringtone defaultRingtone;
 
     public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
@@ -76,7 +71,8 @@ public class RingtonePreference extends DialogPreference {
         setShowDefault(showDefault);
         setShowSilent(showSilent);
 
-        mUriForDefaultItem = Settings.System.DEFAULT_RINGTONE_URI;
+        defaultRingtoneUri = RingtoneManager.getDefaultUri(ringtoneType);
+        defaultRingtone = RingtoneManager.getRingtone(context, defaultRingtoneUri);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -91,7 +87,7 @@ public class RingtonePreference extends DialogPreference {
     public void setRingtoneType(int type) {
         if (type != ringtoneType) {
             if (entries != null) {
-                entries.close();
+                ringtoneManager.getCursor().close();
                 ringtoneManager = new RingtoneManager(getContext());
                 entries = null;
             }
@@ -151,7 +147,7 @@ public class RingtonePreference extends DialogPreference {
 
     /**
      * Called when a ringtone is chosen.
-     * <p>
+     * <p/>
      * By default, this saves the ringtone URI to the persistent storage as a
      * string.
      *
@@ -165,7 +161,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Called when the chooser is about to be shown and the current ringtone
      * should be marked. Can return null to not mark any ringtone.
-     * <p>
+     * <p/>
      * By default, this restores the previous ringtone URI from the persistent
      * storage.
      *
@@ -204,19 +200,23 @@ public class RingtonePreference extends DialogPreference {
 
     private int getValueIndex() {
         Uri uri = onRestoreRingtone();
-        return ringtoneManager.getRingtonePosition(uri);
+        if ((uri == null) || Uri.EMPTY.equals(uri)) {
+            return silentPos;
+        }
+        if (uri.equals(defaultRingtoneUri)) {
+            return defaultRingtonePos;
+        }
+        int pos = ringtoneManager.getRingtonePosition(uri);
+        return (pos >= 0) ? pos + staticItemCount : -1;
     }
 
     @Override
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         super.onPrepareDialogBuilder(builder);
 
-        if (entries == null) {
-            entries = getCursor();
-        }
-
+        CharSequence[] entries = getEntries();
         clickedDialogEntryIndex = getValueIndex();
-        builder.setSingleChoiceItems(entries, clickedDialogEntryIndex, MediaStore.Audio.Media.TITLE, this);
+        builder.setSingleChoiceItems(entries, clickedDialogEntryIndex, this);
         builder.setPositiveButton(R.string.ok, this);
         builder.setNegativeButton(R.string.cancel, this);
     }
@@ -224,9 +224,6 @@ public class RingtonePreference extends DialogPreference {
     @Override
     public void onClick(DialogInterface dialog, int which) {
         super.onClick(dialog, which);
-
-        // Save the position of most recently clicked item
-        mClickedPos = which;
 
         if (which >= 0) {
             // Play clip
@@ -239,7 +236,7 @@ public class RingtonePreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult && clickedDialogEntryIndex >= 0) {
-            Uri uri = ringtoneManager.getRingtoneUri(clickedDialogEntryIndex);
+            Uri uri = getRingtoneUri(clickedDialogEntryIndex);
             if (callChangeListener(uri != null ? uri.toString() : "")) {
                 onSaveRingtone(uri);
             }
@@ -253,15 +250,44 @@ public class RingtonePreference extends DialogPreference {
         stopAnyPlayingRingtone();
     }
 
-    private Cursor getCursor() {
-        return ringtoneManager.getCursor();
+    private CharSequence[] getEntries() {
+        if (entries == null) {
+            Cursor cursor = ringtoneManager.getCursor();
+            int count = cursor.getCount();
+            int pos = 0;
+
+            staticItemCount = 0;
+            if (showDefault) {
+                count++;
+                staticItemCount++;
+            }
+            if (showSilent) {
+                count++;
+                staticItemCount++;
+            }
+            entries = new CharSequence[count];
+
+            if (showDefault) {
+                defaultRingtonePos = pos;
+                entries[pos++] = getContext().getString(R.string.ringtone_default);
+            }
+            if (showSilent) {
+                silentPos = pos;
+                entries[pos++] = getContext().getString(R.string.ringtone_silent);
+            }
+            if (cursor.moveToFirst()) {
+                do {
+                    entries[pos++] = cursor.getString(INDEX_TITLE);
+                } while (cursor.moveToNext());
+            }
+        }
+        return entries;
     }
 
     private void playRingtone(int position, int delay) {
-        mSampleRingtonePos = position;
         clickedDialogEntryIndex = position;
 
-        if (mSampleRingtonePos == mSilentPos) {
+        if (position == silentPos) {
             ringtoneManager.stopPreviousRingtone();
             return;
         }
@@ -270,17 +296,13 @@ public class RingtonePreference extends DialogPreference {
          * Stop the default ringtone, if it's playing (other ringtones will be
          * stopped by the RingtoneManager when we get another Ringtone from it.
          */
-        if (mDefaultRingtone != null && mDefaultRingtone.isPlaying()) {
-            mDefaultRingtone.stop();
-            mDefaultRingtone = null;
+        if (defaultRingtone != null && defaultRingtone.isPlaying()) {
+            defaultRingtone.stop();
         }
 
         Ringtone ringtone;
-        if (mSampleRingtonePos == mDefaultRingtonePos) {
-            if (mDefaultRingtone == null) {
-                mDefaultRingtone = RingtoneManager.getRingtone(getContext(), mUriForDefaultItem);
-            }
-            ringtone = mDefaultRingtone;
+        if (position == defaultRingtonePos) {
+            ringtone = defaultRingtone;
 
             /*
              * Normally the non-static RingtoneManager.getRingtone stops the
@@ -290,7 +312,7 @@ public class RingtonePreference extends DialogPreference {
              */
             ringtoneManager.stopPreviousRingtone();
         } else {
-            ringtone = ringtoneManager.getRingtone(getRingtoneManagerPosition(mSampleRingtonePos));
+            ringtone = ringtoneManager.getRingtone(getRingtoneManagerPosition(position));
         }
 
         if (ringtone != null) {
@@ -299,8 +321,8 @@ public class RingtonePreference extends DialogPreference {
     }
 
     private void stopAnyPlayingRingtone() {
-        if (mDefaultRingtone != null && mDefaultRingtone.isPlaying()) {
-            mDefaultRingtone.stop();
+        if (defaultRingtone != null && defaultRingtone.isPlaying()) {
+            defaultRingtone.stop();
         }
 
         if (ringtoneManager != null) {
@@ -308,8 +330,18 @@ public class RingtonePreference extends DialogPreference {
         }
     }
 
-    private int getRingtoneManagerPosition(int listPos) {
-        return listPos - mStaticItemCount;
+    private int getRingtoneManagerPosition(int position) {
+        return position - staticItemCount;
+    }
+
+    private Uri getRingtoneUri(int position) {
+        if (position == silentPos) {
+            return null;
+        }
+        if (position == defaultRingtonePos) {
+            return defaultRingtoneUri;
+        }
+        return ringtoneManager.getRingtoneUri(position - staticItemCount);
     }
 
 }

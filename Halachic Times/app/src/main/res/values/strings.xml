@@ -325,5 +325,7 @@
     <string name="reminder_thursday">Remind on Thursday</string>
     <string name="reminder_tuesday">Remind on Tuesday</string>
     <string name="reminder_wednesday">Remind on Wednesday</string>
+    <string name="ringtone_default">Default</string>
+    <string name="ringtone_silent">Silent</string>
 
 </resources>

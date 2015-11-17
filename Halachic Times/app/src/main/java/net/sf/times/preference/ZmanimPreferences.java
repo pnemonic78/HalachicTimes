@@ -334,23 +334,26 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      *         the new value.
      */
     private void updateSummary(RingtonePreference preference, String newValue) {
-        Uri ringtoneUri;
+        Uri ringtoneUri = null;
+        String title = null;
+
         if (newValue == null) {
             ringtoneUri = RingtoneManager.getDefaultUri(preference.getRingtoneType());
+            title = getString(R.string.ringtone_default);
         } else if (TextUtils.isEmpty(newValue)) {
-            ringtoneUri = Uri.EMPTY;
+            title = getString(R.string.ringtone_silent);
         } else {
             ringtoneUri = Uri.parse(newValue);
         }
 
-        Context context = this;
-        Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-        if (ringtone != null) {
-            String title = ringtone.getTitle(context);
-            preference.setSummary(title);
-        } else {
-            preference.setSummary(null);
+        if (ringtoneUri != null) {
+            Context context = this;
+            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
+            if (ringtone != null) {
+                title = ringtone.getTitle(context);
+            }
         }
+        preference.setSummary(title);
     }
 
     @Override
