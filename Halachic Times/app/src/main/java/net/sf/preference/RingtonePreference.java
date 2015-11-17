@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.DialogPreference;
@@ -16,6 +15,7 @@ import android.preference.Preference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import net.sf.media.RingtoneManager;
 import net.sf.times.R;
 
 /**
