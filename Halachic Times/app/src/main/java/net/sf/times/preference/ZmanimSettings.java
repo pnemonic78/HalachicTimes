@@ -713,7 +713,7 @@ public class ZmanimSettings {
             return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         }
         if (TextUtils.isEmpty(path)) {
-            return Uri.EMPTY;
+            return null;
         }
         return Uri.parse(path);
     }

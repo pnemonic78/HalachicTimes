@@ -90,7 +90,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         if (pref != null) {
             RingtonePreference ring = (RingtonePreference) pref;
             ring.setOnPreferenceChangeListener(this);
-            onRingtonePreferenceChange(ring, ring.getSharedPreferences().getString(key, null));
+            onRingtonePreferenceChange(ring, ring.getValue());
             return ring;
         }
         return null;

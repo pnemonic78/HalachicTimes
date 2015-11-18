@@ -190,7 +190,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         if (pref != null) {
             RingtonePreference ring = (RingtonePreference) pref;
             ring.setOnPreferenceChangeListener(this);
-            onRingtonePreferenceChange(ring, ring.getSharedPreferences().getString(name, null));
+            onRingtonePreferenceChange(ring, ring.getValue());
             return ring;
         }
         return null;

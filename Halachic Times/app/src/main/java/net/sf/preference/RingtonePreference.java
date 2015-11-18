@@ -370,4 +370,24 @@ public class RingtonePreference extends DialogPreference {
     private Uri getRingtoneUri(int position) {
         return entryValues.get(position);
     }
+
+    /**
+     * Returns the value of the key.
+     *
+     * @return The value of the key.
+     */
+    public String getValue() {
+        String value = getPersistedString(null);
+
+        if (!showExternal) {
+            if (!TextUtils.isEmpty(value)) {
+                String external = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString();
+                if (value.startsWith(external)) {
+                    return null;
+                }
+            }
+        }
+
+        return value;
+    }
 }
