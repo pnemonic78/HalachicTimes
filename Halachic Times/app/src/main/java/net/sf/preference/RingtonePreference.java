@@ -102,9 +102,9 @@ public class RingtonePreference extends DialogPreference {
 
         if (type != ringtoneType) {
             if (entries != null) {
-                ringtoneManager.getCursor().close();
                 ringtoneManager = new RingtoneManager(context);
                 entries = null;
+                entryValues = null;
             }
             ringtoneManager.setType(type);
 
@@ -302,17 +302,8 @@ public class RingtonePreference extends DialogPreference {
 
     private List<CharSequence> getEntries() {
         if (entries == null) {
-            Cursor cursor = ringtoneManager.getCursor();
-            int count = cursor.getCount();
-
-            if (showDefault) {
-                count++;
-            }
-            if (showSilent) {
-                count++;
-            }
-            entries = new ArrayList<>(count);
-            entryValues = new ArrayList<>(count);
+            entries = new ArrayList<>();
+            entryValues = new ArrayList<>();
 
             if (showDefault) {
                 defaultRingtonePos = entryValues.size();
@@ -328,7 +319,9 @@ public class RingtonePreference extends DialogPreference {
             } else {
                 silentPos = -1;
             }
-            if (cursor.moveToFirst()) {
+
+            Cursor cursor = ringtoneManager.getCursor();
+            if ((cursor != null) && cursor.moveToFirst()) {
                 Uri uri;
                 do {
                     uri = Uri.parse(cursor.getString(URI_COLUMN_INDEX));
@@ -337,6 +330,7 @@ public class RingtonePreference extends DialogPreference {
                         entryValues.add(ContentUris.withAppendedId(uri, cursor.getLong(ID_COLUMN_INDEX)));
                     }
                 } while (cursor.moveToNext());
+                cursor.close();
             }
         }
         return entries;
