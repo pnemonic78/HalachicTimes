@@ -14,10 +14,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.DialogPreference;
 import android.preference.Preference;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import net.sf.times.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A {@link Preference} that allows the user to choose a ringtone from those on the device.
@@ -45,8 +49,9 @@ public class RingtonePreference extends DialogPreference {
     private int ringtoneType;
     private boolean showDefault;
     private boolean showSilent;
-    private CharSequence[] entries;
-    private Uri[] entryValues;
+    private boolean showExternal;
+    private List<CharSequence> entries;
+    private List<Uri> entryValues;
     private int clickedDialogEntryIndex;
     private RingtoneManager ringtoneManager;
     private Ringtone ringtoneSample;
@@ -80,6 +85,7 @@ public class RingtonePreference extends DialogPreference {
         setRingtoneType(ringtoneType);
         setShowDefault(showDefault);
         setShowSilent(showSilent);
+        setShowExternal(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -158,6 +164,25 @@ public class RingtonePreference extends DialogPreference {
     }
 
     /**
+     * Returns whether to a show an item for 'Silent'.
+     *
+     * @return Whether to show an item for 'Silent'.
+     */
+    public boolean getShowExternal() {
+        return showExternal;
+    }
+
+    /**
+     * Sets whether to show external media.
+     *
+     * @param showExternal
+     *         Whether to show externals.
+     */
+    public void setShowExternal(boolean showExternal) {
+        this.showExternal = showExternal;
+    }
+
+    /**
      * Called when a ringtone is chosen.
      * <p/>
      * By default, this saves the ringtone URI to the persistent storage as a
@@ -219,8 +244,10 @@ public class RingtonePreference extends DialogPreference {
      */
     public int findIndexOfValue(Uri value) {
         if (entryValues != null) {
-            for (int i = entryValues.length - 1; i >= 0; i--) {
-                if ((value == entryValues[i]) || value.equals(entryValues[i])) {
+            Uri entryValue;
+            for (int i = entryValues.size() - 1; i >= 0; i--) {
+                entryValue = entryValues.get(i);
+                if ((value == entryValue) || value.equals(entryValue)) {
                     return i;
                 }
             }
@@ -236,9 +263,10 @@ public class RingtonePreference extends DialogPreference {
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         super.onPrepareDialogBuilder(builder);
 
-        CharSequence[] entries = getEntries();
+        List<CharSequence> entries = getEntries();
+        CharSequence[] items = entries.toArray(new CharSequence[entries.size()]);
         clickedDialogEntryIndex = getValueIndex();
-        builder.setSingleChoiceItems(entries, clickedDialogEntryIndex, this);
+        builder.setSingleChoiceItems(items, clickedDialogEntryIndex, this);
         builder.setPositiveButton(R.string.ok, this);
         builder.setNegativeButton(R.string.cancel, this);
     }
@@ -272,11 +300,10 @@ public class RingtonePreference extends DialogPreference {
         stopAnyPlayingRingtone();
     }
 
-    private CharSequence[] getEntries() {
+    private List<CharSequence> getEntries() {
         if (entries == null) {
             Cursor cursor = ringtoneManager.getCursor();
             int count = cursor.getCount();
-            int pos = 0;
 
             if (showDefault) {
                 count++;
@@ -284,26 +311,31 @@ public class RingtonePreference extends DialogPreference {
             if (showSilent) {
                 count++;
             }
-            entries = new CharSequence[count];
-            entryValues = new Uri[count];
+            entries = new ArrayList<>(count);
+            entryValues = new ArrayList<>(count);
 
             if (showDefault) {
-                defaultRingtonePos = pos;
-                entries[pos] = getContext().getString(R.string.ringtone_default);
-                entryValues[pos] = defaultRingtoneUri;
-                pos++;
+                defaultRingtonePos = entryValues.size();
+                entries.add(getContext().getString(R.string.ringtone_default));
+                entryValues.add(defaultRingtoneUri);
+            } else {
+                defaultRingtonePos = -1;
             }
             if (showSilent) {
-                silentPos = pos;
-                entries[pos] = getContext().getString(R.string.ringtone_silent);
-                entryValues[pos] = null;
-                pos++;
+                silentPos = entryValues.size();
+                entries.add(getContext().getString(R.string.ringtone_silent));
+                entryValues.add(null);
+            } else {
+                silentPos = -1;
             }
             if (cursor.moveToFirst()) {
+                Uri uri;
                 do {
-                    entries[pos] = cursor.getString(TITLE_COLUMN_INDEX);
-                    entryValues[pos] = ContentUris.withAppendedId(Uri.parse(cursor.getString(URI_COLUMN_INDEX)), cursor.getLong(ID_COLUMN_INDEX));
-                    pos++;
+                    uri = Uri.parse(cursor.getString(URI_COLUMN_INDEX));
+                    if (showExternal || MediaStore.Audio.Media.INTERNAL_CONTENT_URI.equals(uri)) {
+                        entries.add(cursor.getString(TITLE_COLUMN_INDEX));
+                        entryValues.add(ContentUris.withAppendedId(uri, cursor.getLong(ID_COLUMN_INDEX)));
+                    }
                 } while (cursor.moveToNext());
             }
         }
@@ -342,6 +374,6 @@ public class RingtonePreference extends DialogPreference {
     }
 
     private Uri getRingtoneUri(int position) {
-        return entryValues[position];
+        return entryValues.get(position);
     }
 }
