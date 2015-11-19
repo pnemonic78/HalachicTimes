@@ -1,6 +1,5 @@
 package net.sf.media;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,8 +14,6 @@ import java.util.List;
  * Ringtone manager.
  */
 public class RingtoneManager extends android.media.RingtoneManager {
-
-    private static final String READ_EXTERNAL_STORAGE = "android.permission.READ_EXTERNAL_STORAGE";
 
     private static final String[] INTERNAL_COLUMNS = new String[]{
             MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
@@ -37,7 +34,8 @@ public class RingtoneManager extends android.media.RingtoneManager {
     public RingtoneManager(Context context) {
         super(context);
         this.context = context;
-        setIncludeExternal((Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) || (context.checkCallingOrSelfPermission(READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
+        setIncludeExternal((Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+                || (context.checkCallingOrSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
     }
 
     @Override
