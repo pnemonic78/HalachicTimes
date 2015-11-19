@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.DialogPreference;
@@ -18,6 +17,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import net.sf.media.RingtoneManager;
 import net.sf.times.R;
 
 import java.util.ArrayList;
@@ -49,7 +49,6 @@ public class RingtonePreference extends DialogPreference {
     private int ringtoneType;
     private boolean showDefault;
     private boolean showSilent;
-    private boolean showExternal;
     private List<CharSequence> entries;
     private List<Uri> entryValues;
     private int clickedDialogEntryIndex;
@@ -85,7 +84,6 @@ public class RingtonePreference extends DialogPreference {
         setRingtoneType(ringtoneType);
         setShowDefault(showDefault);
         setShowSilent(showSilent);
-        setShowExternal(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -164,27 +162,8 @@ public class RingtonePreference extends DialogPreference {
     }
 
     /**
-     * Returns whether to a show an item for 'Silent'.
-     *
-     * @return Whether to show an item for 'Silent'.
-     */
-    public boolean getShowExternal() {
-        return showExternal;
-    }
-
-    /**
-     * Sets whether to show external media.
-     *
-     * @param showExternal
-     *         Whether to show externals.
-     */
-    public void setShowExternal(boolean showExternal) {
-        this.showExternal = showExternal;
-    }
-
-    /**
      * Called when a ringtone is chosen.
-     * <p/>
+     * <p>
      * By default, this saves the ringtone URI to the persistent storage as a
      * string.
      *
@@ -198,7 +177,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Called when the chooser is about to be shown and the current ringtone
      * should be marked. Can return null to not mark any ringtone.
-     * <p/>
+     * <p>
      * By default, this restores the previous ringtone URI from the persistent
      * storage.
      *
@@ -325,10 +304,8 @@ public class RingtonePreference extends DialogPreference {
                 Uri uri;
                 do {
                     uri = Uri.parse(cursor.getString(URI_COLUMN_INDEX));
-                    if (showExternal || MediaStore.Audio.Media.INTERNAL_CONTENT_URI.equals(uri)) {
-                        entries.add(cursor.getString(TITLE_COLUMN_INDEX));
-                        entryValues.add(ContentUris.withAppendedId(uri, cursor.getLong(ID_COLUMN_INDEX)));
-                    }
+                    entries.add(cursor.getString(TITLE_COLUMN_INDEX));
+                    entryValues.add(ContentUris.withAppendedId(uri, cursor.getLong(ID_COLUMN_INDEX)));
                 } while (cursor.moveToNext());
                 cursor.close();
             }
@@ -379,10 +356,11 @@ public class RingtonePreference extends DialogPreference {
     public String getValue() {
         String value = getPersistedString(null);
 
-        if (!showExternal) {
+        if (!ringtoneManager.getIncludeExternal()) {
             if (!TextUtils.isEmpty(value)) {
                 String external = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString();
                 if (value.startsWith(external)) {
+                    // Return the default tone.
                     return null;
                 }
             }
