@@ -16,8 +16,8 @@ import android.preference.Preference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import net.sf.lib.R;
 import net.sf.media.RingtoneManager;
-import net.sf.times.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +168,7 @@ public class RingtonePreference extends DialogPreference {
 
     /**
      * Called when a ringtone is chosen.
-     * <p>
+     * <p/>
      * By default, this saves the ringtone URI to the persistent storage as a
      * string.
      *
@@ -182,7 +182,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Called when the chooser is about to be shown and the current ringtone
      * should be marked. Can return null to not mark any ringtone.
-     * <p>
+     * <p/>
      * By default, this restores the previous ringtone URI from the persistent
      * storage.
      *

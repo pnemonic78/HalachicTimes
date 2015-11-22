@@ -24,7 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
 
-import net.sf.times.R;
+import net.sf.lib.R;
 
 import java.util.Calendar;
 

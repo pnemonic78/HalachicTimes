@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="ok" translatable="false">@android:string/ok</string>
+    <string name="cancel" translatable="false">@android:string/cancel</string>
+
+    <!-- Go to date -->
+    <string name="today">Today</string>
+
+    <!-- Ringtone -->
+    <string name="ringtone_default">Default</string>
+    <string name="ringtone_silent">Silent</string>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Go to date -->
+    <string name="today">Azi</string>
+
+    <!-- Ringtone -->
+    <string name="ringtone_default">Default</string>
+    <string name="ringtone_silent">Silent</string>
+
+</resources>
