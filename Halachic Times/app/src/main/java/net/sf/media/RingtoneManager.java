@@ -1,19 +1,52 @@
+/*
+ * Source file of the Halachic Times project.
+ * Copyright (c) 2012. All Rights Reserved.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 2.0 (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/2.0
+ *
+ * Contributors can be contacted by electronic mail via the project Web pages:
+ *
+ * http://sourceforge.net/projects/halachictimes
+ *
+ * http://halachictimes.sourceforge.net
+ *
+ * Contributor(s):
+ *   Moshe Waisberg
+ *
+ */
 package net.sf.media;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Ringtone manager.
+ * Ringtone manager that can ignore external media when not permitted.
  */
 public class RingtoneManager extends android.media.RingtoneManager {
+
+    /** Invalid {@link Uri} path that means 'default'. */
+    public static final String DEFAULT_PATH = null;
+
+    /** Empty {@link Uri} that means 'silent'. */
+    public static final Uri SILENT_URI = Uri.EMPTY;
+    /** Empty {@link Uri} path that means 'silent'. */
+    public static final String SILENT_PATH = SILENT_URI.toString();
+
+    private static final String INTERNAL_PATH = MediaStore.Audio.Media.INTERNAL_CONTENT_URI.toString();
+    private static final String EXTERNAL_PATH = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString();
 
     private static final String[] INTERNAL_COLUMNS = new String[]{
             MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
@@ -21,8 +54,13 @@ public class RingtoneManager extends android.media.RingtoneManager {
             MediaStore.Audio.Media.TITLE_KEY
     };
 
+    private static final String[] SETTINGS_COLUMNS = new String[]{
+            Settings.NameValueTable._ID, Settings.NameValueTable.NAME, Settings.NameValueTable.VALUE
+    };
+
     private Context context;
     private Cursor cursor;
+    private int type;
     private boolean includeExternal = true;
 
     /**
@@ -45,6 +83,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
             cursor = null;
         }
         super.setType(type);
+        this.type = type;
         setFilterColumnsList(type);
     }
 
@@ -75,7 +114,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
      *
      * @return is included?
      */
-    public boolean getIncludeExternal() {
+    public boolean isIncludeExternal() {
         return includeExternal;
     }
 
@@ -144,5 +183,41 @@ public class RingtoneManager extends android.media.RingtoneManager {
                          String sortOrder) {
         return context.getContentResolver().query(uri, projection, selection, selectionArgs,
                 sortOrder);
+    }
+
+    public String filterInternal(String uriString) {
+        if (!TextUtils.isEmpty(uriString)) {
+            if (uriString.startsWith(INTERNAL_PATH)) {
+                // Is definitely internal.
+                return uriString;
+            }
+
+            if (uriString.startsWith(EXTERNAL_PATH)) {
+                // Try a 'default' tone.
+                uriString = getDefaultUri(type).toString();
+            }
+
+            ContentResolver resolver = context.getContentResolver();
+            Uri uri = Uri.parse(uriString);
+            Cursor cursor = resolver.query(uri, SETTINGS_COLUMNS, null, null, null);
+            if ((cursor != null) && cursor.moveToFirst()) {
+                String uriValue = cursor.getString(URI_COLUMN_INDEX);
+                cursor.close();
+
+                if (uriValue.startsWith(INTERNAL_PATH)) {
+                    // Is definitely internal.
+                    return uriString;
+                }
+                if (uriValue.startsWith(EXTERNAL_PATH)) {
+                    // 'Default' tone is definitely external.
+                    return SILENT_PATH;
+                }
+            }
+        }
+        return uriString;
+    }
+
+    public String filterInternal(Uri uri) {
+        return filterInternal(uri != null ? uri.toString() : null);
     }
 }

@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.DialogPreference;
 import android.preference.Preference;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -31,8 +30,6 @@ import java.util.List;
  */
 public class RingtonePreference extends DialogPreference {
 
-    private static final int[] ATTRS = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
-
     /**
      * The column index (in the cursor} for the row ID.
      */
@@ -45,6 +42,14 @@ public class RingtonePreference extends DialogPreference {
      * The column index (in the cursor} for the media provider's URI.
      */
     public static final int URI_COLUMN_INDEX = 2;
+
+    private static final int[] ATTRS = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
+
+    private static final String DEFAULT_PATH = RingtoneManager.DEFAULT_PATH;
+    private static final Uri DEFAULT_URI = null;
+
+    private static final String SILENT_PATH = RingtoneManager.SILENT_PATH;
+    private static final Uri SILENT_URI = RingtoneManager.SILENT_URI;
 
     private int ringtoneType;
     private boolean showDefault;
@@ -171,7 +176,7 @@ public class RingtonePreference extends DialogPreference {
      *         The chosen ringtone's {@link Uri}. Can be null.
      */
     protected void onSaveRingtone(Uri ringtoneUri) {
-        persistString(ringtoneUri != null ? ringtoneUri.toString() : "");
+        persistString(ringtoneUri != null ? ringtoneUri.toString() : SILENT_PATH);
     }
 
     /**
@@ -184,8 +189,11 @@ public class RingtonePreference extends DialogPreference {
      * @return The ringtone to be marked as the current ringtone.
      */
     protected Uri onRestoreRingtone() {
-        final String uriString = getPersistedString(null);
-        return !TextUtils.isEmpty(uriString) ? Uri.parse(uriString) : null;
+        final String uriString = getValue();
+        if (uriString == DEFAULT_PATH) {
+            return defaultRingtoneUri;
+        }
+        return TextUtils.isEmpty(uriString) ? SILENT_URI : Uri.parse(uriString);
     }
 
     @Override
@@ -223,10 +231,17 @@ public class RingtonePreference extends DialogPreference {
      */
     public int findIndexOfValue(Uri value) {
         if (entryValues != null) {
+            if ((value == DEFAULT_URI) || value.equals(defaultRingtoneUri)) {
+                return defaultRingtonePos;
+            }
+            if (SILENT_URI.equals(value)) {
+                return silentPos;
+            }
+
             Uri entryValue;
             for (int i = entryValues.size() - 1; i >= 0; i--) {
                 entryValue = entryValues.get(i);
-                if ((value == entryValue) || value.equals(entryValue)) {
+                if (value.equals(entryValue)) {
                     return i;
                 }
             }
@@ -266,7 +281,7 @@ public class RingtonePreference extends DialogPreference {
 
         if (positiveResult && clickedDialogEntryIndex >= 0) {
             Uri uri = getRingtoneUri(clickedDialogEntryIndex);
-            if (callChangeListener(uri != null ? uri.toString() : "")) {
+            if (callChangeListener(uri != null ? uri.toString() : SILENT_PATH)) {
                 onSaveRingtone(uri);
             }
         }
@@ -285,16 +300,21 @@ public class RingtonePreference extends DialogPreference {
             entryValues = new ArrayList<>();
 
             if (showDefault) {
-                defaultRingtonePos = entryValues.size();
-                entries.add(getContext().getString(R.string.ringtone_default));
-                entryValues.add(defaultRingtoneUri);
+                String uriPath = ringtoneManager.filterInternal(defaultRingtoneUri);
+                if (uriPath != null) {
+                    defaultRingtonePos = entryValues.size();
+                    entries.add(getContext().getString(R.string.ringtone_default));
+                    entryValues.add(defaultRingtoneUri);
+                } else {
+                    defaultRingtonePos = -1;
+                }
             } else {
                 defaultRingtonePos = -1;
             }
             if (showSilent) {
                 silentPos = entryValues.size();
                 entries.add(getContext().getString(R.string.ringtone_silent));
-                entryValues.add(null);
+                entryValues.add(SILENT_URI);
             } else {
                 silentPos = -1;
             }
@@ -354,18 +374,6 @@ public class RingtonePreference extends DialogPreference {
      * @return The value of the key.
      */
     public String getValue() {
-        String value = getPersistedString(null);
-
-        if (!ringtoneManager.getIncludeExternal()) {
-            if (!TextUtils.isEmpty(value)) {
-                String external = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString();
-                if (value.startsWith(external)) {
-                    // Return the default tone.
-                    return null;
-                }
-            }
-        }
-
-        return value;
+        return ringtoneManager.filterInternal(getPersistedString(DEFAULT_PATH));
     }
 }

@@ -74,11 +74,6 @@ public class ZmanimApplication extends Application {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
     public void onTerminate() {
         if (addressProvider != null) {
             addressProvider.close();

@@ -24,12 +24,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.media.AudioManager;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
+import net.sf.media.RingtoneManager;
 import net.sf.times.R;
 
 import java.util.Calendar;
@@ -232,6 +232,7 @@ public class ZmanimSettings {
     /** Omer count has "LaOmer" suffix. */
     public static final String OMER_L = "l";
 
+    private Context context;
     private final SharedPreferences preferences;
 
     /**
@@ -244,7 +245,8 @@ public class ZmanimSettings {
         Context app = context.getApplicationContext();
         if (app != null)
             context = app;
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.context = context;
+        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
@@ -704,18 +706,17 @@ public class ZmanimSettings {
      * @see RingtoneManager#getDefaultUri(int)
      */
     public Uri getReminderRingtone() {
-        String path = preferences.getString(KEY_REMINDER_RINGTONE, null);
-        if (path == null) {
-            int audioStreamType = getReminderStream();
-            if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-                return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            }
-            return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        int type = getReminderType();
+        String path = preferences.getString(KEY_REMINDER_RINGTONE, RingtoneManager.DEFAULT_PATH);
+        if (path == RingtoneManager.DEFAULT_PATH) {
+            path = RingtoneManager.getDefaultUri(type).toString();
         }
-        if (TextUtils.isEmpty(path)) {
-            return null;
+        RingtoneManager ringtoneManager = new RingtoneManager(context);
+        ringtoneManager.setType(type);
+        if (!ringtoneManager.isIncludeExternal()) {
+            path = ringtoneManager.filterInternal(path);
         }
-        return Uri.parse(path);
+        return TextUtils.isEmpty(path) ? null : Uri.parse(path);
     }
 
     public boolean isReminderSunday(int id) {
