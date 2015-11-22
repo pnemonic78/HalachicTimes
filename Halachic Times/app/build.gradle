@@ -49,4 +49,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':KosherJava')
+    compile project(':lib')
 }
