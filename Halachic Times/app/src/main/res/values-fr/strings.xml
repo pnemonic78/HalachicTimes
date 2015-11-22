@@ -163,7 +163,6 @@
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>
-    <string name="today">Aujourd\'hui</string>
     <string name="yesterday">Hier</string>
     <string name="tomorrow">Demain</string>
 

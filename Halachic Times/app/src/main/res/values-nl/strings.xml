@@ -163,7 +163,6 @@
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
-    <string name="today">Vandaag</string>
     <string name="yesterday">Gisteren</string>
     <string name="tomorrow">Morgen</string>
 

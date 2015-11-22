@@ -165,7 +165,6 @@
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>
-    <string name="today">Šiandien</string>
     <string name="yesterday">Vakar</string>
     <string name="tomorrow">Rytoj</string>
 

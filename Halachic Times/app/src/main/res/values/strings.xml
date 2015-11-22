@@ -9,8 +9,6 @@
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
     <string name="off">Off</string>
-    <string name="ok" translatable="false">@android:string/ok</string>
-    <string name="cancel" translatable="false">@android:string/cancel</string>
 
     <!-- Backup -->
     <string name="google_backup_api_key" translatable="false">GoogleKey</string>
@@ -270,7 +268,6 @@
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>
-    <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="tomorrow">Tomorrow</string>
 
@@ -325,7 +322,5 @@
     <string name="reminder_thursday">Remind on Thursday</string>
     <string name="reminder_tuesday">Remind on Tuesday</string>
     <string name="reminder_wednesday">Remind on Wednesday</string>
-    <string name="ringtone_default">Default</string>
-    <string name="ringtone_silent">Silent</string>
 
 </resources>

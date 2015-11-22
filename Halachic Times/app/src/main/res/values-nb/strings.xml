@@ -163,7 +163,6 @@
 
     <!-- Go to date -->
     <string name="menu_date">Dato</string>
-    <string name="today">I dag</string>
     <string name="yesterday">i Går</string>
     <string name="tomorrow">i Morgen</string>
 
