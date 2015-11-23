@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--Generated from geonames.org data.-->
 <resources>
+
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -401,4 +402,5 @@
         <item>1</item>
         <item>26</item>
     </string-array>
+
 </resources>
