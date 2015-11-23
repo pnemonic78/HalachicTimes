@@ -6,6 +6,6 @@
 
     <!-- Ringtone -->
     <string name="ringtone_default">Default</string>
-    <string name="ringtone_silent">Silent</string>
+    <string name="ringtone_silent">Nessuna</string>
 
 </resources>
