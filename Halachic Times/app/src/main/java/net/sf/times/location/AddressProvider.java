@@ -31,7 +31,7 @@ import android.location.Location;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import net.sf.times.database.CursorFilter;
+import net.sf.database.CursorFilter;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -24,8 +24,8 @@ import android.database.Cursor;
 import android.location.Address;
 import android.location.Location;
 
+import net.sf.database.CursorFilter;
 import net.sf.times.ZmanimApplication;
-import net.sf.times.database.CursorFilter;
 
 import org.xml.sax.helpers.DefaultHandler;
 

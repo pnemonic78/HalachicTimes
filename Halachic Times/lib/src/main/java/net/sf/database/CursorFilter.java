@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times.database;
+package net.sf.database;
 
 import android.database.Cursor;
 
@@ -38,5 +38,5 @@ public interface CursorFilter {
      * @return {@code true} if the current cursor should be included,
      * {@code false} otherwise.
      */
-    public abstract boolean accept(Cursor cursor);
+    boolean accept(Cursor cursor);
 }
