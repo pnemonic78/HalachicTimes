@@ -627,9 +627,7 @@ public class ZmanimSettings {
     /**
      * Get the reminder ringtone type.
      *
-     * @return the ringtone type.
-     * @see RingtoneManager#TYPE_ALARM
-     * @see RingtoneManager#TYPE_NOTIFICATION
+     * @return the ringtone type. One of {@link RingtoneManager#TYPE_ALARM} or {@link RingtoneManager#TYPE_NOTIFICATION}.
      */
     public int getReminderType() {
         int audioStreamType = getReminderStream();

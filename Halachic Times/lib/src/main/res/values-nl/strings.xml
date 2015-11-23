@@ -5,7 +5,9 @@
     <string name="today">Vandaag</string>
 
     <!-- Ringtone -->
-    <string name="ringtone_default">Default</string>
+    <string name="ringtone_default" msgid="3332469542084549546">"Standaardbeltoon"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"Standaardmeldingsgeluid"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"Standaardalarmgeluid"</string>
     <string name="ringtone_silent">Geen</string>
 
 </resources>

@@ -232,7 +232,10 @@ public class RingtoneManager extends android.media.RingtoneManager {
         if (type == RingtoneManager.TYPE_NOTIFICATION) {
             return context.getString(R.string.notification_sound_default);
         }
-        return context.getString(R.string.alarm_sound_default);
+        if (type == RingtoneManager.TYPE_ALARM) {
+            return context.getString(R.string.alarm_sound_default);
+        }
+        return context.getString(R.string.ringtone_default);
     }
 
     /**

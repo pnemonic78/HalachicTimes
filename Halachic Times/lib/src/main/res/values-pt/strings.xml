@@ -5,7 +5,9 @@
     <string name="today">Hoje</string>
 
     <!-- Ringtone -->
-    <string name="ringtone_default">Default</string>
+    <string name="ringtone_default" msgid="3332469542084549546">"Toque padrão"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"Som de notificação padrão"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"Som de alarme padrão"</string>
     <string name="ringtone_silent">Nenhum</string>
 
 </resources>

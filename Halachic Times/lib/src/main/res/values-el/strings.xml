@@ -5,7 +5,9 @@
     <string name="today">Σήμερα</string>
 
     <!-- Ringtone -->
-    <string name="ringtone_default">Default</string>
+    <string name="ringtone_default" msgid="3332469542084549546">"Προεπιλεγμένος ήχος κλήσης"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"Προεπιλεγμένος ήχος ειδοποίησης"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"Προεπιλεγμένος ήχος ειδοποίησης"</string>
     <string name="ringtone_silent">Κανένας</string>
 
 </resources>

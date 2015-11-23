@@ -5,7 +5,9 @@
     <string name="today">Šiandien</string>
 
     <!-- Ringtone -->
-    <string name="ringtone_default">Default</string>
+    <string name="ringtone_default" msgid="3332469542084549546">"Numatytasis skambėjimo tonas"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"Numatytasis pranešimo garsas"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"Numatytasis signalo garsas"</string>
     <string name="ringtone_silent">Nėra</string>
 
 </resources>

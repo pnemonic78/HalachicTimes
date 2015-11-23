@@ -5,7 +5,9 @@
     <string name="today">Dzisiaj</string>
 
     <!-- Ringtone -->
-    <string name="ringtone_default">Default</string>
+    <string name="ringtone_default" msgid="3332469542084549546">"Dzwonek domyślny"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"Domyślny dźwięk powiadomienia"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"Domyślny dźwięk alarmu"</string>
     <string name="ringtone_silent">Brak</string>
 
 </resources>
