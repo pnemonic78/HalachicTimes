@@ -7,8 +7,11 @@
     <!-- Go to date -->
     <string name="today">Today</string>
 
-    <!-- Ringtone -->
-    <string name="ringtone_default">Default</string>
-    <string name="ringtone_silent">Silent</string>
+    <!-- Choice in the notification sound picker.  If chosen, the default notification sound will be used. -->
+    <string name="notification_sound_default">Default notification sound</string>
+    <!-- Choice in the alarm sound picker.  If chosen, the default alarm sound will be used. -->
+    <string name="alarm_sound_default">Default alarm sound</string>
+    <!-- Choice in the ringtone picker.  If chosen, there will be silence instead of a ringtone played. -->
+    <string name="ringtone_silent">None</string>
 
 </resources>

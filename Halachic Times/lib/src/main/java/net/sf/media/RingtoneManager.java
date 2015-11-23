@@ -29,6 +29,8 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import net.sf.lib.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -219,5 +221,26 @@ public class RingtoneManager extends android.media.RingtoneManager {
 
     public String filterInternal(Uri uri) {
         return filterInternal(uri != null ? uri.toString() : null);
+    }
+
+    /**
+     * Get the 'default' tone title.
+     *
+     * @return the title.
+     */
+    public String getDefaultTitle() {
+        if (type == RingtoneManager.TYPE_NOTIFICATION) {
+            return context.getString(R.string.notification_sound_default);
+        }
+        return context.getString(R.string.alarm_sound_default);
+    }
+
+    /**
+     * Get the 'silent' tone title.
+     *
+     * @return the title.
+     */
+    public String getSilentTitle() {
+        return context.getString(R.string.ringtone_silent);
     }
 }

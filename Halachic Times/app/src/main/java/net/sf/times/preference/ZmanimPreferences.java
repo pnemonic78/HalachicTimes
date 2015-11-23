@@ -26,9 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.media.AudioManager;
-import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -334,26 +332,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      *         the new value.
      */
     private void updateSummary(RingtonePreference preference, String newValue) {
-        Uri ringtoneUri = null;
-        String title = null;
-
-        if (newValue == null) {
-            ringtoneUri = RingtoneManager.getDefaultUri(preference.getRingtoneType());
-            title = getString(R.string.ringtone_default);
-        } else if (TextUtils.isEmpty(newValue)) {
-            title = getString(R.string.ringtone_silent);
-        } else {
-            ringtoneUri = Uri.parse(newValue);
-        }
-
-        if (ringtoneUri != null) {
-            Context context = this;
-            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-            if (ringtone != null) {
-                title = ringtone.getTitle(context);
-            }
-        }
-        preference.setSummary(title);
+        preference.setSummary(preference.getRingtoneTitle(newValue));
     }
 
     @Override

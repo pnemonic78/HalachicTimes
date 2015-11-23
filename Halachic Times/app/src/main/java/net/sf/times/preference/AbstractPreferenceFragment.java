@@ -25,9 +25,6 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -38,7 +35,6 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import net.sf.preference.RingtonePreference;
-import net.sf.times.R;
 import net.sf.times.ZmanimWidget;
 
 /**
@@ -192,26 +188,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      *         the new value.
      */
     private void updateSummary(RingtonePreference preference, String newValue) {
-        Uri ringtoneUri = null;
-        String title = null;
-
-        if (newValue == null) {
-            ringtoneUri = RingtoneManager.getDefaultUri(preference.getRingtoneType());
-            title = getString(R.string.ringtone_default);
-        } else if (TextUtils.isEmpty(newValue)) {
-            title = getString(R.string.ringtone_silent);
-        } else {
-            ringtoneUri = Uri.parse(newValue);
-        }
-
-        if (ringtoneUri != null) {
-            Context context = this.context;
-            Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-            if (ringtone != null) {
-                title = ringtone.getTitle(context);
-            }
-        }
-        preference.setSummary(title);
+        preference.setSummary(preference.getRingtoneTitle(newValue));
     }
 
     @Override
