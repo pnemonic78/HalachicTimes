@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -180,9 +181,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             views = new RemoteViews(packageName, layoutId);
 
             if (isRemoteList()) {
-                populateRemoteTimes(appWidgetId, views, activityPendingIntent);
+                populateScrollableTimes(appWidgetId, views, activityPendingIntent);
             } else {
-                populateRegularTimes(appWidgetId, views, activityPendingIntent, viewId, now);
+                populateStaticTimes(appWidgetId, views, activityPendingIntent, viewId, now);
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -274,8 +275,23 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the list adapter.
      */
     protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
+        bindViews(list, adapter, null);
+    }
+
+    /**
+     * Bind the times to remote views.
+     *
+     * @param list
+     *         the remote views.
+     * @param adapterToday
+     *         the list adapter for today.
+     * @param adapterTomorrow
+     *         the list adapter for tomorrow.
+     */
+    protected void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         Context context = getContext();
-        final int count = adapter.getCount();
+        ZmanimAdapter adapter = adapterToday;
+        int count = adapter.getCount();
         ZmanimItem item;
 
         int positionSunset = -1;
@@ -293,6 +309,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
 
         int positionTomorrow = -1;
+        int positionFirst = -1;
         CharSequence dateHebrew;
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
@@ -305,7 +322,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
-            bindView(list, position, item);
+            if (bindView(list, position, item)) {
+                if (positionFirst < 0) {
+                    positionFirst = position;
+                }
+            }
 
             // Start of the next Hebrew day.
             if ((position >= positionSunset) && (positionTomorrow < 0)) {
@@ -313,6 +334,38 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
                 jewishDate.forward();
                 dateHebrew = adapter.formatDate(context, jewishDate);
                 bindViewGrouping(list, position, dateHebrew);
+            }
+        }
+
+        if ((adapterTomorrow != null) && (positionFirst >= 0)) {
+            adapter = adapterTomorrow;
+            count = Math.min(adapter.getCount(), positionFirst);
+            positionTomorrow = -1;
+
+            if (positionSunset < 0) {
+                for (int position = 0; position < count; position++) {
+                    item = adapter.getItem(position);
+                    if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
+                        continue;
+                    }
+                    if (item.titleId == R.string.sunset) {
+                        positionSunset = position;
+                        break;
+                    }
+                }
+            }
+
+            for (int position = 0; position < count; position++) {
+                item = adapter.getItem(position);
+                bindView(list, position, item);
+
+                // Start of the next Hebrew day.
+                if ((position >= positionSunset) && (positionTomorrow < 0)) {
+                    positionTomorrow = position;
+                    jewishDate.forward();
+                    dateHebrew = adapter.formatDate(context, jewishDate);
+                    bindViewGrouping(list, position, dateHebrew);
+                }
             }
         }
     }
@@ -326,10 +379,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the position index.
      * @param item
      *         the zmanim item.
+     * @return {@code true} if item was bound to view.
      */
-    protected void bindView(RemoteViews list, int position, ZmanimItem item) {
+    protected boolean bindView(RemoteViews list, int position, ZmanimItem item) {
         if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
-            return;
+            return false;
         }
         Context context = getContext();
         String pkg = context.getPackageName();
@@ -337,6 +391,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
         list.addView(android.R.id.list, row);
+        return true;
     }
 
     /**
@@ -439,7 +494,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         list.addView(android.R.id.list, row);
     }
 
-    protected void populateRegularTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+    protected void populateStaticTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
         Context context = getContext();
@@ -462,11 +517,18 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         adapter.setGeoLocation(gloc);
         adapter.setInIsrael(locations.inIsrael());
         adapter.populate(true);
-        bindViews(views, adapter);
+
+        ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, settings);
+        adapterTomorrow.setCalendar(now + DateUtils.DAY_IN_MILLIS);
+        adapterTomorrow.setGeoLocation(gloc);
+        adapterTomorrow.setInIsrael(locations.inIsrael());
+        adapterTomorrow.populate(false);
+
+        bindViews(views, adapter, adapterTomorrow);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    protected void populateRemoteTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
+    protected void populateScrollableTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
         views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
         bindListView(appWidgetId, views);
     }

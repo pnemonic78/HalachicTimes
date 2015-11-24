@@ -56,7 +56,7 @@ public class ClockWidget extends ZmanimWidget {
     }
 
     @Override
-    protected void bindView(RemoteViews list, int position, ZmanimItem item) {
+    protected boolean bindView(RemoteViews list, int position, ZmanimItem item) {
         if (timeFormat == null) {
             Context context = getContext();
             boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
@@ -71,6 +71,7 @@ public class ClockWidget extends ZmanimWidget {
         spans.setSpan(new StyleSpan(Typeface.BOLD), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         list.setTextViewText(R.id.time, spans);
         list.setTextViewText(android.R.id.title, context.getText(item.titleId));
+        return true;
     }
 
     @Override
