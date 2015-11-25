@@ -42,27 +42,27 @@
                 android:value="android.app.Activity"/>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".LocationActivity"/>
+                android:value="net.sf.times.location.LocationActivity"/>
         </activity>
         <activity
             android:name="net.sf.times.preference.ZmanimPreferences"
             android:label="@string/menu_settings"
-            android:parentActivityName=".ZmanimActivity">
+            android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>
         <activity
             android:name="net.sf.times.preference.ZmanimPreferenceActivity"
             android:label="@string/menu_settings"
-            android:parentActivityName=".ZmanimActivity">
+            android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>
         <activity
             android:name="net.sf.times.CompassActivity"
             android:label="@string/title_activity_compass"
-            android:parentActivityName=".ZmanimActivity">
+            android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>
         <activity
             android:name="net.sf.times.location.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName=".ZmanimActivity">
+            android:parentActivityName="net.sf.times.ZmanimActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
