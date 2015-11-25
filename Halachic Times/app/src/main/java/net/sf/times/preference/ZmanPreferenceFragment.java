@@ -29,6 +29,7 @@ import android.preference.Preference;
 import android.text.TextUtils;
 import android.view.View;
 
+import net.sf.times.R;
 import net.sf.times.ZmanimReminder;
 
 /**
@@ -58,6 +59,14 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         Bundle args = getArguments();
         String xmlName = args.getString(EXTRA_XML);
+        int indexSlash = xmlName.lastIndexOf('/');
+        if (indexSlash >= 0) {
+            xmlName = xmlName.substring(indexSlash + 1);
+        }
+        int indexDot = xmlName.indexOf('.');
+        if (indexDot >= 0) {
+            xmlName = xmlName.substring(0, indexDot);
+        }
         Resources res = getResources();
         this.xmlId = res.getIdentifier(xmlName, "xml", getActivity().getPackageName());
         String opinionKey = args.getString(EXTRA_OPINION);

@@ -6,7 +6,7 @@
         android:title="@string/hour">
         <extra
             android:name="xml"
-            android:value="zman_hour_preferences"/>
+            android:value="@xml/zman_hour_preferences"/>
         <extra
             android:name="opinion"
             android:value="hour"/>
@@ -16,7 +16,7 @@
         android:title="@string/dawn">
         <extra
             android:name="xml"
-            android:value="zman_dawn_preferences"/>
+            android:value="@xml/zman_dawn_preferences"/>
         <extra
             android:name="opinion"
             android:value="dawn"/>
@@ -29,7 +29,7 @@
         android:title="@string/tallis">
         <extra
             android:name="xml"
-            android:value="zman_tallis_preferences"/>
+            android:value="@xml/zman_tallis_preferences"/>
         <extra
             android:name="opinion"
             android:value="tallis"/>
@@ -42,7 +42,7 @@
         android:title="@string/sunrise">
         <extra
             android:name="xml"
-            android:value="zman_sunrise_preferences"/>
+            android:value="@xml/zman_sunrise_preferences"/>
         <extra
             android:name="opinion"
             android:value="sunrise"/>
@@ -55,7 +55,7 @@
         android:title="@string/shema">
         <extra
             android:name="xml"
-            android:value="zman_shema_preferences"/>
+            android:value="@xml/zman_shema_preferences"/>
         <extra
             android:name="opinion"
             android:value="shema"/>
@@ -68,7 +68,7 @@
         android:title="@string/prayers">
         <extra
             android:name="xml"
-            android:value="zman_prayers_preferences"/>
+            android:value="@xml/zman_prayers_preferences"/>
         <extra
             android:name="opinion"
             android:value="prayers"/>
@@ -81,7 +81,7 @@
         android:title="@string/midday">
         <extra
             android:name="xml"
-            android:value="zman_midday_preferences"/>
+            android:value="@xml/zman_midday_preferences"/>
         <extra
             android:name="opinion"
             android:value="midday"/>
@@ -94,7 +94,7 @@
         android:title="@string/earliest_mincha">
         <extra
             android:name="xml"
-            android:value="zman_earliest_mincha_preferences"/>
+            android:value="@xml/zman_earliest_mincha_preferences"/>
         <extra
             android:name="opinion"
             android:value="earliest_mincha"/>
@@ -107,7 +107,7 @@
         android:title="@string/mincha">
         <extra
             android:name="xml"
-            android:value="zman_mincha_preferences"/>
+            android:value="@xml/zman_mincha_preferences"/>
         <extra
             android:name="opinion"
             android:value="mincha"/>
@@ -120,7 +120,7 @@
         android:title="@string/plug_hamincha">
         <extra
             android:name="xml"
-            android:value="zman_plug_hamincha_preferences"/>
+            android:value="@xml/zman_plug_hamincha_preferences"/>
         <extra
             android:name="opinion"
             android:value="plug_hamincha"/>
@@ -133,7 +133,7 @@
         android:title="@string/candles">
         <extra
             android:name="xml"
-            android:value="zman_candles_preferences"/>
+            android:value="@xml/zman_candles_preferences"/>
         <extra
             android:name="opinion"
             android:value="candles_chanukka"/>
@@ -146,7 +146,7 @@
         android:title="@string/sunset">
         <extra
             android:name="xml"
-            android:value="zman_sunset_preferences"/>
+            android:value="@xml/zman_sunset_preferences"/>
         <extra
             android:name="opinion"
             android:value="sunset"/>
@@ -159,7 +159,7 @@
         android:title="@string/twilight">
         <extra
             android:name="xml"
-            android:value="zman_twilight_preferences"/>
+            android:value="@xml/zman_twilight_preferences"/>
         <extra
             android:name="opinion"
             android:value="twilight"/>
@@ -172,7 +172,7 @@
         android:title="@string/nightfall">
         <extra
             android:name="xml"
-            android:value="zman_nightfall_preferences"/>
+            android:value="@xml/zman_nightfall_preferences"/>
         <extra
             android:name="opinion"
             android:value="nightfall"/>
@@ -185,7 +185,7 @@
         android:title="@string/midnight">
         <extra
             android:name="xml"
-            android:value="zman_midnight_preferences"/>
+            android:value="@xml/zman_midnight_preferences"/>
         <extra
             android:name="opinion"
             android:value="midnight"/>
@@ -198,7 +198,7 @@
         android:title="@string/levana_earliest">
         <extra
             android:name="xml"
-            android:value="zman_levana_earliest_preferences"/>
+            android:value="@xml/zman_levana_earliest_preferences"/>
         <extra
             android:name="opinion"
             android:value="levana_earliest"/>
@@ -211,7 +211,7 @@
         android:title="@string/levana_latest">
         <extra
             android:name="xml"
-            android:value="zman_levana_latest_preferences"/>
+            android:value="@xml/zman_levana_latest_preferences"/>
         <extra
             android:name="opinion"
             android:value="levana_latest"/>
@@ -224,7 +224,7 @@
         android:title="@string/burn_chametz">
         <extra
             android:name="xml"
-            android:value="zman_chametz_preferences"/>
+            android:value="@xml/zman_chametz_preferences"/>
         <extra
             android:name="opinion"
             android:value="burn_chametz"/>
