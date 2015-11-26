@@ -49,7 +49,7 @@ import java.util.Locale;
 
 /**
  * Adapter for halachic times list.
- * <p/>
+ * <p>
  * See also Wikipedia article on <a
  * href="http://en.wikipedia.org/wiki/Zmanim">Zmanim</a>.
  *
@@ -314,7 +314,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time.
      */
     public void add(int titleId, int summaryId, Date time) {
-        add(titleId, summaryId, time == null ? NEVER : time.getTime());
+        add(titleId, summaryId, time, false);
     }
 
     /**
@@ -344,7 +344,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time in milliseconds..
      */
     public void add(int titleId, int summaryId, long time) {
-        add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time, false);
+        add(titleId, summaryId, time, false);
     }
 
     /**
@@ -372,9 +372,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label.
      * @param time
      *         the time
+     * @param remote
+     *         hide elapsed times for remote view?
      */
-    public void add(int titleId, CharSequence summary, Date time) {
-        add(titleId, summary, time == null ? NEVER : time.getTime(), false);
+    public void add(int titleId, CharSequence summary, Date time, boolean remote) {
+        add(titleId, summary, time == null ? NEVER : time.getTime(), remote);
     }
 
     /**
@@ -401,7 +403,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             item.elapsed = true;
         } else {
             item.timeLabel = timeFormat.format(time);
-            item.elapsed = !remote && (this.showElapsed || (titleId == R.string.hour)) ? false : (time < now);
+            item.elapsed = remote ? (time < now) : (showElapsed || (titleId == R.string.hour)) ? false : (time < now);
         }
 
         if (time != NEVER) {
@@ -562,7 +564,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         add(R.string.dawn, summary, date, remote);
         if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
                 || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
-            add(R.string.fast_begins, null, date);
+            add(R.string.fast_begins, null, date, remote);
         }
 
         opinion = settings.getTallis();
@@ -833,19 +835,19 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             } else {
                 summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
             }
-            add(R.string.candles, summaryText, dateCandles);
+            add(R.string.candles, summaryText, dateCandles, remote);
         }
 
         if (hasCandles && (candlesHow == AT_SUNSET)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                 String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                add(R.string.candles, summaryText, date);
+                add(R.string.candles, summaryText, date, remote);
             } else {
                 add(R.string.candles, summary, date, remote);
             }
         }
         if ((holidayTomorrow == JewishCalendar.TISHA_BEAV) || (holidayTomorrow == JewishCalendar.YOM_KIPPUR)) {
-            add(R.string.fast_begins, null, date);
+            add(R.string.fast_begins, null, date, remote);
         }
         add(R.string.sunset, summary, date, remote);
 
@@ -870,7 +872,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (hasCandles && (candlesHow == AT_TWILIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                 String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                add(R.string.candles, summaryText, date);
+                add(R.string.candles, summaryText, date, remote);
             } else {
                 add(R.string.candles, summary, date, remote);
             }
@@ -878,7 +880,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         add(R.string.twilight, summary, date, remote);
         if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.TISHA_BEAV) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
                 || (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
-            add(R.string.fast_ends, null, date);
+            add(R.string.fast_ends, null, date, remote);
         }
 
         opinion = settings.getNightfall();
@@ -957,12 +959,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         }
         add(R.string.nightfall, summary, date, remote);
         if (holidayToday == JewishCalendar.YOM_KIPPUR) {
-            add(R.string.fast_ends, null, date);
+            add(R.string.fast_ends, null, date, remote);
         }
         if (hasCandles && (candlesHow == AT_NIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                 String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                add(R.string.candles, summaryText, date);
+                add(R.string.candles, summaryText, date, remote);
             } else {
                 add(R.string.candles, summary, date, remote);
             }

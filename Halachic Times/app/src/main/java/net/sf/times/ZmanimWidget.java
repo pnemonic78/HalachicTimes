@@ -522,7 +522,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         adapterTomorrow.setCalendar(now + DateUtils.DAY_IN_MILLIS);
         adapterTomorrow.setGeoLocation(gloc);
         adapterTomorrow.setInIsrael(locations.inIsrael());
-        adapterTomorrow.populate(false);
+        adapterTomorrow.populate(true);
 
         bindViews(views, adapter, adapterTomorrow);
     }
