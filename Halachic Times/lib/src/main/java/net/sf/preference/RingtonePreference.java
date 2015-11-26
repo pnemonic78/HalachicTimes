@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.media.Ringtone;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.DialogPreference;
 import android.preference.Preference;
 import android.text.TextUtils;
@@ -58,7 +60,7 @@ public class RingtonePreference extends DialogPreference {
     private boolean showSilent;
     private List<CharSequence> entries;
     private List<Uri> entryValues;
-    private int clickedDialogEntryIndex;
+    private Uri value;
     private RingtoneManager ringtoneManager;
     private Ringtone ringtoneSample;
 
@@ -175,7 +177,7 @@ public class RingtonePreference extends DialogPreference {
 
     /**
      * Called when a ringtone is chosen.
-     * <p>
+     * <p/>
      * By default, this saves the ringtone URI to the persistent storage as a
      * string.
      *
@@ -189,7 +191,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Called when the chooser is about to be shown and the current ringtone
      * should be marked. Can return null to not mark any ringtone.
-     * <p>
+     * <p/>
      * By default, this restores the previous ringtone URI from the persistent
      * storage.
      *
@@ -266,8 +268,7 @@ public class RingtonePreference extends DialogPreference {
 
         List<CharSequence> entries = getEntries();
         CharSequence[] items = entries.toArray(new CharSequence[entries.size()]);
-        clickedDialogEntryIndex = getValueIndex();
-        builder.setSingleChoiceItems(items, clickedDialogEntryIndex, this);
+        builder.setSingleChoiceItems(items, getValueIndex(), this);
         builder.setPositiveButton(R.string.ok, this);
         builder.setNegativeButton(R.string.cancel, this);
     }
@@ -286,8 +287,8 @@ public class RingtonePreference extends DialogPreference {
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
 
-        if (positiveResult && clickedDialogEntryIndex >= 0) {
-            Uri uri = getRingtoneUri(clickedDialogEntryIndex);
+        if (positiveResult) {
+            Uri uri = value;
             if (callChangeListener(uri != null ? uri.toString() : SILENT_PATH)) {
                 onSaveRingtone(uri);
             }
@@ -341,7 +342,7 @@ public class RingtonePreference extends DialogPreference {
     }
 
     private void playRingtone(int position, int delay) {
-        clickedDialogEntryIndex = position;
+        value = getRingtoneUri(position);
 
         if (ringtoneSample != null) {
             ringtoneSample.stop();
@@ -417,5 +418,57 @@ public class RingtonePreference extends DialogPreference {
             return ringtone.getTitle(context);
         }
         return null;
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Parcelable superState = super.onSaveInstanceState();
+
+        final SavedState myState = new SavedState(superState);
+        myState.value = this.value;
+        return myState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state == null || !(state instanceof SavedState)) {
+            // Didn't save state for us in onSaveInstanceState
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState myState = (SavedState) state;
+        super.onRestoreInstanceState(myState.getSuperState());
+        this.value = myState.value;
+    }
+
+    private static class SavedState extends BaseSavedState {
+        Uri value;
+
+        public SavedState(Parcel source) {
+            super(source);
+            value = Uri.CREATOR.createFromParcel(source);
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            Uri.writeToParcel(dest, value);
+        }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
     }
 }
