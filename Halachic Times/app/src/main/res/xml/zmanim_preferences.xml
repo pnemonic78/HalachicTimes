@@ -233,7 +233,7 @@
             android:value="burn_chametz.reminder"/>
     </PreferenceScreen>
     <ListPreference
-        android:defaultValue="b"
+        android:defaultValue="@string/omer_value_b"
         android:entries="@array/omer_entries"
         android:entryValues="@array/omer_values"
         android:key="omer"

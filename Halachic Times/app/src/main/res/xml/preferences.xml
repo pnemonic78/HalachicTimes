@@ -7,7 +7,7 @@
             android:key="past"
             android:title="@string/past_title"/>
         <ListPreference
-            android:defaultValue="4"
+            android:defaultValue="@string/reminder_stream_value_alarm"
             android:entries="@array/reminder_stream_entries"
             android:entryValues="@array/reminder_stream_values"
             android:icon="@drawable/ic_settings_alarm"
@@ -15,7 +15,7 @@
             android:summary="@string/reminder_stream_alarm"
             android:title="@string/reminder_stream_title"/>
         <net.sf.preference.RingtonePreference
-            android:defaultValue="content://settings/system/alarm_alert"
+            android:defaultValue="@string/reminder_ringtone_alarm"
             android:icon="@drawable/ic_settings_tone"
             android:key="reminder.ringtone"
             android:ringtoneType="alarm"
@@ -25,7 +25,7 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <ListPreference
-            android:defaultValue="decimal"
+            android:defaultValue="@string/coords_format_value_decimal"
             android:entries="@array/coords_format_entries"
             android:entryValues="@array/coords_format_values"
             android:key="coords.format"
@@ -44,7 +44,7 @@
             android:key="summaries.visible"
             android:title="@string/summaries_title"/>
         <ListPreference
-            android:defaultValue="dark"
+            android:defaultValue="@string/theme_value_dark"
             android:entries="@array/list_theme_entries"
             android:entryValues="@array/list_theme_values"
             android:key="theme"
@@ -53,7 +53,7 @@
     <PreferenceCategory android:title="@string/pref_zmanim_title">
         <PreferenceScreen android:title="@string/hour">
             <ListPreference
-                android:defaultValue="GRA"
+                android:defaultValue="@string/opinion_value_gra"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/hour_entries"
                 android:entryValues="@array/hour_values"
@@ -71,7 +71,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/dawn">
             <ListPreference
-                android:defaultValue="16.1"
+                android:defaultValue="@string/opinion_value_16"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/dawn_entries"
                 android:entryValues="@array/dawn_values"
@@ -128,7 +128,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/tallis">
             <ListPreference
-                android:defaultValue="11.5"
+                android:defaultValue="@string/opinion_value_11_5"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/tallis_entries"
                 android:entryValues="@array/tallis_values"
@@ -185,7 +185,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/sunrise">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_level"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/sunrise_entries"
                 android:entryValues="@array/sunrise_values"
@@ -242,7 +242,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/shema">
             <ListPreference
-                android:defaultValue="MGA"
+                android:defaultValue="@string/opinion_value_mga"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/shema_entries"
                 android:entryValues="@array/shema_values"
@@ -299,7 +299,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/prayers">
             <ListPreference
-                android:defaultValue="MGA"
+                android:defaultValue="@string/opinion_value_mga"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/prayers_entries"
                 android:entryValues="@array/prayers_values"
@@ -356,7 +356,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/midday">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_solar"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/midday_entries"
                 android:entryValues="@array/midday_values"
@@ -413,7 +413,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/earliest_mincha">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_default"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/earliest_mincha_entries"
                 android:entryValues="@array/earliest_mincha_values"
@@ -470,7 +470,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/mincha">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_default"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/mincha_entries"
                 android:entryValues="@array/mincha_values"
@@ -527,7 +527,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/plug_hamincha">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_16_sunset"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/plug_hamincha_entries"
                 android:entryValues="@array/plug_hamincha_values"
@@ -584,7 +584,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/candles">
             <net.sf.preference.SeekBarDialogPreference
-                android:defaultValue="22"
+                android:defaultValue="@integer/opinion_candles_defaultValue"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:dialogLayout="@layout/candles_seek"
                 android:dialogTitle="@string/opinion"
@@ -596,7 +596,7 @@
                 android:title="@string/opinion"/>
 
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_sunset"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/candles_chanukka_entries"
                 android:entryValues="@array/candles_chanukka_values"
@@ -659,7 +659,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/sunset">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_sea"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/sunset_entries"
                 android:entryValues="@array/sunset_values"
@@ -716,7 +716,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/twilight">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_2_stars"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/twilight_entries"
                 android:entryValues="@array/twilight_values"
@@ -773,7 +773,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/nightfall">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_3_stars"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/nightfall_entries"
                 android:entryValues="@array/nightfall_values"
@@ -830,7 +830,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/midnight">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_solar"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/midnight_entries"
                 android:entryValues="@array/midnight_values"
@@ -887,7 +887,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/levana_earliest">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_3_days"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/levana_earliest_entries"
                 android:entryValues="@array/levana_earliest_values"
@@ -944,7 +944,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/levana_latest">
             <ListPreference
-                android:defaultValue=""
+                android:defaultValue="@string/opinion_value_half"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/levana_latest_entries"
                 android:entryValues="@array/levana_latest_values"
@@ -1001,7 +1001,7 @@
         </PreferenceScreen>
         <PreferenceScreen android:title="@string/burn_chametz">
             <ListPreference
-                android:defaultValue="GRA"
+                android:defaultValue="@string/opinion_value_gra"
                 android:dialogIcon="@drawable/ic_settings_opinion"
                 android:entries="@array/burn_chametz_entries"
                 android:entryValues="@array/burn_chametz_values"
@@ -1057,7 +1057,7 @@
                 android:title="@string/emphasis_title"/>
         </PreferenceScreen>
         <ListPreference
-            android:defaultValue="b"
+            android:defaultValue="@string/omer_value_b"
             android:entries="@array/omer_entries"
             android:entryValues="@array/omer_values"
             android:key="omer"

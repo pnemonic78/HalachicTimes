@@ -6,7 +6,7 @@
         android:key="past"
         android:title="@string/past_title"/>
     <ListPreference
-        android:defaultValue="4"
+        android:defaultValue="@string/reminder_stream_value_alarm"
         android:entries="@array/reminder_stream_entries"
         android:entryValues="@array/reminder_stream_values"
         android:icon="@drawable/ic_settings_alarm"

@@ -2,22 +2,22 @@
 <resources>
 
     <string-array name="hour_values" translatable="false">
-        <item>GRA</item>
-        <item>AT</item>
-        <item>60</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>MGA</item>
-        <item>16.1</item>
-        <item>18</item>
-        <item>19.8</item>
-        <item>90</item>
-        <item>90_zmanis</item>
-        <item>96</item>
-        <item>96_zmanis</item>
-        <item>26</item>
-        <item>120</item>
-        <item>120_zmanis</item>
+        <item>@string/opinion_value_gra</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_26</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
     </string-array>
     <string-array name="hour_entries" translatable="false">
         <item>@string/hour_gra</item>
@@ -38,19 +38,19 @@
         <item>@string/hour_120_zmanis</item>
     </string-array>
     <string-array name="dawn_values" translatable="false">
-        <item>19.8</item>
-        <item>120</item>
-        <item>120_zmanis</item>
-        <item>18</item>
-        <item>26</item>
-        <item>16.1</item>
-        <item>96</item>
-        <item>96_zmanis</item>
-        <item>90</item>
-        <item>90_zmanis</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>60</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_26</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_60</item>
     </string-array>
     <string-array name="dawn_entries" translatable="false">
         <item>@string/dawn_19</item>
@@ -68,9 +68,9 @@
         <item>@string/dawn_60</item>
     </string-array>
     <string-array name="tallis_values" translatable="false">
-        <item>11.5</item>
-        <item>11</item>
-        <item>10.2</item>
+        <item>@string/opinion_value_11_5</item>
+        <item>@string/opinion_value_11</item>
+        <item>@string/opinion_value_10</item>
     </string-array>
     <string-array name="tallis_entries" translatable="false">
         <item>@string/tallis_summary</item>
@@ -78,31 +78,31 @@
         <item>@string/tallis_10</item>
     </string-array>
     <string-array name="sunrise_values" translatable="false">
-        <item></item>
-        <item>sea</item>
+        <item>@string/opinion_value_level</item>
+        <item>@string/opinion_value_sea</item>
     </string-array>
     <string-array name="sunrise_entries" translatable="false">
         <item>@string/sunrise_summary</item>
         <item>@string/sunrise_sea</item>
     </string-array>
     <string-array name="shema_values" translatable="false">
-        <item>16.1_sunset</item>
-        <item>7.083</item>
-        <item>19.8</item>
-        <item>120</item>
-        <item>18</item>
-        <item>16.1</item>
-        <item>96</item>
-        <item>96_zmanis</item>
-        <item>90</item>
-        <item>90_zmanis</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>MGA</item>
-        <item>AT</item>
-        <item>3</item>
-        <item>fixed</item>
-        <item>GRA</item>
+        <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_3</item>
+        <item>@string/opinion_value_fixed</item>
+        <item>@string/opinion_value_gra</item>
     </string-array>
     <string-array name="shema_entries" translatable="false">
         <item>@string/shema_16_sunset</item>
@@ -124,21 +124,21 @@
         <item>@string/shema_gra</item>
     </string-array>
     <string-array name="prayers_values" translatable="false">
-        <item>120</item>
-        <item>96</item>
-        <item>96_zmanis</item>
-        <item>19.8</item>
-        <item>90</item>
-        <item>90_zmanis</item>
-        <item>AT</item>
-        <item>18</item>
-        <item>fixed</item>
-        <item>16.1</item>
-        <item>MGA</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>2</item>
-        <item>GRA</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_fixed</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_2</item>
+        <item>@string/opinion_value_gra</item>
     </string-array>
     <string-array name="prayers_entries" translatable="false">
         <item>@string/prayers_120</item>
@@ -158,9 +158,9 @@
         <item>@string/prayers_gra</item>
     </string-array>
     <string-array name="burn_chametz_values" translatable="false">
-        <item>16.1</item>
-        <item>72</item>
-        <item>GRA</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_gra</item>
     </string-array>
     <string-array name="burn_chametz_entries" translatable="false">
         <item>@string/burn_chametz_16</item>
@@ -168,19 +168,19 @@
         <item>@string/burn_chametz_gra</item>
     </string-array>
     <string-array name="midday_values" translatable="false">
-        <item></item>
-        <item>fixed</item>
+        <item>@string/opinion_value_solar</item>
+        <item>@string/opinion_value_fixed</item>
     </string-array>
     <string-array name="midday_entries" translatable="false">
         <item>@string/midday_summary</item>
         <item>@string/midday_fixed</item>
     </string-array>
     <string-array name="earliest_mincha_values" translatable="false">
-        <item>AT</item>
-        <item></item>
-        <item>72</item>
-        <item>30</item>
-        <item>16.1</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_30</item>
+        <item>@string/opinion_value_16</item>
     </string-array>
     <string-array name="earliest_mincha_entries" translatable="false">
         <item>@string/earliest_mincha_ateret</item>
@@ -190,10 +190,10 @@
         <item>@string/earliest_mincha_16</item>
     </string-array>
     <string-array name="mincha_values" translatable="false">
-        <item></item>
-        <item>AT</item>
-        <item>72</item>
-        <item>16.1</item>
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_16</item>
     </string-array>
     <string-array name="mincha_entries" translatable="false">
         <item>@string/mincha_summary</item>
@@ -202,23 +202,23 @@
         <item>@string/mincha_16</item>
     </string-array>
     <string-array name="plug_hamincha_values" translatable="false">
-        <item>alos</item>
-        <item></item>
-        <item>16.1_alos</item>
-        <item>AT</item>
-        <item>60</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>16.1</item>
-        <item>18</item>
-        <item>90</item>
-        <item>90_zmanis</item>
-        <item>19.8</item>
-        <item>96</item>
-        <item>96_zmanis</item>
-        <item>120</item>
-        <item>120_zmanis</item>
-        <item>26</item>
+        <item>@string/opinion_value_alos</item>
+        <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_16_alos</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_26</item>
     </string-array>
     <string-array name="plug_hamincha_entries" translatable="false">
         <item>@string/plug_hamincha_16_sunset</item>
@@ -240,18 +240,18 @@
         <item>@string/plug_hamincha_26</item>
     </string-array>
     <string-array name="sunset_values" translatable="false">
-        <item></item>
-        <item>level</item>
+        <item>@string/opinion_value_sea</item>
+        <item>@string/opinion_value_level</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
         <item>@string/sunset_sea</item>
         <item>@string/sunset_summary</item>
     </string-array>
     <string-array name="twilight_values" translatable="false">
-        <item>7.083</item>
-        <item></item>
-        <item>13.24</item>
-        <item>58.5</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_2_stars</item>
+        <item>@string/opinion_value_13</item>
+        <item>@string/opinion_value_58</item>
     </string-array>
     <string-array name="twilight_entries" translatable="false">
         <item>@string/twilight_7_083</item>
@@ -260,30 +260,30 @@
         <item>@string/twilight_58</item>
     </string-array>
     <string-array name="nightfall_values" translatable="false">
-        <item>3.65</item>
-        <item>3.676</item>
-        <item>4.37</item>
-        <item>4.61</item>
-        <item>4.8</item>
-        <item>5.88</item>
-        <item>5.95</item>
-        <item>7.083</item>
-        <item></item>
-        <item>8.5</item>
-        <item>AT</item>
-        <item>60</item>
-        <item>72</item>
-        <item>72_zmanis</item>
-        <item>16.1</item>
-        <item>18</item>
-        <item>90</item>
-        <item>90_zmanis</item>
-        <item>19.8</item>
-        <item>96</item>
-        <item>96_zmanis</item>
-        <item>120</item>
-        <item>120_zmanis</item>
-        <item>26</item>
+        <item>@string/opinion_value_3_65</item>
+        <item>@string/opinion_value_3_676</item>
+        <item>@string/opinion_value_4_37</item>
+        <item>@string/opinion_value_4_61</item>
+        <item>@string/opinion_value_4_8</item>
+        <item>@string/opinion_value_5_88</item>
+        <item>@string/opinion_value_5_95</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_3_stars</item>
+        <item>@string/opinion_value_8</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_26</item>
     </string-array>
     <string-array name="nightfall_entries" translatable="false">
         <item>@string/nightfall_3_65</item>
@@ -312,9 +312,9 @@
         <item>@string/nightfall_26</item>
     </string-array>
     <string-array name="midnight_values" translatable="false">
-        <item></item>
-        <item>12</item>
-        <item>6</item>
+        <item>@string/opinion_value_solar</item>
+        <item>@string/opinion_value_12</item>
+        <item>@string/opinion_value_6</item>
     </string-array>
     <string-array name="midnight_entries" translatable="false">
         <item>@string/midnight_summary</item>
@@ -322,9 +322,9 @@
         <item>@string/midnight_6</item>
     </string-array>
     <string-array name="candles_chanukka_values" translatable="false">
-        <item></item>
-        <item>twilight</item>
-        <item>nightfall</item>
+        <item>@string/opinion_value_sunset</item>
+        <item>@string/opinion_value_twilight</item>
+        <item>@string/opinion_value_nightfall</item>
     </string-array>
     <string-array name="candles_chanukka_entries" translatable="false">
         <item>@string/sunset</item>
@@ -332,24 +332,24 @@
         <item>@string/nightfall</item>
     </string-array>
     <string-array name="levana_earliest_values" translatable="false">
-        <item></item>
-        <item>7</item>
+        <item>@string/opinion_value_3_days</item>
+        <item>@string/opinion_value_7</item>
     </string-array>
     <string-array name="levana_earliest_entries" translatable="false">
         <item>@string/levana_earliest_summary</item>
         <item>@string/levana_7</item>
     </string-array>
     <string-array name="levana_latest_values" translatable="false">
-        <item></item>
-        <item>15</item>
+        <item>@string/opinion_value_half</item>
+        <item>@string/opinion_value_15</item>
     </string-array>
     <string-array name="levana_latest_entries" translatable="false">
         <item>@string/levana_latest_summary</item>
         <item>@string/levana_15</item>
     </string-array>
     <string-array name="coords_format_values" translatable="false">
-        <item>decimal</item>
-        <item>sexagesimal</item>
+        <item>@string/coords_format_value_decimal</item>
+        <item>@string/coords_format_value_sexagesimal</item>
     </string-array>
     <string-array name="coords_format_entries" translatable="false">
         <item>@string/coords_format_decimal</item>
@@ -398,17 +398,17 @@
         <item>Adar I</item>
     </string-array>
     <string-array name="reminder_stream_values" translatable="false">
-        <item>4</item>
-        <item>5</item>
+        <item>@string/reminder_stream_value_alarm</item>
+        <item>@string/reminder_stream_value_notification</item>
     </string-array>
     <string-array name="reminder_stream_entries" translatable="false">
         <item>@string/reminder_stream_alarm</item>
         <item>@string/reminder_stream_notification</item>
     </string-array>
     <string-array name="list_theme_values" translatable="false">
-        <item></item>
-        <item>dark</item>
-        <item>light</item>
+        <item>@string/theme_value_none</item>
+        <item>@string/theme_value_dark</item>
+        <item>@string/theme_value_light</item>
     </string-array>
     <string-array name="list_theme_entries" translatable="false">
         <item>@string/theme_none</item>
@@ -416,9 +416,9 @@
         <item>@string/theme_light</item>
     </string-array>
     <string-array name="omer_values" translatable="false">
-        <item></item>
-        <item>b</item>
-        <item>l</item>
+        <item>@string/omer_value_off</item>
+        <item>@string/omer_value_b</item>
+        <item>@string/omer_value_l</item>
     </string-array>
     <string-array name="omer_entries" translatable="false">
         <item>@string/omer_off</item>

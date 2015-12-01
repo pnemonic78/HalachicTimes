@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:defaultValue="11.5"
+        android:defaultValue="@string/opinion_value_11_5"
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/tallis_entries"
         android:entryValues="@array/tallis_values"

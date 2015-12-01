@@ -209,7 +209,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
     }
 
     /**
-     * Add a location listener.
+     * Register a location listener to receive location notifications.
      *
      * @param listener
      *         the listener.
@@ -222,7 +222,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
     }
 
     /**
-     * Remove a location listener.
+     * Unregister a location listener to stop receiving location notifications.
      *
      * @param listener
      *         the listener.

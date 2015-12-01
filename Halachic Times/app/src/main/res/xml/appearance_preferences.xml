@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:defaultValue="decimal"
+        android:defaultValue="@string/coords_format_value_decimal"
         android:entries="@array/coords_format_entries"
         android:entryValues="@array/coords_format_values"
         android:key="coords.format"
@@ -21,7 +21,7 @@
         android:key="summaries.visible"
         android:title="@string/summaries_title"/>
     <ListPreference
-        android:defaultValue="dark"
+        android:defaultValue="@string/theme_value_dark"
         android:entries="@array/list_theme_entries"
         android:entryValues="@array/list_theme_values"
         android:key="theme"
