@@ -10,7 +10,7 @@
         android:key="mincha"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
-        android:defaultValue=""
+        android:defaultValue="@string/reminder_defaultValue"
         android:dialogIcon="@android:drawable/ic_dialog_alert"
         android:entries="@array/reminder_entries"
         android:entryValues="@array/reminder_values"
