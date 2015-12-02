@@ -58,25 +58,32 @@
 
     <string name="coords_format_value_decimal" translatable="false">decimal</string>
     <string name="coords_format_value_sexagesimal" translatable="false">sexagesimal</string>
+    <string name="coords_format_defaultValue" translatable="false">@string/coords_format_value_decimal</string>
 
     <string name="reminder_stream_value_alarm" translatable="false">4</string>
     <string name="reminder_stream_value_notification" translatable="false">5</string>
-    <string name="reminder_ringtone_alarm" translatable="false">content://settings/system/alarm_alert</string>
+    <string name="reminder_stream_defaultValue" translatable="false">@string/reminder_stream_value_alarm</string>
+    <string name="reminder_ringtone_defaultValue" translatable="false">content://settings/system/alarm_alert</string>
     <string name="reminder_defaultValue" translatable="false"/>
-    <bool name="reminder_day_1" translatable="false">true</bool>
-    <bool name="reminder_day_2" translatable="false">true</bool>
-    <bool name="reminder_day_3" translatable="false">true</bool>
-    <bool name="reminder_day_4" translatable="false">true</bool>
-    <bool name="reminder_day_5" translatable="false">true</bool>
-    <bool name="reminder_day_6" translatable="false">true</bool>
-    <bool name="reminder_day_7" translatable="false">false</bool>
+    <bool name="reminder_day_1_defaultValue" translatable="false">true</bool>
+    <bool name="reminder_day_2_defaultValue" translatable="false">true</bool>
+    <bool name="reminder_day_3_defaultValue" translatable="false">true</bool>
+    <bool name="reminder_day_4_defaultValue" translatable="false">true</bool>
+    <bool name="reminder_day_5_defaultValue" translatable="false">true</bool>
+    <bool name="reminder_day_6_defaultValue" translatable="false">true</bool>
+    <bool name="reminder_day_7_defaultValue" translatable="false">false</bool>
 
     <string name="theme_value_none" translatable="false"/>
     <string name="theme_value_dark" translatable="false">dark</string>
     <string name="theme_value_light" translatable="false">light</string>
+    <string name="theme_defaultValue" translatable="false">@string/theme_value_dark</string>
 
     <string name="omer_value_off" translatable="false"/>
     <string name="omer_value_b" translatable="false">b</string>
     <string name="omer_value_l" translatable="false">l</string>
+    <string name="omer_defaultValue" translatable="false">@string/omer_value_b</string>
+
+    <bool name="animate_defaultValue" translatable="false">true</bool>
+    <bool name="emphasis_defaultValue" translatable="false">false</bool>
 
 </resources>

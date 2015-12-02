@@ -14,7 +14,7 @@
         android:summary="@string/reminder_stream_alarm"
         android:title="@string/reminder_stream_title"/>
     <net.sf.preference.RingtonePreference
-        android:defaultValue="@string/reminder_ringtone_alarm"
+        android:defaultValue="@string/reminder_ringtone_defaultValue"
         android:icon="@drawable/ic_settings_tone"
         android:key="reminder.ringtone"
         android:ringtoneType="alarm"

@@ -14,7 +14,7 @@
         android:key="hour.visible"
         android:title="@string/hour_title"/>
     <CheckBoxPreference
-        android:defaultValue="false"
+        android:defaultValue="@bool/emphasis_defaultValue"
         android:key="hour.emphasis"
         android:title="@string/emphasis_title"/>
 
