@@ -89,5 +89,6 @@
 
     <bool name="seconds_visible_defaultValue">false</bool>
     <bool name="summaries_visible_defaultValue">true</bool>
+    <bool name="past_defaultValue">true</bool>
 
 </resources>

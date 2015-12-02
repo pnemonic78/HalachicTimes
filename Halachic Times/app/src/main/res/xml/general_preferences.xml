@@ -2,16 +2,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <CheckBoxPreference
-        android:defaultValue="true"
+        android:defaultValue="@bool/past_defaultValue"
         android:key="past"
         android:title="@string/past_title"/>
     <ListPreference
-        android:defaultValue="@string/reminder_stream_value_alarm"
+        android:defaultValue="@string/reminder_stream_defaultValue"
         android:entries="@array/reminder_stream_entries"
         android:entryValues="@array/reminder_stream_values"
         android:icon="@drawable/ic_settings_alarm"
         android:key="reminder.stream"
-        android:summary="@string/reminder_stream_alarm"
         android:title="@string/reminder_stream_title"/>
     <net.sf.preference.RingtonePreference
         android:defaultValue="@string/reminder_ringtone_defaultValue"
