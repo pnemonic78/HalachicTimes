@@ -103,10 +103,10 @@
     <string name="coords_format_value_decimal" translatable="false">decimal</string>
     <string name="coords_format_value_sexagesimal" translatable="false">sexagesimal</string>
     <string name="coords_format_defaultValue" translatable="false">@string/coords_format_value_decimal</string>
-    <bool name="coords_visible_defaultValue">true</bool>
+    <bool name="coords_visible_defaultValue" translatable="false">true</bool>
 
-    <bool name="seconds_visible_defaultValue">false</bool>
-    <bool name="summaries_visible_defaultValue">true</bool>
-    <bool name="past_defaultValue">true</bool>
+    <bool name="seconds_visible_defaultValue" translatable="false">false</bool>
+    <bool name="summaries_visible_defaultValue" translatable="false">true</bool>
+    <bool name="past_defaultValue" translatable="false">true</bool>
 
 </resources>
