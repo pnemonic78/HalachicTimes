@@ -34,7 +34,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -81,8 +81,33 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         addPreferencesFromResource(R.xml.preferences);
+        PreferenceScreen screen = getPreferenceScreen();
+        screen.setTitle(getTitle());
+        replaceScreen(screen, "general", R.xml.general_preferences);
+        replaceScreen(screen, "appearance", R.xml.appearance_preferences);
+        PreferenceScreen screenZmanim = replaceScreen(screen, "zmanim", R.xml.zmanim_preferences);
+        replaceScreen(screen, "privacy", R.xml.privacy_preferences);
+        replaceScreen(screen, "about", R.xml.about_preferences);
+
+        replaceScreen(screenZmanim, "hour_screen", R.xml.zman_hour_preferences);
+        replaceScreen(screenZmanim, "dawn_screen", R.xml.zman_dawn_preferences);
+        replaceScreen(screenZmanim, "tallis_screen", R.xml.zman_tallis_preferences);
+        replaceScreen(screenZmanim, "sunrise_screen", R.xml.zman_sunrise_preferences);
+        replaceScreen(screenZmanim, "shema_screen", R.xml.zman_shema_preferences);
+        replaceScreen(screenZmanim, "prayers_screen", R.xml.zman_prayers_preferences);
+        replaceScreen(screenZmanim, "midday_screen", R.xml.zman_midday_preferences);
+        replaceScreen(screenZmanim, "earliest_mincha_screen", R.xml.zman_earliest_mincha_preferences);
+        replaceScreen(screenZmanim, "mincha_screen", R.xml.zman_mincha_preferences);
+        replaceScreen(screenZmanim, "plug_hamincha_screen", R.xml.zman_plug_hamincha_preferences);
+        replaceScreen(screenZmanim, "candles_screen", R.xml.zman_candles_preferences);
+        replaceScreen(screenZmanim, "sunset_screen", R.xml.zman_sunset_preferences);
+        replaceScreen(screenZmanim, "twilight_screen", R.xml.zman_twilight_preferences);
+        replaceScreen(screenZmanim, "nightfall_screen", R.xml.zman_nightfall_preferences);
+        replaceScreen(screenZmanim, "midnight_screen", R.xml.zman_midnight_preferences);
+        replaceScreen(screenZmanim, "levana_earliest_screen", R.xml.zman_levana_earliest_preferences);
+        replaceScreen(screenZmanim, "levana_latest_screen", R.xml.zman_levana_latest_preferences);
+        replaceScreen(screenZmanim, "burn_chametz_screen", R.xml.zman_chametz_preferences);
 
         reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
         initList(ZmanimSettings.KEY_REMINDER_STREAM);
@@ -106,6 +131,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_OPINION_MINCHA);
         initList(ZmanimSettings.KEY_OPINION_PLUG_MINCHA);
         initList(ZmanimSettings.KEY_OPINION_SUNSET);
+        initList(ZmanimSettings.KEY_OPINION_CANDLES_CHANUKKA);
         initList(ZmanimSettings.KEY_OPINION_TWILIGHT);
         initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
         initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
@@ -424,5 +450,25 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             return checkBox;
         }
         return null;
+    }
+
+    protected PreferenceScreen addScreen(PreferenceScreen parent, int titleId, int xmlId) {
+        PreferenceScreen current = getPreferenceScreen();
+        PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this);
+        screen.setTitle(titleId);
+        setPreferenceScreen(screen);
+        addPreferencesFromResource(xmlId);
+        parent.addPreference(screen);
+        setPreferenceScreen((current != null) ? current : parent);
+        return screen;
+    }
+
+    private PreferenceScreen replaceScreen(PreferenceScreen parent, String key, int xmlId) {
+        PreferenceScreen current = getPreferenceScreen();
+        PreferenceScreen screen = (PreferenceScreen) parent.findPreference(key);
+        setPreferenceScreen(screen);
+        addPreferencesFromResource(xmlId);
+        setPreferenceScreen((current != null) ? current : parent);
+        return screen;
     }
 }
