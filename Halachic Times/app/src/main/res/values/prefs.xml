@@ -56,10 +56,6 @@
 
     <integer name="opinion_candles_defaultValue" translatable="false">22</integer>
 
-    <string name="coords_format_value_decimal" translatable="false">decimal</string>
-    <string name="coords_format_value_sexagesimal" translatable="false">sexagesimal</string>
-    <string name="coords_format_defaultValue" translatable="false">@string/coords_format_value_decimal</string>
-
     <string name="reminder_stream_value_alarm" translatable="false">4</string>
     <string name="reminder_stream_value_notification" translatable="false">5</string>
     <string name="reminder_stream_defaultValue" translatable="false">@string/reminder_stream_value_alarm</string>
@@ -85,5 +81,13 @@
 
     <bool name="animate_defaultValue" translatable="false">true</bool>
     <bool name="emphasis_defaultValue" translatable="false">false</bool>
+
+    <string name="coords_format_value_decimal" translatable="false">decimal</string>
+    <string name="coords_format_value_sexagesimal" translatable="false">sexagesimal</string>
+    <string name="coords_format_defaultValue" translatable="false">@string/coords_format_value_decimal</string>
+    <bool name="coords_visible_defaultValue">true</bool>
+
+    <bool name="seconds_visible_defaultValue">false</bool>
+    <bool name="summaries_visible_defaultValue">true</bool>
 
 </resources>
