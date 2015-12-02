@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:defaultValue="@string/opinion_value_16_sunset"
+        android:defaultValue="@string/plug_hamincha_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/plug_hamincha_entries"
         android:entryValues="@array/plug_hamincha_values"

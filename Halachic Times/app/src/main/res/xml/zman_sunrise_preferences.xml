@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:defaultValue="@string/opinion_value_level"
+        android:defaultValue="@string/sunrise_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/sunrise_entries"
         android:entryValues="@array/sunrise_values"

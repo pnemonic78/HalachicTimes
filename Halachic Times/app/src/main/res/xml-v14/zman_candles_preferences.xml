@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <net.sf.preference.SeekBarDialogPreference
-        android:defaultValue="@integer/opinion_candles_defaultValue"
+        android:defaultValue="@integer/candles_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:dialogLayout="@layout/candles_seek"
         android:dialogTitle="@string/opinion"
