@@ -231,6 +231,9 @@ public class ZmanimSettings {
     /** Omer count has "LaOmer" suffix. */
     public static String OMER_L = "l";
 
+    /** Unknown date. */
+    public static final long NEVER = Long.MIN_VALUE;
+
     private Context context;
     private final SharedPreferences preferences;
 
@@ -555,31 +558,51 @@ public class ZmanimSettings {
     }
 
     /**
-     * Get the reminder.
+     * Get reminder as the number of minutes before the zman.
      *
      * @param id
-     *         the time id.
-     * @return the number of minutes before the prayer, in milliseconds - positive value when no reminder.
+     *         the zman id.
+     * @return the number of minutes in milliseconds - negative value when no reminder.
      */
-    public long getReminder(int id) {
+    public long getReminderBefore(int id) {
         String key = getKey(id);
         if (key != null)
-            return getReminder(key + REMINDER_SUFFIX);
-        return Long.MAX_VALUE;
+            return getReminderBefore(key + REMINDER_SUFFIX);
+        return NEVER;
     }
 
     /**
-     * Get the reminder.
+     * Get reminder as the number of minutes before the zman.
      *
      * @param key
-     *         the key.
-     * @return the number of minutes before the prayer, in milliseconds - positive value when no reminder.
+     *         the zman reminder key.
+     * @return the number of minutes in milliseconds - negative value when no reminder.
      */
-    public long getReminder(String key) {
+    public long getReminderBefore(String key) {
         String value = preferences.getString(key, context.getString(R.string.reminder_defaultValue));
         if (!TextUtils.isEmpty(value))
             return Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
-        return Long.MAX_VALUE;
+        return NEVER;
+    }
+
+    /**
+     * Get reminder of the zman. The reminder is either the number of minutes before the zman, or an absolute time.
+     *
+     * @param id
+     *         the zman id.
+     * @param time
+     *         the zman time.
+     * @return the reminder in milliseconds - {@code #NEVER} when no reminder.
+     */
+    public long getReminder(int id, long time) {
+        if (time == NEVER) {
+            return NEVER;
+        }
+        long before = getReminderBefore(id);
+        if (before < 0L) {
+            return NEVER;
+        }
+        return time - before;
     }
 
     /**

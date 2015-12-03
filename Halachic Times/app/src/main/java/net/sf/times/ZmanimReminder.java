@@ -153,11 +153,9 @@ public class ZmanimReminder extends BroadcastReceiver {
         final long soon = now + SOON_DELTA;
         ZmanimItem item;
         ZmanimItem itemFirst = null;
-        long before;
         long when;
         long whenFirst = Long.MAX_VALUE;
         boolean nextDay = true;
-        int id;
         int count;
 
         JewishCalendar jcal = new JewishCalendar(gcal);
@@ -178,11 +176,9 @@ public class ZmanimReminder extends BroadcastReceiver {
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
-                id = item.titleId;
-                before = settings.getReminder(id);
+                when = settings.getReminder(item.titleId, item.time);
 
-                if ((before >= 0L) && (item.time != ZmanimAdapter.NEVER) && allowReminder(item, jcal, settings)) {
-                    when = item.time - before;
+                if ((when != ZmanimSettings.NEVER) && allowReminder(item, jcal, settings)) {
                     if (nextDay && (latest < was) && (was <= when) && (when <= soon)) {
                         notifyNow(context, settings, item);
                         nextDay = false;
