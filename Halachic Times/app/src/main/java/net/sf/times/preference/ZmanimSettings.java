@@ -318,7 +318,7 @@ public class ZmanimSettings {
      * @return {@code true} to show coordinates.
      */
     public boolean isCoordinates() {
-        return preferences.getBoolean(KEY_COORDS, true);
+        return preferences.getBoolean(KEY_COORDS, context.getResources().getBoolean(R.bool.coords_visible_defaultValue));
     }
 
     /**
@@ -327,7 +327,7 @@ public class ZmanimSettings {
      * @return the format.
      */
     public String getCoordinatesFormat() {
-        return preferences.getString(KEY_COORDS_FORMAT, FORMAT_DECIMAL);
+        return preferences.getString(KEY_COORDS_FORMAT, context.getString(R.string.coords_format_defaultValue));
     }
 
     /**
@@ -336,7 +336,7 @@ public class ZmanimSettings {
      * @return {@code true} to show seconds.
      */
     public boolean isSeconds() {
-        return preferences.getBoolean(KEY_SECONDS, false);
+        return preferences.getBoolean(KEY_SECONDS, context.getResources().getBoolean(R.bool.seconds_visible_defaultValue));
     }
 
     /**
@@ -345,7 +345,7 @@ public class ZmanimSettings {
      * @return {@code true} to show summaries.
      */
     public boolean isSummaries() {
-        return preferences.getBoolean(KEY_SUMMARIES, true);
+        return preferences.getBoolean(KEY_SUMMARIES, context.getResources().getBoolean(R.bool.summaries_visible_defaultValue));
     }
 
     /**
@@ -354,7 +354,7 @@ public class ZmanimSettings {
      * @return {@code true} if older times are not grayed.
      */
     public boolean isPast() {
-        return preferences.getBoolean(KEY_PAST, true);
+        return preferences.getBoolean(KEY_PAST, context.getResources().getBoolean(R.bool.past_defaultValue));
     }
 
     /**
@@ -363,7 +363,7 @@ public class ZmanimSettings {
      * @return the theme resource id.
      */
     public int getTheme() {
-        String value = preferences.getString(KEY_THEME, LIST_THEME_DARK);
+        String value = preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue));
         if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value) || !preferences.getBoolean(KEY_BG_GRADIENT, true)) {
             return R.style.Theme_Zmanim_NoGradient;
         }
@@ -379,7 +379,7 @@ public class ZmanimSettings {
      * @return {@code true} to show hour.
      */
     public boolean isHour() {
-        return preferences.getBoolean(KEY_HOUR, false);
+        return preferences.getBoolean(KEY_HOUR, context.getResources().getBoolean(R.bool.hour_visible_defaultValue));
     }
 
     /**
@@ -389,7 +389,7 @@ public class ZmanimSettings {
      * @return the number of minutes.
      */
     public int getCandleLightingOffset() {
-        return preferences.getInt(KEY_OPINION_CANDLES, 22);
+        return preferences.getInt(KEY_OPINION_CANDLES, context.getResources().getInteger(R.integer.candles_defaultValue));
     }
 
     /**
@@ -610,7 +610,7 @@ public class ZmanimSettings {
      * @return {@code true} if candles animations enabled.
      */
     public boolean isCandlesAnimated() {
-        return preferences.getBoolean(KEY_ANIM_CANDLES, true);
+        return preferences.getBoolean(KEY_ANIM_CANDLES, context.getResources().getBoolean(R.bool.animate_defaultValue));
     }
 
     /**
@@ -621,7 +621,7 @@ public class ZmanimSettings {
      * @see AudioManager#STREAM_NOTIFICATION
      */
     public int getReminderStream() {
-        return Integer.parseInt(preferences.getString(KEY_REMINDER_STREAM, String.valueOf(AudioManager.STREAM_ALARM)));
+        return Integer.parseInt(preferences.getString(KEY_REMINDER_STREAM, context.getString(R.string.reminder_stream_defaultValue)));
     }
 
     /**
@@ -647,7 +647,7 @@ public class ZmanimSettings {
     public boolean isEmphasis(int id) {
         String key = getKey(id);
         if (key != null)
-            return preferences.getBoolean(key + EMPHASIS_SUFFIX, false);
+            return preferences.getBoolean(key + EMPHASIS_SUFFIX, context.getResources().getBoolean(R.bool.emphasis_defaultValue));
         return false;
     }
 
@@ -722,7 +722,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SUNDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_1_defaultValue));
             }
         }
         return true;
@@ -733,7 +733,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_MONDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_2_defaultValue));
             }
         }
         return true;
@@ -744,7 +744,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_TUESDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_3_defaultValue));
             }
         }
         return true;
@@ -755,7 +755,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_WEDNESDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_4_defaultValue));
             }
         }
         return true;
@@ -766,7 +766,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_THURSDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_5_defaultValue));
             }
         }
         return true;
@@ -777,7 +777,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_FRIDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, true);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_6_defaultValue));
             }
         }
         return true;
@@ -788,7 +788,7 @@ public class ZmanimSettings {
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SATURDAY_SUFFIX;
             if (keyDay != null) {
-                return preferences.getBoolean(keyDay, false);
+                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_7_defaultValue));
             }
         }
         return true;

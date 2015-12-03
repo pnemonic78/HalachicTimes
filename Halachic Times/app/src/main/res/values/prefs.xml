@@ -60,6 +60,7 @@
     <string name="dawn_defaultValue" translatable="false">@string/opinion_value_16</string>
     <string name="earliest_mincha_defaultValue" translatable="false">@string/opinion_value_default</string>
     <string name="hour_defaultValue" translatable="false">@string/opinion_value_gra</string>
+    <bool name="hour_visible_defaultValue">false</bool>
     <string name="levana_earliest_defaultValue" translatable="false">@string/opinion_value_3_days</string>
     <string name="levana_latest_defaultValue" translatable="false">@string/opinion_value_half</string>
     <string name="midday_defaultValue" translatable="false">@string/opinion_value_solar</string>
