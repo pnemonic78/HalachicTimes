@@ -168,69 +168,69 @@ public class ZmanimSettings {
     /** Preference name for candle lighting animations. */
     public static final String KEY_ANIM_CANDLES = KEY_OPINION_CANDLES + ANIM_SUFFIX;
 
-    public static final String OPINION_DEFAULT = "";
-    public static final String OPINION_10_2 = "10.2";
-    public static final String OPINION_11 = "11";
-    public static final String OPINION_12 = "12";
-    public static final String OPINION_120 = "120";
-    public static final String OPINION_120_ZMANIS = "120_zmanis";
-    public static final Object OPINION_13 = "13.24";
-    public static final String OPINION_15 = "15";
-    public static final String OPINION_16_1 = "16.1";
-    public static final String OPINION_16_1_ALOS = "16.1_alos";
-    public static final String OPINION_16_1_SUNSET = "16.1_sunset";
-    public static final String OPINION_18 = "18";
-    public static final String OPINION_19_8 = "19.8";
-    public static final String OPINION_2 = "2";
-    public static final String OPINION_26 = "26";
-    public static final String OPINION_3 = "3";
-    public static final String OPINION_3_65 = "3.65";
-    public static final String OPINION_3_676 = "3.676";
-    public static final String OPINION_30 = "30";
-    public static final String OPINION_4_37 = "4.37";
-    public static final String OPINION_4_61 = "4.61";
-    public static final String OPINION_4_8 = "4.8";
-    public static final String OPINION_5_88 = "5.88";
-    public static final String OPINION_5_95 = "5.95";
-    public static final Object OPINION_58 = "58.5";
-    public static final String OPINION_6 = "6";
-    public static final String OPINION_60 = "60";
-    public static final String OPINION_7 = "7";
-    public static final String OPINION_7_083 = "7.083";
-    public static final String OPINION_72 = "72";
-    public static final String OPINION_72_ZMANIS = "72_zmanis";
-    public static final String OPINION_8_5 = "8.5";
-    public static final String OPINION_90 = "90";
-    public static final String OPINION_90_ZMANIS = "90_zmanis";
-    public static final String OPINION_96 = "96";
-    public static final String OPINION_96_ZMANIS = "96_zmanis";
-    public static final String OPINION_ATERET = "AT";
-    public static final String OPINION_GRA = "GRA";
-    public static final String OPINION_MGA = "MGA";
-    public static final String OPINION_FIXED = "fixed";
-    public static final String OPINION_LEVEL = "level";
-    public static final String OPINION_SEA = "sea";
-    public static final String OPINION_TWILIGHT = "twilight";
-    public static final String OPINION_NIGHT = "nightfall";
+    public static String OPINION_DEFAULT = "";
+    public static String OPINION_10_2 = "10.2";
+    public static String OPINION_11 = "11";
+    public static String OPINION_12 = "12";
+    public static String OPINION_120 = "120";
+    public static String OPINION_120_ZMANIS = "120_zmanis";
+    public static String OPINION_13 = "13.24";
+    public static String OPINION_15 = "15";
+    public static String OPINION_16_1 = "16.1";
+    public static String OPINION_16_1_ALOS = "16.1_alos";
+    public static String OPINION_16_1_SUNSET = "16.1_sunset";
+    public static String OPINION_18 = "18";
+    public static String OPINION_19_8 = "19.8";
+    public static String OPINION_2 = "2";
+    public static String OPINION_26 = "26";
+    public static String OPINION_3 = "3";
+    public static String OPINION_3_65 = "3.65";
+    public static String OPINION_3_676 = "3.676";
+    public static String OPINION_30 = "30";
+    public static String OPINION_4_37 = "4.37";
+    public static String OPINION_4_61 = "4.61";
+    public static String OPINION_4_8 = "4.8";
+    public static String OPINION_5_88 = "5.88";
+    public static String OPINION_5_95 = "5.95";
+    public static String OPINION_58 = "58.5";
+    public static String OPINION_6 = "6";
+    public static String OPINION_60 = "60";
+    public static String OPINION_7 = "7";
+    public static String OPINION_7_083 = "7.083";
+    public static String OPINION_72 = "72";
+    public static String OPINION_72_ZMANIS = "72_zmanis";
+    public static String OPINION_8_5 = "8.5";
+    public static String OPINION_90 = "90";
+    public static String OPINION_90_ZMANIS = "90_zmanis";
+    public static String OPINION_96 = "96";
+    public static String OPINION_96_ZMANIS = "96_zmanis";
+    public static String OPINION_ATERET = "AT";
+    public static String OPINION_GRA = "GRA";
+    public static String OPINION_MGA = "MGA";
+    public static String OPINION_FIXED = "fixed";
+    public static String OPINION_LEVEL = "level";
+    public static String OPINION_SEA = "sea";
+    public static String OPINION_TWILIGHT = "twilight";
+    public static String OPINION_NIGHT = "nightfall";
 
     /** Format the coordinates in decimal notation. */
-    public static final String FORMAT_DECIMAL = "decimal";
+    public static String FORMAT_DECIMAL = "decimal";
     /** Format the coordinates in sexagesimal notation. */
-    public static final String FORMAT_SEXIGESIMAL = "sexagesimal";
+    public static String FORMAT_SEXIGESIMAL = "sexagesimal";
 
     /** Show zmanim list without background. */
-    public static final String LIST_THEME_NONE = "";
+    public static String LIST_THEME_NONE = "";
     /** Show zmanim list with dark gradient background. */
-    public static final String LIST_THEME_DARK = "dark";
+    public static String LIST_THEME_DARK = "dark";
     /** Show zmanim list with light gradient background. */
-    public static final String LIST_THEME_LIGHT = "light";
+    public static String LIST_THEME_LIGHT = "light";
 
     /** No omer count. */
-    public static final String OMER_NONE = "";
+    public static String OMER_NONE = "";
     /** Omer count has "BaOmer" suffix. */
-    public static final String OMER_B = "b";
+    public static String OMER_B = "b";
     /** Omer count has "LaOmer" suffix. */
-    public static final String OMER_L = "l";
+    public static String OMER_L = "l";
 
     private Context context;
     private final SharedPreferences preferences;
@@ -800,6 +800,70 @@ public class ZmanimSettings {
      * @return the opinion.
      */
     public String getOmerSuffix() {
-        return preferences.getString(KEY_OPINION_OMER, OMER_B);
+        return preferences.getString(KEY_OPINION_OMER, context.getString(R.string.omer_defaultValue));
+    }
+
+    /**
+     * Initialize. Should be called only once when application created.
+     *
+     * @param context
+     *         the context.
+     */
+    public static void init(Context context) {
+        OPINION_DEFAULT = context.getString(R.string.opinion_value_default);
+        OPINION_10_2 = context.getString(R.string.opinion_value_10);
+        OPINION_11 = context.getString(R.string.opinion_value_11);
+        OPINION_12 = context.getString(R.string.opinion_value_12);
+        OPINION_120 = context.getString(R.string.opinion_value_120);
+        OPINION_120_ZMANIS = context.getString(R.string.opinion_value_120_zmanis);
+        OPINION_13 = context.getString(R.string.opinion_value_13);
+        OPINION_15 = context.getString(R.string.opinion_value_15);
+        OPINION_16_1 = context.getString(R.string.opinion_value_16);
+        OPINION_16_1_ALOS = context.getString(R.string.opinion_value_16_alos);
+        OPINION_16_1_SUNSET = context.getString(R.string.opinion_value_16_sunset);
+        OPINION_18 = context.getString(R.string.opinion_value_18);
+        OPINION_19_8 = context.getString(R.string.opinion_value_19);
+        OPINION_2 = context.getString(R.string.opinion_value_2);
+        OPINION_26 = context.getString(R.string.opinion_value_26);
+        OPINION_3 = context.getString(R.string.opinion_value_3);
+        OPINION_3_65 = context.getString(R.string.opinion_value_3_65);
+        OPINION_3_676 = context.getString(R.string.opinion_value_3_676);
+        OPINION_30 = context.getString(R.string.opinion_value_30);
+        OPINION_4_37 = context.getString(R.string.opinion_value_4_37);
+        OPINION_4_61 = context.getString(R.string.opinion_value_4_61);
+        OPINION_4_8 = context.getString(R.string.opinion_value_4_8);
+        OPINION_5_88 = context.getString(R.string.opinion_value_5_88);
+        OPINION_5_95 = context.getString(R.string.opinion_value_5_95);
+        OPINION_58 = context.getString(R.string.opinion_value_58);
+        OPINION_6 = context.getString(R.string.opinion_value_6);
+        OPINION_60 = context.getString(R.string.opinion_value_60);
+        OPINION_7 = context.getString(R.string.opinion_value_7);
+        OPINION_7_083 = context.getString(R.string.opinion_value_7_083);
+        OPINION_72 = context.getString(R.string.opinion_value_72);
+        OPINION_72_ZMANIS = context.getString(R.string.opinion_value_72_zmanis);
+        OPINION_8_5 = context.getString(R.string.opinion_value_8);
+        OPINION_90 = context.getString(R.string.opinion_value_90);
+        OPINION_90_ZMANIS = context.getString(R.string.opinion_value_90_zmanis);
+        OPINION_96 = context.getString(R.string.opinion_value_96);
+        OPINION_96_ZMANIS = context.getString(R.string.opinion_value_96_zmanis);
+        OPINION_ATERET = context.getString(R.string.opinion_value_ateret);
+        OPINION_GRA = context.getString(R.string.opinion_value_gra);
+        OPINION_MGA = context.getString(R.string.opinion_value_mga);
+        OPINION_FIXED = context.getString(R.string.opinion_value_fixed);
+        OPINION_LEVEL = context.getString(R.string.opinion_value_level);
+        OPINION_SEA = context.getString(R.string.opinion_value_sea);
+        OPINION_TWILIGHT = context.getString(R.string.opinion_value_twilight);
+        OPINION_NIGHT = context.getString(R.string.opinion_value_nightfall);
+
+        FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
+        FORMAT_SEXIGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
+
+        LIST_THEME_NONE = context.getString(R.string.theme_value_none);
+        LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
+        LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
+
+        OMER_NONE = context.getString(R.string.omer_value_off);
+        OMER_B = context.getString(R.string.omer_value_b);
+        OMER_L = context.getString(R.string.omer_value_l);
     }
 }

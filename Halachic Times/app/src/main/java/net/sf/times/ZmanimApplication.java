@@ -24,6 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.ZmanimSettings;
 
 /**
  * Zmanim application.
@@ -65,6 +66,12 @@ public class ZmanimApplication extends Application {
             addressProvider = new AddressProvider(this);
         }
         return addressProvider;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ZmanimSettings.init(this);
     }
 
     @Override
