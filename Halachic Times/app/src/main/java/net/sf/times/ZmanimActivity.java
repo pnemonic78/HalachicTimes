@@ -118,7 +118,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     /** Update the location in UI thread. */
     private Runnable updateLocation;
     private ZmanimReminder reminder;
-    protected LayoutInflater inflater;
     /** The master fragment. */
     private ZmanimFragment<ZmanimAdapter> masterFragment;
     /** The details fragment switcher. */
@@ -303,10 +302,8 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
         setTheme(settings.getTheme());
 
-        inflater = LayoutInflater.from(context);
-        ViewGroup view = (ViewGroup) inflater.inflate(R.layout.times, null);
-
-        setContentView(view);
+        setContentView(R.layout.times);
+        View view = getWindow().getDecorView();
 
         gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
