@@ -168,68 +168,68 @@ public class ZmanimSettings {
     /** Preference name for candle lighting animations. */
     public static final String KEY_ANIM_CANDLES = KEY_OPINION_CANDLES + ANIM_SUFFIX;
 
-    public static String OPINION_10_2 = "10.2";
-    public static String OPINION_11 = "11";
-    public static String OPINION_12 = "12";
-    public static String OPINION_120 = "120";
-    public static String OPINION_120_ZMANIS = "120_zmanis";
-    public static String OPINION_13 = "13.24";
-    public static String OPINION_15 = "15";
-    public static String OPINION_16_1 = "16.1";
-    public static String OPINION_16_1_ALOS = "16.1_alos";
-    public static String OPINION_16_1_SUNSET = "16.1_sunset";
-    public static String OPINION_18 = "18";
-    public static String OPINION_19_8 = "19.8";
-    public static String OPINION_2 = "2";
-    public static String OPINION_26 = "26";
-    public static String OPINION_3 = "3";
-    public static String OPINION_3_65 = "3.65";
-    public static String OPINION_3_676 = "3.676";
-    public static String OPINION_30 = "30";
-    public static String OPINION_4_37 = "4.37";
-    public static String OPINION_4_61 = "4.61";
-    public static String OPINION_4_8 = "4.8";
-    public static String OPINION_5_88 = "5.88";
-    public static String OPINION_5_95 = "5.95";
-    public static String OPINION_58 = "58.5";
-    public static String OPINION_6 = "6";
-    public static String OPINION_60 = "60";
-    public static String OPINION_7 = "7";
-    public static String OPINION_7_083 = "7.083";
-    public static String OPINION_72 = "72";
-    public static String OPINION_72_ZMANIS = "72_zmanis";
-    public static String OPINION_8_5 = "8.5";
-    public static String OPINION_90 = "90";
-    public static String OPINION_90_ZMANIS = "90_zmanis";
-    public static String OPINION_96 = "96";
-    public static String OPINION_96_ZMANIS = "96_zmanis";
-    public static String OPINION_ATERET = "AT";
-    public static String OPINION_GRA = "GRA";
-    public static String OPINION_MGA = "MGA";
-    public static String OPINION_FIXED = "fixed";
-    public static String OPINION_LEVEL = "level";
-    public static String OPINION_SEA = "sea";
-    public static String OPINION_TWILIGHT = "twilight";
-    public static String OPINION_NIGHT = "nightfall";
+    public static String OPINION_10_2;
+    public static String OPINION_11;
+    public static String OPINION_12;
+    public static String OPINION_120;
+    public static String OPINION_120_ZMANIS;
+    public static String OPINION_13;
+    public static String OPINION_15;
+    public static String OPINION_16_1;
+    public static String OPINION_16_1_ALOS;
+    public static String OPINION_16_1_SUNSET;
+    public static String OPINION_18;
+    public static String OPINION_19_8;
+    public static String OPINION_2;
+    public static String OPINION_26;
+    public static String OPINION_3;
+    public static String OPINION_3_65;
+    public static String OPINION_3_676;
+    public static String OPINION_30;
+    public static String OPINION_4_37;
+    public static String OPINION_4_61;
+    public static String OPINION_4_8;
+    public static String OPINION_5_88;
+    public static String OPINION_5_95;
+    public static String OPINION_58;
+    public static String OPINION_6;
+    public static String OPINION_60;
+    public static String OPINION_7;
+    public static String OPINION_7_083;
+    public static String OPINION_72;
+    public static String OPINION_72_ZMANIS;
+    public static String OPINION_8_5;
+    public static String OPINION_90;
+    public static String OPINION_90_ZMANIS;
+    public static String OPINION_96;
+    public static String OPINION_96_ZMANIS;
+    public static String OPINION_ATERET;
+    public static String OPINION_GRA;
+    public static String OPINION_MGA;
+    public static String OPINION_FIXED;
+    public static String OPINION_LEVEL;
+    public static String OPINION_NIGHT;
+    public static String OPINION_SEA;
+    public static String OPINION_TWILIGHT;
 
     /** Format the coordinates in decimal notation. */
-    public static String FORMAT_DECIMAL = "decimal";
+    public static String FORMAT_DECIMAL;
     /** Format the coordinates in sexagesimal notation. */
-    public static String FORMAT_SEXIGESIMAL = "sexagesimal";
+    public static String FORMAT_SEXIGESIMAL;
 
     /** Show zmanim list without background. */
-    public static String LIST_THEME_NONE = "";
+    public static String LIST_THEME_NONE;
     /** Show zmanim list with dark gradient background. */
-    public static String LIST_THEME_DARK = "dark";
+    public static String LIST_THEME_DARK;
     /** Show zmanim list with light gradient background. */
-    public static String LIST_THEME_LIGHT = "light";
+    public static String LIST_THEME_LIGHT;
 
     /** No omer count. */
-    public static String OMER_NONE = "";
+    public static String OMER_NONE;
     /** Omer count has "BaOmer" suffix. */
-    public static String OMER_B = "b";
+    public static String OMER_B;
     /** Omer count has "LaOmer" suffix. */
-    public static String OMER_L = "l";
+    public static String OMER_L;
 
     /** Unknown date. */
     public static final long NEVER = Long.MIN_VALUE;
