@@ -182,7 +182,7 @@ public class RingtonePreference extends DialogPreference {
      * string.
      *
      * @param ringtoneUri
-     *         The chosen ringtone's {@link Uri}. Can be null.
+     *         The chosen ringtone's {@link Uri}. Can be {@code null}.
      */
     protected void onSaveRingtone(Uri ringtoneUri) {
         persistString(ringtoneUri != null ? ringtoneUri.toString() : SILENT_PATH);
