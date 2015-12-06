@@ -403,7 +403,6 @@ public class ZmanimSettings {
         return preferences.getString(KEY_OPINION_CANDLES_CHANUKKA, context.getString(R.string.candles_chanukka_defaultValue));
     }
 
-
     /**
      * Get the opinion for temporal hour (<em>shaah zmanis</em>).
      *
@@ -578,7 +577,7 @@ public class ZmanimSettings {
      *         the zman reminder key.
      * @return the number of minutes in milliseconds - negative value when no reminder.
      */
-    public long getReminderBefore(String key) {
+    private long getReminderBefore(String key) {
         String value = preferences.getString(key, context.getString(R.string.reminder_defaultValue));
         if (!TextUtils.isEmpty(value))
             return Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;

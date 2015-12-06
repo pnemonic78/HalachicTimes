@@ -14,7 +14,7 @@
         android:title="@string/opinion"/>
 
     <ListPreference
-        android:defaultValue="@string/opinion_value_sunset"
+        android:defaultValue="@string/candles_chanukka_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:entries="@array/candles_chanukka_entries"
         android:entryValues="@array/candles_chanukka_values"

@@ -35,6 +35,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import net.sf.preference.RingtonePreference;
+import net.sf.preference.TimePreference;
+import net.sf.times.R;
 import net.sf.times.ZmanimWidget;
 
 /**
@@ -68,7 +70,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         }
 
         Preference pref = findPreference(key);
-        if (pref != null) {
+        if ((pref != null) && (pref instanceof ListPreference)) {
             ListPreference list = (ListPreference) pref;
             list.setOnPreferenceChangeListener(this);
             onListPreferenceChange(list, list.getValue());
@@ -83,11 +85,26 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         }
 
         Preference pref = findPreference(key);
-        if (pref != null) {
+        if ((pref != null) && (pref instanceof RingtonePreference)) {
             RingtonePreference ring = (RingtonePreference) pref;
             ring.setOnPreferenceChangeListener(this);
             onRingtonePreferenceChange(ring, ring.getValue());
             return ring;
+        }
+        return null;
+    }
+
+    protected TimePreference initTime(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return null;
+        }
+
+        Preference pref = findPreference(key);
+        if ((pref != null) && (pref instanceof TimePreference)) {
+            TimePreference time = (TimePreference) pref;
+            time.setOnPreferenceChangeListener(this);
+            onTimePreferenceChange(time, time.getValue());
+            return time;
         }
         return null;
     }
@@ -108,6 +125,10 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             RingtonePreference ring = (RingtonePreference) preference;
             return onRingtonePreferenceChange(ring, newValue);
         }
+        if (preference instanceof TimePreference) {
+            TimePreference time = (TimePreference) preference;
+            return onTimePreferenceChange(time, newValue);
+        }
         notifyAppWidgets();
         return true;
     }
@@ -123,6 +144,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      */
     protected void onListPreferenceChange(ListPreference preference, Object newValue) {
         String value = (newValue == null) ? null : newValue.toString();
+        //Set the value for the summary.
+        preference.setValue(value);
         updateSummary(preference, value);
     }
 
@@ -156,6 +179,23 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     }
 
     /**
+     * Called when a time preference has probably changed its value.
+     * <br>Updates the summary to the new value.
+     *
+     * @param preference
+     *         the  preference.
+     * @param newValue
+     *         the possibly new value.
+     */
+    protected boolean onTimePreferenceChange(TimePreference preference, Object newValue) {
+        String value = (newValue == null) ? null : newValue.toString();
+        //Set the value for the summary.
+        preference.setTime(value);
+        updateSummary(preference, value);
+        return true;
+    }
+
+    /**
      * Update the summary that was selected from the list.
      *
      * @param preference
@@ -164,8 +204,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      *         the new value.
      */
     private void updateSummary(ListPreference preference, String newValue) {
-        preference.setValue(newValue);
-
         CharSequence[] values = preference.getEntryValues();
         CharSequence[] entries = preference.getEntries();
         int length = values.length;
@@ -189,6 +227,23 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      */
     private void updateSummary(RingtonePreference preference, String newValue) {
         preference.setSummary(preference.getRingtoneTitle(newValue));
+    }
+
+    /**
+     * Update the summary that was selected from the time picker.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     */
+    private void updateSummary(TimePreference preference, String newValue) {
+        String summary = preference.formatTime();
+        if (summary != null) {
+            preference.setSummary(summary);
+        } else {
+            preference.setSummary(R.string.off);
+        }
     }
 
     @Override

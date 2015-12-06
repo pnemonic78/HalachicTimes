@@ -27,6 +27,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -40,6 +41,7 @@ import android.view.View;
 
 import net.sf.preference.RingtonePreference;
 import net.sf.preference.SeekBarDialogPreference;
+import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.ZmanimReminder;
@@ -153,8 +155,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_REMINDER_TWILIGHT);
         initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
         initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
-        initList(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
-        initList(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
+
+        initTime(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
+        initTime(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
 
         initReminderDays(ZmanimSettings.KEY_REMINDER_DAWN);
         initReminderDays(ZmanimSettings.KEY_REMINDER_TALLIS);
@@ -189,13 +192,13 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     }
 
     @SuppressWarnings("deprecation")
-    protected ListPreference initList(String name) {
-        if (TextUtils.isEmpty(name)) {
+    protected ListPreference initList(String key) {
+        if (TextUtils.isEmpty(key)) {
             return null;
         }
 
-        Preference pref = findPreference(name);
-        if (pref != null) {
+        Preference pref = findPreference(key);
+        if ((pref != null) && (pref instanceof ListPreference)) {
             ListPreference list = (ListPreference) pref;
             list.setOnPreferenceChangeListener(this);
             onListPreferenceChange(list, list.getValue());
@@ -205,17 +208,32 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     }
 
     @SuppressWarnings("deprecation")
-    protected RingtonePreference initRingtone(String name) {
-        if (TextUtils.isEmpty(name)) {
+    protected RingtonePreference initRingtone(String key) {
+        if (TextUtils.isEmpty(key)) {
             return null;
         }
 
-        Preference pref = findPreference(name);
-        if (pref != null) {
+        Preference pref = findPreference(key);
+        if ((pref != null) && (pref instanceof RingtonePreference)) {
             RingtonePreference ring = (RingtonePreference) pref;
             ring.setOnPreferenceChangeListener(this);
             onRingtonePreferenceChange(ring, ring.getValue());
             return ring;
+        }
+        return null;
+    }
+
+    protected TimePreference initTime(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return null;
+        }
+
+        Preference pref = findPreference(key);
+        if ((pref != null) && (pref instanceof TimePreference)) {
+            TimePreference time = (TimePreference) pref;
+            time.setOnPreferenceChangeListener(this);
+            onTimePreferenceChange(time, time.getValue());
+            return time;
         }
         return null;
     }
@@ -239,6 +257,10 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             RingtonePreference ring = (RingtonePreference) preference;
             return onRingtonePreferenceChange(ring, newValue);
         }
+        if (preference instanceof TimePreference) {
+            TimePreference time = (TimePreference) preference;
+            return onTimePreferenceChange(time, newValue);
+        }
         notifyAppWidgets();
         return true;
     }
@@ -260,9 +282,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      * @param newValue
      *         the possibly new value.
      */
-    private void onListPreferenceChange(ListPreference preference, Object newValue) {
+    protected void onListPreferenceChange(ListPreference preference, Object newValue) {
         String oldValue = preference.getValue();
         String value = (newValue == null) ? null : newValue.toString();
+        //Set the value for the summary.
+        preference.setValue(value);
         updateSummary(preference, value);
 
         if (!oldValue.equals(newValue)) {
@@ -326,6 +350,23 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     }
 
     /**
+     * Called when a time preference has probably changed its value.
+     * <br>Updates the summary to the new value.
+     *
+     * @param preference
+     *         the  preference.
+     * @param newValue
+     *         the possibly new value.
+     */
+    protected boolean onTimePreferenceChange(TimePreference preference, Object newValue) {
+        String value = (newValue == null) ? null : newValue.toString();
+        //Set the value for the summary.
+        preference.setTime(value);
+        updateSummary(preference, value);
+        return true;
+    }
+
+    /**
      * Update the summary that was selected from the list.
      *
      * @param preference
@@ -334,8 +375,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      *         the new value.
      */
     private void updateSummary(ListPreference preference, String newValue) {
-        preference.setValue(newValue);
-
         CharSequence[] values = preference.getEntryValues();
         CharSequence[] entries = preference.getEntries();
         int length = values.length;
@@ -361,6 +400,23 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         preference.setSummary(preference.getRingtoneTitle(newValue));
     }
 
+    /**
+     * Update the summary that was selected from the time picker.
+     *
+     * @param preference
+     *         the preference.
+     * @param newValue
+     *         the new value.
+     */
+    private void updateSummary(TimePreference preference, String newValue) {
+        String summary = preference.formatTime();
+        if (summary != null) {
+            preference.setSummary(summary);
+        } else {
+            preference.setSummary(R.string.off);
+        }
+    }
+
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference == clearHistory) {
@@ -381,7 +437,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         provider.deleteAddresses();
     }
 
-    private void notifyAppWidgets() {
+    protected void notifyAppWidgets() {
         Context context = this;
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final Class<?> clazz = ZmanimWidget.class;
@@ -452,22 +508,17 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         return null;
     }
 
-    protected PreferenceScreen addScreen(PreferenceScreen parent, int titleId, int xmlId) {
-        PreferenceScreen current = getPreferenceScreen();
-        PreferenceScreen screen = getPreferenceManager().createPreferenceScreen(this);
-        screen.setTitle(titleId);
-        setPreferenceScreen(screen);
-        addPreferencesFromResource(xmlId);
-        parent.addPreference(screen);
-        setPreferenceScreen((current != null) ? current : parent);
-        return screen;
-    }
-
     private PreferenceScreen replaceScreen(PreferenceScreen parent, String key, int xmlId) {
         PreferenceScreen current = getPreferenceScreen();
         PreferenceScreen screen = (PreferenceScreen) parent.findPreference(key);
         setPreferenceScreen(screen);
         addPreferencesFromResource(xmlId);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            int count = screen.getPreferenceCount();
+            for (int i = 0; i < count; i++) {
+                screen.getPreference(i).setFragment(null);
+            }
+        }
         setPreferenceScreen((current != null) ? current : parent);
         return screen;
     }
