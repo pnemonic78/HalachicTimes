@@ -19,7 +19,9 @@
  */
 package net.sf.preference;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
@@ -56,6 +58,7 @@ public class TimePreference extends DialogPreference {
     private Calendar time;
     private final java.text.DateFormat formatIso = new SimpleDateFormat(PATTERN);
     private java.text.DateFormat formatPretty;
+    private CharSequence neutralButtonText;
 
     public TimePreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -204,5 +207,52 @@ public class TimePreference extends DialogPreference {
      */
     public String formatTime() {
         return (time != null) ? formatPretty.format(time.getTime()) : null;
+    }
+
+    /**
+     * Sets the text of the neutral button of the dialog. This will be shown on subsequent dialogs.
+     *
+     * @param neutralButtonText
+     *         The text of the neutral button.
+     */
+    public void setNeutralButtonText(CharSequence neutralButtonText) {
+        this.neutralButtonText = neutralButtonText;
+    }
+
+    /**
+     * @param neutralButtonTextResId
+     *         The neutral button text as a resource.
+     * @see #setNeutralButtonText(CharSequence)
+     */
+    public void setNeutralButtonText(int neutralButtonTextResId) {
+        setNeutralButtonText(getContext().getString(neutralButtonTextResId));
+    }
+
+    /**
+     * Returns the text of the neutral button to be shown on subsequent dialogs.
+     *
+     * @return The text of the neutral button.
+     */
+    public CharSequence getNeutralButtonText() {
+        return neutralButtonText;
+    }
+
+    @Override
+    protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
+        super.onPrepareDialogBuilder(builder);
+
+        builder.setNeutralButton(getNeutralButtonText(), this);
+    }
+
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        super.onClick(dialog, which);
+
+        if (which == DialogInterface.BUTTON_NEUTRAL) {
+            String value = null;//"off"
+            if (callChangeListener(value)) {
+                setTime(value);
+            }
+        }
     }
 }

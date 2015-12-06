@@ -231,6 +231,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         Preference pref = findPreference(key);
         if ((pref != null) && (pref instanceof TimePreference)) {
             TimePreference time = (TimePreference) pref;
+            time.setNeutralButtonText(R.string.off);
             time.setOnPreferenceChangeListener(this);
             onTimePreferenceChange(time, time.getValue());
             return time;
