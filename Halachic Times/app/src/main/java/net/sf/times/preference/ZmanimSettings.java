@@ -563,7 +563,7 @@ public class ZmanimSettings {
      *         the zman id.
      * @return the number of minutes in milliseconds - negative value when no reminder.
      */
-    public long getReminderBefore(int id) {
+    private long getReminderBefore(int id) {
         String key = getKey(id);
         if (key != null)
             return getReminderBefore(key + REMINDER_SUFFIX);
