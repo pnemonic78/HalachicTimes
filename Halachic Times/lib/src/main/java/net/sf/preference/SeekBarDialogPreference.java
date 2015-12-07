@@ -29,10 +29,11 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
+import net.sf.lib.R;
+
 public class SeekBarDialogPreference extends DialogPreference implements OnSeekBarChangeListener {
 
-    /** Android namespace. */
-    private static final String NS_ANDROID = "http://schemas.android.com/apk/res/android";
+    private static final int[] ATTRIBUTES = {android.R.attr.max};
 
     private int progress;
     private int max;
@@ -42,13 +43,23 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
     private TextView summaryView;
 
     public SeekBarDialogPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+        this(context, attrs, android.R.attr.dialogPreferenceStyle);
     }
 
-    public SeekBarDialogPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+    public SeekBarDialogPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public SeekBarDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+
+        final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
+        this.max = a.getInt(0, 100);
+        a.recycle();
+
+        if (getDialogLayoutResource() == 0) {
+            setDialogLayoutResource(R.layout.preference_seekbar);
+        }
     }
 
     @Override
@@ -117,13 +128,13 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
         super.onBindDialogView(view);
 
         SeekBar seek = (SeekBar) view.findViewById(android.R.id.edit);
-        seek.setMax(max);
+        this.summaryView = (TextView) view.findViewById(android.R.id.summary);
+        this.seekBar = seek;
+
         seek.setOnSeekBarChangeListener(this);
-        seekBar = seek;
-
-        summaryView = (TextView) view.findViewById(android.R.id.summary);
-
+        seek.setMax(getMax());
         seek.setProgress(getProgress());
+        seek.setEnabled(isEnabled());
     }
 
     @Override
@@ -144,7 +155,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if ((this.seekBar == seekBar) && (summaryFormat != 0)) {
+        if ((this.seekBar == seekBar) && (summaryFormat != 0) && (summaryView != null)) {
             Resources res = getContext().getResources();
             CharSequence summary = res.getQuantityString(summaryFormat, progress, progress);
             summaryView.setText(summary);

@@ -4,13 +4,12 @@
     <net.sf.preference.SeekBarDialogPreference
         android:defaultValue="@integer/candles_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
-        android:dialogLayout="@layout/candles_seek"
         android:dialogTitle="@string/opinion"
         android:icon="@drawable/ic_settings_opinion"
         android:key="candles"
         android:max="40"
-        android:negativeButtonText="@android:string/cancel"
-        android:positiveButtonText="@android:string/ok"
+        android:negativeButtonText="@string/cancel"
+        android:positiveButtonText="@string/ok"
         android:title="@string/opinion"/>
 
     <ListPreference

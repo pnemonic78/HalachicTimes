@@ -63,7 +63,7 @@ public class RingtonePreference extends DialogPreference {
      */
     public static final int URI_COLUMN_INDEX = 2;
 
-    private static final int[] ATTRS = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
+    private static final int[] ATTRIBUTES = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
 
     private static final String DEFAULT_PATH = RingtoneManager.DEFAULT_PATH;
     private static final Uri DEFAULT_URI = null;
@@ -101,7 +101,7 @@ public class RingtonePreference extends DialogPreference {
     public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
 
-        final TypedArray a = context.obtainStyledAttributes(attrs, ATTRS, defStyleAttr, defStyleRes);
+        final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
         int ringtoneType = a.getInt(0, RingtoneManager.TYPE_RINGTONE);
         boolean showDefault = a.getBoolean(1, true);
         boolean showSilent = a.getBoolean(2, true);
@@ -113,7 +113,6 @@ public class RingtonePreference extends DialogPreference {
         setShowSilent(showSilent);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
