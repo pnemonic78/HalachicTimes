@@ -43,42 +43,28 @@ import java.util.TimerTask;
  */
 public class SeekBarPreference extends Preference implements OnSeekBarChangeListener {
 
-    /** Android namespace. */
-    private static final String NS_ANDROID = "http://schemas.android.com/apk/res/android";
+    private static final int[] ATTRIBUTES = {android.R.attr.max};
+
     /** Delay in milliseconds to wait for user to finish changing the seek bar. */
     private static final long PERSIST_DELAY = 650;
 
-    private final Context context;
     private SeekBar seekBar;
     private int progress;
-    private int max = 100;
+    private int max;
     private Timer timer;
     private PersistTask task;
     private Toast toast;
 
-    /**
-     * Creates a new seek bar preference.
-     *
-     * @param context
-     *         the context.
-     */
     public SeekBarPreference(Context context) {
         super(context);
-        this.context = context;
     }
 
-    /**
-     * Creates a new seek bar preference.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the attributes.
-     */
     public SeekBarPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
-        max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+        this(context, attrs, android.R.attr.preferenceStyle);
+    }
+
+    public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
     }
 
     /**
@@ -88,13 +74,17 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
      *         the context.
      * @param attrs
      *         the attributes.
-     * @param defStyle
-     *         the default style.
+     * @param defStyleAttr
+     *         the default attribute style.
+     * @param defStyleRes
+     *         the default resource style.
      */
-    public SeekBarPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        this.context = context;
-        max = attrs.getAttributeIntValue(NS_ANDROID, "max", 100);
+    public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr);
+
+        final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
+        this.max = a.getInt(0, 100);
+        a.recycle();
     }
 
     @Override
@@ -119,11 +109,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 
         final int max = this.max;
         final int progress = this.progress;
-        if (max != seekBar.getMax())
+        if (max != seekBar.getMax()) {
             seekBar.setMax(max);
+        }
         seekBar.setOnSeekBarChangeListener(this);
-        if (progress != seekBar.getProgress())
+        if (progress != seekBar.getProgress()) {
             seekBar.setProgress(progress);
+        }
     }
 
     @Override
@@ -195,7 +187,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             if (this.progress != progress) {
                 // FIXME print the progress on the bar instead of toasting.
                 if (toast == null)
-                    toast = Toast.makeText(context, String.valueOf(progress), Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(getContext(), String.valueOf(progress), Toast.LENGTH_SHORT);
                 else {
                     toast.setText(String.valueOf(progress));
                     toast.show();
