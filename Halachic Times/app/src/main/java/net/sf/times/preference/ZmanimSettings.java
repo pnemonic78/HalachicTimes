@@ -590,7 +590,13 @@ public class ZmanimSettings {
                 cal.set(Calendar.MINUTE, parsed.get(Calendar.MINUTE));
                 cal.set(Calendar.SECOND, parsed.get(Calendar.SECOND));
                 cal.set(Calendar.MILLISECOND, 0);
-                return cal.getTimeInMillis();
+                long when = cal.getTimeInMillis();
+                // Reminders should always be before the zman.
+                if (when > time) {
+                    cal.add(Calendar.DAY_OF_MONTH, -1);
+                    when = cal.getTimeInMillis();
+                }
+                return when;
             }
         } else {
             long before = Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
