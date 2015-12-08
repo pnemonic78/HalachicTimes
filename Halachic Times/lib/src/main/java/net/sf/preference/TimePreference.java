@@ -54,7 +54,7 @@ public class TimePreference extends DialogPreference {
     private TimePicker picker;
     private String value;
     private Calendar time;
-    private final java.text.DateFormat formatIso = new SimpleDateFormat(PATTERN);
+    private static final java.text.DateFormat formatIso = new SimpleDateFormat(PATTERN);
     private java.text.DateFormat formatPretty;
 
     public TimePreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -100,16 +100,7 @@ public class TimePreference extends DialogPreference {
         final boolean wasBlocking = shouldDisableDependents();
 
         this.value = timeString;
-        this.time = null;
-        if (!TextUtils.isEmpty(timeString)) {
-            try {
-                Date date = formatIso.parse(timeString);
-                this.time = Calendar.getInstance();
-                time.setTime(date);
-            } catch (ParseException e) {
-                Log.e(TAG, "setTime: " + e.getLocalizedMessage(), e);
-            }
-        }
+        this.time = parseTime(timeString);
 
         persistString(timeString);
 
@@ -216,5 +207,26 @@ public class TimePreference extends DialogPreference {
                 setTime(value);
             }
         }
+    }
+
+    /**
+     * Parse the time value.
+     *
+     * @param timeString
+     *         the time in ISO 8601 format.
+     * @return the time - {@code null} otherwise.
+     */
+    public static Calendar parseTime(String timeString) {
+        if (!TextUtils.isEmpty(timeString)) {
+            try {
+                Date date = formatIso.parse(timeString);
+                Calendar time = Calendar.getInstance();
+                time.setTime(date);
+                return time;
+            } catch (ParseException e) {
+                Log.e(TAG, "parseTime: " + e.getLocalizedMessage(), e);
+            }
+        }
+        return null;
     }
 }

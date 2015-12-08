@@ -30,6 +30,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import net.sf.media.RingtoneManager;
+import net.sf.preference.TimePreference;
 import net.sf.times.R;
 
 import java.util.Calendar;
@@ -557,34 +558,6 @@ public class ZmanimSettings {
     }
 
     /**
-     * Get reminder as the number of minutes before the zman.
-     *
-     * @param id
-     *         the zman id.
-     * @return the number of minutes in milliseconds - negative value when no reminder.
-     */
-    private long getReminderBefore(int id) {
-        String key = getKey(id);
-        if (key != null)
-            return getReminderBefore(key + REMINDER_SUFFIX);
-        return NEVER;
-    }
-
-    /**
-     * Get reminder as the number of minutes before the zman.
-     *
-     * @param key
-     *         the zman reminder key.
-     * @return the number of minutes in milliseconds - negative value when no reminder.
-     */
-    private long getReminderBefore(String key) {
-        String value = preferences.getString(key, context.getString(R.string.reminder_defaultValue));
-        if (!TextUtils.isEmpty(value))
-            return Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
-        return NEVER;
-    }
-
-    /**
      * Get reminder of the zman. The reminder is either the number of minutes before the zman, or an absolute time.
      *
      * @param id
@@ -597,11 +570,36 @@ public class ZmanimSettings {
         if (time == NEVER) {
             return NEVER;
         }
-        long before = getReminderBefore(id);
-        if (before < 0L) {
+        String key = getKey(id);
+        if (key == null) {
             return NEVER;
         }
-        return time - before;
+        String keyReminder = key + REMINDER_SUFFIX;
+
+        String value = preferences.getString(keyReminder, context.getString(R.string.reminder_defaultValue));
+        if (TextUtils.isEmpty(value)) {
+            return NEVER;
+        }
+
+        if (value.indexOf(':') >= 0) {
+            Calendar parsed = TimePreference.parseTime(value);
+            if (parsed != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(time);
+                cal.set(Calendar.HOUR_OF_DAY, parsed.get(Calendar.HOUR_OF_DAY));
+                cal.set(Calendar.MINUTE, parsed.get(Calendar.MINUTE));
+                cal.set(Calendar.SECOND, parsed.get(Calendar.SECOND));
+                cal.set(Calendar.MILLISECOND, 0);
+                return cal.getTimeInMillis();
+            }
+        } else {
+            long before = Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
+            if (before >= 0L) {
+                return time - before;
+            }
+        }
+
+        return NEVER;
     }
 
     /**
