@@ -40,7 +40,6 @@
     <string name="opinion_value_90_zmanis" translatable="false">90_zmanis</string>
     <string name="opinion_value_96" translatable="false">96</string>
     <string name="opinion_value_96_zmanis" translatable="false">96_zmanis</string>
-    <string name="opinion_value_alos" translatable="false">alos</string>
     <string name="opinion_value_ateret" translatable="false">AT</string>
     <string name="opinion_value_default" translatable="false"/>
     <string name="opinion_value_fixed" translatable="false">fixed</string>
@@ -67,9 +66,9 @@
     <string name="midnight_defaultValue" translatable="false">@string/opinion_value_solar</string>
     <string name="mincha_defaultValue" translatable="false">@string/opinion_value_default</string>
     <string name="nightfall_defaultValue" translatable="false">@string/opinion_value_3_stars</string>
-    <string name="plug_hamincha_defaultValue" translatable="false">@string/opinion_value_16_sunset</string>
-    <string name="prayers_defaultValue" translatable="false">@string/opinion_value_mga</string>
-    <string name="shema_defaultValue" translatable="false">@string/opinion_value_mga</string>
+    <string name="plug_hamincha_defaultValue" translatable="false">@string/opinion_value_gra</string>
+    <string name="prayers_defaultValue" translatable="false">@string/opinion_value_gra</string>
+    <string name="shema_defaultValue" translatable="false">@string/opinion_value_gra</string>
     <string name="sunrise_defaultValue" translatable="false">@string/opinion_value_level</string>
     <string name="sunset_defaultValue" translatable="false">@string/opinion_value_sea</string>
     <string name="tallis_defaultValue" translatable="false">@string/opinion_value_11_5</string>

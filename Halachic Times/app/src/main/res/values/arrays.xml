@@ -202,8 +202,8 @@
         <item>@string/mincha_16</item>
     </string-array>
     <string-array name="plug_hamincha_values" translatable="false">
-        <item>@string/opinion_value_alos</item>
         <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_gra</item>
         <item>@string/opinion_value_16_alos</item>
         <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_60</item>

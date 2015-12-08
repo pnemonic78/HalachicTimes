@@ -647,8 +647,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             date = cal.getSofZmanShmaGRA();
             summary = R.string.shema_gra;
         } else {
-            date = cal.getSofZmanShmaMGA();
-            summary = R.string.shema_mga;
+            date = cal.getSofZmanShmaGRA();
+            summary = R.string.shema_gra;
         }
         add(R.string.shema, summary, date, remote);
 
