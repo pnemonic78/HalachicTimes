@@ -19,8 +19,6 @@
  */
 package net.sf.view.animation;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -32,10 +30,6 @@ public class LayoutWeightAnimation extends Animation {
     private float fromWeight;
     private float toWeight;
     private boolean increase;
-
-    public LayoutWeightAnimation(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
 
     public LayoutWeightAnimation(View view, float fromWeight, float toWeight) {
         this.view = view;
