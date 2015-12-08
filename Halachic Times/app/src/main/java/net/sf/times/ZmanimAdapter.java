@@ -643,9 +643,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         } else if (OPINION_FIXED.equals(opinion)) {
             date = cal.getSofZmanShmaFixedLocal();
             summary = R.string.shema_fixed;
-        } else if (OPINION_GRA.equals(opinion)) {
-            date = cal.getSofZmanShmaGRA();
-            summary = R.string.shema_gra;
         } else {
             date = cal.getSofZmanShmaGRA();
             summary = R.string.shema_gra;
@@ -692,12 +689,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         } else if (OPINION_2.equals(opinion)) {
             date = cal.getSofZmanTfila2HoursBeforeChatzos();
             summary = R.string.prayers_2;
-        } else if (OPINION_GRA.equals(opinion)) {
-            date = cal.getSofZmanTfilaGRA();
-            summary = R.string.prayers_gra;
-        } else {
+        } else if (OPINION_MGA.equals(opinion)) {
             date = cal.getSofZmanTfilaMGA();
             summary = R.string.prayers_mga;
+        } else {
+            date = cal.getSofZmanTfilaGRA();
+            summary = R.string.prayers_gra;
         }
         add(R.string.prayers, summary, date, remote);
         if (holidayToday == JewishCalendar.EREV_PESACH)
