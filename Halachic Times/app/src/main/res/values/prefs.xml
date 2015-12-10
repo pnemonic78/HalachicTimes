@@ -16,13 +16,13 @@
     <string name="opinion_value_19" translatable="false">19.8</string>
     <string name="opinion_value_2" translatable="false">2</string>
     <string name="opinion_value_26" translatable="false">26</string>
-    <string name="opinion_value_2_stars" translatable="false">2_stars</string>
+    <string name="opinion_value_2_stars" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_3" translatable="false">3</string>
     <string name="opinion_value_30" translatable="false">30</string>
     <string name="opinion_value_3_65" translatable="false">3.65</string>
     <string name="opinion_value_3_676" translatable="false">3.676</string>
-    <string name="opinion_value_3_days" translatable="false">3_days</string>
-    <string name="opinion_value_3_stars" translatable="false">3_stars</string>
+    <string name="opinion_value_3_days" translatable="false">@string/opinion_value_default</string>
+    <string name="opinion_value_3_stars" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_4_37" translatable="false">4.37</string>
     <string name="opinion_value_4_61" translatable="false">4.61</string>
     <string name="opinion_value_4_8" translatable="false">4.8</string>
@@ -44,17 +44,17 @@
     <string name="opinion_value_default" translatable="false"/>
     <string name="opinion_value_fixed" translatable="false">fixed</string>
     <string name="opinion_value_gra" translatable="false">GRA</string>
-    <string name="opinion_value_half" translatable="false">half</string>
+    <string name="opinion_value_half" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_level" translatable="false">level</string>
     <string name="opinion_value_mga" translatable="false">MGA</string>
     <string name="opinion_value_nightfall" translatable="false">nightfall</string>
     <string name="opinion_value_sea" translatable="false">sea</string>
-    <string name="opinion_value_solar" translatable="false">solar</string>
+    <string name="opinion_value_solar" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_sunset" translatable="false">sunset</string>
     <string name="opinion_value_twilight" translatable="false">twilight</string>
 
     <string name="burn_chametz_defaultValue" translatable="false">@string/opinion_value_gra</string>
-    <string name="candles_chanukka_defaultValue" translatable="false">@string/opinion_value_sunset</string>
+    <string name="candles_chanukka_defaultValue" translatable="false">@string/opinion_value_default</string>
     <integer name="candles_defaultValue" translatable="false">22</integer>
     <string name="dawn_defaultValue" translatable="false">@string/opinion_value_16</string>
     <string name="earliest_mincha_defaultValue" translatable="false">@string/opinion_value_default</string>
@@ -69,8 +69,8 @@
     <string name="plug_hamincha_defaultValue" translatable="false">@string/opinion_value_gra</string>
     <string name="prayers_defaultValue" translatable="false">@string/opinion_value_gra</string>
     <string name="shema_defaultValue" translatable="false">@string/opinion_value_gra</string>
-    <string name="sunrise_defaultValue" translatable="false">@string/opinion_value_level</string>
-    <string name="sunset_defaultValue" translatable="false">@string/opinion_value_sea</string>
+    <string name="sunrise_defaultValue" translatable="false">@string/opinion_value_default</string>
+    <string name="sunset_defaultValue" translatable="false">@string/opinion_value_default</string>
     <string name="tallis_defaultValue" translatable="false">@string/opinion_value_11_5</string>
     <string name="twilight_defaultValue" translatable="false">@string/opinion_value_2_stars</string>
 

@@ -78,12 +78,12 @@
         <item>@string/tallis_10</item>
     </string-array>
     <string-array name="sunrise_values" translatable="false">
-        <item>@string/opinion_value_level</item>
         <item>@string/opinion_value_sea</item>
+        <item>@string/opinion_value_default</item>
     </string-array>
     <string-array name="sunrise_entries" translatable="false">
-        <item>@string/sunrise_summary</item>
         <item>@string/sunrise_sea</item>
+        <item>@string/sunrise_summary</item>
     </string-array>
     <string-array name="shema_values" translatable="false">
         <item>@string/opinion_value_16_sunset</item>
@@ -240,7 +240,7 @@
         <item>@string/plug_hamincha_26</item>
     </string-array>
     <string-array name="sunset_values" translatable="false">
-        <item>@string/opinion_value_sea</item>
+        <item>@string/opinion_value_default</item>
         <item>@string/opinion_value_level</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
@@ -322,7 +322,7 @@
         <item>@string/midnight_6</item>
     </string-array>
     <string-array name="candles_chanukka_values" translatable="false">
-        <item>@string/opinion_value_sunset</item>
+        <item>@string/opinion_value_default</item>
         <item>@string/opinion_value_twilight</item>
         <item>@string/opinion_value_nightfall</item>
     </string-array>
