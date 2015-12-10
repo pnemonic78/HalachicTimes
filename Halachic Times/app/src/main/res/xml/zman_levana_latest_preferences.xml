@@ -11,7 +11,7 @@
         android:title="@string/opinion"/>
     <net.sf.preference.TimePreference
         android:defaultValue="@string/reminder_defaultValue"
-        android:dialogIcon="@android:drawable/ic_dialog_alert"
+        android:dialogIcon="@drawable/ic_settings_alarm"
         android:icon="@drawable/ic_settings_alarm"
         android:key="levana_latest.reminder"
         android:title="@string/reminder"/>

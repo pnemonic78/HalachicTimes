@@ -11,7 +11,7 @@
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"
-        android:dialogIcon="@android:drawable/ic_dialog_alert"
+        android:dialogIcon="@drawable/ic_settings_alarm"
         android:entries="@array/reminder_entries"
         android:entryValues="@array/reminder_values"
         android:icon="@drawable/ic_settings_alarm"
