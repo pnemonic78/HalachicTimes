@@ -28,6 +28,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.Handler;
 import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Random;
@@ -44,6 +45,7 @@ public class CandleAnimation implements Runnable {
     private static final int PERIOD_INT = (int) PERIOD;
 
     private final Handler handler;
+    private final View view;
     private Drawable candle;
     /** Randomizer. */
     private final Random random;
@@ -75,6 +77,7 @@ public class CandleAnimation implements Runnable {
         this.handler = handler;
         if (view == null)
             throw new IllegalArgumentException("view required");
+        this.view = view;
         this.random = random;
 
         // Cache the images to avoid "bitmap size exceeds VM budget".
@@ -117,4 +120,12 @@ public class CandleAnimation implements Runnable {
             handler.postDelayed(this, random.nextInt(PERIOD_INT));
     }
 
+    /**
+     * Get the image view animating the candle.
+     *
+     * @return the view.
+     */
+    public View getView() {
+        return view;
+    }
 }
