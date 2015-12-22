@@ -115,6 +115,15 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
                 return (t1 < t2) ? -1 : +1;
             return this.titleId - that.titleId;
         }
+
+        /**
+         * Is the item empty?
+         *
+         * @return {@code true} if empty.
+         */
+        public boolean isEmpty() {
+            return elapsed || (time == ZmanimAdapter.NEVER) || (timeLabel == null);
+        }
     }
 
     /**

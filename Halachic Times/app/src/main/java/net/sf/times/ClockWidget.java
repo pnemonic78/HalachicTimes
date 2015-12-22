@@ -42,13 +42,13 @@ public class ClockWidget extends ZmanimWidget {
     }
 
     @Override
-    protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
-        final int count = adapter.getCount();
+    protected void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
+        final int count = adapterToday.getCount();
         ZmanimItem item;
 
         for (int position = 0; position < count; position++) {
-            item = adapter.getItem(position);
-            if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null))
+            item = adapterToday.getItem(position);
+            if (item.isEmpty())
                 continue;
             bindView(list, position, item);
             break;
@@ -57,13 +57,7 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected boolean bindView(RemoteViews list, int position, ZmanimItem item) {
-        if (timeFormat == null) {
-            Context context = getContext();
-            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
-            String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
-            timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-        }
-
+        DateFormat timeFormat = getTimeFormat();
         CharSequence label = timeFormat.format(item.time);
         SpannableStringBuilder spans = new SpannableStringBuilder(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
@@ -83,5 +77,20 @@ public class ClockWidget extends ZmanimWidget {
     protected void notifyAppWidgetViewDataChanged(Context context) {
         timeFormat = null;
         super.notifyAppWidgetViewDataChanged(context);
+    }
+
+    /**
+     * Get the time formatter.
+     *
+     * @return the formatter.
+     */
+    protected DateFormat getTimeFormat() {
+        if (timeFormat == null) {
+            Context context = getContext();
+            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
+            String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
+            timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+        }
+        return timeFormat;
     }
 }

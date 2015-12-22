@@ -271,18 +271,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *
      * @param list
      *         the remote views.
-     * @param adapter
-     *         the list adapter.
-     */
-    protected void bindViews(RemoteViews list, ZmanimAdapter adapter) {
-        bindViews(list, adapter, null);
-    }
-
-    /**
-     * Bind the times to remote views.
-     *
-     * @param list
-     *         the remote views.
      * @param adapterToday
      *         the list adapter for today.
      * @param adapterTomorrow
@@ -299,7 +287,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
-            if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
+            if (item.isEmpty()) {
                 continue;
             }
             if (item.titleId == R.string.sunset) {
@@ -345,7 +333,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             if (positionSunset < 0) {
                 for (int position = 0; position < count; position++) {
                     item = adapter.getItem(position);
-                    if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
+                    if (item.isEmpty()) {
                         continue;
                     }
                     if (item.titleId == R.string.sunset) {
@@ -382,7 +370,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      * @return {@code true} if item was bound to view.
      */
     protected boolean bindView(RemoteViews list, int position, ZmanimItem item) {
-        if (item.elapsed || (item.time == ZmanimAdapter.NEVER) || (item.timeLabel == null)) {
+        if (item.isEmpty()) {
             return false;
         }
         Context context = getContext();
