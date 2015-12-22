@@ -39,7 +39,7 @@ import java.util.Random;
  *
  * @author Moshe Waisberg
  */
-public class CandlesFragment extends ZmanimFragment {
+public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopulater> {
 
     private static final int[] SHABBAT_CANDLES = {R.id.candle_1, R.id.candle_2};
     private static final int[] YOM_KIPPURIM_CANDLES = {R.id.candle_1};
@@ -101,14 +101,19 @@ public class CandlesFragment extends ZmanimFragment {
     }
 
     @Override
-    protected ZmanimAdapter createAdapter() {
+    protected CandlesAdapter createAdapter() {
         return new CandlesAdapter(context, settings);
+    }
+
+    @Override
+    protected CandlesPopulater createPopulater() {
+        return new CandlesPopulater(context, settings);
     }
 
     @SuppressLint("InflateParams")
     @Override
-    public ZmanimAdapter populateTimes(Calendar date) {
-        CandlesAdapter adapter = (CandlesAdapter) super.populateTimes(date);
+    public CandlesAdapter populateTimes(Calendar date) {
+        CandlesAdapter adapter = super.populateTimes(date);
 
         stopAnimation();
 
@@ -120,6 +125,7 @@ public class CandlesFragment extends ZmanimFragment {
         boolean animate = settings.isCandlesAnimated();
         ImageView view;
 
+        //TODO move this to adapter's getView
         switch (holiday) {
             case JewishCalendar.YOM_KIPPUR:
                 if (candlesKippurim == null) {
@@ -232,5 +238,10 @@ public class CandlesFragment extends ZmanimFragment {
                 continue;
             handler.post(anim);
         }
+    }
+
+    @Override
+    protected void bindViews(ViewGroup list, CandlesAdapter adapter) {
+        //TODO implement me!
     }
 }

@@ -47,14 +47,14 @@ public class CandlesAdapter extends ZmanimAdapter {
         return null;
     }
 
-    @Override
-    public void populate(boolean remote) {
-        prePopulate();
-        populateCandles();
-    }
-
-    private void populateCandles() {
-        candles = getCandles(getJewishCalendar());
+    /**
+     * Set the candles data.
+     *
+     * @param candles
+     *         the candles data.
+     */
+    public void setCandles(int candles) {
+        this.candles = candles;
     }
 
     /**

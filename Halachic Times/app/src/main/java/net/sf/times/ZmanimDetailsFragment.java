@@ -34,7 +34,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends ZmanimFragment<A> {
+public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends ZmanimDetailsPopulater<A>> extends ZmanimFragment<A, P> {
 
     /** The master id. */
     private int masterId;
@@ -90,7 +90,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
         if (masterId == 0)
             return null;
 
-        return (A) new ZmanimDetailsAdapter(context, settings, masterId);
+        return (A) new ZmanimDetailsAdapter(context, settings);
     }
 
     @Override
@@ -110,75 +110,108 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
     public A populateTimes(Calendar date, int id) {
         masterId = id;
 
-        A adapter = getAdapter();
-        if (adapter != null) {
-            adapter.setItemId(id);
-            super.populateTimes(date);
+        P populater = getPopulater();
+        A adapter = null;
+
+        if (populater != null) {
+            populater.setItemId(id);
+            adapter = super.populateTimes(date);
         }
 
         Resources res = getResources();
 
         switch (settings.getTheme()) {
             case R.style.Theme_Zmanim_Dark:
-                if (id == R.string.dawn) {
-                    list.setBackgroundColor(res.getColor(R.color.dawn));
-                } else if ((id == R.string.tallis) || (id == R.string.tallis_only)) {
-                    list.setBackgroundColor(res.getColor(R.color.tallis));
-                } else if (id == R.string.sunrise) {
-                    list.setBackgroundColor(res.getColor(R.color.sunrise));
-                } else if (id == R.string.shema) {
-                    list.setBackgroundColor(res.getColor(R.color.shema));
-                } else if (id == R.string.prayers) {
-                    list.setBackgroundColor(res.getColor(R.color.prayers));
-                } else if (id == R.string.midday) {
-                    list.setBackgroundColor(res.getColor(R.color.midday));
-                } else if (id == R.string.earliest_mincha) {
-                    list.setBackgroundColor(res.getColor(R.color.earliest_mincha));
-                } else if (id == R.string.mincha) {
-                    list.setBackgroundColor(res.getColor(R.color.mincha));
-                } else if (id == R.string.plug_hamincha) {
-                    list.setBackgroundColor(res.getColor(R.color.plug_hamincha));
-                } else if (id == R.string.sunset) {
-                    list.setBackgroundColor(res.getColor(R.color.sunset));
-                } else if (id == R.string.twilight) {
-                    list.setBackgroundColor(res.getColor(R.color.twilight));
-                } else if (id == R.string.nightfall) {
-                    list.setBackgroundColor(res.getColor(R.color.nightfall));
-                } else if (id == R.string.midnight) {
-                    list.setBackgroundColor(res.getColor(R.color.midnight));
-                } else {
-                    list.setBackgroundDrawable(null);
+                switch (id) {
+                    case R.string.dawn:
+                        list.setBackgroundColor(res.getColor(R.color.dawn));
+                        break;
+                    case R.string.tallis:
+                    case R.string.tallis_only:
+                        list.setBackgroundColor(res.getColor(R.color.tallis));
+                        break;
+                    case R.string.sunrise:
+                        list.setBackgroundColor(res.getColor(R.color.sunrise));
+                        break;
+                    case R.string.shema:
+                        list.setBackgroundColor(res.getColor(R.color.shema));
+                        break;
+                    case R.string.prayers:
+                        list.setBackgroundColor(res.getColor(R.color.prayers));
+                        break;
+                    case R.string.midday:
+                        list.setBackgroundColor(res.getColor(R.color.midday));
+                        break;
+                    case R.string.earliest_mincha:
+                        list.setBackgroundColor(res.getColor(R.color.earliest_mincha));
+                        break;
+                    case R.string.mincha:
+                        list.setBackgroundColor(res.getColor(R.color.mincha));
+                        break;
+                    case R.string.plug_hamincha:
+                        list.setBackgroundColor(res.getColor(R.color.plug_hamincha));
+                        break;
+                    case R.string.sunset:
+                        list.setBackgroundColor(res.getColor(R.color.sunset));
+                        break;
+                    case R.string.twilight:
+                        list.setBackgroundColor(res.getColor(R.color.twilight));
+                        break;
+                    case R.string.nightfall:
+                        list.setBackgroundColor(res.getColor(R.color.nightfall));
+                        break;
+                    case R.string.midnight:
+                        list.setBackgroundColor(res.getColor(R.color.midnight));
+                    default:
+                        list.setBackgroundDrawable(null);
+                        break;
                 }
                 break;
             case R.style.Theme_Zmanim_Light:
-                if (id == R.string.dawn) {
-                    list.setBackgroundColor(res.getColor(R.color.dawn_solid));
-                } else if ((id == R.string.tallis) || (id == R.string.tallis_only)) {
-                    list.setBackgroundColor(res.getColor(R.color.tallis_solid));
-                } else if (id == R.string.sunrise) {
-                    list.setBackgroundColor(res.getColor(R.color.sunrise_solid));
-                } else if (id == R.string.shema) {
-                    list.setBackgroundColor(res.getColor(R.color.shema_solid));
-                } else if (id == R.string.prayers) {
-                    list.setBackgroundColor(res.getColor(R.color.prayers_solid));
-                } else if (id == R.string.midday) {
-                    list.setBackgroundColor(res.getColor(R.color.midday_solid));
-                } else if (id == R.string.earliest_mincha) {
-                    list.setBackgroundColor(res.getColor(R.color.earliest_mincha_solid));
-                } else if (id == R.string.mincha) {
-                    list.setBackgroundColor(res.getColor(R.color.mincha_solid));
-                } else if (id == R.string.plug_hamincha) {
-                    list.setBackgroundColor(res.getColor(R.color.plug_hamincha_solid));
-                } else if (id == R.string.sunset) {
-                    list.setBackgroundColor(res.getColor(R.color.sunset_solid));
-                } else if (id == R.string.twilight) {
-                    list.setBackgroundColor(res.getColor(R.color.twilight_solid));
-                } else if (id == R.string.nightfall) {
-                    list.setBackgroundColor(res.getColor(R.color.nightfall_solid));
-                } else if (id == R.string.midnight) {
-                    list.setBackgroundColor(res.getColor(R.color.midnight_solid));
-                } else {
-                    list.setBackgroundDrawable(null);
+                switch (id) {
+                    case R.string.dawn:
+                        list.setBackgroundColor(res.getColor(R.color.dawn_solid));
+                        break;
+                    case R.string.tallis:
+                    case R.string.tallis_only:
+                        list.setBackgroundColor(res.getColor(R.color.tallis_solid));
+                        break;
+                    case R.string.sunrise:
+                        list.setBackgroundColor(res.getColor(R.color.sunrise_solid));
+                        break;
+                    case R.string.shema:
+                        list.setBackgroundColor(res.getColor(R.color.shema_solid));
+                        break;
+                    case R.string.prayers:
+                        list.setBackgroundColor(res.getColor(R.color.prayers_solid));
+                        break;
+                    case R.string.midday:
+                        list.setBackgroundColor(res.getColor(R.color.midday_solid));
+                        break;
+                    case R.string.earliest_mincha:
+                        list.setBackgroundColor(res.getColor(R.color.earliest_mincha_solid));
+                        break;
+                    case R.string.mincha:
+                        list.setBackgroundColor(res.getColor(R.color.mincha_solid));
+                        break;
+                    case R.string.plug_hamincha:
+                        list.setBackgroundColor(res.getColor(R.color.plug_hamincha_solid));
+                        break;
+                    case R.string.sunset:
+                        list.setBackgroundColor(res.getColor(R.color.sunset_solid));
+                        break;
+                    case R.string.twilight:
+                        list.setBackgroundColor(res.getColor(R.color.twilight_solid));
+                        break;
+                    case R.string.nightfall:
+                        list.setBackgroundColor(res.getColor(R.color.nightfall_solid));
+                        break;
+                    case R.string.midnight:
+                        list.setBackgroundColor(res.getColor(R.color.midnight_solid));
+                        break;
+                    default:
+                        list.setBackgroundDrawable(null);
+                        break;
                 }
                 break;
             case R.style.Theme_Zmanim_NoGradient:
@@ -202,4 +235,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter> extends Zmani
         super.bindViewGrouping(list, position, getResources().getText(masterId));
     }
 
+    @Override
+    protected P createPopulater() {
+        return (P) new ZmanimDetailsPopulater<A>(context, settings);
+    }
 }

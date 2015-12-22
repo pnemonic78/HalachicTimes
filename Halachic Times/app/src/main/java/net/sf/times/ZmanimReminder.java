@@ -120,17 +120,19 @@ public class ZmanimReminder extends BroadcastReceiver {
         if (gloc == null)
             return;
 
+        ZmanimPopulater populater = new ZmanimPopulater(context, settings);
+        populater.setCalendar(System.currentTimeMillis());
+        populater.setGeoLocation(gloc);
+        populater.setInIsrael(locations.inIsrael());
+
         ZmanimAdapter adapter = this.adapter;
         if (adapter == null) {
             adapter = new ZmanimAdapter(context, settings);
             this.adapter = adapter;
         }
-        adapter.setCalendar(System.currentTimeMillis());
-        adapter.setGeoLocation(gloc);
-        adapter.setInIsrael(locations.inIsrael());
-        adapter.populate(false);
+        populater.populate(adapter, false);
 
-        remind(settings, adapter);
+        remind(settings, populater, adapter);
     }
 
     /**
@@ -141,7 +143,7 @@ public class ZmanimReminder extends BroadcastReceiver {
      * @param adapter
      *         the populated adapter.
      */
-    private void remind(ZmanimSettings settings, ZmanimAdapter adapter) {
+    private void remind(ZmanimSettings settings, ZmanimPopulater populater, ZmanimAdapter adapter) {
         Log.i(TAG, "remind");
 
         final Context context = this.context;
@@ -170,7 +172,8 @@ public class ZmanimReminder extends BroadcastReceiver {
                 gcal.add(Calendar.DAY_OF_MONTH, 1);
                 jcal.setDate(gcal);
                 cal.add(Calendar.DAY_OF_MONTH, 1);
-                adapter.populate(false);
+                populater.setCalendar(cal);
+                populater.populate(adapter, false);
             }
 
             count = adapter.getCount();

@@ -512,17 +512,17 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if (gloc == null)
             return;
 
+        ZmanimPopulater populater = new ZmanimPopulater(context, settings);
+        populater.setCalendar(now);
+        populater.setGeoLocation(gloc);
+        populater.setInIsrael(locations.inIsrael());
+
         ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
-        adapter.setCalendar(now);
-        adapter.setGeoLocation(gloc);
-        adapter.setInIsrael(locations.inIsrael());
-        adapter.populate(true);
+        populater.populate(adapter, true);
 
         ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, settings);
-        adapterTomorrow.setCalendar(now + DateUtils.DAY_IN_MILLIS);
-        adapterTomorrow.setGeoLocation(gloc);
-        adapterTomorrow.setInIsrael(locations.inIsrael());
-        adapterTomorrow.populate(true);
+        adapter.setCalendar(now + DateUtils.DAY_IN_MILLIS);
+        populater.populate(adapterTomorrow, true);
 
         bindViews(views, adapter, adapterTomorrow);
     }

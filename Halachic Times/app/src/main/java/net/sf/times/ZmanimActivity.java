@@ -119,7 +119,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private Runnable updateLocation;
     private ZmanimReminder reminder;
     /** The master fragment. */
-    private ZmanimFragment<ZmanimAdapter> masterFragment;
+    private ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>> masterFragment;
     /** The details fragment switcher. */
     private ViewSwitcher detailsFragment;
     /** The details fragment. */
@@ -308,7 +308,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
 
-        masterFragment = (ZmanimFragment<ZmanimAdapter>) view.findViewById(R.id.list_fragment);
+        masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) view.findViewById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
         masterFragment.setGestureDetector(gestureDetector);
         detailsFragment = (ViewSwitcher) view.findViewById(R.id.details_fragment);
@@ -820,7 +820,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             return true;
 
         if (candlesFragment.isVisible()) {
-            ZmanimAdapter candlesAdapter = candlesFragment.getAdapter();
+            CandlesAdapter candlesAdapter = candlesFragment.getAdapter();
             if (candlesAdapter.isEmpty())
                 return false;
             return true;

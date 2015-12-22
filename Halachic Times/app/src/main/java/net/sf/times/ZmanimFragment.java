@@ -47,7 +47,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
+public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A>> extends FrameLayout {
 
     protected final Context context;
     protected LayoutInflater inflater;
@@ -72,6 +72,8 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
     private int paddingTop;
     private int paddingRight;
     private int paddingBottom;
+    /** The adapter populater. */
+    private P populater;
     /** The adapter. */
     private A adapter;
     /** The gesture detector. */
@@ -159,6 +161,30 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
     }
 
     /**
+     * Create a new times populater.
+     *
+     * @return the populater.
+     */
+    @SuppressWarnings("unchecked")
+    protected P createPopulater() {
+        return (P) new ZmanimPopulater<A>(context, settings);
+    }
+
+    /**
+     * Get the times populater.
+     *
+     * @return the populater.
+     */
+    protected P getPopulater() {
+        P populater = this.populater;
+        if (populater == null) {
+            populater = createPopulater();
+            this.populater = populater;
+        }
+        return populater;
+    }
+
+    /**
      * Populate the list with times.
      *
      * @param date
@@ -175,11 +201,15 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
         if (gloc == null)
             return null;
 
-        A adapter = getAdapter();
-        adapter.setCalendar(date);
-        adapter.setGeoLocation(gloc);
-        adapter.setInIsrael(locations.inIsrael());
-        adapter.populate(false);
+        P populater = getPopulater();
+        populater.setCalendar(date);
+        populater.setGeoLocation(gloc);
+        populater.setInIsrael(locations.inIsrael());
+
+        A adapter = createAdapter();
+        if (adapter != null) {
+            populater.populate(adapter, false);
+        }
 
         ViewGroup list = this.list;
         if (list == null)
@@ -199,8 +229,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
     protected void bindViews(ViewGroup list, A adapter) {
         if (list == null)
             return;
-        final int count = adapter.getCount();
         list.removeAllViews();
+        if (adapter == null)
+            return;
 
         ZmanimItem item;
         View row;
@@ -211,6 +242,7 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
         CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
         JewishCalendar jcal = adapter.getJewishCalendar();
 
+        final int count = adapter.getCount();
         int position = 0;
 
         if (position < count) {
@@ -264,6 +296,9 @@ public class ZmanimFragment<A extends ZmanimAdapter> extends FrameLayout {
      *         the item.
      */
     protected void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
+        if (row == null) {
+            throw new IllegalArgumentException("row required");
+        }
         setOnClickListener(row, item);
         inflater.inflate(R.layout.divider, list);
         list.addView(row);
