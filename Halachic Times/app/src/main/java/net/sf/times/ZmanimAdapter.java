@@ -56,81 +56,8 @@ import java.util.Locale;
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
-    /** 12 hours (half of a full day). */
-    protected static final long TWELVE_HOURS = DateUtils.DAY_IN_MILLIS >> 1;
-    /** 6 hours (quarter of a full day). */
-    protected static final long SIX_HOURS = DateUtils.DAY_IN_MILLIS >> 2;
-
-    /** Holiday id for Shabbath. */
-    public static final int SHABBATH = 100;
-
-    /** No candles to light. */
-    private static final int CANDLES_NONE = 0;
-    /** Number of candles to light for Shabbath. */
-    private static final int CANDLES_SHABBATH = 2;
-    /** Number of candles to light for a festival. */
-    private static final int CANDLES_FESTIVAL = 2;
-    /** Number of candles to light for Yom Kippurim. */
-    private static final int CANDLES_YOM_KIPPUR = 1;
-
-    /** Flag indicating lighting times before sunset. */
-    private static final int BEFORE_SUNSET = 0x00000000;
-    /** Flag indicating lighting times at sunset. */
-    private static final int AT_SUNSET = 0x10000000;
-    /** Flag indicating lighting times at twilight. */
-    private static final int AT_TWILIGHT = 0x20000000;
-    /** Flag indicating lighting times after nightfall. */
-    private static final int AT_NIGHT = 0x40000000;
-    /** Flag indicating lighting times after Shabbath. */
-    private static final int MOTZE_SHABBATH = AT_NIGHT;
-
-    protected static final int CANDLES_MASK = 0x0000000F;
-    protected static final int HOLIDAY_MASK = 0x000000FF;
-    protected static final int MOTZE_MASK = 0xF0000000;
-
-    protected static final String OPINION_10_2 = ZmanimSettings.OPINION_10_2;
-    protected static final String OPINION_11 = ZmanimSettings.OPINION_11;
-    protected static final String OPINION_12 = ZmanimSettings.OPINION_12;
-    protected static final String OPINION_120 = ZmanimSettings.OPINION_120;
-    protected static final String OPINION_120_ZMANIS = ZmanimSettings.OPINION_120_ZMANIS;
-    protected static final Object OPINION_13 = ZmanimSettings.OPINION_13;
-    protected static final String OPINION_15 = ZmanimSettings.OPINION_15;
-    protected static final String OPINION_16_1 = ZmanimSettings.OPINION_16_1;
-    protected static final String OPINION_16_1_ALOS = ZmanimSettings.OPINION_16_1_ALOS;
-    protected static final String OPINION_16_1_SUNSET = ZmanimSettings.OPINION_16_1_SUNSET;
-    protected static final String OPINION_18 = ZmanimSettings.OPINION_18;
-    protected static final String OPINION_19_8 = ZmanimSettings.OPINION_19_8;
-    protected static final String OPINION_2 = ZmanimSettings.OPINION_2;
-    protected static final String OPINION_26 = ZmanimSettings.OPINION_26;
-    protected static final String OPINION_3 = ZmanimSettings.OPINION_3;
-    protected static final String OPINION_3_65 = ZmanimSettings.OPINION_3_65;
-    protected static final String OPINION_3_676 = ZmanimSettings.OPINION_3_676;
-    protected static final String OPINION_30 = ZmanimSettings.OPINION_30;
-    protected static final String OPINION_4_37 = ZmanimSettings.OPINION_4_37;
-    protected static final String OPINION_4_61 = ZmanimSettings.OPINION_4_61;
-    protected static final String OPINION_4_8 = ZmanimSettings.OPINION_4_8;
-    protected static final String OPINION_5_88 = ZmanimSettings.OPINION_5_88;
-    protected static final String OPINION_5_95 = ZmanimSettings.OPINION_5_95;
-    protected static final Object OPINION_58 = ZmanimSettings.OPINION_58;
-    protected static final String OPINION_6 = ZmanimSettings.OPINION_6;
-    protected static final String OPINION_60 = ZmanimSettings.OPINION_60;
-    protected static final String OPINION_7 = ZmanimSettings.OPINION_7;
-    protected static final String OPINION_7_083 = ZmanimSettings.OPINION_7_083;
-    protected static final String OPINION_72 = ZmanimSettings.OPINION_72;
-    protected static final String OPINION_72_ZMANIS = ZmanimSettings.OPINION_72_ZMANIS;
-    protected static final String OPINION_8_5 = ZmanimSettings.OPINION_8_5;
-    protected static final String OPINION_90 = ZmanimSettings.OPINION_90;
-    protected static final String OPINION_90_ZMANIS = ZmanimSettings.OPINION_90_ZMANIS;
-    protected static final String OPINION_96 = ZmanimSettings.OPINION_96;
-    protected static final String OPINION_96_ZMANIS = ZmanimSettings.OPINION_96_ZMANIS;
-    protected static final String OPINION_ATERET = ZmanimSettings.OPINION_ATERET;
-    protected static final String OPINION_GRA = ZmanimSettings.OPINION_GRA;
-    protected static final String OPINION_MGA = ZmanimSettings.OPINION_MGA;
-    protected static final String OPINION_FIXED = ZmanimSettings.OPINION_FIXED;
-    protected static final String OPINION_LEVEL = ZmanimSettings.OPINION_LEVEL;
-    protected static final String OPINION_SEA = ZmanimSettings.OPINION_SEA;
-    private static final String OPINION_TWILIGHT = ZmanimSettings.OPINION_TWILIGHT;
-    private static final String OPINION_NIGHT = ZmanimSettings.OPINION_NIGHT;
+    protected static final int CANDLES_MASK = ZmanimPopulater.CANDLES_MASK;
+    protected static final int HOLIDAY_MASK = ZmanimPopulater.HOLIDAY_MASK;
 
     /** The day of the month as a decimal number (range 01 to 31). */
     private static final String DAY_PAD_VAR = "%d";
@@ -213,6 +140,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         this.inflater = LayoutInflater.from(context);
         this.settings = settings;
         this.calendar = new ComplexZmanimCalendar();
+        this.showElapsed = settings.isPast();
 
         if (settings.isSeconds()) {
             boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
@@ -408,26 +336,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (time != NEVER) {
             add(item);
         }
-    }
-
-    protected void prePopulate() {
-        clear();
-
-        ZmanimSettings settings = this.settings;
-
-        summaries = settings.isSummaries();
-        showElapsed = settings.isPast();
-
-        Context context = getContext();
-        if (settings.isSeconds()) {
-            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
-            String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
-            timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-        } else {
-            timeFormat = android.text.format.DateFormat.getTimeFormat(context);
-        }
-
-        now = System.currentTimeMillis();
     }
 
     /**
