@@ -21,7 +21,6 @@ package net.sf.times;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -110,15 +109,20 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         return new CandlesPopulater(context, settings);
     }
 
-    @SuppressLint("InflateParams")
     @Override
     public CandlesAdapter populateTimes(Calendar date) {
-        CandlesAdapter adapter = super.populateTimes(date);
-
         stopAnimation();
+        return super.populateTimes(date);
+    }
 
+    @SuppressLint("InflateParams")
+    @Override
+    protected void bindViews(ViewGroup list, CandlesAdapter adapter) {
+        if (list == null)
+            return;
+        list.removeAllViews();
         if (adapter == null)
-            return null;
+            return;
 
         int holiday = adapter.getCandlesHoliday();
         int candlesCount = adapter.getCandlesCount();
@@ -209,8 +213,6 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
 
         if (animate)
             startAnimation();
-
-        return adapter;
     }
 
     @Override
@@ -238,10 +240,5 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                 continue;
             handler.post(anim);
         }
-    }
-
-    @Override
-    protected void bindViews(ViewGroup list, CandlesAdapter adapter) {
-        //TODO implement me!
     }
 }
