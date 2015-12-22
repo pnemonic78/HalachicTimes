@@ -128,14 +128,14 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         int candlesCount = adapter.getCandlesCount();
         boolean animate = settings.isCandlesAnimated();
         ImageView view;
+        ViewGroup group = null;
 
-        //TODO move this to adapter's getView
         switch (holiday) {
             case JewishCalendar.YOM_KIPPUR:
+                group = (ViewGroup) adapter.getView(holiday, candlesKippurim, list);
                 if (candlesKippurim == null) {
-                    ViewGroup group = (ViewGroup) inflater.inflate(R.layout.candles_kippurim, null);
-                    addView(group);
                     candlesKippurim = group;
+                    addView(group);
 
                     // assert candlesCount == YOM_KIPPURIM_CANDLES.length;
                     animations = new CandleAnimation[candlesCount];
@@ -148,13 +148,12 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     candlesShabbat.setVisibility(View.GONE);
                 if (candlesChannuka != null)
                     candlesChannuka.setVisibility(View.GONE);
-                candlesKippurim.setVisibility(View.VISIBLE);
                 break;
             case JewishCalendar.CHANUKAH:
+                group = (ViewGroup) adapter.getView(holiday, candlesChannuka, list);
                 if (candlesChannuka == null) {
-                    ViewGroup group = (ViewGroup) inflater.inflate(R.layout.candles_channuka, null);
-                    addView(group);
                     candlesChannuka = group;
+                    addView(group);
 
                     // create all candles in case user navigates to future day.
                     final int allCandlesCount = CHANNUKA_CANDLES.length;
@@ -178,22 +177,13 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     candlesShabbat.setVisibility(View.GONE);
                 if (candlesKippurim != null)
                     candlesKippurim.setVisibility(View.GONE);
-                candlesChannuka.setVisibility(View.VISIBLE);
                 break;
             default:
-                if (candlesCount == 0) {
-                    // Should never happen!
-                    if (candlesShabbat != null)
-                        candlesShabbat.setVisibility(View.GONE);
-                    if (candlesKippurim != null)
-                        candlesKippurim.setVisibility(View.GONE);
-                    if (candlesChannuka != null)
-                        candlesChannuka.setVisibility(View.GONE);
-                } else {
+                if (candlesCount > 0) {
+                    group = (ViewGroup) adapter.getView(holiday, candlesShabbat, list);
                     if (candlesShabbat == null) {
-                        ViewGroup group = (ViewGroup) inflater.inflate(R.layout.candles_shabbat, null);
-                        addView(group);
                         candlesShabbat = group;
+                        addView(group);
 
                         // assert candlesCount == SHABBAT_CANDLES.length;
                         animations = new CandleAnimation[candlesCount];
@@ -206,9 +196,20 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                         candlesKippurim.setVisibility(View.GONE);
                     if (candlesChannuka != null)
                         candlesChannuka.setVisibility(View.GONE);
-                    candlesShabbat.setVisibility(View.VISIBLE);
+                } else {
+                    // Should never happen!
+                    if (candlesShabbat != null)
+                        candlesShabbat.setVisibility(View.GONE);
+                    if (candlesKippurim != null)
+                        candlesKippurim.setVisibility(View.GONE);
+                    if (candlesChannuka != null)
+                        candlesChannuka.setVisibility(View.GONE);
                 }
                 break;
+        }
+
+        if (group != null) {
+            group.setVisibility(View.VISIBLE);
         }
 
         if (animate)

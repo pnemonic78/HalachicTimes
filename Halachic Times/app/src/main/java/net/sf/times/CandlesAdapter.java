@@ -24,10 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.sf.times.preference.ZmanimSettings;
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-
-import java.util.Calendar;
 
 /**
  * Adapter for candles.
@@ -44,7 +41,29 @@ public class CandlesAdapter extends ZmanimAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        int holiday = getCandlesHoliday();
+        int candlesCount = getCandlesCount();
+
+        switch (holiday) {
+            case JewishCalendar.YOM_KIPPUR:
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.candles_kippurim, parent, false);
+                }
+                break;
+            case JewishCalendar.CHANUKAH:
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.candles_channuka, parent, false);
+                }
+                break;
+            default:
+                if (candlesCount > 0) {
+                    if (convertView == null) {
+                        convertView = inflater.inflate(R.layout.candles_shabbat, parent, false);
+                    }
+                }
+                break;
+        }
+        return convertView;
     }
 
     /**
