@@ -43,15 +43,30 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
-        final int count = adapterToday.getCount();
+        ZmanimAdapter adapter = adapterToday;
+        int count = adapter.getCount();
         ZmanimItem item;
+        boolean found = false;
 
         for (int position = 0; position < count; position++) {
-            item = adapterToday.getItem(position);
+            item = adapter.getItem(position);
             if (item.isEmpty())
                 continue;
             bindView(list, position, item);
+            found = true;
             break;
+        }
+
+        if (!found && (adapterTomorrow != null)) {
+            adapter = adapterTomorrow;
+            count = adapter.getCount();
+            for (int position = 0; position < count; position++) {
+                item = adapter.getItem(position);
+                if (item.isEmpty())
+                    continue;
+                bindView(list, position, item);
+                break;
+            }
         }
     }
 
