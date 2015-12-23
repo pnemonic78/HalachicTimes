@@ -22,7 +22,7 @@ package net.sf.times;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
+import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +39,7 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -48,7 +48,7 @@ import java.util.Locale;
 
 /**
  * Adapter for halachic times list.
- * <p>
+ * <p/>
  * See also Wikipedia article on <a
  * href="http://en.wikipedia.org/wiki/Zmanim">Zmanim</a>.
  *
@@ -78,7 +78,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected long now = System.currentTimeMillis();
     protected boolean summaries;
     protected boolean showElapsed;
-    private DateFormat timeFormat;
+    private Format timeFormat;
+    private Format timeFormatSeasonalHour;
     private Comparator<ZmanimItem> comparator;
     private HebrewDateFormatter hebrewDateFormatter;
     private String[] monthNames;
@@ -151,13 +152,20 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         this.calendar = new ComplexZmanimCalendar();
         this.showElapsed = settings.isPast();
 
+        boolean time24 = DateFormat.is24HourFormat(context);
+        String patternSeasonalHour;
+
         if (settings.isSeconds()) {
-            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
             String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
             this.timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+
+            patternSeasonalHour = context.getString(R.string.hour_format_seconds);
         } else {
-            this.timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+            this.timeFormat = DateFormat.getTimeFormat(context);
+
+            patternSeasonalHour = context.getString(R.string.hour_format);
         }
+        this.timeFormatSeasonalHour = new SimpleDateFormat(patternSeasonalHour, Locale.getDefault());
     }
 
     /**
@@ -338,7 +346,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             item.timeLabel = null;
             item.elapsed = true;
         } else {
-            item.timeLabel = timeFormat.format(time);
+            item.timeLabel = (titleId == R.string.hour) ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
             item.elapsed = remote ? (time < now) : (showElapsed || (titleId == R.string.hour)) ? false : (time < now);
         }
 

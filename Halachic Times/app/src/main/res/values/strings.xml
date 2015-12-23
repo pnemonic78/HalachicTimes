@@ -53,6 +53,8 @@
     <string name="hour_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
     <string name="hour_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="hour_title" translatable="false">@string/hour</string>
+    <string name="hour_format" translatable="false">H:mm</string>
+    <string name="hour_format_seconds" translatable="false">H:mm:ss</string>
 
     <!-- List -->
     <string name="dawn">Dawn</string>
