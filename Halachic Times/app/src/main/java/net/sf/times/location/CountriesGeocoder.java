@@ -340,9 +340,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
     @Override
     public List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException {
-        if (latitude < -90.0 || latitude > 90.0)
+        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < -180.0 || longitude > 180.0)
+        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
         List<Address> cities = new ArrayList<Address>(maxResults);
@@ -383,9 +383,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
     @Override
     public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
-        if (latitude < -90.0 || latitude > 90.0)
+        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < -180.0 || longitude > 180.0)
+        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
         List<ZmanimAddress> cities = getCities();

@@ -107,6 +107,11 @@ public class AddressProvider {
 
     private static final String WHERE_ID = BaseColumns._ID + "=?";
 
+    protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
+    protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
+    protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
+    protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
+
     private final Context context;
     private final Locale locale;
     private SQLiteOpenHelper openHelper;
@@ -155,10 +160,10 @@ public class AddressProvider {
         if (location == null)
             return null;
         final double latitude = location.getLatitude();
-        if ((latitude > 90) || (latitude < -90))
+        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
             return null;
         final double longitude = location.getLongitude();
-        if ((longitude > 180) || (longitude < -180))
+        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
             return null;
 
         List<Address> addresses;

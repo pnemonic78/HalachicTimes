@@ -66,9 +66,9 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     @Override
     public List<Address> getFromLocation(final double latitude, final double longitude, int maxResults) throws IOException {
-        if (latitude < -90.0 || latitude > 90.0)
+        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < -180.0 || longitude > 180.0)
+        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
         CursorFilter filter = new CursorFilter() {
@@ -104,11 +104,10 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     @Override
     public ZmanimLocation getElevation(final double latitude, final double longitude) throws IOException {
-        if (latitude < -90.0 || latitude > 90.0)
+        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < -180.0 || longitude > 180.0)
+        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
-
 
         CursorFilter filter = new CursorFilter() {
             private final float[] mDistance = new float[1];

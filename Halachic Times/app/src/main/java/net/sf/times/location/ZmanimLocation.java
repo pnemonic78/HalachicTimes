@@ -30,6 +30,15 @@ import android.os.Parcelable;
  */
 public class ZmanimLocation extends Location {
 
+    /** Minimum valid latitude. */
+    public static final double LATITUDE_MIN = -90;
+    /** Maximum valid latitude. */
+    public static final double LATITUDE_MAX = 90;
+    /** Minimum valid longitude. */
+    public static final double LONGITUDE_MIN = -180;
+    /** Maximum valid longitude. */
+    public static final double LONGITUDE_MAX = 180;
+
     /** Double subtraction error. */
     private static final double EPSILON = 1e-6;
 

@@ -72,6 +72,11 @@ public abstract class GeocoderBase {
      */
     protected static final float SAME_PLANET = 5000000f;// 5000 kilometres.
 
+    protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
+    protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
+    protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
+    protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
+
     protected final Context context;
     protected final Locale locale;
     private static SAXParserFactory parserFactory;
@@ -197,13 +202,13 @@ public abstract class GeocoderBase {
                                              double upperRightLongitude) throws IOException {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
-        if (lowerLeftLatitude < -90.0 || lowerLeftLatitude > 90.0)
+        if (lowerLeftLatitude < LATITUDE_MIN || lowerLeftLatitude > LATITUDE_MAX)
             throw new IllegalArgumentException("lowerLeftLatitude == " + lowerLeftLatitude);
-        if (lowerLeftLongitude < -180.0 || lowerLeftLongitude > 180.0)
+        if (lowerLeftLongitude < LONGITUDE_MIN || lowerLeftLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("lowerLeftLongitude == " + lowerLeftLongitude);
-        if (upperRightLatitude < -90.0 || upperRightLatitude > 90.0)
+        if (upperRightLatitude < LATITUDE_MIN || upperRightLatitude > LATITUDE_MAX)
             throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
-        if (upperRightLongitude < -180.0 || upperRightLongitude > 180.0)
+        if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
         return null;
     }

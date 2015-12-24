@@ -126,6 +126,11 @@ public class ZmanimLocations implements ZmanimLocationListener {
      */
     private static final String FORMAT_DEGREES = "%1$.6f";
 
+    protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
+    protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
+    protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
+    protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
+
     /** The context. */
     private final Context context;
     /** The owner location listeners. */
@@ -498,10 +503,10 @@ public class ZmanimLocations implements ZmanimLocationListener {
         if (location == null)
             return false;
         final double latitude = location.getLatitude();
-        if ((latitude > 90) || (latitude < -90))
+        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
             return false;
         final double longitude = location.getLongitude();
-        if ((longitude > 180) || (longitude < -180))
+        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
             return false;
         return true;
     }

@@ -80,9 +80,9 @@ public class GoogleGeocoder extends GeocoderBase {
 
     @Override
     public List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException {
-        if (latitude < -90.0 || latitude > 90.0)
+        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < -180.0 || longitude > 180.0)
+        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage());
         return getAddressXMLFromURL(queryUrl, maxResults);
@@ -101,13 +101,13 @@ public class GoogleGeocoder extends GeocoderBase {
                                              double upperRightLongitude) throws IOException {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
-        if (lowerLeftLatitude < -90.0 || lowerLeftLatitude > 90.0)
+        if (lowerLeftLatitude < LATITUDE_MIN || lowerLeftLatitude > LATITUDE_MAX)
             throw new IllegalArgumentException("lowerLeftLatitude == " + lowerLeftLatitude);
-        if (lowerLeftLongitude < -180.0 || lowerLeftLongitude > 180.0)
+        if (lowerLeftLongitude < LONGITUDE_MIN || lowerLeftLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("lowerLeftLongitude == " + lowerLeftLongitude);
-        if (upperRightLatitude < -90.0 || upperRightLatitude > 90.0)
+        if (upperRightLatitude < LATITUDE_MIN || upperRightLatitude > LATITUDE_MAX)
             throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
-        if (upperRightLongitude < -180.0 || upperRightLongitude > 180.0)
+        if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
         String queryUrl = String
                 .format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
@@ -407,9 +407,9 @@ public class GoogleGeocoder extends GeocoderBase {
 
     @Override
     public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
-        if (latitude < -90.0 || latitude > 90.0)
+        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < -180.0 || longitude > 180.0)
+        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude);
         return getElevationXMLFromURL(queryUrl);
@@ -452,8 +452,6 @@ public class GoogleGeocoder extends GeocoderBase {
          *
          * @param results
          *         the destination results.
-         * @param maxResults
-         *         the maximum number of results.
          */
         public ElevationResponseHandler(List<ZmanimLocation> results) {
             mResults = results;
