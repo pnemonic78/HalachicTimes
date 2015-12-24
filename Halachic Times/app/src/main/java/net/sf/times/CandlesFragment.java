@@ -19,7 +19,6 @@
  */
 package net.sf.times;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -75,6 +74,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
      */
     public CandlesFragment(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init();
     }
 
     /**
@@ -87,6 +87,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
      */
     public CandlesFragment(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     /**
@@ -97,6 +98,14 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
      */
     public CandlesFragment(Context context) {
         super(context);
+        init();
+    }
+
+    /** Initialise. */
+    private void init() {
+        // Ignore the list inside of the scroller.
+        view = this;
+        list = view;
     }
 
     @Override
@@ -121,7 +130,6 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         return super.populateTimes(date);
     }
 
-    @SuppressLint("InflateParams")
     @Override
     protected void bindViews(ViewGroup list, CandlesAdapter adapter) {
         if (list == null)
