@@ -148,8 +148,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     public ZmanimAdapter(Context context, ZmanimSettings settings) {
         super(context, R.layout.times_item);
         this.inflater = LayoutInflater.from(context);
-        this.settings = settings;
         this.calendar = new ComplexZmanimCalendar();
+        this.settings = settings;
+        this.summaries = settings.isSummaries();
         this.showElapsed = settings.isPast();
 
         boolean time24 = DateFormat.is24HourFormat(context);
