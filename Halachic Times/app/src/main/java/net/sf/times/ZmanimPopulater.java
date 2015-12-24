@@ -119,8 +119,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     private final ZmanimSettings settings;
     protected final ComplexZmanimCalendar calendar;
     protected boolean inIsrael;
-    protected boolean summaries;
-    protected boolean showElapsed;
 
     /**
      * Creates a new populater.
@@ -158,11 +156,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.setCalendar(calendar.getCalendar());
         adapter.setGeoLocation(calendar.getGeoLocation());
         adapter.setInIsrael(inIsrael);
-
-        ZmanimSettings settings = getSettings();
-
-        summaries = settings.isSummaries();
-        showElapsed = settings.isPast();
     }
 
     /**
