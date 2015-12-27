@@ -555,7 +555,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
      *         the master item id.
      */
     protected void toggleDetails(int itemId) {
-        if ((itemId == 0) || (itemId == R.string.fast_begins) || (itemId == R.string.fast_ends))
+        if (!hasDetails(itemId))
             return;
 
         if (viewSwitcher != null) {
@@ -893,5 +893,16 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     public void onAnimationRepeat(Animation animation) {
+    }
+
+    /**
+     * Is the item a master with detail times?
+     *
+     * @param itemId
+     *         the item id.
+     * @return {@code true} if the item has details.
+     */
+    protected boolean hasDetails(int itemId) {
+        return (itemId != 0) && (itemId != R.string.fast_begins) && (itemId != R.string.fast_ends);
     }
 }

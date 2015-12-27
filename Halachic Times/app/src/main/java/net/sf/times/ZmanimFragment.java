@@ -384,9 +384,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     @SuppressWarnings("deprecation")
     public void highlight(int itemId) {
         // Find the view that matches the item id (the view that was clicked).
-        final A adapter = this.adapter;
-        if (adapter == null)
-            return;
         final ViewGroup list = this.list;
         if (list == null)
             return;
