@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
@@ -229,10 +230,48 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     }
 
     @Override
-    protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
-        if (position >= 0)
+    protected void bindViews(ViewGroup list, A adapter) {
+        if (list == null)
             return;
-        super.bindViewGrouping(list, position, getResources().getText(masterId));
+        list.removeAllViews();
+        if (adapter == null)
+            return;
+
+        Context context = getContext();
+        Calendar date = adapter.getCalendar().getCalendar();
+        JewishDate jewishDate = new JewishDate(date);
+        CharSequence dateHebrew;
+        int jDayOfMonthPrevious = 0;
+        int jDayOfMonth;
+
+        final int count = adapter.getCount();
+        int position = 0;
+        ZmanimItem item;
+        View row;
+
+        while (position < count) {
+            item = adapter.getItem(position);
+
+            date.setTimeInMillis(item.time);
+            jewishDate.setDate(date);
+            jDayOfMonth = jewishDate.getJewishDayOfMonth();
+            if (jDayOfMonth != jDayOfMonthPrevious) {
+                dateHebrew = adapter.formatDate(context, jewishDate);
+                bindViewGrouping(list, position, dateHebrew);
+            }
+
+            row = adapter.getView(position, null, list);
+            bindView(list, position, row, item);
+            position++;
+            jDayOfMonthPrevious = jDayOfMonth;
+        }
+    }
+
+    @Override
+    protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
+//        if (position >= 0)
+//            return;
+        super.bindViewGrouping(list, position, label);
     }
 
     @Override

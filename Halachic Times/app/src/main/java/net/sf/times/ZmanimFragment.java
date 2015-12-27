@@ -233,9 +233,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (adapter == null)
             return;
 
-        ZmanimItem item;
-        View row;
-
         Context context = getContext();
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
@@ -244,6 +241,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
         final int count = adapter.getCount();
         int position = 0;
+        ZmanimItem item;
+        View row;
 
         if (position < count) {
             item = adapter.getItem(position);
