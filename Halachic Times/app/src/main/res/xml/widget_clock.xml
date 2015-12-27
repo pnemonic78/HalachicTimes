@@ -6,7 +6,7 @@
     android:minResizeWidth="@dimen/min_digital_widget_resize_width"
     android:minWidth="@dimen/min_digital_widget_width"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="1800000"
+    android:updatePeriodMillis="600000"
     android:widgetCategory="keyguard|home_screen">
 
 </appwidget-provider>
