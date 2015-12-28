@@ -509,7 +509,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         populater.populate(adapter, true);
 
         ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, settings);
-        adapterTomorrow.setCalendar(now + DateUtils.DAY_IN_MILLIS);
+        populater.setCalendar(now + DateUtils.DAY_IN_MILLIS);
         populater.populate(adapterTomorrow, true);
 
         bindViews(views, adapter, adapterTomorrow);

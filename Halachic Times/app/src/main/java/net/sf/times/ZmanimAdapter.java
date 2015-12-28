@@ -444,7 +444,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the calendar.
      */
     public void setCalendar(Calendar calendar) {
-        this.calendar.setCalendar(calendar);
+        this.calendar.setCalendar((Calendar) calendar.clone());
     }
 
     /**
