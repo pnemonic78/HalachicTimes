@@ -190,7 +190,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         ZmanimPopulater populater = new ZmanimPopulater(context, settings);
         populater.setCalendar(System.currentTimeMillis());
         populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.inIsrael());
+        populater.setInIsrael(locations.isInIsrael());
 
         // Always create new adapter to avoid concurrency bugs.
         ZmanimAdapter adapter = new ZmanimAdapter(context, settings);

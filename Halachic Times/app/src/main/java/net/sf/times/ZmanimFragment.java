@@ -149,15 +149,10 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Get the times adapter.
      *
-     * @return the adapter.
+     * @return the populated adapter - {@code null} otherwise.
      */
     protected A getAdapter() {
-        A adapter = this.adapter;
-        if (adapter == null) {
-            adapter = createAdapter();
-            this.adapter = adapter;
-        }
-        return adapter;
+        return this.adapter;
     }
 
     /**
@@ -204,12 +199,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         P populater = getPopulater();
         populater.setCalendar(date);
         populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.inIsrael());
+        populater.setInIsrael(locations.isInIsrael());
 
         A adapter = createAdapter();
         if (adapter != null) {
             populater.populate(adapter, false);
         }
+        this.adapter = adapter;
 
         ViewGroup list = this.list;
         if (list == null)

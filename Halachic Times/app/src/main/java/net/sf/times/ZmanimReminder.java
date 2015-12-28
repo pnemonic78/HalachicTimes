@@ -71,8 +71,8 @@ public class ZmanimReminder extends BroadcastReceiver {
 
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
-    /** The number of days per week. */
-    private static final int DAYS_PER_WEEK = 7;
+    /** The number of days to check forwards for a reminder. */
+    private static final int DAYS_FORWARD = 30;
 
     private static final int LED_COLOR = Color.YELLOW;
     private static final int LED_ON = 750;
@@ -85,21 +85,13 @@ public class ZmanimReminder extends BroadcastReceiver {
     /** Extras name for the reminder time. */
     private static final String EXTRA_REMINDER_TIME = "reminder_time";
 
-    private Context context;
+    /** Action to force remind - used for debugging. */
+    private static final String ACTION_REMIND = "net.sf.times.action.REMIND";
+
     private SimpleDateFormat dateFormat;
     /** The adapter. */
     private ZmanimAdapter adapter;
     private Method setLatestEventInfo;
-
-    /**
-     * Creates a new reminder manager.
-     *
-     * @param context
-     *         the context.
-     */
-    public ZmanimReminder(Context context) {
-        this.context = context;
-    }
 
     /** No-argument constructor for broadcast receiver. */
     public ZmanimReminder() {
@@ -108,11 +100,12 @@ public class ZmanimReminder extends BroadcastReceiver {
     /**
      * Setup the first reminder for today.
      *
+     * @param context
+     *         the context.
      * @param settings
      *         the settings.
      */
-    public void remind(ZmanimSettings settings) {
-        final Context context = this.context;
+    public void remind(final Context context, ZmanimSettings settings) {
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         ZmanimLocations locations = app.getLocations();
         GeoLocation gloc = locations.getGeoLocation();
@@ -123,7 +116,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         ZmanimPopulater populater = new ZmanimPopulater(context, settings);
         populater.setCalendar(System.currentTimeMillis());
         populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.inIsrael());
+        populater.setInIsrael(locations.isInIsrael());
 
         ZmanimAdapter adapter = this.adapter;
         if (adapter == null) {
@@ -132,25 +125,25 @@ public class ZmanimReminder extends BroadcastReceiver {
         }
         populater.populate(adapter, false);
 
-        remind(settings, populater, adapter);
+        remind(context, settings, populater, adapter);
     }
 
     /**
      * Setup the first reminder for the week.
      *
+     * @param context
+     *         the context.
      * @param settings
      *         the settings.
      * @param adapter
      *         the populated adapter.
      */
-    private void remind(ZmanimSettings settings, ZmanimPopulater populater, ZmanimAdapter adapter) {
-        Log.i(TAG, "remind");
-
-        final Context context = this.context;
-        final Calendar gcal = Calendar.getInstance();
-        final long now = gcal.getTimeInMillis();
+    private void remind(final Context context, ZmanimSettings settings, ZmanimPopulater populater, ZmanimAdapter adapter) {
         final long latest = settings.getLatestReminder();
         Log.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
+
+        final Calendar gcal = Calendar.getInstance();
+        final long now = gcal.getTimeInMillis();
         final long was = now - WAS_DELTA;
         final long soon = now + SOON_DELTA;
         ZmanimItem item;
@@ -161,13 +154,11 @@ public class ZmanimReminder extends BroadcastReceiver {
         int count;
 
         JewishCalendar jcal = new JewishCalendar(gcal);
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        ZmanimLocations locations = app.getLocations();
-        jcal.setInIsrael(locations.inIsrael());
+        jcal.setInIsrael(populater.isInIsrael());
         Calendar cal = adapter.getCalendar().getCalendar();
 
         // Find the first reminder in the upcoming week.
-        for (int day = 1; nextDay && (day <= DAYS_PER_WEEK); day++) {
+        for (int day = 1; nextDay && (day <= DAYS_FORWARD); day++) {
             if (day > 1) {
                 gcal.add(Calendar.DAY_OF_MONTH, 1);
                 jcal.setDate(gcal);
@@ -182,7 +173,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 when = settings.getReminder(item.titleId, item.time);
 
                 if ((when != ZmanimSettings.NEVER) && allowReminder(item, jcal, settings)) {
-                    if (nextDay && (latest < was) && (was <= when) && (when <= soon)) {
+                    if (nextDay && (latest < when) && (was <= when) && (when <= soon)) {
                         notifyNow(context, settings, item);
                         nextDay = false;
                     }
@@ -203,10 +194,12 @@ public class ZmanimReminder extends BroadcastReceiver {
 
     /**
      * Cancel all reminders.
+     *
+     * @param context
+     *         the context.
      */
-    public void cancel() {
+    public void cancel(final Context context) {
         Log.i(TAG, "cancel");
-        final Context context = this.context;
         AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = createAlarmIntent(context, null);
         alarms.cancel(alarmIntent);
@@ -255,7 +248,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             notification = createNotificationEclair(context, settings, item, contentIntent);
         }
 
-        postNotification(notification, settings);
+        postNotification(notification, context, settings);
     }
 
     /**
@@ -272,7 +265,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         CharSequence contentTitle = context.getText(item.titleId);
         long when = item.time;
 
-        Log.i(TAG, "notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for " + formatDateTime(when));
+        Log.i(TAG, "notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for [" + formatDateTime(when) + "]");
 
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = createAlarmIntent(context, item);
@@ -309,7 +302,6 @@ public class ZmanimReminder extends BroadcastReceiver {
         String nowFormat = formatDateTime(System.currentTimeMillis());
         Log.i(TAG, "onReceive " + intent + " [" + nowFormat + "]");
 
-        this.context = context;
         boolean update = false;
         ZmanimSettings settings = new ZmanimSettings(context);
 
@@ -325,12 +317,19 @@ public class ZmanimReminder extends BroadcastReceiver {
         } else {
             Bundle extras = intent.getExtras();
             if (extras != null) {
-                if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
+                boolean remind = false;
+                if (ACTION_REMIND.equals(action)) {
+                    remind = true;
+                } else if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
+                    remind = true;
+                }
+
+                if (remind) {
                     CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
                     CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
                     long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
 
-                    if ((contentTitle != null) && (contentText != null) && (when != 0L)) {
+                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
                         ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
                         notifyNow(context, settings, reminderItem);
                     }
@@ -340,7 +339,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         }
 
         if (update) {
-            remind(settings);
+            remind(context, settings);
         }
     }
 
@@ -377,7 +376,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();
         long when = item.getTime();
-        Log.i(TAG, "notify now [" + contentTitle + "] for " + formatDateTime(when));
+        Log.i(TAG, "notify now [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
         int audioStreamType = settings.getReminderStream();
         Uri sound = settings.getReminderRingtone();
@@ -421,7 +420,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();
         long when = item.getTime();
-        Log.i(TAG, "notify now [" + contentTitle + "] for " + formatDateTime(when));
+        Log.i(TAG, "notify now [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
         int audioStreamType = settings.getReminderStream();
         Uri sound = settings.getReminderRingtone();
@@ -449,7 +448,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressLint("Wakelock")
-    private void postNotification(Notification notification, ZmanimSettings settings) {
+    private void postNotification(Notification notification, Context context, ZmanimSettings settings) {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);

@@ -557,7 +557,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
      *         the time zone.
      * @return {@code true} if user is in Israel - {@code false} otherwise.
      */
-    public boolean inIsrael(Location location, TimeZone timeZone) {
+    public boolean isInIsrael(Location location, TimeZone timeZone) {
         if (location == null) {
             if (timeZone == null)
                 timeZone = this.timeZone;
@@ -587,8 +587,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
      *         the time zone.
      * @return {@code true} if user is in Israel - {@code false} otherwise.
      */
-    public boolean inIsrael(TimeZone timeZone) {
-        return inIsrael(getLocation(), timeZone);
+    public boolean isInIsrael(TimeZone timeZone) {
+        return isInIsrael(getLocation(), timeZone);
     }
 
     /**
@@ -597,8 +597,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
      *
      * @return {@code true} if user is in Israel - {@code false} otherwise.
      */
-    public boolean inIsrael() {
-        return inIsrael(timeZone);
+    public boolean isInIsrael() {
+        return isInIsrael(timeZone);
     }
 
     /**

@@ -118,7 +118,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     private final Context context;
     private final ZmanimSettings settings;
     protected final ComplexZmanimCalendar calendar;
-    protected boolean inIsrael;
+    private boolean inIsrael;
 
     /**
      * Creates a new populater.
@@ -906,6 +906,16 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     public void setInIsrael(boolean inIsrael) {
         this.inIsrael = inIsrael;
+    }
+
+    /**
+     * Is the current location in Israel?<br>
+     * Used to determine if user is in diaspora for 2-day festivals.
+     *
+     * @return {@code true} if user is in Israel - {@code false} otherwise.
+     */
+    public boolean isInIsrael() {
+        return inIsrael;
     }
 
     /**

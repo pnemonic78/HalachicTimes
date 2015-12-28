@@ -153,8 +153,8 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
                         if (settings == null)
                             settings = new ZmanimSettings(context);
                         if (reminder == null)
-                            reminder = new ZmanimReminder(context);
-                        reminder.remind(settings);
+                            reminder = new ZmanimReminder();
+                        reminder.remind(context, settings);
                     }
                 }
             };

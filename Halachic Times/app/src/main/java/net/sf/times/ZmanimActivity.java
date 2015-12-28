@@ -260,7 +260,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             reminder = createReminder();
             this.reminder = reminder;
         }
-        reminder.cancel();
+        reminder.cancel(this);
         int itemId = selectedId;
         if (itemId != 0) {
             // We need to wait for the list rows to get their default
@@ -277,7 +277,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             // Don't run on UI thread.
             new Thread() {
                 public void run() {
-                    reminder.remind(settings);
+                    reminder.remind(ZmanimActivity.this, settings);
                 }
             }.start();
         }
@@ -439,7 +439,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     }
 
     protected ZmanimReminder createReminder() {
-        return new ZmanimReminder(this);
+        return new ZmanimReminder();
     }
 
     /** Populate the header item. */
