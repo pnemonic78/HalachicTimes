@@ -215,6 +215,9 @@
     <string name="nightfall_7">Sun is 7.083° below sea level</string>
     <string name="nightfall_8">Sun is 8.5° below sea level</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Shabbath ends</string>
+
     <!-- Midnight -->
     <string name="midnight">Midnight (chatzos)</string>
     <string name="midnight_summary">Solar midnight</string>

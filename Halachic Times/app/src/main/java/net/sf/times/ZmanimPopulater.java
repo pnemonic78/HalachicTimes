@@ -704,6 +704,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.nightfall, summary, date, remote);
         if (holidayToday == JewishCalendar.YOM_KIPPUR) {
             adapter.add(R.string.fast_ends, null, date, remote);
+        } else if (holidayToday == SHABBATH) {
+            adapter.add(R.string.shabbath_ends, summary, date, remote);
         }
         if (hasCandles && (candlesHow == AT_NIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
