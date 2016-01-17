@@ -159,6 +159,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                         list.setBackgroundColor(res.getColor(R.color.twilight));
                         break;
                     case R.string.nightfall:
+                    case R.string.shabbath_ends:
                         list.setBackgroundColor(res.getColor(R.color.nightfall));
                         break;
                     case R.string.midnight:
@@ -205,6 +206,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                         list.setBackgroundColor(res.getColor(R.color.twilight_solid));
                         break;
                     case R.string.nightfall:
+                    case R.string.shabbath_ends:
                         list.setBackgroundColor(res.getColor(R.color.nightfall_solid));
                         break;
                     case R.string.midnight:

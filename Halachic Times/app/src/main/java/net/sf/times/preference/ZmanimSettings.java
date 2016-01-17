@@ -710,7 +710,7 @@ public class ZmanimSettings {
             return KEY_OPINION_SUNSET;
         if (id == R.string.twilight)
             return KEY_OPINION_TWILIGHT;
-        if (id == R.string.nightfall)
+        if ((id == R.string.nightfall) || (id == R.string.shabbath_ends))
             return KEY_OPINION_NIGHTFALL;
         if (id == R.string.midnight)
             return KEY_OPINION_MIDNIGHT;

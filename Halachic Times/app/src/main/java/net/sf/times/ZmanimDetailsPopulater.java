@@ -122,6 +122,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
                 populateTwilight(adapter, calendar, settings);
                 break;
             case R.string.nightfall:
+            case R.string.shabbath_ends:
                 populateNightfall(adapter, calendar, settings);
                 break;
             case R.string.midnight:
