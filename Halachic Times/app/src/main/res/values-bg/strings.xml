@@ -113,6 +113,9 @@
     <string name="nightfall_7">Слънцето е 7,083° под морското ниво</string>
     <string name="nightfall_8">Слънцето е 8,5° под морското ниво</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Шабат завършва</string>
+
     <!-- Midnight -->
     <string name="midnight">Полунощ (хацот)</string>
     <string name="midnight_summary">Слънчевата полунощ</string>

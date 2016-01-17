@@ -113,6 +113,9 @@
     <string name="nightfall_7">Päike on 7,083° allpool merepinda</string>
     <string name="nightfall_8">Päike on 8,5° allpool merepinda</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Šabbat otsad</string>
+
     <!-- Midnight -->
     <string name="midnight">Kesköö (chatsos)</string>
     <string name="midnight_summary">Päikese keskööd</string>

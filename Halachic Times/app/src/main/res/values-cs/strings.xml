@@ -115,6 +115,9 @@
     <string name="nightfall_7">Slunce je 7,083° pod úrovní moře</string>
     <string name="nightfall_8">Slunce je 8,5° pod úrovní moře</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Šabat konce</string>
+
     <!-- Midnight -->
     <string name="midnight">Půlnoc (chatzos)</string>
     <string name="midnight_summary">Solární půlnoci</string>

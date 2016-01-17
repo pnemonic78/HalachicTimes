@@ -113,6 +113,9 @@
     <string name="nightfall_7">Ήλιος είναι 7,083° κάτω από επίπεδο της θάλασσας</string>
     <string name="nightfall_8">Ήλιος είναι 8,5° κάτω από επίπεδο της θάλασσας</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Σαμπάτ άκρα</string>
+
     <!-- Midnight -->
     <string name="midnight">Μεσάνυχτα (χαζοτ)</string>
     <string name="midnight_summary">Ηλιακό μεσάνυχτα</string>

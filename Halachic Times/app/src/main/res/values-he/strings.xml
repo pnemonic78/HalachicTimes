@@ -117,6 +117,9 @@
     <string name="nightfall_7">שמש 7.083° מתחת לגובה פני הים</string>
     <string name="nightfall_8">שמש 8.5° מתחת לגובה פני הים</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">צאת השבת</string>
+
     <!-- Midnight -->
     <string name="midnight">חצות הלילה</string>
     <string name="midnight_summary">חצות סולארית</string>
@@ -138,8 +141,8 @@
     <string name="levana_15">15 ימים לאחר המולד</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">התענית מתחילה</string>
-    <string name="fast_ends">התענית מסתיימת</string>
+    <string name="fast_begins">תחילת התענית</string>
+    <string name="fast_ends">צאת התענית</string>
 
     <!-- Omer -->
     <string name="omer">עומר</string>

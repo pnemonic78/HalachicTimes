@@ -115,6 +115,9 @@
     <string name="nightfall_7">Soarele este de 7,083° sub nivelul mării</string>
     <string name="nightfall_8">Soarele este de 8,5° sub nivelul mării</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Șabat finisaje</string>
+
     <!-- Midnight -->
     <string name="midnight">Miezul nopții (chaţos)</string>
     <string name="midnight_summary">Solar miezul nopții</string>

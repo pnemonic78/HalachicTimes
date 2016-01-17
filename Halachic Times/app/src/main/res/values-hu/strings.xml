@@ -113,6 +113,9 @@
     <string name="nightfall_7">A nap 7,083° tengerszint alatt</string>
     <string name="nightfall_8">A nap 8,5° tengerszint alatt</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Szombat véget ér</string>
+
     <!-- Midnight -->
     <string name="midnight">Éjfél (chatzos)</string>
     <string name="midnight_summary">Szolár éjfél</string>

@@ -113,6 +113,9 @@
     <string name="nightfall_7">Sole è 7,083° sotto livello del mare</string>
     <string name="nightfall_8">Sole è 8,5° sotto livello del mare</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Shabato finiture</string>
+
     <!-- Midnight -->
     <string name="midnight">Mezzanotte (chatzos)</string>
     <string name="midnight_summary">Mezzanotte solare</string>

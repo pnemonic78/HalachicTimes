@@ -113,6 +113,9 @@
     <string name="nightfall_7">Solen är 7,083° under havsnivå</string>
     <string name="nightfall_8">Solen är 8,5° under havsnivå</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Šabbat ändar</string>
+
     <!-- Midnight -->
     <string name="midnight">Midnatt (chatzos)</string>
     <string name="midnight_summary">Solens midnatt</string>

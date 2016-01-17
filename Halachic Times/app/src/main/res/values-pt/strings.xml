@@ -113,6 +113,9 @@
     <string name="nightfall_7">Sol é 7,083° abaixo do nível do mar</string>
     <string name="nightfall_8">Sol é 8,5° abaixo do nível do mar</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Termina o Chabat</string>
+
     <!-- Midnight -->
     <string name="midnight">Meia-noite (rraçòz)</string>
     <string name="midnight_summary">Solares da meia-noite</string>

@@ -113,6 +113,9 @@
     <string name="nightfall_7">Sonne ist 7,083° unter dem Meeresspiegel</string>
     <string name="nightfall_8">Sonne ist 8,5° unter dem Meeresspiegel</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Schabbat endet</string>
+
     <!-- Midnight -->
     <string name="midnight">Mitternacht (chatzos)</string>
     <string name="midnight_summary">Solar Mitternacht</string>

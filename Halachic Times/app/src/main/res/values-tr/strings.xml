@@ -113,6 +113,9 @@
     <string name="nightfall_7">Güneş deniz seviyesi altındadır 7,083°</string>
     <string name="nightfall_8">Güneş deniz seviyesi altındadır 8,5°</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Şabat biter</string>
+
     <!-- Midnight -->
     <string name="midnight">Gece yarısı (chatzot)</string>
     <string name="midnight_summary">Güneş geceyarısı</string>

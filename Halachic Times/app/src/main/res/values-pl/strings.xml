@@ -117,6 +117,9 @@
     <string name="nightfall_7">Słońce jest 7,083° poniżej poziomu morza</string>
     <string name="nightfall_8">Słońce jest 8,5° poniżej poziomu morza</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Szabat kończy</string>
+
     <!-- Midnight -->
     <string name="midnight">Północ (chatzos)</string>
     <string name="midnight_summary">Słoneczne północ</string>

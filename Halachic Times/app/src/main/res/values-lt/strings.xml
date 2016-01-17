@@ -115,6 +115,9 @@
     <string name="nightfall_7">Saulė yra 7,083° žemiau jūros lygio</string>
     <string name="nightfall_8">Saulė yra 8,5° žemiau jūros lygio</string>
 
+    <!-- Shabbath. -->
+    <string name="shabbath_ends">Šabo galai</string>
+
     <!-- Midnight -->
     <string name="midnight">Vidurnakčio (chacos)</string>
     <string name="midnight_summary">Saulės vidurnakčio</string>
