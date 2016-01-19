@@ -102,7 +102,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Einbruch der Nacht</string>
-    <string name="nightfall_3stars">3 Sterne sichtbar</string>
     <string name="nightfall_3_65">Sonne ist 3,65° unter dem Meeresspiegel</string>
     <string name="nightfall_3_676">Sonne ist 3,676° unter dem Meeresspiegel</string>
     <string name="nightfall_4_37">Sonne ist 4,37° unter dem Meeresspiegel</string>

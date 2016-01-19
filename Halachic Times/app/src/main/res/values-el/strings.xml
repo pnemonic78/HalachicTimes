@@ -102,7 +102,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Σούρουπο</string>
-    <string name="nightfall_3stars">3 αστέρια ορατά</string>
     <string name="nightfall_3_65">Ήλιος είναι 3,65° κάτω από επίπεδο της θάλασσας</string>
     <string name="nightfall_3_676">Ήλιος είναι 3,676° κάτω από επίπεδο της θάλασσας</string>
     <string name="nightfall_4_37">Ήλιος είναι 4,37° κάτω από επίπεδο της θάλασσας</string>

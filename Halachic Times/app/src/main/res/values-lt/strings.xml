@@ -104,7 +104,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Ateinančio naktys</string>
-    <string name="nightfall_3stars">3 žvaigždės matomas</string>
     <string name="nightfall_3_65">Saulė yra 3,65° žemiau jūros lygio</string>
     <string name="nightfall_3_676">Saulė yra 3,676° žemiau jūros lygio</string>
     <string name="nightfall_4_37">Saulė yra 4,37° žemiau jūros lygio</string>

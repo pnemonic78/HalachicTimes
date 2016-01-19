@@ -106,7 +106,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">לילה</string>
-    <string name="nightfall_3stars">צאת הכוכבים (3 כוכבים גלויים)</string>
     <string name="nightfall_3_65">שמש 3.65° מתחת לגובה פני הים</string>
     <string name="nightfall_3_676">שמש 3.676° מתחת לגובה פני הים</string>
     <string name="nightfall_4_37">שמש 4.37° מתחת לגובה פני הים</string>

@@ -698,8 +698,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = cal.getTzaisGeonim8Point5Degrees();
             summary = R.string.nightfall_8;
         } else {
-            date = cal.getTzais();
-            summary = R.string.nightfall_3stars;
+            date = cal.getTzaisGeonim7Point083Degrees();
+            summary = R.string.nightfall_7;
         }
         adapter.add(R.string.nightfall, summary, date, remote);
         if (holidayToday == JewishCalendar.YOM_KIPPUR) {

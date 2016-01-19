@@ -102,7 +102,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Anochecer</string>
-    <string name="nightfall_3stars">3 estrellas visibles</string>
     <string name="nightfall_3_65">Sol es 3,65° debajo el nivel del mar</string>
     <string name="nightfall_3_676">Sol es 3,676° debajo el nivel del mar</string>
     <string name="nightfall_4_37">Sol es 4,37° debajo el nivel del mar</string>

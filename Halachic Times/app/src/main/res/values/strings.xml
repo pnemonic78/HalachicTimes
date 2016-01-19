@@ -190,7 +190,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Nightfall</string>
-    <string name="nightfall_3stars">3 stars visible</string>
     <string name="nightfall_120" translatable="false">@string/opinion_120</string>
     <string name="nightfall_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
     <string name="nightfall_16" translatable="false">@string/opinion_16</string>

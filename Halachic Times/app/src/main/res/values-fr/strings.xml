@@ -102,7 +102,6 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Tombée de la nuit</string>
-    <string name="nightfall_3stars">3 étoiles visibles</string>
     <string name="nightfall_3_65">Le soleil se trouve à 3,65° sous le niveau de la mer</string>
     <string name="nightfall_3_676">Le soleil se trouve à 3,676° sous le niveau de la mer</string>
     <string name="nightfall_4_37">Le soleil se trouve à 4,37° sous le niveau de la mer</string>

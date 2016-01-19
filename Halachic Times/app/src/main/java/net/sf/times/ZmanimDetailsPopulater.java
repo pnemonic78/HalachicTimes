@@ -702,10 +702,6 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         date = cal.getTzaisGeonim8Point5Degrees();
         title = R.string.nightfall_8;
         adapter.add(title, SUMMARY_NONE, date);
-
-        date = cal.getTzais();
-        title = R.string.nightfall_3stars;
-        adapter.add(title, SUMMARY_NONE, date);
     }
 
     private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
