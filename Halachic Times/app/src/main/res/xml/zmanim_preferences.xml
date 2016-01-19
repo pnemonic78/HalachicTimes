@@ -44,6 +44,9 @@
         android:key="nightfall_screen"
         android:title="@string/nightfall"/>
     <PreferenceScreen
+        android:key="shabbath_screen"
+        android:title="@string/shabbath_ends"/>
+    <PreferenceScreen
         android:key="midnight_screen"
         android:title="@string/midnight"/>
     <PreferenceScreen

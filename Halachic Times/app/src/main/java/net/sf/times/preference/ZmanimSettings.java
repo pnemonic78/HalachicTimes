@@ -724,7 +724,7 @@ public class ZmanimSettings {
         if (id == R.string.nightfall)
             return KEY_OPINION_NIGHTFALL;
         if (id == R.string.shabbath_ends)
-            return KEY_OPINION_NIGHTFALL;
+            return KEY_OPINION_SHABBATH_ENDS;
         if (id == R.string.midnight)
             return KEY_OPINION_MIDNIGHT;
         if (id == R.string.levana_earliest)

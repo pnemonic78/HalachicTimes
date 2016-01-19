@@ -106,6 +106,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         replaceScreen(screenZmanim, "sunset_screen", R.xml.zman_sunset_preferences);
         replaceScreen(screenZmanim, "twilight_screen", R.xml.zman_twilight_preferences);
         replaceScreen(screenZmanim, "nightfall_screen", R.xml.zman_nightfall_preferences);
+        replaceScreen(screenZmanim, "shabbath_screen", R.xml.zman_shabbath_preferences);
         replaceScreen(screenZmanim, "midnight_screen", R.xml.zman_midnight_preferences);
         replaceScreen(screenZmanim, "levana_earliest_screen", R.xml.zman_levana_earliest_preferences);
         replaceScreen(screenZmanim, "levana_latest_screen", R.xml.zman_levana_latest_preferences);
