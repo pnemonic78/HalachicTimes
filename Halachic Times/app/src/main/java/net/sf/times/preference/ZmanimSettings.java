@@ -112,6 +112,8 @@ public class ZmanimSettings {
     public static final String KEY_OPINION_TWILIGHT = "twilight";
     /** Preference name for nightfall type. */
     public static final String KEY_OPINION_NIGHTFALL = "nightfall";
+    /** Preference name for Shabbat ends type. */
+    public static final String KEY_OPINION_SHABBATH_ENDS = "shabbath_ends";
     /** Preference name for midnight type. */
     public static final String KEY_OPINION_MIDNIGHT = "midnight";
     /** Preference name for earliest kiddush levana type. */
@@ -531,6 +533,15 @@ public class ZmanimSettings {
     }
 
     /**
+     * Get the opinion for when Shabbath ends.
+     *
+     * @return the opinion.
+     */
+    public String getShabbathEnds() {
+        return preferences.getString(KEY_OPINION_SHABBATH_ENDS, context.getString(R.string.shabbath_ends_defaultValue));
+    }
+
+    /**
      * Get the opinion for midnight (<em>chatzos layla</em>).
      *
      * @return the opinion.
@@ -710,7 +721,9 @@ public class ZmanimSettings {
             return KEY_OPINION_SUNSET;
         if (id == R.string.twilight)
             return KEY_OPINION_TWILIGHT;
-        if ((id == R.string.nightfall) || (id == R.string.shabbath_ends))
+        if (id == R.string.nightfall)
+            return KEY_OPINION_NIGHTFALL;
+        if (id == R.string.shabbath_ends)
             return KEY_OPINION_NIGHTFALL;
         if (id == R.string.midnight)
             return KEY_OPINION_MIDNIGHT;

@@ -704,8 +704,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.nightfall, summary, date, remote);
         if (holidayToday == JewishCalendar.YOM_KIPPUR) {
             adapter.add(R.string.fast_ends, null, date, remote);
-        } else if (holidayToday == SHABBATH) {
-            adapter.add(R.string.shabbath_ends, summary, date, remote);
         }
         if (hasCandles && (candlesHow == AT_NIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
@@ -716,6 +714,81 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
         Date nightfall = date;
+
+        if (holidayToday == SHABBATH) {
+            opinion = settings.getShabbathEnds();
+            if (OPINION_120.equals(opinion)) {
+                date = cal.getTzais120();
+                summary = R.string.nightfall_120;
+            } else if (OPINION_120_ZMANIS.equals(opinion)) {
+                date = cal.getTzais120Zmanis();
+                summary = R.string.nightfall_120_zmanis;
+            } else if (OPINION_16_1.equals(opinion)) {
+                date = cal.getTzais16Point1Degrees();
+                summary = R.string.nightfall_16;
+            } else if (OPINION_18.equals(opinion)) {
+                date = cal.getTzais18Degrees();
+                summary = R.string.nightfall_18;
+            } else if (OPINION_19_8.equals(opinion)) {
+                date = cal.getTzais19Point8Degrees();
+                summary = R.string.nightfall_19;
+            } else if (OPINION_26.equals(opinion)) {
+                date = cal.getTzais26Degrees();
+                summary = R.string.nightfall_26;
+            } else if (OPINION_60.equals(opinion)) {
+                date = cal.getTzais60();
+                summary = R.string.nightfall_60;
+            } else if (OPINION_72.equals(opinion)) {
+                date = cal.getTzais72();
+                summary = R.string.nightfall_72;
+            } else if (OPINION_72_ZMANIS.equals(opinion)) {
+                date = cal.getTzais72Zmanis();
+                summary = R.string.nightfall_72_zmanis;
+            } else if (OPINION_90.equals(opinion)) {
+                date = cal.getTzais90();
+                summary = R.string.nightfall_90;
+            } else if (OPINION_90_ZMANIS.equals(opinion)) {
+                date = cal.getTzais90Zmanis();
+                summary = R.string.nightfall_90_zmanis;
+            } else if (OPINION_96.equals(opinion)) {
+                date = cal.getTzais96();
+                summary = R.string.nightfall_96;
+            } else if (OPINION_96_ZMANIS.equals(opinion)) {
+                date = cal.getTzais96Zmanis();
+                summary = R.string.nightfall_96_zmanis;
+            } else if (OPINION_ATERET.equals(opinion)) {
+                date = cal.getTzaisAteretTorah();
+                summary = R.string.nightfall_ateret;
+            } else if (OPINION_3_65.equals(opinion)) {
+                date = cal.getTzaisGeonim3Point65Degrees();
+                summary = R.string.nightfall_3_65;
+            } else if (OPINION_3_676.equals(opinion)) {
+                date = cal.getTzaisGeonim3Point676Degrees();
+                summary = R.string.nightfall_3_676;
+            } else if (OPINION_4_37.equals(opinion)) {
+                date = cal.getTzaisGeonim4Point37Degrees();
+                summary = R.string.nightfall_4_37;
+            } else if (OPINION_4_61.equals(opinion)) {
+                date = cal.getTzaisGeonim4Point61Degrees();
+                summary = R.string.nightfall_4_61;
+            } else if (OPINION_4_8.equals(opinion)) {
+                date = cal.getTzaisGeonim4Point8Degrees();
+                summary = R.string.nightfall_4_8;
+            } else if (OPINION_5_88.equals(opinion)) {
+                date = cal.getTzaisGeonim5Point88Degrees();
+                summary = R.string.nightfall_5_88;
+            } else if (OPINION_5_95.equals(opinion)) {
+                date = cal.getTzaisGeonim5Point95Degrees();
+                summary = R.string.nightfall_5_95;
+            } else if (OPINION_7_083.equals(opinion)) {
+                date = cal.getTzaisGeonim7Point083Degrees();
+                summary = R.string.nightfall_7;
+            } else {
+                date = cal.getTzaisGeonim8Point5Degrees();
+                summary = R.string.nightfall_8;
+            }
+            adapter.add(R.string.shabbath_ends, summary, date, remote);
+        }
 
         opinion = settings.getMidnight();
         if (OPINION_12.equals(opinion)) {
