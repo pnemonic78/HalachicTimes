@@ -93,7 +93,7 @@ public class ZmanimSettings {
     /** Preference name for Last Morning Tfila type. */
     public static final String KEY_OPINION_TFILA = "prayers";
     /** Preference name for Last Biur Chametz type. */
-    public static final String KEY_OPINION_BURN = "biur_chametz";
+    public static final String KEY_OPINION_BURN = "burn_chametz";
     /** Preference name for midday / noon type. */
     public static final String KEY_OPINION_NOON = "midday";
     /** Preference name for Earliest Mincha type. */
