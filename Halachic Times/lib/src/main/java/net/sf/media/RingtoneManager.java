@@ -206,6 +206,9 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 String uriValue = cursor.getString(URI_COLUMN_INDEX);
                 cursor.close();
 
+                if (uriValue == null) {
+                    return null;
+                }
                 if (uriValue.startsWith(INTERNAL_PATH)) {
                     // Is definitely internal.
                     return uriString;
