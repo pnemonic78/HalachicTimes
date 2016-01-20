@@ -34,9 +34,6 @@ import java.util.Date;
  */
 public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopulater<A> {
 
-    /** No summary. */
-    protected static final int SUMMARY_NONE = 0;
-
     private int itemId;
 
     /**

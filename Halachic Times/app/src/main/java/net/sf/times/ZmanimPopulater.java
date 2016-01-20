@@ -115,6 +115,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_TWILIGHT = ZmanimSettings.OPINION_TWILIGHT;
     protected static final String OPINION_NIGHT = ZmanimSettings.OPINION_NIGHT;
 
+    /** No summary. */
+    protected static final int SUMMARY_NONE = 0;
+
+    private static final long FAST_ENDS_18 = 18 * DateUtils.MINUTE_IN_MILLIS;
+    private static final long FAST_ENDS_24 = 24 * DateUtils.MINUTE_IN_MILLIS;
+
     private final Context context;
     private final ZmanimSettings settings;
     protected final ComplexZmanimCalendar calendar;
@@ -311,7 +317,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.dawn, summary, date, remote);
         if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
                 || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
-            adapter.add(R.string.fast_begins, null, date, remote);
+            adapter.add(R.string.fast_begins, SUMMARY_NONE, date, remote);
         }
 
         opinion = settings.getTallis();
@@ -591,9 +597,18 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
         if ((holidayTomorrow == JewishCalendar.TISHA_BEAV) || (holidayTomorrow == JewishCalendar.YOM_KIPPUR)) {
-            adapter.add(R.string.fast_begins, null, date, remote);
+            adapter.add(R.string.fast_begins, SUMMARY_NONE, date, remote);
         }
         adapter.add(R.string.sunset, summary, date, remote);
+
+        if (date != null) {
+            if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
+                    || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, date.getTime() + FAST_ENDS_18, remote);
+            } else if (holidayToday == JewishCalendar.TISHA_BEAV) {
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, date.getTime() + FAST_ENDS_24, remote);
+            }
+        }
 
         opinion = settings.getTwilight();
         if (OPINION_7_083.equals(opinion)) {
@@ -622,10 +637,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
         adapter.add(R.string.twilight, summary, date, remote);
-        if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.TISHA_BEAV) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH)
-                || (holidayToday == JewishCalendar.TENTH_OF_TEVES) || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
-            adapter.add(R.string.fast_ends, null, date, remote);
-        }
 
         opinion = settings.getNightfall();
         if (OPINION_120.equals(opinion)) {
@@ -703,7 +714,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         adapter.add(R.string.nightfall, summary, date, remote);
         if (holidayToday == JewishCalendar.YOM_KIPPUR) {
-            adapter.add(R.string.fast_ends, null, date, remote);
+            adapter.add(R.string.fast_ends, SUMMARY_NONE, date, remote);
         }
         if (hasCandles && (candlesHow == AT_NIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
