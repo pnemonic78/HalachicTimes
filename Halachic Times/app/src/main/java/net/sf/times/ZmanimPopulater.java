@@ -196,6 +196,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         ComplexZmanimCalendar cal = getCalendar();
         Calendar gcal = cal.getCalendar();
         JewishCalendar jcal = getJewishCalendar();
+        int dayOfWeek = jcal.getDayOfWeek();
         int candlesOffset = settings.getCandleLightingOffset();
         int candles = getCandles(jcal);
         int candlesCount = candles & CANDLES_MASK;
@@ -716,17 +717,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (holidayToday == JewishCalendar.YOM_KIPPUR) {
             adapter.add(R.string.fast_ends, SUMMARY_NONE, date, remote);
         }
-        if (hasCandles && (candlesHow == AT_NIGHT)) {
-            if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                adapter.add(R.string.candles, summaryText, date, remote);
-            } else {
-                adapter.add(R.string.candles, summary, date, remote);
-            }
-        }
         Date nightfall = date;
 
-        if (holidayToday == SHABBATH) {
+        if (dayOfWeek == Calendar.SATURDAY) {
             opinion = settings.getShabbathEnds();
             if (OPINION_120.equals(opinion)) {
                 date = cal.getTzais120();
@@ -799,6 +792,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 summary = R.string.nightfall_8;
             }
             adapter.add(R.string.shabbath_ends, summary, date, remote);
+        }
+        if (hasCandles && (candlesHow == AT_NIGHT)) {
+            if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+                String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                adapter.add(R.string.candles, summaryText, date, remote);
+            } else {
+                adapter.add(R.string.candles, summary, date, remote);
+            }
         }
 
         opinion = settings.getMidnight();
