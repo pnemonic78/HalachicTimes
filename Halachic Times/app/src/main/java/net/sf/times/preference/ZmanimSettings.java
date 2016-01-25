@@ -112,7 +112,7 @@ public class ZmanimSettings {
     public static final String KEY_OPINION_TWILIGHT = "twilight";
     /** Preference name for nightfall type. */
     public static final String KEY_OPINION_NIGHTFALL = "nightfall";
-    /** Preference name for Shabbat ends type. */
+    /** Preference name for Shabbath ends after nightfall. */
     public static final String KEY_OPINION_SHABBATH_ENDS = "shabbath_ends";
     /** Preference name for midnight type. */
     public static final String KEY_OPINION_MIDNIGHT = "midnight";
@@ -533,12 +533,12 @@ public class ZmanimSettings {
     }
 
     /**
-     * Get the opinion for when Shabbath ends.
+     * Get the number of minutes when Shabbath ends after nightfall.
      *
      * @return the opinion.
      */
-    public String getShabbathEnds() {
-        return preferences.getString(KEY_OPINION_SHABBATH_ENDS, context.getString(R.string.shabbath_ends_defaultValue));
+    public int getShabbathEnds() {
+        return preferences.getInt(KEY_OPINION_SHABBATH_ENDS + ".minutes", context.getResources().getInteger(R.integer.shabbath_ends_defaultValue));
     }
 
     /**
