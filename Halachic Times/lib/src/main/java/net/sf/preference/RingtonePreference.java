@@ -223,7 +223,7 @@ public class RingtonePreference extends DialogPreference {
     }
 
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
+    protected String onGetDefaultValue(TypedArray a, int index) {
         return a.getString(index);
     }
 

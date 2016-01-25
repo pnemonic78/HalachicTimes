@@ -63,7 +63,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
     }
 
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
+    protected Integer onGetDefaultValue(TypedArray a, int index) {
         return a.getInt(index, 0);
     }
 
