@@ -20,6 +20,7 @@
 package net.sf.times;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 
 import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
@@ -119,8 +120,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
                 populateTwilight(adapter, calendar, settings);
                 break;
             case R.string.nightfall:
-            case R.string.shabbath_ends:
                 populateNightfall(adapter, calendar, settings);
+                break;
+            case R.string.shabbath_ends:
+                populateShabbathEnds(adapter, calendar, settings);
                 break;
             case R.string.midnight:
                 populateMidnight(adapter, calendar, settings);
@@ -605,100 +608,150 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+        populateNightfall(adapter, cal, settings, 0);
+    }
+
+    private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings, long offset) {
         Date date;
         int title;
 
         date = cal.getTzais120();
-        title = R.string.nightfall_120;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_120;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais120Zmanis();
-        title = R.string.nightfall_120_zmanis;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_120_zmanis;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
-        date = cal.getTzais16Point1Degrees();
-        title = R.string.nightfall_16;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            date = cal.getTzais16Point1Degrees();
+            title = R.string.nightfall_16;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais18Degrees();
-        title = R.string.nightfall_18;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_18;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais19Point8Degrees();
-        title = R.string.nightfall_19;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_19;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais26Degrees();
-        title = R.string.nightfall_26;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_26;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais60();
-        title = R.string.nightfall_60;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_60;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais72();
-        title = R.string.nightfall_72;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_72;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais72Zmanis();
-        title = R.string.nightfall_72_zmanis;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_72_zmanis;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais90();
-        title = R.string.nightfall_90;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_90;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais90Zmanis();
-        title = R.string.nightfall_90_zmanis;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_90_zmanis;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
-        date = cal.getTzais96();
-        title = R.string.nightfall_96;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            date = cal.getTzais96();
+            title = R.string.nightfall_96;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzais96Zmanis();
-        title = R.string.nightfall_96_zmanis;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_96_zmanis;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisAteretTorah();
-        title = R.string.nightfall_ateret;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_ateret;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim3Point65Degrees();
-        title = R.string.nightfall_3_65;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_3_65;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim3Point676Degrees();
-        title = R.string.nightfall_3_676;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_3_676;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim4Point37Degrees();
-        title = R.string.nightfall_4_37;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_4_37;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim4Point61Degrees();
-        title = R.string.nightfall_4_61;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_4_61;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim4Point8Degrees();
-        title = R.string.nightfall_4_8;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_4_8;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim5Point88Degrees();
-        title = R.string.nightfall_5_88;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_5_88;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim5Point95Degrees();
-        title = R.string.nightfall_5_95;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_5_95;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim7Point083Degrees();
-        title = R.string.nightfall_7;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_7;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getTzaisGeonim8Point5Degrees();
-        title = R.string.nightfall_8;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.nightfall_8;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
     }
 
     private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
@@ -863,5 +916,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         }
 
         return date;
+    }
+
+    private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+        long offset = settings.getShabbathEnds() * DateUtils.MINUTE_IN_MILLIS;
+        populateNightfall(adapter, cal, settings, offset);
     }
 }
