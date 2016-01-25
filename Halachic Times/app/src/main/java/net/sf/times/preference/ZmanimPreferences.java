@@ -65,7 +65,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     private static final String REMINDER_FRIDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.FRIDAY;
     private static final String REMINDER_SATURDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.SATURDAY;
 
-    private SeekBarDialogPreference candles;
+    private SeekBarDialogPreference candlesSeek;
+    private SeekBarDialogPreference shabbathSeek;
     private ZmanimSettings settings;
     private ZmanimReminder reminder;
     private Preference clearHistory;
@@ -118,10 +119,15 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_COORDS_FORMAT);
         initList(ZmanimSettings.KEY_THEME);
 
-        candles = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
-        candles.setSummaryFormat(R.plurals.candles_summary);
-        candles.setOnPreferenceChangeListener(this);
-        onCandlesPreferenceChange(candles, null);
+        candlesSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+        candlesSeek.setSummaryFormat(R.plurals.candles_summary);
+        candlesSeek.setOnPreferenceChangeListener(this);
+        onSeekPreferenceChange(candlesSeek, null);
+
+        shabbathSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
+        shabbathSeek.setSummaryFormat(R.plurals.shabbath_ends_summary);
+        shabbathSeek.setOnPreferenceChangeListener(this);
+        onSeekPreferenceChange(shabbathSeek, null);
 
         initList(ZmanimSettings.KEY_OPINION_HOUR);
         initList(ZmanimSettings.KEY_OPINION_DAWN);
@@ -137,7 +143,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         initList(ZmanimSettings.KEY_OPINION_CANDLES_CHANUKKA);
         initList(ZmanimSettings.KEY_OPINION_TWILIGHT);
         initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
-        initList(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS);
+        initList(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
         initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
         initList(ZmanimSettings.KEY_OPINION_EARLIEST_LEVANA);
         initList(ZmanimSettings.KEY_OPINION_LATEST_LEVANA);
@@ -244,8 +250,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == candles) {
-            return onCandlesPreferenceChange(candles, newValue);
+        if (preference == candlesSeek) {
+            return onSeekPreferenceChange(candlesSeek, newValue);
+        }
+        if (preference == shabbathSeek) {
+            return onSeekPreferenceChange(shabbathSeek, newValue);
         }
         if (preference instanceof CheckBoxPreference) {
             CheckBoxPreference checkBox = (CheckBoxPreference) preference;
@@ -269,10 +278,15 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         return true;
     }
 
-    private boolean onCandlesPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
+    private boolean onSeekPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
         int minutes = preference.getProgress();
         Resources res = getResources();
-        CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
+        CharSequence summary = null;
+        if (preference == candlesSeek) {
+            summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
+        } else if (preference == shabbathSeek) {
+            summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes);
+        }
         preference.setSummary(summary);
         return true;
     }

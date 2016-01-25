@@ -195,7 +195,7 @@
             android:value="nightfall.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="net.sf.times.preference.ZmanShabbathPreferenceFragment"
         android:key="shabbath_screen"
         android:title="@string/shabbath_ends">
         <extra
@@ -203,7 +203,7 @@
             android:value="@xml/zman_shabbath_preferences"/>
         <extra
             android:name="opinion"
-            android:value="shabbath_ends"/>
+            android:value="shabbath_ends.minutes"/>
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"

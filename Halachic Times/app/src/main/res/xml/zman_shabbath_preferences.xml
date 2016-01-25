@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--ListPreference
+    <net.sf.preference.SeekBarDialogPreference
         android:defaultValue="@integer/shabbath_ends_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
-        android:entries="@array/nightfall_entries"
-        android:entryValues="@array/nightfall_values"
+        android:dialogTitle="@string/opinion"
         android:icon="@drawable/ic_settings_opinion"
         android:key="shabbath_ends.minutes"
-        android:title="@string/opinion"/-->
+        android:max="120"
+        android:negativeButtonText="@string/cancel"
+        android:positiveButtonText="@string/ok"
+        android:title="@string/opinion"/>
     <CheckBoxPreference
         android:defaultValue="@bool/emphasis_defaultValue"
         android:key="shabbath_ends.emphasis"

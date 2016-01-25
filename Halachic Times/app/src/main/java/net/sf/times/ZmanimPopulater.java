@@ -198,13 +198,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         JewishCalendar jcal = getJewishCalendar();
         int dayOfWeek = jcal.getDayOfWeek();
         int candlesOffset = settings.getCandleLightingOffset();
+        int shabbathOffset = settings.getShabbathEnds();
         int candles = getCandles(jcal);
         int candlesCount = candles & CANDLES_MASK;
         boolean hasCandles = candlesCount > 0;
         int candlesHow = candles & MOTZE_MASK;
         int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
         int holidayToday = (candles >> 12) & HOLIDAY_MASK;
-        Date dateCandles;
 
         Date date;
         int summary;
@@ -578,15 +578,16 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = cal.getSeaLevelSunset();
             summary = R.string.sunset_sea;
         }
+        Date sunset = date;
         if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
-            dateCandles = cal.getTimeOffset(date, -candlesOffset * DateUtils.MINUTE_IN_MILLIS);
+            date = cal.getTimeOffset(sunset, -candlesOffset * DateUtils.MINUTE_IN_MILLIS);
             String summaryText;
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                 summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
             } else {
                 summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
             }
-            adapter.add(R.string.candles, summaryText, dateCandles, remote);
+            adapter.add(R.string.candles, summaryText, date, remote);
         }
 
         if (hasCandles && (candlesHow == AT_SUNSET)) {
@@ -720,8 +721,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         Date nightfall = date;
 
         if ((dayOfWeek == Calendar.SATURDAY) && (nightfall != null)) {
-            long minutes = settings.getShabbathEnds();
-            adapter.add(R.string.shabbath_ends, SUMMARY_NONE, date.getTime() + (minutes * DateUtils.MINUTE_IN_MILLIS), remote);
+            date = cal.getTimeOffset(nightfall, shabbathOffset * DateUtils.MINUTE_IN_MILLIS);
+            String summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+            adapter.add(R.string.shabbath_ends, summaryText, date, remote);
         }
         if (hasCandles && (candlesHow == AT_NIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {

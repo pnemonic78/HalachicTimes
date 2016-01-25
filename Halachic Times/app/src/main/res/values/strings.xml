@@ -216,6 +216,10 @@
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Shabbath ends</string>
+    <plurals name="shabbath_ends_summary">
+        <item quantity="one">%1$d minute after nightfall</item>
+        <item quantity="other">%1$d minutes after nightfall</item>
+    </plurals>
 
     <!-- Midnight -->
     <string name="midnight">Midnight (chatzos)</string>

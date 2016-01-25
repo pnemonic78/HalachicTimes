@@ -32,7 +32,7 @@ import net.sf.times.R;
  * This fragment shows the preferences for the Candles zman screen.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
+public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
     private SeekBarDialogPreference seek;
 
@@ -40,8 +40,8 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
-        seek.setSummaryFormat(R.plurals.candles_summary);
+        seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
+        seek.setSummaryFormat(R.plurals.shabbath_ends_summary);
         seek.setOnPreferenceChangeListener(this);
         onSeekPreferenceChange(seek, null);
     }
@@ -49,7 +49,7 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     private boolean onSeekPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
         int minutes = preference.getProgress();
         Resources res = getResources();
-        CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
+        CharSequence summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes);
         preference.setSummary(summary);
         return true;
     }
