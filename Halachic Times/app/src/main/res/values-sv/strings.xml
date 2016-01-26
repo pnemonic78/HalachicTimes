@@ -119,11 +119,11 @@
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabbat ändar</string>
     <string name="shabbath_ends_summary_zero">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_one">%1$d minute after nightfall</string>
+    <string name="shabbath_ends_summary_one">%1$d minut efter nattens inbrott</string>
     <string name="shabbath_ends_summary_two">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_other">%1$d minutes after nightfall</string>
+    <string name="shabbath_ends_summary_other">%1$d minuter efter nattens inbrott</string>
 
     <!-- Midnight -->
     <string name="midnight">Midnatt (chatzos)</string>

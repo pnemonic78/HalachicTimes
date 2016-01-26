@@ -119,11 +119,11 @@
     <!-- Shabbath. -->
     <string name="shabbath_ends">Şabat biter</string>
     <string name="shabbath_ends_summary_zero">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_one">%1$d minute after nightfall</string>
+    <string name="shabbath_ends_summary_one">%1$d dakika sonra akşam vakti</string>
     <string name="shabbath_ends_summary_two">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_other">%1$d minutes after nightfall</string>
+    <string name="shabbath_ends_summary_other">%1$d dakika sonra akşam vakti</string>
 
     <!-- Midnight -->
     <string name="midnight">Gece yarısı (chatzot)</string>
