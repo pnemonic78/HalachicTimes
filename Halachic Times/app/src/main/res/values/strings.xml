@@ -164,9 +164,6 @@
 
     <!-- Candle lighting -->
     <string name="candles">Candle lighting</string>
-    <string name="chanukka">Chanukka</string>
-    <string name="candles_chanukka_opinion" translatable="false">@string/chanukka</string>
-
     <string name="candles_summary_zero">@string/candles_summary_other</string>
     <string name="candles_summary_one">%1$d minute before sunset</string>
     <string name="candles_summary_two">@string/candles_summary_other</string>
@@ -181,6 +178,9 @@
         <item quantity="many">@string/candles_summary_many</item>
         <item quantity="other">@string/candles_summary_other</item>
     </plurals>
+
+    <string name="chanukka">Chanukka</string>
+    <string name="candles_chanukka_opinion" translatable="false">@string/chanukka</string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka candle</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>

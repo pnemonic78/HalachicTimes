@@ -79,16 +79,20 @@
 
     <!-- Candle lighting -->
     <string name="candles">Allumage des bougies</string>
-    <string name="chanukka">\'Hanoukka</string>
+    <string name="candles_summary_zero">@string/candles_summary_other</string>
+    <string name="candles_summary_one">%1$d minute avant le coucher du soleil</string>
+    <string name="candles_summary_two">@string/candles_summary_other</string>
+    <string name="candles_summary_few">@string/candles_summary_other</string>
+    <string name="candles_summary_many">@string/candles_summary_other</string>
+    <string name="candles_summary_other">%1$d minutes avant le coucher du soleil</string>
 
-    <plurals name="candles_summary">
-        <item quantity="one">%1$d minute avant le coucher du soleil</item>
-        <item quantity="other">%1$d minutes avant le coucher du soleil</item>
-    </plurals>
-    <plurals name="candles_chanukka">
-        <item quantity="one">%1$d bougie de \'Hanoukka</item>
-        <item quantity="other">%1$d bougies de \'Hanoukka</item>
-    </plurals>
+    <string name="chanukka">\'Hanoukka</string>
+    <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_one">%1$d bougie de \'Hanoukka</string>
+    <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_other">%1$d bougies de \'Hanoukka</string>
 
     <!-- Sunset -->
     <string name="sunset">Coucher du soleil</string>

@@ -79,20 +79,20 @@
 
     <!-- Candle lighting -->
     <string name="candles">הדלקת נרות</string>
-    <string name="chanukka">חנוכה</string>
+    <string name="candles_summary_zero">@string/candles_summary_other</string>
+    <string name="candles_summary_one">דקה %1$d לפני השקיעה</string>
+    <string name="candles_summary_two">%1$d דקות לפני השקיעה</string>
+    <string name="candles_summary_few">@string/candles_summary_other</string>
+    <string name="candles_summary_many">%1$d דקות לפני השקיעה</string>
+    <string name="candles_summary_other">%1$d דקות לפני השקיעה</string>
 
-    <plurals name="candles_summary">
-        <item quantity="one">דקה %1$d לפני השקיעה</item>
-        <item quantity="two">%1$d דקות לפני השקיעה</item>
-        <item quantity="many">%1$d דקות לפני השקיעה</item>
-        <item quantity="other">%1$d דקות לפני השקיעה</item>
-    </plurals>
-    <plurals name="candles_chanukka">
-        <item quantity="one">נר חנוכה %1$d</item>
-        <item quantity="two">%1$d נרות חנוכה</item>
-        <item quantity="many">%1$d נרות חנוכה</item>
-        <item quantity="other">%1$d נרות חנוכה</item>
-    </plurals>
+    <string name="chanukka">חנוכה</string>
+    <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_one">נר חנוכה %1$d</string>
+    <string name="candles_chanukka_two">%1$d נרות חנוכה</string>
+    <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_many">%1$d נרות חנוכה</string>
+    <string name="candles_chanukka_other">%1$d נרות חנוכה</string>
 
     <!-- Sunset -->
     <string name="sunset">שקיעת השמש</string>

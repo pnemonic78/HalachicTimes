@@ -44,6 +44,10 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    lintOptions {
+        disable "LocaleFolder", "NestedWeights", "PluralsCandidate"
+    }
 }
 
 dependencies {

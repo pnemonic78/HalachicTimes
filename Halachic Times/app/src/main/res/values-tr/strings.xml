@@ -79,16 +79,20 @@
 
     <!-- Candle lighting -->
     <string name="candles">Mum aydınlatma</string>
-    <string name="chanukka">Chanuka</string>
+    <string name="candles_summary_zero">@string/candles_summary_other</string>
+    <string name="candles_summary_one">%1$d dakika önce günbatımı</string>
+    <string name="candles_summary_two">@string/candles_summary_other</string>
+    <string name="candles_summary_few">@string/candles_summary_other</string>
+    <string name="candles_summary_many">@string/candles_summary_other</string>
+    <string name="candles_summary_other">%1$d dakika önce günbatımı</string>
 
-    <plurals name="candles_summary">
-        <item quantity="one">%1$d dakika önce günbatımı</item>
-        <item quantity="other">%1$d dakika önce günbatımı</item>
-    </plurals>
-    <plurals name="candles_chanukka">
-        <item quantity="one">%1$d Chanuka mum</item>
-        <item quantity="other">%1$d Chanuka mumlar</item>
-    </plurals>
+    <string name="chanukka">Chanuka</string>
+    <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_one">%1$d Chanuka mum</string>
+    <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_other">%1$d Chanuka mumlar</string>
 
     <!-- Sunset -->
     <string name="sunset">Gün batımı</string>

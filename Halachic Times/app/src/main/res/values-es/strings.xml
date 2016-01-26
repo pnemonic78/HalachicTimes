@@ -79,16 +79,20 @@
 
     <!-- Candle lighting -->
     <string name="candles">Encendido de velas</string>
-    <string name="chanukka">Jánuca</string>
+    <string name="candles_summary_zero">@string/candles_summary_other</string>
+    <string name="candles_summary_one">%1$d minuto antes de la puesta del sol</string>
+    <string name="candles_summary_two">@string/candles_summary_other</string>
+    <string name="candles_summary_few">@string/candles_summary_other</string>
+    <string name="candles_summary_many">@string/candles_summary_other</string>
+    <string name="candles_summary_other">%1$d minutos antes de la puesta del sol</string>
 
-    <plurals name="candles_summary">
-        <item quantity="one">%1$d minuto antes de la puesta del sol</item>
-        <item quantity="other">%1$d minutos antes de la puesta del sol</item>
-    </plurals>
-    <plurals name="candles_chanukka">
-        <item quantity="one">%1$d vela de Jánuca</item>
-        <item quantity="other">%1$d velas de Jánuca</item>
-    </plurals>
+    <string name="chanukka">Jánuca</string>
+    <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_one">%1$d vela de Jánuca</string>
+    <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_other">%1$d velas de Jánuca</string>
 
     <!-- Sunset -->
     <string name="sunset">Puesta del sol</string>

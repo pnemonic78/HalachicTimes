@@ -79,16 +79,20 @@
 
     <!-- Candle lighting -->
     <string name="candles">Φωτισμό κεριών</string>
-    <string name="chanukka">Χανουκά</string>
+    <string name="candles_summary_zero">@string/candles_summary_other</string>
+    <string name="candles_summary_one">%1$d λεπτό πριν το ηλιοβασίλεμα</string>
+    <string name="candles_summary_two">@string/candles_summary_other</string>
+    <string name="candles_summary_few">@string/candles_summary_other</string>
+    <string name="candles_summary_many">@string/candles_summary_other</string>
+    <string name="candles_summary_other">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
 
-    <plurals name="candles_summary">
-        <item quantity="one">%1$d λεπτό πριν το ηλιοβασίλεμα</item>
-        <item quantity="other">%1$d λεπτά πριν το ηλιοβασίλεμα</item>
-    </plurals>
-    <plurals name="candles_chanukka">
-        <item quantity="one">%1$d Χανουκά κερί</item>
-        <item quantity="other">%1$d κεριά Χανουκά</item>
-    </plurals>
+    <string name="chanukka">Χανουκά</string>
+    <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_one">%1$d Χανουκά κερί</string>
+    <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_other">%1$d κεριά Χανουκά</string>
 
     <!-- Sunset -->
     <string name="sunset">Ηλιοβασίλεμα</string>

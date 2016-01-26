@@ -79,18 +79,20 @@
 
     <!-- Candle lighting -->
     <string name="candles">Lumânare de iluminat</string>
-    <string name="chanukka">Chanuka</string>
+    <string name="candles_summary_zero">@string/candles_summary_other</string>
+    <string name="candles_summary_one">%1$d minute înainte de apus</string>
+    <string name="candles_summary_two">@string/candles_summary_other</string>
+    <string name="candles_summary_few">%1$d minute înainte de apus</string>
+    <string name="candles_summary_many">@string/candles_summary_other</string>
+    <string name="candles_summary_other">%1$d minute înainte de apus</string>
 
-    <plurals name="candles_summary">
-        <item quantity="one">%1$d minute înainte de apus</item>
-        <item quantity="few">%1$d minute înainte de apus</item>
-        <item quantity="other">%1$d minute înainte de apus</item>
-    </plurals>
-    <plurals name="candles_chanukka">
-        <item quantity="one">%1$d Chanuka lumânare</item>
-        <item quantity="few">%1$d lumânări de Chanuka</item>
-        <item quantity="other">%1$d lumânări de Chanuka</item>
-    </plurals>
+    <string name="chanukka">Chanuka</string>
+    <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_one">%1$d Chanuka lumânare</string>
+    <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_few">%1$d lumânări de Chanuka</string>
+    <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
+    <string name="candles_chanukka_other">%1$d lumânări de Chanuka</string>
 
     <!-- Sunset -->
     <string name="sunset">Apus de soare</string>
