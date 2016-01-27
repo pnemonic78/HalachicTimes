@@ -855,6 +855,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
 
         switch (dayOfWeek) {
+            // Forbidden to light candles during Shabbath.
             case Calendar.FRIDAY:
                 // Probably never happens that Yom Kippurim falls on a Friday.
                 // Prohibited to light candles on Yom Kippurim for Shabbath.
