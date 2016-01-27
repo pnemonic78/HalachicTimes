@@ -223,8 +223,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private void bindView(RemoteViews row, int position, ZmanimItem item) {
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
-        // FIXME - the application must notify the widget that "past times" has
-        // changed.
+        // FIXME - the application must notify the widget that "past times" has changed.
         if (item.elapsed) {
             // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws
             // error.
@@ -236,6 +235,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         }
         // Enable clicking to open the main activity.
         row.setOnClickFillInIntent(R.id.widget_item, new Intent());
+        bindViewRowSpecial(row, position, item);
     }
 
     /**
@@ -250,5 +250,12 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
      */
     private void bindViewGrouping(RemoteViews row, int position, CharSequence label) {
         row.setTextViewText(R.id.date_hebrew, label);
+    }
+
+    protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
+        if (item.titleId == R.string.candles) {
+            Context context = this.context;
+            row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
+        }
     }
 }

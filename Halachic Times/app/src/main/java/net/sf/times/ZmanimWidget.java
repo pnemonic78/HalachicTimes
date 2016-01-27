@@ -378,6 +378,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(position));
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
+        bindViewRowSpecial(row, position, item);
         list.addView(android.R.id.list, row);
         return true;
     }
@@ -533,5 +534,12 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if (isDeviceNokia())
             return light ? R.layout.widget_item_nokia_light : R.layout.widget_item_nokia;
         return light ? R.layout.widget_item_light : R.layout.widget_item;
+    }
+
+    protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
+        if (item.titleId == R.string.candles) {
+            Context context = this.context;
+            row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
+        }
     }
 }

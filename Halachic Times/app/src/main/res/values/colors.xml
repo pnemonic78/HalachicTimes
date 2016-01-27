@@ -35,9 +35,10 @@
     <color name="widget_border">#10ffffff</color>
     <color name="background_nokia">#ffff8200</color>
     <color name="text_nokia">@android:color/white</color>
+    <color name="widget_candles_bg">#60ffff00</color>
 
     <!-- Compass. -->
-    <color name="compass">#ffffff</color>
+    <color name="compass">@android:color/white</color>
     <color name="compass_gradient">#cc9933</color>
     <color name="compass_frame">#cc9933</color>
     <color name="compass_frame_highlight">#ffdd77</color>
