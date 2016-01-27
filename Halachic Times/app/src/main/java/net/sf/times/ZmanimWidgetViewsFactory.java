@@ -256,6 +256,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         if (item.titleId == R.string.candles) {
             Context context = this.context;
             row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
+        } else {
+            row.setInt(R.id.widget_item, "setBackgroundColor", Color.TRANSPARENT);
         }
     }
 }
