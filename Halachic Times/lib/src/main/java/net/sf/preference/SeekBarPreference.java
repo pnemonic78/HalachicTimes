@@ -107,13 +107,14 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     protected void onBindView(View view) {
         super.onBindView(view);
 
-        final int max = this.max;
-        final int progress = this.progress;
-        if (max != seekBar.getMax()) {
-            seekBar.setMax(max);
-        }
+        int progress = getProgress();
+
+        seekBar.setMax(max);
         seekBar.setOnSeekBarChangeListener(this);
-        if (progress != seekBar.getProgress()) {
+        seekBar.setEnabled(isEnabled());
+        if (progress == seekBar.getProgress()) {
+            onProgressChanged(seekBar, progress, false);
+        } else {
             seekBar.setProgress(progress);
         }
     }
@@ -229,6 +230,14 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
             if (callChangeListener(mProgress)) {
                 persistInt(mProgress);
             }
+        }
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (seekBar != null) {
+            seekBar.setEnabled(isEnabled());
         }
     }
 }
