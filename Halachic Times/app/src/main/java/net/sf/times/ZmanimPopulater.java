@@ -209,6 +209,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         Date date;
         int summary;
         String opinion;
+        CharSequence summaryText;
         final Resources res = context.getResources();
 
         if (!remote && settings.isHour()) {
@@ -581,7 +582,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         Date sunset = date;
         if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
             date = cal.getTimeOffset(sunset, -candlesOffset * DateUtils.MINUTE_IN_MILLIS);
-            String summaryText;
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
                 summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
             } else {
@@ -592,7 +592,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         if (hasCandles && (candlesHow == AT_SUNSET)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
                 adapter.add(R.string.candles, summaryText, date, remote);
             } else {
                 adapter.add(R.string.candles, summary, date, remote);
@@ -632,7 +632,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         if (hasCandles && (candlesHow == AT_TWILIGHT)) {
             if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
                 adapter.add(R.string.candles, summaryText, date, remote);
             } else {
                 adapter.add(R.string.candles, summary, date, remote);
@@ -720,17 +720,18 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         Date nightfall = date;
 
-        if ((dayOfWeek == Calendar.SATURDAY) && (nightfall != null)) {
+        if (nightfall != null) {
             date = cal.getTimeOffset(nightfall, shabbathOffset * DateUtils.MINUTE_IN_MILLIS);
-            String summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
-            adapter.add(R.string.shabbath_ends, summaryText, date, remote);
-        }
-        if (hasCandles && (candlesHow == AT_NIGHT)) {
-            if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                String summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                adapter.add(R.string.candles, summaryText, date, remote);
-            } else {
-                adapter.add(R.string.candles, summary, date, remote);
+            if (hasCandles && (candlesHow == AT_NIGHT)) {
+                if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+                    summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                    adapter.add(R.string.candles, summaryText, date, remote);
+                } else {
+                    adapter.add(R.string.candles, summary, date, remote);
+                }
+            } else if (!hasCandles && (dayOfWeek == Calendar.SATURDAY)) {
+                summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                adapter.add(R.string.shabbath_ends, summaryText, date, remote);
             }
         }
 
