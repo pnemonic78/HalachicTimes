@@ -854,7 +854,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
         }
 
-        // Forbidden to light candles during Shabbath.
         switch (dayOfWeek) {
             case Calendar.FRIDAY:
                 // Probably never happens that Yom Kippurim falls on a Friday.
@@ -863,6 +862,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     count = CANDLES_NONE;
                 }
                 break;
+            // Forbidden to light candles during Shabbath.
             case Calendar.SATURDAY:
                 if (holidayToday == -1) {
                     holidayToday = SHABBATH;
@@ -870,8 +870,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 flags = MOTZE_SHABBATH;
                 break;
             default:
-                // During a holiday, we can light for the next day from an existing
-                // flame.
+                // During a holiday, we can light for the next day from an existing flame,
+                // but preferable to light havdala candle after the Yom Tov.
                 switch (holidayToday) {
                     case JewishCalendar.ROSH_HASHANA:
                     case JewishCalendar.SUCCOS:
@@ -879,7 +879,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     case JewishCalendar.SIMCHAS_TORAH:
                     case JewishCalendar.PESACH:
                     case JewishCalendar.SHAVUOS:
-                        flags = AT_SUNSET;
+                        flags = AT_NIGHT;
                         break;
                 }
                 break;
