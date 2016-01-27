@@ -131,10 +131,16 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
         this.summaryView = (TextView) view.findViewById(android.R.id.summary);
         this.seekBar = seek;
 
+        int progressBefore = seek.getProgress();
+        int progressAfter = getProgress();
+
         seek.setOnSeekBarChangeListener(this);
         seek.setMax(getMax());
-        seek.setProgress(getProgress());
+        seek.setProgress(progressAfter);
         seek.setEnabled(isEnabled());
+        if (progressBefore == progressAfter) {
+            onProgressChanged(seek, getProgress(), false);
+        }
     }
 
     @Override
