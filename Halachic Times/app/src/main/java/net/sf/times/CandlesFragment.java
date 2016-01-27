@@ -19,7 +19,9 @@
  */
 package net.sf.times;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
@@ -209,7 +211,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
             group.setVisibility(View.VISIBLE);
         }
 
-        if (animate)
+        if (animate && isVisible())
             startAnimation();
     }
 
@@ -237,6 +239,29 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
             if (anim == null)
                 continue;
             handler.post(anim);
+        }
+    }
+
+    @Override
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    protected void onVisibilityChanged(View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        onVisibilityChanged(visibility);
+    }
+
+    protected void onVisibilityChanged(int visibility) {
+        if (visibility == VISIBLE) {
+            startAnimation();
+        } else {
+            stopAnimation();
+        }
+    }
+
+    @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+            onVisibilityChanged(visibility);
         }
     }
 }
