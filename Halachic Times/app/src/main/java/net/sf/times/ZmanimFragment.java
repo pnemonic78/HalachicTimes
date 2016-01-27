@@ -239,6 +239,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         int position = 0;
         ZmanimItem item;
         View row;
+        CharSequence groupingText;
 
         if (position < count) {
             item = adapter.getItem(position);
@@ -261,16 +262,18 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     jcal.forward();
 
                     dateHebrew = adapter.formatDate(context, jewishDate);
-                    bindViewGrouping(list, position, dateHebrew);
+                    groupingText = dateHebrew;
 
                     // Sefirat HaOmer?
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
-                            bindViewGrouping(list, position, omerLabel);
+                            groupingText = TextUtils.concat(groupingText, "\n", omerLabel);
                         }
                     }
+
+                    bindViewGrouping(list, position, groupingText);
                 }
 
                 position++;
@@ -314,7 +317,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (position > 0)
             inflater.inflate(R.layout.divider, list);
         ViewGroup row = (ViewGroup) inflater.inflate(R.layout.date_group, null);
-        TextView text = (TextView) row.findViewById(R.id.date_hebrew);
+        TextView text = (TextView) row.findViewById(android.R.id.title);
         text.setText(label);
         list.addView(row);
     }
