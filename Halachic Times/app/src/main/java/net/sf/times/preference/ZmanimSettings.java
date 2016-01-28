@@ -727,7 +727,7 @@ public class ZmanimSettings {
             case R.string.nightfall:
                 return KEY_OPINION_NIGHTFALL;
             case R.string.shabbath_ends:
-            case R.string.yom_tov_ends:
+            case R.string.festival_ends:
                 return KEY_OPINION_SHABBATH_ENDS;
             case R.string.midnight:
                 return KEY_OPINION_MIDNIGHT;

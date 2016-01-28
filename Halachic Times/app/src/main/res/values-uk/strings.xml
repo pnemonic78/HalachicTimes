@@ -124,6 +124,7 @@
     <string name="shabbath_ends_summary_few">%1$d хвилини після настання ночі</string>
     <string name="shabbath_ends_summary_many">%1$d хвилин після настання ночі</string>
     <string name="shabbath_ends_summary_other">%1$d хвилин після настання ночі</string>
+    <string name="festival_ends">Свято закінчується</string>
 
     <!-- Midnight -->
     <string name="midnight">Опівночі (хацот)</string>

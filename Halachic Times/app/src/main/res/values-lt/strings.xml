@@ -124,6 +124,7 @@
     <string name="shabbath_ends_summary_few">%1$d minučių po ateinančio naktys</string>
     <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_other">%1$d minučių po ateinančio naktys</string>
+    <string name="festival_ends">Šventė galai</string>
 
     <!-- Midnight -->
     <string name="midnight">Vidurnakčio (chacos)</string>

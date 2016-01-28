@@ -250,7 +250,7 @@
         <item quantity="many">@string/shabbath_ends_summary_many</item>
         <item quantity="other">@string/shabbath_ends_summary_other</item>
     </plurals>
-    <string name="yom_tov_ends">Yom Tov ends</string>
+    <string name="festival_ends">Festival ends</string>
 
     <!-- Midnight -->
     <string name="midnight">Midnight (chatzos)</string>

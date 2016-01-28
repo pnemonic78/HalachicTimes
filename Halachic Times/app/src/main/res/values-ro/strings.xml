@@ -124,6 +124,7 @@
     <string name="shabbath_ends_summary_few">%1$d minute după căderea nopții</string>
     <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_other">%1$d minute după căderea nopții</string>
+    <string name="festival_ends">Sărbătoare finisaje</string>
 
     <!-- Midnight -->
     <string name="midnight">Miezul nopții (chaţos)</string>

@@ -124,6 +124,7 @@
     <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_other">%1$d λεπτά μετά τη σούρουπο</string>
+    <string name="festival_ends">Πανηγύρι άκρα</string>
 
     <!-- Midnight -->
     <string name="midnight">Μεσάνυχτα (χαζοτ)</string>

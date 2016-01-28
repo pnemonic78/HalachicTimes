@@ -203,8 +203,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         int candlesCount = candles & CANDLES_MASK;
         boolean hasCandles = candlesCount > 0;
         int candlesHow = candles & MOTZE_MASK;
-        int holidayTomorrow = (candles >> 4) & HOLIDAY_MASK;
-        int holidayToday = (candles >> 12) & HOLIDAY_MASK;
+        int holidayToday = (byte) ((candles >> 12) & HOLIDAY_MASK);
+        int holidayTomorrow = (byte) ((candles >> 4) & HOLIDAY_MASK);
 
         Date date;
         int summary;
@@ -722,21 +722,33 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         if (nightfall != null) {
             date = cal.getTimeOffset(nightfall, shabbathOffset * DateUtils.MINUTE_IN_MILLIS);
-            if (hasCandles && (candlesHow == AT_NIGHT)) {
-                if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                    summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                    adapter.add(R.string.candles, summaryText, date, remote);
-                } else {
-                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
-                    adapter.add(R.string.candles, summaryText, date, remote);
+            if (hasCandles) {
+                if (candlesHow == AT_NIGHT) {
+                    if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+                        summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                        adapter.add(R.string.candles, summaryText, date, remote);
+                    } else {
+                        summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                        adapter.add(R.string.candles, summaryText, date, remote);
+                    }
                 }
-            } else if (!hasCandles) {
+            } else {
                 if (dayOfWeek == Calendar.SATURDAY) {
                     summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
                     adapter.add(R.string.shabbath_ends, summaryText, date, remote);
-                } else if (dayOfWeek != Calendar.FRIDAY) {
-                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
-                    adapter.add(R.string.yom_tov_ends, summaryText, date, remote);
+                } else if (holidayToday >= 0) {
+                    switch (holidayToday) {
+                        case JewishCalendar.PESACH:
+                        case JewishCalendar.SHAVUOS:
+                        case JewishCalendar.ROSH_HASHANA:
+                        case JewishCalendar.YOM_KIPPUR:
+                        case JewishCalendar.SUCCOS:
+                        case JewishCalendar.SHEMINI_ATZERES:
+                        case JewishCalendar.SIMCHAS_TORAH:
+                            summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                            adapter.add(R.string.festival_ends, summaryText, date, remote);
+                            break;
+                    }
                 }
             }
         }

@@ -124,6 +124,7 @@
     <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
     <string name="shabbath_ends_summary_other">%1$d dakika sonra akşam vakti</string>
+    <string name="festival_ends">Bayram biter</string>
 
     <!-- Midnight -->
     <string name="midnight">Gece yarısı (chatzot)</string>
