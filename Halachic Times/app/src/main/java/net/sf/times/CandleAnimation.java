@@ -40,7 +40,7 @@ import java.util.Random;
  */
 public class CandleAnimation implements Runnable {
 
-    private static final int LEVELS = 6;
+    private static final int LEVELS = 14;
     private static final long PERIOD = DateUtils.SECOND_IN_MILLIS >> 1;
     private static final int PERIOD_INT = (int) PERIOD;
 
@@ -91,12 +91,24 @@ public class CandleAnimation implements Runnable {
             Bitmap bmp1 = BitmapFactory.decodeResource(res, R.drawable.candle_1, opts);
             Bitmap bmp2 = BitmapFactory.decodeResource(res, R.drawable.candle_2, opts);
             Bitmap bmp3 = BitmapFactory.decodeResource(res, R.drawable.candle_3, opts);
+            Bitmap bmp4 = BitmapFactory.decodeResource(res, R.drawable.candle_4, opts);
+            Bitmap bmp5 = BitmapFactory.decodeResource(res, R.drawable.candle_5, opts);
+            Bitmap bmp6 = BitmapFactory.decodeResource(res, R.drawable.candle_6, opts);
+            Bitmap bmp7 = BitmapFactory.decodeResource(res, R.drawable.candle_7, opts);
             sprites[0] = new BitmapDrawable(res, bmp0);
             sprites[1] = new BitmapDrawable(res, bmp1);
             sprites[2] = new BitmapDrawable(res, bmp2);
             sprites[3] = new BitmapDrawable(res, bmp3);
             sprites[4] = sprites[2];
             sprites[5] = sprites[1];
+            sprites[6] = sprites[0];
+            sprites[7] = new BitmapDrawable(res, bmp4);
+            sprites[8] = new BitmapDrawable(res, bmp5);
+            sprites[9] = new BitmapDrawable(res, bmp6);
+            sprites[10] = new BitmapDrawable(res, bmp7);
+            sprites[11] = sprites[9];
+            sprites[12] = sprites[8];
+            sprites[13] = sprites[7];
         }
 
         LevelListDrawable candle = new LevelListDrawable();
