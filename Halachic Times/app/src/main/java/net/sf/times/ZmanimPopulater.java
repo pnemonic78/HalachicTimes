@@ -730,9 +730,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
                     adapter.add(R.string.candles, summaryText, date, remote);
                 }
-            } else if (!hasCandles && (dayOfWeek == Calendar.SATURDAY)) {
-                summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
-                adapter.add(R.string.shabbath_ends, summaryText, date, remote);
+            } else if (!hasCandles) {
+                if (dayOfWeek == Calendar.SATURDAY) {
+                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                    adapter.add(R.string.shabbath_ends, summaryText, date, remote);
+                } else if (dayOfWeek != Calendar.FRIDAY) {
+                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                    adapter.add(R.string.yom_tov_ends, summaryText, date, remote);
+                }
             }
         }
 

@@ -696,44 +696,48 @@ public class ZmanimSettings {
      * @return the key - {@code null} otherwise.
      */
     protected String getKey(int id) {
-        if (id == R.string.hour)
-            return KEY_OPINION_HOUR;
-        if (id == R.string.dawn)
-            return KEY_OPINION_DAWN;
-        if ((id == R.string.tallis) || (id == R.string.tallis_only))
-            return KEY_OPINION_TALLIS;
-        if (id == R.string.sunrise)
-            return KEY_OPINION_SUNRISE;
-        if (id == R.string.shema)
-            return KEY_OPINION_SHEMA;
-        if (id == R.string.prayers)
-            return KEY_OPINION_TFILA;
-        if (id == R.string.midday)
-            return KEY_OPINION_NOON;
-        if (id == R.string.earliest_mincha)
-            return KEY_OPINION_EARLIEST_MINCHA;
-        if (id == R.string.mincha)
-            return KEY_OPINION_MINCHA;
-        if (id == R.string.plug_hamincha)
-            return KEY_OPINION_PLUG_MINCHA;
-        if (id == R.string.candles)
-            return KEY_OPINION_CANDLES;
-        if (id == R.string.sunset)
-            return KEY_OPINION_SUNSET;
-        if (id == R.string.twilight)
-            return KEY_OPINION_TWILIGHT;
-        if (id == R.string.nightfall)
-            return KEY_OPINION_NIGHTFALL;
-        if (id == R.string.shabbath_ends)
-            return KEY_OPINION_SHABBATH_ENDS;
-        if (id == R.string.midnight)
-            return KEY_OPINION_MIDNIGHT;
-        if (id == R.string.levana_earliest)
-            return KEY_OPINION_EARLIEST_LEVANA;
-        if (id == R.string.levana_latest)
-            return KEY_OPINION_LATEST_LEVANA;
-
-        return null;
+        switch (id) {
+            case R.string.hour:
+                return KEY_OPINION_HOUR;
+            case R.string.dawn:
+                return KEY_OPINION_DAWN;
+            case R.string.tallis:
+            case R.string.tallis_only:
+                return KEY_OPINION_TALLIS;
+            case R.string.sunrise:
+                return KEY_OPINION_SUNRISE;
+            case R.string.shema:
+                return KEY_OPINION_SHEMA;
+            case R.string.prayers:
+                return KEY_OPINION_TFILA;
+            case R.string.midday:
+                return KEY_OPINION_NOON;
+            case R.string.earliest_mincha:
+                return KEY_OPINION_EARLIEST_MINCHA;
+            case R.string.mincha:
+                return KEY_OPINION_MINCHA;
+            case R.string.plug_hamincha:
+                return KEY_OPINION_PLUG_MINCHA;
+            case R.string.candles:
+                return KEY_OPINION_CANDLES;
+            case R.string.sunset:
+                return KEY_OPINION_SUNSET;
+            case R.string.twilight:
+                return KEY_OPINION_TWILIGHT;
+            case R.string.nightfall:
+                return KEY_OPINION_NIGHTFALL;
+            case R.string.shabbath_ends:
+            case R.string.yom_tov_ends:
+                return KEY_OPINION_SHABBATH_ENDS;
+            case R.string.midnight:
+                return KEY_OPINION_MIDNIGHT;
+            case R.string.levana_earliest:
+                return KEY_OPINION_EARLIEST_LEVANA;
+            case R.string.levana_latest:
+                return KEY_OPINION_LATEST_LEVANA;
+            default:
+                return null;
+        }
     }
 
     /**
