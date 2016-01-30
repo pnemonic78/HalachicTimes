@@ -173,6 +173,7 @@
     <string name="theme_dark">Întuneric</string>
     <string name="theme_light">Lumina</string>
     <string name="theme_none">Niciuna</string>
+    <string name="theme_white">Albă</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

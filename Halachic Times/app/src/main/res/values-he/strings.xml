@@ -173,6 +173,7 @@
     <string name="theme_dark">כהה</string>
     <string name="theme_light">בהיר</string>
     <string name="theme_none">ללא</string>
+    <string name="theme_white">לבן</string>
 
     <!-- Go to date -->
     <string name="menu_date">תאריך</string>

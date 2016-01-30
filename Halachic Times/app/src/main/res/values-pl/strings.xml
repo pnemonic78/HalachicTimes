@@ -173,6 +173,7 @@
     <string name="theme_dark">Ciemny</string>
     <string name="theme_light">Światła</string>
     <string name="theme_none">Żaden</string>
+    <string name="theme_white">Biały</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

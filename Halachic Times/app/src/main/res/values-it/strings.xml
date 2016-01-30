@@ -173,6 +173,7 @@
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
     <string name="theme_none">Nessuna</string>
+    <string name="theme_white">Bianco</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

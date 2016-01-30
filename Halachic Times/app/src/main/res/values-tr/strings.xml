@@ -173,6 +173,7 @@
     <string name="theme_dark">Koyu</string>
     <string name="theme_light">Hafif</string>
     <string name="theme_none">Hiçbiri</string>
+    <string name="theme_white">Beyaz</string>
 
     <!-- Go to date -->
     <string name="menu_date">Tarih</string>

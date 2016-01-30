@@ -173,6 +173,7 @@
     <string name="theme_dark">Tamsi</string>
     <string name="theme_light">Šviesos</string>
     <string name="theme_none">Nė vienas</string>
+    <string name="theme_white">Baltųjų</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

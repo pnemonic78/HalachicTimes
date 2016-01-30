@@ -173,6 +173,7 @@
     <string name="theme_dark">Sombre</string>
     <string name="theme_light">Lumière</string>
     <string name="theme_none">Aucun</string>
+    <string name="theme_white">Blanc</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

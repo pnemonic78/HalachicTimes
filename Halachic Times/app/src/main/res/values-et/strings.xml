@@ -173,6 +173,7 @@
     <string name="theme_dark">Tume</string>
     <string name="theme_light">Heledad</string>
     <string name="theme_none">Mitte ükski</string>
+    <string name="theme_white">Valge</string>
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>

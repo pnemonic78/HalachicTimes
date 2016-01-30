@@ -173,6 +173,7 @@
     <string name="theme_dark">Tumma</string>
     <string name="theme_light">Vaalea</string>
     <string name="theme_none">Ei yhtään</string>
+    <string name="theme_white">Valkoinen</string>
 
     <!-- Go to date -->
     <string name="menu_date">Päivämäärä</string>

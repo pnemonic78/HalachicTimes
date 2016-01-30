@@ -173,6 +173,7 @@
     <string name="theme_dark">Sötét</string>
     <string name="theme_light">Világos</string>
     <string name="theme_none">Semmi</string>
+    <string name="theme_white">Fehér</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dátum</string>

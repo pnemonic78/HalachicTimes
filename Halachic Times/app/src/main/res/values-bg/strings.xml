@@ -173,6 +173,7 @@
     <string name="theme_dark">Тъмно</string>
     <string name="theme_light">Светла</string>
     <string name="theme_none">Никой</string>
+    <string name="theme_white">Бял</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>

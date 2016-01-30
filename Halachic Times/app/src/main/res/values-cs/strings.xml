@@ -173,6 +173,7 @@
     <string name="theme_dark">Tmavě</string>
     <string name="theme_light">Světlo</string>
     <string name="theme_none">Žádný</string>
+    <string name="theme_white">Bílý</string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>

@@ -173,6 +173,7 @@
     <string name="theme_dark">Mørkt</string>
     <string name="theme_light">Lys</string>
     <string name="theme_none">Ingen</string>
+    <string name="theme_white">Hvit</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dato</string>

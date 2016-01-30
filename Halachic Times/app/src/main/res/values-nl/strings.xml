@@ -173,6 +173,7 @@
     <string name="theme_dark">Donker</string>
     <string name="theme_light">Lichte</string>
     <string name="theme_none">Geen</string>
+    <string name="theme_white">Wit</string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
