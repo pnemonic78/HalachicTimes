@@ -6,9 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!-- The application uses one or more features on the device for determining location, such as GPS location, network location, or cell location. -->
     <uses-feature
@@ -28,8 +25,8 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Zmanim.Dark">
         <activity
-            android:name="net.sf.times.ZmanimActivity"
-            android:label="@string/title_activity_zmanim">
+            android:name="net.sf.times.CompassActivity"
+            android:label="@string/title_activity_compass">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -46,22 +43,17 @@
         <activity
             android:name="net.sf.times.preference.ZmanimPreferences"
             android:label="@string/menu_settings"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
+            android:parentActivityName="net.sf.times.CompassActivity">
         </activity>
         <activity
             android:name="net.sf.times.preference.ZmanimPreferenceActivity"
             android:label="@string/menu_settings"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
-        </activity>
-        <activity
-            android:name="net.sf.times.CompassActivity"
-            android:label="@string/title_activity_compass"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
+            android:parentActivityName="net.sf.times.CompassActivity">
         </activity>
         <activity
             android:name="net.sf.times.location.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
+            android:parentActivityName="net.sf.times.CompassActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -71,60 +63,9 @@
                 android:resource="@xml/searchable"/>
         </activity>
 
-        <receiver
-            android:name="net.sf.times.ZmanimWidget"
-            android:exported="false"
-            android:label="@string/title_widget_zmanim">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info"/>
-        </receiver>
-        <receiver
-            android:name="net.sf.times.ZmanimListWidget"
-            android:exported="false"
-            android:label="@string/title_widget_zmanim">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_list"/>
-        </receiver>
-        <receiver
-            android:name="net.sf.times.ClockWidget"
-            android:exported="false"
-            android:label="@string/title_widget_clock">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/widget_clock"/>
-        </receiver>
-        <receiver
-            android:name="net.sf.times.ZmanimReminder"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.DATE_CHANGED"/>
-                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
-                <action android:name="android.intent.action.TIME_SET"/>
-                <action android:name="net.sf.times.action.REMIND"/>
-            </intent-filter>
-        </receiver>
-
         <service
             android:name="net.sf.times.location.AddressService"
             android:exported="false"/>
-        <service
-            android:name="net.sf.times.ZmanimWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <meta-data
             android:name="com.google.android.backup.api_key"
