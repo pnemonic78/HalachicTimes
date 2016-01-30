@@ -30,7 +30,10 @@
         <item name="listZmanSummary">@style/Widget.TextView.Summary.NoGradient</item>
     </style>
 
-    <style name="Theme.Zmanim.White">
+    <style name="Theme.Zmanim.White" parent="android:Theme.Light">
+        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
+        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
+
         <item name="listZmanim">@style/Widget.ListView.White</item>
         <item name="listZman">@style/Widget.ListItem.White</item>
         <item name="listZmanTitle">@style/Widget.TextView.Title.White</item>

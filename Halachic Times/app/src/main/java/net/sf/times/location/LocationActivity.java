@@ -20,7 +20,6 @@
 package net.sf.times.location;
 
 import android.app.SearchManager;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
@@ -46,6 +45,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import net.sf.times.R;
+import net.sf.times.ThemedTabActivity;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.location.LocationAdapter.LocationItem;
@@ -62,8 +62,7 @@ import java.util.Locale;
  *
  * @author Moshe Waisberg
  */
-@SuppressWarnings("deprecation")
-public class LocationActivity extends TabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
+public class LocationActivity extends ThemedTabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
 
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
