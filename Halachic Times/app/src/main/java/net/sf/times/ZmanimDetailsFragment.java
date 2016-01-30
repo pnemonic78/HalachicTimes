@@ -219,6 +219,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                         break;
                 }
                 break;
+            case R.style.Theme_Zmanim_White:
+                list.setBackgroundColor(res.getColor(android.R.color.background_light));
+                break;
             case R.style.Theme_Zmanim_NoGradient:
             default:
                 list.setBackgroundDrawable(null);

@@ -304,6 +304,7 @@
     <string name="theme_none">None</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
+    <string name="theme_white">White</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

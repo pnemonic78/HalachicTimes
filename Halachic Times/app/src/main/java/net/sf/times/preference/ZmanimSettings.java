@@ -227,6 +227,8 @@ public class ZmanimSettings {
     public static String LIST_THEME_DARK;
     /** Show zmanim list with light gradient background. */
     public static String LIST_THEME_LIGHT;
+    /** Show zmanim list with white background. */
+    public static String LIST_THEME_WHITE;
 
     /** No omer count. */
     public static String OMER_NONE;
@@ -375,6 +377,9 @@ public class ZmanimSettings {
         }
         if (LIST_THEME_LIGHT.equals(value)) {
             return R.style.Theme_Zmanim_Light;
+        }
+        if (LIST_THEME_WHITE.equals(value)) {
+            return R.style.Theme_Zmanim_White;
         }
         return R.style.Theme_Zmanim_Dark;
     }
@@ -903,6 +908,7 @@ public class ZmanimSettings {
         LIST_THEME_NONE = context.getString(R.string.theme_value_none);
         LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
         LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
+        LIST_THEME_WHITE = context.getString(R.string.theme_value_white);
 
         OMER_NONE = context.getString(R.string.omer_value_off);
         OMER_B = context.getString(R.string.omer_value_b);

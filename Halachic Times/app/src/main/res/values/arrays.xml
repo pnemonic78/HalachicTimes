@@ -407,11 +407,13 @@
         <item>@string/theme_value_none</item>
         <item>@string/theme_value_dark</item>
         <item>@string/theme_value_light</item>
+        <item>@string/theme_value_white</item>
     </string-array>
     <string-array name="list_theme_entries" translatable="false">
         <item>@string/theme_none</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_light</item>
+        <item>@string/theme_white</item>
     </string-array>
     <string-array name="omer_values" translatable="false">
         <item>@string/omer_value_off</item>

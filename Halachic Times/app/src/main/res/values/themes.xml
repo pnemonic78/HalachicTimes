@@ -30,6 +30,14 @@
         <item name="listZmanSummary">@style/Widget.TextView.Summary.NoGradient</item>
     </style>
 
+    <style name="Theme.Zmanim.White">
+        <item name="listZmanim">@style/Widget.ListView.White</item>
+        <item name="listZman">@style/Widget.ListItem.White</item>
+        <item name="listZmanTitle">@style/Widget.TextView.Title.White</item>
+        <item name="listZmanTime">@style/Widget.TextView.Time.White</item>
+        <item name="listZmanSummary">@style/Widget.TextView.Summary.White</item>
+    </style>
+
     <style name="Theme.Zmanim.Settings">
     </style>
 

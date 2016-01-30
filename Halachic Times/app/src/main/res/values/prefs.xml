@@ -90,6 +90,7 @@
     <string name="theme_value_none" translatable="false"/>
     <string name="theme_value_dark" translatable="false">dark</string>
     <string name="theme_value_light" translatable="false">light</string>
+    <string name="theme_value_white" translatable="false">white</string>
     <string name="theme_defaultValue" translatable="false">@string/theme_value_dark</string>
 
     <string name="omer_value_off" translatable="false"/>
