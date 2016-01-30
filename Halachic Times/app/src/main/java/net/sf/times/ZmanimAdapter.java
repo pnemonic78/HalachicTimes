@@ -336,7 +336,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param remote
      *         hide elapsed times for remote view?
      */
-    private void add(int titleId, CharSequence summary, long time, boolean remote) {
+    public void add(int titleId, CharSequence summary, long time, boolean remote) {
         ZmanimItem item = new ZmanimItem();
         item.titleId = titleId;
         item.summary = summary;

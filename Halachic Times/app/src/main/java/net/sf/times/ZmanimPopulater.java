@@ -579,36 +579,42 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = cal.getSeaLevelSunset();
             summary = R.string.sunset_sea;
         }
-        Date sunset = date;
-        if (hasCandles && (candlesHow == BEFORE_SUNSET)) {
-            date = cal.getTimeOffset(sunset, -candlesOffset * DateUtils.MINUTE_IN_MILLIS);
-            if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-            } else {
-                summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
-            }
-            adapter.add(R.string.candles, summaryText, date, remote);
-        }
-
-        if (hasCandles && (candlesHow == AT_SUNSET)) {
-            if (holidayTomorrow == JewishCalendar.CHANUKAH) {
-                summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                adapter.add(R.string.candles, summaryText, date, remote);
-            } else {
-                adapter.add(R.string.candles, summary, date, remote);
-            }
-        }
-        if ((holidayTomorrow == JewishCalendar.TISHA_BEAV) || (holidayTomorrow == JewishCalendar.YOM_KIPPUR)) {
-            adapter.add(R.string.fast_begins, SUMMARY_NONE, date, remote);
-        }
         adapter.add(R.string.sunset, summary, date, remote);
+        Date sunset = date;
 
-        if (date != null) {
-            if ((holidayToday == JewishCalendar.SEVENTEEN_OF_TAMMUZ) || (holidayToday == JewishCalendar.FAST_OF_GEDALYAH) || (holidayToday == JewishCalendar.TENTH_OF_TEVES)
-                    || (holidayToday == JewishCalendar.FAST_OF_ESTHER)) {
-                adapter.add(R.string.fast_ends, SUMMARY_NONE, date.getTime() + FAST_ENDS_18, remote);
-            } else if (holidayToday == JewishCalendar.TISHA_BEAV) {
-                adapter.add(R.string.fast_ends, SUMMARY_NONE, date.getTime() + FAST_ENDS_24, remote);
+        if (sunset != null) {
+            if (hasCandles) {
+                if (candlesHow == BEFORE_SUNSET) {
+                    if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+                        summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                    } else {
+                        summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
+                    }
+                    adapter.add(R.string.candles, summaryText, sunset.getTime() - (candlesOffset * DateUtils.MINUTE_IN_MILLIS), remote);
+                } else if (candlesHow == AT_SUNSET) {
+                    if (holidayTomorrow == JewishCalendar.CHANUKAH) {
+                        summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                        adapter.add(R.string.candles, summaryText, sunset, remote);
+                    } else {
+                        adapter.add(R.string.candles, summary, sunset, remote);
+                    }
+                }
+            }
+
+            if ((holidayTomorrow == JewishCalendar.TISHA_BEAV) || (holidayTomorrow == JewishCalendar.YOM_KIPPUR)) {
+                adapter.add(R.string.fast_begins, SUMMARY_NONE, sunset, remote);
+            }
+
+            switch (holidayToday) {
+                case JewishCalendar.SEVENTEEN_OF_TAMMUZ:
+                case JewishCalendar.FAST_OF_GEDALYAH:
+                case JewishCalendar.TENTH_OF_TEVES:
+                case JewishCalendar.FAST_OF_ESTHER:
+                    adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset.getTime() + FAST_ENDS_18, remote);
+                    break;
+                case JewishCalendar.TISHA_BEAV:
+                    adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset.getTime() + FAST_ENDS_24, remote);
+                    break;
             }
         }
 
