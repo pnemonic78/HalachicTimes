@@ -45,9 +45,9 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import net.sf.times.compass.R;
-import net.sf.times.ZmanimActivity;
+import net.sf.times.CompassActivity;
 import net.sf.times.ZmanimApplication;
+import net.sf.times.compass.R;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 
@@ -337,7 +337,7 @@ public class LocationActivity extends TabActivity implements TextWatcher, OnClic
         Intent intent = getIntent();
         String action = intent.getAction();
         if (Intent.ACTION_SEARCH.equals(action)) {
-            data.setClass(this, ZmanimActivity.class);
+            data.setClass(this, CompassActivity.class);
             data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(data);
         } else {

@@ -44,8 +44,6 @@ import net.sf.preference.SeekBarDialogPreference;
 import net.sf.preference.TimePreference;
 import net.sf.times.compass.R;
 import net.sf.times.ZmanimApplication;
-import net.sf.times.ZmanimReminder;
-import net.sf.times.ZmanimWidget;
 import net.sf.times.location.AddressProvider;
 
 import java.util.Calendar;
@@ -68,7 +66,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
     private SeekBarDialogPreference candlesSeek;
     private SeekBarDialogPreference shabbathSeek;
     private ZmanimSettings settings;
-    private ZmanimReminder reminder;
     private Preference clearHistory;
     private RingtonePreference reminderRingtonePreference;
     private Runnable remindRunner;
@@ -263,7 +260,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         if (preference instanceof ListPreference) {
             ListPreference list = (ListPreference) preference;
             onListPreferenceChange(list, newValue);
-            notifyAppWidgets();
             return false;
         }
         if (preference instanceof RingtonePreference) {
@@ -274,7 +270,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             TimePreference time = (TimePreference) preference;
             return onTimePreferenceChange(time, newValue);
         }
-        notifyAppWidgets();
         return true;
     }
 
@@ -322,8 +317,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             } else if (key.endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
                 // Explicitly disable dependencies?
                 preference.notifyDependencyChange(preference.shouldDisableDependents());
-
-                remind();
             }
         }
     }
@@ -354,16 +347,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
     protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
-        String key = preference.getKey();
-        if (key.endsWith(REMINDER_SUNDAY_SUFFIX)
-                || key.endsWith(REMINDER_MONDAY_SUFFIX)
-                || key.endsWith(REMINDER_TUESDAY_SUFFIX)
-                || key.endsWith(REMINDER_WEDNESDAY_SUFFIX)
-                || key.endsWith(REMINDER_THURSDAY_SUFFIX)
-                || key.endsWith(REMINDER_FRIDAY_SUFFIX)
-                || key.endsWith(REMINDER_SATURDAY_SUFFIX)) {
-            remind();
-        }
         return true;
     }
 
@@ -453,49 +436,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         ZmanimApplication app = (ZmanimApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
-    }
-
-    protected void notifyAppWidgets() {
-        Context context = this;
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        final Class<?> clazz = ZmanimWidget.class;
-        ComponentName provider = new ComponentName(context, clazz);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0))
-            return;
-
-        Intent intent = new Intent(context, ZmanimWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        context.sendBroadcast(intent);
-    }
-
-    /**
-     * Run the reminder service.
-     * Tries to postpone the reminder until after any preferences have changed.
-     */
-    private void remind() {
-        if (remindRunner == null) {
-            remindRunner = new Runnable() {
-                @Override
-                public void run() {
-                    Context context = ZmanimPreferences.this;
-                    if (context != null) {
-                        if (settings == null)
-                            settings = new ZmanimSettings(context);
-                        if (reminder == null)
-                            reminder = new ZmanimReminder();
-                        reminder.remind(context, settings);
-                    }
-                }
-            };
-        }
-        View view = getWindow().getDecorView();
-        if (view == null) {
-            remindRunner.run();
-        } else {
-            view.post(remindRunner);
-        }
     }
 
     protected void initReminderDays(String reminderKey) {

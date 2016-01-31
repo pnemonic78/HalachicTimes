@@ -21,10 +21,7 @@ package net.sf.times.preference;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -37,7 +34,6 @@ import android.text.TextUtils;
 import net.sf.preference.RingtonePreference;
 import net.sf.preference.TimePreference;
 import net.sf.times.compass.R;
-import net.sf.times.ZmanimWidget;
 
 /**
  * This fragment shows the preferences for a header.
@@ -119,7 +115,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         if (preference instanceof ListPreference) {
             ListPreference list = (ListPreference) preference;
             onListPreferenceChange(list, newValue);
-            notifyAppWidgets();
             return false;
         }
         if (preference instanceof RingtonePreference) {
@@ -130,7 +125,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             TimePreference time = (TimePreference) preference;
             return onTimePreferenceChange(time, newValue);
         }
-        notifyAppWidgets();
         return true;
     }
 
@@ -250,20 +244,5 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     @Override
     public boolean onPreferenceClick(Preference preference) {
         return false;
-    }
-
-    protected void notifyAppWidgets() {
-        Context context = this.context;
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        final Class<?> clazz = ZmanimWidget.class;
-        ComponentName provider = new ComponentName(context, clazz);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0))
-            return;
-
-        Intent intent = new Intent(context, ZmanimWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        context.sendBroadcast(intent);
     }
 }

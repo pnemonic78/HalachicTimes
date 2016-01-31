@@ -29,8 +29,6 @@ import android.preference.Preference;
 import android.text.TextUtils;
 import android.view.View;
 
-import net.sf.times.ZmanimReminder;
-
 /**
  * This fragment shows the preferences for a zman screen.
  */
@@ -51,7 +49,6 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     private Preference preferenceReminderFriday;
     private Preference preferenceReminderSaturday;
     private ZmanimSettings settings;
-    private ZmanimReminder reminder;
     private Runnable remindRunner;
 
     @Override
@@ -96,8 +93,6 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         if (!oldValue.equals(newValue) && (preference == preferenceReminder)) {
             // Explicitly disable dependencies?
             preference.notifyDependencyChange(preference.shouldDisableDependents());
-
-            remind();
         }
     }
 
@@ -124,46 +119,5 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
             return checkBox;
         }
         return null;
-    }
-
-    protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
-        if (preference.equals(preferenceReminderSunday)
-                || preference.equals(preferenceReminderMonday)
-                || preference.equals(preferenceReminderTuesday)
-                || preference.equals(preferenceReminderWednesday)
-                || preference.equals(preferenceReminderThursday)
-                || preference.equals(preferenceReminderFriday)
-                || preference.equals(preferenceReminderSaturday)) {
-            remind();
-        }
-
-        return super.onCheckBoxPreferenceChange(preference, newValue);
-    }
-
-    /**
-     * Run the reminder service.
-     * Tries to postpone the reminder until after any preferences have changed.
-     */
-    private void remind() {
-        if (remindRunner == null) {
-            remindRunner = new Runnable() {
-                @Override
-                public void run() {
-                    if (context != null) {
-                        if (settings == null)
-                            settings = new ZmanimSettings(context);
-                        if (reminder == null)
-                            reminder = new ZmanimReminder();
-                        reminder.remind(context, settings);
-                    }
-                }
-            };
-        }
-        View view = getView();
-        if (view == null) {
-            remindRunner.run();
-        } else {
-            view.post(remindRunner);
-        }
     }
 }
