@@ -37,6 +37,7 @@
         <item>@string/hour_120</item>
         <item>@string/hour_120_zmanis</item>
     </string-array>
+
     <string-array name="dawn_values" translatable="false">
         <item>@string/opinion_value_19</item>
         <item>@string/opinion_value_120</item>
@@ -67,6 +68,7 @@
         <item>@string/dawn_72_zmanis</item>
         <item>@string/dawn_60</item>
     </string-array>
+
     <string-array name="tallis_values" translatable="false">
         <item>@string/opinion_value_11_5</item>
         <item>@string/opinion_value_11</item>
@@ -77,6 +79,7 @@
         <item>@string/tallis_11</item>
         <item>@string/tallis_10</item>
     </string-array>
+
     <string-array name="sunrise_values" translatable="false">
         <item>@string/opinion_value_sea</item>
         <item>@string/opinion_value_default</item>
@@ -85,6 +88,7 @@
         <item>@string/sunrise_sea</item>
         <item>@string/sunrise_summary</item>
     </string-array>
+
     <string-array name="shema_values" translatable="false">
         <item>@string/opinion_value_16_sunset</item>
         <item>@string/opinion_value_7_083</item>
@@ -123,6 +127,7 @@
         <item>@string/shema_fixed</item>
         <item>@string/shema_gra</item>
     </string-array>
+
     <string-array name="prayers_values" translatable="false">
         <item>@string/opinion_value_120</item>
         <item>@string/opinion_value_96</item>
@@ -157,6 +162,7 @@
         <item>@string/prayers_2</item>
         <item>@string/prayers_gra</item>
     </string-array>
+
     <string-array name="burn_chametz_values" translatable="false">
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_72</item>
@@ -167,6 +173,7 @@
         <item>@string/burn_chametz_72</item>
         <item>@string/burn_chametz_gra</item>
     </string-array>
+
     <string-array name="midday_values" translatable="false">
         <item>@string/opinion_value_solar</item>
         <item>@string/opinion_value_fixed</item>
@@ -175,6 +182,7 @@
         <item>@string/midday_summary</item>
         <item>@string/midday_fixed</item>
     </string-array>
+
     <string-array name="earliest_mincha_values" translatable="false">
         <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_default</item>
@@ -189,6 +197,7 @@
         <item>@string/earliest_mincha_30</item>
         <item>@string/earliest_mincha_16</item>
     </string-array>
+
     <string-array name="mincha_values" translatable="false">
         <item>@string/opinion_value_default</item>
         <item>@string/opinion_value_ateret</item>
@@ -201,6 +210,7 @@
         <item>@string/mincha_72</item>
         <item>@string/mincha_16</item>
     </string-array>
+
     <string-array name="plug_hamincha_values" translatable="false">
         <item>@string/opinion_value_16_sunset</item>
         <item>@string/opinion_value_gra</item>
@@ -239,6 +249,7 @@
         <item>@string/plug_hamincha_120_zmanis</item>
         <item>@string/plug_hamincha_26</item>
     </string-array>
+
     <string-array name="sunset_values" translatable="false">
         <item>@string/opinion_value_default</item>
         <item>@string/opinion_value_level</item>
@@ -247,6 +258,7 @@
         <item>@string/sunset_sea</item>
         <item>@string/sunset_summary</item>
     </string-array>
+
     <string-array name="twilight_values" translatable="false">
         <item>@string/opinion_value_7_083</item>
         <item>@string/opinion_value_2_stars</item>
@@ -259,6 +271,7 @@
         <item>@string/twilight_13</item>
         <item>@string/twilight_58</item>
     </string-array>
+
     <string-array name="nightfall_values" translatable="false">
         <item>@string/opinion_value_3_65</item>
         <item>@string/opinion_value_3_676</item>
@@ -309,6 +322,7 @@
         <item>@string/nightfall_120_zmanis</item>
         <item>@string/nightfall_26</item>
     </string-array>
+
     <string-array name="midnight_values" translatable="false">
         <item>@string/opinion_value_solar</item>
         <item>@string/opinion_value_12</item>
@@ -319,6 +333,7 @@
         <item>@string/midnight_12</item>
         <item>@string/midnight_6</item>
     </string-array>
+
     <string-array name="candles_chanukka_values" translatable="false">
         <item>@string/opinion_value_default</item>
         <item>@string/opinion_value_twilight</item>
@@ -329,6 +344,7 @@
         <item>@string/twilight</item>
         <item>@string/nightfall</item>
     </string-array>
+
     <string-array name="levana_earliest_values" translatable="false">
         <item>@string/opinion_value_3_days</item>
         <item>@string/opinion_value_7</item>
@@ -337,6 +353,7 @@
         <item>@string/levana_earliest_summary</item>
         <item>@string/levana_7</item>
     </string-array>
+
     <string-array name="levana_latest_values" translatable="false">
         <item>@string/opinion_value_half</item>
         <item>@string/opinion_value_15</item>
@@ -345,6 +362,7 @@
         <item>@string/levana_latest_summary</item>
         <item>@string/levana_15</item>
     </string-array>
+
     <string-array name="coords_format_values" translatable="false">
         <item>@string/coords_format_value_decimal</item>
         <item>@string/coords_format_value_sexagesimal</item>
@@ -353,6 +371,7 @@
         <item>@string/coords_format_decimal</item>
         <item>@string/coords_format_sexagesimal</item>
     </string-array>
+
     <string-array name="reminder_values" translatable="false">
         <item/>
         <item>0</item>
@@ -379,6 +398,7 @@
         <item>45 minutes before</item>
         <item>1 hour before</item>
     </string-array>
+
     <string-array name="hebrew_months">
         <item>Nissan</item>
         <item>Iyar</item>
@@ -395,6 +415,7 @@
         <item>Adar II</item>
         <item>Adar I</item>
     </string-array>
+
     <string-array name="reminder_stream_values" translatable="false">
         <item>@string/reminder_stream_value_alarm</item>
         <item>@string/reminder_stream_value_notification</item>
@@ -403,6 +424,7 @@
         <item>@string/reminder_stream_alarm</item>
         <item>@string/reminder_stream_notification</item>
     </string-array>
+
     <string-array name="list_theme_values" translatable="false">
         <item>@string/theme_value_none</item>
         <item>@string/theme_value_dark</item>
@@ -415,6 +437,7 @@
         <item>@string/theme_light</item>
         <item>@string/theme_white</item>
     </string-array>
+
     <string-array name="omer_values" translatable="false">
         <item>@string/omer_value_off</item>
         <item>@string/omer_value_b</item>
@@ -424,6 +447,23 @@
         <item>@string/omer_off</item>
         <item>@string/omer_b</item>
         <item>@string/omer_l</item>
+    </string-array>
+
+    <string-array name="emphasis_scale_values" translatable="false">
+        <item>@string/emphasis_scale_value_100</item>
+        <item>@string/emphasis_scale_value_110</item>
+        <item>@string/emphasis_scale_value_120</item>
+        <item>@string/emphasis_scale_value_130</item>
+        <item>@string/emphasis_scale_value_140</item>
+        <item>@string/emphasis_scale_value_150</item>
+    </string-array>
+    <string-array name="emphasis_scale_entries" translatable="false">
+        <item>@string/emphasis_scale_100</item>
+        <item>@string/emphasis_scale_110</item>
+        <item>@string/emphasis_scale_120</item>
+        <item>@string/emphasis_scale_130</item>
+        <item>@string/emphasis_scale_140</item>
+        <item>@string/emphasis_scale_150</item>
     </string-array>
 
 </resources>

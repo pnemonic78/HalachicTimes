@@ -85,6 +85,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     private String[] monthNames;
     private String monthDayYear;
     private String omerFormat;
+    private float emphasisScale;
 
     /**
      * Time row item.
@@ -152,6 +153,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         this.settings = settings;
         this.summaries = settings.isSummaries();
         this.showElapsed = settings.isPast();
+        this.emphasisScale = settings.getEmphasisScale();
 
         boolean time24 = DateFormat.is24HourFormat(context);
         String patternSeasonalHour;
@@ -228,7 +230,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         title.setEnabled(enabled);
         if (item.emphasis) {
             title.setTypeface(title.getTypeface(), Typeface.BOLD);
-            title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.getTextSize() * 1.25f);
+            title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.getTextSize() * emphasisScale);
         }
 
         if (summary != null) {
@@ -242,7 +244,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         time.setEnabled(enabled);
         if (item.emphasis) {
             time.setTypeface(time.getTypeface(), Typeface.BOLD);
-            time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.getTextSize() * 1.25f);
+            time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.getTextSize() * emphasisScale);
         }
 
         return view;

@@ -42,5 +42,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
         initList(ZmanimSettings.KEY_COORDS_FORMAT);
         initList(ZmanimSettings.KEY_THEME);
+        initList(ZmanimSettings.KEY_EMPHASIS_SCALE);
     }
 }

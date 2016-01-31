@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim" parent="android:Theme.Holo">
-        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
-        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
-    </style>
-
 </resources>

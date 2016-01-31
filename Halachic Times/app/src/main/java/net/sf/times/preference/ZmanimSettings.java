@@ -79,6 +79,8 @@ public class ZmanimSettings {
     public static final String KEY_REMINDER_RINGTONE = "reminder.ringtone";
     /** Preference name for the temporal hour visibility. */
     public static final String KEY_HOUR = "hour.visible";
+    /** Preference name for the emphasis scale. */
+    public static final String KEY_EMPHASIS_SCALE = "emphasis_scale";
 
     /** Preference name for temporal hour type. */
     public static final String KEY_OPINION_HOUR = "hour";
@@ -691,6 +693,16 @@ public class ZmanimSettings {
         if (key != null)
             return preferences.getBoolean(key + EMPHASIS_SUFFIX, context.getResources().getBoolean(R.bool.emphasis_defaultValue));
         return false;
+    }
+
+    /**
+     * Get the emphasis size scale.
+     *
+     * @return the emphasis scale as a fractional percentage.
+     */
+    public float getEmphasisScale() {
+        String value= preferences.getString(KEY_EMPHASIS_SCALE, context.getString(R.string.emphasis_scale_defaultValue));
+        return Float.parseFloat(value);
     }
 
     /**

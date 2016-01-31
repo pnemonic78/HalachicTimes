@@ -25,5 +25,11 @@
         android:entryValues="@array/list_theme_values"
         android:key="theme"
         android:title="@string/theme_title"/>
+    <net.sf.preference.HtmlListPreference
+        android:defaultValue="@string/emphasis_scale_defaultValue"
+        android:entries="@array/emphasis_scale_entries"
+        android:entryValues="@array/emphasis_scale_values"
+        android:key="emphasis_scale"
+        android:title="@string/emphasis_scale_title"/>
 
 </PreferenceScreen>
