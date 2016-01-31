@@ -173,46 +173,46 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             case R.style.Theme_Zmanim_Light:
                 switch (id) {
                     case R.string.dawn:
-                        list.setBackgroundColor(res.getColor(R.color.dawn_solid));
+                        list.setBackgroundColor(res.getColor(R.color.dawn_light));
                         break;
                     case R.string.tallis:
                     case R.string.tallis_only:
-                        list.setBackgroundColor(res.getColor(R.color.tallis_solid));
+                        list.setBackgroundColor(res.getColor(R.color.tallis_light));
                         break;
                     case R.string.sunrise:
-                        list.setBackgroundColor(res.getColor(R.color.sunrise_solid));
+                        list.setBackgroundColor(res.getColor(R.color.sunrise_light));
                         break;
                     case R.string.shema:
-                        list.setBackgroundColor(res.getColor(R.color.shema_solid));
+                        list.setBackgroundColor(res.getColor(R.color.shema_light));
                         break;
                     case R.string.prayers:
-                        list.setBackgroundColor(res.getColor(R.color.prayers_solid));
+                        list.setBackgroundColor(res.getColor(R.color.prayers_light));
                         break;
                     case R.string.midday:
-                        list.setBackgroundColor(res.getColor(R.color.midday_solid));
+                        list.setBackgroundColor(res.getColor(R.color.midday_light));
                         break;
                     case R.string.earliest_mincha:
-                        list.setBackgroundColor(res.getColor(R.color.earliest_mincha_solid));
+                        list.setBackgroundColor(res.getColor(R.color.earliest_mincha_light));
                         break;
                     case R.string.mincha:
-                        list.setBackgroundColor(res.getColor(R.color.mincha_solid));
+                        list.setBackgroundColor(res.getColor(R.color.mincha_light));
                         break;
                     case R.string.plug_hamincha:
-                        list.setBackgroundColor(res.getColor(R.color.plug_hamincha_solid));
+                        list.setBackgroundColor(res.getColor(R.color.plug_hamincha_light));
                         break;
                     case R.string.sunset:
-                        list.setBackgroundColor(res.getColor(R.color.sunset_solid));
+                        list.setBackgroundColor(res.getColor(R.color.sunset_light));
                         break;
                     case R.string.twilight:
-                        list.setBackgroundColor(res.getColor(R.color.twilight_solid));
+                        list.setBackgroundColor(res.getColor(R.color.twilight_light));
                         break;
                     case R.string.nightfall:
                     case R.string.shabbath_ends:
                     case R.string.festival_ends:
-                        list.setBackgroundColor(res.getColor(R.color.nightfall_solid));
+                        list.setBackgroundColor(res.getColor(R.color.nightfall_light));
                         break;
                     case R.string.midnight:
-                        list.setBackgroundColor(res.getColor(R.color.midnight_solid));
+                        list.setBackgroundColor(res.getColor(R.color.midnight_light));
                         break;
                     default:
                         list.setBackgroundDrawable(null);

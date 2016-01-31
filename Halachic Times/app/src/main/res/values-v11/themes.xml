@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim" parent="android:Theme.Holo">
-        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
-        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
+    <style name="Theme.Zmanim.Base" parent="android:Theme.Holo">
     </style>
 
-    <style name="Theme.Zmanim.White" parent="android:Theme.Holo.Light">
-        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
-        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
-
-        <item name="listZmanim">@style/Widget.ListView.White</item>
-        <item name="listZman">@style/Widget.ListItem.White</item>
-        <item name="listZmanTitle">@style/Widget.TextView.Title.White</item>
-        <item name="listZmanTime">@style/Widget.TextView.Time.White</item>
-        <item name="listZmanSummary">@style/Widget.TextView.Summary.White</item>
+    <style name="Theme.Zmanim.Base.Light" parent="android:Theme.Holo.Light">
     </style>
 
 </resources>
