@@ -336,6 +336,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
         int positionTomorrow = -1;
         int positionFirst = -1;
+        int positionTotal = 0;
         CharSequence dateHebrew;
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
@@ -346,9 +347,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             bindViewGrouping(list, 0, dateHebrew);
         }
 
-        for (int position = 0; position < count; position++) {
+        for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            if (bindView(list, position, item)) {
+            if (bindView(list, position, positionTotal, item)) {
                 if (positionFirst < 0) {
                     positionFirst = position;
                 }
@@ -381,9 +382,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
                 }
             }
 
-            for (int position = 0; position < count; position++) {
+            for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
-                bindView(list, position, item);
+                bindView(list, position, positionTotal, item);
 
                 // Start of the next Hebrew day.
                 if ((position >= positionSunset) && (positionTomorrow < 0)) {
@@ -403,17 +404,19 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the remote list.
      * @param position
      *         the position index.
+     * @param positionTotal
+     *         the position index relative to all rows.
      * @param item
      *         the zmanim item.
      * @return {@code true} if item was bound to view.
      */
-    protected boolean bindView(RemoteViews list, int position, ZmanimItem item) {
+    protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
         if (item.isEmpty()) {
             return false;
         }
         Context context = getContext();
         String pkg = context.getPackageName();
-        RemoteViews row = new RemoteViews(pkg, getLayoutItemId(position));
+        RemoteViews row = new RemoteViews(pkg, getLayoutItemId(positionTotal));
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
         bindViewRowSpecial(row, position, item);

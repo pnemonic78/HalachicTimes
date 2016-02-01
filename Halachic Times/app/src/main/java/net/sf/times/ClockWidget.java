@@ -66,12 +66,13 @@ public class ClockWidget extends ZmanimWidget {
         int count = adapter.getCount();
         ZmanimItem item;
         boolean found = false;
+        int positionTotal = 0;
 
-        for (int position = 0; position < count; position++) {
+        for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
             if (item.isEmpty())
                 continue;
-            bindView(list, position, item);
+            bindView(list, position, positionTotal, item);
             found = true;
             break;
         }
@@ -79,18 +80,18 @@ public class ClockWidget extends ZmanimWidget {
         if (!found && (adapterTomorrow != null)) {
             adapter = adapterTomorrow;
             count = adapter.getCount();
-            for (int position = 0; position < count; position++) {
+            for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
                 if (item.isEmpty())
                     continue;
-                bindView(list, position, item);
+                bindView(list, position, positionTotal, item);
                 break;
             }
         }
     }
 
     @Override
-    protected boolean bindView(RemoteViews list, int position, ZmanimItem item) {
+    protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
         DateFormat timeFormat = getTimeFormat();
         CharSequence label = timeFormat.format(item.time);
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
