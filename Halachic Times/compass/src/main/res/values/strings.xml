@@ -304,6 +304,14 @@
     <string name="theme_none">None</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
+    <string name="theme_white">White</string>
+    <string name="emphasis_scale_title" translatable="false">@string/emphasis_title</string>
+    <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
+    <string name="emphasis_scale_120"><![CDATA[<h4>Large</h4>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Extra large</h3>]]></string>
+    <string name="emphasis_scale_140"><![CDATA[<h2>Huge</h2>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

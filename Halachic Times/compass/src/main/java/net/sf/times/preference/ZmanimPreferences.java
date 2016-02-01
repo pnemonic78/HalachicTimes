@@ -19,10 +19,6 @@
  */
 package net.sf.times.preference;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.media.AudioManager;
@@ -37,16 +33,13 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
-import android.view.View;
 
 import net.sf.preference.RingtonePreference;
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.preference.TimePreference;
-import net.sf.times.compass.R;
 import net.sf.times.ZmanimApplication;
+import net.sf.times.compass.R;
 import net.sf.times.location.AddressProvider;
-
-import java.util.Calendar;
 
 /**
  * Application preferences that populate the settings.
@@ -54,14 +47,6 @@ import java.util.Calendar;
  * @author Moshe Waisberg
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
-
-    private static final String REMINDER_SUNDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.SUNDAY;
-    private static final String REMINDER_MONDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.MONDAY;
-    private static final String REMINDER_TUESDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.TUESDAY;
-    private static final String REMINDER_WEDNESDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.WEDNESDAY;
-    private static final String REMINDER_THURSDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.THURSDAY;
-    private static final String REMINDER_FRIDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.FRIDAY;
-    private static final String REMINDER_SATURDAY_SUFFIX = ZmanimSettings.REMINDER_SUFFIX + ".day." + Calendar.SATURDAY;
 
     private SeekBarDialogPreference candlesSeek;
     private SeekBarDialogPreference shabbathSeek;
@@ -84,31 +69,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         addPreferencesFromResource(R.xml.preferences);
         PreferenceScreen screen = getPreferenceScreen();
         screen.setTitle(getTitle());
-        replaceScreen(screen, "general", R.xml.general_preferences);
         replaceScreen(screen, "appearance", R.xml.appearance_preferences);
-        PreferenceScreen screenZmanim = replaceScreen(screen, "zmanim", R.xml.zmanim_preferences);
         replaceScreen(screen, "privacy", R.xml.privacy_preferences);
         replaceScreen(screen, "about", R.xml.about_preferences);
-
-        replaceScreen(screenZmanim, "hour_screen", R.xml.zman_hour_preferences);
-        replaceScreen(screenZmanim, "dawn_screen", R.xml.zman_dawn_preferences);
-        replaceScreen(screenZmanim, "tallis_screen", R.xml.zman_tallis_preferences);
-        replaceScreen(screenZmanim, "sunrise_screen", R.xml.zman_sunrise_preferences);
-        replaceScreen(screenZmanim, "shema_screen", R.xml.zman_shema_preferences);
-        replaceScreen(screenZmanim, "prayers_screen", R.xml.zman_prayers_preferences);
-        replaceScreen(screenZmanim, "midday_screen", R.xml.zman_midday_preferences);
-        replaceScreen(screenZmanim, "earliest_mincha_screen", R.xml.zman_earliest_mincha_preferences);
-        replaceScreen(screenZmanim, "mincha_screen", R.xml.zman_mincha_preferences);
-        replaceScreen(screenZmanim, "plug_hamincha_screen", R.xml.zman_plug_hamincha_preferences);
-        replaceScreen(screenZmanim, "candles_screen", R.xml.zman_candles_preferences);
-        replaceScreen(screenZmanim, "sunset_screen", R.xml.zman_sunset_preferences);
-        replaceScreen(screenZmanim, "twilight_screen", R.xml.zman_twilight_preferences);
-        replaceScreen(screenZmanim, "nightfall_screen", R.xml.zman_nightfall_preferences);
-        replaceScreen(screenZmanim, "shabbath_screen", R.xml.zman_shabbath_preferences);
-        replaceScreen(screenZmanim, "midnight_screen", R.xml.zman_midnight_preferences);
-        replaceScreen(screenZmanim, "levana_earliest_screen", R.xml.zman_levana_earliest_preferences);
-        replaceScreen(screenZmanim, "levana_latest_screen", R.xml.zman_levana_latest_preferences);
-        replaceScreen(screenZmanim, "burn_chametz_screen", R.xml.zman_chametz_preferences);
 
         reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
         initList(ZmanimSettings.KEY_REMINDER_STREAM);

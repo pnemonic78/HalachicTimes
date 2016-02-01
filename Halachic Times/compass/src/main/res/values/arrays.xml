@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="hour_values" translatable="false">
+        <item>@string/opinion_value_gra</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_26</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+    </string-array>
+    <string-array name="hour_entries" translatable="false">
+        <item>@string/hour_gra</item>
+        <item>@string/hour_ateret</item>
+        <item>@string/hour_60</item>
+        <item>@string/hour_72</item>
+        <item>@string/hour_72_zmanis</item>
+        <item>@string/hour_mga</item>
+        <item>@string/hour_16</item>
+        <item>@string/hour_18</item>
+        <item>@string/hour_19</item>
+        <item>@string/hour_90</item>
+        <item>@string/hour_90_zmanis</item>
+        <item>@string/hour_96</item>
+        <item>@string/hour_96_zmanis</item>
+        <item>@string/hour_26</item>
+        <item>@string/hour_120</item>
+        <item>@string/hour_120_zmanis</item>
+    </string-array>
+
+    <string-array name="dawn_values" translatable="false">
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_26</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_60</item>
+    </string-array>
+    <string-array name="dawn_entries" translatable="false">
+        <item>@string/dawn_19</item>
+        <item>@string/dawn_120</item>
+        <item>@string/dawn_120_zmanis</item>
+        <item>@string/dawn_18</item>
+        <item>@string/dawn_26</item>
+        <item>@string/dawn_16</item>
+        <item>@string/dawn_96</item>
+        <item>@string/dawn_96_zmanis</item>
+        <item>@string/dawn_90</item>
+        <item>@string/dawn_90_zmanis</item>
+        <item>@string/dawn_72</item>
+        <item>@string/dawn_72_zmanis</item>
+        <item>@string/dawn_60</item>
+    </string-array>
+
+    <string-array name="tallis_values" translatable="false">
+        <item>@string/opinion_value_11_5</item>
+        <item>@string/opinion_value_11</item>
+        <item>@string/opinion_value_10</item>
+    </string-array>
+    <string-array name="tallis_entries" translatable="false">
+        <item>@string/tallis_summary</item>
+        <item>@string/tallis_11</item>
+        <item>@string/tallis_10</item>
+    </string-array>
+
+    <string-array name="sunrise_values" translatable="false">
+        <item>@string/opinion_value_sea</item>
+        <item>@string/opinion_value_default</item>
+    </string-array>
+    <string-array name="sunrise_entries" translatable="false">
+        <item>@string/sunrise_sea</item>
+        <item>@string/sunrise_summary</item>
+    </string-array>
+
+    <string-array name="shema_values" translatable="false">
+        <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_3</item>
+        <item>@string/opinion_value_fixed</item>
+        <item>@string/opinion_value_gra</item>
+    </string-array>
+    <string-array name="shema_entries" translatable="false">
+        <item>@string/shema_16_sunset</item>
+        <item>@string/shema_7</item>
+        <item>@string/shema_19</item>
+        <item>@string/shema_120</item>
+        <item>@string/shema_18</item>
+        <item>@string/shema_16</item>
+        <item>@string/shema_96</item>
+        <item>@string/shema_96_zmanis</item>
+        <item>@string/shema_90</item>
+        <item>@string/shema_90_zmanis</item>
+        <item>@string/shema_72</item>
+        <item>@string/shema_72_zmanis</item>
+        <item>@string/shema_mga</item>
+        <item>@string/shema_ateret</item>
+        <item>@string/shema_3</item>
+        <item>@string/shema_fixed</item>
+        <item>@string/shema_gra</item>
+    </string-array>
+
+    <string-array name="prayers_values" translatable="false">
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_fixed</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_2</item>
+        <item>@string/opinion_value_gra</item>
+    </string-array>
+    <string-array name="prayers_entries" translatable="false">
+        <item>@string/prayers_120</item>
+        <item>@string/prayers_96</item>
+        <item>@string/prayers_96_zmanis</item>
+        <item>@string/prayers_19</item>
+        <item>@string/prayers_90</item>
+        <item>@string/prayers_90_zmanis</item>
+        <item>@string/prayers_ateret</item>
+        <item>@string/prayers_18</item>
+        <item>@string/prayers_fixed</item>
+        <item>@string/prayers_16</item>
+        <item>@string/prayers_mga</item>
+        <item>@string/prayers_72</item>
+        <item>@string/prayers_72_zmanis</item>
+        <item>@string/prayers_2</item>
+        <item>@string/prayers_gra</item>
+    </string-array>
+
+    <string-array name="burn_chametz_values" translatable="false">
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_gra</item>
+    </string-array>
+    <string-array name="burn_chametz_entries" translatable="false">
+        <item>@string/burn_chametz_16</item>
+        <item>@string/burn_chametz_72</item>
+        <item>@string/burn_chametz_gra</item>
+    </string-array>
+
+    <string-array name="midday_values" translatable="false">
+        <item>@string/opinion_value_solar</item>
+        <item>@string/opinion_value_fixed</item>
+    </string-array>
+    <string-array name="midday_entries" translatable="false">
+        <item>@string/midday_summary</item>
+        <item>@string/midday_fixed</item>
+    </string-array>
+
+    <string-array name="earliest_mincha_values" translatable="false">
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_30</item>
+        <item>@string/opinion_value_16</item>
+    </string-array>
+    <string-array name="earliest_mincha_entries" translatable="false">
+        <item>@string/earliest_mincha_ateret</item>
+        <item>@string/earliest_mincha_summary</item>
+        <item>@string/earliest_mincha_72</item>
+        <item>@string/earliest_mincha_30</item>
+        <item>@string/earliest_mincha_16</item>
+    </string-array>
+
+    <string-array name="mincha_values" translatable="false">
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_16</item>
+    </string-array>
+    <string-array name="mincha_entries" translatable="false">
+        <item>@string/mincha_summary</item>
+        <item>@string/mincha_ateret</item>
+        <item>@string/mincha_72</item>
+        <item>@string/mincha_16</item>
+    </string-array>
+
+    <string-array name="plug_hamincha_values" translatable="false">
+        <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_gra</item>
+        <item>@string/opinion_value_16_alos</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_26</item>
+    </string-array>
+    <string-array name="plug_hamincha_entries" translatable="false">
+        <item>@string/plug_hamincha_16_sunset</item>
+        <item>@string/plug_hamincha_gra</item>
+        <item>@string/plug_hamincha_16_alos</item>
+        <item>@string/plug_hamincha_ateret</item>
+        <item>@string/plug_hamincha_60</item>
+        <item>@string/plug_hamincha_72</item>
+        <item>@string/plug_hamincha_72_zmanis</item>
+        <item>@string/plug_hamincha_16</item>
+        <item>@string/plug_hamincha_18</item>
+        <item>@string/plug_hamincha_90</item>
+        <item>@string/plug_hamincha_90_zmanis</item>
+        <item>@string/plug_hamincha_19</item>
+        <item>@string/plug_hamincha_96</item>
+        <item>@string/plug_hamincha_96_zmanis</item>
+        <item>@string/plug_hamincha_120</item>
+        <item>@string/plug_hamincha_120_zmanis</item>
+        <item>@string/plug_hamincha_26</item>
+    </string-array>
+
+    <string-array name="sunset_values" translatable="false">
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_level</item>
+    </string-array>
+    <string-array name="sunset_entries" translatable="false">
+        <item>@string/sunset_sea</item>
+        <item>@string/sunset_summary</item>
+    </string-array>
+
+    <string-array name="twilight_values" translatable="false">
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_2_stars</item>
+        <item>@string/opinion_value_13</item>
+        <item>@string/opinion_value_58</item>
+    </string-array>
+    <string-array name="twilight_entries" translatable="false">
+        <item>@string/twilight_7_083</item>
+        <item>@string/twilight_2stars</item>
+        <item>@string/twilight_13</item>
+        <item>@string/twilight_58</item>
+    </string-array>
+
+    <string-array name="nightfall_values" translatable="false">
+        <item>@string/opinion_value_3_65</item>
+        <item>@string/opinion_value_3_676</item>
+        <item>@string/opinion_value_4_37</item>
+        <item>@string/opinion_value_4_61</item>
+        <item>@string/opinion_value_4_8</item>
+        <item>@string/opinion_value_5_88</item>
+        <item>@string/opinion_value_5_95</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_8</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_26</item>
+    </string-array>
+    <string-array name="nightfall_entries" translatable="false">
+        <item>@string/nightfall_3_65</item>
+        <item>@string/nightfall_3_676</item>
+        <item>@string/nightfall_4_37</item>
+        <item>@string/nightfall_4_61</item>
+        <item>@string/nightfall_4_8</item>
+        <item>@string/nightfall_5_88</item>
+        <item>@string/nightfall_5_95</item>
+        <item>@string/nightfall_7</item>
+        <item>@string/nightfall_8</item>
+        <item>@string/nightfall_ateret</item>
+        <item>@string/nightfall_60</item>
+        <item>@string/nightfall_72</item>
+        <item>@string/nightfall_72_zmanis</item>
+        <item>@string/nightfall_16</item>
+        <item>@string/nightfall_18</item>
+        <item>@string/nightfall_90</item>
+        <item>@string/nightfall_90_zmanis</item>
+        <item>@string/nightfall_19</item>
+        <item>@string/nightfall_96</item>
+        <item>@string/nightfall_96_zmanis</item>
+        <item>@string/nightfall_120</item>
+        <item>@string/nightfall_120_zmanis</item>
+        <item>@string/nightfall_26</item>
+    </string-array>
+
+    <string-array name="midnight_values" translatable="false">
+        <item>@string/opinion_value_solar</item>
+        <item>@string/opinion_value_12</item>
+        <item>@string/opinion_value_6</item>
+    </string-array>
+    <string-array name="midnight_entries" translatable="false">
+        <item>@string/midnight_summary</item>
+        <item>@string/midnight_12</item>
+        <item>@string/midnight_6</item>
+    </string-array>
+
+    <string-array name="candles_chanukka_values" translatable="false">
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_twilight</item>
+        <item>@string/opinion_value_nightfall</item>
+    </string-array>
+    <string-array name="candles_chanukka_entries" translatable="false">
+        <item>@string/sunset</item>
+        <item>@string/twilight</item>
+        <item>@string/nightfall</item>
+    </string-array>
+
+    <string-array name="levana_earliest_values" translatable="false">
+        <item>@string/opinion_value_3_days</item>
+        <item>@string/opinion_value_7</item>
+    </string-array>
+    <string-array name="levana_earliest_entries" translatable="false">
+        <item>@string/levana_earliest_summary</item>
+        <item>@string/levana_7</item>
+    </string-array>
+
+    <string-array name="levana_latest_values" translatable="false">
+        <item>@string/opinion_value_half</item>
+        <item>@string/opinion_value_15</item>
+    </string-array>
+    <string-array name="levana_latest_entries" translatable="false">
+        <item>@string/levana_latest_summary</item>
+        <item>@string/levana_15</item>
+    </string-array>
+
+    <string-array name="coords_format_values" translatable="false">
+        <item>@string/coords_format_value_decimal</item>
+        <item>@string/coords_format_value_sexagesimal</item>
+    </string-array>
+    <string-array name="coords_format_entries" translatable="false">
+        <item>@string/coords_format_decimal</item>
+        <item>@string/coords_format_sexagesimal</item>
+    </string-array>
+
+    <string-array name="reminder_values" translatable="false">
+        <item/>
+        <item>0</item>
+        <item>1</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+    </string-array>
+    <string-array name="reminder_entries">
+        <item>@string/off</item>
+        <item>On time</item>
+        <item>1 minute before</item>
+        <item>5 minutes before</item>
+        <item>10 minutes before</item>
+        <item>15 minutes before</item>
+        <item>20 minutes before</item>
+        <item>25 minutes before</item>
+        <item>30 minutes before</item>
+        <item>45 minutes before</item>
+        <item>1 hour before</item>
+    </string-array>
+
+    <string-array name="hebrew_months">
+        <item>Nissan</item>
+        <item>Iyar</item>
+        <item>Sivan</item>
+        <item>Tammuz</item>
+        <item>Av</item>
+        <item>Elul</item>
+        <item>Tishrei</item>
+        <item>Cheshvan</item>
+        <item>Kislev</item>
+        <item>Teves</item>
+        <item>Shevat</item>
+        <item>Adar</item>
+        <item>Adar II</item>
+        <item>Adar I</item>
+    </string-array>
+
+    <string-array name="reminder_stream_values" translatable="false">
+        <item>@string/reminder_stream_value_alarm</item>
+        <item>@string/reminder_stream_value_notification</item>
+    </string-array>
+    <string-array name="reminder_stream_entries" translatable="false">
+        <item>@string/reminder_stream_alarm</item>
+        <item>@string/reminder_stream_notification</item>
+    </string-array>
+
+    <string-array name="list_theme_values" translatable="false">
+        <item>@string/theme_value_none</item>
+        <item>@string/theme_value_dark</item>
+        <item>@string/theme_value_light</item>
+        <item>@string/theme_value_white</item>
+    </string-array>
+    <string-array name="list_theme_entries" translatable="false">
+        <item>@string/theme_none</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_light</item>
+        <item>@string/theme_white</item>
+    </string-array>
+
+    <string-array name="omer_values" translatable="false">
+        <item>@string/omer_value_off</item>
+        <item>@string/omer_value_b</item>
+        <item>@string/omer_value_l</item>
+    </string-array>
+    <string-array name="omer_entries" translatable="false">
+        <item>@string/omer_off</item>
+        <item>@string/omer_b</item>
+        <item>@string/omer_l</item>
+    </string-array>
+
+    <string-array name="emphasis_scale_values" translatable="false">
+        <item>@string/emphasis_scale_value_100</item>
+        <item>@string/emphasis_scale_value_110</item>
+        <item>@string/emphasis_scale_value_120</item>
+        <item>@string/emphasis_scale_value_130</item>
+        <item>@string/emphasis_scale_value_140</item>
+        <item>@string/emphasis_scale_value_150</item>
+    </string-array>
+    <string-array name="emphasis_scale_entries" translatable="false">
+        <item>@string/emphasis_scale_100</item>
+        <item>@string/emphasis_scale_110</item>
+        <item>@string/emphasis_scale_120</item>
+        <item>@string/emphasis_scale_130</item>
+        <item>@string/emphasis_scale_140</item>
+        <item>@string/emphasis_scale_150</item>
+    </string-array>
+
+</resources>

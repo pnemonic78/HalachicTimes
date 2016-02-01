@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Zmanim.Base" parent="android:Theme">
+    </style>
+
+    <style name="Theme.Zmanim.Base.Light" parent="android:Theme.Light">
+    </style>
+
+    <style name="Theme.Zmanim" parent="Theme.Zmanim.Base">
+        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
+        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
+    </style>
+
+    <style name="Theme.Zmanim.Dark" parent="Theme.Zmanim.Base">
+        <item name="listZmanim">@style/Widget.ListView.Dark</item>
+        <item name="listZman">@style/Widget.ListItem.Dark</item>
+        <item name="listZmanTitle">@style/Widget.TextView.Title.Dark</item>
+        <item name="listZmanTime">@style/Widget.TextView.Time.Dark</item>
+        <item name="listZmanSummary">@style/Widget.TextView.Summary.Dark</item>
+    </style>
+
+    <style name="Theme.Zmanim.Light" parent="Theme.Zmanim.Base.Light">
+        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
+        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
+
+        <item name="listZmanim">@style/Widget.ListView.Light</item>
+        <item name="listZman">@style/Widget.ListItem.Light</item>
+        <item name="listZmanTitle">@style/Widget.TextView.Title.Light</item>
+        <item name="listZmanTime">@style/Widget.TextView.Time.Light</item>
+        <item name="listZmanSummary">@style/Widget.TextView.Summary.Light</item>
+    </style>
+
+    <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim.Base">
+        <item name="listZmanim">@style/Widget.ListView.NoGradient</item>
+        <item name="listZman">@style/Widget.ListItem.NoGradient</item>
+        <item name="listZmanTitle">@style/Widget.TextView.Title.NoGradient</item>
+        <item name="listZmanTime">@style/Widget.TextView.Time.NoGradient</item>
+        <item name="listZmanSummary">@style/Widget.TextView.Summary.NoGradient</item>
+    </style>
+
+    <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Base.Light">
+        <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
+        <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
+    </style>
+
+    <style name="Theme.Zmanim.Settings">
+    </style>
+
+</resources>
