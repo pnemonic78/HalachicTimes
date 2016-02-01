@@ -174,12 +174,12 @@
     <string name="theme_light">בהיר</string>
     <string name="theme_none">ללא</string>
     <string name="theme_white">לבן</string>
-    <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
-    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
-    <string name="emphasis_scale_120"><![CDATA[<h4>Large</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Extra Large</h3>]]></string>
-    <string name="emphasis_scale_140"><![CDATA[<h2>Huge</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_100"><![CDATA[<h6>רגיל</h6>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>בינוני</h5>]]></string>
+    <string name="emphasis_scale_120"><![CDATA[<h4>גדול</h4>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>גדול מאוד</h3>]]></string>
+    <string name="emphasis_scale_140"><![CDATA[<h2>ענק</h2>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>עצום</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">תאריך</string>

@@ -175,11 +175,11 @@
     <string name="theme_none">Mitte ükski</string>
     <string name="theme_white">Valge</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Tavaline</h6>]]></string>
-    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>Keskmise</h5>]]></string>
     <string name="emphasis_scale_120"><![CDATA[<h4>Suur</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Suur</h3>]]></string>
-    <string name="emphasis_scale_140"><![CDATA[<h2>Väga suur</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Väga suur</h3>]]></string>
+    <string name="emphasis_scale_140"><![CDATA[<h2>Tohutu</h2>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Hiiglaslik</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>

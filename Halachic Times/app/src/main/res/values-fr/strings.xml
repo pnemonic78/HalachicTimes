@@ -175,11 +175,11 @@
     <string name="theme_none">Aucun</string>
     <string name="theme_white">Blanc</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normale</h6>]]></string>
-    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>Moyen</h5>]]></string>
     <string name="emphasis_scale_120"><![CDATA[<h4>Grande</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Grande</h3>]]></string>
-    <string name="emphasis_scale_140"><![CDATA[<h2>Très grande</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Très grande</h3>]]></string>
+    <string name="emphasis_scale_140"><![CDATA[<h2>Énorme</h2>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Gigantesque</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

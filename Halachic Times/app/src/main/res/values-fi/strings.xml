@@ -175,11 +175,11 @@
     <string name="theme_none">Ei yhtään</string>
     <string name="theme_white">Valkoinen</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normaali</h6>]]></string>
-    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>Keskikokoinen</h5>]]></string>
     <string name="emphasis_scale_120"><![CDATA[<h4>Suuri</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Suuri</h3>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Erittäin suuri</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Valtava</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Jättiläismäinen</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Päivämäärä</string>

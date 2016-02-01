@@ -175,11 +175,11 @@
     <string name="theme_none">Niciuna</string>
     <string name="theme_white">Albă</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normală</h6>]]></string>
-    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>Mediu</h5>]]></string>
     <string name="emphasis_scale_120"><![CDATA[<h4>Mare</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Extra Large</h3>]]></string>
-    <string name="emphasis_scale_140"><![CDATA[<h2>Foarte mare</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Foarte mare</h3>]]></string>
+    <string name="emphasis_scale_140"><![CDATA[<h2>Enorm</h2>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Uriaş</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

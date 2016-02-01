@@ -177,9 +177,9 @@
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормален</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Среда</h5>]]></string>
     <string name="emphasis_scale_120"><![CDATA[<h4>Голям</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Голям</h3>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Много голям</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Огромен</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Гигантски</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>

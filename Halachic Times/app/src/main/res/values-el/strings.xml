@@ -175,11 +175,11 @@
     <string name="theme_none">Κανένας</string>
     <string name="theme_white">Λευκός</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Κανονικό</h6>]]></string>
-    <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>
-    <string name="emphasis_scale_120"><![CDATA[<h4>Μεγάλο μέγεθος</h4>]]></string>
-    <string name="emphasis_scale_130"><![CDATA[<h3>Μεγάλο μέγεθος</h3>]]></string>
+    <string name="emphasis_scale_110"><![CDATA[<h5>Μέσον</h5>]]></string>
+    <string name="emphasis_scale_120"><![CDATA[<h4>Μεγάλο</h4>]]></string>
+    <string name="emphasis_scale_130"><![CDATA[<h3>Πολύ μεγάλο</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Τεράστιαe</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Πελώριος</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Ημερομηνία</string>

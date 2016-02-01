@@ -179,7 +179,7 @@
     <string name="emphasis_scale_120"><![CDATA[<h4>Stor</h4>]]></string>
     <string name="emphasis_scale_130"><![CDATA[<h3>Extra Large</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Mycket stor</h2>]]></string>
-    <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="emphasis_scale_150"><![CDATA[<h1>Jättelik</h1>]]></string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>
