@@ -175,6 +175,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         RemoteViews views;
         int layoutId = getLayoutId();
         long now = System.currentTimeMillis();
+        ZmanimAdapter adapter = null;
 
         for (int appWidgetId : appWidgetIds) {
             activityIntent = new Intent(context, ZmanimActivity.class);
@@ -186,13 +187,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             if (isRemoteList()) {
                 populateScrollableTimes(appWidgetId, views, activityPendingIntent);
             } else {
-                populateStaticTimes(appWidgetId, views, activityPendingIntent, viewId, now);
+                adapter = populateStaticTimes(appWidgetId, views, activityPendingIntent, viewId, now);
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
 
-        scheduleForMidnight(context, appWidgetIds);
+        scheduleNext(context, appWidgetIds, adapter);
     }
 
     /**
@@ -247,21 +248,41 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     }
 
     /**
-     * Schedule an update for midnight to populate the new day's list.
+     * Schedule an update for the next relevant zman.
      *
      * @param context
      *         the context.
      * @param appWidgetIds
      *         the widget ids for which an update is needed.
+     * @param adapter
+     *         the adapter with zmanim.
      */
-    private void scheduleForMidnight(Context context, int[] appWidgetIds) {
-        Calendar midnight = Calendar.getInstance();
-        midnight.set(Calendar.HOUR_OF_DAY, 0);
-        midnight.set(Calendar.MINUTE, 0);
-        midnight.set(Calendar.SECOND, 0);
-        midnight.set(Calendar.MILLISECOND, 100);
-        midnight.add(Calendar.DATE, 1);
-        scheduleUpdate(context, appWidgetIds, midnight.getTimeInMillis());
+    private void scheduleNext(Context context, int[] appWidgetIds, ZmanimAdapter adapter) {
+        if (adapter == null) {
+            return;
+        }
+
+        int count = adapter.getCount();
+        if (count == 0) {
+            return;
+        }
+
+        long now = System.currentTimeMillis();
+        long when = Long.MAX_VALUE;
+        ZmanimItem item;
+        long time;
+
+        for (int i = 0; i < count; i++) {
+            item = adapter.getItem(i);
+            time = item.time;
+            if ((now < time) && (time < when)) {
+                when = time;
+            }
+        }
+        if (when < Long.MAX_VALUE) {
+            // Let the first visible item linger for another minute.
+            scheduleUpdate(context, appWidgetIds, when + DateUtils.MINUTE_IN_MILLIS);
+        }
     }
 
     /**
@@ -500,7 +521,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         list.addView(android.R.id.list, row);
     }
 
-    protected void populateStaticTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+    protected ZmanimAdapter populateStaticTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
         Context context = getContext();
@@ -516,7 +537,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
         GeoLocation gloc = locations.getGeoLocation();
         if (gloc == null)
-            return;
+            return null;
 
         ZmanimPopulater populater = new ZmanimPopulater(context, settings);
         populater.setCalendar(now);
@@ -531,6 +552,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         populater.populate(adapterTomorrow, true);
 
         bindViews(views, adapter, adapterTomorrow);
+
+        return adapter;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
