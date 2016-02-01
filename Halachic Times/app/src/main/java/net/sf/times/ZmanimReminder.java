@@ -67,7 +67,7 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     private static final int ID_NOTIFY = 1;
     /** Reminder id for alarms. */
-    private static final int ID_ALARM = 2;
+    private static final int ID_ALARM_REMINDER = 2;
 
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
@@ -293,7 +293,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             intent.putExtra(EXTRA_REMINDER_TIME, when);
         }
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
     }
 

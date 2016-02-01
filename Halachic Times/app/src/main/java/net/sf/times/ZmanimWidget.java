@@ -59,6 +59,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     private static final String TAG = "ZmanimWidget";
 
+    /** Reminder id for alarms. */
+    private static final int ID_ALARM_WIDGET = 10;
+
     /** The context. */
     protected Context context;
     /** Provider for locations. */
@@ -258,12 +261,26 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         midnight.set(Calendar.SECOND, 0);
         midnight.set(Calendar.MILLISECOND, 100);
         midnight.add(Calendar.DATE, 1);
+        scheduleUpdate(context, appWidgetIds, midnight.getTimeInMillis());
+    }
+
+    /**
+     * Schedule an update to populate the day's list.
+     *
+     * @param context
+     *         the context.
+     * @param appWidgetIds
+     *         the widget ids for which an update is needed.
+     * @param time
+     *         the time to update.
+     */
+    private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
         Intent alarmIntent = new Intent(context, ZmanimWidget.class);
         alarmIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         alarmIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_WIDGET, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarm.set(AlarmManager.RTC, midnight.getTimeInMillis(), alarmPendingIntent);
+        alarm.set(AlarmManager.RTC, time, alarmPendingIntent);
     }
 
     /**
