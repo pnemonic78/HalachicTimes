@@ -91,6 +91,12 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
     private static final int WHAT_SETTINGS = 4;
     private static final int WHAT_TODAY = 5;
 
+    private static final int CHILD_MAIN = 0;
+    private static final int CHILD_DETAILS = 1;
+
+    private static final int CHILD_DETAILS_LIST = 0;
+    private static final int CHILD_DETAILS_CANDLES = 1;
+
     /** The date. */
     private final Calendar date = Calendar.getInstance();
     /** The location header. */
@@ -114,7 +120,7 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
     /** The master fragment. */
     private ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>> masterFragment;
     /** The details fragment switcher. */
-    private ViewSwitcher detailsFragment;
+    private ViewSwitcher detailsFragmentSwitcher;
     /** The details fragment. */
     private ZmanimDetailsFragment detailsListFragment;
     /** The candles fragment. */
@@ -301,7 +307,7 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
         masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) view.findViewById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
         masterFragment.setGestureDetector(gestureDetector);
-        detailsFragment = (ViewSwitcher) view.findViewById(R.id.details_fragment);
+        detailsFragmentSwitcher = (ViewSwitcher) view.findViewById(R.id.details_fragment);
         detailsListFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_list_fragment);
         detailsListFragment.setGestureDetector(gestureDetector);
         candlesFragment = (CandlesFragment) view.findViewById(R.id.candles_fragment);
@@ -326,9 +332,9 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
 
         slideRightToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
         slideLeftToRight = AnimationUtils.loadAnimation(context, R.anim.slide_left_to_right);
-        detailsGrow = new LayoutWeightAnimation(detailsFragment, 0f, 2f);
+        detailsGrow = new LayoutWeightAnimation(detailsFragmentSwitcher, 0f, 2f);
         detailsGrow.setDuration(500L);
-        detailsShrink = new LayoutWeightAnimation(detailsFragment, 2f, 0f);
+        detailsShrink = new LayoutWeightAnimation(detailsFragmentSwitcher, 2f, 0f);
         detailsShrink.setDuration(500L);
         hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
         hideNavigation.setAnimationListener(this);
@@ -551,10 +557,10 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
         if (viewSwitcher != null) {
             if (itemId == R.string.candles) {
                 candlesFragment.populateTimes(date);
-                detailsFragment.setDisplayedChild(1);
+                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
             } else {
                 detailsListFragment.populateTimes(date, itemId);
-                detailsFragment.setDisplayedChild(0);
+                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
             }
             if (isDetailsShowing())
                 hideDetails();
@@ -566,10 +572,10 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
             masterFragment.unhighlight();
         } else {
             if (itemId == R.string.candles) {
-                detailsFragment.setDisplayedChild(1);
+                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
             } else {
                 detailsListFragment.populateTimes(date, itemId);
-                detailsFragment.setDisplayedChild(0);
+                detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
             }
             masterFragment.unhighlight();
             masterFragment.highlight(itemId);
@@ -624,7 +630,7 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
 
     protected void hideDetails() {
         if (viewSwitcher != null) {
-            viewSwitcher.showPrevious();
+            viewSwitcher.setDisplayedChild(CHILD_MAIN);
 
             // Not enough to hide the details switcher = must also hide its
             // children otherwise visible when sliding dates.
@@ -633,27 +639,27 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
             if (candlesFragment != null)
                 candlesFragment.setVisibility(View.INVISIBLE);
         } else {
-            detailsFragment.startAnimation(detailsShrink);
+            detailsFragmentSwitcher.startAnimation(detailsShrink);
         }
         selectedId = 0;
     }
 
     protected void showDetails() {
         if (viewSwitcher != null) {
-            viewSwitcher.showNext();
+            viewSwitcher.setDisplayedChild(CHILD_DETAILS);
         } else {
-            detailsFragment.startAnimation(detailsGrow);
+            detailsFragmentSwitcher.startAnimation(detailsGrow);
         }
     }
 
     protected boolean isDetailsShowing() {
-        if ((detailsFragment == null) || (detailsFragment.getVisibility() != View.VISIBLE))
+        if ((detailsFragmentSwitcher == null) || (detailsFragmentSwitcher.getVisibility() != View.VISIBLE))
             return false;
         if (viewSwitcher == null) {
-            LinearLayout.LayoutParams lp = (LayoutParams) detailsFragment.getLayoutParams();
+            LinearLayout.LayoutParams lp = (LayoutParams) detailsFragmentSwitcher.getLayoutParams();
             return (lp.weight > 0);
         }
-        return (viewSwitcher.getCurrentView() == detailsFragment);
+        return (viewSwitcher.getDisplayedChild() == CHILD_DETAILS);
     }
 
     @Override
@@ -811,7 +817,7 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
 
         if (candlesFragment.isVisible()) {
             CandlesAdapter candlesAdapter = candlesFragment.getAdapter();
-            if (candlesAdapter.isEmpty())
+            if (candlesAdapter.getCandlesCount() == 0)
                 return false;
             return true;
         }
@@ -838,10 +844,10 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
 
         if (localeRTL) {
             slideLeft(masterFragment);
-            slideLeft(detailsFragment);
+            slideLeft(detailsFragmentSwitcher);
         } else {
             slideRight(masterFragment);
-            slideRight(detailsFragment);
+            slideRight(detailsFragmentSwitcher);
         }
 
         setDate(date.getTimeInMillis());
@@ -854,10 +860,10 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
 
         if (localeRTL) {
             slideRight(masterFragment);
-            slideRight(detailsFragment);
+            slideRight(detailsFragmentSwitcher);
         } else {
             slideLeft(masterFragment);
-            slideLeft(detailsFragment);
+            slideLeft(detailsFragmentSwitcher);
         }
 
         setDate(date.getTimeInMillis());
