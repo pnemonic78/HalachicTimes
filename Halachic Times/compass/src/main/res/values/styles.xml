@@ -19,45 +19,9 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <style name="Widget.ListDivider">
-        <item name="android:background">@drawable/divider_horizontal_dark</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="Widget.ListItem">
-        <item name="android:background">@android:drawable/list_selector_background</item>
-    </style>
-
-    <style name="Widget.ListItem.Dark">
-    </style>
-
-    <style name="Widget.ListItem.Light">
-    </style>
-
-    <style name="Widget.ListItem.NoGradient">
-    </style>
-
     <style name="Widget.TextView.Clock.Time" parent="Widget.TextView.Large">
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
-    </style>
-
-    <style name="Widget.TextView.Clock.Title" parent="Widget.TextView.Medium">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="Widget.ListView.Dark">
-        <item name="android:background">@drawable/list_gradient</item>
-    </style>
-
-    <style name="Widget.ListView.Light">
-        <item name="android:background">@drawable/list_gradient_light</item>
-    </style>
-
-    <style name="Widget.ListView.NoGradient">
-        <item name="android:background">@null</item>
     </style>
 
     <style name="Widget.TextView.Title" parent="Widget.TextView.Medium">
@@ -85,10 +49,6 @@
     <style name="Widget.TextView.Title.NoGradient">
     </style>
 
-    <style name="Widget.TextView.Title.Widget">
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
-    </style>
-
     <style name="Widget.TextView.Time.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
@@ -98,10 +58,6 @@
     </style>
 
     <style name="Widget.TextView.Time.NoGradient">
-    </style>
-
-    <style name="Widget.TextView.Time.Widget">
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
     <style name="Widget.TextView.Summary.Dark">
