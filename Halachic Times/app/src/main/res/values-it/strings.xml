@@ -3,8 +3,6 @@
 
     <string name="app_name">Tempi di Preghiera Halachiche</string>
     <string name="title_activity_zmanim">Tempi Halachiche</string>
-    <string name="location_unknown">Indirizzo sconosciuto</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%d %B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animazioni</string>
 
     <!-- Location -->
+    <string name="location_unknown">Indirizzo sconosciuto</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="menu_location">Posizione</string>
     <string name="title_activity_location">La mia posizione</string>
 

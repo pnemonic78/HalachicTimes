@@ -3,8 +3,6 @@
 
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
-    <string name="location_unknown">Unknown address</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
@@ -333,6 +331,8 @@
     <string name="animations">Animations</string>
 
     <!-- Location -->
+    <string name="location_unknown">Unknown address</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
 

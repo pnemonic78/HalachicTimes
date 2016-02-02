@@ -3,8 +3,6 @@
 
     <string name="app_name">Halachisk Bøn Tider</string>
     <string name="title_activity_zmanim">Halachisk Tider</string>
-    <string name="location_unknown">Ukendte adresse</string>
-    <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h.mm.ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e. %B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animationer</string>
 
     <!-- Location -->
+    <string name="location_unknown">Ukendte adresse</string>
+    <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
     <string name="menu_location">Placering</string>
     <string name="title_activity_location">Min placering</string>
 

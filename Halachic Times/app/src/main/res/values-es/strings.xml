@@ -3,8 +3,6 @@
 
     <string name="app_name">Horarios Halájicos de Oración</string>
     <string name="title_activity_zmanim">Horarios Halájicos</string>
-    <string name="location_unknown">Dirección desconocida</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e de %B de %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animaciones</string>
 
     <!-- Location -->
+    <string name="location_unknown">Dirección desconocida</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="menu_location">Ubicación</string>
     <string name="title_activity_location">Mi ubicación</string>
 

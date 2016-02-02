@@ -3,8 +3,6 @@
 
     <string name="app_name">Halachikus Áhítatok</string>
     <string name="title_activity_zmanim">Halachikus Szor</string>
-    <string name="location_unknown">Ismeretlen cím</string>
-    <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%Y. %B %-e.</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animációk</string>
 
     <!-- Location -->
+    <string name="location_unknown">Ismeretlen cím</string>
+    <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
     <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
 

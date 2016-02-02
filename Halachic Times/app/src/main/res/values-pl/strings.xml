@@ -3,8 +3,6 @@
 
     <string name="app_name">Halachiczny Czasy Modły</string>
     <string name="title_activity_zmanim">Halachiczny Czasy</string>
-    <string name="location_unknown">Nieznany adres</string>
-    <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e %B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animacje</string>
 
     <!-- Location -->
+    <string name="location_unknown">Nieznany adres</string>
+    <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
     <string name="menu_location">Lokalizacja</string>
     <string name="title_activity_location">Moja lokalizacja</string>
 

@@ -3,8 +3,6 @@
 
     <string name="app_name">Horaires Halakhiques de Prière</string>
     <string name="title_activity_zmanim">Horaires Halakhiques</string>
-    <string name="location_unknown">Adresse inconnue</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e %B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animations</string>
 
     <!-- Location -->
+    <string name="location_unknown">Adresse inconnue</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="menu_location">Position</string>
     <string name="title_activity_location">Ma position</string>
 

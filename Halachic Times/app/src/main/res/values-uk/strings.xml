@@ -3,8 +3,6 @@
 
     <string name="app_name">Галахических Разів Молитву</string>
     <string name="title_activity_zmanim">Галахических Разів</string>
-    <string name="location_unknown">Невідома адреса</string>
-    <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e %B %Y р.</string>
@@ -201,6 +199,8 @@
     <string name="animations">Анімації</string>
 
     <!-- Location -->
+    <string name="location_unknown">Невідома адреса</string>
+    <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
     <string name="menu_location">Місцезнаходження</string>
     <string name="title_activity_location">Мое місцезнаходження</string>
 

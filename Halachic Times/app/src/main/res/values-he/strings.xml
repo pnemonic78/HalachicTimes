@@ -3,8 +3,6 @@
 
     <string name="app_name">זמני תפילה הלכתיים</string>
     <string name="title_activity_zmanim">זמנים הלכתיים</string>
-    <string name="location_unknown">לא אותרה כתובת</string>
-    <string name="location_coords">רוחב %1$s; אורך %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e ב%B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">אנימציות</string>
 
     <!-- Location -->
+    <string name="location_unknown">לא אותרה כתובת</string>
+    <string name="location_coords">רוחב %1$s; אורך %2$s</string>
     <string name="menu_location">מיקום</string>
     <string name="title_activity_location">המיקום שלי</string>
 

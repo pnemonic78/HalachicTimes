@@ -3,8 +3,6 @@
 
     <string name="app_name">Halachiska Bönetider</string>
     <string name="title_activity_zmanim">Halachiska Tider</string>
-    <string name="location_unknown">Okänd adress</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">H:mm:ss</string>
     <string name="month_day_year" formatted="false">%-e %B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animationer</string>
 
     <!-- Location -->
+    <string name="location_unknown">Okänd adress</string>
+    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="menu_location">Plats</string>
     <string name="title_activity_location">Min plats</string>
 

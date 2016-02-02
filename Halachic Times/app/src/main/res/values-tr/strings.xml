@@ -3,8 +3,6 @@
 
     <string name="app_name">Halachik Namaz Vakitleri</string>
     <string name="title_activity_zmanim">Halachik Vakitleri</string>
-    <string name="location_unknown">Bilinmeyen adres</string>
-    <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
     <string name="twelve_hour_time_format">h:mm:ss a</string>
     <string name="twenty_four_hour_time_format">HH:mm:ss</string>
     <string name="month_day_year" formatted="false">%d %B %Y</string>
@@ -201,6 +199,8 @@
     <string name="animations">Animasyonlar</string>
 
     <!-- Location -->
+    <string name="location_unknown">Bilinmeyen adres</string>
+    <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
     <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>
 
