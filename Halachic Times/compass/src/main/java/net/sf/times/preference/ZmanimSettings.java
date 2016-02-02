@@ -51,13 +51,6 @@ public class ZmanimSettings {
     public static final String KEY_COORDS_FORMAT = "coords.format";
     /** Preference name for showing summaries. */
     public static final String KEY_SUMMARIES = "summaries.visible";
-    /**
-     * Preference name for the background gradient.
-     *
-     * @deprecated use #KEY_THEME
-     */
-    @Deprecated
-    public static final String KEY_BG_GRADIENT = "gradient";
     /** Preference name for the theme. */
     public static final String KEY_THEME = "theme";
 
@@ -66,11 +59,9 @@ public class ZmanimSettings {
     /** Format the coordinates in sexagesimal notation. */
     public static String FORMAT_SEXIGESIMAL;
 
-    /** Show zmanim list without background. */
-    public static String LIST_THEME_NONE;
-    /** Show zmanim list with dark gradient background. */
+    /** Dark theme. */
     public static String LIST_THEME_DARK;
-    /** Show zmanim list with light gradient background. */
+    /** Light theme. */
     public static String LIST_THEME_LIGHT;
 
     private Context context;
@@ -187,13 +178,10 @@ public class ZmanimSettings {
      */
     public int getTheme() {
         String value = preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue));
-        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value) || !preferences.getBoolean(KEY_BG_GRADIENT, true)) {
-            return R.style.Theme_Zmanim_NoGradient;
-        }
         if (LIST_THEME_LIGHT.equals(value)) {
-            return R.style.Theme_Zmanim_Light;
+            return R.style.Theme_Compass_Light;
         }
-        return R.style.Theme_Zmanim_Dark;
+        return R.style.Theme_Compass_Dark;
     }
 
     /**
@@ -206,7 +194,6 @@ public class ZmanimSettings {
         FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
         FORMAT_SEXIGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
 
-        LIST_THEME_NONE = context.getString(R.string.theme_value_none);
         LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
         LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
     }

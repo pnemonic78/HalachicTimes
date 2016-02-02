@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim.Base" parent="android:Theme">
+    <style name="Theme.Compass.Base" parent="android:Theme">
     </style>
 
-    <style name="Theme.Zmanim.Base.Light" parent="android:Theme.Light">
+    <style name="Theme.Compass.Base.Light" parent="android:Theme.Light">
     </style>
 
-    <style name="Theme.Zmanim" parent="Theme.Zmanim.Base">
+    <style name="Theme.Compass" parent="Theme.Compass.Base">
     </style>
 
-    <style name="Theme.Zmanim.Dark" parent="Theme.Zmanim.Base">
+    <style name="Theme.Compass.Dark" parent="Theme.Compass">
     </style>
 
-    <style name="Theme.Zmanim.Light" parent="Theme.Zmanim.Base.Light">
+    <style name="Theme.Compass.Light" parent="Theme.Compass.Base.Light">
     </style>
 
-    <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim.Base">
-    </style>
-
-    <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Base.Light">
-    </style>
-
-    <style name="Theme.Zmanim.Settings">
+    <style name="Theme.Compass.Settings">
     </style>
 
 </resources>

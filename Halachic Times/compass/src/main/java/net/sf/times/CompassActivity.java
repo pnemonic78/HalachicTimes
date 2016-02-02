@@ -55,7 +55,7 @@ import java.lang.ref.WeakReference;
  *
  * @author Moshe Waisberg
  */
-public class CompassActivity extends Activity implements ZmanimLocationListener, SensorEventListener {
+public class CompassActivity extends ThemedActivity implements ZmanimLocationListener, SensorEventListener {
 
     /** Latitude of the Holy of Holies, according to Google. */
     private static final double HOLIEST_LATITUDE = 31.778122;

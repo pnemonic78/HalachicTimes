@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim" parent="android:Theme.DeviceDefault">
+    <style name="Theme.Compass.Base" parent="android:Theme.DeviceDefault">
+    </style>
+
+    <style name="Theme.Compass.Base.Light" parent="android:Theme.DeviceDefault.Light">
     </style>
 
 </resources>
