@@ -24,7 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.compass.preference.ZmanimSettings;
 
 /**
  * Zmanim application.

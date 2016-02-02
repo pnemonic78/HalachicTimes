@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  *
  */
-package net.sf.times.preference;
+package net.sf.times.compass.preference;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

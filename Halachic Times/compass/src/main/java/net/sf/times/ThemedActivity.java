@@ -23,7 +23,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.compass.preference.ZmanimSettings;
 
 /**
  * Activity that applies a custom theme.

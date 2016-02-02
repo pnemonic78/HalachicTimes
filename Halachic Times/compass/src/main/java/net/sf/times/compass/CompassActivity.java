@@ -43,9 +43,9 @@ import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimPreferenceActivity;
-import net.sf.times.preference.ZmanimPreferences;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.compass.preference.ZmanimPreferenceActivity;
+import net.sf.times.compass.preference.ZmanimPreferences;
+import net.sf.times.compass.preference.ZmanimSettings;
 
 import java.lang.ref.WeakReference;
 

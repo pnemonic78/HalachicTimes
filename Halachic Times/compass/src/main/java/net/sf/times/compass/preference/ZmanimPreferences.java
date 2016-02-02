@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times.preference;
+package net.sf.times.compass.preference;
 
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;

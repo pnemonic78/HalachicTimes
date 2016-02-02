@@ -40,7 +40,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import net.sf.times.compass.R;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.compass.preference.ZmanimSettings;
 
 import java.util.ArrayList;
 import java.util.List;

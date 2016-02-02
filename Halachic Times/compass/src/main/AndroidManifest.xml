@@ -41,7 +41,7 @@
                 android:value="net.sf.times.location.LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.preference.ZmanimPreferenceActivity"
+            android:name="net.sf.times.compass.preference.ZmanimPreferenceActivity"
             android:label="@string/menu_settings"
             android:parentActivityName="net.sf.times.compass.CompassActivity">
         </activity>
