@@ -44,7 +44,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import net.sf.times.CompassActivity;
+import net.sf.times.compass.CompassActivity;
 import net.sf.times.ThemedTabActivity;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.compass.R;

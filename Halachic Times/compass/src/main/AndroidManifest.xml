@@ -25,7 +25,7 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Compass.Dark">
         <activity
-            android:name="net.sf.times.CompassActivity"
+            android:name="net.sf.times.compass.CompassActivity"
             android:label="@string/title_activity_compass">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -43,12 +43,12 @@
         <activity
             android:name="net.sf.times.preference.ZmanimPreferenceActivity"
             android:label="@string/menu_settings"
-            android:parentActivityName="net.sf.times.CompassActivity">
+            android:parentActivityName="net.sf.times.compass.CompassActivity">
         </activity>
         <activity
             android:name="net.sf.times.location.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName="net.sf.times.CompassActivity">
+            android:parentActivityName="net.sf.times.compass.CompassActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>

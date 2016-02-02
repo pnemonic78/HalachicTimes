@@ -17,12 +17,11 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.compass;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -35,8 +34,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import net.sf.times.compass.BuildConfig;
-import net.sf.times.compass.R;
+import net.sf.times.BuildConfig;
+import net.sf.times.R;
 
 /**
  * Compass view.

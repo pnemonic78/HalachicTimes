@@ -54,7 +54,7 @@
             android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>
         <activity
-            android:name="net.sf.times.CompassActivity"
+            android:name="net.sf.times.compass.CompassActivity"
             android:label="@string/title_activity_compass"
             android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>

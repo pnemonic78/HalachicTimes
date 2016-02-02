@@ -11,7 +11,7 @@
 
     <view
         android:id="@+id/compass"
-        class="net.sf.times.CompassView"
+        class="net.sf.times.compass.CompassView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
 
