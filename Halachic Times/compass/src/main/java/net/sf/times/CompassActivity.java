@@ -20,22 +20,34 @@
 package net.sf.times;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.compass.R;
+import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.ZmanimPreferenceActivity;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sf.times.preference.ZmanimSettings;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -51,6 +63,12 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     private static final double HOLIEST_LONGITUDE = 35.235345;
     /** Elevation of the Holy of Holies, according to Google. */
     private static final double HOLIEST_ELEVATION = 744.5184937;
+
+    /** Activity id for searching locations. */
+    private static final int ACTIVITY_LOCATIONS = 1;
+
+    private static final int WHAT_LOCATION = 3;
+    private static final int WHAT_SETTINGS = 4;
 
     /** The sensor manager. */
     private SensorManager sensorManager;
@@ -82,11 +100,49 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     private Runnable populateHeader;
     /** Update the location in UI thread. */
     private Runnable updateLocation;
+    private final Handler handler;
+
+    /** The handler. */
+    private static class ActivityHandler extends Handler {
+
+        private final WeakReference<CompassActivity> activityWeakReference;
+
+        public ActivityHandler(CompassActivity activity) {
+            this.activityWeakReference = new WeakReference<CompassActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            CompassActivity activity = activityWeakReference.get();
+            Context context = activity;
+
+            switch (msg.what) {
+                case WHAT_LOCATION:
+                    Location loc = activity.locations.getLocation();
+                    // Have we been destroyed?
+                    if (loc == null)
+                        break;
+
+                    Intent intent = new Intent(context, LocationActivity.class);
+                    intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
+                    activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
+                    break;
+                case WHAT_SETTINGS:
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                        activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
+                    else
+                        activity.startActivity(new Intent(context, ZmanimPreferences.class));
+                    break;
+            }
+        }
+    }
 
     /**
      * Constructs a new compass.
      */
     public CompassActivity() {
+        this.handler = new ActivityHandler(this);
+
         holiest = new Location(LocationManager.GPS_PROVIDER);
         holiest.setLatitude(HOLIEST_LATITUDE);
         holiest.setLongitude(HOLIEST_LONGITUDE);
@@ -239,5 +295,40 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     @Override
     public void onElevationChanged(Location location) {
         onLocationChanged(location);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.zmanim, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_location:
+                handler.sendEmptyMessage(WHAT_LOCATION);
+                return true;
+            case R.id.menu_settings:
+                handler.sendEmptyMessage(WHAT_SETTINGS);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTIVITY_LOCATIONS) {
+            if (resultCode == RESULT_OK) {
+                Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+                if (loc == null) {
+                    locations.setLocation(null);
+                    loc = locations.getLocation();
+                }
+                locations.setLocation(loc);
+            }
+        }
     }
 }
