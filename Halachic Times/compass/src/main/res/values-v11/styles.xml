@@ -3,8 +3,6 @@
 
     <style name="Widget" parent="android:Widget.Holo"/>
 
-    <style name="Widget.ListView" parent="android:Widget.Holo.ListView"/>
-
     <style name="Widget.TextView" parent="android:Widget.Holo.TextView"/>
 
     <style name="Widget.ListItem">

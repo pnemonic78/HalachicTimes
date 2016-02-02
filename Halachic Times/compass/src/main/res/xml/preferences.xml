@@ -2,14 +2,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
-        android:key="general"
-        android:title="@string/pref_general_title"/>
-    <PreferenceScreen
         android:key="appearance"
         android:title="@string/pref_appearance_title"/>
-    <PreferenceScreen
-        android:key="zmanim"
-        android:title="@string/pref_zmanim_title"/>
     <PreferenceScreen
         android:key="privacy"
         android:title="@string/pref_privacy_security_title"/>

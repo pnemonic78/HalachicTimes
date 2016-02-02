@@ -41,7 +41,6 @@ import android.util.Log;
 
 import net.sf.times.compass.R;
 import net.sf.times.preference.ZmanimSettings;
-import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -672,34 +671,6 @@ public class ZmanimLocations implements ZmanimLocationListener {
             return Location.convert(coord, Location.FORMAT_SECONDS);
         }
         return String.format(Locale.US, FORMAT_DEGREES, coord);
-    }
-
-    /**
-     * Get the location.
-     *
-     * @param timeZone
-     *         the time zone.
-     * @return the location - {@code null} otherwise.
-     */
-    public GeoLocation getGeoLocation(TimeZone timeZone) {
-        Location loc = getLocation();
-        if (loc == null)
-            return null;
-        final String locationName = loc.getProvider();
-        final double latitude = loc.getLatitude();
-        final double longitude = loc.getLongitude();
-        final double elevation = loc.hasAltitude() ? Math.max(0, loc.getAltitude()) : 0;
-
-        return new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
-    }
-
-    /**
-     * Get the location.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    public GeoLocation getGeoLocation() {
-        return getGeoLocation(timeZone);
     }
 
     /**

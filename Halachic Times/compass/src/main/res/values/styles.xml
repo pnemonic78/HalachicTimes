@@ -54,4 +54,8 @@
         <item name="android:textColor">?android:textColorSecondaryInverse</item>
     </style>
 
+    <style name="Widget.ListItem">
+        <item name="android:background">@android:drawable/list_selector_background</item>
+    </style>
+
 </resources>

@@ -31,10 +31,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import net.sf.preference.RingtonePreference;
-import net.sf.preference.TimePreference;
-import net.sf.times.compass.R;
-
 /**
  * This fragment shows the preferences for a header.
  */
@@ -75,37 +71,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         return null;
     }
 
-    protected RingtonePreference initRingtone(String key) {
-        if (TextUtils.isEmpty(key)) {
-            return null;
-        }
-
-        Preference pref = findPreference(key);
-        if ((pref != null) && (pref instanceof RingtonePreference)) {
-            RingtonePreference ring = (RingtonePreference) pref;
-            ring.setOnPreferenceChangeListener(this);
-            onRingtonePreferenceChange(ring, ring.getValue());
-            return ring;
-        }
-        return null;
-    }
-
-    protected TimePreference initTime(String key) {
-        if (TextUtils.isEmpty(key)) {
-            return null;
-        }
-
-        Preference pref = findPreference(key);
-        if ((pref != null) && (pref instanceof TimePreference)) {
-            TimePreference time = (TimePreference) pref;
-            time.setNeutralButtonText(R.string.off);
-            time.setOnPreferenceChangeListener(this);
-            onTimePreferenceChange(time, time.getValue());
-            return time;
-        }
-        return null;
-    }
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference instanceof CheckBoxPreference) {
@@ -116,14 +81,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             ListPreference list = (ListPreference) preference;
             onListPreferenceChange(list, newValue);
             return false;
-        }
-        if (preference instanceof RingtonePreference) {
-            RingtonePreference ring = (RingtonePreference) preference;
-            return onRingtonePreferenceChange(ring, newValue);
-        }
-        if (preference instanceof TimePreference) {
-            TimePreference time = (TimePreference) preference;
-            return onTimePreferenceChange(time, newValue);
         }
         return true;
     }
@@ -145,22 +102,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     }
 
     /**
-     * Called when a ringtone preference has changed its value.
-     * <br>Updates the summary to the new ringtone title.
-     *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
-     * @return {@code true} if the user value should be set as the preference value (and persisted).
-     */
-    protected boolean onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
-        String value = (newValue == null) ? null : newValue.toString();
-        updateSummary(preference, value);
-        return true;
-    }
-
-    /**
      * Called when a check box preference has changed its value.
      *
      * @param preference
@@ -170,23 +111,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
     protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
-        return true;
-    }
-
-    /**
-     * Called when a time preference has probably changed its value.
-     * <br>Updates the summary to the new value.
-     *
-     * @param preference
-     *         the  preference.
-     * @param newValue
-     *         the possibly new value.
-     */
-    protected boolean onTimePreferenceChange(TimePreference preference, Object newValue) {
-        String value = (newValue == null) ? null : newValue.toString();
-        //Set the value for the summary.
-        preference.setTime(value);
-        updateSummary(preference, value);
         return true;
     }
 
@@ -210,35 +134,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             }
         }
         preference.setSummary(null);
-    }
-
-    /**
-     * Update the summary that was selected from the list.
-     *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
-     */
-    private void updateSummary(RingtonePreference preference, String newValue) {
-        preference.setSummary(preference.getRingtoneTitle(newValue));
-    }
-
-    /**
-     * Update the summary that was selected from the time picker.
-     *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
-     */
-    private void updateSummary(TimePreference preference, String newValue) {
-        String summary = preference.formatTime();
-        if (summary != null) {
-            preference.setSummary(summary);
-        } else {
-            preference.setSummary(R.string.off);
-        }
     }
 
     @Override
