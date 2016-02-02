@@ -12,10 +12,6 @@
         android:key="coords.visible"
         android:title="@string/coords_title"/>
     <CheckBoxPreference
-        android:defaultValue="@bool/seconds_visible_defaultValue"
-        android:key="seconds.visible"
-        android:title="@string/seconds_title"/>
-    <CheckBoxPreference
         android:defaultValue="@bool/summaries_visible_defaultValue"
         android:key="summaries.visible"
         android:title="@string/summaries_title"/>

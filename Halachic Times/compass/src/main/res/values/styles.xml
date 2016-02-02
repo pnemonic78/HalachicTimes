@@ -3,8 +3,6 @@
 
     <style name="Widget" parent="android:Widget"/>
 
-    <style name="Widget.ListView" parent="android:Widget.ListView"/>
-
     <style name="Widget.TextView" parent="android:Widget.TextView"/>
 
     <style name="Widget.TextView.Large">
@@ -17,11 +15,6 @@
 
     <style name="Widget.TextView.Small">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
-    </style>
-
-    <style name="Widget.TextView.Clock.Time" parent="Widget.TextView.Large">
-        <item name="android:singleLine">true</item>
-        <item name="android:textSize">@dimen/widget_big_font_size</item>
     </style>
 
     <style name="Widget.TextView.Title" parent="Widget.TextView.Medium">
@@ -46,9 +39,6 @@
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
-    <style name="Widget.TextView.Title.NoGradient">
-    </style>
-
     <style name="Widget.TextView.Time.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
@@ -57,17 +47,11 @@
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
-    <style name="Widget.TextView.Time.NoGradient">
-    </style>
-
     <style name="Widget.TextView.Summary.Dark">
     </style>
 
     <style name="Widget.TextView.Summary.Light">
         <item name="android:textColor">?android:textColorSecondaryInverse</item>
-    </style>
-
-    <style name="Widget.TextView.Summary.NoGradient">
     </style>
 
 </resources>
