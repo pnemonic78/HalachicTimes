@@ -20,9 +20,6 @@
 package net.sf.times.preference;
 
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Resources;
-import android.media.AudioManager;
-import android.media.RingtoneManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -34,9 +31,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
-import net.sf.preference.RingtonePreference;
-import net.sf.preference.SeekBarDialogPreference;
-import net.sf.preference.TimePreference;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.compass.R;
 import net.sf.times.location.AddressProvider;
@@ -48,12 +42,7 @@ import net.sf.times.location.AddressProvider;
  */
 public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
-    private SeekBarDialogPreference candlesSeek;
-    private SeekBarDialogPreference shabbathSeek;
-    private ZmanimSettings settings;
     private Preference clearHistory;
-    private RingtonePreference reminderRingtonePreference;
-    private Runnable remindRunner;
 
     /**
      * Constructs a new preferences.
@@ -73,77 +62,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         replaceScreen(screen, "privacy", R.xml.privacy_preferences);
         replaceScreen(screen, "about", R.xml.about_preferences);
 
-        reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
-        initList(ZmanimSettings.KEY_REMINDER_STREAM);
-
         initList(ZmanimSettings.KEY_COORDS_FORMAT);
         initList(ZmanimSettings.KEY_THEME);
-
-        candlesSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
-        candlesSeek.setSummaryFormat(R.plurals.candles_summary);
-        candlesSeek.setOnPreferenceChangeListener(this);
-        onSeekPreferenceChange(candlesSeek, null);
-
-        shabbathSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        shabbathSeek.setSummaryFormat(R.plurals.shabbath_ends_summary);
-        shabbathSeek.setOnPreferenceChangeListener(this);
-        onSeekPreferenceChange(shabbathSeek, null);
-
-        initList(ZmanimSettings.KEY_OPINION_HOUR);
-        initList(ZmanimSettings.KEY_OPINION_DAWN);
-        initList(ZmanimSettings.KEY_OPINION_TALLIS);
-        initList(ZmanimSettings.KEY_OPINION_SUNRISE);
-        initList(ZmanimSettings.KEY_OPINION_SHEMA);
-        initList(ZmanimSettings.KEY_OPINION_TFILA);
-        initList(ZmanimSettings.KEY_OPINION_NOON);
-        initList(ZmanimSettings.KEY_OPINION_EARLIEST_MINCHA);
-        initList(ZmanimSettings.KEY_OPINION_MINCHA);
-        initList(ZmanimSettings.KEY_OPINION_PLUG_MINCHA);
-        initList(ZmanimSettings.KEY_OPINION_SUNSET);
-        initList(ZmanimSettings.KEY_OPINION_CANDLES_CHANUKKA);
-        initList(ZmanimSettings.KEY_OPINION_TWILIGHT);
-        initList(ZmanimSettings.KEY_OPINION_NIGHTFALL);
-        initList(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        initList(ZmanimSettings.KEY_OPINION_MIDNIGHT);
-        initList(ZmanimSettings.KEY_OPINION_EARLIEST_LEVANA);
-        initList(ZmanimSettings.KEY_OPINION_LATEST_LEVANA);
-        initList(ZmanimSettings.KEY_OPINION_BURN);
-        initList(ZmanimSettings.KEY_OPINION_OMER);
-
-        initList(ZmanimSettings.KEY_REMINDER_DAWN);
-        initList(ZmanimSettings.KEY_REMINDER_TALLIS);
-        initList(ZmanimSettings.KEY_REMINDER_SUNRISE);
-        initList(ZmanimSettings.KEY_REMINDER_SHEMA);
-        initList(ZmanimSettings.KEY_REMINDER_TFILA);
-        initList(ZmanimSettings.KEY_REMINDER_NOON);
-        initList(ZmanimSettings.KEY_REMINDER_EARLIEST_MINCHA);
-        initList(ZmanimSettings.KEY_REMINDER_MINCHA);
-        initList(ZmanimSettings.KEY_REMINDER_PLUG_MINCHA);
-        initList(ZmanimSettings.KEY_REMINDER_CANDLES);
-        initList(ZmanimSettings.KEY_REMINDER_SUNSET);
-        initList(ZmanimSettings.KEY_REMINDER_TWILIGHT);
-        initList(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
-        initList(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
-
-        initTime(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
-        initTime(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
-
-        initReminderDays(ZmanimSettings.KEY_REMINDER_DAWN);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_TALLIS);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_SUNRISE);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_SHEMA);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_TFILA);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_NOON);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_EARLIEST_MINCHA);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_MINCHA);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_PLUG_MINCHA);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_CANDLES);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_SUNSET);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_TWILIGHT);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_NIGHTFALL);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_MIDNIGHT);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_EARLIEST_LEVANA);
-        initReminderDays(ZmanimSettings.KEY_REMINDER_LATEST_LEVANA);
 
         clearHistory = findPreference("clear_history");
         clearHistory.setOnPreferenceClickListener(this);
@@ -154,10 +74,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         } catch (NameNotFoundException e) {
             // Never should happen with our own package!
         }
-
-        // Other preferences that affect the app widget.
-        findPreference(ZmanimSettings.KEY_PAST).setOnPreferenceChangeListener(this);
-        findPreference(ZmanimSettings.KEY_SECONDS).setOnPreferenceChangeListener(this);
     }
 
     @SuppressWarnings("deprecation")
@@ -176,46 +92,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         return null;
     }
 
-    @SuppressWarnings("deprecation")
-    protected RingtonePreference initRingtone(String key) {
-        if (TextUtils.isEmpty(key)) {
-            return null;
-        }
-
-        Preference pref = findPreference(key);
-        if ((pref != null) && (pref instanceof RingtonePreference)) {
-            RingtonePreference ring = (RingtonePreference) pref;
-            ring.setOnPreferenceChangeListener(this);
-            onRingtonePreferenceChange(ring, ring.getValue());
-            return ring;
-        }
-        return null;
-    }
-
-    protected TimePreference initTime(String key) {
-        if (TextUtils.isEmpty(key)) {
-            return null;
-        }
-
-        Preference pref = findPreference(key);
-        if ((pref != null) && (pref instanceof TimePreference)) {
-            TimePreference time = (TimePreference) pref;
-            time.setNeutralButtonText(R.string.off);
-            time.setOnPreferenceChangeListener(this);
-            onTimePreferenceChange(time, time.getValue());
-            return time;
-        }
-        return null;
-    }
-
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == candlesSeek) {
-            return onSeekPreferenceChange(candlesSeek, newValue);
-        }
-        if (preference == shabbathSeek) {
-            return onSeekPreferenceChange(shabbathSeek, newValue);
-        }
         if (preference instanceof CheckBoxPreference) {
             CheckBoxPreference checkBox = (CheckBoxPreference) preference;
             return onCheckBoxPreferenceChange(checkBox, newValue);
@@ -225,27 +103,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
             onListPreferenceChange(list, newValue);
             return false;
         }
-        if (preference instanceof RingtonePreference) {
-            RingtonePreference ring = (RingtonePreference) preference;
-            return onRingtonePreferenceChange(ring, newValue);
-        }
-        if (preference instanceof TimePreference) {
-            TimePreference time = (TimePreference) preference;
-            return onTimePreferenceChange(time, newValue);
-        }
-        return true;
-    }
-
-    private boolean onSeekPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
-        int minutes = preference.getProgress();
-        Resources res = getResources();
-        CharSequence summary = null;
-        if (preference == candlesSeek) {
-            summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
-        } else if (preference == shabbathSeek) {
-            summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes);
-        }
-        preference.setSummary(summary);
         return true;
     }
 
@@ -259,45 +116,10 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      *         the possibly new value.
      */
     protected void onListPreferenceChange(ListPreference preference, Object newValue) {
-        String oldValue = preference.getValue();
         String value = (newValue == null) ? null : newValue.toString();
         //Set the value for the summary.
         preference.setValue(value);
         updateSummary(preference, value);
-
-        if (!oldValue.equals(newValue)) {
-            String key = preference.getKey();
-
-            if (ZmanimSettings.KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
-                int audioStreamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
-                int ringType;
-                if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-                    ringType = RingtoneManager.TYPE_NOTIFICATION;
-                } else {
-                    ringType = RingtoneManager.TYPE_ALARM;
-                }
-                reminderRingtonePreference.setRingtoneType(ringType);
-            } else if (key.endsWith(ZmanimSettings.REMINDER_SUFFIX)) {
-                // Explicitly disable dependencies?
-                preference.notifyDependencyChange(preference.shouldDisableDependents());
-            }
-        }
-    }
-
-    /**
-     * Called when a ringtone preference has changed its value.
-     * <br>Updates the summary to the new ringtone title.
-     *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
-     * @return {@code true} if the user value should be set as the preference value (and persisted).
-     */
-    protected boolean onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
-        String value = (newValue == null) ? null : newValue.toString();
-        updateSummary(preference, value);
-        return true;
     }
 
     /**
@@ -310,23 +132,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
     protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
-        return true;
-    }
-
-    /**
-     * Called when a time preference has probably changed its value.
-     * <br>Updates the summary to the new value.
-     *
-     * @param preference
-     *         the  preference.
-     * @param newValue
-     *         the possibly new value.
-     */
-    protected boolean onTimePreferenceChange(TimePreference preference, Object newValue) {
-        String value = (newValue == null) ? null : newValue.toString();
-        //Set the value for the summary.
-        preference.setTime(value);
-        updateSummary(preference, value);
         return true;
     }
 
@@ -352,35 +157,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         preference.setSummary(null);
     }
 
-    /**
-     * Update the summary that was selected from the list.
-     *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
-     */
-    private void updateSummary(RingtonePreference preference, String newValue) {
-        preference.setSummary(preference.getRingtoneTitle(newValue));
-    }
-
-    /**
-     * Update the summary that was selected from the time picker.
-     *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
-     */
-    private void updateSummary(TimePreference preference, String newValue) {
-        String summary = preference.formatTime();
-        if (summary != null) {
-            preference.setSummary(summary);
-        } else {
-            preference.setSummary(R.string.off);
-        }
-    }
-
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference == clearHistory) {
@@ -399,34 +175,6 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         ZmanimApplication app = (ZmanimApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
-    }
-
-    protected void initReminderDays(String reminderKey) {
-        if (TextUtils.isEmpty(reminderKey)) {
-            return;
-        }
-
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_SUNDAY_SUFFIX);
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_MONDAY_SUFFIX);
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_TUESDAY_SUFFIX);
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_WEDNESDAY_SUFFIX);
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_THURSDAY_SUFFIX);
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_FRIDAY_SUFFIX);
-        initReminderDay(reminderKey + ZmanimSettings.REMINDER_SATURDAY_SUFFIX);
-    }
-
-    protected CheckBoxPreference initReminderDay(String key) {
-        if (TextUtils.isEmpty(key)) {
-            return null;
-        }
-
-        Preference pref = findPreference(key);
-        if (pref != null) {
-            CheckBoxPreference checkBox = (CheckBoxPreference) pref;
-            checkBox.setOnPreferenceChangeListener(this);
-            return checkBox;
-        }
-        return null;
     }
 
     private PreferenceScreen replaceScreen(PreferenceScreen parent, String key, int xmlId) {

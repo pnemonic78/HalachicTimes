@@ -23,17 +23,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.location.Location;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 
-import net.sf.media.RingtoneManager;
-import net.sf.preference.TimePreference;
 import net.sf.times.compass.R;
-
-import java.util.Calendar;
 
 /**
  * Application settings.
@@ -56,12 +49,8 @@ public class ZmanimSettings {
     public static final String KEY_COORDS = "coords.visible";
     /** Preference name for the co-ordinates format. */
     public static final String KEY_COORDS_FORMAT = "coords.format";
-    /** Preference name for showing seconds. */
-    public static final String KEY_SECONDS = "seconds.visible";
     /** Preference name for showing summaries. */
     public static final String KEY_SUMMARIES = "summaries.visible";
-    /** Preference name for enabling past times. */
-    public static final String KEY_PAST = "past";
     /**
      * Preference name for the background gradient.
      *
@@ -71,103 +60,6 @@ public class ZmanimSettings {
     public static final String KEY_BG_GRADIENT = "gradient";
     /** Preference name for the theme. */
     public static final String KEY_THEME = "theme";
-    /** Preference name for the last reminder. */
-    private static final String KEY_REMINDER_LATEST = "reminder";
-    /** Preference name for the reminder audio stream type. */
-    public static final String KEY_REMINDER_STREAM = "reminder.stream";
-    /** Preference name for the reminder ringtone. */
-    public static final String KEY_REMINDER_RINGTONE = "reminder.ringtone";
-    /** Preference name for the temporal hour visibility. */
-    public static final String KEY_HOUR = "hour.visible";
-
-    /** Preference name for temporal hour type. */
-    public static final String KEY_OPINION_HOUR = "hour";
-    /** Preference name for Alos type. */
-    public static final String KEY_OPINION_DAWN = "dawn";
-    /** Preference name for earliest tallis type. */
-    public static final String KEY_OPINION_TALLIS = "tallis";
-    /** Preference name for sunrise type. */
-    public static final String KEY_OPINION_SUNRISE = "sunrise";
-    /** Preference name for Last Shema type. */
-    public static final String KEY_OPINION_SHEMA = "shema";
-    /** Preference name for Last Morning Tfila type. */
-    public static final String KEY_OPINION_TFILA = "prayers";
-    /** Preference name for Last Biur Chametz type. */
-    public static final String KEY_OPINION_BURN = "burn_chametz";
-    /** Preference name for midday / noon type. */
-    public static final String KEY_OPINION_NOON = "midday";
-    /** Preference name for Earliest Mincha type. */
-    public static final String KEY_OPINION_EARLIEST_MINCHA = "earliest_mincha";
-    /** Preference name for Mincha Ketana type. */
-    public static final String KEY_OPINION_MINCHA = "mincha";
-    /** Preference name for Plug HaMincha type. */
-    public static final String KEY_OPINION_PLUG_MINCHA = "plug_hamincha";
-    /** Preference name for candle lighting minutes offset. */
-    public static final String KEY_OPINION_CANDLES = "candles";
-    /** Preference name for Chanukka candle lighting. */
-    public static final String KEY_OPINION_CANDLES_CHANUKKA = "candles_chanukka";
-    /** Preference name for sunset type. */
-    public static final String KEY_OPINION_SUNSET = "sunset";
-    /** Preference name for twilight type. */
-    public static final String KEY_OPINION_TWILIGHT = "twilight";
-    /** Preference name for nightfall type. */
-    public static final String KEY_OPINION_NIGHTFALL = "nightfall";
-    /** Preference name for Shabbath ends after nightfall. */
-    public static final String KEY_OPINION_SHABBATH_ENDS = "shabbath_ends";
-    public static final String KEY_OPINION_SHABBATH_ENDS_MINUTES = KEY_OPINION_SHABBATH_ENDS + ".minutes";
-    /** Preference name for midnight type. */
-    public static final String KEY_OPINION_MIDNIGHT = "midnight";
-    /** Preference name for earliest kiddush levana type. */
-    public static final String KEY_OPINION_EARLIEST_LEVANA = "levana_earliest";
-    /** Preference name for latest kiddush levana type. */
-    public static final String KEY_OPINION_LATEST_LEVANA = "levana_latest";
-    /** Preference name for omer count suffix. */
-    public static final String KEY_OPINION_OMER = "omer";
-
-    static final String REMINDER_SUFFIX = ".reminder";
-    static final String REMINDER_SUNDAY_SUFFIX = ".day." + Calendar.SUNDAY;
-    static final String REMINDER_MONDAY_SUFFIX = ".day." + Calendar.MONDAY;
-    static final String REMINDER_TUESDAY_SUFFIX = ".day." + Calendar.TUESDAY;
-    static final String REMINDER_WEDNESDAY_SUFFIX = ".day." + Calendar.WEDNESDAY;
-    static final String REMINDER_THURSDAY_SUFFIX = ".day." + Calendar.THURSDAY;
-    static final String REMINDER_FRIDAY_SUFFIX = ".day." + Calendar.FRIDAY;
-    static final String REMINDER_SATURDAY_SUFFIX = ".day." + Calendar.SATURDAY;
-
-    private static final String EMPHASIS_SUFFIX = ".emphasis";
-    private static final String ANIM_SUFFIX = ".anim";
-
-    /** Preference name for Alos reminder. */
-    public static final String KEY_REMINDER_DAWN = KEY_OPINION_DAWN + REMINDER_SUFFIX;
-    /** Preference name for earliest tallis reminder. */
-    public static final String KEY_REMINDER_TALLIS = KEY_OPINION_TALLIS + REMINDER_SUFFIX;
-    /** Preference name for sunrise reminder. */
-    public static final String KEY_REMINDER_SUNRISE = KEY_OPINION_SUNRISE + REMINDER_SUFFIX;
-    /** Preference name for Last Shema reminder. */
-    public static final String KEY_REMINDER_SHEMA = KEY_OPINION_SHEMA + REMINDER_SUFFIX;
-    /** Preference name for Last Morning Tfila reminder. */
-    public static final String KEY_REMINDER_TFILA = KEY_OPINION_TFILA + REMINDER_SUFFIX;
-    /** Preference name for midday / noon reminder. */
-    public static final String KEY_REMINDER_NOON = KEY_OPINION_NOON + REMINDER_SUFFIX;
-    /** Preference name for Earliest Mincha reminder. */
-    public static final String KEY_REMINDER_EARLIEST_MINCHA = KEY_OPINION_EARLIEST_MINCHA + REMINDER_SUFFIX;
-    /** Preference name for Mincha Ketana reminder. */
-    public static final String KEY_REMINDER_MINCHA = KEY_OPINION_MINCHA + REMINDER_SUFFIX;
-    /** Preference name for Plug HaMincha reminder. */
-    public static final String KEY_REMINDER_PLUG_MINCHA = KEY_OPINION_PLUG_MINCHA + REMINDER_SUFFIX;
-    /** Preference name for candle lighting reminder. */
-    public static final String KEY_REMINDER_CANDLES = KEY_OPINION_CANDLES + REMINDER_SUFFIX;
-    /** Preference name for sunset reminder. */
-    public static final String KEY_REMINDER_SUNSET = KEY_OPINION_SUNSET + REMINDER_SUFFIX;
-    /** Preference name for twilight reminder. */
-    public static final String KEY_REMINDER_TWILIGHT = KEY_OPINION_TWILIGHT + REMINDER_SUFFIX;
-    /** Preference name for nightfall reminder. */
-    public static final String KEY_REMINDER_NIGHTFALL = KEY_OPINION_NIGHTFALL + REMINDER_SUFFIX;
-    /** Preference name for midnight reminder. */
-    public static final String KEY_REMINDER_MIDNIGHT = KEY_OPINION_MIDNIGHT + REMINDER_SUFFIX;
-    /** Preference name for earliest kiddush levana reminder. */
-    public static final String KEY_REMINDER_EARLIEST_LEVANA = KEY_OPINION_EARLIEST_LEVANA + REMINDER_SUFFIX;
-    /** Preference name for latest kiddush levana reminder. */
-    public static final String KEY_REMINDER_LATEST_LEVANA = KEY_OPINION_LATEST_LEVANA + REMINDER_SUFFIX;
 
     /** Format the coordinates in decimal notation. */
     public static String FORMAT_DECIMAL;
@@ -180,16 +72,6 @@ public class ZmanimSettings {
     public static String LIST_THEME_DARK;
     /** Show zmanim list with light gradient background. */
     public static String LIST_THEME_LIGHT;
-
-    /** No omer count. */
-    public static String OMER_NONE;
-    /** Omer count has "BaOmer" suffix. */
-    public static String OMER_B;
-    /** Omer count has "LaOmer" suffix. */
-    public static String OMER_L;
-
-    /** Unknown date. */
-    public static final long NEVER = Long.MIN_VALUE;
 
     private Context context;
     private final SharedPreferences preferences;
