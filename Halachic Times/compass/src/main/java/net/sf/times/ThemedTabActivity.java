@@ -23,7 +23,7 @@ import android.app.TabActivity;
 import android.content.Context;
 import android.os.Bundle;
 
-import net.sf.times.compass.preference.ZmanimSettings;
+import net.sf.times.compass.preference.CompassSettings;
 
 /**
  * Activity that applies a custom theme.
@@ -34,13 +34,13 @@ import net.sf.times.compass.preference.ZmanimSettings;
 public class ThemedTabActivity extends TabActivity {
 
     /** The settings and preferences. */
-    protected ZmanimSettings settings;
+    protected CompassSettings settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Context context = this;
-        settings = new ZmanimSettings(context);
+        settings = new CompassSettings(context);
         setTheme(settings.getTheme());
 
     }

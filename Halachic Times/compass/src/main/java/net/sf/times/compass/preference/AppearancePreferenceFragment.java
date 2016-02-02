@@ -40,7 +40,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(ZmanimSettings.KEY_COORDS_FORMAT);
-        initList(ZmanimSettings.KEY_THEME);
+        initList(CompassSettings.KEY_COORDS_FORMAT);
+        initList(CompassSettings.KEY_THEME);
     }
 }

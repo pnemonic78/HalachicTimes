@@ -33,7 +33,7 @@ import net.sf.times.compass.R;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimSettings {
+public class CompassSettings {
 
     /** Preference name for the latitude. */
     private static final String KEY_LATITUDE = "latitude";
@@ -73,7 +73,7 @@ public class ZmanimSettings {
      * @param context
      *         the context.
      */
-    public ZmanimSettings(Context context) {
+    public CompassSettings(Context context) {
         Context app = context.getApplicationContext();
         if (app != null)
             context = app;

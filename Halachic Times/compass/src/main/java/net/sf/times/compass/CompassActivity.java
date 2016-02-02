@@ -37,15 +37,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.ThemedActivity;
-import net.sf.times.ZmanimApplication;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.compass.preference.ZmanimPreferenceActivity;
-import net.sf.times.compass.preference.ZmanimPreferences;
-import net.sf.times.compass.preference.ZmanimSettings;
+import net.sf.times.compass.preference.CompassPreferenceActivity;
+import net.sf.times.compass.preference.Compass10PreferenceActivity;
+import net.sf.times.compass.preference.CompassSettings;
 
 import java.lang.ref.WeakReference;
 
@@ -91,7 +90,7 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
     /** Orientation matrix. */
     private final float[] orientation = new float[3];
     /** The settings and preferences. */
-    private ZmanimSettings settings;
+    private CompassSettings settings;
     /** The address location. */
     private Location addressLocation;
     /** The address. */
@@ -129,9 +128,9 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
                     break;
                 case WHAT_SETTINGS:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                        activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
+                        activity.startActivity(new Intent(context, CompassPreferenceActivity.class));
                     else
-                        activity.startActivity(new Intent(context, ZmanimPreferences.class));
+                        activity.startActivity(new Intent(context, Compass10PreferenceActivity.class));
                     break;
             }
         }
@@ -155,13 +154,13 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
         setContentView(R.layout.compass);
         view = (CompassView) findViewById(R.id.compass);
 
-        settings = new ZmanimSettings(this);
+        settings = new CompassSettings(this);
         if (!settings.isSummaries()) {
             View summary = findViewById(android.R.id.summary);
             summary.setVisibility(View.GONE);
         }
 
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        CompassApplication app = (CompassApplication) getApplication();
         locations = app.getLocations();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

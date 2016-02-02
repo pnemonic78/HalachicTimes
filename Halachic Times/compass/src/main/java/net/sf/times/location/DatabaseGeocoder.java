@@ -25,7 +25,7 @@ import android.location.Address;
 import android.location.Location;
 
 import net.sf.database.CursorFilter;
-import net.sf.times.ZmanimApplication;
+import net.sf.times.compass.CompassApplication;
 
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -89,7 +89,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 return (mDistance[0] <= SAME_LOCATION);
             }
         };
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        CompassApplication app = (CompassApplication) context.getApplicationContext();
         AddressProvider provider = app.getAddresses();
         List<ZmanimAddress> q = provider.query(filter);
         List<Address> addresses = new ArrayList<Address>(q);
@@ -120,7 +120,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 return (mDistance[0] <= SAME_PLATEAU);
             }
         };
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        CompassApplication app = (CompassApplication) context.getApplicationContext();
         AddressProvider provider = app.getAddresses();
         List<ZmanimLocation> locations = provider.queryElevations(filter);
 

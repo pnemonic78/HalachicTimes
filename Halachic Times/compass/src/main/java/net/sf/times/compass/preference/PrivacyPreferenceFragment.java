@@ -24,8 +24,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 
+import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.R;
-import net.sf.times.ZmanimApplication;
 import net.sf.times.location.AddressProvider;
 
 /**
@@ -64,7 +64,7 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
      * Clear the history of addresses.
      */
     private void deleteHistory() {
-        ZmanimApplication app = (ZmanimApplication) getActivity().getApplication();
+        CompassApplication app = (CompassApplication) getActivity().getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
     }

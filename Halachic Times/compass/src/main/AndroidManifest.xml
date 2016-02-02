@@ -17,7 +17,7 @@
         android:required="true"/>
 
     <application
-        android:name="net.sf.times.ZmanimApplication"
+        android:name="net.sf.times.compass.CompassApplication"
         android:allowBackup="true"
         android:backupAgent="net.sf.times.backup.ZmanimBackupAgent"
         android:icon="@drawable/ic_launcher"
@@ -41,7 +41,12 @@
                 android:value="net.sf.times.location.LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.compass.preference.ZmanimPreferenceActivity"
+            android:name="net.sf.times.compass.preference.Compass10PreferenceActivity"
+            android:label="@string/menu_settings"
+            android:parentActivityName="net.sf.times.compass.CompassActivity">
+        </activity>
+        <activity
+            android:name="net.sf.times.compass.preference.CompassPreferenceActivity"
             android:label="@string/menu_settings"
             android:parentActivityName="net.sf.times.compass.CompassActivity">
         </activity>

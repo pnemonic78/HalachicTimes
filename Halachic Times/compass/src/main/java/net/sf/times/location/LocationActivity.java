@@ -44,9 +44,9 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.CompassActivity;
 import net.sf.times.ThemedTabActivity;
-import net.sf.times.ZmanimApplication;
 import net.sf.times.compass.R;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
@@ -190,7 +190,7 @@ public class LocationActivity extends ThemedTabActivity implements TextWatcher, 
      * Populate the lists with cities.
      */
     protected void populateLists() {
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        CompassApplication app = (CompassApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         ZmanimLocations locations = app.getLocations();
         List<ZmanimAddress> addresses = provider.query(null);
@@ -367,7 +367,7 @@ public class LocationActivity extends ThemedTabActivity implements TextWatcher, 
                     ZmanimAddress address = (ZmanimAddress) msg.obj;
                     long id = address.getId();
                     LocationActivity activity = activityWeakReference.get();
-                    ZmanimApplication app = (ZmanimApplication) activity.getApplication();
+                    CompassApplication app = (CompassApplication) activity.getApplication();
                     AddressProvider provider = app.getAddresses();
                     if (id < 0L) {
                         provider.insertOrUpdateCity(address);

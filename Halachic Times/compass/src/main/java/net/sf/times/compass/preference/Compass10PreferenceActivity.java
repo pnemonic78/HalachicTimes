@@ -31,7 +31,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
-import net.sf.times.ZmanimApplication;
+import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.R;
 import net.sf.times.location.AddressProvider;
 
@@ -40,14 +40,14 @@ import net.sf.times.location.AddressProvider;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimPreferences extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
+public class Compass10PreferenceActivity extends PreferenceActivity implements OnPreferenceChangeListener, OnPreferenceClickListener {
 
     private Preference clearHistory;
 
     /**
      * Constructs a new preferences.
      */
-    public ZmanimPreferences() {
+    public Compass10PreferenceActivity() {
     }
 
     @SuppressWarnings("deprecation")
@@ -62,8 +62,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         replaceScreen(screen, "privacy", R.xml.privacy_preferences);
         replaceScreen(screen, "about", R.xml.about_preferences);
 
-        initList(ZmanimSettings.KEY_COORDS_FORMAT);
-        initList(ZmanimSettings.KEY_THEME);
+        initList(CompassSettings.KEY_COORDS_FORMAT);
+        initList(CompassSettings.KEY_THEME);
 
         clearHistory = findPreference("clear_history");
         clearHistory.setOnPreferenceClickListener(this);
@@ -172,7 +172,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      * Clear the history of addresses.
      */
     private void deleteHistory() {
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        CompassApplication app = (CompassApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
     }

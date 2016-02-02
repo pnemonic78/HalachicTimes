@@ -34,14 +34,14 @@ import java.util.List;
  * @author Moshe Waisberg
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ZmanimPreferenceActivity extends PreferenceActivity {
+public class CompassPreferenceActivity extends PreferenceActivity {
 
     private final String packageName;
 
     /**
      * Constructs a new preferences.
      */
-    public ZmanimPreferenceActivity() {
+    public CompassPreferenceActivity() {
         packageName = getClass().getPackage().getName();
     }
 

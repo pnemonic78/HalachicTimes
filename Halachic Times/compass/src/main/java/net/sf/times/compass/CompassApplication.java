@@ -17,21 +17,21 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times;
+package net.sf.times.compass;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.compass.preference.ZmanimSettings;
+import net.sf.times.compass.preference.CompassSettings;
 
 /**
  * Zmanim application.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimApplication extends Application {
+public class CompassApplication extends Application {
 
     /** Provider for locations. */
     private ZmanimLocations locations;
@@ -41,7 +41,7 @@ public class ZmanimApplication extends Application {
     /**
      * Constructs a new application.
      */
-    public ZmanimApplication() {
+    public CompassApplication() {
     }
 
     /**
@@ -71,7 +71,7 @@ public class ZmanimApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ZmanimSettings.init(this);
+        CompassSettings.init(this);
     }
 
     @Override

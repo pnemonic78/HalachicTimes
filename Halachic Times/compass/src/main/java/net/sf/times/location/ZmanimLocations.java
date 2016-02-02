@@ -40,7 +40,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import net.sf.times.compass.R;
-import net.sf.times.compass.preference.ZmanimSettings;
+import net.sf.times.compass.preference.CompassSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +141,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
     /** The location. */
     private Location location;
     /** The settings and preferences. */
-    private ZmanimSettings settings;
+    private CompassSettings settings;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     /** The coordinates format. */
@@ -172,7 +172,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
         if (app != null)
             context = app;
         this.context = context;
-        settings = new ZmanimSettings(context);
+        settings = new CompassSettings(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         coordsFormat = context.getString(R.string.location_coords);
@@ -648,7 +648,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
         final String notation = settings.getCoordinatesFormat();
         final String latitudeText;
         final String longitudeText;
-        if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+        if (CompassSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
             latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
             longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
         } else {
@@ -667,7 +667,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
      */
     public String formatCoordinate(double coord) {
         final String notation = settings.getCoordinatesFormat();
-        if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+        if (CompassSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
             return Location.convert(coord, Location.FORMAT_SECONDS);
         }
         return String.format(Locale.US, FORMAT_DEGREES, coord);
