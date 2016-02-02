@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachiline Ajad Palvetes</string>
-    <string name="title_activity_zmanim">Halachiline Ajad</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Tundmatu aadress</string>
     <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradiendi tausta</string>
     <string name="theme_dark">Tume</string>
     <string name="theme_light">Heledad</string>
-    <string name="theme_none">Mitte ükski</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>

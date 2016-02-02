@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachický Modlitební Časy</string>
-    <string name="title_activity_zmanim">Halachický Časy</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Neznámý adresa</string>
     <string name="location_coords">Šířka %1$s; Délka %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradient pozadí</string>
     <string name="theme_dark">Tmavě</string>
     <string name="theme_light">Světlo</string>
-    <string name="theme_none">Žádný</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>

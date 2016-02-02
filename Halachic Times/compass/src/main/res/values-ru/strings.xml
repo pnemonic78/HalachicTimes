@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Галахические Времена Молитв</string>
-    <string name="title_activity_zmanim">Галахические Времена</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Адрес не найден</string>
     <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Градиент фона</string>
     <string name="theme_dark">Темный</string>
     <string name="theme_light">Светлая</string>
-    <string name="theme_none">Ни одной</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>

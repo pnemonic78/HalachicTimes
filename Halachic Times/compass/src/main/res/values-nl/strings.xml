@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachische Gebedstijden</string>
-    <string name="title_activity_zmanim">Halachische Tijden</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Onbekend adres</string>
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradiënt achtergrond</string>
     <string name="theme_dark">Donker</string>
     <string name="theme_light">Lichte</string>
-    <string name="theme_none">Geen</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>

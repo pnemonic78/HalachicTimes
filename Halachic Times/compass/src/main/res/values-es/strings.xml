@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Horarios Halájicos de Oración</string>
-    <string name="title_activity_zmanim">Horarios Halájicos</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Dirección desconocida</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradiente de fondo</string>
     <string name="theme_dark">Oscuro</string>
     <string name="theme_light">Claro</string>
-    <string name="theme_none">Nada</string>
 
     <!-- Compass -->
     <string name="menu_compass">Brújula</string>

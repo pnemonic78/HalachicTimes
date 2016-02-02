@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachiska Bönetider</string>
-    <string name="title_activity_zmanim">Halachiska Tider</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Okänd adress</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradient bakgrund</string>
     <string name="theme_dark">Mörkt</string>
     <string name="theme_light">Ljus</string>
-    <string name="theme_none">Inget</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>

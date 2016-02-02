@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Ori Halachic Rugăciune</string>
-    <string name="title_activity_zmanim">Ori Halachic</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Necunoscuta adresa</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradient de fundal</string>
     <string name="theme_dark">Întuneric</string>
     <string name="theme_light">Lumina</string>
-    <string name="theme_none">Niciuna</string>
 
     <!-- Compass -->
     <string name="menu_compass">Busolă</string>

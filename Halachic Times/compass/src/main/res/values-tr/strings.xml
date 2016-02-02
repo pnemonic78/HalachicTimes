@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachik Namaz Vakitleri</string>
-    <string name="title_activity_zmanim">Halachik Vakitleri</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Bilinmeyen adres</string>
     <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Degrade arka plan</string>
     <string name="theme_dark">Koyu</string>
     <string name="theme_light">Hafif</string>
-    <string name="theme_none">Hiçbiri</string>
 
     <!-- Compass -->
     <string name="menu_compass">Pusula</string>

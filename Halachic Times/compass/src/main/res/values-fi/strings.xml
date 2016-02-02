@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachinen Ajat Rukous</string>
-    <string name="title_activity_zmanim">Halachinen Ajat</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Tuntematon osoite</string>
     <string name="location_coords">Lvy. %1$s; Pts. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradientin tausta</string>
     <string name="theme_dark">Tumma</string>
     <string name="theme_light">Vaalea</string>
-    <string name="theme_none">Ei yhtään</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompassi</string>

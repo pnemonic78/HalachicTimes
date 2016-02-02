@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="theme_value_none" translatable="false"/>
     <string name="theme_value_dark" translatable="false">dark</string>
     <string name="theme_value_light" translatable="false">light</string>
-    <string name="theme_value_white" translatable="false">white</string>
     <string name="theme_defaultValue" translatable="false">@string/theme_value_dark</string>
 
     <string name="coords_format_value_decimal" translatable="false">decimal</string>

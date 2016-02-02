@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Tempi di Preghiera Halachiche</string>
-    <string name="title_activity_zmanim">Tempi Halachiche</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Indirizzo sconosciuto</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradiente di sfondo</string>
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
-    <string name="theme_none">Nessuna</string>
 
     <!-- Compass -->
     <string name="menu_compass">Bussola</string>

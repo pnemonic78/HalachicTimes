@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachic Prayer Times</string>
-    <string name="title_activity_zmanim">Halachic Times</string>
+    <string name="app_name">Prayer Direction</string>
     <string name="location_unknown">Unknown address</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
@@ -19,10 +18,8 @@
     <string name="summaries_title">Summaries</string>
     <string name="gradient_title">Gradient background</string>
     <string name="theme_title" translatable="false">@string/gradient_title</string>
-    <string name="theme_none">None</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
-    <string name="theme_white">White</string>
 
     <!-- Compass -->
     <string name="menu_compass">Compass</string>

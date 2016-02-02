@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Horaires Halakhiques de Prière</string>
-    <string name="title_activity_zmanim">Horaires Halakhiques</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Adresse inconnue</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Fond graduel</string>
     <string name="theme_dark">Sombre</string>
     <string name="theme_light">Lumière</string>
-    <string name="theme_none">Aucun</string>
 
     <!-- Compass -->
     <string name="menu_compass">Boussole</string>

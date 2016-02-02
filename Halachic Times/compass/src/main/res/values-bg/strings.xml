@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Халахичен Молитвен Време</string>
-    <string name="title_activity_zmanim">Халахичен Време</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Неизвестен адрес</string>
     <string name="location_coords">Lai. %1$s; Pik. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Градиентна фона</string>
     <string name="theme_dark">Тъмно</string>
     <string name="theme_light">Светла</string>
-    <string name="theme_none">Никой</string>
 
     <!-- Compass -->
     <string name="menu_compass">Компас</string>

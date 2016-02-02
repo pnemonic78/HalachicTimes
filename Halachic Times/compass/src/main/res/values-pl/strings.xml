@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachiczny Czasy Modły</string>
-    <string name="title_activity_zmanim">Halachiczny Czasy</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Nieznany adres</string>
     <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Tło gradient</string>
     <string name="theme_dark">Ciemny</string>
     <string name="theme_light">Światła</string>
-    <string name="theme_none">Żaden</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>

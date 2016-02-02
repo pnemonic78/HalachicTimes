@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Halachinis Malda Kartų</string>
-    <string name="title_activity_zmanim">Halachinis Kartų</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">Nežinomas adresas</string>
     <string name="location_coords">Pla. %1$s; Ilg. %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">Gradientas fone</string>
     <string name="theme_dark">Tamsi</string>
     <string name="theme_light">Šviesos</string>
-    <string name="theme_none">Nė vienas</string>
 
     <!-- Compass -->
     <string name="menu_compass">Kompasas</string>

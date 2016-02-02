@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">זמני תפילה הלכתיים</string>
-    <string name="title_activity_zmanim">זמנים הלכתיים</string>
+    <string name="app_name">@string/title_activity_compass</string>
     <string name="location_unknown">לא אותרה כתובת</string>
     <string name="location_coords">רוחב %1$s; אורך %2$s</string>
 
@@ -17,7 +16,6 @@
     <string name="gradient_title">רקע הדרגתי</string>
     <string name="theme_dark">כהה</string>
     <string name="theme_light">בהיר</string>
-    <string name="theme_none">ללא</string>
 
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
