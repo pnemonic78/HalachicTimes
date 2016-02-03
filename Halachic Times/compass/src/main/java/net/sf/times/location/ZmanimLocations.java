@@ -39,7 +39,6 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import net.sf.times.compass.R;
 import net.sf.times.compass.preference.CompassSettings;
 
 import java.util.ArrayList;
@@ -65,17 +64,17 @@ public class ZmanimLocations implements ZmanimLocationListener {
     /** ISO 639 language code for "Yiddish". */
     public static final String ISO639_YIDDISH = "yi";
 
-    /** The minimum time interval between location updates, in milliseconds. */
-    private static final long UPDATE_TIME = 30 * DateUtils.SECOND_IN_MILLIS;
     /** The maximum time interval between location updates, in milliseconds. */
-    private static final long UPDATE_TIME_MAX = 2 * DateUtils.HOUR_IN_MILLIS;
+    private static final long UPDATE_TIME_MAX = 6 * DateUtils.HOUR_IN_MILLIS;
     /** The time interval between requesting location updates, in milliseconds. */
     private static final long UPDATE_TIME_START = 30 * DateUtils.SECOND_IN_MILLIS;
     /**
      * The duration to receive updates, in milliseconds.<br>
      * Should be enough time to get a sufficiently accurate location.
      */
-    private static final long UPDATE_DURATION = 30 * DateUtils.SECOND_IN_MILLIS;
+    private static final long UPDATE_DURATION = DateUtils.MINUTE_IN_MILLIS;
+    /** The minimum time interval between location updates, in milliseconds. */
+    private static final long UPDATE_TIME = 5 * DateUtils.SECOND_IN_MILLIS;
     /** The minimum distance between location updates, in metres. */
     private static final int UPDATE_DISTANCE = 100;
 

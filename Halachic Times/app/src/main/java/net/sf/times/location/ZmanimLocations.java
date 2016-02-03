@@ -76,7 +76,7 @@ public class ZmanimLocations implements ZmanimLocationListener {
      */
     private static final long UPDATE_DURATION = DateUtils.MINUTE_IN_MILLIS;
     /** The minimum time interval between location updates, in milliseconds. */
-    private static final long UPDATE_TIME = 15 * DateUtils.SECOND_IN_MILLIS;
+    private static final long UPDATE_TIME = 5 * DateUtils.SECOND_IN_MILLIS;
     /** The minimum distance between location updates, in metres. */
     private static final int UPDATE_DISTANCE = 100;
 
