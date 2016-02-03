@@ -12,7 +12,6 @@
     <string name="theme_light">Šviesos</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Kompasas</string>
     <string name="title_activity_compass">Kryptis maldos</string>
     <string name="compass_summary">Kryptis maldos Šventasis Šventųjų Jeruzalėje</string>
     <string name="north">Š</string>

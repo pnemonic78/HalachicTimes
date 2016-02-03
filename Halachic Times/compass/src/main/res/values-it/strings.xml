@@ -12,7 +12,6 @@
     <string name="theme_light">Chiaro</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Bussola</string>
     <string name="title_activity_compass">Direzione di preghiera</string>
     <string name="compass_summary">Direzione della preghiera a Santo dei Santi a Gerusalemme</string>
     <string name="north">N</string>

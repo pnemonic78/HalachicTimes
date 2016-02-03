@@ -12,7 +12,6 @@
     <string name="theme_light">Світло</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Компас</string>
     <string name="title_activity_compass">Напрям молитви</string>
     <string name="compass_summary">Напрямок молитві святая святих у Єрусалимі</string>
     <string name="north">П</string>

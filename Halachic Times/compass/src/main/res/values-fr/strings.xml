@@ -12,7 +12,6 @@
     <string name="theme_light">Lumière</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Boussole</string>
     <string name="title_activity_compass">Direction de la prière</string>
     <string name="compass_summary">Direction de la prière vers le Saint des Saints à Jérusalem</string>
     <string name="north">N</string>

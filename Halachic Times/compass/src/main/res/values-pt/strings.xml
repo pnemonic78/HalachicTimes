@@ -12,7 +12,6 @@
     <string name="theme_light">Clara</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Bússola</string>
     <string name="title_activity_compass">Direção da oração</string>
     <string name="compass_summary">Direção da oração para Santo dos Santos em Jerusalém</string>
     <string name="north">N</string>

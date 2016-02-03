@@ -12,7 +12,6 @@
     <string name="theme_light">Ljus</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Riktning av bön</string>
     <string name="compass_summary">Riktning av bön till Heligaste av Heliga i Jerusalem</string>
     <string name="north">N</string>

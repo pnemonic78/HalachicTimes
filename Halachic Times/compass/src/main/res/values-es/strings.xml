@@ -12,7 +12,6 @@
     <string name="theme_light">Claro</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Brújula</string>
     <string name="title_activity_compass">Dirección de la oración</string>
     <string name="compass_summary">Dirección de la oración a la Santa de los Santos en Jerusalén</string>
     <string name="north">N</string>

@@ -12,7 +12,6 @@
     <string name="theme_light">Helle</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Gebetsrichtung</string>
     <string name="compass_summary"> Gebetsrichtung zu Allerheiligste in Jerusalem</string>
     <string name="north">N</string>

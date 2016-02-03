@@ -15,7 +15,6 @@
     <string name="theme_light">Light</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Compass</string>
     <string name="title_activity_compass">Direction of Prayer</string>
     <string name="compass_summary">Direction of prayer to Holy of Holies in Jerusalem</string>
     <string name="north">N</string>

@@ -12,7 +12,6 @@
     <string name="theme_light">Világos</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Iránytű</string>
     <string name="title_activity_compass">Irány az ima</string>
     <string name="compass_summary">Irány az imádság a Szentek Szentje Jeruzsálemben</string>
     <string name="north">É</string>

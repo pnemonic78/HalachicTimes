@@ -12,7 +12,6 @@
     <string name="theme_light">בהיר</string>
 
     <!-- Compass -->
-    <string name="menu_compass">מצפן</string>
     <string name="title_activity_compass">כיוון התפילה</string>
     <string name="compass_summary">כיוון התפילה קודש הקודשים בירושלים</string>
     <string name="north">צ</string>

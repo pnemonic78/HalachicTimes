@@ -12,7 +12,6 @@
     <string name="theme_light">Светлая</string>
 
     <!-- Compass -->
-    <string name="menu_compass">Компас</string>
     <string name="title_activity_compass">Направление молитвы</string>
     <string name="compass_summary">Направление молитвы к Святому Святых в Иерусалиме</string>
     <string name="north">С</string>
