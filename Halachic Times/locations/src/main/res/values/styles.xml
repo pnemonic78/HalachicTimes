@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Widget" parent="android:Widget"/>
+
+    <style name="Widget.ListItem">
+        <item name="android:background">@android:drawable/list_selector_background</item>
+    </style>
+
+</resources>

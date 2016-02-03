@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget" parent="android:Widget.Holo"/>
+
+    <style name="Widget.ListItem">
+        <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
+    </style>
+
+</resources>
