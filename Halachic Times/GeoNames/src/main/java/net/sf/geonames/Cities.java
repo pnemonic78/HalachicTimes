@@ -58,7 +58,7 @@ public class Cities {
     public static final String ANDROID_ELEMENT_INTEGER_ARRAY = "integer-array";
     public static final String ANDROID_ELEMENT_ITEM = "item";
 
-    protected static final String APP_RES = "app/src/main/res";
+    protected static final String APP_RES = "locations/src/main/res";
 
     /**
      * Constructs a new cities.
