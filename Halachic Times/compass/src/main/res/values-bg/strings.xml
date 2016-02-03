@@ -7,7 +7,7 @@
     <string name="menu_settings">Настройки</string>
     <string name="pref_appearance_title">появяване</string>
     <string name="summaries_title">Описания</string>
-    <string name="gradient_title">Градиентна фона</string>
+    <string name="theme_title">Тема</string>
     <string name="theme_dark">Тъмно</string>
     <string name="theme_light">Светла</string>
 

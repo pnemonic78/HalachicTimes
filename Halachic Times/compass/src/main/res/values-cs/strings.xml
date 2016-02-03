@@ -7,7 +7,7 @@
     <string name="menu_settings">Nastavení</string>
     <string name="pref_appearance_title">Vzhled</string>
     <string name="summaries_title">Souhrny</string>
-    <string name="gradient_title">Gradient pozadí</string>
+    <string name="theme_title">Motiv</string>
     <string name="theme_dark">Tmavě</string>
     <string name="theme_light">Světlo</string>
 

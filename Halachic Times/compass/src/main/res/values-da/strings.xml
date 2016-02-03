@@ -7,7 +7,7 @@
     <string name="menu_settings">Indstillinger</string>
     <string name="pref_appearance_title">Udseende</string>
     <string name="summaries_title">Sammenfatninger</string>
-    <string name="gradient_title">Gradienten baggrund</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Mørk</string>
     <string name="theme_light">Lys</string>
 

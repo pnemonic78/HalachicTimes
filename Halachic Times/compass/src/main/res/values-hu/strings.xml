@@ -7,7 +7,7 @@
     <string name="menu_settings">Beállítások</string>
     <string name="pref_appearance_title">Megjelenés</string>
     <string name="summaries_title">Összefoglalók</string>
-    <string name="gradient_title">Gradient háttér</string>
+    <string name="theme_title">Téma</string>
     <string name="theme_dark">Sötét</string>
     <string name="theme_light">Világos</string>
 

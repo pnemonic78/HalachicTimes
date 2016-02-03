@@ -7,7 +7,7 @@
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="pref_appearance_title">Παρουσιαστικό</string>
     <string name="summaries_title">Περιγραφές</string>
-    <string name="gradient_title">Υπόβαθρο ντεγκραντέ</string>
+    <string name="theme_title">Θέμα</string>
     <string name="theme_dark">Σκοτεινό</string>
     <string name="theme_light">Φως</string>
 

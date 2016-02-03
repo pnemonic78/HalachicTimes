@@ -7,7 +7,7 @@
     <string name="menu_settings">Seaded</string>
     <string name="pref_appearance_title">Välimus</string>
     <string name="summaries_title">Kokkuvõtted</string>
-    <string name="gradient_title">Gradiendi tausta</string>
+    <string name="theme_title">Teema</string>
     <string name="theme_dark">Tume</string>
     <string name="theme_light">Heledad</string>
 

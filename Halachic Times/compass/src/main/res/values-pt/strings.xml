@@ -7,7 +7,7 @@
     <string name="menu_settings">Configurações</string>
     <string name="pref_appearance_title">Aparência</string>
     <string name="summaries_title">Sumários</string>
-    <string name="gradient_title">Fundo gradiente</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Escuro</string>
     <string name="theme_light">Clara</string>
 

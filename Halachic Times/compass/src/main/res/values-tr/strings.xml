@@ -7,7 +7,7 @@
     <string name="menu_settings">Ayarlar</string>
     <string name="pref_appearance_title">Görünüş</string>
     <string name="summaries_title">Özetler</string>
-    <string name="gradient_title">Degrade arka plan</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Koyu</string>
     <string name="theme_light">Hafif</string>
 

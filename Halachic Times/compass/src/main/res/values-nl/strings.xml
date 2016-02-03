@@ -7,7 +7,7 @@
     <string name="menu_settings">Instellingen</string>
     <string name="pref_appearance_title">Uiterlijk</string>
     <string name="summaries_title">Samenvattingen</string>
-    <string name="gradient_title">Gradiënt achtergrond</string>
+    <string name="theme_title">Thema</string>
     <string name="theme_dark">Donker</string>
     <string name="theme_light">Lichte</string>
 
