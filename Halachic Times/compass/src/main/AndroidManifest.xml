@@ -19,7 +19,7 @@
     <application
         android:name="net.sf.times.compass.CompassApplication"
         android:allowBackup="true"
-        android:backupAgent="net.sf.times.backup.ZmanimBackupAgent"
+        android:backupAgent="net.sf.times.backup.CompassBackupAgent"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="false"

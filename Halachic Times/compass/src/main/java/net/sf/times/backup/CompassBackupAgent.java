@@ -29,7 +29,7 @@ import android.os.Build;
  * Backup agent helper for the application.
  */
 @TargetApi(Build.VERSION_CODES.FROYO)
-public class ZmanimBackupAgent extends BackupAgentHelper {
+public class CompassBackupAgent extends BackupAgentHelper {
 
     /** A key to uniquely identify the set of backup data. */
     private static final String PREFS_BACKUP_KEY = "prefs";
