@@ -160,10 +160,6 @@
     <string name="menu_settings">Настройки</string>
     <string name="pref_general_title">Общие</string>
     <string name="pref_appearance_title">Внешность</string>
-    <string name="coords_title">Координаты</string>
-    <string name="coords_format_title">Формат координатов</string>
-    <string name="coords_format_decimal">Десятичный</string>
-    <string name="coords_format_sexagesimal">Шестидесятеричный</string>
     <string name="past_title">Прошедшие времена</string>
     <string name="seconds_title">Секунды</string>
     <string name="summaries_title">Описания</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Мнение</string>
     <string name="emphasis_title">Акцент</string>
     <string name="animations">Анимации</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Адрес не найден</string>
-    <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
-    <string name="menu_location">Местоположение</string>
-    <string name="title_activity_location">Мое местоположение</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Личные данные</string>

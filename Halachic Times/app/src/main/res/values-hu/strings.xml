@@ -160,10 +160,6 @@
     <string name="menu_settings">Beállítások</string>
     <string name="pref_general_title">Általános</string>
     <string name="pref_appearance_title">Megjelenés</string>
-    <string name="coords_title">Koordináták</string>
-    <string name="coords_format_title">Koordináták formátum</string>
-    <string name="coords_format_decimal">Decimális</string>
-    <string name="coords_format_sexagesimal">Hatvanas</string>
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="seconds_title">Másodperc</string>
     <string name="summaries_title">Összefoglalók</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Vélemény</string>
     <string name="emphasis_title">Hangsúly</string>
     <string name="animations">Animációk</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Ismeretlen cím</string>
-    <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
-    <string name="menu_location">Hely</string>
-    <string name="title_activity_location">Saját hely</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Adatvédelem és biztonság</string>

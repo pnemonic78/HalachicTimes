@@ -160,10 +160,6 @@
     <string name="menu_settings">Налаштування</string>
     <string name="pref_general_title">Загальні</string>
     <string name="pref_appearance_title">Вигляд</string>
-    <string name="coords_title">Координати</string>
-    <string name="coords_format_title">Координати форматі</string>
-    <string name="coords_format_decimal">Десятковий</string>
-    <string name="coords_format_sexagesimal">Шістдесятирічний</string>
     <string name="past_title">Минулі разів</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описи</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Думка</string>
     <string name="emphasis_title">Акцент</string>
     <string name="animations">Анімації</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Невідома адреса</string>
-    <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
-    <string name="menu_location">Місцезнаходження</string>
-    <string name="title_activity_location">Мое місцезнаходження</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Конфіденційність і безпека</string>

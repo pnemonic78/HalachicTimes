@@ -160,10 +160,6 @@
     <string name="menu_settings">Настройки</string>
     <string name="pref_general_title">Общи</string>
     <string name="pref_appearance_title">появяване</string>
-    <string name="coords_title">Координати</string>
-    <string name="coords_format_title">Координати формат</string>
-    <string name="coords_format_decimal">Десетичен</string>
-    <string name="coords_format_sexagesimal">Шестдесетичен</string>
     <string name="past_title">Време са изминали</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описания</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Становище</string>
     <string name="emphasis_title">Емфаза</string>
     <string name="animations">Анимации</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Неизвестен адрес</string>
-    <string name="location_coords">Lai. %1$s; Pik. %2$s</string>
-    <string name="menu_location">Място</string>
-    <string name="title_activity_location">Моето място</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Поверителност и сигурност</string>

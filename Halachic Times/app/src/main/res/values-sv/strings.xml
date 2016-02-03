@@ -160,10 +160,6 @@
     <string name="menu_settings">Inställningar</string>
     <string name="pref_general_title">Allmänt</string>
     <string name="pref_appearance_title">Utseende</string>
-    <string name="coords_title">Koordinater</string>
-    <string name="coords_format_title">Koordinater format</string>
-    <string name="coords_format_decimal">Decimal</string>
-    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="past_title">Tider som förflutit</string>
     <string name="seconds_title">Sekunder</string>
     <string name="summaries_title">Sammanfattningar</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Yttrande</string>
     <string name="emphasis_title">Betoning</string>
     <string name="animations">Animationer</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Okänd adress</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="menu_location">Plats</string>
-    <string name="title_activity_location">Min plats</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Sekretess och säkerhet</string>

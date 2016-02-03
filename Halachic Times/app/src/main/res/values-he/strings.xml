@@ -160,10 +160,6 @@
     <string name="menu_settings">הגדרות</string>
     <string name="pref_general_title">כללי</string>
     <string name="pref_appearance_title">מראה</string>
-    <string name="coords_title">קואורדינטות</string>
-    <string name="coords_format_title">פורמט קואורדינטות</string>
-    <string name="coords_format_decimal">עשרוני</string>
-    <string name="coords_format_sexagesimal">סקסגסימלי</string>
     <string name="past_title">זמנים שחלפו</string>
     <string name="seconds_title">שניות</string>
     <string name="summaries_title">תקצירים</string>
@@ -197,12 +193,6 @@
     <string name="opinion">דעה</string>
     <string name="emphasis_title">הדגשה</string>
     <string name="animations">אנימציות</string>
-
-    <!-- Location -->
-    <string name="location_unknown">לא אותרה כתובת</string>
-    <string name="location_coords">רוחב %1$s; אורך %2$s</string>
-    <string name="menu_location">מיקום</string>
-    <string name="title_activity_location">המיקום שלי</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">פרטיות ואבטחה</string>

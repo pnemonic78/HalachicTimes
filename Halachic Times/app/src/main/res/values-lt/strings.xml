@@ -160,10 +160,6 @@
     <string name="menu_settings">Nustatymai</string>
     <string name="pref_general_title">Bendras</string>
     <string name="pref_appearance_title">Išvaizda</string>
-    <string name="coords_title">Koordinatės</string>
-    <string name="coords_format_title">Koordinačių formatą,</string>
-    <string name="coords_format_decimal">Dešimtainis</string>
-    <string name="coords_format_sexagesimal">Šešiasdešimt dalis</string>
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
     <string name="summaries_title">Santraukas</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Nuomonė</string>
     <string name="emphasis_title">Emfazė</string>
     <string name="animations">Animacijos</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Nežinomas adresas</string>
-    <string name="location_coords">Pla. %1$s; Ilg. %2$s</string>
-    <string name="menu_location">Vieta</string>
-    <string name="title_activity_location">Mano vieta</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>

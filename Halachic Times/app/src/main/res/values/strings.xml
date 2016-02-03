@@ -290,10 +290,6 @@
     <string name="pref_general_title">General</string>
     <string name="pref_appearance_title">Appearance</string>
     <string name="pref_zmanim_title" translatable="false">@string/title_activity_zmanim</string>
-    <string name="coords_title">Coordinates</string>
-    <string name="coords_format_title">Coordinates format</string>
-    <string name="coords_format_decimal">Decimal</string>
-    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
     <string name="summaries_title">Summaries</string>
@@ -328,12 +324,6 @@
     <string name="opinion">Opinion</string>
     <string name="emphasis_title">Emphasis</string>
     <string name="animations">Animations</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Unknown address</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="menu_location">Location</string>
-    <string name="title_activity_location">My location</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>

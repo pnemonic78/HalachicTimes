@@ -160,10 +160,6 @@
     <string name="menu_settings">Seaded</string>
     <string name="pref_general_title">Üldine</string>
     <string name="pref_appearance_title">Välimus</string>
-    <string name="coords_title">Koordinaadid</string>
-    <string name="coords_format_title">Koordinaadid formaat</string>
-    <string name="coords_format_decimal">Kümnend</string>
-    <string name="coords_format_sexagesimal">Seksagesimaalne</string>
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
     <string name="summaries_title">Kokkuvõtted</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Arvamus</string>
     <string name="emphasis_title">Rõhk</string>
     <string name="animations">Animatsioonid</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Tundmatu aadress</string>
-    <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
-    <string name="menu_location">Asukoht</string>
-    <string name="title_activity_location">Minu asukoht</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>

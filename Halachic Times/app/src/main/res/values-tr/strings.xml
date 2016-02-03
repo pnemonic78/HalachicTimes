@@ -160,10 +160,6 @@
     <string name="menu_settings">Ayarlar</string>
     <string name="pref_general_title">Genel</string>
     <string name="pref_appearance_title">Görünüş</string>
-    <string name="coords_title">Koordinatlar</string>
-    <string name="coords_format_title">Koordinatlar biçimi</string>
-    <string name="coords_format_decimal">Ondalık</string>
-    <string name="coords_format_sexagesimal">Altmışlık</string>
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="seconds_title">Saniye</string>
     <string name="summaries_title">Özetler</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Görüş</string>
     <string name="emphasis_title">Önem</string>
     <string name="animations">Animasyonlar</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Bilinmeyen adres</string>
-    <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
-    <string name="menu_location">Konum</string>
-    <string name="title_activity_location">Konumum</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Gizlilik ve güvenlik</string>

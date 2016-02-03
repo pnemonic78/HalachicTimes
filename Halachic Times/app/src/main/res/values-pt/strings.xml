@@ -160,10 +160,6 @@
     <string name="menu_settings">Configurações</string>
     <string name="pref_general_title">Geral</string>
     <string name="pref_appearance_title">Aparência</string>
-    <string name="coords_title">Coordenadas</string>
-    <string name="coords_format_title">Formato de coordenadas</string>
-    <string name="coords_format_decimal">Decimal</string>
-    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="past_title">Tempos que transcorridos</string>
     <string name="seconds_title">Segundos</string>
     <string name="summaries_title">Sumários</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Opinião</string>
     <string name="emphasis_title">Ênfase</string>
     <string name="animations">Animações</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Endereço desconhecido</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
-    <string name="menu_location">Localização</string>
-    <string name="title_activity_location">Minha localização</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacidade e segurança</string>

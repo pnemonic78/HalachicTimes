@@ -160,10 +160,6 @@
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="pref_general_title">Γενικές</string>
     <string name="pref_appearance_title">Παρουσιαστικό</string>
-    <string name="coords_title">Συντεταγμένες</string>
-    <string name="coords_format_title">Συντεταγμένες μορφή</string>
-    <string name="coords_format_decimal">Δεκαδικός</string>
-    <string name="coords_format_sexagesimal">Βάσης 60</string>
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="seconds_title">Δευτερόλεπτα</string>
     <string name="summaries_title">Περιγραφές</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Γνώμες</string>
     <string name="emphasis_title">Έμφαση</string>
     <string name="animations">Κινούμενες εικόνες</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Άγνωστη διεύθυνση</string>
-    <string name="location_coords">Πλτ. %1$s; Μήκ. %2$s</string>
-    <string name="menu_location">Τοποθεσία</string>
-    <string name="title_activity_location">Η τοποθεσία μου</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Απόρρητο και ασφάλεια</string>

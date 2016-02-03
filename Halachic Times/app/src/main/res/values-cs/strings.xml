@@ -160,10 +160,6 @@
     <string name="menu_settings">Nastavení</string>
     <string name="pref_general_title">Obecné</string>
     <string name="pref_appearance_title">Vzhled</string>
-    <string name="coords_title">Souřadnice</string>
-    <string name="coords_format_title">Souřadnice formát</string>
-    <string name="coords_format_decimal">Desetinný</string>
-    <string name="coords_format_sexagesimal">Šedesátý</string>
     <string name="past_title">Časy, které uplynuly</string>
     <string name="seconds_title">Sekundy</string>
     <string name="summaries_title">Souhrny</string>
@@ -197,12 +193,6 @@
     <string name="opinion">Stanoviska</string>
     <string name="emphasis_title">Důraz</string>
     <string name="animations">Animace</string>
-
-    <!-- Location -->
-    <string name="location_unknown">Neznámý adresa</string>
-    <string name="location_coords">Šířka %1$s; Délka %2$s</string>
-    <string name="menu_location">Místo</string>
-    <string name="title_activity_location">Moje místo</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>
