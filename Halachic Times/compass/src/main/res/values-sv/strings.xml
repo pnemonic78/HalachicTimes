@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Okänd adress</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Inställningar</string>
     <string name="pref_appearance_title">Utseende</string>
-    <string name="coords_title">Koordinater</string>
-    <string name="coords_format_title">Koordinater format</string>
-    <string name="coords_format_decimal">Decimal</string>
-    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="summaries_title">Sammanfattningar</string>
     <string name="gradient_title">Gradient bakgrund</string>
     <string name="theme_dark">Mörkt</string>
@@ -25,10 +19,6 @@
     <string name="east">Ö</string>
     <string name="south">S</string>
     <string name="west">V</string>
-
-    <!-- Location -->
-    <string name="menu_location">Plats</string>
-    <string name="title_activity_location">Min plats</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Sekretess och säkerhet</string>

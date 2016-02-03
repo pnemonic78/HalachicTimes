@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Unbekannte Adresse</string>
-    <string name="location_coords">Brt. %1$s; Lng. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Einstellungen</string>
     <string name="pref_appearance_title">Darstellung</string>
-    <string name="coords_title">Koordinaten</string>
-    <string name="coords_format_title">Koordinaten-Format</string>
-    <string name="coords_format_decimal">Dezimal</string>
-    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="summaries_title">Zusammenfassungen</string>
     <string name="gradient_title">Hintergrund mit Farbverlauf</string>
     <string name="theme_dark">Dunkles</string>
@@ -25,10 +19,6 @@
     <string name="east">O</string>
     <string name="south">S</string>
     <string name="west">W</string>
-
-    <!-- Location -->
-    <string name="menu_location">Standort</string>
-    <string name="title_activity_location">Mein Standort</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Datenschutz und Sicherheit</string>

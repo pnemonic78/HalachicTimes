@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Neznámý adresa</string>
-    <string name="location_coords">Šířka %1$s; Délka %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Nastavení</string>
     <string name="pref_appearance_title">Vzhled</string>
-    <string name="coords_title">Souřadnice</string>
-    <string name="coords_format_title">Souřadnice formát</string>
-    <string name="coords_format_decimal">Desetinný</string>
-    <string name="coords_format_sexagesimal">Šedesátý</string>
     <string name="summaries_title">Souhrny</string>
     <string name="gradient_title">Gradient pozadí</string>
     <string name="theme_dark">Tmavě</string>
@@ -25,10 +19,6 @@
     <string name="east">V</string>
     <string name="south">J</string>
     <string name="west">Z</string>
-
-    <!-- Location -->
-    <string name="menu_location">Místo</string>
-    <string name="title_activity_location">Moje místo</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>

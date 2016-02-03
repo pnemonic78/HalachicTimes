@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Necunoscuta adresa</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
     <string name="pref_appearance_title">Aparenţă</string>
-    <string name="coords_title">Coordonează</string>
-    <string name="coords_format_title">Coordonează format</string>
-    <string name="coords_format_decimal">Zecimal</string>
-    <string name="coords_format_sexagesimal">Șaizecelea</string>
     <string name="summaries_title">Rezumatele</string>
     <string name="gradient_title">Gradient de fundal</string>
     <string name="theme_dark">Întuneric</string>
@@ -25,10 +19,6 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">V</string>
-
-    <!-- Location -->
-    <string name="menu_location">Locație</string>
-    <string name="title_activity_location">Locația mea</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Confidenţialitate şi securitate</string>

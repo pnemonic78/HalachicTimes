@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Адрес не найден</string>
-    <string name="location_coords">Шрт. %1$s; Длг. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Настройки</string>
     <string name="pref_appearance_title">Внешность</string>
-    <string name="coords_title">Координаты</string>
-    <string name="coords_format_title">Формат координатов</string>
-    <string name="coords_format_decimal">Десятичный</string>
-    <string name="coords_format_sexagesimal">Шестидесятеричный</string>
     <string name="summaries_title">Описания</string>
     <string name="gradient_title">Градиент фона</string>
     <string name="theme_dark">Темный</string>
@@ -25,10 +19,6 @@
     <string name="east">В</string>
     <string name="south">Ю</string>
     <string name="west">З</string>
-
-    <!-- Location -->
-    <string name="menu_location">Местоположение</string>
-    <string name="title_activity_location">Мое местоположение</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Личные данные</string>

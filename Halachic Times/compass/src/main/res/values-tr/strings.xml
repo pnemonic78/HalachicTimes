@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Bilinmeyen adres</string>
-    <string name="location_coords">Enl. %1$s; Boy. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Ayarlar</string>
     <string name="pref_appearance_title">Görünüş</string>
-    <string name="coords_title">Koordinatlar</string>
-    <string name="coords_format_title">Koordinatlar biçimi</string>
-    <string name="coords_format_decimal">Ondalık</string>
-    <string name="coords_format_sexagesimal">Altmışlık</string>
     <string name="summaries_title">Özetler</string>
     <string name="gradient_title">Degrade arka plan</string>
     <string name="theme_dark">Koyu</string>
@@ -25,10 +19,6 @@
     <string name="east">D</string>
     <string name="south">G</string>
     <string name="west">B</string>
-
-    <!-- Location -->
-    <string name="menu_location">Konum</string>
-    <string name="title_activity_location">Konumum</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Gizlilik ve güvenlik</string>

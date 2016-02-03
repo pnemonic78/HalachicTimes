@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">לא אותרה כתובת</string>
-    <string name="location_coords">רוחב %1$s; אורך %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
     <string name="pref_appearance_title">מראה</string>
-    <string name="coords_title">קואורדינטות</string>
-    <string name="coords_format_title">פורמט קואורדינטות</string>
-    <string name="coords_format_decimal">עשרוני</string>
-    <string name="coords_format_sexagesimal">סקסגסימלי</string>
     <string name="summaries_title">תקצירים</string>
     <string name="gradient_title">רקע הדרגתי</string>
     <string name="theme_dark">כהה</string>
@@ -25,10 +19,6 @@
     <string name="east">ז</string>
     <string name="south">ד</string>
     <string name="west">ע</string>
-
-    <!-- Location -->
-    <string name="menu_location">מיקום</string>
-    <string name="title_activity_location">המיקום שלי</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">פרטיות ואבטחה</string>

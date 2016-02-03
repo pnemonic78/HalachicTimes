@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Tuntematon osoite</string>
-    <string name="location_coords">Lvy. %1$s; Pts. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Asetukset</string>
     <string name="pref_appearance_title">Ulkonäkö</string>
-    <string name="coords_title">Koordinaatit</string>
-    <string name="coords_format_title">Koordinaatit formaatti</string>
-    <string name="coords_format_decimal">Desimaali</string>
-    <string name="coords_format_sexagesimal">Seksagesimaali</string>
     <string name="summaries_title">Yhteenvedot</string>
     <string name="gradient_title">Gradientin tausta</string>
     <string name="theme_dark">Tumma</string>
@@ -25,10 +19,6 @@
     <string name="east">I</string>
     <string name="south">E</string>
     <string name="west">L</string>
-
-    <!-- Location -->
-    <string name="menu_location">Sijainti</string>
-    <string name="title_activity_location">Oma sijainti</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Tietosuoja ja turvallisuus</string>

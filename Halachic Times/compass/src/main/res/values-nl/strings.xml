@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Onbekend adres</string>
-    <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Instellingen</string>
     <string name="pref_appearance_title">Uiterlijk</string>
-    <string name="coords_title">Coordinates</string>
-    <string name="coords_format_title">Coördinaten formaat</string>
-    <string name="coords_format_decimal">Decimale</string>
-    <string name="coords_format_sexagesimal">Sexagesimale</string>
     <string name="summaries_title">Samenvattingen</string>
     <string name="gradient_title">Gradiënt achtergrond</string>
     <string name="theme_dark">Donker</string>
@@ -25,10 +19,6 @@
     <string name="east">O</string>
     <string name="south">Z</string>
     <string name="west">W</string>
-
-    <!-- Location -->
-    <string name="menu_location">Locatie</string>
-    <string name="title_activity_location">Mijn locatie</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy en beveiliging</string>

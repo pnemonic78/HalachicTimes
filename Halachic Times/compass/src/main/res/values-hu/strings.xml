@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Ismeretlen cím</string>
-    <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Beállítások</string>
     <string name="pref_appearance_title">Megjelenés</string>
-    <string name="coords_title">Koordináták</string>
-    <string name="coords_format_title">Koordináták formátum</string>
-    <string name="coords_format_decimal">Decimális</string>
-    <string name="coords_format_sexagesimal">Hatvanas</string>
     <string name="summaries_title">Összefoglalók</string>
     <string name="gradient_title">Gradient háttér</string>
     <string name="theme_dark">Sötét</string>
@@ -25,10 +19,6 @@
     <string name="east">K</string>
     <string name="south">D</string>
     <string name="west">N</string>
-
-    <!-- Location -->
-    <string name="menu_location">Hely</string>
-    <string name="title_activity_location">Saját hely</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Adatvédelem és biztonság</string>

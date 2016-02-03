@@ -1,42 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="dawn">#50fbf2db</color>
-    <color name="tallis">#50eac599</color>
-    <color name="sunrise">#50d99058</color>
-    <color name="shema">#50b9a78f</color>
-    <color name="prayers">#50a8b4ae</color>
-    <color name="midday">#5087ceeb</color>
-    <color name="earliest_mincha">#508ec4db</color>
-    <color name="mincha">#50b68d84</color>
-    <color name="plug_hamincha">#50c7765f</color>
-    <color name="sunset">#50d9603b</color>
-    <color name="twilight">#509966cc</color>
-    <color name="nightfall">#50440044</color>
-    <color name="midnight">#50000000</color>
-
-    <color name="dawn_light">#c0fbf2db</color>
-    <color name="tallis_light">#c0eac599</color>
-    <color name="sunrise_light">#c0d99058</color>
-    <color name="shema_light">#c0b9a78f</color>
-    <color name="prayers_light">#c0a8b4ae</color>
-    <color name="midday_light">#c087ceeb</color>
-    <color name="earliest_mincha_light">#c08ec4db</color>
-    <color name="mincha_light">#c0b68d84</color>
-    <color name="plug_hamincha_light">#c0c7765f</color>
-    <color name="sunset_light">#c0d9603b</color>
-    <color name="twilight_light">#c09966cc</color>
-    <color name="nightfall_light">#80440044</color>
-    <color name="midnight_light">#80000000</color>
-
-    <!-- Widget applet. -->
-    <color name="bright">#10ffffff</color>
-    <color name="widget_box">#80000000</color>
-    <color name="widget_border">#10ffffff</color>
-    <color name="background_nokia">#ffff8200</color>
-    <color name="text_nokia">@android:color/white</color>
-    <color name="widget_candles_bg">#60ffff00</color>
-
     <!-- Compass. -->
     <color name="compass">@android:color/white</color>
     <color name="compass_gradient">#cc9933</color>
@@ -66,10 +30,5 @@
     <color name="bright_foreground_light_disabled">#80000000</color>
     <color name="bright_foreground_dark_inverse">@color/bright_foreground_light</color>
     <color name="bright_foreground_light_inverse">@color/bright_foreground_dark</color>
-
-    <!-- Buttons. -->
-    <color name="btn_navigation_pressed">#ccffff00</color>
-    <color name="btn_navigation_selected">#a6808000</color>
-    <color name="btn_navigation_default">#80000000</color>
 
 </resources>

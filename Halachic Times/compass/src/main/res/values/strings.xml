@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">Prayer Direction</string>
-    <string name="location_unknown">Unknown address</string>
-    <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
 
     <!-- Backup -->
     <string name="google_backup_api_key" translatable="false">GoogleKey</string>
@@ -11,13 +9,8 @@
     <!-- Preferences -->
     <string name="menu_settings">Settings</string>
     <string name="pref_appearance_title">Appearance</string>
-    <string name="coords_title">Coordinates</string>
-    <string name="coords_format_title">Coordinates format</string>
-    <string name="coords_format_decimal">Decimal</string>
-    <string name="coords_format_sexagesimal">Sexagesimal</string>
     <string name="summaries_title">Summaries</string>
-    <string name="gradient_title">Gradient background</string>
-    <string name="theme_title" translatable="false">@string/gradient_title</string>
+    <string name="theme_title">Theme</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
 
@@ -29,10 +22,6 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">W</string>
-
-    <!-- Location -->
-    <string name="menu_location">Location</string>
-    <string name="title_activity_location">My location</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>

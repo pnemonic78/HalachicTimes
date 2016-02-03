@@ -2,16 +2,10 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="location_unknown">Nežinomas adresas</string>
-    <string name="location_coords">Pla. %1$s; Ilg. %2$s</string>
 
     <!-- Preferences -->
     <string name="menu_settings">Nustatymai</string>
     <string name="pref_appearance_title">Išvaizda</string>
-    <string name="coords_title">Koordinatės</string>
-    <string name="coords_format_title">Koordinačių formatą,</string>
-    <string name="coords_format_decimal">Dešimtainis</string>
-    <string name="coords_format_sexagesimal">Šešiasdešimt dalis</string>
     <string name="summaries_title">Santraukas</string>
     <string name="gradient_title">Gradientas fone</string>
     <string name="theme_dark">Tamsi</string>
@@ -25,10 +19,6 @@
     <string name="east">R</string>
     <string name="south">P</string>
     <string name="west">V</string>
-
-    <!-- Location -->
-    <string name="menu_location">Vieta</string>
-    <string name="title_activity_location">Mano vieta</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>
