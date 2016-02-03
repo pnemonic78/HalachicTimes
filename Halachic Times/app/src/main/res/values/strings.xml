@@ -297,8 +297,7 @@
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
     <string name="summaries_title">Summaries</string>
-    <string name="gradient_title">Gradient background</string>
-    <string name="theme_title" translatable="false">@string/gradient_title</string>
+    <string name="theme_title">Theme</string>
     <string name="theme_none">None</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>

@@ -167,7 +167,7 @@
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
     <string name="summaries_title">Santraukas</string>
-    <string name="gradient_title">Gradientas fone</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Tamsi</string>
     <string name="theme_light">Šviesos</string>
     <string name="theme_none">Nė vienas</string>

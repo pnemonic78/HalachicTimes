@@ -167,7 +167,7 @@
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
     <string name="summaries_title">Kokkuvõtted</string>
-    <string name="gradient_title">Gradiendi tausta</string>
+    <string name="theme_title">Teema</string>
     <string name="theme_dark">Tume</string>
     <string name="theme_light">Heledad</string>
     <string name="theme_none">Mitte ükski</string>

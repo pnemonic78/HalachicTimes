@@ -167,7 +167,7 @@
     <string name="past_title">Tider der er gået</string>
     <string name="seconds_title">Sekunder</string>
     <string name="summaries_title">Sammenfatninger</string>
-    <string name="gradient_title">Gradienten baggrund</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Mørk</string>
     <string name="theme_light">Lys</string>
     <string name="theme_none">Ingen</string>

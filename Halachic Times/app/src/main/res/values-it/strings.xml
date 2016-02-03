@@ -167,7 +167,7 @@
     <string name="past_title">Tempi che sono trascorsi</string>
     <string name="seconds_title">Secondi</string>
     <string name="summaries_title">Sommari</string>
-    <string name="gradient_title">Gradiente di sfondo</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Scuro</string>
     <string name="theme_light">Chiaro</string>
     <string name="theme_none">Nessuna</string>

@@ -167,7 +167,7 @@
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="seconds_title">Secondes</string>
     <string name="summaries_title">Résumés</string>
-    <string name="gradient_title">Fond graduel</string>
+    <string name="theme_title">Thème</string>
     <string name="theme_dark">Sombre</string>
     <string name="theme_light">Lumière</string>
     <string name="theme_none">Aucun</string>

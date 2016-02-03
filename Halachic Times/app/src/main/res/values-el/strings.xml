@@ -167,7 +167,7 @@
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="seconds_title">Δευτερόλεπτα</string>
     <string name="summaries_title">Περιγραφές</string>
-    <string name="gradient_title">Υπόβαθρο ντεγκραντέ</string>
+    <string name="theme_title">Θέμα</string>
     <string name="theme_dark">Σκοτεινό</string>
     <string name="theme_light">Φως</string>
     <string name="theme_none">Κανένας</string>

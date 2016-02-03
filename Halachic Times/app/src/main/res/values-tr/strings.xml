@@ -167,7 +167,7 @@
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="seconds_title">Saniye</string>
     <string name="summaries_title">Özetler</string>
-    <string name="gradient_title">Degrade arka plan</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Koyu</string>
     <string name="theme_light">Hafif</string>
     <string name="theme_none">Hiçbiri</string>

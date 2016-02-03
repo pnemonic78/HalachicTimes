@@ -167,7 +167,7 @@
     <string name="past_title">זמנים שחלפו</string>
     <string name="seconds_title">שניות</string>
     <string name="summaries_title">תקצירים</string>
-    <string name="gradient_title">רקע הדרגתי</string>
+    <string name="theme_title">עיצוב</string>
     <string name="theme_dark">כהה</string>
     <string name="theme_light">בהיר</string>
     <string name="theme_none">ללא</string>

@@ -167,7 +167,7 @@
     <string name="past_title">Минулі разів</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описи</string>
-    <string name="gradient_title">Градієнт фону</string>
+    <string name="theme_title">Тема</string>
     <string name="theme_dark">Темний</string>
     <string name="theme_light">Світло</string>
     <string name="theme_none">Ні</string>

@@ -167,7 +167,7 @@
     <string name="past_title">Horarios que han superado</string>
     <string name="seconds_title">Segundos</string>
     <string name="summaries_title">Descripciones</string>
-    <string name="gradient_title">Gradiente de fondo</string>
+    <string name="theme_title">Tema</string>
     <string name="theme_dark">Oscuro</string>
     <string name="theme_light">Claro</string>
     <string name="theme_none">Nada</string>

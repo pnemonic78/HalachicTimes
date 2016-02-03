@@ -167,7 +167,7 @@
     <string name="past_title">Време са изминали</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описания</string>
-    <string name="gradient_title">Градиентна фона</string>
+    <string name="theme_title">Тема</string>
     <string name="theme_dark">Тъмно</string>
     <string name="theme_light">Светла</string>
     <string name="theme_none">Никой</string>

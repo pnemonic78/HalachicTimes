@@ -167,7 +167,7 @@
     <string name="past_title">Ajat että kulunut</string>
     <string name="seconds_title">Sekuntia</string>
     <string name="summaries_title">Yhteenvedot</string>
-    <string name="gradient_title">Gradientin tausta</string>
+    <string name="theme_title">Teema</string>
     <string name="theme_dark">Tumma</string>
     <string name="theme_light">Vaalea</string>
     <string name="theme_none">Ei yhtään</string>
