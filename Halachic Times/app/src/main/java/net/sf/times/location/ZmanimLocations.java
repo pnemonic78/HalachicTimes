@@ -41,6 +41,7 @@ import android.util.Log;
 
 import net.sf.times.R;
 import net.sf.times.preference.ZmanimSettings;
+import net.sf.util.LocaleUtils;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.ArrayList;
@@ -56,15 +57,6 @@ import java.util.TimeZone;
 public class ZmanimLocations implements ZmanimLocationListener, LocationFormatter {
 
     private static final String TAG = "ZmanimLocations";
-
-    /** ISO 639 language code for "Hebrew". */
-    public static final String ISO639_HEBREW_FORMER = "he";
-    /** ISO 639 language code for "Hebrew" (Java compatibility). */
-    public static final String ISO639_HEBREW = "iw";
-    /** ISO 639 language code for "Yiddish" (Java compatibility). */
-    public static final String ISO639_YIDDISH_FORMER = "ji";
-    /** ISO 639 language code for "Yiddish". */
-    public static final String ISO639_YIDDISH = "yi";
 
     /** The maximum time interval between location updates, in milliseconds. */
     private static final long UPDATE_TIME_MAX = 6 * DateUtils.HOUR_IN_MILLIS;
@@ -694,8 +686,7 @@ public class ZmanimLocations implements ZmanimLocationListener, LocationFormatte
      * @return {@code true} if the locale is either Hebrew or Yiddish.
      */
     public static boolean isLocaleRTL() {
-        final String iso639 = Locale.getDefault().getLanguage();
-        return ISO639_HEBREW.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
+        return LocaleUtils.isLocaleRTL();
     }
 
     private void requestUpdatesEclair() {
