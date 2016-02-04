@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">@string/title_activity_compass</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Asetukset</string>
+    <string name="pref_appearance_title">Ulkonäkö</string>
+    <string name="summaries_title">Yhteenvedot</string>
+    <string name="theme_title">Teema</string>
+    <string name="theme_dark">Tumma</string>
+    <string name="theme_light">Vaalea</string>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Suunta rukous</string>
+    <string name="compass_summary">Suunta rukouksen Kaikkeinpyhimpään Jerusalemissa</string>
+    <string name="north">P</string>
+    <string name="east">I</string>
+    <string name="south">E</string>
+    <string name="west">L</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Tietosuoja ja turvallisuus</string>
+    <string name="pref_privacy_clear_history">Tyhjennä historia</string>
+
+    <!-- About -->
+    <string name="pref_about_title">Tietoja</string>
+    <string name="version">Sovellusversio </string>
+
+</resources>

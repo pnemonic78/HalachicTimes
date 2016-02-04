@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">@string/title_activity_compass</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Налаштування</string>
+    <string name="pref_appearance_title">Вигляд</string>
+    <string name="summaries_title">Описи</string>
+    <string name="theme_title">Тема</string>
+    <string name="theme_dark">Темний</string>
+    <string name="theme_light">Світло</string>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Напрям молитви</string>
+    <string name="compass_summary">Напрямок молитві святая святих у Єрусалимі</string>
+    <string name="north">П</string>
+    <string name="east">С</string>
+    <string name="south">п</string>
+    <string name="west">З</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Конфіденційність і безпека</string>
+    <string name="pref_privacy_clear_history">Очистити історію</string>
+
+    <!-- About -->
+    <string name="pref_about_title">Про</string>
+    <string name="version">Версія програми</string>
+
+</resources>

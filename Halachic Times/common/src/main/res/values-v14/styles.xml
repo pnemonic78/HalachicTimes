@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget" parent="android:Widget.DeviceDefault"/>
+
+    <style name="Widget.TextView" parent="android:Widget.DeviceDefault.TextView"/>
+
+</resources>

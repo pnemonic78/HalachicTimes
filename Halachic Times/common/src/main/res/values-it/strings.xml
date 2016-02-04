@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">@string/title_activity_compass</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Impostazioni</string>
+    <string name="pref_appearance_title">Apparenza</string>
+    <string name="summaries_title">Sommari</string>
+    <string name="theme_title">Tema</string>
+    <string name="theme_dark">Scuro</string>
+    <string name="theme_light">Chiaro</string>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Direzione di preghiera</string>
+    <string name="compass_summary">Direzione della preghiera a Santo dei Santi a Gerusalemme</string>
+    <string name="north">N</string>
+    <string name="east">E</string>
+    <string name="south">S</string>
+    <string name="west">O</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Privatumas ir sauga</string>
+    <string name="pref_privacy_clear_history">Clear history</string>
+
+    <!-- About -->
+    <string name="pref_about_title">Su</string>
+    <string name="version">Versione di applicazione</string>
+
+</resources>

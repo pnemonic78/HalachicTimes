@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">@string/title_activity_compass</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Nustatymai</string>
+    <string name="pref_appearance_title">Išvaizda</string>
+    <string name="summaries_title">Santraukas</string>
+    <string name="theme_title">Tema</string>
+    <string name="theme_dark">Tamsi</string>
+    <string name="theme_light">Šviesos</string>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Kryptis maldos</string>
+    <string name="compass_summary">Kryptis maldos Šventasis Šventųjų Jeruzalėje</string>
+    <string name="north">Š</string>
+    <string name="east">R</string>
+    <string name="south">P</string>
+    <string name="west">V</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Privacy &amp; security</string>
+    <string name="pref_privacy_clear_history">Išvalyti istoriją</string>
+
+    <!-- About -->
+    <string name="pref_about_title">Apie</string>
+    <string name="version">Programos versija </string>
+
+</resources>

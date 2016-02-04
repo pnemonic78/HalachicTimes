@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">@string/title_activity_compass</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Instellingen</string>
+    <string name="pref_appearance_title">Uiterlijk</string>
+    <string name="summaries_title">Samenvattingen</string>
+    <string name="theme_title">Thema</string>
+    <string name="theme_dark">Donker</string>
+    <string name="theme_light">Lichte</string>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Richting van het gebed</string>
+    <string name="compass_summary">Richting van het gebed om de Heilige der Heiligen in Jeruzalem</string>
+    <string name="north">N</string>
+    <string name="east">O</string>
+    <string name="south">Z</string>
+    <string name="west">W</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Privacy en beveiliging</string>
+    <string name="pref_privacy_clear_history">Geschiedenis wissen</string>
+
+    <!-- About -->
+    <string name="pref_about_title">Over</string>
+    <string name="version">App versie</string>
+
+</resources>
