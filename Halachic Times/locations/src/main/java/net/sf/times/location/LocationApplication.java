@@ -51,6 +51,12 @@ public class LocationApplication extends Application {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        LocationSettings.init(this);
+    }
+
+    @Override
     public void onLowMemory() {
         super.onLowMemory();
         SQLiteDatabase.releaseMemory();

@@ -20,18 +20,16 @@
 package net.sf.times.preference;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.location.Location;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import net.sf.media.RingtoneManager;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
+import net.sf.times.location.LocationSettings;
 
 import java.util.Calendar;
 
@@ -40,22 +38,8 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimSettings {
+public class ZmanimSettings extends LocationSettings {
 
-    /** Preference name for the latitude. */
-    private static final String KEY_LATITUDE = "latitude";
-    /** Preference name for the longitude. */
-    private static final String KEY_LONGITUDE = "longitude";
-    /** Preference key for the elevation / altitude. */
-    private static final String KEY_ELEVATION = "altitude";
-    /** Preference name for the location provider. */
-    private static final String KEY_PROVIDER = "provider";
-    /** Preference name for the location time. */
-    private static final String KEY_TIME = "time";
-    /** Preference name for the co-ordinates visibility. */
-    public static final String KEY_COORDS = "coords.visible";
-    /** Preference name for the co-ordinates format. */
-    public static final String KEY_COORDS_FORMAT = "coords.format";
     /** Preference name for showing seconds. */
     public static final String KEY_SECONDS = "seconds.visible";
     /** Preference name for showing summaries. */
@@ -218,11 +202,6 @@ public class ZmanimSettings {
     public static String OPINION_SEA;
     public static String OPINION_TWILIGHT;
 
-    /** Format the coordinates in decimal notation. */
-    public static String FORMAT_DECIMAL;
-    /** Format the coordinates in sexagesimal notation. */
-    public static String FORMAT_SEXIGESIMAL;
-
     /** Show zmanim list without background. */
     public static String LIST_THEME_NONE;
     /** Show zmanim list with dark gradient background. */
@@ -242,9 +221,6 @@ public class ZmanimSettings {
     /** Unknown date. */
     public static final long NEVER = Long.MIN_VALUE;
 
-    private Context context;
-    private final SharedPreferences preferences;
-
     /**
      * Constructs a new settings.
      *
@@ -252,92 +228,7 @@ public class ZmanimSettings {
      *         the context.
      */
     public ZmanimSettings(Context context) {
-        Context app = context.getApplicationContext();
-        if (app != null)
-            context = app;
-        this.context = context;
-        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    /**
-     * Get the data.
-     *
-     * @return the shared preferences.
-     */
-    public SharedPreferences getData() {
-        return preferences;
-    }
-
-    /**
-     * Get the editor to modify the preferences data.
-     *
-     * @return the editor.
-     */
-    public SharedPreferences.Editor edit() {
-        return preferences.edit();
-    }
-
-    /**
-     * Get the location.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    public Location getLocation() {
-        if (!preferences.contains(KEY_LATITUDE))
-            return null;
-        if (!preferences.contains(KEY_LONGITUDE))
-            return null;
-        double latitude;
-        double longitude;
-        double elevation;
-        try {
-            latitude = Double.parseDouble(preferences.getString(KEY_LATITUDE, "0"));
-            longitude = Double.parseDouble(preferences.getString(KEY_LONGITUDE, "0"));
-            elevation = Double.parseDouble(preferences.getString(KEY_ELEVATION, "0"));
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-            return null;
-        }
-        String provider = preferences.getString(KEY_PROVIDER, "");
-        Location location = new Location(provider);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setAltitude(elevation);
-        location.setTime(preferences.getLong(KEY_TIME, 0L));
-        return location;
-    }
-
-    /**
-     * Set the location.
-     *
-     * @return the location.
-     */
-    public void putLocation(Location location) {
-        Editor editor = preferences.edit();
-        editor.putString(KEY_PROVIDER, location.getProvider());
-        editor.putString(KEY_LATITUDE, Double.toString(location.getLatitude()));
-        editor.putString(KEY_LONGITUDE, Double.toString(location.getLongitude()));
-        editor.putString(KEY_ELEVATION, Double.toString(location.hasAltitude() ? location.getAltitude() : 0));
-        editor.putLong(KEY_TIME, location.getTime());
-        editor.commit();
-    }
-
-    /**
-     * Are coordinates visible?
-     *
-     * @return {@code true} to show coordinates.
-     */
-    public boolean isCoordinates() {
-        return preferences.getBoolean(KEY_COORDS, context.getResources().getBoolean(R.bool.coords_visible_defaultValue));
-    }
-
-    /**
-     * Get the notation of latitude and longitude.
-     *
-     * @return the format.
-     */
-    public String getCoordinatesFormat() {
-        return preferences.getString(KEY_COORDS_FORMAT, context.getString(R.string.coords_format_defaultValue));
+        super(context);
     }
 
     /**
@@ -701,7 +592,7 @@ public class ZmanimSettings {
      * @return the emphasis scale as a fractional percentage.
      */
     public float getEmphasisScale() {
-        String value= preferences.getString(KEY_EMPHASIS_SCALE, context.getString(R.string.emphasis_scale_defaultValue));
+        String value = preferences.getString(KEY_EMPHASIS_SCALE, context.getString(R.string.emphasis_scale_defaultValue));
         return Float.parseFloat(value);
     }
 
@@ -913,9 +804,6 @@ public class ZmanimSettings {
         OPINION_SEA = context.getString(R.string.opinion_value_sea);
         OPINION_TWILIGHT = context.getString(R.string.opinion_value_twilight);
         OPINION_NIGHT = context.getString(R.string.opinion_value_nightfall);
-
-        FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
-        FORMAT_SEXIGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
 
         LIST_THEME_NONE = context.getString(R.string.theme_value_none);
         LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
