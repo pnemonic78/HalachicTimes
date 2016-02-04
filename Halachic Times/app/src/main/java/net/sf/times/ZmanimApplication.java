@@ -19,10 +19,7 @@
  */
 package net.sf.times;
 
-import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
-
-import net.sf.times.location.AddressProvider;
+import net.sf.times.location.LocationApplication;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimSettings;
 
@@ -31,12 +28,10 @@ import net.sf.times.preference.ZmanimSettings;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimApplication extends Application {
+public class ZmanimApplication extends LocationApplication {
 
     /** Provider for locations. */
     private ZmanimLocations locations;
-    /** Provider for addresses. */
-    private AddressProvider addressProvider;
 
     /**
      * Constructs a new application.
@@ -56,18 +51,6 @@ public class ZmanimApplication extends Application {
         return locations;
     }
 
-    /**
-     * Get the addresses provider instance.
-     *
-     * @return the provider.
-     */
-    public AddressProvider getAddresses() {
-        if (addressProvider == null) {
-            addressProvider = new AddressProvider(this);
-        }
-        return addressProvider;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -75,16 +58,7 @@ public class ZmanimApplication extends Application {
     }
 
     @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        SQLiteDatabase.releaseMemory();
-    }
-
-    @Override
     public void onTerminate() {
-        if (addressProvider != null) {
-            addressProvider.close();
-        }
         if (locations != null) {
             locations.quit();
         }

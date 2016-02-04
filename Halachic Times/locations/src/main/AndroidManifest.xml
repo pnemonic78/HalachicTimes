@@ -2,7 +2,19 @@
     package="net.sf.times.location"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- The application uses one or more features on the device for determining location, such as GPS location, network location, or cell location. -->
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false"/>
+
     <application>
+        <service
+            android:name="net.sf.times.location.AddressService"
+            android:exported="false"/>
     </application>
 
 </manifest>

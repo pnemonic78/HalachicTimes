@@ -3,17 +3,10 @@
     package="net.sf.times"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
-    <!-- The application uses one or more features on the device for determining location, such as GPS location, network location, or cell location. -->
-    <uses-feature
-        android:name="android.hardware.location"
-        android:required="false"/>
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
         android:name="android.hardware.sensor.compass"
@@ -119,9 +112,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="net.sf.times.location.AddressService"
-            android:exported="false"/>
         <service
             android:name="net.sf.times.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>

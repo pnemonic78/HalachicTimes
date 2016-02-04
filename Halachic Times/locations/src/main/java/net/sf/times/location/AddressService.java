@@ -25,7 +25,6 @@ import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 
-import net.sf.times.ZmanimApplication;
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
 
 /**
@@ -106,7 +105,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
     @Override
     public void onCreate() {
         super.onCreate();
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        LocationApplication app = (LocationApplication) getApplication();
         addressProvider = app.getAddresses();
     }
 
