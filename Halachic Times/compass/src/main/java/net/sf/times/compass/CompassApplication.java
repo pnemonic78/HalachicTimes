@@ -20,8 +20,8 @@
 package net.sf.times.compass;
 
 import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.location.CompassLocations;
 import net.sf.times.location.LocationApplication;
-import net.sf.times.location.ZmanimLocations;
 
 /**
  * Compass application.
@@ -31,7 +31,7 @@ import net.sf.times.location.ZmanimLocations;
 public class CompassApplication extends LocationApplication {
 
     /** Provider for locations. */
-    private ZmanimLocations locations;
+    private CompassLocations locations;
 
     /**
      * Constructs a new application.
@@ -44,9 +44,9 @@ public class CompassApplication extends LocationApplication {
      *
      * @return the provider.
      */
-    public ZmanimLocations getLocations() {
+    public CompassLocations getLocations() {
         if (locations == null) {
-            locations = new ZmanimLocations(this);
+            locations = new CompassLocations(this);
         }
         return locations;
     }

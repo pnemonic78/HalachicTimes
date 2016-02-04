@@ -39,7 +39,7 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import net.sf.times.compass.preference.CompassSettings;
+import net.sf.util.LocaleUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,22 +47,13 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * Location provider.
+ * Locations provider.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimLocations implements ZmanimLocationListener, LocationFormatter {
+public class LocationsProvider implements ZmanimLocationListener, LocationFormatter {
 
-    private static final String TAG = "ZmanimLocations";
-
-    /** ISO 639 language code for "Hebrew". */
-    public static final String ISO639_HEBREW_FORMER = "he";
-    /** ISO 639 language code for "Hebrew" (Java compatibility). */
-    public static final String ISO639_HEBREW = "iw";
-    /** ISO 639 language code for "Yiddish" (Java compatibility). */
-    public static final String ISO639_YIDDISH_FORMER = "ji";
-    /** ISO 639 language code for "Yiddish". */
-    public static final String ISO639_YIDDISH = "yi";
+    private static final String TAG = "LocationProvider";
 
     /** The maximum time interval between location updates, in milliseconds. */
     private static final long UPDATE_TIME_MAX = 6 * DateUtils.HOUR_IN_MILLIS;
@@ -140,7 +131,7 @@ public class ZmanimLocations implements ZmanimLocationListener, LocationFormatte
     /** The location. */
     private Location location;
     /** The settings and preferences. */
-    private CompassSettings settings;
+    private LocationSettings settings;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     /** The coordinates format. */
@@ -166,12 +157,12 @@ public class ZmanimLocations implements ZmanimLocationListener, LocationFormatte
      * @param context
      *         the context.
      */
-    public ZmanimLocations(Context context) {
+    protected LocationsProvider(Context context) {
         Context app = context.getApplicationContext();
         if (app != null)
             context = app;
         this.context = context;
-        settings = new CompassSettings(context);
+        settings = new LocationSettings(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         coordsFormat = context.getString(R.string.location_coords);
@@ -618,7 +609,7 @@ public class ZmanimLocations implements ZmanimLocationListener, LocationFormatte
         final String notation = settings.getCoordinatesFormat();
         final String latitudeText;
         final String longitudeText;
-        if (CompassSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+        if (LocationSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
             latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
             longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
         } else {
@@ -631,7 +622,7 @@ public class ZmanimLocations implements ZmanimLocationListener, LocationFormatte
     @Override
     public CharSequence formatCoordinate(double coord) {
         final String notation = settings.getCoordinatesFormat();
-        if (CompassSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+        if (LocationSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
             return Location.convert(coord, Location.FORMAT_SECONDS);
         }
         return String.format(Locale.US, FORMAT_DEGREES, coord);
@@ -664,8 +655,7 @@ public class ZmanimLocations implements ZmanimLocationListener, LocationFormatte
      * @return {@code true} if the locale is either Hebrew or Yiddish.
      */
     public static boolean isLocaleRTL() {
-        final String iso639 = Locale.getDefault().getLanguage();
-        return ISO639_HEBREW.equals(iso639) || ISO639_HEBREW_FORMER.equals(iso639) || ISO639_YIDDISH.equals(iso639) || ISO639_YIDDISH_FORMER.equals(iso639);
+        return LocaleUtils.isLocaleRTL();
     }
 
     private void requestUpdatesEclair() {

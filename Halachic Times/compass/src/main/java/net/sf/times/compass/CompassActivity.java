@@ -37,14 +37,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.ThemedActivity;
+import net.sf.times.compass.preference.Compass10PreferenceActivity;
+import net.sf.times.compass.preference.CompassPreferenceActivity;
+import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.location.CompassLocations;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
-import net.sf.times.location.ZmanimLocations;
-import net.sf.times.compass.preference.CompassPreferenceActivity;
-import net.sf.times.compass.preference.Compass10PreferenceActivity;
-import net.sf.times.compass.preference.CompassSettings;
 
 import java.lang.ref.WeakReference;
 
@@ -76,7 +76,7 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
     /** The magnetic field sensor. */
     private Sensor magnetic;
     /** Provider for locations. */
-    private ZmanimLocations locations;
+    private CompassLocations locations;
     /** Location of the Holy of Holies. */
     private Location holiest;
     /** The main view. */
