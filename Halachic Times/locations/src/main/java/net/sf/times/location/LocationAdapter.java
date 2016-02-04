@@ -31,8 +31,6 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.TextView;
 
-import net.sf.times.compass.R;
-
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
