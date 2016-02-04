@@ -183,7 +183,7 @@
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Gebetsrichtung</string>
-    <string name="compass_summary"> Gebetsrichtung zu Allerheiligste in Jerusalem</string>
+    <string name="compass_summary">Gebetsrichtung zu Allerheiligste in Jerusalem</string>
     <string name="north">N</string>
     <string name="east">O</string>
     <string name="south">S</string>
