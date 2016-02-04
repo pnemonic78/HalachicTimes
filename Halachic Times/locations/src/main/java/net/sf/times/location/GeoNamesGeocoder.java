@@ -25,7 +25,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import net.sf.net.HTTPReader;
-import net.sf.times.BuildConfig;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

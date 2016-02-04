@@ -15,9 +15,6 @@ android {
         versionCode versionCodeValue
         versionName versionMajor + '.' + versionMinor
 
-        buildConfigField "String", "BING_API_KEY", '"' + project.BING_API_KEY + '"'
-        buildConfigField "String", "GEONAMES_USERNAME", '"' + project.GEONAMES_USERNAME + '"'
-
         testApplicationId "net.sf.times.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }

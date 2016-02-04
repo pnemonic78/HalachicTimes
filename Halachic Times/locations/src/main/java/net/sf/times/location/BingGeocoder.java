@@ -24,8 +24,6 @@ import android.location.Address;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import net.sf.times.BuildConfig;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;

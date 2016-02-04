@@ -25,8 +25,6 @@ import android.location.Address;
 import android.location.Location;
 import android.text.format.DateUtils;
 
-import net.sf.times.R;
-
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
