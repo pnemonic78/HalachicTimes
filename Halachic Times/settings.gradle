@@ -1,6 +1,7 @@
 include ':GeoNames'
 include ':KosherJava'
 include ':lib'
+include ':common'
 include ':locations'
 include ':app'
 include ':compass'
