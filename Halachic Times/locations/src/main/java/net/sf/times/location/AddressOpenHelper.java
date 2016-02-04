@@ -27,8 +27,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.text.format.DateUtils;
 
-import net.sf.times.compass.R;
-
 /**
  * A helper class to manage database creation and version management for
  * addresses and elevations.

@@ -442,7 +442,7 @@ public class AddressProvider {
         List<Address> addresses = null;
         GeocoderBase geocoder = databaseGeocoder;
         if (geocoder == null) {
-            geocoder = new DatabaseGeocoder(context, locale);
+            geocoder = new DatabaseGeocoder(context, this, locale);
             databaseGeocoder = geocoder;
         }
         try {
@@ -811,7 +811,7 @@ public class AddressProvider {
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = databaseGeocoder;
         if (geocoder == null) {
-            geocoder = new DatabaseGeocoder(context, locale);
+            geocoder = new DatabaseGeocoder(context, this, locale);
             databaseGeocoder = geocoder;
         }
         try {

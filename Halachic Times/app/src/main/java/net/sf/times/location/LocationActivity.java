@@ -192,7 +192,7 @@ public class LocationActivity extends ThemedTabActivity implements TextWatcher, 
     protected void populateLists() {
         ZmanimApplication app = (ZmanimApplication) getApplication();
         AddressProvider provider = app.getAddresses();
-        ZmanimLocations locations = app.getLocations();
+        LocationFormatter formatter = app.getLocations();
         List<ZmanimAddress> addresses = provider.query(null);
         List<ZmanimAddress> cities = countriesGeocoder.getCities();
 
@@ -206,7 +206,7 @@ public class LocationActivity extends ThemedTabActivity implements TextWatcher, 
         // themselves.
         List<LocationItem> items = new ArrayList<LocationItem>(addresses.size());
         for (ZmanimAddress addr : addresses) {
-            items.add(new LocationItem(addr, locations));
+            items.add(new LocationItem(addr, formatter));
         }
 
         LocationAdapter adapter = new LocationAdapter(this, items);

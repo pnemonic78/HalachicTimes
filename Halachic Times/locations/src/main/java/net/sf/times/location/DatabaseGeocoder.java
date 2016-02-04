@@ -25,7 +25,6 @@ import android.location.Address;
 import android.location.Location;
 
 import net.sf.database.CursorFilter;
-import net.sf.times.ZmanimApplication;
 
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -42,14 +41,19 @@ import java.util.Locale;
  */
 public class DatabaseGeocoder extends GeocoderBase {
 
+    private final AddressProvider provider;
+
     /**
      * Creates a new database geocoder.
      *
      * @param context
      *         the context.
+     * @param provider
+     *         the address provider.
      */
-    public DatabaseGeocoder(Context context) {
+    public DatabaseGeocoder(Context context, AddressProvider provider) {
         super(context);
+        this.provider = provider;
     }
 
     /**
@@ -57,11 +61,14 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param context
      *         the context.
+     * @param provider
+     *         the address provider.
      * @param locale
      *         the locale.
      */
-    public DatabaseGeocoder(Context context, Locale locale) {
+    public DatabaseGeocoder(Context context, AddressProvider provider, Locale locale) {
         super(context, locale);
+        this.provider = provider;
     }
 
     @Override
@@ -89,8 +96,6 @@ public class DatabaseGeocoder extends GeocoderBase {
                 return (mDistance[0] <= SAME_LOCATION);
             }
         };
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        AddressProvider provider = app.getAddresses();
         List<ZmanimAddress> q = provider.query(filter);
         List<Address> addresses = new ArrayList<Address>(q);
 
@@ -120,8 +125,6 @@ public class DatabaseGeocoder extends GeocoderBase {
                 return (mDistance[0] <= SAME_PLATEAU);
             }
         };
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        AddressProvider provider = app.getAddresses();
         List<ZmanimLocation> locations = provider.queryElevations(filter);
 
         int locationsCount = locations.size();
