@@ -53,7 +53,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     private long id;
     private double elevation;
     private boolean hasElevation;
-    private String formatted;
+    private CharSequence formatted;
     private boolean favorite;
 
     /**
@@ -124,7 +124,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
      *
      * @return the address
      */
-    public String getFormatted() {
+    public CharSequence getFormatted() {
         if (formatted == null)
             formatted = format();
         return formatted;
@@ -195,7 +195,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
      *
      * @return the formatted address.
      */
-    protected String format() {
+    protected CharSequence format() {
         Bundle extras = getExtras();
         String formatted = (extras == null) ? null : extras.getString(KEY_FORMATTED);
         if (formatted != null)
@@ -272,8 +272,8 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
         // Don't need to compare elevation.
 
-        String format1 = this.getFormatted();
-        String format2 = that.getFormatted();
+        String format1 = this.getFormatted().toString();
+        String format2 = that.getFormatted().toString();
         int c = format1.compareToIgnoreCase(format2);
         if (c != 0)
             return c;
@@ -288,7 +288,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         super.writeToParcel(parcel, flags);
         parcel.writeLong(id);
         parcel.writeDouble(elevation);
-        parcel.writeString(formatted);
+        TextUtils.writeToParcel(formatted, parcel, flags);
         parcel.writeInt(favorite ? 1 : 0);
     }
 
@@ -299,7 +299,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             ZmanimAddress za = new ZmanimAddress(a);
             za.id = source.readLong();
             za.elevation = source.readDouble();
-            za.formatted = source.readString();
+            za.formatted = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(source);
             za.favorite = source.readInt() == 0 ? false : true;
             return za;
         }

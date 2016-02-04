@@ -450,8 +450,8 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
         if (loc == null)
             return;
 
-        final String coordsText = locations.formatCoordinates(loc);
-        final String locationName = formatAddress();
+        final CharSequence coordsText = locations.formatCoordinates(loc);
+        final CharSequence locationName = formatAddress();
 
         // Update the location.
         TextView coordinates = (TextView) header.findViewById(R.id.coordinates);
@@ -525,7 +525,7 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
      *
      * @return the formatted address.
      */
-    private String formatAddress() {
+    private CharSequence formatAddress() {
         if (address != null)
             return address.getFormatted();
         return getString(R.string.location_unknown);

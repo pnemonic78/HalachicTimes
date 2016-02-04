@@ -254,8 +254,8 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
         if (loc == null)
             return;
 
-        final String coordsText = locations.formatCoordinates(loc);
-        final String locationName = formatAddress();
+        final CharSequence coordsText = locations.formatCoordinates(loc);
+        final CharSequence locationName = formatAddress();
 
         // Update the location.
         TextView address = (TextView) findViewById(R.id.address);
@@ -270,7 +270,7 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
      *
      * @return the formatted address.
      */
-    private String formatAddress() {
+    private CharSequence formatAddress() {
         if (address != null)
             return address.getFormatted();
         return getString(R.string.location_unknown);

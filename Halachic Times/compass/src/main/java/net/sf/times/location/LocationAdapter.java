@@ -292,8 +292,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
                 for (int i = 0; i < count; i++) {
                     value = values.get(i);
                     valueText = value.getLabelLower();
-                    latitude = value.getFormatLatitude();
-                    longitude = value.getFormatLongitude();
+                    latitude = value.getFormatLatitude().toString();
+                    longitude = value.getFormatLongitude().toString();
 
                     if (contains(valueText, constraintString) || latitude.contains(constraintString) || longitude.contains(constraintString)) {
                         newValues.add(value);
@@ -370,11 +370,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
     protected static class LocationItem {
 
         private final ZmanimAddress mAddress;
-        private final String mLabel;
+        private final CharSequence mLabel;
         private final String mLabelLower;
-        private final String mLatitude;
-        private final String mLongitude;
-        private final String mCoordinates;
+        private final CharSequence mLatitude;
+        private final CharSequence mLongitude;
+        private final CharSequence mCoordinates;
 
         /**
          * Constructs a new item.
@@ -385,7 +385,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
         public LocationItem(ZmanimAddress address, ZmanimLocations locations) {
             this.mAddress = address;
             this.mLabel = address.getFormatted();
-            this.mLabelLower = mLabel.toLowerCase(address.getLocale());
+            this.mLabelLower = mLabel.toString().toLowerCase(address.getLocale());
             this.mLatitude = locations.formatCoordinate(address.getLatitude());
             this.mLongitude = locations.formatCoordinate(address.getLongitude());
             this.mCoordinates = locations.formatCoordinates(getAddress());
@@ -405,7 +405,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the label.
          */
-        public String getLabel() {
+        public CharSequence getLabel() {
             return mLabel;
         }
 
@@ -423,7 +423,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the latitude.
          */
-        public String getFormatLatitude() {
+        public CharSequence getFormatLatitude() {
             return mLatitude;
         }
 
@@ -432,7 +432,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the longitude.
          */
-        public String getFormatLongitude() {
+        public CharSequence getFormatLongitude() {
             return mLongitude;
         }
 
@@ -441,7 +441,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the coordinates.
          */
-        public String getCoordinates() {
+        public CharSequence getCoordinates() {
             return mCoordinates;
         }
 

@@ -422,7 +422,7 @@ public class AddressProvider {
      *         the address.
      * @return the formatted address name.
      */
-    public static String formatAddress(ZmanimAddress a) {
+    public static CharSequence formatAddress(ZmanimAddress a) {
         return a.getFormatted();
     }
 
@@ -512,7 +512,7 @@ public class AddressProvider {
                 values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
             }
         }
-        values.put(AddressColumns.ADDRESS, formatAddress(address));
+        values.put(AddressColumns.ADDRESS, formatAddress(address).toString());
         values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
         values.put(AddressColumns.LATITUDE, address.getLatitude());
         values.put(AddressColumns.LONGITUDE, address.getLongitude());

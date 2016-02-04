@@ -53,7 +53,7 @@ import java.util.TimeZone;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimLocations implements ZmanimLocationListener {
+public class ZmanimLocations implements ZmanimLocationListener, LocationFormatter {
 
     private static final String TAG = "ZmanimLocations";
 
@@ -601,51 +601,22 @@ public class ZmanimLocations implements ZmanimLocationListener {
         return isInIsrael(timeZone);
     }
 
-    /**
-     * Format the coordinates.
-     *
-     * @return the coordinates text.
-     */
-    public String formatCoordinates() {
-        return formatCoordinates(getLocation());
-    }
-
-    /**
-     * Format the coordinates.
-     *
-     * @param location
-     *         the location.
-     * @return the coordinates text.
-     */
-    public String formatCoordinates(Location location) {
+    @Override
+    public CharSequence formatCoordinates(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         return formatCoordinates(latitude, longitude);
     }
 
-    /**
-     * Format the coordinates.
-     *
-     * @param address
-     *         the address.
-     * @return the coordinates text.
-     */
-    public String formatCoordinates(Address address) {
+    @Override
+    public CharSequence formatCoordinates(Address address) {
         final double latitude = address.getLatitude();
         final double longitude = address.getLongitude();
         return formatCoordinates(latitude, longitude);
     }
 
-    /**
-     * Format the coordinates.
-     *
-     * @param latitude
-     *         the latitude.
-     * @param longitude
-     *         the longitude.
-     * @return the coordinates text.
-     */
-    public String formatCoordinates(double latitude, double longitude) {
+    @Override
+    public CharSequence formatCoordinates(double latitude, double longitude) {
         final String notation = settings.getCoordinatesFormat();
         final String latitudeText;
         final String longitudeText;
@@ -659,14 +630,8 @@ public class ZmanimLocations implements ZmanimLocationListener {
         return String.format(Locale.US, coordsFormat, latitudeText, longitudeText);
     }
 
-    /**
-     * Format the coordinates.
-     *
-     * @param coord
-     *         the coordinate.
-     * @return the coordinate text.
-     */
-    public String formatCoordinate(double coord) {
+    @Override
+    public CharSequence formatCoordinate(double coord) {
         final String notation = settings.getCoordinatesFormat();
         if (ZmanimSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
             return Location.convert(coord, Location.FORMAT_SECONDS);

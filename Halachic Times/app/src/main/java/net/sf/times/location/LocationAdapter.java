@@ -282,8 +282,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
             } else {
                 final Locale locale = LocationAdapter.this.locale;
                 final String constraintString = constraint.toString().toLowerCase(locale);
-                String latitude;
-                String longitude;
+                CharSequence latitude;
+                CharSequence longitude;
 
                 final List<LocationItem> newValues = new ArrayList<LocationItem>();
                 LocationItem value;
@@ -295,7 +295,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
                     latitude = value.getFormatLatitude();
                     longitude = value.getFormatLongitude();
 
-                    if (contains(valueText, constraintString) || latitude.contains(constraintString) || longitude.contains(constraintString)) {
+                    if (contains(valueText, constraintString) || (TextUtils.indexOf(latitude, constraintString) >= 0) || (TextUtils.indexOf(longitude, constraintString) >= 0)) {
                         newValues.add(value);
                     }
                 }
@@ -370,11 +370,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
     protected static class LocationItem {
 
         private final ZmanimAddress mAddress;
-        private final String mLabel;
+        private final CharSequence mLabel;
         private final String mLabelLower;
-        private final String mLatitude;
-        private final String mLongitude;
-        private final String mCoordinates;
+        private final CharSequence mLatitude;
+        private final CharSequence mLongitude;
+        private final CharSequence mCoordinates;
 
         /**
          * Constructs a new item.
@@ -382,13 +382,13 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @param address
          *         the address.
          */
-        public LocationItem(ZmanimAddress address, ZmanimLocations locations) {
+        public LocationItem(ZmanimAddress address, LocationFormatter formatter) {
             this.mAddress = address;
             this.mLabel = address.getFormatted();
-            this.mLabelLower = mLabel.toLowerCase(address.getLocale());
-            this.mLatitude = locations.formatCoordinate(address.getLatitude());
-            this.mLongitude = locations.formatCoordinate(address.getLongitude());
-            this.mCoordinates = locations.formatCoordinates(getAddress());
+            this.mLabelLower = mLabel.toString().toLowerCase(address.getLocale());
+            this.mLatitude = formatter.formatCoordinate(address.getLatitude());
+            this.mLongitude = formatter.formatCoordinate(address.getLongitude());
+            this.mCoordinates = formatter.formatCoordinates(getAddress());
         }
 
         /**
@@ -405,7 +405,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the label.
          */
-        public String getLabel() {
+        public CharSequence getLabel() {
             return mLabel;
         }
 
@@ -423,7 +423,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the latitude.
          */
-        public String getFormatLatitude() {
+        public CharSequence getFormatLatitude() {
             return mLatitude;
         }
 
@@ -432,7 +432,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the longitude.
          */
-        public String getFormatLongitude() {
+        public CharSequence getFormatLongitude() {
             return mLongitude;
         }
 
@@ -441,7 +441,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *
          * @return the coordinates.
          */
-        public String getCoordinates() {
+        public CharSequence getCoordinates() {
             return mCoordinates;
         }
 
@@ -494,8 +494,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
             ZmanimAddress addr2 = item2.getAddress();
 
             // Sort first by name.
-            String format1 = item1.getLabelLower();
-            String format2 = item2.getLabelLower();
+            String format1 = item1.getLabelLower().toString();
+            String format2 = item2.getLabelLower().toString();
             int c = mCollator.compare(format1, format2);
             if (c != 0)
                 return c;
