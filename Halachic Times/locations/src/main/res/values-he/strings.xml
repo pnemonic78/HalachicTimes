@@ -13,4 +13,7 @@
     <string name="menu_location">מיקום</string>
     <string name="title_activity_location">המיקום שלי</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">נקה היסטוריה</string>
+
 </resources>

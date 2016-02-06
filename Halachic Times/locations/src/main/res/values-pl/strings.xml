@@ -13,4 +13,7 @@
     <string name="menu_location">Lokalizacja</string>
     <string name="title_activity_location">Moja lokalizacja</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Wyczyść historię</string>
+
 </resources>

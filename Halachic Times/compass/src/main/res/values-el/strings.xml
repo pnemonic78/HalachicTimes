@@ -14,7 +14,4 @@
     <string name="south">Ν</string>
     <string name="west">Δ</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>
-
 </resources>

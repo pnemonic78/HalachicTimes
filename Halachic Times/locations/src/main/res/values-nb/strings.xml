@@ -13,4 +13,7 @@
     <string name="menu_location">Posisjon</string>
     <string name="title_activity_location">Min posisjon</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Slett loggen</string>
+
 </resources>

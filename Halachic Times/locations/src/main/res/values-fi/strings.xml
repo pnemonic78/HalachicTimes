@@ -13,4 +13,7 @@
     <string name="menu_location">Sijainti</string>
     <string name="title_activity_location">Oma sijainti</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Tyhjenn? historia</string>
+
 </resources>

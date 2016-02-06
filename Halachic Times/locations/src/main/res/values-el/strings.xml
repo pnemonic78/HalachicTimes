@@ -13,4 +13,7 @@
     <string name="menu_location">Τοποθεσία</string>
     <string name="title_activity_location">Η τοποθεσία μου</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>
+
 </resources>

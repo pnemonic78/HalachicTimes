@@ -13,4 +13,7 @@
     <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Kustuta ajalugu</string>
+
 </resources>

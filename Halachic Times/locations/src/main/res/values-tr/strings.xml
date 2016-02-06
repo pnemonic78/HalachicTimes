@@ -13,4 +13,7 @@
     <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Geçmişi temizle</string>
+
 </resources>

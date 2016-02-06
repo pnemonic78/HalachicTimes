@@ -14,7 +14,4 @@
     <string name="south">G</string>
     <string name="west">B</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Geçmişi temizle</string>
-
 </resources>

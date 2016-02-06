@@ -14,7 +14,4 @@
     <string name="south">D</string>
     <string name="west">N</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Előzmények törlése</string>
-
 </resources>

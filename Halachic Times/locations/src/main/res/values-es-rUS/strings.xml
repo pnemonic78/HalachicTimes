@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Eliminar historial</string>
+
 </resources>

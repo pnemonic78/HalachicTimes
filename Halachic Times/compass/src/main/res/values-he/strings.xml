@@ -14,7 +14,4 @@
     <string name="south">ד</string>
     <string name="west">ע</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">נקה היסטוריה</string>
-
 </resources>

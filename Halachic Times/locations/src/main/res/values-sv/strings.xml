@@ -13,4 +13,7 @@
     <string name="menu_location">Plats</string>
     <string name="title_activity_location">Min plats</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Rensa historik</string>
+
 </resources>

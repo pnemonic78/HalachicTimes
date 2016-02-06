@@ -14,7 +14,4 @@
     <string name="south">J</string>
     <string name="west">Z</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Vymazat historii</string>
-
 </resources>

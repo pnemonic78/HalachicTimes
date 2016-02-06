@@ -14,7 +14,4 @@
     <string name="south">п</string>
     <string name="west">З</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Очистити історію</string>
-
 </resources>

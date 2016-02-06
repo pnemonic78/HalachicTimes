@@ -14,7 +14,4 @@
     <string name="south">S</string>
     <string name="west">O</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Effacer l\'historique</string>
-
 </resources>

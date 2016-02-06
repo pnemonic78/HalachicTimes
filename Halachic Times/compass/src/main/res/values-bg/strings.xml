@@ -14,7 +14,4 @@
     <string name="south">Ю</string>
     <string name="west">З</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Изчистване на историята</string>
-
 </resources>

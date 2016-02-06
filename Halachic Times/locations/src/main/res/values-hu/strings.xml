@@ -13,4 +13,7 @@
     <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Előzmények törlése</string>
+
 </resources>

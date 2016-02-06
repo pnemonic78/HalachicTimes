@@ -14,7 +14,4 @@
     <string name="south">S</string>
     <string name="west">V</string>
 
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Rensa historik</string>
-
 </resources>

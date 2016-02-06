@@ -13,4 +13,7 @@
     <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
 
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">Išvalyti istoriją</string>
+
 </resources>
