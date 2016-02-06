@@ -17,4 +17,20 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+    <style name="Widget.Light.TextView" parent="Widget.TextView">
+        <item name="android:textAppearance">?android:textAppearanceInverse</item>
+    </style>
+
+    <style name="Widget.Light.TextView.Large">
+        <item name="android:textAppearance">?android:textAppearanceLargeInverse</item>
+    </style>
+
+    <style name="Widget.Light.TextView.Medium">
+        <item name="android:textAppearance">?android:textAppearanceMediumInverse</item>
+    </style>
+
+    <style name="Widget.Light.TextView.Small">
+        <item name="android:textAppearance">?android:textAppearanceSmallInverse</item>
+    </style>
+
 </resources>

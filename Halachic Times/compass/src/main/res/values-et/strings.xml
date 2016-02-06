@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Seaded</string>
-    <string name="pref_appearance_title">Välimus</string>
     <string name="summaries_title">Kokkuvõtted</string>
-    <string name="theme_title">Teema</string>
-    <string name="theme_dark">Tume</string>
-    <string name="theme_light">Heledad</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Suund palve</string>
@@ -20,11 +15,6 @@
     <string name="west">Lä</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>
     <string name="pref_privacy_clear_history">Kustuta ajalugu</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Kohta</string>
-    <string name="version">Rakenduse versioon</string>
 
 </resources>

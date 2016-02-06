@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Beállítások</string>
-    <string name="pref_appearance_title">Megjelenés</string>
     <string name="summaries_title">Összefoglalók</string>
-    <string name="theme_title">Téma</string>
-    <string name="theme_dark">Sötét</string>
-    <string name="theme_light">Világos</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Irány az ima</string>
@@ -20,11 +15,6 @@
     <string name="west">N</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Adatvédelem és biztonság</string>
     <string name="pref_privacy_clear_history">Előzmények törlése</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Körülbelül</string>
-    <string name="version">Alkalmazás verziója</string>
 
 </resources>

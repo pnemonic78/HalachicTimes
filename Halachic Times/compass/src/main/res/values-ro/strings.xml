@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Setări</string>
-    <string name="pref_appearance_title">Aparenţă</string>
     <string name="summaries_title">Rezumatele</string>
-    <string name="theme_title">Temă</string>
-    <string name="theme_dark">Întuneric</string>
-    <string name="theme_light">Lumina</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Direcția de rugăciune</string>
@@ -20,11 +15,6 @@
     <string name="west">V</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Confidenţialitate şi securitate</string>
     <string name="pref_privacy_clear_history">Ștergeţi istoricul</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Despre</string>
-    <string name="version">Versiunea aplicație</string>
 
 </resources>

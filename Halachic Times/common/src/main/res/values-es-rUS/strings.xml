@@ -6,6 +6,5 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacidad y seguridad</string>
-    <string name="pref_privacy_clear_history">Eliminar historial</string>
 
 </resources>

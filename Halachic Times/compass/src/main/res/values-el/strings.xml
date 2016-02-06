@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ρυθμίσεις</string>
-    <string name="pref_appearance_title">Παρουσιαστικό</string>
     <string name="summaries_title">Περιγραφές</string>
-    <string name="theme_title">Θέμα</string>
-    <string name="theme_dark">Σκοτεινό</string>
-    <string name="theme_light">Φως</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Κατεύθυνση της προσευχής</string>
@@ -20,11 +15,6 @@
     <string name="west">Δ</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Απόρρητο και ασφάλεια</string>
     <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Σχετικά</string>
-    <string name="version">Έκδοση της εφαρμογής</string>
 
 </resources>

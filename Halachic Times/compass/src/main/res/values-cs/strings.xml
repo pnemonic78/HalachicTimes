@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Nastavení</string>
-    <string name="pref_appearance_title">Vzhled</string>
     <string name="summaries_title">Souhrny</string>
-    <string name="theme_title">Motiv</string>
-    <string name="theme_dark">Tmavě</string>
-    <string name="theme_light">Světlo</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Směr modlitby</string>
@@ -20,11 +15,6 @@
     <string name="west">Z</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>
     <string name="pref_privacy_clear_history">Vymazat historii</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Info o</string>
-    <string name="version">Verze aplikace</string>
 
 </resources>

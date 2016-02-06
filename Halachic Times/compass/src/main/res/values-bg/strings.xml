@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Настройки</string>
-    <string name="pref_appearance_title">появяване</string>
     <string name="summaries_title">Описания</string>
-    <string name="theme_title">Тема</string>
-    <string name="theme_dark">Тъмно</string>
-    <string name="theme_light">Светла</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Посока на молитва</string>
@@ -20,11 +15,6 @@
     <string name="west">З</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Поверителност и сигурност</string>
     <string name="pref_privacy_clear_history">Изчистване на историята</string>
-
-    <!-- About -->
-    <string name="pref_about_title">За</string>
-    <string name="version">Версия на приложението</string>
 
 </resources>

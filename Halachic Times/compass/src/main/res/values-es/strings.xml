@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ajustes</string>
-    <string name="pref_appearance_title">Apariencia</string>
     <string name="summaries_title">Descripciones</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Oscuro</string>
-    <string name="theme_light">Claro</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Dirección de la oración</string>
@@ -20,11 +15,6 @@
     <string name="west">O</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Seguridad y privacidad</string>
     <string name="pref_privacy_clear_history">Borrar historial</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Información</string>
-    <string name="version">Versión de aplicación</string>
 
 </resources>

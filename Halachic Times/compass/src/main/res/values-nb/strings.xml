@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Innstillinger</string>
-    <string name="pref_appearance_title">Utseende</string>
     <string name="summaries_title">Sammentrag</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Mørkt</string>
-    <string name="theme_light">Lys</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Retning av bønn</string>
@@ -20,11 +15,6 @@
     <string name="west">V</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Personvern og sikkerhet</string>
     <string name="pref_privacy_clear_history">Slett loggen</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Om</string>
-    <string name="version">Apper versjon</string>
 
 </resources>

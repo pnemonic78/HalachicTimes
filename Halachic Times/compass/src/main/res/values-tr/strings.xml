@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ayarlar</string>
-    <string name="pref_appearance_title">Görünüş</string>
     <string name="summaries_title">Özetler</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Koyu</string>
-    <string name="theme_light">Hafif</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Namaz yönü</string>
@@ -20,11 +15,6 @@
     <string name="west">B</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Gizlilik ve güvenlik</string>
     <string name="pref_privacy_clear_history">Geçmişi temizle</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Hakkında</string>
-    <string name="version">Uygulama sürümü </string>
 
 </resources>

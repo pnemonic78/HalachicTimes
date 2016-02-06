@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">@string/title_activity_compass</string>
-
     <!-- Preferences -->
     <string name="menu_settings">Seaded</string>
     <string name="pref_appearance_title">Välimus</string>
-    <string name="summaries_title">Kokkuvõtted</string>
+
+    <!-- Theme. -->
     <string name="theme_title">Teema</string>
     <string name="theme_dark">Tume</string>
     <string name="theme_light">Heledad</string>
 
-    <!-- Compass -->
-    <string name="title_activity_compass">Suund palve</string>
-    <string name="compass_summary">Suund palve kõige pühamat paika Jeruusalemma</string>
-    <string name="north">P</string>
-    <string name="east">I</string>
-    <string name="south">Lõ</string>
-    <string name="west">Lä</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>
-    <string name="pref_privacy_clear_history">Kustuta ajalugu</string>
 
     <!-- About -->
     <string name="pref_about_title">Kohta</string>

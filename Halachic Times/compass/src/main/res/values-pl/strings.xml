@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ustawienia</string>
-    <string name="pref_appearance_title">Wygląd</string>
     <string name="summaries_title">Podsumowań</string>
-    <string name="theme_title">Motyw</string>
-    <string name="theme_dark">Ciemny</string>
-    <string name="theme_light">Światła</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Kierunek modlitwy</string>
@@ -20,11 +15,6 @@
     <string name="west">Z</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Prywatność i bezpieczeństwo</string>
     <string name="pref_privacy_clear_history">Wyczyść historię</string>
-
-    <!-- About -->
-    <string name="pref_about_title">O</string>
-    <string name="version">Wersja aplikacji</string>
 
 </resources>

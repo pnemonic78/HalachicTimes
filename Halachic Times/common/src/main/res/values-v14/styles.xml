@@ -5,4 +5,6 @@
 
     <style name="Widget.TextView" parent="android:Widget.DeviceDefault.TextView"/>
 
+    <style name="Widget.Light.TextView" parent="android:Widget.DeviceDefault.Light.TextView"/>
+
 </resources>

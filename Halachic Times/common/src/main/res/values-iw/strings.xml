@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">@string/title_activity_compass</string>
-
     <!-- Preferences -->
     <string name="menu_settings">הגדרות</string>
     <string name="pref_appearance_title">מראה</string>
-    <string name="summaries_title">תקצירים</string>
+
+    <!-- Theme. -->
     <string name="theme_title">עיצוב</string>
     <string name="theme_dark">כהה</string>
     <string name="theme_light">בהיר</string>
 
-    <!-- Compass -->
-    <string name="title_activity_compass">כיוון התפילה</string>
-    <string name="compass_summary">כיוון התפילה קודש הקודשים בירושלים</string>
-    <string name="north">צ</string>
-    <string name="east">ז</string>
-    <string name="south">ד</string>
-    <string name="west">ע</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">פרטיות ואבטחה</string>
-    <string name="pref_privacy_clear_history">נקה היסטוריה</string>
 
     <!-- About -->
     <string name="pref_about_title">אודות</string>

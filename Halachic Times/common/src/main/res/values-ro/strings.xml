@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">@string/title_activity_compass</string>
-
     <!-- Preferences -->
     <string name="menu_settings">Setări</string>
     <string name="pref_appearance_title">Aparenţă</string>
-    <string name="summaries_title">Rezumatele</string>
+
+    <!-- Theme. -->
     <string name="theme_title">Temă</string>
     <string name="theme_dark">Întuneric</string>
     <string name="theme_light">Lumina</string>
 
-    <!-- Compass -->
-    <string name="title_activity_compass">Direcția de rugăciune</string>
-    <string name="compass_summary">Direcția de rugăciune la Sfânta Sfintelor din Ierusalim</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">V</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Confidenţialitate şi securitate</string>
-    <string name="pref_privacy_clear_history">Ștergeţi istoricul</string>
 
     <!-- About -->
     <string name="pref_about_title">Despre</string>

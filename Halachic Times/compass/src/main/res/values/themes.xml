@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Compass.Base" parent="android:Theme">
-    </style>
+    <style name="Theme.Compass" parent="Theme.Base"/>
 
-    <style name="Theme.Compass.Base.Light" parent="android:Theme.Light">
-    </style>
+    <style name="Theme.Compass.Dark" parent="Theme.Compass"/>
 
-    <style name="Theme.Compass" parent="Theme.Compass.Base">
-    </style>
+    <style name="Theme.Compass.Light" parent="Theme.Base.Light"/>
 
-    <style name="Theme.Compass.Dark" parent="Theme.Compass">
-    </style>
-
-    <style name="Theme.Compass.Light" parent="Theme.Compass.Base.Light">
-    </style>
-
-    <style name="Theme.Compass.Settings">
-    </style>
+    <style name="Theme.Compass.Settings" parent="Theme.Base.Settings"/>
 
 </resources>

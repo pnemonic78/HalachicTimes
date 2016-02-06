@@ -4,12 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Indstillinger</string>
-    <string name="pref_appearance_title">Udseende</string>
     <string name="summaries_title">Sammenfatninger</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Mørk</string>
-    <string name="theme_light">Lys</string>
 
     <!-- Compass -->
     <string name="title_activity_compass">Retning af bøn</string>
@@ -20,11 +15,6 @@
     <string name="west">V</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Sikkerhed og personlige oplysninger</string>
     <string name="pref_privacy_clear_history">Ryd historik</string>
-
-    <!-- About -->
-    <string name="pref_about_title">Om</string>
-    <string name="version">Programversion</string>
 
 </resources>
