@@ -23,6 +23,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 
+import net.sf.times.common.preference.AbstractPreferenceFragment;
 import net.sf.times.compass.R;
 
 /**
