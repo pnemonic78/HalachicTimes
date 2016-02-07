@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Go to date -->
+    <string name="off">Nenhum</string>
+
+    <!-- Date -->
     <string name="today">Hoje</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
+    <string name="month_day_year" formatted="false">%-e de %B de %Y</string>
 
     <!-- Ringtone -->
     <string name="ringtone_default" msgid="3332469542084549546">"Toque padrão"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Som de notificação padrão"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Som de alarme padrão"</string>
     <string name="ringtone_silent">Nenhum</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Configurações</string>
+    <string name="pref_general_title">Geral</string>
+    <string name="pref_appearance_title">Aparência</string>
+    <string name="pref_about_title">Sobre</string>
+
+    <!-- Theme. -->
+    <string name="theme_title">Tema</string>
 
 </resources>

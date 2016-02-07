@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachiline Ajad Palvetes</string>
     <string name="title_activity_zmanim">Halachiline Ajad</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e %B %Y</string>
-    <string name="off">Väljas</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Päeval on 120 minut enne päikesetõusu / pärast päikeseloojangut</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Seaded</string>
-    <string name="pref_general_title">Üldine</string>
-    <string name="pref_appearance_title">Välimus</string>
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
     <string name="summaries_title">Kokkuvõtted</string>
-    <string name="theme_title">Teema</string>
-    <string name="theme_dark">Tume</string>
-    <string name="theme_light">Heledad</string>
     <string name="theme_none">Mitte ükski</string>
     <string name="theme_white">Valge</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Tavaline</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animatsioonid</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>
     <string name="pref_privacy_clear_history">Kustuta ajalugu</string>
 
     <!-- About -->
-    <string name="pref_about_title">Kohta</string>
-    <string name="version">Rakenduse versioon</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Autoriõigus \u00A9 2004–2011 Eelija Hershfeld</string>
 

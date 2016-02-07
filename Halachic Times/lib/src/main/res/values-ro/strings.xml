@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Go to date -->
+    <string name="off">Dezactivat</string>
+
+    <!-- Date -->
     <string name="today">Azi</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">H:mm:ss</string>
+    <string name="month_day_year" formatted="false">%-e %B %Y</string>
 
     <!-- Ringtone -->
     <string name="ringtone_default" msgid="3332469542084549546">"Ton de sonerie prestabilit"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Sunet de notificare prestabilit"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Sunet de alarmă prestabilit"</string>
     <string name="ringtone_silent">Niciunul</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Setări</string>
+    <string name="pref_general_title">General</string>
+    <string name="pref_appearance_title">Aparenţă</string>
+    <string name="pref_about_title">Despre</string>
+
+    <!-- Theme. -->
+    <string name="theme_title">Temă</string>
 
 </resources>

@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachický Modlitební Časy</string>
     <string name="title_activity_zmanim">Halachický Časy</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e. %B %Y</string>
-    <string name="off">Vyp</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Den je 120 minut před východem slunce / po západu slunce</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">la-omer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Nastavení</string>
-    <string name="pref_general_title">Obecné</string>
-    <string name="pref_appearance_title">Vzhled</string>
     <string name="past_title">Časy, které uplynuly</string>
     <string name="seconds_title">Sekundy</string>
     <string name="summaries_title">Souhrny</string>
-    <string name="theme_title">Motiv</string>
-    <string name="theme_dark">Tmavě</string>
-    <string name="theme_light">Světlo</string>
     <string name="theme_none">Žádný</string>
     <string name="theme_white">Bílý</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normální</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animace</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>
     <string name="pref_privacy_clear_history">Vymazat historii</string>
 
     <!-- About -->
-    <string name="pref_about_title">Info o</string>
-    <string name="version">Verze aplikace</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Autorská práva \u00A9 2004–2011 Eliyahu Hershfeld</string>
 

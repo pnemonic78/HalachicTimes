@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Налаштування</string>
-    <string name="pref_appearance_title">Вигляд</string>
-
     <!-- Theme. -->
-    <string name="theme_title">Тема</string>
     <string name="theme_dark">Темний</string>
     <string name="theme_light">Світло</string>
 
@@ -14,7 +9,6 @@
     <string name="pref_privacy_security_title">Конфіденційність і безпека</string>
 
     <!-- About -->
-    <string name="pref_about_title">Про</string>
-    <string name="version">Версія програми</string>
+    <string name="version_title">Версія програми</string>
 
 </resources>

@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachiczny Czasy Modły</string>
     <string name="title_activity_zmanim">Halachiczny Czasy</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e %B %Y</string>
-    <string name="off">Wyłączony</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dzień jest 120 minut przed wschodem słońca / po zachodzie słońca</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">la-Omer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ustawienia</string>
-    <string name="pref_general_title">Ogólne</string>
-    <string name="pref_appearance_title">Wygląd</string>
     <string name="past_title">Czasy które upłynęły</string>
     <string name="seconds_title">Sekund</string>
     <string name="summaries_title">Podsumowań</string>
-    <string name="theme_title">Motyw</string>
-    <string name="theme_dark">Ciemny</string>
-    <string name="theme_light">Światła</string>
     <string name="theme_none">Żaden</string>
     <string name="theme_white">Biały</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normalny</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animacje</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Prywatność i bezpieczeństwo</string>
     <string name="pref_privacy_clear_history">Wyczyść historię</string>
 
     <!-- About -->
-    <string name="pref_about_title">O</string>
-    <string name="version">Wersja aplikacji</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Prawa autorskie \u00A9 2004–2011 Elijahu Hershfeld</string>
 

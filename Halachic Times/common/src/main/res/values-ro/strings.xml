@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Setări</string>
-    <string name="pref_appearance_title">Aparenţă</string>
-
     <!-- Theme. -->
-    <string name="theme_title">Temă</string>
     <string name="theme_dark">Întuneric</string>
     <string name="theme_light">Lumina</string>
 
@@ -14,7 +9,6 @@
     <string name="pref_privacy_security_title">Confidenţialitate şi securitate</string>
 
     <!-- About -->
-    <string name="pref_about_title">Despre</string>
-    <string name="version">Versiunea aplicație</string>
+    <string name="version_title">Versiunea aplicație</string>
 
 </resources>

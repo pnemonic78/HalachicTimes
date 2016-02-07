@@ -3,10 +3,6 @@
 
     <string name="app_name">Ήαλαχικός Φορές Προσευχή</string>
     <string name="title_activity_zmanim">Ήαλαχικός Φορές</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%d %B %Y</string>
-    <string name="off">Ανενεργό</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Ημέρα είναι 120 λεπτά πριν την ανατολή / μετά τη δύση</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">ΛάΌμερ</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ρυθμίσεις</string>
-    <string name="pref_general_title">Γενικές</string>
-    <string name="pref_appearance_title">Παρουσιαστικό</string>
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="seconds_title">Δευτερόλεπτα</string>
     <string name="summaries_title">Περιγραφές</string>
-    <string name="theme_title">Θέμα</string>
-    <string name="theme_dark">Σκοτεινό</string>
-    <string name="theme_light">Φως</string>
     <string name="theme_none">Κανένας</string>
     <string name="theme_white">Λευκός</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Κανονικό</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Κινούμενες εικόνες</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Απόρρητο και ασφάλεια</string>
     <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>
 
     <!-- About -->
-    <string name="pref_about_title">Σχετικά</string>
-    <string name="version">Έκδοση της εφαρμογής</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Πνευματικά δικαιώματα \u00A9 2004–2011 Ηλίας Χίρσφελτ</string>
 

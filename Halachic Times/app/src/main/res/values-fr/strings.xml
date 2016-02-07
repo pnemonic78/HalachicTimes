@@ -3,10 +3,6 @@
 
     <string name="app_name">Horaires Halakhiques de Prière</string>
     <string name="title_activity_zmanim">Horaires Halakhiques</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e %B %Y</string>
-    <string name="off">Eteint</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Jour est 120 minutes avant le lever / après le coucher du soleil</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">La\'omer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Paramètres</string>
-    <string name="pref_general_title">Généraux</string>
-    <string name="pref_appearance_title">Apparence</string>
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="seconds_title">Secondes</string>
     <string name="summaries_title">Résumés</string>
-    <string name="theme_title">Thème</string>
-    <string name="theme_dark">Sombre</string>
-    <string name="theme_light">Lumière</string>
     <string name="theme_none">Aucun</string>
     <string name="theme_white">Blanc</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normale</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animations</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Confidentialité et sécurité</string>
     <string name="pref_privacy_clear_history">Effacer l\'historique</string>
 
     <!-- About -->
-    <string name="pref_about_title">À propos</string>
-    <string name="version">Version de l\'application</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Droits d\'auteur \u00A9 2004–2011 Élie Hershfeld</string>
 

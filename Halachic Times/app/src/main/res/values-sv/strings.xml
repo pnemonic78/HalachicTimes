@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachiska Bönetider</string>
     <string name="title_activity_zmanim">Halachiska Tider</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e %B %Y</string>
-    <string name="off">Av</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dag är 120 minuter före soluppgången / efter solnedgången</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Inställningar</string>
-    <string name="pref_general_title">Allmänt</string>
-    <string name="pref_appearance_title">Utseende</string>
     <string name="past_title">Tider som förflutit</string>
     <string name="seconds_title">Sekunder</string>
     <string name="summaries_title">Sammanfattningar</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Mörkt</string>
-    <string name="theme_light">Ljus</string>
     <string name="theme_none">Inget</string>
     <string name="theme_white">Vit</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animationer</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Sekretess och säkerhet</string>
     <string name="pref_privacy_clear_history">Rensa historik</string>
 
     <!-- About -->
-    <string name="pref_about_title">Om</string>
-    <string name="version">Applen versionen</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Upphovsrätt \u00A9 2004–2011 Eliyahu Hershfeld</string>
 

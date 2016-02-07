@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Nastavení</string>
-    <string name="pref_appearance_title">Vzhled</string>
-
     <!-- Theme. -->
-    <string name="theme_title">Motiv</string>
     <string name="theme_dark">Tmavě</string>
     <string name="theme_light">Světlo</string>
 
@@ -14,7 +9,6 @@
     <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>
 
     <!-- About -->
-    <string name="pref_about_title">Info o</string>
-    <string name="version">Verze aplikace</string>
+    <string name="version_title">Verze aplikace</string>
 
 </resources>

@@ -3,9 +3,13 @@
 
     <string name="ok" translatable="false">@android:string/ok</string>
     <string name="cancel" translatable="false">@android:string/cancel</string>
+    <string name="off">Off</string>
 
-    <!-- Go to date -->
+    <!-- Date -->
     <string name="today">Today</string>
+    <string name="twelve_hour_time_format">h:mm:ss a</string>
+    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
+    <string name="month_day_year" formatted="false">%B %-e, %Y</string>
 
     <!-- Choice in the ringtone picker.  If chosen, the default ringtone will be used. -->
     <string name="ringtone_default">Default ringtone</string>
@@ -15,5 +19,14 @@
     <string name="alarm_sound_default">Default alarm sound</string>
     <!-- Choice in the ringtone picker.  If chosen, there will be silence instead of a ringtone played. -->
     <string name="ringtone_silent">None</string>
+
+    <!-- Preferences -->
+    <string name="pref_general_title">General</string>
+    <string name="menu_settings">Settings</string>
+    <string name="pref_appearance_title">Appearance</string>
+    <string name="pref_about_title">About</string>
+
+    <!-- Theme. -->
+    <string name="theme_title">Theme</string>
 
 </resources>

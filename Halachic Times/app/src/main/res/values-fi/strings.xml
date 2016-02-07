@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachinen Ajat Rukous</string>
     <string name="title_activity_zmanim">Halachinen Ajat</string>
-    <string name="twelve_hour_time_format">h.mm.ss a</string>
-    <string name="twenty_four_hour_time_format">H.mm.ss</string>
-    <string name="month_day_year" formatted="false">%-e. %B %Y</string>
-    <string name="off">Pois</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Päivä on 120 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Asetukset</string>
-    <string name="pref_general_title">Yleiset</string>
-    <string name="pref_appearance_title">Ulkonäkö</string>
     <string name="past_title">Ajat että kulunut</string>
     <string name="seconds_title">Sekuntia</string>
     <string name="summaries_title">Yhteenvedot</string>
-    <string name="theme_title">Teema</string>
-    <string name="theme_dark">Tumma</string>
-    <string name="theme_light">Vaalea</string>
     <string name="theme_none">Ei yhtään</string>
     <string name="theme_white">Valkoinen</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normaali</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animaatiot</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Tietosuoja ja turvallisuus</string>
     <string name="pref_privacy_clear_history">Tyhjennä historia</string>
 
     <!-- About -->
-    <string name="pref_about_title">Tietoja</string>
-    <string name="version">Sovellusversio </string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004–2011 Elia Hirschfeldin</string>
 

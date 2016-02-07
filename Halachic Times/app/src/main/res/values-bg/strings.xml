@@ -3,10 +3,6 @@
 
     <string name="app_name">Халахичен Молитвен Време</string>
     <string name="title_activity_zmanim">Халахичен Време</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%d %B %Y</string>
-    <string name="off">Изключено</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Ден е 120 минути преди изгрев / след залез</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">ла-Омер</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Настройки</string>
-    <string name="pref_general_title">Общи</string>
-    <string name="pref_appearance_title">появяване</string>
     <string name="past_title">Време са изминали</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описания</string>
-    <string name="theme_title">Тема</string>
-    <string name="theme_dark">Тъмно</string>
-    <string name="theme_light">Светла</string>
     <string name="theme_none">Никой</string>
     <string name="theme_white">Бял</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормален</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Анимации</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Поверителност и сигурност</string>
     <string name="pref_privacy_clear_history">Изчистване на историята</string>
 
     <!-- About -->
-    <string name="pref_about_title">За</string>
-    <string name="version">Версия на приложението</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Авторски права \u00A9 2004–2011 Илия Хиршфелд</string>
 

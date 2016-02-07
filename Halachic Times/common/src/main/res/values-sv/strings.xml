@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Inställningar</string>
-    <string name="pref_appearance_title">Utseende</string>
-
     <!-- Theme. -->
-    <string name="theme_title">Tema</string>
     <string name="theme_dark">Mörkt</string>
     <string name="theme_light">Ljus</string>
 
@@ -14,7 +9,6 @@
     <string name="pref_privacy_security_title">Sekretess och säkerhet</string>
 
     <!-- About -->
-    <string name="pref_about_title">Om</string>
-    <string name="version">Applen versionen</string>
+    <string name="version_title">Applen versionen</string>
 
 </resources>

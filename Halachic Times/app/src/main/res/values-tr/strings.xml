@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachik Namaz Vakitleri</string>
     <string name="title_activity_zmanim">Halachik Vakitleri</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
-    <string name="month_day_year" formatted="false">%d %B %Y</string>
-    <string name="off">Kapalı</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Gün 120 dakika güneş doğmadan / günbatımı sonradır</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ayarlar</string>
-    <string name="pref_general_title">Genel</string>
-    <string name="pref_appearance_title">Görünüş</string>
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="seconds_title">Saniye</string>
     <string name="summaries_title">Özetler</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Koyu</string>
-    <string name="theme_light">Hafif</string>
     <string name="theme_none">Hiçbiri</string>
     <string name="theme_white">Beyaz</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animasyonlar</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Gizlilik ve güvenlik</string>
     <string name="pref_privacy_clear_history">Geçmişi temizle</string>
 
     <!-- About -->
-    <string name="pref_about_title">Hakkında</string>
-    <string name="version">Uygulama sürümü </string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Telif Hakkı \u00A9 2004–2011 İlyas Hershfeld</string>
 

@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachikus Áhítatok</string>
     <string name="title_activity_zmanim">Halachikus Szor</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
-    <string name="month_day_year" formatted="false">%Y. %B %-e.</string>
-    <string name="off">Ki</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Nap 120 perc napkelte előtt / napnyugta után</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">láómer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Beállítások</string>
-    <string name="pref_general_title">Általános</string>
-    <string name="pref_appearance_title">Megjelenés</string>
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="seconds_title">Másodperc</string>
     <string name="summaries_title">Összefoglalók</string>
-    <string name="theme_title">Téma</string>
-    <string name="theme_dark">Sötét</string>
-    <string name="theme_light">Világos</string>
     <string name="theme_none">Semmi</string>
     <string name="theme_white">Fehér</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normál</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animációk</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Adatvédelem és biztonság</string>
     <string name="pref_privacy_clear_history">Előzmények törlése</string>
 
     <!-- About -->
-    <string name="pref_about_title">Körülbelül</string>
-    <string name="version">Alkalmazás verziója</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Szerzői jog \u00A9 2004–2011 Illés Hershfeld</string>
 

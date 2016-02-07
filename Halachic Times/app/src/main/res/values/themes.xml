@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim.Base" parent="android:Theme">
-    </style>
-
-    <style name="Theme.Zmanim.Base.Light" parent="android:Theme.Light">
-    </style>
-
-    <style name="Theme.Zmanim" parent="Theme.Zmanim.Base">
+    <style name="Theme.Zmanim" parent="Theme.Base">
         <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
         <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
     </style>
 
-    <style name="Theme.Zmanim.Dark" parent="Theme.Zmanim.Base">
+    <style name="Theme.Zmanim.Dark">
         <item name="listZmanim">@style/Widget.ListView.Dark</item>
         <item name="listZman">@style/Widget.ListItem.Dark</item>
         <item name="listZmanTitle">@style/Widget.TextView.Title.Dark</item>
@@ -20,7 +14,7 @@
         <item name="listZmanSummary">@style/Widget.TextView.Summary.Dark</item>
     </style>
 
-    <style name="Theme.Zmanim.Light" parent="Theme.Zmanim.Base.Light">
+    <style name="Theme.Zmanim.Light" parent="Theme.Base.Light">
         <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
         <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
 
@@ -31,7 +25,7 @@
         <item name="listZmanSummary">@style/Widget.TextView.Summary.Light</item>
     </style>
 
-    <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim.Base">
+    <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim">
         <item name="listZmanim">@style/Widget.ListView.NoGradient</item>
         <item name="listZman">@style/Widget.ListItem.NoGradient</item>
         <item name="listZmanTitle">@style/Widget.TextView.Title.NoGradient</item>
@@ -39,7 +33,7 @@
         <item name="listZmanSummary">@style/Widget.TextView.Summary.NoGradient</item>
     </style>
 
-    <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Base.Light">
+    <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Light">
         <item name="widgetZmanTitle">@style/Widget.TextView.Title.Widget</item>
         <item name="widgetZmanTime">@style/Widget.TextView.Time.Widget</item>
 
@@ -50,7 +44,7 @@
         <item name="listZmanSummary">@style/Widget.TextView.Summary.White</item>
     </style>
 
-    <style name="Theme.Zmanim.Settings">
+    <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings">
     </style>
 
 </resources>

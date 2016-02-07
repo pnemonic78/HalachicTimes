@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Definições</string>
-
     <!-- About -->
-    <string name="pref_about_title">Acerca</string>
-    <string name="version">Versão do aplicação</string>
+    <string name="version_title">Versão do aplicação</string>
 
 </resources>

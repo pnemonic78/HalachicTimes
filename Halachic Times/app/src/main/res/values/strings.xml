@@ -3,13 +3,6 @@
 
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
-    <string name="month_day_year" formatted="false">%B %-e, %Y</string>
-    <string name="off">Off</string>
-
-    <!-- Backup -->
-    <string name="google_backup_api_key" translatable="false">GoogleKey</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
@@ -286,17 +279,11 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Settings</string>
-    <string name="pref_general_title">General</string>
-    <string name="pref_appearance_title">Appearance</string>
     <string name="pref_zmanim_title" translatable="false">@string/title_activity_zmanim</string>
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
     <string name="summaries_title">Summaries</string>
-    <string name="theme_title">Theme</string>
     <string name="theme_none">None</string>
-    <string name="theme_dark">Dark</string>
-    <string name="theme_light">Light</string>
     <string name="theme_white">White</string>
     <string name="emphasis_scale_title" translatable="false">@string/emphasis_title</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
@@ -326,13 +313,9 @@
     <string name="animations">Animations</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privacy &amp; security</string>
     <string name="pref_privacy_clear_history">Clear history</string>
 
     <!-- About -->
-    <string name="pref_about_title">About</string>
-    <string name="version">Application version</string>
-    <string name="support_url" translatable="false">https://sourceforge.net/projects/halachictimes/?source=navbar</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2011 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>

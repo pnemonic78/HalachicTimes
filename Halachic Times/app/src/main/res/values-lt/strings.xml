@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachinis Malda Kartų</string>
     <string name="title_activity_zmanim">Halachinis Kartų</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%Y m. %B %-e d.</string>
-    <string name="off">Išjungta</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dieną yra 120 minučių prieš saulėtekį / po saulėlydžio</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Nustatymai</string>
-    <string name="pref_general_title">Bendras</string>
-    <string name="pref_appearance_title">Išvaizda</string>
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
     <string name="summaries_title">Santraukas</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Tamsi</string>
-    <string name="theme_light">Šviesos</string>
     <string name="theme_none">Nė vienas</string>
     <string name="theme_white">Baltųjų</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Įprastas</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animacijos</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privacy &amp; security</string>
     <string name="pref_privacy_clear_history">Išvalyti istoriją</string>
 
     <!-- About -->
-    <string name="pref_about_title">Apie</string>
-    <string name="version">Programos versija </string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Autorių teisės \u00A9 2004–2011 Elijas Hershfeld</string>
 

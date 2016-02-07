@@ -4,12 +4,7 @@
     <!-- Backup -->
     <string name="google_backup_api_key" translatable="false">GoogleKey</string>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Settings</string>
-    <string name="pref_appearance_title">Appearance</string>
-
     <!-- Theme. -->
-    <string name="theme_title">Theme</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>
 
@@ -17,8 +12,7 @@
     <string name="pref_privacy_security_title">Privacy &amp; security</string>
 
     <!-- About -->
-    <string name="pref_about_title">About</string>
-    <string name="version">Application version</string>
+    <string name="version_title">Application version</string>
     <string name="support_url" translatable="false">https://sourceforge.net/projects/halachictimes/?source=navbar</string>
 
 </resources>

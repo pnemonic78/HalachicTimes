@@ -3,10 +3,6 @@
 
     <string name="app_name">Галахических Разів Молитву</string>
     <string name="title_activity_zmanim">Галахических Разів</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">H:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e %B %Y р.</string>
-    <string name="off">Вимкнено</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 мінут перед сходом сонця / після заходу сонця</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">ла-Омер</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Налаштування</string>
-    <string name="pref_general_title">Загальні</string>
-    <string name="pref_appearance_title">Вигляд</string>
     <string name="past_title">Минулі разів</string>
     <string name="seconds_title">Секунди</string>
     <string name="summaries_title">Описи</string>
-    <string name="theme_title">Тема</string>
-    <string name="theme_dark">Темний</string>
-    <string name="theme_light">Світло</string>
     <string name="theme_none">Ні</string>
     <string name="theme_white">Білий</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормальний</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Анімації</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Конфіденційність і безпека</string>
     <string name="pref_privacy_clear_history">Очистити історію</string>
 
     <!-- About -->
-    <string name="pref_about_title">Про</string>
-    <string name="version">Версія програми</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Автор. право \u00A9 2004–2011 Еліягу Хиршфельд</string>
 

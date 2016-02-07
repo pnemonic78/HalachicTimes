@@ -3,10 +3,6 @@
 
     <string name="app_name">Halachische Gebedstijden</string>
     <string name="title_activity_zmanim">Halachische Tijden</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
-    <string name="month_day_year" formatted="false">%-e %B %Y</string>
-    <string name="off">Uit</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dag is 120 minuten vóór zonsopgang / na zonsondergang</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">laOmer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Instellingen</string>
-    <string name="pref_general_title">Algemeen</string>
-    <string name="pref_appearance_title">Uiterlijk</string>
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="seconds_title">Seconden</string>
     <string name="summaries_title">Samenvattingen</string>
-    <string name="theme_title">Thema</string>
-    <string name="theme_dark">Donker</string>
-    <string name="theme_light">Lichte</string>
     <string name="theme_none">Geen</string>
     <string name="theme_white">Wit</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normaal</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animaties</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privacy en beveiliging</string>
     <string name="pref_privacy_clear_history">Geschiedenis wissen</string>
 
     <!-- About -->
-    <string name="pref_about_title">Over</string>
-    <string name="version">App versie</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Auteursrecht \u00A9 2004–2011 Elijahoe Hershfeld</string>
 

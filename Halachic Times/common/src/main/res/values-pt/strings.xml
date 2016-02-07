@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Preferences -->
-    <string name="menu_settings">Configurações</string>
-    <string name="pref_appearance_title">Aparência</string>
-
     <!-- Theme. -->
-    <string name="theme_title">Tema</string>
     <string name="theme_dark">Escuro</string>
     <string name="theme_light">Clara</string>
 
@@ -14,7 +9,6 @@
     <string name="pref_privacy_security_title">Privacidade e segurança</string>
 
     <!-- About -->
-    <string name="pref_about_title">Sobre</string>
-    <string name="version">Versão do aplicativo</string>
+    <string name="version_title">Versão do aplicativo</string>
 
 </resources>

@@ -3,10 +3,6 @@
 
     <string name="app_name">Tempi di Preghiera Halachiche</string>
     <string name="title_activity_zmanim">Tempi Halachiche</string>
-    <string name="twelve_hour_time_format">h:mm:ss a</string>
-    <string name="twenty_four_hour_time_format">HH:mm:ss</string>
-    <string name="month_day_year" formatted="false">%d %B %Y</string>
-    <string name="off">Non attivo</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Giorno è 120 minuti prima dell\'alba / dopo tramonto</string>
@@ -157,15 +153,9 @@
     <string name="omer_l">La\'omer</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Impostazioni</string>
-    <string name="pref_general_title">Generali</string>
-    <string name="pref_appearance_title">Apparenza</string>
     <string name="past_title">Tempi che sono trascorsi</string>
     <string name="seconds_title">Secondi</string>
     <string name="summaries_title">Sommari</string>
-    <string name="theme_title">Tema</string>
-    <string name="theme_dark">Scuro</string>
-    <string name="theme_light">Chiaro</string>
     <string name="theme_none">Nessuna</string>
     <string name="theme_white">Bianco</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normali</h6>]]></string>
@@ -195,12 +185,9 @@
     <string name="animations">Animazioni</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privatumas ir sauga</string>
     <string name="pref_privacy_clear_history">Clear history</string>
 
     <!-- About -->
-    <string name="pref_about_title">Su</string>
-    <string name="version">Versione di applicazione</string>
     <string name="kosherjava">KosherJava</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2011 Elia Hershfeld</string>
 
