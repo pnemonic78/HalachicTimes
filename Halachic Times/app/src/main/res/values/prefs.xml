@@ -88,17 +88,13 @@
     <bool name="reminder_day_7_defaultValue" translatable="false">false</bool>
 
     <string name="theme_value_none" translatable="false"/>
-    <string name="theme_value_dark" translatable="false">dark</string>
-    <string name="theme_value_light" translatable="false">light</string>
     <string name="theme_value_white" translatable="false">white</string>
-    <string name="theme_defaultValue" translatable="false">@string/theme_value_dark</string>
 
     <string name="omer_value_off" translatable="false"/>
     <string name="omer_value_b" translatable="false">b</string>
     <string name="omer_value_l" translatable="false">l</string>
     <string name="omer_defaultValue" translatable="false">@string/omer_value_b</string>
 
-    <bool name="animate_defaultValue" translatable="false">true</bool>
     <bool name="emphasis_defaultValue" translatable="false">false</bool>
     <string name="emphasis_scale_value_100" translatable="false">1.00</string>
     <string name="emphasis_scale_value_110" translatable="false">1.10</string>
@@ -108,6 +104,7 @@
     <string name="emphasis_scale_value_150" translatable="false">1.50</string>
     <string name="emphasis_scale_defaultValue" translatable="false">@string/emphasis_scale_value_120</string>
 
+    <bool name="animate_defaultValue" translatable="false">true</bool>
     <bool name="seconds_visible_defaultValue" translatable="false">false</bool>
     <bool name="summaries_visible_defaultValue" translatable="false">true</bool>
     <bool name="past_defaultValue" translatable="false">true</bool>
