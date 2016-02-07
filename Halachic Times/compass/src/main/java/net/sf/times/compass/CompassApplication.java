@@ -19,7 +19,10 @@
  */
 package net.sf.times.compass;
 
+import android.content.Context;
+
 import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.location.AddressProvider;
 import net.sf.times.location.CompassLocations;
 import net.sf.times.location.LocationApplication;
 
@@ -28,10 +31,7 @@ import net.sf.times.location.LocationApplication;
  *
  * @author Moshe Waisberg
  */
-public class CompassApplication extends LocationApplication {
-
-    /** Provider for locations. */
-    private CompassLocations locations;
+public class CompassApplication extends LocationApplication<AddressProvider, CompassLocations> {
 
     /**
      * Constructs a new application.
@@ -39,29 +39,14 @@ public class CompassApplication extends LocationApplication {
     public CompassApplication() {
     }
 
-    /**
-     * Get the locations provider instance.
-     *
-     * @return the provider.
-     */
-    public CompassLocations getLocations() {
-        if (locations == null) {
-            locations = new CompassLocations(this);
-        }
-        return locations;
+    @Override
+    protected CompassLocations createLocationsProvider(Context context) {
+        return new CompassLocations(context);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         CompassSettings.init(this);
-    }
-
-    @Override
-    public void onTerminate() {
-        if (locations != null) {
-            locations.quit();
-        }
-        super.onTerminate();
     }
 }

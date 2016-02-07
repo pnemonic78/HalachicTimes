@@ -19,6 +19,9 @@
  */
 package net.sf.times;
 
+import android.content.Context;
+
+import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimSettings;
@@ -28,10 +31,7 @@ import net.sf.times.preference.ZmanimSettings;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimApplication extends LocationApplication {
-
-    /** Provider for locations. */
-    private ZmanimLocations locations;
+public class ZmanimApplication extends LocationApplication<AddressProvider, ZmanimLocations> {
 
     /**
      * Constructs a new application.
@@ -39,29 +39,14 @@ public class ZmanimApplication extends LocationApplication {
     public ZmanimApplication() {
     }
 
-    /**
-     * Get the locations provider instance.
-     *
-     * @return the provider.
-     */
-    public ZmanimLocations getLocations() {
-        if (locations == null) {
-            locations = new ZmanimLocations(this);
-        }
-        return locations;
+    @Override
+    protected ZmanimLocations createLocationsProvider(Context context) {
+        return new ZmanimLocations(context);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         ZmanimSettings.init(this);
-    }
-
-    @Override
-    public void onTerminate() {
-        if (locations != null) {
-            locations.quit();
-        }
-        super.onTerminate();
     }
 }
