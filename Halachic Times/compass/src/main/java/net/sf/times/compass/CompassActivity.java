@@ -298,7 +298,7 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.zmanim, menu);
+        getMenuInflater().inflate(R.menu.compass, menu);
         return true;
     }
 
