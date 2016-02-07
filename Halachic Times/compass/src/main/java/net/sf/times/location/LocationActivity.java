@@ -20,6 +20,8 @@
 package net.sf.times.location;
 
 import android.app.SearchManager;
+import android.app.TabActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
@@ -44,10 +46,10 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.CompassActivity;
-import net.sf.times.ThemedTabActivity;
+import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.R;
+import net.sf.times.compass.preference.CompassSettings;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 
@@ -62,7 +64,8 @@ import java.util.Locale;
  *
  * @author Moshe Waisberg
  */
-public class LocationActivity extends ThemedTabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
+@SuppressWarnings("deprecation")
+public class LocationActivity extends TabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
 
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
@@ -92,6 +95,7 @@ public class LocationActivity extends ThemedTabActivity implements TextWatcher, 
     private LocationAdapter adapterFavorites;
     private LocationAdapter adapterHistory;
     private final Handler handler;
+    private CompassSettings settings;
 
     /**
      * Constructs a new activity.
@@ -103,6 +107,11 @@ public class LocationActivity extends ThemedTabActivity implements TextWatcher, 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Context context = this;
+        settings = new CompassSettings(context);
+
+        setTheme(settings.getTheme());
         setContentView(R.layout.locations);
 
         EditText searchText = (EditText) findViewById(R.id.search_src_text);

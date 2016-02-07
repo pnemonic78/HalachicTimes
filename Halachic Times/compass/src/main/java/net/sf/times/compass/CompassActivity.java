@@ -19,6 +19,7 @@
  */
 package net.sf.times.compass;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -36,7 +37,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import net.sf.times.ThemedActivity;
 import net.sf.times.compass.preference.Compass10PreferenceActivity;
 import net.sf.times.compass.preference.CompassPreferenceActivity;
 import net.sf.times.compass.preference.CompassSettings;
@@ -54,7 +54,7 @@ import java.lang.ref.WeakReference;
  *
  * @author Moshe Waisberg
  */
-public class CompassActivity extends ThemedActivity implements ZmanimLocationListener, SensorEventListener {
+public class CompassActivity extends Activity implements ZmanimLocationListener, SensorEventListener {
 
     /** Latitude of the Holy of Holies, according to Google. */
     private static final double HOLIEST_LATITUDE = 31.778122;
@@ -151,10 +151,14 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Context context = this;
+        settings = new CompassSettings(context);
+
+        setTheme(settings.getTheme());
         setContentView(R.layout.compass);
         view = (CompassView) findViewById(R.id.compass);
 
-        settings = new CompassSettings(this);
         if (!settings.isSummaries()) {
             View summary = findViewById(android.R.id.summary);
             summary.setVisibility(View.GONE);

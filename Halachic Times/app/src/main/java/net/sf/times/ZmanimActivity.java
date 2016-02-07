@@ -19,6 +19,7 @@
  */
 package net.sf.times;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
@@ -61,6 +62,7 @@ import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimPreferences;
+import net.sf.times.preference.ZmanimSettings;
 import net.sf.view.animation.LayoutWeightAnimation;
 
 import java.lang.ref.WeakReference;
@@ -71,7 +73,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends ThemedActivity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener, GestureDetector.OnDoubleTapListener, Animation.AnimationListener {
+public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener, GestureDetector.OnDoubleTapListener, Animation.AnimationListener {
 
     /** The date parameter. */
     public static final String EXTRA_DATE = "date";
@@ -107,6 +109,8 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
     private View navigationBar;
     /** Provider for locations. */
     private ZmanimLocations locations;
+    /** The settings and preferences. */
+    protected ZmanimSettings settings;
     /** The date picker. */
     private DatePickerDialog datePicker;
     /** The address location. */
@@ -298,7 +302,9 @@ public class ZmanimActivity extends ThemedActivity implements ZmanimLocationList
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         Context context = this;
+        settings = new ZmanimSettings(context);
 
+        setTheme(settings.getTheme());
         setContentView(R.layout.times);
         View view = getWindow().getDecorView();
 

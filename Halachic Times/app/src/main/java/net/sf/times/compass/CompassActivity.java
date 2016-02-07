@@ -19,6 +19,8 @@
  */
 package net.sf.times.compass;
 
+import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -30,12 +32,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.R;
-import net.sf.times.ThemedActivity;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.ZmanimSettings;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -43,7 +45,7 @@ import net.sf.times.location.ZmanimLocations;
  *
  * @author Moshe Waisberg
  */
-public class CompassActivity extends ThemedActivity implements ZmanimLocationListener, SensorEventListener {
+public class CompassActivity extends Activity implements ZmanimLocationListener, SensorEventListener {
 
     /** Latitude of the Holy of Holies, according to Google. */
     private static final double HOLIEST_LATITUDE = 31.778122;
@@ -72,6 +74,8 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
     private final float[] matrixR = new float[9];
     /** Orientation matrix. */
     private final float[] orientation = new float[3];
+    /** The settings and preferences. */
+    private ZmanimSettings settings;
     /** The address location. */
     private Location addressLocation;
     /** The address. */
@@ -94,6 +98,11 @@ public class CompassActivity extends ThemedActivity implements ZmanimLocationLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Context context = this;
+        settings = new ZmanimSettings(context);
+
+        setTheme(settings.getTheme());
         setContentView(R.layout.compass);
         view = (CompassView) findViewById(R.id.compass);
 
