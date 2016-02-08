@@ -32,11 +32,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.R;
-import net.sf.times.ZmanimApplication;
+import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
-import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimSettings;
 
 /**
@@ -61,7 +61,7 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     /** The magnetic field sensor. */
     private Sensor magnetic;
     /** Provider for locations. */
-    private ZmanimLocations locations;
+    private LocationsProvider locations;
     /** Location of the Holy of Holies. */
     private Location holiest;
     /** The main view. */
@@ -111,7 +111,7 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
             summary.setVisibility(View.GONE);
         }
 
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

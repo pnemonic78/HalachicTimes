@@ -43,10 +43,10 @@ import net.sf.preference.RingtonePreference;
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
-import net.sf.times.ZmanimApplication;
 import net.sf.times.ZmanimReminder;
 import net.sf.times.ZmanimWidget;
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.LocationApplication;
 
 import java.util.Calendar;
 
@@ -451,7 +451,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
      * Clear the history of addresses.
      */
     private void deleteHistory() {
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        LocationApplication app = (LocationApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
     }

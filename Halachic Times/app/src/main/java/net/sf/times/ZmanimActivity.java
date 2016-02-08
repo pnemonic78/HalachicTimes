@@ -56,6 +56,8 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.compass.CompassActivity;
 import net.sf.times.content.res.ZmanimResources;
 import net.sf.times.location.LocationActivity;
+import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
@@ -108,7 +110,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     /** The navigation bar. */
     private View navigationBar;
     /** Provider for locations. */
-    private ZmanimLocations locations;
+    private LocationsProvider locations;
     /** The settings and preferences. */
     protected ZmanimSettings settings;
     /** The date picker. */
@@ -351,7 +353,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     /** Initialise the location providers. */
     private void initLocation() {
-        ZmanimApplication app = (ZmanimApplication) getApplication();
+        LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
         localeRTL = ZmanimLocations.isLocaleRTL();
     }

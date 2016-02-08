@@ -25,9 +25,9 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 import net.sf.times.common.preference.AbstractPreferenceFragment;
-import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.R;
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.LocationApplication;
 
 /**
  * This fragment shows the preferences for the Privacy and Security header.
@@ -65,7 +65,7 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
      * Clear the history of addresses.
      */
     private void deleteHistory() {
-        CompassApplication app = (CompassApplication) getActivity().getApplication();
+        LocationApplication app = (LocationApplication) getActivity().getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
     }

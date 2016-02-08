@@ -25,8 +25,8 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 import net.sf.times.R;
-import net.sf.times.ZmanimApplication;
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.LocationApplication;
 
 /**
  * This fragment shows the preferences for the Privacy and Security header.
@@ -64,7 +64,7 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
      * Clear the history of addresses.
      */
     private void deleteHistory() {
-        ZmanimApplication app = (ZmanimApplication) getActivity().getApplication();
+        LocationApplication app = (LocationApplication) getActivity().getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
     }

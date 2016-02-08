@@ -31,9 +31,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
-import net.sf.times.compass.CompassApplication;
 import net.sf.times.compass.R;
 import net.sf.times.location.AddressProvider;
+import net.sf.times.location.LocationApplication;
 
 /**
  * Application preferences that populate the settings.
@@ -172,7 +172,7 @@ public class Compass10PreferenceActivity extends PreferenceActivity implements O
      * Clear the history of addresses.
      */
     private void deleteHistory() {
-        CompassApplication app = (CompassApplication) getApplication();
+        LocationApplication app = (LocationApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
     }
