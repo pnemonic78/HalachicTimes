@@ -5,6 +5,8 @@
 
     <style name="Widget.TextView" parent="android:Widget.TextView"/>
 
+    <style name="Widget.Light.TextView" parent="Widget.TextView"/>
+
     <style name="Widget.TextView.Large">
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
     </style>
@@ -15,10 +17,6 @@
 
     <style name="Widget.TextView.Small">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
-    </style>
-
-    <style name="Widget.Light.TextView" parent="Widget.TextView">
-        <item name="android:textAppearance">?android:textAppearanceInverse</item>
     </style>
 
     <style name="Widget.Light.TextView.Large">
