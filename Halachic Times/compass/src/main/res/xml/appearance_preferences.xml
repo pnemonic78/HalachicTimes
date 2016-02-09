@@ -8,10 +8,6 @@
         android:key="coords.format"
         android:title="@string/coords_format_title"/>
     <CheckBoxPreference
-        android:defaultValue="@bool/coords_visible_defaultValue"
-        android:key="coords.visible"
-        android:title="@string/coords_title"/>
-    <CheckBoxPreference
         android:defaultValue="@bool/summaries_visible_defaultValue"
         android:key="summaries.visible"
         android:title="@string/summaries_title"/>

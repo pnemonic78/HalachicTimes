@@ -2,10 +2,12 @@
 <resources>
 
     <string-array name="coords_format_values" translatable="false">
+        <item>@string/coords_format_value_none</item>
         <item>@string/coords_format_value_decimal</item>
         <item>@string/coords_format_value_sexagesimal</item>
     </string-array>
     <string-array name="coords_format_entries" translatable="false">
+        <item>@string/coords_format_none</item>
         <item>@string/coords_format_decimal</item>
         <item>@string/coords_format_sexagesimal</item>
     </string-array>

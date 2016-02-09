@@ -609,7 +609,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         final String notation = settings.getCoordinatesFormat();
         final String latitudeText;
         final String longitudeText;
-        if (LocationSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
             latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
             longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
         } else {
@@ -622,7 +622,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     @Override
     public CharSequence formatCoordinate(double coord) {
         final String notation = settings.getCoordinatesFormat();
-        if (LocationSettings.FORMAT_SEXIGESIMAL.equals(notation)) {
+        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
             return Location.convert(coord, Location.FORMAT_SECONDS);
         }
         return String.format(Locale.US, FORMAT_DEGREES, coord);

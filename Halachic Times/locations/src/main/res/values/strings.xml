@@ -4,6 +4,7 @@
     <!-- Preferences -->
     <string name="coords_title">Coordinates</string>
     <string name="coords_format_title">Coordinates format</string>
+    <string name="coords_format_none" translatable="false">@string/off</string>
     <string name="coords_format_decimal">Decimal</string>
     <string name="coords_format_sexagesimal">Sexagesimal</string>
 

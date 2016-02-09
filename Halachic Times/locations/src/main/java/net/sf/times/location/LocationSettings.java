@@ -41,15 +41,15 @@ public class LocationSettings {
     private static final String KEY_PROVIDER = "provider";
     /** Preference name for the location time. */
     private static final String KEY_TIME = "time";
-    /** Preference name for the co-ordinates visibility. */
-    private static final String KEY_COORDS = "coords.visible";
     /** Preference name for the co-ordinates format. */
     public static final String KEY_COORDS_FORMAT = "coords.format";
 
     /** Format the coordinates in decimal notation. */
+    public static String FORMAT_NONE;
+    /** Format the coordinates in decimal notation. */
     public static String FORMAT_DECIMAL;
     /** Format the coordinates in sexagesimal notation. */
-    public static String FORMAT_SEXIGESIMAL;
+    public static String FORMAT_SEXAGESIMAL;
 
     protected final Context context;
     protected final SharedPreferences preferences;
@@ -75,8 +75,9 @@ public class LocationSettings {
      *         the context.
      */
     public static void init(Context context) {
+        FORMAT_NONE = context.getString(R.string.coords_format_value_none);
         FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
-        FORMAT_SEXIGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
+        FORMAT_SEXAGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
     }
 
     /**
@@ -148,7 +149,7 @@ public class LocationSettings {
      * @return {@code true} to show coordinates.
      */
     public boolean isCoordinates() {
-        return preferences.getBoolean(KEY_COORDS, context.getResources().getBoolean(R.bool.coords_visible_defaultValue));
+        return !FORMAT_NONE.equals(getCoordinatesFormat());
     }
 
     /**
