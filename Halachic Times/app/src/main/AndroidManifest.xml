@@ -27,7 +27,6 @@
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
@@ -49,15 +48,8 @@
         </activity>
         <activity
             android:name="net.sf.times.compass.CompassActivity"
-            android:icon="@drawable/ic_compass"
             android:label="@string/title_activity_compass"
-            android:parentActivityName="net.sf.times.ZmanimActivity"
-            android:taskAffinity="net.sf.times.compass.CompassActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>
         <activity
             android:name="net.sf.times.location.LocationActivity"
