@@ -30,8 +30,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,8 +44,6 @@ import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
-
-import java.lang.ref.WeakReference;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -66,9 +62,6 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
 
     /** Activity id for searching locations. */
     private static final int ACTIVITY_LOCATIONS = 1;
-
-    private static final int WHAT_LOCATION = 3;
-    private static final int WHAT_SETTINGS = 4;
 
     /** The sensor manager. */
     private SensorManager sensorManager;
@@ -100,49 +93,11 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     private Runnable populateHeader;
     /** Update the location in UI thread. */
     private Runnable updateLocation;
-    private final Handler handler;
-
-    /** The handler. */
-    private static class ActivityHandler extends Handler {
-
-        private final WeakReference<CompassActivity> activityWeakReference;
-
-        public ActivityHandler(CompassActivity activity) {
-            this.activityWeakReference = new WeakReference<CompassActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            CompassActivity activity = activityWeakReference.get();
-            Context context = activity;
-
-            switch (msg.what) {
-                case WHAT_LOCATION:
-                    Location loc = activity.locations.getLocation();
-                    // Have we been destroyed?
-                    if (loc == null)
-                        break;
-
-                    Intent intent = new Intent(context, LocationActivity.class);
-                    intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-                    activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
-                    break;
-                case WHAT_SETTINGS:
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                        activity.startActivity(new Intent(context, CompassPreferenceActivity.class));
-                    else
-                        activity.startActivity(new Intent(context, Compass10PreferenceActivity.class));
-                    break;
-            }
-        }
-    }
 
     /**
      * Constructs a new compass.
      */
     public CompassActivity() {
-        this.handler = new ActivityHandler(this);
-
         holiest = new Location(LocationManager.GPS_PROVIDER);
         holiest.setLatitude(HOLIEST_LATITUDE);
         holiest.setLongitude(HOLIEST_LONGITUDE);
@@ -311,10 +266,10 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_location:
-                handler.sendEmptyMessage(WHAT_LOCATION);
+                startLocations();
                 return true;
             case R.id.menu_settings:
-                handler.sendEmptyMessage(WHAT_SETTINGS);
+                startSettings();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -334,5 +289,27 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
                 locations.setLocation(loc);
             }
         }
+    }
+
+    private void startLocations() {
+        Activity activity = this;
+        Context context = activity;
+
+        Location loc = locations.getLocation();
+        // Have we been destroyed?
+        if (loc == null)
+            return;
+
+        Intent intent = new Intent(context, LocationActivity.class);
+        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
+        activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
+    }
+
+    private void startSettings() {
+        Context context = this;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            context.startActivity(new Intent(context, CompassPreferenceActivity.class));
+        else
+            context.startActivity(new Intent(context, Compass10PreferenceActivity.class));
     }
 }

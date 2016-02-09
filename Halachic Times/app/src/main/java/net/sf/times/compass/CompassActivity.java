@@ -21,6 +21,7 @@ package net.sf.times.compass;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -28,10 +29,13 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.R;
+import net.sf.times.location.LocationActivity;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimAddress;
@@ -53,6 +57,9 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     private static final double HOLIEST_LONGITUDE = 35.235345;
     /** Elevation of the Holy of Holies, according to Google. */
     private static final double HOLIEST_ELEVATION = 744.5184937;
+
+    /** Activity id for searching locations. */
+    private static final int ACTIVITY_LOCATIONS = 1;
 
     /** The sensor manager. */
     private SensorManager sensorManager;
@@ -245,5 +252,51 @@ public class CompassActivity extends Activity implements ZmanimLocationListener,
     @Override
     public void onElevationChanged(Location location) {
         onLocationChanged(location);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.compass, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_location:
+                startLocations();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTIVITY_LOCATIONS) {
+            if (resultCode == RESULT_OK) {
+                Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+                if (loc == null) {
+                    locations.setLocation(null);
+                    loc = locations.getLocation();
+                }
+                locations.setLocation(loc);
+            }
+        }
+    }
+
+    private void startLocations() {
+        Activity activity = this;
+        Context context = activity;
+
+        Location loc = locations.getLocation();
+        // Have we been destroyed?
+        if (loc == null)
+            return;
+
+        Intent intent = new Intent(context, LocationActivity.class);
+        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
+        activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
     }
 }
