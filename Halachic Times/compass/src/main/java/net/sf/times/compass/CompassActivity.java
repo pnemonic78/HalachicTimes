@@ -53,10 +53,10 @@ import net.sf.times.location.ZmanimLocationListener;
  */
 public class CompassActivity extends Activity implements ZmanimLocationListener, SensorEventListener {
 
-    /** Latitude of the Holy of Holies, according to Google. */
-    private static final double HOLIEST_LATITUDE = 31.778122;
-    /** Longitude of the Holy of Holies, according to Google. */
-    private static final double HOLIEST_LONGITUDE = 35.235345;
+    /** Latitude of the Holy of Holies. */
+    private static final double HOLIEST_LATITUDE = 31.778;
+    /** Longitude of the Holy of Holies. */
+    private static final double HOLIEST_LONGITUDE = 35.2353;
     /** Elevation of the Holy of Holies, according to Google. */
     private static final double HOLIEST_ELEVATION = 744.5184937;
 
