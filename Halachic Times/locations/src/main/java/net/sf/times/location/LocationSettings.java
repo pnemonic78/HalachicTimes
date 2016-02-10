@@ -41,6 +41,8 @@ public class LocationSettings {
     private static final String KEY_PROVIDER = "provider";
     /** Preference name for the location time. */
     private static final String KEY_TIME = "time";
+    /** Preference name for the co-ordinates visibility. */
+    private static final String KEY_COORDS_VISIBLE = "coords.visible";
     /** Preference name for the co-ordinates format. */
     public static final String KEY_COORDS_FORMAT = "coords.format";
 
@@ -66,6 +68,23 @@ public class LocationSettings {
             context = app;
         this.context = context;
         this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        migrate(context, preferences);
+    }
+
+    /**
+     * Migrate old preferences to their new preferences.
+     */
+    protected void migrate(Context context, SharedPreferences preferences) {
+        if (preferences.contains(KEY_COORDS_VISIBLE)) {
+            boolean visible = preferences.getBoolean(KEY_COORDS_VISIBLE, context.getResources().getBoolean(R.bool.coords_visible_defaultValue));
+            SharedPreferences.Editor editor = preferences.edit();
+            if (!visible) {
+                editor.putString(KEY_COORDS_FORMAT, FORMAT_NONE);
+            }
+            editor.remove(KEY_COORDS_VISIBLE);
+            editor.commit();
+        }
     }
 
     /**
@@ -81,21 +100,12 @@ public class LocationSettings {
     }
 
     /**
-     * Get the data.
+     * Get the preferences.
      *
      * @return the shared preferences.
      */
-    public SharedPreferences getData() {
+    public SharedPreferences getPreferences() {
         return preferences;
-    }
-
-    /**
-     * Get the editor to modify the preferences data.
-     *
-     * @return the editor.
-     */
-    public SharedPreferences.Editor edit() {
-        return preferences.edit();
     }
 
     /**
