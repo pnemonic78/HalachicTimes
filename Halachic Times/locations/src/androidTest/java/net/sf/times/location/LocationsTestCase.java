@@ -17,17 +17,15 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.times.test;
+package net.sf.times.location;
 
-import java.util.TimeZone;
-
-import net.sf.times.location.ZmanimLocations;
-import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.location.Location;
 import android.test.AndroidTestCase;
 
-public class ZmanimTestCase extends AndroidTestCase {
+import java.util.TimeZone;
+
+public class LocationsTestCase extends AndroidTestCase {
 
 	/**
 	 * Test time zones.
@@ -41,8 +39,8 @@ public class ZmanimTestCase extends AndroidTestCase {
 	public void testTZ() throws Exception {
 		Context context = getContext();
 		assertNotNull(context);
-		assertEquals("net.sf.times", context.getPackageName());
-		ZmanimLocations locations = new ZmanimLocations(context);
+		assertEquals("net.sf.times.location.test", context.getPackageName());
+		LocationsProvider locations = new LocationsProvider(context);
 		assertNotNull(locations);
 
 		String[] ids = TimeZone.getAvailableIDs();
@@ -50,7 +48,6 @@ public class ZmanimTestCase extends AndroidTestCase {
 
 		TimeZone tz;
 		Location loc;
-		GeoLocation geoloc;
 		double latitude;
 		double longitude;
 
@@ -67,8 +64,6 @@ public class ZmanimTestCase extends AndroidTestCase {
 			longitude = loc.getLongitude();
 			assertTrue(id + " " + longitude, longitude >= -180);
 			assertTrue(id + " " + longitude, longitude <= 180);
-			geoloc = new GeoLocation(id, latitude, longitude, tz);
-			assertNotNull(geoloc);
 		}
 	}
 }
