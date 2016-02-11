@@ -3,12 +3,4 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Compass -->
-    <string name="title_activity_compass">Retning av bønn</string>
-    <string name="compass_summary">Retning av bønn til Hellige av Hellig i Jerusalem</string>
-    <string name="north">N</string>
-    <string name="east">Ø</string>
-    <string name="south">S</string>
-    <string name="west">V</string>
-
 </resources>

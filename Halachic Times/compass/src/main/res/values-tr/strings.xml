@@ -3,12 +3,4 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Compass -->
-    <string name="title_activity_compass">Namaz yönü</string>
-    <string name="compass_summary">Kudüs\'teki Kutsallar Kutsal dua yönü</string>
-    <string name="north">K</string>
-    <string name="east">D</string>
-    <string name="south">G</string>
-    <string name="west">B</string>
-
 </resources>

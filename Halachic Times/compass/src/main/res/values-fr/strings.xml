@@ -3,12 +3,4 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Compass -->
-    <string name="title_activity_compass">Direction de la prière</string>
-    <string name="compass_summary">Direction de la prière vers le Saint des Saints à Jérusalem</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">O</string>
-
 </resources>
