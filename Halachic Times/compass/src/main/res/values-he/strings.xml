@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">תקצירים</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">כיוון התפילה</string>
     <string name="compass_summary">כיוון התפילה קודש הקודשים בירושלים</string>

@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Podsumowań</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Kierunek modlitwy</string>
     <string name="compass_summary">Kierunek modlitwy do Świętego Świętych w Jerozolimie</string>

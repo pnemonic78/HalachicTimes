@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Sammenfatninger</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Retning af bøn</string>
     <string name="compass_summary">Retning for bøn til Allerhelligste i Jerusalem</string>

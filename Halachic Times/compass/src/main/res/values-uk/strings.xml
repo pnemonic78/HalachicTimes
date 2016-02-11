@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Описи</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Напрям молитви</string>
     <string name="compass_summary">Напрямок молитві святая святих у Єрусалимі</string>

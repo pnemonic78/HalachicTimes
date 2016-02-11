@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Preferences -->
+    <string name="summaries_title">Kokkuvõtted</string>
+
     <!-- Theme. -->
     <string name="theme_dark">Tume</string>
     <string name="theme_light">Heledad</string>

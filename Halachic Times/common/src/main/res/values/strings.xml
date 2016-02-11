@@ -4,6 +4,9 @@
     <!-- Backup -->
     <string name="google_backup_api_key" translatable="false">GoogleKey</string>
 
+    <!-- Preferences -->
+    <string name="summaries_title">Summaries</string>
+
     <!-- Theme. -->
     <string name="theme_dark">Dark</string>
     <string name="theme_light">Light</string>

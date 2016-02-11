@@ -3,9 +3,6 @@
 
     <string name="app_name">Prayer Direction</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Summaries</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Direction of Prayer</string>
     <string name="compass_summary">Direction of prayer to Holy of Holies in Jerusalem</string>

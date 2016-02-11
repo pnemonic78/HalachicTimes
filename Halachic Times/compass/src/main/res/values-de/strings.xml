@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Zusammenfassungen</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Gebetsrichtung</string>
     <string name="compass_summary">Gebetsrichtung zu Allerheiligste in Jerusalem</string>

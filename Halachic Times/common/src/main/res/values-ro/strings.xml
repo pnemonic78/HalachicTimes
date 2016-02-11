@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Preferences -->
+    <string name="summaries_title">Rezumatele</string>
+
     <!-- Theme. -->
     <string name="theme_dark">Întuneric</string>
     <string name="theme_light">Lumina</string>

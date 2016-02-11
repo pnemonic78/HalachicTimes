@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Preferences -->
+    <string name="summaries_title">Zusammenfassungen</string>
+
     <!-- Theme. -->
     <string name="theme_dark">Dunkles</string>
     <string name="theme_light">Helle</string>

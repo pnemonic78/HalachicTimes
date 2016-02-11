@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Résumés</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Direction de la prière</string>
     <string name="compass_summary">Direction de la prière vers le Saint des Saints à Jérusalem</string>

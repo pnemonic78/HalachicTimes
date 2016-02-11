@@ -3,9 +3,6 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
-    <!-- Preferences -->
-    <string name="summaries_title">Sammanfattningar</string>
-
     <!-- Compass -->
     <string name="title_activity_compass">Riktning av bön</string>
     <string name="compass_summary">Riktning av bön till Heligaste av Heliga i Jerusalem</string>

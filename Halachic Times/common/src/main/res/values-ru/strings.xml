@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Preferences -->
+    <string name="summaries_title">Описания</string>
+
     <!-- Theme. -->
     <string name="theme_dark">Темный</string>
     <string name="theme_light">Светлая</string>
