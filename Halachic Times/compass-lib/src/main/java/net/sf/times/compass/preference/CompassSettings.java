@@ -21,7 +21,7 @@ package net.sf.times.compass.preference;
 
 import android.content.Context;
 
-import net.sf.times.compass.R;
+import net.sf.times.compass.lib.R;
 import net.sf.times.location.LocationSettings;
 
 /**
@@ -32,7 +32,7 @@ import net.sf.times.location.LocationSettings;
 public class CompassSettings extends LocationSettings {
 
     /** Preference name for showing summaries. */
-    public static final String KEY_SUMMARIES = "summaries.visible";
+    private static final String KEY_SUMMARIES = "summaries.visible";
 
     /**
      * Constructs a new settings.
