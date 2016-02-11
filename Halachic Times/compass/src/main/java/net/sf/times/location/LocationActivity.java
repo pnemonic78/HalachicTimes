@@ -19,10 +19,8 @@
  */
 package net.sf.times.location;
 
-import android.app.Activity;
 import android.content.Context;
 
-import net.sf.times.compass.CompassActivity;
 import net.sf.times.compass.preference.CompassSettings;
 
 /**
@@ -37,10 +35,5 @@ public class LocationActivity extends LocationTabActivity {
         Context context = this;
         CompassSettings settings = new CompassSettings(context);
         return settings.getTheme();
-    }
-
-    @Override
-    protected Class<? extends Activity> getSearchActivity() {
-        return CompassActivity.class;
     }
 }

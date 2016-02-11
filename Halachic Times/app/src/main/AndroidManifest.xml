@@ -30,9 +30,6 @@
             </intent-filter>
 
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.Activity"/>
-            <meta-data
                 android:name="android.app.default_searchable"
                 android:value="net.sf.times.location.LocationActivity"/>
         </activity>
@@ -50,6 +47,9 @@
             android:name="net.sf.times.compass.CompassActivity"
             android:label="@string/title_activity_compass"
             android:parentActivityName="net.sf.times.ZmanimActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="net.sf.times.location.LocationActivity"/>
         </activity>
         <activity
             android:name="net.sf.times.location.LocationActivity"

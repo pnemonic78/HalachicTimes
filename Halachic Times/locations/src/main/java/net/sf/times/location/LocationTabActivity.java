@@ -334,16 +334,7 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
     protected void setAddress(Location location) {
         Intent data = new Intent();
         data.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
-
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        if (Intent.ACTION_SEARCH.equals(action)) {
-            data.setClass(this, getSearchActivity());
-            data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(data);
-        } else {
-            setResult(RESULT_OK, data);
-        }
+        setResult(RESULT_OK, data);
 
         finish();
     }
@@ -398,9 +389,5 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
 
     protected int getThemeId() {
         return R.style.Theme_Base;
-    }
-
-    protected Class<? extends Activity> getSearchActivity() {
-        return null;
     }
 }

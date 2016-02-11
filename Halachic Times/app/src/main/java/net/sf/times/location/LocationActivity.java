@@ -19,10 +19,8 @@
  */
 package net.sf.times.location;
 
-import android.app.Activity;
 import android.content.Context;
 
-import net.sf.times.ZmanimActivity;
 import net.sf.times.preference.ZmanimSettings;
 
 /**
@@ -37,10 +35,5 @@ public class LocationActivity extends LocationTabActivity {
         Context context = this;
         ZmanimSettings settings = new ZmanimSettings(context);
         return settings.getTheme();
-    }
-
-    @Override
-    protected Class<? extends Activity> getSearchActivity() {
-        return ZmanimActivity.class;
     }
 }

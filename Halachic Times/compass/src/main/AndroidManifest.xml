@@ -26,9 +26,6 @@
             </intent-filter>
 
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="android.app.Activity"/>
-            <meta-data
                 android:name="android.app.default_searchable"
                 android:value="net.sf.times.location.LocationActivity"/>
         </activity>
