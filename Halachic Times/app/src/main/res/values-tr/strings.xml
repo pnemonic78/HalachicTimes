@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Zaman geçmiş olması vakitleri</string>
     <string name="seconds_title">Saniye</string>
-    <string name="summaries_title">Özetler</string>
     <string name="theme_none">Hiçbiri</string>
     <string name="theme_white">Beyaz</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">Dün</string>
     <string name="tomorrow">Yarın</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Pusula</string>
-    <string name="title_activity_compass">Namaz yönü</string>
-    <string name="compass_summary">Kudüs\'teki Kutsallar Kutsal dua yönü</string>
-    <string name="north">K</string>
-    <string name="east">D</string>
-    <string name="south">G</string>
-    <string name="west">B</string>
-
     <!-- Setting per time -->
     <string name="opinion">Görüş</string>
     <string name="emphasis_title">Önem</string>
     <string name="animations">Animasyonlar</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Geçmişi temizle</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

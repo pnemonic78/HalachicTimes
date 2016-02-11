@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Compass -->
+    <string name="menu_compass">Πυξίδα</string>
     <string name="title_activity_compass">Κατεύθυνση της προσευχής</string>
     <string name="compass_summary">Κατεύθυνση της προσευχής στην Άγια των Αγίων στην Ιερουσαλήμ</string>
     <string name="north">Β</string>

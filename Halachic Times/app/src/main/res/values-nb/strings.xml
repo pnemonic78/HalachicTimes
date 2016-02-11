@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Tider som er gått</string>
     <string name="seconds_title">Sekunder</string>
-    <string name="summaries_title">Sammentrag</string>
     <string name="theme_none">Ingen</string>
     <string name="theme_white">Hvit</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">i Går</string>
     <string name="tomorrow">i Morgen</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Kompass</string>
-    <string name="title_activity_compass">Retning av bønn</string>
-    <string name="compass_summary">Retning av bønn til Hellige av Hellig i Jerusalem</string>
-    <string name="north">N</string>
-    <string name="east">Ø</string>
-    <string name="south">S</string>
-    <string name="west">V</string>
-
     <!-- Setting per time -->
     <string name="opinion">Mening</string>
     <string name="emphasis_title">Vektlegging</string>
     <string name="animations">Animasjoner</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Slett loggen</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

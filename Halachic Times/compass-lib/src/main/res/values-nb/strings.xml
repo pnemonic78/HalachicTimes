@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Compass -->
+    <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Retning av bønn</string>
     <string name="compass_summary">Retning av bønn til Hellige av Hellig i Jerusalem</string>
     <string name="north">N</string>

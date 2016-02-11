@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="month_day_year" formatted="false">%B %-e, %Y</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Eliminar historial</string>
-
 </resources>

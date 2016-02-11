@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Ori care s-au scurs</string>
     <string name="seconds_title">Secunde</string>
-    <string name="summaries_title">Rezumatele</string>
     <string name="theme_none">Niciuna</string>
     <string name="theme_white">Albă</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normală</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">Ieri</string>
     <string name="tomorrow">Mâine</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Busolă</string>
-    <string name="title_activity_compass">Direcția de rugăciune</string>
-    <string name="compass_summary">Direcția de rugăciune la Sfânta Sfintelor din Ierusalim</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">V</string>
-
     <!-- Setting per time -->
     <string name="opinion">Opinie</string>
     <string name="emphasis_title">Accent</string>
     <string name="animations">Animații</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Ștergeţi istoricul</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

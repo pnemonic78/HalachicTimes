@@ -282,7 +282,6 @@
     <string name="pref_zmanim_title" translatable="false">@string/title_activity_zmanim</string>
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
-    <string name="summaries_title">Summaries</string>
     <string name="theme_none">None</string>
     <string name="theme_white">White</string>
     <string name="emphasis_scale_title" translatable="false">@string/emphasis_title</string>
@@ -298,22 +297,10 @@
     <string name="yesterday">Yesterday</string>
     <string name="tomorrow">Tomorrow</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Compass</string>
-    <string name="title_activity_compass">Direction of prayer</string>
-    <string name="compass_summary">Direction of prayer to Holy of Holies in Jerusalem</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">W</string>
-
     <!-- Setting per time -->
     <string name="opinion">Opinion</string>
     <string name="emphasis_title">Emphasis</string>
     <string name="animations">Animations</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Clear history</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

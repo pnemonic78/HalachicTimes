@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Compass -->
+    <string name="menu_compass">Kompassi</string>
     <string name="title_activity_compass">Suunta rukous</string>
     <string name="compass_summary">Suunta rukouksen Kaikkeinpyhimpään Jerusalemissa</string>
     <string name="north">P</string>

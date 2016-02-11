@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Минулі разів</string>
     <string name="seconds_title">Секунди</string>
-    <string name="summaries_title">Описи</string>
     <string name="theme_none">Ні</string>
     <string name="theme_white">Білий</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормальний</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">Учора</string>
     <string name="tomorrow">Завтра</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Компас</string>
-    <string name="title_activity_compass">Напрям молитви</string>
-    <string name="compass_summary">Напрямок молитві святая святих у Єрусалимі</string>
-    <string name="north">П</string>
-    <string name="east">С</string>
-    <string name="south">п</string>
-    <string name="west">З</string>
-
     <!-- Setting per time -->
     <string name="opinion">Думка</string>
     <string name="emphasis_title">Акцент</string>
     <string name="animations">Анімації</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Очистити історію</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

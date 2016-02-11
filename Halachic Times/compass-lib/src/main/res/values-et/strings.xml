@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Compass -->
+    <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Suund palve</string>
     <string name="compass_summary">Suund palve kõige pühamat paika Jeruusalemma</string>
     <string name="north">P</string>

@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Tider som förflutit</string>
     <string name="seconds_title">Sekunder</string>
-    <string name="summaries_title">Sammanfattningar</string>
     <string name="theme_none">Inget</string>
     <string name="theme_white">Vit</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">i Går</string>
     <string name="tomorrow">i Morgon</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Kompass</string>
-    <string name="title_activity_compass">Riktning av bön</string>
-    <string name="compass_summary">Riktning av bön till Heligaste av Heliga i Jerusalem</string>
-    <string name="north">N</string>
-    <string name="east">Ö</string>
-    <string name="south">S</string>
-    <string name="west">V</string>
-
     <!-- Setting per time -->
     <string name="opinion">Yttrande</string>
     <string name="emphasis_title">Betoning</string>
     <string name="animations">Animationer</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Rensa historik</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

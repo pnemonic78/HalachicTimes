@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">זמנים שחלפו</string>
     <string name="seconds_title">שניות</string>
-    <string name="summaries_title">תקצירים</string>
     <string name="theme_none">ללא</string>
     <string name="theme_white">לבן</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>רגיל</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">אתמול</string>
     <string name="tomorrow">מחר</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">מצפן</string>
-    <string name="title_activity_compass">כיוון התפילה</string>
-    <string name="compass_summary">כיוון התפילה קודש הקודשים בירושלים</string>
-    <string name="north">צ</string>
-    <string name="east">ז</string>
-    <string name="south">ד</string>
-    <string name="west">ע</string>
-
     <!-- Setting per time -->
     <string name="opinion">דעה</string>
     <string name="emphasis_title">הדגשה</string>
     <string name="animations">אנימציות</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">נקה היסטוריה</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
-    <string name="summaries_title">Santraukas</string>
     <string name="theme_none">Nė vienas</string>
     <string name="theme_white">Baltųjų</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Įprastas</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">Vakar</string>
     <string name="tomorrow">Rytoj</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Kompasas</string>
-    <string name="title_activity_compass">Kryptis maldos</string>
-    <string name="compass_summary">Kryptis maldos Šventasis Šventųjų Jeruzalėje</string>
-    <string name="north">Š</string>
-    <string name="east">R</string>
-    <string name="south">P</string>
-    <string name="west">V</string>
-
     <!-- Setting per time -->
     <string name="opinion">Nuomonė</string>
     <string name="emphasis_title">Emfazė</string>
     <string name="animations">Animacijos</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Išvalyti istoriją</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="seconds_title">Secondes</string>
-    <string name="summaries_title">Résumés</string>
     <string name="theme_none">Aucun</string>
     <string name="theme_white">Blanc</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normale</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">Hier</string>
     <string name="tomorrow">Demain</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Boussole</string>
-    <string name="title_activity_compass">Direction de la prière</string>
-    <string name="compass_summary">Direction de la prière vers le Saint des Saints à Jérusalem</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">O</string>
-
     <!-- Setting per time -->
     <string name="opinion">Opinion</string>
     <string name="emphasis_title">Emphase</string>
     <string name="animations">Animations</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Effacer l\'historique</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>

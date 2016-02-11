@@ -155,7 +155,6 @@
     <!-- Preferences -->
     <string name="past_title">Φορές που έχει παρέλθει</string>
     <string name="seconds_title">Δευτερόλεπτα</string>
-    <string name="summaries_title">Περιγραφές</string>
     <string name="theme_none">Κανένας</string>
     <string name="theme_white">Λευκός</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Κανονικό</h6>]]></string>
@@ -170,22 +169,10 @@
     <string name="yesterday">Εχθές</string>
     <string name="tomorrow">Αύριο</string>
 
-    <!-- Compass -->
-    <string name="menu_compass">Πυξίδα</string>
-    <string name="title_activity_compass">Κατεύθυνση της προσευχής</string>
-    <string name="compass_summary">Κατεύθυνση της προσευχής στην Άγια των Αγίων στην Ιερουσαλήμ</string>
-    <string name="north">Β</string>
-    <string name="east">Α</string>
-    <string name="south">Ν</string>
-    <string name="west">Δ</string>
-
     <!-- Setting per time -->
     <string name="opinion">Γνώμες</string>
     <string name="emphasis_title">Έμφαση</string>
     <string name="animations">Κινούμενες εικόνες</string>
-
-    <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>
 
     <!-- About -->
     <string name="kosherjava">KosherJava</string>
