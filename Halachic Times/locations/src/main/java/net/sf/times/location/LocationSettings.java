@@ -22,14 +22,15 @@ package net.sf.times.location;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.preference.PreferenceManager;
+
+import net.sf.times.common.preference.ThemedSettings;
 
 /**
  * Location settings.
  *
  * @author Moshe Waisberg
  */
-public class LocationSettings {
+public class LocationSettings extends ThemedSettings {
 
     /** Preference name for the latitude. */
     private static final String KEY_LATITUDE = "latitude";
@@ -53,9 +54,6 @@ public class LocationSettings {
     /** Format the coordinates in sexagesimal notation. */
     public static String FORMAT_SEXAGESIMAL;
 
-    protected final Context context;
-    protected final SharedPreferences preferences;
-
     /**
      * Constructs a new settings.
      *
@@ -63,12 +61,7 @@ public class LocationSettings {
      *         the context.
      */
     public LocationSettings(Context context) {
-        Context app = context.getApplicationContext();
-        if (app != null)
-            context = app;
-        this.context = context;
-        this.preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
+        super(context);
         migrate(context, preferences);
     }
 
@@ -94,18 +87,11 @@ public class LocationSettings {
      *         the context.
      */
     public static void init(Context context) {
+        ThemedSettings.init(context);
+
         FORMAT_NONE = context.getString(R.string.coords_format_value_none);
         FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
         FORMAT_SEXAGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
-    }
-
-    /**
-     * Get the preferences.
-     *
-     * @return the shared preferences.
-     */
-    public SharedPreferences getPreferences() {
-        return preferences;
     }
 
     /**

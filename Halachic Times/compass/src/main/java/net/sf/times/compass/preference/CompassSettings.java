@@ -33,13 +33,6 @@ public class CompassSettings extends LocationSettings {
 
     /** Preference name for showing summaries. */
     public static final String KEY_SUMMARIES = "summaries.visible";
-    /** Preference name for the theme. */
-    public static final String KEY_THEME = "theme";
-
-    /** Dark theme. */
-    public static String LIST_THEME_DARK;
-    /** Light theme. */
-    public static String LIST_THEME_LIGHT;
 
     /**
      * Constructs a new settings.
@@ -60,13 +53,8 @@ public class CompassSettings extends LocationSettings {
         return preferences.getBoolean(KEY_SUMMARIES, context.getResources().getBoolean(R.bool.summaries_visible_defaultValue));
     }
 
-    /**
-     * Get the application theme.
-     *
-     * @return the theme resource id.
-     */
-    public int getTheme() {
-        String value = preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue));
+    @Override
+    protected int getTheme(String value) {
         if (LIST_THEME_LIGHT.equals(value)) {
             return R.style.Theme_Compass_Light;
         }
@@ -80,7 +68,6 @@ public class CompassSettings extends LocationSettings {
      *         the context.
      */
     public static void init(Context context) {
-        LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
-        LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
+        LocationSettings.init(context);
     }
 }

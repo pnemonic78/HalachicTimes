@@ -46,15 +46,6 @@ public class ZmanimSettings extends LocationSettings {
     public static final String KEY_SUMMARIES = "summaries.visible";
     /** Preference name for enabling past times. */
     public static final String KEY_PAST = "past";
-    /**
-     * Preference name for the background gradient.
-     *
-     * @deprecated use #KEY_THEME
-     */
-    @Deprecated
-    public static final String KEY_BG_GRADIENT = "gradient";
-    /** Preference name for the theme. */
-    public static final String KEY_THEME = "theme";
     /** Preference name for the last reminder. */
     private static final String KEY_REMINDER_LATEST = "reminder";
     /** Preference name for the reminder audio stream type. */
@@ -204,10 +195,6 @@ public class ZmanimSettings extends LocationSettings {
 
     /** Show zmanim list without background. */
     public static String LIST_THEME_NONE;
-    /** Show zmanim list with dark gradient background. */
-    public static String LIST_THEME_DARK;
-    /** Show zmanim list with light gradient background. */
-    public static String LIST_THEME_LIGHT;
     /** Show zmanim list with white background. */
     public static String LIST_THEME_WHITE;
 
@@ -258,14 +245,9 @@ public class ZmanimSettings extends LocationSettings {
         return preferences.getBoolean(KEY_PAST, context.getResources().getBoolean(R.bool.past_defaultValue));
     }
 
-    /**
-     * Get the application theme.
-     *
-     * @return the theme resource id.
-     */
-    public int getTheme() {
-        String value = preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue));
-        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value) || !preferences.getBoolean(KEY_BG_GRADIENT, true)) {
+    @Override
+    protected int getTheme(String value) {
+        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
         }
         if (LIST_THEME_LIGHT.equals(value)) {
@@ -761,6 +743,8 @@ public class ZmanimSettings extends LocationSettings {
      *         the context.
      */
     public static void init(Context context) {
+        LocationSettings.init(context);
+
         OPINION_10_2 = context.getString(R.string.opinion_value_10);
         OPINION_11 = context.getString(R.string.opinion_value_11);
         OPINION_12 = context.getString(R.string.opinion_value_12);
@@ -806,8 +790,6 @@ public class ZmanimSettings extends LocationSettings {
         OPINION_NIGHT = context.getString(R.string.opinion_value_nightfall);
 
         LIST_THEME_NONE = context.getString(R.string.theme_value_none);
-        LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
-        LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
         LIST_THEME_WHITE = context.getString(R.string.theme_value_white);
 
         OMER_NONE = context.getString(R.string.omer_value_off);
