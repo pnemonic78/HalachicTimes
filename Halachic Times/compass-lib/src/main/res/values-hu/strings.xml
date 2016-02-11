@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Irány az ima</string>
+    <string name="compass_summary">Irány az imádság a Szentek Szentje Jeruzsálemben</string>
+    <string name="north">É</string>
+    <string name="east">K</string>
+    <string name="south">D</string>
+    <string name="west">N</string>
+
+</resources>

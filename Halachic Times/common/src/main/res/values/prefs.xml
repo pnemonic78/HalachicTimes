@@ -5,4 +5,6 @@
     <string name="theme_value_light" translatable="false">light</string>
     <string name="theme_defaultValue" translatable="false">@string/theme_value_dark</string>
 
+    <bool name="summaries_visible_defaultValue" translatable="false">true</bool>
+
 </resources>

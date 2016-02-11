@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Kryptis maldos</string>
+    <string name="compass_summary">Kryptis maldos Šventasis Šventųjų Jeruzalėje</string>
+    <string name="north">Š</string>
+    <string name="east">R</string>
+    <string name="south">P</string>
+    <string name="west">V</string>
+
+</resources>

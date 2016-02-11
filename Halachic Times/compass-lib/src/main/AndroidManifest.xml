@@ -1,3 +1,4 @@
-<manifest package="com.example.compasslibrary"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="net.sf.times.compass.lib"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 </manifest>

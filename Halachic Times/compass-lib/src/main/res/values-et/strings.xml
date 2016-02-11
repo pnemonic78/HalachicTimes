@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Suund palve</string>
+    <string name="compass_summary">Suund palve kõige pühamat paika Jeruusalemma</string>
+    <string name="north">P</string>
+    <string name="east">I</string>
+    <string name="south">Lõ</string>
+    <string name="west">Lä</string>
+
+</resources>

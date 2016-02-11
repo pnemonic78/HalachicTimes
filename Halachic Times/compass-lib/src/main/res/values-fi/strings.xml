@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Suunta rukous</string>
+    <string name="compass_summary">Suunta rukouksen Kaikkeinpyhimpään Jerusalemissa</string>
+    <string name="north">P</string>
+    <string name="east">I</string>
+    <string name="south">E</string>
+    <string name="west">L</string>
+
+</resources>

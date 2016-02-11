@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Направление молитвы</string>
+    <string name="compass_summary">Направление молитвы к Святому Святых в Иерусалиме</string>
+    <string name="north">С</string>
+    <string name="east">В</string>
+    <string name="south">Ю</string>
+    <string name="west">З</string>
+
+</resources>

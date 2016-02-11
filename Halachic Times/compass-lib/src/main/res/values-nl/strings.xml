@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Richting van het gebed</string>
+    <string name="compass_summary">Richting van het gebed om de Heilige der Heiligen in Jeruzalem</string>
+    <string name="north">N</string>
+    <string name="east">O</string>
+    <string name="south">Z</string>
+    <string name="west">W</string>
+
+</resources>

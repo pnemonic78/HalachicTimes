@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Riktning av bön</string>
+    <string name="compass_summary">Riktning av bön till Heligaste av Heliga i Jerusalem</string>
+    <string name="north">N</string>
+    <string name="east">Ö</string>
+    <string name="south">S</string>
+    <string name="west">V</string>
+
+</resources>

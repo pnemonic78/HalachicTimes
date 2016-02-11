@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Direção da oração</string>
+    <string name="compass_summary">Direção da oração para Santo dos Santos em Jerusalém</string>
+    <string name="north">N</string>
+    <string name="east">L</string>
+    <string name="south">S</string>
+    <string name="west">O</string>
+
+</resources>

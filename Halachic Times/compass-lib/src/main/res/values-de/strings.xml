@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="title_activity_compass">Gebetsrichtung</string>
+    <string name="compass_summary">Gebetsrichtung zu Allerheiligste in Jerusalem</string>
+    <string name="north">N</string>
+    <string name="east">O</string>
+    <string name="south">S</string>
+    <string name="west">W</string>
+
+</resources>
