@@ -52,5 +52,6 @@ dependencies {
     compile project(':lib')
     compile project(':common')
     compile project(':locations')
-    compile project(':compass-lib')
+    debugCompile project(path: ':compass-lib', configuration: 'debug')
+    releaseCompile project(path: ':compass-lib', configuration: 'release')
 }

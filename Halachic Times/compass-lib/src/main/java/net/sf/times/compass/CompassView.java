@@ -34,8 +34,10 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import net.sf.times.BuildConfig;
-import net.sf.times.R;
+import net.sf.times.compass.lib.BuildConfig;
+import net.sf.times.compass.lib.R;
+
+import java.util.Random;
 
 /**
  * Compass view.
@@ -183,8 +185,11 @@ public class CompassView extends View {
         paintFill.setStrokeCap(Paint.Cap.BUTT);
 
         setAzimuth(0f);
+        setHoliest(0f);
         if (BuildConfig.DEBUG) {
-            setAzimuth(1f);
+            Random rnd = new Random();
+            setAzimuth((float) (Math.PI * 2 * rnd.nextDouble()));
+            setHoliest(rnd.nextInt(360));
         }
     }
 
