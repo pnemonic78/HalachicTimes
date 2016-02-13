@@ -37,7 +37,6 @@ import android.os.Message;
 import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -85,9 +84,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
     /** The details list parameter. */
     private static final String PARAMETER_DETAILS = "details";
-
-    /** Activity id for searching locations. */
-    private static final int ACTIVITY_LOCATIONS = 1;
 
     private static final int WHAT_TOGGLE_DETAILS = 0;
     private static final int WHAT_COMPASS = 1;
@@ -166,6 +162,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         @Override
         public void handleMessage(Message msg) {
             ZmanimActivity activity = activityWeakReference.get();
+            if (activity == null) {
+                return;
+            }
             Context context = activity;
 
             switch (msg.what) {
@@ -200,7 +199,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
                     Intent intent = new Intent(context, LocationActivity.class);
                     intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-                    activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
+                    activity.startActivity(intent);
                     break;
                 case WHAT_SETTINGS:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -594,20 +593,18 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         }
     }
 
-    /* onBackPressed requires API 5+. */
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (masterFragment != null) {
-                masterFragment.unhighlight();
+    public void onBackPressed() {
+        if (masterFragment != null) {
+            masterFragment.unhighlight();
 
-                if (isDetailsShowing()) {
-                    hideDetails();
-                    return true;
-                }
+            if (isDetailsShowing()) {
+                hideDetails();
+                return;
             }
         }
-        return super.onKeyDown(keyCode, event);
+
+        super.onBackPressed();
     }
 
     @Override
@@ -671,33 +668,23 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         return (viewSwitcher.getDisplayedChild() == CHILD_DETAILS);
     }
 
+    /**
+     * Search key was pressed.
+     */
     @Override
     public boolean onSearchRequested() {
         Location loc = locations.getLocation();
         // Have we been destroyed?
         if (loc == null)
-            return false;
+            return super.onSearchRequested();
+
+        ZmanimAddress address = this.address;
+        String query = (address != null) ? address.getFormatted().toString() : null;
 
         Bundle appData = new Bundle();
         appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
-        startSearch(null, false, appData, false);
+        startSearch(query, false, appData, false);
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ACTIVITY_LOCATIONS) {
-            if (resultCode == RESULT_OK) {
-                Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-                if (loc == null) {
-                    locations.setLocation(null);
-                    loc = locations.getLocation();
-                }
-                locations.setLocation(loc);
-            }
-        }
     }
 
     @Override

@@ -974,4 +974,8 @@ public class AddressProvider {
             return;
         db.delete(AddressOpenHelper.TABLE_ADDRESSES, null, null);
     }
+
+    public List<ZmanimAddress> getCities() {
+        return countriesGeocoder.getCities();
+    }
 }

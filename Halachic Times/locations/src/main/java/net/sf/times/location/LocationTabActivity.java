@@ -19,10 +19,8 @@
  */
 package net.sf.times.location;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.app.TabActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
@@ -36,11 +34,11 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -54,7 +52,6 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Pick a city from the list.
@@ -87,7 +84,6 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
     private static final int WHAT_FAVORITE = 1;
 
     private EditText searchText;
-    private CountriesGeocoder countriesGeocoder;
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
     private LocationAdapter adapterHistory;
@@ -104,8 +100,6 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context context = this;
-
         setTheme(getThemeId());
         setContentView(R.layout.locations);
 
@@ -117,10 +111,10 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
         searchText.setBackgroundDrawable(null);
         this.searchText = searchText;
 
-        ImageView searchClear = (ImageView) findViewById(R.id.search_close_btn);
+        View searchClear = findViewById(R.id.search_close_btn);
         searchClear.setOnClickListener(this);
 
-        ImageView myLocation = (ImageView) findViewById(R.id.my_location);
+        View myLocation = findViewById(R.id.my_location);
         myLocation.setOnClickListener(this);
 
         TabHost tabs = getTabHost();
@@ -140,8 +134,6 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
         tabHistory.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_recent_history));
         tabHistory.setContent(R.id.list_history);
         tabs.addTab(tabHistory);
-
-        countriesGeocoder = new CountriesGeocoder(this, Locale.getDefault());
 
         Intent intent = getIntent();
         String query = intent.getStringExtra(SearchManager.QUERY);
@@ -176,7 +168,7 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
         searchText.requestFocus();
         searchText.setText(query);
         if (!TextUtils.isEmpty(query))
-            searchText.setSelection(query.length());
+            searchText.setSelection(0, query.length());
     }
 
     @Override
@@ -198,7 +190,7 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
         AddressProvider provider = app.getAddresses();
         LocationFormatter formatter = app.getLocations();
         List<ZmanimAddress> addresses = provider.query(null);
-        List<ZmanimAddress> cities = countriesGeocoder.getCities();
+        List<ZmanimAddress> cities = provider.getCities();
 
         provider.populateCities(cities);
 
@@ -283,17 +275,22 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
         // Maybe user typed "latitude,longitude"?
         boolean submit = false;
         switch (actionId) {
-            case 5:
-            case 6:
+            case EditorInfo.IME_ACTION_NEXT:
+            case EditorInfo.IME_ACTION_DONE:
+            case EditorInfo.IME_ACTION_GO:
                 submit = true;
-            case 0:
+                break;
+            case EditorInfo.IME_ACTION_UNSPECIFIED:
                 if (event != null) {
                     switch (event.getKeyCode()) {
                         case KeyEvent.KEYCODE_ENTER:
                             submit = true;
+                            break;
                     }
                 }
+                break;
         }
+
         if (submit) {
             CharSequence text = v.getText();
             Location loc = null;
@@ -332,9 +329,13 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
      *         the location.
      */
     protected void setAddress(Location location) {
-        Intent data = new Intent();
-        data.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
-        setResult(RESULT_OK, data);
+        LocationApplication app = (LocationApplication) getApplication();
+        LocationsProvider locations = app.getLocations();
+        locations.setLocation(location);
+
+        Intent intent = getIntent();
+        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
+        setResult(RESULT_OK, intent);
 
         finish();
     }
@@ -355,11 +356,15 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
 
         @Override
         public void handleMessage(Message msg) {
+            LocationTabActivity activity = activityWeakReference.get();
+            if (activity == null) {
+                return;
+            }
+
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     ZmanimAddress address = (ZmanimAddress) msg.obj;
                     long id = address.getId();
-                    LocationTabActivity activity = activityWeakReference.get();
                     LocationApplication app = (LocationApplication) activity.getApplication();
                     AddressProvider provider = app.getAddresses();
                     if (id < 0L) {
@@ -381,10 +386,7 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
      * Set the location to "here".
      */
     private void gotoHere() {
-        Intent data = new Intent();
-        data.putExtra(LocationManager.KEY_LOCATION_CHANGED, (Location) null);
-        setResult(RESULT_OK, data);
-        finish();
+        setAddress(null);
     }
 
     protected int getThemeId() {

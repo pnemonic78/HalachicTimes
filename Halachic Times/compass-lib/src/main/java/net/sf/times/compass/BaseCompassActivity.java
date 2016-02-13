@@ -30,7 +30,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -276,18 +275,35 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
     }
 
     protected void startLocations() {
-        Activity activity = this;
-        Context context = activity;
-
         Location loc = locations.getLocation();
         // Have we been destroyed?
         if (loc == null)
             return;
 
-        Intent intent = new Intent(context, getLocationActivityClass());
+        Activity activity = this;
+        Intent intent = new Intent(activity, getLocationActivityClass());
         intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
         activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
     }
 
     protected abstract Class<? extends Activity> getLocationActivityClass();
+
+    /**
+     * Search key was pressed.
+     */
+    @Override
+    public boolean onSearchRequested() {
+        Location loc = locations.getLocation();
+        // Have we been destroyed?
+        if (loc == null)
+            return super.onSearchRequested();
+
+        ZmanimAddress address = this.address;
+        String query = (address != null) ? address.getFormatted().toString() : null;
+
+        Bundle appData = new Bundle();
+        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
+        startSearch(query, false, appData, false);
+        return true;
+    }
 }
