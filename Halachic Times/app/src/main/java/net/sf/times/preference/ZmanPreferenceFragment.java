@@ -73,7 +73,17 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
         super.onCreate(savedInstanceState);
 
-        initList(opinionKey);
+        if (!TextUtils.isEmpty(opinionKey)) {
+            if (opinionKey.indexOf(';') > 0) {
+                String[] opinionKeys = opinionKey.split(";");
+                int length = opinionKeys.length;
+                for (int i = 0; i < length; i++) {
+                    initList(opinionKeys[i]);
+                }
+            } else {
+                initList(opinionKey);
+            }
+        }
         if ((this.preferenceReminder = initList(reminderKey)) == null) {
             this.preferenceReminder = initTime(reminderKey);
         }

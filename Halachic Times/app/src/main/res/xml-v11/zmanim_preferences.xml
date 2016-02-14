@@ -203,7 +203,7 @@
             android:value="@xml/zman_shabbath_preferences"/>
         <extra
             android:name="opinion"
-            android:value="shabbath_ends.minutes"/>
+            android:value="shabbath_ends.after;shabbath_ends.minutes"/>
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"

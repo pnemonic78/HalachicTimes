@@ -65,6 +65,7 @@
     <string name="midnight_defaultValue" translatable="false">@string/opinion_value_solar</string>
     <string name="mincha_defaultValue" translatable="false">@string/opinion_value_default</string>
     <string name="nightfall_defaultValue" translatable="false">@string/opinion_value_7_083</string>
+    <string name="shabbath_ends_after_defaultValue" translatable="false">@string/opinion_value_nightfall</string>
     <integer name="shabbath_ends_defaultValue" translatable="false">0</integer>
     <string name="plug_hamincha_defaultValue" translatable="false">@string/opinion_value_gra</string>
     <string name="prayers_defaultValue" translatable="false">@string/opinion_value_gra</string>

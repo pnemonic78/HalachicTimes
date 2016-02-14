@@ -91,6 +91,7 @@ public class ZmanimSettings extends LocationSettings {
     public static final String KEY_OPINION_NIGHTFALL = "nightfall";
     /** Preference name for Shabbath ends after nightfall. */
     public static final String KEY_OPINION_SHABBATH_ENDS = "shabbath_ends";
+    public static final String KEY_OPINION_SHABBATH_ENDS_AFTER = KEY_OPINION_SHABBATH_ENDS + ".after";
     public static final String KEY_OPINION_SHABBATH_ENDS_MINUTES = KEY_OPINION_SHABBATH_ENDS + ".minutes";
     /** Preference name for midnight type. */
     public static final String KEY_OPINION_MIDNIGHT = "midnight";
@@ -414,6 +415,15 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     /**
+     * Get the time when Shabbath ends after.
+     *
+     * @return the time id.
+     */
+    public int getShabbathEndsAfter() {
+        return toId(preferences.getString(KEY_OPINION_SHABBATH_ENDS_AFTER,  context.getString(R.string.shabbath_ends_after_defaultValue)));
+    }
+
+    /**
      * Get the number of minutes when Shabbath ends after nightfall.
      *
      * @return the opinion.
@@ -462,7 +472,7 @@ public class ZmanimSettings extends LocationSettings {
         if (time == NEVER) {
             return NEVER;
         }
-        String key = getKey(id);
+        String key = toKey(id);
         if (key == null) {
             return NEVER;
         }
@@ -562,7 +572,7 @@ public class ZmanimSettings extends LocationSettings {
      * @return {@code true} for emphasis.
      */
     public boolean isEmphasis(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null)
             return preferences.getBoolean(key + EMPHASIS_SUFFIX, context.getResources().getBoolean(R.bool.emphasis_defaultValue));
         return false;
@@ -585,7 +595,7 @@ public class ZmanimSettings extends LocationSettings {
      *         the time id.
      * @return the key - {@code null} otherwise.
      */
-    protected String getKey(int id) {
+    protected String toKey(int id) {
         switch (id) {
             case R.string.hour:
                 return KEY_OPINION_HOUR;
@@ -631,6 +641,56 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     /**
+     * Get the preference title id.
+     *
+     * @param name
+     *         the time name.
+     * @return the id - {@code null} otherwise.
+     */
+    protected int toId(String name) {
+        switch (name) {
+            case KEY_OPINION_HOUR:
+                return R.string.hour;
+            case KEY_OPINION_DAWN:
+                return R.string.dawn;
+            case KEY_OPINION_TALLIS:
+                return R.string.tallis;
+            case KEY_OPINION_SUNRISE:
+                return R.string.sunrise;
+            case KEY_OPINION_SHEMA:
+                return R.string.shema;
+            case KEY_OPINION_TFILA:
+                return R.string.prayers;
+            case KEY_OPINION_NOON:
+                return R.string.midday;
+            case KEY_OPINION_EARLIEST_MINCHA:
+                return R.string.earliest_mincha;
+            case KEY_OPINION_MINCHA:
+                return R.string.mincha;
+            case KEY_OPINION_PLUG_MINCHA:
+                return R.string.plug_hamincha;
+            case KEY_OPINION_CANDLES:
+                return R.string.candles;
+            case KEY_OPINION_SUNSET:
+                return R.string.sunset;
+            case KEY_OPINION_TWILIGHT:
+                return R.string.twilight;
+            case KEY_OPINION_NIGHTFALL:
+                return R.string.nightfall;
+            case KEY_OPINION_SHABBATH_ENDS:
+                return R.string.shabbath_ends;
+            case KEY_OPINION_MIDNIGHT:
+                return R.string.midnight;
+            case KEY_OPINION_EARLIEST_LEVANA:
+                return R.string.levana_earliest;
+            case KEY_OPINION_LATEST_LEVANA:
+                return R.string.levana_latest;
+            default:
+                return 0;
+        }
+    }
+
+    /**
      * Get the reminder ringtone.
      *
      * @return the ringtone.
@@ -651,7 +711,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderSunday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SUNDAY_SUFFIX;
             if (keyDay != null) {
@@ -662,7 +722,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderMonday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_MONDAY_SUFFIX;
             if (keyDay != null) {
@@ -673,7 +733,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderTuesday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_TUESDAY_SUFFIX;
             if (keyDay != null) {
@@ -684,7 +744,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderWednesday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_WEDNESDAY_SUFFIX;
             if (keyDay != null) {
@@ -695,7 +755,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderThursday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_THURSDAY_SUFFIX;
             if (keyDay != null) {
@@ -706,7 +766,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderFriday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_FRIDAY_SUFFIX;
             if (keyDay != null) {
@@ -717,7 +777,7 @@ public class ZmanimSettings extends LocationSettings {
     }
 
     public boolean isReminderSaturday(int id) {
-        String key = getKey(id);
+        String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SATURDAY_SUFFIX;
             if (keyDay != null) {
