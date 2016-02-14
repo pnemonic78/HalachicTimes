@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Date -->
+    <string name="month_day_year" formatted="false">%B %-e, %Y</string>
+
+    <!-- Preferences -->
+    <string name="menu_settings">Configuración</string>
+
+</resources>
