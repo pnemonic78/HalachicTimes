@@ -5,8 +5,8 @@
     <string name="summaries_title">Описи</string>
 
     <!-- Theme. -->
-    <string name="theme_dark">Темний</string>
-    <string name="theme_light">Світло</string>
+    <string name="theme_dark">Темна</string>
+    <string name="theme_light">Світла</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Конфіденційність і безпека</string>

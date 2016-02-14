@@ -6,7 +6,7 @@
 
     <!-- Theme. -->
     <string name="theme_dark">Tamsi</string>
-    <string name="theme_light">Šviesos</string>
+    <string name="theme_light">Šviesi</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>

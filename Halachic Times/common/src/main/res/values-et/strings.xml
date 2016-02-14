@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Preferences -->
-    <string name="summaries_title">Kokkuvõtted</string>
+    <string name="summaries_title">Kokkuvï¿½tted</string>
 
     <!-- Theme. -->
     <string name="theme_dark">Tume</string>
-    <string name="theme_light">Heledad</string>
+    <string name="theme_light">Hele</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>

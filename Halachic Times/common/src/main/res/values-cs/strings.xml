@@ -5,8 +5,8 @@
     <string name="summaries_title">Souhrny</string>
 
     <!-- Theme. -->
-    <string name="theme_dark">Tmavě</string>
-    <string name="theme_light">Světlo</string>
+    <string name="theme_dark">Tmavý</string>
+    <string name="theme_light">Světlý</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>

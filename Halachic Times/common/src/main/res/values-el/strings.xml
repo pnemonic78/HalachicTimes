@@ -5,8 +5,8 @@
     <string name="summaries_title">Περιγραφές</string>
 
     <!-- Theme. -->
-    <string name="theme_dark">Σκοτεινό</string>
-    <string name="theme_light">Φως</string>
+    <string name="theme_dark">Σκοτεινός</string>
+    <string name="theme_light">Ανοιχτόχρωμο</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Απόρρητο και ασφάλεια</string>

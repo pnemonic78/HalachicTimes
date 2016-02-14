@@ -6,7 +6,7 @@
 
     <!-- Theme. -->
     <string name="theme_dark">Тъмно</string>
-    <string name="theme_light">Светла</string>
+    <string name="theme_light">Светло</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Поверителност и сигурност</string>

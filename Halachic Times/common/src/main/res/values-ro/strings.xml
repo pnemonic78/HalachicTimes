@@ -5,8 +5,8 @@
     <string name="summaries_title">Rezumatele</string>
 
     <!-- Theme. -->
-    <string name="theme_dark">Întuneric</string>
-    <string name="theme_light">Lumina</string>
+    <string name="theme_dark">Întunecat</string>
+    <string name="theme_light">Luminos</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Confidenţialitate şi securitate</string>
