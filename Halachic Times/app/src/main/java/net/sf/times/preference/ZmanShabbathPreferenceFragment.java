@@ -40,8 +40,9 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        String minutesAfter = getString(R.string.nightfall);
         seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        seek.setSummaryFormat(R.plurals.shabbath_ends_summary);
+        seek.setSummaryFormat(R.plurals.shabbath_ends_summary, minutesAfter);
         seek.setOnPreferenceChangeListener(this);
         onSeekPreferenceChange(seek, null);
     }
@@ -49,7 +50,8 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     private boolean onSeekPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
         int minutes = preference.getProgress();
         Resources res = getResources();
-        CharSequence summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes);
+        String minutesAfter = res.getString(R.string.nightfall);
+        CharSequence summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes, minutesAfter);
         preference.setSummary(summary);
         return true;
     }

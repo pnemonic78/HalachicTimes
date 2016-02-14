@@ -112,12 +112,12 @@
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Sjabbat eindigt</string>
-    <string name="shabbath_ends_summary_zero">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_one">%1$d minuut na de nacht</string>
-    <string name="shabbath_ends_summary_two">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_other">%1$d minuten na de nacht</string>
+    <string name="minutes_after_zero">@string/minutes_after_other</string>
+    <string name="minutes_after_one">%1$d minuut na de %2$s</string>
+    <string name="minutes_after_two">@string/minutes_after_other</string>
+    <string name="minutes_after_few">@string/minutes_after_other</string>
+    <string name="minutes_after_many">@string/minutes_after_other</string>
+    <string name="minutes_after_other">%1$d minuten na de %2$s</string>
     <string name="festival_ends">Feestdag eindigt</string>
 
     <!-- Midnight -->

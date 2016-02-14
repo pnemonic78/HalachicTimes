@@ -39,6 +39,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
     private int max;
     private boolean progressSet;
     private int summaryFormat;
+    private Object[] summaryArgs;
     private SeekBar seekBar;
     private TextView summaryView;
 
@@ -150,8 +151,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
         if (positiveResult) {
             int progress = seekBar.getProgress();
             if (callChangeListener(progress) && (summaryFormat != 0)) {
+                summaryArgs[0] = progress;
                 Resources res = getContext().getResources();
-                CharSequence summary = res.getQuantityString(summaryFormat, progress, progress);
+                CharSequence summary = res.getQuantityString(summaryFormat, progress, summaryArgs);
                 setSummary(summary);
 
                 setProgress(progress);
@@ -162,8 +164,9 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if ((this.seekBar == seekBar) && (summaryFormat != 0) && (summaryView != null)) {
+            summaryArgs[0] = progress;
             Resources res = getContext().getResources();
-            CharSequence summary = res.getQuantityString(summaryFormat, progress, progress);
+            CharSequence summary = res.getQuantityString(summaryFormat, progress, summaryArgs);
             summaryView.setText(summary);
         }
     }
@@ -181,8 +184,17 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
      *
      * @param pluralId
      *         the plural id for quantity.
+     * @param args
+     *         the plural arguments.
      */
-    public void setSummaryFormat(int pluralId) {
+    public void setSummaryFormat(int pluralId, Object... args) {
         summaryFormat = pluralId;
+        if (args != null) {
+            int length = args.length;
+            summaryArgs = new Object[1 + length];
+            System.arraycopy(args, 0, summaryArgs, 1, length);
+        } else {
+            summaryArgs = new Object[1];
+        }
     }
 }

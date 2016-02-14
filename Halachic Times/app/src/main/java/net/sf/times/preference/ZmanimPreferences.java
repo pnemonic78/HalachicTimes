@@ -125,8 +125,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         candlesSeek.setOnPreferenceChangeListener(this);
         onSeekPreferenceChange(candlesSeek, null);
 
+        String minutesAfter = getString(R.string.nightfall);
         shabbathSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        shabbathSeek.setSummaryFormat(R.plurals.shabbath_ends_summary);
+        shabbathSeek.setSummaryFormat(R.plurals.shabbath_ends_summary, minutesAfter);
         shabbathSeek.setOnPreferenceChangeListener(this);
         onSeekPreferenceChange(shabbathSeek, null);
 
@@ -286,7 +287,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         if (preference == candlesSeek) {
             summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
         } else if (preference == shabbathSeek) {
-            summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes);
+            String minutesAfter = res.getString(R.string.nightfall);
+            summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes, minutesAfter);
         }
         preference.setSummary(summary);
         return true;

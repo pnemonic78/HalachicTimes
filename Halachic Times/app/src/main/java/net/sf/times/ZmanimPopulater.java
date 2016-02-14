@@ -734,15 +734,18 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                         summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
                         adapter.add(R.string.candles, summaryText, date, remote);
                     } else {
-                        summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                        String minutesAfter = getContext().getString(R.string.nightfall);
+                        summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, minutesAfter);
                         adapter.add(R.string.candles, summaryText, date, remote);
                     }
                 }
             } else {
                 if (dayOfWeek == Calendar.SATURDAY) {
-                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                    String minutesAfter = getContext().getString(R.string.nightfall);
+                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, minutesAfter);
                     adapter.add(R.string.shabbath_ends, summaryText, date, remote);
                 } else if (holidayToday >= 0) {
+                    String minutesAfter = getContext().getString(R.string.nightfall);
                     switch (holidayToday) {
                         case JewishCalendar.PESACH:
                         case JewishCalendar.SHAVUOS:
@@ -751,7 +754,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                         case JewishCalendar.SUCCOS:
                         case JewishCalendar.SHEMINI_ATZERES:
                         case JewishCalendar.SIMCHAS_TORAH:
-                            summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset);
+                            summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, minutesAfter);
                             adapter.add(R.string.festival_ends, summaryText, date, remote);
                             break;
                     }

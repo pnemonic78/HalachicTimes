@@ -112,12 +112,12 @@
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Шабат завършва</string>
-    <string name="shabbath_ends_summary_zero">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_one">%1$d минута след свечеряване</string>
-    <string name="shabbath_ends_summary_two">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_other">%1$d минути след свечеряване</string>
+    <string name="minutes_after_zero">@string/minutes_after_other</string>
+    <string name="minutes_after_one">%1$d минута след %2$s</string>
+    <string name="minutes_after_two">@string/minutes_after_other</string>
+    <string name="minutes_after_few">@string/minutes_after_other</string>
+    <string name="minutes_after_many">@string/minutes_after_other</string>
+    <string name="minutes_after_other">%1$d минути след %2$s</string>
     <string name="festival_ends">Празник завършва</string>
 
     <!-- Midnight -->

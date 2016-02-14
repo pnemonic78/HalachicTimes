@@ -227,19 +227,19 @@
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Shabbath ends</string>
-    <string name="shabbath_ends_summary_zero">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_one">%1$d minute after nightfall</string>
-    <string name="shabbath_ends_summary_two">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_other">%1$d minutes after nightfall</string>
+    <string name="minutes_after_zero">@string/minutes_after_other</string>
+    <string name="minutes_after_one">%1$d minute after %2$s</string>
+    <string name="minutes_after_two">@string/minutes_after_other</string>
+    <string name="minutes_after_few">@string/minutes_after_other</string>
+    <string name="minutes_after_many">@string/minutes_after_other</string>
+    <string name="minutes_after_other">%1$d minutes after %2$s</string>
     <plurals name="shabbath_ends_summary" translatable="false">
-        <item quantity="zero">@string/shabbath_ends_summary_zero</item>
-        <item quantity="one">@string/shabbath_ends_summary_one</item>
-        <item quantity="two">@string/shabbath_ends_summary_two</item>
-        <item quantity="few">@string/shabbath_ends_summary_few</item>
-        <item quantity="many">@string/shabbath_ends_summary_many</item>
-        <item quantity="other">@string/shabbath_ends_summary_other</item>
+        <item quantity="zero">@string/minutes_after_zero</item>
+        <item quantity="one">@string/minutes_after_one</item>
+        <item quantity="two">@string/minutes_after_two</item>
+        <item quantity="few">@string/minutes_after_few</item>
+        <item quantity="many">@string/minutes_after_many</item>
+        <item quantity="other">@string/minutes_after_other</item>
     </plurals>
     <string name="festival_ends">Festival ends</string>
 

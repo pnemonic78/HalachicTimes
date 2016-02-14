@@ -112,12 +112,12 @@
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Şabat biter</string>
-    <string name="shabbath_ends_summary_zero">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_one">%1$d dakika sonra akşam vakti</string>
-    <string name="shabbath_ends_summary_two">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_few">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_many">@string/shabbath_ends_summary_other</string>
-    <string name="shabbath_ends_summary_other">%1$d dakika sonra akşam vakti</string>
+    <string name="minutes_after_zero">@string/minutes_after_other</string>
+    <string name="minutes_after_one">%1$d dakika sonra %2$s</string>
+    <string name="minutes_after_two">@string/minutes_after_other</string>
+    <string name="minutes_after_few">@string/minutes_after_other</string>
+    <string name="minutes_after_many">@string/minutes_after_other</string>
+    <string name="minutes_after_other">%1$d dakika sonra %2$s</string>
     <string name="festival_ends">Bayram biter</string>
 
     <!-- Midnight -->
