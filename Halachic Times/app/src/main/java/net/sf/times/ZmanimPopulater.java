@@ -116,7 +116,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_NIGHT = ZmanimSettings.OPINION_NIGHT;
 
     /** No summary. */
-    protected static final int SUMMARY_NONE = 0;
+    protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
 
     private static final long FAST_ENDS_18 = 18 * DateUtils.MINUTE_IN_MILLIS;
     private static final long FAST_ENDS_24 = 24 * DateUtils.MINUTE_IN_MILLIS;
@@ -265,7 +265,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 summary = R.string.hour_gra;
             }
             // Offset is added back when formatted.
-            adapter.add(R.string.hour, summary, time - gcal.getTimeZone().getRawOffset(), remote);
+            adapter.addHour(R.string.hour, summary, time - gcal.getTimeZone().getRawOffset(), remote);
         }
 
         opinion = settings.getDawn();

@@ -154,67 +154,67 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         time = cal.getShaahZmanis120Minutes();
         title = R.string.hour_120;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis120MinutesZmanis();
         title = R.string.hour_120_zmanis;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis16Point1Degrees();
         title = R.string.hour_16;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis18Degrees();
         title = R.string.hour_18;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis19Point8Degrees();
         title = R.string.hour_19;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis26Degrees();
         title = R.string.hour_26;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis60Minutes();
         title = R.string.hour_60;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis72Minutes();
         title = R.string.hour_72;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis72MinutesZmanis();
         title = R.string.hour_72_zmanis;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis90Minutes();
         title = R.string.hour_90;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis90MinutesZmanis();
         title = R.string.hour_90_zmanis;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis96Minutes();
         title = R.string.hour_96;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis96MinutesZmanis();
         title = R.string.hour_96_zmanis;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanisAteretTorah();
         title = R.string.hour_ateret;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanisGra();
         title = R.string.hour_gra;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanisMGA();
         title = R.string.hour_mga;
-        adapter.add(title, SUMMARY_NONE, time - offset);
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
     }
 
     private void populateDawn(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {

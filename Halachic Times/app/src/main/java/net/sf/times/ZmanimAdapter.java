@@ -59,6 +59,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected static final int CANDLES_MASK = ZmanimPopulater.CANDLES_MASK;
     protected static final int HOLIDAY_MASK = ZmanimPopulater.HOLIDAY_MASK;
 
+    /** No summary. */
+    protected static final int SUMMARY_NONE = 0;
+
     /** The day of the month as a decimal number (range 01 to 31). */
     private static final String DAY_PAD_VAR = "%d";
     /** The day of the month as a decimal number (range 1 to 31). */
@@ -288,7 +291,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param summaryId
      *         the summary label id.
      * @param time
-     *         the time in milliseconds..
+     *         the time in milliseconds.
      */
     public void add(int titleId, int summaryId, long time) {
         add(titleId, summaryId, time, false);
@@ -302,7 +305,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param summaryId
      *         the summary label id.
      * @param time
-     *         the time in milliseconds..
+     *         the time in milliseconds.
      * @param remote
      *         hide elapsed times for remote view?
      */
@@ -339,6 +342,24 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         hide elapsed times for remote view?
      */
     public void add(int titleId, CharSequence summary, long time, boolean remote) {
+        add(titleId, summary, time, remote, (titleId == R.string.hour));
+    }
+
+    /**
+     * Adds the item to the array for a valid date.
+     *
+     * @param titleId
+     *         the row layout id.
+     * @param summary
+     *         the summary label.
+     * @param time
+     *         the time in milliseconds.
+     * @param remote
+     *         hide elapsed times for remote view?
+     * @param hour
+     *         format as hour?
+     */
+    public void add(int titleId, CharSequence summary, long time, boolean remote, boolean hour) {
         ZmanimItem item = new ZmanimItem();
         item.titleId = titleId;
         item.summary = summary;
@@ -349,13 +370,41 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             item.timeLabel = null;
             item.elapsed = true;
         } else {
-            item.timeLabel = (titleId == R.string.hour) ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
+            item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
             item.elapsed = remote ? (time < now) : (showElapsed || (titleId == R.string.hour)) ? false : (time < now);
         }
 
         if (time != NEVER) {
             add(item);
         }
+    }
+
+    /**
+     * Adds the item to the array for a valid time.
+     *
+     * @param titleId
+     *         the title label id.
+     * @param summaryId
+     *         the summary label id.
+     * @param time
+     *         the time in milliseconds.
+     */
+    public void addHour(int titleId, int summaryId, long time) {
+        addHour(titleId, summaryId, time, false);
+    }
+
+    /**
+     * Adds the item to the array for a valid time.
+     *
+     * @param titleId
+     *         the title label id.
+     * @param summaryId
+     *         the summary label id.
+     * @param time
+     *         the time in milliseconds.
+     */
+    public void addHour(int titleId, int summaryId, long time, boolean remote) {
+        add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time, remote, true);
     }
 
     /**
