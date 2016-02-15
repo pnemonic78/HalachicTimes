@@ -123,13 +123,11 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         candlesSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
         candlesSeek.setSummaryFormat(R.plurals.candles_summary);
         candlesSeek.setOnPreferenceChangeListener(this);
-        onSeekPreferenceChange(candlesSeek, null);
 
-        String shabbathAfterName = getString(settings.getShabbathEndsAfter());
+        String shabbathAfterName = getString(getSettings().getShabbathEndsAfter());
         shabbathSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
         shabbathSeek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
         shabbathSeek.setOnPreferenceChangeListener(this);
-        onSeekPreferenceChange(shabbathSeek, null);
 
         initList(ZmanimSettings.KEY_OPINION_HOUR);
         initList(ZmanimSettings.KEY_OPINION_DAWN);
@@ -201,6 +199,13 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         // Other preferences that affect the app widget.
         findPreference(ZmanimSettings.KEY_PAST).setOnPreferenceChangeListener(this);
         findPreference(ZmanimSettings.KEY_SECONDS).setOnPreferenceChangeListener(this);
+    }
+
+    protected ZmanimSettings getSettings() {
+        if (settings == null) {
+            settings = new ZmanimSettings(this);
+        }
+        return settings;
     }
 
     @SuppressWarnings("deprecation")
@@ -288,7 +293,7 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         if (preference == candlesSeek) {
             summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
         } else if (preference == shabbathSeek) {
-            String shabbathAfterName = res.getString(settings.getShabbathEndsAfter());
+            String shabbathAfterName = res.getString(getSettings().getShabbathEndsAfter());
             summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes, shabbathAfterName);
         }
         preference.setSummary(summary);
@@ -328,6 +333,10 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
                 preference.notifyDependencyChange(preference.shouldDisableDependents());
 
                 remind();
+            } else if (ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_AFTER.equals(key) && (value != null)){
+                int shabbathAfter = getSettings().toId(value);
+                String shabbathAfterName = getString(shabbathAfter);
+                shabbathSeek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
             }
         }
     }
@@ -485,11 +494,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
                 public void run() {
                     Context context = ZmanimPreferences.this;
                     if (context != null) {
-                        if (settings == null)
-                            settings = new ZmanimSettings(context);
                         if (reminder == null)
                             reminder = new ZmanimReminder();
-                        reminder.remind(context, settings);
+                        reminder.remind(context, getSettings());
                     }
                 }
             };

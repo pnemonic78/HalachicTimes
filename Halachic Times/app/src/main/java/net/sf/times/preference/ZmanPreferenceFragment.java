@@ -97,6 +97,13 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
         return xmlId;
     }
 
+    protected ZmanimSettings getSettings() {
+        if (settings == null) {
+            settings = new ZmanimSettings(context);
+        }
+        return settings;
+    }
+
     @Override
     protected void onListPreferenceChange(ListPreference preference, Object newValue) {
         String oldValue = preference.getValue();
@@ -160,11 +167,9 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
                 @Override
                 public void run() {
                     if (context != null) {
-                        if (settings == null)
-                            settings = new ZmanimSettings(context);
                         if (reminder == null)
                             reminder = new ZmanimReminder();
-                        reminder.remind(context, settings);
+                        reminder.remind(context, getSettings());
                     }
                 }
             };

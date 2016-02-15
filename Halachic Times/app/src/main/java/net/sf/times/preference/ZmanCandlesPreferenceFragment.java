@@ -20,10 +20,8 @@
 package net.sf.times.preference;
 
 import android.annotation.TargetApi;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
 
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
@@ -34,31 +32,12 @@ import net.sf.times.R;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
 
-    private SeekBarDialogPreference seek;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+        SeekBarDialogPreference seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
         seek.setSummaryFormat(R.plurals.candles_summary);
         seek.setOnPreferenceChangeListener(this);
-        onSeekPreferenceChange(seek, null);
-    }
-
-    private boolean onSeekPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
-        int minutes = preference.getProgress();
-        Resources res = getResources();
-        CharSequence summary = res.getQuantityString(R.plurals.candles_summary, minutes, minutes);
-        preference.setSummary(summary);
-        return true;
-    }
-
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == seek) {
-            return onSeekPreferenceChange(seek, newValue);
-        }
-        return super.onPreferenceChange(preference, newValue);
     }
 }

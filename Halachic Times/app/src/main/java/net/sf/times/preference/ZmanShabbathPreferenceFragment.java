@@ -20,10 +20,9 @@
 package net.sf.times.preference;
 
 import android.annotation.TargetApi;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
+import android.preference.ListPreference;
 
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
@@ -34,33 +33,31 @@ import net.sf.times.R;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
+    private ListPreference after;
     private SeekBarDialogPreference seek;
+    private String shabbathAfterName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        String minutesAfter = getString(R.string.opinion_value_nightfall);// FIXME: "nightfall" -> R.string.nightfall -> "Nightfall"
-        seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        seek.setSummaryFormat(R.plurals.shabbath_ends_summary, minutesAfter);
-        seek.setOnPreferenceChangeListener(this);
-        onSeekPreferenceChange(seek, null);
-    }
+        after = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_AFTER);
+        int shabbathAfter = getSettings().toId(after.getValue());
+        shabbathAfterName = getString(shabbathAfter);
 
-    private boolean onSeekPreferenceChange(SeekBarDialogPreference preference, Object newValue) {
-        int minutes = preference.getProgress();
-        Resources res = getResources();
-        String minutesAfter = res.getString(R.string.opinion_value_nightfall);// FIXME: "nightfall" -> R.string.nightfall -> "Nightfall"
-        CharSequence summary = res.getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes, minutesAfter);
-        preference.setSummary(summary);
-        return true;
+        seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
+        seek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
+        seek.setOnPreferenceChangeListener(this);
     }
 
     @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == seek) {
-            return onSeekPreferenceChange(seek, newValue);
+    protected void onListPreferenceChange(ListPreference preference, Object newValue) {
+        super.onListPreferenceChange(preference, newValue);
+        if ((preference == after) && (newValue != null)) {
+            // Update "seek" summary.
+            int shabbathAfter = getSettings().toId(newValue.toString());
+            shabbathAfterName = getString(shabbathAfter);
+            seek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
         }
-        return super.onPreferenceChange(preference, newValue);
     }
 }

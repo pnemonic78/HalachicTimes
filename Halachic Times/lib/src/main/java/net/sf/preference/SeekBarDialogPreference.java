@@ -35,12 +35,15 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
     private static final int[] ATTRIBUTES = {android.R.attr.max};
 
+    private final Resources resources;
     private int progress;
     private int max;
     private boolean progressSet;
     private int summaryFormat;
     private Object[] summaryArgs;
+    /** Seek bar in the dialog. */
     private SeekBar seekBar;
+    /** Summary view in the dialog. */
     private TextView summaryView;
 
     public SeekBarDialogPreference(Context context, AttributeSet attrs) {
@@ -53,6 +56,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
 
     public SeekBarDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
+        this.resources = context.getResources();
 
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
         this.max = a.getInt(0, 100);
@@ -152,9 +156,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
             int progress = seekBar.getProgress();
             if (callChangeListener(progress) && (summaryFormat != 0)) {
                 summaryArgs[0] = progress;
-                Resources res = getContext().getResources();
-                CharSequence summary = res.getQuantityString(summaryFormat, progress, summaryArgs);
-                setSummary(summary);
+                updateSummary();
 
                 setProgress(progress);
             }
@@ -165,8 +167,7 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if ((this.seekBar == seekBar) && (summaryFormat != 0) && (summaryView != null)) {
             summaryArgs[0] = progress;
-            Resources res = getContext().getResources();
-            CharSequence summary = res.getQuantityString(summaryFormat, progress, summaryArgs);
+            CharSequence summary = resources.getQuantityString(summaryFormat, progress, summaryArgs);
             summaryView.setText(summary);
         }
     }
@@ -195,6 +196,16 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
             System.arraycopy(args, 0, summaryArgs, 1, length);
         } else {
             summaryArgs = new Object[1];
+        }
+        summaryArgs[0] = getProgress();
+        updateSummary();
+    }
+
+    private void updateSummary() {
+        CharSequence summary = resources.getQuantityString(summaryFormat, progress, summaryArgs);
+        setSummary(summary);
+        if (summaryView != null) {
+            summaryView.setText(summary);
         }
     }
 }

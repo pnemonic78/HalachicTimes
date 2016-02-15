@@ -575,37 +575,57 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateSunset(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+        populateSunset(adapter, cal, settings, 0);
+    }
+
+    private void populateSunset(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings, long offset) {
         Date date;
         int title;
 
         date = cal.getSeaLevelSunset();
-        title = R.string.sunset_sea;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.sunset_sea;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getSunset();
-        title = R.string.sunset_summary;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.sunset_summary;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
     }
 
     private void populateTwilight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+        populateTwilight(adapter, cal, settings, 0);
+    }
+
+    private void populateTwilight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings, long offset) {
         Date date;
         int title;
 
         date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
-        title = R.string.twilight_7_083;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.twilight_7_083;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getBainHasmashosRT58Point5Minutes();
-        title = R.string.twilight_58;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.twilight_58;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getBainHasmashosRT13Point24Degrees();
-        title = R.string.twilight_13;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.twilight_13;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
 
         date = cal.getBainHasmashosRT2Stars();
-        title = R.string.twilight_2stars;
-        adapter.add(title, SUMMARY_NONE, date);
+        if (date != null) {
+            title = R.string.twilight_2stars;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
     }
 
     private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
@@ -760,16 +780,18 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
 
         date = getMidday(cal, settings);
-        if (date != null)
+        if (date != null) {
             date.setTime(date.getTime() + TWELVE_HOURS);
-        title = R.string.midnight_12;
-        adapter.add(title, SUMMARY_NONE, date);
+            title = R.string.midnight_12;
+            adapter.add(title, SUMMARY_NONE, date);
+        }
 
         date = getNightfall(cal, settings);
-        if (date != null)
+        if (date != null) {
             date.setTime(date.getTime() + SIX_HOURS);
-        title = R.string.midnight_6;
-        adapter.add(title, SUMMARY_NONE, date);
+            title = R.string.midnight_6;
+            adapter.add(title, SUMMARY_NONE, date);
+        }
 
         date = cal.getSolarMidnight();
         title = R.string.midnight_summary;
@@ -920,7 +942,18 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+        int endsAfter = settings.getShabbathEndsAfter();
         long offset = settings.getShabbathEnds() * DateUtils.MINUTE_IN_MILLIS;
-        populateNightfall(adapter, cal, settings, offset);
+        switch (endsAfter) {
+            case R.string.sunset:
+                populateSunset(adapter, cal, settings, offset);
+                break;
+            case R.string.twilight:
+                populateTwilight(adapter, cal, settings, offset);
+                break;
+            case R.string.nightfall:
+                populateNightfall(adapter, cal, settings, offset);
+                break;
+        }
     }
 }
