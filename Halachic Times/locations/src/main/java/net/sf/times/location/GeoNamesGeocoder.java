@@ -179,45 +179,64 @@ public class GeoNamesGeocoder extends GeocoderBase {
                         throw new SAXException("Unexpected root element " + localName);
                     break;
                 case ROOT:
-                    if (TAG_GEONAME.equals(localName)) {
-                        state = State.GEONAME;
-                        address = new Address(locale);
-                    } else if (TAG_ADDRESS.equals(localName)) {
-                        state = State.GEONAME;
-                        address = new Address(locale);
+                    switch (localName) {
+                        case TAG_GEONAME:
+                            state = State.GEONAME;
+                            address = new Address(locale);
+                        case TAG_ADDRESS:
+                            state = State.GEONAME;
+                            address = new Address(locale);
+                            break;
                     }
                     break;
                 case GEONAME:
-                    if (TAG_TOPONYM.equals(localName))
-                        state = State.TOPONYM;
-                    else if (TAG_NAME.equals(localName))
-                        state = State.TOPONYM_NAME;
-                    else if (TAG_LATITUDE.equals(localName))
-                        state = State.LATITUDE;
-                    else if (TAG_LONGITUDE.equals(localName))
-                        state = State.LONGITUDE;
-                    else if (TAG_CC.equals(localName))
-                        state = State.COUNTRY_CODE;
-                    else if (TAG_COUNTRY.equals(localName))
-                        state = State.COUNTRY;
-                    else if (TAG_STREET.equals(localName))
-                        state = State.STREET;
-                    else if (TAG_MTFCC.equals(localName))
-                        state = State.MTFCC;
-                    else if (TAG_STREET_NUMBER.equals(localName))
-                        state = State.STREET_NUMBER;
-                    else if (TAG_POSTAL_CODE.equals(localName))
-                        state = State.POSTAL_CODE;
-                    else if (TAG_LOCALITY.equals(localName))
-                        state = State.LOCALITY;
-                    else if (TAG_ADMIN.equals(localName))
-                        state = State.ADMIN;
-                    else if (TAG_ADMIN_CODE.equals(localName))
-                        state = State.ADMIN_CODE;
-                    else if (TAG_SUBADMIN.equals(localName))
-                        state = State.SUBADMIN;
-                    else if (TAG_SUBADMIN_CODE.equals(localName))
-                        state = State.SUBADMIN_CODE;
+                    switch (localName) {
+                        case TAG_TOPONYM:
+                            state = State.TOPONYM;
+                            break;
+                        case TAG_NAME:
+                            state = State.TOPONYM_NAME;
+                            break;
+                        case TAG_LATITUDE:
+                            state = State.LATITUDE;
+                            break;
+                        case TAG_LONGITUDE:
+                            state = State.LONGITUDE;
+                            break;
+                        case TAG_CC:
+                            state = State.COUNTRY_CODE;
+                            break;
+                        case TAG_COUNTRY:
+                            state = State.COUNTRY;
+                            break;
+                        case TAG_STREET:
+                            state = State.STREET;
+                            break;
+                        case TAG_MTFCC:
+                            state = State.MTFCC;
+                            break;
+                        case TAG_STREET_NUMBER:
+                            state = State.STREET_NUMBER;
+                            break;
+                        case TAG_POSTAL_CODE:
+                            state = State.POSTAL_CODE;
+                            break;
+                        case TAG_LOCALITY:
+                            state = State.LOCALITY;
+                            break;
+                        case TAG_ADMIN:
+                            state = State.ADMIN;
+                            break;
+                        case TAG_ADMIN_CODE:
+                            state = State.ADMIN_CODE;
+                            break;
+                        case TAG_SUBADMIN:
+                            state = State.SUBADMIN;
+                            break;
+                        case TAG_SUBADMIN_CODE:
+                            state = State.SUBADMIN_CODE;
+                            break;
+                    }
                     break;
                 case FINISH:
                     return;
@@ -238,25 +257,28 @@ public class GeoNamesGeocoder extends GeocoderBase {
                         state = State.FINISH;
                     break;
                 case GEONAME:
-                    if (TAG_GEONAME.equals(localName)) {
-                        state = State.ROOT;
-                        if (address != null) {
-                            if ((results.size() < maxResults) && address.hasLatitude() && address.hasLongitude())
-                                results.add(address);
-                            else
-                                state = State.FINISH;
-                            address = null;
-                        }
-                    } else if (TAG_ADDRESS.equals(localName)) {
-                        state = State.ROOT;
-                        if (address != null) {
-                            if (results.size() < maxResults)
-                                results.add(address);
-                            else
-                                state = State.FINISH;
-                            address = null;
-                        }
-                        state = State.ROOT;
+                    switch (localName) {
+                        case TAG_GEONAME:
+                            state = State.ROOT;
+                            if (address != null) {
+                                if ((results.size() < maxResults) && address.hasLatitude() && address.hasLongitude())
+                                    results.add(address);
+                                else
+                                    state = State.FINISH;
+                                address = null;
+                            }
+                            break;
+                        case TAG_ADDRESS:
+                            state = State.ROOT;
+                            if (address != null) {
+                                if (results.size() < maxResults)
+                                    results.add(address);
+                                else
+                                    state = State.FINISH;
+                                address = null;
+                            }
+                            state = State.ROOT;
+                            break;
                     }
                     break;
                 case ADMIN:
