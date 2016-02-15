@@ -96,37 +96,37 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         this.context = context;
+        Context app = context.getApplicationContext();
+        ContentResolver resolver = context.getContentResolver();
 
         final String action = intent.getAction();
-        if (AppWidgetManager.ACTION_APPWIDGET_UPDATE.equals(action)) {
-            Context app = context.getApplicationContext();
+        switch (action) {
+            case AppWidgetManager.ACTION_APPWIDGET_UPDATE:
 
-            IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
-            app.registerReceiver(this, timeChanged);
+                IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
+                app.registerReceiver(this, timeChanged);
 
-            IntentFilter dateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
-            app.registerReceiver(this, dateChanged);
+                IntentFilter dateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
+                app.registerReceiver(this, dateChanged);
 
-            IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-            app.registerReceiver(this, tzChanged);
+                IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
+                app.registerReceiver(this, tzChanged);
 
-            ContentResolver resolver = context.getContentResolver();
-            resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
-        } else if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-            Context app = context.getApplicationContext();
-            ContentResolver resolver = context.getContentResolver();
-            try {
-                app.unregisterReceiver(this);
-                resolver.unregisterContentObserver(formatChangeObserver);
-            } catch (IllegalArgumentException e) {
-                Log.e(TAG, "unregister receiver: " + e.getLocalizedMessage(), e);
-            }
-        } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-            notifyAppWidgetViewDataChanged(context);
-        } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-            notifyAppWidgetViewDataChanged(context);
-        } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
-            notifyAppWidgetViewDataChanged(context);
+                resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
+                break;
+            case AppWidgetManager.ACTION_APPWIDGET_DELETED:
+                try {
+                    app.unregisterReceiver(this);
+                    resolver.unregisterContentObserver(formatChangeObserver);
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "unregister receiver: " + e.getLocalizedMessage(), e);
+                }
+                break;
+            case Intent.ACTION_DATE_CHANGED:
+            case Intent.ACTION_TIME_CHANGED:
+            case Intent.ACTION_TIMEZONE_CHANGED:
+                notifyAppWidgetViewDataChanged(context);
+                break;
         }
     }
 

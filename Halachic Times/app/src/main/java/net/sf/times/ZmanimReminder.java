@@ -306,36 +306,36 @@ public class ZmanimReminder extends BroadcastReceiver {
         ZmanimSettings settings = new ZmanimSettings(context);
 
         String action = intent.getAction();
-        if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
-            update = true;
-        } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {
-            update = true;
-        } else if (Intent.ACTION_TIMEZONE_CHANGED.equals(action)) {
-            update = true;
-        } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-            update = true;
-        } else {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                boolean remind = false;
-                if (ACTION_REMIND.equals(action)) {
-                    remind = true;
-                } else if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
-                    remind = true;
-                }
-
-                if (remind) {
-                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
-                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
-
-                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
-                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
-                        notifyNow(context, settings, reminderItem);
+        switch (action) {
+            case Intent.ACTION_BOOT_COMPLETED:
+            case Intent.ACTION_DATE_CHANGED:
+            case Intent.ACTION_TIMEZONE_CHANGED:
+            case Intent.ACTION_TIME_CHANGED:
+                update = true;
+                break;
+            default:
+                Bundle extras = intent.getExtras();
+                if (extras != null) {
+                    boolean remind = false;
+                    if (ACTION_REMIND.equals(action)) {
+                        remind = true;
+                    } else if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
+                        remind = true;
                     }
-                    update = true;
+
+                    if (remind) {
+                        CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
+                        CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
+                        long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
+
+                        if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
+                            ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
+                            notifyNow(context, settings, reminderItem);
+                        }
+                        update = true;
+                    }
                 }
-            }
+                break;
         }
 
         if (update) {
