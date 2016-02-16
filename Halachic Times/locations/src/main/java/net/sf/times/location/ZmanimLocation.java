@@ -42,6 +42,10 @@ public class ZmanimLocation extends Location {
     /** Double subtraction error. */
     private static final double EPSILON = 1e-6;
 
+    private static final double RADIANS_180 = Math.PI;
+    private static final double RADIANS_360 = RADIANS_180 * 2;
+    private static final double RADIANS_45 = RADIANS_180 / 4;
+
     private long id;
 
     /**
@@ -81,6 +85,74 @@ public class ZmanimLocation extends Location {
      */
     public void setId(long id) {
         this.id = id;
+    }
+
+    /**
+     * Returns the approximate initial bearing in degrees East of true
+     * North when traveling along the loxodrome path between this
+     * location and the given location. The constant bearing path is defined
+     * using the Rhumb line.
+     *
+     * @param dest
+     *         the destination location
+     * @return the initial bearing in degrees
+     */
+    public float angleTo(Location dest) {
+        return angleTo(dest.getLatitude(), dest.getLongitude());
+    }
+
+    /**
+     * Returns the approximate initial bearing in degrees East of true
+     * North when traveling along the loxodrome path between this
+     * location and the given location. The constant bearing path is defined
+     * using the Rhumb line.
+     *
+     * @param latitude
+     *         the destination latitude, in degrees.
+     * @param longitude
+     *         the destination longitude, in degrees.
+     * @return the bearing in degrees.
+     */
+    public float angleTo(double latitude, double longitude) {
+        return (float) computeRhumbBearing(this.getLatitude(), this.getLongitude(), latitude, longitude);
+    }
+
+    /**
+     * Computes the azimuth angle (clockwise from North) of a Rhumb line (a line of constant heading) between two
+     * locations.
+     * This method uses a spherical model, not elliptical.
+     *
+     * @param latitude1
+     *         the starting latitude, in degrees.
+     * @param longitude1
+     *         the starting longitude, in degrees.
+     * @param latitude2
+     *         the destination longitude, in degrees.
+     * @param longitude2
+     *         the destination latitude, in degrees.
+     * @return teh bearing in degrees.
+     */
+    private double computeRhumbBearing(double latitude1, double longitude1, double latitude2, double longitude2) {
+        double lat1 = Math.toRadians(latitude1);
+        double lng1 = Math.toRadians(longitude1);
+        double lat2 = Math.toRadians(latitude2);
+        double lng2 = Math.toRadians(longitude2);
+
+        double phi1 = Math.tan(RADIANS_45 + (lat1 / 2));
+        double phi2 = Math.tan(RADIANS_45 + (lat2 / 2));
+        double dPhi = Math.log(phi2 / phi1);
+        double dLon = lng2 - lng1;
+
+        // if dLon over 180° take shorter Rhumb line across the anti-meridian:
+        if (Math.abs(dLon) > RADIANS_180)
+            dLon = dLon > 0 ? -(RADIANS_360 - dLon) : (RADIANS_360 + dLon);
+
+        double azimuth = Math.atan2(dLon, dPhi);
+        if (azimuth < 0) {
+            azimuth += RADIANS_360;
+        }
+
+        return Math.toDegrees(azimuth);
     }
 
     @Override
