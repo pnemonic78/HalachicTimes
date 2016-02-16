@@ -22,6 +22,9 @@ package net.sf.times.common.preference;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -252,5 +255,21 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      * Notification that the preference has changed and should do something external.
      */
     protected void notifyPreferenceChanged() {
+    }
+
+    protected void validateIntent(String key) {
+        validateIntent(findPreference(key));
+    }
+
+    protected void validateIntent(Preference preference) {
+        Intent intent = preference.getIntent();
+        if (intent == null) {
+            return;
+        }
+        PackageManager pm = getActivity().getPackageManager();
+        ResolveInfo info = pm.resolveActivity(intent, 0);
+        if (info == null) {
+            preference.setIntent(null);
+        }
     }
 }

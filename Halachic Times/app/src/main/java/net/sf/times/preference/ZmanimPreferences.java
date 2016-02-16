@@ -23,7 +23,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
@@ -195,6 +197,8 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         } catch (NameNotFoundException e) {
             // Never should happen with our own package!
         }
+        validateIntent(version);
+        validateIntent("about.kosherjava");
 
         // Other preferences that affect the app widget.
         findPreference(ZmanimSettings.KEY_PAST).setOnPreferenceChangeListener(this);
@@ -550,5 +554,21 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         }
         setPreferenceScreen((current != null) ? current : parent);
         return screen;
+    }
+
+    protected void validateIntent(String key) {
+        validateIntent(findPreference(key));
+    }
+
+    protected void validateIntent(Preference preference) {
+        Intent intent = preference.getIntent();
+        if (intent == null) {
+            return;
+        }
+        PackageManager pm = this.getPackageManager();
+        ResolveInfo info = pm.resolveActivity(intent, 0);
+        if (info == null) {
+            preference.setIntent(null);
+        }
     }
 }

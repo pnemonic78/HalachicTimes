@@ -16,6 +16,6 @@
 
     <!-- About -->
     <string name="version_title">Application version</string>
-    <string name="support_url" translatable="false">https://sourceforge.net/projects/halachictimes/?source=navbar</string>
+    <string name="support_url" translatable="false">http://sourceforge.net/projects/halachictimes</string>
 
 </resources>
