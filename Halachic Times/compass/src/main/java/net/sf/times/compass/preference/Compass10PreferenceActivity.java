@@ -31,9 +31,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.text.TextUtils;
 
+import net.sf.times.common.preference.ThemedSettings;
 import net.sf.times.compass.R;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationSettings;
 
 /**
  * Application preferences that populate the settings.
@@ -58,12 +60,14 @@ public class Compass10PreferenceActivity extends PreferenceActivity implements O
         addPreferencesFromResource(R.xml.preferences);
         PreferenceScreen screen = getPreferenceScreen();
         screen.setTitle(getTitle());
+        replaceScreen(screen, "general", R.xml.general_preferences);
         replaceScreen(screen, "appearance", R.xml.appearance_preferences);
         replaceScreen(screen, "privacy", R.xml.privacy_preferences);
         replaceScreen(screen, "about", R.xml.about_preferences);
 
-        initList(CompassSettings.KEY_COORDS_FORMAT);
-        initList(CompassSettings.KEY_THEME);
+        initList(LocationSettings.KEY_COORDS_FORMAT);
+        initList(CompassSettings.KEY_COMPASS_BEARING);
+        initList(ThemedSettings.KEY_THEME);
 
         clearHistory = findPreference("clear_history");
         clearHistory.setOnPreferenceClickListener(this);

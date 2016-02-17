@@ -21,4 +21,12 @@
         android:showSilent="true"
         android:title="@string/reminder_tone"/>
 
+    <ListPreference
+        android:defaultValue="@string/compass_bearing_defaultValue"
+        android:entries="@array/compass_bearing_entries"
+        android:entryValues="@array/compass_bearing_values"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:key="compass.bearing"
+        android:title="@string/compass_bearing"/>
+
 </PreferenceScreen>

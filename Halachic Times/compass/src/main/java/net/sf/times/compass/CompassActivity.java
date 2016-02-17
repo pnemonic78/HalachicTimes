@@ -70,9 +70,10 @@ public class CompassActivity extends BaseCompassActivity {
 
     protected void startSettings() {
         Context context = this;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             context.startActivity(new Intent(context, CompassPreferenceActivity.class));
-        else
+        } else {
             context.startActivity(new Intent(context, Compass10PreferenceActivity.class));
+        }
     }
 }

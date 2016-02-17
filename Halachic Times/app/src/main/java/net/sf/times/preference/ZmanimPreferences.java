@@ -47,8 +47,11 @@ import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sf.times.ZmanimReminder;
 import net.sf.times.ZmanimWidget;
+import net.sf.times.common.preference.ThemedSettings;
+import net.sf.times.compass.preference.CompassSettings;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationSettings;
 
 import java.util.Calendar;
 
@@ -118,8 +121,9 @@ public class ZmanimPreferences extends PreferenceActivity implements OnPreferenc
         reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
         initList(ZmanimSettings.KEY_REMINDER_STREAM);
 
-        initList(ZmanimSettings.KEY_COORDS_FORMAT);
-        initList(ZmanimSettings.KEY_THEME);
+        initList(LocationSettings.KEY_COORDS_FORMAT);
+        initList(CompassSettings.KEY_COMPASS_BEARING);
+        initList(ThemedSettings.KEY_THEME);
         initList(ZmanimSettings.KEY_EMPHASIS_SCALE);
 
         candlesSeek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);

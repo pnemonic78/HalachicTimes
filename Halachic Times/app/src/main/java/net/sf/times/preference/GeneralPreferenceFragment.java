@@ -29,6 +29,7 @@ import android.text.TextUtils;
 
 import net.sf.preference.RingtonePreference;
 import net.sf.times.R;
+import net.sf.times.compass.preference.CompassSettings;
 
 /**
  * This fragment shows the preferences for the General header.
@@ -50,6 +51,7 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         reminderRingtonePreference = initRingtone(ZmanimSettings.KEY_REMINDER_RINGTONE);
 
         initList(ZmanimSettings.KEY_REMINDER_STREAM);
+        initList(CompassSettings.KEY_COMPASS_BEARING);
     }
 
     @Override

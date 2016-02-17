@@ -31,8 +31,15 @@ import net.sf.times.location.LocationSettings;
  */
 public class CompassSettings extends LocationSettings {
 
+    /** Preference name for the compass bearing type. */
+    public static final String KEY_COMPASS_BEARING = "compass.bearing";
     /** Preference name for showing summaries. */
     private static final String KEY_SUMMARIES = "summaries.visible";
+
+    /** Calculates the bearing for a Great Circle (shortest distance). */
+    public static String BEARING_GREAT_CIRCLE;
+    /** Calculates the bearing for a Rhumb Line (constant angle). */
+    public static String BEARING_RHUMB_LINE;
 
     /**
      * Constructs a new settings.
@@ -42,6 +49,15 @@ public class CompassSettings extends LocationSettings {
      */
     public CompassSettings(Context context) {
         super(context);
+    }
+
+    /**
+     * Get the type of bearing for calculating compass direction.
+     *
+     * @return the bearing type - either {@link #BEARING_GREAT_CIRCLE} or {@link #BEARING_RHUMB_LINE}.
+     */
+    public String getBearing() {
+        return preferences.getString(KEY_COMPASS_BEARING, context.getString(R.string.compass_bearing_defaultValue));
     }
 
     /**
@@ -69,5 +85,8 @@ public class CompassSettings extends LocationSettings {
      */
     public static void init(Context context) {
         LocationSettings.init(context);
+
+        BEARING_GREAT_CIRCLE = context.getString(R.string.compass_bearing_circle);
+        BEARING_RHUMB_LINE = context.getString(R.string.compass_bearing_rhumb);
     }
 }

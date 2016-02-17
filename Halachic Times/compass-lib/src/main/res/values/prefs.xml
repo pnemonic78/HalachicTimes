@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="compass_bearing_value_circle" translatable="false">circle</string>
+    <string name="compass_bearing_value_rhumb" translatable="false">rhumb</string>
+    <string name="compass_bearing_defaultValue" translatable="false">@string/compass_bearing_value_rhumb</string>
+
+</resources>

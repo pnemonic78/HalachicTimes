@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="compass_bearing_values" translatable="false">
+        <item>@string/compass_bearing_value_circle</item>
+        <item>@string/compass_bearing_value_rhumb</item>
+    </string-array>
+    <string-array name="compass_bearing_entries" translatable="false">
+        <item>@string/compass_bearing_circle</item>
+        <item>@string/compass_bearing_rhumb</item>
+    </string-array>
+
+</resources>
