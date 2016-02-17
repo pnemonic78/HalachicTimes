@@ -118,6 +118,22 @@ public class ZmanimLocation extends Location {
     }
 
     /**
+     * Returns the approximate initial bearing in degrees East of true
+     * North when traveling along the loxodrome path between this
+     * location and the given location. The constant bearing path is defined
+     * using the Rhumb line.
+     *
+     * @param location
+     *         the initial location.
+     * @param destination
+     *         the destination location.
+     * @return the bearing in degrees.
+     */
+    public static float angleTo(Location location, Location destination) {
+        return (float) computeRhumbBearing(location.getLatitude(), location.getLongitude(), destination.getLatitude(), destination.getLongitude());
+    }
+
+    /**
      * Computes the azimuth angle (clockwise from North) of a Rhumb line (a line of constant heading) between two
      * locations.
      * This method uses a spherical model, not elliptical.
@@ -132,7 +148,7 @@ public class ZmanimLocation extends Location {
      *         the destination latitude, in degrees.
      * @return teh bearing in degrees.
      */
-    private double computeRhumbBearing(double latitude1, double longitude1, double latitude2, double longitude2) {
+    private static double computeRhumbBearing(double latitude1, double longitude1, double latitude2, double longitude2) {
         double lat1 = Math.toRadians(latitude1);
         double lng1 = Math.toRadians(longitude1);
         double lat2 = Math.toRadians(latitude2);

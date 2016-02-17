@@ -162,7 +162,15 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
                         return;
 
                     populateHeader();
-                    cv.setHoliest(loc.bearingTo(holiest));
+
+                    float bearing;
+                    String bearingType = settings.getBearing();
+                    if (CompassSettings.BEARING_GREAT_CIRCLE.equals(bearingType)) {
+                        bearing = loc.bearingTo(holiest);
+                    } else {
+                        bearing = ZmanimLocation.angleTo(loc, holiest);
+                    }
+                    cv.setHoliest(bearing);
                 }
             };
         }

@@ -86,7 +86,7 @@ public class CompassSettings extends LocationSettings {
     public static void init(Context context) {
         LocationSettings.init(context);
 
-        BEARING_GREAT_CIRCLE = context.getString(R.string.compass_bearing_circle);
-        BEARING_RHUMB_LINE = context.getString(R.string.compass_bearing_rhumb);
+        BEARING_GREAT_CIRCLE = context.getString(R.string.compass_bearing_value_circle);
+        BEARING_RHUMB_LINE = context.getString(R.string.compass_bearing_value_rhumb);
     }
 }
