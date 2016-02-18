@@ -11,6 +11,6 @@
     <string name="west">Z</string>
     <string name="compass_bearing">Namiar</string>
     <string name="compass_bearing_circle">Koło wielkie (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Loksodroma (tym samym kątem)</string>
+    <string name="compass_bearing_rhumb">Loksodroma (stały kąt)</string>
 
 </resources>

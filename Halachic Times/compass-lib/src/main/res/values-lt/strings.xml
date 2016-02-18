@@ -11,6 +11,6 @@
     <string name="west">V</string>
     <string name="compass_bearing">Kursas</string>
     <string name="compass_bearing_circle">Didysis apskritimas (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Rumbo linija (constant angle)</string>
+    <string name="compass_bearing_rhumb">Rumbo linija (pačiu kampu)</string>
 
 </resources>
