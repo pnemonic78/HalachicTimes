@@ -11,6 +11,6 @@
     <string name="west">N</string>
     <string name="compass_bearing">Pálya</string>
     <string name="compass_bearing_circle">Főkör (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Loxodroma</string>
+    <string name="compass_bearing_rhumb">Loxodroma (azonos szögben)</string>
 
 </resources>

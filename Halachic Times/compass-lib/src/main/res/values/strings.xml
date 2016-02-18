@@ -11,6 +11,6 @@
     <string name="west">W</string>
     <string name="compass_bearing">Bearing</string>
     <string name="compass_bearing_circle">Great circle (shortest path)</string>
-    <string name="compass_bearing_rhumb">Rhumb line (constant bearing)</string>
+    <string name="compass_bearing_rhumb">Rhumb line (constant angle)</string>
 
 </resources>

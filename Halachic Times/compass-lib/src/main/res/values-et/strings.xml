@@ -11,6 +11,6 @@
     <string name="west">Lä</string>
     <string name="compass_bearing">Kurss</string>
     <string name="compass_bearing_circle">Suurring (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Loksodroomi (constant bearing)</string>
+    <string name="compass_bearing_rhumb">Loksodroomi (constant angle)</string>
 
 </resources>

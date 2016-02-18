@@ -11,6 +11,6 @@
     <string name="west">V</string>
     <string name="compass_bearing">Bäring</string>
     <string name="compass_bearing_circle">Storcirkel (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Loxodrom</string>
+    <string name="compass_bearing_rhumb">Loxodrom (konstant vinkel)</string>
 
 </resources>

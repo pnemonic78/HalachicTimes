@@ -11,6 +11,6 @@
     <string name="west">V</string>
     <string name="compass_bearing">Kurs</string>
     <string name="compass_bearing_circle">Storcirkel (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Kompaslinje (constant bearing)</string>
+    <string name="compass_bearing_rhumb">Kompaslinje (constant angle)</string>
 
 </resources>

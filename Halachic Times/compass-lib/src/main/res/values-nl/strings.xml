@@ -11,6 +11,6 @@
     <string name="west">W</string>
     <string name="compass_bearing">Peiling</string>
     <string name="compass_bearing_circle">Grootcirkel (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Loxodroom</string>
+    <string name="compass_bearing_rhumb">Loxodroom (vaste koers)</string>
 
 </resources>

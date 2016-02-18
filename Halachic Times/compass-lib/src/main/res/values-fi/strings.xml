@@ -11,6 +11,6 @@
     <string name="west">L</string>
     <string name="compass_bearing">Kurssi</string>
     <string name="compass_bearing_circle">Isoympyrä (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Loksodromilta (constant bearing)</string>
+    <string name="compass_bearing_rhumb">Loksodromilta (constant angle)</string>
 
 </resources>
