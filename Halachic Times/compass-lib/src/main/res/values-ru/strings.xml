@@ -9,5 +9,8 @@
     <string name="east">В</string>
     <string name="south">Ю</string>
     <string name="west">З</string>
+    <string name="compass_bearing">Пеленг</string>
+    <string name="compass_bearing_circle">Большой круг (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Локсодрома</string>
 
 </resources>

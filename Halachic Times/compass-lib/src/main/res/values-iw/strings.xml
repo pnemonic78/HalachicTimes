@@ -9,5 +9,8 @@
     <string name="east">ז</string>
     <string name="south">ד</string>
     <string name="west">ע</string>
+    <string name="compass_bearing">Compass bearing</string>
+    <string name="compass_bearing_circle">מעגל גדול (shortest distance)</string>
+    <string name="compass_bearing_rhumb">לוקסודרום</string>
 
 </resources>

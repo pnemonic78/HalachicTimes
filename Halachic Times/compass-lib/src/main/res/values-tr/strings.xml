@@ -9,5 +9,8 @@
     <string name="east">D</string>
     <string name="south">G</string>
     <string name="west">B</string>
+    <string name="compass_bearing">Kerteriz</string>
+    <string name="compass_bearing_circle">Büyük daire (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Kerte hattı</string>
 
 </resources>

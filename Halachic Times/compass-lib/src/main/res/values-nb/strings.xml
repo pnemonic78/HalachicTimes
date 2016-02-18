@@ -9,5 +9,8 @@
     <string name="east">Ø</string>
     <string name="south">S</string>
     <string name="west">V</string>
+    <string name="compass_bearing">Peiling</string>
+    <string name="compass_bearing_circle">Storsirkel (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Loksodrom</string>
 
 </resources>

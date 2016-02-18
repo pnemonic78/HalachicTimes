@@ -9,5 +9,8 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">O</string>
+    <string name="compass_bearing">Rumbo</string>
+    <string name="compass_bearing_circle">Gran círculo (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Loxodrómica (constant bearing)</string>
 
 </resources>

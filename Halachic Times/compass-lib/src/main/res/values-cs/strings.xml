@@ -9,5 +9,8 @@
     <string name="east">V</string>
     <string name="south">J</string>
     <string name="west">Z</string>
+    <string name="compass_bearing">Compass bearing</string>
+    <string name="compass_bearing_circle">Great Circle (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Loxodroma (stejný úhel)</string>
 
 </resources>

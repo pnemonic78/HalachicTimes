@@ -2,11 +2,15 @@
 <resources>
 
     <!-- Compass -->
+    <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Gebetsrichtung</string>
     <string name="compass_summary">Gebetsrichtung zu Allerheiligste in Jerusalem</string>
     <string name="north">N</string>
     <string name="east">O</string>
     <string name="south">S</string>
     <string name="west">W</string>
+    <string name="compass_bearing">Peilung</string>
+    <string name="compass_bearing_circle">Großkreis (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Loxodrome (gleichen Winkel)</string>
 
 </resources>

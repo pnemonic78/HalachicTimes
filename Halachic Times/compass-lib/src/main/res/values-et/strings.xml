@@ -9,5 +9,8 @@
     <string name="east">I</string>
     <string name="south">Lõ</string>
     <string name="west">Lä</string>
+    <string name="compass_bearing">Kurss</string>
+    <string name="compass_bearing_circle">Suurring (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Rhumb line (constant bearing)</string>
 
 </resources>

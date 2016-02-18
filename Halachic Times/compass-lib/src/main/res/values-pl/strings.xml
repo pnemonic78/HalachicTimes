@@ -9,5 +9,8 @@
     <string name="east">W</string>
     <string name="south">p</string>
     <string name="west">Z</string>
+    <string name="compass_bearing">Namiar</string>
+    <string name="compass_bearing_circle">Koło wielkie (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Loksodroma</string>
 
 </resources>

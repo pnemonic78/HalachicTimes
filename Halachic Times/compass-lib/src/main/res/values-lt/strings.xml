@@ -9,5 +9,8 @@
     <string name="east">R</string>
     <string name="south">P</string>
     <string name="west">V</string>
+    <string name="compass_bearing">Compass bearing</string>
+    <string name="compass_bearing_circle">Didysis apskritimas (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Rhumb line (constant bearing)</string>
 
 </resources>

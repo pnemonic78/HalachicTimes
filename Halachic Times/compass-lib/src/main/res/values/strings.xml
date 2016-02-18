@@ -9,8 +9,8 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">W</string>
-    <string name="compass_bearing">Compass bearing</string>
-    <string name="compass_bearing_circle">Great Circle (shortest distance)</string>
-    <string name="compass_bearing_rhumb">Rhumb Line (constant angle)</string>
+    <string name="compass_bearing">Bearing</string>
+    <string name="compass_bearing_circle">Great circle (shortest path)</string>
+    <string name="compass_bearing_rhumb">Rhumb line (constant bearing)</string>
 
 </resources>

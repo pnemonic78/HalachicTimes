@@ -9,5 +9,8 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">O</string>
+    <string name="compass_bearing">Rotta navale</string>
+    <string name="compass_bearing_circle">Cerchio massimo (shortest distance)</string>
+    <string name="compass_bearing_rhumb">Lossodromia</string>
 
 </resources>
