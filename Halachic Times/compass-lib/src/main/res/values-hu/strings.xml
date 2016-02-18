@@ -9,7 +9,7 @@
     <string name="east">K</string>
     <string name="south">D</string>
     <string name="west">N</string>
-    <string name="compass_bearing">Compass bearing</string>
+    <string name="compass_bearing">Pálya</string>
     <string name="compass_bearing_circle">Főkör (shortest distance)</string>
     <string name="compass_bearing_rhumb">Loxodroma</string>
 
