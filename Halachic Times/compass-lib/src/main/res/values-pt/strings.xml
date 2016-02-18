@@ -10,7 +10,7 @@
     <string name="south">S</string>
     <string name="west">O</string>
     <string name="compass_bearing">Rumo</string>
-    <string name="compass_bearing_circle">Círculo máximo (shortest distance)</string>
+    <string name="compass_bearing_circle">Círculo máximo (distância mais curta)</string>
     <string name="compass_bearing_rhumb">Loxodromia (ângulo constante)</string>
 
 </resources>

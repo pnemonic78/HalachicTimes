@@ -10,7 +10,7 @@
     <string name="south">S</string>
     <string name="west">V</string>
     <string name="compass_bearing">Kurs</string>
-    <string name="compass_bearing_circle">Storcirkel (shortest distance)</string>
+    <string name="compass_bearing_circle">Storcirkel (korteste kurve)</string>
     <string name="compass_bearing_rhumb">Kompaslinje (samme vinkel)</string>
 
 </resources>

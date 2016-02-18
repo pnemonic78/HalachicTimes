@@ -10,7 +10,7 @@
     <string name="south">Ю</string>
     <string name="west">З</string>
     <string name="compass_bearing">Курс</string>
-    <string name="compass_bearing_circle">Голяма окръжност (shortest distance)</string>
+    <string name="compass_bearing_circle">Голяма окръжност (най-краткият път)</string>
     <string name="compass_bearing_rhumb">Ромбоидна линия (същия ъгъл)</string>
 
 </resources>

@@ -10,7 +10,7 @@
     <string name="south">S</string>
     <string name="west">O</string>
     <string name="compass_bearing">Relèvement</string>
-    <string name="compass_bearing_circle">Grand cercle (shortest distance)</string>
+    <string name="compass_bearing_circle">Grand cercle (distance la plus courte)</string>
     <string name="compass_bearing_rhumb">Loxodromie (angle constant)</string>
 
 </resources>

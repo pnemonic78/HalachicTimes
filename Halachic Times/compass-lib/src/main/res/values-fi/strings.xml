@@ -10,7 +10,7 @@
     <string name="south">E</string>
     <string name="west">L</string>
     <string name="compass_bearing">Kurssi</string>
-    <string name="compass_bearing_circle">Isoympyrä (shortest distance)</string>
+    <string name="compass_bearing_circle">Isoympyrä (etäisyys on lyhin)</string>
     <string name="compass_bearing_rhumb">Loksodromilta (samassa kulmassa)</string>
 
 </resources>

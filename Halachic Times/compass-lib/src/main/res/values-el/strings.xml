@@ -10,7 +10,7 @@
     <string name="south">Ν</string>
     <string name="west">Δ</string>
     <string name="compass_bearing">Διόπτευση</string>
-    <string name="compass_bearing_circle">Μεγάλη κύκλο (shortest distance)</string>
+    <string name="compass_bearing_circle">Μεγάλη κύκλο (shortest path)</string>
     <string name="compass_bearing_rhumb">Λοξοδρομία (σταθερή γωνία)</string>
 
 </resources>

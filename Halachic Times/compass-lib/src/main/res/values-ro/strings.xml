@@ -10,7 +10,7 @@
     <string name="south">S</string>
     <string name="west">V</string>
     <string name="compass_bearing">Relevment</string>
-    <string name="compass_bearing_circle">Cerc mare (shortest distance)</string>
+    <string name="compass_bearing_circle">Cerc mare (shortest path)</string>
     <string name="compass_bearing_rhumb">Linii rombice (același unghi)</string>
 
 </resources>

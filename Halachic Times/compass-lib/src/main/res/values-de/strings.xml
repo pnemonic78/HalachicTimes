@@ -10,7 +10,7 @@
     <string name="south">S</string>
     <string name="west">W</string>
     <string name="compass_bearing">Peilung</string>
-    <string name="compass_bearing_circle">Großkreis (shortest distance)</string>
+    <string name="compass_bearing_circle">Großkreis (als kürzeste Verbindung)</string>
     <string name="compass_bearing_rhumb">Loxodrome (gleichen Winkel)</string>
 
 </resources>

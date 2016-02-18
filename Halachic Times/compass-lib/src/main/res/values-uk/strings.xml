@@ -10,7 +10,7 @@
     <string name="south">п</string>
     <string name="west">З</string>
     <string name="compass_bearing">Пеленг</string>
-    <string name="compass_bearing_circle">Велике коло (shortest distance)</string>
+    <string name="compass_bearing_circle">Велике коло (найкоротшим шляхом)</string>
     <string name="compass_bearing_rhumb">Локсодрома (постійний кут)</string>
 
 </resources>

@@ -10,7 +10,7 @@
     <string name="south">S</string>
     <string name="west">O</string>
     <string name="compass_bearing">Rotta navale</string>
-    <string name="compass_bearing_circle">Cerchio massimo (shortest distance)</string>
+    <string name="compass_bearing_circle">Cerchio massimo (distanza più breve)</string>
     <string name="compass_bearing_rhumb">Lossodromia (stesso angolo)</string>
 
 </resources>

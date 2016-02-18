@@ -10,7 +10,7 @@
     <string name="south">ד</string>
     <string name="west">ע</string>
     <string name="compass_bearing">כיוון</string>
-    <string name="compass_bearing_circle">מעגל גדול (shortest distance)</string>
+    <string name="compass_bearing_circle">מעגל גדול (דרך הקצרה ביותר)</string>
     <string name="compass_bearing_rhumb">לוקסודרום (באותה זווית)</string>
 
 </resources>
