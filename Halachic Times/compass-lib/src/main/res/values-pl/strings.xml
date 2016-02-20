@@ -10,7 +10,7 @@
     <string name="south">p</string>
     <string name="west">Z</string>
     <string name="compass_bearing">Namiar</string>
-    <string name="compass_bearing_circle">Koło wielkie (shortest path)</string>
+    <string name="compass_bearing_circle">Koło wielkie (najkrótsza droga)</string>
     <string name="compass_bearing_rhumb">Loksodroma (stały kąt)</string>
 
 </resources>

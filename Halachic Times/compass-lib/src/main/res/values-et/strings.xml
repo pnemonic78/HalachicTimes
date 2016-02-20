@@ -10,7 +10,7 @@
     <string name="south">Lõ</string>
     <string name="west">Lä</string>
     <string name="compass_bearing">Kurss</string>
-    <string name="compass_bearing_circle">Suurring (shortest path)</string>
+    <string name="compass_bearing_circle">Suurring (lühim tee)</string>
     <string name="compass_bearing_rhumb">Loksodroomi (sama nurga all)</string>
 
 </resources>

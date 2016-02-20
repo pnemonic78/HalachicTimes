@@ -10,7 +10,7 @@
     <string name="south">J</string>
     <string name="west">Z</string>
     <string name="compass_bearing">Chod</string>
-    <string name="compass_bearing_circle">Velký kruh (shortest path)</string>
+    <string name="compass_bearing_circle">Velký kruh (nejkratší cesta)</string>
     <string name="compass_bearing_rhumb">Loxodroma (stejný úhel)</string>
 
 </resources>
