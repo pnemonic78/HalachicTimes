@@ -7,9 +7,9 @@
     <color name="compass_frame">#cc9933</color>
     <color name="compass_frame_highlight">#ffdd77</color>
     <color name="compass_frame_shadow">#aa6600</color>
-    <color name="compass_label">#dddddd</color>
-    <color name="compass_label_dark">#b0b0b0</color>
-    <color name="compass_label2">#dddddd</color>
+    <color name="compass_label">@color/compass_frame_highlight</color>
+    <color name="compass_label_dark">@color/compass_frame_shadow</color>
+    <color name="compass_label2">@color/compass_frame</color>
     <color name="compass_north">#ff0000</color>
     <color name="compass_north_dark">#800000</color>
     <color name="compass_south">#0000ff</color>
@@ -20,7 +20,8 @@
     <color name="compass_west_dark">@color/compass_label_dark</color>
     <color name="compass_holiest">#ff00ff</color>
     <color name="compass_arrow_bg">#80400040</color>
-    <color name="compass_pivot">@color/compass</color>
-    <color name="compass_pivot_dark">@color/compass_label2</color>
+    <color name="compass_pivot">@color/compass_frame_highlight</color>
+    <color name="compass_pivot_dark">@color/compass_frame</color>
+    <color name="compass_shadow">#80cccccc</color>
 
 </resources>

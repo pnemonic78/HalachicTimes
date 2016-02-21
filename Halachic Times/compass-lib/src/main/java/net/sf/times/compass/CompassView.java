@@ -22,6 +22,7 @@ package net.sf.times.compass;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -48,6 +49,7 @@ public class CompassView extends View {
 
     private float north;
     private float holiest;
+    private float nortToHoliest;
 
     private Paint paintCircle;
     private Paint paintFrame;
@@ -62,6 +64,7 @@ public class CompassView extends View {
     private Paint paintFill;
     private Paint paintPivot;
     private Paint paintArrow;
+    private Paint paintShadow;
     private final RectF rectFill = new RectF();
     private float widthHalf;
     private float heightHalf;
@@ -70,6 +73,10 @@ public class CompassView extends View {
     private final Path pathArrowHoliest = new Path();
     private final Path pathArrowBig = new Path();
     private final Path pathArrowSmall = new Path();
+    private final Path pathShadowBigLeft = new Path();
+    private final Path pathShadowBigRight = new Path();
+    private final Path pathShadowSmallLeft = new Path();
+    private final Path pathShadowSmallRight = new Path();
     private final RectF rectFrameOuter = new RectF();
     private final RectF rectFrameInner = new RectF();
 
@@ -184,6 +191,11 @@ public class CompassView extends View {
         paintFill.setStyle(Paint.Style.STROKE);
         paintFill.setStrokeCap(Paint.Cap.BUTT);
 
+        paintShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintShadow.setStyle(Paint.Style.FILL_AND_STROKE);
+        paintShadow.setStrokeWidth(res.getDimension(R.dimen.north_thickness));
+        paintShadow.setColor(res.getColor(R.color.compass_shadow));
+
         setAzimuth(0f);
         setHoliest(0f);
         if (BuildConfig.DEBUG) {
@@ -211,39 +223,50 @@ public class CompassView extends View {
         canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
         canvas.rotate(north, w2, h2);
+        canvas.drawPath(pathShadowBigLeft, paintShadow);
+        canvas.drawPath(pathShadowBigRight, paintShadow);
         canvas.drawPath(pathArrowBig, paintNorth);
         canvas.drawText(labelNorth, w2, h2r7, paintNorth);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowSmallLeft, paintShadow);
+        canvas.drawPath(pathShadowSmallRight, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowBigLeft, paintShadow);
+        canvas.drawPath(pathShadowBigRight, paintShadow);
         canvas.drawPath(pathArrowBig, paintEast);
         canvas.drawText(labelEast, w2, h2r7, paintEast);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowSmallLeft, paintShadow);
+        canvas.drawPath(pathShadowSmallRight, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowBigLeft, paintShadow);
+        canvas.drawPath(pathShadowBigRight, paintShadow);
         canvas.drawPath(pathArrowBig, paintSouth);
         canvas.drawText(labelSouth, w2, h2r7, paintSouth);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowSmallLeft, paintShadow);
+        canvas.drawPath(pathShadowSmallRight, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowBigLeft, paintShadow);
+        canvas.drawPath(pathShadowBigRight, paintShadow);
         canvas.drawPath(pathArrowBig, paintWest);
         canvas.drawText(labelWest, w2, h2r7, paintWest);
 
         canvas.rotate(45, w2, h2);
+        canvas.drawPath(pathShadowSmallLeft, paintShadow);
+        canvas.drawPath(pathShadowSmallRight, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
-        float sweepAngle = north + holiest;
-        if (sweepAngle > 180f)
-            sweepAngle -= 360f;
-        else if (sweepAngle < -180f)
-            sweepAngle += 360f;
-        canvas.drawArc(rectFill, 315 - north, sweepAngle, false, paintFill);
+        canvas.drawArc(rectFill, 315 - north, nortToHoliest, false, paintFill);
 
         canvas.rotate(45 + holiest, w2, h2);
         canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
@@ -260,6 +283,13 @@ public class CompassView extends View {
      */
     public void setAzimuth(float bearing) {
         north = (float) Math.toDegrees(-bearing);
+
+        nortToHoliest = bearing + holiest;
+        if (nortToHoliest > 180f)
+            nortToHoliest -= 360f;
+        else if (nortToHoliest < -180f)
+            nortToHoliest += 360f;
+
         invalidate();
     }
 
@@ -271,6 +301,13 @@ public class CompassView extends View {
      */
     public void setHoliest(float bearing) {
         holiest = bearing;
+
+        nortToHoliest = north + bearing;
+        if (nortToHoliest > 180f)
+            nortToHoliest -= 360f;
+        else if (nortToHoliest < -180f)
+            nortToHoliest += 360f;
+
         invalidate();
     }
 
@@ -285,13 +322,16 @@ public class CompassView extends View {
         final float boundary = res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness);
         final float r = Math.max(0, Math.min(w2, h2) - (boundary * 2f));
         final float r75 = r * 0.075f;
+        final float r75_15 = r75 * 1.15f;
         final float r1 = r * 0.1f;
         final float r15 = r * 0.15f;
         final float r150 = r * 1.5f;
         final float r2 = r * 0.2f;
         final float r4 = r * 0.4f;
+        final float r4_15 = r4 * 1.15f;
         final float r5 = r * 0.5f;
         final float r6 = r * 0.6f;
+        final float r6_15 = r6 * 1.15f;
         final float r9 = r * 0.9f;
         final float r95 = r * 0.95f;
         final float h2r6 = h2 - r6;
@@ -379,5 +419,29 @@ public class CompassView extends View {
         pathArrowHoliest.lineTo(w2 - r1, h2r6);
         pathArrowHoliest.quadTo(w2, h2r9, w2 + r1, h2r6);
         pathArrowHoliest.close();
+
+        pathShadowBigLeft.reset();
+        pathShadowBigLeft.moveTo(w2, h2);
+        pathShadowBigLeft.lineTo(w2 - r75_15, h2);
+        pathShadowBigLeft.lineTo(w2, h2 - r6_15);
+        pathShadowBigLeft.close();
+
+        pathShadowBigRight.reset();
+        pathShadowBigRight.moveTo(w2, h2);
+        pathShadowBigRight.lineTo(w2 + r75_15, h2);
+        pathShadowBigRight.lineTo(w2, h2 - r6_15);
+        pathShadowBigRight.close();
+
+        pathShadowSmallLeft.reset();
+        pathShadowSmallLeft.moveTo(w2, h2);
+        pathShadowSmallLeft.lineTo(w2 - r75_15, h2);
+        pathShadowSmallLeft.lineTo(w2, h2 - r4_15);
+        pathShadowSmallLeft.close();
+
+        pathShadowSmallRight.reset();
+        pathShadowSmallRight.moveTo(w2, h2);
+        pathShadowSmallRight.lineTo(w2 + r75_15, h2);
+        pathShadowSmallRight.lineTo(w2, h2 - r4_15);
+        pathShadowSmallRight.close();
     }
 }
