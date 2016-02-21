@@ -21,6 +21,7 @@
     <string name="opinion_value_30" translatable="false">30</string>
     <string name="opinion_value_3_65" translatable="false">3.65</string>
     <string name="opinion_value_3_676" translatable="false">3.676</string>
+    <string name="opinion_value_3_7" translatable="false">3.7</string>
     <string name="opinion_value_3_days" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_4_37" translatable="false">4.37</string>
     <string name="opinion_value_4_61" translatable="false">4.61</string>

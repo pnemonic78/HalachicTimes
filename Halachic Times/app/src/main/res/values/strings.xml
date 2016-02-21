@@ -217,6 +217,7 @@
     <string name="nightfall_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="nightfall_3_65">Sun is 3.65° below sea level</string>
     <string name="nightfall_3_676">Sun is 3.676° below sea level</string>
+    <string name="nightfall_3_7">Sun is 3.7° below sea level</string>
     <string name="nightfall_4_37">Sun is 4.37° below sea level</string>
     <string name="nightfall_4_61">Sun is 4.61° below sea level</string>
     <string name="nightfall_4_8">Sun is 4.8° below sea level</string>

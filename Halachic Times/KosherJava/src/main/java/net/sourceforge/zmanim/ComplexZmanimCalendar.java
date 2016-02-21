@@ -1730,9 +1730,9 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @return the <code>Date</code> representing the time when the sun is 3.7&deg; below sea level.
 	 * @see #ZENITH_3_POINT_7
 	 */
-	// public Date getTzaisGeonim3Point7Degrees() {
-	// return getSunsetOffsetByDegrees(ZENITH_3_POINT_7);
-	// }
+	public Date getTzaisGeonim3Point7Degrees() {
+		return getSunsetOffsetByDegrees(ZENITH_3_POINT_7);
+	}
 
 	/**
 	 * This method returns the <em>tzais</em> (nightfall) based on the opinion of the <em>Geonim</em> calculated at the
