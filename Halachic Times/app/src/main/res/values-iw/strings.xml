@@ -102,6 +102,8 @@
     <string name="nightfall">לילה</string>
     <string name="nightfall_3_65">שמש 3.65° מתחת לגובה פני הים</string>
     <string name="nightfall_3_676">שמש 3.676° מתחת לגובה פני הים</string>
+    <string name="nightfall_3_7">שמש 3.7° מתחת לגובה פני הים</string>
+    <string name="nightfall_3_8">שמש 3.8° מתחת לגובה פני הים</string>
     <string name="nightfall_4_37">שמש 4.37° מתחת לגובה פני הים</string>
     <string name="nightfall_4_61">שמש 4.61° מתחת לגובה פני הים</string>
     <string name="nightfall_4_8">שמש 4.8° מתחת לגובה פני הים</string>
@@ -117,7 +119,7 @@
     <string name="minutes_after_two">@string/minutes_after_other</string>
     <string name="minutes_after_few">@string/minutes_after_other</string>
     <string name="minutes_after_many">@string/minutes_after_other</string>
-    <string name="minutes_after_other">%1$d דקות לאחר לילה</string>
+    <string name="minutes_after_other">%1$d דקות לאחר %2$s</string>
     <string name="festival_ends">צאת החג</string>
 
     <!-- Midnight -->

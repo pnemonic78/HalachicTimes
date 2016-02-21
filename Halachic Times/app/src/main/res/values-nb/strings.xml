@@ -102,6 +102,8 @@
     <string name="nightfall">Mørkningen</string>
     <string name="nightfall_3_65">Sol er 3,65° nedenfor havnivå</string>
     <string name="nightfall_3_676">Sol er 3,676° nedenfor havnivå</string>
+    <string name="nightfall_3_7">Sol er 3,7° nedenfor havnivå</string>
+    <string name="nightfall_3_8">Sol er 3,8° nedenfor havnivå</string>
     <string name="nightfall_4_37">Sol er 4,37° nedenfor havnivå</string>
     <string name="nightfall_4_61">Sol er 4,61° nedenfor havnivå</string>
     <string name="nightfall_4_8">Sol er 4,8° nedenfor havnivå</string>
