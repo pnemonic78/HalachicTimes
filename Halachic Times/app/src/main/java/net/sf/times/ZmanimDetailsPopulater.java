@@ -738,6 +738,12 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
         }
 
+        date = cal.getTzaisGeonim3Point8Degrees();
+        if (date != null) {
+            title = R.string.nightfall_3_8;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
+
         date = cal.getTzaisGeonim4Point37Degrees();
         if (date != null) {
             title = R.string.nightfall_4_37;
@@ -928,6 +934,8 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             date = cal.getTzaisGeonim3Point676Degrees();
         } else if (OPINION_3_7.equals(opinion)) {
             date = cal.getTzaisGeonim3Point7Degrees();
+        } else if (OPINION_3_8.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point8Degrees();
         } else if (OPINION_4_37.equals(opinion)) {
             date = cal.getTzaisGeonim4Point37Degrees();
         } else if (OPINION_4_61.equals(opinion)) {

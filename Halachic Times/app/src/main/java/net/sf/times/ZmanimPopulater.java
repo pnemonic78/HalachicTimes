@@ -89,6 +89,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_3_65 = ZmanimSettings.OPINION_3_65;
     protected static final String OPINION_3_676 = ZmanimSettings.OPINION_3_676;
     protected static final String OPINION_3_7 = ZmanimSettings.OPINION_3_7;
+    protected static final String OPINION_3_8 = ZmanimSettings.OPINION_3_8;
     protected static final String OPINION_30 = ZmanimSettings.OPINION_30;
     protected static final String OPINION_4_37 = ZmanimSettings.OPINION_4_37;
     protected static final String OPINION_4_61 = ZmanimSettings.OPINION_4_61;
@@ -702,6 +703,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_3_7.equals(opinion)) {
             date = cal.getTzaisGeonim3Point7Degrees();
             summary = R.string.nightfall_3_7;
+        } else if (OPINION_3_8.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point8Degrees();
+            summary = R.string.nightfall_3_8;
         } else if (OPINION_4_37.equals(opinion)) {
             date = cal.getTzaisGeonim4Point37Degrees();
             summary = R.string.nightfall_4_37;
