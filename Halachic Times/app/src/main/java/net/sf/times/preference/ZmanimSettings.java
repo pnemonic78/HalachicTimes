@@ -29,7 +29,7 @@ import android.text.format.DateUtils;
 import net.sf.media.RingtoneManager;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
-import net.sf.times.location.LocationSettings;
+import net.sf.times.compass.preference.CompassSettings;
 
 import java.util.Calendar;
 
@@ -38,7 +38,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimSettings extends LocationSettings {
+public class ZmanimSettings extends CompassSettings {
 
     /** Preference name for showing seconds. */
     public static final String KEY_SECONDS = "seconds.visible";
@@ -806,7 +806,7 @@ public class ZmanimSettings extends LocationSettings {
      *         the context.
      */
     public static void init(Context context) {
-        LocationSettings.init(context);
+        CompassSettings.init(context);
 
         OPINION_10_2 = context.getString(R.string.opinion_value_10);
         OPINION_11 = context.getString(R.string.opinion_value_11);
