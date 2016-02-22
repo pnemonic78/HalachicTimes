@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="white_50">#80ffffff</color>
+    <color name="black_50">#80000000</color>
+
     <!-- Text. -->
     <color name="bright_foreground_dark">@android:color/background_light</color>
     <color name="bright_foreground_light">@android:color/background_dark</color>
-    <color name="bright_foreground_dark_disabled">#80ffffff</color>
-    <color name="bright_foreground_light_disabled">#80000000</color>
+    <color name="bright_foreground_dark_disabled">@color/white_50</color>
+    <color name="bright_foreground_light_disabled">@color/black_50</color>
     <color name="bright_foreground_dark_inverse">@color/bright_foreground_light</color>
     <color name="bright_foreground_light_inverse">@color/bright_foreground_dark</color>
 

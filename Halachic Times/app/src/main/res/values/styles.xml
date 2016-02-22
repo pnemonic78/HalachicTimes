@@ -16,6 +16,10 @@
 
     <style name="Widget.ListItem.White"/>
 
+    <style name="Widget.Clock">
+        <item name="android:gravity">top|center_horizontal</item>
+    </style>
+
     <style name="Widget.Clock.Time" parent="Widget.TextView.Large">
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
@@ -126,5 +130,14 @@
     <style name="Widget.Item.Nokia.Light.Widget" parent="Widget.Item.Light.Widget"/>
 
     <style name="Widget.List.Widget" parent="Widget.Static.Widget"/>
+
+    <style name="Widget.Date">
+        <item name="android:background">@color/black_50</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Widget.Date.Text" parent="Widget.TextView.Small">
+        <item name="android:gravity">center</item>
+    </style>
 
 </resources>

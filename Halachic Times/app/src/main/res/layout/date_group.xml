@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    style="@style/Widget.Date"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#80000000"
-    android:gravity="center"
     android:orientation="horizontal"
     android:paddingBottom="2dp"
     android:paddingLeft="4dp"
@@ -13,9 +13,9 @@
 
     <TextView
         android:id="@android:id/title"
+        style="@style/Widget.Date.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        tools:text="@string/today"/>
 
 </LinearLayout>
