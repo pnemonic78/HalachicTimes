@@ -284,7 +284,7 @@ public class CompassView extends View {
     public void setAzimuth(float bearing) {
         north = (float) Math.toDegrees(-bearing);
 
-        nortToHoliest = bearing + holiest;
+        nortToHoliest = north + holiest;
         if (nortToHoliest > 180f)
             nortToHoliest -= 360f;
         else if (nortToHoliest < -180f)
@@ -302,7 +302,7 @@ public class CompassView extends View {
     public void setHoliest(float bearing) {
         holiest = bearing;
 
-        nortToHoliest = north + bearing;
+        nortToHoliest = north + holiest;
         if (nortToHoliest > 180f)
             nortToHoliest -= 360f;
         else if (nortToHoliest < -180f)
