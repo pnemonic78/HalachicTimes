@@ -51,5 +51,6 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
         } catch (PackageManager.NameNotFoundException e) {
             // Never should happen with our own package!
         }
+        validateIntent(version);
     }
 }
