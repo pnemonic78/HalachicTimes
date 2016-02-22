@@ -3,6 +3,7 @@
 
     <style name="Widget.ListItem">
         <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 </resources>

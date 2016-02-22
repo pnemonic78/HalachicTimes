@@ -3,6 +3,27 @@
 
     <style name="Widget.ListItem">
         <item name="android:background">@android:drawable/list_selector_background</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.Location.Title" parent="Widget.TextView.Medium">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Widget.Location.Coordinates" parent="Widget.TextView.Small">
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="Widget.Location.Address" parent="Widget.TextView.Small">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Widget.Location.Search" parent="Widget.TextView">
+        <item name="android:inputType">text</item>
     </style>
 
 </resources>

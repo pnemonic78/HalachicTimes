@@ -8,11 +8,10 @@
 
     <TextView
         android:id="@+id/coordinates"
+        style="@style/Widget.Location.Coordinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:text="@string/location_coords"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+        android:text="@string/location_coords"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -23,12 +22,10 @@
 
         <TextView
             android:id="@+id/address"
+            style="@style/Widget.Location.Address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:text="@string/location_unknown"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:text="@string/location_unknown"/>
     </LinearLayout>
 
 </LinearLayout>
