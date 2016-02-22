@@ -95,6 +95,7 @@
     <string name="twilight">Schemering</string>
     <string name="twilight_2stars">2 sterren zichtbaar</string>
     <string name="twilight_7_083">13,5 minuten voor 7,083° nacht</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmaniejos</i> minuten voor 7,083° nacht</string>
     <string name="twilight_58">58,5 minuten na zonsondergang</string>
     <string name="twilight_13">Zon is 13,24° beneden de horizon</string>
 

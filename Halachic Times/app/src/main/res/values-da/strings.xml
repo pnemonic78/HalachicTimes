@@ -95,6 +95,7 @@
     <string name="twilight">Tusmørke</string>
     <string name="twilight_2stars">2 stjerner synlige</string>
     <string name="twilight_7_083">13,5 minutter før 7,083° mørkets frembrud</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmanijos</i> minutter før 7,083° mørkets frembrud</string>
     <string name="twilight_58">58,5 minutter efter solnedgang</string>
     <string name="twilight_13">Sol er 13,24° nedenfor horisonten</string>
 

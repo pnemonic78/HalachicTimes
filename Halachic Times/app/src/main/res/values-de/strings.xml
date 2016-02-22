@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Tag ist 120 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
-    <string name="opinion_120_zmanis">Tag ist 120 </string>
+    <string name="opinion_120_zmanis">Tag ist 120 <i>zmaniyos</i> Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_16">Tag ist 16,1° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_16_sunset">Tag vom Morgengrauen 16,1° auf dem Meeresspiegel Sonnenuntergang</string>
     <string name="opinion_16_night">Tag vom morgengrauen 16,1° auf nacht</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Tag ist 18° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_60">Tag ist 60 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_72">Tag ist 72 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
-    <string name="opinion_72_zmanis">Tag ist 72 </string>
+    <string name="opinion_72_zmanis">Tag ist 72 <i>zmaniyos</i> Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_90">Tag ist 90 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
-    <string name="opinion_90_zmanis">Tag ist 90 </string>
+    <string name="opinion_90_zmanis">Tag ist 90 <i>zmaniyos</i> Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_96">Tag ist 96 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
-    <string name="opinion_96_zmanis">Tag ist 96 </string>
+    <string name="opinion_96_zmanis">Tag ist 96 <i>zmaniyos</i> Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_ateret">Nach Yeshivat Ateret Tora</string>
     <string name="opinion_gra">Nach GRA und Baal Tanya</string>
     <string name="opinion_mga">Nach Magen Avraham</string>
@@ -95,6 +95,7 @@
     <string name="twilight">Zwielicht</string>
     <string name="twilight_2stars">2 Sterne sichtbar</string>
     <string name="twilight_7_083">13,5 Minuten vor 7,083° Nacht</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmaniyos</i> Minuten vor 7,083° Nacht</string>
     <string name="twilight_58">58,5 Minuten nach Sonnenuntergang</string>
     <string name="twilight_13">Sonne ist 13,24° unter dem Horizont</string>
 

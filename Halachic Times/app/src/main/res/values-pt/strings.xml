@@ -95,6 +95,7 @@
     <string name="twilight">Crepúsculo</string>
     <string name="twilight_2stars">2 estrelas visíveis</string>
     <string name="twilight_7_083">13,5 minutos antes 7,083° anoitecer</string>
+    <string name="twilight_7_083_zmanis">13,5 minutos <i>zmaniot</i> antes 7,083° anoitecer</string>
     <string name="twilight_58">58,5 minutos depois do pôr do sol</string>
     <string name="twilight_13">Sol é 13,24° abaixo do horizonte</string>
 

@@ -95,6 +95,7 @@
     <string name="twilight">Crépuscule</string>
     <string name="twilight_2stars">2 étoiles visibles</string>
     <string name="twilight_7_083">13,5 minutes avant 7,083° de la nuit</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmanïot</i> minutes avant 7,083° de la nuit</string>
     <string name="twilight_58">58,5 minutes après le coucher du soleil</string>
     <string name="twilight_13">Le soleil se trouve à 13,24° sous l\'horizon</string>
 

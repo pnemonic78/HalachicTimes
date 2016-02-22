@@ -95,6 +95,7 @@
     <string name="twilight">Zmierzch</string>
     <string name="twilight_2stars">2 gwiazdki widoczne</string>
     <string name="twilight_7_083">13,5 minut przed 7,083° zmroku</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmanios</i> minut przed 7,083° zmroku</string>
     <string name="twilight_58">58,5 minut po zachodzie słońca</string>
     <string name="twilight_13">Słońce jest 13,24° poniżej horyzontu</string>
 

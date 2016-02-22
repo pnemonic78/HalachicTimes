@@ -95,6 +95,7 @@
     <string name="twilight">Hämärä</string>
     <string name="twilight_2stars">2 tähteä näkyvissä</string>
     <string name="twilight_7_083">13,5 minuuttia ennen 7,083° pimetessä</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmanjos</i> minuuttia ennen 7,083° pimetessä</string>
     <string name="twilight_58">58,5 minuuttia auringonlaskun jälkeen</string>
     <string name="twilight_13">Aurinko on 13,24° horisontin alapuolella</string>
 

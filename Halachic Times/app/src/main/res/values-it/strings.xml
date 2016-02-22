@@ -95,6 +95,7 @@
     <string name="twilight">Crepuscolo</string>
     <string name="twilight_2stars">2 stelle visibili</string>
     <string name="twilight_7_083">13,5 minuti prima di 7,083° imbrunire</string>
+    <string name="twilight_7_083_zmanis">13,5 minuti <i>zmaniyos</i> prima di 7,083° imbrunire</string>
     <string name="twilight_58">58,5 minuti dopo il tramonto</string>
     <string name="twilight_13">Sole è 13,24° sotto l\'orizzonte</string>
 

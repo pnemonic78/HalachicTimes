@@ -95,6 +95,7 @@
     <string name="twilight">Присмерк</string>
     <string name="twilight_2stars">2 зірки видимі</string>
     <string name="twilight_7_083">13,5 мінут до 7,083° ночі</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>зманёс</i> мінут до 7,083° ночі</string>
     <string name="twilight_58">58,5 мінут після заходу сонця</string>
     <string name="twilight_13">Сонце 13,24° нижче горизонту</string>
 

@@ -95,6 +95,7 @@
     <string name="twilight">Szürkület</string>
     <string name="twilight_2stars">2 csillagos látható</string>
     <string name="twilight_7_083">Előtt 13,5 perc 7,083° alkony</string>
+    <string name="twilight_7_083_zmanis">Előtt 13,5 <i>zmaniyos</i> perc 7,083° alkony</string>
     <string name="twilight_58">58,5 perccel napnyugta után</string>
     <string name="twilight_13">A nap 13,24° alatt horizont</string>
 

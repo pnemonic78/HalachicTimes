@@ -95,6 +95,7 @@
     <string name="twilight">Сумерки</string>
     <string name="twilight_2stars">2 звезды видны</string>
     <string name="twilight_7_083">13,5 минут до 7,083° темноты</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>временных</i> минут до 7,083° темноты</string>
     <string name="twilight_58">58,5 минут после захода солнца</string>
     <string name="twilight_13">Солнце 13,24° ниже горизонта</string>
 

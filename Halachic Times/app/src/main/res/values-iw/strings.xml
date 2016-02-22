@@ -95,6 +95,7 @@
     <string name="twilight">בין השמשות</string>
     <string name="twilight_2stars">2 כוכבים גלויים</string>
     <string name="twilight_7_083">13.5 דקות לפני 7.083° לילה</string>
+    <string name="twilight_7_083_zmanis">13.5 דקות זמניות לפני 7.083° לילה</string>
     <string name="twilight_58">58.5 דקות לאחר השקיעה</string>
     <string name="twilight_13">שמש 13.24° מתחת לאופק</string>
 

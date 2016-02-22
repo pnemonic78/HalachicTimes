@@ -95,6 +95,7 @@
     <string name="twilight">Amurg</string>
     <string name="twilight_2stars">2 stele vizibile</string>
     <string name="twilight_7_083">13,5 minute înainte de 7,083° căderea nopții</string>
+    <string name="twilight_7_083_zmanis">13,5 minute <i>zmaniyos</i> înainte de 7,083° căderea nopții</string>
     <string name="twilight_58">58,5 minute după apus</string>
     <string name="twilight_13">Soarele este des 13,24° sub orizont</string>
 

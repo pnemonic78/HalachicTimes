@@ -95,6 +95,7 @@
     <string name="twilight">Soumrak</string>
     <string name="twilight_2stars">2 hvězdičky viditelné</string>
     <string name="twilight_7_083">13,5 minut před 7,083° setmění</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmaniyos</i> minut před 7,083° setmění</string>
     <string name="twilight_58">58,5 minut po západu slunce</string>
     <string name="twilight_13">Slunce je 13,24° pod obzorem</string>
 

@@ -95,6 +95,7 @@
     <string name="twilight">Apytema</string>
     <string name="twilight_2stars">2 žvaigždės matomas</string>
     <string name="twilight_7_083">13,5 minučių prieš 7,083° naktį</string>
+    <string name="twilight_7_083_zmanis">13,5 <i>zmanios</i> minučių prieš 7,083° naktį</string>
     <string name="twilight_58">58,5 minutes po saulėlydžio</string>
     <string name="twilight_13">Saulė yra 13,24° žemiau horizonto</string>
 
