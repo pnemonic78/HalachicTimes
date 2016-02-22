@@ -22,6 +22,6 @@
     <color name="compass_arrow_bg">#80400040</color>
     <color name="compass_pivot">@color/compass_frame_highlight</color>
     <color name="compass_pivot_dark">@color/compass_frame</color>
-    <color name="compass_shadow">#80cccccc</color>
+    <color name="compass_shadow">#80888888</color>
 
 </resources>

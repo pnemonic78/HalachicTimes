@@ -73,10 +73,8 @@ public class CompassView extends View {
     private final Path pathArrowHoliest = new Path();
     private final Path pathArrowBig = new Path();
     private final Path pathArrowSmall = new Path();
-    private final Path pathShadowBigLeft = new Path();
-    private final Path pathShadowBigRight = new Path();
-    private final Path pathShadowSmallLeft = new Path();
-    private final Path pathShadowSmallRight = new Path();
+    private final Path pathShadowBig = new Path();
+    private final Path pathShadowSmall = new Path();
     private final Path pathShadowHoliest = new Path();
     private final RectF rectFrameOuter = new RectF();
     private final RectF rectFrameInner = new RectF();
@@ -227,47 +225,39 @@ public class CompassView extends View {
         canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
         canvas.rotate(north, w2, h2);
-        canvas.drawPath(pathShadowBigLeft, paintShadow);
-        canvas.drawPath(pathShadowBigRight, paintShadow);
+        canvas.drawPath(pathShadowBig, paintShadow);
         canvas.drawPath(pathArrowBig, paintNorth);
         canvas.drawText(labelNorth, w2, h2r7, paintNorth);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmallLeft, paintShadow);
-        canvas.drawPath(pathShadowSmallRight, paintShadow);
+        canvas.drawPath(pathShadowSmall, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowBigLeft, paintShadow);
-        canvas.drawPath(pathShadowBigRight, paintShadow);
+        canvas.drawPath(pathShadowBig, paintShadow);
         canvas.drawPath(pathArrowBig, paintEast);
         canvas.drawText(labelEast, w2, h2r7, paintEast);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmallLeft, paintShadow);
-        canvas.drawPath(pathShadowSmallRight, paintShadow);
+        canvas.drawPath(pathShadowSmall, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowBigLeft, paintShadow);
-        canvas.drawPath(pathShadowBigRight, paintShadow);
+        canvas.drawPath(pathShadowBig, paintShadow);
         canvas.drawPath(pathArrowBig, paintSouth);
         canvas.drawText(labelSouth, w2, h2r7, paintSouth);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmallLeft, paintShadow);
-        canvas.drawPath(pathShadowSmallRight, paintShadow);
+        canvas.drawPath(pathShadowSmall, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowBigLeft, paintShadow);
-        canvas.drawPath(pathShadowBigRight, paintShadow);
+        canvas.drawPath(pathShadowBig, paintShadow);
         canvas.drawPath(pathArrowBig, paintWest);
         canvas.drawText(labelWest, w2, h2r7, paintWest);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmallLeft, paintShadow);
-        canvas.drawPath(pathShadowSmallRight, paintShadow);
+        canvas.drawPath(pathShadowSmall, paintShadow);
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
@@ -326,7 +316,7 @@ public class CompassView extends View {
         final int w2 = w / 2;
         final int h2 = h / 2;
         final float boundary = res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness);
-        final float shadowScale = 1.15f;
+        final float shadowScale = 1.1f;
         final float r = Math.max(0, Math.min(w2, h2) - (boundary * 2f));
         final float r75 = r * 0.075f;
         final float r75_shadow = r75 * shadowScale;
@@ -338,11 +328,11 @@ public class CompassView extends View {
         final float r4_shadow = r4 * shadowScale;
         final float r5 = r * 0.5f;
         final float r6 = r * 0.6f;
-        final float r6_shadow = r6;
+        final float r6_shadow = r6 * shadowScale;
         final float r85 = r * 0.85f;
         final float r9 = r * 0.9f;
         final float h2r6 = h2 - r6;
-        final float h2r6_shadow = h2 - r6_shadow;
+        final float h2r6_shadow = h2 - r6;
         final float h2r85 = h2 - r85;
         final float h2r9 = h2 - r9;
         final float h2r9_shadow = h2r9;
@@ -429,29 +419,17 @@ public class CompassView extends View {
         pathArrowHoliest.quadTo(w2, h2r85, w2 + r1, h2r6);
         pathArrowHoliest.close();
 
-        pathShadowBigLeft.reset();
-        pathShadowBigLeft.moveTo(w2, h2);
-        pathShadowBigLeft.lineTo(w2 - r75_shadow, h2);
-        pathShadowBigLeft.lineTo(w2, h2 - r6_shadow);
-        pathShadowBigLeft.close();
+        pathShadowBig.reset();
+        pathShadowBig.moveTo(w2 + r75_shadow, h2);
+        pathShadowBig.lineTo(w2 - r75_shadow, h2);
+        pathShadowBig.lineTo(w2, h2 - r6_shadow);
+        pathShadowBig.close();
 
-        pathShadowBigRight.reset();
-        pathShadowBigRight.moveTo(w2, h2);
-        pathShadowBigRight.lineTo(w2 + r75_shadow, h2);
-        pathShadowBigRight.lineTo(w2, h2 - r6_shadow);
-        pathShadowBigRight.close();
-
-        pathShadowSmallLeft.reset();
-        pathShadowSmallLeft.moveTo(w2, h2);
-        pathShadowSmallLeft.lineTo(w2 - r75_shadow, h2);
-        pathShadowSmallLeft.lineTo(w2, h2 - r4_shadow);
-        pathShadowSmallLeft.close();
-
-        pathShadowSmallRight.reset();
-        pathShadowSmallRight.moveTo(w2, h2);
-        pathShadowSmallRight.lineTo(w2 + r75_shadow, h2);
-        pathShadowSmallRight.lineTo(w2, h2 - r4_shadow);
-        pathShadowSmallRight.close();
+        pathShadowSmall.reset();
+        pathShadowSmall.moveTo(w2 + r75_shadow, h2);
+        pathShadowSmall.lineTo(w2 - r75_shadow, h2);
+        pathShadowSmall.lineTo(w2, h2 - r4_shadow);
+        pathShadowSmall.close();
 
         pathShadowHoliest.reset();
         pathShadowHoliest.moveTo(w2, h2r9_shadow);
