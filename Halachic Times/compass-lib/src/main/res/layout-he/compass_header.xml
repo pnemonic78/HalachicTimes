@@ -13,11 +13,9 @@
 
     <TextView
         android:id="@android:id/summary"
+        style="@style/Widget.Compass.Holiest.Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="marquee"
-        android:text="@string/compass_summary"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/compass_holiest"/>
+        android:text="@string/compass_summary"/>
 
 </LinearLayout>
