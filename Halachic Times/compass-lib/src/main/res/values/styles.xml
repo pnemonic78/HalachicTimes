@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Compass.Holiest.Text" parent="Widget.TextView.Small">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:textColor">@color/compass_holiest</item>
+    </style>
+
+</resources>
