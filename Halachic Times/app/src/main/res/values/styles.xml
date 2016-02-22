@@ -16,12 +16,12 @@
 
     <style name="Widget.ListItem.White"/>
 
-    <style name="Widget.TextView.Clock.Time" parent="Widget.TextView.Large">
+    <style name="Widget.Clock.Time" parent="Widget.TextView.Large">
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
     </style>
 
-    <style name="Widget.TextView.Clock.Title" parent="Widget.TextView.Medium">
+    <style name="Widget.Clock.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:singleLine">true</item>
@@ -43,61 +43,88 @@
         <item name="android:background">@null</item>
     </style>
 
-    <style name="Widget.TextView.Title" parent="Widget.TextView.Medium">
+    <style name="Widget.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:singleLine">true</item>
     </style>
 
-    <style name="Widget.TextView.Time" parent="Widget.TextView.Medium"/>
+    <style name="Widget.Time" parent="Widget.TextView.Medium"/>
 
-    <style name="Widget.TextView.Title.Dark">
+    <style name="Widget.Title.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
 
-    <style name="Widget.TextView.Title.Light" parent="Widget.Light.TextView.Medium">
+    <style name="Widget.Title.Light" parent="Widget.Light.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
-    <style name="Widget.TextView.Title.NoGradient" parent="Widget.TextView.Title.Dark"/>
+    <style name="Widget.Title.NoGradient" parent="Widget.Title.Dark"/>
 
-    <style name="Widget.TextView.Title.White" parent="Widget.TextView.Title.Light"/>
+    <style name="Widget.Title.White" parent="Widget.Title.Light"/>
 
-    <style name="Widget.TextView.Title.Widget">
+    <style name="Widget.Title.Widget">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
-    <style name="Widget.TextView.Time.Dark">
+    <style name="Widget.Time.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
 
-    <style name="Widget.TextView.Time.Light">
+    <style name="Widget.Time.Light">
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
-    <style name="Widget.TextView.Time.NoGradient" parent="Widget.TextView.Time.Dark"/>
+    <style name="Widget.Time.NoGradient" parent="Widget.Time.Dark"/>
 
-    <style name="Widget.TextView.Time.White" parent="Widget.TextView.Time.Light"/>
+    <style name="Widget.Time.White" parent="Widget.Time.Light"/>
 
-    <style name="Widget.TextView.Time.Widget" parent="Widget.TextView.Small"/>
+    <style name="Widget.Time.Widget" parent="Widget.TextView.Small"/>
 
-    <style name="Widget.TextView.Summary" parent="Widget.TextView.Small">
+    <style name="Widget.Summary" parent="Widget.TextView.Small">
         <item name="android:maxLines">3</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="Widget.TextView.Summary.Dark"/>
+    <style name="Widget.Summary.Dark"/>
 
-    <style name="Widget.TextView.Summary.Light" parent="Widget.Light.TextView.Small">
+    <style name="Widget.Summary.Light" parent="Widget.Light.TextView.Small">
         <item name="android:maxLines">3</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="Widget.TextView.Summary.NoGradient"/>
+    <style name="Widget.Summary.NoGradient"/>
 
-    <style name="Widget.TextView.Summary.White" parent="Widget.TextView.Summary.Light"/>
+    <style name="Widget.Summary.White" parent="Widget.Summary.Light"/>
+
+    <style name="Widget.Static.Widget" parent="Widget">
+        <item name="android:background">@drawable/widget_bg</item>
+        <item name="android:padding">@dimen/widget_padding</item>
+    </style>
+
+    <style name="Widget.Static.Nokia.Widget" parent="Widget.Static.Widget">
+        <item name="android:background">@color/background_nokia</item>
+    </style>
+
+    <style name="Widget.Date.Widget" parent="Widget.TextView.Small">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Widget.Item.Widget" parent="Widget"/>
+
+    <style name="Widget.Item.Light.Widget" parent="Widget.Item.Widget">
+        <item name="android:background">@color/bright</item>
+    </style>
+
+    <style name="Widget.Item.Nokia.Widget" parent="Widget.Item.Widget"/>
+
+    <style name="Widget.Item.Nokia.Light.Widget" parent="Widget.Item.Light.Widget"/>
+
+    <style name="Widget.List.Widget" parent="Widget.Static.Widget"/>
 
 </resources>

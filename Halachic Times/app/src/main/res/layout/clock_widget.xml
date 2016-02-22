@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/time"
-        style="@style/Widget.TextView.Clock.Time"
+        style="@style/Widget.Clock.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-15dp"
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@android:id/title"
-        style="@style/Widget.TextView.Clock.Title"
+        style="@style/Widget.Clock.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/dawn"/>
