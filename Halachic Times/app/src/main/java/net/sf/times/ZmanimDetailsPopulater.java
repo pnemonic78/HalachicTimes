@@ -609,6 +609,12 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
         }
 
+        date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
+        if (date != null) {
+            title = R.string.twilight_7_083_zmanis;
+            adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
+        }
+
         date = cal.getBainHasmashosRT58Point5Minutes();
         if (date != null) {
             title = R.string.twilight_58;

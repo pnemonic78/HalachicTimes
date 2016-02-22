@@ -180,6 +180,7 @@ public class ZmanimSettings extends LocationSettings {
     public static String OPINION_60;
     public static String OPINION_7;
     public static String OPINION_7_083;
+    public static String OPINION_7_083_ZMANIS;
     public static String OPINION_72;
     public static String OPINION_72_ZMANIS;
     public static String OPINION_8_5;
@@ -837,6 +838,7 @@ public class ZmanimSettings extends LocationSettings {
         OPINION_60 = context.getString(R.string.opinion_value_60);
         OPINION_7 = context.getString(R.string.opinion_value_7);
         OPINION_7_083 = context.getString(R.string.opinion_value_7_083);
+        OPINION_7_083_ZMANIS = context.getString(R.string.opinion_value_7_083_zmanis);
         OPINION_72 = context.getString(R.string.opinion_value_72);
         OPINION_72_ZMANIS = context.getString(R.string.opinion_value_72_zmanis);
         OPINION_8_5 = context.getString(R.string.opinion_value_8);

@@ -101,6 +101,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_60 = ZmanimSettings.OPINION_60;
     protected static final String OPINION_7 = ZmanimSettings.OPINION_7;
     protected static final String OPINION_7_083 = ZmanimSettings.OPINION_7_083;
+    protected static final String OPINION_7_083_ZMANIS = ZmanimSettings.OPINION_7_083_ZMANIS;
     protected static final String OPINION_72 = ZmanimSettings.OPINION_72;
     protected static final String OPINION_72_ZMANIS = ZmanimSettings.OPINION_72_ZMANIS;
     protected static final String OPINION_8_5 = ZmanimSettings.OPINION_8_5;
@@ -626,6 +627,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_7_083.equals(opinion)) {
             date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
             summary = R.string.twilight_7_083;
+        } else if (OPINION_7_083_ZMANIS.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
+            summary = R.string.twilight_7_083_zmanis;
         } else if (OPINION_58.equals(opinion)) {
             date = cal.getBainHasmashosRT58Point5Minutes();
             summary = R.string.twilight_58;

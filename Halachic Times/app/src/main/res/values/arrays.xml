@@ -261,12 +261,14 @@
 
     <string-array name="twilight_values" translatable="false">
         <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_7_083_zmanis</item>
         <item>@string/opinion_value_2_stars</item>
         <item>@string/opinion_value_13</item>
         <item>@string/opinion_value_58</item>
     </string-array>
     <string-array name="twilight_entries" translatable="false">
         <item>@string/twilight_7_083</item>
+        <item>@string/twilight_7_083_zmanis</item>
         <item>@string/twilight_2stars</item>
         <item>@string/twilight_13</item>
         <item>@string/twilight_58</item>

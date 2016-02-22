@@ -196,6 +196,7 @@
     <string name="twilight">Twilight</string>
     <string name="twilight_2stars">2 stars visible</string>
     <string name="twilight_7_083">13.5 minutes before 7.083° nightfall</string>
+    <string name="twilight_7_083_zmanis">13.5 minutes <i>zmaniyos</i> before 7.083° nightfall</string>
     <string name="twilight_58">58.5 minutes after sunset</string>
     <string name="twilight_13">Sun is 13.24° below horizon</string>
 
