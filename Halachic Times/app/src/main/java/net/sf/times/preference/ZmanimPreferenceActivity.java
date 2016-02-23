@@ -33,7 +33,6 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimPreferenceActivity extends PreferenceActivity {
 
     private final String packageName;

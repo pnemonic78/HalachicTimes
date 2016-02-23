@@ -19,7 +19,6 @@
  */
 package net.sf.times;
 
-import android.annotation.TargetApi;
 import android.os.Build;
 
 /**
@@ -28,7 +27,6 @@ import android.os.Build;
  *
  * @author Moshe Waisberg
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimListWidget extends ZmanimWidget {
 
     /**

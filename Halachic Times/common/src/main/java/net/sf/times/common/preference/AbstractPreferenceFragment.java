@@ -19,13 +19,10 @@
  */
 package net.sf.times.common.preference;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -41,15 +38,14 @@ import net.sf.times.common.R;
 /**
  * This fragment shows the preferences for a header.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     protected Context context;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.context = activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override

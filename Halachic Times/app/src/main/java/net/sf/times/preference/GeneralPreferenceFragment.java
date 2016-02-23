@@ -19,10 +19,8 @@
  */
 package net.sf.times.preference;
 
-import android.annotation.TargetApi;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.text.TextUtils;
@@ -34,7 +32,6 @@ import net.sf.times.compass.preference.CompassSettings;
 /**
  * This fragment shows the preferences for the General header.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     private RingtonePreference reminderRingtonePreference;

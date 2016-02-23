@@ -19,9 +19,7 @@
  */
 package net.sf.times.preference;
 
-import android.annotation.TargetApi;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -34,7 +32,6 @@ import net.sf.times.ZmanimReminder;
 /**
  * This fragment shows the preferences for a zman screen.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
     public static final String EXTRA_XML = "xml";

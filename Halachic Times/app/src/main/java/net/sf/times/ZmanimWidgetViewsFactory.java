@@ -19,12 +19,10 @@
  */
 package net.sf.times;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -43,7 +41,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
  *
  * @author Moshe
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
 
     /** The context. */

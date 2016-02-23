@@ -19,7 +19,6 @@
  */
 package net.sf.times;
 
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -474,7 +473,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the remote list.
      */
     @SuppressWarnings("deprecation")
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected void bindListView(int appWidgetId, RemoteViews list) {
         Context context = getContext();
         Intent service = new Intent();
@@ -492,7 +490,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected void notifyAppWidgetViewDataChanged11(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final Class<?> clazz = getClass();
@@ -559,7 +556,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         return adapter;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     protected void populateScrollableTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
         views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
         bindListView(appWidgetId, views);

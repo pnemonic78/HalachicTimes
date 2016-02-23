@@ -19,12 +19,8 @@
  */
 package net.sf.times.backup;
 
-import android.annotation.TargetApi;
-import android.os.Build;
-
 /**
  * Backup agent helper for the application.
  */
-@TargetApi(Build.VERSION_CODES.FROYO)
 public class ZmanimBackupAgent extends DefaultBackupAgent {
 }

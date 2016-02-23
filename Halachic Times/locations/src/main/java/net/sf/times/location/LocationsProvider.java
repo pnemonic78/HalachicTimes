@@ -383,7 +383,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    @TargetApi(Build.VERSION_CODES.FROYO)
     public Location getLocationPassiveFroyo() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO)
             return null;

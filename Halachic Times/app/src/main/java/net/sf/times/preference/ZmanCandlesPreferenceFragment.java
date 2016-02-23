@@ -19,8 +19,6 @@
  */
 package net.sf.times.preference;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 
 import net.sf.preference.SeekBarDialogPreference;
@@ -29,7 +27,6 @@ import net.sf.times.R;
 /**
  * This fragment shows the preferences for the Candles zman screen.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
 
     @Override

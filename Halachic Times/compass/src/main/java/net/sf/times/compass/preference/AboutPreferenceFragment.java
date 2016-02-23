@@ -19,10 +19,8 @@
  */
 package net.sf.times.compass.preference;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 
@@ -32,7 +30,6 @@ import net.sf.times.compass.R;
 /**
  * This fragment shows the preferences for the About header.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override

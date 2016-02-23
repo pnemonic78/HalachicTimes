@@ -19,7 +19,6 @@
  */
 package net.sf.times;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
@@ -243,7 +242,6 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.FROYO)
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
         onVisibilityChanged(visibility);

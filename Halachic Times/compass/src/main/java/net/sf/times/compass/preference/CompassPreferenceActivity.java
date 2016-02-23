@@ -33,7 +33,6 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CompassPreferenceActivity extends PreferenceActivity {
 
     private final String packageName;

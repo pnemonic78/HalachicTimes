@@ -19,8 +19,6 @@
  */
 package net.sf.times.compass.preference;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 
@@ -32,7 +30,6 @@ import net.sf.times.location.LocationApplication;
 /**
  * This fragment shows the preferences for the Privacy and Security header.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
 
     private Preference clearHistory;

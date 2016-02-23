@@ -20,7 +20,6 @@
 package net.sf.times;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -371,7 +370,6 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressWarnings("deprecation")
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();
@@ -415,7 +413,6 @@ public class ZmanimReminder extends BroadcastReceiver {
 
     @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private Notification createNotification(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();

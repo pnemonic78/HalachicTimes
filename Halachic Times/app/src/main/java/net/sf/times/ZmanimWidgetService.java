@@ -19,9 +19,7 @@
  */
 package net.sf.times;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.widget.RemoteViewsService;
 
 /**
@@ -30,7 +28,6 @@ import android.widget.RemoteViewsService;
  *
  * @author Moshe
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ZmanimWidgetService extends RemoteViewsService {
 
     private ZmanimWidgetViewsFactory factory;

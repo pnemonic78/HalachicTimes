@@ -19,16 +19,13 @@
  */
 package net.sf.times.backup;
 
-import android.annotation.TargetApi;
 import android.app.backup.BackupAgentHelper;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
-import android.os.Build;
 
 /**
  * Default backup agent helper for the application.
  */
-@TargetApi(Build.VERSION_CODES.FROYO)
 public class DefaultBackupAgent extends BackupAgentHelper {
 
     /** A key to uniquely identify the set of backup data. */
