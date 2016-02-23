@@ -37,7 +37,6 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -76,7 +75,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
     protected final LayoutInflater inflater;
     protected final ZmanimSettings settings;
-    protected final ComplexZmanimCalendar calendar;
+    protected ComplexZmanimCalendar calendar;
     protected boolean inIsrael;
     protected long now = System.currentTimeMillis();
     protected boolean summaries;
@@ -153,6 +152,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         super(context, R.layout.times_item);
         this.inflater = LayoutInflater.from(context);
         this.calendar = new ComplexZmanimCalendar();
+        calendar.setShaahZmanisType(settings.getHourType());
         this.settings = settings;
         this.summaries = settings.isSummaries();
         this.showElapsed = settings.isPast();
@@ -494,29 +494,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param calendar
      *         the calendar.
      */
-    public void setCalendar(Calendar calendar) {
-        this.calendar.setCalendar((Calendar) calendar.clone());
-    }
-
-    /**
-     * Set the calendar time.
-     *
-     * @param time
-     *         the time in milliseconds.
-     */
-    public void setCalendar(long time) {
-        Calendar cal = calendar.getCalendar();
-        cal.setTimeInMillis(time);
-    }
-
-    /**
-     * Sets the {@link GeoLocation}.
-     *
-     * @param geoLocation
-     *         the location.
-     */
-    public void setGeoLocation(GeoLocation geoLocation) {
-        this.calendar.setGeoLocation(geoLocation);
+    public void setCalendar(ComplexZmanimCalendar calendar) {
+        this.calendar = calendar;
     }
 
     /**

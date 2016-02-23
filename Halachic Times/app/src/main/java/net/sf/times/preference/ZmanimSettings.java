@@ -30,6 +30,7 @@ import net.sf.media.RingtoneManager;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sf.times.compass.preference.CompassSettings;
+import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
 
@@ -301,6 +302,63 @@ public class ZmanimSettings extends CompassSettings {
     }
 
     /**
+     * Get the type for temporal hour (<em>shaah zmanis</em>).
+     *
+     * @return the type.
+     * @see ZmanimCalendar#SHAAH_ZMANIS_GRA
+     * @see ZmanimCalendar#SHAAH_ZMANIS_MGA
+     */
+    public int getHourType() {
+        String opinion = getHour();
+        if (OPINION_19_8.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_120.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_120_ZMANIS.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_18.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_26.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_16_1.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_96.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_96_ZMANIS.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_90.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_90_ZMANIS.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_72.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_72_ZMANIS.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_60.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_ATERET.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        }
+        if (OPINION_MGA.equals(opinion)) {
+            return ZmanimCalendar.SHAAH_ZMANIS_MGA;
+        }
+        return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+    }
+
+    /**
      * Get the opinion for dawn (<em>alos</em>).
      *
      * @return the opinion.
@@ -423,7 +481,7 @@ public class ZmanimSettings extends CompassSettings {
      * @return the time id.
      */
     public int getShabbathEndsAfter() {
-        return toId(preferences.getString(KEY_OPINION_SHABBATH_ENDS_AFTER,  context.getString(R.string.shabbath_ends_after_defaultValue)));
+        return toId(preferences.getString(KEY_OPINION_SHABBATH_ENDS_AFTER, context.getString(R.string.shabbath_ends_after_defaultValue)));
     }
 
     /**

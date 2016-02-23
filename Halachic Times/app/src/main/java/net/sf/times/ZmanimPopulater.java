@@ -25,6 +25,7 @@ import android.text.format.DateUtils;
 
 import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.ZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -141,6 +142,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         this.context = context;
         this.settings = settings;
         this.calendar = new ComplexZmanimCalendar();
+        calendar.setShaahZmanisType(settings.getHourType());
     }
 
     protected Context getContext() {
@@ -162,8 +164,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
     protected void prePopulate(A adapter) {
         adapter.clear();
-        adapter.setCalendar(calendar.getCalendar());
-        adapter.setGeoLocation(calendar.getGeoLocation());
+        adapter.setCalendar(calendar);
         adapter.setInIsrael(inIsrael);
     }
 
