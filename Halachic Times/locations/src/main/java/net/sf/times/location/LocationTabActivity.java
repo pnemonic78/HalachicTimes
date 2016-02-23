@@ -19,8 +19,8 @@
  */
 package net.sf.times.location;
 
+import android.app.Activity;
 import android.app.SearchManager;
-import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
@@ -58,8 +58,7 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-@SuppressWarnings("deprecation")
-public class LocationTabActivity extends TabActivity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
+public class LocationTabActivity extends Activity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
 
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
@@ -99,6 +98,7 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Resources res = getResources();
 
         setTheme(getThemeId());
         setContentView(R.layout.locations);
@@ -117,8 +117,8 @@ public class LocationTabActivity extends TabActivity implements TextWatcher, OnC
         View myLocation = findViewById(R.id.my_location);
         myLocation.setOnClickListener(this);
 
-        TabHost tabs = getTabHost();
-        Resources res = getResources();
+        TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
+        tabs.setup();
 
         TabSpec tabFavorites = tabs.newTabSpec(TAG_FAVORITES);
         tabFavorites.setIndicator(null, res.getDrawable(ic_menu_star));
