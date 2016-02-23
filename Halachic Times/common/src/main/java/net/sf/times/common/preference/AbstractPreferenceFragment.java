@@ -40,12 +40,8 @@ import net.sf.times.common.R;
  */
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
-    protected Context context;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
+    public Context getContext() {
+        return getActivity();
     }
 
     @Override

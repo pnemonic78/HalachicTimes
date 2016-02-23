@@ -19,6 +19,7 @@
  */
 package net.sf.times.preference;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -96,7 +97,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
     protected ZmanimSettings getSettings() {
         if (settings == null) {
-            settings = new ZmanimSettings(context);
+            settings = new ZmanimSettings(getContext());
         }
         return settings;
     }
@@ -163,6 +164,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
             remindRunner = new Runnable() {
                 @Override
                 public void run() {
+                    Context context = getContext();
                     if (context != null) {
                         if (reminder == null)
                             reminder = new ZmanimReminder();

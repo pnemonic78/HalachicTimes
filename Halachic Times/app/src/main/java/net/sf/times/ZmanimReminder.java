@@ -364,7 +364,6 @@ public class ZmanimReminder extends BroadcastReceiver {
         return formatDateTime(new Date(time));
     }
 
-    @SuppressWarnings("deprecation")
     @SuppressLint("NewApi")
     private Notification createNotification(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
         CharSequence contentTitle = item.getTitle();

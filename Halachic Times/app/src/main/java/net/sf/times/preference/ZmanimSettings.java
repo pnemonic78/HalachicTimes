@@ -590,7 +590,7 @@ public class ZmanimSettings extends CompassSettings {
     public void setLatestReminder(long time) {
         Editor editor = preferences.edit();
         editor.putLong(KEY_REMINDER_LATEST, time);
-        editor.commit();
+        editor.apply();
     }
 
     /**

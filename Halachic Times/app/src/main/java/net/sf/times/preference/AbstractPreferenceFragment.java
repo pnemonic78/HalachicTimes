@@ -38,7 +38,7 @@ public abstract class AbstractPreferenceFragment extends net.sf.times.common.pre
     }
 
     protected void notifyAppWidgets() {
-        Context context = this.context;
+        Context context = getContext();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final Class<?> clazz = ZmanimWidget.class;
         ComponentName provider = new ComponentName(context, clazz);

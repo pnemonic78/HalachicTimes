@@ -23,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -185,7 +186,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param date
      *         the date.
      */
-    @SuppressWarnings("deprecation")
     public A populateTimes(Calendar date) {
         // Called before attached to activity?
         ZmanimLocations locations = this.locations;
@@ -359,7 +359,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param view
      *         the row view.
      */
-    @SuppressWarnings("deprecation")
     private void unhighlight(View view) {
         Drawable bg = unhighlightBackground;
         if ((view == null) || (bg == null))
@@ -368,7 +367,10 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         // Workaround for Samsung ICS bug where the highlight lingers.
         if (bg instanceof StateListDrawable)
             bg = bg.getConstantState().newDrawable();
-        view.setBackgroundDrawable(bg);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            view.setBackgroundDrawable(bg);
+        else
+            view.setBackground(bg);
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         unhighlightBackground = null;
     }
@@ -379,7 +381,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param itemId
      *         the row id.
      */
-    @SuppressWarnings("deprecation")
     public void highlight(int itemId) {
         // Find the view that matches the item id (the view that was clicked).
         final ViewGroup list = this.list;
@@ -408,7 +409,10 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         paddingTop = view.getPaddingTop();
         paddingRight = view.getPaddingRight();
         paddingBottom = view.getPaddingBottom();
-        view.setBackgroundDrawable(getSelectedBackground());
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+            view.setBackgroundDrawable(getSelectedBackground());
+        else
+            view.setBackground(getSelectedBackground());
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         highlightRow = view;
     }

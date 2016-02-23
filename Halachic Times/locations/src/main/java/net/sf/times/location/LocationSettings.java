@@ -76,7 +76,7 @@ public class LocationSettings extends ThemedSettings {
                 editor.putString(KEY_COORDS_FORMAT, FORMAT_NONE);
             }
             editor.remove(KEY_COORDS_VISIBLE);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -136,7 +136,7 @@ public class LocationSettings extends ThemedSettings {
         editor.putString(KEY_LONGITUDE, Double.toString(location.getLongitude()));
         editor.putString(KEY_ELEVATION, Double.toString(location.hasAltitude() ? location.getAltitude() : 0));
         editor.putLong(KEY_TIME, location.getTime());
-        editor.commit();
+        editor.apply();
     }
 
     /**

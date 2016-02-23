@@ -21,6 +21,7 @@ package net.sf.times;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +108,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
      * @param id
      *         the time id.
      */
-    @SuppressWarnings("deprecation")
     public A populateTimes(Calendar date, int id) {
         masterId = id;
 
@@ -166,7 +166,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                     case R.string.midnight:
                         list.setBackgroundColor(res.getColor(R.color.midnight));
                     default:
-                        list.setBackgroundDrawable(null);
+                        list.setBackgroundColor(Color.TRANSPARENT);
                         break;
                 }
                 break;
@@ -215,14 +215,14 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                         list.setBackgroundColor(res.getColor(R.color.midnight_light));
                         break;
                     default:
-                        list.setBackgroundDrawable(null);
+                        list.setBackgroundColor(Color.TRANSPARENT);
                         break;
                 }
                 break;
             case R.style.Theme_Zmanim_NoGradient:
             case R.style.Theme_Zmanim_White:
             default:
-                list.setBackgroundDrawable(null);
+                list.setBackgroundColor(Color.TRANSPARENT);
                 break;
         }
 
