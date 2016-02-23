@@ -82,7 +82,7 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	 */
 	private double candleLightingOffset = 18;
 
-	private int shaahZmanisType = SHAAH_ZMANIS_GRA;
+	protected int shaahZmanisType = SHAAH_ZMANIS_GRA;
 
 	/**
 	 * A method that returns <em>tzais</em> (nightfall) when the sun is 8.5&deg; below the western geometric horizon
