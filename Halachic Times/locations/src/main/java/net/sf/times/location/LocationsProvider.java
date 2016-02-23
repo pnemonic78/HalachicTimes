@@ -301,7 +301,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    public Location getLocationGPSEclair() {
+    public Location getLocationGPSBase() {
         if (locationManager == null)
             return null;
 
@@ -342,7 +342,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    public Location getLocationNetworkEclair() {
+    public Location getLocationNetworkBase() {
         if (locationManager == null)
             return null;
 
@@ -384,10 +384,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the location - {@code null} otherwise.
      */
     public Location getLocationPassiveFroyo() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO)
-            return null;
         if (locationManager == null)
             return null;
+
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         } catch (IllegalArgumentException e) {
@@ -459,10 +458,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (isValid(loc))
             return loc;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            loc = getLocationGPSEclair();
+            loc = getLocationGPSBase();
             if (isValid(loc))
                 return loc;
-            loc = getLocationNetworkEclair();
+            loc = getLocationNetworkBase();
             if (isValid(loc))
                 return loc;
             loc = getLocationPassiveFroyo();
@@ -663,7 +662,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         return LocaleUtils.isLocaleRTL();
     }
 
-    private void requestUpdatesEclair() {
+    private void requestUpdatesBase() {
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         criteria.setAltitudeRequired(true);
@@ -759,7 +758,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             switch (msg.what) {
                 case WHAT_START:
                     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                        requestUpdatesEclair();
+                        requestUpdatesBase();
                     } else {
                         requestUpdates();
                     }

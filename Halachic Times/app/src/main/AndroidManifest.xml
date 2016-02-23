@@ -34,11 +34,6 @@
                 android:value="net.sf.times.location.LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.preference.ZmanimPreferences"
-            android:label="@string/menu_settings"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
-        </activity>
-        <activity
             android:name="net.sf.times.preference.ZmanimPreferenceActivity"
             android:label="@string/menu_settings"
             android:parentActivityName="net.sf.times.ZmanimActivity">

@@ -244,22 +244,11 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     @Override
     protected void onVisibilityChanged(View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-        onVisibilityChanged(visibility);
-    }
 
-    protected void onVisibilityChanged(int visibility) {
         if (visibility == VISIBLE) {
             startAnimation();
         } else {
             stopAnimation();
-        }
-    }
-
-    @Override
-    public void setVisibility(int visibility) {
-        super.setVisibility(visibility);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
-            onVisibilityChanged(visibility);
         }
     }
 }

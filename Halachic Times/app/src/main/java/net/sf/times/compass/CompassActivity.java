@@ -22,14 +22,12 @@ package net.sf.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import net.sf.times.R;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.preference.ZmanimPreferenceActivity;
-import net.sf.times.preference.ZmanimPreferences;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -71,10 +69,6 @@ public class CompassActivity extends BaseCompassActivity {
 
     private void startSettings() {
         Context context = this;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            startActivity(new Intent(context, ZmanimPreferenceActivity.class));
-        } else {
-            startActivity(new Intent(context, ZmanimPreferences.class));
-        }
+        startActivity(new Intent(context, ZmanimPreferenceActivity.class));
     }
 }

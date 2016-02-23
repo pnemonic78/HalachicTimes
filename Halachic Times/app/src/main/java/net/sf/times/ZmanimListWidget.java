@@ -19,8 +19,6 @@
  */
 package net.sf.times;
 
-import android.os.Build;
-
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a
  * widget.
@@ -37,7 +35,7 @@ public class ZmanimListWidget extends ZmanimWidget {
 
     @Override
     protected boolean isRemoteList() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+        return true;
     }
 
 }

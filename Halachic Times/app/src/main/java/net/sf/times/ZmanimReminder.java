@@ -240,12 +240,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         // Clicking on the item will launch the main activity.
         PendingIntent contentIntent = createActivityIntent(context);
 
-        Notification notification;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            notification = createNotification(context, settings, item, contentIntent);
-        } else {
-            notification = createNotificationEclair(context, settings, item, contentIntent);
-        }
+        Notification notification = createNotification(context, settings, item, contentIntent);
 
         postNotification(notification, context, settings);
     }
@@ -367,48 +362,6 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     private String formatDateTime(long time) {
         return formatDateTime(new Date(time));
-    }
-
-    @SuppressWarnings("deprecation")
-    private Notification createNotificationEclair(Context context, ZmanimSettings settings, ZmanimReminderItem item, PendingIntent contentIntent) {
-        CharSequence contentTitle = item.getTitle();
-        CharSequence contentText = item.getText();
-        long when = item.getTime();
-        Log.i(TAG, "notify now [" + contentTitle + "] for [" + formatDateTime(when) + "]");
-
-        int audioStreamType = settings.getReminderStream();
-        Uri sound = settings.getReminderRingtone();
-
-        Notification notification = new Notification();
-        notification.audioStreamType = audioStreamType;
-        notification.icon = R.drawable.stat_notify_time;
-        notification.defaults = Notification.DEFAULT_VIBRATE;
-        notification.flags = Notification.FLAG_AUTO_CANCEL | Notification.FLAG_SHOW_LIGHTS;
-        notification.ledARGB = LED_COLOR;
-        notification.ledOffMS = LED_OFF;
-        notification.ledOnMS = LED_ON;
-        notification.when = when;
-        notification.sound = sound;
-        // Notification#setLatestEventInfo removed in Marshmallow.
-        if (setLatestEventInfo == null) {
-            Class<?> clazz = notification.getClass();
-            try {
-                setLatestEventInfo = clazz.getDeclaredMethod("setLatestEventInfo", Context.class, CharSequence.class, CharSequence.class, PendingIntent.class);
-            } catch (NoSuchMethodException nsme) {
-                Log.e(TAG, "createNotificationEclair: " + nsme.getLocalizedMessage(), nsme);
-            }
-        }
-        if (setLatestEventInfo != null) {
-            try {
-                setLatestEventInfo.invoke(notification, context, contentTitle, contentText, contentIntent);
-            } catch (IllegalAccessException iae) {
-                Log.e(TAG, "createNotificationEclair: " + iae.getLocalizedMessage(), iae);
-            } catch (InvocationTargetException ite) {
-                Log.e(TAG, "createNotificationEclair: " + ite.getLocalizedMessage(), ite);
-            }
-        }
-
-        return notification;
     }
 
     @SuppressWarnings("deprecation")

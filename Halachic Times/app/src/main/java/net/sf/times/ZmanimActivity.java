@@ -62,7 +62,6 @@ import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferenceActivity;
-import net.sf.times.preference.ZmanimPreferences;
 import net.sf.times.preference.ZmanimSettings;
 import net.sf.view.animation.LayoutWeightAnimation;
 
@@ -202,10 +201,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
                     activity.startActivity(intent);
                     break;
                 case WHAT_SETTINGS:
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-                        activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
-                    else
-                        activity.startActivity(new Intent(context, ZmanimPreferences.class));
+                    activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
                     break;
                 case WHAT_TODAY:
                     activity.setDate(System.currentTimeMillis());

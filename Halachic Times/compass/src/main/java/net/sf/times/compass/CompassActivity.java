@@ -22,11 +22,9 @@ package net.sf.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import net.sf.times.compass.preference.Compass10PreferenceActivity;
 import net.sf.times.compass.preference.CompassPreferenceActivity;
 import net.sf.times.location.LocationActivity;
 
@@ -70,10 +68,6 @@ public class CompassActivity extends BaseCompassActivity {
 
     protected void startSettings() {
         Context context = this;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            context.startActivity(new Intent(context, CompassPreferenceActivity.class));
-        } else {
-            context.startActivity(new Intent(context, Compass10PreferenceActivity.class));
-        }
+        startActivity(new Intent(context, CompassPreferenceActivity.class));
     }
 }
