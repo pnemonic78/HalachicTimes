@@ -64,7 +64,7 @@
         android:key="candles.reminder.day.7"
         android:title="@string/reminder_saturday"/>
 
-    <CheckBoxPreference
+    <SwitchPreference
         android:defaultValue="@bool/animate_defaultValue"
         android:icon="@drawable/ic_settings_anim"
         android:key="candles.anim"

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Widget.ListView" parent="android:Widget.ListView"/>
+    <style name="Widget.ListView" parent="android:Widget.DeviceDefault.ListView"/>
+
+    <style name="Widget.ListItem">
+        <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
+    </style>
 
     <style name="Widget.ListDivider">
         <item name="android:background">@drawable/divider_horizontal_dark</item>

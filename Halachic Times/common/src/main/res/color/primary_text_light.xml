@@ -4,7 +4,6 @@
     <item android:state_window_focused="false" android:color="@color/bright_foreground_light"/>
     <item android:state_pressed="true" android:color="@color/bright_foreground_light_inverse"/>
     <item android:state_selected="true" android:color="@color/bright_foreground_light_inverse"/>
-    <!-- state_activated causes problems on pre-Honeycomb devices.
-    <item android:state_activated="true" android:color="@color/bright_foreground_light_inverse"/-->
+    <item android:state_activated="true" android:color="@color/bright_foreground_light_inverse"/>
     <item android:color="@color/bright_foreground_light"/>
 </selector>
