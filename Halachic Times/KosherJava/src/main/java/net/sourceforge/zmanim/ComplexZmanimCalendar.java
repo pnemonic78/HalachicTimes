@@ -569,17 +569,17 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * <em>Baal Hatanya</em>) or 1/10th of the day before sea level sunrise. This is based on an 18 minute <em>Mil</em>
 	 * so the time for 4 <em>Mil</em> is 72 minutes which is 1/10th of a day (12 * 60 = 720) based on the day starting
 	 * at {@link #getSeaLevelSunrise() sea level sunrise} and ending at {@link #getSeaLevelSunset() sea level sunset}.
-	 * The actual alculation is {@link #getSeaLevelSunrise()}- ( {@link #getShaahZmanisGra()} * 1.2). This calculation
+	 * The actual alculation is {@link #getSeaLevelSunrise()} - ( {@link #getShaahZmanis()} * 1.2). This calculation
 	 * is used in the calendars published by <em>Hisachdus Harabanim D'Artzos Habris Ve'Canada</em>
 	 * 
 	 * @return the <code>Date</code> representing the time. If the calculation can't be computed such as in the Arctic
 	 *         Circle where there is at least one day a year where the sun does not rise, and one where it does not set,
 	 *         a null will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
-	 * @see #getShaahZmanisGra()
+	 * @see #getShaahZmanis()
 	 */
 	public Date getAlos72Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -607,16 +607,16 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * <em>Baal Hatanya</em>) or 1/8th of the day before sea level sunrise. This is based on a 22.5 minute <em>Mil</em>
 	 * so the time for 4 <em>Mil</em> is 90 minutes which is 1/8th of a day (12 * 60) / 8 = 90 based on the day starting
 	 * at {@link #getSunrise() sunrise} and ending at {@link #getSunset() sunset}. The actual calculation is
-	 * {@link #getSunrise()} - ( {@link #getShaahZmanisGra()} * 1.5).
+	 * {@link #getSunrise()} - ( {@link #getShaahZmanis()} * 1.5).
 	 * 
 	 * @return the <code>Date</code> representing the time. If the calculation can't be computed such as in the Arctic
 	 *         Circle where there is at least one day a year where the sun does not rise, and one where it does not set,
 	 *         a null will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
-	 * @see #getShaahZmanisGra()
+	 * @see #getShaahZmanis()
 	 */
 	public Date getAlos90Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -628,16 +628,16 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * <em>Baal Hatanya</em>) or 1/8th of the day before sea level sunrise. This is based on a 24 minute <em>Mil</em> so
 	 * the time for 4 <em>Mil</em> is 96 minutes which is 1/7.5th of a day (12 * 60) / 7.5 = 96 based on the day
 	 * starting at {@link #getSunrise() sunrise} and ending at {@link #getSunset() sunset}. The actual calculation is
-	 * {@link #getSunrise()} - ( {@link #getShaahZmanisGra()} * 1.6).
+	 * {@link #getSunrise()} - ( {@link #getShaahZmanis()} * 1.6).
 	 * 
 	 * @return the <code>Date</code> representing the time. If the calculation can't be computed such as in the Arctic
 	 *         Circle where there is at least one day a year where the sun does not rise, and one where it does not set,
 	 *         a null will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
-	 * @see #getShaahZmanisGra()
+	 * @see #getShaahZmanis()
 	 */
 	public Date getAlos96Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -682,16 +682,16 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * <em>Baal Hatanya</em>) or 1/6th of the day before sea level sunrise. This is based on a 24 minute <em>Mil</em> so
 	 * the time for 5 <em>Mil</em> is 120 minutes which is 1/6th of a day (12 * 60) / 6 = 120 based on the day starting
 	 * at {@link #getSunrise() sunrise} and ending at {@link #getSunset() sunset}. The actual calculation is
-	 * {@link #getSunrise()} - ( {@link #getShaahZmanisGra()} * 2).
+	 * {@link #getSunrise()} - ( {@link #getShaahZmanis()} * 2).
 	 * 
 	 * @return the <code>Date</code> representing the time. If the calculation can't be computed such as in the Arctic
 	 *         Circle where there is at least one day a year where the sun does not rise, and one where it does not set,
 	 *         a null will be returned. See detailed explanation on top of the {@link AstronomicalCalendar}
 	 *         documentation.
-	 * @see #getShaahZmanisGra()
+	 * @see #getShaahZmanis()
 	 */
 	public Date getAlos120Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -1725,7 +1725,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTzaisGeonim7Point083Degrees()
 	 */
 	public Date getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -2142,7 +2142,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos72Zmanis()
 	 */
 	public Date getTzais72Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -2160,7 +2160,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos90Zmanis()
 	 */
 	public Date getTzais90Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -2178,7 +2178,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos96Zmanis()
 	 */
 	public Date getTzais96Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -2232,7 +2232,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getAlos120Zmanis()
 	 */
 	public Date getTzais120Zmanis() {
-		long shaahZmanis = getShaahZmanisGra();
+		long shaahZmanis = getShaahZmanis();
 		if (shaahZmanis == Long.MIN_VALUE) {
 			return null;
 		}
@@ -2600,7 +2600,6 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * Hatanya</em> that the day is calculated from sunrise to sunset. This returns the time 4 *
 	 * {@link #getShaahZmanisGra()} after {@link #getSeaLevelSunrise() sea level sunrise}.
 	 * 
-	 * @see ZmanimCalendar#getShaahZmanisGra()
 	 * @see ZmanimCalendar#getSofZmanTfilaGRA()
 	 * @return the <code>Date</code> one is allowed eating chametz on Erev Pesach. If the calculation can't be computed
 	 *         such as in the Arctic Circle where there is at least one day a year where the sun does not rise, and one

@@ -458,6 +458,16 @@ public class ZmanimCalendar extends AstronomicalCalendar {
 	}
 
 	/**
+	 * A method that returns a <em>shaah zmanis</em> ( {@link #getTemporalHour(Date, Date) temporal hour}).
+	 *
+	 * @return the <code>long</code> millisecond length of a <em>shaah zmanis</em>.
+	 * @see #getShaahZmanisGra()
+	 */
+	public long getShaahZmanis() {
+		return getShaahZmanisGra();
+	}
+
+	/**
 	 * Default constructor will set a default {@link GeoLocation#GeoLocation()}, a default
 	 * {@link AstronomicalCalculator#getDefault() AstronomicalCalculator} and default the calendar to the current date.
 	 * 
