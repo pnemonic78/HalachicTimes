@@ -19,7 +19,6 @@
  */
 package net.sf.times.common.preference;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -39,10 +38,6 @@ import net.sf.times.common.R;
  * This fragment shows the preferences for a header.
  */
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
-
-    public Context getContext() {
-        return getActivity();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

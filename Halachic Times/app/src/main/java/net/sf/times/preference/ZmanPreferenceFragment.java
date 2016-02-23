@@ -97,7 +97,8 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
     protected ZmanimSettings getSettings() {
         if (settings == null) {
-            settings = new ZmanimSettings(getContext());
+            Context context = getActivity();
+            settings = new ZmanimSettings(context);
         }
         return settings;
     }
@@ -164,7 +165,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
             remindRunner = new Runnable() {
                 @Override
                 public void run() {
-                    Context context = getContext();
+                    Context context = getActivity();
                     if (context != null) {
                         if (reminder == null)
                             reminder = new ZmanimReminder();
