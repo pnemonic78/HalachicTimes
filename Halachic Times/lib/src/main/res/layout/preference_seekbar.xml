@@ -6,8 +6,8 @@
     android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/listPreferredItemPaddingLeft"
-    android:paddingRight="@dimen/listPreferredItemPaddingRight">
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight">
 
     <TextView
         android:id="@android:id/summary"
