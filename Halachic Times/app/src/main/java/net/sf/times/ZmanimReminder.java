@@ -300,6 +300,9 @@ public class ZmanimReminder extends BroadcastReceiver {
         ZmanimSettings settings = new ZmanimSettings(context);
 
         String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
         switch (action) {
             case Intent.ACTION_BOOT_COMPLETED:
             case Intent.ACTION_DATE_CHANGED:

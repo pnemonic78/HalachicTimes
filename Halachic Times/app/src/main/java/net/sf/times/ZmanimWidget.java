@@ -99,6 +99,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         ContentResolver resolver = context.getContentResolver();
 
         final String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
         switch (action) {
             case AppWidgetManager.ACTION_APPWIDGET_UPDATE:
 

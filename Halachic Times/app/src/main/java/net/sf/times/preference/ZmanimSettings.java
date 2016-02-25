@@ -710,6 +710,9 @@ public class ZmanimSettings extends CompassSettings {
      * @return the id - {@code null} otherwise.
      */
     protected int toId(String name) {
+        if (name == null) {
+            return 0;
+        }
         switch (name) {
             case KEY_OPINION_HOUR:
                 return R.string.hour;
