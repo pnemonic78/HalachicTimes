@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -32,6 +33,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -101,6 +103,9 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
         Resources res = getResources();
 
         setTheme(getThemeId());
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         setContentView(R.layout.locations);
 
         EditText searchText = (EditText) findViewById(R.id.search_src_text);
@@ -151,6 +156,19 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
         if (adapterFavorites.getCount() == 0) {
             tabs.setCurrentTab(1);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    finish();
+                    return true;
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

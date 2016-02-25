@@ -22,6 +22,8 @@ package net.sf.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -37,10 +39,12 @@ import net.sf.times.preference.ZmanimPreferenceActivity;
  */
 public class CompassActivity extends BaseCompassActivity {
 
-    /**
-     * Constructs a new compass.
-     */
-    public CompassActivity() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -52,6 +56,12 @@ public class CompassActivity extends BaseCompassActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    finish();
+                    return true;
+                }
+                break;
             case R.id.menu_location:
                 startLocations();
                 return true;

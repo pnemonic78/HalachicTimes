@@ -23,6 +23,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
 import net.sf.times.R;
 
@@ -48,6 +49,10 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Zmanim_Settings);
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -59,5 +64,18 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     protected boolean isValidFragment(String fragmentName) {
         return fragmentName.startsWith(packageName);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    finish();
+                    return true;
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
