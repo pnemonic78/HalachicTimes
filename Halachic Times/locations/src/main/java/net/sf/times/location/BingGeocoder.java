@@ -284,7 +284,7 @@ public class BingGeocoder extends GeocoderBase {
                         }
                     }
                 case POINT:
-                    if (address != null) {
+                    if ((address != null) && (tag != null)) {
                         switch (tag) {
                             case TAG_LATITUDE:
                                 try {
@@ -304,7 +304,7 @@ public class BingGeocoder extends GeocoderBase {
                     }
                     break;
                 case ADDRESS:
-                    if (address != null) {
+                    if ((address != null) && (tag != null)) {
                         switch (tag) {
                             case TAG_ADDRESS_LINE:
                                 prev = address.getAddressLine(0);

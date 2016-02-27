@@ -295,34 +295,36 @@ public class GoogleGeocoder extends GeocoderBase {
                 case ADDRESS:
                     if (TAG_ADDRESS.equals(localName)) {
                         if (address != null) {
-                            switch (addressType) {
-                                case TYPE_ADMIN:
-                                    address.setAdminArea(longName);
-                                    break;
-                                case TYPE_SUBADMIN:
-                                    address.setSubAdminArea(longName);
-                                    break;
-                                case TYPE_COUNTRY:
-                                    address.setCountryCode(shortName);
-                                    address.setCountryName(longName);
-                                    break;
-                                case TYPE_FEATURE:
-                                    address.setFeatureName(longName);
-                                    break;
-                                case TYPE_LOCALITY:
-                                    address.setLocality(longName);
-                                    break;
-                                case TYPE_POSTAL_CODE:
-                                    address.setPostalCode(longName);
-                                    break;
-                                case TYPE_ROUTE:
-                                case TYPE_STREET:
-                                case TYPE_STREET_NUMBER:
-                                    address.setAddressLine(address.getMaxAddressLineIndex() + 1, longName);
-                                    break;
-                                case TYPE_SUBLOCALITY:
-                                    address.setSubLocality(longName);
-                                    break;
+                            if (addressType != null) {
+                                switch (addressType) {
+                                    case TYPE_ADMIN:
+                                        address.setAdminArea(longName);
+                                        break;
+                                    case TYPE_SUBADMIN:
+                                        address.setSubAdminArea(longName);
+                                        break;
+                                    case TYPE_COUNTRY:
+                                        address.setCountryCode(shortName);
+                                        address.setCountryName(longName);
+                                        break;
+                                    case TYPE_FEATURE:
+                                        address.setFeatureName(longName);
+                                        break;
+                                    case TYPE_LOCALITY:
+                                        address.setLocality(longName);
+                                        break;
+                                    case TYPE_POSTAL_CODE:
+                                        address.setPostalCode(longName);
+                                        break;
+                                    case TYPE_ROUTE:
+                                    case TYPE_STREET:
+                                    case TYPE_STREET_NUMBER:
+                                        address.setAddressLine(address.getMaxAddressLineIndex() + 1, longName);
+                                        break;
+                                    case TYPE_SUBLOCALITY:
+                                        address.setSubLocality(longName);
+                                        break;
+                                }
                             }
                             longName = null;
                             shortName = null;
@@ -589,7 +591,7 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case LOCATION:
-                    if (location != null) {
+                    if ((location != null) && (tag != null)) {
                         switch (tag) {
                             case TAG_LATITUDE:
                                 try {
