@@ -118,7 +118,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private Runnable populateHeader;
     /** Update the location in UI thread. */
     private Runnable updateLocation;
-    private ZmanimReminder reminder;
     /** The master fragment. */
     private ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>> masterFragment;
     /** The details fragment switcher. */
@@ -256,12 +255,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     protected void onResume() {
         super.onResume();
         locations.start(this);
-        ZmanimReminder reminder = this.reminder;
-        if (reminder == null) {
-            reminder = createReminder();
-            this.reminder = reminder;
-        }
-        reminder.cancel(this);
+        cancelReminders();
         int itemId = selectedId;
         if (itemId != 0) {
             // We need to wait for the list rows to get their default
@@ -273,20 +267,13 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     protected void onPause() {
-        super.onPause();
-        if (reminder != null) {
-            // Don't run on UI thread.
-            new Thread() {
-                public void run() {
-                    reminder.remind(ZmanimActivity.this, settings);
-                }
-            }.start();
-        }
         int itemId = selectedId;
         if (itemId != 0) {
             hideDetails();
             selectedId = itemId;
         }
+        updateReminders();
+        super.onPause();
     }
 
     @Override
@@ -427,19 +414,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    /**
-     * Is the list background painted?
-     *
-     * @return {@code true} for non-transparent background.
-     */
-    protected boolean isBackgroundDrawable() {
-        return true;
-    }
-
-    protected ZmanimReminder createReminder() {
-        return new ZmanimReminder();
     }
 
     /** Populate the header item. */
@@ -892,5 +866,21 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
      */
     protected boolean hasDetails(int itemId) {
         return (itemId != 0) && (itemId != R.string.fast_begins) && (itemId != R.string.fast_ends);
+    }
+
+    private void updateReminders() {
+        Context context = this;
+
+        Intent intent = new Intent(context, ZmanimReminder.class);
+        intent.setAction(ZmanimReminder.ACTION_UPDATE);
+        context.sendBroadcast(intent);
+    }
+
+    private void cancelReminders() {
+        Context context = this;
+
+        Intent intent = new Intent(context, ZmanimReminder.class);
+        intent.setAction(ZmanimReminder.ACTION_CANCEL);
+        context.sendBroadcast(intent);
     }
 }

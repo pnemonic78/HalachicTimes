@@ -282,7 +282,7 @@
     <string name="omer_l">LaOmer</string>
 
     <!-- Preferences -->
-    <string name="pref_zmanim_title" translatable="false">@string/title_activity_zmanim</string>
+    <string name="pref_zmanim_title" translatable="false">@string/app_name</string>
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
     <string name="theme_none">None</string>

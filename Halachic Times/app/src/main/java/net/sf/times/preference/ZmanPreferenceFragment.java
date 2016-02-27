@@ -20,15 +20,18 @@
 package net.sf.times.preference;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.text.TextUtils;
-import android.view.View;
 
 import net.sf.times.ZmanimReminder;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This fragment shows the preferences for a zman screen.
@@ -40,6 +43,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     public static final String EXTRA_REMINDER = "reminder";
 
     private int xmlId;
+    private final Set<String> opinionKeys = new HashSet<>(1);
     private Preference preferenceReminder;
     private Preference preferenceReminderSunday;
     private Preference preferenceReminderMonday;
@@ -49,8 +53,6 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
     private Preference preferenceReminderFriday;
     private Preference preferenceReminderSaturday;
     private ZmanimSettings settings;
-    private ZmanimReminder reminder;
-    private Runnable remindRunner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,15 +73,18 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
         super.onCreate(savedInstanceState);
 
+        opinionKeys.clear();
         if (!TextUtils.isEmpty(opinionKey)) {
             if (opinionKey.indexOf(';') > 0) {
-                String[] opinionKeys = opinionKey.split(";");
-                int length = opinionKeys.length;
+                String[] tokens = opinionKey.split(";");
+                int length = tokens.length;
                 for (int i = 0; i < length; i++) {
-                    initList(opinionKeys[i]);
+                    initList(tokens[i]);
+                    opinionKeys.add(tokens[i]);
                 }
             } else {
                 initList(opinionKey);
+                opinionKeys.add(opinionKey);
             }
         }
         if ((this.preferenceReminder = initList(reminderKey)) == null) {
@@ -109,7 +114,7 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
 
         super.onListPreferenceChange(preference, newValue);
 
-        if (!oldValue.equals(newValue) && (preference == preferenceReminder)) {
+        if (!oldValue.equals(newValue) && ((preference == preferenceReminder) || opinionKeys.contains(preference.getKey()))) {
             // Explicitly disable dependencies?
             preference.notifyDependencyChange(preference.shouldDisableDependents());
 
@@ -161,24 +166,10 @@ public class ZmanPreferenceFragment extends AbstractPreferenceFragment {
      * Tries to postpone the reminder until after any preferences have changed.
      */
     private void remind() {
-        if (remindRunner == null) {
-            remindRunner = new Runnable() {
-                @Override
-                public void run() {
-                    Context context = getActivity();
-                    if (context != null) {
-                        if (reminder == null)
-                            reminder = new ZmanimReminder();
-                        reminder.remind(context, getSettings());
-                    }
-                }
-            };
-        }
-        View view = getView();
-        if (view == null) {
-            remindRunner.run();
-        } else {
-            view.post(remindRunner);
-        }
+        Context context = getActivity();
+
+        Intent intent = new Intent(context, ZmanimReminder.class);
+        intent.setAction(ZmanimReminder.ACTION_UPDATE);
+        context.sendBroadcast(intent);
     }
 }

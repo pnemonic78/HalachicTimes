@@ -44,7 +44,6 @@ import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -84,8 +83,12 @@ public class ZmanimReminder extends BroadcastReceiver {
     /** Extras name for the reminder time. */
     private static final String EXTRA_REMINDER_TIME = "reminder_time";
 
-    /** Action to force remind - used for debugging. */
+    /** Action to remind. */
     private static final String ACTION_REMIND = "net.sf.times.action.REMIND";
+    /** Action to update reminders. */
+    public static final String ACTION_UPDATE = "net.sf.times.action.UPDATE";
+    /** Action to cancel reminders. */
+    public static final String ACTION_CANCEL = "net.sf.times.action.CANCEL";
 
     private SimpleDateFormat dateFormat;
     /** The adapter. */
@@ -276,6 +279,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
         Intent intent = new Intent(context, ZmanimReminder.class);
+        intent.setAction(ACTION_REMIND);
 
         if (item != null) {
             CharSequence contentTitle = context.getText(item.titleId);
@@ -308,29 +312,24 @@ public class ZmanimReminder extends BroadcastReceiver {
             case Intent.ACTION_DATE_CHANGED:
             case Intent.ACTION_TIMEZONE_CHANGED:
             case Intent.ACTION_TIME_CHANGED:
+            case ACTION_UPDATE:
                 update = true;
                 break;
-            default:
+            case ACTION_CANCEL:
+                cancel(context);
+                break;
+            case ACTION_REMIND:
                 Bundle extras = intent.getExtras();
                 if (extras != null) {
-                    boolean remind = false;
-                    if (ACTION_REMIND.equals(action)) {
-                        remind = true;
-                    } else if (extras.getInt(Intent.EXTRA_ALARM_COUNT, 0) > 0) {
-                        remind = true;
-                    }
+                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
+                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
+                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
 
-                    if (remind) {
-                        CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                        CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
-                        long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
-
-                        if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
-                            ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
-                            notifyNow(context, settings, reminderItem);
-                        }
-                        update = true;
+                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
+                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(contentTitle, contentText, when);
+                        notifyNow(context, settings, reminderItem);
                     }
+                    update = true;
                 }
                 break;
         }
