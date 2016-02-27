@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<geonames>
+<geoname>
+<toponymName>Earth</toponymName>
+<name>Earth</name>
+<lat>0</lat>
+<lng>0</lng>
+<geonameId>6295630</geonameId>
+<countryCode/>
+<fcl>L</fcl>
+<fcode>AREA</fcode>
+</geoname>
+<geoname>
+<toponymName>Asia</toponymName>
+<name>Asia</name>
+<lat>29.84064</lat>
+<lng>89.29688</lng>
+<geonameId>6255147</geonameId>
+<countryCode/>
+<fcl>L</fcl>
+<fcode>CONT</fcode>
+</geoname>
+<geoname>
+<toponymName>State of Israel</toponymName>
+<name>Israel</name>
+<lat>31.5</lat>
+<lng>34.75</lng>
+<geonameId>294640</geonameId>
+<countryCode>IL</countryCode>
+<countryName>Israel</countryName>
+<fcl>A</fcl>
+<fcode>PCLI</fcode>
+</geoname>
+<geoname>
+<toponymName>Central District</toponymName>
+<name>Central District</name>
+<lat>32.08333</lat>
+<lng>34.91667</lng>
+<geonameId>294904</geonameId>
+<countryCode>IL</countryCode>
+<countryName>Israel</countryName>
+<fcl>A</fcl>
+<fcode>ADM1</fcode>
+</geoname>
+<geoname>
+<toponymName>El‘ad</toponymName>
+<name>El‘ad</name>
+<lat>32.04984</lat>
+<lng>34.95382</lng>
+<geonameId>8428480</geonameId>
+<countryCode>IL</countryCode>
+<countryName>Israel</countryName>
+<fcl>P</fcl>
+<fcode>PPL</fcode>
+</geoname>
+</geonames>

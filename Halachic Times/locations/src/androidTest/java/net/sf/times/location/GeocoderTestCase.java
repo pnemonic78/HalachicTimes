@@ -146,4 +146,37 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertEquals(94.6400452, location.getAltitude());
     }
 
+    /**
+     * Test GeoNames address geocoder.
+     *
+     * @throws Exception
+     *         if an error occurs.
+     */
+    public void testGeoNamesAddress() throws Exception {
+        Context context = getContext();
+        assertNotNull(context);
+
+        Locale locale = Locale.getDefault();
+        GeoNamesGeocoder geocoder = new GeoNamesGeocoder(context);
+        int maxResults = 10;
+
+        // Near Elad
+        List<Address> results = new ArrayList<>(maxResults);
+        InputStream in = context.getResources().openRawResource(R.raw.geonames_near_elad);
+        assertNotNull(in);
+        SAXParser parser = getParser();
+        assertNotNull(parser);
+        DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertEquals(5, results.size());
+
+        Address address = results.get(4);
+        assertNotNull(address);
+        assertEquals(32.04984, address.getLatitude());
+        assertEquals(34.95382, address.getLongitude());
+        assertEquals("Israel", address.getCountryName());
+        assertEquals("El‘ad", address.getFeatureName());
+    }
+
 }
