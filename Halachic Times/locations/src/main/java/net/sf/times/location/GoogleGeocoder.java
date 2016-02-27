@@ -166,6 +166,7 @@ public class GoogleGeocoder extends GeocoderBase {
         private String longName;
         private String shortName;
         private String addressType;
+        private final StringBuffer text = new StringBuffer();
 
         /**
          * Constructs a new parse handler.
@@ -186,6 +187,8 @@ public class GoogleGeocoder extends GeocoderBase {
             super.startElement(uri, localName, qName, attributes);
             if (TextUtils.isEmpty(localName))
                 localName = qName;
+
+            text.delete(0, text.length());
 
             switch (state) {
                 case START:
@@ -260,6 +263,8 @@ public class GoogleGeocoder extends GeocoderBase {
             if (TextUtils.isEmpty(localName))
                 localName = qName;
 
+            String s = text.toString().trim();
+
             switch (state) {
                 case ROOT:
                     if (TAG_ROOT.equals(localName))
@@ -268,6 +273,9 @@ public class GoogleGeocoder extends GeocoderBase {
                 case STATUS:
                     if (TAG_STATUS.equals(localName))
                         state = State.ROOT;
+                    if (!STATUS_OK.equals(s)) {
+                        state = State.FINISH;
+                    }
                     break;
                 case RESULT:
                     if (TAG_RESULT.equals(localName)) {
@@ -287,8 +295,20 @@ public class GoogleGeocoder extends GeocoderBase {
                 case RESULT_TYPE:
                     if (TAG_TYPE.equals(localName))
                         state = State.RESULT;
+                    if (TYPE_POLITICAL.equals(s))
+                        break;
+                    address = new Address(locale);
                     break;
                 case RESULT_FORMATTED:
+                    if (address != null) {
+                        Bundle extras = address.getExtras();
+                        if (extras == null) {
+                            extras = new Bundle();
+                            address.setExtras(extras);
+                            extras = address.getExtras();
+                        }
+                        extras.putString(ZmanimAddress.KEY_FORMATTED, s);
+                    }
                     if (TAG_FORMATTED.equals(localName))
                         state = State.RESULT;
                     break;
@@ -334,16 +354,22 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case ADDRESS_LONG:
+                    longName = s;
                     if (TAG_LONG_NAME.equals(localName))
                         state = State.ADDRESS;
                     break;
                 case ADDRESS_SHORT:
+                    shortName = s;
                     if (TAG_SHORT_NAME.equals(localName))
                         state = State.ADDRESS;
                     break;
                 case ADDRESS_TYPE:
                     if (TAG_TYPE.equals(localName))
                         state = State.ADDRESS;
+                    if (TYPE_POLITICAL.equals(s))
+                        break;
+                    if (addressType == null)
+                        addressType = s;
                     break;
                 case GEOMETRY:
                     if (TAG_GEOMETRY.equals(localName))
@@ -354,10 +380,24 @@ public class GoogleGeocoder extends GeocoderBase {
                         state = State.GEOMETRY;
                     break;
                 case LATITUDE:
+                    if (address != null) {
+                        try {
+                            address.setLatitude(Double.parseDouble(s));
+                        } catch (NumberFormatException nfe) {
+                            throw new SAXException(nfe);
+                        }
+                    }
                     if (TAG_LATITUDE.equals(localName))
                         state = State.LOCATION;
                     break;
                 case LONGITUDE:
+                    if (address != null) {
+                        try {
+                            address.setLongitude(Double.parseDouble(s));
+                        } catch (NumberFormatException nfe) {
+                            throw new SAXException(nfe);
+                        }
+                    }
                     if (TAG_LONGITUDE.equals(localName))
                         state = State.LOCATION;
                     break;
@@ -374,66 +414,7 @@ public class GoogleGeocoder extends GeocoderBase {
 
             if (length == 0)
                 return;
-            String s = new String(ch, start, length).trim();
-            if (s.length() == 0)
-                return;
-
-            switch (state) {
-                case STATUS:
-                    if (!STATUS_OK.equals(s))
-                        state = State.FINISH;
-                    break;
-                case RESULT_TYPE:
-                    if (TYPE_POLITICAL.equals(s))
-                        break;
-                    address = new Address(locale);
-                    break;
-                case RESULT_FORMATTED:
-                    if (address != null) {
-                        Bundle extras = address.getExtras();
-                        if (extras == null) {
-                            extras = new Bundle();
-                            address.setExtras(extras);
-                            extras = address.getExtras();
-                        }
-                        extras.putString(ZmanimAddress.KEY_FORMATTED, s);
-                    }
-                    break;
-                case ADDRESS_LONG:
-                    longName = s;
-                    break;
-                case ADDRESS_SHORT:
-                    shortName = s;
-                    break;
-                case ADDRESS_TYPE:
-                    if (TYPE_POLITICAL.equals(s))
-                        break;
-                    if (addressType == null)
-                        addressType = s;
-                    break;
-                case LATITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLatitude(Double.parseDouble(s));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
-                        }
-                    }
-                    break;
-                case LONGITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLongitude(Double.parseDouble(s));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
-                        }
-                    }
-                    break;
-                case FINISH:
-                    return;
-                default:
-                    break;
-            }
+            text.append(ch, start, length);
         }
     }
 
@@ -477,7 +458,7 @@ public class GoogleGeocoder extends GeocoderBase {
         private State state = State.START;
         private final List<ZmanimLocation> results;
         private ZmanimLocation location;
-        private String tag;
+        private final StringBuffer text = new StringBuffer();
 
         /**
          * Constructs a new parse handler.
@@ -495,7 +476,7 @@ public class GoogleGeocoder extends GeocoderBase {
             if (TextUtils.isEmpty(localName))
                 localName = qName;
 
-            tag = localName;
+            text.delete(0, text.length());
 
             switch (state) {
                 case START:
@@ -534,6 +515,8 @@ public class GoogleGeocoder extends GeocoderBase {
             if (TextUtils.isEmpty(localName))
                 localName = qName;
 
+            String s = text.toString().trim();
+
             switch (state) {
                 case ROOT:
                     if (TAG_ROOT.equals(localName))
@@ -542,57 +525,30 @@ public class GoogleGeocoder extends GeocoderBase {
                 case STATUS:
                     if (TAG_STATUS.equals(localName))
                         state = State.ROOT;
-                    break;
-                case RESULT:
-                    if (TAG_RESULT.equals(localName)) {
-                        if (location != null) {
-                            if (location.hasAltitude())
-                                results.add(location);
-                            location = null;
-                        }
-                        state = State.ROOT;
-                    }
-                    break;
-                case LOCATION:
-                    if (TAG_LOCATION.equals(localName))
-                        state = State.RESULT;
-                    break;
-                case FINISH:
-                    return;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
-
-            if (length == 0)
-                return;
-            String s = new String(ch, start, length).trim();
-            if (s.length() == 0)
-                return;
-
-            switch (state) {
-                case STATUS:
                     if (!STATUS_OK.equals(s))
                         state = State.FINISH;
                     break;
                 case RESULT:
-                    if (location != null) {
-                        if (TAG_ELEVATION.equals(tag)) {
-                            try {
-                                location.setAltitude(Double.parseDouble(s));
-                            } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                    switch (localName) {
+                        case TAG_ELEVATION:
+                            if (location != null) {
+                                try {
+                                    location.setAltitude(Double.parseDouble(s));
+                                    results.add(location);
+                                } catch (NumberFormatException nfe) {
+                                    throw new SAXException(nfe);
+                                }
                             }
-                        }
+                            break;
+                        case TAG_RESULT:
+                            location = null;
+                            state = State.ROOT;
+                            break;
                     }
                     break;
                 case LOCATION:
-                    if ((location != null) && (tag != null)) {
-                        switch (tag) {
+                    if (location != null) {
+                        switch (localName) {
                             case TAG_LATITUDE:
                                 try {
                                     location.setLatitude(Double.parseDouble(s));
@@ -609,12 +565,23 @@ public class GoogleGeocoder extends GeocoderBase {
                                 break;
                         }
                     }
+                    if (TAG_LOCATION.equals(localName))
+                        state = State.RESULT;
                     break;
                 case FINISH:
                     return;
                 default:
                     break;
             }
+        }
+
+        @Override
+        public void characters(char[] ch, int start, int length) throws SAXException {
+            super.characters(ch, start, length);
+
+            if (length == 0)
+                return;
+            text.append(ch, start, length);
         }
     }
 

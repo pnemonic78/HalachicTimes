@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ElevationResponse>
+    <status>OK</status>
+    <result>
+        <location>
+            <lat>32.0629985</lat>
+            <lng>34.9768113</lng>
+        </location>
+        <elevation>94.6400452</elevation>
+        <resolution>610.8129272</resolution>
+    </result>
+</ElevationResponse>

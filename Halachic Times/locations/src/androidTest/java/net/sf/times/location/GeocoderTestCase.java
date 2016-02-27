@@ -55,12 +55,12 @@ public class GeocoderTestCase extends AndroidTestCase {
     }
 
     /**
-     * Test Google geocoder.
+     * Test Google address geocoder.
      *
      * @throws Exception
      *         if an error occurs.
      */
-    public void testGoogle() throws Exception {
+    public void testGoogleAddress() throws Exception {
         Context context = getContext();
         assertNotNull(context);
 
@@ -69,7 +69,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         int maxResults = 5;
 
         // Holon
-        List<Address> results = new ArrayList<Address>(maxResults);
+        List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.google_holon);
         assertNotNull(in);
         SAXParser parser = getParser();
@@ -86,9 +86,9 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertEquals(34.7766799, address.getLongitude());
         assertEquals("Kalischer St 1-5, Holon, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
 
-        // Rosh Haayin
-        results = new ArrayList<Address>(maxResults);
-        in = context.getResources().openRawResource(R.raw.google_nowhere);
+        // Near Elad
+        results = new ArrayList<>(maxResults);
+        in = context.getResources().openRawResource(R.raw.google_near_elad);
         assertNotNull(in);
         parser = getParser();
         assertNotNull(parser);
@@ -104,4 +104,46 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertEquals(34.9717498, address.getLongitude());
         assertEquals("Unnamed Road, Rosh Haayin, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
     }
+
+    /**
+     * Test Google elevation geocoder.
+     *
+     * @throws Exception
+     *         if an error occurs.
+     */
+    public void testGoogleElevation() throws Exception {
+        Context context = getContext();
+        assertNotNull(context);
+
+        Locale locale = Locale.getDefault();
+        GeocoderBase geocoder = new GoogleGeocoder(context);
+
+        // Access Denied
+        List<ZmanimLocation> results = new ArrayList<>();
+        InputStream in = context.getResources().openRawResource(R.raw.google_elevation_denied);
+        assertNotNull(in);
+        SAXParser parser = getParser();
+        assertNotNull(parser);
+        DefaultHandler handler = geocoder.createElevationResponseHandler(results);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertEquals(0, results.size());
+
+        // Near Elad
+        results = new ArrayList<>();
+        in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
+        assertNotNull(in);
+        parser = getParser();
+        assertNotNull(parser);
+        handler = geocoder.createElevationResponseHandler(results);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertEquals(1, results.size());
+        ZmanimLocation location = results.get(0);
+        assertNotNull(location);
+        assertEquals(32.0629985, location.getLatitude());
+        assertEquals(34.9768113, location.getLongitude());
+        assertEquals(94.6400452, location.getAltitude());
+    }
+
 }
