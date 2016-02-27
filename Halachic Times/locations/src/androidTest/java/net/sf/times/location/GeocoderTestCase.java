@@ -66,7 +66,7 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         Locale locale = Locale.getDefault();
         GeocoderBase geocoder = new GoogleGeocoder(context);
-        int maxResults = 5;
+        int maxResults = 10;
 
         // Holon
         List<Address> results = new ArrayList<>(maxResults);
@@ -77,7 +77,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
-        assertEquals(maxResults, results.size());
+        assertTrue(maxResults >= results.size());
+        assertEquals(5, results.size());
 
         Address address = results.get(0);
         assertNotNull(address);
@@ -95,7 +96,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
-        assertEquals(maxResults, results.size());
+        assertTrue(maxResults >= results.size());
+        assertEquals(6, results.size());
 
         address = results.get(0);
         assertNotNull(address);
@@ -157,7 +159,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertNotNull(context);
 
         Locale locale = Locale.getDefault();
-        GeoNamesGeocoder geocoder = new GeoNamesGeocoder(context);
+        GeocoderBase geocoder = new GeoNamesGeocoder(context);
         int maxResults = 10;
 
         // Near Elad
@@ -169,6 +171,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
+        assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
 
         Address address = results.get(4);
@@ -177,6 +180,59 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertEquals(34.95382, address.getLongitude());
         assertEquals("Israel", address.getCountryName());
         assertEquals("El‘ad", address.getFeatureName());
+    }
+
+    /**
+     * Test Bing address geocoder.
+     *
+     * @throws Exception
+     *         if an error occurs.
+     */
+    public void testBingAddress() throws Exception {
+        Context context = getContext();
+        assertNotNull(context);
+
+        Locale locale = Locale.getDefault();
+        GeocoderBase geocoder = new BingGeocoder(context);
+        int maxResults = 10;
+
+        // Holon
+        List<Address> results = new ArrayList<>(maxResults);
+        InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
+        assertNotNull(in);
+        SAXParser parser = getParser();
+        assertNotNull(parser);
+        DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertTrue(maxResults >= results.size());
+        assertEquals(1, results.size());
+
+        Address address = results.get(0);
+        assertNotNull(address);
+        assertNotNull(address.getExtras());
+        assertEquals(32.0236, address.getLatitude());
+        assertEquals(34.776698, address.getLongitude());
+        assertEquals("Street, Holon, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+
+        // Near Elad
+        results = new ArrayList<>(maxResults);
+        in = context.getResources().openRawResource(R.raw.bing_near_elad);
+        assertNotNull(in);
+        parser = getParser();
+        assertNotNull(parser);
+        handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertTrue(maxResults >= results.size());
+        assertEquals(1, results.size());
+
+        address = results.get(0);
+        assertNotNull(address);
+        assertNotNull(address.getExtras());
+        assertEquals(32.094619750976563, address.getLatitude());
+        assertEquals(34.885761260986328, address.getLongitude());
+        assertEquals("Petah Tiqwa, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
     }
 
 }
