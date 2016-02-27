@@ -232,9 +232,9 @@ public abstract class GeocoderBase {
         try {
             return parseLocations(data, maxResults);
         } catch (ParserConfigurationException pce) {
-            throw new IOException(pce.getMessage());
+            throw new IOException(pce);
         } catch (SAXException se) {
-            throw new IOException(se.getMessage());
+            throw new IOException(se);
         }
     }
 
@@ -328,9 +328,9 @@ public abstract class GeocoderBase {
         try {
             return parseElevation(data);
         } catch (ParserConfigurationException pce) {
-            throw new IOException(pce.getMessage());
+            throw new IOException(pce);
         } catch (SAXException se) {
-            throw new IOException(se.getMessage());
+            throw new IOException(se);
         }
     }
 

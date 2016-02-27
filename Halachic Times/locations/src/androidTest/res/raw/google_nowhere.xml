@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GeocodeResponse>
+    <status>OK</status>
+    <result>
+        <type>route</type>
+        <formatted_address>Unnamed Road, Rosh Haayin, Israel</formatted_address>
+        <address_component>
+            <long_name>Unnamed Road</long_name>
+            <short_name>Unnamed Road</short_name>
+            <type>route</type>
+        </address_component>
+        <address_component>
+            <long_name>Rosh Haayin</long_name>
+            <short_name>Rosh Haayin</short_name>
+            <type>locality</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Petach Tikva</long_name>
+            <short_name>Petach Tikva</short_name>
+            <type>administrative_area_level_2</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Center District</long_name>
+            <short_name>Center District</short_name>
+            <type>administrative_area_level_1</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Israel</long_name>
+            <short_name>IL</short_name>
+            <type>country</type>
+            <type>political</type>
+        </address_component>
+        <geometry>
+            <location>
+                <lat>32.0626167</lat>
+                <lng>34.9717498</lng>
+            </location>
+            <location_type>GEOMETRIC_CENTER</location_type>
+            <viewport>
+                <southwest>
+                    <lat>32.0612595</lat>
+                    <lng>34.9703997</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.0639575</lat>
+                    <lng>34.9730976</lng>
+                </northeast>
+            </viewport>
+            <bounds>
+                <southwest>
+                    <lat>32.0624015</lat>
+                    <lng>34.9708787</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.0628155</lat>
+                    <lng>34.9726186</lng>
+                </northeast>
+            </bounds>
+        </geometry>
+        <place_id>ChIJBZVhlkIxHRURWOhxyZEbhY4</place_id>
+    </result>
+    <result>
+        <type>locality</type>
+        <type>political</type>
+        <formatted_address>Rosh Haayin, Israel</formatted_address>
+        <address_component>
+            <long_name>Rosh Haayin</long_name>
+            <short_name>Rosh Haayin</short_name>
+            <type>locality</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Petach Tikva</long_name>
+            <short_name>Petach Tikva</short_name>
+            <type>administrative_area_level_2</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Center District</long_name>
+            <short_name>Center District</short_name>
+            <type>administrative_area_level_1</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Israel</long_name>
+            <short_name>IL</short_name>
+            <type>country</type>
+            <type>political</type>
+        </address_component>
+        <geometry>
+            <location>
+                <lat>32.0958380</lat>
+                <lng>34.9521770</lng>
+            </location>
+            <location_type>APPROXIMATE</location_type>
+            <viewport>
+                <southwest>
+                    <lat>32.0514180</lat>
+                    <lng>34.9325340</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.1178340</lat>
+                    <lng>34.9994091</lng>
+                </northeast>
+            </viewport>
+            <bounds>
+                <southwest>
+                    <lat>32.0514180</lat>
+                    <lng>34.9325340</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.1178340</lat>
+                    <lng>34.9994091</lng>
+                </northeast>
+            </bounds>
+        </geometry>
+        <place_id>ChIJTbFX6ioxHRURHn9WS3zh798</place_id>
+    </result>
+    <result>
+        <type>administrative_area_level_3</type>
+        <type>political</type>
+        <formatted_address>Ezor Petah Tikva, Israel</formatted_address>
+        <address_component>
+            <long_name>Ezor Petah Tikva</long_name>
+            <short_name>Ezor Petah Tikva</short_name>
+            <type>administrative_area_level_3</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Israel</long_name>
+            <short_name>IL</short_name>
+            <type>country</type>
+            <type>political</type>
+        </address_component>
+        <geometry>
+            <location>
+                <lat>32.0847355</lat>
+                <lng>34.9286096</lng>
+            </location>
+            <location_type>APPROXIMATE</location_type>
+            <viewport>
+                <southwest>
+                    <lat>32.0012910</lat>
+                    <lng>34.8432169</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.1439250</lat>
+                    <lng>35.0048960</lng>
+                </northeast>
+            </viewport>
+            <bounds>
+                <southwest>
+                    <lat>32.0012910</lat>
+                    <lng>34.8432169</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.1439250</lat>
+                    <lng>35.0048960</lng>
+                </northeast>
+            </bounds>
+        </geometry>
+        <place_id>ChIJhyI0i3k1HRUR98WdIlGv_lk</place_id>
+    </result>
+    <result>
+        <type>administrative_area_level_2</type>
+        <type>political</type>
+        <formatted_address>Petach Tikva, Israel</formatted_address>
+        <address_component>
+            <long_name>Petach Tikva</long_name>
+            <short_name>Petach Tikva</short_name>
+            <type>administrative_area_level_2</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Center District</long_name>
+            <short_name>Center District</short_name>
+            <type>administrative_area_level_1</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Israel</long_name>
+            <short_name>IL</short_name>
+            <type>country</type>
+            <type>political</type>
+        </address_component>
+        <geometry>
+            <location>
+                <lat>32.1245739</lat>
+                <lng>34.9286096</lng>
+            </location>
+            <location_type>APPROXIMATE</location_type>
+            <viewport>
+                <southwest>
+                    <lat>32.0012909</lat>
+                    <lng>34.8367079</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.2487936</lat>
+                    <lng>35.0238042</lng>
+                </northeast>
+            </viewport>
+            <bounds>
+                <southwest>
+                    <lat>32.0012909</lat>
+                    <lng>34.8367079</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.2487936</lat>
+                    <lng>35.0238042</lng>
+                </northeast>
+            </bounds>
+        </geometry>
+        <place_id>ChIJEWWGa0A3HRURX13ymBg8WKs</place_id>
+    </result>
+    <result>
+        <type>administrative_area_level_1</type>
+        <type>political</type>
+        <formatted_address>Center District, Israel</formatted_address>
+        <address_component>
+            <long_name>Center District</long_name>
+            <short_name>Center District</short_name>
+            <type>administrative_area_level_1</type>
+            <type>political</type>
+        </address_component>
+        <address_component>
+            <long_name>Israel</long_name>
+            <short_name>IL</short_name>
+            <type>country</type>
+            <type>political</type>
+        </address_component>
+        <geometry>
+            <location>
+                <lat>31.9521108</lat>
+                <lng>34.9065510</lng>
+            </location>
+            <location_type>APPROXIMATE</location_type>
+            <viewport>
+                <southwest>
+                    <lat>31.7571918</lat>
+                    <lng>34.6665428</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.4126018</lat>
+                    <lng>35.0514220</lng>
+                </northeast>
+            </viewport>
+            <bounds>
+                <southwest>
+                    <lat>31.7571918</lat>
+                    <lng>34.6665428</lng>
+                </southwest>
+                <northeast>
+                    <lat>32.4126018</lat>
+                    <lng>35.0514220</lng>
+                </northeast>
+            </bounds>
+        </geometry>
+        <place_id>ChIJ1dI8PjMVHRURwtHEUjGbcmU</place_id>
+    </result>
+    <result>
+        <type>country</type>
+        <type>political</type>
+        <formatted_address>Israel</formatted_address>
+        <address_component>
+            <long_name>Israel</long_name>
+            <short_name>IL</short_name>
+            <type>country</type>
+            <type>political</type>
+        </address_component>
+        <geometry>
+            <location>
+                <lat>31.0460510</lat>
+                <lng>34.8516120</lng>
+            </location>
+            <location_type>APPROXIMATE</location_type>
+            <viewport>
+                <southwest>
+                    <lat>29.4906463</lat>
+                    <lng>34.2673871</lng>
+                </southwest>
+                <northeast>
+                    <lat>33.3328050</lat>
+                    <lng>35.8962440</lng>
+                </northeast>
+            </viewport>
+            <bounds>
+                <southwest>
+                    <lat>29.4906463</lat>
+                    <lng>34.2673871</lng>
+                </southwest>
+                <northeast>
+                    <lat>33.3328050</lat>
+                    <lng>35.8962440</lng>
+                </northeast>
+            </bounds>
+        </geometry>
+        <place_id>ChIJi8mnMiRJABURuiw1EyBCa2o</place_id>
+    </result>
+</GeocodeResponse>

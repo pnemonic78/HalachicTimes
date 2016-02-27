@@ -66,20 +66,42 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         Locale locale = Locale.getDefault();
         GeocoderBase geocoder = new GoogleGeocoder(context);
-        int maxResults = 10;
+        int maxResults = 5;
 
+        // Holon
         List<Address> results = new ArrayList<Address>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.google_holon);
+        assertNotNull(in);
         SAXParser parser = getParser();
         assertNotNull(parser);
         DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        assertNotNull(handler);
         parser.parse(in, handler);
-        assertEquals(5, results.size());
-        assertNotNull(results.get(0));
-        assertNotNull(results.get(0).getExtras());
-        assertEquals(32.0234380, results.get(0).getLatitude());
-        assertEquals(34.7766799, results.get(0).getLongitude());
-        assertEquals("Kalischer St 1-5, Holon, Israel", results.get(0).getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+        assertEquals(maxResults, results.size());
 
+        Address address = results.get(0);
+        assertNotNull(address);
+        assertNotNull(address.getExtras());
+        assertEquals(32.0234380, address.getLatitude());
+        assertEquals(34.7766799, address.getLongitude());
+        assertEquals("Kalischer St 1-5, Holon, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+
+        // Rosh Haayin
+        results = new ArrayList<Address>(maxResults);
+        in = context.getResources().openRawResource(R.raw.google_nowhere);
+        assertNotNull(in);
+        parser = getParser();
+        assertNotNull(parser);
+        handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertEquals(maxResults, results.size());
+
+        address = results.get(0);
+        assertNotNull(address);
+        assertNotNull(address.getExtras());
+        assertEquals(32.0626167, address.getLatitude());
+        assertEquals(34.9717498, address.getLongitude());
+        assertEquals("Unnamed Road, Rosh Haayin, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
     }
 }
