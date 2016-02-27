@@ -22,11 +22,9 @@ package net.sf.times.location;
 import android.content.Context;
 import android.location.Address;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
@@ -97,7 +95,7 @@ public class BingGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class AddressResponseHandler extends DefaultHandler2 {
+    protected static class AddressResponseHandler extends DefaultAddressResponseHandler {
 
         /** Parse state. */
         private enum State {
@@ -128,7 +126,6 @@ public class BingGeocoder extends GeocoderBase {
         private final int maxResults;
         private final Locale locale;
         private Address address;
-        private String tag;
 
         /**
          * Constructs a new parse handler.
@@ -145,12 +142,8 @@ public class BingGeocoder extends GeocoderBase {
         }
 
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            super.startElement(uri, localName, qName, attributes);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            tag = localName;
+        protected void startElement(String uri, String localName, Attributes attributes) throws SAXException {
+            super.startElement(uri, localName, attributes);
 
             switch (state) {
                 case START:
@@ -194,23 +187,18 @@ public class BingGeocoder extends GeocoderBase {
                     }
                     break;
                 case POINT:
-                    break;
                 case ADDRESS:
-                    break;
                 case FINISH:
-                    return;
                 default:
                     break;
             }
         }
 
         @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            super.endElement(uri, localName, qName);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
+        protected void endElement(String uri, String localName, String qName, String text) throws SAXException {
+            super.endElement(uri, localName, qName, text);
 
-            tag = localName;
+            String prev;
 
             switch (state) {
                 case ROOT:
@@ -220,6 +208,8 @@ public class BingGeocoder extends GeocoderBase {
                 case STATUS:
                     if (TAG_STATUS.equals(localName))
                         state = State.ROOT;
+                    if (!STATUS_OK.equals(text))
+                        state = State.FINISH;
                     break;
                 case RESOURCE_SETS:
                     if (TAG_RESOURCE_SETS.equals(localName))
@@ -234,91 +224,71 @@ public class BingGeocoder extends GeocoderBase {
                         state = State.RESOURCE_SET;
                     break;
                 case LOCATION:
-                    if (TAG_LOCATION.equals(localName)) {
-                        if (address != null) {
-                            if ((results.size() < maxResults) && address.hasLatitude() && address.hasLongitude())
-                                results.add(address);
-                            else
-                                state = State.FINISH;
-                            address = null;
-                        }
-                        state = State.RESOURCES;
+                    switch (localName) {
+                        case TAG_NAME:
+                            if (address != null) {
+                                prev = address.getFeatureName();
+                                address.setFeatureName((prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_LOCATION:
+                            if (address != null) {
+                                if ((results.size() < maxResults) && address.hasLatitude() && address.hasLongitude())
+                                    results.add(address);
+                                else
+                                    state = State.FINISH;
+                                address = null;
+                            }
+                            state = State.RESOURCES;
+                            break;
                     }
                     break;
                 case POINT:
+                    switch (localName) {
+                        case TAG_LATITUDE:
+                            if (address != null) {
+                                try {
+                                    address.setLatitude(Double.parseDouble(text));
+                                } catch (NumberFormatException nfe) {
+                                    throw new SAXException(nfe);
+                                }
+                            }
+                            break;
+                        case TAG_LONGITUDE:
+                            if (address != null) {
+                                try {
+                                    address.setLongitude(Double.parseDouble(text));
+                                } catch (NumberFormatException nfe) {
+                                    throw new SAXException(nfe);
+                                }
+                            }
+                            break;
+                    }
                     if (TAG_POINT.equals(localName))
                         state = State.LOCATION;
                     break;
                 case ADDRESS:
-                    if (TAG_ADDRESS.equals(localName))
-                        state = State.LOCATION;
-                    break;
-                case FINISH:
-                    return;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
-
-            if (length == 0)
-                return;
-            String s = new String(ch, start, length).trim();
-            if (s.length() == 0)
-                return;
-            String prev;
-
-            switch (state) {
-                case STATUS:
-                    if (!STATUS_OK.equals(s))
-                        state = State.FINISH;
-                    break;
-                case LOCATION:
-                    if (address != null) {
-                        if (TAG_NAME.equals(tag)) {
-                            prev = address.getFeatureName();
-                            address.setFeatureName((prev == null) ? s : prev + s);
-                        }
-                    }
-                case POINT:
-                    if ((address != null) && (tag != null)) {
-                        switch (tag) {
-                            case TAG_LATITUDE:
-                                try {
-                                    address.setLatitude(Double.parseDouble(s));
-                                } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
-                                }
-                                break;
-                            case TAG_LONGITUDE:
-                                try {
-                                    address.setLongitude(Double.parseDouble(s));
-                                } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
-                                }
-                                break;
-                        }
-                    }
-                    break;
-                case ADDRESS:
-                    if ((address != null) && (tag != null)) {
-                        switch (tag) {
-                            case TAG_ADDRESS_LINE:
+                    switch (localName) {
+                        case TAG_ADDRESS_LINE:
+                            if (address != null) {
                                 prev = address.getAddressLine(0);
-                                address.setAddressLine(0, (prev == null) ? s : prev + s);
-                                break;
-                            case TAG_ADDRESS_DISTRICT:
+                                address.setAddressLine(0, (prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_ADDRESS_DISTRICT:
+                            if (address != null) {
                                 prev = address.getAdminArea();
-                                address.setAdminArea((prev == null) ? s : prev + s);
-                                break;
-                            case TAG_ADDRESS_COUNTRY:
+                                address.setAdminArea((prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_ADDRESS_COUNTRY:
+                            if (address != null) {
                                 prev = address.getCountryName();
-                                address.setCountryName((prev == null) ? s : prev + s);
-                                break;
-                            case TAG_FORMATTED:
+                                address.setCountryName((prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_FORMATTED:
+                            if (address != null) {
                                 Bundle extras = address.getExtras();
                                 if (extras == null) {
                                     extras = new Bundle();
@@ -326,17 +296,21 @@ public class BingGeocoder extends GeocoderBase {
                                     extras = address.getExtras();
                                 }
                                 prev = extras.getString(ZmanimAddress.KEY_FORMATTED);
-                                extras.putString(ZmanimAddress.KEY_FORMATTED, (prev == null) ? s : prev + s);
-                                break;
-                            case TAG_LOCALITY:
+                                extras.putString(ZmanimAddress.KEY_FORMATTED, (prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_LOCALITY:
+                            if (address != null) {
                                 prev = address.getLocality();
-                                address.setLocality((prev == null) ? s : prev + s);
-                                break;
-                        }
+                                address.setLocality((prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_ADDRESS:
+                            state = State.LOCATION;
+                            break;
                     }
                     break;
                 case FINISH:
-                    return;
                 default:
                     break;
             }
@@ -368,7 +342,7 @@ public class BingGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class ElevationResponseHandler extends DefaultHandler2 {
+    protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
 
         /** Parse state. */
         private enum State {
@@ -389,7 +363,6 @@ public class BingGeocoder extends GeocoderBase {
         private State state = State.START;
         private final List<ZmanimLocation> results;
         private ZmanimLocation location;
-        private String tag;
 
         /**
          * Constructs a new parse handler.
@@ -402,12 +375,8 @@ public class BingGeocoder extends GeocoderBase {
         }
 
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            super.startElement(uri, localName, qName, attributes);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            tag = localName;
+        protected void startElement(String uri, String localName, Attributes attributes) throws SAXException {
+            super.startElement(uri, localName, attributes);
 
             switch (state) {
                 case START:
@@ -455,12 +424,8 @@ public class BingGeocoder extends GeocoderBase {
         }
 
         @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            super.endElement(uri, localName, qName);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            tag = localName;
+        protected void endElement(String uri, String localName, String qName, String text) throws SAXException {
+            super.endElement(uri, localName, qName, text);
 
             switch (state) {
                 case ROOT:
@@ -470,6 +435,8 @@ public class BingGeocoder extends GeocoderBase {
                 case STATUS:
                     if (TAG_STATUS.equals(localName))
                         state = State.ROOT;
+                    if (!STATUS_OK.equals(text))
+                        state = State.FINISH;
                     break;
                 case RESOURCE_SETS:
                     if (TAG_RESOURCE_SETS.equals(localName))
@@ -496,43 +463,22 @@ public class BingGeocoder extends GeocoderBase {
                     }
                     break;
                 case ELEVATION:
-                    if (TAG_ELEVATIONS.equals(localName))
-                        state = State.ELEVATION_DATA;
-                    break;
-                case FINISH:
-                    return;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
-
-            if (length == 0)
-                return;
-            String s = new String(ch, start, length).trim();
-            if (s.length() == 0)
-                return;
-
-            switch (state) {
-                case STATUS:
-                    if (!STATUS_OK.equals(s))
-                        state = State.FINISH;
-                    break;
-                case ELEVATION:
-                    if (location != null) {
-                        if (TAG_ELEVATION.equals(tag)) {
-                            try {
-                                location.setAltitude(Double.parseDouble(s));
-                            } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                    switch (localName) {
+                        case TAG_ELEVATION:
+                            if (location != null) {
+                                try {
+                                    location.setAltitude(Double.parseDouble(text));
+                                } catch (NumberFormatException nfe) {
+                                    throw new SAXException(nfe);
+                                }
                             }
-                        }
+                            break;
+                        case TAG_ELEVATIONS:
+                            state = State.ELEVATION_DATA;
+                            break;
                     }
+                    break;
                 case FINISH:
-                    return;
                 default:
                     break;
             }

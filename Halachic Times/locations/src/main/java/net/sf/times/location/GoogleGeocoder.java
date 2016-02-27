@@ -22,11 +22,9 @@ package net.sf.times.location;
 import android.content.Context;
 import android.location.Address;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
@@ -124,7 +122,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class GeocodeResponseHandler extends DefaultHandler2 {
+    protected static class GeocodeResponseHandler extends DefaultAddressResponseHandler {
 
         /** Parse state. */
         private enum State {
@@ -166,7 +164,6 @@ public class GoogleGeocoder extends GeocoderBase {
         private String longName;
         private String shortName;
         private String addressType;
-        private final StringBuffer text = new StringBuffer();
 
         /**
          * Constructs a new parse handler.
@@ -183,12 +180,8 @@ public class GoogleGeocoder extends GeocoderBase {
         }
 
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            super.startElement(uri, localName, qName, attributes);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            text.delete(0, text.length());
+        protected void startElement(String uri, String localName, Attributes attributes) throws SAXException {
+            super.startElement(uri, localName, attributes);
 
             switch (state) {
                 case START:
@@ -258,12 +251,8 @@ public class GoogleGeocoder extends GeocoderBase {
         }
 
         @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            super.endElement(uri, localName, qName);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            String s = text.toString().trim();
+        protected void endElement(String uri, String localName, String qName, String text) throws SAXException {
+            super.endElement(uri, localName, qName, text);
 
             switch (state) {
                 case ROOT:
@@ -273,7 +262,7 @@ public class GoogleGeocoder extends GeocoderBase {
                 case STATUS:
                     if (TAG_STATUS.equals(localName))
                         state = State.ROOT;
-                    if (!STATUS_OK.equals(s)) {
+                    if (!STATUS_OK.equals(text)) {
                         state = State.FINISH;
                     }
                     break;
@@ -295,9 +284,9 @@ public class GoogleGeocoder extends GeocoderBase {
                 case RESULT_TYPE:
                     if (TAG_TYPE.equals(localName))
                         state = State.RESULT;
-                    if (TYPE_POLITICAL.equals(s))
-                        break;
-                    address = new Address(locale);
+                    if (!TYPE_POLITICAL.equals(text)) {
+                        address = new Address(locale);
+                    }
                     break;
                 case RESULT_FORMATTED:
                     if (address != null) {
@@ -307,7 +296,7 @@ public class GoogleGeocoder extends GeocoderBase {
                             address.setExtras(extras);
                             extras = address.getExtras();
                         }
-                        extras.putString(ZmanimAddress.KEY_FORMATTED, s);
+                        extras.putString(ZmanimAddress.KEY_FORMATTED, text);
                     }
                     if (TAG_FORMATTED.equals(localName))
                         state = State.RESULT;
@@ -354,22 +343,22 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case ADDRESS_LONG:
-                    longName = s;
+                    longName = text;
                     if (TAG_LONG_NAME.equals(localName))
                         state = State.ADDRESS;
                     break;
                 case ADDRESS_SHORT:
-                    shortName = s;
+                    shortName = text;
                     if (TAG_SHORT_NAME.equals(localName))
                         state = State.ADDRESS;
                     break;
                 case ADDRESS_TYPE:
                     if (TAG_TYPE.equals(localName))
                         state = State.ADDRESS;
-                    if (TYPE_POLITICAL.equals(s))
+                    if (TYPE_POLITICAL.equals(text))
                         break;
                     if (addressType == null)
-                        addressType = s;
+                        addressType = text;
                     break;
                 case GEOMETRY:
                     if (TAG_GEOMETRY.equals(localName))
@@ -382,7 +371,7 @@ public class GoogleGeocoder extends GeocoderBase {
                 case LATITUDE:
                     if (address != null) {
                         try {
-                            address.setLatitude(Double.parseDouble(s));
+                            address.setLatitude(Double.parseDouble(text));
                         } catch (NumberFormatException nfe) {
                             throw new SAXException(nfe);
                         }
@@ -393,7 +382,7 @@ public class GoogleGeocoder extends GeocoderBase {
                 case LONGITUDE:
                     if (address != null) {
                         try {
-                            address.setLongitude(Double.parseDouble(s));
+                            address.setLongitude(Double.parseDouble(text));
                         } catch (NumberFormatException nfe) {
                             throw new SAXException(nfe);
                         }
@@ -406,15 +395,6 @@ public class GoogleGeocoder extends GeocoderBase {
                 default:
                     break;
             }
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
-
-            if (length == 0)
-                return;
-            text.append(ch, start, length);
         }
     }
 
@@ -438,7 +418,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class ElevationResponseHandler extends DefaultHandler2 {
+    protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
 
         /** Parse state. */
         private enum State {
@@ -458,7 +438,6 @@ public class GoogleGeocoder extends GeocoderBase {
         private State state = State.START;
         private final List<ZmanimLocation> results;
         private ZmanimLocation location;
-        private final StringBuffer text = new StringBuffer();
 
         /**
          * Constructs a new parse handler.
@@ -471,12 +450,8 @@ public class GoogleGeocoder extends GeocoderBase {
         }
 
         @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            super.startElement(uri, localName, qName, attributes);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            text.delete(0, text.length());
+        protected void startElement(String uri, String localName, Attributes attributes) throws SAXException {
+            super.startElement(uri, localName, attributes);
 
             switch (state) {
                 case START:
@@ -503,19 +478,14 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case FINISH:
-                    return;
                 default:
                     break;
             }
         }
 
         @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            super.endElement(uri, localName, qName);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            String s = text.toString().trim();
+        protected void endElement(String uri, String localName, String qName, String text) throws SAXException {
+            super.endElement(uri, localName, qName, text);
 
             switch (state) {
                 case ROOT:
@@ -525,7 +495,7 @@ public class GoogleGeocoder extends GeocoderBase {
                 case STATUS:
                     if (TAG_STATUS.equals(localName))
                         state = State.ROOT;
-                    if (!STATUS_OK.equals(s))
+                    if (!STATUS_OK.equals(text))
                         state = State.FINISH;
                     break;
                 case RESULT:
@@ -533,7 +503,7 @@ public class GoogleGeocoder extends GeocoderBase {
                         case TAG_ELEVATION:
                             if (location != null) {
                                 try {
-                                    location.setAltitude(Double.parseDouble(s));
+                                    location.setAltitude(Double.parseDouble(text));
                                     results.add(location);
                                 } catch (NumberFormatException nfe) {
                                     throw new SAXException(nfe);
@@ -547,41 +517,34 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case LOCATION:
-                    if (location != null) {
-                        switch (localName) {
-                            case TAG_LATITUDE:
+                    switch (localName) {
+                        case TAG_LATITUDE:
+                            if (location != null) {
                                 try {
-                                    location.setLatitude(Double.parseDouble(s));
+                                    location.setLatitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
                                     throw new SAXException(nfe);
                                 }
-                                break;
-                            case TAG_LONGITUDE:
+                            }
+                            break;
+                        case TAG_LONGITUDE:
+                            if (location != null) {
                                 try {
-                                    location.setLongitude(Double.parseDouble(s));
+                                    location.setLongitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
                                     throw new SAXException(nfe);
                                 }
-                                break;
-                        }
+                            }
+                            break;
+                        case TAG_LOCATION:
+                            state = State.RESULT;
+                            break;
                     }
-                    if (TAG_LOCATION.equals(localName))
-                        state = State.RESULT;
                     break;
                 case FINISH:
-                    return;
                 default:
                     break;
             }
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
-
-            if (length == 0)
-                return;
-            text.append(ch, start, length);
         }
     }
 

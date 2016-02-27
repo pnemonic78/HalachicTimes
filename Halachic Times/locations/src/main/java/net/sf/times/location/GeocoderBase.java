@@ -21,10 +21,13 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.text.TextUtils;
 
 import net.sf.net.HTTPReader;
 
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.ext.DefaultHandler2;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.ByteArrayInputStream;
@@ -376,4 +379,48 @@ public abstract class GeocoderBase {
      */
     protected abstract DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results);
 
+    /**
+     * Handler for parsing the XML response.
+     *
+     * @author Moshe
+     */
+    protected abstract static class DefaultAddressResponseHandler extends DefaultHandler2 {
+
+        private final StringBuffer text = new StringBuffer();
+
+        @Override
+        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+            super.startElement(uri, localName, qName, attributes);
+
+            if (TextUtils.isEmpty(localName))
+                localName = qName;
+
+            text.delete(0, text.length());
+
+            startElement(uri, localName, attributes);
+        }
+
+        protected void startElement(String uri, String localName, Attributes attributes) throws SAXException {
+        }
+
+        @Override
+        public void characters(char[] ch, int start, int length) throws SAXException {
+            super.characters(ch, start, length);
+            if (length == 0)
+                return;
+            text.append(ch, start, length);
+        }
+
+        @Override
+        public void endElement(String uri, String localName, String qName) throws SAXException {
+            super.endElement(uri, localName, qName);
+            if (TextUtils.isEmpty(localName))
+                localName = qName;
+
+            endElement(uri, localName, qName, text.toString().trim());
+        }
+
+        protected void endElement(String uri, String localName, String qName, String text) throws SAXException {
+        }
+    }
 }
