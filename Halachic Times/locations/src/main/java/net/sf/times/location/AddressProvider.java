@@ -33,7 +33,6 @@ import android.util.Log;
 
 import net.sf.database.CursorFilter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -246,8 +245,8 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (IOException e) {
-            Log.e(TAG, "Geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -273,8 +272,8 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (IOException e) {
-            Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -299,8 +298,8 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
-        } catch (IOException e) {
-            Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -325,8 +324,8 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (IOException e) {
-            Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -447,8 +446,8 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
-        } catch (IOException e) {
-            Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -572,8 +571,8 @@ public class AddressProvider {
         GeocoderBase geocoder = countriesGeocoder;
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
-        } catch (IOException e) {
-            Log.e(TAG, "City: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "City: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -722,8 +721,8 @@ public class AddressProvider {
         final double longitude = location.getLongitude();
         try {
             return countriesGeocoder.getElevation(latitude, longitude);
-        } catch (IOException e) {
-            Log.e(TAG, "Countries geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Countries geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }
@@ -745,8 +744,8 @@ public class AddressProvider {
         }
         try {
             return geocoder.getElevation(latitude, longitude);
-        } catch (IOException e) {
-            Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }
@@ -768,8 +767,8 @@ public class AddressProvider {
         }
         try {
             return geocoder.getElevation(latitude, longitude);
-        } catch (IOException e) {
-            Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }
@@ -791,8 +790,8 @@ public class AddressProvider {
         }
         try {
             return geocoder.getElevation(latitude, longitude);
-        } catch (IOException e) {
-            Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }
@@ -816,8 +815,8 @@ public class AddressProvider {
         }
         try {
             return geocoder.getElevation(latitude, longitude);
-        } catch (IOException e) {
-            Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage(), e);
+        } catch (Exception e) {
+            Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }
