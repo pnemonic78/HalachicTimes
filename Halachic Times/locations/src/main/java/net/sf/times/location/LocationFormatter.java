@@ -54,9 +54,11 @@ public interface LocationFormatter {
      *         the latitude.
      * @param longitude
      *         the longitude.
+     * @param altitude
+     *         the altitude or elevation.
      * @return the coordinates text.
      */
-    CharSequence formatCoordinates(double latitude, double longitude);
+    CharSequence formatCoordinates(double latitude, double longitude, double altitude);
 
     /**
      * Format a coordinate.

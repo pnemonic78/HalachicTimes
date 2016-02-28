@@ -114,6 +114,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * form "[+-]DDD.DDDDD" where D indicates degrees.
      */
     private static final String FORMAT_DEGREES = "%1$.6f";
+    private static final String FORMAT_ALTITUDE = "%1$.0f";
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -136,6 +137,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private CountriesGeocoder countriesGeocoder;
     /** The coordinates format. */
     private String coordsFormat;
+    /** The coordinates format with altitude. */
+    private String coordsFormatAltitude;
     /** The time zone. */
     private TimeZone timeZone;
     /** The handler thread. */
@@ -166,6 +169,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         coordsFormat = context.getString(R.string.location_coords);
+        coordsFormatAltitude = context.getString(R.string.location_coords_altitude);
         timeZone = TimeZone.getDefault();
 
         addressReceiver = new BroadcastReceiver() {
@@ -598,27 +602,35 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     public CharSequence formatCoordinates(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        return formatCoordinates(latitude, longitude);
+        final double altitude = location.getAltitude();
+        return formatCoordinates(latitude, longitude, altitude);
     }
 
     @Override
     public CharSequence formatCoordinates(Address address) {
         final double latitude = address.getLatitude();
         final double longitude = address.getLongitude();
-        return formatCoordinates(latitude, longitude);
+        final double altitude = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address).getElevation() : 0;
+        return formatCoordinates(latitude, longitude, altitude);
     }
 
     @Override
-    public CharSequence formatCoordinates(double latitude, double longitude) {
+    public CharSequence formatCoordinates(double latitude, double longitude, double altitude) {
         final String notation = settings.getCoordinatesFormat();
         final String latitudeText;
         final String longitudeText;
+        final String altitudeText;
         if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
             latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
             longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
+            altitudeText = String.format(Locale.US, FORMAT_ALTITUDE, altitude);
         } else {
             latitudeText = String.format(Locale.US, FORMAT_DEGREES, latitude);
             longitudeText = String.format(Locale.US, FORMAT_DEGREES, longitude);
+            altitudeText =  String.format(Locale.US, FORMAT_ALTITUDE, altitude);
+        }
+        if (settings.isAltitude()) {
+            return String.format(Locale.US, coordsFormatAltitude, latitudeText, longitudeText, altitudeText);
         }
         return String.format(Locale.US, coordsFormat, latitudeText, longitudeText);
     }

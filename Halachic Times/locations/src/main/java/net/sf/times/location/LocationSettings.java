@@ -157,4 +157,13 @@ public class LocationSettings extends ThemedSettings {
         return preferences.getString(KEY_COORDS_FORMAT, context.getString(R.string.coords_format_defaultValue));
     }
 
+    /**
+     * Are coordinates with altitude/elevation visible?
+     *
+     * @return {@code true} to show coordinates with altitude.
+     */
+    public boolean isAltitude() {
+        //TODO implement me!
+        return true;
+    }
 }

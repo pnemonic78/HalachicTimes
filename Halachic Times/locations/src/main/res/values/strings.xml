@@ -11,6 +11,7 @@
     <!-- Location -->
     <string name="location_unknown">Unknown address</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="location_coords_altitude">Lat. %1$s; Lng. %2$s; Alt. %3$s</string>
     <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
 
