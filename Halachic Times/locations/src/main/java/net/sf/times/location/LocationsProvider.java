@@ -622,19 +622,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     @Override
     public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
-        final String notation = settings.getCoordinatesFormat();
-        final CharSequence latitudeText;
-        final CharSequence longitudeText;
-        final CharSequence elevationText;
-        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
-            latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
-            longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
-            elevationText = formatElevation(elevation);
-        } else {
-            latitudeText = String.format(Locale.US, FORMAT_DEGREES, latitude);
-            longitudeText = String.format(Locale.US, FORMAT_DEGREES, longitude);
-            elevationText = formatElevation(elevation);
-        }
+        final CharSequence latitudeText = formatLatitude(latitude);
+        final CharSequence longitudeText = formatLongitude(longitude);
+        final CharSequence elevationText = formatElevation(elevation);
         if (settings.isElevation()) {
             return String.format(Locale.US, coordsFormatAltitude, latitudeText, longitudeText, elevationText);
         }
@@ -642,12 +632,21 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public CharSequence formatCoordinate(double coord) {
+    public CharSequence formatLatitude(double latitude) {
         final String notation = settings.getCoordinatesFormat();
         if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
-            return Location.convert(coord, Location.FORMAT_SECONDS);
+            return Location.convert(latitude, Location.FORMAT_SECONDS);
         }
-        return String.format(Locale.US, FORMAT_DEGREES, coord);
+        return String.format(Locale.US, FORMAT_DEGREES, latitude);
+    }
+
+    @Override
+    public CharSequence formatLongitude(double longitude) {
+        final String notation = settings.getCoordinatesFormat();
+        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
+            return Location.convert(longitude, Location.FORMAT_SECONDS);
+        }
+        return String.format(Locale.US, FORMAT_DEGREES, longitude);
     }
 
     @Override

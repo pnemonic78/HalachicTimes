@@ -367,12 +367,12 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
      */
     protected static class LocationItem {
 
-        private final ZmanimAddress mAddress;
-        private final CharSequence mLabel;
-        private final String mLabelLower;
-        private final CharSequence mLatitude;
-        private final CharSequence mLongitude;
-        private final CharSequence mCoordinates;
+        private final ZmanimAddress address;
+        private final CharSequence label;
+        private final String labelLower;
+        private final CharSequence latitude;
+        private final CharSequence longitude;
+        private final CharSequence coordinates;
 
         /**
          * Constructs a new item.
@@ -381,12 +381,12 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          *         the address.
          */
         public LocationItem(ZmanimAddress address, LocationFormatter formatter) {
-            this.mAddress = address;
-            this.mLabel = address.getFormatted();
-            this.mLabelLower = mLabel.toString().toLowerCase(address.getLocale());
-            this.mLatitude = formatter.formatCoordinate(address.getLatitude());
-            this.mLongitude = formatter.formatCoordinate(address.getLongitude());
-            this.mCoordinates = formatter.formatCoordinates(getAddress());
+            this.address = address;
+            this.label = address.getFormatted();
+            this.labelLower = label.toString().toLowerCase(address.getLocale());
+            this.latitude = formatter.formatLatitude(address.getLatitude());
+            this.longitude = formatter.formatLongitude(address.getLongitude());
+            this.coordinates = formatter.formatCoordinates(getAddress());
         }
 
         /**
@@ -395,7 +395,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @return the address.
          */
         public ZmanimAddress getAddress() {
-            return mAddress;
+            return address;
         }
 
         /**
@@ -404,7 +404,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @return the label.
          */
         public CharSequence getLabel() {
-            return mLabel;
+            return label;
         }
 
         /**
@@ -413,7 +413,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @return the label.
          */
         public String getLabelLower() {
-            return mLabelLower;
+            return labelLower;
         }
 
         /**
@@ -422,7 +422,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @return the latitude.
          */
         public CharSequence getFormatLatitude() {
-            return mLatitude;
+            return latitude;
         }
 
         /**
@@ -431,7 +431,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @return the longitude.
          */
         public CharSequence getFormatLongitude() {
-            return mLongitude;
+            return longitude;
         }
 
         /**
@@ -440,7 +440,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
          * @return the coordinates.
          */
         public CharSequence getCoordinates() {
-            return mCoordinates;
+            return coordinates;
         }
 
         /**
@@ -475,14 +475,14 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
         /** Double subtraction error. */
         private static final double EPSILON = 1e-6;
 
-        private Collator mCollator;
+        private Collator collator;
 
         /**
          * Constructs a new comparator.
          */
         public LocationComparator() {
-            mCollator = Collator.getInstance();
-            mCollator.setStrength(Collator.PRIMARY);
+            collator = Collator.getInstance();
+            collator.setStrength(Collator.PRIMARY);
         }
 
         @SuppressLint("DefaultLocale")
@@ -494,7 +494,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
             // Sort first by name.
             String format1 = item1.getLabelLower().toString();
             String format2 = item2.getLabelLower().toString();
-            int c = mCollator.compare(format1, format2);
+            int c = collator.compare(format1, format2);
             if (c != 0)
                 return c;
 
