@@ -28,7 +28,7 @@ import android.database.sqlite.SQLiteDatabase;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocationApplication<AP extends AddressProvider, LP extends LocationsProvider> extends Application {
+public class LocationApplication<AP extends AddressProvider, LP extends LocationsProvider> extends Application {
 
     /** Provider for addresses. */
     private AP addressProvider;
@@ -69,7 +69,9 @@ public abstract class LocationApplication<AP extends AddressProvider, LP extends
         return locations;
     }
 
-    protected abstract LP createLocationsProvider(Context context);
+    protected LP createLocationsProvider(Context context){
+        return (LP) new LocationsProvider(context);
+    }
 
     @Override
     public void onCreate() {

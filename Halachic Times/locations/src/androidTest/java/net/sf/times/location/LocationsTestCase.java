@@ -21,11 +21,35 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Location;
-import android.test.AndroidTestCase;
+import android.test.ApplicationTestCase;
 
 import java.util.TimeZone;
 
-public class LocationsTestCase extends AndroidTestCase {
+public class LocationsTestCase extends ApplicationTestCase<LocationApplication> {
+
+    public LocationsTestCase() {
+        super(LocationApplication.class);
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        createApplication();
+    }
+
+    /**
+     * Test application.
+     */
+    public void testApp() {
+        Context context = getContext();
+        assertNotNull(context);
+        assertEquals("net.sf.times.location.test", context.getPackageName());
+
+        LocationApplication app = getApplication();
+        assertNotNull(app);
+        LocationsProvider locations = app.getLocations();
+        assertNotNull(locations);
+    }
 
     /**
      * Test time zones.
@@ -37,10 +61,9 @@ public class LocationsTestCase extends AndroidTestCase {
      *         if an error occurs.
      */
     public void testTZ() throws Exception {
-        Context context = getContext();
-        assertNotNull(context);
-        assertEquals("net.sf.times.location.test", context.getPackageName());
-        LocationsProvider locations = new LocationsProvider(context);
+        LocationApplication app = getApplication();
+        assertNotNull(app);
+        LocationsProvider locations = app.getLocations();
         assertNotNull(locations);
 
         String[] ids = TimeZone.getAvailableIDs();
@@ -59,11 +82,11 @@ public class LocationsTestCase extends AndroidTestCase {
             loc = locations.getLocationTZ(tz);
             assertNotNull(loc);
             latitude = loc.getLatitude();
-            assertTrue(id + " " + latitude, latitude >= -90);
-            assertTrue(id + " " + latitude, latitude <= 90);
+            assertTrue(id + " " + latitude, latitude >= ZmanimLocation.LATITUDE_MIN);
+            assertTrue(id + " " + latitude, latitude <= ZmanimLocation.LATITUDE_MAX);
             longitude = loc.getLongitude();
-            assertTrue(id + " " + longitude, longitude >= -180);
-            assertTrue(id + " " + longitude, longitude <= 180);
+            assertTrue(id + " " + longitude, longitude >= ZmanimLocation.LONGITUDE_MIN);
+            assertTrue(id + " " + longitude, longitude <= ZmanimLocation.LONGITUDE_MAX);
         }
     }
 

@@ -60,7 +60,7 @@ public class BingGeocoder extends GeocoderBase {
      *         the context.
      */
     public BingGeocoder(Context context) {
-        super(context);
+        this(context, Locale.getDefault());
     }
 
     /**

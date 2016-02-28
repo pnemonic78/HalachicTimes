@@ -80,7 +80,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
      *         the context.
      */
     public GeoNamesGeocoder(Context context) {
-        super(context);
+        this(context, Locale.getDefault());
     }
 
     /**

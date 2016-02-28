@@ -93,7 +93,6 @@ public class ZmanimReminder extends BroadcastReceiver {
     private SimpleDateFormat dateFormat;
     /** The adapter. */
     private ZmanimAdapter adapter;
-    private Method setLatestEventInfo;
 
     /** No-argument constructor for broadcast receiver. */
     public ZmanimReminder() {

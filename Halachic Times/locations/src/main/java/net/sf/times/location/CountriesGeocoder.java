@@ -71,7 +71,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the context.
      */
     public CountriesGeocoder(Context context) {
-        super(context);
+        this(context, Locale.getDefault());
     }
 
     /**
@@ -258,7 +258,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the location.
      * @return the city - {@code null} otherwise.
      */
-    public Address findCity(Location location) {
+    public ZmanimAddress findCity(Location location) {
         ZmanimAddress city = null;
         final int citiesCount = citiesNames.length;
         double searchLatitude = location.getLatitude();

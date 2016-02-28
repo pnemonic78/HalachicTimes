@@ -61,7 +61,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *         the context.
      */
     public GoogleGeocoder(Context context) {
-        super(context);
+        this(context, Locale.getDefault());
     }
 
     /**

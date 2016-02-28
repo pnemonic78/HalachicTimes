@@ -52,8 +52,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *         the address provider.
      */
     public DatabaseGeocoder(Context context, AddressProvider provider) {
-        super(context);
-        this.provider = provider;
+        this(context, provider, Locale.getDefault());
     }
 
     /**

@@ -90,16 +90,6 @@ public abstract class GeocoderBase {
      *
      * @param context
      *         the context.
-     */
-    public GeocoderBase(Context context) {
-        this(context, Locale.getDefault());
-    }
-
-    /**
-     * Creates a new geocoder.
-     *
-     * @param context
-     *         the context.
      * @param locale
      *         the locale.
      */
