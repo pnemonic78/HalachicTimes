@@ -137,13 +137,13 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     /**
-     * Find the nearest city to the location.
+     * Find the nearest country for the location.
      *
      * @param latitude
      *         the latitude.
      * @param longitude
      *         the longitude.
-     * @return the city - {@code null} otherwise.
+     * @return the location - {@code null} otherwise.
      */
     public Address findCountry(double latitude, double longitude) {
         final int fixedpointLatitude = (int) Math.rint(latitude * RATIO);
@@ -224,14 +224,14 @@ public class CountriesGeocoder extends GeocoderBase {
         }
 
         Locale locale = new Locale(getLanguage(), countryBorders[found].countryCode);
-        ZmanimAddress city = new ZmanimAddress(locale);
-        city.setId(-found);
-        city.setLatitude(latitude);
-        city.setLongitude(longitude);
-        city.setCountryCode(locale.getCountry());
-        city.setCountryName(locale.getDisplayCountry());
+        ZmanimAddress location = new ZmanimAddress(locale);
+        location.setId(-found);
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        location.setCountryCode(locale.getCountry());
+        location.setCountryName(locale.getDisplayCountry());
 
-        return city;
+        return location;
     }
 
     /**
@@ -243,11 +243,43 @@ public class CountriesGeocoder extends GeocoderBase {
      */
     public Location findLocation(TimeZone tz) {
         Location loc = new Location(TIMEZONE_PROVIDER);
-        if (tz != null) {
-            int offset = tz.getRawOffset() % 43200000;
-            double longitude = (TZ_HOUR * offset) / DateUtils.HOUR_IN_MILLIS;
-            loc.setLongitude(longitude);
+        if (tz == null) {
+            return loc;
         }
+
+        int offset = tz.getRawOffset() % 43200000;
+        double longitudeTZ = (TZ_HOUR * offset) / DateUtils.HOUR_IN_MILLIS;
+        loc.setLongitude(longitudeTZ);
+
+        // Find a close city in the timezone.
+        final int citiesCount = citiesNames.length;
+        double searchLatitude = 0;
+        double searchLongitude = longitudeTZ;
+        double latitudeWest = searchLongitude - TZ_HOUR;
+        double latitudeEast = searchLongitude + TZ_HOUR;
+        double latitude;
+        double longitude;
+        float distanceMin = Float.MAX_VALUE;
+        float[] distances = new float[1];
+        int nearestCityIndex = -1;
+
+        for (int i = 0; i < citiesCount; i++) {
+            latitude = citiesLatitudes[i];
+            longitude = citiesLongitudes[i];
+            if ((latitudeWest <= latitude) && (latitude <= latitudeEast)) {
+                Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
+                if (distances[0] <= distanceMin) {
+                    distanceMin = distances[0];
+                    nearestCityIndex = i;
+                }
+            }
+        }
+        if (nearestCityIndex >= 0) {
+            loc.setLatitude(citiesLatitudes[nearestCityIndex]);
+            loc.setLongitude(citiesLongitudes[nearestCityIndex]);
+            loc.setAltitude(citiesElevations[nearestCityIndex]);
+        }
+
         return loc;
     }
 
