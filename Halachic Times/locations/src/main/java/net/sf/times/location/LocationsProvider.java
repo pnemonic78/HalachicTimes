@@ -610,7 +610,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     public CharSequence formatCoordinates(Address address) {
         final double latitude = address.getLatitude();
         final double longitude = address.getLongitude();
-        final double altitude = (address instanceof ZmanimAddress) ? ((ZmanimAddress) address).getElevation() : 0;
+        double altitude = 0;
+        if (address instanceof ZmanimAddress) {
+            ZmanimAddress zaddress = (ZmanimAddress) address;
+            if (zaddress.hasElevation()) {
+                altitude = zaddress.getElevation();
+            }
+        }
         return formatCoordinates(latitude, longitude, altitude);
     }
 
@@ -627,7 +633,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         } else {
             latitudeText = String.format(Locale.US, FORMAT_DEGREES, latitude);
             longitudeText = String.format(Locale.US, FORMAT_DEGREES, longitude);
-            altitudeText =  String.format(Locale.US, FORMAT_ALTITUDE, altitude);
+            altitudeText = String.format(Locale.US, FORMAT_ALTITUDE, altitude);
         }
         if (settings.isAltitude()) {
             return String.format(Locale.US, coordsFormatAltitude, latitudeText, longitudeText, altitudeText);

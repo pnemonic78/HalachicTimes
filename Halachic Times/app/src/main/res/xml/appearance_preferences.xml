@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="@string/coords_format_defaultValue"
-        android:entries="@array/coords_format_entries"
-        android:entryValues="@array/coords_format_values"
-        android:key="coords.format"
-        android:title="@string/coords_format_title"/>
+    <PreferenceCategory
+        android:title="@string/coords_title">
+        <ListPreference
+            android:defaultValue="@string/coords_format_defaultValue"
+            android:entries="@array/coords_format_entries"
+            android:entryValues="@array/coords_format_values"
+            android:key="coords.format"
+            android:title="@string/coords_format_title"/>
+        <CheckBoxPreference
+            android:defaultValue="@bool/coords_altitude_visible_defaultValue"
+            android:key="coords.altitude"
+            android:title="@string/coords_altitude_title"/>
+    </PreferenceCategory>
     <CheckBoxPreference
         android:defaultValue="@bool/seconds_visible_defaultValue"
         android:key="seconds.visible"
