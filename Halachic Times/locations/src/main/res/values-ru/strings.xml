@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Шрт. %1$s; Длг. %2$s; Выс. %3$sм</string>
     <string name="menu_location">Местоположение</string>
     <string name="title_activity_location">Мое местоположение</string>
+    <string name="north">С</string>
+    <string name="east">В</string>
+    <string name="south">Ю</string>
+    <string name="west">З</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Очистить историю</string>

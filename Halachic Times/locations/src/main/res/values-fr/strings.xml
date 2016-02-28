@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Lat. %1$s; Lng. %2$s; Élév. %3$sm</string>
     <string name="menu_location">Position</string>
     <string name="title_activity_location">Ma position</string>
+    <string name="north">N</string>
+    <string name="east">E</string>
+    <string name="south">S</string>
+    <string name="west">O</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Effacer l\'historique</string>

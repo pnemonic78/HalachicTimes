@@ -5,10 +5,6 @@
     <string name="menu_compass">Kompasas</string>
     <string name="title_activity_compass">Kryptis maldos</string>
     <string name="compass_summary">Kryptis maldos Šventasis Šventųjų Jeruzalėje</string>
-    <string name="north">Š</string>
-    <string name="east">R</string>
-    <string name="south">P</string>
-    <string name="west">V</string>
     <string name="compass_bearing">Kursas</string>
     <string name="compass_bearing_circle">Didysis apskritimas (trumpiausias atstumas)</string>
     <string name="compass_bearing_rhumb">Rumbo linija (pačiu kampu)</string>

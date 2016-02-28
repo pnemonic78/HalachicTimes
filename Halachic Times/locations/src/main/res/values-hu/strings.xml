@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Szl. %1$s; Hss. %2$s; Mgs. %3$sm</string>
     <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
+    <string name="north">É</string>
+    <string name="east">K</string>
+    <string name="south">D</string>
+    <string name="west">N</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Előzmények törlése</string>

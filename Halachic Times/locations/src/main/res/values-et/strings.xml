@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Lai. %1$s; Pkk. %2$s; Krg. %3$sm</string>
     <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
+    <string name="north">P</string>
+    <string name="east">I</string>
+    <string name="south">Lõ</string>
+    <string name="west">Lä</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Kustuta ajalugu</string>

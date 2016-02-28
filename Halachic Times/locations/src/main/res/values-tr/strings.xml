@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Enl. %1$s; Byl. %2$s; Yüks. %3$sm</string>
     <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>
+    <string name="north">K</string>
+    <string name="east">D</string>
+    <string name="south">G</string>
+    <string name="west">B</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Geçmişi temizle</string>

@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$sm</string>
     <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
+    <string name="north">Š</string>
+    <string name="east">R</string>
+    <string name="south">P</string>
+    <string name="west">V</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Išvalyti istoriją</string>

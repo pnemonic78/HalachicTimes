@@ -5,10 +5,6 @@
     <string name="menu_compass">Pusula</string>
     <string name="title_activity_compass">Namaz yönü</string>
     <string name="compass_summary">Kudüs\'teki Kutsallar Kutsal dua yönü</string>
-    <string name="north">K</string>
-    <string name="east">D</string>
-    <string name="south">G</string>
-    <string name="west">B</string>
     <string name="compass_bearing">Kerteriz</string>
     <string name="compass_bearing_circle">Büyük daire (kısa yol)</string>
     <string name="compass_bearing_rhumb">Kerte hattı (aynı açı)</string>

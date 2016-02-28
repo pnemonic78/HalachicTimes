@@ -5,10 +5,6 @@
     <string name="menu_compass">Πυξίδα</string>
     <string name="title_activity_compass">Κατεύθυνση της προσευχής</string>
     <string name="compass_summary">Κατεύθυνση της προσευχής στην Άγια των Αγίων στην Ιερουσαλήμ</string>
-    <string name="north">Β</string>
-    <string name="east">Α</string>
-    <string name="south">Ν</string>
-    <string name="west">Δ</string>
     <string name="compass_bearing">Διόπτευση</string>
     <string name="compass_bearing_circle">Μεγάλη κύκλο (συντομότερο μονοπάτι)</string>
     <string name="compass_bearing_rhumb">Λοξοδρομία (σταθερή γωνία)</string>

@@ -5,10 +5,6 @@
     <string name="menu_compass">Busolă</string>
     <string name="title_activity_compass">Direcția de rugăciune</string>
     <string name="compass_summary">Direcția de rugăciune la Sfânta Sfintelor din Ierusalim</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">V</string>
     <string name="compass_bearing">Relevment</string>
     <string name="compass_bearing_circle">Cerc mare (cea mai mică distanță)</string>
     <string name="compass_bearing_rhumb">Linii rombice (același unghi)</string>

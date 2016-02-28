@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Πλτ. %1$s; Μήκ. %2$s; Ανύ. %3$sμ</string>
     <string name="menu_location">Τοποθεσία</string>
     <string name="title_activity_location">Η τοποθεσία μου</string>
+    <string name="north">Β</string>
+    <string name="east">Α</string>
+    <string name="south">Ν</string>
+    <string name="west">Δ</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>

@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Šřk. %1$s; Dlk. %2$s; Všk. %3$sm</string>
     <string name="menu_location">Místo</string>
     <string name="title_activity_location">Moje místo</string>
+    <string name="north">S</string>
+    <string name="east">V</string>
+    <string name="south">J</string>
+    <string name="west">Z</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Vymazat historii</string>

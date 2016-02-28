@@ -5,10 +5,6 @@
     <string name="menu_compass">Iránytű</string>
     <string name="title_activity_compass">Irány az ima</string>
     <string name="compass_summary">Irány az imádság a Szentek Szentje Jeruzsálemben</string>
-    <string name="north">É</string>
-    <string name="east">K</string>
-    <string name="south">D</string>
-    <string name="west">N</string>
     <string name="compass_bearing">Pálya</string>
     <string name="compass_bearing_circle">Főkör (legrövidebb út)</string>
     <string name="compass_bearing_rhumb">Loxodroma (azonos szögben)</string>

@@ -5,10 +5,6 @@
     <string name="menu_compass">Компас</string>
     <string name="title_activity_compass">Напрям молитви</string>
     <string name="compass_summary">Напрямок молитві святая святих у Єрусалимі</string>
-    <string name="north">П</string>
-    <string name="east">С</string>
-    <string name="south">п</string>
-    <string name="west">З</string>
     <string name="compass_bearing">Пеленг</string>
     <string name="compass_bearing_circle">Велике коло (найкоротшим шляхом)</string>
     <string name="compass_bearing_rhumb">Локсодрома (постійний кут)</string>

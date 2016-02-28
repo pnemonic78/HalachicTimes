@@ -5,10 +5,6 @@
     <string name="menu_compass">Bussola</string>
     <string name="title_activity_compass">Direzione di preghiera</string>
     <string name="compass_summary">Direzione della preghiera a Santo dei Santi a Gerusalemme</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">O</string>
     <string name="compass_bearing">Rotta navale</string>
     <string name="compass_bearing_circle">Cerchio massimo (distanza più breve)</string>
     <string name="compass_bearing_rhumb">Lossodromia (stesso angolo)</string>

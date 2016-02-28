@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Brt. %1$s; Lng. %2$s; Höhe %3$sM</string>
     <string name="menu_location">Standort</string>
     <string name="title_activity_location">Mein Standort</string>
+    <string name="north">N</string>
+    <string name="east">O</string>
+    <string name="south">S</string>
+    <string name="west">W</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Verlauf l?schen</string>

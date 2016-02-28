@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Brd. %1$s; Lng. %2$s; Hoog. %3$sm</string>
     <string name="menu_location">Locatie</string>
     <string name="title_activity_location">Mijn locatie</string>
+    <string name="north">N</string>
+    <string name="east">O</string>
+    <string name="south">Z</string>
+    <string name="west">W</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Geschiedenis wissen</string>

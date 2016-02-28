@@ -14,6 +14,10 @@
     <string name="location_coords_elevation">Brd. %1$s; Lng. %2$s; Hyd. %3$sm</string>
     <string name="menu_location">Posisjon</string>
     <string name="title_activity_location">Min posisjon</string>
+    <string name="north">N</string>
+    <string name="east">Ø</string>
+    <string name="south">S</string>
+    <string name="west">V</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Slett loggen</string>

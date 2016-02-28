@@ -156,6 +156,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /** The location is externally set? */
     private boolean manualLocation;
 
+    private final String symbolNorth;
+    private final String symbolSouth;
+    private final String symbolEast;
+    private final String symbolWest;
+
     /**
      * Constructs a new provider.
      *
@@ -173,6 +178,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         coordsFormat = context.getString(R.string.location_coords);
         coordsFormatAltitude = context.getString(R.string.location_coords_elevation);
         timeZone = TimeZone.getDefault();
+        symbolNorth = context.getString(R.string.north);
+        symbolSouth = context.getString(R.string.south);
+        symbolEast = context.getString(R.string.east);
+        symbolWest = context.getString(R.string.west);
 
         addressReceiver = new BroadcastReceiver() {
             @Override
@@ -644,7 +653,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             coordinate -= minutes;
             coordinate *= 60.0;
             double seconds = coordinate;
-            String symbol = "N";
+            String symbol = (degrees >= 0) ? symbolNorth : symbolSouth;
             return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
             //return Location.convert(latitude, Location.FORMAT_SECONDS);
         }
@@ -662,7 +671,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             coordinate -= minutes;
             coordinate *= 60.0;
             double seconds = coordinate;
-            String symbol = "E";
+            String symbol = (degrees >= 0) ? symbolEast : symbolWest;
             return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
             //return Location.convert(latitude, Location.FORMAT_SECONDS);
         }

@@ -5,10 +5,6 @@
     <string name="menu_compass">Compass</string>
     <string name="title_activity_compass">Direction of Prayer</string>
     <string name="compass_summary">Direction of prayer to Holy of Holies in Jerusalem</string>
-    <string name="north">N</string>
-    <string name="east">E</string>
-    <string name="south">S</string>
-    <string name="west">W</string>
     <string name="compass_bearing">Bearing</string>
     <string name="compass_bearing_circle">Great circle (shortest path)</string>
     <string name="compass_bearing_rhumb">Rhumb line (constant angle)</string>
