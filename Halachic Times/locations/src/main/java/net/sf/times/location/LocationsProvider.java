@@ -115,6 +115,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     private static final String FORMAT_DEGREES = "%1$.6f";
     private static final String FORMAT_ALTITUDE = "%1$.0f";
+    /** http://en.wikipedia.org/wiki/ISO_6709#Representation_at_the_human_interface_.28Annex_D.29 */
+    private static final String FORMAT_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -632,21 +634,39 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public CharSequence formatLatitude(double latitude) {
+    public CharSequence formatLatitude(double coordinate) {
         final String notation = settings.getCoordinatesFormat();
         if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
-            return Location.convert(latitude, Location.FORMAT_SECONDS);
+            int degrees = (int) Math.floor(coordinate);
+            coordinate -= degrees;
+            coordinate *= 60.0;
+            int minutes = (int) Math.floor(coordinate);
+            coordinate -= minutes;
+            coordinate *= 60.0;
+            double seconds = coordinate;
+            String symbol = "N";
+            return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
+            //return Location.convert(latitude, Location.FORMAT_SECONDS);
         }
-        return String.format(Locale.US, FORMAT_DEGREES, latitude);
+        return String.format(Locale.US, FORMAT_DEGREES, coordinate);
     }
 
     @Override
-    public CharSequence formatLongitude(double longitude) {
+    public CharSequence formatLongitude(double coordinate) {
         final String notation = settings.getCoordinatesFormat();
         if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
-            return Location.convert(longitude, Location.FORMAT_SECONDS);
+            int degrees = (int) Math.floor(coordinate);
+            coordinate -= degrees;
+            coordinate *= 60.0;
+            int minutes = (int) Math.floor(coordinate);
+            coordinate -= minutes;
+            coordinate *= 60.0;
+            double seconds = coordinate;
+            String symbol = "E";
+            return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
+            //return Location.convert(latitude, Location.FORMAT_SECONDS);
         }
-        return String.format(Locale.US, FORMAT_DEGREES, longitude);
+        return String.format(Locale.US, FORMAT_DEGREES, coordinate);
     }
 
     @Override

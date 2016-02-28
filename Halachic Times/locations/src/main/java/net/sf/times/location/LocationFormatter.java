@@ -63,20 +63,20 @@ public interface LocationFormatter {
     /**
      * Format a latitude coordinate.
      *
-     * @param latitude
+     * @param coordinate
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLatitude(double latitude);
+    CharSequence formatLatitude(double coordinate);
 
     /**
      * Format a longitude coordinate.
      *
-     * @param longitude
+     * @param coordinate
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLongitude(double longitude);
+    CharSequence formatLongitude(double coordinate);
 
     /**
      * Format an elevation.
