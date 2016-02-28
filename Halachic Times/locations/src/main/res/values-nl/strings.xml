@@ -6,10 +6,12 @@
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_decimal">Decimale</string>
     <string name="coords_format_sexagesimal">Sexagesimale</string>
+    <string name="coords_elevation_title">Hoogte</string>
 
     <!-- Location -->
     <string name="location_unknown">Onbekend adres</string>
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
+    <string name="location_coords_elevation">Brd. %1$s; Lng. %2$s; Hoog. %3$s</string>
     <string name="menu_location">Locatie</string>
     <string name="title_activity_location">Mijn locatie</string>
 

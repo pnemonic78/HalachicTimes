@@ -6,10 +6,12 @@
     <string name="coords_format_title">Koordinater format</string>
     <string name="coords_format_decimal">Decimal</string>
     <string name="coords_format_sexagesimal">Sexagesimal</string>
+    <string name="coords_elevation_title">Højde</string>
 
     <!-- Location -->
     <string name="location_unknown">Ukendte adresse</string>
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
+    <string name="location_coords_elevation">Brd. %1$s; Lng. %2$s; Høj. %3$s</string>
     <string name="menu_location">Placering</string>
     <string name="title_activity_location">Min placering</string>
 

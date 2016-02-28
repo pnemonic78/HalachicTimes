@@ -169,7 +169,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         coordsFormat = context.getString(R.string.location_coords);
-        coordsFormatAltitude = context.getString(R.string.location_coords_altitude);
+        coordsFormatAltitude = context.getString(R.string.location_coords_elevation);
         timeZone = TimeZone.getDefault();
 
         addressReceiver = new BroadcastReceiver() {
@@ -621,22 +621,22 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public CharSequence formatCoordinates(double latitude, double longitude, double altitude) {
+    public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
         final String notation = settings.getCoordinatesFormat();
-        final String latitudeText;
-        final String longitudeText;
-        final String altitudeText;
+        final CharSequence latitudeText;
+        final CharSequence longitudeText;
+        final CharSequence elevationText;
         if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
             latitudeText = Location.convert(latitude, Location.FORMAT_SECONDS);
             longitudeText = Location.convert(longitude, Location.FORMAT_SECONDS);
-            altitudeText = String.format(Locale.US, FORMAT_ALTITUDE, altitude);
+            elevationText = formatElevation(elevation);
         } else {
             latitudeText = String.format(Locale.US, FORMAT_DEGREES, latitude);
             longitudeText = String.format(Locale.US, FORMAT_DEGREES, longitude);
-            altitudeText = String.format(Locale.US, FORMAT_ALTITUDE, altitude);
+            elevationText = formatElevation(elevation);
         }
-        if (settings.isAltitude()) {
-            return String.format(Locale.US, coordsFormatAltitude, latitudeText, longitudeText, altitudeText);
+        if (settings.isElevation()) {
+            return String.format(Locale.US, coordsFormatAltitude, latitudeText, longitudeText, elevationText);
         }
         return String.format(Locale.US, coordsFormat, latitudeText, longitudeText);
     }
@@ -648,6 +648,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             return Location.convert(coord, Location.FORMAT_SECONDS);
         }
         return String.format(Locale.US, FORMAT_DEGREES, coord);
+    }
+
+    @Override
+    public CharSequence formatElevation(double elevation) {
+        return String.format(Locale.US, FORMAT_ALTITUDE, elevation);
     }
 
     /**

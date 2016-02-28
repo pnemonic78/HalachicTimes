@@ -6,10 +6,12 @@
     <string name="coords_format_title">Koordinaatit formaatti</string>
     <string name="coords_format_decimal">Desimaali</string>
     <string name="coords_format_sexagesimal">Seksagesimaali</string>
+    <string name="coords_elevation_title">Korkeus</string>
 
     <!-- Location -->
     <string name="location_unknown">Tuntematon osoite</string>
     <string name="location_coords">Lvy. %1$s; Pts. %2$s</string>
+    <string name="location_coords_elevation">Lvy. %1$s; Pts. %2$s; Krk. %3$s</string>
     <string name="menu_location">Sijainti</string>
     <string name="title_activity_location">Oma sijainti</string>
 

@@ -6,10 +6,12 @@
     <string name="coords_format_title">Format współrzędne</string>
     <string name="coords_format_decimal">Dziesiętny</string>
     <string name="coords_format_sexagesimal">Sześćdziesiątkowa</string>
+    <string name="coords_elevation_title">Podniesienie</string>
 
     <!-- Location -->
     <string name="location_unknown">Nieznany adres</string>
-    <string name="location_coords">Szr. %1$s; Dług. %2$s</string>
+    <string name="location_coords">Szr. %1$s; Dłg. %2$s</string>
+    <string name="location_coords_elevation">Szr. %1$s; Dłg. %2$s; Podn. %3$s</string>
     <string name="menu_location">Lokalizacja</string>
     <string name="title_activity_location">Moja lokalizacja</string>
 

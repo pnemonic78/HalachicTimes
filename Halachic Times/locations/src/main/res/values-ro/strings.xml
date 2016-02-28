@@ -6,10 +6,12 @@
     <string name="coords_format_title">Coordonează format</string>
     <string name="coords_format_decimal">Zecimal</string>
     <string name="coords_format_sexagesimal">Șaizecelea</string>
+    <string name="coords_elevation_title">Elevație</string>
 
     <!-- Location -->
     <string name="location_unknown">Necunoscuta adresa</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="location_coords_elevation">Lat. %1$s; Lng. %2$s; Elev. %3$s</string>
     <string name="menu_location">Locație</string>
     <string name="title_activity_location">Locația mea</string>
 

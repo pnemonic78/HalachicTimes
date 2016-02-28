@@ -6,10 +6,12 @@
     <string name="coords_format_title">Koordinačių formatą,</string>
     <string name="coords_format_decimal">Dešimtainis</string>
     <string name="coords_format_sexagesimal">Šešiasdešimt dalis</string>
+    <string name="coords_elevation_title">Aukštis</string>
 
     <!-- Location -->
     <string name="location_unknown">Nežinomas adresas</string>
-    <string name="location_coords">Pla. %1$s; Ilg. %2$s</string>
+    <string name="location_coords">Plt. %1$s; Ilg. %2$s</string>
+    <string name="location_coords_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$s</string>
     <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
 

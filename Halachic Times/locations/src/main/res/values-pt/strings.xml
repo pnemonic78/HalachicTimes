@@ -6,10 +6,12 @@
     <string name="coords_format_title">Formato de coordenadas</string>
     <string name="coords_format_decimal">Decimal</string>
     <string name="coords_format_sexagesimal">Sexagesimal</string>
+    <string name="coords_elevation_title">Elevação</string>
 
     <!-- Location -->
     <string name="location_unknown">Endereço desconhecido</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
+    <string name="location_coords_elevation">Lat. %1$s; Lng. %2$s; Elev. %3$s</string>
     <string name="menu_location">Localização</string>
     <string name="title_activity_location">Minha localização</string>
 

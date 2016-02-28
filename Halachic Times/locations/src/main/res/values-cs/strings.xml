@@ -6,10 +6,12 @@
     <string name="coords_format_title">Souřadnice formát</string>
     <string name="coords_format_decimal">Desetinný</string>
     <string name="coords_format_sexagesimal">Šedesátý</string>
+    <string name="coords_elevation_title">Nadmořská výška</string>
 
     <!-- Location -->
     <string name="location_unknown">Neznámý adresa</string>
-    <string name="location_coords">Šířka %1$s; Délka %2$s</string>
+    <string name="location_coords">Šřk. %1$s; Dlk. %2$s</string>
+    <string name="location_coords_elevation">Šřk. %1$s; Dlk. %2$s; Všk. %3$s</string>
     <string name="menu_location">Místo</string>
     <string name="title_activity_location">Moje místo</string>
 

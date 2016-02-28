@@ -10,29 +10,32 @@
             android:key="coords.format"
             android:title="@string/coords_format_title"/>
         <CheckBoxPreference
-            android:defaultValue="@bool/coords_altitude_visible_defaultValue"
-            android:key="coords.altitude"
-            android:title="@string/coords_altitude_title"/>
+            android:defaultValue="@bool/coords_elevation_visible_defaultValue"
+            android:key="coords.elevation"
+            android:title="@string/coords_elevation_title"/>
     </PreferenceCategory>
-    <CheckBoxPreference
-        android:defaultValue="@bool/seconds_visible_defaultValue"
-        android:key="seconds.visible"
-        android:title="@string/seconds_title"/>
-    <CheckBoxPreference
-        android:defaultValue="@bool/summaries_visible_defaultValue"
-        android:key="summaries.visible"
-        android:title="@string/summaries_title"/>
-    <ListPreference
-        android:defaultValue="@string/theme_defaultValue"
-        android:entries="@array/list_theme_entries"
-        android:entryValues="@array/list_theme_values"
-        android:key="theme"
-        android:title="@string/theme_title"/>
-    <net.sf.preference.HtmlListPreference
-        android:defaultValue="@string/emphasis_scale_defaultValue"
-        android:entries="@array/emphasis_scale_entries"
-        android:entryValues="@array/emphasis_scale_values"
-        android:key="emphasis_scale"
-        android:title="@string/emphasis_scale_title"/>
+    <PreferenceCategory
+        android:title="@string/pref_appearance_title">
+        <CheckBoxPreference
+            android:defaultValue="@bool/seconds_visible_defaultValue"
+            android:key="seconds.visible"
+            android:title="@string/seconds_title"/>
+        <CheckBoxPreference
+            android:defaultValue="@bool/summaries_visible_defaultValue"
+            android:key="summaries.visible"
+            android:title="@string/summaries_title"/>
+        <ListPreference
+            android:defaultValue="@string/theme_defaultValue"
+            android:entries="@array/list_theme_entries"
+            android:entryValues="@array/list_theme_values"
+            android:key="theme"
+            android:title="@string/theme_title"/>
+        <net.sf.preference.HtmlListPreference
+            android:defaultValue="@string/emphasis_scale_defaultValue"
+            android:entries="@array/emphasis_scale_entries"
+            android:entryValues="@array/emphasis_scale_values"
+            android:key="emphasis_scale"
+            android:title="@string/emphasis_scale_title"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

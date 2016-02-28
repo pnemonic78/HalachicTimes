@@ -6,10 +6,12 @@
     <string name="coords_format_title">Координати формат</string>
     <string name="coords_format_decimal">Десетичен</string>
     <string name="coords_format_sexagesimal">Шестдесетичен</string>
+    <string name="coords_elevation_title">Кота</string>
 
     <!-- Location -->
     <string name="location_unknown">Неизвестен адрес</string>
-    <string name="location_coords">Lai. %1$s; Pik. %2$s</string>
+    <string name="location_coords">Шир. %1$s; Дъл. %2$s</string>
+    <string name="location_coords_elevation">Шир. %1$s; Дъл. %2$s; Кота %3$s</string>
     <string name="menu_location">Място</string>
     <string name="title_activity_location">Моето място</string>
 

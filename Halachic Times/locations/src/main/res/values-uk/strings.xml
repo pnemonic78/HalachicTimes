@@ -6,10 +6,12 @@
     <string name="coords_format_title">Координати форматі</string>
     <string name="coords_format_decimal">Десятковий</string>
     <string name="coords_format_sexagesimal">Шістдесятирічний</string>
+    <string name="coords_elevation_title">Висота</string>
 
     <!-- Location -->
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
+    <string name="location_coords_elevation">Шрт. %1$s; Двг. %2$s; Вис. %3$s</string>
     <string name="menu_location">Місцезнаходження</string>
     <string name="title_activity_location">Мое місцезнаходження</string>
 

@@ -6,10 +6,12 @@
     <string name="coords_format_title">פורמט קואורדינטות</string>
     <string name="coords_format_decimal">עשרוני</string>
     <string name="coords_format_sexagesimal">סקסגסימלי</string>
+    <string name="coords_elevation_title">גובה</string>
 
     <!-- Location -->
     <string name="location_unknown">לא אותרה כתובת</string>
     <string name="location_coords">רוחב %1$s; אורך %2$s</string>
+    <string name="location_coords_elevation">רוחב %1$s; אורך %2$s; גובה %3$s</string>
     <string name="menu_location">מיקום</string>
     <string name="title_activity_location">המיקום שלי</string>
 

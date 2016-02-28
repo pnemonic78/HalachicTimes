@@ -6,10 +6,12 @@
     <string name="coords_format_title">Koordinaadid formaat</string>
     <string name="coords_format_decimal">Kümnend</string>
     <string name="coords_format_sexagesimal">Seksagesimaalne</string>
+    <string name="coords_elevation_title">Kõrgendus</string>
 
     <!-- Location -->
     <string name="location_unknown">Tundmatu aadress</string>
     <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
+    <string name="location_coords_elevation">Lai. %1$s; Pkk. %2$s; Krg. %3$s</string>
     <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
 

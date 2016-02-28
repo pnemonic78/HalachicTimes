@@ -46,8 +46,8 @@ public class LocationSettings extends ThemedSettings {
     private static final String KEY_COORDS_VISIBLE = "coords.visible";
     /** Preference name for the co-ordinates format. */
     public static final String KEY_COORDS_FORMAT = "coords.format";
-    /** Preference name for the co-ordinates with altitude/elevation. */
-    public static final String KEY_COORDS_ALTITUDE = "coords.altitude";
+    /** Preference name for the co-ordinates with elevation/altitude. */
+    public static final String KEY_COORDS_ELEVATION = "coords.elevation";
 
     /** Format the coordinates in decimal notation. */
     public static String FORMAT_NONE;
@@ -160,11 +160,11 @@ public class LocationSettings extends ThemedSettings {
     }
 
     /**
-     * Are coordinates with altitude/elevation visible?
+     * Are coordinates with elevation (altitude) visible?
      *
-     * @return {@code true} to show coordinates with altitude.
+     * @return {@code true} to show coordinates with elevation.
      */
-    public boolean isAltitude() {
-        return preferences.getBoolean(KEY_COORDS_ALTITUDE, context.getResources().getBoolean(R.bool.coords_altitude_visible_defaultValue));
+    public boolean isElevation() {
+        return preferences.getBoolean(KEY_COORDS_ELEVATION, context.getResources().getBoolean(R.bool.coords_elevation_visible_defaultValue));
     }
 }
