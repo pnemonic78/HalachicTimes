@@ -11,7 +11,7 @@
     <!-- Location -->
     <string name="location_unknown">Nežinomas adresas</string>
     <string name="location_coords">Plt. %1$s; Ilg. %2$s</string>
-    <string name="location_coords_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$s</string>
+    <string name="location_coords_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$sm</string>
     <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
 

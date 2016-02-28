@@ -11,7 +11,7 @@
     <!-- Location -->
     <string name="location_unknown">Ismeretlen cím</string>
     <string name="location_coords">Szl. %1$s; Hss. %2$s</string>
-    <string name="location_coords_elevation">Szl. %1$s; Hss. %2$s; Mgs. %3$s</string>
+    <string name="location_coords_elevation">Szl. %1$s; Hss. %2$s; Mgs. %3$sm</string>
     <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
 

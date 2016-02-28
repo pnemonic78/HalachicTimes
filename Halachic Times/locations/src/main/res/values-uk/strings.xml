@@ -11,7 +11,7 @@
     <!-- Location -->
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
-    <string name="location_coords_elevation">Шрт. %1$s; Двг. %2$s; Вис. %3$s</string>
+    <string name="location_coords_elevation">Шрт. %1$s; Двг. %2$s; Вис. %3$sм</string>
     <string name="menu_location">Місцезнаходження</string>
     <string name="title_activity_location">Мое місцезнаходження</string>
 

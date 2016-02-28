@@ -11,7 +11,7 @@
     <!-- Location -->
     <string name="location_unknown">Bilinmeyen adres</string>
     <string name="location_coords">Enl. %1$s; Byl. %2$s</string>
-    <string name="location_coords_elevation">Enl. %1$s; Byl. %2$s; Yüks. %3$s</string>
+    <string name="location_coords_elevation">Enl. %1$s; Byl. %2$s; Yüks. %3$sm</string>
     <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>
 
