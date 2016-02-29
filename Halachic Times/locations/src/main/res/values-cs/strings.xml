@@ -14,8 +14,8 @@
 
     <!-- Location -->
     <string name="location_unknown">Neznámý adresa</string>
-    <string name="location_format_decimal">Šřk. %1$s; Dlk. %2$s</string>
-    <string name="location_format_decimal_with_elevation">Šřk. %1$s; Dlk. %2$s; Všk. %3$sm</string>
+    <string name="location_decimal">Šřk. %1$s; Dlk. %2$s</string>
+    <string name="location_decimal_with_elevation">Šřk. %1$s; Dlk. %2$s; Všk. %3$sm</string>
     <string name="north">S</string>
     <string name="east">V</string>
     <string name="south">J</string>

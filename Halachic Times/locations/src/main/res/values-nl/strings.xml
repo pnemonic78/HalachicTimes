@@ -14,8 +14,8 @@
 
     <!-- Location -->
     <string name="location_unknown">Onbekend adres</string>
-    <string name="location_format_decimal">Brd. %1$s; Lng. %2$s</string>
-    <string name="location_format_decimal_with_elevation">Brd. %1$s; Lng. %2$s; Hoog. %3$sm</string>
+    <string name="location_decimal">Brd. %1$s; Lng. %2$s</string>
+    <string name="location_decimal_with_elevation">Brd. %1$s; Lng. %2$s; Hoog. %3$sm</string>
     <string name="north">N</string>
     <string name="east">O</string>
     <string name="south">Z</string>

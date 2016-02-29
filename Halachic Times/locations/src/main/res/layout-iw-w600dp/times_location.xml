@@ -11,7 +11,7 @@
         style="@style/Widget.Location.Coordinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/location_format_decimal_with_elevation"/>
+        android:text="@string/location_decimal_with_elevation"/>
 
     <LinearLayout
         android:layout_width="0dp"

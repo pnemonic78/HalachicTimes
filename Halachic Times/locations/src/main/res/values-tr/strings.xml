@@ -14,8 +14,8 @@
 
     <!-- Location -->
     <string name="location_unknown">Bilinmeyen adres</string>
-    <string name="location_format_decimal">Enl. %1$s; Byl. %2$s</string>
-    <string name="location_format_decimal_with_elevation">Enl. %1$s; Byl. %2$s; Yüks. %3$sm</string>
+    <string name="location_decimal">Enl. %1$s; Byl. %2$s</string>
+    <string name="location_decimal_with_elevation">Enl. %1$s; Byl. %2$s; Yüks. %3$sm</string>
     <string name="north">K</string>
     <string name="east">D</string>
     <string name="south">G</string>

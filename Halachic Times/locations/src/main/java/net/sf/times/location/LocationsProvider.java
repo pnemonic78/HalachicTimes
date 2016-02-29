@@ -175,8 +175,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         settings = new LocationSettings(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        formatDecimal = context.getString(R.string.location_format_decimal);
-        formatDecimalElevation = context.getString(R.string.location_format_decimal_with_elevation);
+        formatDecimal = context.getString(R.string.location_decimal);
+        formatDecimalElevation = context.getString(R.string.location_decimal_with_elevation);
         timeZone = TimeZone.getDefault();
         symbolNorth = context.getString(R.string.north);
         symbolSouth = context.getString(R.string.south);
