@@ -326,7 +326,7 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
                         loc.setTime(System.currentTimeMillis());
 
                         if (tokens.length >= 3) {
-                            double elevation = Location.convert(tokens[2]);
+                            double elevation = Double.parseDouble(tokens[2]);
 
                             loc.setAltitude(elevation);
                         }
