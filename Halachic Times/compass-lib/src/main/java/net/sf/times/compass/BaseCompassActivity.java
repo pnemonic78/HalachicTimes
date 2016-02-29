@@ -68,7 +68,7 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
     /** Provider for locations. */
     private LocationsProvider locations;
     /** Location of the Holy of Holies. */
-    private Location holiest;
+    private final Location holiest;
     /** The main view. */
     private CompassView view;
     /** The gravity values. */

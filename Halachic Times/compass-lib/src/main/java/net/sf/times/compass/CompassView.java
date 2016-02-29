@@ -46,6 +46,8 @@ import java.util.Random;
  */
 public class CompassView extends View {
 
+    private static final int SHADOWS = 3;
+
     private float north;
     private float holiest;
     private float northToHoliest;
@@ -63,7 +65,7 @@ public class CompassView extends View {
     private Paint paintFill;
     private Paint paintPivot;
     private Paint paintArrow;
-    private Paint paintShadow;
+    private final Paint[] paintShadow = new Paint[SHADOWS];
     private Paint paintShadowHoliest;
     private final RectF rectFill = new RectF();
     private float widthHalf;
@@ -73,8 +75,8 @@ public class CompassView extends View {
     private final Path pathArrowHoliest = new Path();
     private final Path pathArrowBig = new Path();
     private final Path pathArrowSmall = new Path();
-    private final Path pathShadowBig = new Path();
-    private final Path pathShadowSmall = new Path();
+    private final Path[] pathShadowBig = new Path[SHADOWS];
+    private final Path[] pathShadowSmall = new Path[SHADOWS];
     private final Path pathShadowHoliest = new Path();
     private final RectF rectFrameOuter = new RectF();
     private final RectF rectFrameInner = new RectF();
@@ -190,12 +192,18 @@ public class CompassView extends View {
         paintFill.setStyle(Paint.Style.STROKE);
         paintFill.setStrokeCap(Paint.Cap.BUTT);
 
-        paintShadow = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintShadow.setStyle(Paint.Style.FILL_AND_STROKE);
-        paintShadow.setStrokeWidth(res.getDimension(R.dimen.north_thickness));
-        paintShadow.setColor(res.getColor(R.color.compass_shadow));
+        Paint paint;
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(res.getDimension(R.dimen.shadow_thickness));
+        paint.setColor(res.getColor(R.color.compass_shadow_1));
+        paintShadow[0] = new Paint(paint);
+        paint.setColor(res.getColor(R.color.compass_shadow_2));
+        paintShadow[1] = new Paint(paint);
+        paint.setColor(res.getColor(R.color.compass_shadow_3));
+        paintShadow[2] = new Paint(paint);
 
-        paintShadowHoliest = new Paint(paintShadow);
+        paintShadowHoliest = new Paint(paintShadow[1]);
         paintShadowHoliest.setStrokeWidth(res.getDimension(R.dimen.holiest_thickness) * 2f);
 
         setAzimuth(0f);
@@ -225,39 +233,55 @@ public class CompassView extends View {
         canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
         canvas.rotate(north, w2, h2);
-        canvas.drawPath(pathShadowBig, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowBig, paintNorth);
         canvas.drawText(labelNorth, w2, h2r7, paintNorth);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmall, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowBig, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowBig, paintEast);
         canvas.drawText(labelEast, w2, h2r7, paintEast);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmall, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowBig, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowBig, paintSouth);
         canvas.drawText(labelSouth, w2, h2r7, paintSouth);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmall, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowBig, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowBig, paintWest);
         canvas.drawText(labelWest, w2, h2r7, paintWest);
 
         canvas.rotate(45, w2, h2);
-        canvas.drawPath(pathShadowSmall, paintShadow);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
@@ -316,26 +340,19 @@ public class CompassView extends View {
         final int w2 = w / 2;
         final int h2 = h / 2;
         final float boundary = res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness);
-        final float shadowScale = 1.1f;
         final float r = Math.max(0, Math.min(w2, h2) - (boundary * 2f));
         final float r75 = r * 0.075f;
-        final float r75_shadow = r75 * shadowScale;
         final float r1 = r * 0.1f;
-        final float r1_shadow = r1;
         final float r15 = r * 0.15f;
         final float r2 = r * 0.2f;
         final float r4 = r * 0.4f;
-        final float r4_shadow = r4 * shadowScale;
         final float r5 = r * 0.5f;
         final float r6 = r * 0.6f;
-        final float r6_shadow = r6 * shadowScale;
         final float r85 = r * 0.85f;
         final float r9 = r * 0.9f;
         final float h2r6 = h2 - r6;
-        final float h2r6_shadow = h2 - r6;
         final float h2r85 = h2 - r85;
         final float h2r9 = h2 - r9;
-        final float h2r9_shadow = h2r9;
 
         widthHalf = w2;
         heightHalf = h2;
@@ -419,22 +436,35 @@ public class CompassView extends View {
         pathArrowHoliest.quadTo(w2, h2r85, w2 + r1, h2r6);
         pathArrowHoliest.close();
 
-        pathShadowBig.reset();
-        pathShadowBig.moveTo(w2 + r75_shadow, h2);
-        pathShadowBig.lineTo(w2 - r75_shadow, h2);
-        pathShadowBig.lineTo(w2, h2 - r6_shadow);
-        pathShadowBig.close();
+        float shadowThickness = res.getDimension(R.dimen.shadow_thickness);
+        Path pathShadow;
+        float shadowOffset = shadowThickness;
+        for (int i = 0; i < SHADOWS; i++, shadowOffset += shadowThickness) {
+            pathShadow = pathShadowBig[i];
+            if (pathShadow == null) {
+                pathShadow = new Path();
+                pathShadowBig[i] = pathShadow;
+            }
+            pathShadow.reset();
+            pathShadow.moveTo(w2 - r75 - shadowOffset, h2 + shadowOffset);
+            pathShadow.lineTo(w2 + r75 + shadowOffset, h2 + shadowOffset);
+            pathShadow.lineTo(w2, h2 - r6 - shadowOffset - shadowOffset);
+            pathShadow.close();
 
-        pathShadowSmall.reset();
-        pathShadowSmall.moveTo(w2 + r75_shadow, h2);
-        pathShadowSmall.lineTo(w2 - r75_shadow, h2);
-        pathShadowSmall.lineTo(w2, h2 - r4_shadow);
-        pathShadowSmall.close();
+            pathShadow = pathShadowSmall[i];
+            if (pathShadow == null) {
+                pathShadow = new Path();
+                pathShadowSmall[i] = pathShadow;
+            }
+            pathShadow.reset();
+            pathShadow.moveTo(w2 - r75 - shadowOffset, h2 + shadowOffset);
+            pathShadow.lineTo(w2 + r75 + shadowOffset, h2 + shadowOffset);
+            pathShadow.lineTo(w2, h2 - r4 - shadowOffset - shadowOffset);
+            pathShadow.close();
+        }
 
         pathShadowHoliest.reset();
-        pathShadowHoliest.moveTo(w2, h2r9_shadow);
-        pathShadowHoliest.lineTo(w2 - r1_shadow, h2r6_shadow);
-        pathShadowHoliest.quadTo(w2, h2r9_shadow, w2 + r1_shadow, h2r6_shadow);
+        pathShadowHoliest.set(pathArrowHoliest);
         pathShadowHoliest.close();
     }
 }
