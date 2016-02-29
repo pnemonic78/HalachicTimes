@@ -603,13 +603,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public CharSequence formatLatitude(double coordinate) {
-        return formatterHelper.formatLatitude(coordinate);
+    public CharSequence formatLatitude(double latitude) {
+        return formatterHelper.formatLatitude(latitude);
     }
 
     @Override
-    public CharSequence formatLongitude(double coordinate) {
-        return formatterHelper.formatLongitude(coordinate);
+    public CharSequence formatLongitude(double longitude) {
+        return formatterHelper.formatLongitude(longitude);
     }
 
     @Override
