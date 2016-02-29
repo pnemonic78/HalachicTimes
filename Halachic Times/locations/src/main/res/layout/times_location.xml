@@ -8,7 +8,7 @@
         style="@style/Widget.Location.Coordinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/location_coords"/>
+        tools:text="@string/location_format_decimal_with_elevation"/>
 
     <TextView
         android:id="@+id/address"

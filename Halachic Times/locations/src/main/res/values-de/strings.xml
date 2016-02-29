@@ -14,8 +14,8 @@
 
     <!-- Location -->
     <string name="location_unknown">Unbekannte Adresse</string>
-    <string name="location_coords">Brt. %1$s; Lng. %2$s</string>
-    <string name="location_coords_elevation">Brt. %1$s; Lng. %2$s; Höhe %3$sM</string>
+    <string name="location_format_decimal">Brt. %1$s; Lng. %2$s</string>
+    <string name="location_format_decimal_with_elevation">Brt. %1$s; Lng. %2$s; Höhe %3$sM</string>
     <string name="north">N</string>
     <string name="east">O</string>
     <string name="south">S</string>

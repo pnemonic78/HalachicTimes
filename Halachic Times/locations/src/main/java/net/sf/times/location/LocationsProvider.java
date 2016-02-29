@@ -137,10 +137,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private LocationSettings settings;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
-    /** The coordinates format. */
-    private String coordsFormat;
-    /** The coordinates format with altitude. */
-    private String coordsFormatAltitude;
+    /** The coordinates format for decimal format. */
+    private final String formatDecimal;
+    /** The coordinates format for decimal format with elevation. */
+    private final String formatDecimalElevation;
     /** The time zone. */
     private TimeZone timeZone;
     /** The handler thread. */
@@ -175,8 +175,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         settings = new LocationSettings(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        coordsFormat = context.getString(R.string.location_coords);
-        coordsFormatAltitude = context.getString(R.string.location_coords_elevation);
+        formatDecimal = context.getString(R.string.location_format_decimal);
+        formatDecimalElevation = context.getString(R.string.location_format_decimal_with_elevation);
         timeZone = TimeZone.getDefault();
         symbolNorth = context.getString(R.string.north);
         symbolSouth = context.getString(R.string.south);
@@ -637,9 +637,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         final CharSequence longitudeText = formatLongitude(longitude);
         final CharSequence elevationText = formatElevation(elevation);
         if (settings.isElevation()) {
-            return String.format(Locale.US, coordsFormatAltitude, latitudeText, longitudeText, elevationText);
+            return String.format(Locale.US, formatDecimalElevation, latitudeText, longitudeText, elevationText);
         }
-        return String.format(Locale.US, coordsFormat, latitudeText, longitudeText);
+        return String.format(Locale.US, formatDecimal, latitudeText, longitudeText);
     }
 
     @Override

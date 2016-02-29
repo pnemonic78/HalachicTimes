@@ -14,8 +14,8 @@
 
     <!-- Location -->
     <string name="location_unknown">Tundmatu aadress</string>
-    <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
-    <string name="location_coords_elevation">Lai. %1$s; Pkk. %2$s; Krg. %3$sm</string>
+    <string name="location_format_decimal">Lai. %1$s; Pkk. %2$s</string>
+    <string name="location_format_decimal_with_elevation">Lai. %1$s; Pkk. %2$s; Krg. %3$sm</string>
     <string name="north">P</string>
     <string name="east">I</string>
     <string name="south">Lõ</string>
