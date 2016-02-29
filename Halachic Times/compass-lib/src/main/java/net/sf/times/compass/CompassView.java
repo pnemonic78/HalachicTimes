@@ -233,55 +233,81 @@ public class CompassView extends View {
         canvas.drawArc(rectFrameInner, 0f, 360f, false, paintFrameInner);
 
         canvas.rotate(north, w2, h2);
+
+        // Shadow for North.
         for (int i = 0; i < SHADOWS; i++) {
             canvas.drawPath(pathShadowBig[i], paintShadow[i]);
         }
+        // Shadow for North-East.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
+        // Shadow for East.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
+        // Shadow for South-East.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
+        // Shadow for South.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
+        // Shadow for South-West.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
+        // Shadow for West.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
+        }
+        // Shadow for North-West.
+        canvas.rotate(45, w2, h2);
+        for (int i = 0; i < SHADOWS; i++) {
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
+        }
+        canvas.rotate(45, w2, h2);
+
+        // Arrow and label for North.
         canvas.drawPath(pathArrowBig, paintNorth);
         canvas.drawText(labelNorth, w2, h2r7, paintNorth);
 
+        // Arrow for North-East.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
+        // Arrow and label for East.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowBig, paintEast);
         canvas.drawText(labelEast, w2, h2r7, paintEast);
 
+        // Arrow for South-East.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
+        // Arrow and label for South.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowBig, paintSouth);
         canvas.drawText(labelSouth, w2, h2r7, paintSouth);
 
+        // Arrow for South-West.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
+        // Arrow and label for West.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowBig[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowBig, paintWest);
         canvas.drawText(labelWest, w2, h2r7, paintWest);
 
+        // Arrow for North-West.
         canvas.rotate(45, w2, h2);
-        for (int i = 0; i < SHADOWS; i++) {
-            canvas.drawPath(pathShadowSmall[i], paintShadow[i]);
-        }
         canvas.drawPath(pathArrowSmall, paintNE);
 
         canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
