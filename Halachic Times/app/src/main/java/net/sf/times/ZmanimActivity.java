@@ -682,6 +682,8 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if ((e1 == null) || (e2 == null))
+            return false;
         // Go to date?
         float dX = e2.getX() - e1.getX();
         float dY = e2.getY() - e1.getY();
