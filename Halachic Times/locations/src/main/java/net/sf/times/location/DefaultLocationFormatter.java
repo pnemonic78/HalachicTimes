@@ -27,7 +27,8 @@ import java.util.Locale;
 
 /**
  * Default location formatter.
- * Created by moshe.w on 29/02/2016.
+ *
+ * @author Moshe Waisberg
  */
 public class DefaultLocationFormatter implements LocationFormatter {
 
