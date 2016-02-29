@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Konum</string>
+    <string name="title_activity_location">Konumum</string>
+
     <!-- Preferences -->
     <string name="coords_title">Koordinatlar</string>
     <string name="coords_format_title">Koordinatlar biçimi</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Bilinmeyen adres</string>
     <string name="location_coords">Enl. %1$s; Byl. %2$s</string>
     <string name="location_coords_elevation">Enl. %1$s; Byl. %2$s; Yüks. %3$sm</string>
-    <string name="menu_location">Konum</string>
-    <string name="title_activity_location">Konumum</string>
     <string name="north">K</string>
     <string name="east">D</string>
     <string name="south">G</string>

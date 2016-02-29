@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Místo</string>
+    <string name="title_activity_location">Moje místo</string>
+
     <!-- Preferences -->
     <string name="coords_title">Souřadnice</string>
     <string name="coords_format_title">Souřadnice formát</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Neznámý adresa</string>
     <string name="location_coords">Šřk. %1$s; Dlk. %2$s</string>
     <string name="location_coords_elevation">Šřk. %1$s; Dlk. %2$s; Všk. %3$sm</string>
-    <string name="menu_location">Místo</string>
-    <string name="title_activity_location">Moje místo</string>
     <string name="north">S</string>
     <string name="east">V</string>
     <string name="south">J</string>

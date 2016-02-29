@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Lokalizacja</string>
+    <string name="title_activity_location">Moja lokalizacja</string>
+
     <!-- Preferences -->
     <string name="coords_title">Współrzędne</string>
     <string name="coords_format_title">Format współrzędne</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Nieznany adres</string>
     <string name="location_coords">Szr. %1$s; Dłg. %2$s</string>
     <string name="location_coords_elevation">Szr. %1$s; Dłg. %2$s; Podn. %3$sm</string>
-    <string name="menu_location">Lokalizacja</string>
-    <string name="title_activity_location">Moja lokalizacja</string>
     <string name="north">P</string>
     <string name="east">W</string>
     <string name="south">p</string>

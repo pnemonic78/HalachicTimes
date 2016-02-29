@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">מיקום</string>
+    <string name="title_activity_location">המיקום שלי</string>
+
     <!-- Preferences -->
     <string name="coords_title">קואורדינטות</string>
     <string name="coords_format_title">פורמט קואורדינטות</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">לא אותרה כתובת</string>
     <string name="location_coords">רוחב %1$s; אורך %2$s</string>
     <string name="location_coords_elevation">רוחב %1$s; אורך %2$s; גובה %3$sמ</string>
-    <string name="menu_location">מיקום</string>
-    <string name="title_activity_location">המיקום שלי</string>
     <string name="north">צ</string>
     <string name="east">ז</string>
     <string name="south">ד</string>

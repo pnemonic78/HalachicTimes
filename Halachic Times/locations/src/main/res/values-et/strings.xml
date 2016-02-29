@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Asukoht</string>
+    <string name="title_activity_location">Minu asukoht</string>
+
     <!-- Preferences -->
     <string name="coords_title">Koordinaadid</string>
     <string name="coords_format_title">Koordinaadid formaat</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Tundmatu aadress</string>
     <string name="location_coords">Lai. %1$s; Pkk. %2$s</string>
     <string name="location_coords_elevation">Lai. %1$s; Pkk. %2$s; Krg. %3$sm</string>
-    <string name="menu_location">Asukoht</string>
-    <string name="title_activity_location">Minu asukoht</string>
     <string name="north">P</string>
     <string name="east">I</string>
     <string name="south">Lõ</string>

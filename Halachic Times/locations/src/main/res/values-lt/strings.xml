@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Vieta</string>
+    <string name="title_activity_location">Mano vieta</string>
+
     <!-- Preferences -->
     <string name="coords_title">Koordinatės</string>
     <string name="coords_format_title">Koordinačių formatą,</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Nežinomas adresas</string>
     <string name="location_coords">Plt. %1$s; Ilg. %2$s</string>
     <string name="location_coords_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$sm</string>
-    <string name="menu_location">Vieta</string>
-    <string name="title_activity_location">Mano vieta</string>
     <string name="north">Š</string>
     <string name="east">R</string>
     <string name="south">P</string>

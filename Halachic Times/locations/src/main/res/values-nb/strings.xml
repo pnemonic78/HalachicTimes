@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Posisjon</string>
+    <string name="title_activity_location">Min posisjon</string>
+
     <!-- Preferences -->
     <string name="coords_title">Koordinerer</string>
     <string name="coords_format_title">Koordinerer format</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Ukjent adresse</string>
     <string name="location_coords">Brd. %1$s; Lng. %2$s</string>
     <string name="location_coords_elevation">Brd. %1$s; Lng. %2$s; Hyd. %3$sm</string>
-    <string name="menu_location">Posisjon</string>
-    <string name="title_activity_location">Min posisjon</string>
     <string name="north">N</string>
     <string name="east">Ø</string>
     <string name="south">S</string>

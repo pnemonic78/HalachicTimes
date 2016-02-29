@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Място</string>
+    <string name="title_activity_location">Моето място</string>
+
     <!-- Preferences -->
     <string name="coords_title">Координати</string>
     <string name="coords_format_title">Координати формат</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Неизвестен адрес</string>
     <string name="location_coords">Шир. %1$s; Дъл. %2$s</string>
     <string name="location_coords_elevation">Шир. %1$s; Дъл. %2$s; Кота %3$sм</string>
-    <string name="menu_location">Място</string>
-    <string name="title_activity_location">Моето място</string>
     <string name="north">С</string>
     <string name="east">И</string>
     <string name="south">Ю</string>

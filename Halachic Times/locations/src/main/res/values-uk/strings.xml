@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Місцезнаходження</string>
+    <string name="title_activity_location">Мое місцезнаходження</string>
+
     <!-- Preferences -->
     <string name="coords_title">Координати</string>
     <string name="coords_format_title">Координати форматі</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Невідома адреса</string>
     <string name="location_coords">Шрт. %1$s; Двг. %2$s</string>
     <string name="location_coords_elevation">Шрт. %1$s; Двг. %2$s; Вис. %3$sм</string>
-    <string name="menu_location">Місцезнаходження</string>
-    <string name="title_activity_location">Мое місцезнаходження</string>
     <string name="north">П</string>
     <string name="east">С</string>
     <string name="south">п</string>

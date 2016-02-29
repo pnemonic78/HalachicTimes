@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Ubicación</string>
+    <string name="title_activity_location">Mi ubicación</string>
+
     <!-- Preferences -->
     <string name="coords_title">Coordenadas</string>
     <string name="coords_format_title">Formato de coordenadas</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Dirección desconocida</string>
     <string name="location_coords">Lat. %1$s; Lng. %2$s</string>
     <string name="location_coords_elevation">Lat. %1$s; Lng. %2$s; Elev. %3$sm</string>
-    <string name="menu_location">Ubicación</string>
-    <string name="title_activity_location">Mi ubicación</string>
     <string name="north">N</string>
     <string name="east">E</string>
     <string name="south">S</string>

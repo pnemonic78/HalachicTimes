@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Activity -->
+    <string name="menu_location">Sijainti</string>
+    <string name="title_activity_location">Oma sijainti</string>
+
     <!-- Preferences -->
     <string name="coords_title">Koordinaatit</string>
     <string name="coords_format_title">Koordinaatit formaatti</string>
@@ -12,8 +16,6 @@
     <string name="location_unknown">Tuntematon osoite</string>
     <string name="location_coords">Lvy. %1$s; Pts. %2$s</string>
     <string name="location_coords_elevation">Lvy. %1$s; Pts. %2$s; Krk. %3$sm</string>
-    <string name="menu_location">Sijainti</string>
-    <string name="title_activity_location">Oma sijainti</string>
     <string name="north">P</string>
     <string name="east">I</string>
     <string name="south">E</string>
