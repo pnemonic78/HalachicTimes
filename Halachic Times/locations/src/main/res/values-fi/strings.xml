@@ -14,8 +14,9 @@
 
     <!-- Location -->
     <string name="location_unknown">Tuntematon osoite</string>
+    <string name="location_elevation">%.0fm</string>
     <string name="location_decimal">Lvy. %1$s; Pts. %2$s</string>
-    <string name="location_decimal_with_elevation">Lvy. %1$s; Pts. %2$s; Krk. %3$sm</string>
+    <string name="location_decimal_with_elevation">Lvy. %1$s; Pts. %2$s; Krk. %3$s</string>
     <string name="north">P</string>
     <string name="east">I</string>
     <string name="south">E</string>

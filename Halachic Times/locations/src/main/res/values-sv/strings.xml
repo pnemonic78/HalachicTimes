@@ -14,8 +14,9 @@
 
     <!-- Location -->
     <string name="location_unknown">Okänd adress</string>
+    <string name="location_elevation">%.0fm</string>
     <string name="location_decimal">Lat. %1$s; Lng. %2$s</string>
-    <string name="location_decimal_with_elevation">Lat. %1$s; Lng. %2$s; Frhj. %3$sm</string>
+    <string name="location_decimal_with_elevation">Lat. %1$s; Lng. %2$s; Frhj. %3$s</string>
     <string name="north">N</string>
     <string name="east">Ö</string>
     <string name="south">S</string>

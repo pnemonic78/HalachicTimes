@@ -14,8 +14,9 @@
 
     <!-- Location -->
     <string name="location_unknown">Невідома адреса</string>
+    <string name="location_elevation">%.0fм</string>
     <string name="location_decimal">Шрт. %1$s; Двг. %2$s</string>
-    <string name="location_decimal_with_elevation">Шрт. %1$s; Двг. %2$s; Вис. %3$sм</string>
+    <string name="location_decimal_with_elevation">Шрт. %1$s; Двг. %2$s; Вис. %3$s</string>
     <string name="north">П</string>
     <string name="east">С</string>
     <string name="south">п</string>

@@ -14,8 +14,9 @@
 
     <!-- Location -->
     <string name="location_unknown">Nežinomas adresas</string>
+    <string name="location_elevation">%.0fm</string>
     <string name="location_decimal">Plt. %1$s; Ilg. %2$s</string>
-    <string name="location_decimal_with_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$sm</string>
+    <string name="location_decimal_with_elevation">Plt. %1$s; Ilg. %2$s; Auk. %3$s</string>
     <string name="north">Š</string>
     <string name="east">R</string>
     <string name="south">P</string>

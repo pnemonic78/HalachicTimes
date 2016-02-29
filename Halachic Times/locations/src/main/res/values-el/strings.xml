@@ -14,8 +14,9 @@
 
     <!-- Location -->
     <string name="location_unknown">Άγνωστη διεύθυνση</string>
+    <string name="location_elevation">%.0fμ</string>
     <string name="location_decimal">Πλτ. %1$s; Μήκ. %2$s</string>
-    <string name="location_decimal_with_elevation">Πλτ. %1$s; Μήκ. %2$s; Ανύ. %3$sμ</string>
+    <string name="location_decimal_with_elevation">Πλτ. %1$s; Μήκ. %2$s; Ανύ. %3$s</string>
     <string name="north">Β</string>
     <string name="east">Α</string>
     <string name="south">Ν</string>

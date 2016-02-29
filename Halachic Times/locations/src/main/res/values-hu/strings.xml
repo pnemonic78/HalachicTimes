@@ -14,8 +14,9 @@
 
     <!-- Location -->
     <string name="location_unknown">Ismeretlen cím</string>
+    <string name="location_elevation">%.0fm</string>
     <string name="location_decimal">Szl. %1$s; Hss. %2$s</string>
-    <string name="location_decimal_with_elevation">Szl. %1$s; Hss. %2$s; Mgs. %3$sm</string>
+    <string name="location_decimal_with_elevation">Szl. %1$s; Hss. %2$s; Mgs. %3$s</string>
     <string name="north">É</string>
     <string name="east">K</string>
     <string name="south">D</string>

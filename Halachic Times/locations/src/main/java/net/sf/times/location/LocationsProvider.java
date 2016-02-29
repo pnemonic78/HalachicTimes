@@ -43,7 +43,6 @@ import net.sf.util.LocaleUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -109,15 +108,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /** If the current location is older than 1 second, then it is stale. */
     private static final long LOCATION_EXPIRATION = DateUtils.SECOND_IN_MILLIS;
 
-    /**
-     * Constant used to specify formatting of a latitude or longitude in the
-     * form "[+-]DDD.DDDDD" where D indicates degrees.
-     */
-    private static final String FORMAT_DEGREES = "%1$.6f";
-    private static final String FORMAT_ALTITUDE = "%1$.0f";
-    /** http://en.wikipedia.org/wiki/ISO_6709#Representation_at_the_human_interface_.28Annex_D.29 */
-    private static final String FORMAT_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
-
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
     protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
@@ -137,10 +127,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private LocationSettings settings;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
-    /** The coordinates format for decimal format. */
-    private final String formatDecimal;
-    /** The coordinates format for decimal format with elevation. */
-    private final String formatDecimalElevation;
     /** The time zone. */
     private TimeZone timeZone;
     /** The handler thread. */
@@ -155,11 +141,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private final BroadcastReceiver addressReceiver;
     /** The location is externally set? */
     private boolean manualLocation;
-
-    private final String symbolNorth;
-    private final String symbolSouth;
-    private final String symbolEast;
-    private final String symbolWest;
+    /** The location formatter. */
+    private final LocationFormatter formatterHelper;
 
     /**
      * Constructs a new provider.
@@ -175,13 +158,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         settings = new LocationSettings(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        formatDecimal = context.getString(R.string.location_decimal);
-        formatDecimalElevation = context.getString(R.string.location_decimal_with_elevation);
         timeZone = TimeZone.getDefault();
-        symbolNorth = context.getString(R.string.north);
-        symbolSouth = context.getString(R.string.south);
-        symbolEast = context.getString(R.string.east);
-        symbolWest = context.getString(R.string.west);
+        formatterHelper = createLocationFormatter(context);
 
         addressReceiver = new BroadcastReceiver() {
             @Override
@@ -611,76 +589,32 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     @Override
     public CharSequence formatCoordinates(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        final double altitude = location.getAltitude();
-        return formatCoordinates(latitude, longitude, altitude);
+        return formatterHelper.formatCoordinates(location);
     }
 
     @Override
     public CharSequence formatCoordinates(Address address) {
-        final double latitude = address.getLatitude();
-        final double longitude = address.getLongitude();
-        double altitude = 0;
-        if (address instanceof ZmanimAddress) {
-            ZmanimAddress zaddress = (ZmanimAddress) address;
-            if (zaddress.hasElevation()) {
-                altitude = zaddress.getElevation();
-            }
-        }
-        return formatCoordinates(latitude, longitude, altitude);
+        return formatterHelper.formatCoordinates(address);
     }
 
     @Override
     public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
-        final CharSequence latitudeText = formatLatitude(latitude);
-        final CharSequence longitudeText = formatLongitude(longitude);
-        final CharSequence elevationText = formatElevation(elevation);
-        if (settings.isElevation()) {
-            return String.format(Locale.US, formatDecimalElevation, latitudeText, longitudeText, elevationText);
-        }
-        return String.format(Locale.US, formatDecimal, latitudeText, longitudeText);
+        return formatterHelper.formatCoordinates(latitude, longitude, elevation);
     }
 
     @Override
     public CharSequence formatLatitude(double coordinate) {
-        final String notation = settings.getCoordinatesFormat();
-        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
-            int degrees = (int) Math.floor(coordinate);
-            coordinate -= degrees;
-            coordinate *= 60.0;
-            int minutes = (int) Math.floor(coordinate);
-            coordinate -= minutes;
-            coordinate *= 60.0;
-            double seconds = coordinate;
-            String symbol = (degrees >= 0) ? symbolNorth : symbolSouth;
-            return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
-            //return Location.convert(latitude, Location.FORMAT_SECONDS);
-        }
-        return String.format(Locale.US, FORMAT_DEGREES, coordinate);
+        return formatterHelper.formatLatitude(coordinate);
     }
 
     @Override
     public CharSequence formatLongitude(double coordinate) {
-        final String notation = settings.getCoordinatesFormat();
-        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
-            int degrees = (int) Math.floor(coordinate);
-            coordinate -= degrees;
-            coordinate *= 60.0;
-            int minutes = (int) Math.floor(coordinate);
-            coordinate -= minutes;
-            coordinate *= 60.0;
-            double seconds = coordinate;
-            String symbol = (degrees >= 0) ? symbolEast : symbolWest;
-            return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
-            //return Location.convert(latitude, Location.FORMAT_SECONDS);
-        }
-        return String.format(Locale.US, FORMAT_DEGREES, coordinate);
+        return formatterHelper.formatLongitude(coordinate);
     }
 
     @Override
     public CharSequence formatElevation(double elevation) {
-        return String.format(Locale.US, FORMAT_ALTITUDE, elevation);
+        return formatterHelper.formatElevation(elevation);
     }
 
     /**
@@ -851,5 +785,16 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         findElevation.setAction(ELEVATION_ACTION);
         findElevation.putExtra(PARAMETER_LOCATION, location);
         context.startService(findElevation);
+    }
+
+    /**
+     * Create a location formatter helper.
+     *
+     * @param context
+     *         the context.
+     * @return the formatter.
+     */
+    protected LocationFormatter createLocationFormatter(Context context) {
+        return new DefaultLocationFormatter(context);
     }
 }

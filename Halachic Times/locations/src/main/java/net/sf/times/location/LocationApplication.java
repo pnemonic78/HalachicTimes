@@ -21,6 +21,7 @@ package net.sf.times.location;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -34,12 +35,6 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
     private AP addressProvider;
     /** Provider for locations. */
     private LP locations;
-
-    /**
-     * Constructs a new application.
-     */
-    public LocationApplication() {
-    }
 
     /**
      * Get the addresses provider instance.
@@ -69,7 +64,7 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
         return locations;
     }
 
-    protected LP createLocationsProvider(Context context){
+    protected LP createLocationsProvider(Context context) {
         return (LP) new LocationsProvider(context);
     }
 
@@ -89,10 +84,25 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
     public void onTerminate() {
         if (addressProvider != null) {
             addressProvider.close();
+            addressProvider = null;
         }
         if (locations != null) {
             locations.quit();
+            locations = null;
         }
         super.onTerminate();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (addressProvider != null) {
+            addressProvider.close();
+            addressProvider = null;
+        }
+        if (locations != null) {
+            locations.quit();
+            locations = null;
+        }
     }
 }
