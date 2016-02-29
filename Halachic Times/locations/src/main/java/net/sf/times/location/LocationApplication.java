@@ -82,20 +82,17 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
 
     @Override
     public void onTerminate() {
-        if (addressProvider != null) {
-            addressProvider.close();
-            addressProvider = null;
-        }
-        if (locations != null) {
-            locations.quit();
-            locations = null;
-        }
+        dispose();
         super.onTerminate();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        dispose();
+    }
+
+    private void dispose() {
         if (addressProvider != null) {
             addressProvider.close();
             addressProvider = null;

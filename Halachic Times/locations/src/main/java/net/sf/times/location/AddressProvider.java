@@ -129,7 +129,7 @@ public class AddressProvider {
      *         the context.
      */
     public AddressProvider(Context context) {
-        this(context, Locale.getDefault());
+        this(context, context.getResources().getConfiguration().locale);
     }
 
     /**
