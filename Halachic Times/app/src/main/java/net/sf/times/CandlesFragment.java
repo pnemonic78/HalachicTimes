@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -37,7 +38,7 @@ import java.util.Random;
  *
  * @author Moshe Waisberg
  */
-public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopulater> {
+public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopulater> implements ViewTreeObserver.OnGlobalLayoutListener {
 
     private static final int[] SHABBAT_CANDLES = {R.id.candle_1, R.id.candle_2};
     private static final int[] YOM_KIPPURIM_CANDLES = {R.id.candle_1};
@@ -65,8 +66,15 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        view.getViewTreeObserver().addOnGlobalLayoutListener(this);
         // Ignore the list inside of the scroller.
-        list = (ViewGroup) view;
+        this.list = (ViewGroup) view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        super.onDestroyView();
     }
 
     @Override
@@ -201,17 +209,21 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         }
     }
 
-    //TODO implement me!
-//    @Override
-//    public void onVisibilityChanged(View changedView, int visibility) {
-//        super.onVisibilityChanged(changedView, visibility);
-//
-//        if (visibility == VISIBLE) {
-//            startAnimation();
-//        } else {
-//            stopAnimation();
-//        }
-//    }
+    protected void onVisibilityChanged(View changedView, int visibility) {
+        if (changedView == list) {
+            if (visibility == View.VISIBLE) {
+                startAnimation();
+            } else {
+                stopAnimation();
+            }
+        }
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        View view = getView();
+        onVisibilityChanged(view, view.getVisibility());
+    }
 
     @Override
     public void hide() {
