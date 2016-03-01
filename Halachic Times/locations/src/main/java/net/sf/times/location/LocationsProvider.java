@@ -795,6 +795,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the formatter.
      */
     protected LocationFormatter createLocationFormatter(Context context) {
-        return new DefaultLocationFormatter(context);
+        return new SimpleLocationFormatter(context);
     }
 }

@@ -32,14 +32,6 @@ import java.util.Locale;
  */
 public class DefaultLocationFormatter implements LocationFormatter {
 
-    /**
-     * Constant used to specify formatting of a latitude or longitude in the
-     * form "[+-]DDD.DDDDD" where D indicates degrees.
-     */
-    private static final String FORMAT_DEGREES = "%1$.6f";
-    /** http://en.wikipedia.org/wiki/ISO_6709#Representation_at_the_human_interface_.28Annex_D.29 */
-    private static final String FORMAT_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
-
     /** The settings and preferences. */
     private LocationSettings settings;
     /** The coordinates format for decimal format. */
@@ -52,10 +44,6 @@ public class DefaultLocationFormatter implements LocationFormatter {
     private final String formatSexagesimalElevation;
     /** The format for elevation. */
     private final String formatElevation;
-    private final String symbolNorth;
-    private final String symbolSouth;
-    private final String symbolEast;
-    private final String symbolWest;
 
     public DefaultLocationFormatter(Context context) {
         settings = new LocationSettings(context);
@@ -66,10 +54,6 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
         formatSexagesimal = context.getString(R.string.location_sexagesimal);
         formatSexagesimalElevation = context.getString(R.string.location_sexagesimal_with_elevation);
-        symbolNorth = context.getString(R.string.north);
-        symbolSouth = context.getString(R.string.south);
-        symbolEast = context.getString(R.string.east);
-        symbolWest = context.getString(R.string.west);
     }
 
     @Override
@@ -135,19 +119,11 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     protected CharSequence formatLatitudeDecimal(double coordinate) {
-        return String.format(Locale.US, FORMAT_DEGREES, coordinate);
+        return Location.convert(coordinate, Location.FORMAT_DEGREES);
     }
 
     protected CharSequence formatLatitudeSexagesimal(double coordinate) {
-        int degrees = (int) Math.floor(coordinate);
-        coordinate -= degrees;
-        coordinate *= 60.0;
-        int minutes = (int) Math.floor(coordinate);
-        coordinate -= minutes;
-        coordinate *= 60.0;
-        double seconds = coordinate;
-        String symbol = (degrees >= 0) ? symbolNorth : symbolSouth;
-        return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
+        return Location.convert(coordinate, Location.FORMAT_SECONDS);
     }
 
     @Override
@@ -160,19 +136,11 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     protected CharSequence formatLongitudeDecimal(double coordinate) {
-        return String.format(Locale.US, FORMAT_DEGREES, coordinate);
+        return Location.convert(coordinate, Location.FORMAT_DEGREES);
     }
 
     protected CharSequence formatLongitudeSexagesimal(double coordinate) {
-        int degrees = (int) Math.floor(coordinate);
-        coordinate -= degrees;
-        coordinate *= 60.0;
-        int minutes = (int) Math.floor(coordinate);
-        coordinate -= minutes;
-        coordinate *= 60.0;
-        double seconds = coordinate;
-        String symbol = (degrees >= 0) ? symbolEast : symbolWest;
-        return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
+        return Location.convert(coordinate, Location.FORMAT_SECONDS);
     }
 
     @Override
