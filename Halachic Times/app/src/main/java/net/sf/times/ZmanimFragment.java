@@ -20,18 +20,17 @@
 package net.sf.times;
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -48,21 +47,16 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A>> extends FrameLayout {
+public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A>> extends Fragment {
 
-    protected final Context context;
     protected LayoutInflater inflater;
     private OnClickListener onClickListener;
-    /** The main list view. */
-    protected ViewGroup view;
     /** The list. */
     protected ViewGroup list;
     /** Provider for locations. */
     protected ZmanimLocations locations;
     /** The settings and preferences. */
     protected ZmanimSettings settings;
-    /** The gradient background. */
-    private Drawable background;
     /** The master item selected row. */
     private View highlightRow;
     /** The master item background that is selected. */
@@ -77,73 +71,42 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     private P populater;
     /** The adapter. */
     private A adapter;
-    /** The gesture detector. */
-    private GestureDetector gestureDetector;
 
-    /**
-     * Constructs a new list.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the XMl attributes.
-     * @param defStyle
-     *         the default style.
-     */
-    public ZmanimFragment(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        this.context = context;
-        init(context);
+    protected Context getContextImpl() {
+        return getActivity();
     }
 
-    /**
-     * Constructs a new list.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the XML attributes.
-     */
-    public ZmanimFragment(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
-        init(context);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Context context = getContextImpl();
+        settings = new ZmanimSettings(context);
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        locations = app.getLocations();
     }
 
-    /**
-     * Constructs a new list.
-     *
-     * @param context
-     *         the context.
-     */
-    public ZmanimFragment(Context context) {
-        super(context);
-        this.context = context;
-        init(context);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.inflater = inflater;
+        return inflater.inflate(R.layout.times_list, container, false);
     }
 
-    /** Initialise. */
-    @SuppressLint("InflateParams")
-    private void init(Context context) {
-        if (!isInEditMode()) {
-            settings = new ZmanimSettings(context);
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-        }
-
-        inflater = LayoutInflater.from(context);
-        view = (ViewGroup) inflater.inflate(R.layout.times_list, null);
-        addView(view);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         list = (ViewGroup) view.findViewById(android.R.id.list);
     }
 
     /**
      * Create a new times adapter.
      *
+     * @param context
+     *         the context.
      * @return the adapter.
      */
     @SuppressWarnings("unchecked")
-    protected A createAdapter() {
+    protected A createAdapter(Context context) {
         return (A) new ZmanimAdapter(context, settings);
     }
 
@@ -159,10 +122,12 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Create a new times populater.
      *
+     * @param context
+     *         the context.
      * @return the populater.
      */
     @SuppressWarnings("unchecked")
-    protected P createPopulater() {
+    protected P createPopulater(Context context) {
         return (P) new ZmanimPopulater<A>(context, settings);
     }
 
@@ -174,7 +139,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected P getPopulater() {
         P populater = this.populater;
         if (populater == null) {
-            populater = createPopulater();
+            populater = createPopulater(getContextImpl());
             this.populater = populater;
         }
         return populater;
@@ -201,7 +166,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
-        A adapter = createAdapter();
+        A adapter = createAdapter(getContextImpl());
         if (adapter != null) {
             populater.populate(adapter, false);
         }
@@ -229,7 +194,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (adapter == null)
             return;
 
-        Context context = getContext();
+        Context context = getContextImpl();
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
         CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
@@ -329,9 +294,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         view.setClickable(clickable);
     }
 
-    @Override
     public void setOnClickListener(OnClickListener listener) {
-        onClickListener = listener;
+        this.onClickListener = listener;
     }
 
     /**
@@ -417,24 +381,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         highlightRow = view;
     }
 
-    public boolean isVisible() {
-        return getVisibility() == VISIBLE;
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent event) {
-        if ((gestureDetector != null) && gestureDetector.onTouchEvent(event))
-            return true;
-        return super.onInterceptTouchEvent(event);
-    }
-
-    /**
-     * Set the gesture detector.
-     *
-     * @param gestureDetector
-     *         the gesture detector.
-     */
-    public void setGestureDetector(GestureDetector gestureDetector) {
-        this.gestureDetector = gestureDetector;
+    public void hide() {
+        getView().setVisibility(View.INVISIBLE);
     }
 }

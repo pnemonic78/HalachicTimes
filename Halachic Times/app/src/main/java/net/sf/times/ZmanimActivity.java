@@ -22,6 +22,7 @@ package net.sf.times;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -295,13 +296,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
 
-        masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) view.findViewById(R.id.list_fragment);
+        FragmentManager fragmentManager = getFragmentManager();
+        masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) fragmentManager.findFragmentById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
-        masterFragment.setGestureDetector(gestureDetector);
         detailsFragmentSwitcher = (ViewSwitcher) view.findViewById(R.id.details_fragment);
-        detailsListFragment = (ZmanimDetailsFragment) view.findViewById(R.id.details_list_fragment);
-        detailsListFragment.setGestureDetector(gestureDetector);
-        candlesFragment = (CandlesFragment) view.findViewById(R.id.candles_fragment);
+        detailsListFragment = (ZmanimDetailsFragment) fragmentManager.findFragmentById(R.id.details_list_fragment);
+        candlesFragment = (CandlesFragment) fragmentManager.findFragmentById(R.id.candles_fragment);
 
         viewSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
         if (viewSwitcher != null) {
@@ -611,9 +611,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             // Not enough to hide the details switcher = must also hide its
             // children otherwise visible when sliding dates.
             if (detailsListFragment != null)
-                detailsListFragment.setVisibility(View.INVISIBLE);
+                detailsListFragment.hide();
             if (candlesFragment != null)
-                candlesFragment.setVisibility(View.INVISIBLE);
+                candlesFragment.hide();
         } else {
             detailsFragmentSwitcher.startAnimation(detailsShrink);
         }
@@ -811,10 +811,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         date.add(Calendar.DATE, -1);
 
         if (localeRTL) {
-            slideLeft(masterFragment);
+            //TODO slideLeft(masterFragment);
             slideLeft(detailsFragmentSwitcher);
         } else {
-            slideRight(masterFragment);
+            //TODO slideRight(masterFragment);
             slideRight(detailsFragmentSwitcher);
         }
 
@@ -827,10 +827,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         date.add(Calendar.DATE, +1);
 
         if (localeRTL) {
-            slideRight(masterFragment);
+            //TODO slideRight(masterFragment);
             slideRight(detailsFragmentSwitcher);
         } else {
-            slideLeft(masterFragment);
+            //TODO slideLeft(masterFragment);
             slideLeft(detailsFragmentSwitcher);
         }
 
@@ -884,5 +884,13 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         Intent intent = new Intent(context, ZmanimReminder.class);
         intent.setAction(ZmanimReminder.ACTION_CANCEL);
         context.sendBroadcast(intent);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (gestureDetector.onTouchEvent(ev)) {
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }

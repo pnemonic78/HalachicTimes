@@ -22,7 +22,6 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -42,42 +41,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     private int masterId;
 
     /**
-     * Constructs a new details list.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the XMl attributes.
-     * @param defStyle
-     *         the default style.
-     */
-    public ZmanimDetailsFragment(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-
-    /**
-     * Constructs a new details list.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the XML attributes.
-     */
-    public ZmanimDetailsFragment(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    /**
-     * Constructs a new details list.
-     *
-     * @param context
-     *         the context.
-     */
-    public ZmanimDetailsFragment(Context context) {
-        super(context);
-    }
-
-    /**
      * Get the master id for populating the details.
      *
      * @return the master id.
@@ -88,7 +51,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
 
     @SuppressWarnings("unchecked")
     @Override
-    protected A createAdapter() {
+    protected A createAdapter(Context context) {
         if (masterId == 0)
             return null;
 
@@ -242,7 +205,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (adapter == null)
             return;
 
-        Context context = getContext();
+        Context context = getContextImpl();
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
         CharSequence dateHebrew;
@@ -280,7 +243,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     }
 
     @Override
-    protected P createPopulater() {
+    protected P createPopulater(Context context) {
         return (P) new ZmanimDetailsPopulater<A>(context, settings);
     }
 }

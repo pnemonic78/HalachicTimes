@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:baselineAligned="false"
@@ -15,28 +16,31 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <view
+        <fragment
             android:id="@+id/list_fragment"
             class="net.sf.times.ZmanimFragment"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"/>
+            android:layout_height="fill_parent"
+            tools:layout="@layout/times_list"/>
 
         <ViewSwitcher
             android:id="@+id/details_fragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
-            <view
+            <fragment
                 android:id="@+id/details_list_fragment"
-                class="net.sf.times.ZmanimDetailsFragment"
+                android:name="net.sf.times.ZmanimDetailsFragment"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"
+                tools:layout="@layout/times_list"/>
 
-            <view
+            <fragment
                 android:id="@+id/candles_fragment"
-                class="net.sf.times.CandlesFragment"
+                android:name="net.sf.times.CandlesFragment"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"/>
+                android:layout_height="fill_parent"
+                tools:layout="@layout/times_list"/>
         </ViewSwitcher>
     </ViewSwitcher>
 

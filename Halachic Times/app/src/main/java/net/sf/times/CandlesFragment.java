@@ -20,9 +20,8 @@
 package net.sf.times;
 
 import android.content.Context;
-import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -63,65 +62,26 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     /** Randomizer. */
     private final Random random = new Random();
 
-    /**
-     * Constructs a new candles view.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the XMl attributes.
-     * @param defStyle
-     *         the default style.
-     */
-    public CandlesFragment(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
-    }
-
-    /**
-     * Constructs a new candles view.
-     *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the XML attributes.
-     */
-    public CandlesFragment(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    /**
-     * Constructs a new candles view.
-     *
-     * @param context
-     *         the context.
-     */
-    public CandlesFragment(Context context) {
-        super(context);
-        init();
-    }
-
-    /** Initialise. */
-    private void init() {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         // Ignore the list inside of the scroller.
-        view = this;
-        list = view;
+        list = (ViewGroup) view;
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    public void onDetach() {
+        super.onDetach();
         stopAnimation();
     }
 
     @Override
-    protected CandlesAdapter createAdapter() {
+    protected CandlesAdapter createAdapter(Context context) {
         return new CandlesAdapter(context, settings);
     }
 
     @Override
-    protected CandlesPopulater createPopulater() {
+    protected CandlesPopulater createPopulater(Context context) {
         return new CandlesPopulater(context, settings);
     }
 
@@ -241,14 +201,21 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         }
     }
 
-    @Override
-    protected void onVisibilityChanged(View changedView, int visibility) {
-        super.onVisibilityChanged(changedView, visibility);
+    //TODO implement me!
+//    @Override
+//    public void onVisibilityChanged(View changedView, int visibility) {
+//        super.onVisibilityChanged(changedView, visibility);
+//
+//        if (visibility == VISIBLE) {
+//            startAnimation();
+//        } else {
+//            stopAnimation();
+//        }
+//    }
 
-        if (visibility == VISIBLE) {
-            startAnimation();
-        } else {
-            stopAnimation();
-        }
+    @Override
+    public void hide() {
+        super.hide();
+        stopAnimation();
     }
 }
