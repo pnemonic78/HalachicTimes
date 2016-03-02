@@ -28,11 +28,6 @@ import android.content.Context;
  */
 public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
-    /**
-     * Constant used to specify formatting of a latitude or longitude in the
-     * form "[+-]DDD.DDDDD" where D indicates degrees.
-     */
-    protected static final String FORMAT_DEGREES = "%1$.6f";
     /** http://en.wikipedia.org/wiki/ISO_6709#Representation_at_the_human_interface_.28Annex_D.29 */
     protected static final String FORMAT_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
 
