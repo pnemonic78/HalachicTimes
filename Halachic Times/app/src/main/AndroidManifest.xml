@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:name="net.sf.times.preference.ZmanimPreferenceActivity"
-            android:label="@string/menu_settings"
+            android:label="@string/title_activity_settings"
             android:parentActivityName="net.sf.times.ZmanimActivity">
         </activity>
         <activity
