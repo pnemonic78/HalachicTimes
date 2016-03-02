@@ -811,10 +811,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         date.add(Calendar.DATE, -1);
 
         if (localeRTL) {
-            //TODO slideLeft(masterFragment);
+            slideLeft(masterFragment.getView());
             slideLeft(detailsFragmentSwitcher);
         } else {
-            //TODO slideRight(masterFragment);
+            slideRight(masterFragment.getView());
             slideRight(detailsFragmentSwitcher);
         }
 
@@ -827,10 +827,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         date.add(Calendar.DATE, +1);
 
         if (localeRTL) {
-            //TODO slideRight(masterFragment);
+            slideRight(masterFragment.getView());
             slideRight(detailsFragmentSwitcher);
         } else {
-            //TODO slideLeft(masterFragment);
+            slideLeft(masterFragment.getView());
             slideLeft(detailsFragmentSwitcher);
         }
 
