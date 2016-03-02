@@ -611,9 +611,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             // Not enough to hide the details switcher = must also hide its
             // children otherwise visible when sliding dates.
             if (detailsListFragment != null)
-                detailsListFragment.hide();
+                detailsListFragment.setVisibility(View.INVISIBLE);
             if (candlesFragment != null)
-                candlesFragment.hide();
+                candlesFragment.setVisibility(View.INVISIBLE);
         } else {
             detailsFragmentSwitcher.startAnimation(detailsShrink);
         }

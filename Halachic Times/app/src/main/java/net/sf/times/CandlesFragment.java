@@ -226,8 +226,8 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     }
 
     @Override
-    public void hide() {
-        super.hide();
+    public void setVisibility(int visibility) {
+        super.setVisibility( visibility);
         stopAnimation();
     }
 }

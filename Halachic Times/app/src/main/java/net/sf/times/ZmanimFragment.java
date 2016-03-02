@@ -381,7 +381,16 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         highlightRow = view;
     }
 
-    public void hide() {
-        getView().setVisibility(View.INVISIBLE);
+    /**
+     * Set the view's visibility.
+     *
+     * @param visibility
+     *         the visibility.
+     * @see View#VISIBLE
+     * @see View#INVISIBLE
+     * @see View#GONE
+     */
+    public void setVisibility(int visibility) {
+        getView().setVisibility(visibility);
     }
 }
