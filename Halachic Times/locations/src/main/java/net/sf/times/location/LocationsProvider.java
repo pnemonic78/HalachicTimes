@@ -166,8 +166,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
                 if (ADDRESS_ACTION.equals(action)) {
-                    Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
-                    ZmanimAddress address = intent.getParcelableExtra(PARAMETER_ADDRESS);
+                    Bundle intentExtras = intent.getExtras();
+                    Location location = null;
+                    ZmanimAddress address = null;
+                    if (intentExtras != null) {
+                        intentExtras.setClassLoader(getClass().getClassLoader());
+                        location = intentExtras.getParcelable(PARAMETER_LOCATION);
+                        address = intentExtras.getParcelable(PARAMETER_ADDRESS);
+                    }
                     if (address != null) {
                         Bundle extras = address.getExtras();
                         if (extras == null) {
