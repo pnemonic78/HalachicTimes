@@ -29,7 +29,7 @@ import net.sf.times.ZmanimWidget;
 /**
  * This fragment shows the preferences for a header.
  */
-public abstract class AbstractPreferenceFragment extends net.sf.times.common.preference.AbstractPreferenceFragment {
+public abstract class AbstractPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
 
     @Override
     protected void notifyPreferenceChanged() {

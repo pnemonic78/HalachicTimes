@@ -26,7 +26,7 @@ import net.sf.times.R;
 /**
  * This fragment shows the preferences for the Zmanim header.
  */
-public class ZmanimPreferenceFragment extends AbstractPreferenceFragment {
+public class ZmanimPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {

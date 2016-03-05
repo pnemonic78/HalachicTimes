@@ -21,7 +21,7 @@ package net.sf.times.compass.preference;
 
 import android.os.Bundle;
 
-import net.sf.times.common.preference.AbstractPreferenceFragment;
+import net.sf.preference.AbstractPreferenceFragment;
 import net.sf.times.compass.R;
 
 /**

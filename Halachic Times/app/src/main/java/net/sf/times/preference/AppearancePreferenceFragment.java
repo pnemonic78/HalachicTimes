@@ -26,7 +26,7 @@ import net.sf.times.R;
 /**
  * This fragment shows the preferences for the Appearance header.
  */
-public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
+public class AppearancePreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {

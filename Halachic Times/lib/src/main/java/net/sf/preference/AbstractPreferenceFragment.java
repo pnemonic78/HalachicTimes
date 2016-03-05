@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  *
  */
-package net.sf.times.common.preference;
+package net.sf.preference;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,9 +30,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import net.sf.preference.RingtonePreference;
-import net.sf.preference.TimePreference;
-import net.sf.times.common.R;
+import net.sf.lib.R;
 
 /**
  * This fragment shows the preferences for a header.

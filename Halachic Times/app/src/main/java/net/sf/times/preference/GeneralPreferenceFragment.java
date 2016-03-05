@@ -32,7 +32,7 @@ import net.sf.times.compass.preference.CompassSettings;
 /**
  * This fragment shows the preferences for the General header.
  */
-public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
+public class GeneralPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
 
     private RingtonePreference reminderRingtonePreference;
 

@@ -29,7 +29,7 @@ import net.sf.times.location.LocationApplication;
 /**
  * This fragment shows the preferences for the Privacy and Security header.
  */
-public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
+public class PrivacyPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
 
     private Preference clearHistory;
 
