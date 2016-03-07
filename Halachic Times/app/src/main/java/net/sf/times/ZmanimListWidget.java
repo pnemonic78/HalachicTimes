@@ -19,6 +19,10 @@
  */
 package net.sf.times;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.widget.RemoteViews;
+
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a
  * widget.
@@ -34,8 +38,24 @@ public class ZmanimListWidget extends ZmanimWidget {
     }
 
     @Override
-    protected boolean isRemoteList() {
-        return true;
+    protected int getLayoutId() {
+        return R.layout.widget_list;
+    }
+
+    @Override
+    protected void notifyAppWidgetViewDataChanged(Context context) {
+        notifyAppWidgetViewDataChanged11(context);
+    }
+
+    @Override
+    protected ZmanimAdapter populateWidgetTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+        populateScrollableTimes(appWidgetId, views, activityPendingIntent);
+        return null;
+    }
+
+    protected void populateScrollableTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
+        views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
+        bindListView(appWidgetId, views);
     }
 
 }

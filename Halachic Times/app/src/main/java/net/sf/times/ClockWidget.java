@@ -104,11 +104,6 @@ public class ClockWidget extends ZmanimWidget {
     }
 
     @Override
-    protected boolean isRemoteList() {
-        return false;
-    }
-
-    @Override
     protected void notifyAppWidgetViewDataChanged(Context context) {
         timeFormat = null;
         super.notifyAppWidgetViewDataChanged(context);

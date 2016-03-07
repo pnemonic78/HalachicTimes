@@ -164,7 +164,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
     protected void prePopulate(A adapter) {
         adapter.clear();
-        adapter.setCalendar(calendar);
+        adapter.setCalendar((ComplexZmanimCalendar) calendar.clone());
         adapter.setInIsrael(inIsrael);
     }
 

@@ -186,11 +186,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
             views = new RemoteViews(packageName, layoutId);
 
-            if (isRemoteList()) {
-                populateScrollableTimes(appWidgetId, views, activityPendingIntent);
-            } else {
-                adapter = populateStaticTimes(appWidgetId, views, activityPendingIntent, viewId, now);
-            }
+            adapter = populateWidgetTimes(appWidgetId, views, activityPendingIntent, viewId, now);
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
@@ -442,8 +438,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      * @return the layout id.
      */
     protected int getLayoutId() {
-        if (isRemoteList())
-            return R.layout.widget_list;
         if (isDeviceNokia())
             return R.layout.widget_static_nokia;
         return R.layout.widget_static;
@@ -456,15 +450,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      */
     protected int getIntentViewId() {
         return android.R.id.list;
-    }
-
-    /**
-     * Is the widget a list with remote adapter?
-     *
-     * @return {@code true} if remote list.
-     */
-    protected boolean isRemoteList() {
-        return false;
     }
 
     /**
@@ -485,11 +470,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     }
 
     protected void notifyAppWidgetViewDataChanged(Context context) {
-        if (isRemoteList()) {
-            notifyAppWidgetViewDataChanged11(context);
-        } else {
-            populateTimes(context);
-        }
+        populateTimes(context);
     }
 
     protected void notifyAppWidgetViewDataChanged11(Context context) {
@@ -521,6 +502,10 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         RemoteViews row = new RemoteViews(pkg, R.layout.widget_date);
         row.setTextViewText(R.id.date_hebrew, label);
         list.addView(android.R.id.list, row);
+    }
+
+    protected ZmanimAdapter populateWidgetTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+        return populateStaticTimes(appWidgetId, views, activityPendingIntent, viewId, now);
     }
 
     protected ZmanimAdapter populateStaticTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
@@ -556,11 +541,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         bindViews(views, adapter, adapterTomorrow);
 
         return adapter;
-    }
-
-    protected void populateScrollableTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
-        views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
-        bindListView(appWidgetId, views);
     }
 
     /**
