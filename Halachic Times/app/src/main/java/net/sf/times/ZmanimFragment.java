@@ -57,6 +57,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected ZmanimLocations locations;
     /** The settings and preferences. */
     protected ZmanimSettings settings;
+    /** The master item selected id. */
+    private int highlightItemId;
     /** The master item selected row. */
     private View highlightRow;
     /** The master item background that is selected. */
@@ -244,6 +246,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 position++;
             }
         }
+
+        highlight(highlightItemId);
     }
 
     /**
@@ -324,6 +328,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      *         the row view.
      */
     private void unhighlight(View view) {
+        highlightItemId = 0;
+        highlightRow = null;
+
         Drawable bg = unhighlightBackground;
         if ((view == null) || (bg == null))
             return;
@@ -346,10 +353,16 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      *         the row id.
      */
     public void highlight(int itemId) {
+        highlightItemId = itemId;
+        highlightRow = null;
+        if (itemId == 0) {
+            return;
+        }
         // Find the view that matches the item id (the view that was clicked).
         final ViewGroup list = this.list;
         if (list == null)
             return;
+
         View view = null;
         View child;
         ZmanimItem item;
