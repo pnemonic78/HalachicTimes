@@ -28,7 +28,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -102,7 +101,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private final Calendar date = Calendar.getInstance();
     /** The location header. */
     private View header;
-    private final Rect headerRect = new Rect();
     /** The navigation bar. */
     private View navigationBar;
     /** Provider for locations. */
@@ -314,6 +312,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         }
 
         header = view.findViewById(R.id.header);
+        header.setOnClickListener(this);
         navigationBar = header.findViewById(R.id.navigation_bar);
 
         View iconBack = navigationBar.findViewById(R.id.nav_yesterday);
@@ -682,13 +681,9 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if ((e1 == null) || (e2 == null))
-            return false;
         // Go to date?
-        float dX = e2.getX() - e1.getX();
-        float dY = e2.getY() - e1.getY();
-        if (Math.abs(dX) > Math.abs(dY)) {
-            if (dX < 0) {
+        if (Math.abs(velocityX) >= Math.abs(velocityY)) {
+            if (velocityX < 0) {
                 if (localeRTL) {
                     navigateYesterday();
                 } else {
@@ -708,16 +703,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-        View header = this.header;
-        if (header != null) {
-            int x = (int) e.getX();
-            int y = (int) e.getY();
-            header.getGlobalVisibleRect(headerRect);
-            if (headerRect.contains(x, y)) {
-                onClick(header);
-                return true;
-            }
-        }
         return false;
     }
 
