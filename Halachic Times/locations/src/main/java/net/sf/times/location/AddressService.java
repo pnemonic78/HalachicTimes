@@ -116,6 +116,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
             provider.insertOrUpdateElevation(elevated);
 
             Intent result = new Intent(ELEVATION_ACTION);
+            result.setPackage(getPackageName());
             result.putExtra(PARAMETER_LOCATION, elevated);
             sendBroadcast(result);
         }
