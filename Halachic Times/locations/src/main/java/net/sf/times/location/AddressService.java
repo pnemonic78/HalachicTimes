@@ -97,6 +97,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
         }
 
         Intent result = new Intent(ADDRESS_ACTION);
+        result.setPackage(getPackageName());
         result.putExtra(PARAMETER_LOCATION, location);
         result.putExtra(PARAMETER_ADDRESS, addr);
         sendBroadcast(result);

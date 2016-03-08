@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
@@ -165,6 +166,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
+                String intentPackage = intent.getPackage();
+                if (TextUtils.isEmpty(intentPackage) || !context.getPackageName().equals(intentPackage)) {
+                    return;
+                }
                 if (ADDRESS_ACTION.equals(action)) {
                     Bundle intentExtras = intent.getExtras();
                     Location location = null;
