@@ -648,7 +648,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             return super.onSearchRequested();
 
         ZmanimAddress address = this.address;
-        String query = (address != null) ? address.getFormatted().toString() : null;
+        String query = (address != null) ? address.getFormatted() : null;
 
         Bundle appData = new Bundle();
         appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
