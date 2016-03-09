@@ -813,7 +813,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 int y = gcal.get(Calendar.YEAR);
                 int m = gcal.get(Calendar.MONTH);
                 int d = gcal.get(Calendar.DAY_OF_MONTH);
-                jcal.forward();// Molad is always of the previous month.
+
+                // Molad is always of the previous month.
+                int jLastDatOfMonth = jcal.getDaysInJewishMonth();
+                if (jDayOfMonth < jLastDatOfMonth) {
+                    jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
+                }
+                jcal.forward();
+
                 JewishDate molad = jcal.getMolad();
                 int moladYear = molad.getGregorianYear();
                 int moladMonth = molad.getGregorianMonth();
