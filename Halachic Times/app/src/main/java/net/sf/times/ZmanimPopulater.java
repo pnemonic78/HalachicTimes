@@ -806,59 +806,57 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         adapter.add(R.string.midnight, summary, date, remote);
 
-        if (!remote) {
-            final int jDayOfMonth = jcal.getJewishDayOfMonth();
-            // Molad.
-            if ((jDayOfMonth <= 1) || (jDayOfMonth >= 25)) {
-                int y = gcal.get(Calendar.YEAR);
-                int m = gcal.get(Calendar.MONTH);
-                int d = gcal.get(Calendar.DAY_OF_MONTH);
+        final int jDayOfMonth = jcal.getJewishDayOfMonth();
+        // Molad.
+        if ((jDayOfMonth <= 1) || (jDayOfMonth >= 25)) {
+            int y = gcal.get(Calendar.YEAR);
+            int m = gcal.get(Calendar.MONTH);
+            int d = gcal.get(Calendar.DAY_OF_MONTH);
 
-                // Molad is always of the previous month.
-                int jLastDatOfMonth = jcal.getDaysInJewishMonth();
-                if (jDayOfMonth < jLastDatOfMonth) {
-                    jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
-                }
-                jcal.forward();
+            // Molad is always of the previous month.
+            int jLastDatOfMonth = jcal.getDaysInJewishMonth();
+            if (jDayOfMonth < jLastDatOfMonth) {
+                jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
+            }
+            jcal.forward();
 
-                JewishDate molad = jcal.getMolad();
-                int moladYear = molad.getGregorianYear();
-                int moladMonth = molad.getGregorianMonth();
-                int moladDay = molad.getGregorianDayOfMonth();
-                if ((moladYear == y) && (moladMonth == m) && (moladDay == d)) {
-                    double moladSeconds = (molad.getMoladChalakim() * 10.0) / 3.0;
-                    double moladSecondsFloor = Math.floor(moladSeconds);
-                    Calendar calMolad = (Calendar) gcal.clone();
-                    calMolad.set(moladYear, moladMonth, moladDay, molad.getMoladHours(), molad.getMoladMinutes(), (int) moladSecondsFloor);
-                    calMolad.set(Calendar.MILLISECOND, (int) (DateUtils.SECOND_IN_MILLIS * (moladSeconds - moladSecondsFloor)));
-                    summary = R.string.molad_summary;
-                    adapter.add(R.string.molad, summary, calMolad.getTime(), remote);
-                }
+            JewishDate molad = jcal.getMolad();
+            int moladYear = molad.getGregorianYear();
+            int moladMonth = molad.getGregorianMonth();
+            int moladDay = molad.getGregorianDayOfMonth();
+            if ((moladYear == y) && (moladMonth == m) && (moladDay == d)) {
+                double moladSeconds = (molad.getMoladChalakim() * 10.0) / 3.0;
+                double moladSecondsFloor = Math.floor(moladSeconds);
+                Calendar calMolad = (Calendar) gcal.clone();
+                calMolad.set(moladYear, moladMonth, moladDay, molad.getMoladHours(), molad.getMoladMinutes(), (int) moladSecondsFloor);
+                calMolad.set(Calendar.MILLISECOND, (int) (DateUtils.SECOND_IN_MILLIS * (moladSeconds - moladSecondsFloor)));
+                summary = R.string.molad_summary;
+                adapter.add(R.string.molad, summary, calMolad.getTime(), remote);
             }
-            // First Kiddush Levana.
-            else if ((jDayOfMonth >= 2) && (jDayOfMonth <= 8)) {
-                opinion = settings.getEarliestKiddushLevana();
-                if (OPINION_7.equals(opinion)) {
-                    date = cal.getTchilasZmanKidushLevana7Days();
-                    summary = R.string.levana_7;
-                } else {
-                    date = cal.getTchilasZmanKidushLevana3Days();
-                    summary = R.string.levana_earliest_summary;
-                }
-                adapter.add(R.string.levana_earliest, summary, date, remote);
+        }
+        // First Kiddush Levana.
+        else if ((jDayOfMonth >= 2) && (jDayOfMonth <= 8)) {
+            opinion = settings.getEarliestKiddushLevana();
+            if (OPINION_7.equals(opinion)) {
+                date = cal.getTchilasZmanKidushLevana7Days();
+                summary = R.string.levana_7;
+            } else {
+                date = cal.getTchilasZmanKidushLevana3Days();
+                summary = R.string.levana_earliest_summary;
             }
-            // Last Kiddush Levana.
-            else if ((jDayOfMonth > 10) && (jDayOfMonth < 20)) {
-                opinion = settings.getLatestKiddushLevana();
-                if (OPINION_15.equals(opinion)) {
-                    date = cal.getSofZmanKidushLevana15Days();
-                    summary = R.string.levana_15;
-                } else {
-                    date = cal.getSofZmanKidushLevanaBetweenMoldos();
-                    summary = R.string.levana_latest_summary;
-                }
-                adapter.add(R.string.levana_latest, summary, date, remote);
+            adapter.add(R.string.levana_earliest, summary, date, remote);
+        }
+        // Last Kiddush Levana.
+        else if ((jDayOfMonth > 10) && (jDayOfMonth < 20)) {
+            opinion = settings.getLatestKiddushLevana();
+            if (OPINION_15.equals(opinion)) {
+                date = cal.getSofZmanKidushLevana15Days();
+                summary = R.string.levana_15;
+            } else {
+                date = cal.getSofZmanKidushLevanaBetweenMoldos();
+                summary = R.string.levana_latest_summary;
             }
+            adapter.add(R.string.levana_latest, summary, date, remote);
         }
 
         adapter.sort();
