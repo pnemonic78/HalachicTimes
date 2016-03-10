@@ -59,6 +59,9 @@ public class CountriesGeocoder extends GeocoderBase {
     /** Maximum radius for which a zman is the same (20 kilometres). */
     private static final float CITY_RADIUS = 20000f;
 
+    /** The results index for the distance. */
+    private static final int INDEX_DISTANCE = 0;
+
     private static CountryPolygon[] countryBorders;
     private String[] citiesNames;
     private static String[] citiesCountries;
@@ -135,7 +138,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *
      * @param location
      *         the location.
-     * @return the city - {@code null} otherwise.
+     * @return the country - {@code null} otherwise.
      */
     public Address findCountry(Location location) {
         return findCountry(location.getLatitude(), location.getLongitude());
@@ -148,11 +151,37 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the latitude.
      * @param longitude
      *         the longitude.
-     * @return the location - {@code null} otherwise.
+     * @return the country - {@code null} otherwise.
      */
     public Address findCountry(double latitude, double longitude) {
-        final int fixedpointLatitude = (int) Math.rint(latitude * RATIO);
-        final int fixedpointLongitude = (int) Math.rint(longitude * RATIO);
+        int countryIndex = findCountryIndex(latitude, longitude);
+        if (countryIndex < 0) {
+            return null;
+        }
+
+        Locale locale = new Locale(getLanguage(), countryBorders[countryIndex].countryCode);
+        ZmanimAddress address = new ZmanimAddress(locale);
+        address.setId(-countryIndex);
+        address.setLatitude(latitude);
+        address.setLongitude(longitude);
+        address.setCountryCode(locale.getCountry());
+        address.setCountryName(locale.getDisplayCountry());
+
+        return address;
+    }
+
+    /**
+     * Find the nearest country index for the location.
+     *
+     * @param latitude
+     *         the latitude.
+     * @param longitude
+     *         the longitude.
+     * @return the country index - {@code -1} otherwise.
+     */
+    public int findCountryIndex(double latitude, double longitude) {
+        final int fixedPointLatitude = (int) Math.rint(latitude * RATIO);
+        final int fixedPointLongitude = (int) Math.rint(longitude * RATIO);
         double distanceToBorder;
         double distanceMin = Double.MAX_VALUE;
         int found = -1;
@@ -163,22 +192,19 @@ public class CountriesGeocoder extends GeocoderBase {
 
         for (int c = 0; (c < countriesSize) && (matchesCount < MAX_COUNTRIES_OVERLAP); c++) {
             country = countryBorders[c];
-            if (country.containsBox(fixedpointLatitude, fixedpointLongitude))
+            if (country.containsBox(fixedPointLatitude, fixedPointLongitude))
                 matches[matchesCount++] = c;
         }
         if (matchesCount == 0) {
             // Find the nearest border.
             for (int c = 0; c < countriesSize; c++) {
                 country = countryBorders[c];
-                distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+                distanceToBorder = country.minimumDistanceToBorders(fixedPointLatitude, fixedPointLongitude);
                 if (distanceToBorder < distanceMin) {
                     distanceMin = distanceToBorder;
                     found = c;
                 }
             }
-
-            if (found < 0)
-                return null;
         } else if (matchesCount == 1) {
             found = matches[0];
         } else {
@@ -204,8 +230,8 @@ public class CountriesGeocoder extends GeocoderBase {
                 for (int m = 0; m < matchesCount; m++) {
                     matchCountryIndex = matches[m];
                     country = countryBorders[matchCountryIndex];
-                    if (country.contains(fixedpointLatitude, fixedpointLongitude)) {
-                        distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+                    if (country.contains(fixedPointLatitude, fixedPointLongitude)) {
+                        distanceToBorder = country.minimumDistanceToBorders(fixedPointLatitude, fixedPointLongitude);
                         if (distanceToBorder < distanceMin) {
                             distanceMin = distanceToBorder;
                             found = matchCountryIndex;
@@ -218,7 +244,7 @@ public class CountriesGeocoder extends GeocoderBase {
                     for (int m = 0; m < matchesCount; m++) {
                         matchCountryIndex = matches[m];
                         country = countryBorders[matchCountryIndex];
-                        distanceToBorder = country.minimumDistanceToBorders(fixedpointLatitude, fixedpointLongitude);
+                        distanceToBorder = country.minimumDistanceToBorders(fixedPointLatitude, fixedPointLongitude);
                         if (distanceToBorder < distanceMin) {
                             distanceMin = distanceToBorder;
                             found = matchCountryIndex;
@@ -228,15 +254,7 @@ public class CountriesGeocoder extends GeocoderBase {
             }
         }
 
-        Locale locale = new Locale(getLanguage(), countryBorders[found].countryCode);
-        ZmanimAddress location = new ZmanimAddress(locale);
-        location.setId(-found);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setCountryCode(locale.getCountry());
-        location.setCountryName(locale.getDisplayCountry());
-
-        return location;
+        return found;
     }
 
     /**
@@ -292,8 +310,8 @@ public class CountriesGeocoder extends GeocoderBase {
             if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
                 latitude = citiesLatitudes[cityIndex];
                 Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
-                if (distances[0] <= distanceMin) {
-                    distanceMin = distances[0];
+                if (distances[INDEX_DISTANCE] <= distanceMin) {
+                    distanceMin = distances[INDEX_DISTANCE];
                     nearestCityIndex = cityIndex;
                 }
             }
@@ -303,6 +321,7 @@ public class CountriesGeocoder extends GeocoderBase {
             loc.setLatitude(citiesLatitudes[nearestCityIndex]);
             loc.setLongitude(citiesLongitudes[nearestCityIndex]);
             loc.setAltitude(citiesElevations[nearestCityIndex]);
+            loc.setAccuracy(distanceMin);
         }
 
         return loc;
@@ -331,8 +350,8 @@ public class CountriesGeocoder extends GeocoderBase {
             latitude = citiesLatitudes[i];
             longitude = citiesLongitudes[i];
             Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
-            if (distances[0] <= distanceMin) {
-                distanceMin = distances[0];
+            if (distances[INDEX_DISTANCE] <= distanceMin) {
+                distanceMin = distances[INDEX_DISTANCE];
                 if (distanceMin <= CITY_RADIUS) {
                     nearestCityIndex = i;
                 }
@@ -412,7 +431,7 @@ public class CountriesGeocoder extends GeocoderBase {
             cityLatitude = citiesLatitudes[i];
             cityLongitude = citiesLongitudes[i];
             Location.distanceBetween(latitude, longitude, cityLatitude, cityLongitude, distances);
-            if (distances[0] <= CITY_RADIUS) {
+            if (distances[INDEX_DISTANCE] <= CITY_RADIUS) {
                 cityLocale = new Locale(getLanguage(), citiesCountries[i]);
 
                 city = new ZmanimAddress(locale);
@@ -461,7 +480,7 @@ public class CountriesGeocoder extends GeocoderBase {
             if (!city.hasElevation())
                 continue;
             Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distanceCity);
-            distance = distanceCity[0];
+            distance = distanceCity[INDEX_DISTANCE];
             if (distance <= SAME_PLATEAU) {
                 if (distance < distanceCityMin) {
                     cityNearest = city;
