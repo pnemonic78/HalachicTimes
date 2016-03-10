@@ -30,9 +30,9 @@ public interface ZmanimLocationListener extends LocationListener {
     /** The address parameter. */
     String PARAMETER_ADDRESS = "address";
     /** The intent action for an address that was found. */
-    String ADDRESS_ACTION = "net.sf.times.location.ADDRESS";
+    String ACTION_ADDRESS = "net.sf.times.location.ADDRESS";
     /** The intent action for a location with elevation that was found. */
-    String ELEVATION_ACTION = "net.sf.times.location.ELEVATION";
+    String ACTION_ELEVATION = "net.sf.times.location.ELEVATION";
 
     /**
      * Called when an address is found.

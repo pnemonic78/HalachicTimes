@@ -36,8 +36,8 @@ public class AddressService extends IntentService implements OnFindAddressListen
 
     private static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
     private static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
-    private static final String ADDRESS_ACTION = ZmanimLocationListener.ADDRESS_ACTION;
-    private static final String ELEVATION_ACTION = ZmanimLocationListener.ELEVATION_ACTION;
+    private static final String ACTION_ADDRESS = ZmanimLocationListener.ACTION_ADDRESS;
+    private static final String ACTION_ELEVATION = ZmanimLocationListener.ACTION_ELEVATION;
 
     private static final String NAME = "AddressService";
 
@@ -75,9 +75,9 @@ public class AddressService extends IntentService implements OnFindAddressListen
         if (provider == null)
             return;
         String action = intent.getAction();
-        if (ADDRESS_ACTION.equals(action)) {
+        if (ACTION_ADDRESS.equals(action)) {
             provider.findNearestAddress(location, this);
-        } else if (ELEVATION_ACTION.equals(action)) {
+        } else if (ACTION_ELEVATION.equals(action)) {
             provider.findElevation(location, this);
         }
     }
@@ -96,7 +96,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
             provider.insertOrUpdateAddress(location, addr);
         }
 
-        Intent result = new Intent(ADDRESS_ACTION);
+        Intent result = new Intent(ACTION_ADDRESS);
         result.setPackage(getPackageName());
         result.putExtra(PARAMETER_LOCATION, location);
         result.putExtra(PARAMETER_ADDRESS, addr);
@@ -115,7 +115,7 @@ public class AddressService extends IntentService implements OnFindAddressListen
         if (elevated != null) {
             provider.insertOrUpdateElevation(elevated);
 
-            Intent result = new Intent(ELEVATION_ACTION);
+            Intent result = new Intent(ACTION_ELEVATION);
             result.setPackage(getPackageName());
             result.putExtra(PARAMETER_LOCATION, elevated);
             sendBroadcast(result);

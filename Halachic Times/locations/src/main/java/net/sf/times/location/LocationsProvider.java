@@ -138,8 +138,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private long startTaskDelay = UPDATE_TIME_START;
     /** The next time to stop update locations. */
     private final long stopTaskDelay = UPDATE_DURATION;
-    /** The address receiver. */
-    private final BroadcastReceiver addressReceiver;
     /** The location is externally set? */
     private boolean manualLocation;
     /** The location formatter. */
@@ -162,44 +160,12 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         timeZone = TimeZone.getDefault();
         formatterHelper = createLocationFormatter(context);
 
-        addressReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                String action = intent.getAction();
-                String intentPackage = intent.getPackage();
-                if (TextUtils.isEmpty(intentPackage) || !context.getPackageName().equals(intentPackage)) {
-                    return;
-                }
-                if (ADDRESS_ACTION.equals(action)) {
-                    Bundle intentExtras = intent.getExtras();
-                    Location location = null;
-                    ZmanimAddress address = null;
-                    if (intentExtras != null) {
-                        intentExtras.setClassLoader(getClass().getClassLoader());
-                        location = intentExtras.getParcelable(PARAMETER_LOCATION);
-                        address = intentExtras.getParcelable(PARAMETER_ADDRESS);
-                    }
-                    if (address != null) {
-                        Bundle extras = address.getExtras();
-                        if (extras == null) {
-                            extras = new Bundle();
-                            address.setExtras(extras);
-                        }
-                        extras.putParcelable(PARAMETER_LOCATION, location);
-                        handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
-                    } else {
-                        handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
-                    }
-                } else if (ELEVATION_ACTION.equals(action)) {
-                    Location location = intent.getParcelableExtra(PARAMETER_LOCATION);
-                    handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
-                }
-            }
-        };
-        IntentFilter filter = new IntentFilter(ADDRESS_ACTION);
-        context.registerReceiver(addressReceiver, filter);
-        filter = new IntentFilter(ELEVATION_ACTION);
-        context.registerReceiver(addressReceiver, filter);
+        IntentFilter filter = new IntentFilter(ACTION_ADDRESS);
+        context.registerReceiver(broadcastReceiver, filter);
+        filter = new IntentFilter(ACTION_ELEVATION);
+        context.registerReceiver(broadcastReceiver, filter);
+        filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
+        context.registerReceiver(broadcastReceiver, filter);
 
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();
@@ -739,7 +705,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         removeUpdates();
         handler.removeMessages(WHAT_START);
 
-        context.unregisterReceiver(addressReceiver);
+        context.unregisterReceiver(broadcastReceiver);
 
         Looper looper = handlerThread.getLooper();
         if (looper != null) {
@@ -794,14 +760,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     private void findAddress(Location location) {
         Intent findAddress = new Intent(context, AddressService.class);
-        findAddress.setAction(ADDRESS_ACTION);
+        findAddress.setAction(ACTION_ADDRESS);
         findAddress.putExtra(PARAMETER_LOCATION, location);
         context.startService(findAddress);
     }
 
     private void findElevation(Location location) {
         Intent findElevation = new Intent(context, AddressService.class);
-        findElevation.setAction(ELEVATION_ACTION);
+        findElevation.setAction(ACTION_ELEVATION);
         findElevation.putExtra(PARAMETER_LOCATION, location);
         context.startService(findElevation);
     }
@@ -816,4 +782,53 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     protected LocationFormatter createLocationFormatter(Context context) {
         return new SimpleLocationFormatter(context);
     }
+
+    /** The receiver for addresses and date/time settings. */
+    private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (TextUtils.isEmpty(action)) {
+                return;
+            }
+            String intentPackage = intent.getPackage();
+            Location location = null;
+
+            switch (action) {
+                case ACTION_ADDRESS:
+                    if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
+                        return;
+                    }
+                    Bundle intentExtras = intent.getExtras();
+                    ZmanimAddress address = null;
+                    if (intentExtras != null) {
+                        location = intentExtras.getParcelable(PARAMETER_LOCATION);
+                        address = intentExtras.getParcelable(PARAMETER_ADDRESS);
+                    }
+                    if (address != null) {
+                        Bundle extras = address.getExtras();
+                        if (extras == null) {
+                            extras = new Bundle();
+                            address.setExtras(extras);
+                        }
+                        extras.putParcelable(PARAMETER_LOCATION, location);
+                        handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
+                    } else {
+                        handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
+                    }
+                    break;
+                case ACTION_ELEVATION:
+                    if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
+                        return;
+                    }
+                    location = intent.getParcelableExtra(PARAMETER_LOCATION);
+                    handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
+                    break;
+                case Intent.ACTION_TIMEZONE_CHANGED:
+                    timeZone = TimeZone.getDefault();
+                    break;
+            }
+        }
+    };
+
 }
