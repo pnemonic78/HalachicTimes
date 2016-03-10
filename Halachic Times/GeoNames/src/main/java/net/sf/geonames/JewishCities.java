@@ -1,3 +1,22 @@
+/*
+ * Source file of the Halachic Times project.
+ * Copyright (c) 2012. All Rights Reserved.
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 2.0 (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/2.0
+ *
+ * Contributors can be contacted by electronic mail via the project Web pages:
+ *
+ * http://sourceforge.net/projects/halachictimes
+ *
+ * http://halachictimes.sourceforge.net
+ *
+ * Contributor(s):
+ *   Moshe Waisberg
+ *
+ */
 package net.sf.geonames;
 
 import java.io.File;
@@ -10,6 +29,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -246,11 +266,13 @@ public class JewishCities extends Cities {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = builderFactory.newDocumentBuilder();
         Document doc = builder.newDocument();
-        TransformerFactory xformerFactory = TransformerFactory.newInstance();
-        Transformer xformer = xformerFactory.newTransformer();
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
         File file;
         if (language == null)
-            file = new File(APP_RES, "/values/cities.xml");
+            file = new File(APP_RES, "values/cities.xml");
         else
             file = new File(APP_RES, "values-" + language + "/cities.xml");
         file.getParentFile().mkdirs();
@@ -277,27 +299,35 @@ public class JewishCities extends Cities {
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(longitudesElement);
+        Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_time_zones");
+        zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
+        if (language == null)
+            resources.appendChild(zonesElement);
 
-        Element city, country, latitude, longitude;
+        Element city, country, latitude, longitude, zone;
 
-        for (GeoName name : sorted) {
+        for (GeoName place : sorted) {
             city = doc.createElement(ANDROID_ELEMENT_ITEM);
-            city.setTextContent(name.getName());
+            city.setTextContent(place.getName());
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
-            country.setTextContent(name.getCountryCode());
+            country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            latitude.setTextContent(String.valueOf(name.getLatitude()));
+            latitude.setTextContent(String.valueOf(place.getLatitude()));
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            longitude.setTextContent(String.valueOf(name.getLongitude()));
+            longitude.setTextContent(String.valueOf(place.getLongitude()));
+            zone = doc.createElement(ANDROID_ELEMENT_ITEM);
+            zone.setTextContent(place.getTimeZone());
 
             citiesElement.appendChild(city);
             countriesElement.appendChild(country);
             latitudesElement.appendChild(latitude);
             longitudesElement.appendChild(longitude);
+            zonesElement.appendChild(zone);
         }
 
         Source src = new DOMSource(doc);
         Result result = new StreamResult(file);
-        xformer.transform(src, result);
+        transformer.transform(src, result);
     }
 }

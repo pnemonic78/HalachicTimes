@@ -322,6 +322,86 @@
         <item>151.20732</item>
         <item>174.76667</item>
     </string-array>
+    <string-array name="cities_time_zones" translatable="false">
+        <item>America/Vancouver</item>
+        <item>America/Los_Angeles</item>
+        <item>America/Los_Angeles</item>
+        <item>America/Los_Angeles</item>
+        <item>America/Los_Angeles</item>
+        <item>America/Phoenix</item>
+        <item>America/Denver</item>
+        <item>America/Denver</item>
+        <item>America/Mexico_City</item>
+        <item>America/Chicago</item>
+        <item>America/Chicago</item>
+        <item>America/Chicago</item>
+        <item>America/Chicago</item>
+        <item>America/Chicago</item>
+        <item>America/New_York</item>
+        <item>America/Detroit</item>
+        <item>America/New_York</item>
+        <item>America/New_York</item>
+        <item>America/Toronto</item>
+        <item>America/New_York</item>
+        <item>America/New_York</item>
+        <item>America/New_York</item>
+        <item>America/Bogota</item>
+        <item>America/New_York</item>
+        <item>America/Toronto</item>
+        <item>America/New_York</item>
+        <item>America/New_York</item>
+        <item>America/Argentina/Buenos_Aires</item>
+        <item>America/Sao_Paulo</item>
+        <item>America/Sao_Paulo</item>
+        <item>Africa/Casablanca</item>
+        <item>Europe/Madrid</item>
+        <item>Europe/London</item>
+        <item>Europe/London</item>
+        <item>Europe/Paris</item>
+        <item>Europe/Brussels</item>
+        <item>Europe/Paris</item>
+        <item>Europe/Amsterdam</item>
+        <item>Europe/Paris</item>
+        <item>Europe/Zurich</item>
+        <item>Europe/Paris</item>
+        <item>Europe/Zurich</item>
+        <item>Europe/Berlin</item>
+        <item>Europe/Rome</item>
+        <item>Europe/Berlin</item>
+        <item>Europe/Vienna</item>
+        <item>Europe/Stockholm</item>
+        <item>Europe/Sarajevo</item>
+        <item>Africa/Johannesburg</item>
+        <item>Europe/Budapest</item>
+        <item>Europe/Helsinki</item>
+        <item>Africa/Johannesburg</item>
+        <item>Europe/Istanbul</item>
+        <item>Europe/Moscow</item>
+        <item>Europe/Kiev</item>
+        <item>Africa/Johannesburg</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Europe/Moscow</item>
+        <item>Africa/Addis_Ababa</item>
+        <item>Asia/Kolkata</item>
+        <item>Asia/Kolkata</item>
+        <item>Australia/Perth</item>
+        <item>Australia/Melbourne</item>
+        <item>Australia/Sydney</item>
+        <item>Pacific/Auckland</item>
+    </string-array>
     <string-array name="cities_elevations" translatable="false">
         <item>63</item>
         <item>60</item>

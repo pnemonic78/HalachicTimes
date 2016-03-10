@@ -33,6 +33,7 @@ import java.util.TreeSet;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -258,8 +259,10 @@ public class Cities {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = builderFactory.newDocumentBuilder();
         Document doc = builder.newDocument();
-        TransformerFactory xformerFactory = TransformerFactory.newInstance();
-        Transformer xformer = xformerFactory.newTransformer();
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
         File file;
         if (language == null)
             file = new File(APP_RES, "values/cities.xml");
@@ -290,22 +293,22 @@ public class Cities {
         if (language == null)
             resources.appendChild(longitudesElement);
         Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "timezones");
+        zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "time_zones");
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(zonesElement);
 
         Element country, latitude, longitude, zone;
 
-        for (GeoName capital : sorted) {
+        for (GeoName place : sorted) {
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
-            country.setTextContent(capital.getCountryCode());
+            country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            latitude.setTextContent(String.valueOf(capital.getLatitude()));
+            latitude.setTextContent(String.valueOf(place.getLatitude()));
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            longitude.setTextContent(String.valueOf(capital.getLongitude()));
+            longitude.setTextContent(String.valueOf(place.getLongitude()));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-            zone.setTextContent(capital.getTimeZone());
+            zone.setTextContent(place.getTimeZone());
 
             countriesElement.appendChild(country);
             latitudesElement.appendChild(latitude);
@@ -315,7 +318,7 @@ public class Cities {
 
         Source src = new DOMSource(doc);
         Result result = new StreamResult(file);
-        xformer.transform(src, result);
+        transformer.transform(src, result);
     }
 
     /**

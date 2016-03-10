@@ -63,6 +63,7 @@ public class CountriesGeocoder extends GeocoderBase {
     private static double[] citiesLatitudes;
     private static double[] citiesLongitudes;
     private static double[] citiesElevations;
+    private static String[] citiesTimeZones;
 
     /**
      * Constructs a new cities provider.
@@ -109,6 +110,8 @@ public class CountriesGeocoder extends GeocoderBase {
         }
         if (citiesCountries == null) {
             citiesCountries = res.getStringArray(R.array.cities_countries);
+            citiesTimeZones = res.getStringArray(R.array.cities_time_zones);
+
             int citiesCount = citiesCountries.length;
             String[] latitudes = res.getStringArray(R.array.cities_latitudes);
             String[] longitudes = res.getStringArray(R.array.cities_longitudes);
