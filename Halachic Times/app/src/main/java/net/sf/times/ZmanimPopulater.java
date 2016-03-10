@@ -461,7 +461,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (holidayToday == JewishCalendar.EREV_PESACH)
             adapter.add(R.string.eat_chametz, summary, date, remote);
 
-        if (!remote && (holidayToday == JewishCalendar.EREV_PESACH)) {
+        if (holidayToday == JewishCalendar.EREV_PESACH) {
             opinion = settings.getBurnChametz();
             if (OPINION_16_1.equals(opinion)) {
                 date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
