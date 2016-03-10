@@ -121,7 +121,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /** The owner location listeners for dispatching events. */
     private List<ZmanimLocationListener> locationListenersLoop = locationListeners;
     /** Service provider for locations. */
-    private LocationManager locationManager;
+    private final LocationManager locationManager;
     /** The location. */
     private Location location;
     /** The settings and preferences. */
@@ -659,6 +659,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     private void requestUpdatesBase() {
+        if (locationManager == null)
+            return;
+
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         criteria.setAltitudeRequired(true);
@@ -684,6 +687,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     @TargetApi(Build.VERSION_CODES.M)
     private void requestUpdates() {
+        if (locationManager == null)
+            return;
+
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
         criteria.setAltitudeRequired(true);
@@ -711,10 +717,12 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     private void removeUpdates() {
-        try {
-            locationManager.removeUpdates(this);
-        } catch (SecurityException e) {
-            Log.e(TAG, "remove updates: " + e.getLocalizedMessage(), e);
+        if (locationManager != null) {
+            try {
+                locationManager.removeUpdates(this);
+            } catch (SecurityException e) {
+                Log.e(TAG, "remove updates: " + e.getLocalizedMessage(), e);
+            }
         }
 
         if (!locationListeners.isEmpty()) {
