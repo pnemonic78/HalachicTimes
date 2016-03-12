@@ -45,8 +45,8 @@ public class CountriesGeocoder extends GeocoderBase {
 
     /** Degrees per time zone hour. */
     private static final double TZ_HOUR = 360 / 24;
-    /** 12 hours (half of 1 day), in milliseconds. */
-    private static final long TZ_12_HOURS_IN_MILLIS = 12 * DateUtils.HOUR_IN_MILLIS;
+    /** Middle of a time zone. */
+    private static final double TZ_HOUR_MIDDLE = TZ_HOUR * 0.5;
 
     /** Factor to convert a fixed-point integer to double. */
     private static final double RATIO = 1e+6;
@@ -271,44 +271,84 @@ public class CountriesGeocoder extends GeocoderBase {
         }
 
         String tzId = tz.getID();
-        long offset = tz.getRawOffset() % TZ_12_HOURS_IN_MILLIS;
-        double longitudeTZ = (TZ_HOUR * offset) / DateUtils.HOUR_IN_MILLIS;
+        long offsetMillis = tz.getRawOffset();
+        double longitudeTZ = ((TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS) + TZ_HOUR_MIDDLE;
+        if (longitudeTZ > 180) {
+            longitudeTZ -= 360;
+        } else if (longitudeTZ < 180) {
+            longitudeTZ += 360;
+        }
         loc.setLongitude(longitudeTZ);
 
         // Find a close city in the timezone.
         final int citiesCount = citiesNames.length;
-        double searchLatitude = 0;
-        double searchLongitude = longitudeTZ;
-        double longitudeWest = searchLongitude - TZ_HOUR;
-        double longitudeEast = searchLongitude + TZ_HOUR;
         double latitude;
         double longitude;
         float distanceMin = Float.MAX_VALUE;
-        float[] distances = new float[1];
         int nearestCityIndex = -1;
-        int[] citiesWithTimeZone = new int[citiesCount];
-        int citiesWithTimeZoneCount = 0;
+        int[] matches = new int[citiesCount];
+        int matchesCount = 0;
         int cityIndex;
 
         // First filter for all cities with the same time zone.
         for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
             if (citiesTimeZones[cityIndex].equals(tzId)) {
-                citiesWithTimeZone[citiesWithTimeZoneCount++] = cityIndex;
+                matches[matchesCount++] = cityIndex;
             }
         }
-        if (citiesWithTimeZoneCount == 0) {
+        if (matchesCount == 1) {
+            nearestCityIndex = matches[0];
+            loc.setLatitude(citiesLatitudes[nearestCityIndex]);
+            loc.setLongitude(citiesLongitudes[nearestCityIndex]);
+            loc.setAltitude(citiesElevations[nearestCityIndex]);
+            loc.setAccuracy(distanceMin);
+            return loc;
+        }
+
+        if (matchesCount == 0) {
+            // Maybe find the cities within related time zones.
+            // FIXME in case searchLongitude is edge case like +/-170 degrees.
+            double longitudeWest = longitudeTZ - TZ_HOUR;
+            double longitudeEast = longitudeTZ + TZ_HOUR;
+
             for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
-                citiesWithTimeZone[cityIndex] = cityIndex;
+                longitude = citiesLongitudes[cityIndex];
+                if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
+                    matches[matchesCount++] = cityIndex;
+                } else if (longitude > longitudeEast) {
+                    // Cities are sorted by longitude.
+                    break;
+                }
             }
-            citiesWithTimeZoneCount = citiesCount;
+        }
+
+        if (matchesCount == 1) {
+            nearestCityIndex = matches[0];
+            loc.setLatitude(citiesLatitudes[nearestCityIndex]);
+            loc.setLongitude(citiesLongitudes[nearestCityIndex]);
+            loc.setAltitude(citiesElevations[nearestCityIndex]);
+            loc.setAccuracy(distanceMin);
+            return loc;
         }
 
         // Next find the nearest city within the time zone.
-        for (int i = 0; i < citiesWithTimeZoneCount; i++) {
-            cityIndex = citiesWithTimeZone[i];
-            longitude = citiesLongitudes[cityIndex];
-            if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
+        if (matchesCount > 0) {
+            double searchLatitude = 0;
+            double searchLongitude = 0;
+            for (int i = 0; i < matchesCount; i++) {
+                cityIndex = matches[i];
+                searchLatitude += citiesLatitudes[cityIndex];
+                searchLongitude += citiesLongitudes[cityIndex];
+            }
+            searchLatitude /= matchesCount;
+            searchLongitude /= matchesCount;
+
+            float[] distances = new float[1];
+
+            for (int i = 0; i < matchesCount; i++) {
+                cityIndex = matches[i];
                 latitude = citiesLatitudes[cityIndex];
+                longitude = citiesLongitudes[cityIndex];
                 Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
                 if (distances[INDEX_DISTANCE] <= distanceMin) {
                     distanceMin = distances[INDEX_DISTANCE];
