@@ -45,11 +45,11 @@ public class CountriesGeocoder extends GeocoderBase {
 
     /** Degrees per time zone hour. */
     private static final double TZ_HOUR = 360 / 24;
-    /** Middle of a time zone. */
-    private static final double TZ_HOUR_MIDDLE = TZ_HOUR * 0.5;
+    /** Middle of a time zone, in degrees. */
+    private static final double TZ_HOUR_HALF = TZ_HOUR * 0.5;
 
     /** Factor to convert a fixed-point integer to double. */
-    private static final double RATIO = 1e+6;
+    private static final double RATIO = CountryPolygon.RATIO;
 
     /**
      * Not physically possible for more than 20 countries to overlap each other.
@@ -272,10 +272,10 @@ public class CountriesGeocoder extends GeocoderBase {
 
         String tzId = tz.getID();
         long offsetMillis = tz.getRawOffset();
-        double longitudeTZ = ((TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS) + TZ_HOUR_MIDDLE;
+        double longitudeTZ = ((TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS) + TZ_HOUR_HALF;
         if (longitudeTZ > 180) {
             longitudeTZ -= 360;
-        } else if (longitudeTZ < 180) {
+        } else if (longitudeTZ < -180) {
             longitudeTZ += 360;
         }
         loc.setLongitude(longitudeTZ);
@@ -306,29 +306,55 @@ public class CountriesGeocoder extends GeocoderBase {
         }
 
         if (matchesCount == 0) {
-            // Maybe find the cities within related time zones.
+            // Maybe find the cities within the time zone.
             // FIXME in case searchLongitude is edge case like +/-170 degrees.
-            double longitudeWest = longitudeTZ - TZ_HOUR;
-            double longitudeEast = longitudeTZ + TZ_HOUR;
+            double longitudeWest = longitudeTZ - TZ_HOUR_HALF;
+            double longitudeEast = longitudeTZ + TZ_HOUR_HALF;
 
             for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
                 longitude = citiesLongitudes[cityIndex];
                 if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
                     matches[matchesCount++] = cityIndex;
                 } else if (longitude > longitudeEast) {
-                    // Cities are sorted by longitude.
+                    // Cities are sorted by longitude ascending.
                     break;
                 }
             }
-        }
 
-        if (matchesCount == 1) {
-            nearestCityIndex = matches[0];
-            loc.setLatitude(citiesLatitudes[nearestCityIndex]);
-            loc.setLongitude(citiesLongitudes[nearestCityIndex]);
-            loc.setAltitude(citiesElevations[nearestCityIndex]);
-            loc.setAccuracy(distanceMin);
-            return loc;
+            if (matchesCount == 1) {
+                nearestCityIndex = matches[0];
+                loc.setLatitude(citiesLatitudes[nearestCityIndex]);
+                loc.setLongitude(citiesLongitudes[nearestCityIndex]);
+                loc.setAltitude(citiesElevations[nearestCityIndex]);
+                loc.setAccuracy(distanceMin);
+                return loc;
+            }
+
+            if (matchesCount == 0) {
+                // Maybe find the cities within related time zones.
+                // FIXME in case searchLongitude is edge case like +/-170 degrees.
+                longitudeWest = longitudeTZ - TZ_HOUR;
+                longitudeEast = longitudeTZ + TZ_HOUR;
+
+                for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
+                    longitude = citiesLongitudes[cityIndex];
+                    if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
+                        matches[matchesCount++] = cityIndex;
+                    } else if (longitude > longitudeEast) {
+                        // Cities are sorted by longitude ascending.
+                        break;
+                    }
+                }
+
+                if (matchesCount == 1) {
+                    nearestCityIndex = matches[0];
+                    loc.setLatitude(citiesLatitudes[nearestCityIndex]);
+                    loc.setLongitude(citiesLongitudes[nearestCityIndex]);
+                    loc.setAltitude(citiesElevations[nearestCityIndex]);
+                    loc.setAccuracy(distanceMin);
+                    return loc;
+                }
+            }
         }
 
         // Next find the nearest city within the time zone.
@@ -355,13 +381,13 @@ public class CountriesGeocoder extends GeocoderBase {
                     nearestCityIndex = cityIndex;
                 }
             }
-        }
 
-        if (nearestCityIndex >= 0) {
-            loc.setLatitude(citiesLatitudes[nearestCityIndex]);
-            loc.setLongitude(citiesLongitudes[nearestCityIndex]);
-            loc.setAltitude(citiesElevations[nearestCityIndex]);
-            loc.setAccuracy(distanceMin);
+            if (nearestCityIndex >= 0) {
+                loc.setLatitude(citiesLatitudes[nearestCityIndex]);
+                loc.setLongitude(citiesLongitudes[nearestCityIndex]);
+                loc.setAltitude(citiesElevations[nearestCityIndex]);
+                loc.setAccuracy(distanceMin);
+            }
         }
 
         return loc;
