@@ -43,8 +43,10 @@ public class CountriesGeocoder extends GeocoderBase {
     /** The time zone location provider. */
     public static final String TIMEZONE_PROVIDER = "timezone";
 
+    /** Degrees per globe. */
+    private static final double LONGITUDE_GLOBE = 360;
     /** Degrees per time zone hour. */
-    private static final double TZ_HOUR = 360 / 24;
+    private static final double TZ_HOUR = LONGITUDE_GLOBE / 24;
     /** Middle of a time zone, in degrees. */
     private static final double TZ_HOUR_HALF = TZ_HOUR * 0.5;
 
@@ -273,10 +275,10 @@ public class CountriesGeocoder extends GeocoderBase {
         String tzId = tz.getID();
         long offsetMillis = tz.getRawOffset();
         double longitudeTZ = (TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS;
-        if (longitudeTZ > 180) {
-            longitudeTZ -= 360;
-        } else if (longitudeTZ < -180) {
-            longitudeTZ += 360;
+        if (longitudeTZ > ZmanimLocation.LONGITUDE_MAX) {
+            longitudeTZ -= LONGITUDE_GLOBE;
+        } else if (longitudeTZ < ZmanimLocation.LONGITUDE_MIN) {
+            longitudeTZ += LONGITUDE_GLOBE;
         }
         loc.setLongitude(longitudeTZ);
 
@@ -307,13 +309,25 @@ public class CountriesGeocoder extends GeocoderBase {
 
         if (matchesCount == 0) {
             // Maybe find the cities within the time zone.
-            // FIXME in case searchLongitude is edge case like +/-170 degrees.
             double longitudeWest = longitudeTZ - TZ_HOUR_HALF;
             double longitudeEast = longitudeTZ + TZ_HOUR_HALF;
 
+            // In case longitudeTZ is edge case like +/-170 degrees.
+            double longitudeWest2 = longitudeWest;
+            double longitudeEast2 = longitudeEast;
+            if (longitudeEast > ZmanimLocation.LONGITUDE_MAX) {
+                longitudeEast = ZmanimLocation.LONGITUDE_MAX;
+                longitudeWest2 = ZmanimLocation.LONGITUDE_MIN;
+                longitudeEast2 -= LONGITUDE_GLOBE;
+            } else if (longitudeWest < ZmanimLocation.LONGITUDE_MIN) {
+                longitudeWest = ZmanimLocation.LONGITUDE_MIN;
+                longitudeWest2 += LONGITUDE_GLOBE;
+                longitudeEast2 = ZmanimLocation.LONGITUDE_MAX;
+            }
+
             for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
                 longitude = citiesLongitudes[cityIndex];
-                if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
+                if (((longitudeWest <= longitude) && (longitude <= longitudeEast)) || ((longitudeWest2 <= longitude) && (longitude <= longitudeEast2))) {
                     matches[matchesCount++] = cityIndex;
                 } else if (longitude > longitudeEast) {
                     // Cities are sorted by longitude ascending.
@@ -332,13 +346,25 @@ public class CountriesGeocoder extends GeocoderBase {
 
             if (matchesCount == 0) {
                 // Maybe find the cities within related time zones.
-                // FIXME in case searchLongitude is edge case like +/-170 degrees.
                 longitudeWest = longitudeTZ - TZ_HOUR;
                 longitudeEast = longitudeTZ + TZ_HOUR;
 
+                // In case longitudeTZ is edge case like +/-170 degrees.
+                longitudeWest2 = longitudeWest;
+                longitudeEast2 = longitudeEast;
+                if (longitudeEast > ZmanimLocation.LONGITUDE_MAX) {
+                    longitudeEast = ZmanimLocation.LONGITUDE_MAX;
+                    longitudeWest2 = ZmanimLocation.LONGITUDE_MIN;
+                    longitudeEast2 -= LONGITUDE_GLOBE;
+                } else if (longitudeWest < ZmanimLocation.LONGITUDE_MIN) {
+                    longitudeWest = ZmanimLocation.LONGITUDE_MIN;
+                    longitudeWest2 += LONGITUDE_GLOBE;
+                    longitudeEast2 = ZmanimLocation.LONGITUDE_MAX;
+                }
+
                 for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
                     longitude = citiesLongitudes[cityIndex];
-                    if ((longitudeWest <= longitude) && (longitude <= longitudeEast)) {
+                    if (((longitudeWest <= longitude) && (longitude <= longitudeEast)) || ((longitudeWest2 <= longitude) && (longitude <= longitudeEast2))) {
                         matches[matchesCount++] = cityIndex;
                     } else if (longitude > longitudeEast) {
                         // Cities are sorted by longitude ascending.
