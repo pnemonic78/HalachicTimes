@@ -272,7 +272,7 @@ public class CountriesGeocoder extends GeocoderBase {
 
         String tzId = tz.getID();
         long offsetMillis = tz.getRawOffset();
-        double longitudeTZ = ((TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS) + TZ_HOUR_HALF;
+        double longitudeTZ = (TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS;
         if (longitudeTZ > 180) {
             longitudeTZ -= 360;
         } else if (longitudeTZ < -180) {
