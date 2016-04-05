@@ -72,9 +72,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
 
     public CompassFragment() {
         holiest = new Location(LocationManager.GPS_PROVIDER);
-        holiest.setLatitude(HOLIEST_LATITUDE);
-        holiest.setLongitude(HOLIEST_LONGITUDE);
-        holiest.setAltitude(HOLIEST_ELEVATION);
+        setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
     }
 
     @Override
@@ -149,5 +147,15 @@ public class CompassFragment extends Fragment implements SensorEventListener {
             bearing = ZmanimLocation.angleTo(location, holiest);
         }
         view.setHoliest(bearing);
+    }
+
+    public void setHoliest(Location location) {
+        this.holiest.set(location);
+    }
+
+    public void setHoliest(double latitude, double longitude, double elevation) {
+        holiest.setLatitude(latitude);
+        holiest.setLongitude(longitude);
+        holiest.setAltitude(elevation);
     }
 }
