@@ -3,4 +3,7 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
+    <!-- Compass -->
+    <string name="compass_summary">Irány az imádság a Szentek Szentje Jeruzsálemben</string>
+
 </resources>

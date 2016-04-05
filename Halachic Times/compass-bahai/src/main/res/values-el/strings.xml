@@ -3,4 +3,7 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
+    <!-- Compass -->
+    <string name="compass_summary">Κατεύθυνση της προσευχής στην Άγια των Αγίων στην Ιερουσαλήμ</string>
+
 </resources>

@@ -3,4 +3,7 @@
 
     <string name="app_name">@string/title_activity_compass</string>
 
+    <!-- Compass -->
+    <string name="compass_summary">Směr modlitbě nejsvětější svatyně v Jeruzalémě</string>
+
 </resources>

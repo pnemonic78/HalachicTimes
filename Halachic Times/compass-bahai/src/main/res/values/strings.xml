@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Bahá’í Prayer Direction</string>
+    <string name="app_name">Prayer Direction</string>
+
+    <!-- Compass -->
+    <string name="compass_summary">Direction of prayer to the tomb of Bahá\'u\'lláh in Bahjí</string>
 
 </resources>
