@@ -1,26 +1,57 @@
 apply plugin: 'com.android.application'
 
+def versionMajor = project.APP_VERSION_MAJOR
+def versionMinor = project.APP_VERSION_MINOR.padLeft(2, '0')
+def versionCodeValue = Integer.parseInt(project.APP_VERSION_CODE)
+
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "net.sf.bahaicompass"
-        minSdkVersion 14
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        applicationId "net.sf.times.compass.bahai"
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+        versionCode versionCodeValue
+        versionName versionMajor + '.' + versionMinor
+
+        testApplicationId "net.sf.times.compass.bahai.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file("release.keystore")
+            storePassword project.STORE_PASSWORD_RELEASE
+            keyAlias "release"
+            keyPassword project.KEY_PASSWORD_RELEASE
         }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        disable "LocaleFolder", "NestedWeights", "PluralsCandidate"
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile project(':lib')
+    compile project(':common')
+    compile project(':locations')
+    debugCompile project(path: ':compass-lib', configuration: 'debug')
+    releaseCompile project(path: ':compass-lib', configuration: 'release')
 }
