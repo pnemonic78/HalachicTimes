@@ -4,6 +4,6 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Compass -->
-    <string name="compass_summary">Kierunek modlitwy do Świętego Świętych w Jerozolimie</string>
+    <string name="compass_summary">Kierunek modlitwy do sanktuarium Bahá\'u\'lláh\'a w Al-Bahja</string>
 
 </resources>
