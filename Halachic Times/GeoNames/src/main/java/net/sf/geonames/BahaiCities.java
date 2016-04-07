@@ -23,30 +23,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-public class JewishCities extends Cities {
+public class BahaiCities extends JewishCities {
 
     /**
-     * List of Jewish cities' GeoName IDs.
+     * List of Bahai cities' GeoName IDs.
      */
-    private static final long[] JEWISH_CITIES = {
+    private static final long[] BAHAI_CITIES = {
             // Addis Ababa, Ethiopia
             344979,
             // Aizawl, India
@@ -204,34 +187,35 @@ public class JewishCities extends Cities {
             // Zurich, Switzerland
             2657896};
 
-    public JewishCities() {
+    public BahaiCities() {
         super();
-        Arrays.sort(JEWISH_CITIES);
+        Arrays.sort(BAHAI_CITIES);
+        setModuleName("compass-bahai");
     }
 
     public static void main(String[] args) {
         String path = "GeoNames/res/cities1000.txt";
         File res = new File(path);
-        JewishCities cities = new JewishCities();
+        BahaiCities cities = new BahaiCities();
         Collection<GeoName> names;
         Collection<GeoName> jewish;
         try {
             names = cities.loadNames(res);
-            jewish = cities.filterJewishCities(names);
+            jewish = cities.filterBahaiCities(names);
             cities.toAndroidXML(jewish, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Collection<GeoName> filterJewishCities(Collection<GeoName> names) {
+    public Collection<GeoName> filterBahaiCities(Collection<GeoName> names) {
         Collection<GeoName> cities = new ArrayList<GeoName>();
 
         long nameId;
         for (GeoName name : names) {
             nameId = name.getGeoNameId();
 
-            for (long id : JEWISH_CITIES) {
+            for (long id : BAHAI_CITIES) {
                 if (id == nameId) {
                     cities.add(name);
                     continue;
@@ -240,94 +224,5 @@ public class JewishCities extends Cities {
         }
 
         return cities;
-    }
-
-    /**
-     * Write the list of names as arrays in Android resource file format.
-     *
-     * @param names
-     *         the list of names.
-     * @param language
-     *         the language code.
-     * @throws ParserConfigurationException
-     *         if a DOM error occurs.
-     * @throws TransformerException
-     *         if a DOM error occurs.
-     */
-    @Override
-    public void toAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
-        List<GeoName> sorted = null;
-        if (names instanceof List)
-            sorted = (List<GeoName>) names;
-        else
-            sorted = new ArrayList<GeoName>(names);
-        Collections.sort(sorted, new LocationComparator());
-
-        DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = builderFactory.newDocumentBuilder();
-        Document doc = builder.newDocument();
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-        File file;
-        if (language == null)
-            file = new File(getModulePath(), "values/cities.xml");
-        else
-            file = new File(getModulePath(), "values-" + language + "/cities.xml");
-        file.getParentFile().mkdirs();
-
-        Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
-        doc.appendChild(doc.createComment("Generated from geonames.org data."));
-        doc.appendChild(resources);
-
-        Element citiesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        citiesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities");
-        resources.appendChild(citiesElement);
-        Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_countries");
-        countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        if (language == null)
-            resources.appendChild(countriesElement);
-        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_latitudes");
-        latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        if (language == null)
-            resources.appendChild(latitudesElement);
-        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_longitudes");
-        longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        if (language == null)
-            resources.appendChild(longitudesElement);
-        Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
-        zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_time_zones");
-        zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
-        if (language == null)
-            resources.appendChild(zonesElement);
-
-        Element city, country, latitude, longitude, zone;
-
-        for (GeoName place : sorted) {
-            city = doc.createElement(ANDROID_ELEMENT_ITEM);
-            city.setTextContent(place.getName());
-            country = doc.createElement(ANDROID_ELEMENT_ITEM);
-            country.setTextContent(place.getCountryCode());
-            latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            latitude.setTextContent(String.valueOf(place.getLatitude()));
-            longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            longitude.setTextContent(String.valueOf(place.getLongitude()));
-            zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-            zone.setTextContent(place.getTimeZone());
-
-            citiesElement.appendChild(city);
-            countriesElement.appendChild(country);
-            latitudesElement.appendChild(latitude);
-            longitudesElement.appendChild(longitude);
-            zonesElement.appendChild(zone);
-        }
-
-        Source src = new DOMSource(doc);
-        Result result = new StreamResult(file);
-        transformer.transform(src, result);
     }
 }

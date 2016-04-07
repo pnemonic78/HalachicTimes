@@ -122,7 +122,7 @@ public class Countries extends Cities {
         Document doc = builder.newDocument();
         TransformerFactory xformerFactory = TransformerFactory.newInstance();
         Transformer xformer = xformerFactory.newTransformer();
-        File file = new File(APP_RES, "values/countries.xml");
+        File file = new File(getModulePath(), "values/countries.xml");
         file.getParentFile().mkdirs();
 
         Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);

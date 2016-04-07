@@ -59,13 +59,27 @@ public class Cities {
     public static final String ANDROID_ELEMENT_INTEGER_ARRAY = "integer-array";
     public static final String ANDROID_ELEMENT_ITEM = "item";
 
-    protected static final String APP_RES = "locations/src/main/res";
+    private static final String APP_RES = "/src/main/res";
+
+    private String moduleName;
 
     /**
      * Constructs a new cities.
      */
     public Cities() {
-        super();
+        setModuleName("locations");
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    protected File getModulePath() {
+        return new File(getModuleName(), APP_RES);
     }
 
     public static void main(String[] args) {
@@ -265,9 +279,9 @@ public class Cities {
 
         File file;
         if (language == null)
-            file = new File(APP_RES, "values/cities.xml");
+            file = new File(getModulePath(), "values/cities.xml");
         else
-            file = new File(APP_RES, "values-" + language + "/cities.xml");
+            file = new File(getModulePath(), "values-" + language + "/cities.xml");
         file.getParentFile().mkdirs();
 
         Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
