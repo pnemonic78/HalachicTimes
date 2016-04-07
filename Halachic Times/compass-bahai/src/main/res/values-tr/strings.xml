@@ -4,6 +4,6 @@
     <string name="app_name">@string/title_activity_compass</string>
 
     <!-- Compass -->
-    <string name="compass_summary">Bahji içinde Bahá\'u\'lláh\'in mezarına dua yönü</string>
+    <string name="compass_summary">Bahji içinde Bahaullah\'in mezarına dua yönü</string>
 
 </resources>
