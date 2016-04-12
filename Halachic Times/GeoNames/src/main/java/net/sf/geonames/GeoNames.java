@@ -106,7 +106,7 @@ public class GeoNames {
             record.setPopulation(Long.parseLong(field));
             field = fields[column++];
             if (field.length() > 0)
-                record.setElevation(Integer.parseInt(field));
+                record.setElevation(Double.parseDouble(field));
             field = fields[column++];
             if (field.length() > 0)
                 record.setDem(Integer.parseInt(field));

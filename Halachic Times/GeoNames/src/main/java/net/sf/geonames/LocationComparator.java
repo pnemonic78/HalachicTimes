@@ -45,11 +45,12 @@ public class LocationComparator implements Comparator<GeoName> {
         if (lat0 < lat1)
             return -1;
 
-        int alt0 = geo0.getElevation();
-        int alt1 = geo1.getElevation();
-        int alt = alt0 - alt1;
-        if (alt != 0)
-            return alt;
+        double ele0 = geo0.getElevation();
+        double ele1 = geo1.getElevation();
+        if (ele0 > ele1)
+            return +1;
+        if (ele0 < ele1)
+            return -1;
 
         String name0 = geo0.getName();
         String name1 = geo1.getName();

@@ -19,8 +19,17 @@
  */
 package net.sf.geonames;
 
+import net.sf.net.HTTPReader;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -42,9 +51,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 /**
  * Cities.
  *
@@ -58,6 +64,25 @@ public class Cities {
     public static final String ANDROID_ELEMENT_STRING_ARRAY = "string-array";
     public static final String ANDROID_ELEMENT_INTEGER_ARRAY = "integer-array";
     public static final String ANDROID_ELEMENT_ITEM = "item";
+
+    /** GeoNames user name. */
+    private static final String USERNAME = "";
+
+    private static final String TAG_ELEVATION_STATUS = "status";
+    private static final String TAG_ELEVATION_RESULT = "result";
+    private static final String TAG_ELEVATION_ELEVATION = "elevation";
+
+    /**
+     * URL that accepts latitude and longitude coordinates as parameters for an
+     * elevation.
+     */
+    private static final String URL_ELEVATION_GOOGLE = "http://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f";
+    /**
+     * URL that accepts latitude and longitude coordinates as parameters for an
+     * elevation.<br>
+     * Uses Aster Global Digital Elevation Model data.
+     */
+    private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
 
     private static final String APP_RES = "/src/main/res";
 
@@ -358,16 +383,59 @@ public class Cities {
      *         the list of names.
      */
     public void populateElevations(Collection<GeoName> names) {
-        int elevation;
+        double elevation;
         for (GeoName name : names) {
             elevation = name.getElevation();
-            if (elevation == 0) {
-                populateElevation(name);
+            if ((elevation == 0) || Double.isNaN(elevation)) {
+                try {
+                    populateElevation(name);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    protected void populateElevation(GeoName name) {
-        //TODO implement me!
+    protected void populateElevation(GeoName name) throws IOException, ParserConfigurationException, SAXException {
+        try {
+            populateElevationGeoNames(name);
+        } catch (Exception e) {
+            populateElevationGoogle(name);
+        }
+    }
+
+    protected void populateElevationGeoNames(GeoName name) throws IOException, ParserConfigurationException, SAXException {
+        double latitude = name.getLatitude();
+        double longitude = name.getLongitude();
+        String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
+        URL url = new URL(queryUrl);
+        byte[] data = HTTPReader.read(url);
+        String elevationValue = new String(data).trim();
+        double elevation = Double.parseDouble(elevationValue);
+        name.setElevation(elevation);
+    }
+
+    protected void populateElevationGoogle(GeoName name) throws IOException, ParserConfigurationException, SAXException {
+        double latitude = name.getLatitude();
+        double longitude = name.getLongitude();
+        String queryUrl = String.format(Locale.US, URL_ELEVATION_GOOGLE, latitude, longitude);
+        URL url = new URL(queryUrl);
+        byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+        InputStream source = new ByteArrayInputStream(data);
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document doc = builder.parse(source);
+        Element root = doc.getDocumentElement();
+        Element statusNode = (Element) root.getElementsByTagName(TAG_ELEVATION_STATUS).item(0);
+        String status = statusNode.getTextContent();
+        if (!"OK".equals(status)) {
+            System.err.println("status: " + status);
+            return;
+        }
+        Element resultNode = (Element) root.getElementsByTagName(TAG_ELEVATION_RESULT).item(0);
+        Element elevationNode = (Element) resultNode.getElementsByTagName(TAG_ELEVATION_ELEVATION).item(0);
+        String elevationValue = elevationNode.getTextContent().trim();
+        double elevation = Double.parseDouble(elevationValue);
+        name.setElevation(elevation);
     }
 }

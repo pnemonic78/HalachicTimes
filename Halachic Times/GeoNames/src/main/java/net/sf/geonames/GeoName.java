@@ -96,7 +96,7 @@ public class GeoName {
     private String admin3;
     private String admin4;
     private long population;
-    private int elevation;
+    private double elevation = Double.NaN;
     private int dem;
     private String timezone;
     private String modification;
@@ -395,7 +395,7 @@ public class GeoName {
      *
      * @return the elevation
      */
-    public int getElevation() {
+    public double getElevation() {
         return elevation;
     }
 
@@ -405,7 +405,7 @@ public class GeoName {
      * @param elevation
      *         the elevation.
      */
-    public void setElevation(int elevation) {
+    public void setElevation(double elevation) {
         this.elevation = elevation;
     }
 
