@@ -19,6 +19,9 @@
  */
 package net.sf.geonames;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,9 +40,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class JewishCities extends Cities {
 
@@ -320,7 +320,7 @@ public class JewishCities extends Cities {
 
         for (GeoName place : sorted) {
             city = doc.createElement(ANDROID_ELEMENT_ITEM);
-            city.setTextContent(place.getName());
+            city.setTextContent(escape(place.getName()));
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
@@ -343,5 +343,10 @@ public class JewishCities extends Cities {
         Source src = new DOMSource(doc);
         Result result = new StreamResult(file);
         transformer.transform(src, result);
+    }
+
+    protected String escape(String text) {
+        text = text.replaceAll("(['\"])", "\\\\$1");
+        return text;
     }
 }

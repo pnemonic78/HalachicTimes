@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * HTTP reader.
@@ -85,10 +86,14 @@ public class HTTPReader {
      *         if an I/O error occurs.
      */
     public static byte[] read(URL url, String[] contentTypesExpected) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        int code = conn.getResponseCode();
-        if (code != HttpURLConnection.HTTP_OK)
-            return null;
+        URLConnection conn = url.openConnection();
+        HttpURLConnection hconn = null;
+        if (conn instanceof HttpURLConnection) {
+            hconn = (HttpURLConnection) conn;
+            int code = hconn.getResponseCode();
+            if (code != HttpURLConnection.HTTP_OK)
+                return null;
+        }
         String contentType = conn.getContentType();
         if (contentType == null)
             return null;
@@ -123,7 +128,9 @@ public class HTTPReader {
                 } catch (Exception e) {
                 }
             }
-            conn.disconnect();
+            if (hconn != null) {
+                hconn.disconnect();
+            }
         }
         return data;
     }

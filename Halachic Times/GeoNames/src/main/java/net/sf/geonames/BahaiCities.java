@@ -227,6 +227,7 @@ public class BahaiCities extends JewishCities {
         try {
             names = cities.loadNames(res);
             filtered = cities.filterBahaiCities(names);
+            cities.populateAlternateNames(filtered);
             cities.populateElevations(filtered);
             cities.toAndroidXML(filtered, null);
         } catch (Exception e) {

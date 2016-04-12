@@ -39,6 +39,10 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -71,6 +75,11 @@ public class Cities {
     private static final String TAG_ELEVATION_STATUS = "status";
     private static final String TAG_ELEVATION_RESULT = "result";
     private static final String TAG_ELEVATION_ELEVATION = "elevation";
+
+    /**
+     * URL that returns the attribute of the geoNames feature with the given geonameId as JSON document.
+     */
+    private static final String URL_GEONAME_GET = "http://api.geonames.org/getJSON?geonameId=%d&username=%s";
 
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
@@ -379,12 +388,12 @@ public class Cities {
     /**
      * Populate the list of names with elevations.
      *
-     * @param names
-     *         the list of names.
+     * @param geoNames
+     *         the list of names to populate.
      */
-    public void populateElevations(Collection<GeoName> names) {
+    public void populateElevations(Collection<GeoName> geoNames) {
         double elevation;
-        for (GeoName name : names) {
+        for (GeoName name : geoNames) {
             elevation = name.getElevation();
             if ((elevation == 0) || Double.isNaN(elevation)) {
                 try {
@@ -396,28 +405,29 @@ public class Cities {
         }
     }
 
-    protected void populateElevation(GeoName name) throws IOException, ParserConfigurationException, SAXException {
+    protected void populateElevation(GeoName geoName) throws IOException, ParserConfigurationException, SAXException {
+        geoName.setElevation(0);
         try {
-            populateElevationGeoNames(name);
+            populateElevationGeoNames(geoName);
         } catch (Exception e) {
-            populateElevationGoogle(name);
+            populateElevationGoogle(geoName);
         }
     }
 
-    protected void populateElevationGeoNames(GeoName name) throws IOException, ParserConfigurationException, SAXException {
-        double latitude = name.getLatitude();
-        double longitude = name.getLongitude();
+    protected void populateElevationGeoNames(GeoName geoName) throws IOException, ParserConfigurationException, SAXException {
+        double latitude = geoName.getLatitude();
+        double longitude = geoName.getLongitude();
         String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
         URL url = new URL(queryUrl);
         byte[] data = HTTPReader.read(url);
         String elevationValue = new String(data).trim();
         double elevation = Double.parseDouble(elevationValue);
-        name.setElevation(elevation);
+        geoName.setElevation(elevation);
     }
 
-    protected void populateElevationGoogle(GeoName name) throws IOException, ParserConfigurationException, SAXException {
-        double latitude = name.getLatitude();
-        double longitude = name.getLongitude();
+    protected void populateElevationGoogle(GeoName geoName) throws IOException, ParserConfigurationException, SAXException {
+        double latitude = geoName.getLatitude();
+        double longitude = geoName.getLongitude();
         String queryUrl = String.format(Locale.US, URL_ELEVATION_GOOGLE, latitude, longitude);
         URL url = new URL(queryUrl);
         byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
@@ -436,6 +446,54 @@ public class Cities {
         Element elevationNode = (Element) resultNode.getElementsByTagName(TAG_ELEVATION_ELEVATION).item(0);
         String elevationValue = elevationNode.getTextContent().trim();
         double elevation = Double.parseDouble(elevationValue);
-        name.setElevation(elevation);
+        geoName.setElevation(elevation);
+    }
+
+    /**
+     * Populate the list of names with alternate names.
+     *
+     * @param geoNames
+     *         the list of names to populate.
+     */
+    public void populateAlternateNames(Collection<GeoName> geoNames) {
+        Map<String, AlternateName> alternateNames;
+        for (GeoName geoName : geoNames) {
+            alternateNames = geoName.getAlternateNamesMap();
+            if (alternateNames.size() <= 1) {
+                try {
+                    populateAlternateNames(geoName);
+                    return;//~!@
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void populateAlternateNames(GeoName geoName) throws IOException {
+        String queryUrl = String.format(Locale.US, URL_GEONAME_GET, geoName.getGeoNameId(), USERNAME);
+        queryUrl = "file:///C:\\Users\\moshe.w\\workspace\\Halachic Times\\GeoNames\\res\\524901.json";
+        URL url = new URL(queryUrl);
+        byte[] data = HTTPReader.read(url);
+        JsonReader reader = Json.createReader(new ByteArrayInputStream(data));
+        JsonObject json = reader.readObject();
+        JsonArray arr = json.getJsonArray("alternateNames");
+
+        Map<String, AlternateName> alternateNames = geoName.getAlternateNamesMap();
+        AlternateName alternateName;
+        JsonObject jsonAlternateName;
+        String lang;
+        String name;
+        int length = arr.size();
+        for (int i = 0; i < length; i++) {
+            jsonAlternateName = arr.getJsonObject(i);
+            if (!jsonAlternateName.containsKey("lang")) {
+                continue;
+            }
+            lang = jsonAlternateName.getString("lang");
+            name = jsonAlternateName.getString("name");
+            alternateName = new AlternateName(lang, name);
+            alternateNames.put(lang, alternateName);
+        }
     }
 }

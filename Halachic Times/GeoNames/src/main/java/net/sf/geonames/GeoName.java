@@ -19,6 +19,9 @@
  */
 package net.sf.geonames;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <code>
  * The main 'geoname' table has the following fields :<br>
@@ -44,7 +47,7 @@ package net.sf.geonames;
  * modification date : date of last modification in yyyy-MM-dd format<br>
  * </code>
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class GeoName {
 
@@ -81,10 +84,10 @@ public class GeoName {
     /** Feature code for an Israeli settlement. */
     public static final String FEATURE_STLMT = "STLMT";
 
-    private long geonameid;
+    private long geonameId;
     private String name;
-    private String asciiname;
-    private String alternatenames;
+    private String asciiName;
+    private String alternateNames;
     private double latitude;
     private double longitude;
     private String featureClass;
@@ -100,28 +103,29 @@ public class GeoName {
     private int dem;
     private String timezone;
     private String modification;
+    private final Map<String, AlternateName> alternateNamesMap = new HashMap<>();
 
     public GeoName() {
         super();
     }
 
     /**
-     * Get the geonameid.
+     * Get the geoname id.
      *
-     * @return the geonameid
+     * @return the id.
      */
     public long getGeoNameId() {
-        return geonameid;
+        return geonameId;
     }
 
     /**
-     * Set the geonameid.
+     * Set the geoname id.
      *
-     * @param geonameid
-     *         the geonameid.
+     * @param geonameId
+     *         the id.
      */
-    public void setGeoNameId(long geonameid) {
-        this.geonameid = geonameid;
+    public void setGeoNameId(long geonameId) {
+        this.geonameId = geonameId;
     }
 
     /**
@@ -141,44 +145,48 @@ public class GeoName {
      */
     public void setName(String name) {
         this.name = name;
+        if ((name != null) && alternateNamesMap.isEmpty()) {
+            AlternateName alternateName = new AlternateName("en", name);
+            alternateNamesMap.put(alternateName.getLanguage(), alternateName);
+        }
     }
 
     /**
-     * Get the asciiname.
+     * Get the ASCII name.
      *
-     * @return the asciiname
+     * @return the name.
      */
     public String getAsciiName() {
-        return asciiname;
+        return asciiName;
     }
 
     /**
-     * Set the asciiname.
+     * Set the ASCII name.
      *
-     * @param asciiname
-     *         the asciiname.
+     * @param asciiName
+     *         the name.
      */
-    public void setAsciiName(String asciiname) {
-        this.asciiname = asciiname;
+    public void setAsciiName(String asciiName) {
+        this.asciiName = asciiName;
     }
 
     /**
-     * Get the alternatenames.
+     * Get the alternate names.
      *
-     * @return the alternatenames
+     * @return the alternateNames
      */
     public String getAlternateNames() {
-        return alternatenames;
+        return alternateNames;
     }
 
     /**
-     * Set the alternatenames.
+     * Set the alternate names.
      *
-     * @param alternatenames
-     *         the alternatenames.
+     * @param alternateNames
+     *         the alternate names.
      */
-    public void setAlternateNames(String alternatenames) {
-        this.alternatenames = alternatenames;
+    public void setAlternateNames(String alternateNames) {
+        this.alternateNames = alternateNames;
     }
 
     /**
@@ -469,5 +477,16 @@ public class GeoName {
     @Override
     public int hashCode() {
         return (int) getGeoNameId();
+    }
+
+    public Map<String, AlternateName> getAlternateNamesMap() {
+        return alternateNamesMap;
+    }
+
+    public void setAlternateNames(Map<String, AlternateName> alternateNames) {
+        this.alternateNamesMap.clear();
+        if (alternateNamesMap != null) {
+            this.alternateNamesMap.putAll(alternateNamesMap);
+        }
     }
 }
