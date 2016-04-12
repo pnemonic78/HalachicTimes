@@ -291,21 +291,25 @@ public class Cities {
         Element citiesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         citiesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities");
         resources.appendChild(citiesElement);
+
         Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "countries");
         countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(countriesElement);
+
         Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "latitudes");
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(latitudesElement);
+
         Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "longitudes");
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(longitudesElement);
+
         Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "time_zones");
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
@@ -345,5 +349,25 @@ public class Cities {
         for (String country : Locale.getISOCountries())
             countries.add(country);
         return countries;
+    }
+
+    /**
+     * Populate the list of names with elevations.
+     *
+     * @param names
+     *         the list of names.
+     */
+    public void populateElevations(Collection<GeoName> names) {
+        int elevation;
+        for (GeoName name : names) {
+            elevation = name.getElevation();
+            if (elevation == 0) {
+                populateElevation(name);
+            }
+        }
+    }
+
+    protected void populateElevation(GeoName name) {
+        //TODO implement me!
     }
 }

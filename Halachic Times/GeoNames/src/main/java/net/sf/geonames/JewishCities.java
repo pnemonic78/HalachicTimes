@@ -214,11 +214,12 @@ public class JewishCities extends Cities {
         File res = new File(path);
         JewishCities cities = new JewishCities();
         Collection<GeoName> names;
-        Collection<GeoName> jewish;
+        Collection<GeoName> filtered;
         try {
             names = cities.loadNames(res);
-            jewish = cities.filterJewishCities(names);
-            cities.toAndroidXML(jewish, null);
+            filtered = cities.filterJewishCities(names);
+            cities.populateElevations(filtered);
+            cities.toAndroidXML(filtered, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -284,28 +285,38 @@ public class JewishCities extends Cities {
         Element citiesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         citiesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities");
         resources.appendChild(citiesElement);
+
         Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         countriesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_countries");
         countriesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(countriesElement);
+
         Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_latitudes");
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(latitudesElement);
+
         Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_longitudes");
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(longitudesElement);
+
+        Element elevationsElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        elevationsElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_elevations");
+        elevationsElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
+        if (language == null)
+            resources.appendChild(elevationsElement);
+
         Element zonesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_time_zones");
         zonesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(zonesElement);
 
-        Element city, country, latitude, longitude, zone;
+        Element city, country, latitude, longitude, elevation, zone;
 
         for (GeoName place : sorted) {
             city = doc.createElement(ANDROID_ELEMENT_ITEM);
@@ -316,6 +327,8 @@ public class JewishCities extends Cities {
             latitude.setTextContent(String.valueOf(place.getLatitude()));
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
             longitude.setTextContent(String.valueOf(place.getLongitude()));
+            elevation = doc.createElement(ANDROID_ELEMENT_ITEM);
+            elevation.setTextContent(String.valueOf(place.getElevation()));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
             zone.setTextContent(place.getTimeZone());
 
@@ -323,6 +336,7 @@ public class JewishCities extends Cities {
             countriesElement.appendChild(country);
             latitudesElement.appendChild(latitude);
             longitudesElement.appendChild(longitude);
+            elevationsElement.appendChild(elevation);
             zonesElement.appendChild(zone);
         }
 
