@@ -94,10 +94,11 @@ public class GeoName {
     private String featureCode;
     private String countryCode;
     private String cc2;
-    private String admin1;
-    private String admin2;
-    private String admin3;
-    private String admin4;
+    private String adminCode1;
+    private String adminCode2;
+    private String adminCode3;
+    private String adminCode4;
+    private String adminCode5;
     private long population;
     private double elevation = Double.NaN;
     private int dem;
@@ -304,79 +305,98 @@ public class GeoName {
     }
 
     /**
-     * Get the admin1.
+     * Get the admin 1 code.
      *
-     * @return the admin1
+     * @return the code.
      */
-    public String getAdmin1() {
-        return admin1;
+    public String getAdminCode1() {
+        return adminCode1;
     }
 
     /**
-     * Set the admin1.
+     * Set the admin 1 code.
      *
-     * @param admin1
-     *         the admin1.
+     * @param code
+     *         the code.
      */
-    public void setAdmin1(String admin1) {
-        this.admin1 = admin1;
+    public void setAdminCode1(String code) {
+        this.adminCode1 = code;
     }
 
     /**
-     * Get the admin2.
+     * Get the admin 2 code.
      *
-     * @return the admin2
+     * @return the code.
      */
-    public String getAdmin2() {
-        return admin2;
+    public String getAdminCode2() {
+        return adminCode2;
     }
 
     /**
-     * Set the admin2.
+     * Set the admin 2 code.
      *
-     * @param admin2
-     *         the admin2.
+     * @param code
+     *         the code.
      */
-    public void setAdmin2(String admin2) {
-        this.admin2 = admin2;
+    public void setAdminCode2(String code) {
+        this.adminCode2 = code;
     }
 
     /**
-     * Get the admin3.
+     * Get the admin 3 code.
      *
-     * @return the admin3
+     * @return the code.
      */
-    public String getAdmin3() {
-        return admin3;
+    public String getAdminCode3() {
+        return adminCode3;
     }
 
     /**
-     * Set the admin3.
+     * Set the admin 3 code.
      *
-     * @param admin3
-     *         the admin3.
+     * @param code
+     *         the code.
      */
-    public void setAdmin3(String admin3) {
-        this.admin3 = admin3;
+    public void setAdminCode3(String code) {
+        this.adminCode3 = code;
     }
 
     /**
-     * Get the admin4.
+     * Get the admin 4 code.
      *
-     * @return the admin4
+     * @return the code.
      */
-    public String getAdmin4() {
-        return admin4;
+    public String getAdminCode4() {
+        return adminCode4;
     }
 
     /**
-     * Set the admin4.
+     * Set the admin 5 code.
      *
-     * @param admin4
-     *         the admin4.
+     * @param code
+     *         the code.
      */
-    public void setAdmin4(String admin4) {
-        this.admin4 = admin4;
+    public void setAdminCode4(String code) {
+        this.adminCode4 = code;
+    }
+
+    /**
+     * Get the admin 5 code.
+     *
+     * @return the code.
+     */
+    public String getAdminCode5() {
+        return adminCode5;
+    }
+
+    /**
+     * Set the admin 4 code.
+     *
+     * @param code
+     *         the code.
+     */
+    public void setAdminCode5(String code) {
+        this.adminCode5 = code;
     }
 
     /**

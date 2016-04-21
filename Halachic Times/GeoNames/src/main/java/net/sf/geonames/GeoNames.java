@@ -95,13 +95,13 @@ public class GeoNames {
             field = fields[column++];
             record.setCc2(field);
             field = fields[column++];
-            record.setAdmin1(field);
+            record.setAdminCode1(field);
             field = fields[column++];
-            record.setAdmin2(field);
+            record.setAdminCode2(field);
             field = fields[column++];
-            record.setAdmin3(field);
+            record.setAdminCode3(field);
             field = fields[column++];
-            record.setAdmin4(field);
+            record.setAdminCode4(field);
             field = fields[column++];
             record.setPopulation(Long.parseLong(field));
             field = fields[column++];
