@@ -60,7 +60,7 @@ import javax.xml.transform.stream.StreamResult;
  *
  * @author Moshe
  */
-public class Cities implements NameFilter{
+public class Cities {
 
     public static final String ANDROID_ATTRIBUTE_NAME = "name";
     public static final String ANDROID_ATTRIBUTE_TRANSLATABLE = "translatable";
@@ -123,12 +123,10 @@ public class Cities implements NameFilter{
         System.out.println(res.getAbsolutePath());
         Cities cities = new Cities();
         Collection<GeoName> names;
-        Collection<GeoName> cityNames;
         Collection<GeoName> capitals;
         try {
-            names = cities.loadNames(res, null);
-            cityNames = cities.filterCity(names);
-            capitals = cities.filterCapitals(cityNames);
+            names = cities.loadNames(res, new CityFilter());
+            capitals = cities.filterCapitals(names);
             cities.toAndroidXML(capitals, null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,29 +150,10 @@ public class Cities implements NameFilter{
     }
 
     /**
-     * Filter the list of names to find only cities.
+     * Filter the list of names to find only capital (or the next-best-to-capital) cities.
      *
      * @param names
-     *         the list of all names.
-     * @return the list of cities.
-     */
-    public Collection<GeoName> filterCity(Collection<GeoName> names) {
-        Collection<GeoName> cities = new ArrayList<GeoName>();
-
-        for (GeoName name : names) {
-            if (GeoName.FEATURE_P.equals(name.getFeatureClass())) {
-                cities.add(name);
-            }
-        }
-
-        return cities;
-    }
-
-    /**
-     * Filter the list of names to find only capital cities.
-     *
-     * @param names
-     *         the list of all names.
+     *         the list of cites.
      * @return the list of capitals.
      */
     public Collection<GeoName> filterCapitals(Collection<GeoName> names) {
@@ -188,8 +167,7 @@ public class Cities implements NameFilter{
             }
         }
 
-        // For all countries without capitals, find the next best matching city
-        // type.
+        // For all countries without capitals, find the next best matching city type.
         if (!countries.isEmpty()) {
             Map<String, GeoName> best = new TreeMap<String, GeoName>();
             GeoName place;
@@ -234,16 +212,12 @@ public class Cities implements NameFilter{
             return name2;
         if (rank2 < 0)
             return (rank1 < rank2) ? name2 : name1;
-        // if (rank2 > rank1)
-        // return name2;
 
         // Compare populations.
-        // if (rank1 == rank2) {
         long pop1 = name1.getPopulation();
         long pop2 = name2.getPopulation();
         if (pop2 > pop1)
             return name2;
-        // }
 
         return name1;
     }
@@ -491,10 +465,5 @@ public class Cities implements NameFilter{
             alternateName = new AlternateName(lang, name);
             alternateNames.put(lang, alternateName);
         }
-    }
-
-    @Override
-    public boolean accept(GeoName name) {
-        return false;
     }
 }
