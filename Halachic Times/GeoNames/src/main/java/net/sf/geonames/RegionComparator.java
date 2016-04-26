@@ -21,6 +21,11 @@ package net.sf.geonames;
 
 import java.util.Comparator;
 
+/**
+ * Region comparator.
+ *
+ * @author Moshe Waisberg
+ */
 public class RegionComparator implements Comparator<CountryRegion> {
 
     public RegionComparator() {

@@ -25,7 +25,7 @@ import java.awt.geom.Point2D;
 /**
  * Country region.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class CountryRegion extends Polygon {
 

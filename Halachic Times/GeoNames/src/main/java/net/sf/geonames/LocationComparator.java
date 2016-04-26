@@ -21,6 +21,11 @@ package net.sf.geonames;
 
 import java.util.Comparator;
 
+/**
+ * Location comparator.
+ *
+ * @author Moshe Waisberg
+ */
 public class LocationComparator implements Comparator<GeoName> {
 
     public LocationComparator() {

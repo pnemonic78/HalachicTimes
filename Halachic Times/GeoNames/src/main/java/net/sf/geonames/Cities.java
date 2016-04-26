@@ -58,7 +58,7 @@ import javax.xml.transform.stream.StreamResult;
 /**
  * Cities.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class Cities {
 

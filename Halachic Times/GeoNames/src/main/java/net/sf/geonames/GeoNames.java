@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * List of geoname records.
+ * Manage lists of GeoName records.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class GeoNames {
 

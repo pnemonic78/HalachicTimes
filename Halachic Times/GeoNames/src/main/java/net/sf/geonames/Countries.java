@@ -44,7 +44,7 @@ import org.w3c.dom.Element;
 /**
  * Countries.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class Countries extends Cities {
 

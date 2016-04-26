@@ -40,6 +40,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+/**
+ * Jewish cities for Android application resources.
+ *
+ * @author Moshe Waisberg
+ */
 public class JewishCities extends Cities {
 
     protected static final String[] LANGUAGES = {null/*, "ar", "bg", "cs", "da", "de", "el", "es", "et", "fa", "fi", "fr", "hi", "hu", "it", "iw", "lt", "nb", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"*/};

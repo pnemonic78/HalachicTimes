@@ -22,6 +22,11 @@ package net.sf.geonames;
 import java.io.File;
 import java.util.Collection;
 
+/**
+ * Bahai cities for Android application resources.
+ *
+ * @author Moshe Waisberg
+ */
 public class BahaiCities extends JewishCities {
 
     public BahaiCities() {
