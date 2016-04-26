@@ -43,7 +43,7 @@ public class BahaiCities extends JewishCities {
         try {
             names = cities.loadNames(res, new BahaiCitiesFilter());
             cities.populateAlternateNames(names);
-            //TODO cities.populateElevations(names);
+            cities.populateElevations(names);
             for (String lang : LANGUAGES) {
                 cities.toAndroidXML(names, lang);
             }

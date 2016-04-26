@@ -57,6 +57,7 @@ public class JewishCities extends Cities {
 
         try {
             names = cities.loadNames(res, new JewishCitiesFilter());
+            cities.populateAlternateNames(names);
             cities.populateElevations(names);
             for (String lang : LANGUAGES) {
                 cities.toAndroidXML(names, lang);
@@ -151,7 +152,7 @@ public class JewishCities extends Cities {
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
             longitude.setTextContent(String.valueOf(place.getLongitude()));
             elevation = doc.createElement(ANDROID_ELEMENT_ITEM);
-            elevation.setTextContent(String.valueOf(place.getElevation()));
+            elevation.setTextContent(String.valueOf(place.getGrossElevation()));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
             zone.setTextContent(place.getTimeZone());
 

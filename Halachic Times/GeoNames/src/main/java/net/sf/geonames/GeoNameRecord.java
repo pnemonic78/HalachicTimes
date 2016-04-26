@@ -84,7 +84,6 @@ public class GeoNameRecord {
     /** Feature code for an Israeli settlement. */
     public static final String FEATURE_STLMT = "STLMT";
 
-
     private long geonameId;
     private String name;
     private String asciiName;
@@ -101,8 +100,8 @@ public class GeoNameRecord {
     private String adminCode4;
     private String adminCode5;
     private long population;
-    private double elevation = Double.NaN;
-    private int dem;
+    private int elevation = Integer.MIN_VALUE;
+    private int dem = Integer.MIN_VALUE;
     private String timezone;
     private String modification;
 
@@ -278,21 +277,21 @@ public class GeoNameRecord {
     }
 
     /**
-     * Get the cc2.
+     * Get the alternate country codes.
      *
-     * @return the cc2
+     * @return the comma-separated list of codes.
      */
-    public String getCc2() {
+    public String getAlternateCountryCodes() {
         return cc2;
     }
 
     /**
-     * Set the cc2.
+     * Set the alternate country codes.
      *
      * @param cc2
-     *         the cc2.
+     *         the the comma-separated list of codes.
      */
-    public void setCc2(String cc2) {
+    public void setAlternateCountryCodes(String cc2) {
         this.cc2 = cc2;
     }
 
@@ -415,7 +414,7 @@ public class GeoNameRecord {
      *
      * @return the elevation
      */
-    public double getElevation() {
+    public int getElevation() {
         return elevation;
     }
 
@@ -425,26 +424,26 @@ public class GeoNameRecord {
      * @param elevation
      *         the elevation.
      */
-    public void setElevation(double elevation) {
+    public void setElevation(int elevation) {
         this.elevation = elevation;
     }
 
     /**
-     * Get the dem.
+     * Get the SRTM3 elevation.
      *
-     * @return the dem
+     * @return the elevation.
      */
-    public int getDem() {
+    public int getDigitalElevation() {
         return dem;
     }
 
     /**
-     * Set the dem.
+     * Set the SRTM3 elevation.
      *
      * @param dem
-     *         the dem.
+     *         the elevation.
      */
-    public void setDem(int dem) {
+    public void setDigitalElevation(int dem) {
         this.dem = dem;
     }
 
@@ -491,4 +490,11 @@ public class GeoNameRecord {
         return (int) getGeoNameId();
     }
 
+    public int getGrossElevation() {
+        int elevation = getElevation();
+        if (elevation == Integer.MIN_VALUE) {
+            elevation = getDigitalElevation();
+        }
+        return elevation;
+    }
 }
