@@ -60,7 +60,7 @@ import javax.xml.transform.stream.StreamResult;
  *
  * @author Moshe
  */
-public class Cities {
+public class Cities implements NameFilter{
 
     public static final String ANDROID_ATTRIBUTE_NAME = "name";
     public static final String ANDROID_ATTRIBUTE_TRANSLATABLE = "translatable";
@@ -121,17 +121,12 @@ public class Cities {
         File res = new File(path);
         System.out.println(res);
         System.out.println(res.getAbsolutePath());
-        try {
-            System.out.println(res.getCanonicalPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         Cities cities = new Cities();
         Collection<GeoName> names;
         Collection<GeoName> cityNames;
         Collection<GeoName> capitals;
         try {
-            names = cities.loadNames(res);
+            names = cities.loadNames(res, null);
             cityNames = cities.filterCity(names);
             capitals = cities.filterCapitals(cityNames);
             cities.toAndroidXML(capitals, null);
@@ -145,13 +140,15 @@ public class Cities {
      *
      * @param file
      *         the geonames file.
+     * @param filter
+     *         the name filter.
      * @return the sorted list of records.
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> loadNames(File file) throws IOException {
+    public Collection<GeoName> loadNames(File file, NameFilter filter) throws IOException {
         GeoNames parser = new GeoNames();
-        return parser.parse(file);
+        return parser.parseCSV(file, filter);
     }
 
     /**
@@ -462,7 +459,6 @@ public class Cities {
             if (alternateNames.size() <= 1) {
                 try {
                     populateAlternateNames(geoName);
-                    return;//~!@
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -495,5 +491,10 @@ public class Cities {
             alternateName = new AlternateName(lang, name);
             alternateNames.put(lang, alternateName);
         }
+    }
+
+    @Override
+    public boolean accept(GeoName name) {
+        return false;
     }
 }

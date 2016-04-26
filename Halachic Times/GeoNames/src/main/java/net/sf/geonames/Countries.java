@@ -65,7 +65,7 @@ public class Countries extends Cities {
         Collection<GeoName> names;
         Collection<CountryRegion> regions;
         try {
-            names = countries.loadNames(res);
+            names = countries.loadNames(res, null);
             regions = countries.toRegions(names);
             countries.toAndroidXML(regions);
         } catch (Exception e) {

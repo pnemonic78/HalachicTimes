@@ -39,7 +39,31 @@ public class GeoNames {
         super();
     }
 
-    public Collection<GeoName> parse(File file) throws IOException {
+    /**
+     * Parse the file with GeoName records.
+     *
+     * @param file
+     *         the file to parseCSV.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> parseCSV(File file) throws IOException {
+        return parseCSV(file, null);
+    }
+
+    /**
+     * Parse the file with GeoName records.
+     *
+     * @param file
+     *         the file to parseCSV.
+     * @param filter
+     *         the filter.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> parseCSV(File file, NameFilter filter) throws IOException {
         Collection<GeoName> records = null;
         Reader reader = null;
         FileInputStream in = null;
@@ -47,7 +71,7 @@ public class GeoNames {
             in = new FileInputStream(file);
             reader = new InputStreamReader(in, "UTF-8");
             in = null;
-            records = parse(reader);
+            records = parseCSV(reader, filter);
         } finally {
             if (in != null)
                 in.close();
@@ -57,7 +81,31 @@ public class GeoNames {
         return records;
     }
 
-    public Collection<GeoName> parse(Reader reader) throws IOException {
+    /**
+     * Parse the file with GeoName records.
+     *
+     * @param reader
+     *         the reader.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> parseCSV(Reader reader) throws IOException {
+        return parseCSV(reader, null);
+    }
+
+    /**
+     * Parse the file with GeoName records.
+     *
+     * @param reader
+     *         the reader.
+     * @param filter
+     *         the filter.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> parseCSV(Reader reader, NameFilter filter) throws IOException {
         Collection<GeoName> records = new ArrayList<GeoName>();
         GeoName record;
         String line;
@@ -122,7 +170,9 @@ public class GeoNames {
             field = fields[column++];
             record.setModification(field);
 
-            records.add(record);
+            if ((filter == null) || filter.accept(record)) {
+                records.add(record);
+            }
         }
 
         return records;
