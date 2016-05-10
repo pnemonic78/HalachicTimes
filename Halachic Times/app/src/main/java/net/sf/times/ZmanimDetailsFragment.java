@@ -206,6 +206,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             return;
 
         Context context = getContextImpl();
+        if (context == null)
+            return;
+
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
         CharSequence dateHebrew;

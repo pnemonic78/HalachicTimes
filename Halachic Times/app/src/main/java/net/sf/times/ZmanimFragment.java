@@ -83,6 +83,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         super.onCreate(savedInstanceState);
 
         Context context = getContextImpl();
+        if (context == null)
+            return;
         settings = new ZmanimSettings(context);
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         locations = app.getLocations();
@@ -109,6 +111,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      */
     @SuppressWarnings("unchecked")
     protected A createAdapter(Context context) {
+        if (context == null)
+            return null;
         return (A) new ZmanimAdapter(context, settings);
     }
 
@@ -130,6 +134,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      */
     @SuppressWarnings("unchecked")
     protected P createPopulater(Context context) {
+        if (context == null)
+            return null;
         return (P) new ZmanimPopulater<A>(context, settings);
     }
 
@@ -197,6 +203,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             return;
 
         Context context = getContextImpl();
+        if (context == null)
+            return;
+
         Calendar date = adapter.getCalendar().getCalendar();
         JewishDate jewishDate = new JewishDate(date);
         CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
