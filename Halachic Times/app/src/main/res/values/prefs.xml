@@ -97,7 +97,7 @@
     <string name="omer_value_off" translatable="false"/>
     <string name="omer_value_b" translatable="false">b</string>
     <string name="omer_value_l" translatable="false">l</string>
-    <string name="omer_defaultValue" translatable="false">@string/omer_value_b</string>
+    <string name="omer_defaultValue" translatable="false">@string/omer_value_l</string>
 
     <bool name="emphasis_defaultValue" translatable="false">false</bool>
     <string name="emphasis_scale_value_100" translatable="false">1.00</string>
