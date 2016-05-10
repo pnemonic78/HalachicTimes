@@ -99,8 +99,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     /** The date. */
     private final Calendar date = Calendar.getInstance();
-    /** The location header. */
-    private View header;
+    /** The location header Gregorian date. */
+    private TextView headerGregorianDate;
+    /** The location header location. */
+    private TextView headerLocation;
+    /** The location header for formatted address. */
+    private TextView headerAddress;
     /** The navigation bar. */
     private View navigationBar;
     /** Provider for locations. */
@@ -311,8 +315,11 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             viewSwitcher.setOutAnimation(outAnim);
         }
 
-        header = view.findViewById(R.id.header);
+        View header = view.findViewById(R.id.header);
         header.setOnClickListener(this);
+        headerGregorianDate = (TextView) header.findViewById(R.id.date_gregorian);
+        headerLocation = (TextView) header.findViewById(R.id.coordinates);
+        headerAddress = (TextView) header.findViewById(R.id.address);
         navigationBar = header.findViewById(R.id.navigation_bar);
 
         View iconBack = navigationBar.findViewById(R.id.nav_yesterday);
@@ -349,13 +356,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         this.date.setTimeInMillis(date);
         this.date.setTimeZone(locations.getTimeZone());
 
-        View header = this.header;
+        TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
-        if (header == null)
+        if (textGregorian == null)
             return;
         CharSequence dateGregorian = DateUtils.formatDateTime(this, this.date.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                 | DateUtils.FORMAT_SHOW_WEEKDAY);
-        TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
         textGregorian.setText(dateGregorian);
     }
 
@@ -375,13 +381,12 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         date.setTimeZone(locations.getTimeZone());
 
-        View header = this.header;
+        TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
-        if (header == null)
+        if (textGregorian == null)
             return;
         CharSequence dateGregorian = DateUtils.formatDateTime(this, date.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                 | DateUtils.FORMAT_SHOW_WEEKDAY);
-        TextView textGregorian = (TextView) header.findViewById(R.id.date_gregorian);
         textGregorian.setText(dateGregorian);
     }
 
@@ -417,24 +422,23 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     /** Populate the header item. */
     private void populateHeader() {
-        View header = this.header;
+        TextView locationLabel = headerLocation;
+        TextView addressLabel = headerAddress;
         // Have we been destroyed?
-        if (header == null)
+        if ((locationLabel == null) || (addressLabel == null))
             return;
-        Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
+        Location loc = (addressLocation != null) ? addressLocation : locations.getLocation();
         // Have we been destroyed?
         if (loc == null)
             return;
 
-        final CharSequence coordsText = locations.formatCoordinates(loc);
-        final CharSequence locationName = formatAddress();
+        final CharSequence locationText = locations.formatCoordinates(loc);
+        final CharSequence locationName = formatAddress(address);
 
         // Update the location.
-        TextView coordinates = (TextView) header.findViewById(R.id.coordinates);
-        coordinates.setText(coordsText);
-        coordinates.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
-        TextView address = (TextView) header.findViewById(R.id.address);
-        address.setText(locationName);
+        locationLabel.setText(locationText);
+        locationLabel.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
+        addressLabel.setText(locationName);
     }
 
     @Override
@@ -499,9 +503,11 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     /**
      * Format the address for the current location.
      *
+     * @param address
+     *         the address.
      * @return the formatted address.
      */
-    private CharSequence formatAddress() {
+    private CharSequence formatAddress(ZmanimAddress address) {
         if (address != null)
             return address.getFormatted();
         return getString(R.string.location_unknown);
