@@ -123,7 +123,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     protected CharSequence formatLatitudeSexagesimal(double coordinate) {
-        return Location.convert(coordinate, Location.FORMAT_SECONDS);
+        return Location.convert(Math.abs(coordinate), Location.FORMAT_SECONDS);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     protected CharSequence formatLongitudeSexagesimal(double coordinate) {
-        return Location.convert(coordinate, Location.FORMAT_SECONDS);
+        return Location.convert(Math.abs(coordinate), Location.FORMAT_SECONDS);
     }
 
     @Override

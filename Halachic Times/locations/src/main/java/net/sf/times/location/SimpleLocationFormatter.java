@@ -55,7 +55,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate *= 60.0;
         double seconds = coordinate;
         String symbol = (degrees >= 0) ? symbolNorth : symbolSouth;
-        return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
+        return String.format(FORMAT_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
     }
 
     @Override
@@ -68,6 +68,6 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate *= 60.0;
         double seconds = coordinate;
         String symbol = (degrees >= 0) ? symbolEast : symbolWest;
-        return String.format(FORMAT_SEXAGESIMAL, degrees, minutes, seconds, symbol);
+        return String.format(FORMAT_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
     }
 }
