@@ -19,7 +19,9 @@
  */
 package net.sf.geonames;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -29,13 +31,27 @@ import java.util.Map;
  */
 public class GeoName extends GeoNameRecord {
 
+    private BoundingBox bbox;
+    private String countryId;
+    private String countryName;
+    private String adminId1;
+    private String continentCode;
+    private String toponymName;
+    private String wikipediaURL;
+    private String adminName1;
+    private String adminName2;
+    private String adminName3;
+    private String adminName4;
+    private String adminName5;
     private final Map<String, AlternateName> alternateNamesMap = new HashMap<>();
+    private String fclName;
+    private String fcodeName;
 
     @Override
     public void setName(String name) {
         super.setName(name);
         if ((name != null) && alternateNamesMap.isEmpty()) {
-            AlternateName alternateName = new AlternateName("en", name);
+            AlternateName alternateName = new AlternateName(Locale.ENGLISH.getLanguage(), name);
             alternateNamesMap.put(alternateName.getLanguage(), alternateName);
         }
     }
@@ -49,5 +65,126 @@ public class GeoName extends GeoNameRecord {
         if (alternateNamesMap != null) {
             this.alternateNamesMap.putAll(alternateNamesMap);
         }
+    }
+
+    public void setAlternateNames(Collection<AlternateName> alternateNames) {
+        this.alternateNamesMap.clear();
+        if (alternateNamesMap != null) {
+            for (AlternateName name : alternateNames) {
+                this.alternateNamesMap.put(name.getName(), name);
+            }
+        }
+    }
+
+    public BoundingBox getBounds() {
+        return bbox;
+    }
+
+    public void setBounds(BoundingBox bbox) {
+        this.bbox = bbox;
+    }
+
+    public String getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(String countryId) {
+        this.countryId = countryId;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getAdminId1() {
+        return adminId1;
+    }
+
+    public void setAdminId1(String adminId1) {
+        this.adminId1 = adminId1;
+    }
+
+    public String getContinentCode() {
+        return continentCode;
+    }
+
+    public void setContinentCode(String continentCode) {
+        this.continentCode = continentCode;
+    }
+
+    public String getToponymName() {
+        return toponymName;
+    }
+
+    public void setToponymName(String toponymName) {
+        this.toponymName = toponymName;
+    }
+
+    public String getWikipediaURL() {
+        return wikipediaURL;
+    }
+
+    public void setWikipediaURL(String wikipediaURL) {
+        this.wikipediaURL = wikipediaURL;
+    }
+
+    public String getAdminName1() {
+        return adminName1;
+    }
+
+    public void setAdminName1(String adminName1) {
+        this.adminName1 = adminName1;
+    }
+
+    public String getAdminName2() {
+        return adminName2;
+    }
+
+    public void setAdminName2(String adminName2) {
+        this.adminName2 = adminName2;
+    }
+
+    public String getAdminName3() {
+        return adminName3;
+    }
+
+    public void setAdminName3(String adminName3) {
+        this.adminName3 = adminName3;
+    }
+
+    public String getAdminName4() {
+        return adminName4;
+    }
+
+    public void setAdminName4(String adminName4) {
+        this.adminName4 = adminName4;
+    }
+
+    public String getAdminName5() {
+        return adminName5;
+    }
+
+    public void setAdminName5(String adminName5) {
+        this.adminName5 = adminName5;
+    }
+
+    public String getFeatureClassName() {
+        return fclName;
+    }
+
+    public void setFeatureClassName(String fclName) {
+        this.fclName = fclName;
+    }
+
+    public String getFeatureCodeName() {
+        return fcodeName;
+    }
+
+    public void setFeatureCodeName(String fcodeName) {
+        this.fcodeName = fcodeName;
     }
 }
