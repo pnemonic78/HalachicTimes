@@ -85,11 +85,17 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
 
     @Override
     protected CandlesAdapter createAdapter(Context context) {
+        if (context == null) {
+            return null;
+        }
         return new CandlesAdapter(context, settings);
     }
 
     @Override
     protected CandlesPopulater createPopulater(Context context) {
+        if (context == null) {
+            return null;
+        }
         return new CandlesPopulater(context, settings);
     }
 
@@ -227,7 +233,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
 
     @Override
     public void setVisibility(int visibility) {
-        super.setVisibility( visibility);
+        super.setVisibility(visibility);
         stopAnimation();
     }
 }

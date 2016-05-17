@@ -52,8 +52,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     @SuppressWarnings("unchecked")
     @Override
     protected A createAdapter(Context context) {
-        if (masterId == 0)
+        if ((masterId == 0) || (context == null)) {
             return null;
+        }
 
         return (A) new ZmanimDetailsAdapter(context, settings);
     }
@@ -247,6 +248,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
 
     @Override
     protected P createPopulater(Context context) {
+        if (context == null) {
+            return null;
+        }
         return (P) new ZmanimDetailsPopulater<A>(context, settings);
     }
 }

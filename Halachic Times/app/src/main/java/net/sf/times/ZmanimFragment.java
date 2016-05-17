@@ -83,8 +83,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         super.onCreate(savedInstanceState);
 
         Context context = getContextImpl();
-        if (context == null)
-            return;
         settings = new ZmanimSettings(context);
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         locations = app.getLocations();
@@ -170,12 +168,14 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             return null;
 
         P populater = getPopulater();
-        populater.setCalendar(date);
-        populater.setGeoLocation(gloc);
-        populater.setInIsrael(locations.isInIsrael());
+        if (populater != null) {
+            populater.setCalendar(date);
+            populater.setGeoLocation(gloc);
+            populater.setInIsrael(locations.isInIsrael());
+        }
 
         A adapter = createAdapter(getContextImpl());
-        if (adapter != null) {
+        if ((populater != null) && (adapter != null)) {
             populater.populate(adapter, false);
         }
         this.adapter = adapter;
