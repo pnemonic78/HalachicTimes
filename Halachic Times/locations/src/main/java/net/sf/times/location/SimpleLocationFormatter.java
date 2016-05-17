@@ -47,6 +47,8 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
     @Override
     protected CharSequence formatLatitudeSexagesimal(double coordinate) {
+        String symbol = (coordinate >= 0) ? symbolNorth : symbolSouth;
+        coordinate = Math.abs(coordinate);
         int degrees = (int) Math.floor(coordinate);
         coordinate -= degrees;
         coordinate *= 60.0;
@@ -54,12 +56,13 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate -= minutes;
         coordinate *= 60.0;
         double seconds = coordinate;
-        String symbol = (degrees >= 0) ? symbolNorth : symbolSouth;
         return String.format(FORMAT_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
     }
 
     @Override
     protected CharSequence formatLongitudeSexagesimal(double coordinate) {
+        String symbol = (coordinate >= 0) ? symbolEast : symbolWest;
+        coordinate = Math.abs(coordinate);
         int degrees = (int) Math.floor(coordinate);
         coordinate -= degrees;
         coordinate *= 60.0;
@@ -67,7 +70,6 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate -= minutes;
         coordinate *= 60.0;
         double seconds = coordinate;
-        String symbol = (degrees >= 0) ? symbolEast : symbolWest;
         return String.format(FORMAT_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
     }
 }
