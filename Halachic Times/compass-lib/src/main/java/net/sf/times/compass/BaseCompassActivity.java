@@ -54,7 +54,7 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
 
     /** Provider for locations. */
     private LocationsProvider locations;
-   /** The main fragment. */
+    /** The main fragment. */
     private CompassFragment fragment;
     /** The settings and preferences. */
     private CompassSettings settings;

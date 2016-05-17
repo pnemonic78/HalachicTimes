@@ -810,6 +810,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                         if (extras == null) {
                             extras = new Bundle();
                             address.setExtras(extras);
+                            extras = address.getExtras();
                         }
                         extras.putParcelable(PARAMETER_LOCATION, location);
                         handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
