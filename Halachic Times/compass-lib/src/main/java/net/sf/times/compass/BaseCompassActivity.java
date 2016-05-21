@@ -22,10 +22,6 @@ package net.sf.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -66,6 +62,10 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
     private Runnable populateHeader;
     /** Update the location in UI thread. */
     private Runnable updateLocation;
+    /** The location header location. */
+    private TextView headerLocation;
+    /** The location header for formatted address. */
+    private TextView headerAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +76,8 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
 
         setTheme(settings.getTheme());
         setContentView(R.layout.compass);
+        headerLocation = (TextView) findViewById(R.id.coordinates);
+        headerAddress = (TextView) findViewById(R.id.address);
         fragment = (CompassFragment) getFragmentManager().findFragmentById(R.id.compass);
 
         if (!settings.isSummaries()) {
@@ -140,28 +142,33 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
 
     /** Populate the header item. */
     private void populateHeader() {
+        TextView locationLabel = headerLocation;
+        TextView addressLabel = headerAddress;
+        // Have we been destroyed?
+        if ((locationLabel == null) || (addressLabel == null))
+            return;
         // Have we been destroyed?
         Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
         if (loc == null)
             return;
 
-        final CharSequence coordsText = locations.formatCoordinates(loc);
-        final CharSequence locationName = formatAddress();
+        final CharSequence locationText = locations.formatCoordinates(loc);
+        final CharSequence locationName = formatAddress(address);
 
         // Update the location.
-        TextView address = (TextView) findViewById(R.id.address);
-        address.setText(locationName);
-        TextView coordinates = (TextView) findViewById(R.id.coordinates);
-        coordinates.setText(coordsText);
-        coordinates.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
+        locationLabel.setText(locationText);
+        locationLabel.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
+        addressLabel.setText(locationName);
     }
 
     /**
      * Format the address for the current location.
      *
+     * @param address
+     *         the address.
      * @return the formatted address.
      */
-    private CharSequence formatAddress() {
+    private CharSequence formatAddress(ZmanimAddress address) {
         if (address != null)
             return address.getFormatted();
         return getString(R.string.location_unknown);

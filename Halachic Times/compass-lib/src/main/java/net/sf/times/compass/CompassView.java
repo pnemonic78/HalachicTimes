@@ -340,7 +340,7 @@ public class CompassView extends View {
     }
 
     /**
-     * Set the bearing to the Holy of Holies.
+     * Set the bearing to some holy place.
      *
      * @param bearing
      *         the bearing in degrees.

@@ -22,10 +22,10 @@ package net.sf.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.ZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -39,6 +39,8 @@ import java.util.Date;
  * @author Moshe Waisberg
  */
 public class ZmanimPopulater<A extends ZmanimAdapter> {
+
+    private static final String TAG = "ZmanimPopulater";
 
     /** 12 hours (half of a full day). */
     protected static final long TWELVE_HOURS = DateUtils.DAY_IN_MILLIS >> 1;
@@ -177,7 +179,15 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      *         is for remote views?
      */
     public void populate(A adapter, boolean remote) {
+        if (adapter == null) {
+            Log.e(TAG, "adapter required to populate");
+            return;
+        }
         Context context = getContext();
+        if (context == null) {
+            Log.e(TAG, "context required to populate");
+            return;
+        }
         ZmanimSettings settings = getSettings();
 
         prePopulate(adapter);

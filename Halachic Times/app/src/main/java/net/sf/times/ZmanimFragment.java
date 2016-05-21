@@ -20,6 +20,7 @@
 package net.sf.times;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -49,6 +50,7 @@ import java.util.Calendar;
  */
 public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A>> extends Fragment {
 
+    private Context context;
     protected LayoutInflater inflater;
     private OnClickListener onClickListener;
     /** The list. */
@@ -75,7 +77,19 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     private A adapter;
 
     protected Context getContextImpl() {
-        return getActivity();
+        return context;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.context = activity;
     }
 
     @Override
