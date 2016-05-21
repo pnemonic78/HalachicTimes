@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--Generated from geonames.org data.-->
 <resources>
-
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -16,9 +15,9 @@
         <item>Houston</item>
         <item>Saint Louis</item>
         <item>Chicago</item>
-        <item>Cleveland</item>
         <item>Atlanta</item>
         <item>Detroit</item>
+        <item>Cleveland</item>
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
@@ -176,15 +175,15 @@
         <item>29.76328</item>
         <item>38.62727</item>
         <item>41.85003</item>
-        <item>33.99093</item>
         <item>33.749</item>
         <item>42.33143</item>
+        <item>41.4995</item>
         <item>25.77427</item>
         <item>40.44062</item>
         <item>43.70011</item>
         <item>38.89511</item>
         <item>39.29038</item>
-        <item>39.95233</item>
+        <item>39.95234</item>
         <item>4.60971</item>
         <item>40.71427</item>
         <item>45.50884</item>
@@ -206,7 +205,7 @@
         <item>43.70313</item>
         <item>47.36667</item>
         <item>48.13743</item>
-        <item>41.89193</item>
+        <item>41.89474</item>
         <item>52.52437</item>
         <item>48.20849</item>
         <item>59.33258</item>
@@ -216,27 +215,27 @@
         <item>60.16952</item>
         <item>-26.20227</item>
         <item>41.01384</item>
-        <item>59.93863</item>
+        <item>59.89444</item>
         <item>50.45466</item>
         <item>-29.8579</item>
         <item>31.66926</item>
-        <item>31.79213</item>
+        <item>31.81667</item>
         <item>32.08088</item>
         <item>31.25181</item>
-        <item>32.44192</item>
+        <item>32.43645</item>
         <item>29.55805</item>
         <item>32.81841</item>
-        <item>31.73072</item>
-        <item>33.01135</item>
+        <item>31.74959</item>
+        <item>33.00586</item>
         <item>32.1065</item>
         <item>31.76904</item>
         <item>32.69925</item>
-        <item>32.96465</item>
-        <item>32.79221</item>
+        <item>32.96564</item>
+        <item>32.7922</item>
         <item>55.75222</item>
         <item>9.02497</item>
         <item>19.07283</item>
-        <item>23.72894</item>
+        <item>23.72444</item>
         <item>-31.95224</item>
         <item>-37.814</item>
         <item>-33.86785</item>
@@ -256,9 +255,9 @@
         <item>-95.36327</item>
         <item>-90.19789</item>
         <item>-87.65005</item>
-        <item>-86.57749</item>
         <item>-84.38798</item>
         <item>-83.04575</item>
+        <item>-81.69541</item>
         <item>-80.19366</item>
         <item>-79.99589</item>
         <item>-79.4163</item>
@@ -286,7 +285,7 @@
         <item>7.26608</item>
         <item>8.55</item>
         <item>11.57549</item>
-        <item>12.51133</item>
+        <item>12.4839</item>
         <item>13.41053</item>
         <item>16.37208</item>
         <item>18.0649</item>
@@ -296,31 +295,111 @@
         <item>24.93545</item>
         <item>28.04363</item>
         <item>28.94966</item>
-        <item>30.31413</item>
+        <item>30.26417</item>
         <item>30.5238</item>
         <item>31.0292</item>
         <item>34.57149</item>
-        <item>34.64966</item>
+        <item>34.65</item>
         <item>34.78057</item>
         <item>34.7913</item>
-        <item>34.9039</item>
+        <item>34.91956</item>
         <item>34.94821</item>
         <item>34.9885</item>
-        <item>34.99293</item>
-        <item>35.09467</item>
+        <item>34.98877</item>
+        <item>35.09409</item>
         <item>35.18449</item>
         <item>35.21633</item>
         <item>35.30483</item>
-        <item>35.496</item>
+        <item>35.50049</item>
         <item>35.53124</item>
         <item>37.61556</item>
         <item>38.74689</item>
         <item>72.88261</item>
-        <item>92.71791</item>
+        <item>92.7175</item>
         <item>115.8614</item>
         <item>144.96332</item>
         <item>151.20732</item>
         <item>174.76667</item>
+    </string-array>
+    <string-array name="cities_elevations" translatable="false">
+        <item>70</item>
+        <item>16</item>
+        <item>56</item>
+        <item>61</item>
+        <item>20</item>
+        <item>331</item>
+        <item>1958</item>
+        <item>1609</item>
+        <item>2240</item>
+        <item>128</item>
+        <item>12</item>
+        <item>142</item>
+        <item>179</item>
+        <item>320</item>
+        <item>183</item>
+        <item>199</item>
+        <item>2</item>
+        <item>233</item>
+        <item>175</item>
+        <item>7</item>
+        <item>10</item>
+        <item>12</item>
+        <item>2582</item>
+        <item>10</item>
+        <item>216</item>
+        <item>14</item>
+        <item>19</item>
+        <item>31</item>
+        <item>769</item>
+        <item>5</item>
+        <item>17</item>
+        <item>665</item>
+        <item>51</item>
+        <item>27</item>
+        <item>42</item>
+        <item>28</item>
+        <item>173</item>
+        <item>13</item>
+        <item>28</item>
+        <item>400</item>
+        <item>25</item>
+        <item>429</item>
+        <item>524</item>
+        <item>29</item>
+        <item>74</item>
+        <item>171</item>
+        <item>28</item>
+        <item>509</item>
+        <item>25</item>
+        <item>111</item>
+        <item>26</item>
+        <item>1767</item>
+        <item>39</item>
+        <item>12</item>
+        <item>187</item>
+        <item>21</item>
+        <item>42</item>
+        <item>11</item>
+        <item>15</item>
+        <item>285</item>
+        <item>42</item>
+        <item>63</item>
+        <item>34</item>
+        <item>307</item>
+        <item>15</item>
+        <item>560</item>
+        <item>806</item>
+        <item>322</item>
+        <item>746</item>
+        <item>-140</item>
+        <item>144</item>
+        <item>2405</item>
+        <item>8</item>
+        <item>1039</item>
+        <item>46</item>
+        <item>25</item>
+        <item>58</item>
+        <item>79</item>
     </string-array>
     <string-array name="cities_time_zones" translatable="false">
         <item>America/Vancouver</item>
@@ -336,9 +415,9 @@
         <item>America/Chicago</item>
         <item>America/Chicago</item>
         <item>America/Chicago</item>
-        <item>America/Chicago</item>
         <item>America/New_York</item>
         <item>America/Detroit</item>
+        <item>America/New_York</item>
         <item>America/New_York</item>
         <item>America/New_York</item>
         <item>America/Toronto</item>
@@ -347,7 +426,7 @@
         <item>America/New_York</item>
         <item>America/Bogota</item>
         <item>America/New_York</item>
-        <item>America/Toronto</item>
+        <item>America/Montreal</item>
         <item>America/New_York</item>
         <item>America/New_York</item>
         <item>America/Argentina/Buenos_Aires</item>
@@ -402,85 +481,4 @@
         <item>Australia/Sydney</item>
         <item>Pacific/Auckland</item>
     </string-array>
-    <string-array name="cities_elevations" translatable="false">
-        <item>63</item>
-        <item>60</item>
-        <item>60</item>
-        <item>71</item>
-        <item>26</item>
-        <item>343</item>
-        <item>1977</item>
-        <item>1598</item>
-        <item>2215</item>
-        <item>137</item>
-        <item>15</item>
-        <item>135</item>
-        <item>181</item>
-        <item>159</item>
-        <item>305</item>
-        <item>181</item>
-        <item>2</item>
-        <item>235</item>
-        <item>173</item>
-        <item>11</item>
-        <item>2</item>
-        <item>8</item>
-        <item>2621</item>
-        <item>2</item>
-        <item>119</item>
-        <item>11</item>
-        <item>4</item>
-        <item>21</item>
-        <item>631</item>
-        <item>19</item>
-        <item>17</item>
-        <item>638</item>
-        <item>60</item>
-        <item>35</item>
-        <item>30</item>
-        <item>20</item>
-        <item>173</item>
-        <item>-2</item>
-        <item>40</item>
-        <item>375</item>
-        <item>0</item>
-        <item>472</item>
-        <item>512</item>
-        <item>15</item>
-        <item>36</item>
-        <item>164</item>
-        <item>20</item>
-        <item>518</item>
-        <item>16</item>
-        <item>75</item>
-        <item>26</item>
-        <item>1751</item>
-        <item>28</item>
-        <item>5</item>
-        <item>136</item>
-        <item>23</item>
-        <item>63</item>
-        <item>4</item>
-        <item>18</item>
-        <item>268</item>
-        <item>55</item>
-        <item>96</item>
-        <item>34</item>
-        <item>244</item>
-        <item>0</item>
-        <item>607</item>
-        <item>806</item>
-        <item>322</item>
-        <item>601</item>
-        <item>-39</item>
-        <item>151</item>
-        <item>2371</item>
-        <item>14</item>
-        <item>1039</item>
-        <item>46</item>
-        <item>58</item>
-        <item>1</item>
-        <item>26</item>
-    </string-array>
-
 </resources>

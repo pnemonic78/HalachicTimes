@@ -72,8 +72,8 @@ public class JewishCitiesFilter implements NameFilter {
             2553604,
             // Chicago, United States
             4887398,
-            // Cleveland, United States
-            4055815,
+            // Cleveland, OH, United States
+            5150529,
             // Dallas, United States
             4684888,
             // Denver, United States
