@@ -104,7 +104,7 @@ public class Cities {
      * Load the list of names.
      *
      * @param file
-     *         the geonames file.
+     *         the geonames CSV file.
      * @param filter
      *         the name filter.
      * @return the sorted list of records.

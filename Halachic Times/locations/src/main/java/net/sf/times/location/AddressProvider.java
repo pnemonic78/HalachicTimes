@@ -1026,7 +1026,6 @@ public class AddressProvider {
 
         for (ZmanimAddress city : cities) {
             values.put(BaseColumns._ID, -city.getId());
-            System.out.println("~!@ [" + city.format() + "] " + (-city.getId()) + " " + city.getLatitude() + " " + city.getLongitude());
             db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
         }
     }
