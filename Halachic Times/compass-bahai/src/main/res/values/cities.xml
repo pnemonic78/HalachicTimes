@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--Generated from geonames.org data.-->
 <resources>
-    <string-array name="cities">
+    <!--string-array name="cities">
         <item>Apia</item>
         <item>Anchorage</item>
         <item>Vancouver</item>
@@ -552,5 +552,5 @@
         <item>Australia/Sydney</item>
         <item>Pacific/Auckland</item>
         <item>Pacific/Fiji</item>
-    </string-array>
+    </string-array-->
 </resources>
