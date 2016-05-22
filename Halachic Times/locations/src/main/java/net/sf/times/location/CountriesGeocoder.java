@@ -453,13 +453,13 @@ public class CountriesGeocoder extends GeocoderBase {
             cityLocale = new Locale(getLanguage(), citiesCountries[nearestCityIndex]);
 
             city = new ZmanimAddress(locale);
-            city.setId(-nearestCityIndex - 1);
             city.setLatitude(citiesLatitudes[nearestCityIndex]);
             city.setLongitude(citiesLongitudes[nearestCityIndex]);
             city.setElevation(citiesElevations[nearestCityIndex]);
             city.setCountryCode(cityLocale.getCountry());
             city.setCountryName(cityLocale.getDisplayCountry());
             city.setLocality(citiesNames[nearestCityIndex]);
+            city.setId(generateCityId(city));
         }
 
         return city;
@@ -482,7 +482,7 @@ public class CountriesGeocoder extends GeocoderBase {
         String languageCode = locale.getLanguage();
         ZmanimAddress city;
 
-        for (int i = 0, j = -1; i < citiesCount; i++, j--) {
+        for (int i = 0; i < citiesCount; i++) {
             latitude = citiesLatitudes[i];
             longitude = citiesLongitudes[i];
             elevation = citiesElevations[i];
@@ -490,13 +490,13 @@ public class CountriesGeocoder extends GeocoderBase {
             cityLocale = new Locale(languageCode, citiesCountries[i]);
 
             city = new ZmanimAddress(locale);
-            city.setId(j);
             city.setLatitude(latitude);
             city.setLongitude(longitude);
             city.setElevation(elevation);
             city.setCountryCode(cityLocale.getCountry());
             city.setCountryName(cityLocale.getDisplayCountry());
             city.setLocality(cityName);
+            city.setId(generateCityId(city));
 
             cities.add(city);
         }
@@ -527,13 +527,13 @@ public class CountriesGeocoder extends GeocoderBase {
                 cityLocale = new Locale(getLanguage(), citiesCountries[i]);
 
                 city = new ZmanimAddress(locale);
-                city.setId(-i - 1);
                 city.setLatitude(cityLatitude);
                 city.setLongitude(cityLongitude);
                 city.setElevation(citiesElevations[i]);
                 city.setCountryCode(cityLocale.getCountry());
                 city.setCountryName(cityLocale.getDisplayCountry());
                 city.setLocality(citiesNames[i]);
+                city.setId(generateCityId(city));
 
                 cities.add(city);
             }
@@ -618,4 +618,9 @@ public class CountriesGeocoder extends GeocoderBase {
         return null;
     }
 
+    public static long generateCityId(ZmanimAddress city) {
+        final long fixedPointLatitude = (long) Math.rint(city.getLatitude() * RATIO) & 0x7FFFFFFFL;
+        final long fixedPointLongitude = (long) Math.rint(city.getLongitude() * RATIO) & 0xFFFFFFFFL;
+        return -((fixedPointLatitude << 31) | fixedPointLongitude);
+    }
 }

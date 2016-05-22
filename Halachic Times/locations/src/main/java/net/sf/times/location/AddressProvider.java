@@ -22,6 +22,7 @@ package net.sf.times.location;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -144,6 +145,7 @@ public class AddressProvider {
         this.context = context;
         this.locale = locale;
         countriesGeocoder = new CountriesGeocoder(context, locale);
+        upgradeCities();
     }
 
     /**
@@ -928,7 +930,11 @@ public class AddressProvider {
                     favorite = cursor.getShort(INDEX_CITIES_FAVORITE) != 0;
 
                     city = citiesById.get(id);
-                    city.setFavorite(favorite);
+                    if (city != null) {
+                        city.setFavorite(favorite);
+                    } else {
+                        Log.w(TAG, "city not found for id " + id);
+                    }
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteException se) {
@@ -976,5 +982,52 @@ public class AddressProvider {
 
     public List<ZmanimAddress> getCities() {
         return countriesGeocoder.getCities();
+    }
+
+    /**
+     * Delete the list of cached cities and re-populate.
+     */
+    public void clearCities() {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+        db.delete(AddressOpenHelper.TABLE_CITIES, null, null);
+        fillCities(db);
+    }
+
+    /**
+     * Upgrade the list of cached cities.
+     */
+    public void upgradeCities() {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+
+        String whereClause = "(" + AddressColumns._ID + " <= 78)";
+        int deleted = db.delete(AddressOpenHelper.TABLE_CITIES, whereClause, null);
+
+        if ((deleted > 70) || (DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM " + AddressOpenHelper.TABLE_CITIES, null) == 0)) {
+            fillCities(db);
+        }
+    }
+
+    /**
+     * Fill the cities table with empty rows.
+     *
+     * @param db
+     *         the database.
+     */
+    private void fillCities(SQLiteDatabase db) {
+        List<ZmanimAddress> cities = getCities();
+
+        ContentValues values = new ContentValues();
+        values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
+        values.put(CitiesColumns.FAVORITE, 0);
+
+        for (ZmanimAddress city : cities) {
+            values.put(BaseColumns._ID, -city.getId());
+            System.out.println("~!@ [" + city.format() + "] " + (-city.getId()) + " " + city.getLatitude() + " " + city.getLongitude());
+            db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
+        }
     }
 }
