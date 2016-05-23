@@ -332,7 +332,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      */
     private Drawable getSelectedBackground() {
         if (highlightBackground == null) {
-            highlightBackground = getResources().getDrawable(R.drawable.list_selected);
+            highlightBackground = getContextImpl().getResources().getDrawable(R.drawable.list_selected);
         }
         return highlightBackground;
     }
