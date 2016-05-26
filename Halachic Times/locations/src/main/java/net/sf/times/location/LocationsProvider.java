@@ -42,9 +42,9 @@ import android.util.Log;
 
 import net.sf.util.LocaleUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.TimeZone;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Locations provider.
@@ -117,9 +117,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /** The context. */
     private final Context context;
     /** The owner location listeners. */
-    private final List<ZmanimLocationListener> locationListeners = new ArrayList<ZmanimLocationListener>();
-    /** The owner location listeners for dispatching events. */
-    private List<ZmanimLocationListener> locationListenersLoop = locationListeners;
+    private final Collection<ZmanimLocationListener> locationListeners = new CopyOnWriteArrayList<>();
     /** Service provider for locations. */
     private final LocationManager locationManager;
     /** The location. */
@@ -181,7 +179,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private void addLocationListener(ZmanimLocationListener listener) {
         if (!locationListeners.contains(listener) && (listener != this)) {
             locationListeners.add(listener);
-            locationListenersLoop = new ArrayList<ZmanimLocationListener>(locationListeners);
         }
     }
 
@@ -193,7 +190,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     private void removeLocationListener(ZmanimLocationListener listener) {
         locationListeners.remove(listener);
-        locationListenersLoop = new ArrayList<ZmanimLocationListener>(locationListeners);
     }
 
     @Override
@@ -223,8 +219,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             settings.putLocation(location);
         }
 
-        List<ZmanimLocationListener> listeners = locationListenersLoop;
-        for (ZmanimLocationListener listener : listeners)
+        for (ZmanimLocationListener listener : locationListeners)
             listener.onLocationChanged(location);
 
         if (findElevation && !location.hasAltitude())
@@ -235,29 +230,25 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     @Override
     public void onProviderDisabled(String provider) {
-        List<ZmanimLocationListener> listeners = locationListenersLoop;
-        for (ZmanimLocationListener listener : listeners)
+        for (ZmanimLocationListener listener : locationListeners)
             listener.onProviderDisabled(provider);
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        List<ZmanimLocationListener> listeners = locationListenersLoop;
-        for (ZmanimLocationListener listener : listeners)
+        for (ZmanimLocationListener listener : locationListeners)
             listener.onProviderEnabled(provider);
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        List<ZmanimLocationListener> listeners = locationListenersLoop;
-        for (ZmanimLocationListener listener : listeners)
+        for (ZmanimLocationListener listener : locationListeners)
             listener.onStatusChanged(provider, status, extras);
     }
 
     @Override
     public void onAddressChanged(Location location, ZmanimAddress address) {
-        List<ZmanimLocationListener> listeners = locationListenersLoop;
-        for (ZmanimLocationListener listener : listeners)
+        for (ZmanimLocationListener listener : locationListeners)
             listener.onAddressChanged(location, address);
     }
 
