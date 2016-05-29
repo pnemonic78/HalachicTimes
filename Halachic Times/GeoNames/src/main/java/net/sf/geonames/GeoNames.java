@@ -455,6 +455,9 @@ public class GeoNames {
                 record.setWikipediaURL(field);
                 continue;
             }
+            if (field.length() > 3) {
+                continue;
+            }
             language = field;
             locale = new Locale(language);
             language = locale.getLanguage();

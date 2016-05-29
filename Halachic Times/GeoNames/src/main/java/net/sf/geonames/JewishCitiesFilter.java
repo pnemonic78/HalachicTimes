@@ -107,9 +107,9 @@ public class JewishCitiesFilter implements NameFilter {
             // Las Vegas, United States
             5475433,
             // London, United Kingdom
-            2643741,
+            2643743,
             // Los Angeles, United States
-            5344994,
+            5368361,
             // Lyon, France
             2996944,
             // Madrid, Spain
