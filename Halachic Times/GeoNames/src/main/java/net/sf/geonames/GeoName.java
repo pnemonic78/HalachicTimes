@@ -187,8 +187,10 @@ public class GeoName extends GeoNameRecord {
         AlternateName alternateName = alternateNamesMap.get(language);
         if ((alternateName == null) || preferred) {
             alternateName = new AlternateName(language, name, preferred);
+            alternateNamesMap.put(language, alternateName);
+        } else {
+            alternateName.setName(name);
         }
-        alternateNamesMap.put(language, alternateName);
     }
 
     public String getBestName(String language) {
