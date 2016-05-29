@@ -47,15 +47,6 @@ public class GeoName extends GeoNameRecord {
     private String fclName;
     private String fcodeName;
 
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-        if ((name != null) && alternateNamesMap.isEmpty()) {
-            AlternateName alternateName = new AlternateName(Locale.ENGLISH.getLanguage(), name);
-            alternateNamesMap.put(alternateName.getLanguage(), alternateName);
-        }
-    }
-
     public Map<String, AlternateName> getAlternateNamesMap() {
         return alternateNamesMap;
     }
@@ -193,6 +184,22 @@ public class GeoName extends GeoNameRecord {
     }
 
     public void putAlternateName(String language, String name, boolean preferred) {
-        alternateNamesMap.put(language, new AlternateName(language, name, preferred));
+        AlternateName alternateName = alternateNamesMap.get(language);
+        if ((alternateName == null) || preferred) {
+            alternateName = new AlternateName(language, name, preferred);
+        }
+        alternateNamesMap.put(language, alternateName);
+    }
+
+    public String getBestName(String language) {
+        String name = getName();
+        if (language == null) {
+            language = Locale.ENGLISH.getLanguage();
+        }
+        AlternateName alternateName = getAlternateNamesMap().get(language);
+        if (alternateName != null) {
+            name = alternateName.getName();
+        }
+        return name;
     }
 }

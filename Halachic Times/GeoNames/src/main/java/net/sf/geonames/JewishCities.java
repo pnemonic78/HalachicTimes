@@ -140,7 +140,7 @@ public class JewishCities extends Cities {
 
         for (GeoName place : sorted) {
             city = doc.createElement(ANDROID_ELEMENT_ITEM);
-            city.setTextContent(escape(place.getName()));
+            city.setTextContent(escape(place.getBestName(language)));
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
