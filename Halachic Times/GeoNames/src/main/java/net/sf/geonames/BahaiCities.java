@@ -34,21 +34,17 @@ public class BahaiCities extends JewishCities {
         setModuleName("compass-bahai");
     }
 
-    public static void main(String[] args) {
-        String path = "GeoNames/res/cities1000.txt";
-        File res = new File(path);
+    public static void main(String[] args) throws Exception {
+        String pathCities = "GeoNames/res/cities1000.txt";
+        String pathNames = "GeoNames/res/alternateNames.txt";
         BahaiCities cities = new BahaiCities();
         Collection<GeoName> names;
 
-        try {
-            names = cities.loadNames(res, new BahaiCitiesFilter());
-            cities.populateAlternateNames(names);
-            cities.populateElevations(names);
-            for (String lang : LANGUAGES) {
-                cities.toAndroidXML(names, lang);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter());
+        cities.populateElevations(names);
+        cities.populateAlternateNames(new File(pathNames), names);
+        for (String lang : LANGUAGES) {
+            cities.toAndroidXML(names, lang);
         }
     }
 }

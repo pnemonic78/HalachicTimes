@@ -49,21 +49,17 @@ public class JewishCities extends Cities {
 
     protected static final String[] LANGUAGES = {null/*, "ar", "bg", "cs", "da", "de", "el", "es", "et", "fa", "fi", "fr", "hi", "hu", "it", "iw", "lt", "nb", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"*/};
 
-    public static void main(String[] args) {
-        String path = "GeoNames/res/cities15000.txt";
-        File res = new File(path);
+    public static void main(String[] args) throws Exception {
+        String pathCities = "GeoNames/res/cities15000.txt";
+        String pathNames = "GeoNames/res/alternateNames.txt";
         JewishCities cities = new JewishCities();
         Collection<GeoName> names;
 
-        try {
-            names = cities.loadNames(res, new JewishCitiesFilter());
-            cities.populateAlternateNames(names);
-            cities.populateElevations(names);
-            for (String lang : LANGUAGES) {
-                cities.toAndroidXML(names, lang);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        names = cities.loadNames(new File(pathCities), new JewishCitiesFilter());
+        cities.populateElevations(names);
+        cities.populateAlternateNames(new File(pathNames), names);
+        for (String lang : LANGUAGES) {
+            cities.toAndroidXML(names, lang);
         }
     }
 

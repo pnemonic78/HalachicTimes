@@ -34,8 +34,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -86,7 +88,7 @@ public class GeoNames {
      * Parse the file with GeoName records.
      *
      * @param file
-     *         the file to parseCSV.
+     *         the file to parse.
      * @return the list of names.
      * @throws IOException
      *         if an I/O error occurs.
@@ -99,7 +101,7 @@ public class GeoNames {
      * Parse the file with GeoName records.
      *
      * @param file
-     *         the file to parseCSV.
+     *         the file to parse.
      * @param filter
      *         the filter.
      * @return the list of names.
@@ -112,7 +114,7 @@ public class GeoNames {
         FileInputStream in = null;
         try {
             in = new FileInputStream(file);
-            reader = new InputStreamReader(in, "UTF-8");
+            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             in = null;
             records = parseCSV(reader, filter);
         } finally {
@@ -313,16 +315,17 @@ public class GeoNames {
     /**
      * Populate the list of names with alternate names.
      *
-     * @param geoNames
-     *         the list of names to populate.
+     * @param records
+     *         the list of records to populate.
+     * @see #populateAlternateNamesInternet(GeoName)
      */
-    public void populateAlternateNames(Collection<GeoName> geoNames) {
+    public void populateAlternateNames(Collection<GeoName> records) {
         Map<String, AlternateName> alternateNames;
-        for (GeoName geoName : geoNames) {
-            alternateNames = geoName.getAlternateNamesMap();
+        for (GeoName record : records) {
+            alternateNames = record.getAlternateNamesMap();
             if (alternateNames.size() <= 1) {
                 try {
-                    populateAlternateNames(geoName);
+                    populateAlternateNamesInternet(record);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -330,16 +333,23 @@ public class GeoNames {
         }
     }
 
-    public void populateAlternateNames(GeoName geoName) throws IOException {
-        String queryUrl = String.format(Locale.US, URL_GEONAME_GET, geoName.getGeoNameId(), USERNAME);
-        queryUrl = "file:///C:\\Users\\moshe.w\\workspace\\Halachic Times\\GeoNames\\res\\524901.json";
+    /**
+     * Populate the list of names with alternate names from the Internet.
+     *
+     * @param record
+     *         the name to populate.
+     * @see {@linktourl http://download.geonames.org/export/dump/readme.txt}
+     */
+    protected void populateAlternateNamesInternet(GeoName record) throws IOException {
+        String queryUrl = String.format(Locale.US, URL_GEONAME_GET, record.getGeoNameId(), USERNAME);
+        //queryUrl = "GeoNames/res/524901.json";
         URL url = new URL(queryUrl);
         byte[] data = HTTPReader.read(url);
         JsonReader reader = Json.createReader(new ByteArrayInputStream(data));
         JsonObject json = reader.readObject();
         JsonArray arr = json.getJsonArray("alternateNames");
 
-        Map<String, AlternateName> alternateNames = geoName.getAlternateNamesMap();
+        Map<String, AlternateName> alternateNames = record.getAlternateNamesMap();
         AlternateName alternateName;
         JsonObject jsonAlternateName;
         String lang;
@@ -356,4 +366,111 @@ public class GeoNames {
             alternateNames.put(lang, alternateName);
         }
     }
+
+    /**
+     * Parse the file with GeoName alternate names.
+     *
+     * @param file
+     *         the file to parse.
+     * @param records
+     *         the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
+        Reader reader = null;
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
+            in = null;
+            populateAlternateNames(reader, records);
+        } finally {
+            if (in != null)
+                in.close();
+            if (reader != null)
+                reader.close();
+        }
+    }
+
+    /**
+     * Parse the file with GeoName alternate names.
+     * <p>
+     * <code>
+     * The table 'alternate names' :<br>
+     * -----------------------------
+     * alternateNameId   : the id of this alternate name, int<br>
+     * geonameid         : geonameId referring to id in table 'geoname', int<br>
+     * isolanguage       : iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link for a website, varchar(7)<br>
+     * alternate name    : alternate name or name variant, varchar(200)<br>
+     * isPreferredName   : '1', if this alternate name is an official/preferred name<br>
+     * isShortName       : '1', if this is a short name like 'California' for 'State of California'<br>
+     * isColloquial      : '1', if this alternate name is a colloquial or slang term<br>
+     * isHistoric        : '1', if this alternate name is historic and was used in the past<br>
+     * </code>
+     * </p>
+     *
+     * @param reader
+     *         the reader.
+     * @param records
+     *         the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(Reader reader, Collection<GeoName> records) throws IOException {
+        Map<Long, GeoName> recordsById = new HashMap<>();
+        for (GeoName record : records) {
+            recordsById.put(record.getGeoNameId(), record);
+        }
+
+        GeoName record;
+        String line;
+        BufferedReader buf = new BufferedReader(reader);
+        String[] fields;
+        String field;
+
+        long geonameId;
+        String language;
+        Locale locale;
+        String name;
+        boolean isPreferredName;
+
+        while (true) {
+            line = buf.readLine();
+            if (line == null)
+                break;
+            fields = line.split("\t");
+
+            field = fields[1];
+            geonameId = Long.parseLong(field);
+            record = recordsById.get(geonameId);
+            if (record == null) {
+                continue;
+            }
+            field = fields[2];
+            if (field.isEmpty()) {
+                continue;
+            }
+            if ("link".equals(field) && (record.getWikipediaURL() == null)) {
+                record.setWikipediaURL(field);
+                continue;
+            }
+            language = field;
+            locale = new Locale(language);
+            language = locale.getLanguage();
+
+            field = fields[3];
+            name = field;
+
+            if (fields.length > 4) {
+                field = fields[4];
+                isPreferredName = "1".equals(field);
+            } else {
+                isPreferredName = false;
+            }
+
+            record.putAlternateName(language, name, isPreferredName);
+        }
+    }
+
 }

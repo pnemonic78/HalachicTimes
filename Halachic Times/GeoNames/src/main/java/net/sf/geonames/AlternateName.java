@@ -28,13 +28,19 @@ public class AlternateName {
 
     private String name;
     private String languageCode;
+    private boolean preferred;
 
     public AlternateName() {
     }
 
     public AlternateName(String languageCode, String name) {
+        this(languageCode, name, false);
+    }
+
+    public AlternateName(String languageCode, String name, boolean preferred) {
         setLanguage(languageCode);
         setName(name);
+        setPreferred(preferred);
     }
 
     public String getName() {
@@ -51,6 +57,14 @@ public class AlternateName {
 
     public void setLanguage(String languageCode) {
         this.languageCode = languageCode;
+    }
+
+    public boolean isPreferred() {
+        return preferred;
+    }
+
+    public void setPreferred(boolean preferred) {
+        this.preferred = preferred;
     }
 
     @Override

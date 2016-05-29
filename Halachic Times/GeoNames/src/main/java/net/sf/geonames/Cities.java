@@ -83,21 +83,16 @@ public class Cities {
         return new File(getModuleName(), APP_RES);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String path = "GeoNames/res/cities1000.txt";
         File res = new File(path);
         System.out.println(res);
         System.out.println(res.getAbsolutePath());
         Cities cities = new Cities();
-        Collection<GeoName> names;
-        Collection<GeoName> capitals;
-        try {
-            names = cities.loadNames(res, new CityFilter());
-            capitals = cities.filterCapitals(names);
-            cities.toAndroidXML(capitals, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        Collection<GeoName> names = cities.loadNames(res, new CityFilter());
+        Collection<GeoName> capitals = cities.filterCapitals(names);
+        cities.toAndroidXML(capitals, null);
     }
 
     /**
@@ -322,11 +317,19 @@ public class Cities {
         return countries;
     }
 
-    public void populateElevations(Collection<GeoName> names) {
-        geoNames.populateElevations(names);
+    public void populateElevations(Collection<GeoName> records) {
+        geoNames.populateElevations(records);
     }
 
-    public void populateAlternateNames(Collection<GeoName> names) {
-        geoNames.populateAlternateNames(names);
+    /**
+     * Populate the list of names with alternate names.
+     *
+     * @param records
+     *         the list of records to populate.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
+        geoNames.populateAlternateNames(file, records);
     }
 }

@@ -187,4 +187,12 @@ public class GeoName extends GeoNameRecord {
     public void setFeatureCodeName(String fcodeName) {
         this.fcodeName = fcodeName;
     }
+
+    public void putAlternateName(String language, String name) {
+        putAlternateName(language, name, false);
+    }
+
+    public void putAlternateName(String language, String name, boolean preferred) {
+        alternateNamesMap.put(language, new AlternateName(language, name, preferred));
+    }
 }
