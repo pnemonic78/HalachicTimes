@@ -17,7 +17,11 @@
  *   Moshe Waisberg
  * 
  */
-package net.sf.geonames;
+package net.sf.geonames.test;
+
+import net.sf.geonames.Countries;
+import net.sf.geonames.CountryRegion;
+import net.sf.geonames.GeoName;
 
 import java.awt.Color;
 import java.awt.Dialog.ModalityType;
@@ -172,15 +176,20 @@ public class CountryCanvas extends JComponent {
     }
 
     public static void main(String[] args) {
-        String path = "res/cities1000.txt";
+        if (args.length < 1) {
+            System.out.println("Country code required");
+            System.exit(0);
+            return;
+        }
         String code = args[0];
+        String path = "GeoNames/res/cities1000.txt";
         File res = new File(path);
         Countries countries = new Countries();
         Collection<GeoName> names;
         Collection<CountryRegion> regions;
         CountryRegion region = null;
         try {
-            names = countries.loadNames(res);
+            names = countries.loadNames(res, null);
             regions = countries.toRegions(names);
 
             for (CountryRegion r : regions) {
