@@ -106,6 +106,7 @@ public class AddressProvider {
     static final int INDEX_CITIES_FAVORITE = 2;
 
     private static final String WHERE_ID = BaseColumns._ID + "=?";
+    private static final String SELECT_COUNT_CITIES = "SELECT COUNT(*) FROM " + AddressOpenHelper.TABLE_CITIES + " WHERE " + WHERE_ID;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -145,7 +146,6 @@ public class AddressProvider {
         this.context = context;
         this.locale = locale;
         countriesGeocoder = new CountriesGeocoder(context, locale);
-        upgradeCities();
     }
 
     /**
@@ -967,7 +967,12 @@ public class AddressProvider {
         if (db == null)
             return;
         String[] whereArgs = {Long.toString(id)};
-        db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
+        if (DatabaseUtils.longForQuery(db, SELECT_COUNT_CITIES, whereArgs) == 0) {
+            values.put(BaseColumns._ID, id);
+            db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
+        } else {
+            db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
+        }
     }
 
     /**
@@ -992,23 +997,6 @@ public class AddressProvider {
         if (db == null)
             return;
         db.delete(AddressOpenHelper.TABLE_CITIES, null, null);
-        fillCities(db);
-    }
-
-    /**
-     * Upgrade the list of cached cities.
-     */
-    public void upgradeCities() {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-
-        String whereClause = "(" + AddressColumns._ID + " <= 78)";
-        int deleted = db.delete(AddressOpenHelper.TABLE_CITIES, whereClause, null);
-
-        if ((deleted > 70) || (DatabaseUtils.longForQuery(db, "SELECT COUNT(*) FROM " + AddressOpenHelper.TABLE_CITIES, null) == 0)) {
-            fillCities(db);
-        }
     }
 
     /**
