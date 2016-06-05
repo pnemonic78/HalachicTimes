@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Translated using Google Translator Toolkit. -->
 <resources>
-
     <string-array name="cities">
         <item>Ванкувер</item>
         <item>Сан-Франциско</item>
@@ -81,5 +80,4 @@
         <item>Сидней</item>
         <item>Окленд</item>
     </string-array>
-
 </resources>

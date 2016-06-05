@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Translated using Google Translator Toolkit. -->
 <resources>
-
     <string-array name="cities">
         <item>Βανκούβερ</item>
         <item>Σαν Φρανσίσκο</item>
@@ -81,5 +80,4 @@
         <item>Σίδνεϊ</item>
         <item>Όκλαντ</item>
     </string-array>
-
 </resources>
