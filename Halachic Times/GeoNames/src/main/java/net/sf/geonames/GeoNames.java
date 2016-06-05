@@ -451,10 +451,6 @@ public class GeoNames {
             if (field.isEmpty()) {
                 continue;
             }
-            if ("link".equals(field) && (record.getWikipediaURL() == null)) {
-                record.setWikipediaURL(field);
-                continue;
-            }
             if (field.length() > 3) {
                 continue;
             }
@@ -463,6 +459,10 @@ public class GeoNames {
             language = locale.getLanguage();
 
             field = fields[3];
+            if ("link".equals(fields[2]) && (record.getWikipediaURL() == null)) {
+                record.setWikipediaURL(field);
+                continue;
+            }
             name = field;
 
             if (fields.length > 4) {

@@ -204,4 +204,19 @@ public class GeoName extends GeoNameRecord {
         }
         return name;
     }
+
+    public String getName(String language) {
+        String languageCode = language;
+        if (language == null) {
+            languageCode = Locale.ENGLISH.getLanguage();
+        }
+        AlternateName alternateName = getAlternateNamesMap().get(languageCode);
+        if (alternateName != null) {
+            return alternateName.getName();
+        }
+        if (language == null) {
+            return getName();
+        }
+        return "UNKNOWN";
+    }
 }
