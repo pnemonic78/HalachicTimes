@@ -525,7 +525,9 @@ public class AddressProvider {
             return;
         if (insert) {
             id = db.insert(AddressOpenHelper.TABLE_ADDRESSES, null, values);
-            address.setId(id);
+            if (id > 0L) {
+                address.setId(id);
+            }
         } else {
             String[] whereArgs = {Long.toString(id)};
             db.update(AddressOpenHelper.TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
@@ -848,7 +850,9 @@ public class AddressProvider {
             return;
         if (id == 0L) {
             id = db.insert(AddressOpenHelper.TABLE_ELEVATIONS, null, values);
-            location.setId(id);
+            if (id > 0L) {
+                location.setId(id);
+            }
         } else {
             String[] whereArgs = {Long.toString(id)};
             db.update(AddressOpenHelper.TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
@@ -904,7 +908,17 @@ public class AddressProvider {
      * @param cities
      *         the list of cities to populate.
      */
-    public void populateCities(Collection<ZmanimAddress> cities) {
+    public void populateCities(Collection<City> cities) {
+        Map<Long, City> citiesById = new HashMap<>();
+        long id;
+        for (City city : cities) {
+            id = city.getId();
+            if (id == 0L) {
+                id = City.generateCityId(city);
+            }
+            citiesById.put(id, city);
+        }
+
         SQLiteDatabase db = getReadableDatabase();
         if (db == null)
             return;
@@ -913,17 +927,10 @@ public class AddressProvider {
             return;
         }
 
-        Map<Long, ZmanimAddress> citiesById = new HashMap<Long, ZmanimAddress>();
-        long id;
-        for (ZmanimAddress city : cities) {
-            id = -city.getId();
-            citiesById.put(id, city);
-        }
-
         try {
             if (cursor.moveToFirst()) {
                 boolean favorite;
-                ZmanimAddress city;
+                City city;
 
                 do {
                     id = cursor.getLong(INDEX_CITIES_ID);
@@ -931,9 +938,8 @@ public class AddressProvider {
 
                     city = citiesById.get(id);
                     if (city != null) {
+                        city.setId(id);
                         city.setFavorite(favorite);
-                    } else {
-                        Log.w(TAG, "city not found for id " + id);
                     }
                 } while (cursor.moveToNext());
             }
@@ -950,27 +956,29 @@ public class AddressProvider {
      * @param city
      *         the city.
      */
-    public void insertOrUpdateCity(ZmanimAddress city) {
+    public void insertOrUpdateCity(City city) {
         if (city == null)
             return;
-        long id = city.getId();
-        if (id >= 0L)
-            return;
 
-        id = -id;
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
 
         ContentValues values = new ContentValues();
         values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
         values.put(CitiesColumns.FAVORITE, city.isFavorite());
 
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        String[] whereArgs = {Long.toString(id)};
-        if (DatabaseUtils.longForQuery(db, SELECT_COUNT_CITIES, whereArgs) == 0) {
+        long id = city.getId();
+        if (id == 0L) {
+            id = City.generateCityId(city);
+
             values.put(BaseColumns._ID, id);
-            db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
+            id = db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
+            if (id > 0L) {
+                city.setId(id);
+            }
         } else {
+            String[] whereArgs = {Long.toString(id)};
             db.update(AddressOpenHelper.TABLE_CITIES, values, WHERE_ID, whereArgs);
         }
     }
@@ -985,7 +993,7 @@ public class AddressProvider {
         db.delete(AddressOpenHelper.TABLE_ADDRESSES, null, null);
     }
 
-    public List<ZmanimAddress> getCities() {
+    public List<City> getCities() {
         return countriesGeocoder.getCities();
     }
 
@@ -1006,13 +1014,13 @@ public class AddressProvider {
      *         the database.
      */
     private void fillCities(SQLiteDatabase db) {
-        List<ZmanimAddress> cities = getCities();
+        List<City> cities = getCities();
 
         ContentValues values = new ContentValues();
         values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
         values.put(CitiesColumns.FAVORITE, 0);
 
-        for (ZmanimAddress city : cities) {
+        for (City city : cities) {
             values.put(BaseColumns._ID, -city.getId());
             db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
         }

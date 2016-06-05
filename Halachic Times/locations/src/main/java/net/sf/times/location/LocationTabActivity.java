@@ -208,7 +208,7 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
         AddressProvider provider = app.getAddresses();
         LocationFormatter formatter = app.getLocations();
         List<ZmanimAddress> addresses = provider.query(null);
-        List<ZmanimAddress> cities = provider.getCities();
+        List<City> cities = provider.getCities();
 
         provider.populateCities(cities);
 
@@ -382,11 +382,10 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     ZmanimAddress address = (ZmanimAddress) msg.obj;
-                    long id = address.getId();
                     LocationApplication app = (LocationApplication) activity.getApplication();
                     AddressProvider provider = app.getAddresses();
-                    if (id < 0L) {
-                        provider.insertOrUpdateCity(address);
+                    if (address instanceof City) {
+                        provider.insertOrUpdateCity((City) address);
                     } else {
                         provider.insertOrUpdateAddress(null, address);
                     }

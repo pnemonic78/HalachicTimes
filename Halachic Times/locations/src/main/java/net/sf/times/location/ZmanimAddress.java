@@ -101,6 +101,22 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     }
 
     /**
+     * Constructs a new address.
+     *
+     * @param address
+     *         the source address.
+     */
+    public ZmanimAddress(ZmanimAddress address) {
+        this((Address) address);
+        setId(address.getId());
+        if (address.hasElevation()) {
+            setElevation(address.getElevation());
+        }
+        setFormatted(address.getFormatted());
+        setFavorite(address.isFavorite());
+    }
+
+    /**
      * Get the id.
      *
      * @return the id

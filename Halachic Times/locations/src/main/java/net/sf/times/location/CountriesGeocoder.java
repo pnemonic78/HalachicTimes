@@ -426,8 +426,8 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the location.
      * @return the city - {@code null} otherwise.
      */
-    public ZmanimAddress findCity(Location location) {
-        ZmanimAddress city = null;
+    public City findCity(Location location) {
+        City city = null;
         final int citiesCount = citiesNames.length;
         double searchLatitude = location.getLatitude();
         double searchLongitude = location.getLongitude();
@@ -452,14 +452,13 @@ public class CountriesGeocoder extends GeocoderBase {
         if (nearestCityIndex >= 0) {
             cityLocale = new Locale(getLanguage(), citiesCountries[nearestCityIndex]);
 
-            city = new ZmanimAddress(locale);
+            city = new City(locale);
             city.setLatitude(citiesLatitudes[nearestCityIndex]);
             city.setLongitude(citiesLongitudes[nearestCityIndex]);
             city.setElevation(citiesElevations[nearestCityIndex]);
             city.setCountryCode(cityLocale.getCountry());
             city.setCountryName(cityLocale.getDisplayCountry());
             city.setLocality(citiesNames[nearestCityIndex]);
-            city.setId(generateCityId(city));
         }
 
         return city;
@@ -470,9 +469,9 @@ public class CountriesGeocoder extends GeocoderBase {
      *
      * @return the list of addresses.
      */
-    public List<ZmanimAddress> getCities() {
+    public List<City> getCities() {
         final int citiesCount = citiesNames.length;
-        List<ZmanimAddress> cities = new ArrayList<ZmanimAddress>(citiesCount);
+        List<City> cities = new ArrayList<>(citiesCount);
         double latitude;
         double longitude;
         double elevation;
@@ -480,7 +479,7 @@ public class CountriesGeocoder extends GeocoderBase {
         Locale locale = this.locale;
         Locale cityLocale;
         String languageCode = locale.getLanguage();
-        ZmanimAddress city;
+        City city;
 
         for (int i = 0; i < citiesCount; i++) {
             latitude = citiesLatitudes[i];
@@ -489,14 +488,13 @@ public class CountriesGeocoder extends GeocoderBase {
             cityName = citiesNames[i];
             cityLocale = new Locale(languageCode, citiesCountries[i]);
 
-            city = new ZmanimAddress(locale);
+            city = new City(locale);
             city.setLatitude(latitude);
             city.setLongitude(longitude);
             city.setElevation(elevation);
             city.setCountryCode(cityLocale.getCountry());
             city.setCountryName(cityLocale.getDisplayCountry());
             city.setLocality(cityName);
-            city.setId(generateCityId(city));
 
             cities.add(city);
         }
@@ -511,8 +509,8 @@ public class CountriesGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
-        List<Address> cities = new ArrayList<Address>(maxResults);
-        ZmanimAddress city = null;
+        List<Address> cities = new ArrayList<>(maxResults);
+        City city;
         final int citiesCount = citiesNames.length;
         double cityLatitude;
         double cityLongitude;
@@ -526,14 +524,13 @@ public class CountriesGeocoder extends GeocoderBase {
             if (distances[INDEX_DISTANCE] <= CITY_RADIUS) {
                 cityLocale = new Locale(getLanguage(), citiesCountries[i]);
 
-                city = new ZmanimAddress(locale);
+                city = new City(locale);
                 city.setLatitude(cityLatitude);
                 city.setLongitude(cityLongitude);
                 city.setElevation(citiesElevations[i]);
                 city.setCountryCode(cityLocale.getCountry());
                 city.setCountryName(cityLocale.getDisplayCountry());
                 city.setLocality(citiesNames[i]);
-                city.setId(generateCityId(city));
 
                 cities.add(city);
             }
@@ -554,7 +551,7 @@ public class CountriesGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
-        List<ZmanimAddress> cities = getCities();
+        List<City> cities = getCities();
         int citiesCount = cities.size();
 
         float distance;
@@ -565,10 +562,10 @@ public class CountriesGeocoder extends GeocoderBase {
         double[] distances = new double[citiesCount];
         double[] elevations = new double[citiesCount];
         ZmanimLocation elevated;
-        ZmanimAddress cityNearest = null;
+        City cityNearest = null;
         double distanceCityMin = SAME_CITY;
 
-        for (ZmanimAddress city : cities) {
+        for (City city : cities) {
             if (!city.hasElevation())
                 continue;
             Location.distanceBetween(latitude, longitude, city.getLatitude(), city.getLongitude(), distanceCity);
@@ -616,11 +613,5 @@ public class CountriesGeocoder extends GeocoderBase {
     @Override
     protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
         return null;
-    }
-
-    public static long generateCityId(ZmanimAddress city) {
-        final long fixedPointLatitude = (long) Math.rint(city.getLatitude() * RATIO) & 0x7FFFFFFFL;
-        final long fixedPointLongitude = (long) Math.rint(city.getLongitude() * RATIO) & 0xFFFFFFFFL;
-        return -((fixedPointLatitude << 31) | fixedPointLongitude);
     }
 }
