@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>ונקובר</item>
         <item>סן פרנסיסקו</item>
         <item>סיאטל</item>
-        <item>לוס אנג\'לס</item>
+        <item>לוס אנגלס</item>
         <item>סן דייגו</item>
-        <item>פניקס</item>
-        <item>דנבר</item>
+        <item>פיניקס</item>
+        <item>דנוור</item>
         <item>מקסיקו סיטי</item>
         <item>דאלאס</item>
         <item>יוסטון</item>
@@ -30,7 +30,7 @@
         <item>פורטלנד</item>
         <item>בואנוס איירס</item>
         <item>סאו פאולו</item>
-        <item>ריו דה ז\'נרו</item>
+        <item>ריו דה זניירו</item>
         <item>קזבלנקה</item>
         <item>מדריד</item>
         <item>מנצ\'סטר</item>
@@ -40,32 +40,32 @@
         <item>ליון</item>
         <item>אמסטרדם</item>
         <item>מרסיי</item>
-        <item>ז\'נבה</item>
-        <item>נחמד</item>
+        <item>זנבה</item>
+        <item>ניס</item>
         <item>ציריך</item>
         <item>מינכן</item>
         <item>רומא</item>
         <item>ברלין</item>
         <item>וינה</item>
-        <item>שטוקהולם</item>
+        <item>סטוקהולם</item>
         <item>סרייבו</item>
         <item>קייפטאון</item>
         <item>בודפשט</item>
         <item>הלסינקי</item>
         <item>יוהנסבורג</item>
-        <item>איסטנבול</item>
-        <item>סנט פטרסבורג</item>
+        <item>ביזנטיון</item>
+        <item>סנקט פטרבורג</item>
         <item>קייב</item>
         <item>דרבן</item>
         <item>אשקלון</item>
         <item>אשדוד</item>
-        <item>תל אביב</item>
+        <item>תל אביב-יפו</item>
         <item>באר שבע</item>
         <item>חדרה</item>
         <item>אילת</item>
         <item>חיפה</item>
         <item>בית שמש</item>
-        <item>נהריה</item>
+        <item>‏נהריה</item>
         <item>אריאל</item>
         <item>ירושלים</item>
         <item>נצרת</item>

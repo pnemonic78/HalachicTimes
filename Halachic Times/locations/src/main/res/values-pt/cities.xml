@@ -1,26 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
-        <item>Vancôver</item>
+        <item>Vancouver</item>
         <item>São Francisco</item>
         <item>Seattle</item>
         <item>Los Angeles</item>
-        <item>São Diego</item>
-        <item>Fenix</item>
+        <item>San Diego</item>
+        <item>Phoenix</item>
         <item>Denver</item>
         <item>Cidade do México</item>
         <item>Dallas</item>
         <item>Houston</item>
-        <item>São Luís</item>
+        <item>St. Louis</item>
         <item>Chicago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
         <item>Cleveland</item>
         <item>Miami</item>
-        <item>Pittsburgh</item>
+        <item>Pitsburgo</item>
         <item>Toronto</item>
-        <item>Washington DC</item>
+        <item>Washington</item>
         <item>Baltimore</item>
         <item>Filadélfia</item>
         <item>Bogotá</item>
@@ -32,18 +32,18 @@
         <item>São Paulo</item>
         <item>Rio de Janeiro</item>
         <item>Casablanca</item>
-        <item>Madri</item>
+        <item>Madrid</item>
         <item>Manchester</item>
         <item>Londres</item>
         <item>Paris</item>
         <item>Bruxelas</item>
         <item>Lyon</item>
-        <item>Amsterdã</item>
+        <item>Amesterdão</item>
         <item>Marselha</item>
         <item>Genebra</item>
         <item>Nice</item>
         <item>Zurique</item>
-        <item>Munchen</item>
+        <item>Munique</item>
         <item>Roma</item>
         <item>Berlim</item>
         <item>Viena</item>
@@ -51,29 +51,29 @@
         <item>Sarajevo</item>
         <item>Cidade do Cabo</item>
         <item>Budapeste</item>
-        <item>Helsinque</item>
-        <item>Joanesburgo</item>
+        <item>Helsínquia</item>
+        <item>Johannesburgo</item>
         <item>Istambul</item>
         <item>São Petersburgo</item>
         <item>Kiev</item>
         <item>Durban</item>
         <item>Ashkelon</item>
-        <item>Ashdod</item>
+        <item>Asdode</item>
         <item>Tel Aviv</item>
         <item>Bersebá</item>
         <item>Hadera</item>
-        <item>Eilat</item>
+        <item>Éilat</item>
         <item>Haifa</item>
-        <item>Beןt Shemesh</item>
+        <item>Bet Shemesh</item>
         <item>Nahariya</item>
         <item>Ariel</item>
         <item>Jerusalém</item>
         <item>Nazaré</item>
         <item>Safed</item>
         <item>Tiberíades</item>
-        <item>Moscou</item>
+        <item>Moscovo</item>
         <item>Adis Abeba</item>
-        <item>Mumbai</item>
+        <item>Bombaim</item>
         <item>Aizawl</item>
         <item>Perth</item>
         <item>Melbourne</item>

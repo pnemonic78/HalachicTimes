@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>Ванкувър</item>
@@ -7,12 +7,12 @@
         <item>Сиатъл</item>
         <item>Лос Анджелис</item>
         <item>Сан Диего</item>
-        <item>Феникс</item>
+        <item>Финикс</item>
         <item>Денвър</item>
-        <item>Мексико Сити</item>
+        <item>Мексико</item>
         <item>Далас</item>
         <item>Хюстън</item>
-        <item>Санкт Луис</item>
+        <item>Сейнт Луис</item>
         <item>Чикаго</item>
         <item>Атланта</item>
         <item>Детройт</item>
@@ -26,7 +26,7 @@
         <item>Богота</item>
         <item>Ню Йорк</item>
         <item>Монреал</item>
-        <item>Бостон</item>
+        <item>Бостън</item>
         <item>Портланд</item>
         <item>Буенос Айрес</item>
         <item>Сао Пауло</item>
@@ -70,7 +70,7 @@
         <item>Йерусалим</item>
         <item>Назарет</item>
         <item>Сафед</item>
-        <item>Тверия</item>
+        <item>Тиберия</item>
         <item>Москва</item>
         <item>Адис Абеба</item>
         <item>Мумбай</item>

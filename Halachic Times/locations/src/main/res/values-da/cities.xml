@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>Vancouver</item>
@@ -7,12 +7,12 @@
         <item>Seattle</item>
         <item>Los Angeles</item>
         <item>San Diego</item>
-        <item>Føniks</item>
+        <item>Phoenix</item>
         <item>Denver</item>
-        <item>Mexico By</item>
+        <item>Mexico City</item>
         <item>Dallas</item>
         <item>Houston</item>
-        <item>Sankt Louis</item>
+        <item>St. Louis</item>
         <item>Chicago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
@@ -20,7 +20,7 @@
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
-        <item>Washington DC</item>
+        <item>Washington</item>
         <item>Baltimore</item>
         <item>Philadelphia</item>
         <item>Bogotá</item>
@@ -40,16 +40,16 @@
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marseille</item>
-        <item>Geneva</item>
-        <item>Rart</item>
-        <item>Zurich</item>
+        <item>Geneve</item>
+        <item>Nice</item>
+        <item>Zürich</item>
         <item>München</item>
         <item>Rom</item>
         <item>Berlin</item>
         <item>Wien</item>
         <item>Stockholm</item>
         <item>Sarajevo</item>
-        <item>Cape Town</item>
+        <item>Kapstaden</item>
         <item>Budapest</item>
         <item>Helsinki</item>
         <item>Johannesburg</item>
@@ -58,9 +58,9 @@
         <item>Kiev</item>
         <item>Durban</item>
         <item>Askelon</item>
-        <item>Asdod</item>
+        <item>Ashdod</item>
         <item>Tel Aviv</item>
-        <item>Be\'ersjeba</item>
+        <item>Beersheba</item>
         <item>Hadera</item>
         <item>Eilat</item>
         <item>Haifa</item>
@@ -68,7 +68,7 @@
         <item>Nahariyya</item>
         <item>Ariel</item>
         <item>Jerusalem</item>
-        <item>Nazaret</item>
+        <item>Nazareth</item>
         <item>Safed</item>
         <item>Tiberias</item>
         <item>Moskva</item>
