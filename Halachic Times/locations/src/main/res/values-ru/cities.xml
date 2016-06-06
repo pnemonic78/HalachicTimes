@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>Ванкувер</item>
@@ -7,20 +7,20 @@
         <item>Сиэтл</item>
         <item>Лос-Анджелес</item>
         <item>Сан-Диего</item>
-        <item>Феникс</item>
+        <item>Финикс</item>
         <item>Денвер</item>
         <item>Мехико</item>
         <item>Даллас</item>
         <item>Хьюстон</item>
         <item>Сент-Луис</item>
         <item>Чикаго</item>
-        <item>Атланты</item>
+        <item>Атланта</item>
         <item>Детройт</item>
         <item>Кливленд</item>
         <item>Майами</item>
         <item>Питтсбург</item>
         <item>Торонто</item>
-        <item>Вашингтон, О.К.</item>
+        <item>Вашингтон</item>
         <item>Балтимор</item>
         <item>Филадельфия</item>
         <item>Богота</item>
@@ -44,9 +44,9 @@
         <item>Ницца</item>
         <item>Цюрих</item>
         <item>Мюнхен</item>
-        <item>Цыган</item>
+        <item>Рим</item>
         <item>Берлин</item>
-        <item>Вены</item>
+        <item>Вена</item>
         <item>Стокгольм</item>
         <item>Сараево</item>
         <item>Кейптаун</item>
@@ -69,12 +69,12 @@
         <item>Ариэль</item>
         <item>Иерусалим</item>
         <item>Назарет</item>
-        <item>Сефат</item>
+        <item>Цфат</item>
         <item>Тверия</item>
         <item>Москва</item>
         <item>Аддис-Абеба</item>
         <item>Мумбаи</item>
-        <item>Эйзол</item>
+        <item>Аиджал</item>
         <item>Перт</item>
         <item>Мельбурн</item>
         <item>Сидней</item>
