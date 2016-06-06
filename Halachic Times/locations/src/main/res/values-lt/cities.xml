@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>Vankuveris</item>
-        <item>San Franciskas</item>
+        <item>San Fransiskas</item>
         <item>Sietlas</item>
         <item>Los Andželas</item>
         <item>San Diegas</item>
-        <item>Feniksas</item>
+        <item>Finiksas</item>
         <item>Denveris</item>
         <item>Meksikas</item>
         <item>Dalasas</item>
         <item>Hiustonas</item>
-        <item>Sent Luise</item>
-        <item>Čikagoje</item>
+        <item>Sent Luisas</item>
+        <item>Čikaga</item>
         <item>Atlanta</item>
         <item>Detroitas</item>
-        <item>Klyvlendas</item>
+        <item>Klivlandas</item>
         <item>Majamis</item>
         <item>Pitsburgas</item>
         <item>Torontas</item>
@@ -25,11 +25,11 @@
         <item>Filadelfija</item>
         <item>Bogota</item>
         <item>Niujorkas</item>
-        <item>Monrealio</item>
+        <item>Monrealis</item>
         <item>Bostonas</item>
         <item>Portland</item>
         <item>Buenos Airės</item>
-        <item>São Paulo</item>
+        <item>San Paulas</item>
         <item>Rio de Žaneiras</item>
         <item>Kasablanka</item>
         <item>Madridas</item>
@@ -62,7 +62,7 @@
         <item>Tel Avivas</item>
         <item>Beer Ševa</item>
         <item>Hadera</item>
-        <item>Eilat</item>
+        <item>Elatas</item>
         <item>Haifa</item>
         <item>Beit Shemesh</item>
         <item>Nahariya</item>
@@ -70,7 +70,7 @@
         <item>Jeruzalė</item>
         <item>Nazaretas</item>
         <item>Safed</item>
-        <item>Tiberijus</item>
+        <item>Tiberijas</item>
         <item>Maskva</item>
         <item>Adis Abeba</item>
         <item>Mumbajus</item>
