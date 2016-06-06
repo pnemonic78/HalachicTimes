@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>Vancouver</item>
@@ -7,13 +7,13 @@
         <item>Seattle</item>
         <item>Los Angeles</item>
         <item>San Diego</item>
-        <item>Feniks</item>
+        <item>Phoenix</item>
         <item>Denver</item>
-        <item>Meksiko</item>
+        <item>Ciudad de Mexico</item>
         <item>Dallas</item>
         <item>Houston</item>
         <item>Saint Louis</item>
-        <item>Chicago</item>
+        <item>Şikago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
         <item>Cleveland</item>
@@ -29,9 +29,9 @@
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
-        <item>São Paulo</item>
+        <item>Sao Paulo</item>
         <item>Rio de Janeiro</item>
-        <item>Casablanca</item>
+        <item>Kazablanka</item>
         <item>Madrid</item>
         <item>Manchester</item>
         <item>Londra</item>
@@ -40,37 +40,37 @@
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marsilya</item>
-        <item>Cenevre</item>
+        <item>Genève</item>
         <item>Güzel</item>
         <item>Zürih</item>
         <item>Münih</item>
         <item>Roma</item>
         <item>Berlin</item>
-        <item>Viyana</item>
-        <item>Stockholm</item>
+        <item>Beç</item>
+        <item>Stokolm</item>
         <item>Saraybosna</item>
         <item>Cape Town</item>
         <item>Budapeşte</item>
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>İstanbul</item>
-        <item>Saint Petersburg</item>
+        <item>Sankt Peterburg</item>
         <item>Kiev</item>
         <item>Durban</item>
-        <item>Ashqelon</item>
-        <item>Ashdod</item>
+        <item>Aşkelon</item>
+        <item>Aşdod</item>
         <item>Tel Aviv</item>
-        <item>Beer Sheba</item>
+        <item>Beerşeba</item>
         <item>Hadera</item>
         <item>Eilat</item>
-        <item>Haifa</item>
-        <item>Bet Shemesh</item>
+        <item>Hayfa</item>
+        <item>Bet Şemesh</item>
         <item>Nahariyya</item>
         <item>Ariel</item>
         <item>Kudüs</item>
         <item>Nasıra</item>
-        <item>Sefat</item>
-        <item>Tiberias</item>
+        <item>Safed</item>
+        <item>Tiberya</item>
         <item>Moskova</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
