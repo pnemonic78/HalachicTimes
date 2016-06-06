@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--Generated from geonames.org data.-->
 <resources>
     <string-array name="cities">
         <item>Vancouver</item>
@@ -9,7 +9,7 @@
         <item>San Diego</item>
         <item>Phoenix</item>
         <item>Denver</item>
-        <item>Mexico-Stad</item>
+        <item>Mexico-stad</item>
         <item>Dallas</item>
         <item>Houston</item>
         <item>Saint Louis</item>
@@ -24,12 +24,12 @@
         <item>Baltimore</item>
         <item>Philadelphia</item>
         <item>Bogota</item>
-        <item>New York</item>
-        <item>Montreal</item>
+        <item>New York City</item>
+        <item>Montréal</item>
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
-        <item>Sao Paolo</item>
+        <item>São Paulo</item>
         <item>Rio de Janeiro</item>
         <item>Casablanca</item>
         <item>Madrid</item>
@@ -39,7 +39,7 @@
         <item>Brussel</item>
         <item>Lyon</item>
         <item>Amsterdam</item>
-        <item>Marseij</item>
+        <item>Marseille</item>
         <item>Genève</item>
         <item>Nice</item>
         <item>Zürich</item>
@@ -58,22 +58,22 @@
         <item>Kiev</item>
         <item>Durban</item>
         <item>Askelon</item>
-        <item>Asdod</item>
+        <item>Asjdod</item>
         <item>Tel Aviv</item>
         <item>Beër Sjeva</item>
-        <item>Chadera</item>
+        <item>Hadera</item>
         <item>Eilat</item>
         <item>Haifa</item>
-        <item>Bet Semes</item>
-        <item>Naharija</item>
+        <item>Bet Shemesh</item>
+        <item>Naharia</item>
         <item>Ariel</item>
         <item>Jeruzalem</item>
-        <item>Nazaret</item>
+        <item>Nazareth</item>
         <item>Safed</item>
         <item>Tiberias</item>
         <item>Moskou</item>
         <item>Addis Abeba</item>
-        <item>Mumbai</item>
+        <item>Bombay</item>
         <item>Ajzawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
