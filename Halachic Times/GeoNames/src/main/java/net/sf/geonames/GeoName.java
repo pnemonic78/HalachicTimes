@@ -217,6 +217,6 @@ public class GeoName extends GeoNameRecord {
         if (language == null) {
             return getName();
         }
-        return "UNKNOWN";
+        return "UNKNOWN [" + getName() + "]";
     }
 }

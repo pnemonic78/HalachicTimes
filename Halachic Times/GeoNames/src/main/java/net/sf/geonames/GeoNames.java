@@ -51,6 +51,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * Manage lists of GeoName records.
+ * <p>
+ * <a href="http://download.geonames.org/export/dump/">GeoNames export</a>
+ * </p>
  *
  * @author Moshe Waisberg
  */
