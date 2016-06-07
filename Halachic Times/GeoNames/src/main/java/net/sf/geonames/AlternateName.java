@@ -19,6 +19,8 @@
  */
 package net.sf.geonames;
 
+import java.util.Locale;
+
 /**
  * Alternate name.
  *
@@ -29,6 +31,7 @@ public class AlternateName {
     private String name;
     private String languageCode;
     private boolean preferred;
+    private Locale locale;
 
     public AlternateName() {
     }
@@ -57,6 +60,7 @@ public class AlternateName {
 
     public void setLanguage(String languageCode) {
         this.languageCode = languageCode;
+        this.locale = null;
     }
 
     public boolean isPreferred() {
@@ -70,5 +74,21 @@ public class AlternateName {
     @Override
     public String toString() {
         return languageCode + ": " + name;
+    }
+
+    /**
+     * Get the ISO 639-1 code.
+     *
+     * @return the language code.
+     */
+    public String getLanguageISO2() {
+        return getLocale().getLanguage();
+    }
+
+    public Locale getLocale() {
+        if (locale == null) {
+            locale = new Locale(getLanguage());
+        }
+        return locale;
     }
 }

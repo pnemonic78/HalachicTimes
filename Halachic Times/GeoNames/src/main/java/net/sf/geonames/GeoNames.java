@@ -191,6 +191,8 @@ public class GeoNames {
             line = buf.readLine();
             if (line == null)
                 break;
+            if (line.isEmpty())
+                continue;
             fields = line.split("\t");
             record = new GeoName();
 
@@ -442,6 +444,8 @@ public class GeoNames {
             line = buf.readLine();
             if (line == null)
                 break;
+            if (line.isEmpty())
+                continue;
             fields = line.split("\t");
 
             field = fields[1];
