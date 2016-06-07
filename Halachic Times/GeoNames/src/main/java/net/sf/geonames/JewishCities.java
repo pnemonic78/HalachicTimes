@@ -52,12 +52,14 @@ public class JewishCities extends Cities {
     public static void main(String[] args) throws Exception {
         String pathCities = "GeoNames/res/cities15000.txt";
         String pathNames = "GeoNames/res/alternateNames.txt";
+        String pathNames2 = "GeoNames/res/googleNames.txt";
         JewishCities cities = new JewishCities();
         Collection<GeoName> names;
 
         names = cities.loadNames(new File(pathCities), new JewishCitiesFilter());
         cities.populateElevations(names);
         cities.populateAlternateNames(new File(pathNames), names);
+        cities.populateAlternateNames(new File(pathNames2), names);
         for (String lang : LANGUAGES) {
             cities.toAndroidXML(names, lang);
         }
