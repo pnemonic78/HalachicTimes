@@ -19,6 +19,11 @@
  */
 package net.sf.geonames;
 
+import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +35,7 @@ import java.util.TreeMap;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -37,9 +43,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 /**
  * Countries.
@@ -120,13 +123,9 @@ public class Countries extends Cities {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = builderFactory.newDocumentBuilder();
         Document doc = builder.newDocument();
-        TransformerFactory xformerFactory = TransformerFactory.newInstance();
-        Transformer xformer = xformerFactory.newTransformer();
-        File file = new File(getModulePath(), "values/countries.xml");
-        file.getParentFile().mkdirs();
 
         Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
-        doc.appendChild(doc.createComment("Generated from geonames.org data."));
+        resources.appendChild(doc.createComment(HEADER));
         doc.appendChild(resources);
 
         Element countriesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
@@ -180,8 +179,15 @@ public class Countries extends Cities {
 
         }
 
+        File file = new File(getModulePath(), "values/countries.xml");
+        file.getParentFile().mkdirs();
+
         Source src = new DOMSource(doc);
         Result result = new StreamResult(file);
-        xformer.transform(src, result);
+        TransformerFactory xformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = xformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
+        transformer.transform(src, result);
     }
 }

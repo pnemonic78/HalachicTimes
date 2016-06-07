@@ -19,6 +19,8 @@
  */
 package net.sf.geonames;
 
+import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -89,19 +91,9 @@ public class JewishCities extends Cities {
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = builderFactory.newDocumentBuilder();
         Document doc = builder.newDocument();
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-
-        File file;
-        if (language == null)
-            file = new File(getModulePath(), "values/cities.xml");
-        else
-            file = new File(getModulePath(), "values-" + language + "/cities.xml");
-        file.getParentFile().mkdirs();
 
         Element resources = doc.createElement(ANDROID_ELEMENT_RESOURCES);
-        doc.appendChild(doc.createComment("Generated from geonames.org data."));
+        resources.appendChild(doc.createComment(HEADER));
         doc.appendChild(resources);
 
         Element citiesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
@@ -162,8 +154,19 @@ public class JewishCities extends Cities {
             zonesElement.appendChild(zone);
         }
 
+        File file;
+        if (language == null)
+            file = new File(getModulePath(), "values/cities.xml");
+        else
+            file = new File(getModulePath(), "values-" + language + "/cities.xml");
+        file.getParentFile().mkdirs();
+
         Source src = new DOMSource(doc);
         Result result = new StreamResult(file);
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
         transformer.transform(src, result);
     }
 
