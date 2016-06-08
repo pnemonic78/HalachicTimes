@@ -436,7 +436,6 @@ public class GeoNames {
 
         long geonameId;
         String language;
-        Locale locale;
         String name;
         boolean isPreferredName;
 
@@ -462,8 +461,6 @@ public class GeoNames {
                 continue;
             }
             language = field;
-            locale = new Locale(language);
-            language = locale.getLanguage();
 
             field = fields[3];
             if ("link".equals(fields[2]) && (record.getWikipediaURL() == null)) {

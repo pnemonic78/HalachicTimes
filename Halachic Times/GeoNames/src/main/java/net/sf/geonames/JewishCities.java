@@ -132,10 +132,17 @@ public class JewishCities extends Cities {
             resources.appendChild(zonesElement);
 
         Element city, country, latitude, longitude, elevation, zone;
+        String name;
+        String language2 = getLanguageCode(language);
 
         for (GeoName place : sorted) {
+            name = place.getName(language2);
+            if (name == null) {
+                name = "UNKNOWN [" + place.getName() + "]";
+            }
+
             city = doc.createElement(ANDROID_ELEMENT_ITEM);
-            city.setTextContent(escape(place.getName(language)));
+            city.setTextContent(escape(name));
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
@@ -174,5 +181,16 @@ public class JewishCities extends Cities {
     protected String escape(String text) {
         text = text.replaceAll("(['\"])", "\\\\$1");
         return text;
+    }
+
+    protected String getLanguageCode(String language) {
+        if (language == null) {
+            return null;
+        }
+        String language2 = new Locale(language).getLanguage();
+        if (LocationComparator.ISO_639_NB.equals(language2)) {
+            language2 = LocationComparator.ISO_639_NO;
+        }
+        return language2;
     }
 }

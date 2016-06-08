@@ -28,6 +28,11 @@ import java.util.Comparator;
  */
 public class LocationComparator implements Comparator<GeoName> {
 
+    /** ISO 639 code for Norwegian Bokmål. */
+    public static final String ISO_639_NB = "nb";
+    /** ISO 639 code for Norwegian. */
+    public static final String ISO_639_NO = "no";
+
     public LocationComparator() {
         super();
     }

@@ -194,15 +194,8 @@ public class GeoName extends GeoNameRecord {
     }
 
     public String getBestName(String language) {
-        String name = getName();
-        if (language == null) {
-            language = Locale.ENGLISH.getLanguage();
-        }
-        AlternateName alternateName = getAlternateNamesMap().get(language);
-        if (alternateName != null) {
-            name = alternateName.getName();
-        }
-        return name;
+        String name = getName(language);
+        return name != null ? name : getName();
     }
 
     public String getName(String language) {
@@ -217,6 +210,6 @@ public class GeoName extends GeoNameRecord {
         if (language == null) {
             return getName();
         }
-        return "UNKNOWN [" + getName() + "]";
+        return null;
     }
 }
