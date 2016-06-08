@@ -22,7 +22,6 @@ package net.sf.times.location;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -1000,29 +999,10 @@ public class AddressProvider {
     /**
      * Delete the list of cached cities and re-populate.
      */
-    public void clearCities() {
+    public void deleteCities() {
         SQLiteDatabase db = getWritableDatabase();
         if (db == null)
             return;
         db.delete(AddressOpenHelper.TABLE_CITIES, null, null);
-    }
-
-    /**
-     * Fill the cities table with empty rows.
-     *
-     * @param db
-     *         the database.
-     */
-    private void fillCities(SQLiteDatabase db) {
-        List<City> cities = getCities();
-
-        ContentValues values = new ContentValues();
-        values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
-        values.put(CitiesColumns.FAVORITE, 0);
-
-        for (City city : cities) {
-            values.put(BaseColumns._ID, -city.getId());
-            db.insert(AddressOpenHelper.TABLE_CITIES, null, values);
-        }
     }
 }

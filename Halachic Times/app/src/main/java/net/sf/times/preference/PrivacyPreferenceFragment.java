@@ -64,6 +64,6 @@ public class PrivacyPreferenceFragment extends net.sf.preference.AbstractPrefere
         LocationApplication app = (LocationApplication) getActivity().getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
-        provider.clearCities();
+        provider.deleteCities();
     }
 }
