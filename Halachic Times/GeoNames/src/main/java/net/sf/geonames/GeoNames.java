@@ -88,7 +88,7 @@ public class GeoNames {
     }
 
     /**
-     * Parse the file with GeoName records.
+     * Parse the tab-delimited file with GeoName records.
      *
      * @param file
      *         the file to parse.
@@ -96,12 +96,12 @@ public class GeoNames {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> parseCSV(File file) throws IOException {
-        return parseCSV(file, null);
+    public Collection<GeoName> parseTabbed(File file) throws IOException {
+        return parseTabbed(file, null);
     }
 
     /**
-     * Parse the file with GeoName records.
+     * Parse the tab-delimited file with GeoName records.
      *
      * @param file
      *         the file to parse.
@@ -111,7 +111,7 @@ public class GeoNames {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> parseCSV(File file, NameFilter filter) throws IOException {
+    public Collection<GeoName> parseTabbed(File file, NameFilter filter) throws IOException {
         Collection<GeoName> records = null;
         Reader reader = null;
         FileInputStream in = null;
@@ -119,7 +119,7 @@ public class GeoNames {
             in = new FileInputStream(file);
             reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             in = null;
-            records = parseCSV(reader, filter);
+            records = parseTabbed(reader, filter);
         } finally {
             if (in != null)
                 in.close();
@@ -130,7 +130,7 @@ public class GeoNames {
     }
 
     /**
-     * Parse the file with GeoName records.
+     * Parse the tab-delimited file with GeoName records.
      *
      * @param reader
      *         the reader.
@@ -138,12 +138,12 @@ public class GeoNames {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> parseCSV(Reader reader) throws IOException {
-        return parseCSV(reader, null);
+    public Collection<GeoName> parseTabbed(Reader reader) throws IOException {
+        return parseTabbed(reader, null);
     }
 
     /**
-     * Parse the file with GeoName records.
+     * Parse the tab-delimited file with GeoName records.
      * <p>
      * <code>
      * The main 'geoname' table has the following fields :<br>
@@ -178,7 +178,7 @@ public class GeoNames {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> parseCSV(Reader reader, NameFilter filter) throws IOException {
+    public Collection<GeoName> parseTabbed(Reader reader, NameFilter filter) throws IOException {
         Collection<GeoName> records = new ArrayList<GeoName>();
         GeoName record;
         String line;

@@ -34,8 +34,6 @@ public class JewishCitiesFilter implements NameFilter {
     private static final long[] CITIES = {
             // Addis Ababa, Ethiopia
             344979,
-            // Aizawl, India
-            1279186,
             // Amsterdam, Netherlands
             2759794,
             // Ariel, Israel

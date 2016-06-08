@@ -111,7 +111,7 @@ public class Cities {
      *         if an I/O error occurs.
      */
     public Collection<GeoName> loadNames(File file, NameFilter filter) throws IOException {
-        return geoNames.parseCSV(file, filter);
+        return geoNames.parseTabbed(file, filter);
     }
 
     /**
