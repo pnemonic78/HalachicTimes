@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -49,7 +50,7 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class JewishCities extends Cities {
 
-    protected static final String[] LANGUAGES = {null, "ar", "bg", "cs", "da", "de", "el", "es", "et", "fa", "fi", "fr", "hi", "hu", "it", "iw", "lt", "nb", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"};
+    protected static final String[] LANGUAGES = {null, "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"};
 
     public static void main(String[] args) throws Exception {
         String pathCities = "GeoNames/res/cities15000.txt";

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Preferences -->
+    <string name="summaries_title">Sammentrag</string>
+
+    <!-- Theme. -->
+    <string name="theme_dark">Mørk</string>
+    <string name="theme_light">Lys</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_security_title">Personvern og sikkerhet</string>
+
+    <!-- About -->
+    <string name="version_title">Apper versjon</string>
+
+</resources>

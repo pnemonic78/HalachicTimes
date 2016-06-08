@@ -29,6 +29,8 @@ import java.util.Collection;
  */
 public class BahaiCities extends JewishCities {
 
+    protected static final String[] LANGUAGES = {null, "ar", "bg", "cs", "da", "de", "el", "es", "et", "fa", "fi", "fr", "he", "hi", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"};
+
     public BahaiCities() {
         super();
         setModuleName("compass-bahai");
