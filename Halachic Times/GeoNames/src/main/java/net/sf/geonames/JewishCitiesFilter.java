@@ -82,8 +82,6 @@ public class JewishCitiesFilter implements NameFilter {
             1007311,
             // Eilat, Israel
             295277,
-            // Miami, United States
-            4164138,
             // Geneve, Switzerland
             2660646,
             // Hadera, Israel
@@ -120,6 +118,8 @@ public class JewishCitiesFilter implements NameFilter {
             2158177,
             // Mexico City, Mexico
             3530597,
+            // Miami, United States
+            4164138,
             // Montreal, Canada
             6077243,
             // Moscow, Russia
@@ -152,6 +152,8 @@ public class JewishCitiesFilter implements NameFilter {
             3451190,
             // Rome, Italy
             3169070,
+            // Safed / Zefat, Israel
+            293100,
             // Sarajevo, Bosnia and Herzegovina
             3191281,
             // Seattle, United States
@@ -176,8 +178,6 @@ public class JewishCitiesFilter implements NameFilter {
             293322,
             // Toronto, Canada
             6167865,
-            // Safed / Zefat, Israel
-            293100,
             // Vancouver, Canada
             6173331,
             // Vienna, Austria

@@ -1,1 +1,190 @@
-0	8199394	ru	Ариэль
+0	293100	cs	Safed	
+0	293100	da	Safed	
+0	293100	da	Safed
+0	293100	de	Safed
+0	293100	es	Sefat	
+0	293100	fi	Safed	
+0	293100	fr	Safed	
+0	293100	hu	Safed	
+0	293100	lt	Safed	
+0	293100	nl	Safed	
+0	293100	pl	Safed	
+0	293100	pt	Safed	
+0	293100	ro	Safed	
+0	293100	sv	Sefat	
+0	293100	tr	Safed	
+0	293322	cs	Tibériův	
+0	293322	el	Τιβεριάδα	
+0	293322	et	Teverya	
+0	293322	fi	Tiberias	
+0	293322	fi	Tiberias	
+0	293322	he	טבריה	1
+0	293322	hu	Tibériás	
+0	293322	ro	Tiberius	
+0	293322	sv	Tiberias	
+0	293397	et	Tel Aviv	
+0	294098	bg	Назарет	
+0	294098	hu	Názáret	
+0	294098	ro	Nazaret	
+0	294117	da	Nahariya	
+0	294117	el	Ναχαρίγια	
+0	294117	es	Nahariya	
+0	294117	et	Nahariya	
+0	294117	fi	Nahariya	
+0	294117	fr	Nahariya	
+0	294117	hu	Nahariyá	
+0	294117	lt	Nahariya	
+0	294117	pt	Nahariya	
+0	294117	sv	Nahariya	
+0	294117	tr	Nahariya	
+0	294801	et	Haifa	
+0	294801	hu	Haifá	
+0	294946	bg	Хадера	
+0	294946	cs	Chadera	1
+0	294946	el	Χαντέρα	
+0	294946	et	Hadera	
+0	294946	fi	Hadera	
+0	294946	he	חדרה	
+0	294946	hu	Haderá	
+0	294946	lt	Hadera	
+0	294946	tr	Hadera	
+0	294946	uk	Хадера	
+0	295277	el	Σαφετ	
+0	295277	et	Eilat	
+0	295277	tr	Eilat	
+0	295432	bg	Бейт Шемеш	
+0	295432	cs	Bejt Shemes	
+0	295432	da	Beit Sjemesj	
+0	295432	el	Βέιτ Σεμές	
+0	295432	et	Bayt Semesis	
+0	295432	fi	Bet Semeksen	
+0	295432	fr	Bet Shemesh	
+0	295432	hu	Beit Szemesz	
+0	295432	lt	Bet Shemesh	
+0	295432	pt	Bet Semeksen	
+0	295432	tr	Bet Şemeş	
+0	295432	uk	Бейт-Шемеш	
+0	295620	bg	Ашкелон	
+0	295620	cs	Aškelon	
+0	295620	da	Asjkelon	
+0	295620	de	Aschkelon	
+0	295620	el	Ασκελόν	
+0	295620	es	Askelon	
+0	295620	et	Ashkelon	
+0	295620	fi	Ashkelon	
+0	295620	fi	Askelon	
+0	295620	he	אשקלון	1
+0	295620	hu	Aszkelon	
+0	295620	lt	Aškelonas	
+0	295620	nl	Askelon	
+0	295620	pl	Aszkelon	
+0	295620	pt	Askelon	
+0	295620	ro	Așkelon	
+0	295620	sv	Ashkelon	
+0	295620	tr	Aşkelon	
+0	295620	uk	Ашкелон	
+0	295629	da	Asjdod	
+0	295629	et	Ashdod	
+0	295629	fi	Asdod	
+0	344979	ro	Addis Abeba	
+0	745044	et	Istanbul	
+0	745044	lt	Stambulas	
+0	745044	ro	Istambul	
+0	993800	cs	Johannesburg	
+0	993800	hu	Johannesburg	
+0	1007311	da	Durban	
+0	1007311	et	Durban	
+0	1007311	hu	Durban	
+0	1007311	ro	Durban	
+0	1007311	tr	Durban	
+0	2063523	ro	Perth	
+0	2063523	tr	Perth	
+0	2158177	el	Μελβούρνη	
+0	2158177	uk	Мельбурн	
+0	2193733	el	Όκλαντ	
+0	2193733	hu	Auckland	
+0	2193733	it	Auckland	
+0	2193733	tr	Auckland	
+0	2553604	hu	Casablanca	
+0	2643123	et	Manchester	
+0	2660646	uk	Женева	
+0	2761369	he	וינה	
+0	2990440	cs	Nice	
+0	2990440	tr	Güzel	
+0	3369157	ro	Cape Town	
+0	3435910	cs	Buenos Aires	
+0	3435910	et	Buenos Aires	
+0	3435910	hu	Buenos Aires	
+0	3435910	nl	Buenos Aires	
+0	3435910	pl	Buenos Aires	
+0	3435910	ro	Buenos Aires	
+0	3435910	tr	Buenos Aires	
+0	3530597	hu	Mexikóváros	
+0	3688689	et	Bogotá	
+0	4140963	bg	Вашингтон	
+0	4140963	cs	Washington DC	
+0	4140963	et	Washington DC	
+0	4140963	he	וושינגטון	
+0	4140963	hu	Washington DC	
+0	4140963	nl	Washington DC	
+0	4140963	ro	Washington DC	
+0	4140963	tr	Washington DC	
+0	4140963	uk	Вашингтон, ДК	
+0	4164138	cs	Miami	
+0	4164138	es	Miami	
+0	4164138	ro	Miami	
+0	4347778	et	Baltimore	
+0	4347778	hu	Baltimore	
+0	4347778	ro	Baltimore	
+0	4407066	hu	Szentlouis	
+0	4407066	tr	Saint Louis	
+0	4560349	et	Filadelfia	
+0	4560349	hu	Philadelphiá	
+0	4684888	hu	Dallas	
+0	4699066	de	Houston	
+0	4699066	es	Houston	
+0	4699066	hu	Houston	
+0	4887398	hu	Chicagó	
+0	4975802	cs	Portland	
+0	4975802	da	Portland	
+0	4975802	es	Portland	
+0	4975802	hu	Portland	
+0	4975802	lt	Portland	
+0	4975802	ro	Portland	
+0	5128581	et	New Yorgi	
+0	5150529	et	Cleveland	
+0	5150529	hu	Cleveland	
+0	5206379	cs	Pittsburgh	
+0	5206379	hu	Pittsburgh	
+0	5206379	ro	Pittsburgh	
+0	5308655	es	Fénix	
+0	5308655	et	Fööniks	
+0	5308655	fi	Feeniks	
+0	5391811	et	San Diego	
+0	5391959	ro	San Francisco	
+0	5419384	cs	Denver	
+0	5419384	et	Denver	
+0	5419384	hu	Denver	
+0	5809844	et	Seattle	
+0	6077243	hu	Montréal	
+0	6173331	hu	Vancouver	
+0	8199394	bg	Ариел	
+0	8199394	cs	Ariel	
+0	8199394	da	Ariel	
+0	8199394	de	Ariel	
+0	8199394	el	Άριελ	
+0	8199394	es	Ariel	
+0	8199394	et	Ariel	
+0	8199394	fi	Ariel	
+0	8199394	fi	Ariel	
+0	8199394	fr	Ariel	
+0	8199394	hu	Ariel	
+0	8199394	lt	Arielis	
+0	8199394	nl	Ariel	
+0	8199394	pl	Ariel	
+0	8199394	pt	Ariel	
+0	8199394	ro	Ariel	
+0	8199394	ru	Ариэль	
+0	8199394	sv	Ariel	
+0	8199394	tr	Ariel	
+0	8199394	uk	Аріель	
