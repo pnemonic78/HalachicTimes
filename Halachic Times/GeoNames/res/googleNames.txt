@@ -8,6 +8,7 @@
 0	293100	hu	Safed	
 0	293100	lt	Safed	
 0	293100	nl	Safed	
+0	293100	no	Safed	
 0	293100	pl	Safed	
 0	293100	pt	Safed	
 0	293100	ro	Safed	
@@ -34,6 +35,7 @@
 0	294117	fr	Nahariya	
 0	294117	hu	Nahariyá	
 0	294117	lt	Nahariya	
+0	294117	no	Nahariya	
 0	294117	pt	Nahariya	
 0	294117	sv	Nahariya	
 0	294117	tr	Nahariya	
@@ -61,9 +63,11 @@
 0	295432	fr	Bet Shemesh	
 0	295432	hu	Beit Szemesz	
 0	295432	lt	Bet Shemesh	
+0	295432	no	Bet Semes	
 0	295432	pt	Bet Semeksen	
 0	295432	tr	Bet Şemeş	
 0	295432	uk	Бейт-Шемеш	
+0	295530	no	Be'erseba	
 0	295620	bg	Ашкелон	
 0	295620	cs	Aškelon	
 0	295620	da	Asjkelon	
@@ -77,6 +81,7 @@
 0	295620	hu	Aszkelon	
 0	295620	lt	Aškelonas	
 0	295620	nl	Askelon	
+0	295620	no	Askalon	
 0	295620	pl	Aszkelon	
 0	295620	pt	Askelon	
 0	295620	ro	Așkelon	
@@ -87,6 +92,7 @@
 0	295629	et	Ashdod	
 0	295629	fi	Asdod	
 0	295629	hu	Aszdód	1
+0	295629	no	Asdod	
 0	344979	ro	Addis Abeba	
 0	745044	et	Istanbul	
 0	745044	lt	Stambulas	
@@ -111,6 +117,7 @@
 0	2193733	hu	Auckland	
 0	2193733	it	Auckland	
 0	2193733	nl	Auckland	
+0	2193733	no	Auckland	
 0	2193733	pl	Auckland	
 0	2193733	pt	Auckland	
 0	2193733	ro	Auckland	
@@ -127,6 +134,7 @@
 0	3435910	et	Buenos Aires	
 0	3435910	hu	Buenos Aires	
 0	3435910	nl	Buenos Aires	
+0	3435910	no	Buenos Aires	
 0	3435910	pl	Buenos Aires	
 0	3435910	ro	Buenos Aires	
 0	3435910	tr	Buenos Aires	
@@ -138,6 +146,7 @@
 0	4140963	he	וושינגטון	
 0	4140963	hu	Washington DC	
 0	4140963	nl	Washington DC	
+0	4140963	no	Washington DC	
 0	4140963	ro	Washington DC	
 0	4140963	tr	Washington DC	
 0	4140963	uk	Вашингтон, ДК	
@@ -178,6 +187,7 @@
 0	5308655	et	Fööniks	
 0	5308655	fi	Feeniks	
 0	5308655	hu	Főnix	1
+0	5308655	no	Føniks	1
 0	5308655	pl	Feniks	1
 0	5308655	ro	Fenix	1
 0	5308655	sv	Fenix	1
@@ -202,6 +212,7 @@
 0	8199394	hu	Ariel	
 0	8199394	lt	Arielis	
 0	8199394	nl	Ariel	
+0	8199394	no	Ariel	
 0	8199394	pl	Ariel	
 0	8199394	pt	Ariel	
 0	8199394	ro	Ariel	
