@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -74,7 +74,6 @@
         <item>Moskou</item>
         <item>Addis Abeba</item>
         <item>Bombay</item>
-        <item>Ajzawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

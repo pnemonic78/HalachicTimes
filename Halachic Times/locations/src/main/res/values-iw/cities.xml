@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>ונקובר</item>
         <item>סן פרנסיסקו</item>
@@ -74,7 +74,6 @@
         <item>מוסקבה</item>
         <item>אדיס אבבה</item>
         <item>מומבאי</item>
-        <item>אייזוול</item>
         <item>פרת\'</item>
         <item>מלבורן</item>
         <item>סידני</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -64,8 +64,8 @@
         <item>Hadera</item>
         <item>Eilat</item>
         <item>Hayfa</item>
-        <item>Bet Şemesh</item>
-        <item>Nahariyya</item>
+        <item>Bet Şemeş</item>
+        <item>Nahariya</item>
         <item>Ariel</item>
         <item>Kudüs</item>
         <item>Nasıra</item>
@@ -74,7 +74,6 @@
         <item>Moskova</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
-        <item>Aizawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sidney</item>

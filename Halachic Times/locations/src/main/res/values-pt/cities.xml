@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>São Francisco</item>
@@ -57,14 +57,14 @@
         <item>São Petersburgo</item>
         <item>Kiev</item>
         <item>Durban</item>
-        <item>Ashkelon</item>
+        <item>Askelon</item>
         <item>Asdode</item>
         <item>Tel Aviv</item>
         <item>Bersebá</item>
         <item>Hadera</item>
         <item>Éilat</item>
         <item>Haifa</item>
-        <item>Bet Shemesh</item>
+        <item>Bet Semeksen</item>
         <item>Nahariya</item>
         <item>Ariel</item>
         <item>Jerusalém</item>
@@ -74,7 +74,6 @@
         <item>Moscovo</item>
         <item>Adis Abeba</item>
         <item>Bombaim</item>
-        <item>Aizawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

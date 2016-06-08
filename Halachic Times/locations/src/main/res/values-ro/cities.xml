@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -12,7 +12,7 @@
         <item>Ciudad de México</item>
         <item>Dallas</item>
         <item>Houston</item>
-        <item>Sfânt Louis</item>
+        <item>Saint Louis</item>
         <item>Chicago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
@@ -23,9 +23,9 @@
         <item>Washington DC</item>
         <item>Baltimore</item>
         <item>Filadelfia</item>
-        <item>Bogota</item>
+        <item>Bogotá</item>
         <item>New York</item>
-        <item>Montréal</item>
+        <item>Montreal</item>
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
@@ -48,13 +48,13 @@
         <item>Berlin</item>
         <item>Viena</item>
         <item>Stockholm</item>
-        <item>Saraievo</item>
+        <item>Sarajevo</item>
         <item>Cape Town</item>
         <item>Budapesta</item>
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>Istambul</item>
-        <item>Sfânt Petersburg</item>
+        <item>Sankt Petersburg</item>
         <item>Kiev</item>
         <item>Durban</item>
         <item>Așkelon</item>
@@ -64,8 +64,8 @@
         <item>Hadera</item>
         <item>Eilat</item>
         <item>Haifa</item>
-        <item>Beit Shemesh</item>
-        <item>Nahariya</item>
+        <item>Beit Şemeș</item>
+        <item>Nahariia</item>
         <item>Ariel</item>
         <item>Ierusalim</item>
         <item>Nazaret</item>
@@ -73,8 +73,7 @@
         <item>Tiberius</item>
         <item>Moscova</item>
         <item>Addis Abeba</item>
-        <item>Mumbai</item>
-        <item>Aizawl</item>
+        <item>Mumbay</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
         <item>Seattle</item>
-        <item>Los Anieli</item>
+        <item>Los Angeles</item>
         <item>San Diego</item>
         <item>Feniks</item>
         <item>Denver</item>
@@ -20,7 +20,7 @@
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
-        <item>Waszyngton DC</item>
+        <item>Waszyngton</item>
         <item>Baltimore</item>
         <item>Filadelfia</item>
         <item>Bogota</item>
@@ -41,7 +41,7 @@
         <item>Amsterdam</item>
         <item>Marsylia</item>
         <item>Genewa</item>
-        <item>Nice</item>
+        <item>Nicea</item>
         <item>Zurych</item>
         <item>Monachium</item>
         <item>Rzym</item>
@@ -60,12 +60,12 @@
         <item>Aszkelon</item>
         <item>Aszdod</item>
         <item>Tel Awiw</item>
-        <item>Be\'er Szewa</item>
-        <item>Hadera</item>
+        <item>Beer Szewa</item>
+        <item>Chadera</item>
         <item>Ejlat</item>
         <item>Hajfa</item>
-        <item>Beit Szemesz</item>
-        <item>Nahariyya</item>
+        <item>Bet Shemesh</item>
+        <item>Naharijja</item>
         <item>Ariel</item>
         <item>Jerozolima</item>
         <item>Nazaret</item>
@@ -74,7 +74,6 @@
         <item>Moskwa</item>
         <item>Addis Abeba</item>
         <item>Mumbaj</item>
-        <item>Ajzawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

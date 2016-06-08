@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -9,7 +9,7 @@
         <item>San Diego</item>
         <item>Fööniks</item>
         <item>Denver</item>
-        <item>Mexico City</item>
+        <item>México</item>
         <item>Dallas</item>
         <item>Houston</item>
         <item>Saint Louis</item>
@@ -25,7 +25,7 @@
         <item>Filadelfia</item>
         <item>Bogotá</item>
         <item>New Yorgi</item>
-        <item>Montreal</item>
+        <item>Montréal</item>
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
@@ -36,7 +36,7 @@
         <item>Manchester</item>
         <item>London</item>
         <item>Pariis</item>
-        <item>Brüsselis</item>
+        <item>Brüssel</item>
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marseille</item>
@@ -54,13 +54,13 @@
         <item>Helsingi</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
-        <item>Saint Petersburg</item>
+        <item>Peterburi</item>
         <item>Kiiev</item>
         <item>Durban</item>
         <item>Ashkelon</item>
         <item>Ashdod</item>
         <item>Tel Aviv</item>
-        <item>Beersheba</item>
+        <item>Beer-Sheva</item>
         <item>Hadera</item>
         <item>Eilat</item>
         <item>Haifa</item>
@@ -69,12 +69,11 @@
         <item>Ariel</item>
         <item>Jeruusalemm</item>
         <item>Naatsaret</item>
-        <item>Safed</item>
+        <item>Tsfat</item>
         <item>Teverya</item>
         <item>Moskva</item>
-        <item>Addis Abebas</item>
+        <item>Addis Abeba</item>
         <item>Mumbai</item>
-        <item>Aizawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

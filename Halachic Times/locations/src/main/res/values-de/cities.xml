@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -12,7 +12,7 @@
         <item>Mexiko-Stadt</item>
         <item>Dallas</item>
         <item>Houston</item>
-        <item>Sankt Louis</item>
+        <item>St. Louis</item>
         <item>Chicago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
@@ -20,16 +20,16 @@
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
-        <item>Washington DC</item>
+        <item>Washington</item>
         <item>Baltimore</item>
         <item>Philadelphia</item>
-        <item>Bogota</item>
-        <item>New York</item>
+        <item>Bogotá</item>
+        <item>New York City</item>
         <item>Montreal</item>
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
-        <item>Sao Paulo</item>
+        <item>São Paulo</item>
         <item>Rio de Janeiro</item>
         <item>Casablanca</item>
         <item>Madrid</item>
@@ -44,7 +44,7 @@
         <item>Nizza</item>
         <item>Zürich</item>
         <item>München</item>
-        <item>Roma</item>
+        <item>Rom</item>
         <item>Berlin</item>
         <item>Wien</item>
         <item>Stockholm</item>
@@ -57,24 +57,23 @@
         <item>Sankt Petersburg</item>
         <item>Kiew</item>
         <item>Durban</item>
-        <item>Ashkelon</item>
-        <item>Ashdod</item>
+        <item>Aschkelon</item>
+        <item>Aschdod</item>
         <item>Tel Aviv</item>
-        <item>Beerscheba</item>
-        <item>Hadera</item>
-        <item>Eilat</item>
+        <item>Be’er Scheva</item>
+        <item>Chadera</item>
+        <item>Elat</item>
         <item>Haifa</item>
-        <item>Bet Shemesh</item>
-        <item>Nahariya</item>
+        <item>Bet Schemesch</item>
+        <item>Naharija</item>
         <item>Ariel</item>
         <item>Jerusalem</item>
-        <item>Nazareth</item>
+        <item>Nazaret</item>
         <item>Safed</item>
         <item>Tiberias</item>
         <item>Moskau</item>
         <item>Addis Abeba</item>
         <item>Mumbai</item>
-        <item>Aizol</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

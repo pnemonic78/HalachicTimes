@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Ванкувер</item>
         <item>Сан-Франциско</item>
@@ -74,7 +74,6 @@
         <item>Москва</item>
         <item>Аддис-Абеба</item>
         <item>Мумбаи</item>
-        <item>Аиджал</item>
         <item>Перт</item>
         <item>Мельбурн</item>
         <item>Сидней</item>

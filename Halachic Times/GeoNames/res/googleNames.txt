@@ -1,7 +1,7 @@
 0	293100	cs	Safed	
 0	293100	da	Safed	
-0	293100	da	Safed
-0	293100	de	Safed
+0	293100	de	Safed	
+0	293100	el	Σαφετ	
 0	293100	es	Sefat	
 0	293100	fi	Safed	
 0	293100	fr	Safed	
@@ -71,8 +71,8 @@
 0	295620	el	Ασκελόν	
 0	295620	es	Askelon	
 0	295620	et	Ashkelon	
-0	295620	fi	Ashkelon	
 0	295620	fi	Askelon	
+0	295620	fr	Ashkelon	
 0	295620	he	אשקלון	1
 0	295620	hu	Aszkelon	
 0	295620	lt	Aškelonas	
@@ -86,6 +86,7 @@
 0	295629	da	Asjdod	
 0	295629	et	Ashdod	
 0	295629	fi	Asdod	
+0	295629	hu	Aszdód	1
 0	344979	ro	Addis Abeba	
 0	745044	et	Istanbul	
 0	745044	lt	Stambulas	
@@ -101,9 +102,19 @@
 0	2063523	tr	Perth	
 0	2158177	el	Μελβούρνη	
 0	2158177	uk	Мельбурн	
+0	2193733	cs	Auckland	
+0	2193733	da	Auckland	
 0	2193733	el	Όκλαντ	
+0	2193733	es	Auckland	
+0	2193733	et	Auckland	
+0	2193733	fi	Auckland	
 0	2193733	hu	Auckland	
 0	2193733	it	Auckland	
+0	2193733	nl	Auckland	
+0	2193733	pl	Auckland	
+0	2193733	pt	Auckland	
+0	2193733	ro	Auckland	
+0	2193733	sv	Auckland	
 0	2193733	tr	Auckland	
 0	2553604	hu	Casablanca	
 0	2643123	et	Manchester	
@@ -133,13 +144,17 @@
 0	4164138	cs	Miami	
 0	4164138	es	Miami	
 0	4164138	ro	Miami	
+0	4180439	hu	Atlantá	
 0	4347778	et	Baltimore	
 0	4347778	hu	Baltimore	
 0	4347778	ro	Baltimore	
 0	4407066	hu	Szentlouis	
 0	4407066	tr	Saint Louis	
+0	4560349	cs	Filadelfie	1
 0	4560349	et	Filadelfia	
 0	4560349	hu	Philadelphiá	
+0	4560349	ro	Filadelfia	1
+0	4560349	sv	Filadelfia	1
 0	4684888	hu	Dallas	
 0	4699066	de	Houston	
 0	4699066	es	Houston	
@@ -157,9 +172,15 @@
 0	5206379	cs	Pittsburgh	
 0	5206379	hu	Pittsburgh	
 0	5206379	ro	Pittsburgh	
+0	5308655	cs	Fénix	1
+0	5308655	de	Phönix	1
 0	5308655	es	Fénix	
 0	5308655	et	Fööniks	
 0	5308655	fi	Feeniks	
+0	5308655	hu	Főnix	1
+0	5308655	pl	Feniks	1
+0	5308655	ro	Fenix	1
+0	5308655	sv	Fenix	1
 0	5391811	et	San Diego	
 0	5391959	ro	San Francisco	
 0	5419384	cs	Denver	

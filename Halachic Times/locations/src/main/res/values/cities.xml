@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -74,7 +74,6 @@
         <item>Moscow</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
-        <item>Aizawl</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>
@@ -152,7 +151,6 @@
         <item>IL</item>
         <item>RU</item>
         <item>ET</item>
-        <item>IN</item>
         <item>IN</item>
         <item>AU</item>
         <item>AU</item>
@@ -232,7 +230,6 @@
         <item>55.75222</item>
         <item>9.02497</item>
         <item>19.07283</item>
-        <item>23.72894</item>
         <item>-31.95224</item>
         <item>-37.814</item>
         <item>-33.86785</item>
@@ -311,7 +308,6 @@
         <item>37.61556</item>
         <item>38.74689</item>
         <item>72.88261</item>
-        <item>92.71791</item>
         <item>115.8614</item>
         <item>144.96332</item>
         <item>151.20732</item>
@@ -390,7 +386,6 @@
         <item>144</item>
         <item>2405</item>
         <item>8</item>
-        <item>1080</item>
         <item>34</item>
         <item>25</item>
         <item>58</item>
@@ -468,7 +463,6 @@
         <item>Asia/Jerusalem</item>
         <item>Europe/Moscow</item>
         <item>Africa/Addis_Ababa</item>
-        <item>Asia/Kolkata</item>
         <item>Asia/Kolkata</item>
         <item>Australia/Perth</item>
         <item>Australia/Melbourne</item>

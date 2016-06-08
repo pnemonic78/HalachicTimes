@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -20,12 +20,12 @@
         <item>Miami</item>
         <item>Pittsburgh</item>
         <item>Toronto</item>
-        <item>Washington DC</item>
+        <item>Washington</item>
         <item>Baltimore</item>
         <item>Filadelfia</item>
         <item>Bogotá</item>
         <item>New York</item>
-        <item>Montréal</item>
+        <item>Montreal</item>
         <item>Boston</item>
         <item>Portland</item>
         <item>Buenos Aires</item>
@@ -40,11 +40,11 @@
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marseille</item>
-        <item>Geneve</item>
+        <item>Genève</item>
         <item>Nice</item>
         <item>Zürich</item>
         <item>München</item>
-        <item>Roma</item>
+        <item>Rom</item>
         <item>Berlin</item>
         <item>Wien</item>
         <item>Stockholm</item>
@@ -60,7 +60,7 @@
         <item>Ashkelon</item>
         <item>Ashdod</item>
         <item>Tel Aviv</item>
-        <item>Beersheba</item>
+        <item>Be\'er Sheva</item>
         <item>Hadera</item>
         <item>Eilat</item>
         <item>Haifa</item>
@@ -73,8 +73,7 @@
         <item>Tiberias</item>
         <item>Moskva</item>
         <item>Addis Abeba</item>
-        <item>Mumbai</item>
-        <item>Aizawl</item>
+        <item>Bombay</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

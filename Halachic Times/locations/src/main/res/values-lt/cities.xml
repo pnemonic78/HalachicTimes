@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vankuveris</item>
         <item>San Fransiskas</item>
@@ -64,7 +64,7 @@
         <item>Hadera</item>
         <item>Elatas</item>
         <item>Haifa</item>
-        <item>Beit Shemesh</item>
+        <item>Bet Shemesh</item>
         <item>Nahariya</item>
         <item>Arielis</item>
         <item>Jeruzalė</item>
@@ -74,7 +74,6 @@
         <item>Maskva</item>
         <item>Adis Abeba</item>
         <item>Mumbajus</item>
-        <item>Aizavlis</item>
         <item>Pertas</item>
         <item>Melburnas</item>
         <item>Sidnėjus</item>

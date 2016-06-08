@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Vancouver</item>
         <item>San Francisco</item>
@@ -9,10 +9,10 @@
         <item>San Diego</item>
         <item>Fénix</item>
         <item>Denver</item>
-        <item>Mexico City</item>
+        <item>Ciudad de México</item>
         <item>Dallas</item>
         <item>Houston</item>
-        <item>Svatý Louis</item>
+        <item>St. Louis</item>
         <item>Chicago</item>
         <item>Atlanta</item>
         <item>Detroit</item>
@@ -23,7 +23,7 @@
         <item>Washington DC</item>
         <item>Baltimore</item>
         <item>Filadelfie</item>
-        <item>Bogota</item>
+        <item>Bogotá</item>
         <item>New York</item>
         <item>Montreal</item>
         <item>Boston</item>
@@ -38,7 +38,7 @@
         <item>Paříž</item>
         <item>Brusel</item>
         <item>Lyon</item>
-        <item>Amsterodam</item>
+        <item>Amsterdam</item>
         <item>Marseille</item>
         <item>Ženeva</item>
         <item>Nice</item>
@@ -51,7 +51,7 @@
         <item>Sarajevo</item>
         <item>Kapské Město</item>
         <item>Budapešť</item>
-        <item>Helsinki</item>
+        <item>Helsinky</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>Petrohrad</item>
@@ -62,19 +62,18 @@
         <item>Tel Aviv</item>
         <item>Beerševa</item>
         <item>Chadera</item>
-        <item>Eilat</item>
+        <item>Ejlat</item>
         <item>Haifa</item>
-        <item>Bejt Shemesh</item>
-        <item>Nahariyya</item>
+        <item>Bejt Shemes</item>
+        <item>Naharija</item>
         <item>Ariel</item>
         <item>Jeruzalém</item>
         <item>Nazaret</item>
         <item>Safed</item>
         <item>Tibériův</item>
         <item>Moskva</item>
-        <item>Addis Ababa</item>
-        <item>Mumbai</item>
-        <item>Aizawl</item>
+        <item>Addis Abeba</item>
+        <item>Bombaj</item>
         <item>Perth</item>
         <item>Melbourne</item>
         <item>Sydney</item>

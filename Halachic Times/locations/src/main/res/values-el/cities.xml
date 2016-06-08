@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Βανκούβερ</item>
         <item>Σαν Φρανσίσκο</item>
@@ -12,25 +12,25 @@
         <item>Πόλη του Μεξικού</item>
         <item>Ντάλας</item>
         <item>Χιούστον</item>
-        <item>Σεν Λουί</item>
+        <item>Σαιντ Λούις</item>
         <item>Σικάγο</item>
         <item>Ατλάντα</item>
         <item>Ντιτρόιτ</item>
         <item>Κλίβελαντ</item>
         <item>Μαϊάμι</item>
-        <item>Πίτσμπουργκ</item>
+        <item>Πίτσμπεργκ</item>
         <item>Τορόντο</item>
-        <item>Ουάσιγκτον Σ.Ρ.</item>
+        <item>Ουάσιγκτον</item>
         <item>Βαλτιμόρη</item>
         <item>Φιλαδέλφεια</item>
         <item>Μπογκοτά</item>
         <item>Νέα Υόρκη</item>
-        <item>Μόντρεαλ</item>
-        <item>Βοστώνη</item>
+        <item>Μοντρεαλ</item>
+        <item>Βοστωνη</item>
         <item>Πόρτλαντ</item>
         <item>Μπουένος Άιρες</item>
         <item>Σάο Πάολο</item>
-        <item>Ρίο Ιανέιρο</item>
+        <item>Ρίο ντε Τζανέιρο</item>
         <item>Καζαμπλάνκα</item>
         <item>Μαδρίτη</item>
         <item>Μάντσεστερ</item>
@@ -40,31 +40,31 @@
         <item>Λυών</item>
         <item>Άμστερνταμ</item>
         <item>Μασσαλία</item>
-        <item>Γενεύη</item>
+        <item>Γενευη</item>
         <item>Νίκαια</item>
         <item>Ζυρίχη</item>
         <item>Μόναχο</item>
-        <item>Ρομά</item>
+        <item>Ρώμη</item>
         <item>Βερολίνο</item>
         <item>Βιέννη</item>
         <item>Στοκχόλμη</item>
-        <item>Σαράγεβο</item>
+        <item>Σαραγιεβο</item>
         <item>Κέιπ Τάουν</item>
         <item>Βουδαπέστη</item>
         <item>Ελσίνκι</item>
         <item>Γιοχάνεσμπουργκ</item>
-        <item>Κωνσταντινούπολη</item>
+        <item>Ισταμπούλ</item>
         <item>Αγία Πετρούπολη</item>
         <item>Κίεβο</item>
         <item>Ντέρμπαν</item>
         <item>Ασκελόν</item>
         <item>Ασντόντ</item>
         <item>Τελ Αβίβ</item>
-        <item>Βηρ Σεβά</item>
+        <item>Μπερ Σεβά</item>
         <item>Χαντέρα</item>
-        <item>Εϊλάτ</item>
+        <item>Σαφετ</item>
         <item>Χάιφα</item>
-        <item>Μπέιτ Σεμές</item>
+        <item>Βέιτ Σεμές</item>
         <item>Ναχαρίγια</item>
         <item>Άριελ</item>
         <item>Ιερουσαλήμ</item>
@@ -73,8 +73,7 @@
         <item>Τιβεριάδα</item>
         <item>Μόσχα</item>
         <item>Αντίς Αμπέμπα</item>
-        <item>Μουμπάι</item>
-        <item>Αϊζόλ</item>
+        <item>Βομβάη</item>
         <item>Περθ</item>
         <item>Μελβούρνη</item>
         <item>Σίδνεϊ</item>

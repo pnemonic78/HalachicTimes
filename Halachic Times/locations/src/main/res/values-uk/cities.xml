@@ -1,27 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Translated using Google Translator Toolkit. -->
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <!--Generated from geonames.org data-->
     <string-array name="cities">
         <item>Ванкувер</item>
         <item>Сан-Франциско</item>
-        <item>Сіетл</item>
+        <item>Сієтл</item>
         <item>Лос-Анджелес</item>
         <item>Сан-Дієго</item>
-        <item>Фенікс</item>
+        <item>Фінікс</item>
         <item>Денвер</item>
         <item>Мехіко</item>
         <item>Даллас</item>
-        <item>Х\'юстон</item>
+        <item>Хюстон</item>
         <item>Сент-Луїс</item>
-        <item>Чикаго</item>
-        <item>Атланти</item>
+        <item>Чикаґо</item>
+        <item>Атланта</item>
         <item>Детройт</item>
         <item>Клівленд</item>
-        <item>Майамі</item>
+        <item>Маямі</item>
         <item>Піттсбург</item>
         <item>Торонто</item>
         <item>Вашингтон, ДК</item>
-        <item>Балтімор</item>
+        <item>Балтимор</item>
         <item>Філадельфія</item>
         <item>Богота</item>
         <item>Нью-Йорк</item>
@@ -44,14 +44,14 @@
         <item>Ніцца</item>
         <item>Цюрих</item>
         <item>Мюнхен</item>
-        <item>Циган</item>
+        <item>Рим</item>
         <item>Берлін</item>
-        <item>Відня</item>
+        <item>Відень</item>
         <item>Стокгольм</item>
         <item>Сараєво</item>
         <item>Кейптаун</item>
         <item>Будапешт</item>
-        <item>Хельсінкі</item>
+        <item>Гельсінкі</item>
         <item>Йоганнесбург</item>
         <item>Стамбул</item>
         <item>Санкт-Петербург</item>
@@ -72,9 +72,8 @@
         <item>Цфат</item>
         <item>Тверія</item>
         <item>Москва</item>
-        <item>Аддіс-Абеба</item>
+        <item>Аддис-Абеба</item>
         <item>Мумбаї</item>
-        <item>Ейзол</item>
         <item>Перт</item>
         <item>Мельбурн</item>
         <item>Сідней</item>
