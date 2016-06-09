@@ -180,15 +180,15 @@ public class GeoName extends GeoNameRecord {
     }
 
     public void putAlternateName(String language, String name) {
-        putAlternateName(language, name, false);
+        putAlternateName(language, name, false, false, false, false);
     }
 
-    public void putAlternateName(String language, String name, boolean preferred) {
+    public void putAlternateName(String language, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
         AlternateName alternateName = alternateNamesMap.get(language);
         if ((alternateName == null) || preferred) {
             alternateName = new AlternateName(language, name, preferred);
             alternateNamesMap.put(alternateName.getLanguageISO2(), alternateName);
-        } else if (!alternateName.isPreferred()) {
+        } else if (!alternateName.isPreferred() && !shortName && !colloquial && !historic) {
             alternateName.setName(name);
         }
     }

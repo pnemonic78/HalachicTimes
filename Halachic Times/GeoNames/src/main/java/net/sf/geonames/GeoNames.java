@@ -437,7 +437,10 @@ public class GeoNames {
         long geonameId;
         String language;
         String name;
-        boolean isPreferredName;
+        boolean preferredName;
+        boolean shortName;
+        boolean colloquial;
+        boolean historic;
 
         while (true) {
             line = buf.readLine();
@@ -454,7 +457,7 @@ public class GeoNames {
                 continue;
             }
             field = fields[2];
-            if (field.isEmpty()) {
+            if (field.isEmpty() || "post".equals(field)) {
                 continue;
             }
             if (field.length() > 3) {
@@ -469,14 +472,12 @@ public class GeoNames {
             }
             name = field;
 
-            if (fields.length > 4) {
-                field = fields[4];
-                isPreferredName = "1".equals(field);
-            } else {
-                isPreferredName = false;
-            }
+            preferredName = (fields.length > 4) && "1".equals(fields[4]);
+            shortName = (fields.length > 5) && "1".equals(fields[5]);
+            colloquial = (fields.length > 6) && "1".equals(fields[6]);
+            historic = (fields.length > 7) && "1".equals(fields[7]);
 
-            record.putAlternateName(language, name, isPreferredName);
+            record.putAlternateName(language, name, preferredName, shortName, colloquial, historic);
         }
     }
 
