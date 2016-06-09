@@ -384,11 +384,7 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
                     ZmanimAddress address = (ZmanimAddress) msg.obj;
                     LocationApplication app = (LocationApplication) activity.getApplication();
                     AddressProvider provider = app.getAddresses();
-                    if (address instanceof City) {
-                        provider.insertOrUpdateCity((City) address);
-                    } else {
-                        provider.insertOrUpdateAddress(null, address);
-                    }
+                    provider.insertOrUpdateAddress(null, address);
 
                     activity.adapterAll.notifyDataSetChanged();
                     activity.adapterFavorites.notifyDataSetChanged();

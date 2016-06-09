@@ -142,7 +142,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the location.
      * @return the country - {@code null} otherwise.
      */
-    public Address findCountry(Location location) {
+    public Country findCountry(Location location) {
         return findCountry(location.getLatitude(), location.getLongitude());
     }
 
@@ -155,21 +155,21 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the longitude.
      * @return the country - {@code null} otherwise.
      */
-    public Address findCountry(double latitude, double longitude) {
+    public Country findCountry(double latitude, double longitude) {
         int countryIndex = findCountryIndex(latitude, longitude);
         if (countryIndex < 0) {
             return null;
         }
 
         Locale locale = new Locale(getLanguage(), countryBorders[countryIndex].countryCode);
-        ZmanimAddress address = new ZmanimAddress(locale);
-        address.setId(-countryIndex);
-        address.setLatitude(latitude);
-        address.setLongitude(longitude);
-        address.setCountryCode(locale.getCountry());
-        address.setCountryName(locale.getDisplayCountry());
+        Country country = new Country(locale);
+        country.setLatitude(latitude);
+        country.setLongitude(longitude);
+        country.setCountryCode(locale.getCountry());
+        country.setCountryName(locale.getDisplayCountry());
+        country.setId(Country.generateCountryId(country));
 
-        return address;
+        return country;
     }
 
     /**

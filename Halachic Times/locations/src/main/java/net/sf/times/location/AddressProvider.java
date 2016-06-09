@@ -500,6 +500,15 @@ public class AddressProvider {
         long id = address.getId();
         if (id < 0L)
             return;
+        // Cities have their own table.
+        if (address instanceof City) {
+            insertOrUpdateCity((City) address);
+            return;
+        }
+        // Nothing to save.
+        if (address instanceof Country) {
+            return;
+        }
         boolean insert = id == 0L;
 
         ContentValues values = new ContentValues();
