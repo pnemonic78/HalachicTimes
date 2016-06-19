@@ -30,6 +30,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +45,6 @@ import net.sf.times.preference.ZmanimSettings;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -375,18 +375,21 @@ public class ZmanimReminder extends BroadcastReceiver {
         int audioStreamType = settings.getReminderStream();
         Uri sound = settings.getReminderRingtone();
 
-        Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentIntent(contentIntent);
-        builder.setContentText(contentText);
-        builder.setContentTitle(contentTitle);
-        builder.setDefaults(Notification.DEFAULT_VIBRATE);
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher));
-        builder.setLights(LED_COLOR, LED_ON, LED_OFF);
-        builder.setSmallIcon(R.drawable.stat_notify_time);
-        builder.setSound(sound, audioStreamType);
-        builder.setWhen(when);
+        Notification.Builder builder = new Notification.Builder(context)
+                .setContentIntent(contentIntent)
+                .setContentText(contentText)
+                .setContentTitle(contentTitle)
+                .setDefaults(Notification.DEFAULT_VIBRATE)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher))
+                .setLights(LED_COLOR, LED_ON, LED_OFF)
+                .setSmallIcon(R.drawable.stat_notify_time)
+                .setSound(sound, audioStreamType)
+                .setWhen(when);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder.setCategory(audioStreamType == AudioManager.STREAM_ALARM ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
         }
         Notification notification;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
