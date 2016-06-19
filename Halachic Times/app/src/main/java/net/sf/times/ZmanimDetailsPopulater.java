@@ -654,8 +654,8 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
         }
 
+        date = cal.getTzais16Point1Degrees();
         if (date != null) {
-            date = cal.getTzais16Point1Degrees();
             title = R.string.nightfall_16;
             adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
         }
@@ -708,8 +708,8 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
         }
 
+        date = cal.getTzais96();
         if (date != null) {
-            date = cal.getTzais96();
             title = R.string.nightfall_96;
             adapter.add(title, SUMMARY_NONE, date.getTime() + offset);
         }
@@ -799,16 +799,14 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         date = getMidday(cal, settings);
         if (date != null) {
-            date.setTime(date.getTime() + TWELVE_HOURS);
             title = R.string.midnight_12;
-            adapter.add(title, SUMMARY_NONE, date);
+            adapter.add(title, SUMMARY_NONE, date.getTime() + TWELVE_HOURS);
         }
 
         date = getNightfall(cal, settings);
         if (date != null) {
-            date.setTime(date.getTime() + SIX_HOURS);
             title = R.string.midnight_6;
-            adapter.add(title, SUMMARY_NONE, date);
+            adapter.add(title, SUMMARY_NONE, date.getTime() + SIX_HOURS);
         }
 
         date = cal.getSolarMidnight();
