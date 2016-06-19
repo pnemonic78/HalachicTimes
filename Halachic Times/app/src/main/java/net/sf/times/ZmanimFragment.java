@@ -173,6 +173,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      */
     public A populateTimes(Calendar date) {
         // Called before attached to activity?
+        if (!isAdded()) {
+            return null;
+        }
         ZmanimLocations locations = this.locations;
         if (locations == null)
             return null;

@@ -74,6 +74,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
      */
     public A populateTimes(Calendar date, int id) {
         masterId = id;
+        if (!isAdded()) {
+            return null;
+        }
 
         P populater = getPopulater();
         A adapter = null;
