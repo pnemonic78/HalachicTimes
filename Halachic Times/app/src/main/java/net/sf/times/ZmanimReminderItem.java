@@ -26,14 +26,25 @@ package net.sf.times;
  */
 public class ZmanimReminderItem {
 
+    private final int id;
     private final CharSequence title;
     private final CharSequence text;
     private final long time;
 
-    public ZmanimReminderItem(CharSequence title, CharSequence text, long time) {
+    public ZmanimReminderItem(int id, CharSequence title, CharSequence text, long time) {
+        this.id = id;
         this.title = title;
         this.text = text;
         this.time = time;
+    }
+
+    /**
+     * Get the zman id.
+     *
+     * @return the id.
+     */
+    public int getId() {
+        return id;
     }
 
     /**
