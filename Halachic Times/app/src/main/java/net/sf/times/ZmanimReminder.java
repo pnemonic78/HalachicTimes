@@ -470,11 +470,6 @@ public class ZmanimReminder extends BroadcastReceiver {
      * @return can the reminder be activated?
      */
     private boolean allowReminder(ZmanimSettings settings, int itemId, JewishCalendar jcal) {
-        // TODO
-//        if (jcal after sunset){
-//            jcal.forward();
-//        }
-
         int dayOfWeek = jcal.getDayOfWeek();
         int holidayIndex = jcal.getYomTovIndex();
 
