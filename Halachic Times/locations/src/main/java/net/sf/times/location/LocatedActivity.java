@@ -19,10 +19,14 @@
  */
 package net.sf.times.location;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import java.util.TimeZone;
@@ -39,6 +43,10 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
 
     /** Activity id for searching locations. */
     protected static final int ACTIVITY_LOCATIONS = 1;
+    /** Activity id for requesting location permissions. */
+    protected static final int ACTIVITY_PERMISSIONS = 2;
+
+    protected static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     /** Provider for locations. */
     private LocationsProvider locations;
@@ -95,8 +103,11 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
 
         Intent intent = getIntent();
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
-        if (location != null)
+        if (location != null) {
             locations.setLocation(location);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            initLocationPermissions();
+        }
     }
 
     @Override
@@ -214,5 +225,13 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
         if (address != null)
             return address.getFormatted();
         return getString(R.string.location_unknown);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void initLocationPermissions() {
+        if ((checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+                && (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
+        }
     }
 }
