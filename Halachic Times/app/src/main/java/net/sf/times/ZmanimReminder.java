@@ -93,7 +93,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     public static final String ACTION_CANCEL = "net.sf.times.action.CANCEL";
 
     /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
-    private static final long CANCEL_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS * 5;
+    private static final long STOP_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS * 3;
 
     private SimpleDateFormat dateFormat;
     /** The adapter. */
@@ -212,7 +212,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         alarms.cancel(alarmIntent);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancelAll();
+        nm.cancel(ID_NOTIFY);
     }
 
     /**
@@ -245,13 +245,12 @@ public class ZmanimReminder extends BroadcastReceiver {
      *         the reminder item.
      */
     private void notifyNow(Context context, ZmanimSettings settings, ZmanimReminderItem item) {
-        // Clicking on the item will launch the main activity.
         PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification = createNotification(context, settings, item, contentIntent);
-
         postNotification(context, settings, notification);
-        maybeCancelNotification(context, settings, item);
+
+        cancelFuture(context, item.getTime() + STOP_NOTIFICATION_AFTER);
     }
 
     /**
@@ -275,6 +274,13 @@ public class ZmanimReminder extends BroadcastReceiver {
         manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
+    /**
+     * Create the intent for when user clicks on the notification to launch the main activity.
+     *
+     * @param context
+     *         the context.
+     * @return the pending intent.
+     */
     private PendingIntent createActivityIntent(Context context) {
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
@@ -297,6 +303,21 @@ public class ZmanimReminder extends BroadcastReceiver {
             intent.putExtra(EXTRA_REMINDER_TEXT, contentText);
             intent.putExtra(EXTRA_REMINDER_TIME, when);
         }
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return pendingIntent;
+    }
+
+    /**
+     * Create the intent to cancel notifications.
+     *
+     * @param context
+     *         the context.
+     * @return the pending intent.
+     */
+    private PendingIntent createCancelIntent(Context context) {
+        Intent intent = new Intent(context, ZmanimReminder.class);
+        intent.setAction(ACTION_CANCEL);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         return pendingIntent;
@@ -449,8 +470,14 @@ public class ZmanimReminder extends BroadcastReceiver {
      * @return can the reminder be activated?
      */
     private boolean allowReminder(ZmanimSettings settings, int itemId, JewishCalendar jcal) {
+        // TODO
+//        if (jcal after sunset){
+//            jcal.forward();
+//        }
+
         int dayOfWeek = jcal.getDayOfWeek();
         int holidayIndex = jcal.getYomTovIndex();
+
         switch (holidayIndex) {
             case JewishCalendar.PESACH:
             case JewishCalendar.SHAVUOS:
@@ -484,28 +511,18 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     /**
-     * Cancel the notification if it is during a time that is not allowed.
-     * For example, notification started 5 minutes before Shabbat - so cancel it when Shabbat begins.
+     * Set alarm manager to cancel alert reminders.
      *
      * @param context
      *         the context.
-     * @param settings
-     *         the settings with reminder day flags.
-     * @param item
-     *         the item that is reminded.
+     * @param triggerAt
+     *         when to stop.
      */
-    private void maybeCancelNotification(Context context, ZmanimSettings settings, ZmanimReminderItem item) {
-        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-        ZmanimLocations locations = app.getLocations();
+    private void cancelFuture(Context context, long triggerAt) {
+        Log.i(TAG, "cancel future at [" + formatDateTime(triggerAt) + "]");
 
-        Calendar gcal = Calendar.getInstance();
-        gcal.setTimeInMillis(item.getTime() + CANCEL_NOTIFICATION_AFTER);
-        JewishCalendar jcal = new JewishCalendar(gcal);
-        jcal.setInIsrael(locations.isInIsrael());
-
-        if (!allowReminder(settings, item.getId(), jcal)) {
-            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.cancel(ID_NOTIFY);
-        }
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent alarmIntent = createCancelIntent(context);
+        manager.set(AlarmManager.RTC, triggerAt, alarmIntent);
     }
 }
