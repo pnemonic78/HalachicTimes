@@ -54,12 +54,11 @@ import net.sf.content.ContextResourcesWrapper;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.compass.CompassActivity;
 import net.sf.times.content.res.ZmanimResources;
+import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationActivity;
-import net.sf.times.location.LocationApplication;
 import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
-import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimSettings;
@@ -73,14 +72,17 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends Activity implements ZmanimLocationListener, OnDateSetListener, View.OnClickListener, OnGestureListener, GestureDetector.OnDoubleTapListener, Animation.AnimationListener {
+public class ZmanimActivity extends LocatedActivity implements
+        OnDateSetListener,
+        View.OnClickListener,
+        OnGestureListener,
+        GestureDetector.OnDoubleTapListener,
+        Animation.AnimationListener {
 
     /** The date parameter. */
     public static final String EXTRA_DATE = "date";
     /** The time parameter. */
     public static final String EXTRA_TIME = "time";
-    /** The location parameter. */
-    public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
     /** The details list parameter. */
     private static final String PARAMETER_DETAILS = "details";
 
@@ -107,8 +109,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     private TextView headerAddress;
     /** The navigation bar. */
     private View navigationBar;
-    /** Provider for locations. */
-    private LocationsProvider locations;
     /** The settings and preferences. */
     protected ZmanimSettings settings;
     /** The date picker. */
@@ -193,14 +193,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
                     activity.datePicker.show();
                     break;
                 case WHAT_LOCATION:
-                    Location loc = activity.locations.getLocation();
-                    // Have we been destroyed?
-                    if (loc == null)
-                        break;
-
-                    Intent intent = new Intent(context, LocationActivity.class);
-                    intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-                    activity.startActivity(intent);
+                    activity.startLocations();
                     break;
                 case WHAT_SETTINGS:
                     activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
@@ -234,10 +227,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
                 date = System.currentTimeMillis();
         }
         setDate(date);
-
-        Location location = intent.getParcelableExtra(EXTRA_LOCATION);
-        if (location != null)
-            locations.setLocation(location);
     }
 
     @Override
@@ -257,7 +246,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
     @Override
     protected void onResume() {
         super.onResume();
-        locations.start(this);
         cancelReminders();
         int itemId = selectedId;
         if (itemId != 0) {
@@ -277,12 +265,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         }
         updateReminders();
         super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        locations.stop(this);
-        super.onStop();
     }
 
     /** Initialise. */
@@ -341,8 +323,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
 
     /** Initialise the location providers. */
     private void initLocation() {
-        LocationApplication app = (LocationApplication) getApplication();
-        locations = app.getLocations();
         localeRTL = ZmanimLocations.isLocaleRTL();
     }
 
@@ -354,7 +334,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
      */
     private void setDate(long date) {
         this.date.setTimeInMillis(date);
-        this.date.setTimeZone(locations.getTimeZone());
+        this.date.setTimeZone(getTimeZone());
 
         TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
@@ -379,7 +359,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         date.set(Calendar.YEAR, year);
         date.set(Calendar.MONTH, monthOfYear);
         date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        date.setTimeZone(locations.getTimeZone());
+        date.setTimeZone(getTimeZone());
 
         TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
@@ -408,18 +388,6 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         runOnUiThread(updateLocation);
     }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
     /** Populate the header item. */
     private void populateHeader() {
         TextView locationLabel = headerLocation;
@@ -427,6 +395,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
         // Have we been destroyed?
         if ((locationLabel == null) || (addressLabel == null))
             return;
+        LocationsProvider locations = getLocations();
         Location loc = (addressLocation != null) ? addressLocation : locations.getLocation();
         // Have we been destroyed?
         if (loc == null)
@@ -648,7 +617,7 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
      */
     @Override
     public boolean onSearchRequested() {
-        Location loc = locations.getLocation();
+        Location loc = getLocation();
         // Have we been destroyed?
         if (loc == null)
             return super.onSearchRequested();
@@ -883,5 +852,10 @@ public class ZmanimActivity extends Activity implements ZmanimLocationListener, 
             return true;
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
+    protected Class<? extends Activity> getLocationActivityClass() {
+        return LocationActivity.class;
     }
 }

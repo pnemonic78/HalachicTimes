@@ -19,9 +19,7 @@
  */
 package net.sf.times.compass;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -31,11 +29,10 @@ import android.widget.TextView;
 
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassSettings;
-import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
-import net.sf.times.location.ZmanimLocationListener;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -43,13 +40,8 @@ import net.sf.times.location.ZmanimLocationListener;
  *
  * @author Moshe Waisberg
  */
-public abstract class BaseCompassActivity extends Activity implements ZmanimLocationListener {
+public abstract class BaseCompassActivity extends LocatedActivity {
 
-    /** Activity id for searching locations. */
-    private static final int ACTIVITY_LOCATIONS = 1;
-
-    /** Provider for locations. */
-    private LocationsProvider locations;
     /** The main fragment. */
     private CompassFragment fragment;
     /** The settings and preferences. */
@@ -84,21 +76,6 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
             View summary = findViewById(android.R.id.summary);
             summary.setVisibility(View.GONE);
         }
-
-        LocationApplication app = (LocationApplication) getApplication();
-        locations = app.getLocations();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        locations.start(this);
-    }
-
-    @Override
-    protected void onStop() {
-        locations.stop(this);
-        super.onStop();
     }
 
     @Override
@@ -128,18 +105,6 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
         runOnUiThread(updateLocation);
     }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
     /** Populate the header item. */
     private void populateHeader() {
         TextView locationLabel = headerLocation;
@@ -148,6 +113,7 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
         if ((locationLabel == null) || (addressLabel == null))
             return;
         // Have we been destroyed?
+        LocationsProvider locations = getLocations();
         Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
         if (loc == null)
             return;
@@ -200,42 +166,12 @@ public abstract class BaseCompassActivity extends Activity implements ZmanimLoca
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == ACTIVITY_LOCATIONS) {
-            if (resultCode == RESULT_OK) {
-                Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-                if (loc == null) {
-                    locations.setLocation(null);
-                    loc = locations.getLocation();
-                }
-                locations.setLocation(loc);
-            }
-        }
-    }
-
-    protected void startLocations() {
-        Location loc = locations.getLocation();
-        // Have we been destroyed?
-        if (loc == null)
-            return;
-
-        Activity activity = this;
-        Intent intent = new Intent(activity, getLocationActivityClass());
-        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
-        activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
-    }
-
-    protected abstract Class<? extends Activity> getLocationActivityClass();
-
     /**
      * Search key was pressed.
      */
     @Override
     public boolean onSearchRequested() {
-        Location loc = locations.getLocation();
+        Location loc = getLocation();
         // Have we been destroyed?
         if (loc == null)
             return super.onSearchRequested();
