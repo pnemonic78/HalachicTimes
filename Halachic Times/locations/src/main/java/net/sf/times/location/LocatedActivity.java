@@ -42,14 +42,14 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
 
     /** Provider for locations. */
     private LocationsProvider locations;
-//    /** The address location. */
-//    private Location addressLocation;
-//    /** The address. */
-//    private ZmanimAddress address;
-//    /** Populate the header in UI thread. */
-//    private Runnable populateHeader;
-//    /** Update the location in UI thread. */
-//    private Runnable updateLocation;
+    /** The address location. */
+    private Location addressLocation;
+    /** The address. */
+    private ZmanimAddress address;
+    /** Populate the header in UI thread. */
+    private Runnable populateHeader;
+    /** Update the location in UI thread. */
+    private Runnable updateLocation;
 
     /**
      * Get the locations provider.
@@ -76,6 +76,14 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
      */
     protected TimeZone getTimeZone() {
         return getLocations().getTimeZone();
+    }
+
+    protected Location getAddressLocation() {
+        return addressLocation;
+    }
+
+    protected ZmanimAddress getAddress() {
+        return address;
     }
 
     @Override
@@ -105,15 +113,34 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
 
     @Override
     public void onAddressChanged(Location location, ZmanimAddress address) {
+        addressLocation = location;
+        this.address = address;
+        if (populateHeader == null) {
+            populateHeader = createPopulateHeaderRunnable();
+        }
+        runOnUiThread(populateHeader);
     }
+
+    protected abstract Runnable createPopulateHeaderRunnable();
 
     @Override
     public void onElevationChanged(Location location) {
+        onLocationChanged(location);
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
+            address = null;
+        }
+        addressLocation = location;
+        if (updateLocation == null) {
+            updateLocation = createUpdateLocationRunnable();
+        }
+        runOnUiThread(updateLocation);
     }
+
+    protected abstract Runnable createUpdateLocationRunnable();
 
     @Override
     public void onProviderDisabled(String provider) {
@@ -155,5 +182,37 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
                 locations.setLocation(loc);
             }
         }
+    }
+
+    /**
+     * Search key was pressed.
+     */
+    @Override
+    public boolean onSearchRequested() {
+        Location loc = getLocation();
+        // Have we been destroyed?
+        if (loc == null)
+            return super.onSearchRequested();
+
+        ZmanimAddress address = this.address;
+        String query = (address != null) ? address.getFormatted() : null;
+
+        Bundle appData = new Bundle();
+        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
+        startSearch(query, false, appData, false);
+        return true;
+    }
+
+    /**
+     * Format the address for the current location.
+     *
+     * @param address
+     *         the address.
+     * @return the formatted address.
+     */
+    protected CharSequence formatAddress(ZmanimAddress address) {
+        if (address != null)
+            return address.getFormatted();
+        return getString(R.string.location_unknown);
     }
 }

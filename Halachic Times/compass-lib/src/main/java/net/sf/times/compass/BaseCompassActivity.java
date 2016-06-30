@@ -21,7 +21,6 @@ package net.sf.times.compass;
 
 import android.content.Context;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -31,8 +30,6 @@ import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassSettings;
 import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationsProvider;
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocation;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -46,14 +43,6 @@ public abstract class BaseCompassActivity extends LocatedActivity {
     private CompassFragment fragment;
     /** The settings and preferences. */
     private CompassSettings settings;
-    /** The address location. */
-    private Location addressLocation;
-    /** The address. */
-    private ZmanimAddress address;
-    /** Populate the header in UI thread. */
-    private Runnable populateHeader;
-    /** Update the location in UI thread. */
-    private Runnable updateLocation;
     /** The location header location. */
     private TextView headerLocation;
     /** The location header for formatted address. */
@@ -79,30 +68,23 @@ public abstract class BaseCompassActivity extends LocatedActivity {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
-            address = null;
-        }
-        addressLocation = location;
-        if (updateLocation == null) {
-            updateLocation = new Runnable() {
-                @Override
-                public void run() {
-                    // Have we been destroyed?
-                    Location loc = addressLocation;
-                    if (loc == null)
-                        return;
+    protected Runnable createUpdateLocationRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                // Have we been destroyed?
+                Location loc = getAddressLocation();
+                if (loc == null)
+                    return;
 
-                    populateHeader();
+                populateHeader();
 
-                    CompassFragment c = fragment;
-                    if (c == null)
-                        return;
-                    c.setLocation(loc);
-                }
-            };
-        }
-        runOnUiThread(updateLocation);
+                CompassFragment c = fragment;
+                if (c == null)
+                    return;
+                c.setLocation(loc);
+            }
+        };
     }
 
     /** Populate the header item. */
@@ -114,12 +96,13 @@ public abstract class BaseCompassActivity extends LocatedActivity {
             return;
         // Have we been destroyed?
         LocationsProvider locations = getLocations();
+        Location addressLocation = getAddressLocation();
         Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
         if (loc == null)
             return;
 
         final CharSequence locationText = locations.formatCoordinates(loc);
-        final CharSequence locationName = formatAddress(address);
+        final CharSequence locationName = formatAddress(getAddress());
 
         // Update the location.
         locationLabel.setText(locationText);
@@ -127,61 +110,19 @@ public abstract class BaseCompassActivity extends LocatedActivity {
         addressLabel.setText(locationName);
     }
 
-    /**
-     * Format the address for the current location.
-     *
-     * @param address
-     *         the address.
-     * @return the formatted address.
-     */
-    private CharSequence formatAddress(ZmanimAddress address) {
-        if (address != null)
-            return address.getFormatted();
-        return getString(R.string.location_unknown);
-    }
-
     @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
-        addressLocation = location;
-        this.address = address;
-        if (populateHeader == null) {
-            populateHeader = new Runnable() {
-                @Override
-                public void run() {
-                    populateHeader();
-                }
-            };
-        }
-        runOnUiThread(populateHeader);
-    }
-
-    @Override
-    public void onElevationChanged(Location location) {
-        onLocationChanged(location);
+    protected Runnable createPopulateHeaderRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                populateHeader();
+            }
+        };
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.compass, menu);
-        return true;
-    }
-
-    /**
-     * Search key was pressed.
-     */
-    @Override
-    public boolean onSearchRequested() {
-        Location loc = getLocation();
-        // Have we been destroyed?
-        if (loc == null)
-            return super.onSearchRequested();
-
-        ZmanimAddress address = this.address;
-        String query = (address != null) ? address.getFormatted() : null;
-
-        Bundle appData = new Bundle();
-        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
-        startSearch(query, false, appData, false);
         return true;
     }
 }

@@ -29,7 +29,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,8 +56,6 @@ import net.sf.times.content.res.ZmanimResources;
 import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.LocationsProvider;
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.ZmanimLocation;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimSettings;
@@ -113,14 +110,6 @@ public class ZmanimActivity extends LocatedActivity implements
     protected ZmanimSettings settings;
     /** The date picker. */
     private DatePickerDialog datePicker;
-    /** The address location. */
-    private Location addressLocation;
-    /** The address. */
-    private ZmanimAddress address;
-    /** Populate the header in UI thread. */
-    private Runnable populateHeader;
-    /** Update the location in UI thread. */
-    private Runnable updateLocation;
     /** The master fragment. */
     private ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>> masterFragment;
     /** The details fragment switcher. */
@@ -371,21 +360,14 @@ public class ZmanimActivity extends LocatedActivity implements
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
-            address = null;
-        }
-        addressLocation = location;
-        if (updateLocation == null) {
-            updateLocation = new Runnable() {
-                @Override
-                public void run() {
-                    populateHeader();
-                    populateFragments(date);
-                }
-            };
-        }
-        runOnUiThread(updateLocation);
+    protected Runnable createUpdateLocationRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                populateHeader();
+                populateFragments(date);
+            }
+        };
     }
 
     /** Populate the header item. */
@@ -396,13 +378,14 @@ public class ZmanimActivity extends LocatedActivity implements
         if ((locationLabel == null) || (addressLabel == null))
             return;
         LocationsProvider locations = getLocations();
+        Location addressLocation = getAddressLocation();
         Location loc = (addressLocation != null) ? addressLocation : locations.getLocation();
         // Have we been destroyed?
         if (loc == null)
             return;
 
         final CharSequence locationText = locations.formatCoordinates(loc);
-        final CharSequence locationName = formatAddress(address);
+        final CharSequence locationName = formatAddress(getAddress());
 
         // Update the location.
         locationLabel.setText(locationText);
@@ -450,36 +433,13 @@ public class ZmanimActivity extends LocatedActivity implements
     }
 
     @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
-        addressLocation = location;
-        this.address = address;
-        if (populateHeader == null) {
-            populateHeader = new Runnable() {
-                @Override
-                public void run() {
-                    populateHeader();
-                }
-            };
-        }
-        runOnUiThread(populateHeader);
-    }
-
-    @Override
-    public void onElevationChanged(Location location) {
-        onLocationChanged(location);
-    }
-
-    /**
-     * Format the address for the current location.
-     *
-     * @param address
-     *         the address.
-     * @return the formatted address.
-     */
-    private CharSequence formatAddress(ZmanimAddress address) {
-        if (address != null)
-            return address.getFormatted();
-        return getString(R.string.location_unknown);
+    protected Runnable createPopulateHeaderRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                populateHeader();
+            }
+        };
     }
 
     /**
@@ -610,25 +570,6 @@ public class ZmanimActivity extends LocatedActivity implements
             return (lp.weight > 0);
         }
         return (viewSwitcher.getDisplayedChild() == CHILD_DETAILS);
-    }
-
-    /**
-     * Search key was pressed.
-     */
-    @Override
-    public boolean onSearchRequested() {
-        Location loc = getLocation();
-        // Have we been destroyed?
-        if (loc == null)
-            return super.onSearchRequested();
-
-        ZmanimAddress address = this.address;
-        String query = (address != null) ? address.getFormatted() : null;
-
-        Bundle appData = new Bundle();
-        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
-        startSearch(query, false, appData, false);
-        return true;
     }
 
     @Override
