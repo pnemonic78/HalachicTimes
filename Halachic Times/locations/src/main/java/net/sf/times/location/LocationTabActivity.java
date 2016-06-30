@@ -210,8 +210,6 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
         List<ZmanimAddress> addresses = provider.query(null);
         List<City> cities = provider.getCities();
 
-        provider.populateCities(cities);
-
         // "History" locations take precedence over "built-in" locations.
         addresses.addAll(cities);
 

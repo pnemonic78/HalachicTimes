@@ -531,6 +531,7 @@ public class CountriesGeocoder extends GeocoderBase {
                 city.setCountryCode(cityLocale.getCountry());
                 city.setCountryName(cityLocale.getDisplayCountry());
                 city.setLocality(citiesNames[i]);
+                city.setId(-1 - i);//Don't persist in db.
 
                 cities.add(city);
             }

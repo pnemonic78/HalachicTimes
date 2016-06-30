@@ -1002,7 +1002,9 @@ public class AddressProvider {
     }
 
     public List<City> getCities() {
-        return countriesGeocoder.getCities();
+        List<City> cities = countriesGeocoder.getCities();
+        populateCities(cities);
+        return cities;
     }
 
     /**
