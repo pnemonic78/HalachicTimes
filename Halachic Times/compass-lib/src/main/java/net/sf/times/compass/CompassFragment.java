@@ -49,6 +49,8 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     /** Elevation of the Holy of Holies, according to Google. */
     private static final double HOLIEST_ELEVATION = 744.5184937;
 
+    private static final float ALPHA = 0.25f; // if ALPHA = 1 OR 0, no filter applies.
+
     /** The sensor manager. */
     private SensorManager sensorManager;
     /** The accelerometer sensor. */
@@ -118,10 +120,10 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
-                System.arraycopy(event.values, 0, gravity, 0, 3);
+                lowPass(event.values, gravity);
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
-                System.arraycopy(event.values, 0, geomagnetic, 0, 3);
+                lowPass(event.values, geomagnetic);
                 break;
             default:
                 return;
@@ -157,5 +159,16 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         holiest.setLatitude(latitude);
         holiest.setLongitude(longitude);
         holiest.setAltitude(elevation);
+    }
+
+    private float[] lowPass(float[] input, float[] output) {
+        if (output == null) {
+            return input;
+        }
+        final int length = Math.min(input.length, output.length);
+        for (int i = 0; i < length; i++) {
+            output[i] = output[i] + ALPHA * (input[i] - output[i]);
+        }
+        return output;
     }
 }
