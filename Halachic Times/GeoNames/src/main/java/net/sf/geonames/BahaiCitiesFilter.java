@@ -76,7 +76,7 @@ public class BahaiCitiesFilter implements NameFilter {
             1821274,
             // Shanghai, China
             1796236,
-            // Taiwan, China
+            // Dawan, Taiwan, China
             1813416,
             // Bogota, Colombia
             3688689,
@@ -201,7 +201,7 @@ public class BahaiCitiesFilter implements NameFilter {
             // Kiev, Ukraine
             703448,
             // London, United Kingdom
-            2643741,
+            2643743,
             // Anchorage, United States
             5879400,
             // Eliot (Maine), United States
