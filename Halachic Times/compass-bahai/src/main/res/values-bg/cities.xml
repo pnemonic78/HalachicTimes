@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>Апия</item>
+        <item>Анкъридж</item>
+        <item>Ванкувър</item>
+        <item>Мексико</item>
+        <item>UNKNOWN [Guatemala City]</item>
+        <item>Сан Салвадор</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>Тегусигалпа</item>
+        <item>Манагуа</item>
+        <item>UNKNOWN [San José]</item>
+        <item>Панама</item>
+        <item>Торонто</item>
+        <item>Кито</item>
+        <item>Лима</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>Богота</item>
+        <item>Порт о Пренс</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>Сантяго де Чиле</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>Ла Пас</item>
+        <item>Каракас</item>
+        <item>Буенос Айрес</item>
+        <item>Асунсион</item>
+        <item>Монтевидео</item>
+        <item>Рио де Жанейро</item>
+        <item>Рейкявик</item>
+        <item>Дакар</item>
+        <item>Лисабон</item>
+        <item>Казабланка</item>
+        <item>Белфаст</item>
+        <item>Глазгоу</item>
+        <item>Мадрид</item>
+        <item>Сити</item>
+        <item>Андора ла Веля</item>
+        <item>Париж</item>
+        <item>Брюксел</item>
+        <item>Амстердам</item>
+        <item>Берн</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>Тунис</item>
+        <item>Осло</item>
+        <item>Яунде</item>
+        <item>Рим</item>
+        <item>Копенхаген</item>
+        <item>Берлин</item>
+        <item>Нджамена</item>
+        <item>UNKNOWN [Brazzaville]</item>
+        <item>Виена</item>
+        <item>Братислава</item>
+        <item>Стокхолм</item>
+        <item>Сараево</item>
+        <item>Будапеща</item>
+        <item>Бенгази</item>
+        <item>Варшава</item>
+        <item>Хелзинки</item>
+        <item>Габороне</item>
+        <item>Йоханесбург</item>
+        <item>Истанбул</item>
+        <item>Кигали</item>
+        <item>Киев</item>
+        <item>Кайро</item>
+        <item>Кампала</item>
+        <item>Лилонгве</item>
+        <item>Хайфа</item>
+        <item>UNKNOWN [‘Akko]</item>
+        <item>Додома</item>
+        <item>Найроби</item>
+        <item>Москва</item>
+        <item>Багдад</item>
+        <item>Ереван</item>
+        <item>Антананариву</item>
+        <item>Баку</item>
+        <item>UNKNOWN [Tehran]</item>
+        <item>Карачи</item>
+        <item>Кабул</item>
+        <item>Мумбай</item>
+        <item>Делхи</item>
+        <item>Янгон</item>
+        <item>Батамбанг</item>
+        <item>Джакарта</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>Макао</item>
+        <item>Хонконг</item>
+        <item>Манила</item>
+        <item>Шанхай</item>
+        <item>Токио</item>
+        <item>Сидни</item>
+        <item>Окланд</item>
+        <item>Сува</item>
+    </string-array>
+</resources>

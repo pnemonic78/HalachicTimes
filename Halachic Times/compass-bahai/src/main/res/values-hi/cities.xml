@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>UNKNOWN [Apia]</item>
+        <item>एंकोरेज</item>
+        <item>वैंकूवर</item>
+        <item>UNKNOWN [Mexico City]</item>
+        <item>UNKNOWN [Guatemala City]</item>
+        <item>सान-साल्वाडोर</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>UNKNOWN [Tegucigalpa]</item>
+        <item>UNKNOWN [Managua]</item>
+        <item>UNKNOWN [San José]</item>
+        <item>UNKNOWN [Panamá]</item>
+        <item>टोरण्टो</item>
+        <item>क्वीटो</item>
+        <item>लीमा</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>बोगोटा</item>
+        <item>पोर्ट-ऑ-प्रिंस</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>UNKNOWN [Santiago]</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>ला पास</item>
+        <item>काराकास</item>
+        <item>ब्युएनॉस एरीस</item>
+        <item>UNKNOWN [Asunción]</item>
+        <item>मोण्टेवीडियो</item>
+        <item>रियो डि जेनेरो</item>
+        <item>रेक्जाविक</item>
+        <item>डकार</item>
+        <item>लिस्बन</item>
+        <item>UNKNOWN [Casablanca]</item>
+        <item>UNKNOWN [Belfast]</item>
+        <item>ग्लासगो</item>
+        <item>मद्रिद</item>
+        <item>सिटी ऑफ़ लंदन</item>
+        <item>UNKNOWN [Andorra la Vella]</item>
+        <item>पैरिस</item>
+        <item>UNKNOWN [Brussels]</item>
+        <item>ऐम्स्टर्डैम</item>
+        <item>बर्न</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>ट्यूनिस</item>
+        <item>ओस्लो</item>
+        <item>UNKNOWN [Yaoundé]</item>
+        <item>रोम</item>
+        <item>UNKNOWN [Copenhagen]</item>
+        <item>UNKNOWN [Berlin]</item>
+        <item>UNKNOWN [N\'Djamena]</item>
+        <item>UNKNOWN [Brazzaville]</item>
+        <item>UNKNOWN [Vienna]</item>
+        <item>UNKNOWN [Bratislava]</item>
+        <item>स्टॉकहोम</item>
+        <item>UNKNOWN [Sarajevo]</item>
+        <item>बुडापेस्ट</item>
+        <item>UNKNOWN [Benghazi]</item>
+        <item>UNKNOWN [Warsaw]</item>
+        <item>हेलसिंकी</item>
+        <item>गोबोर्नी</item>
+        <item>जोहान्सबर्ग</item>
+        <item>इस्तांबुल</item>
+        <item>UNKNOWN [Kigali]</item>
+        <item>कीव</item>
+        <item>UNKNOWN [Cairo]</item>
+        <item>कम्पाला</item>
+        <item>UNKNOWN [Lilongwe]</item>
+        <item>हैफ़ा</item>
+        <item>UNKNOWN [‘Akko]</item>
+        <item>दोदोमा</item>
+        <item>UNKNOWN [Nairobi]</item>
+        <item>मास्को</item>
+        <item>UNKNOWN [Baghdad]</item>
+        <item>UNKNOWN [Yerevan]</item>
+        <item>अन्टाननरीवो</item>
+        <item>बाकू</item>
+        <item>तेहरान</item>
+        <item>कराची</item>
+        <item>काबुल</item>
+        <item>मुम्बई</item>
+        <item>दिल्ली</item>
+        <item>यांगून</item>
+        <item>UNKNOWN [Battambang]</item>
+        <item>जकार्ता</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>मकाउ</item>
+        <item>हॉन्ग कॉन्ग</item>
+        <item>मनीला</item>
+        <item>UNKNOWN [Shanghai]</item>
+        <item>टोक्यो</item>
+        <item>सिडनी</item>
+        <item>ऑक्लैण्ड</item>
+        <item>सुवा</item>
+    </string-array>
+</resources>

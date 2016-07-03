@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>Апіа</item>
+        <item>Анкоридж</item>
+        <item>Ванкувер</item>
+        <item>Мехіко</item>
+        <item>UNKNOWN [Guatemala City]</item>
+        <item>Сан-Сальвадор</item>
+        <item>Вілметт</item>
+        <item>Тегусігальпа</item>
+        <item>Манагуа</item>
+        <item>UNKNOWN [San José]</item>
+        <item>UNKNOWN [Panamá]</item>
+        <item>Торонто</item>
+        <item>Кіто</item>
+        <item>Ліма</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>Богота</item>
+        <item>Порт-о-Пренс</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>UNKNOWN [Santiago]</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>Ла-Пас</item>
+        <item>Каракас</item>
+        <item>Буенос-Айрес</item>
+        <item>Асунсьйон</item>
+        <item>Монтевідео</item>
+        <item>Ріо-де-Жанейро</item>
+        <item>Рейкявік</item>
+        <item>Дакар</item>
+        <item>UNKNOWN [Lisbon]</item>
+        <item>Касабланка</item>
+        <item>Белфаст</item>
+        <item>Глазго</item>
+        <item>Мадрид</item>
+        <item>Лондонське Сіті</item>
+        <item>UNKNOWN [Andorra la Vella]</item>
+        <item>Париж</item>
+        <item>Брюссель</item>
+        <item>Амстердам</item>
+        <item>Берн</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>Туніс</item>
+        <item>Осло</item>
+        <item>Яунде</item>
+        <item>Рим</item>
+        <item>Копенгаген</item>
+        <item>Берлін</item>
+        <item>UNKNOWN [N\'Djamena]</item>
+        <item>UNKNOWN [Brazzaville]</item>
+        <item>Відень</item>
+        <item>Братислава</item>
+        <item>Стокгольм</item>
+        <item>Сараєво</item>
+        <item>Будапешт</item>
+        <item>Бенгазі</item>
+        <item>Варшава</item>
+        <item>Гельсінкі</item>
+        <item>Габороне</item>
+        <item>Йоганнесбург</item>
+        <item>Стамбул</item>
+        <item>Кігалі</item>
+        <item>Київ</item>
+        <item>Каїр</item>
+        <item>Кампала</item>
+        <item>Лілонгве</item>
+        <item>Хайфа</item>
+        <item>Акко</item>
+        <item>Додома</item>
+        <item>Найробі</item>
+        <item>Москва</item>
+        <item>Багдад</item>
+        <item>Єреван</item>
+        <item>Антананаріву</item>
+        <item>Баку</item>
+        <item>UNKNOWN [Tehran]</item>
+        <item>Карачі</item>
+        <item>Кабул</item>
+        <item>Мумбаї</item>
+        <item>Старе Делі</item>
+        <item>Янгон</item>
+        <item>UNKNOWN [Battambang]</item>
+        <item>Джакарта</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>Аоминь</item>
+        <item>Гонконг</item>
+        <item>Маніла</item>
+        <item>Шанхай</item>
+        <item>Токіо</item>
+        <item>Сідней</item>
+        <item>Окленд</item>
+        <item>Сува</item>
+    </string-array>
+</resources>

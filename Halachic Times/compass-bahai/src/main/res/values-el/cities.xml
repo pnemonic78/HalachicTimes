@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>Απία</item>
+        <item>Ανκορέιτζ</item>
+        <item>Βανκούβερ</item>
+        <item>Πόλη του Μεξικού</item>
+        <item>Πόλη της Γουατεμάλας</item>
+        <item>Σαν Σαλβαδόρ</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>Τεγουσιγάλπα</item>
+        <item>Μανάγουα</item>
+        <item>UNKNOWN [San José]</item>
+        <item>Πόλη του Παναμά</item>
+        <item>Τορόντο</item>
+        <item>Κίτο</item>
+        <item>Λίμα</item>
+        <item>Κίνγκστον</item>
+        <item>Μπογκοτά</item>
+        <item>Πορτ-ο-Πρενς</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>Σαντιάγο</item>
+        <item>Σάντο Ντομίνγκο</item>
+        <item>Λα Πας</item>
+        <item>Καράκας</item>
+        <item>Μπουένος Άιρες</item>
+        <item>Ασουνσιόν</item>
+        <item>Μοντεβιδέο</item>
+        <item>Ρίο ντε Τζανέιρο</item>
+        <item>Ρευκιαβικ</item>
+        <item>Ντακάρ</item>
+        <item>Λισαβώνα</item>
+        <item>Καζαμπλάνκα</item>
+        <item>Μπέλφαστ</item>
+        <item>Γλασκώβη</item>
+        <item>Μαδρίτη</item>
+        <item>Σίτι του Λονδίνου</item>
+        <item>Ανδόρρα</item>
+        <item>Παρίσι</item>
+        <item>Βρυξέλλες</item>
+        <item>Άμστερνταμ</item>
+        <item>Βέρνη</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>Τύνιδα</item>
+        <item>Όσλο</item>
+        <item>Γιαουντέ</item>
+        <item>Ρώμη</item>
+        <item>Κοπεγχάγη</item>
+        <item>Βερολίνο</item>
+        <item>Τζαμένα</item>
+        <item>Μπραζαβίλ</item>
+        <item>Βιέννη</item>
+        <item>Μπρατισλάβα</item>
+        <item>Στοκχόλμη</item>
+        <item>Σαραγιεβο</item>
+        <item>Βουδαπέστη</item>
+        <item>Βεγγάζη</item>
+        <item>Βαρσοβία</item>
+        <item>Ελσίνκι</item>
+        <item>Γκαμπορόνε</item>
+        <item>Γιοχάνεσμπουργκ</item>
+        <item>Ισταμπούλ</item>
+        <item>Κιγκάλι</item>
+        <item>Κίεβο</item>
+        <item>Κάιρο</item>
+        <item>Καμπάλα</item>
+        <item>Λιλόνγκουε</item>
+        <item>Χάιφα</item>
+        <item>Άκρα</item>
+        <item>Ντοντόμα</item>
+        <item>Ναϊρόμπι</item>
+        <item>Μόσχα</item>
+        <item>Βαγδάτη</item>
+        <item>Γιερεβάν</item>
+        <item>Ανταναναρίβο</item>
+        <item>Μπακού</item>
+        <item>Τεχεράνη</item>
+        <item>Καράτσι</item>
+        <item>Καμπούλ</item>
+        <item>Βομβάη</item>
+        <item>Δελχί</item>
+        <item>Γιανγκόν</item>
+        <item>Μπατταμπάνγκ</item>
+        <item>Τζακάρτα</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>Μακάου</item>
+        <item>Χονγκ Κονγκ</item>
+        <item>Μανίλα</item>
+        <item>Σανγκάη</item>
+        <item>Τόκιο</item>
+        <item>Σίδνεϊ</item>
+        <item>Όκλαντ</item>
+        <item>Σούβα</item>
+    </string-array>
+</resources>

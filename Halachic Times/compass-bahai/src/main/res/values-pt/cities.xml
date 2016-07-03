@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>Apia</item>
+        <item>Anchorage</item>
+        <item>Vancouver</item>
+        <item>Cidade do México</item>
+        <item>Cidade da Guatemala</item>
+        <item>San Salvador</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>Tegucigalpa</item>
+        <item>Manágua</item>
+        <item>UNKNOWN [San José]</item>
+        <item>Panamá</item>
+        <item>Toronto</item>
+        <item>Quito</item>
+        <item>Lima</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>Bogotá</item>
+        <item>Porto Príncipe</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>Santiago do Chile</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>La Paz</item>
+        <item>Caracas</item>
+        <item>Buenos Aires</item>
+        <item>Assunção</item>
+        <item>Montevidéu</item>
+        <item>Rio de Janeiro</item>
+        <item>Reiquiavique</item>
+        <item>Dacar</item>
+        <item>Lisboa</item>
+        <item>Casablanca</item>
+        <item>Belfast</item>
+        <item>Glasgow</item>
+        <item>Madrid</item>
+        <item>Cidade de Londres</item>
+        <item>Andorra-a-Velha</item>
+        <item>Paris</item>
+        <item>Bruxelas</item>
+        <item>Amesterdão</item>
+        <item>Berna</item>
+        <item>Limbe</item>
+        <item>Tunes</item>
+        <item>Oslo</item>
+        <item>Yaoundé</item>
+        <item>Roma</item>
+        <item>Copenhaga</item>
+        <item>Berlim</item>
+        <item>N\'Djamena</item>
+        <item>Brazzaville</item>
+        <item>Viena</item>
+        <item>Bratislava</item>
+        <item>Estocolmo</item>
+        <item>Sarajevo</item>
+        <item>Budapeste</item>
+        <item>Bengasi</item>
+        <item>Varsóvia</item>
+        <item>Helsínquia</item>
+        <item>Gaborone</item>
+        <item>Johannesburgo</item>
+        <item>Istambul</item>
+        <item>Kigali</item>
+        <item>Kiev</item>
+        <item>Cairo</item>
+        <item>Kampala</item>
+        <item>Lilongwe</item>
+        <item>Haifa</item>
+        <item>Acre</item>
+        <item>Dodoma</item>
+        <item>Nairóbi</item>
+        <item>Moscovo</item>
+        <item>Bagdá</item>
+        <item>Yerevan</item>
+        <item>Antananarivo</item>
+        <item>Bacu</item>
+        <item>Teerã</item>
+        <item>Carachi</item>
+        <item>Cabul</item>
+        <item>Mumbai</item>
+        <item>Deli</item>
+        <item>Rangum</item>
+        <item>Battambang</item>
+        <item>Jakarta</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>Macau</item>
+        <item>Hong Kong</item>
+        <item>Manila</item>
+        <item>Xangai</item>
+        <item>Tóquio</item>
+        <item>Sydney</item>
+        <item>Auckland</item>
+        <item>Suva</item>
+    </string-array>
+</resources>

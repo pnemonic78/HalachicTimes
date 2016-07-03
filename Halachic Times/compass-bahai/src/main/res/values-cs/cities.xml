@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>UNKNOWN [Apia]</item>
+        <item>Anchorage</item>
+        <item>Vancouver</item>
+        <item>Ciudad de México</item>
+        <item>UNKNOWN [Guatemala City]</item>
+        <item>UNKNOWN [San Salvador]</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>UNKNOWN [Tegucigalpa]</item>
+        <item>Managua</item>
+        <item>UNKNOWN [San José]</item>
+        <item>UNKNOWN [Panamá]</item>
+        <item>Toronto</item>
+        <item>Quito</item>
+        <item>Lima</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>Bogotá</item>
+        <item>UNKNOWN [Port-au-Prince]</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>Santiago de Chile</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>La Paz</item>
+        <item>Caracas</item>
+        <item>Buenos Aires</item>
+        <item>Asunción</item>
+        <item>Montevideo</item>
+        <item>Rio de Janeiro</item>
+        <item>Reykjavík</item>
+        <item>UNKNOWN [Dakar]</item>
+        <item>Lisabon</item>
+        <item>Casablanca</item>
+        <item>Belfast</item>
+        <item>Glasgow</item>
+        <item>Madrid</item>
+        <item>City</item>
+        <item>UNKNOWN [Andorra la Vella]</item>
+        <item>Paříž</item>
+        <item>Brusel</item>
+        <item>Amsterdam</item>
+        <item>Bern</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>Tunis</item>
+        <item>Oslo</item>
+        <item>Jaunde</item>
+        <item>Řím</item>
+        <item>Kodaň</item>
+        <item>Berlín</item>
+        <item>UNKNOWN [N\'Djamena]</item>
+        <item>UNKNOWN [Brazzaville]</item>
+        <item>Vídeň</item>
+        <item>Bratislava</item>
+        <item>Stockholm</item>
+        <item>Sarajevo</item>
+        <item>Budapešť</item>
+        <item>Benghází</item>
+        <item>Varšava</item>
+        <item>Helsinky</item>
+        <item>UNKNOWN [Gaborone]</item>
+        <item>Johannesburg</item>
+        <item>Istanbul</item>
+        <item>UNKNOWN [Kigali]</item>
+        <item>Kyjev</item>
+        <item>Káhira</item>
+        <item>UNKNOWN [Kampala]</item>
+        <item>UNKNOWN [Lilongwe]</item>
+        <item>Haifa</item>
+        <item>Akko</item>
+        <item>UNKNOWN [Dodoma]</item>
+        <item>Nairobi</item>
+        <item>Moskva</item>
+        <item>Bagdád</item>
+        <item>Jerevan</item>
+        <item>UNKNOWN [Antananarivo]</item>
+        <item>Baku</item>
+        <item>Teherán</item>
+        <item>Karáčí</item>
+        <item>Kábul</item>
+        <item>Bombaj</item>
+        <item>Šáhdžahanabád</item>
+        <item>Rangún</item>
+        <item>UNKNOWN [Battambang]</item>
+        <item>Jakarta</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>UNKNOWN [Macau]</item>
+        <item>UNKNOWN [Hong Kong]</item>
+        <item>Manila</item>
+        <item>Šanghaj</item>
+        <item>Tokio</item>
+        <item>Sydney</item>
+        <item>Auckland</item>
+        <item>Suva</item>
+    </string-array>
+</resources>

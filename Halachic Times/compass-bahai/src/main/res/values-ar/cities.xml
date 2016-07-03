@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>أبيا</item>
+        <item>أنكوريج</item>
+        <item>فانكوفر</item>
+        <item>مدينة مكسيكو</item>
+        <item>مدينة غواتيمالا</item>
+        <item>سان سلفادور</item>
+        <item>ويلميت</item>
+        <item>تيغوسيغالبا</item>
+        <item>ماناغوا</item>
+        <item>UNKNOWN [San José]</item>
+        <item>UNKNOWN [Panamá]</item>
+        <item>تورونتو</item>
+        <item>كيتو</item>
+        <item>ليما</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>بوغوتا</item>
+        <item>بورت أو برانس</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>سانتياغو</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>لاباز</item>
+        <item>كاراكاس</item>
+        <item>بوينس آيرس</item>
+        <item>أسونسيون</item>
+        <item>مونتفيدو</item>
+        <item>ريو دي جانيرو</item>
+        <item>ريكيافيك</item>
+        <item>داكار</item>
+        <item>لشبونة</item>
+        <item>الدار البيضاء</item>
+        <item>بلفاست</item>
+        <item>غلاسكو</item>
+        <item>مدريد</item>
+        <item>مدينة لندن</item>
+        <item>أندورا لا فيلا</item>
+        <item>باريس</item>
+        <item>بروكسل</item>
+        <item>أمستردام</item>
+        <item>برن</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>تونس</item>
+        <item>أوسلو</item>
+        <item>ياوندي</item>
+        <item>روما</item>
+        <item>كوبنهاغن</item>
+        <item>برلين</item>
+        <item>أنجمينا</item>
+        <item>برازافيل</item>
+        <item>فيينا</item>
+        <item>براتيسلافا</item>
+        <item>ستوكهولم</item>
+        <item>سراييفو</item>
+        <item>بودابست</item>
+        <item>بنغازي</item>
+        <item>وارسو</item>
+        <item>هلسنكي</item>
+        <item>جابورون</item>
+        <item>جوهانسبرغ</item>
+        <item>اسطنبول</item>
+        <item>كيغالي</item>
+        <item>كييف</item>
+        <item>القاهرة</item>
+        <item>كامبالا</item>
+        <item>ليلونغوي</item>
+        <item>حيفا</item>
+        <item>عكا</item>
+        <item>دودوما</item>
+        <item>نيروبي</item>
+        <item>موسكو</item>
+        <item>بغداد</item>
+        <item>يريفان</item>
+        <item>أنتاناناريفو</item>
+        <item>باكو</item>
+        <item>طهران</item>
+        <item>كراتشي</item>
+        <item>كابل</item>
+        <item>مومباي</item>
+        <item>دلهي</item>
+        <item>يانغون</item>
+        <item>UNKNOWN [Battambang]</item>
+        <item>جاكارتا</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>ماكاو</item>
+        <item>هونغ كونغ</item>
+        <item>مانيلا</item>
+        <item>شانغهاي</item>
+        <item>طوكيو</item>
+        <item>سيدني</item>
+        <item>أوكلاند</item>
+        <item>سوفا</item>
+    </string-array>
+</resources>

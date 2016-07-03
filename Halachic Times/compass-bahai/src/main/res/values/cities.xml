@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--Generated from geonames.org data.-->
 <resources>
-    <!--string-array name="cities">
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
         <item>Apia</item>
         <item>Anchorage</item>
         <item>Vancouver</item>
@@ -12,7 +12,7 @@
         <item>Tegucigalpa</item>
         <item>Managua</item>
         <item>San José</item>
-        <item>Panamá</item>
+        <item>Panama City</item>
         <item>Toronto</item>
         <item>Quito</item>
         <item>Lima</item>
@@ -28,7 +28,7 @@
         <item>Asunción</item>
         <item>Montevideo</item>
         <item>Rio de Janeiro</item>
-        <item>Reykjavík</item>
+        <item>Reykjavik</item>
         <item>Dakar</item>
         <item>Lisbon</item>
         <item>Casablanca</item>
@@ -60,14 +60,14 @@
         <item>Helsinki</item>
         <item>Gaborone</item>
         <item>Johannesburg</item>
-        <item>İstanbul</item>
+        <item>Istanbul</item>
         <item>Kigali</item>
         <item>Kiev</item>
         <item>Cairo</item>
         <item>Kampala</item>
         <item>Lilongwe</item>
         <item>Haifa</item>
-        <item>‘Akko</item>
+        <item>Acre</item>
         <item>Dodoma</item>
         <item>Nairobi</item>
         <item>Moscow</item>
@@ -84,7 +84,7 @@
         <item>Battambang</item>
         <item>Jakarta</item>
         <item>Dawan</item>
-        <item>Macau</item>
+        <item>Macao</item>
         <item>Hong Kong</item>
         <item>Manila</item>
         <item>Shanghai</item>
@@ -370,96 +370,96 @@
         <item>178.44149</item>
     </string-array>
     <string-array name="cities_elevations" translatable="false">
-        <item>12.0</item>
-        <item>31.0</item>
-        <item>67.0</item>
-        <item>2225.0</item>
-        <item>1508.0</item>
-        <item>648.0</item>
-        <item>194.0</item>
-        <item>942.0</item>
-        <item>100.0</item>
-        <item>33.0</item>
-        <item>10.0</item>
-        <item>174.0</item>
-        <item>2836.0</item>
-        <item>149.0</item>
-        <item>54.0</item>
-        <item>2597.0</item>
-        <item>37.0</item>
-        <item>9.0</item>
-        <item>545.0</item>
-        <item>52.0</item>
-        <item>3763.0</item>
-        <item>896.0</item>
-        <item>25.0</item>
-        <item>123.0</item>
-        <item>40.0</item>
-        <item>7.0</item>
-        <item>23.0</item>
-        <item>14.0</item>
-        <item>39.0</item>
-        <item>27.0</item>
-        <item>5.0</item>
-        <item>23.0</item>
-        <item>658.0</item>
-        <item>44.0</item>
-        <item>1040.0</item>
-        <item>32.0</item>
-        <item>20.0</item>
-        <item>255.0</item>
-        <item>543.0</item>
-        <item>82.0</item>
-        <item>23.0</item>
-        <item>11.0</item>
-        <item>685.0</item>
-        <item>20.0</item>
-        <item>18.0</item>
-        <item>74.0</item>
-        <item>294.0</item>
-        <item>280.0</item>
-        <item>171.0</item>
-        <item>156.0</item>
-        <item>21.0</item>
-        <item>497.0</item>
-        <item>120.0</item>
-        <item>9.0</item>
-        <item>117.0</item>
-        <item>14.0</item>
-        <item>1022.0</item>
-        <item>1769.0</item>
-        <item>26.0</item>
-        <item>1541.0</item>
-        <item>185.0</item>
-        <item>31.0</item>
-        <item>1203.0</item>
-        <item>1053.0</item>
-        <item>35.0</item>
-        <item>5.0</item>
-        <item>1100.0</item>
-        <item>1667.0</item>
-        <item>150.0</item>
-        <item>38.0</item>
-        <item>988.0</item>
-        <item>1276.0</item>
-        <item>236.0</item>
-        <item>1178.0</item>
-        <item>35.0</item>
-        <item>1798.0</item>
-        <item>15.0</item>
-        <item>232.0</item>
-        <item>17.0</item>
-        <item>15.0</item>
-        <item>6.0</item>
-        <item>34.0</item>
-        <item>19.0</item>
-        <item>12.0</item>
-        <item>4.0</item>
-        <item>12.0</item>
-        <item>40.0</item>
-        <item>39.0</item>
-        <item>67.0</item>
-        <item>50.0</item>
+        <item>9</item>
+        <item>31</item>
+        <item>70</item>
+        <item>2240</item>
+        <item>1508</item>
+        <item>653</item>
+        <item>194</item>
+        <item>944</item>
+        <item>108</item>
+        <item>50</item>
+        <item>17</item>
+        <item>175</item>
+        <item>2854</item>
+        <item>152</item>
+        <item>65</item>
+        <item>2582</item>
+        <item>44</item>
+        <item>9</item>
+        <item>556</item>
+        <item>55</item>
+        <item>3782</item>
+        <item>887</item>
+        <item>31</item>
+        <item>133</item>
+        <item>34</item>
+        <item>5</item>
+        <item>37</item>
+        <item>12</item>
+        <item>45</item>
+        <item>27</item>
+        <item>7</item>
+        <item>40</item>
+        <item>665</item>
+        <item>27</item>
+        <item>1037</item>
+        <item>42</item>
+        <item>28</item>
+        <item>13</item>
+        <item>549</item>
+        <item>69</item>
+        <item>23</item>
+        <item>26</item>
+        <item>726</item>
+        <item>20</item>
+        <item>14</item>
+        <item>74</item>
+        <item>299</item>
+        <item>284</item>
+        <item>171</item>
+        <item>157</item>
+        <item>28</item>
+        <item>509</item>
+        <item>111</item>
+        <item>3</item>
+        <item>113</item>
+        <item>26</item>
+        <item>1011</item>
+        <item>1767</item>
+        <item>39</item>
+        <item>1542</item>
+        <item>187</item>
+        <item>23</item>
+        <item>1223</item>
+        <item>1056</item>
+        <item>40</item>
+        <item>8</item>
+        <item>1125</item>
+        <item>1684</item>
+        <item>144</item>
+        <item>41</item>
+        <item>994</item>
+        <item>1274</item>
+        <item>-23</item>
+        <item>1178</item>
+        <item>38</item>
+        <item>1798</item>
+        <item>8</item>
+        <item>227</item>
+        <item>30</item>
+        <item>18</item>
+        <item>16</item>
+        <item>40</item>
+        <item>22</item>
+        <item>3</item>
+        <item>13</item>
+        <item>12</item>
+        <item>44</item>
+        <item>58</item>
+        <item>79</item>
+        <item>57</item>
     </string-array>
     <string-array name="cities_time_zones" translatable="false">
         <item>Pacific/Apia</item>
@@ -552,5 +552,5 @@
         <item>Australia/Sydney</item>
         <item>Pacific/Auckland</item>
         <item>Pacific/Fiji</item>
-    </string-array-->
+    </string-array>
 </resources>

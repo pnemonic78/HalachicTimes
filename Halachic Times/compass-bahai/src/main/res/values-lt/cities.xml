@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>Apija</item>
+        <item>Ankoridžas</item>
+        <item>Vankuveris</item>
+        <item>Meksikas</item>
+        <item>Gvatemala</item>
+        <item>San Salvadoras</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>Tegusigalpa</item>
+        <item>Managva</item>
+        <item>UNKNOWN [San José]</item>
+        <item>Panama</item>
+        <item>Torontas</item>
+        <item>Kitas</item>
+        <item>Lima</item>
+        <item>UNKNOWN [Kingston]</item>
+        <item>Bogota</item>
+        <item>Port o Prensas</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>Čilės Santjagas</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>La Pasas</item>
+        <item>Karakasas</item>
+        <item>Buenos Airės</item>
+        <item>Asunsjonas</item>
+        <item>Montevidėjas</item>
+        <item>Rio de Žaneiras</item>
+        <item>Reikjavikas</item>
+        <item>Dakaras</item>
+        <item>Lisabona</item>
+        <item>Kasablanka</item>
+        <item>Belfastas</item>
+        <item>Glazgas</item>
+        <item>Madridas</item>
+        <item>Londono Sitis</item>
+        <item>Andora</item>
+        <item>Paryžius</item>
+        <item>Briuselis</item>
+        <item>Amsterdamas</item>
+        <item>Bernas</item>
+        <item>Limbė</item>
+        <item>Tunisas</item>
+        <item>Oslas</item>
+        <item>Jaundė</item>
+        <item>Roma</item>
+        <item>Kopenhaga</item>
+        <item>Berlynas</item>
+        <item>Ndžamena</item>
+        <item>Brazavilis</item>
+        <item>Viena</item>
+        <item>Bratislava</item>
+        <item>Stokholmas</item>
+        <item>Sarajevas</item>
+        <item>Budapeštas</item>
+        <item>Bengazis</item>
+        <item>Varšuva</item>
+        <item>Helsinkis</item>
+        <item>Gaboronas</item>
+        <item>Johanesburgas</item>
+        <item>Stambulas</item>
+        <item>Kigalis</item>
+        <item>Kijevas</item>
+        <item>Kairas</item>
+        <item>Kampala</item>
+        <item>Lilongvė</item>
+        <item>Haifa</item>
+        <item>UNKNOWN [‘Akko]</item>
+        <item>Dodoma</item>
+        <item>Nairobis</item>
+        <item>Maskva</item>
+        <item>Bagdadas</item>
+        <item>Jerevanas</item>
+        <item>Antananaryvas</item>
+        <item>Baku</item>
+        <item>Teheranas</item>
+        <item>Karačis</item>
+        <item>Kabulas</item>
+        <item>Mumbajus</item>
+        <item>Delis</item>
+        <item>Rangūnas</item>
+        <item>Batambangas</item>
+        <item>Džakarta</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>Makao</item>
+        <item>UNKNOWN [Hong Kong]</item>
+        <item>Manila</item>
+        <item>Šanchajus</item>
+        <item>Tokijas</item>
+        <item>Sidnėjus</item>
+        <item>Oklandas</item>
+        <item>Suva</item>
+    </string-array>
+</resources>

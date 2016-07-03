@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!--Generated from geonames.org data-->
+    <string-array name="cities">
+        <item>آپیا</item>
+        <item>انکوریج</item>
+        <item>ونکوور</item>
+        <item>مکزیکو</item>
+        <item>شهر گواتمالا</item>
+        <item>سان سالوادور</item>
+        <item>UNKNOWN [Wilmette]</item>
+        <item>تگوسیگالپا</item>
+        <item>ماناگوآ</item>
+        <item>UNKNOWN [San José]</item>
+        <item>شهر پاناما</item>
+        <item>تورنتو</item>
+        <item>کیتو</item>
+        <item>لیما</item>
+        <item>کینگستون</item>
+        <item>بوگوتا</item>
+        <item>پورتو پرنس</item>
+        <item>UNKNOWN [Eliot]</item>
+        <item>سانتیاگو</item>
+        <item>UNKNOWN [Santo Domingo]</item>
+        <item>لاپاز</item>
+        <item>کاراکاس</item>
+        <item>بوئنوس آیرس</item>
+        <item>آسونسیون</item>
+        <item>مونته‌ویدئو</item>
+        <item>ریو دو ژانیرو</item>
+        <item>ریکیاویک</item>
+        <item>داکار</item>
+        <item>لیسبون</item>
+        <item>کازابلانکا</item>
+        <item>بلفاست</item>
+        <item>گلاسگو</item>
+        <item>مادرید</item>
+        <item>سیتی لندن</item>
+        <item>UNKNOWN [Andorra la Vella]</item>
+        <item>پاریس</item>
+        <item>بروکسل</item>
+        <item>آمستردام</item>
+        <item>برن</item>
+        <item>UNKNOWN [Limbe]</item>
+        <item>تونس</item>
+        <item>اسلو</item>
+        <item>یائونده</item>
+        <item>رم</item>
+        <item>UNKNOWN [Copenhagen]</item>
+        <item>برلین</item>
+        <item>UNKNOWN [N\'Djamena]</item>
+        <item>برازاویل</item>
+        <item>UNKNOWN [Vienna]</item>
+        <item>براتیسلاوا</item>
+        <item>استکهلم</item>
+        <item>سارایوو</item>
+        <item>بوداپست</item>
+        <item>بنغازی</item>
+        <item>ورشو</item>
+        <item>هلسینکی</item>
+        <item>گابورون</item>
+        <item>ژوهانسبورگ</item>
+        <item>UNKNOWN [İstanbul]</item>
+        <item>کیگالی</item>
+        <item>کی‌یف</item>
+        <item>قاهره</item>
+        <item>کامپالا</item>
+        <item>لیلونگوه</item>
+        <item>حیفا</item>
+        <item>UNKNOWN [‘Akko]</item>
+        <item>دودوما</item>
+        <item>نایروبی</item>
+        <item>مسکو</item>
+        <item>بغداد</item>
+        <item>ایروان</item>
+        <item>آنتاناناریوو</item>
+        <item>باکو</item>
+        <item>تِهِرَن</item>
+        <item>کراچی</item>
+        <item>كابل</item>
+        <item>بمبئی</item>
+        <item>دهلی قدیم</item>
+        <item>یانگون</item>
+        <item>باتم‌بنگ</item>
+        <item>جاکارتا</item>
+        <item>UNKNOWN [Dawan]</item>
+        <item>ماکائو</item>
+        <item>هنگ کنگ</item>
+        <item>مانیل</item>
+        <item>شانگهای</item>
+        <item>توکیو</item>
+        <item>سیدنی</item>
+        <item>آوکلند</item>
+        <item>سووا</item>
+    </string-array>
+</resources>
