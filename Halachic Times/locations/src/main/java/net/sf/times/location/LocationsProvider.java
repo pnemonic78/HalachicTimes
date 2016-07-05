@@ -483,11 +483,21 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *         the listener who wants to resume listening.
      */
     public void start(ZmanimLocationListener listener) {
-        if (listener != null)
-            addLocationListener(listener);
+        startPassive(listener);
 
         startTaskDelay = UPDATE_TIME_START;
         handler.sendEmptyMessage(WHAT_START);
+    }
+
+    /**
+     * Start or resume listening passively.
+     *
+     * @param listener
+     *         the listener who wants to resume listening.
+     */
+    public void startPassive(ZmanimLocationListener listener) {
+        if (listener != null)
+            addLocationListener(listener);
 
         // Give the listener our latest known location, and address.
         if (listener != null) {
