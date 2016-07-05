@@ -126,7 +126,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     @Override
     public void onCreate() {
         if (locations != null)
-            locations.start(this);
+            locations.startPassive(this);
     }
 
     @Override
@@ -177,7 +177,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         if (locations == null) {
             ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
             locations = app.getLocations();
-            locations.start(this);
+            locations.startPassive(this);
             this.locations = locations;
         }
         GeoLocation gloc = locations.getGeoLocation();
