@@ -83,11 +83,11 @@
         <item>Yangon</item>
         <item>Battambang</item>
         <item>Jakarta</item>
-        <item>Dawan</item>
         <item>Macao</item>
         <item>Hong Kong</item>
         <item>Manila</item>
         <item>Shanghai</item>
+        <item>Taipei</item>
         <item>Tokyo</item>
         <item>Sydney</item>
         <item>Auckland</item>
@@ -175,11 +175,11 @@
         <item>MM</item>
         <item>KH</item>
         <item>ID</item>
-        <item>CN</item>
         <item>MO</item>
         <item>HK</item>
         <item>PH</item>
         <item>CN</item>
+        <item>TW</item>
         <item>JP</item>
         <item>AU</item>
         <item>NZ</item>
@@ -267,11 +267,11 @@
         <item>16.80528</item>
         <item>13.10271</item>
         <item>-6.21462</item>
-        <item>22.82107</item>
         <item>22.20056</item>
         <item>22.28552</item>
         <item>14.6042</item>
         <item>31.22222</item>
+        <item>25.04776</item>
         <item>35.6895</item>
         <item>-33.86785</item>
         <item>-36.86667</item>
@@ -359,11 +359,11 @@
         <item>96.15611</item>
         <item>103.19822</item>
         <item>106.84513</item>
-        <item>111.62993</item>
         <item>113.54611</item>
         <item>114.15769</item>
         <item>120.9822</item>
         <item>121.45806</item>
+        <item>121.53185</item>
         <item>139.69171</item>
         <item>151.20732</item>
         <item>174.76667</item>
@@ -451,11 +451,11 @@
         <item>30</item>
         <item>18</item>
         <item>16</item>
-        <item>40</item>
         <item>22</item>
         <item>3</item>
         <item>13</item>
         <item>12</item>
+        <item>10</item>
         <item>44</item>
         <item>58</item>
         <item>79</item>
@@ -543,11 +543,11 @@
         <item>Asia/Rangoon</item>
         <item>Asia/Phnom_Penh</item>
         <item>Asia/Jakarta</item>
-        <item>Asia/Shanghai</item>
         <item>Asia/Macau</item>
         <item>Asia/Hong_Kong</item>
         <item>Asia/Manila</item>
         <item>Asia/Shanghai</item>
+        <item>Asia/Taipei</item>
         <item>Asia/Tokyo</item>
         <item>Australia/Sydney</item>
         <item>Pacific/Auckland</item>

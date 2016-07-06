@@ -76,8 +76,8 @@ public class BahaiCitiesFilter implements NameFilter {
             1821274,
             // Shanghai, China
             1796236,
-            // Dawan, Taiwan, China
-            1813416,
+            // Taipei, Taiwan, China
+            1668341,
             // Bogota, Colombia
             3688689,
             // Brazzaville, Congo
