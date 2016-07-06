@@ -5,6 +5,7 @@
 0	88319	no	Benghazi	
 0	88319	ro	Benghazi	
 0	88319	sv	Benghazi	
+0	98182	hi	बगदाद	
 0	112931	bg	Техеран	
 0	112931	uk	Тегеран	
 0	160196	cs	Dodoma	
@@ -123,9 +124,15 @@
 0	295721	ro	Acra	
 0	295721	tr	Akka	
 0	344979	ro	Addis Abeba	
+0	360630	hi	काहिरा	
+0	587084	ro	बाकू	
+0	616052	hi	येरेवान	
+0	616052	ro	Erevan	
 0	745044	et	Istanbul	
+0	745044	fa	استانبول	
 0	745044	lt	Stambulas	
 0	745044	ro	Istambul	
+0	756135	hi	वॉरसॉ	
 0	927967	cs	Lilongwe	
 0	927967	hi	लिलोंग्वे	
 0	927967	hu	Lilongwe	
@@ -142,12 +149,16 @@
 0	1007311	ro	Durban	
 0	1007311	tr	Durban	
 0	1070940	cs	Antananarivo	
+0	1138958	hu	Kabul	
+0	1174872	ro	Karachi	
 0	1273294	da	Delhi	
 0	1273294	et	Delhi	
 0	1273294	it	Delhi	
 0	1273294	nb	Delhi	
 0	1273294	no	Delhi	
 0	1273294	tr	Delhi	
+0	1298824	ro	Yangon	
+0	1298824	tr	Yangon	
 0	1642911	et	Jakarta	
 0	1642911	ro	Jakarta	
 0	1668341	ar	تايبيه	
@@ -156,6 +167,8 @@
 0	1668341	hu	Tajpej	
 0	1668341	ro	Taipei	
 0	1668341	uk	Тайбей	
+0	1701668	hu	Manila	
+0	1796236	hi	शंघाई	
 0	1819729	cs	Hongkong	
 0	1819729	et	Hongkong	
 0	1819729	lt	Honkongas	
@@ -201,6 +214,9 @@
 0	2198148	et	Suva	
 0	2198148	ro	Suva	
 0	2198148	tr	Suva	
+0	2220957	hi	याओंडे	
+0	2220957	hu	Yaoundéban	
+0	2220957	ro	Yaoundé	
 0	2229411	ar	يمبي	
 0	2229411	bg	Лимбе	
 0	2229411	cs	Limbe	
@@ -233,6 +249,7 @@
 0	2260535	hi	ब्राज़ाविल	
 0	2260535	ro	Brazzaville	
 0	2260535	uk	Браззавіль	
+0	2267057	uk	Лісабон	
 0	2427123	cs	N'Djamena	
 0	2427123	fa	انجامنا	
 0	2427123	hi	न'दजामेना	
@@ -243,9 +260,18 @@
 0	2464470	ro	Tunis	
 0	2553604	hi	कैसाब्लांका	
 0	2553604	hu	Casablanca	
+0	2618425	fa	کپنهاگ	
+0	2618425	hi	कोपेनहेगन	
 0	2643123	et	Manchester	
+0	2648579	hu	Glasgow	
+0	2648579	tr	Glasgow	
+0	2655984	hi	बेलफास्ट	
 0	2660646	uk	Женева	
+0	2761369	fa	وین	
 0	2761369	he	וינה	
+0	2761369	hi	वियना	
+0	2800866	hi	ब्रसेल्स	
+0	2950159	hi	बर्लिन	
 0	2990440	cs	Nice	
 0	2990440	tr	Güzel	
 0	3041563	cs	Andorra la Vella	
@@ -253,6 +279,8 @@
 0	3041563	hi	अण्डोरा ला वेला	
 0	3041563	tr	Andorra la Vella	
 0	3041563	uk	Андорра-ла-Велья	
+0	3060972	hi	ब्राटिस्लावा	
+0	3191281	hi	साराजेवो	
 0	3369157	ro	Cape Town	
 0	3435910	cs	Buenos Aires	
 0	3435910	et	Buenos Aires	
@@ -262,6 +290,8 @@
 0	3435910	pl	Buenos Aires	
 0	3435910	ro	Buenos Aires	
 0	3435910	tr	Buenos Aires	
+0	3439389	hi	असुंकिओन	
+0	3439389	ro	Asunción	
 0	3489854	ar	كينغستون	
 0	3489854	bg	Кингстън	
 0	3489854	cs	Kingston	
@@ -304,6 +334,7 @@
 0	3492908	sv	Santo Domingo	
 0	3492908	tr	Santo Domingo	
 0	3492908	uk	Санто-Домінго	
+0	3530597	hi	मेक्सिको सिटी	
 0	3530597	hu	Mexikóváros	
 0	3583361	cs	San Salvador	
 0	3583361	et	San Salvador	
@@ -364,6 +395,8 @@
 0	3718426	cs	Port-au-Prince	
 0	3718426	hu	Port-au-Prince	
 0	3718426	tr	Port-au-Prince	
+0	3871336	hi	सैंटियागो	
+0	3871336	uk	Сантьяго	
 0	3911925	et	La Paz	
 0	3911925	ro	La Paz	
 0	4035413	cs	Apia	
