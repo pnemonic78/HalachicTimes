@@ -2,24 +2,24 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
-        <item>UNKNOWN [Apia]</item>
+        <item>Apia</item>
         <item>Anchorage</item>
         <item>Vancouver</item>
         <item>Mexico-stad</item>
         <item>Guatemala-stad</item>
         <item>San Salvador</item>
-        <item>UNKNOWN [Wilmette]</item>
+        <item>Wilmette</item>
         <item>Tegucigalpa</item>
         <item>Managua</item>
-        <item>UNKNOWN [San José]</item>
+        <item>San José</item>
         <item>Panama-stad</item>
         <item>Toronto</item>
         <item>Quito</item>
         <item>Lima</item>
-        <item>UNKNOWN [Kingston]</item>
+        <item>Kingston</item>
         <item>Bogota</item>
         <item>Port-au-Prince</item>
-        <item>UNKNOWN [Eliot]</item>
+        <item>Eliot</item>
         <item>Santiago</item>
         <item>Ciudad Trujillo</item>
         <item>La Paz</item>
@@ -29,7 +29,7 @@
         <item>Montevideo</item>
         <item>Rio de Janeiro</item>
         <item>Reykjavik</item>
-        <item>UNKNOWN [Dakar]</item>
+        <item>Dakar</item>
         <item>Lissabon</item>
         <item>Casablanca</item>
         <item>Belfast</item>
@@ -41,7 +41,7 @@
         <item>Brussel</item>
         <item>Amsterdam</item>
         <item>Bern</item>
-        <item>UNKNOWN [Limbe]</item>
+        <item>Limbe</item>
         <item>Tunis</item>
         <item>Oslo</item>
         <item>Yaoundé</item>
@@ -83,8 +83,8 @@
         <item>Rangoon</item>
         <item>Khett Batdambang</item>
         <item>Jakarta</item>
-        <item>UNKNOWN [Macau]</item>
-        <item>UNKNOWN [Hong Kong]</item>
+        <item>Macau</item>
+        <item>Hongkong</item>
         <item>Manilla</item>
         <item>Sjanghai</item>
         <item>Taipei</item>

@@ -8,20 +8,20 @@
         <item>Mexico City</item>
         <item>Guatemala City</item>
         <item>San Salvador</item>
-        <item>UNKNOWN [Wilmette]</item>
+        <item>Wilmette</item>
         <item>Tegucigalpa</item>
         <item>Managua</item>
-        <item>UNKNOWN [San José]</item>
+        <item>San José</item>
         <item>Panama City</item>
         <item>Toronto</item>
         <item>Quito</item>
         <item>Lima</item>
-        <item>UNKNOWN [Kingston]</item>
+        <item>Kingston</item>
         <item>Bogotá</item>
         <item>Port-au-Prince</item>
-        <item>UNKNOWN [Eliot]</item>
+        <item>Eliot</item>
         <item>Santiago de Chile</item>
-        <item>UNKNOWN [Santo Domingo]</item>
+        <item>Santo Domingo</item>
         <item>La Paz</item>
         <item>Caracas</item>
         <item>Buenos Aires</item>
@@ -41,7 +41,7 @@
         <item>Bryssel</item>
         <item>Amsterdam</item>
         <item>Bern</item>
-        <item>UNKNOWN [Limbe]</item>
+        <item>Limbe</item>
         <item>Tunis</item>
         <item>Oslo</item>
         <item>Yaoundé</item>
@@ -55,7 +55,7 @@
         <item>Stockholm</item>
         <item>Sarajevo</item>
         <item>Budapest</item>
-        <item>UNKNOWN [Benghazi]</item>
+        <item>Benghazi</item>
         <item>Warszawa</item>
         <item>Helsingfors</item>
         <item>Gaborone</item>
@@ -81,7 +81,7 @@
         <item>Mumbai</item>
         <item>Delhi</item>
         <item>Rangoon</item>
-        <item>UNKNOWN [Battambang]</item>
+        <item>Battambang</item>
         <item>Jakarta</item>
         <item>Macao</item>
         <item>Hong Kong</item>

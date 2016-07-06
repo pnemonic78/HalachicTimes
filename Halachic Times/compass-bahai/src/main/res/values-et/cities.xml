@@ -2,34 +2,34 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
-        <item>UNKNOWN [Apia]</item>
-        <item>UNKNOWN [Anchorage]</item>
+        <item>Apia</item>
+        <item>Anchorage</item>
         <item>Vancouver</item>
         <item>México</item>
         <item>Guatemala</item>
-        <item>UNKNOWN [San Salvador]</item>
-        <item>UNKNOWN [Wilmette]</item>
-        <item>UNKNOWN [Tegucigalpa]</item>
-        <item>UNKNOWN [Managua]</item>
-        <item>UNKNOWN [San José]</item>
-        <item>UNKNOWN [Panamá]</item>
+        <item>San Salvador</item>
+        <item>Wilmette</item>
+        <item>Tegucigalpa</item>
+        <item>Managua</item>
+        <item>San José</item>
+        <item>Panamá</item>
         <item>Toronto</item>
         <item>Quito</item>
         <item>Lima</item>
-        <item>UNKNOWN [Kingston]</item>
+        <item>Kingston</item>
         <item>Bogotá</item>
         <item>Port-au-Prince</item>
-        <item>UNKNOWN [Eliot]</item>
+        <item>Eliot</item>
         <item>Santiago</item>
-        <item>UNKNOWN [Santo Domingo]</item>
-        <item>UNKNOWN [La Paz]</item>
-        <item>UNKNOWN [Caracas]</item>
+        <item>Santo Domingo</item>
+        <item>La Paz</item>
+        <item>Caracas</item>
         <item>Buenos Aires</item>
         <item>Asunción</item>
         <item>Montevideo</item>
         <item>Rio de Janeiro</item>
         <item>Reykjavík</item>
-        <item>UNKNOWN [Dakar]</item>
+        <item>Dakar</item>
         <item>Lissabon</item>
         <item>Casablanca</item>
         <item>Belfast</item>
@@ -41,8 +41,8 @@
         <item>Brüssel</item>
         <item>Amsterdam</item>
         <item>Bern</item>
-        <item>UNKNOWN [Limbe]</item>
-        <item>UNKNOWN [Tunis]</item>
+        <item>Limbe</item>
+        <item>Tunis</item>
         <item>Oslo</item>
         <item>Yaoundé</item>
         <item>Rooma</item>
@@ -55,21 +55,21 @@
         <item>Stockholm</item>
         <item>Sarajevo</item>
         <item>Budapest</item>
-        <item>UNKNOWN [Benghazi]</item>
+        <item>Benghazi</item>
         <item>Varssavi</item>
         <item>Helsingi</item>
-        <item>UNKNOWN [Gaborone]</item>
+        <item>Gaborone</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>Kigali</item>
         <item>Kiiev</item>
         <item>Kairo</item>
-        <item>UNKNOWN [Kampala]</item>
+        <item>Kampala</item>
         <item>Lilongwe</item>
         <item>Haifa</item>
-        <item>UNKNOWN [‘Akko]</item>
+        <item>Akko</item>
         <item>Dodoma</item>
-        <item>UNKNOWN [Nairobi]</item>
+        <item>Nairobi</item>
         <item>Moskva</item>
         <item>Bagdad</item>
         <item>Jerevan</item>
@@ -79,18 +79,18 @@
         <item>Karachi</item>
         <item>Kabul</item>
         <item>Mumbai</item>
-        <item>UNKNOWN [Delhi]</item>
+        <item>Delhi</item>
         <item>Yangon</item>
-        <item>UNKNOWN [Battambang]</item>
-        <item>UNKNOWN [Jakarta]</item>
-        <item>UNKNOWN [Macau]</item>
-        <item>UNKNOWN [Hong Kong]</item>
+        <item>Bătdâmbâng</item>
+        <item>Jakarta</item>
+        <item>Macau</item>
+        <item>Hongkong</item>
         <item>Manila</item>
         <item>Shanghai</item>
-        <item>UNKNOWN [Taipei]</item>
+        <item>Taipei</item>
         <item>Tōkyō</item>
         <item>Sydney</item>
         <item>Auckland</item>
-        <item>UNKNOWN [Suva]</item>
+        <item>Suva</item>
     </string-array>
 </resources>

@@ -1,3 +1,24 @@
+0	88319	da	Benghazi	
+0	88319	et	Benghazi	
+0	88319	hi	बेनगाजी	
+0	88319	nb	Benghazi	
+0	88319	no	Benghazi	
+0	88319	ro	Benghazi	
+0	88319	sv	Benghazi	
+0	112931	bg	Техеран	
+0	112931	uk	Тегеран	
+0	160196	cs	Dodoma	
+0	160196	hu	Dodoma	
+0	160196	ro	Dodoma	
+0	184745	et	Nairobi	
+0	184745	hi	नैरोबी	
+0	202061	cs	Kigali	
+0	202061	hi	किगाली	
+0	202061	hu	Kigali	
+0	232422	cs	Kampala	
+0	232422	et	Kampala	
+0	232422	hu	Kampala	
+0	232422	ro	Kampala	
 0	293100	cs	Safed	
 0	293100	da	Safed	
 0	293100	de	Safed	
@@ -93,10 +114,26 @@
 0	295629	fi	Asdod	
 0	295629	hu	Aszdód	1
 0	295629	no	Asdod	
+0	295721	bg	Акра	
+0	295721	et	Akko	
+0	295721	fa	عکا	
+0	295721	hi	एकड़	
+0	295721	hu	Akko	
+0	295721	lt	Akas	
+0	295721	ro	Acra	
+0	295721	tr	Akka	
 0	344979	ro	Addis Abeba	
 0	745044	et	Istanbul	
 0	745044	lt	Stambulas	
 0	745044	ro	Istambul	
+0	927967	cs	Lilongwe	
+0	927967	hi	लिलोंग्वे	
+0	927967	hu	Lilongwe	
+0	927967	ro	Lilongwe	
+0	927967	tr	Lilongwe	
+0	933773	cs	Gaborone	
+0	933773	et	Gaborone	
+0	933773	hu	Gaborone	
 0	993800	cs	Johannesburg	
 0	993800	hu	Johannesburg	
 0	1007311	da	Durban	
@@ -104,6 +141,44 @@
 0	1007311	hu	Durban	
 0	1007311	ro	Durban	
 0	1007311	tr	Durban	
+0	1070940	cs	Antananarivo	
+0	1273294	da	Delhi	
+0	1273294	et	Delhi	
+0	1273294	it	Delhi	
+0	1273294	nb	Delhi	
+0	1273294	no	Delhi	
+0	1273294	tr	Delhi	
+0	1642911	et	Jakarta	
+0	1642911	ro	Jakarta	
+0	1668341	ar	تايبيه	
+0	1668341	et	Taipei	
+0	1668341	fa	تایپه	
+0	1668341	hu	Tajpej	
+0	1668341	ro	Taipei	
+0	1668341	uk	Тайбей	
+0	1819729	cs	Hongkong	
+0	1819729	et	Hongkong	
+0	1819729	lt	Honkongas	
+0	1819729	nl	Hongkong	
+0	1819729	pl	Hongkong	
+0	1821274	cs	Macao	
+0	1821274	et	Macau	
+0	1821274	nl	Macau	
+0	1821274	ro	Macao	
+0	1831797	ar	باتامبانج	
+0	1831797	cs	Battambang	
+0	1831797	da	Battambang	
+0	1831797	et	Bătdâmbâng	
+0	1831797	he	בטאמבאנג	
+0	1831797	hi	बट्टमबैंग	
+0	1831797	hu	Battambang	
+0	1831797	it	Battambang	
+0	1831797	nb	Battambang	
+0	1831797	no	Battambang	
+0	1831797	ro	Battambang	
+0	1831797	sv	Battambang	
+0	1831797	tr	Battambang	
+0	1831797	uk	Баттамбанг	
 0	2063523	ro	Perth	
 0	2063523	tr	Perth	
 0	2158177	el	Μελβούρνη	
@@ -123,12 +198,61 @@
 0	2193733	ro	Auckland	
 0	2193733	sv	Auckland	
 0	2193733	tr	Auckland	
+0	2198148	et	Suva	
+0	2198148	ro	Suva	
+0	2198148	tr	Suva	
+0	2229411	ar	يمبي	
+0	2229411	bg	Лимбе	
+0	2229411	cs	Limbe	
+0	2229411	da	Limbe	
+0	2229411	de	Limbe	
+0	2229411	el	Λίμπε	
+0	2229411	es	Limbe	
+0	2229411	et	Limbe	
+0	2229411	fa	يمبي	
+0	2229411	fi	Limbe	
+0	2229411	he	לימבה	
+0	2229411	hi	लिम्बे	
+0	2229411	hu	Limbe	
+0	2229411	it	Limbe	
+0	2229411	nb	Limbe	
+0	2229411	nl	Limbe	
+0	2229411	no	Limbe	
+0	2229411	sv	Limbe	
+0	2229411	tr	Limbe	
+0	2229411	uk	Лімбі	
+0	2253354	cs	Dakar	
+0	2253354	et	Dakar	
+0	2253354	hu	Dakar	
+0	2253354	nl	Dakar	
+0	2253354	pl	Dakar	
+0	2253354	ro	Dakar	
+0	2253354	tr	Dakar	
+0	2260535	bg	Бразавил	
+0	2260535	cs	Brazzaville	
+0	2260535	hi	ब्राज़ाविल	
+0	2260535	ro	Brazzaville	
+0	2260535	uk	Браззавіль	
+0	2427123	cs	N'Djamena	
+0	2427123	fa	انجامنا	
+0	2427123	hi	न'दजामेना	
+0	2427123	ro	N'Djamena	
+0	2427123	tr	N'Djamena	
+0	2427123	uk	Нджамена	
+0	2464470	et	Tunis	
+0	2464470	ro	Tunis	
+0	2553604	hi	कैसाब्लांका	
 0	2553604	hu	Casablanca	
 0	2643123	et	Manchester	
 0	2660646	uk	Женева	
 0	2761369	he	וינה	
 0	2990440	cs	Nice	
 0	2990440	tr	Güzel	
+0	3041563	cs	Andorra la Vella	
+0	3041563	fa	آندورا لاولا	
+0	3041563	hi	अण्डोरा ला वेला	
+0	3041563	tr	Andorra la Vella	
+0	3041563	uk	Андорра-ла-Велья	
 0	3369157	ro	Cape Town	
 0	3435910	cs	Buenos Aires	
 0	3435910	et	Buenos Aires	
@@ -138,8 +262,120 @@
 0	3435910	pl	Buenos Aires	
 0	3435910	ro	Buenos Aires	
 0	3435910	tr	Buenos Aires	
+0	3489854	ar	كينغستون	
+0	3489854	bg	Кингстън	
+0	3489854	cs	Kingston	
+0	3489854	es	Kingston	
+0	3489854	et	Kingston	
+0	3489854	fi	Kingston	
+0	3489854	he	קינגסטון	
+0	3489854	hi	किंग्सटन	
+0	3489854	hu	Kingston	
+0	3489854	it	Kingston	
+0	3489854	lt	Kingstonas	
+0	3489854	nb	Kingston	
+0	3489854	nl	Kingston	
+0	3489854	no	Kingston	
+0	3489854	pl	Kingston	
+0	3489854	pt	Kingston	
+0	3489854	ro	Kingston	
+0	3489854	sv	Kingston	
+0	3489854	tr	Kingston	
+0	3489854	uk	Кінгстон	
+0	3492908	ar	سانتو دومينغو	
+0	3492908	bg	Санто Доминго	
+0	3492908	cs	Santo Domingo	
+0	3492908	de	Santo Domingo	
+0	3492908	es	Santo Domingo	
+0	3492908	et	Santo Domingo	
+0	3492908	fa	سانتو دمینگو	
+0	3492908	fi	Santo Domingo	
+0	3492908	fr	Saint-Domingue	
+0	3492908	he	סנטו דומינגו	
+0	3492908	hi	सैंटो डोमिंगो	
+0	3492908	hu	Santo Domingo	
+0	3492908	it	Santo Domingo	
+0	3492908	lt	Santo Domingas	
+0	3492908	nb	Santo Domingo	
+0	3492908	no	Santo Domingo	
+0	3492908	pl	Santo Domingo	
+0	3492908	pt	Santo Domingo	
+0	3492908	ro	Santo Domingo	
+0	3492908	sv	Santo Domingo	
+0	3492908	tr	Santo Domingo	
+0	3492908	uk	Санто-Домінго	
 0	3530597	hu	Mexikóváros	
+0	3583361	cs	San Salvador	
+0	3583361	et	San Salvador	
+0	3583361	hu	San Salvador	
+0	3583361	ro	San Salvador	
+0	3598132	bg	Гватемала Сити	
+0	3598132	cs	Ciudad de Guatemala	
+0	3598132	hi	ग्वाटेमाला शहर	
+0	3598132	hu	Guatemalaváros	
+0	3598132	ro	Ciudad de Guatemala	
+0	3598132	tr	Guatemala şehri	
+0	3598132	uk	місто Гватемала	
+0	3600949	cs	Tegucigalpa	
+0	3600949	et	Tegucigalpa	
+0	3600949	hi	टेगुसिगलपा	
+0	3600949	hu	Tegucigalpa	
+0	3600949	ro	Tegucigalpa	
+0	3600949	tr	Tegucigalpa	
+0	3617763	et	Managua	
+0	3617763	hi	मनागुआ	
+0	3617763	hu	Managua	
+0	3617763	ro	Managua	
+0	3621841	ar	سان خوسيه	
+0	3621841	bg	Сан Хосе	
+0	3621841	cs	San José	
+0	3621841	da	San José	
+0	3621841	de	San Jose	
+0	3621841	el	Σαν Χοσέ	
+0	3621841	es	San José	
+0	3621841	et	San José	
+0	3621841	fa	سان خوزه	
+0	3621841	fi	San José	
+0	3621841	fr	San José	
+0	3621841	he	סן חוסה	
+0	3621841	hi	सान होज़े	
+0	3621841	hu	San José	
+0	3621841	it	San José	
+0	3621841	lt	San Chosė	
+0	3621841	nb	San José	
+0	3621841	nl	San José	
+0	3621841	no	San José	
+0	3621841	pl	San José	
+0	3621841	pt	San José	
+0	3621841	ro	San José	
+0	3621841	ru	Сан-Хосе	
+0	3621841	sv	San José	
+0	3621841	tr	San José	
+0	3621841	uk	Сан-Хосе	
+0	3646738	et	Caracas	
 0	3688689	et	Bogotá	
+0	3703443	ar	مدينة بنما	
+0	3703443	cs	Ciudad de Panamá	
+0	3703443	et	Panamá	
+0	3703443	hi	पनामा सिटी	
+0	3703443	hu	Panamaváros	
+0	3703443	tr	Panama şehri	
+0	3703443	uk	Панама-Сіті	
+0	3718426	cs	Port-au-Prince	
+0	3718426	hu	Port-au-Prince	
+0	3718426	tr	Port-au-Prince	
+0	3911925	et	La Paz	
+0	3911925	ro	La Paz	
+0	4035413	cs	Apia	
+0	4035413	et	Apia	
+0	4035413	hi	एपिया	
+0	4035413	hu	Apia	
+0	4035413	nb	Apia	
+0	4035413	nl	Apia	
+0	4035413	no	Apia	
+0	4035413	pl	Apia	
+0	4035413	ro	Apia	
+0	4035413	tr	Apia	
 0	4140963	bg	Вашингтон	
 0	4140963	cs	Washington DC	
 0	4140963	et	Washington DC	
@@ -169,6 +405,55 @@
 0	4699066	es	Houston	
 0	4699066	hu	Houston	
 0	4887398	hu	Chicagó	
+0	4916732	bg	Уилмет	
+0	4916732	cs	Wilmette	
+0	4916732	da	Wilmette	
+0	4916732	de	Wilmette	
+0	4916732	el	Ουιλμέτ	
+0	4916732	es	Wilmette	
+0	4916732	et	Wilmette	
+0	4916732	fa	ویلمت	
+0	4916732	fi	Wilmette	
+0	4916732	fr	Wilmette	
+0	4916732	hi	विलमेटे	
+0	4916732	hu	Wilmette	
+0	4916732	it	Wilmette	
+0	4916732	lt	Wilmette	
+0	4916732	nb	Wilmette	
+0	4916732	nl	Wilmette	
+0	4916732	no	Wilmette	
+0	4916732	pl	Wilmette	
+0	4916732	pt	Wilmette	
+0	4916732	ro	Wilmette	
+0	4916732	ru	Уилмет	
+0	4916732	sv	Wilmette	
+0	4916732	tr	Wilmette	
+0	4963642	ar	إليوت	
+0	4963642	bg	Елиът	
+0	4963642	cs	Eliot	
+0	4963642	da	Eliot	
+0	4963642	de	Eliot	
+0	4963642	el	Έλιοτ	
+0	4963642	es	Eliot	
+0	4963642	et	Eliot	
+0	4963642	fa	الیوت	
+0	4963642	fi	Eliot	
+0	4963642	fr	Eliot	
+0	4963642	he	אליוט	
+0	4963642	hi	एलियट	
+0	4963642	hu	Eliot	
+0	4963642	it	Eliot	
+0	4963642	lt	Eliotas	
+0	4963642	nb	Eliot	
+0	4963642	nl	Eliot	
+0	4963642	no	Eliot	
+0	4963642	pl	Eliot	
+0	4963642	pt	Eliot	
+0	4963642	ro	Eliot	
+0	4963642	ru	Элиот	
+0	4963642	sv	Eliot	
+0	4963642	tr	Eliot	
+0	4963642	uk	Еліот	
 0	4975802	cs	Portland	
 0	4975802	da	Portland	
 0	4975802	es	Portland	
@@ -197,6 +482,8 @@
 0	5419384	et	Denver	
 0	5419384	hu	Denver	
 0	5809844	et	Seattle	
+0	5879400	et	Anchorage	
+0	5879400	ro	Anchorage	
 0	6077243	hu	Montréal	
 0	6173331	hu	Vancouver	
 0	8199394	bg	Ариел	
