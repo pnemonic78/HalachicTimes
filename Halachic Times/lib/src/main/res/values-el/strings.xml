@@ -13,15 +13,17 @@
     <string name="ringtone_default" msgid="3332469542084549546">"Προεπιλεγμένος ήχος κλήσης"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Προεπιλεγμένος ήχος ειδοποίησης"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Προεπιλεγμένος ήχος ειδοποίησης"</string>
-    <string name="ringtone_silent">Κανένας</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">Κανένας</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ρυθμίσεις</string>
-    <string name="pref_general_title">Γενικές</string>
+    <string name="settings_label" msgid="1626402585530130914">Ρυθμίσεις</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">Γενικές</string>
     <string name="pref_appearance_title">Παρουσιαστικό</string>
     <string name="pref_about_title">Σχετικά</string>
 
     <!-- Theme. -->
-    <string name="theme_title">Θέμα</string>
+    <string name="night_mode_title">Θέμα</string>
+    <string name="night_mode_no">Ανοιχτόχρωμο</string>
+    <string name="night_mode_yes">Σκοτεινός</string>
 
 </resources>

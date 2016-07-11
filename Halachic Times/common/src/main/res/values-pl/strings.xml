@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Podsumowań</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Ciemny</string>
-    <string name="theme_light">Jasny</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Prywatność i bezpieczeństwo</string>
 

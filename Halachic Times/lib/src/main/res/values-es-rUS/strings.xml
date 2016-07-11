@@ -5,6 +5,6 @@
     <string name="month_day_year" formatted="false">%B %-e, %Y</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Configuración</string>
+    <string name="settings_label" msgid="1626402585530130914">Configuración</string>
 
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="off">दूर का</string>
+
+    <!-- Date -->
+    <string name="today">आज</string>
+    <string name="twelve_hour_time_format">h:mm a</string>
+    <string name="twenty_four_hour_time_format">H:mm</string>
+    <string name="month_day_year" formatted="false">%-e %B %Y</string>
+
+    <!-- Ringtone -->
+    <string name="ringtone_default" msgid="3332469542084549546">"डिफ़ॉल्‍ट रिंगटोन"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"साधारण नोटिफिकेशन ध्वनी"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"डिफ़ॉल्ट अलार्म ध्वनि"</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">"कोई नहीं"</string>
+
+    <!-- Preferences -->
+    <string name="settings_label" msgid="1626402585530130914">"सेटिंग"</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">"सामान्य"</string>
+    <string name="pref_appearance_title">दिखावट</string>
+    <string name="pref_about_title">के बारे में</string>
+
+    <!-- Theme. -->
+    <string name="night_mode_title" msgid="6928425617491943384">"थीम"</string>
+    <string name="night_mode_no" msgid="7682792841791457238">"हल्का"</string>
+    <string name="night_mode_yes" msgid="4847655033618591567">"गहरा"</string>
+
+</resources>

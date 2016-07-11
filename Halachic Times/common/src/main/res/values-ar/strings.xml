@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">ملخصات</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">مظلم</string>
-    <string name="theme_light">خفيف</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">الخصوصية والأمن</string>
 

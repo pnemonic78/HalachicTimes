@@ -13,15 +13,17 @@
     <string name="ringtone_default" msgid="3332469542084549546">"Numatytasis skambėjimo tonas"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Numatytasis pranešimo garsas"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Numatytasis signalo garsas"</string>
-    <string name="ringtone_silent">Nėra</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">Nėra</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Nustatymai</string>
-    <string name="pref_general_title">Bendras</string>
+    <string name="settings_label" msgid="1626402585530130914">Nustatymai</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">Bendras</string>
     <string name="pref_appearance_title">Išvaizda</string>
     <string name="pref_about_title">Apie</string>
 
     <!-- Theme. -->
-    <string name="theme_title">Tema</string>
+    <string name="night_mode_title">Tema</string>
+    <string name="night_mode_no">Šviesi</string>
+    <string name="night_mode_yes">Tamsi</string>
 
 </resources>

@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Kokkuv�tted</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Tume</string>
-    <string name="theme_light">Hele</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>
 

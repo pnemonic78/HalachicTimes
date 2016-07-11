@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">सारांश</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">अंधेरा</string>
-    <string name="theme_light">हलका</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">गोपनीयता का और सुरक्षा की</string>
 

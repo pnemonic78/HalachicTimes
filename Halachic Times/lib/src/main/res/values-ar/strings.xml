@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="off">إيقاف</string>
+
+    <!-- Date -->
+    <string name="today">اليوم</string>
+    <string name="twelve_hour_time_format">h:mm a</string>
+    <string name="twenty_four_hour_time_format">H:mm</string>
+    <string name="month_day_year" formatted="false">%-e %B، %Y</string>
+
+    <!-- Ringtone -->
+    <string name="ringtone_default" msgid="3332469542084549546">"نغمة الرنين الافتراضية"</string>
+    <string name="notification_sound_default" msgid="5309766396223094324">"صوت الإشعار الافتراضي"</string>
+    <string name="alarm_sound_default" msgid="6854264112790616066">"صوت التنبيه الافتراضي"</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">"لا شيء"</string>
+
+    <!-- Preferences -->
+    <string name="settings_label" msgid="1626402585530130914">"الإعدادات"</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">"عامة"</string>
+    <string name="pref_appearance_title">مظهر</string>
+    <string name="pref_about_title">حول</string>
+
+    <!-- Theme. -->
+    <string name="night_mode_title" msgid="6928425617491943384">"المظهر"</string>
+    <string name="night_mode_no" msgid="7682792841791457238">"فاتح"</string>
+    <string name="night_mode_yes" msgid="4847655033618591567">"داكن"</string>
+
+</resources>

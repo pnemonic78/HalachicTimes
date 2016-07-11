@@ -13,15 +13,17 @@
     <string name="ringtone_default" msgid="3332469542084549546">"Oletussoittoääni"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Ilmoituksen oletusääni"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Hälytyksen oletusääni"</string>
-    <string name="ringtone_silent">Ei mitään</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">Ei mitään</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Asetukset</string>
-    <string name="pref_general_title">Yleiset</string>
+    <string name="settings_label" msgid="1626402585530130914">Asetukset</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">Yleiset</string>
     <string name="pref_appearance_title">Ulkonäkö</string>
     <string name="pref_about_title">Tietoja</string>
 
     <!-- Theme. -->
-    <string name="theme_title">Teema</string>
+    <string name="night_mode_title">Teema</string>
+    <string name="night_mode_no">Vaalea</string>
+    <string name="night_mode_yes">Tumma</string>
 
 </resources>

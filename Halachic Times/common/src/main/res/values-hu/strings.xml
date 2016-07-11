@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Összefoglalók</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Sötét</string>
-    <string name="theme_light">Világos</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Adatvédelem és biztonság</string>
 

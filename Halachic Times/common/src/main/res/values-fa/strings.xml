@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">خلاصه</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">تاریک</string>
-    <string name="theme_light">روشن</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">حریم خصوصی و امنیت</string>
 

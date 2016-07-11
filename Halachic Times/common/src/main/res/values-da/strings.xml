@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Sammenfatninger</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Mørk</string>
-    <string name="theme_light">Lys</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Sikkerhed og personlige oplysninger</string>
 

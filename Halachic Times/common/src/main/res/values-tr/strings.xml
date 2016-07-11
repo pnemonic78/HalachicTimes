@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Özetler</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Koyu</string>
-    <string name="theme_light">Hafif</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Gizlilik ve güvenlik</string>
 

@@ -13,15 +13,17 @@
     <string name="ringtone_default" msgid="3332469542084549546">"Varsayılan zil sesi"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Varsayılan bildirim sesi"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Varsayılan alarm sesi"</string>
-    <string name="ringtone_silent">Yok</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">Yok</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Ayarlar</string>
-    <string name="pref_general_title">Genel</string>
+    <string name="settings_label" msgid="1626402585530130914">Ayarlar</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">Genel</string>
     <string name="pref_appearance_title">Görünüş</string>
     <string name="pref_about_title">Hakkında</string>
 
     <!-- Theme. -->
-    <string name="theme_title">Tema</string>
+    <string name="night_mode_title">Tema</string>
+    <string name="night_mode_no">Hafif</string>
+    <string name="night_mode_yes">Koyu</string>
 
 </resources>

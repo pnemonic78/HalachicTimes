@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Santraukas</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Tamsi</string>
-    <string name="theme_light">Šviesi</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>
 

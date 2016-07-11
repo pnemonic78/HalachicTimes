@@ -13,15 +13,17 @@
     <string name="ringtone_default" msgid="3332469542084549546">"Стандартна мелодия"</string>
     <string name="notification_sound_default" msgid="5309766396223094324">"Стандартен звук за известяване"</string>
     <string name="alarm_sound_default" msgid="6854264112790616066">"Стандартен звук за будилника"</string>
-    <string name="ringtone_silent">Без</string>
+    <string name="ringtone_silent" msgid="7937634392408977062">Без</string>
 
     <!-- Preferences -->
-    <string name="menu_settings">Настройки</string>
-    <string name="pref_general_title">Общи</string>
+    <string name="settings_label" msgid="1626402585530130914">Настройки</string>
+    <string name="tts_general_section_title" msgid="4402572014604490502">Общи</string>
     <string name="pref_appearance_title">появяване</string>
     <string name="pref_about_title">За</string>
 
     <!-- Theme. -->
-    <string name="theme_title">Тема</string>
+    <string name="night_mode_title">Тема</string>
+    <string name="night_mode_no">Светло</string>
+    <string name="night_mode_yes">Тъмно</string>
 
 </resources>

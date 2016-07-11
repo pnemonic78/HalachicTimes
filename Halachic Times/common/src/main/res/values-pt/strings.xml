@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Sumários</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Escuro</string>
-    <string name="theme_light">Claro</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacidade e segurança</string>
 

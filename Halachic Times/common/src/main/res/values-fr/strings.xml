@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Résumés</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Foncé</string>
-    <string name="theme_light">Clair</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Confidentialité et sécurité</string>
 

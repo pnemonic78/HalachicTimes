@@ -4,10 +4,6 @@
     <!-- Preferences -->
     <string name="summaries_title">Zusammenfassungen</string>
 
-    <!-- Theme. -->
-    <string name="theme_dark">Dunkel</string>
-    <string name="theme_light">Hell</string>
-
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Datenschutz und Sicherheit</string>
 
