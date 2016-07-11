@@ -24,7 +24,7 @@ import android.content.Context;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 
 /**
  * Zmanim application.
@@ -47,6 +47,6 @@ public class ZmanimApplication extends LocationApplication<AddressProvider, Zman
     @Override
     public void onCreate() {
         super.onCreate();
-        ZmanimSettings.init(this);
+        ZmanimPreferences.init(this);
     }
 }

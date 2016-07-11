@@ -37,6 +37,6 @@ public class ZmanimPreferenceFragment extends net.sf.preference.AbstractPreferen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(ZmanimSettings.KEY_OPINION_OMER);
+        initList(ZmanimPreferences.KEY_OPINION_OMER);
     }
 }

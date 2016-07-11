@@ -31,7 +31,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -48,7 +48,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     /** Provider for locations. */
     private ZmanimLocations locations;
     /** The settings and preferences. */
-    private ZmanimSettings settings;
+    private ZmanimPreferences settings;
     /** The adapter. */
     private ZmanimAdapter adapter;
     /** Position index of today's Hebrew day. */
@@ -171,7 +171,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         Context context = this.context;
 
         if (settings == null)
-            settings = new ZmanimSettings(context);
+            settings = new ZmanimPreferences(context);
 
         ZmanimLocations locations = this.locations;
         if (locations == null) {

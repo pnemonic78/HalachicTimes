@@ -52,7 +52,7 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
     private Preference preferenceReminderThursday;
     private Preference preferenceReminderFriday;
     private Preference preferenceReminderSaturday;
-    private ZmanimSettings settings;
+    private ZmanimPreferences settings;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -100,10 +100,10 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
         return xmlId;
     }
 
-    protected ZmanimSettings getSettings() {
+    protected ZmanimPreferences getSettings() {
         if (settings == null) {
             Context context = getActivity();
-            settings = new ZmanimSettings(context);
+            settings = new ZmanimPreferences(context);
         }
         return settings;
     }
@@ -124,13 +124,13 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
 
     protected void initReminderDays(Preference reminderTime) {
         String namePrefix = reminderTime.getKey();
-        this.preferenceReminderSunday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_SUNDAY_SUFFIX);
-        this.preferenceReminderMonday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_MONDAY_SUFFIX);
-        this.preferenceReminderTuesday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_TUESDAY_SUFFIX);
-        this.preferenceReminderWednesday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_WEDNESDAY_SUFFIX);
-        this.preferenceReminderThursday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_THURSDAY_SUFFIX);
-        this.preferenceReminderFriday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_FRIDAY_SUFFIX);
-        this.preferenceReminderSaturday = initReminderDay(namePrefix + ZmanimSettings.REMINDER_SATURDAY_SUFFIX);
+        this.preferenceReminderSunday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SUNDAY_SUFFIX);
+        this.preferenceReminderMonday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_MONDAY_SUFFIX);
+        this.preferenceReminderTuesday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_TUESDAY_SUFFIX);
+        this.preferenceReminderWednesday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_WEDNESDAY_SUFFIX);
+        this.preferenceReminderThursday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_THURSDAY_SUFFIX);
+        this.preferenceReminderFriday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_FRIDAY_SUFFIX);
+        this.preferenceReminderSaturday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SATURDAY_SUFFIX);
     }
 
     protected CheckBoxPreference initReminderDay(String key) {

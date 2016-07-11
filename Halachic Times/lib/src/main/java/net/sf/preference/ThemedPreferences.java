@@ -17,18 +17,18 @@
  *   Moshe Waisberg
  *
  */
-package net.sf.times.common.preference;
+package net.sf.preference;
 
 import android.content.Context;
 
-import net.sf.times.common.R;
+import net.sf.lib.R;
 
 /**
  * Application settings.
  *
  * @author Moshe Waisberg
  */
-public class ThemedSettings extends SimpleSettings {
+public class ThemedPreferences extends SimplePreferences {
 
     /** Preference name for the theme. */
     public static final String KEY_THEME = "theme";
@@ -44,7 +44,7 @@ public class ThemedSettings extends SimpleSettings {
      * @param context
      *         the context.
      */
-    public ThemedSettings(Context context) {
+    public ThemedPreferences(Context context) {
         super(context);
     }
 
@@ -65,8 +65,7 @@ public class ThemedSettings extends SimpleSettings {
      * @return the theme resource id.
      */
     public int getTheme() {
-        String value = preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue));
-        return getTheme(value);
+        return getTheme(preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue)));
     }
 
     protected int getTheme(String value) {

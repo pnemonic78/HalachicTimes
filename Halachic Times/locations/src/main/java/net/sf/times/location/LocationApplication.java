@@ -71,7 +71,7 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
     @Override
     public void onCreate() {
         super.onCreate();
-        LocationSettings.init(this);
+        LocationPreferences.init(this);
     }
 
     @Override

@@ -37,8 +37,8 @@ public class AppearancePreferenceFragment extends net.sf.preference.AbstractPref
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(ZmanimSettings.KEY_COORDS_FORMAT);
-        initList(ZmanimSettings.KEY_THEME);
-        initList(ZmanimSettings.KEY_EMPHASIS_SCALE);
+        initList(ZmanimPreferences.KEY_COORDS_FORMAT);
+        initList(ZmanimPreferences.KEY_THEME);
+        initList(ZmanimPreferences.KEY_EMPHASIS_SCALE);
     }
 }

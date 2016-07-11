@@ -21,7 +21,7 @@ package net.sf.times.compass;
 
 import android.content.Context;
 
-import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.CompassLocations;
 import net.sf.times.location.LocationApplication;
@@ -47,6 +47,6 @@ public class CompassApplication extends LocationApplication<AddressProvider, Com
     @Override
     public void onCreate() {
         super.onCreate();
-        CompassSettings.init(this);
+        CompassPreferences.init(this);
     }
 }

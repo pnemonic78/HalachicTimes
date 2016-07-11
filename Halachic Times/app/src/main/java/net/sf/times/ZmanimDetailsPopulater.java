@@ -22,7 +22,7 @@ package net.sf.times;
 import android.content.Context;
 import android.text.format.DateUtils;
 
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
@@ -44,7 +44,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
      *         the context.
      * @param settings
      */
-    public ZmanimDetailsPopulater(Context context, ZmanimSettings settings) {
+    public ZmanimDetailsPopulater(Context context, ZmanimPreferences settings) {
         super(context, settings);
     }
 
@@ -74,11 +74,11 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     @Override
-    protected void populateImpl(A adapter, boolean remote, Context context, ZmanimSettings settings) {
+    protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         populateImpl(adapter, remote, context, settings, itemId);
     }
 
-    protected void populateImpl(A adapter, boolean remote, Context context, ZmanimSettings settings, int itemId) {
+    protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings, int itemId) {
         ComplexZmanimCalendar calendar = this.calendar;
 
         switch (itemId) {
@@ -146,7 +146,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.sort();
     }
 
-    private void populateHour(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateHour(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         long time;
         int title;
         // Offset is added back when formatted.
@@ -217,7 +217,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.addHour(title, SUMMARY_NONE, time - offset);
     }
 
-    private void populateDawn(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateDawn(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -274,7 +274,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateTallis(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateTallis(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -291,7 +291,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateSunrise(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateSunrise(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -304,7 +304,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateShema(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateShema(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -377,7 +377,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populatePrayers(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populatePrayers(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -442,7 +442,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateMidday(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateMidday(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -455,7 +455,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateEarliestMincha(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateEarliestMincha(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -480,7 +480,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateMincha(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateMincha(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -501,7 +501,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populatePlugHamincha(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populatePlugHamincha(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -574,11 +574,11 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateSunset(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateSunset(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         populateSunset(adapter, cal, settings, 0);
     }
 
-    private void populateSunset(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings, long offset) {
+    private void populateSunset(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings, long offset) {
         Date date;
         int title;
 
@@ -595,11 +595,11 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         }
     }
 
-    private void populateTwilight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateTwilight(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         populateTwilight(adapter, cal, settings, 0);
     }
 
-    private void populateTwilight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings, long offset) {
+    private void populateTwilight(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings, long offset) {
         Date date;
         int title;
 
@@ -634,11 +634,11 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         }
     }
 
-    private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         populateNightfall(adapter, cal, settings, 0);
     }
 
-    private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings, long offset) {
+    private void populateNightfall(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings, long offset) {
         Date date;
         int title;
 
@@ -793,7 +793,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         }
     }
 
-    private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -814,7 +814,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateEatChametz(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateEatChametz(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -831,7 +831,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateBurnChametz(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateBurnChametz(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -848,7 +848,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateEarliestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateEarliestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -869,7 +869,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    private void populateLatestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateLatestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         int title;
 
@@ -890,7 +890,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date);
     }
 
-    protected Date getMidday(ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    protected Date getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         String opinion = settings.getMidday();
         if (OPINION_FIXED.equals(opinion)) {
@@ -901,7 +901,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         return date;
     }
 
-    protected Date getNightfall(ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    protected Date getNightfall(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Date date;
         String opinion = settings.getNightfall();
         if (OPINION_120.equals(opinion)) {
@@ -961,7 +961,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         return date;
     }
 
-    private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimSettings settings) {
+    private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         int endsAfter = settings.getShabbathEndsAfter();
         long offset = settings.getShabbathEnds() * DateUtils.MINUTE_IN_MILLIS;
         switch (endsAfter) {

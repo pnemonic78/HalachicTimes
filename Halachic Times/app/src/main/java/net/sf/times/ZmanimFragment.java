@@ -36,7 +36,7 @@ import android.widget.TextView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -58,7 +58,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /** Provider for locations. */
     protected ZmanimLocations locations;
     /** The settings and preferences. */
-    protected ZmanimSettings settings;
+    protected ZmanimPreferences settings;
     /** The master item selected id. */
     private int highlightItemId;
     /** The master item selected row. */
@@ -97,7 +97,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         super.onCreate(savedInstanceState);
 
         Context context = getContextImpl();
-        settings = new ZmanimSettings(context);
+        settings = new ZmanimPreferences(context);
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         locations = app.getLocations();
     }

@@ -27,7 +27,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.sf.times.compass.lib.R;
-import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationsProvider;
 
@@ -42,7 +42,7 @@ public abstract class BaseCompassActivity extends LocatedActivity {
     /** The main fragment. */
     private CompassFragment fragment;
     /** The settings and preferences. */
-    private CompassSettings settings;
+    private CompassPreferences settings;
     /** The location header location. */
     private TextView headerLocation;
     /** The location header for formatted address. */
@@ -53,7 +53,7 @@ public abstract class BaseCompassActivity extends LocatedActivity {
         super.onCreate(savedInstanceState);
 
         Context context = this;
-        settings = new CompassSettings(context);
+        settings = new CompassPreferences(context);
 
         setTheme(settings.getTheme());
         setContentView(R.layout.compass);

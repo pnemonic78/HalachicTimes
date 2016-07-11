@@ -24,7 +24,7 @@ import android.content.res.Resources;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -74,52 +74,52 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final int HOLIDAY_MASK = 0x000000FF;
     protected static final int MOTZE_MASK = 0xF0000000;
 
-    protected static final String OPINION_10_2 = ZmanimSettings.OPINION_10_2;
-    protected static final String OPINION_11 = ZmanimSettings.OPINION_11;
-    protected static final String OPINION_12 = ZmanimSettings.OPINION_12;
-    protected static final String OPINION_120 = ZmanimSettings.OPINION_120;
-    protected static final String OPINION_120_ZMANIS = ZmanimSettings.OPINION_120_ZMANIS;
-    protected static final String OPINION_13 = ZmanimSettings.OPINION_13;
-    protected static final String OPINION_15 = ZmanimSettings.OPINION_15;
-    protected static final String OPINION_16_1 = ZmanimSettings.OPINION_16_1;
-    protected static final String OPINION_16_1_ALOS = ZmanimSettings.OPINION_16_1_ALOS;
-    protected static final String OPINION_16_1_SUNSET = ZmanimSettings.OPINION_16_1_SUNSET;
-    protected static final String OPINION_18 = ZmanimSettings.OPINION_18;
-    protected static final String OPINION_19_8 = ZmanimSettings.OPINION_19_8;
-    protected static final String OPINION_2 = ZmanimSettings.OPINION_2;
-    protected static final String OPINION_26 = ZmanimSettings.OPINION_26;
-    protected static final String OPINION_3 = ZmanimSettings.OPINION_3;
-    protected static final String OPINION_3_65 = ZmanimSettings.OPINION_3_65;
-    protected static final String OPINION_3_676 = ZmanimSettings.OPINION_3_676;
-    protected static final String OPINION_3_7 = ZmanimSettings.OPINION_3_7;
-    protected static final String OPINION_3_8 = ZmanimSettings.OPINION_3_8;
-    protected static final String OPINION_30 = ZmanimSettings.OPINION_30;
-    protected static final String OPINION_4_37 = ZmanimSettings.OPINION_4_37;
-    protected static final String OPINION_4_61 = ZmanimSettings.OPINION_4_61;
-    protected static final String OPINION_4_8 = ZmanimSettings.OPINION_4_8;
-    protected static final String OPINION_5_88 = ZmanimSettings.OPINION_5_88;
-    protected static final String OPINION_5_95 = ZmanimSettings.OPINION_5_95;
-    protected static final String OPINION_58 = ZmanimSettings.OPINION_58;
-    protected static final String OPINION_6 = ZmanimSettings.OPINION_6;
-    protected static final String OPINION_60 = ZmanimSettings.OPINION_60;
-    protected static final String OPINION_7 = ZmanimSettings.OPINION_7;
-    protected static final String OPINION_7_083 = ZmanimSettings.OPINION_7_083;
-    protected static final String OPINION_7_083_ZMANIS = ZmanimSettings.OPINION_7_083_ZMANIS;
-    protected static final String OPINION_72 = ZmanimSettings.OPINION_72;
-    protected static final String OPINION_72_ZMANIS = ZmanimSettings.OPINION_72_ZMANIS;
-    protected static final String OPINION_8_5 = ZmanimSettings.OPINION_8_5;
-    protected static final String OPINION_90 = ZmanimSettings.OPINION_90;
-    protected static final String OPINION_90_ZMANIS = ZmanimSettings.OPINION_90_ZMANIS;
-    protected static final String OPINION_96 = ZmanimSettings.OPINION_96;
-    protected static final String OPINION_96_ZMANIS = ZmanimSettings.OPINION_96_ZMANIS;
-    protected static final String OPINION_ATERET = ZmanimSettings.OPINION_ATERET;
-    protected static final String OPINION_GRA = ZmanimSettings.OPINION_GRA;
-    protected static final String OPINION_MGA = ZmanimSettings.OPINION_MGA;
-    protected static final String OPINION_FIXED = ZmanimSettings.OPINION_FIXED;
-    protected static final String OPINION_LEVEL = ZmanimSettings.OPINION_LEVEL;
-    protected static final String OPINION_SEA = ZmanimSettings.OPINION_SEA;
-    protected static final String OPINION_TWILIGHT = ZmanimSettings.OPINION_TWILIGHT;
-    protected static final String OPINION_NIGHT = ZmanimSettings.OPINION_NIGHT;
+    protected static final String OPINION_10_2 = ZmanimPreferences.OPINION_10_2;
+    protected static final String OPINION_11 = ZmanimPreferences.OPINION_11;
+    protected static final String OPINION_12 = ZmanimPreferences.OPINION_12;
+    protected static final String OPINION_120 = ZmanimPreferences.OPINION_120;
+    protected static final String OPINION_120_ZMANIS = ZmanimPreferences.OPINION_120_ZMANIS;
+    protected static final String OPINION_13 = ZmanimPreferences.OPINION_13;
+    protected static final String OPINION_15 = ZmanimPreferences.OPINION_15;
+    protected static final String OPINION_16_1 = ZmanimPreferences.OPINION_16_1;
+    protected static final String OPINION_16_1_ALOS = ZmanimPreferences.OPINION_16_1_ALOS;
+    protected static final String OPINION_16_1_SUNSET = ZmanimPreferences.OPINION_16_1_SUNSET;
+    protected static final String OPINION_18 = ZmanimPreferences.OPINION_18;
+    protected static final String OPINION_19_8 = ZmanimPreferences.OPINION_19_8;
+    protected static final String OPINION_2 = ZmanimPreferences.OPINION_2;
+    protected static final String OPINION_26 = ZmanimPreferences.OPINION_26;
+    protected static final String OPINION_3 = ZmanimPreferences.OPINION_3;
+    protected static final String OPINION_3_65 = ZmanimPreferences.OPINION_3_65;
+    protected static final String OPINION_3_676 = ZmanimPreferences.OPINION_3_676;
+    protected static final String OPINION_3_7 = ZmanimPreferences.OPINION_3_7;
+    protected static final String OPINION_3_8 = ZmanimPreferences.OPINION_3_8;
+    protected static final String OPINION_30 = ZmanimPreferences.OPINION_30;
+    protected static final String OPINION_4_37 = ZmanimPreferences.OPINION_4_37;
+    protected static final String OPINION_4_61 = ZmanimPreferences.OPINION_4_61;
+    protected static final String OPINION_4_8 = ZmanimPreferences.OPINION_4_8;
+    protected static final String OPINION_5_88 = ZmanimPreferences.OPINION_5_88;
+    protected static final String OPINION_5_95 = ZmanimPreferences.OPINION_5_95;
+    protected static final String OPINION_58 = ZmanimPreferences.OPINION_58;
+    protected static final String OPINION_6 = ZmanimPreferences.OPINION_6;
+    protected static final String OPINION_60 = ZmanimPreferences.OPINION_60;
+    protected static final String OPINION_7 = ZmanimPreferences.OPINION_7;
+    protected static final String OPINION_7_083 = ZmanimPreferences.OPINION_7_083;
+    protected static final String OPINION_7_083_ZMANIS = ZmanimPreferences.OPINION_7_083_ZMANIS;
+    protected static final String OPINION_72 = ZmanimPreferences.OPINION_72;
+    protected static final String OPINION_72_ZMANIS = ZmanimPreferences.OPINION_72_ZMANIS;
+    protected static final String OPINION_8_5 = ZmanimPreferences.OPINION_8_5;
+    protected static final String OPINION_90 = ZmanimPreferences.OPINION_90;
+    protected static final String OPINION_90_ZMANIS = ZmanimPreferences.OPINION_90_ZMANIS;
+    protected static final String OPINION_96 = ZmanimPreferences.OPINION_96;
+    protected static final String OPINION_96_ZMANIS = ZmanimPreferences.OPINION_96_ZMANIS;
+    protected static final String OPINION_ATERET = ZmanimPreferences.OPINION_ATERET;
+    protected static final String OPINION_GRA = ZmanimPreferences.OPINION_GRA;
+    protected static final String OPINION_MGA = ZmanimPreferences.OPINION_MGA;
+    protected static final String OPINION_FIXED = ZmanimPreferences.OPINION_FIXED;
+    protected static final String OPINION_LEVEL = ZmanimPreferences.OPINION_LEVEL;
+    protected static final String OPINION_SEA = ZmanimPreferences.OPINION_SEA;
+    protected static final String OPINION_TWILIGHT = ZmanimPreferences.OPINION_TWILIGHT;
+    protected static final String OPINION_NIGHT = ZmanimPreferences.OPINION_NIGHT;
 
     /** No summary. */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
@@ -128,7 +128,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     private static final long FAST_ENDS_24 = 24 * DateUtils.MINUTE_IN_MILLIS;
 
     private final Context context;
-    private final ZmanimSettings settings;
+    private final ZmanimPreferences settings;
     protected final ComplexZmanimCalendar calendar;
     private boolean inIsrael;
 
@@ -140,7 +140,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * @param settings
      *         the application settings.
      */
-    public ZmanimPopulater(Context context, ZmanimSettings settings) {
+    public ZmanimPopulater(Context context, ZmanimPreferences settings) {
         this.context = context;
         this.settings = settings;
         this.calendar = new ComplexZmanimCalendar();
@@ -151,7 +151,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return context;
     }
 
-    protected ZmanimSettings getSettings() {
+    protected ZmanimPreferences getSettings() {
         return settings;
     }
 
@@ -188,7 +188,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             Log.e(TAG, "context required to populate");
             return;
         }
-        ZmanimSettings settings = getSettings();
+        ZmanimPreferences settings = getSettings();
 
         prePopulate(adapter);
         populateImpl(adapter, remote, context, settings);
@@ -206,7 +206,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * @param settings
      *         the settings.
      */
-    protected void populateImpl(A adapter, boolean remote, Context context, ZmanimSettings settings) {
+    protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         ComplexZmanimCalendar cal = getCalendar();
         Calendar gcal = cal.getCalendar();
         JewishCalendar jcal = getJewishCalendar();

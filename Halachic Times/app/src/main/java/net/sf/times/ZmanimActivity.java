@@ -58,7 +58,7 @@ import net.sf.times.location.LocationActivity;
 import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferenceActivity;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sf.view.animation.LayoutWeightAnimation;
 
 import java.lang.ref.WeakReference;
@@ -107,7 +107,7 @@ public class ZmanimActivity extends LocatedActivity implements
     /** The navigation bar. */
     private View navigationBar;
     /** The settings and preferences. */
-    protected ZmanimSettings settings;
+    protected ZmanimPreferences settings;
     /** The date picker. */
     private DatePickerDialog datePicker;
     /** The master fragment. */
@@ -260,7 +260,7 @@ public class ZmanimActivity extends LocatedActivity implements
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         Context context = this;
-        settings = new ZmanimSettings(context);
+        settings = new ZmanimPreferences(context);
 
         setTheme(settings.getTheme());
         setContentView(R.layout.times);

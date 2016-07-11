@@ -38,7 +38,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(CompassSettings.KEY_COORDS_FORMAT);
-        initList(CompassSettings.KEY_THEME);
+        initList(CompassPreferences.KEY_COORDS_FORMAT);
+        initList(CompassPreferences.KEY_THEME);
     }
 }

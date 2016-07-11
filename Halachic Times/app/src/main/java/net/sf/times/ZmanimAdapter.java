@@ -32,7 +32,7 @@ import android.widget.TextView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -74,7 +74,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     public static final long NEVER = Long.MIN_VALUE;
 
     protected final LayoutInflater inflater;
-    protected final ZmanimSettings settings;
+    protected final ZmanimPreferences settings;
     protected ComplexZmanimCalendar calendar;
     protected boolean inIsrael;
     protected long now = System.currentTimeMillis();
@@ -148,7 +148,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param settings
      *         the application settings.
      */
-    public ZmanimAdapter(Context context, ZmanimSettings settings) {
+    public ZmanimAdapter(Context context, ZmanimPreferences settings) {
         super(context, R.layout.times_item);
         this.inflater = LayoutInflater.from(context);
         this.calendar = new ComplexZmanimCalendar();
@@ -537,9 +537,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (TextUtils.isEmpty(suffix)) {
             return null;
         }
-        if (ZmanimSettings.OMER_B.equals(suffix)) {
+        if (ZmanimPreferences.OMER_B.equals(suffix)) {
             suffix = context.getString(R.string.omer_b);
-        } else if (ZmanimSettings.OMER_L.equals(suffix)) {
+        } else if (ZmanimPreferences.OMER_L.equals(suffix)) {
             suffix = context.getString(R.string.omer_l);
         }
 

@@ -17,7 +17,7 @@
  *   Moshe Waisberg
  *
  */
-package net.sf.times.common.preference;
+package net.sf.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +28,7 @@ import android.preference.PreferenceManager;
  *
  * @author Moshe Waisberg
  */
-public class SimpleSettings {
+public class SimplePreferences {
 
     protected final Context context;
     protected final SharedPreferences preferences;
@@ -39,7 +39,7 @@ public class SimpleSettings {
      * @param context
      *         the context.
      */
-    public SimpleSettings(Context context) {
+    public SimplePreferences(Context context) {
         Context app = context.getApplicationContext();
         if (app != null)
             context = app;

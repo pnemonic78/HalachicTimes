@@ -21,7 +21,7 @@ package net.sf.times;
 
 import android.content.Context;
 
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
 /**
@@ -38,7 +38,7 @@ public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
      *         the context.
      * @param settings
      */
-    public CandlesPopulater(Context context, ZmanimSettings settings) {
+    public CandlesPopulater(Context context, ZmanimPreferences settings) {
         super(context, settings);
     }
 

@@ -32,7 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.ZmanimLocation;
 
 /**
@@ -70,7 +70,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     /** Orientation matrix. */
     private final float[] orientation = new float[3];
     /** The settings and preferences. */
-    private CompassSettings settings;
+    private CompassPreferences settings;
 
     public CompassFragment() {
         holiest = new Location(LocationManager.GPS_PROVIDER);
@@ -93,7 +93,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         super.onCreate(savedInstanceState);
 
         Context context = getActivity();
-        settings = new CompassSettings(context);
+        settings = new CompassPreferences(context);
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnetic = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
@@ -143,7 +143,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void setLocation(Location location) {
         float bearing;
         String bearingType = settings.getBearing();
-        if (CompassSettings.BEARING_GREAT_CIRCLE.equals(bearingType)) {
+        if (CompassPreferences.BEARING_GREAT_CIRCLE.equals(bearingType)) {
             bearing = location.bearingTo(holiest);
         } else {
             bearing = ZmanimLocation.angleTo(location, holiest);

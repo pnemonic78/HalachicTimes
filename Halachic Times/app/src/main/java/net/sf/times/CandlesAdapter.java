@@ -23,7 +23,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
 /**
@@ -35,7 +35,7 @@ public class CandlesAdapter extends ZmanimAdapter {
 
     private int candles;
 
-    public CandlesAdapter(Context context, ZmanimSettings settings) {
+    public CandlesAdapter(Context context, ZmanimPreferences settings) {
         super(context, settings);
     }
 

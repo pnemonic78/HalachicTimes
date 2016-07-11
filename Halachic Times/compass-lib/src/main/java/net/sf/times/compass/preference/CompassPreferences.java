@@ -22,14 +22,14 @@ package net.sf.times.compass.preference;
 import android.content.Context;
 
 import net.sf.times.compass.lib.R;
-import net.sf.times.location.LocationSettings;
+import net.sf.times.location.LocationPreferences;
 
 /**
  * Application settings.
  *
  * @author Moshe Waisberg
  */
-public class CompassSettings extends LocationSettings {
+public class CompassPreferences extends LocationPreferences {
 
     /** Preference name for the compass bearing type. */
     public static final String KEY_COMPASS_BEARING = "compass.bearing";
@@ -47,7 +47,7 @@ public class CompassSettings extends LocationSettings {
      * @param context
      *         the context.
      */
-    public CompassSettings(Context context) {
+    public CompassPreferences(Context context) {
         super(context);
     }
 
@@ -84,7 +84,7 @@ public class CompassSettings extends LocationSettings {
      *         the context.
      */
     public static void init(Context context) {
-        LocationSettings.init(context);
+        LocationPreferences.init(context);
 
         BEARING_GREAT_CIRCLE = context.getString(R.string.compass_bearing_value_circle);
         BEARING_RHUMB_LINE = context.getString(R.string.compass_bearing_value_rhumb);

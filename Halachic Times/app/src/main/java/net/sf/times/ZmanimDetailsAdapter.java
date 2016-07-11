@@ -23,7 +23,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
-import net.sf.times.preference.ZmanimSettings;
+import net.sf.times.preference.ZmanimPreferences;
 
 /**
  * Adapter for all opinions of an halachic time.
@@ -32,7 +32,7 @@ import net.sf.times.preference.ZmanimSettings;
  */
 public class ZmanimDetailsAdapter extends ZmanimAdapter {
 
-    public ZmanimDetailsAdapter(Context context, ZmanimSettings settings) {
+    public ZmanimDetailsAdapter(Context context, ZmanimPreferences settings) {
         super(context, settings);
     }
 

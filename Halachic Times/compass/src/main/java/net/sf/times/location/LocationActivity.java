@@ -21,7 +21,7 @@ package net.sf.times.location;
 
 import android.content.Context;
 
-import net.sf.times.compass.preference.CompassSettings;
+import net.sf.times.compass.preference.CompassPreferences;
 
 /**
  * Pick a city from the list.
@@ -33,7 +33,7 @@ public class LocationActivity extends LocationTabActivity {
     @Override
     protected int getThemeId() {
         Context context = this;
-        CompassSettings settings = new CompassSettings(context);
+        CompassPreferences settings = new CompassPreferences(context);
         return settings.getTheme();
     }
 }

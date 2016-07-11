@@ -38,11 +38,11 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        after = (ListPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_AFTER);
+        after = (ListPreference) findPreference(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER);
         int shabbathAfter = getSettings().toId(after.getValue());
         shabbathAfterName = getString(shabbathAfter);
 
-        seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_SHABBATH_ENDS_MINUTES);
+        seek = (SeekBarDialogPreference) findPreference(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES);
         seek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
         seek.setOnPreferenceChangeListener(this);
     }

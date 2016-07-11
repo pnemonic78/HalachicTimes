@@ -33,7 +33,7 @@ import java.util.Locale;
 public class DefaultLocationFormatter implements LocationFormatter {
 
     /** The settings and preferences. */
-    private LocationSettings settings;
+    private LocationPreferences settings;
     /** The coordinates format for decimal format. */
     private final String formatDecimal;
     /** The coordinates format for decimal format with elevation. */
@@ -46,7 +46,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     private final String formatElevation;
 
     public DefaultLocationFormatter(Context context) {
-        settings = new LocationSettings(context);
+        settings = new LocationPreferences(context);
 
         formatDecimal = context.getString(R.string.location_decimal);
         formatDecimalElevation = context.getString(R.string.location_decimal_with_elevation);
@@ -81,7 +81,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     @Override
     public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
         final String notation = settings.getCoordinatesFormat();
-        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
+        if (LocationPreferences.FORMAT_SEXAGESIMAL.equals(notation)) {
             return formatCoordinatesSexagesimal(latitude, longitude, elevation, settings.isElevation());
         }
         return formatCoordinatesDecimal(latitude, longitude, elevation, settings.isElevation());
@@ -112,7 +112,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     @Override
     public CharSequence formatLatitude(double latitude) {
         final String notation = settings.getCoordinatesFormat();
-        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
+        if (LocationPreferences.FORMAT_SEXAGESIMAL.equals(notation)) {
             return formatLatitudeSexagesimal(latitude);
         }
         return formatLatitudeDecimal(latitude);
@@ -129,7 +129,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     @Override
     public CharSequence formatLongitude(double coordinate) {
         final String notation = settings.getCoordinatesFormat();
-        if (LocationSettings.FORMAT_SEXAGESIMAL.equals(notation)) {
+        if (LocationPreferences.FORMAT_SEXAGESIMAL.equals(notation)) {
             return formatLongitudeSexagesimal(coordinate);
         }
         return formatLongitudeDecimal(coordinate);

@@ -38,6 +38,6 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(CompassSettings.KEY_COMPASS_BEARING);
+        initList(CompassPreferences.KEY_COMPASS_BEARING);
     }
 }

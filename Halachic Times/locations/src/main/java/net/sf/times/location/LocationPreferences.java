@@ -23,14 +23,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 
-import net.sf.times.common.preference.ThemedSettings;
+import net.sf.preference.ThemedPreferences;
 
 /**
  * Location settings.
  *
  * @author Moshe Waisberg
  */
-public class LocationSettings extends ThemedSettings {
+public class LocationPreferences extends ThemedPreferences {
 
     /** Preference name for the latitude. */
     private static final String KEY_LATITUDE = "latitude";
@@ -62,7 +62,7 @@ public class LocationSettings extends ThemedSettings {
      * @param context
      *         the context.
      */
-    public LocationSettings(Context context) {
+    public LocationPreferences(Context context) {
         super(context);
         migrate(context, preferences);
     }
@@ -89,7 +89,7 @@ public class LocationSettings extends ThemedSettings {
      *         the context.
      */
     public static void init(Context context) {
-        ThemedSettings.init(context);
+        ThemedPreferences.init(context);
 
         FORMAT_NONE = context.getString(R.string.coords_format_value_none);
         FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);

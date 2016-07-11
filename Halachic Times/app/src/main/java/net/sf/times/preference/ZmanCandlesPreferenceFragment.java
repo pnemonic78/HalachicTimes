@@ -33,7 +33,7 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SeekBarDialogPreference seek = (SeekBarDialogPreference) findPreference(ZmanimSettings.KEY_OPINION_CANDLES);
+        SeekBarDialogPreference seek = (SeekBarDialogPreference) findPreference(ZmanimPreferences.KEY_OPINION_CANDLES);
         seek.setSummaryFormat(R.plurals.candles_summary);
         seek.setOnPreferenceChangeListener(this);
     }

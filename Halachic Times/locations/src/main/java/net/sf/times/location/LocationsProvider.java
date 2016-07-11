@@ -123,7 +123,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /** The location. */
     private Location location;
     /** The settings and preferences. */
-    private LocationSettings settings;
+    private LocationPreferences settings;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     /** The time zone. */
@@ -152,7 +152,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (app != null)
             context = app;
         this.context = context;
-        settings = new LocationSettings(context);
+        settings = new LocationPreferences(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         timeZone = TimeZone.getDefault();
