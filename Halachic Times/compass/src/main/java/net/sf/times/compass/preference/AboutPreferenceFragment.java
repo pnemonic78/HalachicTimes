@@ -24,8 +24,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 
-import net.sf.times.compass.R;
 import net.sf.preference.AbstractPreferenceFragment;
+import net.sf.times.compass.R;
 
 /**
  * This fragment shows the preferences for the About header.
