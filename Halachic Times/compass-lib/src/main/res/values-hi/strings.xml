@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Compass -->
+    <string name="menu_compass">कंपास</string>
+    <string name="title_activity_compass">प्रार्थना की दिशा</string>
+    <string name="compass_summary">यरूशलेम में परम पवित्र करने के लिए प्रार्थना की दिशा</string>
+    <string name="compass_bearing">अभिविन्यास</string>
+    <string name="compass_bearing_circle">महावृत्त (कम से कम पथ)</string>
+    <string name="compass_bearing_rhumb">रूंब लाइन (निरंतर कोण)</string>
+
+</resources>
