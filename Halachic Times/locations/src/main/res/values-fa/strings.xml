@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activity -->
+    <string name="menu_location">محل</string>
+    <string name="title_activity_location">محل من</string>
+
+    <!-- Preferences -->
+    <string name="coords_title">مختصات</string>
+    <string name="coords_format_title">فرمت مختصات</string>
+    <string name="coords_format_decimal">اعشاری</string>
+    <string name="coords_format_sexagesimal">دوره شصت ساله</string>
+    <string name="coords_elevation_title">بلندی</string>
+
+    <!-- Location -->
+    <string name="location_unknown">آدرس نامعلوم</string>
+    <string name="location_elevation">%.0fم</string>
+    <string name="location_decimal">عرض. %1$s; طول. %2$s</string>
+    <string name="location_decimal_with_elevation">عرض. %1$s; طول. %2$s بلندی %3$s</string>
+    <string name="north">شمال</string>
+    <string name="east">شرق</string>
+    <string name="south">جنوب</string>
+    <string name="west">غرب</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">پاک کردن تاریخچه</string>
+
+</resources>

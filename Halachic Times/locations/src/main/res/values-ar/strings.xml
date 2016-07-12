@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activity -->
+    <string name="menu_location">موقع</string>
+    <string name="title_activity_location">موقعي</string>
+
+    <!-- Preferences -->
+    <string name="coords_title">إحداثيات</string>
+    <string name="coords_format_title">شكل إحداثيات</string>
+    <string name="coords_format_decimal">عدد عشري</string>
+    <string name="coords_format_sexagesimal">الستيني</string>
+    <string name="coords_elevation_title">ارتفاع</string>
+
+    <!-- Location -->
+    <string name="location_unknown">عنوان غير معروف</string>
+    <string name="location_elevation">%.0fم</string>
+    <string name="location_decimal">خط العرض %1$s; خط الطول %2$s</string>
+    <string name="location_decimal_with_elevation">خط العرض %1$s; خط الطول %2$s; ارتفاع %3$s</string>
+    <string name="north">شمال</string>
+    <string name="east">الشرق</string>
+    <string name="south">جنوب</string>
+    <string name="west">غرب</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">تاريخ واضح</string>
+
+</resources>

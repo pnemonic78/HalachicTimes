@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activity -->
+    <string name="menu_location">स्थान</string>
+    <string name="title_activity_location">मेरा स्थान</string>
+
+    <!-- Preferences -->
+    <string name="coords_title">निर्देशांक</string>
+    <string name="coords_format_title">निर्देशांक प्रारूप</string>
+    <string name="coords_format_decimal">दशमलव</string>
+    <string name="coords_format_sexagesimal">साठवाँ</string>
+    <string name="coords_elevation_title">ऊंचाई</string>
+
+    <!-- Location -->
+    <string name="location_unknown">अज्ञात का पता</string>
+    <string name="location_elevation">%.0fम</string>
+    <string name="location_decimal">अक्षांश %1$s; देशान्तर %2$s</string>
+    <string name="location_decimal_with_elevation">अक्षांश %1$s; देशान्तर %2$s ऊंचाई %3$s</string>
+    <string name="north">उ</string>
+    <string name="east">पू</string>
+    <string name="south">द</string>
+    <string name="west">प</string>
+
+    <!-- Settings screen - Privacy -->
+    <string name="pref_privacy_clear_history">इतिहास मिटा दें</string>
+
+</resources>
