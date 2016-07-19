@@ -29,23 +29,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
@@ -60,7 +54,11 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-public class LocationTabActivity extends Activity implements TextWatcher, OnClickListener, OnEditorActionListener, OnItemClickListener, OnFavoriteClickListener {
+public class LocationTabActivity extends Activity implements
+        OnClickListener,
+        OnItemClickListener,
+        OnFavoriteClickListener,
+        SearchView.OnQueryTextListener {
 
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
@@ -84,7 +82,7 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
 
     private static final int WHAT_FAVORITE = 1;
 
-    private EditText searchText;
+    private SearchView searchText;
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
     private LocationAdapter adapterHistory;
@@ -108,16 +106,10 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
         }
         setContentView(R.layout.locations);
 
-        EditText searchText = (EditText) findViewById(R.id.search_src_text);
-        searchText.addTextChangedListener(this);
-        searchText.setOnEditorActionListener(this);
-        View searchTextParent = (View) searchText.getParent();
-        searchTextParent.setBackgroundDrawable(searchText.getBackground());
-        searchText.setBackgroundDrawable(null);
+        SearchView searchText = (SearchView) findViewById(R.id.search_location);
+        searchText.setOnQueryTextListener(this);
+        searchText.setOnSearchClickListener(this);
         this.searchText = searchText;
-
-        View searchClear = findViewById(R.id.search_close_btn);
-        searchClear.setOnClickListener(this);
 
         View myLocation = findViewById(R.id.my_location);
         myLocation.setOnClickListener(this);
@@ -182,20 +174,16 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
     protected void search(CharSequence query, Location loc) {
         populateLists();
 
-        EditText searchText = this.searchText;
+        SearchView searchText = this.searchText;
         searchText.requestFocus();
-        searchText.setText(query);
-        if (!TextUtils.isEmpty(query))
-            searchText.setSelection(0, query.length());
+        searchText.setQuery(query, false);
     }
 
     @Override
     public void onClick(View view) {
         final int id = view.getId();
 
-        if (id == R.id.search_close_btn) {
-            searchText.setText(null);
-        } else if (id == R.id.my_location) {
+        if (id == R.id.my_location) {
             gotoHere();
         }
     }
@@ -264,78 +252,48 @@ public class LocationTabActivity extends Activity implements TextWatcher, OnClic
     }
 
     @Override
-    public void afterTextChanged(Editable s) {
+    public boolean onQueryTextChange(String newText) {
         if (adapterAll != null) {
-            adapterAll.getFilter().filter(s);
+            adapterAll.getFilter().filter(newText);
         }
-
         if (adapterFavorites != null) {
-            adapterFavorites.getFilter().filter(s);
+            adapterFavorites.getFilter().filter(newText);
         }
-
         if (adapterHistory != null) {
-            adapterHistory.getFilter().filter(s);
+            adapterHistory.getFilter().filter(newText);
         }
+        return true;
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-    }
-
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        // Maybe user typed "latitude,longitude"?
-        boolean submit = false;
-        switch (actionId) {
-            case EditorInfo.IME_ACTION_NEXT:
-            case EditorInfo.IME_ACTION_DONE:
-            case EditorInfo.IME_ACTION_GO:
-                submit = true;
-                break;
-            case EditorInfo.IME_ACTION_UNSPECIFIED:
-                if (event != null) {
-                    switch (event.getKeyCode()) {
-                        case KeyEvent.KEYCODE_ENTER:
-                            submit = true;
-                            break;
-                    }
-                }
-                break;
-        }
-
-        if (submit) {
-            CharSequence text = v.getText();
+    public boolean onQueryTextSubmit(String query) {
+        if (!TextUtils.isEmpty(query)) {
             Location loc = null;
-            if (!TextUtils.isEmpty(text)) {
-                String textStr = text.toString();
-                String[] tokens = textStr.split("[,;]");
-                if (tokens.length >= 2) {
-                    try {
-                        double latitude = Location.convert(tokens[0]);
-                        double longitude = Location.convert(tokens[1]);
+            String[] tokens = query.split("[,;]");
+            if (tokens.length >= 2) {
+                try {
+                    double latitude = Location.convert(tokens[0]);
+                    double longitude = Location.convert(tokens[1]);
 
-                        loc = new Location(GeocoderBase.USER_PROVIDER);
-                        loc.setLatitude(latitude);
-                        loc.setLongitude(longitude);
-                        loc.setTime(System.currentTimeMillis());
+                    loc = new Location(GeocoderBase.USER_PROVIDER);
+                    loc.setLatitude(latitude);
+                    loc.setLongitude(longitude);
+                    loc.setTime(System.currentTimeMillis());
 
-                        if (tokens.length >= 3) {
-                            double elevation = Double.parseDouble(tokens[2]);
+                    if (tokens.length >= 3) {
+                        double elevation = Double.parseDouble(tokens[2]);
 
-                            loc.setAltitude(elevation);
-                        }
-                    } catch (IllegalArgumentException e) {
-                        // Not valid coordinate.
+                        loc.setAltitude(elevation);
                     }
+                } catch (IllegalArgumentException e) {
+                    // Not valid coordinate.
                 }
             }
             setAddress(loc);
+            return true;
         }
-        return submit;
+
+        return false;
     }
 
     /**

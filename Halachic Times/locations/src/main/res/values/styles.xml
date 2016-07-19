@@ -22,8 +22,4 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Widget.Location.Search" parent="Widget.TextView">
-        <item name="android:inputType">text</item>
-    </style>
-
 </resources>
