@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -53,6 +54,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     private Context context;
     protected LayoutInflater inflater;
     private OnClickListener onClickListener;
+    /** The scroller. */
+    private ScrollView scrollView;
     /** The list. */
     protected ViewGroup list;
     /** Provider for locations. */
@@ -111,7 +114,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list = (ViewGroup) view.findViewById(android.R.id.list);
+        this.scrollView = (ScrollView) view;
+        this.list = (ViewGroup) view.findViewById(android.R.id.list);
     }
 
     /**
@@ -418,6 +422,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             view.setBackground(getSelectedBackground());
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         highlightRow = view;
+        // Scroll to the row
+        scrollView.requestChildFocus(list, view);
     }
 
     /**

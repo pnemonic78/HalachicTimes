@@ -474,6 +474,8 @@ public class ZmanimActivity extends LocatedActivity implements
                 detailsListFragment.populateTimes(date, itemId);
                 detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
             }
+            masterFragment.unhighlight();
+            masterFragment.highlight(itemId);
             if (isDetailsShowing())
                 hideDetails();
             else
