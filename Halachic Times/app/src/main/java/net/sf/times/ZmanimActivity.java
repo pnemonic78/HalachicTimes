@@ -89,6 +89,7 @@ public class ZmanimActivity extends LocatedActivity implements
     private static final int WHAT_LOCATION = 3;
     private static final int WHAT_SETTINGS = 4;
     private static final int WHAT_TODAY = 5;
+    private static final int WHAT_TOMORROW = 6;
 
     private static final int CHILD_MAIN = 0;
     private static final int CHILD_DETAILS = 1;
@@ -96,8 +97,11 @@ public class ZmanimActivity extends LocatedActivity implements
     private static final int CHILD_DETAILS_LIST = 0;
     private static final int CHILD_DETAILS_CANDLES = 1;
 
+    /** Unknown date. */
+    private static final long NEVER = ZmanimAdapter.NEVER;
+
     /** The date. */
-    private final Calendar date = Calendar.getInstance();
+    private final Calendar calendar = Calendar.getInstance();
     /** The location header Gregorian date. */
     private TextView headerGregorianDate;
     /** The location header location. */
@@ -165,10 +169,10 @@ public class ZmanimActivity extends LocatedActivity implements
                     activity.startActivity(new Intent(context, CompassActivity.class));
                     break;
                 case WHAT_DATE:
-                    Calendar date = activity.date;
-                    final int year = date.get(Calendar.YEAR);
-                    final int month = date.get(Calendar.MONTH);
-                    final int day = date.get(Calendar.DAY_OF_MONTH);
+                    Calendar calendar = activity.calendar;
+                    final int year = calendar.get(Calendar.YEAR);
+                    final int month = calendar.get(Calendar.MONTH);
+                    final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     if (activity.datePicker == null) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             Resources res = context.getResources();
@@ -188,8 +192,9 @@ public class ZmanimActivity extends LocatedActivity implements
                     activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
                     break;
                 case WHAT_TODAY:
+                case WHAT_TOMORROW:
                     activity.setDate(System.currentTimeMillis());
-                    activity.populateFragments(activity.date);
+                    activity.populateFragments(activity.calendar);
                     break;
             }
         }
@@ -207,13 +212,22 @@ public class ZmanimActivity extends LocatedActivity implements
         super.onCreate(savedInstanceState);
         init();
         initLocation();
+        handleIntent(getIntent());
+    }
 
-        Intent intent = getIntent();
-        long date = intent.getLongExtra(EXTRA_DATE, 0L);
-        if (date == 0L) {
-            date = intent.getLongExtra(EXTRA_TIME, 0L);
-            if (date == 0L)
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    protected void handleIntent(Intent intent) {
+        long date = intent.getLongExtra(EXTRA_DATE, NEVER);
+        if (date == NEVER) {
+            date = intent.getLongExtra(EXTRA_TIME, NEVER);
+            if (date == NEVER) {
                 date = System.currentTimeMillis();
+            }
         }
         setDate(date);
     }
@@ -221,7 +235,7 @@ public class ZmanimActivity extends LocatedActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putLong(EXTRA_DATE, date.getTimeInMillis());
+        outState.putLong(EXTRA_DATE, calendar.getTimeInMillis());
         outState.putInt(PARAMETER_DETAILS, selectedId);
     }
 
@@ -319,17 +333,18 @@ public class ZmanimActivity extends LocatedActivity implements
      * Set the date for the list.
      *
      * @param date
-     *         the date.
+     *         the date, in milliseconds.
      */
     private void setDate(long date) {
-        this.date.setTimeInMillis(date);
-        this.date.setTimeZone(getTimeZone());
+        calendar.setTimeZone(getTimeZone());
+        calendar.setTimeInMillis(date);
+        scheduleNextDay();
 
         TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
         if (textGregorian == null)
             return;
-        CharSequence dateGregorian = DateUtils.formatDateTime(this, this.date.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+        CharSequence dateGregorian = DateUtils.formatDateTime(this, calendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                 | DateUtils.FORMAT_SHOW_WEEKDAY);
         textGregorian.setText(dateGregorian);
     }
@@ -345,16 +360,16 @@ public class ZmanimActivity extends LocatedActivity implements
      *         the day of the month.
      */
     private void setDate(int year, int monthOfYear, int dayOfMonth) {
-        date.set(Calendar.YEAR, year);
-        date.set(Calendar.MONTH, monthOfYear);
-        date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        date.setTimeZone(getTimeZone());
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, monthOfYear);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        calendar.setTimeZone(getTimeZone());
 
         TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
         if (textGregorian == null)
             return;
-        CharSequence dateGregorian = DateUtils.formatDateTime(this, date.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
+        CharSequence dateGregorian = DateUtils.formatDateTime(this, calendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
                 | DateUtils.FORMAT_SHOW_WEEKDAY);
         textGregorian.setText(dateGregorian);
     }
@@ -365,7 +380,7 @@ public class ZmanimActivity extends LocatedActivity implements
             @Override
             public void run() {
                 populateHeader();
-                populateFragments(date);
+                populateFragments(calendar);
             }
         };
     }
@@ -429,7 +444,7 @@ public class ZmanimActivity extends LocatedActivity implements
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         setDate(year, monthOfYear, dayOfMonth);
-        populateFragments(date);
+        populateFragments(calendar);
     }
 
     @Override
@@ -467,14 +482,14 @@ public class ZmanimActivity extends LocatedActivity implements
             return;
 
         if (viewSwitcher != null) {
+            masterFragment.unhighlight();
             if (itemId == R.string.candles) {
-                candlesFragment.populateTimes(date);
+                candlesFragment.populateTimes(calendar);
                 detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
             } else {
-                detailsListFragment.populateTimes(date, itemId);
+                detailsListFragment.populateTimes(calendar, itemId);
                 detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
             }
-            masterFragment.unhighlight();
             masterFragment.highlight(itemId);
             if (isDetailsShowing())
                 hideDetails();
@@ -485,13 +500,13 @@ public class ZmanimActivity extends LocatedActivity implements
             hideDetails();
             masterFragment.unhighlight();
         } else {
+            masterFragment.unhighlight();
             if (itemId == R.string.candles) {
                 detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
             } else {
-                detailsListFragment.populateTimes(date, itemId);
+                detailsListFragment.populateTimes(calendar, itemId);
                 detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_LIST);
             }
-            masterFragment.unhighlight();
             masterFragment.highlight(itemId);
             if (!isDetailsShowing())
                 showDetails();
@@ -710,8 +725,8 @@ public class ZmanimActivity extends LocatedActivity implements
     }
 
     private void navigateYesterday() {
-        Calendar date = this.date;
-        date.add(Calendar.DATE, -1);
+        Calendar calendar = this.calendar;
+        calendar.add(Calendar.DATE, -1);
 
         if (localeRTL) {
             slideLeft(masterFragment.getView());
@@ -721,13 +736,13 @@ public class ZmanimActivity extends LocatedActivity implements
             slideRight(detailsFragmentSwitcher);
         }
 
-        setDate(date.getTimeInMillis());
-        populateFragments(date);
+        setDate(calendar.getTimeInMillis());
+        populateFragments(calendar);
     }
 
     private void navigateTomorrow() {
-        Calendar date = this.date;
-        date.add(Calendar.DATE, +1);
+        Calendar calendar = this.calendar;
+        calendar.add(Calendar.DATE, +1);
 
         if (localeRTL) {
             slideRight(masterFragment.getView());
@@ -737,8 +752,8 @@ public class ZmanimActivity extends LocatedActivity implements
             slideLeft(detailsFragmentSwitcher);
         }
 
-        setDate(date.getTimeInMillis());
-        populateFragments(date);
+        setDate(calendar.getTimeInMillis());
+        populateFragments(calendar);
     }
 
     @Override
@@ -800,5 +815,51 @@ public class ZmanimActivity extends LocatedActivity implements
     @Override
     protected Class<? extends Activity> getLocationActivityClass() {
         return LocationActivity.class;
+    }
+
+    /**
+     * Refresh the list at midnight for the next civil day.
+     */
+    private void scheduleNextDay() {
+        Calendar today = Calendar.getInstance();
+        if (!isToday(calendar, today)) {
+            handler.removeMessages(WHAT_TOMORROW);
+            return;
+        }
+        long now = today.getTimeInMillis();
+
+        Calendar tomorrow = today;
+        tomorrow.add(Calendar.DAY_OF_MONTH, 1);
+        tomorrow.set(Calendar.HOUR_OF_DAY, 0);
+        tomorrow.set(Calendar.MINUTE, 0);
+        tomorrow.set(Calendar.SECOND, 0);
+        tomorrow.set(Calendar.MILLISECOND, 0);
+
+        handler.sendEmptyMessageDelayed(WHAT_TOMORROW, tomorrow.getTimeInMillis() - now);
+    }
+
+    private boolean isToday(Calendar when, Calendar today) {
+        int whenYear = when.get(Calendar.YEAR);
+        int whenMonth = when.get(Calendar.MONTH);
+        int whenDay = when.get(Calendar.DAY_OF_MONTH);
+
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH);
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
+
+        return (whenYear == todayYear) && (whenMonth == todayMonth) && (whenDay == todayDay);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        handler.removeMessages(WHAT_TOGGLE_DETAILS);
+        handler.removeMessages(WHAT_COMPASS);
+        handler.removeMessages(WHAT_DATE);
+        handler.removeMessages(WHAT_LOCATION);
+        handler.removeMessages(WHAT_SETTINGS);
+        handler.removeMessages(WHAT_TODAY);
+        handler.removeMessages(WHAT_TOMORROW);
     }
 }
