@@ -20,7 +20,8 @@
 package net.sf.times.compass.bahai;
 
 /**
- * Show the direction in which to pray. Points to to the tomb of Bahá\'u\'lláh in Bahjí, Israel.
+ * Show the direction in which to pray.
+ * Points to to the tomb of Bahá'u'lláh in Bahjí, Israel.
  *
  * @author Moshe Waisberg
  */

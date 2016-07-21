@@ -29,8 +29,8 @@ import net.sf.times.compass.preference.CompassPreferenceActivity;
 import net.sf.times.location.LocationActivity;
 
 /**
- * Show the direction in which to pray. Points to the Holy of Holies in
- * Jerusalem in Israel.
+ * Show the direction in which to pray.
+ * Points to the Holy of Holies in Jerusalem in Israel.
  *
  * @author Moshe Waisberg
  */

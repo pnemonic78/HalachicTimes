@@ -36,7 +36,8 @@ import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.ZmanimLocation;
 
 /**
- * Show the direction in which to pray. Points to the Holy of Holies in Jerusalem in Israel.
+ * Show the direction in which to pray.
+ * Points to the Holy of Holies in Jerusalem in Israel.
  *
  * @author Moshe Waisberg
  */

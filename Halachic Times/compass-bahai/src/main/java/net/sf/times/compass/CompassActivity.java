@@ -30,8 +30,8 @@ import net.sf.times.compass.preference.CompassPreferenceActivity;
 import net.sf.times.location.LocationActivity;
 
 /**
- * Show the direction in which to pray. Points to the Holy of Holies in
- * Jerusalem in Israel.
+ * Show the direction in which to pray.
+ * Points to the Points to to the tomb of Bahá'u'lláh in Bahjí in Israel.
  *
  * @author Moshe Waisberg
  */

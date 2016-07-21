@@ -345,7 +345,6 @@ public class LocationTabActivity extends Activity implements
                     activity.adapterAll.notifyDataSetChanged();
                     activity.adapterFavorites.notifyDataSetChanged();
                     activity.adapterHistory.notifyDataSetChanged();
-
                     break;
             }
         }
@@ -360,5 +359,12 @@ public class LocationTabActivity extends Activity implements
 
     protected int getThemeId() {
         return R.style.Theme_Base;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        handler.removeMessages(WHAT_FAVORITE);
     }
 }

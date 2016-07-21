@@ -89,7 +89,6 @@ public class ZmanimActivity extends LocatedActivity implements
     private static final int WHAT_LOCATION = 3;
     private static final int WHAT_SETTINGS = 4;
     private static final int WHAT_TODAY = 5;
-    private static final int WHAT_TOMORROW = 6;
 
     private static final int CHILD_MAIN = 0;
     private static final int CHILD_DETAILS = 1;
@@ -192,7 +191,6 @@ public class ZmanimActivity extends LocatedActivity implements
                     activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
                     break;
                 case WHAT_TODAY:
-                case WHAT_TOMORROW:
                     activity.setDate(System.currentTimeMillis());
                     activity.populateFragments(activity.calendar);
                     break;
@@ -823,7 +821,6 @@ public class ZmanimActivity extends LocatedActivity implements
     private void scheduleNextDay() {
         Calendar today = Calendar.getInstance();
         if (!isToday(calendar, today)) {
-            handler.removeMessages(WHAT_TOMORROW);
             return;
         }
         long now = today.getTimeInMillis();
@@ -835,7 +832,7 @@ public class ZmanimActivity extends LocatedActivity implements
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
-        handler.sendEmptyMessageDelayed(WHAT_TOMORROW, tomorrow.getTimeInMillis() - now);
+        handler.sendEmptyMessageDelayed(WHAT_TODAY, tomorrow.getTimeInMillis() - now);
     }
 
     private boolean isToday(Calendar when, Calendar today) {
@@ -860,6 +857,5 @@ public class ZmanimActivity extends LocatedActivity implements
         handler.removeMessages(WHAT_LOCATION);
         handler.removeMessages(WHAT_SETTINGS);
         handler.removeMessages(WHAT_TODAY);
-        handler.removeMessages(WHAT_TOMORROW);
     }
 }

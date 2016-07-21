@@ -697,7 +697,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         manualLocation = false;
         locationListeners.clear();
         removeUpdates();
+        handler.removeMessages(WHAT_ADDRESS);
+        handler.removeMessages(WHAT_CHANGED);
+        handler.removeMessages(WHAT_ELEVATION);
         handler.removeMessages(WHAT_START);
+        handler.removeMessages(WHAT_STOP);
 
         context.unregisterReceiver(broadcastReceiver);
 
