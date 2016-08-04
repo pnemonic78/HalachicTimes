@@ -2,6 +2,7 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
+        <item>Anchorage</item>
         <item>Vancouver</item>
         <item>San Francisco</item>
         <item>Seattle</item>
@@ -31,7 +32,9 @@
         <item>Buenos Aires</item>
         <item>São Paulo</item>
         <item>Rio de Janeiro</item>
+        <item>Lisszabon</item>
         <item>Casablanca</item>
+        <item>Belfast</item>
         <item>Madrid</item>
         <item>Manchester</item>
         <item>London</item>
@@ -42,15 +45,19 @@
         <item>Marseille</item>
         <item>Genf</item>
         <item>Nizza</item>
+        <item>Bern</item>
         <item>Zürich</item>
+        <item>Oslo</item>
         <item>München</item>
         <item>Róma</item>
+        <item>Koppenhága</item>
         <item>Berlin</item>
         <item>Bécs</item>
         <item>Stockholm</item>
         <item>Szarajevó</item>
         <item>Fokváros</item>
         <item>Budapest</item>
+        <item>Varsó</item>
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>Isztambul</item>
@@ -74,7 +81,9 @@
         <item>Moszkva</item>
         <item>Addisz-Abeba</item>
         <item>Mumbai</item>
+        <item>Delhi</item>
         <item>Perth</item>
+        <item>Tokió</item>
         <item>Melbourne</item>
         <item>Sydney</item>
         <item>Auckland</item>

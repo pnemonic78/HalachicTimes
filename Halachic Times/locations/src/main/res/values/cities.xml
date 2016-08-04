@@ -2,6 +2,7 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
+        <item>Anchorage</item>
         <item>Vancouver</item>
         <item>San Francisco</item>
         <item>Seattle</item>
@@ -31,7 +32,9 @@
         <item>Buenos Aires</item>
         <item>São Paulo</item>
         <item>Rio de Janeiro</item>
+        <item>Lisbon</item>
         <item>Casablanca</item>
+        <item>Belfast</item>
         <item>Madrid</item>
         <item>Manchester</item>
         <item>London</item>
@@ -42,15 +45,19 @@
         <item>Marseille</item>
         <item>Geneva</item>
         <item>Nice</item>
+        <item>Bern</item>
         <item>Zurich</item>
+        <item>Oslo</item>
         <item>Munich</item>
         <item>Rome</item>
+        <item>Copenhagen</item>
         <item>Berlin</item>
         <item>Vienna</item>
         <item>Stockholm</item>
         <item>Sarajevo</item>
         <item>Cape Town</item>
         <item>Budapest</item>
+        <item>Warsaw</item>
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
@@ -74,12 +81,15 @@
         <item>Moscow</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
+        <item>Delhi</item>
         <item>Perth</item>
+        <item>Tokyo</item>
         <item>Melbourne</item>
         <item>Sydney</item>
         <item>Auckland</item>
     </string-array>
     <string-array name="cities_countries" translatable="false">
+        <item>US</item>
         <item>CA</item>
         <item>US</item>
         <item>US</item>
@@ -109,7 +119,9 @@
         <item>AR</item>
         <item>BR</item>
         <item>BR</item>
+        <item>PT</item>
         <item>MA</item>
+        <item>GB</item>
         <item>ES</item>
         <item>GB</item>
         <item>GB</item>
@@ -121,14 +133,18 @@
         <item>CH</item>
         <item>FR</item>
         <item>CH</item>
+        <item>CH</item>
+        <item>NO</item>
         <item>DE</item>
         <item>IT</item>
+        <item>DK</item>
         <item>DE</item>
         <item>AT</item>
         <item>SE</item>
         <item>BA</item>
         <item>ZA</item>
         <item>HU</item>
+        <item>PL</item>
         <item>FI</item>
         <item>ZA</item>
         <item>TR</item>
@@ -152,12 +168,15 @@
         <item>RU</item>
         <item>ET</item>
         <item>IN</item>
+        <item>IN</item>
         <item>AU</item>
+        <item>JP</item>
         <item>AU</item>
         <item>AU</item>
         <item>NZ</item>
     </string-array>
     <string-array name="cities_latitudes" translatable="false">
+        <item>61.21806</item>
         <item>49.24966</item>
         <item>37.77493</item>
         <item>47.60621</item>
@@ -187,7 +206,9 @@
         <item>-34.61315</item>
         <item>-23.5475</item>
         <item>-22.90278</item>
+        <item>38.71667</item>
         <item>33.58831</item>
+        <item>54.59682</item>
         <item>40.4165</item>
         <item>53.48095</item>
         <item>51.50853</item>
@@ -198,15 +219,19 @@
         <item>43.29695</item>
         <item>46.20222</item>
         <item>43.70313</item>
+        <item>46.94809</item>
         <item>47.36667</item>
+        <item>59.91273</item>
         <item>48.13743</item>
         <item>41.89193</item>
+        <item>55.67594</item>
         <item>52.52437</item>
         <item>48.20849</item>
         <item>59.33258</item>
         <item>43.84864</item>
         <item>-33.92584</item>
         <item>47.49801</item>
+        <item>52.22977</item>
         <item>60.16952</item>
         <item>-26.20227</item>
         <item>41.01384</item>
@@ -230,12 +255,15 @@
         <item>55.75222</item>
         <item>9.02497</item>
         <item>19.07283</item>
+        <item>28.65195</item>
         <item>-31.95224</item>
+        <item>35.6895</item>
         <item>-37.814</item>
         <item>-33.86785</item>
         <item>-36.86667</item>
     </string-array>
     <string-array name="cities_longitudes" translatable="false">
+        <item>-149.90028</item>
         <item>-123.11934</item>
         <item>-122.41942</item>
         <item>-122.33207</item>
@@ -265,7 +293,9 @@
         <item>-58.37723</item>
         <item>-46.63611</item>
         <item>-43.2075</item>
+        <item>-9.13333</item>
         <item>-7.61138</item>
+        <item>-5.92541</item>
         <item>-3.70256</item>
         <item>-2.23743</item>
         <item>-0.12574</item>
@@ -276,15 +306,19 @@
         <item>5.38107</item>
         <item>6.14569</item>
         <item>7.26608</item>
+        <item>7.44744</item>
         <item>8.55</item>
+        <item>10.74609</item>
         <item>11.57549</item>
         <item>12.51133</item>
+        <item>12.56553</item>
         <item>13.41053</item>
         <item>16.37208</item>
         <item>18.0649</item>
         <item>18.35644</item>
         <item>18.42322</item>
         <item>19.03991</item>
+        <item>21.01178</item>
         <item>24.93545</item>
         <item>28.04363</item>
         <item>28.94966</item>
@@ -308,12 +342,15 @@
         <item>37.61556</item>
         <item>38.74689</item>
         <item>72.88261</item>
+        <item>77.23149</item>
         <item>115.8614</item>
+        <item>139.69171</item>
         <item>144.96332</item>
         <item>151.20732</item>
         <item>174.76667</item>
     </string-array>
     <string-array name="cities_elevations" translatable="false">
+        <item>31</item>
         <item>70</item>
         <item>16</item>
         <item>56</item>
@@ -343,7 +380,9 @@
         <item>31</item>
         <item>769</item>
         <item>5</item>
+        <item>45</item>
         <item>27</item>
+        <item>7</item>
         <item>665</item>
         <item>51</item>
         <item>25</item>
@@ -354,15 +393,19 @@
         <item>28</item>
         <item>400</item>
         <item>25</item>
+        <item>549</item>
         <item>429</item>
+        <item>26</item>
         <item>524</item>
         <item>20</item>
+        <item>14</item>
         <item>74</item>
         <item>171</item>
         <item>28</item>
         <item>509</item>
         <item>25</item>
         <item>111</item>
+        <item>113</item>
         <item>26</item>
         <item>1767</item>
         <item>39</item>
@@ -386,12 +429,15 @@
         <item>144</item>
         <item>2405</item>
         <item>8</item>
+        <item>227</item>
         <item>34</item>
+        <item>44</item>
         <item>25</item>
         <item>58</item>
         <item>79</item>
     </string-array>
     <string-array name="cities_time_zones" translatable="false">
+        <item>America/Anchorage</item>
         <item>America/Vancouver</item>
         <item>America/Los_Angeles</item>
         <item>America/Los_Angeles</item>
@@ -421,7 +467,9 @@
         <item>America/Argentina/Buenos_Aires</item>
         <item>America/Sao_Paulo</item>
         <item>America/Sao_Paulo</item>
+        <item>Europe/Lisbon</item>
         <item>Africa/Casablanca</item>
+        <item>Europe/London</item>
         <item>Europe/Madrid</item>
         <item>Europe/London</item>
         <item>Europe/London</item>
@@ -433,14 +481,18 @@
         <item>Europe/Zurich</item>
         <item>Europe/Paris</item>
         <item>Europe/Zurich</item>
+        <item>Europe/Zurich</item>
+        <item>Europe/Oslo</item>
         <item>Europe/Berlin</item>
         <item>Europe/Rome</item>
+        <item>Europe/Copenhagen</item>
         <item>Europe/Berlin</item>
         <item>Europe/Vienna</item>
         <item>Europe/Stockholm</item>
         <item>Europe/Sarajevo</item>
         <item>Africa/Johannesburg</item>
         <item>Europe/Budapest</item>
+        <item>Europe/Warsaw</item>
         <item>Europe/Helsinki</item>
         <item>Africa/Johannesburg</item>
         <item>Europe/Istanbul</item>
@@ -464,7 +516,9 @@
         <item>Europe/Moscow</item>
         <item>Africa/Addis_Ababa</item>
         <item>Asia/Kolkata</item>
+        <item>Asia/Kolkata</item>
         <item>Australia/Perth</item>
+        <item>Asia/Tokyo</item>
         <item>Australia/Melbourne</item>
         <item>Australia/Sydney</item>
         <item>Pacific/Auckland</item>

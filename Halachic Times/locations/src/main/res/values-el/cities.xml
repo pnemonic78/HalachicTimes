@@ -2,6 +2,7 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
+        <item>Ανκορέιτζ</item>
         <item>Βανκούβερ</item>
         <item>Σαν Φρανσίσκο</item>
         <item>Σιάτλ</item>
@@ -31,7 +32,9 @@
         <item>Μπουένος Άιρες</item>
         <item>Σάο Πάολο</item>
         <item>Ρίο ντε Τζανέιρο</item>
+        <item>Λισαβώνα</item>
         <item>Καζαμπλάνκα</item>
+        <item>Μπέλφαστ</item>
         <item>Μαδρίτη</item>
         <item>Μάντσεστερ</item>
         <item>Λονδίνο</item>
@@ -42,15 +45,19 @@
         <item>Μασσαλία</item>
         <item>Γενευη</item>
         <item>Νίκαια</item>
+        <item>Βέρνη</item>
         <item>Ζυρίχη</item>
+        <item>Όσλο</item>
         <item>Μόναχο</item>
         <item>Ρώμη</item>
+        <item>Κοπεγχάγη</item>
         <item>Βερολίνο</item>
         <item>Βιέννη</item>
         <item>Στοκχόλμη</item>
         <item>Σαραγιεβο</item>
         <item>Κέιπ Τάουν</item>
         <item>Βουδαπέστη</item>
+        <item>Βαρσοβία</item>
         <item>Ελσίνκι</item>
         <item>Γιοχάνεσμπουργκ</item>
         <item>Ισταμπούλ</item>
@@ -74,7 +81,9 @@
         <item>Μόσχα</item>
         <item>Αντίς Αμπέμπα</item>
         <item>Βομβάη</item>
+        <item>Δελχί</item>
         <item>Περθ</item>
+        <item>Τόκιο</item>
         <item>Μελβούρνη</item>
         <item>Σίδνεϊ</item>
         <item>Όκλαντ</item>

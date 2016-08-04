@@ -36,6 +36,8 @@ public class JewishCitiesFilter implements NameFilter {
             344979,
             // Amsterdam, Netherlands
             2759794,
+            // Anchorage, United States
+            5879400,
             // Ariel, Israel
             8199394,
             // Ashdod, Israel
@@ -52,18 +54,22 @@ public class JewishCitiesFilter implements NameFilter {
             295530,
             // Beit Shemesh, Israel
             295432,
+            // Belfast, Ireland
+            2655984,
             // Berlin, Germany
             2950159,
+            // Bern, Switzerland
+            2661552,
             // Bogota, Colombia
             3688689,
             // Boston, United States
             4930956,
+            // Brussels, Belgium
+            2800866,
             // Budapest, Hungary
             3054643,
             // Buenos Aires, Argentina
             3435910,
-            // Brussels, Belgium
-            2800866,
             // Cape Town, South Africa
             3369157,
             // Casablanca, Morocco
@@ -72,6 +78,8 @@ public class JewishCitiesFilter implements NameFilter {
             4887398,
             // Cleveland, OH, United States
             5150529,
+            // Copenhagen, Denmark
+            2618425,
             // Dallas, United States
             4684888,
             // Denver, United States
@@ -102,6 +110,8 @@ public class JewishCitiesFilter implements NameFilter {
             703448,
             // Las Vegas, United States
             5475433,
+            // Lisbon, Portugal
+            2267057,
             // London, United Kingdom
             2643743,
             // Los Angeles, United States
@@ -132,10 +142,14 @@ public class JewishCitiesFilter implements NameFilter {
             294117,
             // Nazareth, Israel
             294098,
+            // New Delhi, India
+            1273294,
             // New York, United States
             5128581,
             // Nice, France
             2990440,
+            // Oslo, Norway
+            3143244,
             // Paris, France
             2988507,
             // Perth, Australia
@@ -176,12 +190,16 @@ public class JewishCitiesFilter implements NameFilter {
             293397,
             // Tiberias, Israel
             293322,
+            // Tokyo, Japan
+            1850147,
             // Toronto, Canada
             6167865,
             // Vancouver, Canada
             6173331,
             // Vienna, Austria
             2761369,
+            // Warsaw, Poland
+            756135,
             // Washington D.C., United States
             4140963,
             // Zurich, Switzerland

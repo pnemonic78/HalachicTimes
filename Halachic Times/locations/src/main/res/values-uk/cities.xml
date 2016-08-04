@@ -2,6 +2,7 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
+        <item>Анкоридж</item>
         <item>Ванкувер</item>
         <item>Сан-Франциско</item>
         <item>Сієтл</item>
@@ -31,7 +32,9 @@
         <item>Буенос-Айрес</item>
         <item>Сан-Паулу</item>
         <item>Ріо-де-Жанейро</item>
+        <item>Лісабон</item>
         <item>Касабланка</item>
+        <item>Белфаст</item>
         <item>Мадрид</item>
         <item>Манчестер</item>
         <item>Лондон</item>
@@ -42,15 +45,19 @@
         <item>Марсель</item>
         <item>Женева</item>
         <item>Ніцца</item>
+        <item>Берн</item>
         <item>Цюрих</item>
+        <item>Осло</item>
         <item>Мюнхен</item>
         <item>Рим</item>
+        <item>Копенгаген</item>
         <item>Берлін</item>
         <item>Відень</item>
         <item>Стокгольм</item>
         <item>Сараєво</item>
         <item>Кейптаун</item>
         <item>Будапешт</item>
+        <item>Варшава</item>
         <item>Гельсінкі</item>
         <item>Йоганнесбург</item>
         <item>Стамбул</item>
@@ -74,7 +81,9 @@
         <item>Москва</item>
         <item>Аддис-Абеба</item>
         <item>Мумбаї</item>
+        <item>Старе Делі</item>
         <item>Перт</item>
+        <item>Токіо</item>
         <item>Мельбурн</item>
         <item>Сідней</item>
         <item>Окленд</item>

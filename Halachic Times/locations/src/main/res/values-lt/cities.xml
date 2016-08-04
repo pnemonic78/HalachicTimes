@@ -2,6 +2,7 @@
 <resources>
     <!--Generated from geonames.org data-->
     <string-array name="cities">
+        <item>Ankoridžas</item>
         <item>Vankuveris</item>
         <item>San Fransiskas</item>
         <item>Sietlas</item>
@@ -31,7 +32,9 @@
         <item>Buenos Airės</item>
         <item>San Paulas</item>
         <item>Rio de Žaneiras</item>
+        <item>Lisabona</item>
         <item>Kasablanka</item>
+        <item>Belfastas</item>
         <item>Madridas</item>
         <item>Mančesteris</item>
         <item>Londonas</item>
@@ -42,15 +45,19 @@
         <item>Marselis</item>
         <item>Ženeva</item>
         <item>Nica</item>
+        <item>Bernas</item>
         <item>Ciurichas</item>
+        <item>Oslas</item>
         <item>Miunchenas</item>
         <item>Roma</item>
+        <item>Kopenhaga</item>
         <item>Berlynas</item>
         <item>Viena</item>
         <item>Stokholmas</item>
         <item>Sarajevas</item>
         <item>Keiptaunas</item>
         <item>Budapeštas</item>
+        <item>Varšuva</item>
         <item>Helsinkis</item>
         <item>Johanesburgas</item>
         <item>Stambulas</item>
@@ -74,7 +81,9 @@
         <item>Maskva</item>
         <item>Adis Abeba</item>
         <item>Mumbajus</item>
+        <item>Delis</item>
         <item>Pertas</item>
+        <item>Tokijas</item>
         <item>Melburnas</item>
         <item>Sidnėjus</item>
         <item>Oklandas</item>
