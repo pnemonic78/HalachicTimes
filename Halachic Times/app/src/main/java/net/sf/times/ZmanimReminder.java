@@ -435,7 +435,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-        wake.acquire(5000L);// enough time to also hear an alarm tone
+        wake.acquire(3000L);// enough time to also hear an alarm tone
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(ID_NOTIFY, notification);
