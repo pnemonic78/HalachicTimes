@@ -140,6 +140,11 @@ public abstract class LocatedActivity extends Activity implements ZmanimLocation
     }
 
     @Override
+    public boolean isPassive() {
+        return false;
+    }
+
+    @Override
     public void onLocationChanged(Location location) {
         if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
             address = null;

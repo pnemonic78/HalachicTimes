@@ -126,7 +126,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     @Override
     public void onCreate() {
         if (locations != null)
-            locations.startPassive(this);
+            locations.start(this);
     }
 
     @Override
@@ -167,6 +167,11 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         onDataSetChanged();
     }
 
+    @Override
+    public boolean isPassive() {
+        return true;
+    }
+
     private void populateAdapter() {
         Context context = this.context;
 
@@ -177,7 +182,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         if (locations == null) {
             ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
             locations = app.getLocations();
-            locations.startPassive(this);
+            locations.start(this);
             this.locations = locations;
         }
         GeoLocation gloc = locations.getGeoLocation();

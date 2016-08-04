@@ -77,13 +77,14 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
     @Override
     public void onLowMemory() {
         super.onLowMemory();
+        dispose();
         SQLiteDatabase.releaseMemory();
     }
 
     @Override
     public void onTerminate() {
-        dispose();
         super.onTerminate();
+        dispose();
     }
 
     @Override

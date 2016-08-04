@@ -257,6 +257,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         onLocationChanged(location, true, false);
     }
 
+    @Override
+    public boolean isPassive() {
+        return false;
+    }
+
     /**
      * Get a location from GPS.
      *
@@ -467,12 +472,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *         the listener who wants to stop listening.
      */
     public void stop(ZmanimLocationListener listener) {
-        if (listener != null)
+        if (listener != null) {
             removeLocationListener(listener);
-
-        if (locationListeners.isEmpty()) {
+        }
+        if (!hasActiveListeners()) {
             removeUpdates();
-            handler.removeMessages(WHAT_START);
         }
     }
 
@@ -483,26 +487,19 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *         the listener who wants to resume listening.
      */
     public void start(ZmanimLocationListener listener) {
-        startPassive(listener);
-
-        startTaskDelay = UPDATE_TIME_START;
-        handler.sendEmptyMessage(WHAT_START);
-    }
-
-    /**
-     * Start or resume listening passively.
-     *
-     * @param listener
-     *         the listener who wants to resume listening.
-     */
-    public void startPassive(ZmanimLocationListener listener) {
-        if (listener != null)
-            addLocationListener(listener);
+        if (listener == null) {
+            Log.w(TAG, "start with listener null");
+            return;
+        }
+        addLocationListener(listener);
 
         // Give the listener our latest known location, and address.
-        if (listener != null) {
-            Location location = getLocation();
-            handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+        Location location = getLocation();
+        handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+
+        if (!listener.isPassive()) {
+            startTaskDelay = UPDATE_TIME_START;
+            handler.sendEmptyMessage(WHAT_START);
         }
     }
 
@@ -685,8 +682,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             }
         }
 
-        if (!locationListeners.isEmpty()) {
+        if (hasActiveListeners()) {
             handler.sendEmptyMessageDelayed(WHAT_START, startTaskDelay);
+        } else {
+            handler.removeMessages(WHAT_START);
         }
     }
 
@@ -779,6 +778,23 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     protected LocationFormatter createLocationFormatter(Context context) {
         return new SimpleLocationFormatter(context);
+    }
+
+    /**
+     * Are any listeners active?
+     *
+     * @return {@code true} if no listeners are passive.
+     */
+    private boolean hasActiveListeners() {
+        if (locationListeners.isEmpty()) {
+            return false;
+        }
+        for (ZmanimLocationListener listener : locationListeners) {
+            if (!listener.isPassive()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** The receiver for addresses and date/time settings. */

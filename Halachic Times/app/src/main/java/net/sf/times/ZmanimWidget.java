@@ -141,7 +141,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
             locations = app.getLocations();
         }
-        locations.startPassive(this);
+        locations.start(this);
 
         populateTimes(context, appWidgetManager, appWidgetIds);
     }
@@ -215,7 +215,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     public void onEnabled(Context context) {
         super.onEnabled(context);
         if (locations != null)
-            locations.startPassive(this);
+            locations.start(this);
     }
 
     @Override
@@ -243,6 +243,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     @Override
     public void onElevationChanged(Location location) {
         onLocationChanged(location);
+    }
+
+    @Override
+    public boolean isPassive() {
+        return true;
     }
 
     /**
@@ -519,7 +524,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if (locations == null) {
             ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
             locations = app.getLocations();
-            locations.startPassive(this);
+            locations.start(this);
             this.locations = locations;
         }
         GeoLocation gloc = locations.getGeoLocation();

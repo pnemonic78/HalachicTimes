@@ -51,4 +51,11 @@ public interface ZmanimLocationListener extends LocationListener {
      *         the location with elevation.
      */
     void onElevationChanged(Location location);
+
+    /**
+     * Is the listener passive and does not need expensive GPS/WiFi?
+     *
+     * @return {@code true} if passive.
+     */
+    boolean isPassive();
 }
