@@ -30,9 +30,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton;
@@ -55,7 +55,6 @@ import java.util.List;
  * @author Moshe Waisberg
  */
 public class LocationTabActivity extends Activity implements
-        OnClickListener,
         OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener {
@@ -108,11 +107,7 @@ public class LocationTabActivity extends Activity implements
 
         SearchView searchText = (SearchView) findViewById(R.id.search_location);
         searchText.setOnQueryTextListener(this);
-        searchText.setOnSearchClickListener(this);
         this.searchText = searchText;
-
-        View myLocation = findViewById(R.id.my_location);
-        myLocation.setOnClickListener(this);
 
         TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
         tabs.setup();
@@ -151,14 +146,31 @@ public class LocationTabActivity extends Activity implements
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.locations, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        final int id = item.getItemId();
+
+        switch (id) {
             case android.R.id.home:
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
                     finish();
                     return true;
                 }
                 break;
+        }
+        // Cannot use 'switch' here because library ids are not final.
+        if (id == R.id.menu_location_add) {
+            addLocation();
+            return true;
+        }
+        if (id == R.id.menu_location_here) {
+            gotoHere();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -177,15 +189,6 @@ public class LocationTabActivity extends Activity implements
         SearchView searchText = this.searchText;
         searchText.requestFocus();
         searchText.setQuery(query, false);
-    }
-
-    @Override
-    public void onClick(View view) {
-        final int id = view.getId();
-
-        if (id == R.id.my_location) {
-            gotoHere();
-        }
     }
 
     /**
@@ -366,5 +369,12 @@ public class LocationTabActivity extends Activity implements
         super.onDestroy();
 
         handler.removeMessages(WHAT_FAVORITE);
+    }
+
+    /**
+     * Show the form to add a custom location.
+     */
+    private void addLocation() {
+        //TODO implement me!
     }
 }

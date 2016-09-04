@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<SearchView
+    android:id="@+id/search_location"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
-
-    <SearchView
-        android:id="@+id/search_location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:iconifiedByDefault="false"
-        android:inputType="text"
-        android:queryHint="@android:string/search_go">
-
-        <requestFocus/>
-    </SearchView>
-
-    <ImageButton
-        android:id="@+id/my_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/title_activity_location"
-        android:src="@android:drawable/ic_menu_mylocation"/>
-
-</LinearLayout>
+    android:iconifiedByDefault="true"
+    android:inputType="text"
+    android:queryHint="@android:string/search_go"/>

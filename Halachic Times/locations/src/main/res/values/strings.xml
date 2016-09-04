@@ -20,6 +20,8 @@
     <string name="location_decimal_with_elevation">Lat. %1$s; Lng. %2$s; Elev. %3$s</string>
     <string name="location_sexagesimal" translatable="false">&#x202D;%1$s %2$s</string>
     <string name="location_sexagesimal_with_elevation" translatable="false">‪‪&#x202D;%1$s‪‪ %2$s ‪‪%3$s‪‪</string>
+    <string name="menu_location_here" translatable="false">@string/title_activity_location</string>
+    <string name="menu_location_add" translatable="false">@string/add</string>
     <string name="north">N</string>
     <string name="east">E</string>
     <string name="south">S</string>
