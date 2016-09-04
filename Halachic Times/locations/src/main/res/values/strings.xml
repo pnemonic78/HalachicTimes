@@ -4,6 +4,7 @@
     <!-- Activity -->
     <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
+    <string name="title_dialog_add_location">Add location</string>
 
     <!-- Preferences -->
     <string name="coords_title">Coordinates</string>
@@ -26,6 +27,8 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">W</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Clear history</string>

@@ -20,6 +20,7 @@
 package net.sf.times.location;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -30,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,11 +59,15 @@ import java.util.List;
 public class LocationTabActivity extends Activity implements
         OnItemClickListener,
         OnFavoriteClickListener,
-        SearchView.OnQueryTextListener {
+        SearchView.OnQueryTextListener,
+        EditLocationDialog.OnLocationEditListener {
+
+    private static final String TAG = "LocationTabActivity";
 
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
     private static final String TAG_HISTORY = "history";
+    private static final String TAG_ADD = "add_location";
 
     private static int ic_menu_star;
 
@@ -188,6 +194,9 @@ public class LocationTabActivity extends Activity implements
 
         SearchView searchText = this.searchText;
         searchText.requestFocus();
+        if (!TextUtils.isEmpty(query)) {
+            searchText.setIconified(false);
+        }
         searchText.setQuery(query, false);
     }
 
@@ -275,8 +284,8 @@ public class LocationTabActivity extends Activity implements
             String[] tokens = query.split("[,;]");
             if (tokens.length >= 2) {
                 try {
-                    double latitude = Location.convert(tokens[0]);
-                    double longitude = Location.convert(tokens[1]);
+                    double latitude = Location.convert(tokens[0].trim());
+                    double longitude = Location.convert(tokens[1].trim());
 
                     loc = new Location(GeocoderBase.USER_PROVIDER);
                     loc.setLatitude(latitude);
@@ -375,6 +384,40 @@ public class LocationTabActivity extends Activity implements
      * Show the form to add a custom location.
      */
     private void addLocation() {
-        //TODO implement me!
+        FragmentManager fm = getFragmentManager();
+        EditLocationDialog dialog = (EditLocationDialog) fm.findFragmentByTag(TAG_ADD);
+        if (dialog == null) {
+            dialog = new EditLocationDialog();
+        }
+        dialog.setOnLocationAddedListener(this);
+        dialog.show(getFragmentManager(), TAG_ADD);
+    }
+
+    /**
+     * Add a custom location.
+     *
+     * @param location
+     *         the new location.
+     */
+    private void addLocation(Location location) {
+        if (location == null) {
+            Log.w(TAG, "location empty");
+            return;
+        }
+
+        String query = location.getLatitude() + ", " + location.getLongitude();
+        SearchView searchText = this.searchText;
+        searchText.setIconified(false);
+        searchText.requestFocus();
+        searchText.setQuery(query, false);
+
+        //TODO fetch the address
+        //TODO and then update the database
+        //TODO and then refresh the list with new location.
+    }
+
+    @Override
+    public void onLocationEdited(Location location) {
+        addLocation(location);
     }
 }
