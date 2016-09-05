@@ -46,7 +46,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
     }
 
     @Override
-    protected CharSequence formatLatitudeSexagesimal(double coordinate) {
+    public CharSequence formatLatitudeSexagesimal(double coordinate) {
         String symbol = (coordinate >= 0) ? symbolNorth : symbolSouth;
         coordinate = Math.abs(coordinate);
         int degrees = (int) Math.floor(coordinate);
@@ -60,7 +60,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
     }
 
     @Override
-    protected CharSequence formatLongitudeSexagesimal(double coordinate) {
+    public CharSequence formatLongitudeSexagesimal(double coordinate) {
         String symbol = (coordinate >= 0) ? symbolEast : symbolWest;
         coordinate = Math.abs(coordinate);
         int degrees = (int) Math.floor(coordinate);

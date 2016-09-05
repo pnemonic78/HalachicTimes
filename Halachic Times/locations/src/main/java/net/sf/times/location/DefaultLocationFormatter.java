@@ -118,11 +118,13 @@ public class DefaultLocationFormatter implements LocationFormatter {
         return formatLatitudeDecimal(latitude);
     }
 
-    protected CharSequence formatLatitudeDecimal(double coordinate) {
+    @Override
+    public CharSequence formatLatitudeDecimal(double coordinate) {
         return Location.convert(coordinate, Location.FORMAT_DEGREES);
     }
 
-    protected CharSequence formatLatitudeSexagesimal(double coordinate) {
+    @Override
+    public CharSequence formatLatitudeSexagesimal(double coordinate) {
         return Location.convert(Math.abs(coordinate), Location.FORMAT_SECONDS);
     }
 
@@ -135,11 +137,13 @@ public class DefaultLocationFormatter implements LocationFormatter {
         return formatLongitudeDecimal(coordinate);
     }
 
-    protected CharSequence formatLongitudeDecimal(double coordinate) {
+    @Override
+    public CharSequence formatLongitudeDecimal(double coordinate) {
         return Location.convert(coordinate, Location.FORMAT_DEGREES);
     }
 
-    protected CharSequence formatLongitudeSexagesimal(double coordinate) {
+    @Override
+    public CharSequence formatLongitudeSexagesimal(double coordinate) {
         return Location.convert(Math.abs(coordinate), Location.FORMAT_SECONDS);
     }
 

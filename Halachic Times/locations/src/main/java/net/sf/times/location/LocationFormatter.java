@@ -70,6 +70,24 @@ public interface LocationFormatter {
     CharSequence formatLatitude(double latitude);
 
     /**
+     * Format a latitude coordinate using the decimal notation.
+     *
+     * @param latitude
+     *         the coordinate.
+     * @return the coordinate text.
+     */
+    CharSequence formatLatitudeDecimal(double latitude);
+
+    /**
+     * Format a latitude coordinate using the sexagesimal notation.
+     *
+     * @param latitude
+     *         the coordinate.
+     * @return the coordinate text.
+     */
+    CharSequence formatLatitudeSexagesimal(double latitude);
+
+    /**
      * Format a longitude coordinate.
      *
      * @param longitude
@@ -77,6 +95,24 @@ public interface LocationFormatter {
      * @return the coordinate text.
      */
     CharSequence formatLongitude(double longitude);
+
+    /**
+     * Format a longitude coordinate using the decimal notation.
+     *
+     * @param longitude
+     *         the coordinate.
+     * @return the coordinate text.
+     */
+    CharSequence formatLongitudeDecimal(double longitude);
+
+    /**
+     * Format a longitude coordinate using the sexagesimal notation.
+     *
+     * @param longitude
+     *         the coordinate.
+     * @return the coordinate text.
+     */
+    CharSequence formatLongitudeSexagesimal(double longitude);
 
     /**
      * Format an elevation.

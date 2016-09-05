@@ -27,10 +27,14 @@ import android.content.DialogInterface;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
+import net.sf.times.location.text.LatitudeInputFilter;
+import net.sf.times.location.text.LongitudeInputFilter;
 
 /**
  * Add a city to the list.
@@ -52,18 +56,22 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
         void onLocationEdited(Location location);
     }
 
-    protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
-    protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
-    protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
-    protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
-
     private Location location;
     private OnLocationEditListener locationAddedListener;
-    private EditText latitudeEdit;
-    private EditText longitudeEdit;
+    private EditText latitudeDecimalEdit;
+    private EditText longitudeDecimalEdit;
+    private LocationFormatter formatter;
 
     public void setOnLocationAddedListener(OnLocationEditListener listener) {
         this.locationAddedListener = listener;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Context context = getActivity();
+        this.formatter = createLocationFormatter(context);
     }
 
     @Override
@@ -84,10 +92,10 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
     }
 
     private void init(View view) {
-        latitudeEdit = (EditText) view.findViewById(R.id.latitude_edit);
-        //TODO add latitude filter [LATITUDE_MIN,LATITUDE_MAX]
-        longitudeEdit = (EditText) view.findViewById(R.id.longitude_edit);
-        //TODO add longitude filter [LONGITUDE_MIN,LONGITUDE_MAX]
+        latitudeDecimalEdit = (EditText) view.findViewById(R.id.latitude_decimal_edit);
+        latitudeDecimalEdit.setFilters(new InputFilter[]{new LatitudeInputFilter()});
+        longitudeDecimalEdit = (EditText) view.findViewById(R.id.longitude_decimal_edit);
+        longitudeDecimalEdit.setFilters(new InputFilter[]{new LongitudeInputFilter()});
 
         Bundle args = getArguments();
         if (args != null) {
@@ -95,27 +103,28 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
         }
         if (location == null) {
             location = new Location(GeocoderBase.USER_PROVIDER);
+        } else {
+            latitudeDecimalEdit.setText(formatter.formatLatitudeDecimal(location.getLatitude()));
+            latitudeDecimalEdit.setSelection(latitudeDecimalEdit.length());
+            longitudeDecimalEdit.setText(formatter.formatLongitudeDecimal(location.getLongitude()));
+            longitudeDecimalEdit.setSelection(longitudeDecimalEdit.length());
         }
     }
 
     @Override
     public void onClick(DialogInterface dialogInterface, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            String latitudeString = latitudeEdit.getText().toString();
+            CharSequence latitudeString = latitudeDecimalEdit.getText();
             if (TextUtils.isEmpty(latitudeString)) {
                 return;
             }
-            double latitude = Double.parseDouble(latitudeString);
-            if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
-                return;
+            double latitude = Double.parseDouble(latitudeString.toString());
 
-            String longitudeString = longitudeEdit.getText().toString();
+            CharSequence longitudeString = longitudeDecimalEdit.getText();
             if (TextUtils.isEmpty(longitudeString)) {
                 return;
             }
-            double longitude = Double.parseDouble(longitudeString);
-            if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
-                return;
+            double longitude = Double.parseDouble(longitudeString.toString());
 
             location.setLatitude(latitude);
             location.setLongitude(longitude);
@@ -124,5 +133,16 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
                 locationAddedListener.onLocationEdited(location);
             }
         }
+    }
+
+    /**
+     * Create a location formatter helper.
+     *
+     * @param context
+     *         the context.
+     * @return the formatter.
+     */
+    protected LocationFormatter createLocationFormatter(Context context) {
+        return new SimpleLocationFormatter(context);
     }
 }

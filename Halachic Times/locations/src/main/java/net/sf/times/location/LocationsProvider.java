@@ -578,8 +578,28 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
+    public CharSequence formatLatitudeDecimal(double latitude) {
+        return formatterHelper.formatLatitudeDecimal(latitude);
+    }
+
+    @Override
+    public CharSequence formatLatitudeSexagesimal(double latitude) {
+        return formatterHelper.formatLatitudeSexagesimal(latitude);
+    }
+
+    @Override
     public CharSequence formatLongitude(double longitude) {
         return formatterHelper.formatLongitude(longitude);
+    }
+
+    @Override
+    public CharSequence formatLongitudeDecimal(double longitude) {
+        return formatterHelper.formatLongitudeDecimal(longitude);
+    }
+
+    @Override
+    public CharSequence formatLongitudeSexagesimal(double longitude) {
+        return formatterHelper.formatLongitudeSexagesimal(longitude);
     }
 
     @Override

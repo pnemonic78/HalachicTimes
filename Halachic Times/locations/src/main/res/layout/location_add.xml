@@ -16,11 +16,11 @@
             android:text="@string/latitude"/>
 
         <EditText
-            android:id="@+id/latitude_edit"
+            android:id="@+id/latitude_decimal_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal|numberSigned"/>
     </TableRow>
 
     <TableRow
@@ -33,10 +33,10 @@
             android:text="@string/longitude"/>
 
         <EditText
-            android:id="@+id/longitude_edit"
+            android:id="@+id/longitude_decimal_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal|numberSigned"/>
     </TableRow>
 </TableLayout>
