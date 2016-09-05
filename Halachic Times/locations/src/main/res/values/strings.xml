@@ -5,6 +5,7 @@
     <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
     <string name="title_dialog_add_location">Add location</string>
+    <string name="title_dialog_edit_location">Edit location</string>
 
     <!-- Preferences -->
     <string name="coords_title">Coordinates</string>

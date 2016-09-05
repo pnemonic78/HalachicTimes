@@ -61,6 +61,7 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
     private EditText latitudeDecimalEdit;
     private EditText longitudeDecimalEdit;
     private LocationFormatter formatter;
+    private int titleId;
 
     public void setOnLocationAddedListener(OnLocationEditListener listener) {
         this.locationAddedListener = listener;
@@ -72,6 +73,18 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
 
         Context context = getActivity();
         this.formatter = createLocationFormatter(context);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            location = args.getParcelable(EXTRA_LOCATION);
+        } else {
+            location = null;
+        }
+        if (location != null) {
+            titleId = R.string.title_dialog_edit_location;
+        } else {
+            titleId = R.string.title_dialog_add_location;
+        }
     }
 
     @Override
@@ -83,7 +96,7 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
         init(view);
 
         Dialog dialog = new AlertDialog.Builder(context)
-                .setTitle(R.string.title_dialog_add_location)
+                .setTitle(titleId)
                 .setPositiveButton(R.string.ok, this)
                 .setNegativeButton(R.string.cancel, this)
                 .setView(view)
@@ -97,10 +110,6 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
         longitudeDecimalEdit = (EditText) view.findViewById(R.id.longitude_decimal_edit);
         longitudeDecimalEdit.setFilters(new InputFilter[]{new LongitudeInputFilter()});
 
-        Bundle args = getArguments();
-        if (args != null) {
-            location = args.getParcelable(EXTRA_LOCATION);
-        }
         if (location == null) {
             location = new Location(GeocoderBase.USER_PROVIDER);
         } else {
