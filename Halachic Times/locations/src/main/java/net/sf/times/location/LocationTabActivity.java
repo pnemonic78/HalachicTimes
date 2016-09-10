@@ -60,7 +60,8 @@ public class LocationTabActivity extends Activity implements
         OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,
-        EditLocationDialog.OnLocationEditListener {
+        EditLocationDialog.OnLocationEditListener,
+        ZmanimLocationListener {
 
     private static final String TAG = "LocationTabActivity";
 
@@ -92,6 +93,9 @@ public class LocationTabActivity extends Activity implements
     private LocationAdapter adapterFavorites;
     private LocationAdapter adapterHistory;
     private final Handler handler;
+    /** Provider for locations. */
+    private LocationsProvider locations;
+    private Location locationForAddress;
 
     /**
      * Constructs a new activity.
@@ -110,6 +114,9 @@ public class LocationTabActivity extends Activity implements
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.locations);
+
+        LocationApplication app = (LocationApplication) getApplication();
+        locations = app.getLocations();
 
         SearchView searchText = (SearchView) findViewById(R.id.search_location);
         searchText.setOnQueryTextListener(this);
@@ -149,6 +156,18 @@ public class LocationTabActivity extends Activity implements
         if (adapterFavorites.getCount() == 0) {
             tabs.setCurrentTab(1);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        locations.start(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        locations.stop(this);
     }
 
     @Override
@@ -332,36 +351,6 @@ public class LocationTabActivity extends Activity implements
         handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
     }
 
-    private static class ActivityHandler extends Handler {
-
-        private final WeakReference<LocationTabActivity> activityWeakReference;
-
-        public ActivityHandler(LocationTabActivity activity) {
-            this.activityWeakReference = new WeakReference<LocationTabActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            LocationTabActivity activity = activityWeakReference.get();
-            if (activity == null) {
-                return;
-            }
-
-            switch (msg.what) {
-                case WHAT_FAVORITE:
-                    ZmanimAddress address = (ZmanimAddress) msg.obj;
-                    LocationApplication app = (LocationApplication) activity.getApplication();
-                    AddressProvider provider = app.getAddresses();
-                    provider.insertOrUpdateAddress(null, address);
-
-                    activity.adapterAll.notifyDataSetChanged();
-                    activity.adapterFavorites.notifyDataSetChanged();
-                    activity.adapterHistory.notifyDataSetChanged();
-                    break;
-            }
-        }
-    }
-
     /**
      * Set the location to "here".
      */
@@ -378,6 +367,20 @@ public class LocationTabActivity extends Activity implements
         super.onDestroy();
 
         handler.removeMessages(WHAT_FAVORITE);
+    }
+
+    /**
+     * Get the locations provider.
+     *
+     * @return hte provider.
+     */
+    public LocationsProvider getLocations() {
+        return locations;
+    }
+
+    @Override
+    public void onLocationEdited(Location location) {
+        addLocation(location);
     }
 
     /**
@@ -411,13 +414,90 @@ public class LocationTabActivity extends Activity implements
         searchText.requestFocus();
         searchText.setQuery(query, false);
 
-        //TODO fetch the address
-        //TODO and then update the database
-        //TODO and then refresh the list with new location.
+        fetchAddress(location);
+    }
+
+    private void fetchAddress(Location location) {
+        this.locationForAddress = location;
+        LocationsProvider locations = getLocations();
+        locations.findAddress(location);
     }
 
     @Override
-    public void onLocationEdited(Location location) {
-        addLocation(location);
+    public void onAddressChanged(Location location, final ZmanimAddress address) {
+        if ((location == null) || (address == null)) {
+            return;
+        }
+        if ((locationForAddress == null) || (location.getLatitude() != locationForAddress.getLatitude()) || (location.getLongitude() != locationForAddress.getLongitude())) {
+            return;
+        }
+        // Refresh the lists with the new location's address.
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                populateLists();
+
+                String query = address.format();
+                SearchView searchText = LocationTabActivity.this.searchText;
+                searchText.setIconified(false);
+                searchText.requestFocus();
+                searchText.setQuery(query, false);
+            }
+        });
+    }
+
+    @Override
+    public void onElevationChanged(Location location) {
+    }
+
+    @Override
+    public boolean isPassive() {
+        return false;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+    }
+
+    private static class ActivityHandler extends Handler {
+
+        private final WeakReference<LocationTabActivity> activityWeakReference;
+
+        public ActivityHandler(LocationTabActivity activity) {
+            this.activityWeakReference = new WeakReference<LocationTabActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            LocationTabActivity activity = activityWeakReference.get();
+            if (activity == null) {
+                return;
+            }
+
+            switch (msg.what) {
+                case WHAT_FAVORITE:
+                    ZmanimAddress address = (ZmanimAddress) msg.obj;
+                    LocationApplication app = (LocationApplication) activity.getApplication();
+                    AddressProvider provider = app.getAddresses();
+                    provider.insertOrUpdateAddress(null, address);
+
+                    activity.adapterAll.notifyDataSetChanged();
+                    activity.adapterFavorites.notifyDataSetChanged();
+                    activity.adapterHistory.notifyDataSetChanged();
+                    break;
+            }
+        }
     }
 }

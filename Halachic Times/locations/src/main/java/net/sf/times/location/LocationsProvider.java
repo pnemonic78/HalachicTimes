@@ -775,14 +775,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
     }
 
-    private void findAddress(Location location) {
+    public void findAddress(Location location) {
         Intent findAddress = new Intent(context, AddressService.class);
         findAddress.setAction(ACTION_ADDRESS);
         findAddress.putExtra(PARAMETER_LOCATION, location);
         context.startService(findAddress);
     }
 
-    private void findElevation(Location location) {
+    public void findElevation(Location location) {
         Intent findElevation = new Intent(context, AddressService.class);
         findElevation.setAction(ACTION_ELEVATION);
         findElevation.putExtra(PARAMETER_LOCATION, location);
