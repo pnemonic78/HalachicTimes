@@ -12,6 +12,17 @@
         android:required="false"/>
 
     <application>
+        <activity
+            android:name="net.sf.times.location.AddLocationActivity"
+            android:label="@string/title_activity_add_location">
+            <intent-filter android:label="@string/title_activity_add_location">
+                <action android:name="android.intent.action.INSERT"/>
+            </intent-filter>
+            <intent-filter android:label="@string/title_activity_add_location">
+                <action android:name="android.intent.action.INSERT_OR_EDIT"/>
+            </intent-filter>
+        </activity>
+
         <service
             android:name="net.sf.times.location.AddressService"
             android:exported="false"/>

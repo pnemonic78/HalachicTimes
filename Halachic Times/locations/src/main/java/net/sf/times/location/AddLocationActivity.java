@@ -19,89 +19,67 @@
  */
 package net.sf.times.location;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
 
 /**
- * Add a city to the list.
+ * Add a location by specifying its coordinates.
  *
  * @author Moshe Waisberg
  */
-public class EditLocationDialog extends DialogFragment implements DialogInterface.OnClickListener {
+public class AddLocationActivity extends Activity {
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
 
-    public interface OnLocationEditListener {
-        /**
-         * A location was either added or modified.
-         *
-         * @param location
-         *         the location.
-         */
-        void onLocationEdited(Location location);
-    }
-
     private Location location;
-    private OnLocationEditListener locationAddedListener;
     private EditText latitudeDecimalEdit;
     private EditText longitudeDecimalEdit;
     private LocationFormatter formatter;
-
-    public void setOnLocationAddedListener(OnLocationEditListener listener) {
-        this.locationAddedListener = listener;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context context = getActivity();
+        Context context = this;
         this.formatter = createLocationFormatter(context);
 
-        Bundle args = getArguments();
+        Bundle args = getIntent().getExtras();
         if (args != null) {
             location = args.getParcelable(EXTRA_LOCATION);
         } else {
             location = null;
         }
+
+        setTheme(getThemeId());
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        setContentView(R.layout.location_add);
+        init();
     }
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Context context = getActivity();
-
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.location_add, null);
-        init(view);
-
-        Dialog dialog = new AlertDialog.Builder(context)
-                .setTitle(R.string.title_activity_add_location)
-                .setPositiveButton(R.string.ok, this)
-                .setNegativeButton(R.string.cancel, this)
-                .setView(view)
-                .create();
-        return dialog;
+    protected int getThemeId() {
+        return R.style.Theme_Base;
     }
 
-    private void init(View view) {
-        latitudeDecimalEdit = (EditText) view.findViewById(R.id.latitude_decimal_edit);
+    private void init() {
+        latitudeDecimalEdit = (EditText) findViewById(R.id.latitude_decimal_edit);
         latitudeDecimalEdit.setFilters(new InputFilter[]{new LatitudeInputFilter()});
-        longitudeDecimalEdit = (EditText) view.findViewById(R.id.longitude_decimal_edit);
+        longitudeDecimalEdit = (EditText) findViewById(R.id.longitude_decimal_edit);
         longitudeDecimalEdit.setFilters(new InputFilter[]{new LongitudeInputFilter()});
 
         if (location == null) {
@@ -115,27 +93,53 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
     }
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int which) {
-        if (which == DialogInterface.BUTTON_POSITIVE) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.add_location, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    finish();
+                    return true;
+                }
+                break;
+        }
+        // Cannot use 'switch' here because library ids are not final.
+        if (id == R.id.menu_location_cancel) {
+            setResult(RESULT_CANCELED);
+            finish();
+            return true;
+        }
+        if (id == R.id.menu_location_add) {
             CharSequence latitudeString = latitudeDecimalEdit.getText();
             if (TextUtils.isEmpty(latitudeString)) {
-                return;
+                return true;
             }
             double latitude = Double.parseDouble(latitudeString.toString());
 
             CharSequence longitudeString = longitudeDecimalEdit.getText();
             if (TextUtils.isEmpty(longitudeString)) {
-                return;
+                return true;
             }
             double longitude = Double.parseDouble(longitudeString.toString());
 
             location.setLatitude(latitude);
             location.setLongitude(longitude);
 
-            if (locationAddedListener != null) {
-                locationAddedListener.onLocationEdited(location);
-            }
+            Intent data = new Intent();
+            data.putExtra(EXTRA_LOCATION, location);
+            setResult(RESULT_OK, data);
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

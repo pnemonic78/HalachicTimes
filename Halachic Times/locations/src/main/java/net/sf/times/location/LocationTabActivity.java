@@ -60,7 +60,6 @@ public class LocationTabActivity extends Activity implements
         OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,
-        EditLocationDialog.OnLocationEditListener,
         ZmanimLocationListener {
 
     private static final String TAG = "LocationTabActivity";
@@ -68,7 +67,8 @@ public class LocationTabActivity extends Activity implements
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
     private static final String TAG_HISTORY = "history";
-    private static final String TAG_ADD = "add_location";
+
+    private static final int REQUEST_ADD = 0xADD;
 
     private static int ic_menu_star;
 
@@ -87,6 +87,7 @@ public class LocationTabActivity extends Activity implements
     }
 
     private static final int WHAT_FAVORITE = 1;
+    private static final int WHAT_ADDED = 2;
 
     private SearchView searchText;
     private LocationAdapter adapterAll;
@@ -172,6 +173,7 @@ public class LocationTabActivity extends Activity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
         getMenuInflater().inflate(R.menu.locations, menu);
         return true;
     }
@@ -366,6 +368,7 @@ public class LocationTabActivity extends Activity implements
     protected void onDestroy() {
         super.onDestroy();
 
+        handler.removeMessages(WHAT_ADDED);
         handler.removeMessages(WHAT_FAVORITE);
     }
 
@@ -379,21 +382,22 @@ public class LocationTabActivity extends Activity implements
     }
 
     @Override
-    public void onLocationEdited(Location location) {
-        addLocation(location);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ((requestCode == REQUEST_ADD) && (resultCode == RESULT_OK)) {
+            Location location = data.getParcelableExtra(AddLocationActivity.EXTRA_LOCATION);
+            addLocation(location);
+        }
     }
 
     /**
      * Show the form to add a custom location.
      */
     private void addLocation() {
-        FragmentManager fm = getFragmentManager();
-        EditLocationDialog dialog = (EditLocationDialog) fm.findFragmentByTag(TAG_ADD);
-        if (dialog == null) {
-            dialog = new EditLocationDialog();
-        }
-        dialog.setOnLocationAddedListener(this);
-        dialog.show(getFragmentManager(), TAG_ADD);
+        Intent intent = new Intent(this, AddLocationActivity.class);
+        intent.setAction(Intent.ACTION_INSERT);
+        startActivityForResult(intent, REQUEST_ADD);
     }
 
     /**
@@ -431,19 +435,7 @@ public class LocationTabActivity extends Activity implements
         if ((locationForAddress == null) || (location.getLatitude() != locationForAddress.getLatitude()) || (location.getLongitude() != locationForAddress.getLongitude())) {
             return;
         }
-        // Refresh the lists with the new location's address.
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                populateLists();
-
-                String query = address.format();
-                SearchView searchText = LocationTabActivity.this.searchText;
-                searchText.setIconified(false);
-                searchText.requestFocus();
-                searchText.setQuery(query, false);
-            }
-        });
+        handler.obtainMessage(WHAT_ADDED, address).sendToTarget();
     }
 
     @Override
@@ -485,10 +477,11 @@ public class LocationTabActivity extends Activity implements
             if (activity == null) {
                 return;
             }
+            ZmanimAddress address;
 
             switch (msg.what) {
                 case WHAT_FAVORITE:
-                    ZmanimAddress address = (ZmanimAddress) msg.obj;
+                    address = (ZmanimAddress) msg.obj;
                     LocationApplication app = (LocationApplication) activity.getApplication();
                     AddressProvider provider = app.getAddresses();
                     provider.insertOrUpdateAddress(null, address);
@@ -496,6 +489,17 @@ public class LocationTabActivity extends Activity implements
                     activity.adapterAll.notifyDataSetChanged();
                     activity.adapterFavorites.notifyDataSetChanged();
                     activity.adapterHistory.notifyDataSetChanged();
+                    break;
+                case WHAT_ADDED:
+                    // Refresh the lists with the new location's address.
+                    address = (ZmanimAddress) msg.obj;
+                    activity.populateLists();
+
+                    String query = address.format();
+                    SearchView searchText = activity.searchText;
+                    searchText.setIconified(false);
+                    searchText.requestFocus();
+                    searchText.setQuery(query, false);
                     break;
             }
         }
