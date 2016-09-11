@@ -452,7 +452,7 @@ public class LocationTabActivity extends Activity implements
 
     @Override
     public boolean isPassive() {
-        return false;
+        return true;
     }
 
     @Override

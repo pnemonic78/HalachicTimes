@@ -61,7 +61,6 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
     private EditText latitudeDecimalEdit;
     private EditText longitudeDecimalEdit;
     private LocationFormatter formatter;
-    private int titleId;
 
     public void setOnLocationAddedListener(OnLocationEditListener listener) {
         this.locationAddedListener = listener;
@@ -80,11 +79,6 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
         } else {
             location = null;
         }
-        if (location != null) {
-            titleId = R.string.title_dialog_edit_location;
-        } else {
-            titleId = R.string.title_dialog_add_location;
-        }
     }
 
     @Override
@@ -96,7 +90,7 @@ public class EditLocationDialog extends DialogFragment implements DialogInterfac
         init(view);
 
         Dialog dialog = new AlertDialog.Builder(context)
-                .setTitle(titleId)
+                .setTitle(R.string.title_activity_add_location)
                 .setPositiveButton(R.string.ok, this)
                 .setNegativeButton(R.string.cancel, this)
                 .setView(view)
