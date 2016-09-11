@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import net.sf.preference.ThemedPreferences;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
 
@@ -73,7 +74,9 @@ public class AddLocationActivity extends Activity {
     }
 
     protected int getThemeId() {
-        return R.style.Theme_Base;
+        Context context = this;
+        ThemedPreferences settings = new LocationPreferences(context);
+        return settings.getTheme();
     }
 
     private void init() {

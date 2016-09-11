@@ -19,17 +19,18 @@
  */
 package net.sf.times.location;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+
+import net.sf.app.ThemedApplication;
 
 /**
  * Location application.
  *
  * @author Moshe Waisberg
  */
-public class LocationApplication<AP extends AddressProvider, LP extends LocationsProvider> extends Application {
+public class LocationApplication<AP extends AddressProvider, LP extends LocationsProvider> extends ThemedApplication {
 
     /** Provider for addresses. */
     private AP addressProvider;
@@ -69,9 +70,14 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
     }
 
     @Override
+    protected LocationPreferences createPreferences(Context context) {
+        return new LocationPreferences(context);
+    }
+
+    @Override
     public void onCreate() {
-        super.onCreate();
         LocationPreferences.init(this);
+        super.onCreate();
     }
 
     @Override

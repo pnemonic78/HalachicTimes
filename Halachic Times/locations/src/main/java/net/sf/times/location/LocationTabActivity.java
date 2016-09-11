@@ -20,7 +20,6 @@
 package net.sf.times.location;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -395,9 +394,13 @@ public class LocationTabActivity extends Activity implements
      * Show the form to add a custom location.
      */
     private void addLocation() {
-        Intent intent = new Intent(this, AddLocationActivity.class);
+        Intent intent = new Intent(this, getAddLocationActivityClass());
         intent.setAction(Intent.ACTION_INSERT);
         startActivityForResult(intent, REQUEST_ADD);
+    }
+
+    protected Class<? extends Activity> getAddLocationActivityClass() {
+        return AddLocationActivity.class;
     }
 
     /**

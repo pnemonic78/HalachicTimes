@@ -33,10 +33,10 @@ import net.sf.times.location.LocationApplication;
  */
 public class CompassApplication extends LocationApplication<AddressProvider, CompassLocations> {
 
-    /**
-     * Constructs a new application.
-     */
-    public CompassApplication() {
+    @Override
+    public void onCreate() {
+        CompassPreferences.init(this);
+        super.onCreate();
     }
 
     @Override
@@ -45,8 +45,7 @@ public class CompassApplication extends LocationApplication<AddressProvider, Com
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        CompassPreferences.init(this);
+    protected CompassPreferences createPreferences(Context context) {
+        return new CompassPreferences(context);
     }
 }

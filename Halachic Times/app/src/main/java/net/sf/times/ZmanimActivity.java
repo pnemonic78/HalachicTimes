@@ -274,7 +274,8 @@ public class ZmanimActivity extends LocatedActivity implements
         Context context = this;
         settings = new ZmanimPreferences(context);
 
-        setTheme(settings.getTheme());
+//        setTheme(settings.getTheme());
+        System.out.println("~!@ act " + getTheme());
         setContentView(R.layout.times);
         View view = getWindow().getDecorView();
 

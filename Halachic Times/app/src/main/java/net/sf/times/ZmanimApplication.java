@@ -21,6 +21,7 @@ package net.sf.times;
 
 import android.content.Context;
 
+import net.sf.preference.ThemedPreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.ZmanimLocations;
@@ -33,10 +34,10 @@ import net.sf.times.preference.ZmanimPreferences;
  */
 public class ZmanimApplication extends LocationApplication<AddressProvider, ZmanimLocations> {
 
-    /**
-     * Constructs a new application.
-     */
-    public ZmanimApplication() {
+    @Override
+    public void onCreate() {
+        ZmanimPreferences.init(this);
+        super.onCreate();
     }
 
     @Override
@@ -45,8 +46,7 @@ public class ZmanimApplication extends LocationApplication<AddressProvider, Zman
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        ZmanimPreferences.init(this);
+    protected ZmanimPreferences createPreferences(Context context) {
+        return new ZmanimPreferences(context);
     }
 }
