@@ -42,6 +42,7 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+import net.sf.app.ThemedActivity;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 
@@ -55,7 +56,7 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-public class LocationTabActivity extends Activity implements
+public class LocationTabActivity extends ThemedActivity implements
         OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,
@@ -109,7 +110,6 @@ public class LocationTabActivity extends Activity implements
         super.onCreate(savedInstanceState);
         Resources res = getResources();
 
-        setTheme(getThemeId());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }

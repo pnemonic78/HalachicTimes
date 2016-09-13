@@ -19,39 +19,25 @@
  */
 package net.sf.app;
 
-import android.app.Application;
-import android.content.Context;
+import android.app.Activity;
+import android.os.Bundle;
 
 import net.sf.preference.ThemedPreferences;
 
 /**
- * Application with a theme.
+ * Activity that takes its theme from the application.
  *
  * @author Moshe Waisberg
  */
-public class ThemedApplication<P extends ThemedPreferences> extends Application {
-
-    private P preferences;
+public class ThemedActivity extends Activity {
 
     @Override
-    public void onCreate() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setTheme(getPreferences().getTheme());
-        super.onCreate();
     }
 
-    public P getPreferences() {
-        if (preferences == null) {
-            initPreferences();
-            preferences = createPreferences(this);
-        }
-        return preferences;
-    }
-
-    protected void initPreferences() {
-        P.init(this);
-    }
-
-    protected P createPreferences(Context context) {
-        return (P) new ThemedPreferences(context);
+    public ThemedPreferences getPreferences() {
+        return ((ThemedApplication) getApplication()).getPreferences();
     }
 }

@@ -29,6 +29,8 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import net.sf.app.ThemedActivity;
+
 import java.util.TimeZone;
 
 /**
@@ -36,7 +38,7 @@ import java.util.TimeZone;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocatedActivity extends Activity implements ZmanimLocationListener {
+public abstract class LocatedActivity extends ThemedActivity implements ZmanimLocationListener {
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;

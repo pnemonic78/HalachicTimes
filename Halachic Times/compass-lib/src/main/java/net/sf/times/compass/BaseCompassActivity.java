@@ -55,7 +55,6 @@ public abstract class BaseCompassActivity extends LocatedActivity {
         Context context = this;
         settings = new CompassPreferences(context);
 
-        setTheme(settings.getTheme());
         setContentView(R.layout.compass);
         headerLocation = (TextView) findViewById(R.id.coordinates);
         headerAddress = (TextView) findViewById(R.id.address);

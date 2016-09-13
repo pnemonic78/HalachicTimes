@@ -31,21 +31,21 @@ import net.sf.times.preference.ZmanimPreferences;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimApplication extends LocationApplication<AddressProvider, ZmanimLocations> {
+public class ZmanimApplication extends LocationApplication<ZmanimPreferences, AddressProvider, ZmanimLocations> {
 
     @Override
-    public void onCreate() {
+    protected void initPreferences() {
+        super.initPreferences();
         ZmanimPreferences.init(this);
-        super.onCreate();
-    }
-
-    @Override
-    protected ZmanimLocations createLocationsProvider(Context context) {
-        return new ZmanimLocations(context);
     }
 
     @Override
     protected ZmanimPreferences createPreferences(Context context) {
         return new ZmanimPreferences(context);
+    }
+
+    @Override
+    protected ZmanimLocations createLocationsProvider(Context context) {
+        return new ZmanimLocations(context);
     }
 }

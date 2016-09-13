@@ -30,12 +30,23 @@ import net.sf.app.ThemedApplication;
  *
  * @author Moshe Waisberg
  */
-public class LocationApplication<AP extends AddressProvider, LP extends LocationsProvider> extends ThemedApplication {
+public class LocationApplication<P extends LocationPreferences, AP extends AddressProvider, LP extends LocationsProvider> extends ThemedApplication {
 
     /** Provider for addresses. */
     private AP addressProvider;
     /** Provider for locations. */
     private LP locations;
+
+    @Override
+    protected void initPreferences() {
+        super.initPreferences();
+        P.init(this);
+    }
+
+    @Override
+    protected P createPreferences(Context context) {
+        return (P) new LocationPreferences(context);
+    }
 
     /**
      * Get the addresses provider instance.
@@ -67,17 +78,6 @@ public class LocationApplication<AP extends AddressProvider, LP extends Location
 
     protected LP createLocationsProvider(Context context) {
         return (LP) new LocationsProvider(context);
-    }
-
-    @Override
-    protected LocationPreferences createPreferences(Context context) {
-        return new LocationPreferences(context);
-    }
-
-    @Override
-    public void onCreate() {
-        LocationPreferences.init(this);
-        super.onCreate();
     }
 
     @Override

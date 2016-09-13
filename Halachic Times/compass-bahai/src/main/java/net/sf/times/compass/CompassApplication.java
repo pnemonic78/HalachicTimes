@@ -31,21 +31,21 @@ import net.sf.times.location.LocationApplication;
  *
  * @author Moshe Waisberg
  */
-public class CompassApplication extends LocationApplication<AddressProvider, CompassLocations> {
+public class CompassApplication extends LocationApplication<CompassPreferences, AddressProvider, CompassLocations> {
 
     @Override
-    public void onCreate() {
+    protected void initPreferences() {
+        super.initPreferences();
         CompassPreferences.init(this);
-        super.onCreate();
-    }
-
-    @Override
-    protected CompassLocations createLocationsProvider(Context context) {
-        return new CompassLocations(context);
     }
 
     @Override
     protected CompassPreferences createPreferences(Context context) {
         return new CompassPreferences(context);
+    }
+
+    @Override
+    protected CompassLocations createLocationsProvider(Context context) {
+        return new CompassLocations(context);
     }
 }

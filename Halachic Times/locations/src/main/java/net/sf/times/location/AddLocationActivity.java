@@ -32,6 +32,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import net.sf.app.ThemedActivity;
 import net.sf.preference.ThemedPreferences;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
@@ -41,7 +42,7 @@ import net.sf.times.location.text.LongitudeInputFilter;
  *
  * @author Moshe Waisberg
  */
-public class AddLocationActivity extends Activity {
+public class AddLocationActivity extends ThemedActivity {
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
@@ -65,7 +66,6 @@ public class AddLocationActivity extends Activity {
             location = null;
         }
 
-        setTheme(getThemeId());
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
