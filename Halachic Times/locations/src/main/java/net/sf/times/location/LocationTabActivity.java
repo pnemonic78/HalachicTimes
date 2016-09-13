@@ -110,13 +110,13 @@ public class LocationTabActivity extends ThemedActivity implements
         super.onCreate(savedInstanceState);
         Resources res = getResources();
 
+        LocationApplication app = (LocationApplication) getApplication();
+        locations = app.getLocations();
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.locations);
-
-        LocationApplication app = (LocationApplication) getApplication();
-        locations = app.getLocations();
 
         SearchView searchText = (SearchView) findViewById(R.id.search_location);
         searchText.setOnQueryTextListener(this);
@@ -492,7 +492,7 @@ public class LocationTabActivity extends ThemedActivity implements
                     address = (ZmanimAddress) msg.obj;
                     activity.populateLists();
 
-                    String query = address.format();
+                    String query = address.getFormatted();
                     SearchView searchText = activity.searchText;
                     searchText.setIconified(false);
                     searchText.requestFocus();

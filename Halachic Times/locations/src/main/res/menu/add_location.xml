@@ -13,5 +13,11 @@
         android:orderInCategory="2"
         android:showAsAction="always"
         android:title="@string/menu_location_save"/>
+    <item
+        android:id="@+id/menu_location_show"
+        android:icon="@android:drawable/ic_menu_view"
+        android:orderInCategory="3"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_location_fetch"/>
 
 </menu>

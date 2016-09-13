@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import net.sf.app.ThemedActivity;
@@ -43,7 +44,9 @@ import net.sf.times.location.text.LongitudeInputFilter;
  *
  * @author Moshe Waisberg
  */
-public class AddLocationActivity extends ThemedActivity implements AdapterView.OnItemSelectedListener {
+public class AddLocationActivity extends ThemedActivity implements
+        AdapterView.OnItemSelectedListener,
+        ZmanimLocationListener {
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
@@ -64,7 +67,10 @@ public class AddLocationActivity extends ThemedActivity implements AdapterView.O
     private EditText longitudeMinutesEdit;
     private EditText longitudeSecondsEdit;
     private Spinner longitudeDirection;
+    private TextView addressView;
     private LocationFormatter formatter;
+    /** Provider for locations. */
+    private LocationsProvider locations;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,12 +86,15 @@ public class AddLocationActivity extends ThemedActivity implements AdapterView.O
             location = null;
         }
 
+        LocationApplication app = (LocationApplication) getApplication();
+        locations = app.getLocations();
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.location_add);
-        init();
+        initView();
     }
 
-    private void init() {
+    private void initView() {
         coordsFormatSpinner = (Spinner) findViewById(R.id.coords_format);
         coordsFormatSpinner.setOnItemSelectedListener(this);
 
@@ -105,6 +114,8 @@ public class AddLocationActivity extends ThemedActivity implements AdapterView.O
         longitudeSecondsEdit = (EditText) findViewById(R.id.longitude_seconds_edit);
         longitudeDirection = (Spinner) findViewById(R.id.longitude_direction);
 
+        addressView = (TextView) findViewById(R.id.address);
+
         if (location == null) {
             location = new Location(GeocoderBase.USER_PROVIDER);
         } else {
@@ -113,6 +124,18 @@ public class AddLocationActivity extends ThemedActivity implements AdapterView.O
             longitudeDecimalEdit.setText(formatter.formatLongitudeDecimal(location.getLongitude()));
             longitudeDecimalEdit.setSelection(0, longitudeDecimalEdit.length());
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        locations.start(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        locations.stop(this);
     }
 
     @Override
@@ -142,6 +165,12 @@ public class AddLocationActivity extends ThemedActivity implements AdapterView.O
                 data.putExtra(EXTRA_LOCATION, location);
                 setResult(RESULT_OK, data);
                 finish();
+            }
+            return true;
+        }
+        if (id == R.id.menu_location_show) {
+            if (saveLocation(location)) {
+                fetchAddress(location);
             }
             return true;
         }
@@ -222,5 +251,65 @@ public class AddLocationActivity extends ThemedActivity implements AdapterView.O
         location.setLatitude(latitude);
         location.setLongitude(longitude);
         return true;
+    }
+
+    /**
+     * Get the locations provider.
+     *
+     * @return hte provider.
+     */
+    public LocationsProvider getLocations() {
+        return locations;
+    }
+
+    private void fetchAddress(Location location) {
+        addressView.setText(R.string.location_unknown);
+
+        LocationsProvider locations = getLocations();
+        locations.findAddress(location);
+    }
+
+    @Override
+    public void onAddressChanged(Location location, final ZmanimAddress address) {
+        if ((location == null) || (address == null)) {
+            return;
+        }
+        if ((location.getLatitude() != this.location.getLatitude()) || (location.getLongitude() != this.location.getLongitude())) {
+            return;
+        }
+
+        if (addressView != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    addressView.setText(address.getFormatted());
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onElevationChanged(Location location) {
+    }
+
+    @Override
+    public boolean isPassive() {
+        return true;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
     }
 }
