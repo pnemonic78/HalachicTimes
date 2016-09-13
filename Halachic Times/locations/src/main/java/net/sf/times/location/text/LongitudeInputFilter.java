@@ -36,7 +36,11 @@ public class LongitudeInputFilter extends DigitsKeyListener {
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
 
     public LongitudeInputFilter() {
-        super(true, true);
+        this(true);
+    }
+
+    public LongitudeInputFilter(boolean sign) {
+        super(sign, true);
     }
 
     @Override
@@ -47,6 +51,9 @@ public class LongitudeInputFilter extends DigitsKeyListener {
         String s = dest.toString();
         s = s.substring(0, dstart) + out + s.substring(dend);
         if (!TextUtils.isEmpty(s)) {
+            if ("-".equals(s) || "+".equals(s) || ".".equals(s) || "-.".equals(s) || "+.".equals(s)) {
+                return out;
+            }
             double longitude = Double.parseDouble(s);
             if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX)) {
                 return "";

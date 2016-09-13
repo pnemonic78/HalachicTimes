@@ -47,6 +47,9 @@ public class LatitudeInputFilter extends DigitsKeyListener {
         String s = dest.toString();
         s = s.substring(0, dstart) + out + s.substring(dend);
         if (!TextUtils.isEmpty(s)) {
+            if ("-".equals(s) || "+".equals(s) || ".".equals(s) || "-.".equals(s) || "+.".equals(s)) {
+                return out;
+            }
             double latitude = Double.parseDouble(s);
             if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX)) {
                 return "";
