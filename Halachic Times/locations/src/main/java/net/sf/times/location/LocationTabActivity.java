@@ -181,13 +181,11 @@ public class LocationTabActivity extends ThemedActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         final int id = item.getItemId();
 
-        switch (id) {
-            case android.R.id.home:
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    finish();
-                    return true;
-                }
-                break;
+        if (id == android.R.id.home) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                finish();
+                return true;
+            }
         }
         // Cannot use 'switch' here because library ids are not final.
         if (id == R.id.menu_location_add) {
@@ -357,10 +355,6 @@ public class LocationTabActivity extends ThemedActivity implements
      */
     private void gotoHere() {
         setAddress(null);
-    }
-
-    protected int getThemeId() {
-        return R.style.Theme_Base;
     }
 
     @Override

@@ -19,21 +19,10 @@
  */
 package net.sf.times.location;
 
-import android.content.Context;
-
-import net.sf.times.preference.ZmanimPreferences;
-
 /**
  * Pick a city from the list.
  *
  * @author Moshe Waisberg
  */
 public class LocationActivity extends LocationTabActivity {
-
-    @Override
-    protected int getThemeId() {
-        Context context = this;
-        ZmanimPreferences settings = new ZmanimPreferences(context);
-        return settings.getTheme();
-    }
 }
