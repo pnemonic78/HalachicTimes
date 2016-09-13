@@ -2,4 +2,10 @@
     package="net.sf.lib"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <application>
+        <provider
+            android:name="net.sf.provider.PreferencesProvider"
+            android:authorities="${applicationId}.preferences"/>
+    </application>
+
 </manifest>

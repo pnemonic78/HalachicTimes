@@ -21,7 +21,6 @@ package net.sf.times;
 
 import android.content.Context;
 
-import net.sf.preference.ThemedPreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.ZmanimLocations;

@@ -37,7 +37,6 @@ public class ThemedApplication extends Application {
     public void onCreate() {
         ThemedPreferences.init(this);
         super.onCreate();
-        System.out.println("~!@ app " + getPreferences().getTheme());
         setTheme(getPreferences().getTheme());
     }
 
