@@ -31,6 +31,9 @@
     <string name="west">W</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="coords_format_label" translatable="false">@string/coords_format_title</string>
+    <string name="latitude_label" translatable="false">@string/latitude</string>
+    <string name="longitude_label" translatable="false">@string/longitude</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Clear history</string>

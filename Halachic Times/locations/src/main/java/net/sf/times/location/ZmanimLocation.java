@@ -282,4 +282,8 @@ public class ZmanimLocation extends Location {
         long t2 = l2.getTime();
         return (t1 > t2) ? 1 : (t1 < t2 ? -1 : 0);
     }
+
+    public static double toDecimal(int degrees, int minutes, int seconds) {
+        return degrees + (minutes / 60.0) + (seconds / 3600.0);
+    }
 }

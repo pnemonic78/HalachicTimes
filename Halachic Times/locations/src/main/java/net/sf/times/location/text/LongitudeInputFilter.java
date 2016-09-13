@@ -36,7 +36,7 @@ public class LongitudeInputFilter extends DigitsKeyListener {
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
 
     public LongitudeInputFilter() {
-        this(true);
+        this(false);
     }
 
     public LongitudeInputFilter(boolean sign) {

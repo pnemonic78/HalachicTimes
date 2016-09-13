@@ -19,21 +19,22 @@
  */
 package net.sf.times.location;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.ViewSwitcher;
 
 import net.sf.app.ThemedActivity;
-import net.sf.preference.ThemedPreferences;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
 
@@ -42,14 +43,27 @@ import net.sf.times.location.text.LongitudeInputFilter;
  *
  * @author Moshe Waisberg
  */
-public class AddLocationActivity extends ThemedActivity {
+public class AddLocationActivity extends ThemedActivity implements AdapterView.OnItemSelectedListener {
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
 
+    private static final int POS_DECIMAL = 0;
+
     private Location location;
+    private Spinner coordsFormatSpinner;
+    private ViewSwitcher latitudeSwitcher;
     private EditText latitudeDecimalEdit;
+    private EditText latitudeDegreesEdit;
+    private EditText latitudeMinutesEdit;
+    private EditText latitudeSecondsEdit;
+    private Spinner latitudeDirection;
+    private ViewSwitcher longitudeSwitcher;
     private EditText longitudeDecimalEdit;
+    private EditText longitudeDegreesEdit;
+    private EditText longitudeMinutesEdit;
+    private EditText longitudeSecondsEdit;
+    private Spinner longitudeDirection;
     private LocationFormatter formatter;
 
     @Override
@@ -66,32 +80,38 @@ public class AddLocationActivity extends ThemedActivity {
             location = null;
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.location_add);
         init();
     }
 
-    protected int getThemeId() {
-        Context context = this;
-        ThemedPreferences settings = new LocationPreferences(context);
-        return settings.getTheme();
-    }
-
     private void init() {
+        coordsFormatSpinner = (Spinner) findViewById(R.id.coords_format);
+        coordsFormatSpinner.setOnItemSelectedListener(this);
+
+        latitudeSwitcher = (ViewSwitcher) findViewById(R.id.latitude_switch);
         latitudeDecimalEdit = (EditText) findViewById(R.id.latitude_decimal_edit);
-        latitudeDecimalEdit.setFilters(new InputFilter[]{new LatitudeInputFilter()});
+        latitudeDecimalEdit.setFilters(new InputFilter[]{new LatitudeInputFilter(), new InputFilter.LengthFilter(10)});
+        latitudeDegreesEdit = (EditText) findViewById(R.id.latitude_degrees_edit);
+        latitudeMinutesEdit = (EditText) findViewById(R.id.latitude_minutes_edit);
+        latitudeSecondsEdit = (EditText) findViewById(R.id.latitude_seconds_edit);
+        latitudeDirection = (Spinner) findViewById(R.id.latitude_direction);
+
+        longitudeSwitcher = (ViewSwitcher) findViewById(R.id.longitude_switch);
         longitudeDecimalEdit = (EditText) findViewById(R.id.longitude_decimal_edit);
-        longitudeDecimalEdit.setFilters(new InputFilter[]{new LongitudeInputFilter()});
+        longitudeDecimalEdit.setFilters(new InputFilter[]{new LongitudeInputFilter(), new InputFilter.LengthFilter(10)});
+        longitudeDegreesEdit = (EditText) findViewById(R.id.longitude_degrees_edit);
+        longitudeMinutesEdit = (EditText) findViewById(R.id.longitude_minutes_edit);
+        longitudeSecondsEdit = (EditText) findViewById(R.id.longitude_seconds_edit);
+        longitudeDirection = (Spinner) findViewById(R.id.longitude_direction);
 
         if (location == null) {
             location = new Location(GeocoderBase.USER_PROVIDER);
         } else {
             latitudeDecimalEdit.setText(formatter.formatLatitudeDecimal(location.getLatitude()));
-            latitudeDecimalEdit.setSelection(latitudeDecimalEdit.length());
+            latitudeDecimalEdit.setSelection(0, latitudeDecimalEdit.length());
             longitudeDecimalEdit.setText(formatter.formatLongitudeDecimal(location.getLongitude()));
-            longitudeDecimalEdit.setSelection(longitudeDecimalEdit.length());
+            longitudeDecimalEdit.setSelection(0, longitudeDecimalEdit.length());
         }
     }
 
@@ -106,13 +126,9 @@ public class AddLocationActivity extends ThemedActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         final int id = item.getItemId();
 
-        switch (id) {
-            case android.R.id.home:
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                    finish();
-                    return true;
-                }
-                break;
+        if (id == android.R.id.home) {
+            finish();
+            return true;
         }
         // Cannot use 'switch' here because library ids are not final.
         if (id == R.id.menu_location_cancel) {
@@ -121,25 +137,12 @@ public class AddLocationActivity extends ThemedActivity {
             return true;
         }
         if (id == R.id.menu_location_add) {
-            CharSequence latitudeString = latitudeDecimalEdit.getText();
-            if (TextUtils.isEmpty(latitudeString)) {
-                return true;
+            if (saveLocation(location)) {
+                Intent data = new Intent();
+                data.putExtra(EXTRA_LOCATION, location);
+                setResult(RESULT_OK, data);
+                finish();
             }
-            double latitude = Double.parseDouble(latitudeString.toString());
-
-            CharSequence longitudeString = longitudeDecimalEdit.getText();
-            if (TextUtils.isEmpty(longitudeString)) {
-                return true;
-            }
-            double longitude = Double.parseDouble(longitudeString.toString());
-
-            location.setLatitude(latitude);
-            location.setLongitude(longitude);
-
-            Intent data = new Intent();
-            data.putExtra(EXTRA_LOCATION, location);
-            setResult(RESULT_OK, data);
-            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -154,5 +157,70 @@ public class AddLocationActivity extends ThemedActivity {
      */
     protected LocationFormatter createLocationFormatter(Context context) {
         return new SimpleLocationFormatter(context);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        latitudeSwitcher.setDisplayedChild(position);
+        longitudeSwitcher.setDisplayedChild(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
+    private boolean saveLocation(Location location) {
+        double latitude = 0;
+        double longitude = 0;
+
+        if (coordsFormatSpinner.getSelectedItemPosition() == POS_DECIMAL) {
+            CharSequence latitudeString = latitudeDecimalEdit.getText();
+            if (TextUtils.isEmpty(latitudeString)) {
+                return false;
+            }
+            latitude = Double.parseDouble(latitudeString.toString());
+
+            CharSequence longitudeString = longitudeDecimalEdit.getText();
+            if (TextUtils.isEmpty(longitudeString)) {
+                return false;
+            }
+            longitude = Double.parseDouble(longitudeString.toString());
+        } else {
+            CharSequence latitudeDegreesString = latitudeDegreesEdit.getText();
+            if (TextUtils.isEmpty(latitudeDegreesString)) {
+                return false;
+            }
+            int latitudeDegrees = Integer.parseInt(latitudeDegreesString.toString(), 10);
+
+            CharSequence longitudeDegreesString = longitudeDegreesEdit.getText();
+            if (TextUtils.isEmpty(longitudeDegreesString)) {
+                return false;
+            }
+            int longitudeDegrees = Integer.parseInt(longitudeDegreesString.toString(), 10);
+
+            CharSequence latitudeMinutesString = latitudeMinutesEdit.getText();
+            int latitudeMinutes = TextUtils.isEmpty(latitudeMinutesString) ? 0 : Integer.parseInt(latitudeMinutesString.toString(), 10);
+
+            CharSequence latitudeSecondsString = latitudeSecondsEdit.getText();
+            int latitudeSeconds = TextUtils.isEmpty(latitudeSecondsString) ? 0 : Integer.parseInt(latitudeSecondsString.toString(), 10);
+
+            CharSequence longitudeMinutesString = longitudeMinutesEdit.getText();
+            int longitudeMinutes = TextUtils.isEmpty(longitudeMinutesString) ? 0 : Integer.parseInt(longitudeMinutesString.toString(), 10);
+
+            CharSequence longitudeSecondsString = longitudeSecondsEdit.getText();
+            int longitudeSeconds = TextUtils.isEmpty(longitudeSecondsString) ? 0 : Integer.parseInt(longitudeSecondsString.toString(), 10);
+
+            latitude = ZmanimLocation.toDecimal(latitudeDegrees, latitudeMinutes, latitudeSeconds);
+            longitude = ZmanimLocation.toDecimal(longitudeDegrees, longitudeMinutes, longitudeSeconds);
+        }
+
+        // North = +1; South = -1
+        latitude = Math.abs(latitude) * ((latitudeDirection.getSelectedItemPosition() == 0) ? +1 : -1);
+        // East = +1; West = -1
+        longitude = Math.abs(longitude) * ((longitudeDirection.getSelectedItemPosition() == 0) ? +1 : -1);
+
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        return true;
     }
 }

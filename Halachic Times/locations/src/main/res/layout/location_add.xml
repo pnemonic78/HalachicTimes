@@ -2,41 +2,157 @@
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:stretchColumns="*">
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp">
 
     <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
         <TextView
+            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/latitude"/>
+            android:layout_marginRight="8dp"
+            android:text="@string/coords_format_label"/>
 
-        <EditText
-            android:id="@+id/latitude_decimal_edit"
+        <Spinner
+            android:id="@+id/coords_format"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal|numberSigned"/>
+            android:layout_span="2"
+            android:entries="@array/coords_format_editor_entries"
+            android:spinnerMode="dropdown"/>
     </TableRow>
 
     <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
 
         <TextView
+            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/longitude"/>
+            android:layout_marginRight="8dp"
+            android:text="@string/latitude_label"/>
 
-        <EditText
-            android:id="@+id/longitude_decimal_edit"
+        <ViewSwitcher
+            android:id="@+id/latitude_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal|numberSigned"/>
+            android:measureAllChildren="false">
+
+            <EditText
+                android:id="@+id/latitude_decimal_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:inputType="numberDecimal"
+                android:maxLength="10"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/latitude_degrees_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/latitude_minutes_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/latitude_seconds_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:maxLength="3"/>
+            </LinearLayout>
+        </ViewSwitcher>
+
+        <Spinner
+            android:id="@+id/latitude_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/latitude_entries"
+            android:spinnerMode="dropdown"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/Widget.TextView.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:text="@string/longitude_label"/>
+
+        <ViewSwitcher
+            android:id="@+id/longitude_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:measureAllChildren="false">
+
+            <EditText
+                android:id="@+id/longitude_decimal_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="5"
+                android:inputType="numberDecimal"
+                android:maxLength="10"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/longitude_degrees_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/longitude_minutes_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="number"
+                    android:maxLength="2"/>
+
+                <EditText
+                    android:id="@+id/longitude_seconds_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:maxLength="3"/>
+            </LinearLayout>
+        </ViewSwitcher>
+
+        <Spinner
+            android:id="@+id/longitude_direction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/longitude_entries"
+            android:spinnerMode="dropdown"/>
     </TableRow>
 </TableLayout>

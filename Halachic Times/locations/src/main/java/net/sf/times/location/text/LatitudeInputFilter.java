@@ -36,7 +36,11 @@ public class LatitudeInputFilter extends DigitsKeyListener {
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
 
     public LatitudeInputFilter() {
-        super(true, true);
+        this(false);
+    }
+
+    public LatitudeInputFilter(boolean sign) {
+        super(sign, true);
     }
 
     @Override
