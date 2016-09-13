@@ -12,7 +12,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -34,7 +33,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -67,6 +65,11 @@
                     android:inputType="number"
                     android:maxLength="2"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/degrees_symbol"/>
+
                 <EditText
                     android:id="@+id/latitude_minutes_edit"
                     android:layout_width="wrap_content"
@@ -75,6 +78,11 @@
                     android:inputType="number"
                     android:maxLength="2"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minutes_symbol"/>
+
                 <EditText
                     android:id="@+id/latitude_seconds_edit"
                     android:layout_width="wrap_content"
@@ -82,6 +90,11 @@
                     android:ems="3"
                     android:inputType="number"
                     android:maxLength="3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seconds_symbol"/>
             </LinearLayout>
         </ViewSwitcher>
 
@@ -100,7 +113,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -133,6 +145,11 @@
                     android:inputType="number"
                     android:maxLength="2"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/degrees_symbol"/>
+
                 <EditText
                     android:id="@+id/longitude_minutes_edit"
                     android:layout_width="wrap_content"
@@ -141,6 +158,11 @@
                     android:inputType="number"
                     android:maxLength="2"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/minutes_symbol"/>
+
                 <EditText
                     android:id="@+id/longitude_seconds_edit"
                     android:layout_width="wrap_content"
@@ -148,6 +170,11 @@
                     android:ems="3"
                     android:inputType="number"
                     android:maxLength="3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/seconds_symbol"/>
             </LinearLayout>
         </ViewSwitcher>
 
@@ -166,7 +193,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
@@ -174,7 +200,6 @@
 
         <TextView
             android:id="@+id/address"
-            style="@style/Widget.TextView.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_span="2"

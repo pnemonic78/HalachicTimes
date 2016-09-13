@@ -36,6 +36,9 @@
     <string name="latitude_label" translatable="false">@string/latitude</string>
     <string name="longitude_label" translatable="false">@string/longitude</string>
     <string name="address_label">Address</string>
+    <string name="degrees_symbol" translatable="false">\u00B0</string>
+    <string name="minutes_symbol" translatable="false">\u0027</string>
+    <string name="seconds_symbol" translatable="false">\u0022</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Clear history</string>
