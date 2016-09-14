@@ -39,6 +39,8 @@ import net.sf.app.ThemedActivity;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
 
+import java.util.Locale;
+
 /**
  * Add a location by specifying its coordinates.
  *
@@ -56,7 +58,13 @@ public class AddLocationActivity extends ThemedActivity implements
     /** The address state. */
     private static final String SAVE_STATE_ADDRESS = "address";
 
-    private static final int POS_DECIMAL = 0;
+    private static final int FORMAT_DECIMAL = 0;
+    private static final int FORMAT_SEXAGESIMAL = 1;
+
+    private static final int DIRECTION_NORTH = +1;
+    private static final int DIRECTION_SOUTH = -1;
+    private static final int DIRECTION_EAST = +1;
+    private static final int DIRECTION_WEST = -1;
 
     private Location location;
     private Spinner coordsFormatSpinner;
@@ -78,6 +86,7 @@ public class AddLocationActivity extends ThemedActivity implements
     private LocationsProvider locations;
     private ZmanimAddress address;
     private Runnable addressFormatRunnable;
+    private Location locationForConvert;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,7 +182,7 @@ public class AddLocationActivity extends ThemedActivity implements
             return true;
         }
         if (id == R.id.menu_location_add) {
-            if (saveLocation(location)) {
+            if (saveLocation(location, coordsFormatSpinner.getSelectedItemPosition())) {
                 Intent data = new Intent();
                 data.putExtra(EXTRA_LOCATION, location);
                 setResult(RESULT_OK, data);
@@ -182,7 +191,7 @@ public class AddLocationActivity extends ThemedActivity implements
             return true;
         }
         if (id == R.id.menu_location_show) {
-            if (saveLocation(location)) {
+            if (saveLocation(location, coordsFormatSpinner.getSelectedItemPosition())) {
                 fetchAddress(location);
             }
             return true;
@@ -203,6 +212,11 @@ public class AddLocationActivity extends ThemedActivity implements
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (position == FORMAT_DECIMAL) {
+            convertToDecimal();
+        } else {
+            convertFromDecimal();
+        }
         latitudeSwitcher.setDisplayedChild(position);
         longitudeSwitcher.setDisplayedChild(position);
     }
@@ -211,11 +225,11 @@ public class AddLocationActivity extends ThemedActivity implements
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    private boolean saveLocation(Location location) {
-        double latitude = 0;
-        double longitude = 0;
+    private boolean saveLocation(Location location, int coordsFormat) {
+        double latitude;
+        double longitude;
 
-        if (coordsFormatSpinner.getSelectedItemPosition() == POS_DECIMAL) {
+        if (coordsFormat == FORMAT_DECIMAL) {
             CharSequence latitudeString = latitudeDecimalEdit.getText();
             if (TextUtils.isEmpty(latitudeString)) {
                 return false;
@@ -244,22 +258,20 @@ public class AddLocationActivity extends ThemedActivity implements
             int latitudeMinutes = TextUtils.isEmpty(latitudeMinutesString) ? 0 : Integer.parseInt(latitudeMinutesString.toString(), 10);
 
             CharSequence latitudeSecondsString = latitudeSecondsEdit.getText();
-            int latitudeSeconds = TextUtils.isEmpty(latitudeSecondsString) ? 0 : Integer.parseInt(latitudeSecondsString.toString(), 10);
+            double latitudeSeconds = TextUtils.isEmpty(latitudeSecondsString) ? 0 : Double.parseDouble(latitudeSecondsString.toString());
 
             CharSequence longitudeMinutesString = longitudeMinutesEdit.getText();
             int longitudeMinutes = TextUtils.isEmpty(longitudeMinutesString) ? 0 : Integer.parseInt(longitudeMinutesString.toString(), 10);
 
             CharSequence longitudeSecondsString = longitudeSecondsEdit.getText();
-            int longitudeSeconds = TextUtils.isEmpty(longitudeSecondsString) ? 0 : Integer.parseInt(longitudeSecondsString.toString(), 10);
+            double longitudeSeconds = TextUtils.isEmpty(longitudeSecondsString) ? 0 : Double.parseDouble(longitudeSecondsString.toString());
 
             latitude = ZmanimLocation.toDecimal(latitudeDegrees, latitudeMinutes, latitudeSeconds);
             longitude = ZmanimLocation.toDecimal(longitudeDegrees, longitudeMinutes, longitudeSeconds);
         }
 
-        // North = +1; South = -1
-        latitude = Math.abs(latitude) * ((latitudeDirection.getSelectedItemPosition() == 0) ? +1 : -1);
-        // East = +1; West = -1
-        longitude = Math.abs(longitude) * ((longitudeDirection.getSelectedItemPosition() == 0) ? +1 : -1);
+        latitude = Math.abs(latitude) * ((latitudeDirection.getSelectedItemPosition() == 0) ? DIRECTION_NORTH : DIRECTION_SOUTH);
+        longitude = Math.abs(longitude) * ((longitudeDirection.getSelectedItemPosition() == 0) ? DIRECTION_EAST : DIRECTION_WEST);
 
         location.setLatitude(latitude);
         location.setLongitude(longitude);
@@ -342,5 +354,45 @@ public class AddLocationActivity extends ThemedActivity implements
         super.onRestoreInstanceState(savedInstanceState);
         location = savedInstanceState.getParcelable(SAVE_STATE_LOCATION);
         address = savedInstanceState.getParcelable(SAVE_STATE_ADDRESS);
+    }
+
+    private void convertFromDecimal() {
+        if (locationForConvert == null) {
+            locationForConvert = new Location(location);
+        }
+        if (saveLocation(locationForConvert, FORMAT_DECIMAL)) {
+            setSexagesimalTexts(locationForConvert.getLatitude(), latitudeDegreesEdit, latitudeMinutesEdit, latitudeSecondsEdit);
+            setSexagesimalTexts(locationForConvert.getLongitude(), longitudeDegreesEdit, longitudeMinutesEdit, longitudeSecondsEdit);
+        }
+    }
+
+    private void setSexagesimalTexts(double coordinate, TextView degreesView, TextView minutesView, TextView secondsView) {
+        coordinate = Math.abs(coordinate);
+        int degrees = (int) Math.floor(coordinate);
+        coordinate -= degrees;
+        coordinate *= 60.0;
+        int minutes = (int) Math.floor(coordinate);
+        coordinate -= minutes;
+        coordinate *= 60.0;
+        double seconds = coordinate;
+
+        Locale locale = Locale.getDefault();
+        degreesView.setText(String.format(locale, "%02d", degrees));
+        minutesView.setText(String.format(locale, "%02d", minutes));
+        secondsView.setText(String.format(locale, "%02.3f", seconds));
+    }
+
+    private void convertToDecimal() {
+        if (locationForConvert == null) {
+            locationForConvert = new Location(location);
+        }
+        if (saveLocation(locationForConvert, FORMAT_SEXAGESIMAL)) {
+            setDecimalTexts(locationForConvert.getLatitude(), latitudeDecimalEdit);
+            setDecimalTexts(locationForConvert.getLongitude(), longitudeDecimalEdit);
+        }
+    }
+
+    private void setDecimalTexts(double coordinate, TextView decimalView) {
+        decimalView.setText(String.format(Locale.US, "%02.6f", coordinate));
     }
 }

@@ -283,7 +283,7 @@ public class ZmanimLocation extends Location {
         return (t1 > t2) ? 1 : (t1 < t2 ? -1 : 0);
     }
 
-    public static double toDecimal(int degrees, int minutes, int seconds) {
+    public static double toDecimal(int degrees, int minutes, double seconds) {
         return degrees + (minutes / 60.0) + (seconds / 3600.0);
     }
 }

@@ -55,9 +55,9 @@
                 android:id="@+id/longitude_seconds_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="3"
-                android:inputType="number"
-                android:maxLength="3"/>
+                android:ems="6"
+                android:inputType="numberDecimal"
+                android:maxLength="6"/>
 
             <TextView
                 android:layout_width="wrap_content"
