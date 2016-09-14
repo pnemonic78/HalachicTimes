@@ -51,6 +51,11 @@ public class AddLocationActivity extends ThemedActivity implements
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
 
+    /** The location state. */
+    private static final String SAVE_STATE_LOCATION = EXTRA_LOCATION;
+    /** The address state. */
+    private static final String SAVE_STATE_ADDRESS = "address";
+
     private static final int POS_DECIMAL = 0;
 
     private Location location;
@@ -71,6 +76,8 @@ public class AddLocationActivity extends ThemedActivity implements
     private LocationFormatter formatter;
     /** Provider for locations. */
     private LocationsProvider locations;
+    private ZmanimAddress address;
+    private Runnable addressFormatRunnable;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -136,6 +143,12 @@ public class AddLocationActivity extends ThemedActivity implements
     protected void onStop() {
         super.onStop();
         locations.stop(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onAddressChanged(location, address);
     }
 
     @Override
@@ -270,21 +283,25 @@ public class AddLocationActivity extends ThemedActivity implements
     }
 
     @Override
-    public void onAddressChanged(Location location, final ZmanimAddress address) {
+    public void onAddressChanged(Location location, ZmanimAddress address) {
         if ((location == null) || (address == null)) {
             return;
         }
         if ((location.getLatitude() != this.location.getLatitude()) || (location.getLongitude() != this.location.getLongitude())) {
             return;
         }
+        this.address = address;
 
         if (addressView != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    addressView.setText(address.getFormatted());
-                }
-            });
+            if (addressFormatRunnable == null) {
+                addressFormatRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        addressView.setText(AddLocationActivity.this.address.getFormatted());
+                    }
+                };
+            }
+            runOnUiThread(addressFormatRunnable);
         }
     }
 
@@ -311,5 +328,19 @@ public class AddLocationActivity extends ThemedActivity implements
 
     @Override
     public void onProviderDisabled(String provider) {
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVE_STATE_LOCATION, location);
+        outState.putParcelable(SAVE_STATE_ADDRESS, address);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        location = savedInstanceState.getParcelable(SAVE_STATE_LOCATION);
+        address = savedInstanceState.getParcelable(SAVE_STATE_ADDRESS);
     }
 }
