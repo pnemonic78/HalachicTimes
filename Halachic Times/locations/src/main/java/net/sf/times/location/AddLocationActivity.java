@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -38,6 +39,7 @@ import android.widget.ViewSwitcher;
 import net.sf.app.ThemedActivity;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
+import net.sf.times.location.text.SecondsInputFilter;
 
 import java.util.Locale;
 
@@ -69,22 +71,25 @@ public class AddLocationActivity extends ThemedActivity implements
     private static final int DIRECTION_EAST = +1;
     private static final int DIRECTION_WEST = -1;
 
+    private static final int DEGREES_MIN = 0;
+    private static final int MINUTES_MIN = 0;
+    private static final int MINUTES_MAX = 59;
+
     private Location location;
     private Spinner coordsFormatSpinner;
     private ViewSwitcher latitudeSwitcher;
     private EditText latitudeDecimalEdit;
-    private EditText latitudeDegreesEdit;
-    private EditText latitudeMinutesEdit;
+    private NumberPicker latitudeDegreesEdit;
+    private NumberPicker latitudeMinutesEdit;
     private EditText latitudeSecondsEdit;
     private Spinner latitudeDirection;
     private ViewSwitcher longitudeSwitcher;
     private EditText longitudeDecimalEdit;
-    private EditText longitudeDegreesEdit;
-    private EditText longitudeMinutesEdit;
+    private NumberPicker longitudeDegreesEdit;
+    private NumberPicker longitudeMinutesEdit;
     private EditText longitudeSecondsEdit;
     private Spinner longitudeDirection;
     private TextView addressView;
-    private LocationFormatter formatter;
     /** Provider for locations. */
     private LocationsProvider locations;
     private ZmanimAddress address;
@@ -94,9 +99,6 @@ public class AddLocationActivity extends ThemedActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Context context = this;
-        this.formatter = createLocationFormatter(context);
 
         LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
@@ -126,17 +128,27 @@ public class AddLocationActivity extends ThemedActivity implements
         latitudeSwitcher = (ViewSwitcher) findViewById(R.id.latitude_switch);
         latitudeDecimalEdit = (EditText) findViewById(R.id.latitude_decimal_edit);
         latitudeDecimalEdit.setFilters(new InputFilter[]{new LatitudeInputFilter(), new InputFilter.LengthFilter(10)});
-        latitudeDegreesEdit = (EditText) findViewById(R.id.latitude_degrees_edit);
-        latitudeMinutesEdit = (EditText) findViewById(R.id.latitude_minutes_edit);
+        latitudeDegreesEdit = (NumberPicker) findViewById(R.id.latitude_degrees_edit);
+        latitudeDegreesEdit.setMinValue(DEGREES_MIN);
+        latitudeDegreesEdit.setMaxValue((int) LatitudeInputFilter.LATITUDE_MAX);
+        latitudeMinutesEdit = (NumberPicker) findViewById(R.id.latitude_minutes_edit);
+        latitudeMinutesEdit.setMinValue(MINUTES_MIN);
+        latitudeMinutesEdit.setMaxValue(MINUTES_MAX);
         latitudeSecondsEdit = (EditText) findViewById(R.id.latitude_seconds_edit);
+        latitudeSecondsEdit.setFilters(new InputFilter[]{new SecondsInputFilter(), new InputFilter.LengthFilter(6)});
         latitudeDirection = (Spinner) findViewById(R.id.latitude_direction);
 
         longitudeSwitcher = (ViewSwitcher) findViewById(R.id.longitude_switch);
         longitudeDecimalEdit = (EditText) findViewById(R.id.longitude_decimal_edit);
         longitudeDecimalEdit.setFilters(new InputFilter[]{new LongitudeInputFilter(), new InputFilter.LengthFilter(10)});
-        longitudeDegreesEdit = (EditText) findViewById(R.id.longitude_degrees_edit);
-        longitudeMinutesEdit = (EditText) findViewById(R.id.longitude_minutes_edit);
+        longitudeDegreesEdit = (NumberPicker) findViewById(R.id.longitude_degrees_edit);
+        longitudeDegreesEdit.setMinValue(DEGREES_MIN);
+        longitudeDegreesEdit.setMaxValue((int) LongitudeInputFilter.LONGITUDE_MAX);
+        longitudeMinutesEdit = (NumberPicker) findViewById(R.id.longitude_minutes_edit);
+        longitudeMinutesEdit.setMinValue(MINUTES_MIN);
+        longitudeMinutesEdit.setMaxValue(MINUTES_MAX);
         longitudeSecondsEdit = (EditText) findViewById(R.id.longitude_seconds_edit);
+        longitudeSecondsEdit.setFilters(new InputFilter[]{new SecondsInputFilter(), new InputFilter.LengthFilter(6)});
         longitudeDirection = (Spinner) findViewById(R.id.longitude_direction);
 
         addressView = (TextView) findViewById(R.id.address);
@@ -242,26 +254,14 @@ public class AddLocationActivity extends ThemedActivity implements
             }
             longitude = Double.parseDouble(longitudeString.toString());
         } else {
-            CharSequence latitudeDegreesString = latitudeDegreesEdit.getText();
-            if (TextUtils.isEmpty(latitudeDegreesString)) {
-                return false;
-            }
-            int latitudeDegrees = Integer.parseInt(latitudeDegreesString.toString(), 10);
-
-            CharSequence longitudeDegreesString = longitudeDegreesEdit.getText();
-            if (TextUtils.isEmpty(longitudeDegreesString)) {
-                return false;
-            }
-            int longitudeDegrees = Integer.parseInt(longitudeDegreesString.toString(), 10);
-
-            CharSequence latitudeMinutesString = latitudeMinutesEdit.getText();
-            int latitudeMinutes = TextUtils.isEmpty(latitudeMinutesString) ? 0 : Integer.parseInt(latitudeMinutesString.toString(), 10);
+            int latitudeDegrees = latitudeDegreesEdit.getValue();
+            int latitudeMinutes = latitudeMinutesEdit.getValue();
 
             CharSequence latitudeSecondsString = latitudeSecondsEdit.getText();
             double latitudeSeconds = TextUtils.isEmpty(latitudeSecondsString) ? 0 : Double.parseDouble(latitudeSecondsString.toString());
 
-            CharSequence longitudeMinutesString = longitudeMinutesEdit.getText();
-            int longitudeMinutes = TextUtils.isEmpty(longitudeMinutesString) ? 0 : Integer.parseInt(longitudeMinutesString.toString(), 10);
+            int longitudeDegrees = longitudeDegreesEdit.getValue();
+            int longitudeMinutes = longitudeMinutesEdit.getValue();
 
             CharSequence longitudeSecondsString = longitudeSecondsEdit.getText();
             double longitudeSeconds = TextUtils.isEmpty(longitudeSecondsString) ? 0 : Double.parseDouble(longitudeSecondsString.toString());
@@ -366,7 +366,7 @@ public class AddLocationActivity extends ThemedActivity implements
         }
     }
 
-    private void setSexagesimalTexts(double coordinate, TextView degreesView, TextView minutesView, TextView secondsView, Spinner directionView) {
+    private void setSexagesimalTexts(double coordinate, NumberPicker degreesView, NumberPicker minutesView, TextView secondsView, Spinner directionView) {
         int direction = (coordinate >= 0) ? POSITION_POSITIVE : POSITION_NEGATIVE;
         coordinate = Math.abs(coordinate);
         int degrees = (int) Math.floor(coordinate);
@@ -378,8 +378,8 @@ public class AddLocationActivity extends ThemedActivity implements
         double seconds = coordinate;
 
         Locale locale = Locale.getDefault();
-        degreesView.setText(String.format(locale, "%02d", degrees));
-        minutesView.setText(String.format(locale, "%02d", minutes));
+        degreesView.setValue(degrees);
+        minutesView.setValue(minutes);
         secondsView.setText(String.format(locale, "%02.3f", seconds));
         directionView.setSelection(direction);
     }

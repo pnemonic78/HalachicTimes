@@ -29,8 +29,8 @@ import net.sf.times.location.ZmanimLocation;
  */
 public class LatitudeInputFilter extends RangeInputFilter {
 
-    protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
-    protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
+    public static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
+    public static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
 
     public LatitudeInputFilter() {
         this(false);

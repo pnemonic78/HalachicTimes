@@ -20,23 +20,18 @@
 package net.sf.times.location.text;
 
 import net.sf.text.method.RangeInputFilter;
-import net.sf.times.location.ZmanimLocation;
 
 /**
- * Longitude input filter.
+ * Seconds input filter.
  *
  * @author Moshe Waisberg
  */
-public class LongitudeInputFilter extends RangeInputFilter {
+public class SecondsInputFilter extends RangeInputFilter {
 
-    public static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
-    public static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
+    public static final double SECONDS_MIN = 0;
+    public static final double SECONDS_MAX = 59;
 
-    public LongitudeInputFilter() {
-        this(false);
-    }
-
-    public LongitudeInputFilter(boolean sign) {
-        super(sign, true, LONGITUDE_MIN, LONGITUDE_MAX);
+    public SecondsInputFilter() {
+        super(false, true, SECONDS_MIN, SECONDS_MAX);
     }
 }
