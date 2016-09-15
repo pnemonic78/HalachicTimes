@@ -19,10 +19,7 @@
  */
 package net.sf.times.location.text;
 
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
-
+import net.sf.text.method.RangeInputFilter;
 import net.sf.times.location.ZmanimLocation;
 
 /**
@@ -30,7 +27,7 @@ import net.sf.times.location.ZmanimLocation;
  *
  * @author Moshe Waisberg
  */
-public class LongitudeInputFilter extends DigitsKeyListener {
+public class LongitudeInputFilter extends RangeInputFilter {
 
     protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
@@ -40,26 +37,6 @@ public class LongitudeInputFilter extends DigitsKeyListener {
     }
 
     public LongitudeInputFilter(boolean sign) {
-        super(sign, true);
-    }
-
-    @Override
-    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-        CharSequence out = super.filter(source, start, end, dest, dstart, dend);
-
-        out = (out != null) ? out : source.subSequence(start, end);
-        String s = dest.toString();
-        s = s.substring(0, dstart) + out + s.substring(dend);
-        if (!TextUtils.isEmpty(s)) {
-            if ("-".equals(s) || "+".equals(s) || ".".equals(s) || "-.".equals(s) || "+.".equals(s)) {
-                return out;
-            }
-            double longitude = Double.parseDouble(s);
-            if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX)) {
-                return "";
-            }
-        }
-
-        return out;
+        super(sign, true, LONGITUDE_MIN, LONGITUDE_MAX);
     }
 }
