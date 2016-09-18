@@ -39,6 +39,7 @@
     <string name="degrees_symbol" translatable="false">°</string>
     <string name="minutes_symbol" translatable="false">\'</string>
     <string name="seconds_symbol" translatable="false">\"</string>
+    <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Clear history</string>

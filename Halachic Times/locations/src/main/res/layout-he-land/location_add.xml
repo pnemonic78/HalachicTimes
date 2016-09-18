@@ -1,76 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    android:gravity="right">
+    android:fillViewport="true">
 
-    <TableRow
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right|center_vertical">
+        android:gravity="right">
 
-        <Spinner
-            android:id="@+id/coords_format"
+        <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:entries="@array/coords_format_editor_entries"
-            android:spinnerMode="dropdown"/>
+            android:gravity="right|center_vertical">
 
-        <TextView
+            <Spinner
+                android:id="@+id/coords_format"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/coords_format_editor_entries"
+                android:spinnerMode="dropdown"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/coords_format_label"/>
+        </TableRow>
+
+        <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/coords_format_label"/>
-    </TableRow>
+            android:layout_marginTop="8dp"
+            android:gravity="right|center_vertical">
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="right|center_vertical">
+            <include layout="@layout/latitude"/>
 
-        <include layout="@layout/latitude"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/latitude_label"/>
+        </TableRow>
 
-        <TextView
+        <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/latitude_label"/>
-    </TableRow>
+            android:layout_marginTop="8dp"
+            android:gravity="right|center_vertical">
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="right|center_vertical">
+            <include layout="@layout/longitude"/>
 
-        <include layout="@layout/longitude"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/longitude_label"/>
+        </TableRow>
 
-        <TextView
+        <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/longitude_label"/>
-    </TableRow>
+            android:layout_marginTop="8dp"
+            android:gravity="right|center_vertical">
 
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="right|center_vertical">
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_unknown"/>
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/location_unknown"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="@string/address_label"/>
-    </TableRow>
-</TableLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="@string/address_label"/>
+        </TableRow>
+    </TableLayout>
+</ScrollView>

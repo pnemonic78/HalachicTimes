@@ -6,19 +6,16 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
+    <NumberPicker
+        android:id="@+id/longitude_degrees_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <ViewSwitcher
         android:id="@+id/longitude_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:measureAllChildren="false">
-
-        <EditText
-            android:id="@+id/longitude_decimal_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="8"
-            android:inputType="numberDecimal"
-            android:maxLength="10"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,10 +23,26 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <NumberPicker
-                android:id="@+id/longitude_degrees_edit"
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/fraction_symbol"/>
+
+            <EditText
+                android:id="@+id/longitude_decimal_edit"
+                style="@style/Widget.TextView.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="6"
+                android:inputType="number"
+                android:maxLength="6"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,13 +59,24 @@
                 android:layout_height="wrap_content"
                 android:text="@string/minutes_symbol"/>
 
-            <EditText
+            <NumberPicker
                 android:id="@+id/longitude_seconds_edit"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="6"
-                android:inputType="numberDecimal"
-                android:maxLength="6"/>
+                android:text="@string/fraction_symbol"/>
+
+            <EditText
+                android:id="@+id/longitude_milliseconds_edit"
+                style="@style/Widget.TextView.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="3"
+                android:inputType="number"
+                android:maxLength="4"/>
 
             <TextView
                 android:layout_width="wrap_content"
