@@ -4,6 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
+    <string name="title_activity_add_location">Add location</string>
+
+    <!-- Menu -->
+    <string name="menu_location_fetch">Show</string>
 
     <!-- Preferences -->
     <string name="coords_title">Koordináták</string>
@@ -21,6 +25,10 @@
     <string name="east">K</string>
     <string name="south">D</string>
     <string name="west">N</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="address_label">Address</string>
+    <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Előzmények törlése</string>

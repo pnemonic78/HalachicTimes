@@ -4,6 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">موقع</string>
     <string name="title_activity_location">موقعي</string>
+    <string name="title_activity_add_location">Add location</string>
+
+    <!-- Menu -->
+    <string name="menu_location_fetch">Show</string>
 
     <!-- Preferences -->
     <string name="coords_title">إحداثيات</string>
@@ -21,6 +25,10 @@
     <string name="east">الشرق</string>
     <string name="south">جنوب</string>
     <string name="west">غرب</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="address_label">Address</string>
+    <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">تاريخ واضح</string>
