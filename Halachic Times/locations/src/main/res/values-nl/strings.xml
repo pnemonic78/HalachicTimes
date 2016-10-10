@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Locatie</string>
     <string name="title_activity_location">Mijn locatie</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Voeg locatie toe</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Tonen</string>
 
     <!-- Preferences -->
     <string name="coords_title">Coordinates</string>
@@ -25,9 +25,9 @@
     <string name="east">O</string>
     <string name="south">Z</string>
     <string name="west">W</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Breedtegraad</string>
+    <string name="longitude">Lengtegraad</string>
+    <string name="address_label">Adres</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

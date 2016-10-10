@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Pridėti vietą</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Rodyti</string>
 
     <!-- Preferences -->
     <string name="coords_title">Koordinatės</string>
@@ -25,9 +25,9 @@
     <string name="east">R</string>
     <string name="south">P</string>
     <string name="west">V</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Platuma</string>
+    <string name="longitude">Ilguma</string>
+    <string name="address_label">Adresas</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

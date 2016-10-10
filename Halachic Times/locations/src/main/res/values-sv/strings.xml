@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Plats</string>
     <string name="title_activity_location">Min plats</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Lägg till plats</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Visa</string>
 
     <!-- Preferences -->
     <string name="coords_title">Koordinater</string>
@@ -25,9 +25,9 @@
     <string name="east">Ö</string>
     <string name="south">S</string>
     <string name="west">V</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Latitud</string>
+    <string name="longitude">Longitud</string>
+    <string name="address_label">Adress</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

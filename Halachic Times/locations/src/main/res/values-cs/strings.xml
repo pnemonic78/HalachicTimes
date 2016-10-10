@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Místo</string>
     <string name="title_activity_location">Moje místo</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Přidat umístění</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Ukázat</string>
 
     <!-- Preferences -->
     <string name="coords_title">Souřadnice</string>
@@ -25,9 +25,9 @@
     <string name="east">V</string>
     <string name="south">J</string>
     <string name="west">Z</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Zeměpisná šířka</string>
+    <string name="longitude">Zeměpisná délka</string>
+    <string name="address_label">Adresa</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

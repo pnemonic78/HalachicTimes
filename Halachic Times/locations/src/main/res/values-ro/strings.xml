@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Locație</string>
     <string name="title_activity_location">Locația mea</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Adaugă locație</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Arată</string>
 
     <!-- Preferences -->
     <string name="coords_title">Coordonează</string>
@@ -25,9 +25,9 @@
     <string name="east">E</string>
     <string name="south">S</string>
     <string name="west">V</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Latitudine</string>
+    <string name="longitude">Longitudine</string>
+    <string name="address_label">Adresa</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

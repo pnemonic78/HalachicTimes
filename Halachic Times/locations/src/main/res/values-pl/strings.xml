@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Lokalizacja</string>
     <string name="title_activity_location">Moja lokalizacja</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Dodaj miejsce</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Pokazać</string>
 
     <!-- Preferences -->
     <string name="coords_title">Współrzędne</string>
@@ -25,9 +25,9 @@
     <string name="east">W</string>
     <string name="south">p</string>
     <string name="west">Z</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Szerokość geograficzna</string>
+    <string name="longitude">Długość geograficzna</string>
+    <string name="address_label">Adres</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

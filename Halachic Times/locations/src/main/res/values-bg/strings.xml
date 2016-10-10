@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Място</string>
     <string name="title_activity_location">Моето място</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Добави място</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Покажи</string>
 
     <!-- Preferences -->
     <string name="coords_title">Координати</string>
@@ -25,9 +25,9 @@
     <string name="east">И</string>
     <string name="south">Ю</string>
     <string name="west">З</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Географска ширина</string>
+    <string name="longitude">Географска дължина</string>
+    <string name="address_label">Адрес</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Sijainti</string>
     <string name="title_activity_location">Oma sijainti</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Lisää sijainti</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Näkymä</string>
 
     <!-- Preferences -->
     <string name="coords_title">Koordinaatit</string>
@@ -25,9 +25,9 @@
     <string name="east">I</string>
     <string name="south">E</string>
     <string name="west">L</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Leveysaste</string>
+    <string name="longitude">Pituusaste</string>
+    <string name="address_label">Osoite</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Lisa asukoht</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Näita</string>
 
     <!-- Preferences -->
     <string name="coords_title">Koordinaadid</string>
@@ -25,9 +25,9 @@
     <string name="east">I</string>
     <string name="south">Lõ</string>
     <string name="west">Lä</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Laius</string>
+    <string name="longitude">Pikkuskraad</string>
+    <string name="address_label">Aadress</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

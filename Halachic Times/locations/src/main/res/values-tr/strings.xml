@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Konum ekle</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Göstermek</string>
 
     <!-- Preferences -->
     <string name="coords_title">Koordinatlar</string>
@@ -25,9 +25,9 @@
     <string name="east">D</string>
     <string name="south">G</string>
     <string name="west">B</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">Enlem</string>
+    <string name="longitude">Boylam</string>
+    <string name="address_label">Adres</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

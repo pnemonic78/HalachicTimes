@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">מיקום</string>
     <string name="title_activity_location">המיקום שלי</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">הוסף מיקום</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">תציג</string>
 
     <!-- Preferences -->
     <string name="coords_title">קואורדינטות</string>
@@ -25,9 +25,9 @@
     <string name="east">ז</string>
     <string name="south">ד</string>
     <string name="west">ע</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">קו רוחב</string>
+    <string name="longitude">קו אורך</string>
+    <string name="address_label">כתובת</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">स्थान</string>
     <string name="title_activity_location">मेरा स्थान</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">स्थान बताईए</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">दिखाना</string>
 
     <!-- Preferences -->
     <string name="coords_title">निर्देशांक</string>
@@ -25,9 +25,9 @@
     <string name="east">पू</string>
     <string name="south">द</string>
     <string name="west">प</string>
-    <string name="latitude">Latitude</string>
-    <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="latitude">अक्षांश</string>
+    <string name="longitude">देशान्तर</string>
+    <string name="address_label">पता</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->

@@ -4,10 +4,10 @@
     <!-- Activity -->
     <string name="menu_location">Position</string>
     <string name="title_activity_location">Ma position</string>
-    <string name="title_activity_add_location">Add location</string>
+    <string name="title_activity_add_location">Ajouter un emplacement</string>
 
     <!-- Menu -->
-    <string name="menu_location_fetch">Show</string>
+    <string name="menu_location_fetch">Montrer</string>
 
     <!-- Preferences -->
     <string name="coords_title">Coordonnées</string>
@@ -27,7 +27,7 @@
     <string name="west">O</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
-    <string name="address_label">Address</string>
+    <string name="address_label">Adresse</string>
     <string name="fraction_symbol">.</string>
 
     <!-- Settings screen - Privacy -->
