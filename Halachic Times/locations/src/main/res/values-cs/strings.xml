@@ -28,7 +28,7 @@
     <string name="latitude">Zeměpisná šířka</string>
     <string name="longitude">Zeměpisná délka</string>
     <string name="address_label">Adresa</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Vymazat historii</string>

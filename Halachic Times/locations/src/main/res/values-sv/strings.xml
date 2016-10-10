@@ -28,7 +28,7 @@
     <string name="latitude">Latitud</string>
     <string name="longitude">Longitud</string>
     <string name="address_label">Adress</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Rensa historik</string>

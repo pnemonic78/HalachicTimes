@@ -28,7 +28,7 @@
     <string name="latitude">Географска ширина</string>
     <string name="longitude">Географска дължина</string>
     <string name="address_label">Адрес</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Изчистване на историята</string>

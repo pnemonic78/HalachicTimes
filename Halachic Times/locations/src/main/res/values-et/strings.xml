@@ -28,7 +28,7 @@
     <string name="latitude">Laius</string>
     <string name="longitude">Pikkuskraad</string>
     <string name="address_label">Aadress</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Kustuta ajalugu</string>

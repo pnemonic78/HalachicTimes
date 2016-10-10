@@ -28,7 +28,7 @@
     <string name="latitude">Szélesség</string>
     <string name="longitude">Hosszúság</string>
     <string name="address_label">Cím</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Előzmények törlése</string>

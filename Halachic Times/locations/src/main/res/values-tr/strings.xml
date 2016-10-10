@@ -28,7 +28,7 @@
     <string name="latitude">Enlem</string>
     <string name="longitude">Boylam</string>
     <string name="address_label">Adres</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Geçmişi temizle</string>

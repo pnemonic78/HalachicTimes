@@ -28,7 +28,7 @@
     <string name="latitude">Широта</string>
     <string name="longitude">Долгота</string>
     <string name="address_label">Адрес</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Очистить историю</string>

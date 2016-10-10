@@ -28,7 +28,7 @@
     <string name="latitude">Leveysaste</string>
     <string name="longitude">Pituusaste</string>
     <string name="address_label">Osoite</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Tyhjenn? historia</string>

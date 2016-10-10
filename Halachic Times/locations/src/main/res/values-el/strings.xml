@@ -28,7 +28,7 @@
     <string name="latitude">Γεωγραφικό πλάτος</string>
     <string name="longitude">Γεωγραφικό μήκος</string>
     <string name="address_label">Διεύθυνση</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Εκκαθάριση ιστορικού</string>

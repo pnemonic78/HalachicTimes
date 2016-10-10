@@ -28,7 +28,7 @@
     <string name="latitude">Breddegrad</string>
     <string name="longitude">Længde</string>
     <string name="address_label">Adresse</string>
-    <string name="fraction_symbol">.</string>
+    <string name="fraction_symbol">,</string>
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Ryd historik</string>
