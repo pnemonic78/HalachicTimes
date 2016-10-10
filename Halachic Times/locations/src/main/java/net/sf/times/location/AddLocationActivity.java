@@ -307,7 +307,7 @@ public class AddLocationActivity extends ThemedActivity implements
         addressView.setText(R.string.location_unknown);
 
         LocationsProvider locations = getLocations();
-        locations.findAddress(location);
+        locations.findAddress(location, false);
     }
 
     @Override

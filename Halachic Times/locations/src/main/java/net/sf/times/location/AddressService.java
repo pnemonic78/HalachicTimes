@@ -34,10 +34,13 @@ import net.sf.times.location.AddressProvider.OnFindAddressListener;
  */
 public class AddressService extends IntentService implements OnFindAddressListener {
 
-    private static final String PARAMETER_LOCATION = ZmanimLocationListener.PARAMETER_LOCATION;
-    private static final String PARAMETER_ADDRESS = ZmanimLocationListener.PARAMETER_ADDRESS;
     private static final String ACTION_ADDRESS = ZmanimLocationListener.ACTION_ADDRESS;
     private static final String ACTION_ELEVATION = ZmanimLocationListener.ACTION_ELEVATION;
+    private static final String PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION;
+    private static final String PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS;
+    private static final String PARAMETER_PERSIST = ZmanimLocationListener.EXTRA_PERSIST;
+
+    private static final boolean PERSIST = true;
 
     private static final String NAME = "AddressService";
 
@@ -76,6 +79,14 @@ public class AddressService extends IntentService implements OnFindAddressListen
             return;
         String action = intent.getAction();
         if (ACTION_ADDRESS.equals(action)) {
+            if (extras.containsKey(PARAMETER_PERSIST)) {
+                Bundle locationExtras = location.getExtras();
+                if (locationExtras == null) {
+                    locationExtras = new Bundle();
+                }
+                locationExtras.putBoolean(PARAMETER_PERSIST, extras.getBoolean(PARAMETER_PERSIST, PERSIST));
+                location.setExtras(locationExtras);
+            }
             provider.findNearestAddress(location, this);
         } else if (ACTION_ELEVATION.equals(action)) {
             provider.findElevation(location, this);
@@ -90,10 +101,14 @@ public class AddressService extends IntentService implements OnFindAddressListen
                 addr = (ZmanimAddress) address;
             } else {
                 addr = new ZmanimAddress(address);
-                if (location.hasAltitude())
+                if (location.hasAltitude()) {
                     addr.setElevation(location.getAltitude());
+                }
             }
-            provider.insertOrUpdateAddress(location, addr);
+            Bundle extras = location.getExtras();
+            if ((extras == null) || extras.getBoolean(PARAMETER_PERSIST, PERSIST)) {
+                provider.insertOrUpdateAddress(location, addr);
+            }
         }
 
         Intent result = new Intent(ACTION_ADDRESS);

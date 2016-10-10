@@ -25,14 +25,17 @@ import android.location.LocationManager;
 
 public interface ZmanimLocationListener extends LocationListener {
 
-    /** The location parameter. */
-    String PARAMETER_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-    /** The address parameter. */
-    String PARAMETER_ADDRESS = "address";
     /** The intent action for an address that was found. */
     String ACTION_ADDRESS = "net.sf.times.location.ADDRESS";
     /** The intent action for a location with elevation that was found. */
     String ACTION_ELEVATION = "net.sf.times.location.ELEVATION";
+
+    /** The location parameter. */
+    String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
+    /** The address parameter. */
+    String EXTRA_ADDRESS = "address";
+    /** Whether to persist the address? */
+    String EXTRA_PERSIST = "persist_address";
 
     /**
      * Called when an address is found.

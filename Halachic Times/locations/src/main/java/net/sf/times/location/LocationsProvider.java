@@ -761,7 +761,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     if (msg.obj instanceof ZmanimAddress) {
                         address = (ZmanimAddress) msg.obj;
                         if (address != null)
-                            location = address.getExtras().getParcelable(PARAMETER_LOCATION);
+                            location = address.getExtras().getParcelable(EXTRA_LOCATION);
                     } else {
                         location = (Location) msg.obj;
                     }
@@ -776,16 +776,21 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     public void findAddress(Location location) {
+        findAddress(location, true);
+    }
+
+    public void findAddress(Location location, boolean persist) {
         Intent findAddress = new Intent(context, AddressService.class);
         findAddress.setAction(ACTION_ADDRESS);
-        findAddress.putExtra(PARAMETER_LOCATION, location);
+        findAddress.putExtra(EXTRA_LOCATION, location);
+        findAddress.putExtra(EXTRA_PERSIST, persist);
         context.startService(findAddress);
     }
 
     public void findElevation(Location location) {
         Intent findElevation = new Intent(context, AddressService.class);
         findElevation.setAction(ACTION_ELEVATION);
-        findElevation.putExtra(PARAMETER_LOCATION, location);
+        findElevation.putExtra(EXTRA_LOCATION, location);
         context.startService(findElevation);
     }
 
@@ -836,8 +841,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     Bundle intentExtras = intent.getExtras();
                     ZmanimAddress address = null;
                     if (intentExtras != null) {
-                        location = intentExtras.getParcelable(PARAMETER_LOCATION);
-                        address = intentExtras.getParcelable(PARAMETER_ADDRESS);
+                        location = intentExtras.getParcelable(EXTRA_LOCATION);
+                        address = intentExtras.getParcelable(EXTRA_ADDRESS);
                     }
                     if (address != null) {
                         Bundle extras = address.getExtras();
@@ -845,7 +850,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                             address.setExtras(new Bundle());
                             extras = address.getExtras();
                         }
-                        extras.putParcelable(PARAMETER_LOCATION, location);
+                        extras.putParcelable(EXTRA_LOCATION, location);
                         handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
                     } else {
                         handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
@@ -855,7 +860,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
                         return;
                     }
-                    location = intent.getParcelableExtra(PARAMETER_LOCATION);
+                    location = intent.getParcelableExtra(EXTRA_LOCATION);
                     handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
                     break;
                 case Intent.ACTION_TIMEZONE_CHANGED:
