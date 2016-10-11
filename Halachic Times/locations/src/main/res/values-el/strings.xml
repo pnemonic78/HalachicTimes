@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Τοποθεσία</string>
     <string name="title_activity_location">Η τοποθεσία μου</string>
     <string name="title_activity_add_location">Προσθήκη τοποθεσίας</string>
 
     <!-- Menu -->
+    <string name="menu_location">Τοποθεσία</string>
     <string name="menu_location_fetch">Επίδειξη</string>
 
     <!-- Preferences -->

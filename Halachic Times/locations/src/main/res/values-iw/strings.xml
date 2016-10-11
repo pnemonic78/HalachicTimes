@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">מיקום</string>
     <string name="title_activity_location">המיקום שלי</string>
     <string name="title_activity_add_location">הוסף מיקום</string>
 
     <!-- Menu -->
+    <string name="menu_location">מיקום</string>
     <string name="menu_location_fetch">תציג</string>
 
     <!-- Preferences -->

@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Locație</string>
     <string name="title_activity_location">Locația mea</string>
     <string name="title_activity_add_location">Adaugă locație</string>
 
     <!-- Menu -->
+    <string name="menu_location">Locație</string>
     <string name="menu_location_fetch">Arată</string>
 
     <!-- Preferences -->

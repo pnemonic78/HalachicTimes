@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">محل</string>
     <string name="title_activity_location">محل من</string>
     <string name="title_activity_add_location">اضافه کردن مکان</string>
 
     <!-- Menu -->
+    <string name="menu_location">محل</string>
     <string name="menu_location_fetch">تل نمایش دادن</string>
 
     <!-- Preferences -->

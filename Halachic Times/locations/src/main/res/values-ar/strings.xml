@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">موقع</string>
     <string name="title_activity_location">موقعي</string>
     <string name="title_activity_add_location">اضف الموقع</string>
 
     <!-- Menu -->
+    <string name="menu_location">موقع</string>
     <string name="menu_location_fetch">تبين</string>
 
     <!-- Preferences -->

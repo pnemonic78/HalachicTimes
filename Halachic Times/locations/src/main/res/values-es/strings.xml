@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Ubicación</string>
     <string name="title_activity_location">Mi ubicación</string>
     <string name="title_activity_add_location">Añade una ubicación</string>
 
     <!-- Menu -->
+    <string name="menu_location">Ubicación</string>
     <string name="menu_location_fetch">Espectáculo</string>
 
     <!-- Preferences -->

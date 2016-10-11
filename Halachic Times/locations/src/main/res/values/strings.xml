@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Location</string>
     <string name="title_activity_location">My location</string>
     <string name="title_activity_add_location">Add location</string>
 
     <!-- Menu -->
+    <string name="menu_location">Location</string>
     <string name="menu_location_here" translatable="false">@string/title_activity_location</string>
     <string name="menu_location_add" translatable="false">@string/add</string>
     <string name="menu_location_cancel" translatable="false">@string/cancel</string>

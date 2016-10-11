@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Posisjon</string>
     <string name="title_activity_location">Min posisjon</string>
     <string name="title_activity_add_location">Legg til sted</string>
 
     <!-- Menu -->
+    <string name="menu_location">Posisjon</string>
     <string name="menu_location_fetch">Vise</string>
 
     <!-- Preferences -->

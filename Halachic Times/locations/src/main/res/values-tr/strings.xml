@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Konum</string>
     <string name="title_activity_location">Konumum</string>
     <string name="title_activity_add_location">Konum ekle</string>
 
     <!-- Menu -->
+    <string name="menu_location">Konum</string>
     <string name="menu_location_fetch">Göstermek</string>
 
     <!-- Preferences -->

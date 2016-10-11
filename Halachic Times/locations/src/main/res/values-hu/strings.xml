@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Hely</string>
     <string name="title_activity_location">Saját hely</string>
     <string name="title_activity_add_location">Hely hozzáadása</string>
 
     <!-- Menu -->
+    <string name="menu_location">Hely</string>
     <string name="menu_location_fetch">Mutasd</string>
 
     <!-- Preferences -->

@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Asukoht</string>
     <string name="title_activity_location">Minu asukoht</string>
     <string name="title_activity_add_location">Lisa asukoht</string>
 
     <!-- Menu -->
+    <string name="menu_location">Asukoht</string>
     <string name="menu_location_fetch">Näita</string>
 
     <!-- Preferences -->

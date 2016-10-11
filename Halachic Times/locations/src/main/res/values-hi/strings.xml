@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">स्थान</string>
     <string name="title_activity_location">मेरा स्थान</string>
     <string name="title_activity_add_location">स्थान बताईए</string>
 
     <!-- Menu -->
+    <string name="menu_location">स्थान</string>
     <string name="menu_location_fetch">दिखाना</string>
 
     <!-- Preferences -->

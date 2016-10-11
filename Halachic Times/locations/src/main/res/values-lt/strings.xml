@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Vieta</string>
     <string name="title_activity_location">Mano vieta</string>
     <string name="title_activity_add_location">Pridėti vietą</string>
 
     <!-- Menu -->
+    <string name="menu_location">Vieta</string>
     <string name="menu_location_fetch">Rodyti</string>
 
     <!-- Preferences -->

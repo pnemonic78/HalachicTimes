@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Místo</string>
     <string name="title_activity_location">Moje místo</string>
     <string name="title_activity_add_location">Přidat umístění</string>
 
     <!-- Menu -->
+    <string name="menu_location">Místo</string>
     <string name="menu_location_fetch">Ukázat</string>
 
     <!-- Preferences -->

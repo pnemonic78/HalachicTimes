@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Plats</string>
     <string name="title_activity_location">Min plats</string>
     <string name="title_activity_add_location">Lägg till plats</string>
 
     <!-- Menu -->
+    <string name="menu_location">Plats</string>
     <string name="menu_location_fetch">Visa</string>
 
     <!-- Preferences -->

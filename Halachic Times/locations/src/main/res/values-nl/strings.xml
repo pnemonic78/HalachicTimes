@@ -2,11 +2,11 @@
 <resources>
 
     <!-- Activity -->
-    <string name="menu_location">Locatie</string>
     <string name="title_activity_location">Mijn locatie</string>
     <string name="title_activity_add_location">Voeg locatie toe</string>
 
     <!-- Menu -->
+    <string name="menu_location">Locatie</string>
     <string name="menu_location_fetch">Tonen</string>
 
     <!-- Preferences -->
