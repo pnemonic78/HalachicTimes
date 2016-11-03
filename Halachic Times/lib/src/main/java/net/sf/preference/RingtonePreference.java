@@ -136,8 +136,10 @@ public class RingtonePreference extends DialogPreference {
         ringtoneType = type;
 
         // The volume keys will control the stream that we are choosing a ringtone for
-        Activity activity = (Activity) context;
-        activity.setVolumeControlStream(ringtoneManager.inferStreamType());
+        if (context instanceof Activity) {
+            Activity activity = (Activity) context;
+            activity.setVolumeControlStream(ringtoneManager.inferStreamType());
+        }
     }
 
     /**
