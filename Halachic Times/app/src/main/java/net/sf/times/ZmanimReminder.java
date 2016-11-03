@@ -60,12 +60,17 @@ public class ZmanimReminder extends BroadcastReceiver {
     private static final String TAG = "ZmanimReminder";
 
     /**
-     * Reminder id for all notifications.<br>
+     * Id for reminder notifications.<br>
      * Newer notifications will override current notifications.
      */
     private static final int ID_NOTIFY = 1;
-    /** Reminder id for alarms. */
+    /** Id for alarms. */
     private static final int ID_ALARM_REMINDER = 2;
+    /**
+     * Id for next-zman notifications.<br>
+     * Newer notifications will override current notifications.
+     */
+    private static final int ID_NEXT = 3;
 
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
@@ -129,7 +134,6 @@ public class ZmanimReminder extends BroadcastReceiver {
             adapter = new ZmanimAdapter(context, settings);
             this.adapter = adapter;
         }
-        populater.populate(adapter, false);
 
         remind(context, settings, populater, adapter);
     }
@@ -158,10 +162,13 @@ public class ZmanimReminder extends BroadcastReceiver {
         long whenFirst = Long.MAX_VALUE;
         boolean nextDay = true;
         int count;
+        final boolean nextNotification = settings.isNotificationNext();
+        ZmanimItem itemNext = null;
+        long whenNext = Long.MAX_VALUE;
 
         JewishCalendar jcal = new JewishCalendar(gcal);
         jcal.setInIsrael(populater.isInIsrael());
-        Calendar cal = adapter.getCalendar().getCalendar();
+        Calendar cal = populater.getCalendar().getCalendar();
 
         // Find the first reminder in the upcoming week.
         for (int day = 1; nextDay && (day <= DAYS_FORWARD); day++) {
@@ -170,14 +177,15 @@ public class ZmanimReminder extends BroadcastReceiver {
                 jcal.setDate(gcal);
                 cal.add(Calendar.DAY_OF_MONTH, 1);
                 populater.setCalendar(cal);
-                populater.populate(adapter, false);
             }
+            populater.populate(adapter, false);
 
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
-                when = settings.getReminder(item.titleId, item.time);
 
+                // Is the zman to be reminded?
+                when = settings.getReminder(item.titleId, item.time);
                 if ((when != ZmanimPreferences.NEVER) && allowReminder(settings, item, jcal)) {
                     if (nextDay && (latest < when) && (was <= when) && (when <= soon)) {
                         notifyNow(context, settings, item);
@@ -188,6 +196,15 @@ public class ZmanimReminder extends BroadcastReceiver {
                         whenFirst = when;
                     }
                 }
+
+                // Is the zman to be notified?
+                if (nextNotification) {
+                    when = item.time;
+                    if ((when != ZmanimPreferences.NEVER) && (now <= when) && (when < whenNext)) {
+                        itemNext = item;
+                        whenNext = when;
+                    }
+                }
             }
         }
         if (itemFirst != null) {
@@ -196,6 +213,9 @@ public class ZmanimReminder extends BroadcastReceiver {
             String timeFormat = formatDateTime(item.time);
             Log.i(TAG, "notify at [" + whenFormat + "] for [" + timeFormat + "]");
             notifyFuture(context, item, whenFirst);
+        }
+        if (itemNext != null) {
+            notifyNext(context, settings, itemNext);
         }
     }
 
@@ -213,6 +233,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(ID_NOTIFY);
+        nm.cancel(ID_NEXT);
     }
 
     /**
@@ -247,8 +268,8 @@ public class ZmanimReminder extends BroadcastReceiver {
     private void notifyNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
         PendingIntent contentIntent = createActivityIntent(context);
 
-        Notification notification = createNotification(context, settings, item, contentIntent);
-        postNotification(context, settings, notification);
+        Notification notification = createReminderNotification(context, settings, item, contentIntent);
+        postReminderNotification(context, settings, notification);
 
         cancelFuture(context, item.getTime() + STOP_NOTIFICATION_AFTER);
     }
@@ -396,7 +417,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressLint("NewApi")
-    private Notification createNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent) {
+    private Notification createReminderNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent) {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();
         long when = item.getTime();
@@ -431,7 +452,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressLint("Wakelock")
-    private void postNotification(Context context, ZmanimPreferences settings, Notification notification) {
+    private void postReminderNotification(Context context, ZmanimPreferences settings, Notification notification) {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
@@ -519,5 +540,58 @@ public class ZmanimReminder extends BroadcastReceiver {
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = createCancelIntent(context);
         manager.set(AlarmManager.RTC, triggerAt, alarmIntent);
+    }
+
+    @SuppressLint("NewApi")
+    private Notification createNextNotification(Context context, ZmanimPreferences settings, ZmanimItem item, PendingIntent contentIntent) {
+        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentText = item.summary;
+        long when = item.time;
+        Log.i(TAG, "notify next [" + contentTitle + "] for [" + formatDateTime(when) + "]");
+
+        Notification.Builder builder = new Notification.Builder(context)
+                .setContentIntent(contentIntent)
+                .setContentText(contentText)
+                .setContentTitle(contentTitle)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher))
+                .setOngoing(true)
+                .setSmallIcon(R.drawable.stat_notify_time)
+                .setWhen(when);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            builder.setShowWhen(true);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder.setCategory(Notification.CATEGORY_REMINDER);
+        }
+        Notification notification;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            notification = builder.build();
+        } else {
+            notification = builder.getNotification();
+        }
+        return notification;
+    }
+
+    @SuppressLint("Wakelock")
+    private void postNextNotification(Context context, ZmanimPreferences settings, Notification notification) {
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(ID_NEXT, notification);
+    }
+
+    /**
+     * Notify next.
+     *
+     * @param context
+     *         the context.
+     * @param settings
+     *         the settings.
+     * @param item
+     *         the next item.
+     */
+    private void notifyNext(Context context, ZmanimPreferences settings, ZmanimItem item) {
+        PendingIntent contentIntent = createActivityIntent(context);
+
+        Notification notification = createNextNotification(context, settings, item, contentIntent);
+        postNextNotification(context, settings, notification);
     }
 }
