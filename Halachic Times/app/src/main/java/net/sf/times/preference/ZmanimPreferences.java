@@ -35,6 +35,8 @@ import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
 
+import static android.icu.text.RelativeDateTimeFormatter.Direction.NEXT;
+
 /**
  * Application settings.
  *
@@ -48,6 +50,8 @@ public class ZmanimPreferences extends CompassPreferences {
     public static final String KEY_SUMMARIES = "summaries.visible";
     /** Preference name for enabling past times. */
     public static final String KEY_PAST = "past";
+    /** Preference name for enabling next time in ongoing notification. */
+    public static final String KEY_NOTIFICATION_NEXT = "notification.next";
     /** Preference name for the last reminder. */
     private static final String KEY_REMINDER_LATEST = "reminder";
     /** Preference name for the reminder audio stream type. */
@@ -249,6 +253,15 @@ public class ZmanimPreferences extends CompassPreferences {
      */
     public boolean isPast() {
         return preferences.getBoolean(KEY_PAST, context.getResources().getBoolean(R.bool.past_defaultValue));
+    }
+
+    /**
+     * Are next notification times enabled?
+     *
+     * @return {@code true} if next times shown in notification.
+     */
+    public boolean isNotificationNext() {
+        return preferences.getBoolean(KEY_NOTIFICATION_NEXT, context.getResources().getBoolean(R.bool.notification_next_defaultValue));
     }
 
     @Override

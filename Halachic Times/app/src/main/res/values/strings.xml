@@ -284,6 +284,7 @@
     <!-- Preferences -->
     <string name="pref_zmanim_title" translatable="false">@string/app_name</string>
     <string name="past_title">Times that have elapsed</string>
+    <string name="notification_next_title">Next time in notification</string>
     <string name="seconds_title">Seconds</string>
     <string name="theme_none">None</string>
     <string name="theme_white">White</string>

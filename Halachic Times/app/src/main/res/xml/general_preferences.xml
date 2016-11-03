@@ -5,6 +5,10 @@
         android:defaultValue="@bool/past_defaultValue"
         android:key="past"
         android:title="@string/past_title"/>
+    <SwitchPreference
+        android:defaultValue="@bool/notification_next_defaultValue"
+        android:key="notification.next"
+        android:title="@string/notification_next_title"/>
     <ListPreference
         android:defaultValue="@string/reminder_stream_defaultValue"
         android:entries="@array/reminder_stream_entries"
