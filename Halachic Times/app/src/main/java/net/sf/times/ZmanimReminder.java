@@ -306,8 +306,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+        return PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
@@ -325,8 +324,7 @@ public class ZmanimReminder extends BroadcastReceiver {
             intent.putExtra(EXTRA_REMINDER_TIME, when);
         }
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -340,8 +338,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         Intent intent = new Intent(context, ZmanimReminder.class);
         intent.setAction(ACTION_CANCEL);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     @Override
@@ -593,5 +590,17 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         Notification notification = createNextNotification(context, settings, item, contentIntent);
         postNextNotification(context, settings, notification);
+
+        long triggerAt = item.time + DateUtils.MINUTE_IN_MILLIS;
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent alarmIntent = createNextIntent(context);
+        manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+    }
+
+    private PendingIntent createNextIntent(Context context) {
+        Intent intent = new Intent(context, ZmanimReminder.class);
+        intent.setAction(ACTION_UPDATE);
+
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }
