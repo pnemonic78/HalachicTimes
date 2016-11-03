@@ -197,5 +197,6 @@
     <string name="reminder_thursday">Lembre em Quinta</string>
     <string name="reminder_tuesday">Lembre em Terça</string>
     <string name="reminder_wednesday">Lembre em Quarta</string>
+    <string name="notification_next_title">O próximo horário como uma notificação</string>
 
 </resources>

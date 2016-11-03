@@ -197,5 +197,6 @@
     <string name="reminder_thursday">Erinnere am Donnerstag</string>
     <string name="reminder_tuesday">Erinnere am Dienstag</string>
     <string name="reminder_wednesday">Erinnere am Mittwoch</string>
+    <string name="notification_next_title">Die anstehende Zeit als Benachrichtigung</string>
 
 </resources>

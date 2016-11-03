@@ -197,5 +197,6 @@
     <string name="reminder_thursday">Minn på torsdag</string>
     <string name="reminder_tuesday">Minn på tirsdag</string>
     <string name="reminder_wednesday">Minn på onsdag</string>
+    <string name="notification_next_title">Den kommende tiden som en varsling</string>
 
 </resources>

@@ -197,5 +197,6 @@
     <string name="reminder_thursday">תזכיר ביום חמישי</string>
     <string name="reminder_tuesday">תזכיר ביום שלישי</string>
     <string name="reminder_wednesday">תזכיר ביום רביעי</string>
+    <string name="notification_next_title">הזמן הקרוב כהתראה</string>
 
 </resources>

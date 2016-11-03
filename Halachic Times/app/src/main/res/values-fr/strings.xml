@@ -197,5 +197,6 @@
     <string name="reminder_thursday">Rappeler aux jeudi</string>
     <string name="reminder_tuesday">Rappeler aux mardi</string>
     <string name="reminder_wednesday">Rappeler aux mercredi</string>
+    <string name="notification_next_title">L\'heure à venir en tant que notification</string>
 
 </resources>

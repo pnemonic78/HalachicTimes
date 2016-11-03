@@ -197,5 +197,6 @@
     <string name="reminder_thursday">Emlékeztesse csütörtökön</string>
     <string name="reminder_tuesday">Emlékeztesse kedden</string>
     <string name="reminder_wednesday">Emlékeztesse szerdán</string>
+    <string name="notification_next_title">A közelgő időben értesítést</string>
 
 </resources>

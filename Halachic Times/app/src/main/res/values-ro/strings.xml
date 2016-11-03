@@ -197,5 +197,6 @@
     <string name="reminder_thursday">Amintește joi</string>
     <string name="reminder_tuesday">Amintește marți</string>
     <string name="reminder_wednesday">Amintește miercuri</string>
+    <string name="notification_next_title">Apropiata timp ca o notificare</string>
 
 </resources>
