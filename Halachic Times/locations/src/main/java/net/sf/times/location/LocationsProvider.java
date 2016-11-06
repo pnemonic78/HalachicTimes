@@ -653,7 +653,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
         }
 
@@ -684,7 +684,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
         }
 
