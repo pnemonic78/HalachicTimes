@@ -33,7 +33,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:singleLine="false"
             tools:text="@string/dawn_120"/>
     </LinearLayout>
 
