@@ -46,7 +46,9 @@ android {
         disable "GoogleAppIndexingWarning"
         disable "InconsistentLayout"
         disable "LocaleFolder"
+        disable "Overdraw"
         disable "PluralsCandidate"
+        disable "UnusedAttribute"
     }
 }
 
