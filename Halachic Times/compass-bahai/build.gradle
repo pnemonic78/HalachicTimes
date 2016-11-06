@@ -43,7 +43,9 @@ android {
     }
 
     lintOptions {
-        disable "LocaleFolder", "NestedWeights", "PluralsCandidate"
+        disable "GoogleAppIndexingWarning"
+        disable "LocaleFolder"
+        disable "UnusedAttribute"
     }
 }
 
