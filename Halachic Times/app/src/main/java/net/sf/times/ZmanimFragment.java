@@ -315,7 +315,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
         if (position > 0)
             inflater.inflate(R.layout.divider, list);
-        ViewGroup row = (ViewGroup) inflater.inflate(R.layout.date_group, null);
+        View row = inflater.inflate(R.layout.date_group, list, false);
         TextView text = (TextView) row.findViewById(android.R.id.title);
         text.setText(label);
         list.addView(row);
