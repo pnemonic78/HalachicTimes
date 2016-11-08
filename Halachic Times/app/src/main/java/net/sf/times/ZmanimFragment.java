@@ -436,6 +436,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @see View#GONE
      */
     public void setVisibility(int visibility) {
-        getView().setVisibility(visibility);
+        View view = getView();
+        if (view != null) {
+            view.setVisibility(visibility);
+        }
     }
 }
