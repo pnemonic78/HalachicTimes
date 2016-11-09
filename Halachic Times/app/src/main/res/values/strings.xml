@@ -331,6 +331,6 @@
     <string name="reminder_thursday">Remind on Thursday</string>
     <string name="reminder_tuesday">Remind on Tuesday</string>
     <string name="reminder_wednesday">Remind on Wednesday</string>
-    <string name="notification_next_title">The upcoming time as a notification</string>
+    <string name="notification_upcoming_title">The upcoming time as a notification</string>
 
 </resources>

@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Připomenout v čtvrtek</string>
     <string name="reminder_tuesday">Připomenout v úterý</string>
     <string name="reminder_wednesday">Připomenout v středu</string>
-    <string name="notification_next_title">Nadcházející čas jako oznámení</string>
+    <string name="notification_upcoming_title">Nadcházející čas jako oznámení</string>
 
 </resources>

@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Muistuttaa torstaina</string>
     <string name="reminder_tuesday">Muistuta tiistaina</string>
     <string name="reminder_wednesday">Muistuta keskiviikkona</string>
-    <string name="notification_next_title">Tuleva aika kuin ilmoitus</string>
+    <string name="notification_upcoming_title">Tuleva aika kuin ilmoitus</string>
 
 </resources>

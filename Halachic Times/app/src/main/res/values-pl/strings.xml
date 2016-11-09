@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Przypomnij w czwartek</string>
     <string name="reminder_tuesday">Przypomnij we wtorek</string>
     <string name="reminder_wednesday">Przypomnij w środę</string>
-    <string name="notification_next_title">Nadchodzący czas jako powiadomienie</string>
+    <string name="notification_upcoming_title">Nadchodzący czas jako powiadomienie</string>
 
 </resources>

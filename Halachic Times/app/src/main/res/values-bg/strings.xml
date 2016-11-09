@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Напомни в четвъртък</string>
     <string name="reminder_tuesday">Напомни в вторник</string>
     <string name="reminder_wednesday">Напомни в сряда</string>
-    <string name="notification_next_title">Предстоящите време като нотификация</string>
+    <string name="notification_upcoming_title">Предстоящите време като нотификация</string>
 
 </resources>

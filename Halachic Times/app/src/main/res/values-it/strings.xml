@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Ricordare il Giovedi</string>
     <string name="reminder_tuesday">Ricordare il Martedì</string>
     <string name="reminder_wednesday">Ricordare il Mercoledì</string>
-    <string name="notification_next_title">Il tempo di imminente come notifica</string>
+    <string name="notification_upcoming_title">Il tempo di imminente come notifica</string>
 
 </resources>

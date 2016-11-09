@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Нагадати четвер</string>
     <string name="reminder_tuesday">Нагадати вівторок</string>
     <string name="reminder_wednesday">Нагадати середу</string>
-    <string name="notification_next_title">Майбутній час як повідомлення</string>
+    <string name="notification_upcoming_title">Майбутній час як повідомлення</string>
 
 </resources>

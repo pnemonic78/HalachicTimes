@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Tuleta neljapäeval</string>
     <string name="reminder_tuesday">Tuleta teisipäeval</string>
     <string name="reminder_wednesday">Tuleta kolmapäeval</string>
-    <string name="notification_next_title">Tulemas ajal kui teate</string>
+    <string name="notification_upcoming_title">Tulemas ajal kui teate</string>
 
 </resources>

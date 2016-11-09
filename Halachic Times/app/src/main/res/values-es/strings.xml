@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Recuerde el jueves</string>
     <string name="reminder_tuesday">Recuerde el martes</string>
     <string name="reminder_wednesday">Recuerde el miércoles</string>
-    <string name="notification_next_title">La próxima vez como notificación</string>
+    <string name="notification_upcoming_title">La próxima vez como notificación</string>
 
 </resources>

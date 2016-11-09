@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Θύμισε την Πέμπτη</string>
     <string name="reminder_tuesday">Θύμισε την Τρίτη</string>
     <string name="reminder_wednesday">Θύμισε την Τετάρτη</string>
-    <string name="notification_next_title">Η επερχόμενη χρόνο αυτό ανακοίνωση</string>
+    <string name="notification_upcoming_title">Η επερχόμενη χρόνο αυτό ανακοίνωση</string>
 
 </resources>

@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Perşembe günü hatırlat</string>
     <string name="reminder_tuesday">Salı günü hatırlat</string>
     <string name="reminder_wednesday">Çarşamba günü hatırlat</string>
-    <string name="notification_next_title">Bir bildirim olarak yaklaşan bir zaman</string>
+    <string name="notification_upcoming_title">Bir bildirim olarak yaklaşan bir zaman</string>
 
 </resources>

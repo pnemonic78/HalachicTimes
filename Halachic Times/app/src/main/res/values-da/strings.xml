@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Mind på torsdag</string>
     <string name="reminder_tuesday">Mind på tirsdag</string>
     <string name="reminder_wednesday">Mind på onsdag</string>
-    <string name="notification_next_title">Den kommende tid som en notifikation i</string>
+    <string name="notification_upcoming_title">Den kommende tid som en notifikation i</string>
 
 </resources>

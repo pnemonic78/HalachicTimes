@@ -67,12 +67,12 @@ public class ZmanimReminder extends BroadcastReceiver {
     /** Id for alarms. */
     private static final int ID_ALARM_REMINDER = 2;
     /**
-     * Id for next-zman notifications.<br>
+     * Id for upcoming time notification.<br>
      * Newer notifications will override current notifications.
      */
-    private static final int ID_NOTIFY_NEXT = 3;
-    /** Id for alarms for next-zman notifications. */
-    private static final int ID_ALARM_NEXT = 4;
+    private static final int ID_NOTIFY_UPCOMING = 3;
+    /** Id for alarms for upcoming time notification. */
+    private static final int ID_ALARM_UPCOMING = 4;
 
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
@@ -165,9 +165,9 @@ public class ZmanimReminder extends BroadcastReceiver {
         long whenFirst = Long.MAX_VALUE;
         boolean nextDay = true;
         int count;
-        final boolean nextNotification = settings.isNotificationNext();
-        ZmanimItem itemNext = null;
-        long whenNext = Long.MAX_VALUE;
+        final boolean upcomingNotification = settings.isUpcomingNotification();
+        ZmanimItem itemUpcoming = null;
+        long whenUpcoming = Long.MAX_VALUE;
 
         JewishCalendar jcal = new JewishCalendar(gcal);
         jcal.setInIsrael(populater.isInIsrael());
@@ -201,11 +201,11 @@ public class ZmanimReminder extends BroadcastReceiver {
                 }
 
                 // Is the zman to be notified?
-                if (nextNotification) {
+                if (upcomingNotification) {
                     when = item.time;
-                    if ((when != ZmanimPreferences.NEVER) && (now <= when) && (when < whenNext)) {
-                        itemNext = item;
-                        whenNext = when;
+                    if ((when != ZmanimPreferences.NEVER) && (now <= when) && (when < whenUpcoming)) {
+                        itemUpcoming = item;
+                        whenUpcoming = when;
                     }
                 }
             }
@@ -217,8 +217,8 @@ public class ZmanimReminder extends BroadcastReceiver {
             Log.i(TAG, "notify at [" + whenFormat + "] for [" + timeFormat + "]");
             notifyFuture(context, item, whenFirst);
         }
-        if (itemNext != null) {
-            notifyNext(context, settings, itemNext);
+        if (itemUpcoming != null) {
+            notifyUpcoming(context, settings, itemUpcoming);
         }
     }
 
@@ -231,15 +231,15 @@ public class ZmanimReminder extends BroadcastReceiver {
     public void cancel(final Context context) {
         Log.i(TAG, "cancel");
         PendingIntent alarmIntent = createAlarmIntent(context, null);
-        PendingIntent nextIntent = createNextIntent(context);
+        PendingIntent upcomingIntent = createUpcomingIntent(context);
 
         AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarms.cancel(alarmIntent);
-        alarms.cancel(nextIntent);
+        alarms.cancel(upcomingIntent);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(ID_NOTIFY);
-        nm.cancel(ID_NOTIFY_NEXT);
+        nm.cancel(ID_NOTIFY_UPCOMING);
     }
 
     /**
@@ -546,11 +546,11 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @SuppressLint("NewApi")
-    private Notification createNextNotification(Context context, ZmanimPreferences settings, ZmanimItem item, PendingIntent contentIntent) {
+    private Notification createUpcomingNotification(Context context, ZmanimPreferences settings, ZmanimItem item, PendingIntent contentIntent) {
         CharSequence contentTitle = context.getText(item.titleId);
         CharSequence contentText = item.summary;
         long when = item.time;
-        Log.i(TAG, "notify next [" + contentTitle + "] for [" + formatDateTime(when) + "]");
+        Log.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
         Notification.Builder builder = new Notification.Builder(context)
                 .setContentIntent(contentIntent)
@@ -575,14 +575,13 @@ public class ZmanimReminder extends BroadcastReceiver {
         return notification;
     }
 
-    @SuppressLint("Wakelock")
-    private void postNextNotification(Context context, ZmanimPreferences settings, Notification notification) {
+    private void postUpcomingNotification(Context context, ZmanimPreferences settings, Notification notification) {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(ID_NOTIFY_NEXT, notification);
+        nm.notify(ID_NOTIFY_UPCOMING, notification);
     }
 
     /**
-     * Notify next.
+     * Notify upcoming time.
      *
      * @param context
      *         the context.
@@ -591,22 +590,22 @@ public class ZmanimReminder extends BroadcastReceiver {
      * @param item
      *         the next item.
      */
-    private void notifyNext(Context context, ZmanimPreferences settings, ZmanimItem item) {
+    private void notifyUpcoming(Context context, ZmanimPreferences settings, ZmanimItem item) {
         PendingIntent contentIntent = createActivityIntent(context);
 
-        Notification notification = createNextNotification(context, settings, item, contentIntent);
-        postNextNotification(context, settings, notification);
+        Notification notification = createUpcomingNotification(context, settings, item, contentIntent);
+        postUpcomingNotification(context, settings, notification);
 
         long triggerAt = item.time + DateUtils.MINUTE_IN_MILLIS;
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent alarmIntent = createNextIntent(context);
+        PendingIntent alarmIntent = createUpcomingIntent(context);
         manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
-    private PendingIntent createNextIntent(Context context) {
+    private PendingIntent createUpcomingIntent(Context context) {
         Intent intent = new Intent(context, ZmanimReminder.class);
         intent.setAction(ACTION_UPDATE);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_NEXT, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

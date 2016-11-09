@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Herinner op donderdag</string>
     <string name="reminder_tuesday">Herinner op dinsdag</string>
     <string name="reminder_wednesday">Herinner op woensdag</string>
-    <string name="notification_next_title">De komende tijd als een kennisgeving</string>
+    <string name="notification_upcoming_title">De komende tijd als een kennisgeving</string>
 
 </resources>

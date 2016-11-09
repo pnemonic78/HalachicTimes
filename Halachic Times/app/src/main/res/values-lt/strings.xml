@@ -197,6 +197,6 @@
     <string name="reminder_thursday">Priminti ketvirtadienį</string>
     <string name="reminder_tuesday">Priminti antradien</string>
     <string name="reminder_wednesday">Priminti trečiadienį</string>
-    <string name="notification_next_title">Artėjantis laikas kaip pranešimo apie</string>
+    <string name="notification_upcoming_title">Artėjantis laikas kaip pranešimo apie</string>
 
 </resources>
