@@ -70,14 +70,17 @@ public class ZmanimReminder extends BroadcastReceiver {
      * Id for next-zman notifications.<br>
      * Newer notifications will override current notifications.
      */
-    private static final int ID_NEXT = 3;
+    private static final int ID_NOTIFY_NEXT = 3;
+    /** Id for alarms for next-zman notifications. */
+    private static final int ID_ALARM_NEXT = 4;
 
     private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
     /** The number of days to check forwards for a reminder. */
     private static final int DAYS_FORWARD = 30;
 
-    private static final int LED_COLOR = Color.YELLOW;//Yellow represents the sun or a candle flame.
+    /* Yellow represents the sun or a candle flame. */
+    private static final int LED_COLOR = Color.YELLOW;
     private static final int LED_ON = 750;
     private static final int LED_OFF = 500;
 
@@ -227,13 +230,16 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     public void cancel(final Context context) {
         Log.i(TAG, "cancel");
-        AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = createAlarmIntent(context, null);
+        PendingIntent nextIntent = createNextIntent(context);
+
+        AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarms.cancel(alarmIntent);
+        alarms.cancel(nextIntent);
 
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(ID_NOTIFY);
-        nm.cancel(ID_NEXT);
+        nm.cancel(ID_NOTIFY_NEXT);
     }
 
     /**
@@ -572,7 +578,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     @SuppressLint("Wakelock")
     private void postNextNotification(Context context, ZmanimPreferences settings, Notification notification) {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(ID_NEXT, notification);
+        nm.notify(ID_NOTIFY_NEXT, notification);
     }
 
     /**
@@ -601,6 +607,6 @@ public class ZmanimReminder extends BroadcastReceiver {
         Intent intent = new Intent(context, ZmanimReminder.class);
         intent.setAction(ACTION_UPDATE);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_NEXT, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }
