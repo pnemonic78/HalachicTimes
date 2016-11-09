@@ -611,20 +611,18 @@ public class ZmanimActivity extends LocatedActivity implements
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        // Go to date?
-        if (Math.abs(velocityX) >= Math.abs(velocityY)) {
+        // Go to date? Also don't go to date accidentally while scrolling vertically.
+        if (Math.abs(velocityX) > Math.abs(velocityY) * 2) {
             if (velocityX < 0) {
                 if (localeRTL) {
                     navigateYesterday();
                 } else {
                     navigateTomorrow();
                 }
+            } else if (localeRTL) {
+                navigateTomorrow();
             } else {
-                if (localeRTL) {
-                    navigateTomorrow();
-                } else {
-                    navigateYesterday();
-                }
+                navigateYesterday();
             }
             return true;
         }
