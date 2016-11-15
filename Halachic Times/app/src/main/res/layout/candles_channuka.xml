@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/candle_8"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/candle_7"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -30,7 +30,7 @@
     <ImageView
         android:id="@+id/candle_6"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -39,7 +39,7 @@
     <ImageView
         android:id="@+id/candle_5"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -48,7 +48,7 @@
     <ImageView
         android:id="@+id/candle_shamash"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:paddingBottom="48dp"
@@ -58,7 +58,7 @@
     <ImageView
         android:id="@+id/candle_4"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -67,7 +67,7 @@
     <ImageView
         android:id="@+id/candle_3"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -76,7 +76,7 @@
     <ImageView
         android:id="@+id/candle_2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
@@ -85,7 +85,7 @@
     <ImageView
         android:id="@+id/candle_1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:scaleType="fitCenter"
