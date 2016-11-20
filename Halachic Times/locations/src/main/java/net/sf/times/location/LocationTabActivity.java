@@ -211,8 +211,8 @@ public class LocationTabActivity extends ThemedActivity implements
         populateLists();
 
         SearchView searchText = this.searchText;
-        searchText.requestFocus();
         if (!TextUtils.isEmpty(query)) {
+            searchText.requestFocus();
             searchText.setIconified(false);
         }
         searchText.setQuery(query, false);
