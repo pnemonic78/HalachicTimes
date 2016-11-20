@@ -27,12 +27,14 @@
     <style name="Widget.Clock.Time" parent="Widget.TextView.Large">
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
     <style name="Widget.Clock.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
     <style name="Widget.ListView.Dark">

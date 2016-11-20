@@ -34,9 +34,6 @@
     </style>
 
     <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Light">
-        <item name="widgetZmanTitle">@style/Widget.Title.Widget</item>
-        <item name="widgetZmanTime">@style/Widget.Time.Widget</item>
-
         <item name="listZmanim">@style/Widget.ListView.White</item>
         <item name="listZman">@style/Widget.ListItem.White</item>
         <item name="listZmanTitle">@style/Widget.Title.White</item>
