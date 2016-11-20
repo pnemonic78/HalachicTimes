@@ -76,7 +76,7 @@
 
     <style name="Widget.Title.White" parent="Widget.Title.Light"/>
 
-    <style name="Widget.Title.Widget">
+    <style name="Widget.Title.Widget" parent="Widget.Title.Dark">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
@@ -123,6 +123,7 @@
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:maxLines">1</item>
+        <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
     <style name="Widget.Item.Widget" parent="Widget"/>
