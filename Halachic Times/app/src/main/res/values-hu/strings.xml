@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Nap 120 perc napkelte előtt / napnyugta után</string>
-    <string name="opinion_120_zmanis">Nap 120 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_120_zmanis">Nap 120 זמניות perc napkelte előtt / napnyugta után</string>
     <string name="opinion_16">Nap 16,1° alábbi napkelte / napnyugta</string>
     <string name="opinion_16_sunset">Nap-tól hajnal 16,1° tengerszint napnyugta</string>
     <string name="opinion_16_night">Nap-tól hajnal 16,1° alkony</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Nap 18° alábbi napkelte / napnyugta</string>
     <string name="opinion_60">Nap 60 perc napkelte előtt / napnyugta után</string>
     <string name="opinion_72">Nap 72 perc napkelte előtt / napnyugta után</string>
-    <string name="opinion_72_zmanis">Nap 72 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_72_zmanis">Nap 72 זמניות perc napkelte előtt / napnyugta után</string>
     <string name="opinion_90">Nap 90 perc napkelte előtt / napnyugta után</string>
-    <string name="opinion_90_zmanis">Nap 90 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_90_zmanis">Nap 90 זמניות perc napkelte előtt / napnyugta után</string>
     <string name="opinion_96">Nap 96 perc napkelte előtt / napnyugta után</string>
-    <string name="opinion_96_zmanis">Nap 96 <i>zmaniyos</i> perc napkelte előtt / napnyugta után</string>
+    <string name="opinion_96_zmanis">Nap 96 זמניות perc napkelte előtt / napnyugta után</string>
     <string name="opinion_ateret">Szerint Yeshivat Ateret Tóra</string>
     <string name="opinion_gra">Szerint GRA és Baal Tanya</string>
     <string name="opinion_mga">Szerint Magen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Szürkület</string>
     <string name="twilight_2stars">2 csillagos látható</string>
     <string name="twilight_7_083">Előtt 13,5 perc 7,083° alkony</string>
-    <string name="twilight_7_083_zmanis">Előtt 13,5 <i>zmaniyos</i> perc 7,083° alkony</string>
+    <string name="twilight_7_083_zmanis">Előtt 13,5 זמניות perc 7,083° alkony</string>
     <string name="twilight_58">58,5 perccel napnyugta után</string>
     <string name="twilight_13">A nap 13,24° alatt horizont</string>
 

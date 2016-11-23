@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Giorno è 120 minuti prima dell\'alba / dopo tramonto</string>
-    <string name="opinion_120_zmanis">Giorno è 120 minuti <i>zmaniyos</i> prima dell\'alba / dopo tramonto</string>
+    <string name="opinion_120_zmanis">Giorno è 120 minuti זמניות prima dell\'alba / dopo tramonto</string>
     <string name="opinion_16">Giorno è 16,1° sotto alba / tramonto</string>
     <string name="opinion_16_sunset">Giorno è dall\'alba 16,1° a livello del tramonto sul mare</string>
     <string name="opinion_16_night">Giorno è dall\'alba 16,1° a crepuscolo</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Giorno è 18° sotto alba / tramonto</string>
     <string name="opinion_60">Giorno è 60 minuti prima dell\'alba / dopo tramonto</string>
     <string name="opinion_72">Giorno è 72 minuti prima dell\'alba / dopo tramonto</string>
-    <string name="opinion_72_zmanis">Giorno è 72 minuti <i>zmaniyos</i> prima dell\'alba / dopo tramonto</string>
+    <string name="opinion_72_zmanis">Giorno è 72 minuti זמניות prima dell\'alba / dopo tramonto</string>
     <string name="opinion_90">Giorno è 90 minuti prima dell\'alba / dopo tramonto</string>
-    <string name="opinion_90_zmanis">Giorno è 90 minuti <i>zmaniyos</i> prima dell\'alba / dopo tramonto</string>
+    <string name="opinion_90_zmanis">Giorno è 90 minuti זמניות prima dell\'alba / dopo tramonto</string>
     <string name="opinion_96">Giorno è 96 minuti prima dell\'alba / dopo tramonto</string>
-    <string name="opinion_96_zmanis">Giorno è 96 minuti <i>zmaniyos</i> prima dell\'alba / dopo tramonto</string>
+    <string name="opinion_96_zmanis">Giorno è 96 minuti זמניות prima dell\'alba / dopo tramonto</string>
     <string name="opinion_ateret">Secondo la Yeshivat Ateret Torah</string>
     <string name="opinion_gra">Secondo la GRA e Baal Tanya</string>
     <string name="opinion_mga">Secondo la Magen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Crepuscolo</string>
     <string name="twilight_2stars">2 stelle visibili</string>
     <string name="twilight_7_083">13,5 minuti prima di 7,083° imbrunire</string>
-    <string name="twilight_7_083_zmanis">13,5 minuti <i>zmaniyos</i> prima di 7,083° imbrunire</string>
+    <string name="twilight_7_083_zmanis">13,5 minuti זמניות prima di 7,083° imbrunire</string>
     <string name="twilight_58">58,5 minuti dopo il tramonto</string>
     <string name="twilight_13">Sole è 13,24° sotto l\'orizzonte</string>
 

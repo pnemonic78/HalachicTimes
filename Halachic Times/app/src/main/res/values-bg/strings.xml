@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Ден е 120 минути преди изгрев / след залез</string>
-    <string name="opinion_120_zmanis">Ден е 120 <i>зманьос</i> минути преди изгрев / след залез</string>
+    <string name="opinion_120_zmanis">Ден е 120 זמניות минути преди изгрев / след залез</string>
     <string name="opinion_16">Ден е 16,1° под изгрев / залез</string>
     <string name="opinion_16_sunset">Ден е от зората 16,1° до ниво залез на морето</string>
     <string name="opinion_16_night">Ден е от зората 16,1° до свечеряване</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Ден е 18° под изгрев / залез</string>
     <string name="opinion_60">Ден е 60 минути преди изгрев / след залез</string>
     <string name="opinion_72">Ден е 72 минути преди изгрев / след залез</string>
-    <string name="opinion_72_zmanis">Ден е 72 <i>зманьос</i> минути преди изгрев / след залез</string>
+    <string name="opinion_72_zmanis">Ден е 72 זמניות минути преди изгрев / след залез</string>
     <string name="opinion_90">Ден е 90 минути преди изгрев / след залез</string>
-    <string name="opinion_90_zmanis">Ден е 90 <i>зманьос</i> минути преди изгрев / след залез</string>
+    <string name="opinion_90_zmanis">Ден е 90 זמניות минути преди изгрев / след залез</string>
     <string name="opinion_96">Ден е 96 минути преди изгрев / след залез</string>
-    <string name="opinion_96_zmanis">Ден е 96 <i>зманьос</i> минути преди изгрев / след залез</string>
+    <string name="opinion_96_zmanis">Ден е 96 זמניות минути преди изгрев / след залез</string>
     <string name="opinion_ateret">Съгласно Йшйват Атерет Тора</string>
     <string name="opinion_gra">Съгласно ГРА и Ваал Таня</string>
     <string name="opinion_mga">Съгласно Маген Авраам</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Полумрак</string>
     <string name="twilight_2stars">2 звезди видими</string>
     <string name="twilight_7_083">13,5 минути преди 7,083° свечеряване</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>зманьос</i> минути преди 7,083° свечеряване</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות минути преди 7,083° свечеряване</string>
     <string name="twilight_58">58,5 минути след залез слънце</string>
     <string name="twilight_13">Слънцето е 13,24° под хоризонта</string>
 

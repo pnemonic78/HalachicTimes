@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Jour est 120 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_120_zmanis">Jour est 120 <i>zmanïot</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_120_zmanis">Jour est 120 זמניות minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_16">Jour est 16,1° sous de lever / coucher du soleil</string>
     <string name="opinion_16_sunset">Jour est de l\'aube 16,1° à niveau de la mer coucher de soleil</string>
     <string name="opinion_16_night">Jour est de l\'aube 16,1° à tombée de la nuit</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Jour est 18° sous de lever / coucher du soleil</string>
     <string name="opinion_60">Jour est 60 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_72">Jour est 72 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_72_zmanis">Jour est 72 <i>zmanïot</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_72_zmanis">Jour est 72 זמניות minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_90">Jour est 90 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_90_zmanis">Jour est 90 <i>zmanïot</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_90_zmanis">Jour est 90 זמניות minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_96">Jour est 96 minutes avant le lever / après le coucher du soleil</string>
-    <string name="opinion_96_zmanis">Jour est 96 <i>zmanïot</i> minutes avant le lever / après le coucher du soleil</string>
+    <string name="opinion_96_zmanis">Jour est 96 זמניות minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_ateret">Selon le Yechivat Ateret Torah</string>
     <string name="opinion_gra">Selon le GRA et Baal Tanya</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Crépuscule</string>
     <string name="twilight_2stars">2 étoiles visibles</string>
     <string name="twilight_7_083">13,5 minutes avant 7,083° de la nuit</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanïot</i> minutes avant 7,083° de la nuit</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minutes avant 7,083° de la nuit</string>
     <string name="twilight_58">58,5 minutes après le coucher du soleil</string>
     <string name="twilight_13">Le soleil se trouve à 13,24° sous l\'horizon</string>
 

@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Gün 120 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_120_zmanis">Gün 120 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_120_zmanis">Gün 120 זמניות dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_16">Gün 16,1° aşağıda gündoğumu / günbatımı</string>
     <string name="opinion_16_sunset">Gün şafak 16,1° deniz seviyesi günbatımı</string>
     <string name="opinion_16_night">Gün şafak 16,1° kadar akşam vakti</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Gün 18° aşağıda gündoğumu / günbatımı</string>
     <string name="opinion_60">Gün 60 dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_72">Gün 72 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_72_zmanis">Gün 72 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_72_zmanis">Gün 72 זמניות dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_90">Gün 90 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_90_zmanis">Gün 90 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_90_zmanis">Gün 90 זמניות dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_96">Gün 96 dakika güneş doğmadan / günbatımı sonradır</string>
-    <string name="opinion_96_zmanis">Gün 96 <i>zmanıyot</i> dakika güneş doğmadan / günbatımı sonradır</string>
+    <string name="opinion_96_zmanis">Gün 96 זמניות dakika güneş doğmadan / günbatımı sonradır</string>
     <string name="opinion_ateret">Yeşivat Ateret Tora göre</string>
     <string name="opinion_gra">GRA ve Baal Tanya göre</string>
     <string name="opinion_mga">Magen Avraham göre</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Alaca karanlık</string>
     <string name="twilight_2stars">2 yıldızlar görünür</string>
     <string name="twilight_7_083">13,5 dakika akşam karanlığından önce 7,083°</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanıyot</i> dakika akşam karanlığından önce 7,083°</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות dakika akşam karanlığından önce 7,083°</string>
     <string name="twilight_58">58,5 dakika gün batımından sonra</string>
     <string name="twilight_13">Güneş ufkun altında 13,24°</string>
 

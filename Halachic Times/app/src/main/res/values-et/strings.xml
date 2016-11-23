@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Päeval on 120 minut enne päikesetõusu / pärast päikeseloojangut</string>
-    <string name="opinion_120_zmanis">Päeval on 120 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_120_zmanis">Päeval on 120 זמניות minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_16">Päeval on 16,1° alla päikese tõusu / loojangu</string>
     <string name="opinion_16_sunset">Päeval on ära koidust 16,1° kuni merepinnast loojang</string>
     <string name="opinion_16_night">Päeval on ära koidust 16,1° kuni öö</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Päeval on 18° alla päikese tõusu / loojangu</string>
     <string name="opinion_60">Päeval on 60 minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_72">Päeval on 72 minut enne päikesetõusu / pärast päikeseloojangut</string>
-    <string name="opinion_72_zmanis">Päeval on 72 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_72_zmanis">Päeval on 72 זמניות minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_90">Päeval on 90 minut enne päikesetõusu / pärast päikeseloojangut</string>
-    <string name="opinion_90_zmanis">Päeval on 90 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_90_zmanis">Päeval on 90 זמניות minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_96">Päeval on 96 minut enne päikesetõusu / pärast päikeseloojangut</string>
-    <string name="opinion_96_zmanis">Päeval on 96 <i>zmanjos</i> minut enne päikesetõusu / pärast päikeseloojangut</string>
+    <string name="opinion_96_zmanis">Päeval on 96 זמניות minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_ateret">Vastavalt Ješivat Ateret Toora</string>
     <string name="opinion_gra">Vastavalt GRA ja Baal Tanja</string>
     <string name="opinion_mga">Vastavalt Magen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Videvik</string>
     <string name="twilight_2stars">2 tärni nähtav</string>
     <string name="twilight_7_083">13,5 minutit enne 7,083° öö</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanjos</i> minutit enne 7,083° öö</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minutit enne 7,083° öö</string>
     <string name="twilight_58">58,5 minutit pärast päikeseloojangut</string>
     <string name="twilight_13">Päike on 13,24° allpool horisonti</string>
 

@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dzień jest 120 minut przed wschodem słońca / po zachodzie słońca</string>
-    <string name="opinion_120_zmanis">Dzień jest 120 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_120_zmanis">Dzień jest 120 זמניות minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_16">Dzień jest 16,1° poniżej wschodem słońca / zachodzie słońca</string>
     <string name="opinion_16_sunset">Dzień jest od świtu 16,1° do poziomu morza słońca</string>
     <string name="opinion_16_night">Dzień jest od świtu 16,1° do zmroku</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Dzień jest 18° poniżej wschodem słońca / zachodzie słońca</string>
     <string name="opinion_60">Dzień jest 60 minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_72">Dzień jest 72 minut przed wschodem słońca / po zachodzie słońca</string>
-    <string name="opinion_72_zmanis">Dzień jest 72 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_72_zmanis">Dzień jest 72 זמניות minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_90">Dzień jest 90 minut przed wschodem słońca / po zachodzie słońca</string>
-    <string name="opinion_90_zmanis">Dzień jest 90 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_90_zmanis">Dzień jest 90 זמניות minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_96">Dzień jest 96 minut przed wschodem słońca / po zachodzie słońca</string>
-    <string name="opinion_96_zmanis">Dzień jest 96 <i>zmanios</i> minut przed wschodem słońca / po zachodzie słońca</string>
+    <string name="opinion_96_zmanis">Dzień jest 96 זמניות minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_ateret">Zgodnie z Jesziwy Ateret Torą</string>
     <string name="opinion_gra">Zgodnie z GRA i Baal Tanya</string>
     <string name="opinion_mga">Zgodnie z Magen Abrahama</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Zmierzch</string>
     <string name="twilight_2stars">2 gwiazdki widoczne</string>
     <string name="twilight_7_083">13,5 minut przed 7,083° zmroku</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanios</i> minut przed 7,083° zmroku</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minut przed 7,083° zmroku</string>
     <string name="twilight_58">58,5 minut po zachodzie słońca</string>
     <string name="twilight_13">Słońce jest 13,24° poniżej horyzontu</string>
 

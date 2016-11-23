@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dieną yra 120 minučių prieš saulėtekį / po saulėlydžio</string>
-    <string name="opinion_120_zmanis">Dieną yra 120 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_120_zmanis">Dieną yra 120 זמניות minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_16">Dieną yra 16,1° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_16_sunset">Dieną yra nuo aušros 16,1° jūros lygio saulėlydžio</string>
     <string name="opinion_16_night">Dieną yra nuo aušros 16,1° prieš ateina tamsa</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Dieną yra 18° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_60">Dieną yra 60 minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_72">Dieną yra 72 minučių prieš saulėtekį / po saulėlydžio</string>
-    <string name="opinion_72_zmanis">Dieną yra 72 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_72_zmanis">Dieną yra 72 זמניות minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_90">Dieną yra 90 minučių prieš saulėtekį / po saulėlydžio</string>
-    <string name="opinion_90_zmanis">Dieną yra 90 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_90_zmanis">Dieną yra 90 זמניות minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_96">Dieną yra 96 minučių prieš saulėtekį / po saulėlydžio</string>
-    <string name="opinion_96_zmanis">Dieną yra 96 <i>zmanios</i> minučių prieš saulėtekį / po saulėlydžio</string>
+    <string name="opinion_96_zmanis">Dieną yra 96 זמניות minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_ateret">Pasak Yešivat Ateret Tora</string>
     <string name="opinion_gra">Pasak GRA ir Bąl Tanya</string>
     <string name="opinion_mga">Pasak Magen Abraomas</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Apytema</string>
     <string name="twilight_2stars">2 žvaigždės matomas</string>
     <string name="twilight_7_083">13,5 minučių prieš 7,083° naktį</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanios</i> minučių prieš 7,083° naktį</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minučių prieš 7,083° naktį</string>
     <string name="twilight_58">58,5 minutes po saulėlydžio</string>
     <string name="twilight_13">Saulė yra 13,24° žemiau horizonto</string>
 

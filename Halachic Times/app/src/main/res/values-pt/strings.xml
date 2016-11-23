@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dia é de 120 minutos antes do nascer do sol / depois do sol</string>
-    <string name="opinion_120_zmanis">Dia é de 120 minutos <i>zmaniot</i> antes do nascer do sol / depois do sol</string>
+    <string name="opinion_120_zmanis">Dia é de 120 minutos זמניות antes do nascer do sol / depois do sol</string>
     <string name="opinion_16">Dia é de 16,1° abaixo do nascer do sol / pôr do sol</string>
     <string name="opinion_16_sunset">Dia é de alvorecer 16,1° para o mar nível por do sol</string>
     <string name="opinion_16_night">Dia é de alvorecer 16,1° para anoitecer</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Dia é de 18° abaixo do nascer do sol / pôr do sol</string>
     <string name="opinion_60">Dia é de 60 minutos antes do nascer do sol / depois do sol</string>
     <string name="opinion_72">Dia é de 72 minutos antes do nascer do sol / depois do sol</string>
-    <string name="opinion_72_zmanis">Dia é de 72 minutos <i>zmaniot</i> antes do nascer do sol / depois do sol</string>
+    <string name="opinion_72_zmanis">Dia é de 72 minutos זמניות antes do nascer do sol / depois do sol</string>
     <string name="opinion_90">Dia é de 90 minutos antes do nascer do sol / depois do sol</string>
-    <string name="opinion_90_zmanis">Dia é de 90 minutos <i>zmaniot</i> antes do nascer do sol / depois do sol</string>
+    <string name="opinion_90_zmanis">Dia é de 90 minutos זמניות antes do nascer do sol / depois do sol</string>
     <string name="opinion_96">Dia é de 96 minutos antes do nascer do sol / depois do sol</string>
-    <string name="opinion_96_zmanis">Dia é de 96 minutos <i>zmaniot</i> antes do nascer do sol / depois do sol</string>
+    <string name="opinion_96_zmanis">Dia é de 96 minutos זמניות antes do nascer do sol / depois do sol</string>
     <string name="opinion_ateret">Acordo com a Yechivat Ateret Torah</string>
     <string name="opinion_gra">Acordo com a GRA e Baal Tanya</string>
     <string name="opinion_mga">Acordo com a Maguen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Crepúsculo</string>
     <string name="twilight_2stars">2 estrelas visíveis</string>
     <string name="twilight_7_083">13,5 minutos antes 7,083° anoitecer</string>
-    <string name="twilight_7_083_zmanis">13,5 minutos <i>zmaniot</i> antes 7,083° anoitecer</string>
+    <string name="twilight_7_083_zmanis">13,5 minutos זמניות antes 7,083° anoitecer</string>
     <string name="twilight_58">58,5 minutos depois do pôr do sol</string>
     <string name="twilight_13">Sol é 13,24° abaixo do horizonte</string>
 

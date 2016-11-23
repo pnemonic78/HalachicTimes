@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Päivä on 120 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
-    <string name="opinion_120_zmanis">Päivä on 120 <i>zmanjos</i> minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
+    <string name="opinion_120_zmanis">Päivä on 120 זמניות minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_16">Päivä on 16,1° alla auringonnousu / auringonlasku</string>
     <string name="opinion_16_sunset">Päivä on sarastus 16,1° joilla merenpinnan auringonlasku</string>
     <string name="opinion_16_night">Päivä on sarastus 16,1° ja pimetessä</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Päivä on 18° alla auringonnousu / auringonlasku</string>
     <string name="opinion_60">Päivä on 60 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_72">Päivä on 72 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
-    <string name="opinion_72_zmanis">Päivä on 72 <i>zmanjos</i> minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
+    <string name="opinion_72_zmanis">Päivä on 72 זמניות minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_90">Päivä on 90 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
-    <string name="opinion_90_zmanis">Päivä on 90 <i>zmanjos</i> minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
+    <string name="opinion_90_zmanis">Päivä on 90 זמניות minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_96">Päivä on 96 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
-    <string name="opinion_96_zmanis">Päivä on 96 <i>zmanjos</i> minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
+    <string name="opinion_96_zmanis">Päivä on 96 זמניות minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_ateret">Mukainen Ješivat Ateret Tora</string>
     <string name="opinion_gra">Mukainen GRA ja Baal Tanja</string>
     <string name="opinion_mga">Mukainen Magen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Hämärä</string>
     <string name="twilight_2stars">2 tähteä näkyvissä</string>
     <string name="twilight_7_083">13,5 minuuttia ennen 7,083° pimetessä</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanjos</i> minuuttia ennen 7,083° pimetessä</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minuuttia ennen 7,083° pimetessä</string>
     <string name="twilight_58">58,5 minuuttia auringonlaskun jälkeen</string>
     <string name="twilight_13">Aurinko on 13,24° horisontin alapuolella</string>
 

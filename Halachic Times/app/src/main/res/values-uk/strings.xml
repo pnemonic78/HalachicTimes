@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 мінут перед сходом сонця / після заходу сонця</string>
-    <string name="opinion_120_zmanis">День 120 <i>зманёс</i> мінут перед сходом сонця / після заходу сонця</string>
+    <string name="opinion_120_zmanis">День 120 זמניות мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_16">День 16,1° нижче схід / захід</string>
     <string name="opinion_16_sunset">День від світанку 16,1° до заходу рівнем моря</string>
     <string name="opinion_16_night">День від світанку 16,1° до настання ночі</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">День 18° нижче схід / захід</string>
     <string name="opinion_60">День 60 мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_72">День 72 мінут перед сходом сонця / після заходу сонця</string>
-    <string name="opinion_72_zmanis">День 72 <i>зманёс</i> мінут перед сходом сонця / після заходу сонця</string>
+    <string name="opinion_72_zmanis">День 72 זמניות мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_90">День 90 мінут перед сходом сонця / після заходу сонця</string>
-    <string name="opinion_90_zmanis">День 90 <i>зманёс</i> мінут перед сходом сонця / після заходу сонця</string>
+    <string name="opinion_90_zmanis">День 90 זמניות мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_96">День 96 мінут перед сходом сонця / після заходу сонця</string>
-    <string name="opinion_96_zmanis">День 96 <i>зманёс</i> мінут перед сходом сонця / після заходу сонця</string>
+    <string name="opinion_96_zmanis">День 96 זמניות мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_ateret">Відповідно до Ешіват Атэрэт Тора</string>
     <string name="opinion_gra">Відповідно до ГРА і Ваал Таня</string>
     <string name="opinion_mga">Відповідно до Маген Авраам</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Присмерк</string>
     <string name="twilight_2stars">2 зірки видимі</string>
     <string name="twilight_7_083">13,5 мінут до 7,083° ночі</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>зманёс</i> мінут до 7,083° ночі</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות мінут до 7,083° ночі</string>
     <string name="twilight_58">58,5 мінут після заходу сонця</string>
     <string name="twilight_13">Сонце 13,24° нижче горизонту</string>
 

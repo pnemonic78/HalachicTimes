@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 минут до восхода / после заката</string>
-    <string name="opinion_120_zmanis">День 120 <i>временных</i> минут до восхода / после заката</string>
+    <string name="opinion_120_zmanis">День 120 זמניות минут до восхода / после заката</string>
     <string name="opinion_16">День 16,1° ниже восхода / заката</string>
     <string name="opinion_16_sunset">День с 16,1° рассвета до заката на уровне моря</string>
     <string name="opinion_16_night">День с 16,1°  рассвета до темноты</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">День 18° ниже восхода / заката</string>
     <string name="opinion_60">День 60 минут до восхода / после заката</string>
     <string name="opinion_72">День 72 минут до восхода / после заката</string>
-    <string name="opinion_72_zmanis">День 72 <i>временных</i> минут до восхода / после заката</string>
+    <string name="opinion_72_zmanis">День 72 זמניות минут до восхода / после заката</string>
     <string name="opinion_90">День 90 минут до восхода / после заката</string>
-    <string name="opinion_90_zmanis">День 90 <i>временных</i> минут до восхода / после заката</string>
+    <string name="opinion_90_zmanis">День 90 זמניות минут до восхода / после заката</string>
     <string name="opinion_96">День 96 минут до восхода / после заката</string>
-    <string name="opinion_96_zmanis">День 96 <i>временных</i> минут до восхода / после заката</string>
+    <string name="opinion_96_zmanis">День 96 זמניות минут до восхода / после заката</string>
     <string name="opinion_ateret">В соответствии с Ешйват Атэрэт Тора</string>
     <string name="opinion_gra">В соответствии с ГРА и Баал хаТания</string>
     <string name="opinion_mga">В соответствии с Маген Авраам</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Сумерки</string>
     <string name="twilight_2stars">2 звезды видны</string>
     <string name="twilight_7_083">13,5 минут до 7,083° темноты</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>временных</i> минут до 7,083° темноты</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות минут до 7,083° темноты</string>
     <string name="twilight_58">58,5 минут после захода солнца</string>
     <string name="twilight_13">Солнце 13,24° ниже горизонта</string>
 

@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
-    <string name="opinion_120_zmanis">Day is 120 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_120_zmanis">Day is 120 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_16">Day is 16.1° below sunrise / sunset</string>
     <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
     <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Day is 18° below sunrise / sunset</string>
     <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
     <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
-    <string name="opinion_72_zmanis">Day is 72 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_72_zmanis">Day is 72 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_90">Day is 90 minutes before sunrise / after sunset</string>
-    <string name="opinion_90_zmanis">Day is 90 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_90_zmanis">Day is 90 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
-    <string name="opinion_96_zmanis">Day is 96 <i>zmaniyos</i> minutes before sunrise / after sunset</string>
+    <string name="opinion_96_zmanis">Day is 96 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
     <string name="opinion_gra">According to GRA and Baal Tanya</string>
     <string name="opinion_mga">According to Magen Avraham</string>
@@ -196,7 +196,7 @@
     <string name="twilight">Twilight</string>
     <string name="twilight_2stars">2 stars visible</string>
     <string name="twilight_7_083">13.5 minutes before 7.083° nightfall</string>
-    <string name="twilight_7_083_zmanis">13.5 minutes <i>zmaniyos</i> before 7.083° nightfall</string>
+    <string name="twilight_7_083_zmanis">13.5 minutes זמניות before 7.083° nightfall</string>
     <string name="twilight_58">58.5 minutes after sunset</string>
     <string name="twilight_13">Sun is 13.24° below horizon</string>
 

@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dag is 120 minuten vóór zonsopgang / na zonsondergang</string>
-    <string name="opinion_120_zmanis">Dag is 120 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_120_zmanis">Dag is 120 זמניות minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_16">Dag is 16,1° onder zonsopgang / zonsondergang</string>
     <string name="opinion_16_sunset">Dag is van dageraad 16,1° tot zeeniveau zonsondergang</string>
     <string name="opinion_16_night">Dag is van dageraad 16,1° tot vallen van de avond</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Dag is 18° onder zonsopgang / zonsondergang</string>
     <string name="opinion_60">Dag is 60 minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_72">Dag is 72 minuten vóór zonsopgang / na zonsondergang</string>
-    <string name="opinion_72_zmanis">Dag is 72 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_72_zmanis">Dag is 72 זמניות minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_90">Dag is 90 minuten vóór zonsopgang / na zonsondergang</string>
-    <string name="opinion_90_zmanis">Dag is 90 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_90_zmanis">Dag is 90 זמניות minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_96">Dag is 96 minuten vóór zonsopgang / na zonsondergang</string>
-    <string name="opinion_96_zmanis">Dag is 96 <i>zmaniejos</i> minuten vóór zonsopgang / na zonsondergang</string>
+    <string name="opinion_96_zmanis">Dag is 96 זמניות minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_ateret">Volgens Jeshiwat Ateret Tora</string>
     <string name="opinion_gra">Volgens GRA en Baal Tanja</string>
     <string name="opinion_mga">Volgens Magen Awraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Schemering</string>
     <string name="twilight_2stars">2 sterren zichtbaar</string>
     <string name="twilight_7_083">13,5 minuten voor 7,083° nacht</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmaniejos</i> minuten voor 7,083° nacht</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minuten voor 7,083° nacht</string>
     <string name="twilight_58">58,5 minuten na zonsondergang</string>
     <string name="twilight_13">Zon is 13,24° beneden de horizon</string>
 

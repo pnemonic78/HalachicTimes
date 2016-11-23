@@ -6,7 +6,7 @@
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Dag är 120 minuter före soluppgången / efter solnedgången</string>
-    <string name="opinion_120_zmanis">Dag är 120 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_120_zmanis">Dag är 120 זמניות minuter före soluppgången / efter solnedgången</string>
     <string name="opinion_16">Dag är 16,1° under oluppgången / solnedgången</string>
     <string name="opinion_16_sunset">Dag är från gryning 16,1° till havsnivå solnedgången</string>
     <string name="opinion_16_night">Dag är från gryning 16,1° till kvällen</string>
@@ -15,11 +15,11 @@
     <string name="opinion_18">Dag är 18° under oluppgången / solnedgången</string>
     <string name="opinion_60">Dag är 60 minuter före soluppgången / efter solnedgången</string>
     <string name="opinion_72">Dag är 72 minuter före soluppgången / efter solnedgången</string>
-    <string name="opinion_72_zmanis">Dag är 72 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_72_zmanis">Dag är 72 זמניות minuter före soluppgången / efter solnedgången</string>
     <string name="opinion_90">Dag är 90 minuter före soluppgången / efter solnedgången</string>
-    <string name="opinion_90_zmanis">Dag är 90 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_90_zmanis">Dag är 90 זמניות minuter före soluppgången / efter solnedgången</string>
     <string name="opinion_96">Dag är 96 minuter före soluppgången / efter solnedgången</string>
-    <string name="opinion_96_zmanis">Dag är 96 <i>zmanjos</i> minuter före soluppgången / efter solnedgången</string>
+    <string name="opinion_96_zmanis">Dag är 96 זמניות minuter före soluppgången / efter solnedgången</string>
     <string name="opinion_ateret">Enligt Yešivat Ateret Tora</string>
     <string name="opinion_gra">Enligt GRA och Baal Tanya</string>
     <string name="opinion_mga">Enligt Magen Avraham</string>
@@ -95,7 +95,7 @@
     <string name="twilight">Skymningen</string>
     <string name="twilight_2stars">2 stjärnor synliga</string>
     <string name="twilight_7_083">13,5 minuter före 7,083° natt</string>
-    <string name="twilight_7_083_zmanis">13,5 <i>zmanjos</i> minuter före 7,083° natt</string>
+    <string name="twilight_7_083_zmanis">13,5 זמניות minuter före 7,083° natt</string>
     <string name="twilight_58">58,5 minuter efter solnedgången</string>
     <string name="twilight_13">Solen är 13,24° under horisonten</string>
 
