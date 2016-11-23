@@ -32,8 +32,8 @@
     <string name="dawn">Şafak</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">En erken tallis ve tefillin (mişeyakir)</string>
-    <string name="tallis_only">En erken tallis (mişeyakir)</string>
+    <string name="tallis">En erken טלית ve tefillin (משיכיר)</string>
+    <string name="tallis_only">En erken טלית (משיכיר)</string>
     <string name="tallis_summary">Güneş ufkun aşağıda 11,5°</string>
     <string name="tallis_11">Güneş ufkun aşağıda 11°</string>
     <string name="tallis_10">Güneş ufkun aşağıda 10,2°</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Deniz seviyesinde</string>
 
     <!-- Latest shema -->
-    <string name="shema">En son şema</string>
+    <string name="shema">En son שמע</string>
     <string name="shema_7">Gün şafak 16,1° kadar gece 7,083°</string>
     <string name="shema_3">3 saat önce öğle vakti</string>
     <string name="shema_fixed">3 saat önce öğle vakti sabit yerel</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">En son sabah namazından (şacharis)</string>
+    <string name="prayers">En son sabah namazından (שחרית)</string>
     <string name="prayers_fixed">2 saat önce öğle vakti sabit yerel</string>
     <string name="prayers_2">2 saat önce öğle vakti</string>
 
     <!-- Midday -->
-    <string name="midday">Öğlen (chatzot)</string>
+    <string name="midday">Öğlen (חצות)</string>
     <string name="midday_summary">Güneş öğlen</string>
     <string name="midday_fixed">Öğlen yerel enlem için ayarlanabilir</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">מנחה büyük</string>
     <string name="earliest_mincha_summary">En erken ikindi namazından</string>
     <string name="earliest_mincha_30">30 dakika sonra öğlen</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">מנחה küçük</string>
     <string name="mincha_summary">İkindi namazından</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">מנחה yarısı</string>
 
     <!-- Candle lighting -->
     <string name="candles">Mum aydınlatma</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Bayram biter</string>
 
     <!-- Midnight -->
-    <string name="midnight">Gece yarısı (chatzot)</string>
+    <string name="midnight">Gece yarısı (חצות)</string>
     <string name="midnight_summary">Güneş geceyarısı</string>
     <string name="midnight_12">12 saat sonra öğlen</string>
     <string name="midnight_6">6 saat sonra akşam vakti</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Chametz yemek için son kez</string>
-    <string name="burn_chametz">Chametz yakmak için son kez</string>
+    <string name="eat_chametz">חמץ yemek için son kez</string>
+    <string name="burn_chametz">חמץ yakmak için son kez</string>
 
     <!-- Moon -->
-    <string name="molad">Doğuşu Yeni ay (molad)</string>
-    <string name="molad_summary">Ortalama molad</string>
-    <string name="levana_earliest">Yeni ay en erken kutsallaştırılması (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 gün sonra molad</string>
-    <string name="levana_7">7 gün sonra molad</string>
-    <string name="levana_latest">Yeni ay en son kutsallaştırılması (kiddush levana)</string>
-    <string name="levana_latest_summary">Yarım molad ve molad arasında</string>
-    <string name="levana_15">15 gün sonra molad</string>
+    <string name="molad">Doğuşu Yeni ay (מולד)</string>
+    <string name="molad_summary">Ortalama מולד</string>
+    <string name="levana_earliest">Yeni ay en erken kutsallaştırılması (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 gün sonra מולד</string>
+    <string name="levana_7">7 gün sonra מולד</string>
+    <string name="levana_latest">Yeni ay en son kutsallaştırılması (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Yarım מולד ve מולד arasında</string>
+    <string name="levana_15">15 gün sonra מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Oruç başlar</string>
     <string name="fast_ends">Oruç biter</string>
 
     <!-- Omer -->
-    <string name="omer">Omer</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

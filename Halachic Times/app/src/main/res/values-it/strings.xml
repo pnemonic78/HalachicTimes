@@ -32,8 +32,8 @@
     <string name="dawn">Alba</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Prima tallis e tefillin (misheyakir)</string>
-    <string name="tallis_only">Prima tallis (misheyakir)</string>
+    <string name="tallis">Prima tallis e tefillin (משיכיר)</string>
+    <string name="tallis_only">Prima tallis (משיכיר)</string>
     <string name="tallis_summary">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="tallis_11">Sole è 11° sotto l\'orizzonte</string>
     <string name="tallis_10">Sole è 10,2° sotto l\'orizzonte</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Al livello del mare</string>
 
     <!-- Latest shema -->
-    <string name="shema">Ultime shemà</string>
+    <string name="shema">Ultime שמע</string>
     <string name="shema_7">Giorno è dall\'alba 16,1° a notte 7,083°</string>
     <string name="shema_3">3 ore prima di mezzogiorno</string>
     <string name="shema_fixed">3 ore prima di mezzogiorno fisso locale</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Ultime shacharis</string>
+    <string name="prayers">Ultime שחרית</string>
     <string name="prayers_fixed">2 ore prima di mezzogiorno fisso locale</string>
     <string name="prayers_2">2 ore prima di mezzogiorno</string>
 
     <!-- Midday -->
-    <string name="midday">Mezzogiorno (chatzos)</string>
+    <string name="midday">Mezzogiorno (חצות)</string>
     <string name="midday_summary">Mezzo del giorno</string>
     <string name="midday_fixed">Mezzogiorno regolato per la latitudine locale</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Minchà gedolà</string>
+    <string name="earliest_mincha">Grande מנחה</string>
     <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
     <string name="earliest_mincha_30">30 minuti dopo mezzogiorno</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Minchà ketanà</string>
+    <string name="mincha">Piccolo מנחה</string>
     <string name="mincha_summary">Pomeriggio preghiere</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag haminchà</string>
+    <string name="plug_hamincha">La metà della מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Candela illuminazione</string>
@@ -124,24 +124,24 @@
     <string name="festival_ends">Festival finiture</string>
 
     <!-- Midnight -->
-    <string name="midnight">Mezzanotte (chatzos)</string>
+    <string name="midnight">Mezzanotte (חצות)</string>
     <string name="midnight_summary">Mezzanotte solare</string>
     <string name="midnight_12">12 ore dopo mezzogiorno</string>
     <string name="midnight_6">6 ore dopo imbrunire</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Ultime tempo per mangiare chametz</string>
-    <string name="burn_chametz">Ultime tempo di bruciare chametz</string>
+    <string name="eat_chametz">Ultime tempo per mangiare חמץ</string>
+    <string name="burn_chametz">Ultime tempo di bruciare חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Nascita di luna nuova (molad)</string>
-    <string name="molad_summary">Media molad</string>
+    <string name="molad">Nascita di luna nuova (מולד)</string>
+    <string name="molad_summary">Media מולד</string>
     <string name="levana_earliest">Prima santificazione del novilunio (qiddùsh levana)</string>
-    <string name="levana_earliest_summary">3 giorni dopo l\'molad</string>
-    <string name="levana_7">7 giorni dopo l\'molad</string>
+    <string name="levana_earliest_summary">3 giorni dopo l\'מולד</string>
+    <string name="levana_7">7 giorni dopo l\'מולד</string>
     <string name="levana_latest">Ultime santificazione del novilunio (qiddùsh levana)</string>
-    <string name="levana_latest_summary">Metà strada tra molad e molad</string>
-    <string name="levana_15">15 giorni dopo l\'molad</string>
+    <string name="levana_latest_summary">Metà strada tra מולד e מולד</string>
+    <string name="levana_15">15 giorni dopo l\'מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Quaresima inizia</string>

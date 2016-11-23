@@ -32,8 +32,8 @@
     <string name="dawn">Aušra</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Seniausi tallis ir tefillin (mišeyakir)</string>
-    <string name="tallis_only">Seniausi tallis (mišeyakir)</string>
+    <string name="tallis">Seniausi tallis ir tefillin (משיכיר)</string>
+    <string name="tallis_only">Seniausi tallis (משיכיר)</string>
     <string name="tallis_summary">Saulė yra 11,5° žemiau horizonto</string>
     <string name="tallis_11">Saulė yra 11° žemiau horizonto</string>
     <string name="tallis_10">Saulė yra 10,2° žemiau horizonto</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Jūros lygyje</string>
 
     <!-- Latest shema -->
-    <string name="shema">Vėliausiai šema</string>
+    <string name="shema">Vėliausiai שמע</string>
     <string name="shema_7">Dieną yra nuo aušros 16,1° prieš naktį 7,083°</string>
     <string name="shema_3">3 valandų prieš vidurdienį</string>
     <string name="shema_fixed">3 valandų prieš fiksuoto vietinio vidurdienį</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Vėliausiai ryto malda (šacharis)</string>
+    <string name="prayers">Vėliausiai ryto malda (שחרית)</string>
     <string name="prayers_fixed">2 valandų prieš fiksuoto vietinio vidurdienį</string>
     <string name="prayers_2">2 valandų prieš vidurdienį</string>
 
     <!-- Midday -->
-    <string name="midday">Vidurdienis (chacos)</string>
+    <string name="midday">Vidurdienis (חצות)</string>
     <string name="midday_summary">Saulės vidurdienį</string>
     <string name="midday_fixed">Vidurdienis pakoreguota vietos platumos</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Didelis מנחה</string>
     <string name="earliest_mincha_summary">Seniausi popietės maldas</string>
     <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">Mažas מנחה</string>
     <string name="mincha_summary">Popietė maldas</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">Pusė מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Žvakė apšvietimas</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Šventė galai</string>
 
     <!-- Midnight -->
-    <string name="midnight">Vidurnakčio (chacos)</string>
+    <string name="midnight">Vidurnakčio (חצות)</string>
     <string name="midnight_summary">Saulės vidurnakčio</string>
     <string name="midnight_12">12 valandų po vidurdienį</string>
     <string name="midnight_6">6 valandų po ateinančio naktys</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Vėliausiai laikas valgyti chamec</string>
-    <string name="burn_chametz">Vėliausiai laikas sudeginti chametz</string>
+    <string name="eat_chametz">Vėliausiai laikas valgyti חמץ</string>
+    <string name="burn_chametz">Vėliausiai laikas sudeginti חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Gimimo jaunatį (molad)</string>
-    <string name="molad_summary">Vidutinė molad</string>
-    <string name="levana_earliest">Seniausi pašventinimą jaunatį (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 dienas po molad</string>
-    <string name="levana_7">7 dienas po molad</string>
-    <string name="levana_latest">Vėliausiai pašventinimą jaunatį (kiddush levana)</string>
-    <string name="levana_latest_summary">Pusiaukelėje tarp molad ir molad</string>
-    <string name="levana_15">15 dienas po molad</string>
+    <string name="molad">Gimimo jaunatį (מולד)</string>
+    <string name="molad_summary">Vidutinė מולד</string>
+    <string name="levana_earliest">Seniausi pašventinimą jaunatį (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 dienas po מולד</string>
+    <string name="levana_7">7 dienas po מולד</string>
+    <string name="levana_latest">Vėliausiai pašventinimą jaunatį (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Pusiaukelėje tarp מולד ir מולד</string>
+    <string name="levana_15">15 dienas po מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Pasninkas prasideda</string>
     <string name="fast_ends">Pasninkas galai</string>
 
     <!-- Omer -->
-    <string name="omer">Omer</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

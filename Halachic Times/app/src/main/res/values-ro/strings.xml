@@ -32,8 +32,8 @@
     <string name="dawn">Zori de zi</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Cazarea cel devreme tallis și tefillin (mişeyakir)</string>
-    <string name="tallis_only">Cazarea cel devreme tallis (mişeyakir)</string>
+    <string name="tallis">Cazarea cel devreme tallis și tefillin (משיכיר)</string>
+    <string name="tallis_only">Cazarea cel devreme tallis (משיכיר)</string>
     <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
     <string name="tallis_11">Soarele este de 11° sub orizont</string>
     <string name="tallis_10">Soarele este de 10,2° sub orizont</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">La nivelul mării</string>
 
     <!-- Latest shema -->
-    <string name="shema">Ultima şema</string>
+    <string name="shema">Ultima שמע</string>
     <string name="shema_7">Ziua este din zori 16,1° la noapte 7,083°</string>
     <string name="shema_3">3 ore înainte amiază</string>
     <string name="shema_fixed">3 ore înainte amiază fixă locală</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Ultima şacharis</string>
+    <string name="prayers">Ultima שחרית</string>
     <string name="prayers_fixed">2 ore înainte amiază fixă locală</string>
     <string name="prayers_2">2 ore înainte amiază</string>
 
     <!-- Midday -->
-    <string name="midday">Amiază (chaţos)</string>
+    <string name="midday">Amiază (חצות)</string>
     <string name="midday_summary">Miezul zilei</string>
     <string name="midday_fixed">Amiază ajustate pentru latitudine locală</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha ghedola</string>
+    <string name="earliest_mincha">מנחה mare</string>
     <string name="earliest_mincha_summary">Mai timpurii de după-amiază rugăciunile</string>
     <string name="earliest_mincha_30">30 minute după amiază</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">מנחה mici</string>
     <string name="mincha_summary">De după-amiază rugăciunile</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">Jumătate din מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Lumânare de iluminat</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Sărbătoare finisaje</string>
 
     <!-- Midnight -->
-    <string name="midnight">Miezul nopții (chaţos)</string>
+    <string name="midnight">Miezul nopții (חצות)</string>
     <string name="midnight_summary">Solar miezul nopții</string>
     <string name="midnight_12">12 ore după amiază</string>
     <string name="midnight_6">6 ore după căderea nopții</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Ultima moment a manca chametz</string>
-    <string name="burn_chametz">Ultima moment a arde chametz</string>
+    <string name="eat_chametz">Ultima moment a manca חמץ</string>
+    <string name="burn_chametz">Ultima moment a arde חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Nașterea din lună nouă (molad)</string>
-    <string name="molad_summary">Medie molad</string>
-    <string name="levana_earliest">Mai timpurii sfințire a lunii noi (kiduș levana)</string>
-    <string name="levana_earliest_summary">3 zile după molad</string>
-    <string name="levana_7">7 zile după molad</string>
-    <string name="levana_latest">Ultima sfințire a lunii noi (kiduș levana)</string>
-    <string name="levana_latest_summary">Jumătatea distanței dintre molad și molad</string>
-    <string name="levana_15">15 zile după molad</string>
+    <string name="molad">Nașterea din lună nouă (מולד)</string>
+    <string name="molad_summary">Medie מולד</string>
+    <string name="levana_earliest">Mai timpurii sfințire a lunii noi (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 zile după מולד</string>
+    <string name="levana_7">7 zile după מולד</string>
+    <string name="levana_latest">Ultima sfințire a lunii noi (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Jumătatea distanței dintre מולד și מולד</string>
+    <string name="levana_15">15 zile după מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Postului începe</string>
     <string name="fast_ends">Postului finisaje</string>
 
     <!-- Omer -->
-    <string name="omer">Omer</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

@@ -32,8 +32,8 @@
     <string name="dawn">Świt</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Najwcześniejsze tallis i tefilin (miszejakir)</string>
-    <string name="tallis_only">Najwcześniejsze tallis (miszejakir)</string>
+    <string name="tallis">Najwcześniejsze טלית i tefilin (משיכיר)</string>
+    <string name="tallis_only">Najwcześniejsze טלית (משיכיר)</string>
     <string name="tallis_summary">Słońce jest 11,5° poniżej horyzontu</string>
     <string name="tallis_11">Słońce jest 11° poniżej horyzontu</string>
     <string name="tallis_10">Słońce jest 10,2° poniżej horyzontu</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Na poziomie morza</string>
 
     <!-- Latest shema -->
-    <string name="shema">Ostatnia szema</string>
+    <string name="shema">Ostatnia שמע</string>
     <string name="shema_7">Dzień jest od świtu 16,1° do nocy 7,083°</string>
     <string name="shema_3">3 godziny jeszcze przed południem</string>
     <string name="shema_fixed">3 godziny przed stałym lokalnym południem</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Ostatnia szacharis</string>
+    <string name="prayers">Ostatnia שחרית</string>
     <string name="prayers_fixed">2 godziny przed stałym lokalnym południem</string>
     <string name="prayers_2">2 godziny jeszcze przed południem</string>
 
     <!-- Midday -->
-    <string name="midday">Południe (chatzos)</string>
+    <string name="midday">Południe (חצות)</string>
     <string name="midday_summary">Słoneczne południe</string>
     <string name="midday_fixed">Południe korekcie o lokalnym szerokości geograficznej</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Duży מנחה</string>
     <string name="earliest_mincha_summary">Najwcześniejsze modlitwy popołudniowe</string>
     <string name="earliest_mincha_30">30 minut po południa</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">Małe מנחה</string>
     <string name="mincha_summary">Modły popołudniowe</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">Połowa מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Oświetlenie świecę</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Święto kończy</string>
 
     <!-- Midnight -->
-    <string name="midnight">Północ (chatzos)</string>
+    <string name="midnight">Północ (חצות)</string>
     <string name="midnight_summary">Słoneczne północ</string>
     <string name="midnight_12">12 godziny po południa</string>
     <string name="midnight_6">6 godziny po zmrok</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Ostatni czas zjeść chamec</string>
-    <string name="burn_chametz">Ostatni czas spalić chamec</string>
+    <string name="eat_chametz">Ostatni czas zjeść חמץ</string>
+    <string name="burn_chametz">Ostatni czas spalić חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Narodziny nowego księżyca (molad)</string>
-    <string name="molad_summary">Średnia molad</string>
-    <string name="levana_earliest">Najwcześniej uświęcenie nowiu (kidusz levana)</string>
-    <string name="levana_earliest_summary">3 dni po molad</string>
-    <string name="levana_7">7 dni po molad</string>
-    <string name="levana_latest">Ostatnia uświęcenie nowiu (kidusz levana)</string>
-    <string name="levana_latest_summary">W połowie drogi między molad i molad</string>
-    <string name="levana_15">15 dni po molad</string>
+    <string name="molad">Narodziny nowego księżyca (מולד)</string>
+    <string name="molad_summary">Średnia מולד</string>
+    <string name="levana_earliest">Najwcześniej uświęcenie nowiu (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 dni po מולד</string>
+    <string name="levana_7">7 dni po מולד</string>
+    <string name="levana_latest">Ostatnia uświęcenie nowiu (קידוש לבנה)</string>
+    <string name="levana_latest_summary">W połowie drogi między מולד i מולד</string>
+    <string name="levana_15">15 dni po מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Post rozpoczyna</string>
     <string name="fast_ends">Post kończy</string>
 
     <!-- Omer -->
-    <string name="omer">Omer</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

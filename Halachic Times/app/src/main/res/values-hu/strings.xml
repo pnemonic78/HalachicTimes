@@ -32,8 +32,8 @@
     <string name="dawn">Hajnal</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Legkorábbi tallis és tfilint (misheyakir)</string>
-    <string name="tallis_only">Legkorábbi tallis (misheyakir)</string>
+    <string name="tallis">Legkorábbi tallis és tfilint (משיכיר)</string>
+    <string name="tallis_only">Legkorábbi tallis (משיכיר)</string>
     <string name="tallis_summary">Nap 11,5° alatt horizont</string>
     <string name="tallis_11">Nap 11° alatt horizont</string>
     <string name="tallis_10">Nap 10,2° alatt horizont</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">A tengerszint</string>
 
     <!-- Latest shema -->
-    <string name="shema">Legutóbbi shema</string>
+    <string name="shema">Legutóbbi שמע</string>
     <string name="shema_7">Nap-tól hajnal 16,1° alkony 7,083°</string>
     <string name="shema_3">Előtt 3 órával dél</string>
     <string name="shema_fixed">Előtt 3 órával rögzített helyi dél</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Legutóbbi shacharis</string>
+    <string name="prayers">Legutóbbi שחרית</string>
     <string name="prayers_fixed">Előtt 2 órával rögzített helyi dél</string>
     <string name="prayers_2">Előtt 2 órával dél</string>
 
     <!-- Midday -->
-    <string name="midday">Dél (chatzos)</string>
+    <string name="midday">Dél (חצות)</string>
     <string name="midday_summary">Szolár délig</string>
     <string name="midday_fixed">Noon igazítani a helyi szélességi</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Nagy מנחה</string>
     <string name="earliest_mincha_summary">Legkorábbi délutáni ima</string>
     <string name="earliest_mincha_30">30 perc azután dél</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">Kis מנחה</string>
     <string name="mincha_summary">Délutáni ima</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">Fele a מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Gyertyagyújtás</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Fesztivál véget ér</string>
 
     <!-- Midnight -->
-    <string name="midnight">Éjfél (chatzos)</string>
+    <string name="midnight">Éjfél (חצות)</string>
     <string name="midnight_summary">Szolár éjfél</string>
     <string name="midnight_12">12 órával azután dél</string>
     <string name="midnight_6">6 órával azután alkony</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Legutóbbi ideje enni chametz</string>
-    <string name="burn_chametz">Legutóbbi ideje éget chametz</string>
+    <string name="eat_chametz">Legutóbbi ideje enni חמץ</string>
+    <string name="burn_chametz">Legutóbbi ideje éget חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Születése újhold (molad)</string>
-    <string name="molad_summary">Átlagos molad</string>
-    <string name="levana_earliest">Legkorábbi megszentelése újhold (kiddust levana)</string>
-    <string name="levana_earliest_summary">3 nap után a molad</string>
-    <string name="levana_7">7 nap után a molad</string>
-    <string name="levana_latest">Legutóbbi megszentelése újhold (kiddust levana)</string>
-    <string name="levana_latest_summary">Között félúton molad és molad</string>
-    <string name="levana_15">15 nap után a molad</string>
+    <string name="molad">Születése újhold (מולד)</string>
+    <string name="molad_summary">Átlagos מולד</string>
+    <string name="levana_earliest">Legkorábbi megszentelése újhold (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 nap után a מולד</string>
+    <string name="levana_7">7 nap után a מולד</string>
+    <string name="levana_latest">Legutóbbi megszentelése újhold (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Között félúton מולד és מולד</string>
+    <string name="levana_15">15 nap után a מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Böjtölés kezdődik </string>
     <string name="fast_ends">Böjtölés véget ér</string>
 
     <!-- Omer -->
-    <string name="omer">Ómer</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

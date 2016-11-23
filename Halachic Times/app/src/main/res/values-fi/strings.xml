@@ -32,8 +32,8 @@
     <string name="dawn">Sarastus</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Aikaisintaan tallis ja tefillin (mišejakir)</string>
-    <string name="tallis_only">Aikaisintaan tallis (mišejakir)</string>
+    <string name="tallis">Aikaisintaan tallis ja tefillin (משיכיר)</string>
+    <string name="tallis_only">Aikaisintaan tallis (משיכיר)</string>
     <string name="tallis_summary">Aurinko on 11,5° horisontin alapuolella</string>
     <string name="tallis_11">Aurinko on 11° horisontin alapuolella</string>
     <string name="tallis_10">Aurinko on 10,2° horisontin alapuolella</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Merenpinnan tasolla</string>
 
     <!-- Latest shema -->
-    <string name="shema">Uusin šema</string>
+    <string name="shema">Uusin שמע</string>
     <string name="shema_7">Päivä on sarastus 16,1° iltaan 7,083°</string>
     <string name="shema_3">3 tuntia ennen keskipäivä</string>
     <string name="shema_fixed">3 tuntia ennen kiinteä paikallisia keskipäivä</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Uusin aamurukouksiin (šacharis)</string>
+    <string name="prayers">Uusin aamurukouksiin (שחרית)</string>
     <string name="prayers_fixed">2 tuntia ennen kiinteä paikallisia keskipäivä</string>
     <string name="prayers_2">2 tuntia ennen keskipäivä</string>
 
     <!-- Midday -->
-    <string name="midday">Keskipäivä (chazos)</string>
+    <string name="midday">Keskipäivä (חצות)</string>
     <string name="midday_summary">Aurinko keskipäivä</string>
     <string name="midday_fixed">Keskipäivä oikaistu paikallisia leveysaste</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Suuri מנחה</string>
     <string name="earliest_mincha_summary">Aikaisintaan iltapäivän rukoukset</string>
     <string name="earliest_mincha_30">30 minuuttia jälkeen keskipäivä</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">Pieni מנחה</string>
     <string name="mincha_summary">Iltapäivän rukoukset</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">Puolet מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Kynttilävalaistus</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Festivaali päät</string>
 
     <!-- Midnight -->
-    <string name="midnight">Keskiyö (chazos)</string>
+    <string name="midnight">Keskiyö (חצות)</string>
     <string name="midnight_summary">Aurinko keskiyön</string>
     <string name="midnight_12">12 tuntia jälkeen keskipäivä</string>
     <string name="midnight_6">6 tuntia jälkeen pimetessä</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Uusin aika syödä chamez</string>
-    <string name="burn_chametz">Uusin aika polttaa chamez</string>
+    <string name="eat_chametz">Uusin aika syödä חמץ</string>
+    <string name="burn_chametz">Uusin aika polttaa חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Syntymän uusikuu (molad)</string>
-    <string name="molad_summary">Keskimäärin molad</string>
-    <string name="levana_earliest">Aikaisintaan pyhittäminen uudenkuun (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 päivää jälkeen molad</string>
-    <string name="levana_7">7 päivää jälkeen molad</string>
-    <string name="levana_latest">Uusin pyhittäminen uudenkuun (kiddush levana)</string>
-    <string name="levana_latest_summary">Puolivälissä molad ja molad</string>
-    <string name="levana_15">15 päivää jälkeen molad</string>
+    <string name="molad">Syntymän uusikuu (מולד)</string>
+    <string name="molad_summary">Keskimäärin מולד</string>
+    <string name="levana_earliest">Aikaisintaan pyhittäminen uudenkuun (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 päivää jälkeen מולד</string>
+    <string name="levana_7">7 päivää jälkeen מולד</string>
+    <string name="levana_latest">Uusin pyhittäminen uudenkuun (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Puolivälissä מולד ja מולד</string>
+    <string name="levana_15">15 päivää jälkeen מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Paastota alkaa</string>
     <string name="fast_ends">Paastota päät</string>
 
     <!-- Omer -->
-    <string name="omer">Omer</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

@@ -32,8 +32,8 @@
     <string name="dawn">Koit</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Varaseim tallis ja tefillin (mišejakir)</string>
-    <string name="tallis_only">Varaseim tallis (mišejakir)</string>
+    <string name="tallis">Varaseim tallis ja tefillin (משיכיר)</string>
+    <string name="tallis_only">Varaseim tallis (משיכיר)</string>
     <string name="tallis_summary">Päike on 11,5° alla horisonti</string>
     <string name="tallis_11">Päike on 11° alla horisonti</string>
     <string name="tallis_10">Päike on 10,2° alla horisonti</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Tasemel regioon</string>
 
     <!-- Latest shema -->
-    <string name="shema">Viimane šema</string>
+    <string name="shema">Viimane שמע</string>
     <string name="shema_7">Päeval on ära koidust 16,1° öö-7,083°</string>
     <string name="shema_3">3 tundi enne keskpäeva</string>
     <string name="shema_fixed">3 tundi enne fikseeritud kohalike keskpäeva</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Viimane hommikul palvetes (šacharis)</string>
+    <string name="prayers">Viimane hommikul palvetes (שחרית)</string>
     <string name="prayers_fixed">2 tundi enne fikseeritud kohalike keskpäeva</string>
     <string name="prayers_2">2 tundi enne keskpäeva</string>
 
     <!-- Midday -->
-    <string name="midday">Keskpäeva (chatsos)</string>
+    <string name="midday">Keskpäeva (חצות)</string>
     <string name="midday_summary">Päikese keskpäeval</string>
     <string name="midday_fixed">Keskpäev korrigeeritud kohalike laius</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Mincha gedola</string>
+    <string name="earliest_mincha">Suur מנחה</string>
     <string name="earliest_mincha_summary">Varaseim pärastlõunal palvetes</string>
     <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mincha ketana</string>
+    <string name="mincha">Väike מנחה</string>
     <string name="mincha_summary">Pärastlõunal palvetes</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plag hamincha</string>
+    <string name="plug_hamincha">Pool מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Küünal valgustus</string>
@@ -124,24 +124,24 @@
     <string name="festival_ends">Pidustus otsad</string>
 
     <!-- Midnight -->
-    <string name="midnight">Kesköö (chatsos)</string>
+    <string name="midnight">Kesköö (חצות)</string>
     <string name="midnight_summary">Päikese keskööd</string>
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
     <string name="midnight_6">6 tundi pärast videvik</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Viimane aeg süüa chamets</string>
-    <string name="burn_chametz">Viimane aeg põletada chamets</string>
+    <string name="eat_chametz">Viimane aeg süüa חמץ</string>
+    <string name="burn_chametz">Viimane aeg põletada חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Sündi noorkuu (molad)</string>
-    <string name="molad_summary">Keskmine molad</string>
-    <string name="levana_earliest">Varaseim pühitsemise noorkuu (kiddush levana)</string>
-    <string name="levana_earliest_summary">3 päeva pärast molad</string>
-    <string name="levana_7">7 päeva pärast molad</string>
-    <string name="levana_latest">Viimane pühitsemise noorkuu (kiddush levana)</string>
-    <string name="levana_latest_summary">Poolenisti vahel molad ja molad</string>
-    <string name="levana_15">15 päeva pärast molad</string>
+    <string name="molad">Sündi noorkuu (מולד)</string>
+    <string name="molad_summary">Keskmine מולד</string>
+    <string name="levana_earliest">Varaseim pühitsemise noorkuu (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 päeva pärast מולד</string>
+    <string name="levana_7">7 päeva pärast מולד</string>
+    <string name="levana_latest">Viimane pühitsemise noorkuu (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Poolenisti vahel מולד ja מולד</string>
+    <string name="levana_15">15 päeva pärast מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Paastu algab</string>

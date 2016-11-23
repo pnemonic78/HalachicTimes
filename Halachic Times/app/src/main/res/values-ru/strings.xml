@@ -32,8 +32,8 @@
     <string name="dawn">Рассвет</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Самое раннее время для Талита и Тфилина (мишякир)</string>
-    <string name="tallis_only">Самое раннее время для Талита (мишякир)</string>
+    <string name="tallis">Самое раннее время для טלית и Тфилина (משיכיר)</string>
+    <string name="tallis_only">Самое раннее время для טלית (משיכיר)</string>
     <string name="tallis_summary">Солнце 11,5° ниже горизонта</string>
     <string name="tallis_11">Солнце 11° ниже горизонта</string>
     <string name="tallis_10">Солнце 10,2° ниже горизонта</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">На уровне моря</string>
 
     <!-- Latest shema -->
-    <string name="shema">Самое позднее время для Киръят Шма</string>
+    <string name="shema">Самое позднее время для Киръят שמע</string>
     <string name="shema_7">День с 16,1° рассвета до 7,083° ночи</string>
     <string name="shema_3">3 часа до полудня</string>
     <string name="shema_fixed">3 часа до местного фикс. полудня</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Самое позднее время для Шахарит</string>
+    <string name="prayers">Самое позднее время для שחרית</string>
     <string name="prayers_fixed">2 часа до местного фикс. полудня</string>
     <string name="prayers_2">2 часа до полудня</string>
 
     <!-- Midday -->
-    <string name="midday">Полдень (хацот)</string>
+    <string name="midday">Полдень (חצות)</string>
     <string name="midday_summary">Середина дня</string>
     <string name="midday_fixed">Середина дня с поправкой на местную широту</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Минха гдола</string>
+    <string name="earliest_mincha">Большой מנחה</string>
     <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>
     <string name="earliest_mincha_30">30 минут после полудня</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Минха ктана</string>
+    <string name="mincha">Малый מנחה</string>
     <string name="mincha_summary">Молитва Минха</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Плаг минха</string>
+    <string name="plug_hamincha">Половина מנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">Зажигание свечей</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Празднество заканчивается</string>
 
     <!-- Midnight -->
-    <string name="midnight">Полночь (хацот)</string>
+    <string name="midnight">Полночь (חצות)</string>
     <string name="midnight_summary">Солнечная полночь</string>
     <string name="midnight_12">12 часа после полудня</string>
     <string name="midnight_6">6 часа после наступление темноты</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Последнее время есть Хамец</string>
-    <string name="burn_chametz">Последнее время сжигания Хамеца</string>
+    <string name="eat_chametz">Последнее время есть חמץ</string>
+    <string name="burn_chametz">Последнее время сжигания חמץ</string>
 
     <!-- Moon -->
-    <string name="molad">Рождение новой луны (молад)</string>
-    <string name="molad_summary">Средний молад</string>
-    <string name="levana_earliest">Самое раннее время освящение новой луны (киддуш левана)</string>
-    <string name="levana_earliest_summary">3 дня после молада</string>
-    <string name="levana_7">7 дня после молада</string>
-    <string name="levana_latest">Самое позднее освящение новой луны (киддуш левана)</string>
-    <string name="levana_latest_summary">Между моладами</string>
-    <string name="levana_15">15 дней после молада</string>
+    <string name="molad">Рождение новой луны (מולד)</string>
+    <string name="molad_summary">Средний מולד</string>
+    <string name="levana_earliest">Самое раннее время освящение новой луны (קידוש לבנה)</string>
+    <string name="levana_earliest_summary">3 дня после מולד</string>
+    <string name="levana_7">7 дня после מולד</string>
+    <string name="levana_latest">Самое позднее освящение новой луны (קידוש לבנה)</string>
+    <string name="levana_latest_summary">Между מולדми</string>
+    <string name="levana_15">15 дней после מולד</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Пост начинается</string>
     <string name="fast_ends">Пост заканчивается</string>
 
     <!-- Omer -->
-    <string name="omer">Омер</string>
+    <string name="omer">עומר</string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>
