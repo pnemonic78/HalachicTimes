@@ -127,7 +127,7 @@
     <string name="earliest_mincha_16" translatable="false">@string/opinion_16</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Small מנחה</string>
+    <string name="mincha">Minor מנחה</string>
     <string name="mincha_summary">Afternoon prayers</string>
     <string name="mincha_72" translatable="false">@string/opinion_72</string>
     <string name="mincha_16" translatable="false">@string/opinion_16</string>
