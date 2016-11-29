@@ -60,7 +60,7 @@
     <string name="midday_fixed">Keskpäev korrigeeritud kohalike laius</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Suur מנחה</string>
+    <string name="earliest_mincha">Varaseim pärastlõunal palvetes (מנחה)</string>
     <string name="earliest_mincha_summary">Varaseim pärastlõunal palvetes</string>
     <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
 

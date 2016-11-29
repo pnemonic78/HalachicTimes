@@ -60,7 +60,7 @@
     <string name="midday_fixed">Середина дня с поправкой на местную широту</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Большой מנחה</string>
+    <string name="earliest_mincha">Самое раннее время молитв днем (מנחה)</string>
     <string name="earliest_mincha_summary">Самое раннее время молитв днем</string>
     <string name="earliest_mincha_30">30 минут после полудня</string>
 

@@ -60,7 +60,7 @@
     <string name="midday_fixed">Meio-dia ajustado para a latitude local</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Large מנחה</string>
+    <string name="earliest_mincha">Primeiro horário para orações do tarde (מנחה)</string>
     <string name="earliest_mincha_summary">Primeiro horário para orações do tarde</string>
     <string name="earliest_mincha_30">30 minutos após do meio-dia</string>
 

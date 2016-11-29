@@ -60,7 +60,7 @@
     <string name="midday_fixed">Middagstid justert for lokale breddegrad</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Stor מנחה</string>
+    <string name="earliest_mincha">Tidligste ettermiddag bønner (מנחה)</string>
     <string name="earliest_mincha_summary">Tidligste ettermiddag bønner</string>
     <string name="earliest_mincha_30">30 minutter etter middag</string>
 

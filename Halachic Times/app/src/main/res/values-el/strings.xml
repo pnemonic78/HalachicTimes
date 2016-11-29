@@ -60,7 +60,7 @@
     <string name="midday_fixed">Μεσημέρι ρυθμίζεται για το τοπικό γεωγραφικό πλάτος</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">μεγάλες מנחה</string>
+    <string name="earliest_mincha">Η πιο παλιά προσευχές απόγευμα (מנחה)</string>
     <string name="earliest_mincha_summary">Η πιο παλιά προσευχές απόγευμα</string>
     <string name="earliest_mincha_30">30 λεπτά μετά το μεσημέρι</string>
 

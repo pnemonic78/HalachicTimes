@@ -60,7 +60,7 @@
     <string name="midday_fixed">полудень з урахуванням місцеві широт</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Великий מנחה</string>
+    <string name="earliest_mincha">Перший день молитви (מנחה)</string>
     <string name="earliest_mincha_summary">Перший день молитви</string>
     <string name="earliest_mincha_30">30 мінут після полудня</string>
 

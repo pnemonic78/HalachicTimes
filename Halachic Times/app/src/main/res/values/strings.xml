@@ -119,7 +119,7 @@
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Large מנחה</string>
+    <string name="earliest_mincha">Earliest afternoon prayers (מנחה)</string>
     <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
     <string name="earliest_mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>

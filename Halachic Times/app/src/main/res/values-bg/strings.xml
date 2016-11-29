@@ -60,7 +60,7 @@
     <string name="midday_fixed">Обяд коригирани за местната ширина</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Голема מנחה</string>
+    <string name="earliest_mincha">Най-ранните молитвите следобед (מנחה)</string>
     <string name="earliest_mincha_summary">Най-ранните молитвите следобед</string>
     <string name="earliest_mincha_30">30 минути след пладне</string>
 

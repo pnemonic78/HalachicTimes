@@ -60,7 +60,7 @@
     <string name="midday_fixed">Noon igazítani a helyi szélességi</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Nagy מנחה</string>
+    <string name="earliest_mincha">Legkorábbi délutáni ima (מנחה)</string>
     <string name="earliest_mincha_summary">Legkorábbi délutáni ima</string>
     <string name="earliest_mincha_30">30 perc azután dél</string>
 

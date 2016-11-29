@@ -60,7 +60,7 @@
     <string name="midday_fixed">Mezzogiorno regolato per la latitudine locale</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Grande מנחה</string>
+    <string name="earliest_mincha">Prima preghiere del pomeriggio (מנחה)</string>
     <string name="earliest_mincha_summary">Prima preghiere del pomeriggio</string>
     <string name="earliest_mincha_30">30 minuti dopo mezzogiorno</string>
 

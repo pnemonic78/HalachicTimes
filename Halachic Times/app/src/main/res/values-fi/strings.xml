@@ -60,7 +60,7 @@
     <string name="midday_fixed">Keskipäivä oikaistu paikallisia leveysaste</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Suuri מנחה</string>
+    <string name="earliest_mincha">Aikaisintaan iltapäivän rukoukset (מנחה)</string>
     <string name="earliest_mincha_summary">Aikaisintaan iltapäivän rukoukset</string>
     <string name="earliest_mincha_30">30 minuuttia jälkeen keskipäivä</string>
 

@@ -60,7 +60,7 @@
     <string name="midday_fixed">Poledne upraveny pro lokální zeměpisné šířky</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Velká מנחה</string>
+    <string name="earliest_mincha">Nejranější odpolední modlitby (מנחה)</string>
     <string name="earliest_mincha_summary">Nejranější odpolední modlitby</string>
     <string name="earliest_mincha_30">30 minut po poledne</string>
 

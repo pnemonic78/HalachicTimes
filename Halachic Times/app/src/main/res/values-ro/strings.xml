@@ -60,7 +60,7 @@
     <string name="midday_fixed">Amiază ajustate pentru latitudine locală</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">מנחה mare</string>
+    <string name="earliest_mincha">Mai timpurii de după-amiază rugăciunile (מנחה)</string>
     <string name="earliest_mincha_summary">Mai timpurii de după-amiază rugăciunile</string>
     <string name="earliest_mincha_30">30 minute după amiază</string>
 

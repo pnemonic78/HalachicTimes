@@ -60,7 +60,7 @@
     <string name="midday_fixed">Mediodía ajustado por la latitud local</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Gran מנחה</string>
+    <string name="earliest_mincha">Primeras plegarias de la tarde (מנחה)</string>
     <string name="earliest_mincha_summary">Primeras plegarias de la tarde</string>
     <string name="earliest_mincha_30">30 minutos después de mediodía</string>
 

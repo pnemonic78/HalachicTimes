@@ -60,7 +60,7 @@
     <string name="midday_fixed">Middagstid justerat för den lokala latitud</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Stor מנחה</string>
+    <string name="earliest_mincha">Tidigast eftermiddagens böner (מנחה)</string>
     <string name="earliest_mincha_summary">Tidigast eftermiddagens böner</string>
     <string name="earliest_mincha_30">30 minuter efter middag</string>
 

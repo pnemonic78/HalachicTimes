@@ -60,7 +60,7 @@
     <string name="midday_fixed">Apres midi en fonction de la latitude locale</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Large מנחה</string>
+    <string name="earliest_mincha">Min\'ha au plus tôt (מנחה)</string>
     <string name="earliest_mincha_summary">Min\'ha au plus tôt</string>
     <string name="earliest_mincha_30">30 minutes après midi</string>
 

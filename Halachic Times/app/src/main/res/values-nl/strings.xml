@@ -60,7 +60,7 @@
     <string name="midday_fixed">Middag aangepast vóór de lokale breedtegraad</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Grote מנחה</string>
+    <string name="earliest_mincha">Vroegste middag gebeden (מנחה)</string>
     <string name="earliest_mincha_summary">Vroegste middag gebeden</string>
     <string name="earliest_mincha_30">30 minuten na de middag</string>
 

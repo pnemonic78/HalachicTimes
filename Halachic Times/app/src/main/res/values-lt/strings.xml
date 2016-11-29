@@ -60,7 +60,7 @@
     <string name="midday_fixed">Vidurdienis pakoreguota vietos platumos</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Didelis מנחה</string>
+    <string name="earliest_mincha">Seniausi popietės maldas (מנחה)</string>
     <string name="earliest_mincha_summary">Seniausi popietės maldas</string>
     <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
 

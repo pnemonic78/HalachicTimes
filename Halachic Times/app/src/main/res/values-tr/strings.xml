@@ -60,7 +60,7 @@
     <string name="midday_fixed">Öğlen yerel enlem için ayarlanabilir</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">מנחה büyük</string>
+    <string name="earliest_mincha">En erken ikindi namazından (מנחה)</string>
     <string name="earliest_mincha_summary">En erken ikindi namazından</string>
     <string name="earliest_mincha_30">30 dakika sonra öğlen</string>
 

@@ -60,7 +60,7 @@
     <string name="midday_fixed">Południe korekcie o lokalnym szerokości geograficznej</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Duży מנחה</string>
+    <string name="earliest_mincha">Najwcześniejsze modlitwy popołudniowe (מנחה)</string>
     <string name="earliest_mincha_summary">Najwcześniejsze modlitwy popołudniowe</string>
     <string name="earliest_mincha_30">30 minut po południa</string>
 
