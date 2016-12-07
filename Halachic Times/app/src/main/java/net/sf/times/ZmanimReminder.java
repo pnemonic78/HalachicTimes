@@ -277,7 +277,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         Notification notification = createReminderNotification(context, settings, item, contentIntent);
         postReminderNotification(context, settings, notification);
 
-        cancelFuture(context, item.getTime() + STOP_NOTIFICATION_AFTER);
+        cancelFuture(context, System.currentTimeMillis() + STOP_NOTIFICATION_AFTER);
     }
 
     /**
