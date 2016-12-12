@@ -434,7 +434,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 .setLights(LED_COLOR, LED_ON, LED_OFF)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setSound(sound, audioStreamType)
@@ -556,7 +556,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setWhen(when);
