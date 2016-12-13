@@ -67,6 +67,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     private ZmanimLocations locations;
     /** The settings and preferences. */
     private ZmanimPreferences settings;
+    /** The provider name. */
+    private ComponentName provider;
 
     private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
         @Override
@@ -104,7 +106,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
         switch (action) {
             case AppWidgetManager.ACTION_APPWIDGET_UPDATE:
-
                 IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
                 app.registerReceiver(this, timeChanged);
 
@@ -154,22 +155,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      * @param appWidgetManager
      *         the widget manager.
      * @param appWidgetIds
-     *         the widget ids for which an update is needed - {@code null} to
-     *         get ids from the manager.
+     *         the widget ids for which an update is needed.
      */
     protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        final Class<?> clazz = getClass();
-        ComponentName provider = new ComponentName(context, clazz);
-        if (appWidgetIds == null) {
-            appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-            if (appWidgetIds == null)
-                return;
-        }
-        if (appWidgetIds.length == 0)
+        if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
             return;
+        }
 
-        // Pass the activity to ourselves, because starting another activity is
-        // not working.
+        // Pass the activity to ourselves, because starting another activity is not working.
         final int viewId = getIntentViewId();
         Intent activityIntent;
         PendingIntent activityPendingIntent;
@@ -201,7 +194,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the context.
      */
     protected void populateTimes(Context context) {
-        populateTimes(context, AppWidgetManager.getInstance(context), null);
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        populateTimes(context, appWidgetManager, appWidgetManager.getAppWidgetIds(getProvider()));
     }
 
     @Override
@@ -567,5 +561,13 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             Context context = this.context;
             row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
         }
+    }
+
+    protected ComponentName getProvider() {
+        if (provider == null) {
+            final Class<?> clazz = getClass();
+            provider = new ComponentName(context, clazz);
+        }
+        return provider;
     }
 }
