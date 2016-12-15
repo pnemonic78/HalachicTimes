@@ -91,9 +91,17 @@ public class RingtoneManager extends android.media.RingtoneManager {
 
     @Override
     public Cursor getCursor() {
+        if ((cursor != null) && cursor.isClosed()) {
+            cursor = null;
+        }
         if (cursor == null) {
             if (includeExternal) {
-                cursor = super.getCursor();
+                try {
+                    cursor = super.getCursor();
+                } catch (SecurityException e) {
+                    includeExternal = false;
+                    cursor = getInternalRingtones();
+                }
             } else {
                 cursor = getInternalRingtones();
             }
