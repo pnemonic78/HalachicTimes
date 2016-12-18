@@ -134,7 +134,7 @@
     <string name="mincha_ateret" translatable="false">@string/opinion_ateret</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Half of the מנחה</string>
+    <string name="plug_hamincha">10¾ hours after dawn (פלג המנחה)</string>
     <string name="plug_hamincha_gra" translatable="false">@string/opinion_gra</string>
     <string name="plug_hamincha_120" translatable="false">@string/opinion_120</string>
     <string name="plug_hamincha_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>

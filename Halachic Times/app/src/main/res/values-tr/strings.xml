@@ -69,7 +69,7 @@
     <string name="mincha_summary">İkindi namazından</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">מנחה yarısı</string>
+    <string name="plug_hamincha">Şafak söktükten 10¾ saat sonra (פלג המנחה)</string>
 
     <!-- Candle lighting -->
     <string name="candles">Mum aydınlatma</string>
