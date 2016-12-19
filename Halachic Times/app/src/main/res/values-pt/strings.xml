@@ -8,8 +8,8 @@
     <string name="opinion_120">Dia é de 120 minutos antes do nascer do sol / depois do sol</string>
     <string name="opinion_120_zmanis">Dia é de 120 minutos זמניות antes do nascer do sol / depois do sol</string>
     <string name="opinion_16">Dia é de 16,1° abaixo do nascer do sol / pôr do sol</string>
-    <string name="opinion_16_sunset">Dia é de alvorecer 16,1° para o mar nível por do sol</string>
-    <string name="opinion_16_night">Dia é de alvorecer 16,1° para anoitecer</string>
+    <string name="opinion_16_sunset">Dia é de amanhecer 16,1° para o mar nível por do sol</string>
+    <string name="opinion_16_night">Dia é de amanhecer 16,1° para anoitecer</string>
     <string name="opinion_26">Dia é de 26° abaixo do nascer do sol / pôr do sol</string>
     <string name="opinion_19">Dia é de 19,8° abaixo do nascer do sol / pôr do sol</string>
     <string name="opinion_18">Dia é de 18° abaixo do nascer do sol / pôr do sol</string>
@@ -29,7 +29,7 @@
     <string name="hour">Hora sazonal</string>
 
     <!-- List -->
-    <string name="dawn">Alvorecer</string>
+    <string name="dawn">Amanhecer</string>
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Primeiro para טלית e tefilin (משיכיר)</string>
@@ -45,7 +45,7 @@
 
     <!-- Latest shema -->
     <string name="shema">Último שמע</string>
-    <string name="shema_7">Dia é de alvorecer 16,1° até a noite 7,083°</string>
+    <string name="shema_7">Dia é de amanhecer 16,1° até a noite 7,083°</string>
     <string name="shema_3">3 horas antes do meio-dia</string>
     <string name="shema_fixed">3 horas antes do meio-dia fixa local</string>
 
