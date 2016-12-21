@@ -283,7 +283,12 @@ public class CountriesGeocoder extends GeocoderBase {
         loc.setLongitude(longitudeTZ);
 
         // Find a close city in the timezone.
-        final int citiesCount = citiesNames.length;
+        final String[] names = citiesNames;
+        final String[] zones = citiesTimeZones;
+        final double[] latitudes = citiesLatitudes;
+        final double[] longitudes = citiesLongitudes;
+        final double[] elevations = citiesElevations;
+        final int citiesCount = names.length;
         double latitude;
         double longitude;
         float distanceMin = Float.MAX_VALUE;
@@ -294,15 +299,15 @@ public class CountriesGeocoder extends GeocoderBase {
 
         // First filter for all cities with the same time zone.
         for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
-            if (citiesTimeZones[cityIndex].equals(tzId)) {
+            if (zones[cityIndex].equals(tzId)) {
                 matches[matchesCount++] = cityIndex;
             }
         }
         if (matchesCount == 1) {
             nearestCityIndex = matches[0];
-            loc.setLatitude(citiesLatitudes[nearestCityIndex]);
-            loc.setLongitude(citiesLongitudes[nearestCityIndex]);
-            loc.setAltitude(citiesElevations[nearestCityIndex]);
+            loc.setLatitude(latitudes[nearestCityIndex]);
+            loc.setLongitude(longitudes[nearestCityIndex]);
+            loc.setAltitude(elevations[nearestCityIndex]);
             loc.setAccuracy(distanceMin);
             return loc;
         }
@@ -326,7 +331,7 @@ public class CountriesGeocoder extends GeocoderBase {
             }
 
             for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
-                longitude = citiesLongitudes[cityIndex];
+                longitude = longitudes[cityIndex];
                 if (((longitudeWest <= longitude) && (longitude <= longitudeEast)) || ((longitudeWest2 <= longitude) && (longitude <= longitudeEast2))) {
                     matches[matchesCount++] = cityIndex;
                 } else if (longitude > longitudeEast) {
@@ -337,9 +342,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
             if (matchesCount == 1) {
                 nearestCityIndex = matches[0];
-                loc.setLatitude(citiesLatitudes[nearestCityIndex]);
-                loc.setLongitude(citiesLongitudes[nearestCityIndex]);
-                loc.setAltitude(citiesElevations[nearestCityIndex]);
+                loc.setLatitude(latitudes[nearestCityIndex]);
+                loc.setLongitude(longitudes[nearestCityIndex]);
+                loc.setAltitude(elevations[nearestCityIndex]);
                 loc.setAccuracy(distanceMin);
                 return loc;
             }
@@ -363,7 +368,7 @@ public class CountriesGeocoder extends GeocoderBase {
                 }
 
                 for (cityIndex = 0; cityIndex < citiesCount; cityIndex++) {
-                    longitude = citiesLongitudes[cityIndex];
+                    longitude = longitudes[cityIndex];
                     if (((longitudeWest <= longitude) && (longitude <= longitudeEast)) || ((longitudeWest2 <= longitude) && (longitude <= longitudeEast2))) {
                         matches[matchesCount++] = cityIndex;
                     } else if (longitude > longitudeEast) {
@@ -374,9 +379,9 @@ public class CountriesGeocoder extends GeocoderBase {
 
                 if (matchesCount == 1) {
                     nearestCityIndex = matches[0];
-                    loc.setLatitude(citiesLatitudes[nearestCityIndex]);
-                    loc.setLongitude(citiesLongitudes[nearestCityIndex]);
-                    loc.setAltitude(citiesElevations[nearestCityIndex]);
+                    loc.setLatitude(latitudes[nearestCityIndex]);
+                    loc.setLongitude(longitudes[nearestCityIndex]);
+                    loc.setAltitude(elevations[nearestCityIndex]);
                     loc.setAccuracy(distanceMin);
                     return loc;
                 }
@@ -389,8 +394,8 @@ public class CountriesGeocoder extends GeocoderBase {
             double searchLongitude = 0;
             for (int i = 0; i < matchesCount; i++) {
                 cityIndex = matches[i];
-                searchLatitude += citiesLatitudes[cityIndex];
-                searchLongitude += citiesLongitudes[cityIndex];
+                searchLatitude += latitudes[cityIndex];
+                searchLongitude += longitudes[cityIndex];
             }
             searchLatitude /= matchesCount;
             searchLongitude /= matchesCount;
@@ -399,8 +404,8 @@ public class CountriesGeocoder extends GeocoderBase {
 
             for (int i = 0; i < matchesCount; i++) {
                 cityIndex = matches[i];
-                latitude = citiesLatitudes[cityIndex];
-                longitude = citiesLongitudes[cityIndex];
+                latitude = latitudes[cityIndex];
+                longitude = longitudes[cityIndex];
                 Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
                 if (distances[INDEX_DISTANCE] <= distanceMin) {
                     distanceMin = distances[INDEX_DISTANCE];
@@ -409,9 +414,9 @@ public class CountriesGeocoder extends GeocoderBase {
             }
 
             if (nearestCityIndex >= 0) {
-                loc.setLatitude(citiesLatitudes[nearestCityIndex]);
-                loc.setLongitude(citiesLongitudes[nearestCityIndex]);
-                loc.setAltitude(citiesElevations[nearestCityIndex]);
+                loc.setLatitude(latitudes[nearestCityIndex]);
+                loc.setLongitude(longitudes[nearestCityIndex]);
+                loc.setAltitude(elevations[nearestCityIndex]);
                 loc.setAccuracy(distanceMin);
             }
         }
@@ -428,7 +433,12 @@ public class CountriesGeocoder extends GeocoderBase {
      */
     public City findCity(Location location) {
         City city = null;
-        final int citiesCount = citiesNames.length;
+        final String[] names = citiesNames;
+        final String[] countries = citiesCountries;
+        final double[] latitudes = citiesLatitudes;
+        final double[] longitudes = citiesLongitudes;
+        final double[] elevations = citiesElevations;
+        final int citiesCount = names.length;
         double searchLatitude = location.getLatitude();
         double searchLongitude = location.getLongitude();
         double latitude;
@@ -439,8 +449,8 @@ public class CountriesGeocoder extends GeocoderBase {
         int nearestCityIndex = -1;
 
         for (int i = 0; i < citiesCount; i++) {
-            latitude = citiesLatitudes[i];
-            longitude = citiesLongitudes[i];
+            latitude = latitudes[i];
+            longitude = longitudes[i];
             Location.distanceBetween(searchLatitude, searchLongitude, latitude, longitude, distances);
             if (distances[INDEX_DISTANCE] <= distanceMin) {
                 distanceMin = distances[INDEX_DISTANCE];
@@ -450,15 +460,15 @@ public class CountriesGeocoder extends GeocoderBase {
             }
         }
         if (nearestCityIndex >= 0) {
-            cityLocale = new Locale(getLanguage(), citiesCountries[nearestCityIndex]);
+            cityLocale = new Locale(getLanguage(), countries[nearestCityIndex]);
 
             city = new City(locale);
-            city.setLatitude(citiesLatitudes[nearestCityIndex]);
-            city.setLongitude(citiesLongitudes[nearestCityIndex]);
-            city.setElevation(citiesElevations[nearestCityIndex]);
+            city.setLatitude(latitudes[nearestCityIndex]);
+            city.setLongitude(longitudes[nearestCityIndex]);
+            city.setElevation(elevations[nearestCityIndex]);
             city.setCountryCode(cityLocale.getCountry());
             city.setCountryName(cityLocale.getDisplayCountry());
-            city.setLocality(citiesNames[nearestCityIndex]);
+            city.setLocality(names[nearestCityIndex]);
         }
 
         return city;
@@ -470,7 +480,12 @@ public class CountriesGeocoder extends GeocoderBase {
      * @return the list of addresses.
      */
     public List<City> getCities() {
-        final int citiesCount = citiesNames.length;
+        final String[] names = citiesNames;
+        final String[] countries = citiesCountries;
+        final double[] latitudes = citiesLatitudes;
+        final double[] longitudes = citiesLongitudes;
+        final double[] elevations = citiesElevations;
+        final int citiesCount = names.length;
         List<City> cities = new ArrayList<>(citiesCount);
         double latitude;
         double longitude;
@@ -482,11 +497,11 @@ public class CountriesGeocoder extends GeocoderBase {
         City city;
 
         for (int i = 0; i < citiesCount; i++) {
-            latitude = citiesLatitudes[i];
-            longitude = citiesLongitudes[i];
-            elevation = citiesElevations[i];
-            cityName = citiesNames[i];
-            cityLocale = new Locale(languageCode, citiesCountries[i]);
+            latitude = latitudes[i];
+            longitude = longitudes[i];
+            elevation = elevations[i];
+            cityName = names[i];
+            cityLocale = new Locale(languageCode, countries[i]);
 
             city = new City(locale);
             city.setLatitude(latitude);
@@ -511,26 +526,32 @@ public class CountriesGeocoder extends GeocoderBase {
 
         List<Address> cities = new ArrayList<>(maxResults);
         City city;
-        final int citiesCount = citiesNames.length;
+        final String[] names = citiesNames;
+        final String[] countries = citiesCountries;
+        final double[] latitudes = citiesLatitudes;
+        final double[] longitudes = citiesLongitudes;
+        final double[] elevations = citiesElevations;
+        final int citiesCount = names.length;
         double cityLatitude;
         double cityLongitude;
         float[] distances = new float[1];
         Locale cityLocale;
+        Locale locale = this.locale;
 
         for (int i = 0; i < citiesCount; i++) {
-            cityLatitude = citiesLatitudes[i];
-            cityLongitude = citiesLongitudes[i];
+            cityLatitude = latitudes[i];
+            cityLongitude = longitudes[i];
             Location.distanceBetween(latitude, longitude, cityLatitude, cityLongitude, distances);
             if (distances[INDEX_DISTANCE] <= CITY_RADIUS) {
-                cityLocale = new Locale(getLanguage(), citiesCountries[i]);
+                cityLocale = new Locale(getLanguage(), countries[i]);
 
                 city = new City(locale);
                 city.setLatitude(cityLatitude);
                 city.setLongitude(cityLongitude);
-                city.setElevation(citiesElevations[i]);
+                city.setElevation(elevations[i]);
                 city.setCountryCode(cityLocale.getCountry());
                 city.setCountryName(cityLocale.getDisplayCountry());
-                city.setLocality(citiesNames[i]);
+                city.setLocality(names[i]);
                 city.setId(-1 - i);//Don't persist in db.
 
                 cities.add(city);
