@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Preference that shows a time picker.
@@ -48,13 +49,15 @@ public class TimePreference extends DialogPreference {
 
     private static final String TAG = "TimePreference";
 
-    /** ISO 8601 time format. */
+    /**
+     * ISO 8601 time format.
+     */
     protected static final String PATTERN = "HH:mm";
 
     private TimePicker picker;
     private String value;
     private Calendar time;
-    private static final java.text.DateFormat formatIso = new SimpleDateFormat(PATTERN);
+    private static final java.text.DateFormat formatIso = new SimpleDateFormat(PATTERN, Locale.US);
     private java.text.DateFormat formatPretty;
 
     public TimePreference(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -93,8 +96,7 @@ public class TimePreference extends DialogPreference {
     /**
      * Saves the time to the {@link SharedPreferences}.
      *
-     * @param timeString
-     *         The chosen time. Can be {@code null}.
+     * @param timeString The chosen time. Can be {@code null}.
      */
     public void setTime(String timeString) {
         final boolean wasBlocking = shouldDisableDependents();
@@ -113,8 +115,7 @@ public class TimePreference extends DialogPreference {
     /**
      * Saves the time to the {@link SharedPreferences}.
      *
-     * @param time
-     *         The chosen time. Can be {@code null}.
+     * @param time The chosen time. Can be {@code null}.
      */
     public void setTime(Calendar time) {
         final boolean wasBlocking = shouldDisableDependents();
@@ -212,8 +213,7 @@ public class TimePreference extends DialogPreference {
     /**
      * Parse the time value.
      *
-     * @param timeString
-     *         the time in ISO 8601 format.
+     * @param timeString the time in ISO 8601 format.
      * @return the time - {@code null} otherwise.
      */
     public static Calendar parseTime(String timeString) {

@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Ki</string>
+    <string name="add">Hozzáadás</string>
 
     <!-- Date -->
     <string name="today">Ma</string>

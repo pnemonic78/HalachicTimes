@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Изключено</string>
+    <string name="add">Добавяне</string>
 
     <!-- Date -->
     <string name="today">Днес</string>

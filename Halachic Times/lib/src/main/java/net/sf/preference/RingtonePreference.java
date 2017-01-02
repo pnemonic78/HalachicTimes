@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.Preference;
+import android.support.annotation.StyleableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -62,6 +63,12 @@ public class RingtonePreference extends DialogPreference {
     public static final int URI_COLUMN_INDEX = 2;
 
     private static final int[] ATTRIBUTES = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
+    @StyleableRes
+    private static final int ATTRIBUTE_RINGTONE_TYPE = 0;
+    @StyleableRes
+    private static final int ATTRIBUTE_SHOW_DEFAULT = 1;
+    @StyleableRes
+    private static final int ATTRIBUTE_SHOW_SILENT = 2;
 
     private static final String DEFAULT_PATH = RingtoneManager.DEFAULT_PATH;
     private static final Uri DEFAULT_URI = null;
@@ -100,9 +107,9 @@ public class RingtonePreference extends DialogPreference {
         super(context, attrs, defStyleAttr);
 
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
-        int ringtoneType = a.getInt(0, RingtoneManager.TYPE_RINGTONE);
-        boolean showDefault = a.getBoolean(1, true);
-        boolean showSilent = a.getBoolean(2, true);
+        int ringtoneType = a.getInt(ATTRIBUTE_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
+        boolean showDefault = a.getBoolean(ATTRIBUTE_SHOW_DEFAULT, true);
+        boolean showSilent = a.getBoolean(ATTRIBUTE_SHOW_SILENT, true);
         a.recycle();
 
         ringtoneManager = new RingtoneManager(context);

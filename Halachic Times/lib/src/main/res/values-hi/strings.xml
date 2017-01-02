@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">दूर का</string>
+    <string name="add">जोड़ें</string>
 
     <!-- Date -->
     <string name="today">आज</string>

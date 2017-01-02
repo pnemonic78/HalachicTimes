@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Slukket</string>
+    <string name="add">Tilføje</string>
 
     <!-- Date -->
     <string name="today">I dag</string>

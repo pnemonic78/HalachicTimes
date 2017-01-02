@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Ανενεργό</string>
+    <string name="add">Προσθέτω</string>
 
     <!-- Date -->
     <string name="today">Σήμερα</string>

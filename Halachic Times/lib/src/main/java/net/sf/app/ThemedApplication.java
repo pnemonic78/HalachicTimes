@@ -29,7 +29,7 @@ import net.sf.preference.ThemedPreferences;
  *
  * @author Moshe Waisberg
  */
-public class ThemedApplication<P extends ThemedPreferences> extends Application {
+public abstract class ThemedApplication<P extends ThemedPreferences> extends Application {
 
     private P preferences;
 

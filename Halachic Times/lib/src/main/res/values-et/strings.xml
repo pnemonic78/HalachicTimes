@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Väljas</string>
+    <string name="add">Lisama</string>
 
     <!-- Date -->
     <string name="today">Täna</string>

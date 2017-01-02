@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Dezactivat</string>
+    <string name="add">Adăugați</string>
 
     <!-- Date -->
     <string name="today">Azi</string>

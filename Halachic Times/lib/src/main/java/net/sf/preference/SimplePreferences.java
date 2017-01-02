@@ -63,7 +63,6 @@ public class SimplePreferences {
      *
      * @return the shared preferences.
      */
-
     public SharedPreferences getPreferences() {
         return preferences;
     }

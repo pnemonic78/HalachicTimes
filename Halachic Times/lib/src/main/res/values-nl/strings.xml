@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Uit</string>
+    <string name="add">Toevoegen</string>
 
     <!-- Date -->
     <string name="today">Vandaag</string>

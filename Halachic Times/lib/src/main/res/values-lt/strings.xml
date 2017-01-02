@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Išjungta</string>
+    <string name="add">Pridėti</string>
 
     <!-- Date -->
     <string name="today">Šiandien</string>

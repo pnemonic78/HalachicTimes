@@ -29,7 +29,7 @@ import net.sf.preference.ThemedPreferences;
  *
  * @author Moshe Waisberg
  */
-public class ThemedActivity extends Activity {
+public abstract class ThemedActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

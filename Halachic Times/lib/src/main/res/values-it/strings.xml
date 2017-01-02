@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Non attivo</string>
+    <string name="add">Aggiungere</string>
 
     <!-- Date -->
     <string name="today">Oggi</string>

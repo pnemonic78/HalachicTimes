@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Вимкнено</string>
+    <string name="add">Додати</string>
 
     <!-- Date -->
     <string name="today">Сьогодні</string>

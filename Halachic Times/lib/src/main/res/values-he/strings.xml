@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">כבוי</string>
+    <string name="add">הוסף</string>
 
     <!-- Date -->
     <string name="today">היום</string>

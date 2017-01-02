@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Vyp</string>
+    <string name="add">Přidat</string>
 
     <!-- Date -->
     <string name="today">Dnes</string>

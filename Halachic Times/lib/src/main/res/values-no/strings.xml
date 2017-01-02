@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Av</string>
+    <string name="add">Legg til</string>
 
     <!-- Date -->
     <string name="today">I dag</string>

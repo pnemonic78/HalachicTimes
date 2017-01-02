@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">خاموش</string>
+    <string name="add">إضافة</string>
 
     <!-- Date -->
     <string name="today">امروز</string>

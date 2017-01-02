@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Kapalı</string>
+    <string name="add">Eklemek</string>
 
     <!-- Date -->
     <string name="today">Bugün</string>

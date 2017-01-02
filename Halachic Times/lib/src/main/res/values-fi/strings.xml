@@ -2,6 +2,7 @@
 <resources>
 
     <string name="off">Pois</string>
+    <string name="add">Lisätä</string>
 
     <!-- Date -->
     <string name="today">Tänään</string>

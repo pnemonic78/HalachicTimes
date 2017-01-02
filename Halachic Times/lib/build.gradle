@@ -16,8 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        disable "LocaleFolder"
+        disable "RtlHardcoded"
+        disable "UnusedResources"
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-annotations:25.1.0'
 }
