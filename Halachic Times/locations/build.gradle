@@ -28,6 +28,7 @@ android {
     lintOptions {
         disable "LocaleFolder"
         disable "RtlHardcoded"
+        disable "UnusedAttribute"
         disable "UnusedResources"
     }
 }
