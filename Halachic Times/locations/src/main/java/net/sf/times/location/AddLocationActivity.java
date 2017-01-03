@@ -41,6 +41,9 @@ import net.sf.text.method.RangeInputFilter;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Add a location by specifying its coordinates.
  *
@@ -101,6 +104,22 @@ public class AddLocationActivity extends ThemedActivity implements
     private ZmanimAddress address;
     private Runnable addressFormatRunnable;
     private Location locationForConvert;
+    /**
+     * Formatter for for displaying the current value.
+     */
+    private NumberPicker.Formatter formatter;
+
+    public AddLocationActivity() {
+        setFormatter(new NumberPicker.Formatter() {
+
+            private final NumberFormat formatter = NumberFormat.getIntegerInstance();
+
+            @Override
+            public String format(int value) {
+                return formatter.format(value);
+            }
+        });
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,6 +183,8 @@ public class AddLocationActivity extends ThemedActivity implements
         longitudeDirection = (Spinner) findViewById(R.id.longitude_direction);
 
         addressView = (TextView) findViewById(R.id.address);
+
+        updateNumberPickers();
     }
 
     @Override
@@ -399,7 +420,7 @@ public class AddLocationActivity extends ThemedActivity implements
         degreesView.setValue(degrees);
         minutesView.setValue(minutes);
         secondsView.setValue(seconds);
-        millisecondsView.setText(Integer.toString(milliseconds));
+        millisecondsView.setText(formatNumber(milliseconds));
         directionView.setSelection(direction);
     }
 
@@ -422,7 +443,51 @@ public class AddLocationActivity extends ThemedActivity implements
         int milliseconds = (int) Math.floor(coordinate);
 
         degreesView.setValue(degrees);
-        decimalView.setText(Integer.toString(milliseconds));
+        decimalView.setText(formatNumber(milliseconds));
         directionView.setSelection(direction);
+    }
+
+    /**
+     * Set the formatter to be used for formatting the numbers.
+     *
+     * @param formatter
+     *         The formatter object. If formatter is <code>null</code>,
+     *         {@link String#valueOf(int)} will be used.
+     */
+    public void setFormatter(NumberPicker.Formatter formatter) {
+        if (formatter == this.formatter) {
+            return;
+        }
+        this.formatter = formatter;
+        updateNumberPickers();
+    }
+
+    private String formatNumber(int value) {
+        return (formatter != null) ? formatter.format(value) : formatNumberWithLocale(value);
+    }
+
+    static private String formatNumberWithLocale(int value) {
+        return String.format(Locale.getDefault(), "%d", value);
+    }
+
+    private void updateNumberPickers() {
+        if (latitudeDegreesEdit != null) {
+            latitudeDegreesEdit.setFormatter(formatter);
+        }
+        if (latitudeMinutesEdit != null) {
+            latitudeMinutesEdit.setFormatter(formatter);
+        }
+        if (latitudeSecondsEdit != null) {
+            latitudeSecondsEdit.setFormatter(formatter);
+        }
+        if (longitudeDegreesEdit != null) {
+            longitudeDegreesEdit.setFormatter(formatter);
+        }
+        if (longitudeMinutesEdit != null) {
+            longitudeMinutesEdit.setFormatter(formatter);
+        }
+        if (longitudeSecondsEdit != null) {
+            longitudeSecondsEdit.setFormatter(formatter);
+        }
     }
 }
