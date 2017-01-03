@@ -30,7 +30,7 @@ import net.sf.app.ThemedApplication;
  *
  * @author Moshe Waisberg
  */
-public class LocationApplication<P extends LocationPreferences, AP extends AddressProvider, LP extends LocationsProvider> extends ThemedApplication {
+public abstract class LocationApplication<P extends LocationPreferences, AP extends AddressProvider, LP extends LocationsProvider> extends ThemedApplication {
 
     /** Provider for addresses. */
     private AP addressProvider;

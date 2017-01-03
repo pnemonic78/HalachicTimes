@@ -56,7 +56,7 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-public class LocationTabActivity extends ThemedActivity implements
+public abstract class LocationTabActivity extends ThemedActivity implements
         OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,

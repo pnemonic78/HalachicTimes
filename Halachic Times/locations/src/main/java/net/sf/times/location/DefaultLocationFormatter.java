@@ -32,6 +32,8 @@ import java.util.Locale;
  */
 public class DefaultLocationFormatter implements LocationFormatter {
 
+    /** The context. */
+    private final Context context;
     /** The settings and preferences. */
     private LocationPreferences settings;
     /** The coordinates format for decimal format. */
@@ -46,6 +48,7 @@ public class DefaultLocationFormatter implements LocationFormatter {
     private final String formatElevation;
 
     public DefaultLocationFormatter(Context context) {
+        this.context = context;
         settings = new LocationPreferences(context);
 
         formatDecimal = context.getString(R.string.location_decimal);
@@ -150,5 +153,14 @@ public class DefaultLocationFormatter implements LocationFormatter {
     @Override
     public CharSequence formatElevation(double elevation) {
         return String.format(Locale.US, formatElevation, elevation);
+    }
+
+    /**
+     * Get the locale for formatting.
+     *
+     * @return the context's locale.
+     */
+    protected Locale getLocale() {
+        return context.getResources().getConfiguration().locale;
     }
 }

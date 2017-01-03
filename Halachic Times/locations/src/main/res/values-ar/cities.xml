@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <!-- copied from English. -->
+    <string-array name="cities">
+        <item>Anchorage</item>
+        <item>Vancouver</item>
+        <item>San Francisco</item>
+        <item>Seattle</item>
+        <item>Los Angeles</item>
+        <item>San Diego</item>
+        <item>Phoenix</item>
+        <item>Denver</item>
+        <item>Mexico City</item>
+        <item>Dallas</item>
+        <item>Houston</item>
+        <item>St Louis</item>
+        <item>Chicago</item>
+        <item>Atlanta</item>
+        <item>Detroit</item>
+        <item>Cleveland</item>
+        <item>Miami</item>
+        <item>Pittsburgh</item>
+        <item>Toronto</item>
+        <item>Washington D.C.</item>
+        <item>Baltimore</item>
+        <item>Philadelphia</item>
+        <item>Bogotá</item>
+        <item>New York</item>
+        <item>Montreal</item>
+        <item>Boston</item>
+        <item>Portland</item>
+        <item>Buenos Aires</item>
+        <item>São Paulo</item>
+        <item>Rio de Janeiro</item>
+        <item>Lisbon</item>
+        <item>Casablanca</item>
+        <item>Belfast</item>
+        <item>Madrid</item>
+        <item>Manchester</item>
+        <item>London</item>
+        <item>Paris</item>
+        <item>Brussels</item>
+        <item>Lyon</item>
+        <item>Amsterdam</item>
+        <item>Marseille</item>
+        <item>Geneva</item>
+        <item>Nice</item>
+        <item>Bern</item>
+        <item>Zurich</item>
+        <item>Oslo</item>
+        <item>Munich</item>
+        <item>Rome</item>
+        <item>Copenhagen</item>
+        <item>Berlin</item>
+        <item>Vienna</item>
+        <item>Stockholm</item>
+        <item>Sarajevo</item>
+        <item>Cape Town</item>
+        <item>Budapest</item>
+        <item>Warsaw</item>
+        <item>Helsinki</item>
+        <item>Johannesburg</item>
+        <item>Istanbul</item>
+        <item>Saint Petersburg</item>
+        <item>Kiev</item>
+        <item>Durban</item>
+        <item>Ashqelon</item>
+        <item>Ashdod</item>
+        <item>Tel Aviv</item>
+        <item>Beersheba</item>
+        <item>Hadera</item>
+        <item>Eilat</item>
+        <item>Haifa</item>
+        <item>Bet Shemesh</item>
+        <item>Nahariya</item>
+        <item>Ariel</item>
+        <item>Jerusalem</item>
+        <item>Nazareth</item>
+        <item>Safed</item>
+        <item>Tiberias</item>
+        <item>Moscow</item>
+        <item>Addis Ababa</item>
+        <item>Mumbai</item>
+        <item>Delhi</item>
+        <item>Perth</item>
+        <item>Tokyo</item>
+        <item>Melbourne</item>
+        <item>Sydney</item>
+        <item>Auckland</item>
+    </string-array>
+</resources>
