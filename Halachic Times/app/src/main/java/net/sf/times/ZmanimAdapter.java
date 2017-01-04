@@ -99,7 +99,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         /** The summary. */
         public CharSequence summary;
         /** The time. */
-        public long time;
+        public long time = NEVER;
         /** The time label. */
         public CharSequence timeLabel;
         /** Has the time elapsed? */

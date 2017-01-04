@@ -66,14 +66,13 @@ public abstract class GeocoderBase {
      */
     protected static final float SAME_CITY = 15000f;// 15 kilometres.
     /**
-     * Maximum radius to consider a location near the same plateau with similar
-     * terrain.
+     * Maximum radius to consider a location near the same plateau with similar terrain.
      */
-    protected static final float SAME_PLATEAU = 50000f;// 50 kilometres.
+    protected static final float SAME_PLATEAU = 100000f;// 100 kilometres.
     /**
      * Maximum radius to consider a location near the same planet.
      */
-    protected static final float SAME_PLANET = 5000000f;// 5000 kilometres.
+    protected static final float SAME_PLANET = 6000000f;// 6000 kilometres.
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;

@@ -40,6 +40,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static net.sf.times.location.GeocoderBase.SAME_CITY;
+import static net.sf.times.location.GeocoderBase.SAME_PLANET;
+import static net.sf.times.location.GeocoderBase.SAME_PLATEAU;
+
 /**
  * Address provider.<br>
  * Fetches addresses from various Internet providers, such as Google Maps.
@@ -175,13 +179,13 @@ public class AddressProvider {
             listener.onFindAddress(this, location, best);
 
         addresses = findNearestCountry(location);
-        best = findBestAddress(location, addresses, GeocoderBase.SAME_PLANET);
+        best = findBestAddress(location, addresses, SAME_PLANET);
         if ((best != null) && (listener != null))
             listener.onFindAddress(this, location, best);
         bestCountry = best;
 
         addresses = findNearestCity(location);
-        best = findBestAddress(location, addresses, GeocoderBase.SAME_PLATEAU);
+        best = findBestAddress(location, addresses);
         if ((best != null) && (listener != null))
             listener.onFindAddress(this, location, best);
         bestCity = best;
@@ -341,7 +345,11 @@ public class AddressProvider {
      * @return the best address - {@code null} otherwise.
      */
     private Address findBestAddress(Location location, List<Address> addresses) {
-        return findBestAddress(location, addresses, GeocoderBase.SAME_CITY);
+        Address best = findBestAddress(location, addresses, SAME_CITY);
+        if (best == null) {
+            best = findBestAddress(location, addresses, SAME_PLATEAU);
+        }
+        return best;
     }
 
     /**
