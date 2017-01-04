@@ -220,13 +220,15 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         int jDayOfMonth;
 
         final int count = adapter.getCount();
-        int position = 0;
         ZmanimItem item;
         View row;
 
-        while (position < count) {
+        for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
 
+            if (item.time == ZmanimAdapter.NEVER) {
+                continue;
+            }
             date.setTimeInMillis(item.time);
             jewishDate.setDate(date);
             jDayOfMonth = jewishDate.getJewishDayOfMonth();
@@ -237,7 +239,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
 
             row = adapter.getView(position, null, list);
             bindView(list, position, row, item);
-            position++;
             jDayOfMonthPrevious = jDayOfMonth;
         }
     }
