@@ -19,8 +19,14 @@
  */
 package net.sf.times;
 
+import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -52,6 +58,28 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected int getLayoutId() {
+        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getContext());
+        Drawable wallpaper = wallpaperManager.getDrawable();
+        if ((wallpaper != null) && (wallpaper instanceof BitmapDrawable)) {
+            Bitmap bm = ((BitmapDrawable) wallpaper).getBitmap();
+            Bitmap pixel = Bitmap.createScaledBitmap(bm, 1, 1, true);
+            int bg = pixel.getPixel(0, 0);
+            pixel.recycle();
+
+            if (bg != Color.TRANSPARENT) {
+                int a = Color.alpha(bg);
+                if (a >= 0x80) {
+                    boolean r = Color.red(bg) >= 0xcc;
+                    boolean g = Color.green(bg) >= 0xcc;
+                    boolean b = Color.blue(bg) >= 0xcc;
+                    if ((r && g) || (r && b) || (g && b)) {
+                        return R.layout.clock_widget_light;
+                    }
+                }
+            }
+
+        }
+
         return R.layout.clock_widget;
     }
 
@@ -122,5 +150,20 @@ public class ClockWidget extends ZmanimWidget {
             timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         }
         return timeFormat;
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        final String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
+        switch (action) {
+            case Intent.ACTION_WALLPAPER_CHANGED:
+                notifyAppWidgetViewDataChanged(context);
+                break;
+        }
     }
 }

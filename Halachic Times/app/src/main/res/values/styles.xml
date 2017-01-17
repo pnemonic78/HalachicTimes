@@ -147,4 +147,14 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="Widget.Clock.Light"/>
+
+    <style name="Widget.Clock.Time.Light">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="Widget.Clock.Title.Light">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
 </resources>
