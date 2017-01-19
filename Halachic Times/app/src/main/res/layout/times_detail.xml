@@ -13,11 +13,10 @@
 
     <TextView
         android:id="@android:id/title"
-        style="?listZmanTitle"
+        style="?listZmanDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:maxLines="2"
         tools:text="@string/dawn_120"/>
 
     <TextView

@@ -9,7 +9,7 @@
 
     <style name="Widget.ListDivider">
         <item name="android:background">@drawable/divider_horizontal_dark</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="Widget.ListItem.Dark"/>
@@ -25,7 +25,7 @@
     </style>
 
     <style name="Widget.Clock.Time" parent="Widget.TextView.Large">
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
@@ -33,7 +33,7 @@
     <style name="Widget.Clock.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
@@ -56,7 +56,7 @@
     <style name="Widget.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="Widget.Time" parent="Widget.TextView.Medium"/>
@@ -68,7 +68,7 @@
     <style name="Widget.Title.Light" parent="Widget.Light.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
@@ -155,6 +155,22 @@
 
     <style name="Widget.Clock.Title.Light">
         <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="Widget.Detail.Dark" parent="Widget.Title.Dark">
+        <item name="android:maxLines">3</item>
+    </style>
+
+    <style name="Widget.Detail.Light" parent="Widget.Title.Light">
+        <item name="android:maxLines">3</item>
+    </style>
+
+    <style name="Widget.Detail.NoGradient" parent="Widget.Title.NoGradient">
+        <item name="android:maxLines">3</item>
+    </style>
+
+    <style name="Widget.Detail.White" parent="Widget.Title.White">
+        <item name="android:maxLines">3</item>
     </style>
 
 </resources>

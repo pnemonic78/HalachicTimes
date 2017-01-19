@@ -7,6 +7,7 @@
         <attr name="listZmanTitle" format="reference"/>
         <attr name="listZmanTime" format="reference"/>
         <attr name="listZmanSummary" format="reference"/>
+        <attr name="listZmanDetail" format="reference"/>
         <attr name="widgetZmanTitle" format="reference"/>
         <attr name="widgetZmanTime" format="reference"/>
     </declare-styleable>
