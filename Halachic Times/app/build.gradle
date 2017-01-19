@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 
-def versionMajor = project.APP_VERSION_MAJOR
-def versionMinor = project.APP_VERSION_MINOR.padLeft(2, '0')
-def versionCodeValue = Integer.parseInt(project.APP_VERSION_CODE)
+def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
+def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
@@ -12,8 +11,8 @@ android {
         applicationId "net.sf.times"
         minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
-        versionCode versionCodeValue
-        versionName versionMajor + '.' + versionMinor
+        versionCode versionMajor * 100 + versionMinor
+        versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
         resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "tr", "uk"
 
         testApplicationId "net.sf.times.test"
