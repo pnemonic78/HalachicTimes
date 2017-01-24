@@ -27,6 +27,9 @@ import android.os.Bundle;
 
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
 
+import static net.sf.times.location.ZmanimLocationListener.ACTION_ADDRESS;
+import static net.sf.times.location.ZmanimLocationListener.ACTION_ELEVATION;
+
 /**
  * Service to find an address.
  *
@@ -34,8 +37,6 @@ import net.sf.times.location.AddressProvider.OnFindAddressListener;
  */
 public class AddressService extends IntentService implements OnFindAddressListener {
 
-    private static final String ACTION_ADDRESS = ZmanimLocationListener.ACTION_ADDRESS;
-    private static final String ACTION_ELEVATION = ZmanimLocationListener.ACTION_ELEVATION;
     private static final String PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION;
     private static final String PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS;
     private static final String PARAMETER_PERSIST = ZmanimLocationListener.EXTRA_PERSIST;

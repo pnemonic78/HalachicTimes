@@ -46,6 +46,8 @@ import java.util.Collection;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+
 /**
  * Locations provider.
  *
@@ -162,7 +164,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         context.registerReceiver(broadcastReceiver, filter);
         filter = new IntentFilter(ACTION_ELEVATION);
         context.registerReceiver(broadcastReceiver, filter);
-        filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
+        filter = new IntentFilter(ACTION_TIMEZONE_CHANGED);
         context.registerReceiver(broadcastReceiver, filter);
 
         handlerThread = new HandlerThread(TAG);
@@ -863,7 +865,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     location = intent.getParcelableExtra(EXTRA_LOCATION);
                     handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
                     break;
-                case Intent.ACTION_TIMEZONE_CHANGED:
+                case ACTION_TIMEZONE_CHANGED:
                     timeZone = TimeZone.getDefault();
                     break;
             }
