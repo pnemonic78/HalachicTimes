@@ -131,9 +131,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /** The time zone. */
     private TimeZone timeZone;
     /** The handler thread. */
-    private HandlerThread handlerThread;
+    private final HandlerThread handlerThread;
     /** The handler. */
-    private Handler handler;
+    private final Handler handler;
     /** The next time to start update locations. */
     private long startTaskDelay = UPDATE_TIME_START;
     /** The next time to stop update locations. */
@@ -834,14 +834,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             }
             String intentPackage = intent.getPackage();
             Location location = null;
+            ZmanimAddress address = null;
+            Bundle intentExtras = intent.getExtras();
 
             switch (action) {
                 case ACTION_ADDRESS:
                     if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
                         return;
                     }
-                    Bundle intentExtras = intent.getExtras();
-                    ZmanimAddress address = null;
                     if (intentExtras != null) {
                         location = intentExtras.getParcelable(EXTRA_LOCATION);
                         address = intentExtras.getParcelable(EXTRA_ADDRESS);
@@ -853,8 +853,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                             extras = address.getExtras();
                         }
                         extras.putParcelable(EXTRA_LOCATION, location);
-                        handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
-                    } else {
+                        if (handler != null) {//In case we receive broadcast before provider is constructed.
+                            handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
+                        }
+                    } else if (handler != null) {//In case we receive broadcast before provider is constructed.
                         handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
                     }
                     break;
@@ -862,8 +864,12 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     if (TextUtils.isEmpty(intentPackage) || !intentPackage.equals(context.getPackageName())) {
                         return;
                     }
-                    location = intent.getParcelableExtra(EXTRA_LOCATION);
-                    handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
+                    if (intentExtras != null) {
+                        location = intentExtras.getParcelable(EXTRA_LOCATION);
+                    }
+                    if (handler != null) {//In case we receive broadcast before provider is constructed.
+                        handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
+                    }
                     break;
                 case ACTION_TIMEZONE_CHANGED:
                     timeZone = TimeZone.getDefault();
