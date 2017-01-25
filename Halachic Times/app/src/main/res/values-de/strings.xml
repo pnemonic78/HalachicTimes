@@ -28,12 +28,12 @@
     <!-- Temporal hour -->
     <string name="hour">Saison Stunde</string>
 
-    <!-- List -->
+    <!-- Dawn -->
     <string name="dawn">Morgendämmerung</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Früheste tallis und tefillin (משיכיר)</string>
-    <string name="tallis_only">Früheste tallis (משיכיר)</string>
+    <string name="tallis">Früheste <i>tallis</i> und <i>tefillin</i> (משיכיר)</string>
+    <string name="tallis_only">Früheste <i>tallis</i> (משיכיר)</string>
     <string name="tallis_summary">Sonne ist 11,5° unter dem Horizont</string>
     <string name="tallis_11">Sonne ist 11° unter dem Horizont</string>
     <string name="tallis_10">Sonne ist 10,2° unter dem Horizont</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Auf Meereshöhe</string>
 
     <!-- Latest shema -->
-    <string name="shema">Letzte שמע</string>
+    <string name="shema">Letzte <i>schma</i></string>
     <string name="shema_7">Tag vom Morgengrauen 16,1° auf nacht 7,083°</string>
     <string name="shema_3">3 Stunden vor Mittag</string>
     <string name="shema_fixed">3 Stunden vor festen lokalen Mittag</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Letzte Morgengebet (שחרית)</string>
+    <string name="prayers">Letzte Morgengebet</string>
     <string name="prayers_fixed">2 Stunden vor festen lokalen Mittag</string>
     <string name="prayers_2">2 Stunden vor Mittag</string>
 
     <!-- Midday -->
-    <string name="midday">Mittag (חצות)</string>
+    <string name="midday">Mittag</string>
     <string name="midday_summary">Solar Mittag</string>
     <string name="midday_fixed">Mittag für die lokale Breitengrad eingestellt</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Frühestenachmittagsgebet (מנחה)</string>
-    <string name="earliest_mincha_summary">Frühestenachmittagsgebet</string>
+    <string name="earliest_mincha">Frühestenachmittagsgebet</string>
+    <string name="earliest_mincha_summary">Haupt <i>mincha</i></string>
     <string name="earliest_mincha_30">30 Minuten nach der Mittag</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Geringer מנחה</string>
+    <string name="mincha">Geringer <i>mincha</i></string>
     <string name="mincha_summary">Nachmittagsgebet</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">10¾ Stunden nach der Morgendämmerung (פלג המנחה)</string>
+    <string name="plug_hamincha"><i>Plag hamincha</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Kerzenzünden</string>
@@ -80,7 +80,7 @@
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d minuten vor sonnenuntergang</string>
 
-    <string name="chanukka">Chanukka</string>
+    <string name="chanukka"><i>Chanukka</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka kerze</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Fest endet</string>
 
     <!-- Midnight -->
-    <string name="midnight">Mitternacht (חצות)</string>
+    <string name="midnight">Mitternacht</string>
     <string name="midnight_summary">Solar Mitternacht</string>
     <string name="midnight_12">12 stunden nach der Mittag</string>
     <string name="midnight_6">6 stunden nach Einbruch der Nacht</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Letzte Zeit zu essen חמץ</string>
-    <string name="burn_chametz">Letzte Zeit zu חמץ brennen</string>
+    <string name="eat_chametz">Letzte Zeit zu essen <i>chametz</i></string>
+    <string name="burn_chametz">Letzte Zeit zu <i>chametz</i> brennen</string>
 
     <!-- Moon -->
     <string name="molad">Geburt der Neumond (מולד)</string>
-    <string name="molad_summary">Durchschnittliche מולד</string>
+    <string name="molad_summary">Durchschnittliche Neumond</string>
     <string name="levana_earliest">Frühest Segen des Neumondes (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 Tage nach der מולד</string>
-    <string name="levana_7">7 Tage nach der מולד</string>
+    <string name="levana_earliest_summary">3 Tage nach der Neumond</string>
+    <string name="levana_7">7 Tage nach der Neumond</string>
     <string name="levana_latest">Letzte Segen des Neumondes (קידוש לבנהa)</string>
-    <string name="levana_latest_summary">Auf halbem Weg zwischen מולד und מולד</string>
-    <string name="levana_15">15 Tage nach der מולד</string>
+    <string name="levana_latest_summary">Auf halbem Weg zwischen neuen Monde</string>
+    <string name="levana_15">15 Tage nach der Neumond</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fastenzeit beginnt</string>
     <string name="fast_ends">Fastenzeit endet</string>
 
     <!-- Omer -->
-    <string name="omer">עומר</string>
+    <string name="omer"><i>Omer</i></string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

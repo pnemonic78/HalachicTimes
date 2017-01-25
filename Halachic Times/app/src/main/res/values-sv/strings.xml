@@ -28,12 +28,12 @@
     <!-- Temporal hour -->
     <string name="hour">Säsongs timme</string>
 
-    <!-- List -->
+    <!-- Dawn -->
     <string name="dawn">Gryning</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Tidigast tallis och tefillin (משיכיר)</string>
-    <string name="tallis_only">Tidigast tallis (משיכיר)</string>
+    <string name="tallis">Tidigast <i>tallis</i> och <i>tefillin</i> (משיכיר)</string>
+    <string name="tallis_only">Tidigast <i>tallis</i> (משיכיר)</string>
     <string name="tallis_summary">Solen är 11,5° under horisonten</string>
     <string name="tallis_11">Solen är 11° under horisonten</string>
     <string name="tallis_10">Solen är 10,2° under horisonten</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">På havsnivå</string>
 
     <!-- Latest shema -->
-    <string name="shema">Senaste שמע</string>
+    <string name="shema">Senaste <i>šema</i></string>
     <string name="shema_7">Dag är från gryning 16,1° till natten 7,083°</string>
     <string name="shema_3">3 timmar före middag</string>
     <string name="shema_fixed">3 timmar före fast lokal middag</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Latest morning prayers (שחרית)</string>
+    <string name="prayers">Senaste morgonbönen</string>
     <string name="prayers_fixed">2 timmar före fast lokal middag</string>
     <string name="prayers_2">2 timmar före middag</string>
 
     <!-- Midday -->
-    <string name="midday">Middag (חצות)</string>
+    <string name="midday">Middag</string>
     <string name="midday_summary">Solens middagstid</string>
     <string name="midday_fixed">Middagstid justerat för den lokala latitud</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Tidigast eftermiddagens böner (מנחה)</string>
-    <string name="earliest_mincha_summary">Tidigast eftermiddagens böner</string>
+    <string name="earliest_mincha">Tidigast eftermiddagens böner</string>
+    <string name="earliest_mincha_summary">Större <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuter efter middag</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mindre מנחה</string>
+    <string name="mincha">Smärre <i>mincha</i></string>
     <string name="mincha_summary">Eftermiddagens böner</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">10¾ timmar efter gryningen (פלג המנחה)</string>
+    <string name="plug_hamincha"><i>Plag hamincha</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Stearinljus belysning</string>
@@ -80,7 +80,7 @@
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d minuter före solnedgången</string>
 
-    <string name="chanukka">Chanukka</string>
+    <string name="chanukka"><i>Chanukka</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka ljus</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Festival ändar</string>
 
     <!-- Midnight -->
-    <string name="midnight">Midnatt (חצות)</string>
+    <string name="midnight">Midnatt</string>
     <string name="midnight_summary">Solens midnatt</string>
     <string name="midnight_12">12 timmar efter middag</string>
     <string name="midnight_6">6 timmar efter nattens inbrott</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Senaste tiden att äter חמץ</string>
-    <string name="burn_chametz">Senaste tiden att bränna חמץ</string>
+    <string name="eat_chametz">Senaste tiden att äter <i>chametz</i></string>
+    <string name="burn_chametz">Senaste tiden att bränna <i>chametz</i></string>
 
     <!-- Moon -->
     <string name="molad">Födelse av nymånen (מולד)</string>
-    <string name="molad_summary">Genomsnitt מולד</string>
+    <string name="molad_summary">Genomsnitt nymånen</string>
     <string name="levana_earliest">Tidigast helgelse av den nya månen (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 dagar efter den מולד</string>
-    <string name="levana_7">7 dagar efter den מולד</string>
+    <string name="levana_earliest_summary">3 dagar efter den nymånen</string>
+    <string name="levana_7">7 dagar efter den nymånen</string>
     <string name="levana_latest">Senaste helgelse av den nya månen (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Halvvägs mellan מולד och מולד</string>
-    <string name="levana_15">15 dagar efter den מולד</string>
+    <string name="levana_latest_summary">Halvvägs mellan nya månar</string>
+    <string name="levana_15">15 dagar efter den nymånen</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fasta börjar</string>
     <string name="fast_ends">Fasta ändar</string>
 
     <!-- Omer -->
-    <string name="omer">עומר</string>
+    <string name="omer"><i>Omer</i></string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

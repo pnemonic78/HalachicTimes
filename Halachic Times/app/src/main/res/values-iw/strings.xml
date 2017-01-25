@@ -28,7 +28,7 @@
     <!-- Temporal hour -->
     <string name="hour">שעה זמנית</string>
 
-    <!-- List -->
+    <!-- Dawn -->
     <string name="dawn">עלות השחר</string>
 
     <!-- Tallis and Tefillin -->
@@ -60,16 +60,16 @@
     <string name="midday_fixed">צהריים מותאמים קו הרוחב המקומי</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">מנחה גדולה</string>
-    <string name="earliest_mincha_summary">תפילת מנחה המוקדמת ביותר</string>
+    <string name="earliest_mincha">תפילת מנחה המוקדמת ביותר</string>
+    <string name="earliest_mincha_summary">מנחה גדולה</string>
     <string name="earliest_mincha_30">30 דקות לאחר צהריים</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">מנחה קטנה</string>
-    <string name="mincha_summary">תפילת מנחה</string>
+    <string name="mincha">תפילת מנחה</string>
+    <string name="mincha_summary">מנחה קטנה</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">¾10 שעות אחרי עלות השחר (פלג המנחה)</string>
+    <string name="plug_hamincha">פלג המנחה</string>
 
     <!-- Candle lighting -->
     <string name="candles">הדלקת נרות</string>

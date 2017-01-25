@@ -47,7 +47,7 @@
     <string name="hour_format" translatable="false">H:mm</string>
     <string name="hour_format_seconds" translatable="false">H:mm:ss</string>
 
-    <!-- List -->
+    <!-- Dawn -->
     <string name="dawn">Dawn</string>
     <string name="dawn_19" translatable="false">@string/opinion_19</string>
     <string name="dawn_120" translatable="false">@string/opinion_120</string>
@@ -64,8 +64,8 @@
     <string name="dawn_60" translatable="false">@string/opinion_60</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Earliest tallis and tefillin (משיכיר)</string>
-    <string name="tallis_only">Earliest tallis (משיכיר)</string>
+    <string name="tallis">Earliest <i>tallis</i> and <i>tefillin</i> (משיכיר)</string>
+    <string name="tallis_only">Earliest <i>tallis</i> (משיכיר)</string>
     <string name="tallis_summary">Sun is 11.5° below horizon</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
     <string name="tallis_10">Sun is 10.2° below horizon</string>
@@ -76,7 +76,7 @@
     <string name="sunrise_sea">At sea level</string>
 
     <!-- Latest shema -->
-    <string name="shema">Latest שמע</string>
+    <string name="shema">Latest <i>shema</i></string>
     <string name="shema_16_sunset" translatable="false">@string/opinion_16_sunset</string>
     <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
     <string name="shema_19" translatable="false">@string/opinion_19</string>
@@ -96,7 +96,7 @@
     <string name="shema_gra" translatable="false">@string/opinion_gra</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Latest morning prayers (שחרית)</string>
+    <string name="prayers">Latest morning prayers</string>
     <string name="prayers_120" translatable="false">@string/opinion_120</string>
     <string name="prayers_96" translatable="false">@string/opinion_96</string>
     <string name="prayers_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
@@ -114,27 +114,27 @@
     <string name="prayers_gra" translatable="false">@string/opinion_gra</string>
 
     <!-- Midday -->
-    <string name="midday">Midday (חצות)</string>
+    <string name="midday">Midday</string>
     <string name="midday_summary">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Earliest afternoon prayers (מנחה)</string>
-    <string name="earliest_mincha_summary">Earliest afternoon prayers</string>
+    <string name="earliest_mincha">Earliest afternoon prayers</string>
+    <string name="earliest_mincha_summary">Major <i>mincha</i></string>
     <string name="earliest_mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>
     <string name="earliest_mincha_30">30 minutes after midday</string>
     <string name="earliest_mincha_16" translatable="false">@string/opinion_16</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Minor מנחה</string>
-    <string name="mincha_summary">Afternoon prayers</string>
+    <string name="mincha">Afternoon prayers</string>
+    <string name="mincha_summary">Minor <i>mincha</i></string>
     <string name="mincha_72" translatable="false">@string/opinion_72</string>
     <string name="mincha_16" translatable="false">@string/opinion_16</string>
     <string name="mincha_ateret" translatable="false">@string/opinion_ateret</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">10¾ hours after dawn (פלג המנחה)</string>
+    <string name="plug_hamincha"><i>Plag hamincha</i></string>
     <string name="plug_hamincha_gra" translatable="false">@string/opinion_gra</string>
     <string name="plug_hamincha_120" translatable="false">@string/opinion_120</string>
     <string name="plug_hamincha_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
@@ -170,7 +170,7 @@
         <item quantity="other">@string/candles_summary_other</item>
     </plurals>
 
-    <string name="chanukka">Chanukka</string>
+    <string name="chanukka"><i>Chanukka</i></string>
     <string name="candles_chanukka_opinion" translatable="false">@string/chanukka</string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka candle</string>
@@ -247,34 +247,34 @@
     <string name="festival_ends">Festival ends</string>
 
     <!-- Midnight -->
-    <string name="midnight">Midnight (חצות)</string>
+    <string name="midnight">Midnight</string>
     <string name="midnight_summary">Solar midnight</string>
     <string name="midnight_12">12 hours after midday</string>
     <string name="midnight_6">6 hours after nightfall</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Latest time to eat חמץ</string>
-    <string name="burn_chametz">Latest time to burn חמץ</string>
+    <string name="eat_chametz">Latest time to eat <i>chametz</i></string>
+    <string name="burn_chametz">Latest time to burn <i>chametz</i></string>
     <string name="burn_chametz_gra" translatable="false">@string/opinion_gra</string>
     <string name="burn_chametz_16" translatable="false">@string/opinion_16</string>
     <string name="burn_chametz_72" translatable="false">@string/opinion_72</string>
 
     <!-- Moon -->
     <string name="molad">Birth of new moon (מולד)</string>
-    <string name="molad_summary">Average מולד</string>
+    <string name="molad_summary">Average new moon</string>
     <string name="levana_earliest">Earliest sanctification of the new moon (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 days after the מולד</string>
-    <string name="levana_7">7 days after the מולד</string>
+    <string name="levana_earliest_summary">3 days after the new moon</string>
+    <string name="levana_7">7 days after the new moon</string>
     <string name="levana_latest">Latest sanctification of the new moon (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Halfway between מולד and מולד</string>
-    <string name="levana_15">15 days after the מולד</string>
+    <string name="levana_latest_summary">Halfway between new moons</string>
+    <string name="levana_15">15 days after the new moon</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fast begins</string>
     <string name="fast_ends">Fast ends</string>
 
     <!-- Omer -->
-    <string name="omer">עומר</string>
+    <string name="omer"><i>Omer</i></string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Lag %1$s</string>
     <string name="omer_off">@string/off</string>

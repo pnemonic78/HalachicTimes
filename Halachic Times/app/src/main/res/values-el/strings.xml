@@ -28,12 +28,12 @@
     <!-- Temporal hour -->
     <string name="hour">Εποχιακές ώρα</string>
 
-    <!-- List -->
+    <!-- Dawn -->
     <string name="dawn">Αυγή</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Η πιο παλιά ταλιτ και τεφιλιν (משיכיר)</string>
-    <string name="tallis_only">Η πιο παλιά ταλιτ (משיכיר)</string>
+    <string name="tallis">Η πιο παλιά <i>ταλιτ</i> και <i>τεφιλιν</i> (משיכיר)</string>
+    <string name="tallis_only">Η πιο παλιά <i>ταλιτ</i> (משיכיר)</string>
     <string name="tallis_summary">Ήλιος είναι 11,5° κάτω από τον ορίζοντα</string>
     <string name="tallis_11">Ήλιος είναι 11° κάτω από τον ορίζοντα</string>
     <string name="tallis_10">Ήλιος είναι 10,2° κάτω από τον ορίζοντα</string>
@@ -44,32 +44,32 @@
     <string name="sunrise_sea">Στο επίπεδο της θάλασσας</string>
 
     <!-- Latest shema -->
-    <string name="shema">Τελευταία שמע</string>
+    <string name="shema">Τελευταία <i>σεμα</i></string>
     <string name="shema_7">Ημέρα είναι από την αυγή 16,1° έως 7.083° νύχτα</string>
     <string name="shema_3">3 ώρες πριν από μεσημέρι</string>
     <string name="shema_fixed">3 ώρες πριν από μεσημέρι τοπικές σταθερής</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Τελευταία שחרית</string>
+    <string name="prayers">Τελευταία προσευχές πρωί</string>
     <string name="prayers_fixed">2 ώρες πριν από μεσημέρι τοπικές σταθερής</string>
     <string name="prayers_2">2 ώρες πριν από μεσημέρι</string>
 
     <!-- Midday -->
-    <string name="midday">Μεσημέρι (χαζοτ)</string>
+    <string name="midday">Μεσημέρι</string>
     <string name="midday_summary">Μεσημβρία</string>
     <string name="midday_fixed">Μεσημέρι ρυθμίζεται για το τοπικό γεωγραφικό πλάτος</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Η πιο παλιά προσευχές απόγευμα (מנחה)</string>
-    <string name="earliest_mincha_summary">Η πιο παλιά προσευχές απόγευμα</string>
+    <string name="earliest_mincha">Νωρίτερο προσευχές απόγευμα</string>
+    <string name="earliest_mincha_summary">Μείζων <i>μινχα</i></string>
     <string name="earliest_mincha_30">30 λεπτά μετά το μεσημέρι</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Μικρά מנחה</string>
-    <string name="mincha_summary">Απόγευμα προσευχές</string>
+    <string name="mincha">Απόγευμα προσευχές</string>
+    <string name="mincha_summary">Ελάσσων <i>μινχα</i></string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">10¾ ώρες μετά την αυγή (פלג המנחה)</string>
+    <string name="plug_hamincha"><i>Πλαγ μινχα</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Φωτισμό κεριών</string>
@@ -80,7 +80,7 @@
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d λεπτά πριν το ηλιοβασίλεμα</string>
 
-    <string name="chanukka">Χανουκά</string>
+    <string name="chanukka"><i>Χανουκά</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Χανουκά κερί</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
@@ -124,31 +124,31 @@
     <string name="festival_ends">Πανηγύρι άκρα</string>
 
     <!-- Midnight -->
-    <string name="midnight">Μεσάνυχτα (חצות)</string>
+    <string name="midnight">Μεσάνυχτα</string>
     <string name="midnight_summary">Ηλιακό μεσάνυχτα</string>
     <string name="midnight_12">12 ώρες μετά το μεσημέρι</string>
     <string name="midnight_6">6 ώρες μετά το σούρουπο</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Τελευταία στιγμή για να φάει חמץ</string>
-    <string name="burn_chametz">Τελευταία στιγμή για να κάψει חמץ</string>
+    <string name="eat_chametz">Τελευταία στιγμή για να φάει <i>χαμεζ</i></string>
+    <string name="burn_chametz">Τελευταία στιγμή για να κάψει <i>χαμεζ</i></string>
 
     <!-- Moon -->
     <string name="molad">Γέννηση της νέας σελήνης (מולד)</string>
-    <string name="molad_summary">Μέσος מולד</string>
+    <string name="molad_summary">Μέσος νέα σελήνη</string>
     <string name="levana_earliest">Η πιο παλιά αγιασμό της νέας σελήνης (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 ημέρες μετά מולד</string>
-    <string name="levana_7">7 ημέρες μετά מולד</string>
+    <string name="levana_earliest_summary">3 ημέρες μετά νέα σελήνη</string>
+    <string name="levana_7">7 ημέρες μετά νέα σελήνη</string>
     <string name="levana_latest">Τελευταία αγιασμό το νέας σελήνης (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Μισά του δρόμου μεταξύ מולד και מולד</string>
-    <string name="levana_15">15 ημέρες μετά מולד</string>
+    <string name="levana_latest_summary">Μισά του δρόμου μεταξύ νέα φεγγάρια</string>
+    <string name="levana_15">15 ημέρες μετά νέα σελήνη</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Νηστεία αρχίζει</string>
     <string name="fast_ends">Νηστεία άκρα</string>
 
     <!-- Omer -->
-    <string name="omer">עומר</string>
+    <string name="omer"><i>Όμερ</i></string>
     <string name="omer_format">%1$s %2$s</string>
     <string name="omer_33">Λάγ %1$s</string>
     <string name="omer_off">@string/off</string>
