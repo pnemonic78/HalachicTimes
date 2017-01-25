@@ -27,7 +27,6 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.location.Location;
 import android.net.Uri;
@@ -36,7 +35,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -97,33 +95,18 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         this.context = context;
-        Context app = context.getApplicationContext();
-        ContentResolver resolver = context.getContentResolver();
 
         final String action = intent.getAction();
         if (action == null) {
             return;
         }
+        ContentResolver resolver = context.getContentResolver();
         switch (action) {
             case AppWidgetManager.ACTION_APPWIDGET_UPDATE:
-                IntentFilter timeChanged = new IntentFilter(Intent.ACTION_TIME_CHANGED);
-                app.registerReceiver(this, timeChanged);
-
-                IntentFilter dateChanged = new IntentFilter(Intent.ACTION_DATE_CHANGED);
-                app.registerReceiver(this, dateChanged);
-
-                IntentFilter tzChanged = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
-                app.registerReceiver(this, tzChanged);
-
                 resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
                 break;
             case AppWidgetManager.ACTION_APPWIDGET_DELETED:
-                try {
-                    app.unregisterReceiver(this);
-                    resolver.unregisterContentObserver(formatChangeObserver);
-                } catch (IllegalArgumentException e) {
-                    Log.e(TAG, "unregister receiver: " + e.getLocalizedMessage(), e);
-                }
+                resolver.unregisterContentObserver(formatChangeObserver);
                 break;
             case Intent.ACTION_DATE_CHANGED:
             case Intent.ACTION_TIME_CHANGED:
