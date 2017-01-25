@@ -65,6 +65,7 @@
             android:exported="false"
             android:label="@string/title_widget_zmanim">
             <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
                 <action android:name="android.intent.action.TIME_SET"/>
                 <action android:name="android.intent.action.DATE_CHANGED"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
@@ -77,7 +78,7 @@
         <receiver
             android:name="net.sf.times.ZmanimListWidget"
             android:exported="false"
-            android:label="@string/title_widget_zmanim">
+            android:label="@string/title_widget_list">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

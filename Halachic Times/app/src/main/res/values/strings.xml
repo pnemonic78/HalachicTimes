@@ -312,6 +312,7 @@
 
     <!-- Widget -->
     <string name="title_widget_zmanim" translatable="false">@string/title_activity_zmanim</string>
+    <string name="title_widget_list" translatable="false">@string/title_widget_zmanim</string>
     <string name="title_widget_clock">Halachic Times Clock</string>
     <string name="clock_12_hours_format" translatable="false">h:mm</string>
     <string name="clock_24_hours_format" translatable="false">HH:mm</string>
