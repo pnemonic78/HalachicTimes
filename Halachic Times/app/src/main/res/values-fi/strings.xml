@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Auringonnousu</string>
-    <string name="sunrise_summary">Vuonna tason alueella</string>
+    <string name="sunrise_summary">Oikaistu korkeus</string>
     <string name="sunrise_sea">Merenpinnan tasolla</string>
 
     <!-- Latest shema -->

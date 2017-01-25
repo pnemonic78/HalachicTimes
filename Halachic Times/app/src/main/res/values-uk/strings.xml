@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Схід сонця</string>
-    <string name="sunrise_summary">У рівні регіону</string>
+    <string name="sunrise_summary">З поправкою на висоті</string>
     <string name="sunrise_sea">На рівні моря</string>
 
     <!-- Latest shema -->
@@ -57,7 +57,7 @@
     <!-- Midday -->
     <string name="midday">Полудень</string>
     <string name="midday_summary">Апогей</string>
-    <string name="midday_fixed">полудень з урахуванням місцеві широт</string>
+    <string name="midday_fixed">Полудень з поправкою на місцевій широти</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Перший день молитви</string>

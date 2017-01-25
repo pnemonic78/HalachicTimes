@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Răsărit</string>
-    <string name="sunrise_summary">Într-o regiune nivel</string>
+    <string name="sunrise_summary">Ajustată pentru elevație</string>
     <string name="sunrise_sea">La nivelul mării</string>
 
     <!-- Latest shema -->

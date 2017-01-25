@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Изгрев</string>
-    <string name="sunrise_summary">В региона на ниво</string>
+    <string name="sunrise_summary">Коригирани за кота</string>
     <string name="sunrise_sea">На морското равнище</string>
 
     <!-- Latest shema -->

@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Východ slunce</string>
-    <string name="sunrise_summary">V regionu soudržnosti</string>
+    <string name="sunrise_summary">Po očištění o elevaci</string>
     <string name="sunrise_sea">Na úrovni moře</string>
 
     <!-- Latest shema -->

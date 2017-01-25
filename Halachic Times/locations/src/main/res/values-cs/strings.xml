@@ -14,7 +14,7 @@
     <string name="coords_format_title">Souřadnice formát</string>
     <string name="coords_format_decimal">Desetinný</string>
     <string name="coords_format_sexagesimal">Šedesátý</string>
-    <string name="coords_elevation_title">Nadmořská výška</string>
+    <string name="coords_elevation_title">Elevaci</string>
 
     <!-- Location -->
     <string name="location_unknown">Neznámý adresa</string>

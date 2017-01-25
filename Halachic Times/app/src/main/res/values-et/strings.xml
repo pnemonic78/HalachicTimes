@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Päikesetõus</string>
-    <string name="sunrise_summary">In a level region</string>
+    <string name="sunrise_summary">Korrigeeritud kõrguse</string>
     <string name="sunrise_sea">Tasemel regioon</string>
 
     <!-- Latest shema -->

@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Napkelte</string>
-    <string name="sunrise_summary">Egy szinten régióban</string>
+    <string name="sunrise_summary">Korrigált magaslati</string>
     <string name="sunrise_sea">A tengerszint</string>
 
     <!-- Latest shema -->

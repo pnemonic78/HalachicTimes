@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Восход солнца</string>
-    <string name="sunrise_summary">На горизонтальном регионе</string>
+    <string name="sunrise_summary">С поправкой на высоте</string>
     <string name="sunrise_sea">На уровне моря</string>
 
     <!-- Latest shema -->

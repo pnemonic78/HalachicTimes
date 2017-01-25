@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Soloppgang</string>
-    <string name="sunrise_summary">I et nivå region</string>
+    <string name="sunrise_summary">Justert for opphøyelse</string>
     <string name="sunrise_sea">At havnivå</string>
 
     <!-- Latest shema -->

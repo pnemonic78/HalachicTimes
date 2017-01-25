@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Ανατολή ηλίου</string>
-    <string name="sunrise_summary">Σε μια περιοχή επίπεδο</string>
+    <string name="sunrise_summary">Προσαρμοσμένο για ανύψωση</string>
     <string name="sunrise_sea">Στο επίπεδο της θάλασσας</string>
 
     <!-- Latest shema -->

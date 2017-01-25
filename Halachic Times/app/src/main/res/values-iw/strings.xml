@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">הנץ החמה</string>
-    <string name="sunrise_summary">באזור אפקי</string>
+    <string name="sunrise_summary">מותאם לגובה</string>
     <string name="sunrise_sea">בגובה פני הים</string>
 
     <!-- Latest shema -->

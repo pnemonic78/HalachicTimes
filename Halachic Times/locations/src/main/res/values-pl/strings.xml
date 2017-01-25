@@ -14,7 +14,7 @@
     <string name="coords_format_title">Format współrzędne</string>
     <string name="coords_format_decimal">Dziesiętny</string>
     <string name="coords_format_sexagesimal">Sześćdziesiątkowa</string>
-    <string name="coords_elevation_title">Podniesienie</string>
+    <string name="coords_elevation_title">Elewacja</string>
 
     <!-- Location -->
     <string name="location_unknown">Nieznany adres</string>

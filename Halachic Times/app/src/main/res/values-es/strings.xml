@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Salida del sol</string>
-    <string name="sunrise_summary">En región de nivel</string>
+    <string name="sunrise_summary">Ajustado para la elevación</string>
     <string name="sunrise_sea">A nivel del mar</string>
 
     <!-- Latest shema -->

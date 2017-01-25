@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Wschód słońca</string>
-    <string name="sunrise_summary">W regionie poziom</string>
+    <string name="sunrise_summary">Dostosowane do elewacji</string>
     <string name="sunrise_sea">Na poziomie morza</string>
 
     <!-- Latest shema -->

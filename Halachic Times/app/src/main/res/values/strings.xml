@@ -72,7 +72,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Sunrise</string>
-    <string name="sunrise_summary">In a level region</string>
+    <string name="sunrise_summary">Adjusted for elevation</string>
     <string name="sunrise_sea">At sea level</string>
 
     <!-- Latest shema -->

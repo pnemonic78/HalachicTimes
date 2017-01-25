@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Saulėtekis</string>
-    <string name="sunrise_summary">Horizontalioje regione</string>
+    <string name="sunrise_summary">Pritaikytas aukštis</string>
     <string name="sunrise_sea">Jūros lygyje</string>
 
     <!-- Latest shema -->

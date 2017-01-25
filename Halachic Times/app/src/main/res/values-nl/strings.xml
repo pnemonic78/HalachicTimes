@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Zonsopgang</string>
-    <string name="sunrise_summary">In een platte regio</string>
+    <string name="sunrise_summary">Gecorrigeerd voor elevatie</string>
     <string name="sunrise_sea">Op zeeniveau</string>
 
     <!-- Latest shema -->

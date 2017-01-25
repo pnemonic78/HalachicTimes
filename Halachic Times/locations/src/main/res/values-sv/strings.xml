@@ -14,7 +14,7 @@
     <string name="coords_format_title">Koordinater format</string>
     <string name="coords_format_decimal">Decimal</string>
     <string name="coords_format_sexagesimal">Sexagesimal</string>
-    <string name="coords_elevation_title">Förhöjning</string>
+    <string name="coords_elevation_title">Upphöjande</string>
 
     <!-- Location -->
     <string name="location_unknown">Okänd adress</string>

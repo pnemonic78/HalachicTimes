@@ -14,7 +14,7 @@
     <string name="coords_format_title">Coördinaten formaat</string>
     <string name="coords_format_decimal">Decimale</string>
     <string name="coords_format_sexagesimal">Sexagesimale</string>
-    <string name="coords_elevation_title">Hoogte</string>
+    <string name="coords_elevation_title">Elevatie</string>
 
     <!-- Location -->
     <string name="location_unknown">Onbekend adres</string>

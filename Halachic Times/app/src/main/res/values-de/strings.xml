@@ -40,7 +40,7 @@
 
     <!-- Sunrise -->
     <string name="sunrise">Sonnenaufgang</string>
-    <string name="sunrise_summary">In einem Flachen bereich</string>
+    <string name="sunrise_summary">Höhenverstellbar</string>
     <string name="sunrise_sea">Auf Meereshöhe</string>
 
     <!-- Latest shema -->
