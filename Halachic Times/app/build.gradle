@@ -13,7 +13,7 @@ android {
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
         versionCode versionMajor * 100 + versionMinor
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
-        resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "tr", "uk"
+        resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "uk"
 
         testApplicationId "net.sf.times.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
