@@ -64,7 +64,7 @@ public class JewishCities extends Cities {
         cities.populateAlternateNames(new File(pathNames), names);
         cities.populateAlternateNames(new File(pathNames2), names);
         for (String lang : LANGUAGES) {
-            cities.toAndroidXML(names, lang);
+            cities.writeAndroidXML(names, lang);
         }
     }
 
@@ -81,7 +81,7 @@ public class JewishCities extends Cities {
      *         if a DOM error occurs.
      */
     @Override
-    public void toAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
+    public void writeAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
         List<GeoName> sorted;
         if (names instanceof List)
             sorted = (List<GeoName>) names;

@@ -96,7 +96,7 @@ public class Cities {
 
         Collection<GeoName> names = cities.loadNames(res, new CityFilter());
         Collection<GeoName> capitals = cities.filterCapitals(names);
-        cities.toAndroidXML(capitals, null);
+        cities.writeAndroidXML(capitals, null);
     }
 
     /**
@@ -232,7 +232,7 @@ public class Cities {
      * @throws TransformerException
      *         if a DOM error occurs.
      */
-    public void toAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
+    public void writeAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
         List<GeoName> sorted = null;
         if (names instanceof List)
             sorted = (List<GeoName>) names;

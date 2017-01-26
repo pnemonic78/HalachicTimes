@@ -63,19 +63,16 @@ public class Countries extends Cities {
         super();
     }
 
-    public static void main(String[] args) {
-        String path = "GeoNames/res/cities1000.txt";
-        File res = new File(path);
+    public static void main(String[] args) throws Exception {
+        File countryInfoFile = new File("GeoNames/res/countryInfo.txt");
+        File shapesFile = new File("GeoNames/res/shapes_simplified_low.txt");
+
         Countries countries = new Countries();
-        Collection<GeoName> names;
-        Collection<CountryRegion> regions;
-        try {
-            names = countries.loadNames(res, null);
-            regions = countries.toRegions(names);
-            countries.toAndroidXML(regions);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Collection<CountryInfo> names = countries.loadInfo(countryInfoFile);
+        Collection<GeoShape> shapes = countries.loadShapes(shapesFile);
+        Collection<CountryRegion> regions = countries.toRegions(names, shapes);
+
+        countries.writeAndroidXML(regions);
     }
 
     /**
@@ -114,7 +111,7 @@ public class Countries extends Cities {
      * @throws TransformerException
      *         if a DOM error occurs.
      */
-    public void toAndroidXML(Collection<CountryRegion> countries) throws ParserConfigurationException, TransformerException {
+    public void writeAndroidXML(Collection<CountryRegion> countries) throws ParserConfigurationException, TransformerException {
         List<CountryRegion> sorted = null;
         if (countries instanceof List)
             sorted = (List<CountryRegion>) countries;

@@ -48,7 +48,7 @@ public class BahaiCities extends JewishCities {
         cities.populateAlternateNames(new File(pathNames), names);
         cities.populateAlternateNames(new File(pathNames2), names);
         for (String lang : LANGUAGES) {
-            cities.toAndroidXML(names, lang);
+            cities.writeAndroidXML(names, lang);
         }
     }
 }
