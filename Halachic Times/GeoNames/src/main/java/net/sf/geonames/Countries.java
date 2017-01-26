@@ -25,9 +25,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -77,7 +79,7 @@ public class Countries extends Cities {
     }
 
     /**
-     * Transform the list of names to a list of countries.
+     * Transform the list of names to a list of country regions.
      *
      * @param names
      *         the list of places.
@@ -189,5 +191,65 @@ public class Countries extends Cities {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
         transformer.transform(src, result);
+    }
+
+    /**
+     * Load the list of countries.
+     *
+     * @param file
+     *         the country info file.
+     * @return the list of records.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<CountryInfo> loadInfo(File file) throws IOException {
+        return geoNames.parseCountries(file);
+    }
+
+    /**
+     * Load the list of shapes.
+     *
+     * @param file
+     *         the shapes file.
+     * @return the list of records.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoShape> loadShapes(File file) throws IOException {
+        return geoNames.parseShapes(file);
+    }
+
+    /**
+     * Transform the list of countries to a list of country regions.
+     *
+     * @param names
+     *         the list of countries.
+     * @param shapes
+     *         the list of country shapes.
+     * @return the list of regions.
+     */
+    public Collection<CountryRegion> toRegions(Collection<CountryInfo> names, Collection<GeoShape> shapes) throws IOException {
+        List<CountryRegion> regions = new ArrayList<>(names.size());
+        Long geonameId;
+        CountryRegion region;
+        Map<Long, GeoShape> shapesById = new HashMap<>();
+        GeoShape shape;
+
+        for (GeoShape s : shapes) {
+            shapesById.put(s.getGeoNameId(), s);
+        }
+
+        for (CountryInfo name : names) {
+            geonameId = name.getGeoNameId();
+            shape = shapesById.get(geonameId);
+            if (shape != null) {
+                region = CountryRegion.toRegion(name.getIso(), shape);
+                if (region != null) {
+                    regions.add(region);
+                }
+            }
+        }
+
+        return regions;
     }
 }

@@ -36,6 +36,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
@@ -114,7 +115,7 @@ public class GeoNames {
     public Collection<GeoName> parseTabbed(File file, NameFilter filter) throws IOException {
         Collection<GeoName> records = null;
         Reader reader = null;
-        FileInputStream in = null;
+        InputStream in = null;
         try {
             in = new FileInputStream(file);
             reader = new InputStreamReader(in, StandardCharsets.UTF_8);
@@ -191,7 +192,7 @@ public class GeoNames {
             line = buf.readLine();
             if (line == null)
                 break;
-            if (line.isEmpty())
+            if (line.isEmpty() || line.startsWith("#"))
                 continue;
             fields = line.split("\t");
             record = new GeoName();
@@ -384,7 +385,7 @@ public class GeoNames {
      */
     public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
         Reader reader = null;
-        FileInputStream in = null;
+        InputStream in = null;
         try {
             in = new FileInputStream(file);
             reader = new InputStreamReader(in, StandardCharsets.UTF_8);
@@ -481,4 +482,155 @@ public class GeoNames {
         }
     }
 
+    /**
+     * Parse the tab-delimited file with country records.
+     *
+     * @param file
+     *         the file to parse.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<CountryInfo> parseCountries(File file) throws IOException {
+        Reader reader = null;
+        InputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
+            in = null;
+            return parseCountries(reader);
+        } finally {
+            if (in != null)
+                in.close();
+            if (reader != null)
+                reader.close();
+        }
+    }
+
+
+    /**
+     * Parse the tab-delimited file with GeoName records.
+     *
+     * @param reader
+     *         the reader.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<CountryInfo> parseCountries(Reader reader) throws IOException {
+        Collection<CountryInfo> records = new ArrayList<CountryInfo>();
+        CountryInfo record;
+        String line;
+        BufferedReader buf = new BufferedReader(reader);
+        String[] fields;
+        int column;
+        String field;
+
+        while (true) {
+            line = buf.readLine();
+            if (line == null)
+                break;
+            if (line.isEmpty() || line.startsWith("#"))
+                continue;
+            fields = line.split("\t");
+            record = new CountryInfo();
+
+            column = 0;
+            field = fields[column++];
+            record.setIso(field);
+            field = fields[column++];
+            record.setIso3(field);
+            field = fields[column++];
+            record.setIsoNumeric(Integer.parseInt(field));
+            field = fields[column++];
+            record.setFips(field);
+            field = fields[column++];
+            record.setCountry(field);
+            field = fields[column++];
+            record.setCapital(field);
+            field = fields[column++];
+            record.setArea(Double.parseDouble(field));
+            field = fields[column++];
+            record.setPopulation(Long.parseLong(field));
+            field = fields[column++];
+            record.setContinent(field);
+            field = fields[column++];
+            record.setTld(field);
+            field = fields[column++];
+            record.setCurrencyCode(field);
+            field = fields[column++];
+            record.setCurrencyName(field);
+            field = fields[column++];
+            record.setPhone(field);
+            field = fields[column++];
+            record.setPostalCodeFormat(field);
+            field = fields[column++];
+            record.setPostalCodeRegex(field);
+            field = fields[column++];
+            record.setLanguages(Arrays.asList(field.split(",")));
+            field = fields[column++];
+            record.setGeoNameId(Long.parseLong(field));
+            if (column < fields.length) {
+                field = fields[column++];
+                record.setNeighbours(Arrays.asList(field.split(",")));
+                if (column < fields.length) {
+                    field = fields[column++];
+                    record.setEquivalentFipsCode(field);
+                }
+            }
+
+            records.add(record);
+        }
+
+        return records;
+    }
+
+    public Collection<GeoShape> parseShapes(File file) throws IOException {
+        Reader reader = null;
+        InputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
+            in = null;
+            return parseShapes(reader);
+        } finally {
+            if (in != null)
+                in.close();
+            if (reader != null)
+                reader.close();
+        }
+    }
+
+    public Collection<GeoShape> parseShapes(Reader reader) throws IOException {
+        Collection<GeoShape> records = new ArrayList<GeoShape>();
+        GeoShape record;
+        String line;
+        BufferedReader buf = new BufferedReader(reader);
+        String[] fields;
+        int column;
+        String field;
+
+        // Skip header row.
+        buf.readLine();
+
+        while (true) {
+            line = buf.readLine();
+            if (line == null)
+                break;
+            if (line.isEmpty() || line.startsWith("#"))
+                continue;
+            fields = line.split("\t");
+            record = new GeoShape();
+
+            column = 0;
+            field = fields[column++];
+            record.setGeoNameId(Long.parseLong(field));
+            field = fields[column++];
+            record.setGeoJSON(field);
+
+            records.add(record);
+        }
+
+        return records;
+    }
 }

@@ -20,8 +20,10 @@
 package net.sf.geonames.test;
 
 import net.sf.geonames.Countries;
+import net.sf.geonames.CountryInfo;
 import net.sf.geonames.CountryRegion;
 import net.sf.geonames.GeoName;
+import net.sf.geonames.GeoShape;
 
 import java.awt.Color;
 import java.awt.Dialog.ModalityType;
@@ -185,17 +187,38 @@ public class CountryCanvas extends JComponent {
             return;
         }
         String code = args[0];
-        String path = "GeoNames/res/cities1000.txt";
-        File file = new File(path);
 
         CountryCanvas canvas = new CountryCanvas();
-        canvas.populateFromCities(code, file);
+        //canvas.populateFromCities(code, new File("GeoNames/res/cities1000.txt"));
+        canvas.populateFromShapes(code, new File("GeoNames/res/countryInfo.txt"), new File("GeoNames/res/shapes_simplified_low.txt"));
     }
 
     public void populateFromCities(String code, File file) throws IOException {
         Countries countries = new Countries();
         Collection<GeoName> names = countries.loadNames(file, null);
         Collection<CountryRegion> regions = countries.toRegions(names);
+        CountryRegion region = null;
+
+        for (CountryRegion r : regions) {
+            if (code.equals(r.getCountryCode())) {
+                region = r;
+                break;
+            }
+        }
+        setRegion(region);
+        JDialog window = new JDialog(null, ModalityType.APPLICATION_MODAL);
+        window.setBounds(0, 0, 500, 500);
+        window.getContentPane().add(new JScrollPane(this));
+        window.setVisible(true);
+        System.exit(0);
+    }
+
+
+    public void populateFromShapes(String code, File countryInfoFile, File shapesFile) throws IOException {
+        Countries countries = new Countries();
+        Collection<CountryInfo> names = countries.loadInfo(countryInfoFile);
+        Collection<GeoShape> shapes = countries.loadShapes(shapesFile);
+        Collection<CountryRegion> regions = countries.toRegions(names, shapes);
         CountryRegion region = null;
 
         for (CountryRegion r : regions) {

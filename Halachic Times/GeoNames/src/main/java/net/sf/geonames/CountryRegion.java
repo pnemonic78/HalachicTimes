@@ -19,8 +19,14 @@
  */
 package net.sf.geonames;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+
+import org.geotools.geojson.geom.GeometryJSON;
+
 import java.awt.Polygon;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 
 /**
  * Country region.
@@ -63,6 +69,18 @@ public class CountryRegion extends Polygon {
         int x = (int) (longitude * FACTOR_TO_INT);
         int y = (int) (latitude * FACTOR_TO_INT);
         addPoint(x, y);
+    }
+
+    /**
+     * Add a set of locations.
+     *
+     * @param polygon
+     *         the polygon with locations.
+     */
+    public void addPolygon(Polygon polygon) {
+        for (int i = 0; i < polygon.npoints; i++) {
+            addPoint(polygon.xpoints[i], polygon.ypoints[i]);
+        }
     }
 
     /**
@@ -134,5 +152,28 @@ public class CountryRegion extends Polygon {
         }
 
         return indexes;
+    }
+
+    public static CountryRegion toRegion(String countryCode, GeoShape geoShape) throws IOException {
+        CountryRegion region = new CountryRegion(countryCode);
+
+        GeometryJSON json = new GeometryJSON();
+        Geometry geometry = json.read(geoShape.getGeoJSON());
+        geoShape.setGeometry(geometry);
+
+        addGeometry(region, geometry);
+
+        return region;
+    }
+
+    private static void addGeometry(CountryRegion region, Geometry geometry) {
+        Coordinate[] coordinates = geometry.getCoordinates();
+        final int length = coordinates.length;
+        Coordinate coordinate;
+
+        for (int i = 0; i < length; i++) {
+            coordinate = coordinates[i];
+            region.addPoint((int) (coordinate.x * FACTOR_TO_INT), (int) (coordinate.y * FACTOR_TO_INT));
+        }
     }
 }
