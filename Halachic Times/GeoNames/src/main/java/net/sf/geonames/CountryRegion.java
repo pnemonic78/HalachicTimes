@@ -173,7 +173,7 @@ public class CountryRegion extends Polygon {
 
         for (int i = 0; i < length; i++) {
             coordinate = coordinates[i];
-            region.addPoint((int) (coordinate.x * FACTOR_TO_INT), (int) (coordinate.y * FACTOR_TO_INT));
+            region.addLocation(coordinate.y, coordinate.x);
         }
     }
 }
