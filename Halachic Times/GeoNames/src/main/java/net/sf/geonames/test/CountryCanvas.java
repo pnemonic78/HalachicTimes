@@ -31,6 +31,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.swing.JComponent;
@@ -51,11 +52,13 @@ public class CountryCanvas extends JComponent {
     private int tX, tY;
     private int[] specific;
 
-    public CountryCanvas(CountryRegion region) {
+    public CountryCanvas() {
         super();
 
         setPreferredSize(new Dimension(2500, 1500));
+    }
 
+    public void setRegion(CountryRegion region) {
         centre = findCentre(region);
         centre[0] /= RATIO;
         centre[1] /= -RATIO;
@@ -175,7 +178,7 @@ public class CountryCanvas extends JComponent {
         return centre;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if (args.length < 1) {
             System.out.println("Country code required");
             System.exit(0);
@@ -183,30 +186,29 @@ public class CountryCanvas extends JComponent {
         }
         String code = args[0];
         String path = "GeoNames/res/cities1000.txt";
-        File res = new File(path);
-        Countries countries = new Countries();
-        Collection<GeoName> names;
-        Collection<CountryRegion> regions;
-        CountryRegion region = null;
-        try {
-            names = countries.loadNames(res, null);
-            regions = countries.toRegions(names);
+        File file = new File(path);
 
-            for (CountryRegion r : regions) {
-                if (code.equals(r.getCountryCode())) {
-                    region = r;
-                    break;
-                }
-            }
-            CountryCanvas canvas = new CountryCanvas(region);
-            JDialog window = new JDialog(null, ModalityType.APPLICATION_MODAL);
-            window.setBounds(0, 0, 500, 500);
-            window.getContentPane().add(new JScrollPane(canvas));
-            window.setVisible(true);
-            System.exit(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        CountryCanvas canvas = new CountryCanvas();
+        canvas.populateFromCities(code, file);
     }
 
+    public void populateFromCities(String code, File file) throws IOException {
+        Countries countries = new Countries();
+        Collection<GeoName> names = countries.loadNames(file, null);
+        Collection<CountryRegion> regions = countries.toRegions(names);
+        CountryRegion region = null;
+
+        for (CountryRegion r : regions) {
+            if (code.equals(r.getCountryCode())) {
+                region = r;
+                break;
+            }
+        }
+        setRegion(region);
+        JDialog window = new JDialog(null, ModalityType.APPLICATION_MODAL);
+        window.setBounds(0, 0, 500, 500);
+        window.getContentPane().add(new JScrollPane(this));
+        window.setVisible(true);
+        System.exit(0);
+    }
 }
