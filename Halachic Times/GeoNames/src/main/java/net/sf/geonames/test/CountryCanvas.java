@@ -45,9 +45,9 @@ public class CountryCanvas extends JComponent {
     private static final int RATIO = 50000;
     private static final int RATIO_ = -RATIO;
 
-    private static final int BORDER_VERTICES = 8;
+    private static final int BORDER_VERTICES = 16;
 
-    private int[] main8;
+    private int[] mainVertices;
     private int[] centre;
     private Polygon poly;
     private Polygon border;
@@ -64,14 +64,14 @@ public class CountryCanvas extends JComponent {
         centre = findCentre(region);
         centre[0] /= RATIO;
         centre[1] /= -RATIO;
-        main8 = region.findMainVertices(BORDER_VERTICES);
+        mainVertices = region.findMainVertices(BORDER_VERTICES);
 
         poly = new Polygon();
         for (int i = 0; i < region.npoints; i++) {
             poly.addPoint(region.xpoints[i] / RATIO, region.ypoints[i] / RATIO_);
         }
         border = new Polygon();
-        for (int i : main8) {
+        for (int i : mainVertices) {
             if (i >= 0)
                 border.addPoint(region.xpoints[i] / RATIO, region.ypoints[i] / RATIO_);
         }
@@ -146,7 +146,7 @@ public class CountryCanvas extends JComponent {
         }
 
         g.setColor(Color.BLUE);
-        for (int i : main8) {
+        for (int i : mainVertices) {
             if (i >= 0)
                 g.drawOval(poly.xpoints[i] - 2, poly.ypoints[i] - 2, 5, 5);
         }

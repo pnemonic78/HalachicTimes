@@ -54,7 +54,7 @@ import javax.xml.transform.stream.StreamResult;
 public class Countries extends Cities {
 
     /** The number of main vertices per region border. */
-    private static final int VERTICES_COUNT = 8;
+    private static final int VERTICES_COUNT = 16;
 
     /**
      * Constructs a new countries.
