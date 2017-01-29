@@ -173,57 +173,84 @@ public class AddressProvider {
         List<Address> addresses;
         Address best = null;
         Address bestCountry;
+        Address bestPlateau = null;
         Address bestCity;
 
         if (listener != null)
             listener.onFindAddress(this, location, best);
 
+        // Find the best country.
         addresses = findNearestCountry(location);
         best = findBestAddress(location, addresses, SAME_PLANET);
         if ((best != null) && (listener != null))
             listener.onFindAddress(this, location, best);
         bestCountry = best;
 
+        // Find the best XML city.
         addresses = findNearestCity(location);
-        best = findBestAddress(location, addresses);
+        best = findBestAddress(location, addresses, SAME_CITY);
         if ((best != null) && (listener != null))
             listener.onFindAddress(this, location, best);
         bestCity = best;
 
+        // Find the best cached city.
         addresses = findNearestAddressDatabase(location);
         best = findBestAddress(location, addresses);
         if ((best != null) && (listener != null))
             listener.onFindAddress(this, location, best);
 
+        // Find the best city from some Geocoder provider.
         if (best == null) {
             addresses = findNearestAddressGeocoder(location);
-            best = findBestAddress(location, addresses);
+            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
+            if ((bestPlateau != null) && (listener != null))
+                listener.onFindAddress(this, location, bestPlateau);
+            best = findBestAddress(location, addresses, SAME_CITY);
             if ((best != null) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
+
+        // Find the best city from Google.
         if (best == null) {
             addresses = findNearestAddressGoogle(location);
-            best = findBestAddress(location, addresses);
+            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
+            if ((bestPlateau != null) && (listener != null))
+                listener.onFindAddress(this, location, bestPlateau);
+            best = findBestAddress(location, addresses, SAME_CITY);
             if ((best != null) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
+
+        // Find the best city from Bing.
         if (best == null) {
             addresses = findNearestAddressBing(location);
-            best = findBestAddress(location, addresses);
+            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
+            if ((bestPlateau != null) && (listener != null))
+                listener.onFindAddress(this, location, bestPlateau);
+            best = findBestAddress(location, addresses, SAME_CITY);
             if ((best != null) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
+
+        // Find the best city from GeoNames.
         if (best == null) {
             addresses = findNearestAddressGeoNames(location);
-            best = findBestAddress(location, addresses);
+            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
+            if ((bestPlateau != null) && (listener != null))
+                listener.onFindAddress(this, location, bestPlateau);
+            best = findBestAddress(location, addresses, SAME_CITY);
             if ((best != null) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
+
         if (best == null) {
             best = bestCity;
-        }
-        if (best == null) {
-            best = bestCountry;
+            if (best == null) {
+                best = bestPlateau;
+                if (best == null) {
+                    best = bestCountry;
+                }
+            }
         }
 
         return best;
@@ -345,11 +372,7 @@ public class AddressProvider {
      * @return the best address - {@code null} otherwise.
      */
     private Address findBestAddress(Location location, List<Address> addresses) {
-        Address best = findBestAddress(location, addresses, SAME_CITY);
-        if (best == null) {
-            best = findBestAddress(location, addresses, SAME_PLATEAU);
-        }
-        return best;
+        return findBestAddress(location, addresses, SAME_CITY);
     }
 
     /**
