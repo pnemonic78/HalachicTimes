@@ -19,6 +19,9 @@
  */
 package net.sf.geonames;
 
+import static net.sf.geonames.CountryInfo.ISO639_ISRAEL;
+import static net.sf.geonames.CountryInfo.ISO639_PALESTINE;
+
 /**
  * GeoName data record.
  *
@@ -248,6 +251,9 @@ public class GeoNameRecord {
      *         the countryCode.
      */
     public void setCountryCode(String countryCode) {
+        if (ISO639_PALESTINE.equals(countryCode)) {
+            countryCode = ISO639_ISRAEL;
+        }
         this.countryCode = countryCode;
     }
 
