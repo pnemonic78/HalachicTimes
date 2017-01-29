@@ -33,7 +33,7 @@ import android.graphics.Region;
 public class CountryPolygon {
 
     /** Factor to convert a fixed-point integer to double. */
-    public static final double RATIO = 1e+6;
+    public static final double RATIO = 1e+5;
 
     /** Default length for latitudes and longitudes. */
     private static final int MIN_LENGTH = 8;

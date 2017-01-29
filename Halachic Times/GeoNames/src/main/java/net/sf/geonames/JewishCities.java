@@ -107,19 +107,19 @@ public class JewishCities extends Cities {
         if (language == null)
             resources.appendChild(countriesElement);
 
-        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_latitudes");
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(latitudesElement);
 
-        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_longitudes");
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(longitudesElement);
 
-        Element elevationsElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        Element elevationsElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
         elevationsElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "cities_elevations");
         elevationsElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
@@ -146,11 +146,11 @@ public class JewishCities extends Cities {
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            latitude.setTextContent(String.valueOf(place.getLatitude()));
+            latitude.setTextContent(Integer.toString((int) (place.getLatitude() * CountryRegion.FACTOR_TO_INT)));
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            longitude.setTextContent(String.valueOf(place.getLongitude()));
+            longitude.setTextContent(Integer.toString((int) (place.getLongitude() * CountryRegion.FACTOR_TO_INT)));
             elevation = doc.createElement(ANDROID_ELEMENT_ITEM);
-            elevation.setTextContent(String.valueOf(place.getGrossElevation()));
+            elevation.setTextContent(Integer.toString(place.getGrossElevation()));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
             zone.setTextContent(place.getTimeZone());
 

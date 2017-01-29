@@ -36,12 +36,12 @@ import java.io.IOException;
 public class CountryRegion extends Polygon {
 
     /** Factor to convert coordinate value to a fixed-point integer. */
-    public static final double FACTOR_TO_INT = 1e+6;
+    public static final double FACTOR_TO_INT = 1e+5;
     /**
      * Factor to convert coordinate value to a fixed-point integer for city
      * limits.
      */
-    private static final double CITY_BOUNDARY = 1e+5;
+    private static final double CITY_BOUNDARY = 1e+4;
 
     private final String countryCode;
 

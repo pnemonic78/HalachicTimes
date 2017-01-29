@@ -258,13 +258,13 @@ public class Cities {
         if (language == null)
             resources.appendChild(countriesElement);
 
-        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        Element latitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "latitudes");
         latitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
             resources.appendChild(latitudesElement);
 
-        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_STRING_ARRAY);
+        Element longitudesElement = doc.createElement(ANDROID_ELEMENT_INTEGER_ARRAY);
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_NAME, "longitudes");
         longitudesElement.setAttribute(ANDROID_ATTRIBUTE_TRANSLATABLE, "false");
         if (language == null)
@@ -282,9 +282,9 @@ public class Cities {
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            latitude.setTextContent(String.valueOf(place.getLatitude()));
+            latitude.setTextContent(Integer.toString((int) (place.getLatitude() * CountryRegion.FACTOR_TO_INT)));
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-            longitude.setTextContent(String.valueOf(place.getLongitude()));
+            longitude.setTextContent(Integer.toString((int) (place.getLongitude() * CountryRegion.FACTOR_TO_INT)));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
             zone.setTextContent(place.getTimeZone());
 

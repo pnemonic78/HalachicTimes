@@ -121,16 +121,16 @@ public class CountriesGeocoder extends GeocoderBase {
             citiesTimeZones = res.getStringArray(R.array.cities_time_zones);
 
             int citiesCount = citiesCountries.length;
-            String[] latitudes = res.getStringArray(R.array.cities_latitudes);
-            String[] longitudes = res.getStringArray(R.array.cities_longitudes);
-            String[] elevations = res.getStringArray(R.array.cities_elevations);
+            int[] latitudes = res.getIntArray(R.array.cities_latitudes);
+            int[] longitudes = res.getIntArray(R.array.cities_longitudes);
+            int[] elevations = res.getIntArray(R.array.cities_elevations);
             citiesLatitudes = new double[citiesCount];
             citiesLongitudes = new double[citiesCount];
             citiesElevations = new double[citiesCount];
             for (int i = 0; i < citiesCount; i++) {
-                citiesLatitudes[i] = Double.parseDouble(latitudes[i]);
-                citiesLongitudes[i] = Double.parseDouble(longitudes[i]);
-                citiesElevations[i] = Double.parseDouble(elevations[i]);
+                citiesLatitudes[i] = latitudes[i] / RATIO;
+                citiesLongitudes[i] = longitudes[i] / RATIO;
+                citiesElevations[i] = elevations[i];
             }
         }
         citiesNames = res.getStringArray(R.array.cities);

@@ -164,16 +164,16 @@ public class Countries extends Cities {
                     break;
 
                 latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-                latitude.setTextContent(String.valueOf(region.ypoints[pointIndex]));
+                latitude.setTextContent(Integer.toString(region.ypoints[pointIndex]));
                 latitudesElement.appendChild(latitude);
                 longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
-                longitude.setTextContent(String.valueOf(region.xpoints[pointIndex]));
+                longitude.setTextContent(Integer.toString(region.xpoints[pointIndex]));
                 longitudesElement.appendChild(longitude);
                 pointCount++;
             }
 
             verticesCount = doc.createElement(ANDROID_ELEMENT_ITEM);
-            verticesCount.setTextContent(String.valueOf(pointCount));
+            verticesCount.setTextContent(Integer.toString(pointCount));
             verticesCountElement.appendChild(verticesCount);
 
         }
