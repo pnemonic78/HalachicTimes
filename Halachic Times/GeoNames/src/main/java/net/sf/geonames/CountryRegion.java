@@ -21,12 +21,15 @@ package net.sf.geonames;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 
 import org.geotools.geojson.geom.GeometryJSON;
 
 import java.awt.Polygon;
 import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static net.sf.geonames.CountryInfo.*;
 
@@ -180,5 +183,30 @@ public class CountryRegion extends Polygon {
             coordinate = coordinates[i];
             region.addLocation(coordinate.y, coordinate.x);
         }
+    }
+
+    public static List<CountryRegion> toRegions(String countryCode, GeoShape geoShape) throws IOException {
+        List<CountryRegion> regions = new ArrayList<>();
+        CountryRegion region;
+
+        GeometryJSON json = new GeometryJSON();
+        Geometry geometry = json.read(geoShape.getGeoJSON());
+        geoShape.setGeometry(geometry);
+
+        if (geometry instanceof com.vividsolutions.jts.geom.Polygon) {
+            region = new CountryRegion(countryCode);
+            addGeometry(region, geometry);
+            regions.add(region);
+        } else if (geometry instanceof GeometryCollection) {
+            GeometryCollection gc = (GeometryCollection) geometry;
+            int count = gc.getNumGeometries();
+            for (int i = 0; i < count; i++) {
+                region = new CountryRegion(countryCode);
+                addGeometry(region, gc.getGeometryN(i));
+                regions.add(region);
+            }
+        }
+
+        return regions;
     }
 }

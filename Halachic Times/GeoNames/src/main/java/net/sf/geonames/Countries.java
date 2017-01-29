@@ -227,8 +227,7 @@ public class Countries extends Cities {
      */
     public Collection<CountryRegion> toRegions(Collection<CountryInfo> names, Collection<GeoShape> shapes) throws IOException {
         List<CountryRegion> regions = new ArrayList<>(names.size());
-        Long geonameId;
-        CountryRegion region;
+        Long geoNameId;
         Map<Long, GeoShape> shapesById = new HashMap<>();
         GeoShape shape;
 
@@ -237,13 +236,11 @@ public class Countries extends Cities {
         }
 
         for (CountryInfo name : names) {
-            geonameId = name.getGeoNameId();
-            shape = shapesById.get(geonameId);
+            geoNameId = name.getGeoNameId();
+            shape = shapesById.get(geoNameId);
             if (shape != null) {
-                region = CountryRegion.toRegion(name.getIso(), shape);
-                if (region != null) {
-                    regions.add(region);
-                }
+                regions.add(CountryRegion.toRegion(name.getIso(), shape));
+//                regions.addAll(CountryRegion.toRegions(name.getIso(), shape));
             }
         }
 

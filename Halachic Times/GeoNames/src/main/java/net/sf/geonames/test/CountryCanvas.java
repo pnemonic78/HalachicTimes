@@ -22,11 +22,9 @@ package net.sf.geonames.test;
 import net.sf.geonames.Countries;
 import net.sf.geonames.CountryInfo;
 import net.sf.geonames.CountryRegion;
-import net.sf.geonames.GeoName;
 import net.sf.geonames.GeoShape;
 
 import java.awt.Color;
-import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -37,13 +35,13 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javax.swing.JComponent;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 public class CountryCanvas extends JComponent {
 
     private static final int RATIO = 50000;
-    private static final int RATIO_ = -RATIO;
 
     private static final int BORDER_VERTICES = 16;
 
@@ -51,6 +49,8 @@ public class CountryCanvas extends JComponent {
     private int[] centre;
     private Polygon poly;
     private Polygon border;
+    private int ratio = RATIO;
+    private int ratioNeg = -RATIO;
     private int tX, tY;
     private int[] specific;
 
@@ -61,23 +61,15 @@ public class CountryCanvas extends JComponent {
     }
 
     public void setRegion(CountryRegion region) {
-        centre = findCentre(region);
-        centre[0] /= RATIO;
-        centre[1] /= -RATIO;
-        mainVertices = region.findMainVertices(BORDER_VERTICES);
-
-        poly = new Polygon();
-        for (int i = 0; i < region.npoints; i++) {
-            poly.addPoint(region.xpoints[i] / RATIO, region.ypoints[i] / RATIO_);
-        }
-        border = new Polygon();
-        for (int i : mainVertices) {
-            if (i >= 0)
-                border.addPoint(region.xpoints[i] / RATIO, region.ypoints[i] / RATIO_);
-        }
+        ratio = RATIO;
         tX = 0;
         tY = 0;
         switch (region.getCountryCode()) {
+            case "AE":
+                ratio /= 40;
+                tX = -3700;
+                tY = 2300;
+                break;
             case "AF":
                 tX = -1100;
                 tY = 900;
@@ -97,11 +89,29 @@ public class CountryCanvas extends JComponent {
                 tY = 1500;
                 break;
             case "ZA":
-                tX = -250;
-                tY = -300;
+                ratio /= 25;
+                tX = -800;
+                tY = -1000;
                 // Dikholola near Brits.
                 specific = new int[]{27746222, -25411172};
                 break;
+        }
+
+        ratioNeg = -ratio;
+        centre = findCentre(region);
+        centre[0] /= ratio;
+        centre[1] /= ratioNeg;
+        mainVertices = region.findMainVertices(BORDER_VERTICES);
+
+        poly = new Polygon();
+        for (int i = 0; i < region.npoints; i++) {
+            poly.addPoint(region.xpoints[i] / ratio, region.ypoints[i] / ratioNeg);
+        }
+        border = new Polygon();
+        for (int i : mainVertices) {
+            if (i >= 0) {
+                border.addPoint(region.xpoints[i] / ratio, region.ypoints[i] / ratioNeg);
+            }
         }
     }
 
@@ -155,7 +165,7 @@ public class CountryCanvas extends JComponent {
 
         if (specific != null) {
             g.setColor(Color.RED);
-            g.drawOval((specific[0] / RATIO) - 5, (specific[1] / RATIO_) - 5, 10, 10);
+            g.drawOval((specific[0] / ratio) - 5, (specific[1] / ratioNeg) - 5, 10, 10);
         }
     }
 
@@ -189,30 +199,8 @@ public class CountryCanvas extends JComponent {
         String code = args[0];
 
         CountryCanvas canvas = new CountryCanvas();
-        //canvas.populateFromCities(code, new File("GeoNames/res/cities1000.txt"));
         canvas.populateFromShapes(code, new File("GeoNames/res/countryInfo.txt"), new File("GeoNames/res/shapes_simplified_low.txt"));
     }
-
-    public void populateFromCities(String code, File file) throws IOException {
-        Countries countries = new Countries();
-        Collection<GeoName> names = countries.loadNames(file, null);
-        Collection<CountryRegion> regions = countries.toRegions(names);
-        CountryRegion region = null;
-
-        for (CountryRegion r : regions) {
-            if (code.equals(r.getCountryCode())) {
-                region = r;
-                break;
-            }
-        }
-        setRegion(region);
-        JDialog window = new JDialog(null, ModalityType.APPLICATION_MODAL);
-        window.setBounds(0, 0, 500, 500);
-        window.getContentPane().add(new JScrollPane(this));
-        window.setVisible(true);
-        System.exit(0);
-    }
-
 
     public void populateFromShapes(String code, File countryInfoFile, File shapesFile) throws IOException {
         Countries countries = new Countries();
@@ -228,10 +216,11 @@ public class CountryCanvas extends JComponent {
             }
         }
         setRegion(region);
-        JDialog window = new JDialog(null, ModalityType.APPLICATION_MODAL);
-        window.setBounds(0, 0, 500, 500);
+
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        window.setBounds(0, 0, 1000, 1000);
         window.getContentPane().add(new JScrollPane(this));
         window.setVisible(true);
-        System.exit(0);
     }
 }
