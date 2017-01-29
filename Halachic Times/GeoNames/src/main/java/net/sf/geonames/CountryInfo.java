@@ -28,6 +28,11 @@ import java.util.List;
  */
 public class CountryInfo {
 
+    /** ISO 639 country code for Israel. */
+    public static final String ISO639_ISRAEL = "IL";
+    /** ISO 639 country code for Palestine. */
+    public static final String ISO639_PALESTINE = "PS";
+
     private String iso;
     private String iso3;
     private int isoNumeric;

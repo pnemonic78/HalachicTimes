@@ -28,6 +28,8 @@ import java.awt.Polygon;
 import java.awt.geom.Point2D;
 import java.io.IOException;
 
+import static net.sf.geonames.CountryInfo.*;
+
 /**
  * Country region.
  *
@@ -50,6 +52,9 @@ public class CountryRegion extends Polygon {
      */
     public CountryRegion(String countryCode) {
         super();
+        if (ISO639_PALESTINE.equals(countryCode)) {
+            countryCode = ISO639_ISRAEL;
+        }
         this.countryCode = countryCode;
     }
 

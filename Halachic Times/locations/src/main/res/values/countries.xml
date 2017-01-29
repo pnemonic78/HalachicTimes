@@ -103,6 +103,7 @@
         <item>ID</item>
         <item>IE</item>
         <item>IL</item>
+        <item>IL</item>
         <item>IM</item>
         <item>IN</item>
         <item>IO</item>
@@ -182,7 +183,6 @@
         <item>PM</item>
         <item>PN</item>
         <item>PR</item>
-        <item>PS</item>
         <item>PT</item>
         <item>PW</item>
         <item>PY</item>
@@ -352,6 +352,7 @@
         <item>16</item>
         <item>16</item>
         <item>13</item>
+        <item>13</item>
         <item>8</item>
         <item>16</item>
         <item>7</item>
@@ -430,7 +431,6 @@
         <item>16</item>
         <item>8</item>
         <item>4</item>
-        <item>13</item>
         <item>13</item>
         <item>6</item>
         <item>4</item>
@@ -1794,6 +1794,19 @@
         <item>5435000</item>
         <item>5414800</item>
         <item>5397800</item>
+        <item>3132300</item>
+        <item>3121700</item>
+        <item>3136400</item>
+        <item>3137900</item>
+        <item>3149700</item>
+        <item>3175100</item>
+        <item>3176600</item>
+        <item>3204099</item>
+        <item>3238400</item>
+        <item>3250700</item>
+        <item>3254600</item>
+        <item>3215300</item>
+        <item>3185200</item>
         <item>3159700</item>
         <item>3121700</item>
         <item>3137700</item>
@@ -2789,19 +2802,6 @@
         <item>1848000</item>
         <item>1848500</item>
         <item>1848600</item>
-        <item>3132300</item>
-        <item>3121700</item>
-        <item>3136400</item>
-        <item>3137900</item>
-        <item>3149700</item>
-        <item>3175100</item>
-        <item>3176600</item>
-        <item>3204099</item>
-        <item>3238400</item>
-        <item>3250700</item>
-        <item>3254600</item>
-        <item>3215300</item>
-        <item>3185200</item>
         <item>3782800</item>
         <item>3240400</item>
         <item>3014200</item>
@@ -4899,6 +4899,19 @@
         <item>-978900</item>
         <item>-1021400</item>
         <item>-1026099</item>
+        <item>3421700</item>
+        <item>3426800</item>
+        <item>3490400</item>
+        <item>3522999</item>
+        <item>3547800</item>
+        <item>3524300</item>
+        <item>3555599</item>
+        <item>3551600</item>
+        <item>3556000</item>
+        <item>3540400</item>
+        <item>3520800</item>
+        <item>3497900</item>
+        <item>3505700</item>
         <item>3449100</item>
         <item>3427000</item>
         <item>3489000</item>
@@ -5894,19 +5907,6 @@
         <item>-6613400</item>
         <item>-6623900</item>
         <item>-6716800</item>
-        <item>3421700</item>
-        <item>3426800</item>
-        <item>3490400</item>
-        <item>3522999</item>
-        <item>3547800</item>
-        <item>3524300</item>
-        <item>3555599</item>
-        <item>3551600</item>
-        <item>3556000</item>
-        <item>3540400</item>
-        <item>3520800</item>
-        <item>3497900</item>
-        <item>3505700</item>
         <item>-2584100</item>
         <item>-1646300</item>
         <item>-1587200</item>
