@@ -56,7 +56,6 @@ public class CountryCanvas extends JComponent {
 
     public CountryCanvas() {
         super();
-
         setPreferredSize(new Dimension(2500, 1500));
     }
 
@@ -115,6 +114,7 @@ public class CountryCanvas extends JComponent {
         }
     }
 
+    @Override
     public void paint(Graphics g) {
         g.translate(tX, tY);
 
@@ -167,6 +167,8 @@ public class CountryCanvas extends JComponent {
             g.setColor(Color.RED);
             g.drawOval((specific[0] / ratio) - 5, (specific[1] / ratioNeg) - 5, 10, 10);
         }
+
+        g.translate(-tX, -tY);
     }
 
     /**
@@ -198,29 +200,28 @@ public class CountryCanvas extends JComponent {
         }
         String code = args[0];
 
-        CountryCanvas canvas = new CountryCanvas();
-        canvas.populateFromShapes(code, new File("GeoNames/res/countryInfo.txt"), new File("GeoNames/res/shapes_simplified_low.txt"));
+        populateFromShapes(code, new File("GeoNames/res/countryInfo.txt"), new File("GeoNames/res/shapes_simplified_low.txt"));
     }
 
-    public void populateFromShapes(String code, File countryInfoFile, File shapesFile) throws IOException {
+    public static void populateFromShapes(String code, File countryInfoFile, File shapesFile) throws IOException {
         Countries countries = new Countries();
         Collection<CountryInfo> names = countries.loadInfo(countryInfoFile);
         Collection<GeoShape> shapes = countries.loadShapes(shapesFile);
         Collection<CountryRegion> regions = countries.toRegions(names, shapes);
-        CountryRegion region = null;
+        CountryCanvas canvas = null;
 
-        for (CountryRegion r : regions) {
-            if (code.equals(r.getCountryCode())) {
-                region = r;
+        for (CountryRegion region : regions) {
+            if (code.equals(region.getCountryCode())) {
+                canvas = new CountryCanvas();
+                canvas.setRegion(region);
                 break;
             }
         }
-        setRegion(region);
 
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setBounds(0, 0, 1000, 1000);
-        window.getContentPane().add(new JScrollPane(this));
+        window.getContentPane().add(new JScrollPane(canvas));
         window.setVisible(true);
     }
 }

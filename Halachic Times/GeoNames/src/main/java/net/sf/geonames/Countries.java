@@ -240,7 +240,6 @@ public class Countries extends Cities {
             shape = shapesById.get(geoNameId);
             if (shape != null) {
                 regions.add(CountryRegion.toRegion(name.getIso(), shape));
-//                regions.addAll(CountryRegion.toRegions(name.getIso(), shape));
             }
         }
 
