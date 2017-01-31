@@ -21,7 +21,9 @@ package net.sf.times.compass;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -34,8 +36,10 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import net.sf.app.ThemedApplication;
 import net.sf.times.compass.lib.BuildConfig;
 import net.sf.times.compass.lib.R;
+import net.sf.times.compass.preference.CompassPreferences;
 
 import java.util.Random;
 
@@ -51,6 +55,27 @@ public class CompassView extends View {
     private float north;
     private float holiest;
     private float northToHoliest;
+
+    private int compassColorFace;
+    private int compassColorGradient;
+    private int compassColorFrame;
+    private int compassColorFrameHighlight;
+    private int compassColorFrameShadow;
+    private int compassColorLabel;
+    private int compassColorLabelDark;
+    private int compassColorLabel2;
+    private int compassColorNorth;
+    private int compassColorNorthDark;
+    private int compassColorSouth;
+    private int compassColorSouthDark;
+    private int compassColorEast;
+    private int compassColorEastDark;
+    private int compassColorWest;
+    private int compassColorWestDark;
+    private int compassColorTarget;
+    private int compassColorArrowBg;
+    private int compassColorPivot;
+    private int compassColorPivotDark;
 
     private Paint paintCircle;
     private Paint paintFrame;
@@ -127,7 +152,33 @@ public class CompassView extends View {
 
     /** Initialise. */
     private void init(Context context) {
-        Resources res = getResources();
+        Resources res = context.getResources();
+        ThemedApplication app = (ThemedApplication) context.getApplicationContext();
+        CompassPreferences prefs = (CompassPreferences) app.getPreferences();
+        TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
+
+        compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);
+        compassColorGradient = a.getColor(R.styleable.CompassTheme_compassColorGradient, Color.TRANSPARENT);
+        compassColorFrame = a.getColor(R.styleable.CompassTheme_compassColorFrame, Color.TRANSPARENT);
+        compassColorFrameHighlight = a.getColor(R.styleable.CompassTheme_compassColorFrameHighlight, Color.TRANSPARENT);
+        compassColorFrameShadow = a.getColor(R.styleable.CompassTheme_compassColorFrameShadow, Color.TRANSPARENT);
+        compassColorLabel = a.getColor(R.styleable.CompassTheme_compassColorLabel, Color.TRANSPARENT);
+        compassColorLabelDark = a.getColor(R.styleable.CompassTheme_compassColorLabelDark, Color.TRANSPARENT);
+        compassColorLabel2 = a.getColor(R.styleable.CompassTheme_compassColorLabel2, Color.TRANSPARENT);
+        compassColorNorth = a.getColor(R.styleable.CompassTheme_compassColorNorth, Color.TRANSPARENT);
+        compassColorNorthDark = a.getColor(R.styleable.CompassTheme_compassColorNorthDark, Color.TRANSPARENT);
+        compassColorSouth = a.getColor(R.styleable.CompassTheme_compassColorSouth, Color.TRANSPARENT);
+        compassColorSouthDark = a.getColor(R.styleable.CompassTheme_compassColorSouthDark, Color.TRANSPARENT);
+        compassColorEast = a.getColor(R.styleable.CompassTheme_compassColorEast, Color.TRANSPARENT);
+        compassColorEastDark = a.getColor(R.styleable.CompassTheme_compassColorEastDark, Color.TRANSPARENT);
+        compassColorWest = a.getColor(R.styleable.CompassTheme_compassColorWest, Color.TRANSPARENT);
+        compassColorWestDark = a.getColor(R.styleable.CompassTheme_compassColorWestDark, Color.TRANSPARENT);
+        compassColorTarget = a.getColor(R.styleable.CompassTheme_compassColorTarget, Color.TRANSPARENT);
+        compassColorArrowBg = a.getColor(R.styleable.CompassTheme_compassColorArrowBg, Color.TRANSPARENT);
+        compassColorPivot = a.getColor(R.styleable.CompassTheme_compassColorPivot, Color.TRANSPARENT);
+        compassColorPivotDark = a.getColor(R.styleable.CompassTheme_compassColorPivotDark, Color.TRANSPARENT);
+
+        a.recycle();
 
         labelNorth = context.getString(R.string.north);
         labelEast = context.getString(R.string.east);
@@ -136,26 +187,26 @@ public class CompassView extends View {
 
         paintCircle = new Paint(Paint.DITHER_FLAG);
         paintCircle.setStyle(Paint.Style.FILL);
-        paintCircle.setColor(res.getColor(R.color.compass));
+        paintCircle.setColor(compassColorFace);
 
         paintFrame = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintFrame.setStyle(Paint.Style.STROKE);
         paintFrame.setStrokeWidth(res.getDimension(R.dimen.circle_thickness));
-        paintFrame.setColor(res.getColor(R.color.compass_frame));
+        paintFrame.setColor(compassColorFrame);
 
         paintFrameOuter = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintFrameOuter.setStyle(Paint.Style.STROKE);
         paintFrameOuter.setStrokeWidth(res.getDimension(R.dimen.circle_bevel_thickness));
-        paintFrameOuter.setColor(res.getColor(R.color.compass_frame));
+        paintFrameOuter.setColor(compassColorFrame);
 
         paintFrameInner = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintFrameInner.setStyle(Paint.Style.STROKE);
         paintFrameInner.setStrokeWidth(res.getDimension(R.dimen.circle_bevel_thickness));
-        paintFrameInner.setColor(res.getColor(R.color.compass_frame));
+        paintFrameInner.setColor(compassColorFrame);
 
         paintPivot = new Paint(Paint.DITHER_FLAG);
         paintPivot.setStyle(Paint.Style.FILL);
-        paintPivot.setColor(res.getColor(R.color.compass_pivot));
+        paintPivot.setColor(compassColorPivot);
 
         paintArrow = new Paint(Paint.DITHER_FLAG);
         paintArrow.setStyle(Paint.Style.FILL);
@@ -165,30 +216,30 @@ public class CompassView extends View {
         paintNorth.setStrokeWidth(res.getDimension(R.dimen.north_thickness));
         paintNorth.setTextSize(res.getDimension(R.dimen.label_size));
         paintNorth.setTextAlign(Align.CENTER);
-        paintNorth.setColor(res.getColor(R.color.compass_north));
+        paintNorth.setColor(compassColorNorth);
 
         paintSouth = new TextPaint(paintNorth);
         paintSouth.setStrokeWidth(res.getDimension(R.dimen.south_thickness));
-        paintSouth.setColor(res.getColor(R.color.compass_south));
+        paintSouth.setColor(compassColorSouth);
 
         paintEast = new TextPaint(paintSouth);
         paintEast.setStrokeWidth(res.getDimension(R.dimen.label_thickness));
-        paintEast.setColor(res.getColor(R.color.compass_east));
+        paintEast.setColor(compassColorEast);
 
         paintWest = new TextPaint(paintEast);
-        paintEast.setColor(res.getColor(R.color.compass_west));
+        paintEast.setColor(compassColorWest);
 
         paintNE = new Paint(paintEast);
         paintNE.setStrokeWidth(res.getDimension(R.dimen.label2_thickness));
-        paintNE.setColor(res.getColor(R.color.compass_label2));
+        paintNE.setColor(compassColorLabel2);
 
         paintHoliest = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintHoliest.setStyle(Paint.Style.FILL_AND_STROKE);
         paintHoliest.setStrokeWidth(res.getDimension(R.dimen.holiest_thickness));
-        paintHoliest.setColor(res.getColor(R.color.compass_holiest));
+        paintHoliest.setColor(compassColorTarget);
 
         paintFill = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintFill.setColor(res.getColor(R.color.compass_arrow_bg));
+        paintFill.setColor(compassColorArrowBg);
         paintFill.setStyle(Paint.Style.STROKE);
         paintFill.setStrokeCap(Paint.Cap.BUTT);
 
@@ -386,23 +437,23 @@ public class CompassView extends View {
         radiusPivot = r15;
 
         if (r > 0) {
-            RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, res.getColor(R.color.compass), res.getColor(R.color.compass_gradient), Shader.TileMode.CLAMP);
+            RadialGradient gradientCircle = new RadialGradient(w2, h2, r * 3, compassColorFace, compassColorGradient, Shader.TileMode.CLAMP);
             paintCircle.setShader(gradientCircle);
 
-            RadialGradient gradientPivot = new RadialGradient(w2, h2, radiusPivot, res.getColor(R.color.compass_pivot), res.getColor(R.color.compass_pivot_dark), Shader.TileMode.CLAMP);
+            RadialGradient gradientPivot = new RadialGradient(w2, h2, radiusPivot, compassColorPivot, compassColorPivotDark, Shader.TileMode.CLAMP);
             paintPivot.setShader(gradientPivot);
         }
 
-        LinearGradient gradientNorth = new LinearGradient(w2, h2, w2, 0, res.getColor(R.color.compass_north), res.getColor(R.color.compass_north_dark), Shader.TileMode.CLAMP);
+        LinearGradient gradientNorth = new LinearGradient(w2, h2, w2, 0, compassColorNorth, compassColorNorthDark, Shader.TileMode.CLAMP);
         paintNorth.setShader(gradientNorth);
 
-        LinearGradient gradientEast = new LinearGradient(w2, h2, w2, 0, res.getColor(R.color.compass_east), res.getColor(R.color.compass_east_dark), Shader.TileMode.CLAMP);
+        LinearGradient gradientEast = new LinearGradient(w2, h2, w2, 0, compassColorEast, compassColorEastDark, Shader.TileMode.CLAMP);
         paintEast.setShader(gradientEast);
 
-        LinearGradient gradientSouth = new LinearGradient(w2, h2, w2, 0, res.getColor(R.color.compass_south), res.getColor(R.color.compass_south_dark), Shader.TileMode.CLAMP);
+        LinearGradient gradientSouth = new LinearGradient(w2, h2, w2, 0, compassColorSouth, compassColorSouthDark, Shader.TileMode.CLAMP);
         paintSouth.setShader(gradientSouth);
 
-        LinearGradient gradientWest = new LinearGradient(w2, h2, w2, 0, res.getColor(R.color.compass_west), res.getColor(R.color.compass_west_dark), Shader.TileMode.CLAMP);
+        LinearGradient gradientWest = new LinearGradient(w2, h2, w2, 0, compassColorWest, compassColorWestDark, Shader.TileMode.CLAMP);
         paintWest.setShader(gradientWest);
 
         final float sizeDirections = r2;
@@ -430,9 +481,9 @@ public class CompassView extends View {
         rectFrameInner.right = w2 + r - frameThicknessHalf;
         rectFrameInner.bottom = h2 + r - frameThicknessHalf;
 
-        int colorFrame = res.getColor(R.color.compass_frame);
-        int colorFrameHighlight = res.getColor(R.color.compass_frame_highlight);
-        int colorFrameShadow = res.getColor(R.color.compass_frame_shadow);
+        int colorFrame = compassColorFrame;
+        int colorFrameHighlight = compassColorFrameHighlight;
+        int colorFrameShadow = compassColorFrameShadow;
 
         int[] colorsFrameOuter = {colorFrameShadow, colorFrameShadow, colorFrame, colorFrame, colorFrameHighlight, colorFrameHighlight, colorFrameHighlight, colorFrame, colorFrameShadow};
         float[] positionsFrameOuter = {0f, 0.125f, 0.250f, 0.375f, 0.500f, 0.625f, 0.750f, 0.875f, 1f};

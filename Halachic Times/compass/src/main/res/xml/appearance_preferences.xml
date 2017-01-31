@@ -17,5 +17,11 @@
         android:entryValues="@array/list_theme_values"
         android:key="theme"
         android:title="@string/theme_title"/>
+    <ListPreference
+        android:defaultValue="@string/compass_theme_defaultValue"
+        android:entries="@array/compass_theme_entries"
+        android:entryValues="@array/compass_theme_values"
+        android:key="theme.compass"
+        android:title="@string/compass_theme_title"/>
 
 </PreferenceScreen>

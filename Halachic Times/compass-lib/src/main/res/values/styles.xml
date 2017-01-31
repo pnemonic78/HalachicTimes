@@ -3,8 +3,58 @@
 
     <style name="Widget.Compass.Holiest.Text" parent="Widget.TextView.Small">
         <item name="android:ellipsize">marquee</item>
-        <item name="android:textColor">@color/compass_holiest</item>
+        <item name="android:textColor">@color/compass_target_gold</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Compass"/>
+
+    <style name="Compass.Theme"/>
+
+    <style name="Compass.Theme.Gold">
+        <item name="compassColorFace">@color/compass_face_gold</item>
+        <item name="compassColorGradient">@color/compass_gradient_gold</item>
+        <item name="compassColorFrame">@color/compass_frame_gold</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_gold</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_gold</item>
+        <item name="compassColorLabel">@color/compass_label_gold</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_gold</item>
+        <item name="compassColorLabel2">@color/compass_label2_gold</item>
+        <item name="compassColorNorth">@color/compass_north_gold</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_gold</item>
+        <item name="compassColorSouth">@color/compass_south_gold</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_gold</item>
+        <item name="compassColorEast">@color/compass_east_gold</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_gold</item>
+        <item name="compassColorWest">@color/compass_west_gold</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_gold</item>
+        <item name="compassColorTarget">@color/compass_target_gold</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_gold</item>
+        <item name="compassColorPivot">@color/compass_pivot_gold</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_gold</item>
+    </style>
+
+    <style name="Compass.Theme.Chrome">
+        <item name="compassColorFace">@color/compass_face_chrome</item>
+        <item name="compassColorGradient">@color/compass_gradient_chrome</item>
+        <item name="compassColorFrame">@color/compass_frame_chrome</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_chrome</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_chrome</item>
+        <item name="compassColorLabel">@color/compass_label_chrome</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_chrome</item>
+        <item name="compassColorLabel2">@color/compass_label2_chrome</item>
+        <item name="compassColorNorth">@color/compass_north_chrome</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_chrome</item>
+        <item name="compassColorSouth">@color/compass_south_chrome</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_chrome</item>
+        <item name="compassColorEast">@color/compass_east_chrome</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_chrome</item>
+        <item name="compassColorWest">@color/compass_west_chrome</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_chrome</item>
+        <item name="compassColorTarget">@color/compass_target_chrome</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_chrome</item>
+        <item name="compassColorPivot">@color/compass_pivot_chrome</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_chrome</item>
     </style>
 
 </resources>

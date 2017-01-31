@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CompassTheme">
+        <attr name="compassColorFace" format="color"/>
+        <attr name="compassColorGradient" format="color"/>
+        <attr name="compassColorFrame" format="color"/>
+        <attr name="compassColorFrameHighlight" format="color"/>
+        <attr name="compassColorFrameShadow" format="color"/>
+        <attr name="compassColorLabel" format="color"/>
+        <attr name="compassColorLabelDark" format="color"/>
+        <attr name="compassColorLabel2" format="color"/>
+        <attr name="compassColorNorth" format="color"/>
+        <attr name="compassColorNorthDark" format="color"/>
+        <attr name="compassColorSouth" format="color"/>
+        <attr name="compassColorSouthDark" format="color"/>
+        <attr name="compassColorEast" format="color"/>
+        <attr name="compassColorEastDark" format="color"/>
+        <attr name="compassColorWest" format="color"/>
+        <attr name="compassColorWestDark" format="color"/>
+        <attr name="compassColorTarget" format="color"/>
+        <attr name="compassColorArrowBg" format="color"/>
+        <attr name="compassColorPivot" format="color"/>
+        <attr name="compassColorPivotDark" format="color"/>
+    </declare-styleable>
+
+</resources>

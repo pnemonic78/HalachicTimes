@@ -9,4 +9,9 @@
     <string name="compass_bearing_circle">Great circle (shortest path)</string>
     <string name="compass_bearing_rhumb">Rhumb line (constant angle)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Compass theme</string>
+    <string name="compass_theme_chrome">Chrome</string>
+    <string name="compass_theme_gold">Gold</string>
+
 </resources>

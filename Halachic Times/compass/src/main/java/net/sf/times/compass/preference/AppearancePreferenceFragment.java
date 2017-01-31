@@ -40,5 +40,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
         initList(CompassPreferences.KEY_COORDS_FORMAT);
         initList(CompassPreferences.KEY_THEME);
+        initList(CompassPreferences.KEY_THEME_COMPASS);
     }
 }
