@@ -247,6 +247,9 @@ public class GeoNames {
             record.setModification(field);
 
             if ((filter == null) || filter.accept(record)) {
+                if (filter != null) {
+                    filter.replaceLocation(record);
+                }
                 records.add(record);
             }
         }

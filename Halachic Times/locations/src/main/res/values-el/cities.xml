@@ -4,6 +4,7 @@
     <string-array name="cities">
         <item>Ανκορέιτζ</item>
         <item>Βανκούβερ</item>
+        <item>Πόρτλαντ</item>
         <item>Σαν Φρανσίσκο</item>
         <item>Σιάτλ</item>
         <item>Λος Άντζελες</item>
@@ -28,7 +29,6 @@
         <item>Νέα Υόρκη</item>
         <item>Μοντρεαλ</item>
         <item>Βοστωνη</item>
-        <item>Πόρτλαντ</item>
         <item>Μπουένος Άιρες</item>
         <item>Σάο Πάολο</item>
         <item>Ρίο ντε Τζανέιρο</item>
@@ -39,12 +39,11 @@
         <item>Μάντσεστερ</item>
         <item>Λονδίνο</item>
         <item>Παρίσι</item>
-        <item>Βρυξέλλες</item>
+        <item>Αμβέρσα</item>
         <item>Λυών</item>
         <item>Άμστερνταμ</item>
         <item>Μασσαλία</item>
         <item>Γενευη</item>
-        <item>Νίκαια</item>
         <item>Βέρνη</item>
         <item>Ζυρίχη</item>
         <item>Όσλο</item>

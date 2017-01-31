@@ -4,6 +4,7 @@
     <string-array name="cities">
         <item>Anchorage</item>
         <item>Vancouver</item>
+        <item>Portland</item>
         <item>San Francisco</item>
         <item>Seattle</item>
         <item>Los Angeles</item>
@@ -28,7 +29,6 @@
         <item>New York</item>
         <item>Montreal</item>
         <item>Boston</item>
-        <item>Portland</item>
         <item>Buenos Aires</item>
         <item>São Paulo</item>
         <item>Rio de Janeiro</item>
@@ -39,12 +39,11 @@
         <item>Manchester</item>
         <item>London</item>
         <item>Paris</item>
-        <item>Brussels</item>
+        <item>Antwerp</item>
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marseille</item>
         <item>Geneva</item>
-        <item>Nice</item>
         <item>Bern</item>
         <item>Zurich</item>
         <item>Oslo</item>
@@ -97,6 +96,7 @@
         <item>US</item>
         <item>US</item>
         <item>US</item>
+        <item>US</item>
         <item>MX</item>
         <item>US</item>
         <item>US</item>
@@ -115,7 +115,6 @@
         <item>US</item>
         <item>CA</item>
         <item>US</item>
-        <item>US</item>
         <item>AR</item>
         <item>BR</item>
         <item>BR</item>
@@ -131,7 +130,6 @@
         <item>NL</item>
         <item>FR</item>
         <item>CH</item>
-        <item>FR</item>
         <item>CH</item>
         <item>CH</item>
         <item>NO</item>
@@ -178,6 +176,7 @@
     <integer-array name="cities_latitudes" translatable="false">
         <item>6121806</item>
         <item>4924966</item>
+        <item>4542756</item>
         <item>3777493</item>
         <item>4760621</item>
         <item>3405223</item>
@@ -202,31 +201,29 @@
         <item>4071427</item>
         <item>4550884</item>
         <item>4235843</item>
-        <item>4366147</item>
         <item>-3461314</item>
         <item>-2354750</item>
-        <item>-2290278</item>
+        <item>-2290412</item>
         <item>3871667</item>
         <item>3358831</item>
         <item>5459682</item>
         <item>4041650</item>
         <item>5348095</item>
         <item>5150853</item>
-        <item>4885341</item>
-        <item>5085045</item>
+        <item>4886573</item>
+        <item>5121996</item>
         <item>4574846</item>
         <item>5237403</item>
         <item>4329695</item>
         <item>4620222</item>
-        <item>4370313</item>
         <item>4694809</item>
         <item>4736667</item>
-        <item>5991273</item>
+        <item>5991194</item>
         <item>4813743</item>
         <item>4189193</item>
         <item>5567594</item>
         <item>5252437</item>
-        <item>4820849</item>
+        <item>4821086</item>
         <item>5933258</item>
         <item>4384864</item>
         <item>-3392584</item>
@@ -234,9 +231,9 @@
         <item>5222977</item>
         <item>6016952</item>
         <item>-2620227</item>
-        <item>4101384</item>
+        <item>4101280</item>
         <item>5993863</item>
-        <item>5045466</item>
+        <item>5044630</item>
         <item>-2985790</item>
         <item>3166926</item>
         <item>3179213</item>
@@ -253,7 +250,7 @@
         <item>3296465</item>
         <item>3279220</item>
         <item>5575222</item>
-        <item>902497</item>
+        <item>903506</item>
         <item>1907283</item>
         <item>2865195</item>
         <item>-3195224</item>
@@ -265,6 +262,7 @@
     <integer-array name="cities_longitudes" translatable="false">
         <item>-14990028</item>
         <item>-12311934</item>
+        <item>-12281465</item>
         <item>-12241942</item>
         <item>-12233207</item>
         <item>-11824368</item>
@@ -289,31 +287,29 @@
         <item>-7400597</item>
         <item>-7358781</item>
         <item>-7105977</item>
-        <item>-7025533</item>
         <item>-5837723</item>
         <item>-4663611</item>
-        <item>-4320750</item>
+        <item>-4357345</item>
         <item>-913333</item>
         <item>-761138</item>
         <item>-592541</item>
         <item>-370256</item>
         <item>-223742</item>
         <item>-12573</item>
-        <item>234880</item>
-        <item>434877</item>
+        <item>233821</item>
+        <item>438618</item>
         <item>484671</item>
         <item>488969</item>
         <item>538107</item>
         <item>614569</item>
-        <item>726608</item>
         <item>744744</item>
         <item>855000</item>
-        <item>1074609</item>
+        <item>1073139</item>
         <item>1157549</item>
         <item>1251133</item>
         <item>1256553</item>
         <item>1341053</item>
-        <item>1637208</item>
+        <item>1635505</item>
         <item>1806490</item>
         <item>1835644</item>
         <item>1842322</item>
@@ -321,9 +317,9 @@
         <item>2101178</item>
         <item>2493545</item>
         <item>2804363</item>
-        <item>2894966</item>
+        <item>2895507</item>
         <item>3031413</item>
-        <item>3052380</item>
+        <item>3051808</item>
         <item>3102920</item>
         <item>3457148</item>
         <item>3464965</item>
@@ -340,7 +336,7 @@
         <item>3549600</item>
         <item>3553123</item>
         <item>3761556</item>
-        <item>3874689</item>
+        <item>3874867</item>
         <item>7288261</item>
         <item>7723148</item>
         <item>11586140</item>
@@ -352,6 +348,7 @@
     <integer-array name="cities_elevations" translatable="false">
         <item>31</item>
         <item>70</item>
+        <item>12</item>
         <item>16</item>
         <item>56</item>
         <item>89</item>
@@ -376,7 +373,6 @@
         <item>10</item>
         <item>216</item>
         <item>14</item>
-        <item>19</item>
         <item>31</item>
         <item>769</item>
         <item>5</item>
@@ -387,12 +383,11 @@
         <item>51</item>
         <item>25</item>
         <item>42</item>
-        <item>28</item>
+        <item>10</item>
         <item>173</item>
         <item>13</item>
         <item>28</item>
         <item>400</item>
-        <item>25</item>
         <item>549</item>
         <item>429</item>
         <item>26</item>
@@ -443,6 +438,7 @@
         <item>America/Los_Angeles</item>
         <item>America/Los_Angeles</item>
         <item>America/Los_Angeles</item>
+        <item>America/Los_Angeles</item>
         <item>America/Phoenix</item>
         <item>America/Denver</item>
         <item>America/Mexico_City</item>
@@ -463,7 +459,6 @@
         <item>America/New_York</item>
         <item>America/Toronto</item>
         <item>America/New_York</item>
-        <item>America/New_York</item>
         <item>America/Argentina/Buenos_Aires</item>
         <item>America/Sao_Paulo</item>
         <item>America/Sao_Paulo</item>
@@ -479,7 +474,6 @@
         <item>Europe/Amsterdam</item>
         <item>Europe/Paris</item>
         <item>Europe/Zurich</item>
-        <item>Europe/Paris</item>
         <item>Europe/Zurich</item>
         <item>Europe/Zurich</item>
         <item>Europe/Oslo</item>

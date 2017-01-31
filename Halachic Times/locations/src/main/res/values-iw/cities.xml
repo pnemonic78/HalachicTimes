@@ -4,6 +4,7 @@
     <string-array name="cities">
         <item>אנקורג</item>
         <item>ונקובר</item>
+        <item>פורטלנד</item>
         <item>סן פרנסיסקו</item>
         <item>סיאטל</item>
         <item>לוס אנגלס</item>
@@ -28,7 +29,6 @@
         <item>ניו יורק</item>
         <item>מונטריאול</item>
         <item>בוסטון</item>
-        <item>פורטלנד</item>
         <item>בואנוס איירס</item>
         <item>סאו פאולו</item>
         <item>ריו דה זניירו</item>
@@ -39,12 +39,11 @@
         <item>מנצ\'סטר</item>
         <item>לונדון</item>
         <item>פריז</item>
-        <item>בריסל</item>
+        <item>אנטוורפן</item>
         <item>ליון</item>
         <item>אמסטרדם</item>
         <item>מרסיי</item>
         <item>זנבה</item>
-        <item>ניס</item>
         <item>ברן</item>
         <item>ציריך</item>
         <item>אוסלו</item>

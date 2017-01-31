@@ -28,16 +28,28 @@ import java.util.Arrays;
  */
 public class JewishCitiesFilter implements NameFilter {
 
+    private static final long ADDIS_ABABA = 344979;
+    private static final long ANTWERP = 2803138;
+    private static final long ISTANBUL = 745044;
+    private static final long KIEV = 703448;
+    private static final long OSLO = 3143244;
+    private static final long PARIS = 2988507;
+    private static final long PORTLAND = 5746545;
+    private static final long RIO_DE_JANEIRO = 3451190;
+    private static final long VIENNA = 2761369;
+
     /**
      * List of Jewish cities' GeoName IDs.
      */
     private static final long[] CITIES = {
             // Addis Ababa, Ethiopia
-            344979,
+            ADDIS_ABABA,
             // Amsterdam, Netherlands
             2759794,
             // Anchorage, United States
             5879400,
+            // Antwerp, Belgium
+            ANTWERP,
             // Ariel, Israel
             8199394,
             // Ashdod, Israel
@@ -64,8 +76,6 @@ public class JewishCitiesFilter implements NameFilter {
             3688689,
             // Boston, United States
             4930956,
-            // Brussels, Belgium
-            2800866,
             // Budapest, Hungary
             3054643,
             // Buenos Aires, Argentina
@@ -101,13 +111,13 @@ public class JewishCitiesFilter implements NameFilter {
             // Houston, United States
             4699066,
             // Istanbul, Turkey
-            745044,
+            ISTANBUL,
             // Jerusalem, Israel
             281184,
             // Johannesburg, South Africa
             993800,
             // Kiev, Ukraine
-            703448,
+            KIEV,
             // Las Vegas, United States
             5475433,
             // Lisbon, Portugal
@@ -146,12 +156,10 @@ public class JewishCitiesFilter implements NameFilter {
             1273294,
             // New York, United States
             5128581,
-            // Nice, France
-            2990440,
             // Oslo, Norway
-            3143244,
+            OSLO,
             // Paris, France
-            2988507,
+            PARIS,
             // Perth, Australia
             2063523,
             // Philadelphia, United States
@@ -160,10 +168,10 @@ public class JewishCitiesFilter implements NameFilter {
             5308655,
             // Pittsburgh, United States
             5206379,
-            // Portland, United States
-            4975802,
+            // Portland, Oregon, United States
+            PORTLAND,
             // Rio de Janeiro, Brazil
-            3451190,
+            RIO_DE_JANEIRO,
             // Rome, Italy
             3169070,
             // Safed / Zefat, Israel
@@ -197,7 +205,7 @@ public class JewishCitiesFilter implements NameFilter {
             // Vancouver, Canada
             6173331,
             // Vienna, Austria
-            2761369,
+            VIENNA,
             // Warsaw, Poland
             756135,
             // Washington D.C., United States
@@ -213,5 +221,39 @@ public class JewishCitiesFilter implements NameFilter {
     @Override
     public boolean accept(GeoName name) {
         return Arrays.binarySearch(CITIES, name.getGeoNameId()) >= 0;
+    }
+
+    @Override
+    public void replaceLocation(GeoName name) {
+        final long id = name.getGeoNameId();
+
+        if (id == ADDIS_ABABA) {
+            name.setLatitude(9.0350628);
+            name.setLongitude(38.7486724);
+        } else if (id == ANTWERP) {
+            name.setLatitude(51.2199612);
+            name.setLongitude(4.3861885);
+        } else if (id == ISTANBUL) {
+            name.setLatitude(41.0128072);
+            name.setLongitude(28.9550702);
+        } else if (id == KIEV) {
+            name.setLatitude(50.446306);
+            name.setLongitude(30.5180833);
+        } else if (id == OSLO) {
+            name.setLatitude(59.9119497);
+            name.setLongitude(10.7313994);
+        } else if (id == PARIS) {
+            name.setLatitude(48.8657367);
+            name.setLongitude(2.3382167);
+        } else if (id == PORTLAND) {
+            name.setLatitude(45.4275604);
+            name.setLongitude(-122.814655);
+        } else if (id == RIO_DE_JANEIRO) {
+            name.setLatitude(-22.9041251);
+            name.setLongitude(-43.5734578);
+        } else if (id == VIENNA) {
+            name.setLatitude(48.2108685);
+            name.setLongitude(16.3550599);
+        }
     }
 }

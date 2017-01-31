@@ -30,4 +30,8 @@ public class CityFilter implements NameFilter {
     public boolean accept(GeoName name) {
         return GeoName.FEATURE_P.equals(name.getFeatureClass());
     }
+
+    @Override
+    public void replaceLocation(GeoName name) {
+    }
 }

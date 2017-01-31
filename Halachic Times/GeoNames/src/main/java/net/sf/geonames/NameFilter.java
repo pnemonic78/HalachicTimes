@@ -29,4 +29,6 @@ public interface NameFilter {
     /** Accept the GeoName record? */
     boolean accept(GeoName name);
 
+    /** Replace the default location. */
+    void replaceLocation(GeoName name);
 }

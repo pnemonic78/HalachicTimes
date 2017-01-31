@@ -4,6 +4,7 @@
     <string-array name="cities">
         <item>Ankoridžas</item>
         <item>Vankuveris</item>
+        <item>Portlandas</item>
         <item>San Fransiskas</item>
         <item>Sietlas</item>
         <item>Los Andželas</item>
@@ -28,7 +29,6 @@
         <item>Niujorkas</item>
         <item>Monrealis</item>
         <item>Bostonas</item>
-        <item>Portland</item>
         <item>Buenos Airės</item>
         <item>San Paulas</item>
         <item>Rio de Žaneiras</item>
@@ -39,12 +39,11 @@
         <item>Mančesteris</item>
         <item>Londonas</item>
         <item>Paryžius</item>
-        <item>Briuselis</item>
+        <item>Antverpenas</item>
         <item>Lionas</item>
         <item>Amsterdamas</item>
         <item>Marselis</item>
         <item>Ženeva</item>
-        <item>Nica</item>
         <item>Bernas</item>
         <item>Ciurichas</item>
         <item>Oslas</item>

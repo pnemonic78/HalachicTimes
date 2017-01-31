@@ -222,4 +222,8 @@ public class BahaiCitiesFilter implements NameFilter {
     public boolean accept(GeoName name) {
         return Arrays.binarySearch(CITIES, name.getGeoNameId()) >= 0;
     }
+
+    @Override
+    public void replaceLocation(GeoName name) {
+    }
 }

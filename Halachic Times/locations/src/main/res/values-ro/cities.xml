@@ -4,6 +4,7 @@
     <string-array name="cities">
         <item>Anchorage</item>
         <item>Vancouver</item>
+        <item>Portland</item>
         <item>San Francisco</item>
         <item>Seattle</item>
         <item>Los Angeles</item>
@@ -28,7 +29,6 @@
         <item>New York</item>
         <item>Montreal</item>
         <item>Boston</item>
-        <item>Portland</item>
         <item>Buenos Aires</item>
         <item>São Paulo</item>
         <item>Rio de Janeiro</item>
@@ -39,12 +39,11 @@
         <item>Manchester</item>
         <item>Londra</item>
         <item>Paris</item>
-        <item>Bruxelles</item>
+        <item>Anvers</item>
         <item>Lyon</item>
         <item>Amsterdam</item>
         <item>Marsilia</item>
         <item>Geneva</item>
-        <item>Nisa</item>
         <item>Berna</item>
         <item>Zürich</item>
         <item>Oslo</item>
