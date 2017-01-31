@@ -206,7 +206,7 @@ public class AddressProvider {
             if ((bestPlateau != null) && (listener != null))
                 listener.onFindAddress(this, location, bestPlateau);
             best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (listener != null))
+            if ((best != null) && (best != bestPlateau) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
 
@@ -217,7 +217,7 @@ public class AddressProvider {
             if ((bestPlateau != null) && (listener != null))
                 listener.onFindAddress(this, location, bestPlateau);
             best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (listener != null))
+            if ((best != null) && (best != bestPlateau) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
 
@@ -228,7 +228,7 @@ public class AddressProvider {
             if ((bestPlateau != null) && (listener != null))
                 listener.onFindAddress(this, location, bestPlateau);
             best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (listener != null))
+            if ((best != null) && (best != bestPlateau) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
 
@@ -239,7 +239,7 @@ public class AddressProvider {
             if ((bestPlateau != null) && (listener != null))
                 listener.onFindAddress(this, location, bestPlateau);
             best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (listener != null))
+            if ((best != null) && (best != bestPlateau) && (listener != null))
                 listener.onFindAddress(this, location, best);
         }
 
