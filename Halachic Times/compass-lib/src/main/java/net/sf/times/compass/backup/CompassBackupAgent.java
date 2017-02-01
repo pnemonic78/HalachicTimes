@@ -17,7 +17,9 @@
  *   Moshe Waisberg
  *
  */
-package net.sf.times.backup;
+package net.sf.times.compass.backup;
+
+import net.sf.times.backup.DefaultBackupAgent;
 
 /**
  * Backup agent helper for the application.
