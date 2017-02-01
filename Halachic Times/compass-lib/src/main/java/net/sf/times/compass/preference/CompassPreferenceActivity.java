@@ -19,11 +19,11 @@
  */
 package net.sf.times.compass.preference;
 
-import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
+import net.sf.preference.PreferenceActivity;
 import net.sf.times.compass.lib.R;
 
 import java.util.List;
@@ -35,13 +35,11 @@ import java.util.List;
  */
 public class CompassPreferenceActivity extends PreferenceActivity {
 
-    private final String packageName;
-
     /**
      * Constructs a new preferences.
      */
     public CompassPreferenceActivity() {
-        packageName = getClass().getPackage().getName();
+        markRestartParentActivityForUi();//FIXME call when Theme or Compass Theme changed.
     }
 
     @Override
@@ -56,8 +54,15 @@ public class CompassPreferenceActivity extends PreferenceActivity {
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    protected boolean isValidFragment(String fragmentName) {
-        return fragmentName.startsWith(packageName);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    finish();
+                    return true;
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
