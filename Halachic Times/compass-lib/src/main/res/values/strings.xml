@@ -11,7 +11,7 @@
 
     <!-- Theme -->
     <string name="compass_theme_title">Compass theme</string>
-    <string name="compass_theme_chrome">Chrome</string>
     <string name="compass_theme_gold">Gold</string>
+    <string name="compass_theme_silver">Silver</string>
 
 </resources>

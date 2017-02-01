@@ -5,8 +5,8 @@
     <string name="compass_bearing_value_rhumb" translatable="false">rhumb</string>
     <string name="compass_bearing_defaultValue" translatable="false">@string/compass_bearing_value_rhumb</string>
 
-    <string name="compass_theme_value_chrome" translatable="false">chrome</string>
     <string name="compass_theme_value_gold" translatable="false">gold</string>
+    <string name="compass_theme_value_silver" translatable="false">silver</string>
     <string name="compass_theme_defaultValue" translatable="false">@string/compass_theme_value_gold</string>
 
 </resources>

@@ -35,26 +35,26 @@
     </style>
 
     <style name="Compass.Theme.Chrome">
-        <item name="compassColorFace">@color/compass_face_chrome</item>
-        <item name="compassColorGradient">@color/compass_gradient_chrome</item>
-        <item name="compassColorFrame">@color/compass_frame_chrome</item>
-        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_chrome</item>
-        <item name="compassColorFrameShadow">@color/compass_frame_shadow_chrome</item>
-        <item name="compassColorLabel">@color/compass_label_chrome</item>
-        <item name="compassColorLabelDark">@color/compass_label_dark_chrome</item>
-        <item name="compassColorLabel2">@color/compass_label2_chrome</item>
-        <item name="compassColorNorth">@color/compass_north_chrome</item>
-        <item name="compassColorNorthDark">@color/compass_north_dark_chrome</item>
-        <item name="compassColorSouth">@color/compass_south_chrome</item>
-        <item name="compassColorSouthDark">@color/compass_south_dark_chrome</item>
-        <item name="compassColorEast">@color/compass_east_chrome</item>
-        <item name="compassColorEastDark">@color/compass_east_dark_chrome</item>
-        <item name="compassColorWest">@color/compass_west_chrome</item>
-        <item name="compassColorWestDark">@color/compass_west_dark_chrome</item>
-        <item name="compassColorTarget">@color/compass_target_chrome</item>
-        <item name="compassColorArrowBg">@color/compass_arrow_bg_chrome</item>
-        <item name="compassColorPivot">@color/compass_pivot_chrome</item>
-        <item name="compassColorPivotDark">@color/compass_pivot_dark_chrome</item>
+        <item name="compassColorFace">@color/compass_face_silver</item>
+        <item name="compassColorGradient">@color/compass_gradient_silver</item>
+        <item name="compassColorFrame">@color/compass_frame_silver</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_silver</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_silver</item>
+        <item name="compassColorLabel">@color/compass_label_silver</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_silver</item>
+        <item name="compassColorLabel2">@color/compass_label2_silver</item>
+        <item name="compassColorNorth">@color/compass_north_silver</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_silver</item>
+        <item name="compassColorSouth">@color/compass_south_silver</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_silver</item>
+        <item name="compassColorEast">@color/compass_east_silver</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_silver</item>
+        <item name="compassColorWest">@color/compass_west_silver</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_silver</item>
+        <item name="compassColorTarget">@color/compass_target_silver</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_silver</item>
+        <item name="compassColorPivot">@color/compass_pivot_silver</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_silver</item>
     </style>
 
 </resources>

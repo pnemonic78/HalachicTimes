@@ -43,10 +43,10 @@ public class CompassPreferences extends LocationPreferences {
     /** Calculates the bearing for a Rhumb Line (constant angle). */
     public static String BEARING_RHUMB_LINE;
 
-    /** Chrome theme. */
-    public static String COMPASS_THEME_CHROME;
     /** Gold theme. */
     public static String COMPASS_THEME_GOLD;
+    /** Silver theme. */
+    public static String COMPASS_THEME_SILVER;
 
     /**
      * Constructs a new settings.
@@ -91,7 +91,7 @@ public class CompassPreferences extends LocationPreferences {
      */
     public int getCompassTheme() {
         String value = preferences.getString(KEY_THEME_COMPASS, context.getString(R.string.compass_theme_defaultValue));
-        if (COMPASS_THEME_CHROME.equals(value)) {
+        if (COMPASS_THEME_SILVER.equals(value)) {
             return R.style.Compass_Theme_Chrome;
         }
         return R.style.Compass_Theme_Gold;
@@ -109,7 +109,7 @@ public class CompassPreferences extends LocationPreferences {
         BEARING_GREAT_CIRCLE = context.getString(R.string.compass_bearing_value_circle);
         BEARING_RHUMB_LINE = context.getString(R.string.compass_bearing_value_rhumb);
 
-        COMPASS_THEME_CHROME = context.getString(R.string.compass_theme_value_chrome);
         COMPASS_THEME_GOLD = context.getString(R.string.compass_theme_value_gold);
+        COMPASS_THEME_SILVER = context.getString(R.string.compass_theme_value_silver);
     }
 }

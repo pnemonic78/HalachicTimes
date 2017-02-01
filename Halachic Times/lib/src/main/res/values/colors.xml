@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">@android:color/transparent</color>
+
+    <color name="black">#ff000000</color>
+    <color name="silver">#ffc0c0c0</color>
+    <color name="navy">#ff000080</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="green">#ff008000</color>
+    <color name="lime">#ff00ff00</color>
+    <color name="teal">#ff008080</color>
+    <color name="cyan">#ff00ffff</color>
+    <color name="maroon">#ff800000</color>
+    <color name="red">#ffff0000</color>
+    <color name="purple">#ff800080</color>
+    <color name="magenta">#ffff00ff</color>
+    <color name="olive">#ff808000</color>
+    <color name="yellow">#ffffff00</color>
+    <color name="gray">#ff808080</color>
+    <color name="grey">#ff808080</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="black_80">#80000000</color>
+    <color name="silver_80">#80c0c0c0</color>
+    <color name="navy_80">#80000080</color>
+    <color name="blue_80">#800000ff</color>
+    <color name="green_80">#80008000</color>
+    <color name="lime_80">#8000ff00</color>
+    <color name="teal_80">#80008080</color>
+    <color name="cyan_80">#8000ffff</color>
+    <color name="maroon_80">#80800000</color>
+    <color name="red_80">#80ff0000</color>
+    <color name="purple_80">#80800080</color>
+    <color name="magenta_80">#80ff00ff</color>
+    <color name="olive_80">#80808000</color>
+    <color name="yellow_80">#80ffff00</color>
+    <color name="gray_80">#80808080</color>
+    <color name="grey_80">#80808080</color>
+    <color name="white_80">#80ffffff</color>
+
+</resources>
