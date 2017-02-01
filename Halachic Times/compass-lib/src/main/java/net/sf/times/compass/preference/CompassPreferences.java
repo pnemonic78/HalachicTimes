@@ -91,10 +91,13 @@ public class CompassPreferences extends LocationPreferences {
      */
     public int getCompassTheme() {
         String value = preferences.getString(KEY_THEME_COMPASS, context.getString(R.string.compass_theme_defaultValue));
+        if (COMPASS_THEME_GOLD.equals(value)) {
+            return R.style.Compass_Theme_Gold;
+        }
         if (COMPASS_THEME_SILVER.equals(value)) {
             return R.style.Compass_Theme_Silver;
         }
-        return R.style.Compass_Theme_Gold;
+        return R.style.Compass_Theme_Original;
     }
 
     /**

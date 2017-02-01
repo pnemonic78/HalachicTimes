@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Compass - Original "gold" theme. -->
+    <color name="compass_face_original">@color/white</color>
+    <color name="compass_gradient_original">#cc9933</color>
+    <color name="compass_frame_original">#cc9933</color>
+    <color name="compass_frame_highlight_original">#ffdd77</color>
+    <color name="compass_frame_shadow_original">#aa6600</color>
+    <color name="compass_label_original">@color/compass_frame_highlight_original</color>
+    <color name="compass_label_dark_original">@color/compass_frame_shadow_original</color>
+    <color name="compass_label2_original">@color/compass_frame_original</color>
+    <color name="compass_north_original">@color/red</color>
+    <color name="compass_north_dark_original">@color/maroon</color>
+    <color name="compass_south_original">@color/blue</color>
+    <color name="compass_south_dark_original">@color/navy</color>
+    <color name="compass_east_original">@color/compass_label_original</color>
+    <color name="compass_east_dark_original">@color/compass_label_dark_original</color>
+    <color name="compass_west_original">@color/compass_label_original</color>
+    <color name="compass_west_dark_original">@color/compass_label_dark_original</color>
+    <color name="compass_target_original">@color/magenta</color>
+    <color name="compass_arrow_bg_original">@color/purple_80</color>
+    <color name="compass_pivot_original">@color/compass_frame_highlight_original</color>
+    <color name="compass_pivot_dark_original">@color/compass_frame_original</color>
+
     <!-- Compass - Gold theme. -->
-    <color name="compass_face_gold">@android:color/white</color>
-    <color name="compass_gradient_gold">#cc9933</color>
-    <color name="compass_frame_gold">#cc9933</color>
-    <color name="compass_frame_highlight_gold">#ffdd77</color>
-    <color name="compass_frame_shadow_gold">#aa6600</color>
+    <color name="compass_face_gold">@color/white</color>
+    <color name="compass_gradient_gold">#ffd700</color>
+    <color name="compass_frame_gold">#f0b33e</color>
+    <color name="compass_frame_highlight_gold">#fee6a8</color>
+    <color name="compass_frame_shadow_gold">#743d1e</color>
     <color name="compass_label_gold">@color/compass_frame_highlight_gold</color>
     <color name="compass_label_dark_gold">@color/compass_frame_shadow_gold</color>
     <color name="compass_label2_gold">@color/compass_frame_gold</color>
