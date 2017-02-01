@@ -8,6 +8,7 @@
     <string name="compass_theme_value_original" translatable="false">original</string>
     <string name="compass_theme_value_gold" translatable="false">gold</string>
     <string name="compass_theme_value_silver" translatable="false">silver</string>
+    <string name="compass_theme_value_classic" translatable="false">classic</string>
     <string name="compass_theme_defaultValue" translatable="false">@string/compass_theme_value_original</string>
 
 </resources>

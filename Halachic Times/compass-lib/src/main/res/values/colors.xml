@@ -40,17 +40,17 @@
     <color name="compass_east_dark_gold">@color/compass_label_dark_gold</color>
     <color name="compass_west_gold">@color/compass_label_gold</color>
     <color name="compass_west_dark_gold">@color/compass_label_dark_gold</color>
-    <color name="compass_target_gold">@color/magenta</color>
-    <color name="compass_arrow_bg_gold">@color/purple_80</color>
+    <color name="compass_target_gold">@color/yellow</color>
+    <color name="compass_arrow_bg_gold">@color/olive_80</color>
     <color name="compass_pivot_gold">@color/compass_frame_highlight_gold</color>
     <color name="compass_pivot_dark_gold">@color/compass_frame_gold</color>
 
-    <!-- Compass - Chrome theme. -->
+    <!-- Compass - Silver theme. -->
     <color name="compass_face_silver">@android:color/white</color>
     <color name="compass_gradient_silver">@color/silver</color>
     <color name="compass_frame_silver">@color/silver</color>
     <color name="compass_frame_highlight_silver">#ededed</color>
-    <color name="compass_frame_shadow_silver">#b5b5b5</color>
+    <color name="compass_frame_shadow_silver">@color/gray</color>
     <color name="compass_label_silver">@color/compass_frame_highlight_silver</color>
     <color name="compass_label_dark_silver">@color/compass_frame_shadow_silver</color>
     <color name="compass_label2_silver">@color/compass_frame_silver</color>
@@ -62,10 +62,32 @@
     <color name="compass_east_dark_silver">@color/compass_label_dark_silver</color>
     <color name="compass_west_silver">@color/compass_label_silver</color>
     <color name="compass_west_dark_silver">@color/compass_label_dark_silver</color>
-    <color name="compass_target_silver">@color/magenta</color>
-    <color name="compass_arrow_bg_silver">@color/purple_80</color>
+    <color name="compass_target_silver">@color/silver</color>
+    <color name="compass_arrow_bg_silver">@color/gray_80</color>
     <color name="compass_pivot_silver">@color/compass_frame_highlight_silver</color>
     <color name="compass_pivot_dark_silver">@color/compass_frame_silver</color>
+
+    <!-- Compass - Classic theme. -->
+    <color name="compass_face_classic">#16bef9</color>
+    <color name="compass_gradient_classic">@color/navy</color>
+    <color name="compass_frame_classic">@color/compass_frame_silver</color>
+    <color name="compass_frame_highlight_classic">@color/compass_frame_highlight_silver</color>
+    <color name="compass_frame_shadow_classic">@color/compass_frame_shadow_silver</color>
+    <color name="compass_label_classic">@color/compass_frame_highlight_classic</color>
+    <color name="compass_label_dark_classic">@color/compass_frame_shadow_classic</color>
+    <color name="compass_label2_classic">@color/compass_frame_classic</color>
+    <color name="compass_north_classic">@color/red</color>
+    <color name="compass_north_dark_classic">@color/maroon</color>
+    <color name="compass_south_classic">@color/silver</color>
+    <color name="compass_south_dark_classic">@color/gray</color>
+    <color name="compass_east_classic">@color/compass_label_classic</color>
+    <color name="compass_east_dark_classic">@color/compass_label_dark_classic</color>
+    <color name="compass_west_classic">@color/compass_label_classic</color>
+    <color name="compass_west_dark_classic">@color/compass_label_dark_classic</color>
+    <color name="compass_target_classic">@color/cyan</color>
+    <color name="compass_arrow_bg_classic">@color/teal_80</color>
+    <color name="compass_pivot_classic">@color/compass_frame_highlight_classic</color>
+    <color name="compass_pivot_dark_classic">@color/compass_frame_classic</color>
 
     <!-- Compass. -->
     <color name="compass_shadow_1">#80888888</color>

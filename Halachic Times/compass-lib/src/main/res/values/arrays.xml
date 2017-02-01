@@ -14,11 +14,13 @@
         <item>@string/compass_theme_value_original</item>
         <item>@string/compass_theme_value_gold</item>
         <item>@string/compass_theme_value_silver</item>
+        <item>@string/compass_theme_value_classic</item>
     </string-array>
     <string-array name="compass_theme_entries" translatable="false">
         <item>@string/compass_theme_original</item>
         <item>@string/compass_theme_gold</item>
         <item>@string/compass_theme_silver</item>
+        <item>@string/compass_theme_classic</item>
     </string-array>
 
 </resources>
