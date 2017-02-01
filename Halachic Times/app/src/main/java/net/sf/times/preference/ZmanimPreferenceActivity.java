@@ -20,6 +20,9 @@
 package net.sf.times.preference;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -77,5 +80,26 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void finish() {
+        // Recreate the parent activity in case a theme has changed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            Intent parentIntent = getParentActivityIntent();
+            if (parentIntent == null) {
+                try {
+                    PackageManager pm = getPackageManager();
+                    ActivityInfo info = pm.getActivityInfo(getComponentName(), 0);
+                    String parentActivity = info.parentActivityName;
+                    parentIntent = new Intent();
+                    parentIntent.setClassName(this, parentActivity);
+                } catch (PackageManager.NameNotFoundException e) {
+                }
+            }
+            parentIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(parentIntent);
+        }
+        super.finish();
     }
 }

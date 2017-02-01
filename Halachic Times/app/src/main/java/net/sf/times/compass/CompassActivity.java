@@ -29,7 +29,7 @@ import android.view.MenuItem;
 
 import net.sf.times.R;
 import net.sf.times.location.LocationActivity;
-import net.sf.times.preference.ZmanimPreferenceActivity;
+import net.sf.times.preference.CompassPreferenceActivity;
 
 /**
  * Show the direction in which to pray.
@@ -79,6 +79,6 @@ public class CompassActivity extends BaseCompassActivity {
 
     private void startSettings() {
         Context context = this;
-        startActivity(new Intent(context, ZmanimPreferenceActivity.class));
+        startActivity(new Intent(context, CompassPreferenceActivity.class));
     }
 }

@@ -39,6 +39,7 @@ public class AppearancePreferenceFragment extends net.sf.preference.AbstractPref
 
         initList(ZmanimPreferences.KEY_COORDS_FORMAT);
         initList(ZmanimPreferences.KEY_THEME);
+        initList(ZmanimPreferences.KEY_THEME_COMPASS);
         initList(ZmanimPreferences.KEY_EMPHASIS_SCALE);
     }
 }
