@@ -20,12 +20,15 @@
 package net.sf.times.compass;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import net.sf.app.ThemedApplication;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.LocatedActivity;
@@ -60,8 +63,13 @@ public abstract class BaseCompassActivity extends LocatedActivity {
         headerAddress = (TextView) findViewById(R.id.address);
         fragment = (CompassFragment) getFragmentManager().findFragmentById(R.id.compass);
 
-        if (!settings.isSummaries()) {
-            View summary = findViewById(android.R.id.summary);
+        TextView summary = (TextView) findViewById(android.R.id.summary);
+        if (settings.isSummaries()) {
+            CompassPreferences prefs = settings;
+            TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
+            summary.setTextColor(a.getColor(R.styleable.CompassTheme_compassColorTarget, summary.getSolidColor()));
+            a.recycle();
+        } else {
             summary.setVisibility(View.GONE);
         }
     }
