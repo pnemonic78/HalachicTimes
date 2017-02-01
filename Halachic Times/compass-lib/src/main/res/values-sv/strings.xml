@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Storcirkel (kortaste färdvägen)</string>
     <string name="compass_bearing_rhumb">Loxodrom (konstant vinkel)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Kompass tema</string>
+    <string name="compass_theme_classic">Klassisk</string>
+    <string name="compass_theme_original">Original</string>
+    <string name="compass_theme_gold">Guld</string>
+    <string name="compass_theme_silver">Silver</string>
+
 </resources>

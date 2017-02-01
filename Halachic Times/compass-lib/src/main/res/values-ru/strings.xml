@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Большой круг (кратчайшим путём)</string>
     <string name="compass_bearing_rhumb">Локсодрома (постоянным углом)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Тема компаса</string>
+    <string name="compass_theme_classic">Классический</string>
+    <string name="compass_theme_original">Оригинал</string>
+    <string name="compass_theme_gold">Золото</string>
+    <string name="compass_theme_silver">Серебряный</string>
+
 </resources>

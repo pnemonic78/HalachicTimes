@@ -2,11 +2,18 @@
 <resources>
 
     <!-- Compass -->
-    <string name="menu_compass">Compás</string>
+    <string name="menu_compass">Brújula</string>
     <string name="title_activity_compass">Dirección de la oración</string>
     <string name="compass_summary">Dirección de la oración a la Santa de los Santos en Jerusalén</string>
     <string name="compass_bearing">Rumbo</string>
     <string name="compass_bearing_circle">Gran círculo (distancia más corta)</string>
     <string name="compass_bearing_rhumb">Línea de rumbo (mismo ángulo)</string>
+
+    <!-- Theme -->
+    <string name="compass_theme_title">Tema de la brújula</string>
+    <string name="compass_theme_classic">Clásico</string>
+    <string name="compass_theme_original">Original</string>
+    <string name="compass_theme_gold">Oro</string>
+    <string name="compass_theme_silver">Plata</string>
 
 </resources>

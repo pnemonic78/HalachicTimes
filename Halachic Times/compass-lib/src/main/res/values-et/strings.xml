@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Suurring (lühim tee)</string>
     <string name="compass_bearing_rhumb">Loksodroomi (sama nurga all)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Kompass teema</string>
+    <string name="compass_theme_classic">Klassikaline</string>
+    <string name="compass_theme_original">Originaal</string>
+    <string name="compass_theme_gold">Kuld</string>
+    <string name="compass_theme_silver">Hõbe</string>
+
 </resources>

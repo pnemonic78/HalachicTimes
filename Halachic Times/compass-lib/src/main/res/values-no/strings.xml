@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Storsirkel (korteste avstanden)</string>
     <string name="compass_bearing_rhumb">Loksodrom (samme vinkel)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Kompass tema</string>
+    <string name="compass_theme_classic">Klassiker</string>
+    <string name="compass_theme_original">Opprinnelig</string>
+    <string name="compass_theme_gold">Gull</string>
+    <string name="compass_theme_silver">Sølv</string>
+
 </resources>

@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Cerc mare (cea mai mică distanță)</string>
     <string name="compass_bearing_rhumb">Linii rombice (același unghi)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Temă busolă</string>
+    <string name="compass_theme_classic">Clasic</string>
+    <string name="compass_theme_original">Original</string>
+    <string name="compass_theme_gold">Aur</string>
+    <string name="compass_theme_silver">Argint</string>
+
 </resources>

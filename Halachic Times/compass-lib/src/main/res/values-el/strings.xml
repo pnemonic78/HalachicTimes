@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Μεγάλη κύκλο (συντομότερο μονοπάτι)</string>
     <string name="compass_bearing_rhumb">Λοξοδρομία (σταθερή γωνία)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Πυξίδα θέμα</string>
+    <string name="compass_theme_classic">Κλασσικός</string>
+    <string name="compass_theme_original">Πρωτότυπο</string>
+    <string name="compass_theme_gold">Χρυσός</string>
+    <string name="compass_theme_silver">Ασήμι</string>
+
 </resources>

@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">מעגל גדול (דרך הקצרה ביותר)</string>
     <string name="compass_bearing_rhumb">לוקסודרום (באותה זווית)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">עיצוב מצפן</string>
+    <string name="compass_theme_classic">קלאסי</string>
+    <string name="compass_theme_original">מקורי</string>
+    <string name="compass_theme_gold">זהב</string>
+    <string name="compass_theme_silver">כסף</string>
+
 </resources>

@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">دائرة عظمى (أقصر الطرق)</string>
     <string name="compass_bearing_rhumb">خط أحد إتجاهات البوصلة (زاوية ثابتة)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">المظهر بوصلة</string>
+    <string name="compass_theme_classic">كلاسيكي</string>
+    <string name="compass_theme_original">أصلي</string>
+    <string name="compass_theme_gold">ذهب</string>
+    <string name="compass_theme_silver">فضة</string>
+
 </resources>

@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Főkör (legrövidebb út)</string>
     <string name="compass_bearing_rhumb">Loxodroma (azonos szögben)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Iránytű téma</string>
+    <string name="compass_theme_classic">Klasszikus</string>
+    <string name="compass_theme_original">Eredeti</string>
+    <string name="compass_theme_gold">Arany</string>
+    <string name="compass_theme_silver">Ezüst</string>
+
 </resources>

@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Cerchio massimo (distanza più breve)</string>
     <string name="compass_bearing_rhumb">Lossodromia (stesso angolo)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Tema bussola</string>
+    <string name="compass_theme_classic">Classico</string>
+    <string name="compass_theme_original">Originale</string>
+    <string name="compass_theme_gold">Oro</string>
+    <string name="compass_theme_silver">Argento</string>
+
 </resources>

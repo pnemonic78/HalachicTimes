@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Grootcirkel (kortste verbinding)</string>
     <string name="compass_bearing_rhumb">Loxodroom (vaste koers)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Kompas thema</string>
+    <string name="compass_theme_classic">Klassiek</string>
+    <string name="compass_theme_original">Origineel</string>
+    <string name="compass_theme_gold">Goud</string>
+    <string name="compass_theme_silver">Zilver</string>
+
 </resources>

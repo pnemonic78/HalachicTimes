@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Isoympyrä (etäisyys on lyhin)</string>
     <string name="compass_bearing_rhumb">Loksodromilta (samassa kulmassa)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Kompassi teema</string>
+    <string name="compass_theme_classic">Klassikko</string>
+    <string name="compass_theme_original">Alkuperäinen</string>
+    <string name="compass_theme_gold">Kulta</string>
+    <string name="compass_theme_silver">Hopea</string>
+
 </resources>

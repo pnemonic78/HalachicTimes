@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Велике коло (найкоротшим шляхом)</string>
     <string name="compass_bearing_rhumb">Локсодрома (постійний кут)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Тема компаса</string>
+    <string name="compass_theme_classic">Класичний</string>
+    <string name="compass_theme_original">Оригінал</string>
+    <string name="compass_theme_gold">Золото</string>
+    <string name="compass_theme_silver">Срібло</string>
+
 </resources>

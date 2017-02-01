@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Storcirkel (korteste kurve)</string>
     <string name="compass_bearing_rhumb">Kompaslinje (samme vinkel)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Tema kompas</string>
+    <string name="compass_theme_classic">Klassisk</string>
+    <string name="compass_theme_original">Original</string>
+    <string name="compass_theme_gold">Guld</string>
+    <string name="compass_theme_silver">Sølv</string>
+
 </resources>

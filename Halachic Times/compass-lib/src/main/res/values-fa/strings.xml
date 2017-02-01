@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">دایره بزرگ (کوتاه ترین مسیر)</string>
     <string name="compass_bearing_rhumb">خط هم‌گوشه (شیب ثابت)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">طرح‌زمینه قطب نما</string>
+    <string name="compass_theme_classic">کلاسیک</string>
+    <string name="compass_theme_original">اصلی</string>
+    <string name="compass_theme_gold">طلا</string>
+    <string name="compass_theme_silver">نقره</string>
+
 </resources>

@@ -9,4 +9,11 @@
     <string name="compass_bearing_circle">Büyük daire (kısa yol)</string>
     <string name="compass_bearing_rhumb">Kerte hattı (aynı açı)</string>
 
+    <!-- Theme -->
+    <string name="compass_theme_title">Pusula tema</string>
+    <string name="compass_theme_classic">Klasik</string>
+    <string name="compass_theme_original">Orijinal</string>
+    <string name="compass_theme_gold">Altın</string>
+    <string name="compass_theme_silver">Gümüş</string>
+
 </resources>
