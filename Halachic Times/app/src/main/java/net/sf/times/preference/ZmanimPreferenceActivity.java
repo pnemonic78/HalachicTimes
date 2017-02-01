@@ -22,7 +22,9 @@ package net.sf.times.preference;
 import android.os.Bundle;
 
 import net.sf.preference.PreferenceActivity;
+import net.sf.preference.ThemedPreferences;
 import net.sf.times.R;
+import net.sf.times.compass.preference.CompassPreferences;
 
 import java.util.List;
 
@@ -37,7 +39,6 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
      * Constructs a new preferences.
      */
     public ZmanimPreferenceActivity() {
-        markRestartParentActivityForUi();//FIXME call when Theme or Compass Theme changed.
     }
 
     @Override
@@ -49,5 +50,10 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preference_headers, target);
+    }
+
+    @Override
+    protected boolean shouldRestartParentActivityForUi(String key) {
+        return ThemedPreferences.KEY_THEME.equals(key) || CompassPreferences.KEY_THEME_COMPASS.equals(key);
     }
 }

@@ -21,10 +21,12 @@ package net.sf.preference;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import net.sf.lib.R;
 
@@ -33,7 +35,7 @@ import net.sf.lib.R;
  *
  * @author Moshe Waisberg
  */
-public class PreferenceActivity extends android.preference.PreferenceActivity {
+public class PreferenceActivity extends android.preference.PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final String packageName;
     private boolean restartParentActivityForUi;
@@ -49,10 +51,17 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Base_Settings);
         super.onCreate(savedInstanceState);
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -91,5 +100,16 @@ public class PreferenceActivity extends android.preference.PreferenceActivity {
 
     protected void markRestartParentActivityForUi() {
         this.restartParentActivityForUi = true;
+    }
+
+    protected boolean shouldRestartParentActivityForUi(String key) {
+        return false;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (shouldRestartParentActivityForUi(key)) {
+            markRestartParentActivityForUi();
+        }
     }
 }
