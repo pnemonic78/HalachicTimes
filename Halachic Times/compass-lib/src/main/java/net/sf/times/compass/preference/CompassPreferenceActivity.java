@@ -24,7 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
-import net.sf.times.compass.bahai.R;
+import net.sf.times.compass.lib.R;
 
 import java.util.List;
 

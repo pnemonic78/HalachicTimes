@@ -22,7 +22,7 @@ package net.sf.times.compass.preference;
 import android.os.Bundle;
 
 import net.sf.preference.AbstractPreferenceFragment;
-import net.sf.times.compass.bahai.R;
+import net.sf.times.compass.lib.R;
 
 /**
  * This fragment shows the preferences for the General header.

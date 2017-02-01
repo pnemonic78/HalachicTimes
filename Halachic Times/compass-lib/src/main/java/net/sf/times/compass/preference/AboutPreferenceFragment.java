@@ -19,27 +19,35 @@
  */
 package net.sf.times.compass.preference;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.Preference;
 
 import net.sf.preference.AbstractPreferenceFragment;
-import net.sf.times.compass.R;
+import net.sf.times.compass.lib.R;
 
 /**
- * This fragment shows the preferences for the Appearance header.
+ * This fragment shows the preferences for the About header.
  */
-public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
+public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {
-        return R.xml.appearance_preferences;
+        return R.xml.about_preferences;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(CompassPreferences.KEY_COORDS_FORMAT);
-        initList(CompassPreferences.KEY_THEME);
-        initList(CompassPreferences.KEY_THEME_COMPASS);
+        Context context = getActivity();
+        Preference version = findPreference("about.version");
+        try {
+            version.setSummary(context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            // Never should happen with our own package!
+        }
+        validateIntent(version);
     }
 }

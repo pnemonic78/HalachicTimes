@@ -23,7 +23,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 import net.sf.preference.AbstractPreferenceFragment;
-import net.sf.times.compass.bahai.R;
+import net.sf.times.compass.lib.R;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 
