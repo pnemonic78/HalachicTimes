@@ -34,7 +34,7 @@
         <item name="compassColorPivotDark">@color/compass_pivot_dark_gold</item>
     </style>
 
-    <style name="Compass.Theme.Chrome">
+    <style name="Compass.Theme.Silver">
         <item name="compassColorFace">@color/compass_face_silver</item>
         <item name="compassColorGradient">@color/compass_gradient_silver</item>
         <item name="compassColorFrame">@color/compass_frame_silver</item>

@@ -25,10 +25,10 @@
 
     <!-- Compass - Chrome theme. -->
     <color name="compass_face_silver">@android:color/white</color>
-    <color name="compass_gradient_silver">#cc9933</color>
-    <color name="compass_frame_silver">#cc9933</color>
-    <color name="compass_frame_highlight_silver">#ffdd77</color>
-    <color name="compass_frame_shadow_silver">#aa6600</color>
+    <color name="compass_gradient_silver">@color/silver</color>
+    <color name="compass_frame_silver">@color/silver</color>
+    <color name="compass_frame_highlight_silver">#ededed</color>
+    <color name="compass_frame_shadow_silver">#b5b5b5</color>
     <color name="compass_label_silver">@color/compass_frame_highlight_silver</color>
     <color name="compass_label_dark_silver">@color/compass_frame_shadow_silver</color>
     <color name="compass_label2_silver">@color/compass_frame_silver</color>
