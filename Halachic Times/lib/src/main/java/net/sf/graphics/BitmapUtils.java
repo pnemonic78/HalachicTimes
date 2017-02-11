@@ -49,9 +49,13 @@ public class BitmapUtils {
         if ((wallpaper != null) && (wallpaper instanceof BitmapDrawable)) {
             Bitmap bm = ((BitmapDrawable) wallpaper).getBitmap();
             Bitmap pixel = Bitmap.createScaledBitmap(bm, 1, 1, true);
-            int bg = pixel.getPixel(0, 0);
-            pixel.recycle();
-            return bg;
+            if (!pixel.isRecycled()) {
+                int bg = pixel.getPixel(0, 0);
+                if (bm != pixel) {
+                    pixel.recycle();
+                }
+                return bg;
+            }
         }
 
         return Color.TRANSPARENT;
