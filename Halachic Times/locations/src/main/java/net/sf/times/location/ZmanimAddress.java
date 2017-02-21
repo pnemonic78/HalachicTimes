@@ -316,7 +316,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             za.id = source.readLong();
             za.elevation = source.readDouble();
             za.formatted = source.readString();
-            za.favorite = source.readInt() == 0 ? false : true;
+            za.favorite = source.readInt() != 0;
             return za;
         }
 
@@ -329,12 +329,10 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     public void setCountryCode(String countryCode) {
         if (ISO639_PALESTINE.equals(countryCode)) {
             countryCode = ISO639_ISRAEL;
-            super.setCountryCode(countryCode);
-            Locale locale = new Locale("", countryCode);
+            Locale locale = new Locale(Locale.getDefault().getLanguage(), countryCode);
             setCountryName(locale.getDisplayCountry());
-        } else {
-            super.setCountryCode(countryCode);
         }
+        super.setCountryCode(countryCode);
     }
 
     @Override

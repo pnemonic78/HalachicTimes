@@ -21,7 +21,6 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Address;
-import android.os.Bundle;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -126,7 +125,7 @@ public class GoogleGeocoder extends GeocoderBase {
 
         /** Parse state. */
         private enum State {
-            START, ROOT, STATUS, RESULT, RESULT_TYPE, RESULT_FORMATTED, ADDRESS, ADDRESS_TYPE, ADDRESS_LONG, ADDRESS_SHORT, GEOMETRY, LOCATION, LATITUDE, LONGITUDE, FINISH
+            START, ROOT, STATUS, RESULT, RESULT_TYPE, ADDRESS, ADDRESS_TYPE, ADDRESS_LONG, ADDRESS_SHORT, GEOMETRY, LOCATION, LATITUDE, LONGITUDE, FINISH
         }
 
         private static final String STATUS_OK = "OK";
@@ -135,7 +134,6 @@ public class GoogleGeocoder extends GeocoderBase {
         private static final String TAG_STATUS = "status";
         private static final String TAG_RESULT = "result";
         private static final String TAG_TYPE = "type";
-        private static final String TAG_FORMATTED = "formatted_address";
         private static final String TAG_ADDRESS = "address_component";
         private static final String TAG_LONG_NAME = "long_name";
         private static final String TAG_SHORT_NAME = "short_name";
@@ -204,9 +202,6 @@ public class GoogleGeocoder extends GeocoderBase {
                     switch (localName) {
                         case TAG_TYPE:
                             state = State.RESULT_TYPE;
-                            break;
-                        case TAG_FORMATTED:
-                            state = State.RESULT_FORMATTED;
                             break;
                         case TAG_ADDRESS:
                             state = State.ADDRESS;
@@ -287,19 +282,6 @@ public class GoogleGeocoder extends GeocoderBase {
                     if (!TYPE_POLITICAL.equals(text)) {
                         address = new Address(locale);
                     }
-                    break;
-                case RESULT_FORMATTED:
-                    if (address != null) {
-                        Bundle extras = address.getExtras();
-                        if (extras == null) {
-                            extras = new Bundle();
-                            address.setExtras(extras);
-                            extras = address.getExtras();
-                        }
-                        extras.putString(ZmanimAddress.KEY_FORMATTED, text);
-                    }
-                    if (TAG_FORMATTED.equals(localName))
-                        state = State.RESULT;
                     break;
                 case ADDRESS:
                     if (TAG_ADDRESS.equals(localName)) {

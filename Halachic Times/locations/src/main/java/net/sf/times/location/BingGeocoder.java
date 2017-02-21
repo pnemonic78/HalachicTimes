@@ -21,7 +21,6 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Address;
-import android.os.Bundle;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -115,7 +114,6 @@ public class BingGeocoder extends GeocoderBase {
         private static final String TAG_ADDRESS_LINE = "AddressLine";
         private static final String TAG_ADDRESS_DISTRICT = "AdminDistrict";
         private static final String TAG_ADDRESS_COUNTRY = "CountryRegion";
-        private static final String TAG_FORMATTED = "FormattedAddress";
         private static final String TAG_LOCALITY = "Locality";
         private static final String TAG_POINT = "Point";
         private static final String TAG_LATITUDE = "Latitude";
@@ -285,18 +283,6 @@ public class BingGeocoder extends GeocoderBase {
                             if (address != null) {
                                 prev = address.getCountryName();
                                 address.setCountryName((prev == null) ? text : prev + text);
-                            }
-                            break;
-                        case TAG_FORMATTED:
-                            if (address != null) {
-                                Bundle extras = address.getExtras();
-                                if (extras == null) {
-                                    extras = new Bundle();
-                                    address.setExtras(extras);
-                                    extras = address.getExtras();
-                                }
-                                prev = extras.getString(ZmanimAddress.KEY_FORMATTED);
-                                extras.putString(ZmanimAddress.KEY_FORMATTED, (prev == null) ? text : prev + text);
                             }
                             break;
                         case TAG_LOCALITY:
