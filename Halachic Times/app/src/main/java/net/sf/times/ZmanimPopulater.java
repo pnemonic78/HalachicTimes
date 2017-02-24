@@ -825,7 +825,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
             // Molad is always of the previous month.
             int jLastDatOfMonth = jcal.getDaysInJewishMonth();
-            if (jDayOfMonth < jLastDatOfMonth) {
+            if ((jDayOfMonth > 1) && (jDayOfMonth < jLastDatOfMonth)) {
                 jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
             }
             jcal.forward();
