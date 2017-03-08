@@ -55,6 +55,10 @@ public class AddLocationActivity extends ThemedActivity implements
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
+    /** The location's latitude parameter. */
+    public static final String EXTRA_LATITUDE = "latitude";
+    /** The location's longitude parameter. */
+    public static final String EXTRA_LONGITUDE = "longitude";
 
     /** The location state. */
     private static final String SAVE_STATE_LOCATION = EXTRA_LOCATION;
@@ -108,11 +112,13 @@ public class AddLocationActivity extends ThemedActivity implements
      * Formatter for for displaying the current value.
      */
     private NumberPicker.Formatter formatter;
+    private boolean coordsFormatSpinnerSelectedFirst;
 
     public AddLocationActivity() {
-        setFormatter(new NumberPicker.Formatter() {
+        final NumberFormat formatter = NumberFormat.getIntegerInstance();
+        formatter.setGroupingUsed(false);
 
-            private final NumberFormat formatter = NumberFormat.getIntegerInstance();
+        setFormatter(new NumberPicker.Formatter() {
 
             @Override
             public String format(int value) {
@@ -132,15 +138,26 @@ public class AddLocationActivity extends ThemedActivity implements
         setContentView(R.layout.location_add);
         initView();
 
-        Bundle args = getIntent().getExtras();
-        if (args != null) {
-            location = args.getParcelable(EXTRA_LOCATION);
-        } else {
-            location = null;
-        }
-        if (location == null) {
-            location = new Location(GeocoderBase.USER_PROVIDER);
-        } else {
+        if (savedInstanceState == null) {
+            Bundle args = getIntent().getExtras();
+            if (args != null) {
+                if (args.containsKey(EXTRA_LOCATION)) {
+                    location = args.getParcelable(EXTRA_LOCATION);
+                }
+                if (location == null) {
+                    location = new Location(GeocoderBase.USER_PROVIDER);
+
+                    if (args.containsKey(EXTRA_LATITUDE)) {
+                        location.setLatitude(args.getDouble(EXTRA_LATITUDE));
+                    }
+                    if (args.containsKey(EXTRA_LONGITUDE)) {
+                        location.setLongitude(args.getDouble(EXTRA_LONGITUDE));
+                    }
+                }
+            } else {
+                location = new Location(GeocoderBase.USER_PROVIDER);
+            }
+
             setDecimalTexts(location.getLatitude(), latitudeDegreesEdit, latitudeDecimalEdit, latitudeDirection);
             setDecimalTexts(location.getLongitude(), longitudeDegreesEdit, longitudeDecimalEdit, longitudeDirection);
         }
@@ -149,6 +166,7 @@ public class AddLocationActivity extends ThemedActivity implements
     private void initView() {
         coordsFormatSpinner = (Spinner) findViewById(R.id.coords_format);
         coordsFormatSpinner.setOnItemSelectedListener(this);
+        coordsFormatSpinnerSelectedFirst = true;
 
         latitudeSwitcher = (ViewSwitcher) findViewById(R.id.latitude_switch);
         latitudeDegreesEdit = (NumberPicker) findViewById(R.id.latitude_degrees_edit);
@@ -257,6 +275,10 @@ public class AddLocationActivity extends ThemedActivity implements
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (coordsFormatSpinnerSelectedFirst) {
+            coordsFormatSpinnerSelectedFirst = false;
+            return;
+        }
         if (position == FORMAT_DECIMAL) {
             convertToDecimal();
         } else {
