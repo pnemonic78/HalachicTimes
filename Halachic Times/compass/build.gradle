@@ -20,7 +20,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("release.keystore")
+            storeFile file("../release.keystore")
             storePassword project.STORE_PASSWORD_RELEASE
             keyAlias "release"
             keyPassword project.KEY_PASSWORD_RELEASE
