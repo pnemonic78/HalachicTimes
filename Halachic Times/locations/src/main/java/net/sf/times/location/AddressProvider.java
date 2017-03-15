@@ -21,6 +21,8 @@ package net.sf.times.location;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -28,6 +30,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Bundle;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -84,8 +87,16 @@ public class AddressProvider {
     /** Database provider. */
     public static final String DB_PROVIDER = "db";
 
-    private static final String[] COLUMNS = {BaseColumns._ID, AddressColumns.LOCATION_LATITUDE, AddressColumns.LOCATION_LONGITUDE, AddressColumns.LATITUDE,
-            AddressColumns.LONGITUDE, AddressColumns.ADDRESS, AddressColumns.LANGUAGE, AddressColumns.FAVORITE};
+    private static final String[] COLUMNS = {
+            BaseColumns._ID,
+            AddressColumns.LOCATION_LATITUDE,
+            AddressColumns.LOCATION_LONGITUDE,
+            AddressColumns.LATITUDE,
+            AddressColumns.LONGITUDE,
+            AddressColumns.ADDRESS,
+            AddressColumns.LANGUAGE,
+            AddressColumns.FAVORITE
+    };
     static final int INDEX_ID = 0;
     static final int INDEX_LOCATION_LATITUDE = 1;
     static final int INDEX_LOCATION_LONGITUDE = 2;
@@ -95,8 +106,13 @@ public class AddressProvider {
     static final int INDEX_LANGUAGE = 6;
     static final int INDEX_FAVORITE = 7;
 
-    private static final String[] COLUMNS_ELEVATIONS = {BaseColumns._ID, ElevationColumns.LATITUDE, ElevationColumns.LONGITUDE, ElevationColumns.ELEVATION,
-            ElevationColumns.TIMESTAMP};
+    private static final String[] COLUMNS_ELEVATIONS = {
+            BaseColumns._ID,
+            ElevationColumns.LATITUDE,
+            ElevationColumns.LONGITUDE,
+            ElevationColumns.ELEVATION,
+            ElevationColumns.TIMESTAMP
+    };
     static final int INDEX_ELEVATIONS_ID = 0;
     static final int INDEX_ELEVATIONS_LATITUDE = 1;
     static final int INDEX_ELEVATIONS_LONGITUDE = 2;
@@ -109,7 +125,6 @@ public class AddressProvider {
     static final int INDEX_CITIES_FAVORITE = 2;
 
     private static final String WHERE_ID = BaseColumns._ID + "=?";
-    private static final String SELECT_COUNT_CITIES = "SELECT COUNT(*) FROM " + AddressOpenHelper.TABLE_CITIES + " WHERE " + WHERE_ID;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -126,6 +141,7 @@ public class AddressProvider {
     private GeocoderBase bingGeocoder;
     private GeocoderBase geonamesGeocoder;
     private GeocoderBase databaseGeocoder;
+    private boolean online = true;
 
     /**
      * Constructs a new provider.
@@ -149,6 +165,20 @@ public class AddressProvider {
         this.context = context;
         this.locale = locale;
         countriesGeocoder = new CountriesGeocoder(context, locale);
+
+        ApplicationInfo applicationInfo = context.getApplicationInfo();
+        Bundle metaData = applicationInfo.metaData;
+        if (metaData == null) {
+            try {
+                applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+                metaData = applicationInfo.metaData;
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        if (metaData != null) {
+            online = !metaData.getBoolean("net.sf.times.offline", false);
+        }
     }
 
     /**
@@ -200,7 +230,7 @@ public class AddressProvider {
             listener.onFindAddress(this, location, best);
 
         // Find the best city from some Geocoder provider.
-        if (best == null) {
+        if ((best == null) && online) {
             addresses = findNearestAddressGeocoder(location);
             bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
             if ((bestPlateau != null) && (listener != null))
@@ -211,7 +241,7 @@ public class AddressProvider {
         }
 
         // Find the best city from Google.
-        if (best == null) {
+        if ((best == null) && online) {
             addresses = findNearestAddressGoogle(location);
             bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
             if ((bestPlateau != null) && (listener != null))
@@ -222,7 +252,7 @@ public class AddressProvider {
         }
 
         // Find the best city from Bing.
-        if (best == null) {
+        if ((best == null) && online) {
             addresses = findNearestAddressBing(location);
             bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
             if ((bestPlateau != null) && (listener != null))
@@ -233,7 +263,7 @@ public class AddressProvider {
         }
 
         // Find the best city from GeoNames.
-        if (best == null) {
+        if ((best == null) && online) {
             addresses = findNearestAddressGeoNames(location);
             bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
             if ((bestPlateau != null) && (listener != null))
@@ -727,25 +757,27 @@ public class AddressProvider {
             return elevated;
         }
 
-        elevated = findElevationGoogle(location);
-        if ((elevated != null) && elevated.hasAltitude()) {
-            if (listener != null)
-                listener.onFindElevation(this, location, elevated);
-            return elevated;
-        }
+        if (online) {
+            elevated = findElevationGoogle(location);
+            if ((elevated != null) && elevated.hasAltitude()) {
+                if (listener != null)
+                    listener.onFindElevation(this, location, elevated);
+                return elevated;
+            }
 
-        elevated = findElevationBing(location);
-        if ((elevated != null) && elevated.hasAltitude()) {
-            if (listener != null)
-                listener.onFindElevation(this, location, elevated);
-            return elevated;
-        }
+            elevated = findElevationBing(location);
+            if ((elevated != null) && elevated.hasAltitude()) {
+                if (listener != null)
+                    listener.onFindElevation(this, location, elevated);
+                return elevated;
+            }
 
-        elevated = findElevationGeoNames(location);
-        if ((elevated != null) && elevated.hasAltitude()) {
-            if (listener != null)
-                listener.onFindElevation(this, location, elevated);
-            return elevated;
+            elevated = findElevationGeoNames(location);
+            if ((elevated != null) && elevated.hasAltitude()) {
+                if (listener != null)
+                    listener.onFindElevation(this, location, elevated);
+                return elevated;
+            }
         }
 
         return null;

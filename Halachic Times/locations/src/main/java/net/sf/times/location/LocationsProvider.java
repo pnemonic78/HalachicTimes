@@ -221,37 +221,43 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             settings.putLocation(location);
         }
 
-        for (ZmanimLocationListener listener : locationListeners)
+        for (ZmanimLocationListener listener : locationListeners) {
             listener.onLocationChanged(location);
+        }
 
-        if (findElevation && !location.hasAltitude())
+        if (findElevation && !location.hasAltitude()) {
             findElevation(location);
-        else if (findAddress)
+        } else if (findAddress) {
             findAddress(location);
+        }
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        for (ZmanimLocationListener listener : locationListeners)
+        for (ZmanimLocationListener listener : locationListeners) {
             listener.onProviderDisabled(provider);
+        }
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        for (ZmanimLocationListener listener : locationListeners)
+        for (ZmanimLocationListener listener : locationListeners) {
             listener.onProviderEnabled(provider);
+        }
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        for (ZmanimLocationListener listener : locationListeners)
+        for (ZmanimLocationListener listener : locationListeners) {
             listener.onStatusChanged(provider, status, extras);
+        }
     }
 
     @Override
     public void onAddressChanged(Location location, ZmanimAddress address) {
-        for (ZmanimLocationListener listener : locationListeners)
+        for (ZmanimLocationListener listener : locationListeners) {
             listener.onAddressChanged(location, address);
+        }
     }
 
     @Override

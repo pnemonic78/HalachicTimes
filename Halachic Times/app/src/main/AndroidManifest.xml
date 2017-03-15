@@ -124,6 +124,9 @@
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <meta-data
+            android:name="net.sf.times.offline"
+            android:value="${offline}"/>
+        <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="@string/google_backup_api_key"/>
     </application>

@@ -15,6 +15,8 @@ android {
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
         resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "uk"
 
+        manifestPlaceholders = [offline: false]
+
         testApplicationId "net.sf.times.test"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
     }
@@ -39,6 +41,15 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        regular {
+        }
+
+        offline {
+            manifestPlaceholders = [offline: true]
         }
     }
 
