@@ -380,14 +380,7 @@ public class CompassView extends View {
      */
     public void setAzimuth(float bearing) {
         north = (float) Math.toDegrees(-bearing);
-
-        northToHoliest = north + holiest;
-        if (northToHoliest > 180f)
-            northToHoliest -= 360f;
-        else if (northToHoliest < -180f)
-            northToHoliest += 360f;
-
-        invalidate();
+        setNorthToHoliest();
     }
 
     /**
@@ -398,12 +391,19 @@ public class CompassView extends View {
      */
     public void setHoliest(float bearing) {
         holiest = bearing;
+        setNorthToHoliest();
+    }
 
+    private void setNorthToHoliest() {
         northToHoliest = north + holiest;
         if (northToHoliest > 180f)
             northToHoliest -= 360f;
         else if (northToHoliest < -180f)
             northToHoliest += 360f;
+        // Samsung has bug with tiny arcs.
+        if (Math.abs(northToHoliest) < 0.1) {
+            northToHoliest = 0.1f;
+        }
 
         invalidate();
     }
