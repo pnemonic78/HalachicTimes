@@ -361,7 +361,10 @@ public class CompassView extends View {
         canvas.rotate(45, w2, h2);
         canvas.drawPath(pathArrowSmall, paintNE);
 
-        canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
+        // Samsung has bug with tiny arcs.
+        if (Math.abs(northToHoliest) >= 0.1) {
+            canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
+        }
 
         canvas.rotate(45 + holiest, w2, h2);
         canvas.drawLine(w2, h2, w2, h2r9, paintShadowHoliest);
@@ -400,10 +403,6 @@ public class CompassView extends View {
             northToHoliest -= 360f;
         else if (northToHoliest < -180f)
             northToHoliest += 360f;
-        // Samsung has bug with tiny arcs.
-        if (Math.abs(northToHoliest) < 0.1) {
-            northToHoliest = 0.1f;
-        }
 
         invalidate();
     }
