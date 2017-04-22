@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
@@ -33,7 +34,7 @@ import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 /**
@@ -86,14 +87,26 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
         if ((position == positionToday) || (position == positionTomorrow)) {
             ComplexZmanimCalendar zmanCal = adapter.getCalendar();
-            JewishDate jewishDate = new JewishDate(zmanCal.getCalendar());
+            JewishCalendar jewishDate = new JewishCalendar(zmanCal.getCalendar());
             if (position == positionTomorrow) {
                 jewishDate.forward();
             }
             CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
+            CharSequence groupingText = dateHebrew;
+
+            // Sefirat HaOmer?
+            if (position == positionTomorrow) {
+                int omer = jewishDate.getDayOfOmer();
+                if (omer >= 1) {
+                    CharSequence omerLabel = adapter.formatOmer(context, omer);
+                    if (!TextUtils.isEmpty(omerLabel)) {
+                        groupingText = TextUtils.concat(groupingText, "\n", omerLabel);
+                    }
+                }
+            }
 
             view = new RemoteViews(pkg, R.layout.widget_date);
-            bindViewGrouping(view, position, dateHebrew);
+            bindViewGrouping(view, position, groupingText);
             return view;
         }
 

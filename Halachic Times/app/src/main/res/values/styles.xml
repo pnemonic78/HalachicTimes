@@ -122,8 +122,9 @@
     <style name="Widget.Date.Widget" parent="Widget.TextView.Small">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
-        <item name="android:maxLines">1</item>
+        <item name="android:maxLines">2</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="Widget.Item.Widget" parent="Widget"/>
