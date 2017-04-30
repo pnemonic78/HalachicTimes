@@ -13,3 +13,10 @@ allprojects {
         jcenter()
     }
 }
+
+ext {
+    androidBuildToolsVersion = "25.0.0"
+    androidBuildSdkVersion = 24
+    androidBuildMinSdkVersion = 15
+    androidBuildTargetSdkVersion = 24
+}
