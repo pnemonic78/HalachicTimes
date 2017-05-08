@@ -99,6 +99,8 @@ public class ZmanimReminder extends BroadcastReceiver {
     public static final String ACTION_UPDATE = "net.sf.times.action.UPDATE";
     /** Action to cancel reminders. */
     public static final String ACTION_CANCEL = "net.sf.times.action.CANCEL";
+    /** Action to silence reminders. */
+    public static final String ACTION_SILENCE = "net.sf.times.action.SILENCE";
 
     /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
     private static final long STOP_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS * 3;
@@ -233,11 +235,11 @@ public class ZmanimReminder extends BroadcastReceiver {
         PendingIntent alarmIntent = createAlarmIntent(context, null);
         PendingIntent upcomingIntent = createUpcomingIntent(context);
 
-        AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarms = getAlarmManager(context);
         alarms.cancel(alarmIntent);
         alarms.cancel(upcomingIntent);
 
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nm = getNotificationManager(context);
         nm.cancel(ID_NOTIFY);
         nm.cancel(ID_NOTIFY_UPCOMING);
     }
@@ -272,12 +274,13 @@ public class ZmanimReminder extends BroadcastReceiver {
      *         the reminder item.
      */
     private void notifyNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
+        Log.i(TAG, "notify now [" + item.getTitle() + "] for [" + formatDateTime(item.getTime()) + "]");
         PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification = createReminderNotification(context, settings, item, contentIntent);
         postReminderNotification(context, settings, notification);
 
-        cancelFuture(context, System.currentTimeMillis() + STOP_NOTIFICATION_AFTER);
+        silenceFuture(context, item, System.currentTimeMillis() + STOP_NOTIFICATION_AFTER);
     }
 
     /**
@@ -296,7 +299,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         Log.i(TAG, "notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for [" + formatDateTime(when) + "]");
 
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = getAlarmManager(context);
         PendingIntent alarmIntent = createAlarmIntent(context, item);
         manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
@@ -316,7 +319,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
-        Intent intent = new Intent(context, ZmanimReminder.class);
+        Intent intent = new Intent(context, getClass());
         intent.setAction(ACTION_REMIND);
 
         if (item != null) {
@@ -341,7 +344,7 @@ public class ZmanimReminder extends BroadcastReceiver {
      * @return the pending intent.
      */
     private PendingIntent createCancelIntent(Context context) {
-        Intent intent = new Intent(context, ZmanimReminder.class);
+        Intent intent = new Intent(context, getClass());
         intent.setAction(ACTION_CANCEL);
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -354,6 +357,7 @@ public class ZmanimReminder extends BroadcastReceiver {
 
         boolean update = false;
         ZmanimPreferences settings = new ZmanimPreferences(context);
+        Bundle extras;
 
         String action = intent.getAction();
         if (action == null) {
@@ -371,7 +375,7 @@ public class ZmanimReminder extends BroadcastReceiver {
                 cancel(context);
                 break;
             case ACTION_REMIND:
-                Bundle extras = intent.getExtras();
+                extras = intent.getExtras();
                 if (extras != null) {
                     int id = extras.getInt(EXTRA_REMINDER_ID);
                     CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
@@ -383,6 +387,23 @@ public class ZmanimReminder extends BroadcastReceiver {
                         notifyNow(context, settings, reminderItem);
                     }
                     update = true;
+                }
+                break;
+            case ACTION_SILENCE:
+                extras = intent.getExtras();
+                if (extras != null) {
+                    int id = extras.getInt(EXTRA_REMINDER_ID);
+                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
+                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
+                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
+
+                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
+                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, contentText, when);
+                        silence(context, settings, reminderItem);
+                    }
+                    update = true;
+                } else {
+                    cancel(context);
                 }
                 break;
         }
@@ -419,26 +440,32 @@ public class ZmanimReminder extends BroadcastReceiver {
         return formatDateTime(new Date(time));
     }
 
-    @SuppressLint("NewApi")
     private Notification createReminderNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent) {
+        return createReminderNotification(context, settings, item, contentIntent, false);
+    }
+
+    @SuppressLint("NewApi")
+    private Notification createReminderNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent, boolean silent) {
         CharSequence contentTitle = item.getTitle();
         CharSequence contentText = item.getText();
         long when = item.getTime();
-        Log.i(TAG, "notify now [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
         int audioStreamType = settings.getReminderStream();
-        Uri sound = settings.getReminderRingtone();
+        Uri sound = silent ? null : settings.getReminderRingtone();
 
         Notification.Builder builder = new Notification.Builder(context)
                 .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
-                .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-                .setLights(LED_COLOR, LED_ON, LED_OFF)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setSound(sound, audioStreamType)
                 .setWhen(when);
+        if (!silent) {
+            builder.setDefaults(Notification.DEFAULT_VIBRATE)
+                    .setLights(LED_COLOR, LED_ON, LED_OFF);
+
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
         }
@@ -461,7 +488,7 @@ public class ZmanimReminder extends BroadcastReceiver {
         WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         wake.acquire(3000L);// enough time to also hear an alarm tone
 
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nm = getNotificationManager(context);
         nm.notify(ID_NOTIFY, notification);
 
         // This was the last notification.
@@ -540,7 +567,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     private void cancelFuture(Context context, long triggerAt) {
         Log.i(TAG, "cancel future at [" + formatDateTime(triggerAt) + "]");
 
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = getAlarmManager(context);
         PendingIntent alarmIntent = createCancelIntent(context);
         manager.set(AlarmManager.RTC, triggerAt, alarmIntent);
     }
@@ -576,7 +603,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     private void postUpcomingNotification(Context context, ZmanimPreferences settings, Notification notification) {
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager nm = getNotificationManager(context);
         nm.notify(ID_NOTIFY_UPCOMING, notification);
     }
 
@@ -597,15 +624,106 @@ public class ZmanimReminder extends BroadcastReceiver {
         postUpcomingNotification(context, settings, notification);
 
         long triggerAt = item.time + DateUtils.MINUTE_IN_MILLIS;
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager manager = getAlarmManager(context);
         PendingIntent alarmIntent = createUpcomingIntent(context);
         manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
     private PendingIntent createUpcomingIntent(Context context) {
-        Intent intent = new Intent(context, ZmanimReminder.class);
+        Intent intent = new Intent(context, getClass());
         intent.setAction(ACTION_UPDATE);
 
         return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    /**
+     * Silence the notification at some time in the future.
+     *
+     * @param context
+     *         the context.
+     * @param item
+     *         the item to show.
+     * @param triggerAt
+     *         when to silence.
+     */
+    private void silenceFuture(Context context, ZmanimReminderItem item, long triggerAt) {
+        Log.i(TAG, "silence future at [" + formatDateTime(triggerAt) + "]");
+        if (item == null) {
+            cancelFuture(context, triggerAt);
+            return;
+        }
+
+        AlarmManager manager = getAlarmManager(context);
+        PendingIntent alarmIntent = createSilenceIntent(context, item);
+        manager.set(AlarmManager.RTC, triggerAt, alarmIntent);
+    }
+
+    /**
+     * Create the intent to silence notifications.
+     *
+     * @param context
+     *         the context.
+     * @return the pending intent.
+     */
+    private PendingIntent createSilenceIntent(Context context, ZmanimReminderItem item) {
+        Intent intent = new Intent(context, getClass());
+        intent.setAction(ACTION_SILENCE);
+
+        intent.putExtra(EXTRA_REMINDER_ID, item.getId());
+        intent.putExtra(EXTRA_REMINDER_TITLE, item.getTitle());
+        intent.putExtra(EXTRA_REMINDER_TEXT, item.getText());
+        intent.putExtra(EXTRA_REMINDER_TIME, item.getTime());
+
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    /**
+     * Replace the current notification with a silent notification.
+     *
+     * @param context
+     *         the context.
+     * @param settings
+     *         the settings.
+     * @param item
+     *         the reminder item.
+     */
+    private void silence(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
+        Log.i(TAG, "silence now [" + item.getTitle() + "] for [" + formatDateTime(item.getTime()) + "]");
+        PendingIntent contentIntent = createActivityIntent(context);
+
+        Notification notification = createSilenceNotification(context, settings, item, contentIntent);
+        postSilenceNotification(context, notification);
+    }
+
+    private Notification createSilenceNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent) {
+        return createReminderNotification(context, settings, item, contentIntent, true);
+    }
+
+    private void postSilenceNotification(Context context, Notification notification) {
+        NotificationManager nm = getNotificationManager(context);
+        nm.cancel(ID_NOTIFY); // Kill the notification so that the sound stops playing.
+        nm.notify(ID_NOTIFY, notification);
+    }
+
+    /**
+     * Get the notification manager.
+     *
+     * @param context
+     *         the context.
+     * @return the manager.
+     */
+    protected NotificationManager getNotificationManager(Context context) {
+        return (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    /**
+     * Get the alarm manager.
+     *
+     * @param context
+     *         the context.
+     * @return the manager.
+     */
+    protected AlarmManager getAlarmManager(Context context) {
+        return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 }
