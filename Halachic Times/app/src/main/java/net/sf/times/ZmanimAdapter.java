@@ -42,7 +42,6 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -263,7 +262,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param time
      *         the time.
      */
-    public void add(int titleId, int summaryId, Date time) {
+    public void add(int titleId, int summaryId, Long time) {
         add(titleId, summaryId, time, false);
     }
 
@@ -279,8 +278,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param remote
      *         hide elapsed times for remote view?
      */
-    public void add(int titleId, int summaryId, Date time, boolean remote) {
-        add(titleId, summaryId, time == null ? NEVER : time.getTime(), remote);
+    public void add(int titleId, int summaryId, Long time, boolean remote) {
+        add(titleId, summaryId, time == null ? NEVER : time, remote);
     }
 
     /**
@@ -325,8 +324,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param remote
      *         hide elapsed times for remote view?
      */
-    public void add(int titleId, CharSequence summary, Date time, boolean remote) {
-        add(titleId, summary, time == null ? NEVER : time.getTime(), remote);
+    public void add(int titleId, CharSequence summary, Long time, boolean remote) {
+        add(titleId, summary, time == null ? NEVER : time, remote);
     }
 
     /**
