@@ -19,16 +19,16 @@
  */
 package net.sf.geonames;
 
-import javafx.beans.NamedArg;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A rectangular bounding box which is used to describe the bounds of a name.
  *
  * @author moshe.w
  */
-public class BoundingBox extends javafx.geometry.BoundingBox {
+public class BoundingBox extends Rectangle2D.Double {
 
-    public BoundingBox(@NamedArg("west") double west, @NamedArg("north") double north, @NamedArg("east") double east, @NamedArg("south") double south) {
+    public BoundingBox(/*@NamedArg("west")*/ double west, /*@NamedArg("north")*/ double north, /*@NamedArg("east")*/ double east, /*@NamedArg("south")*/ double south) {
         super(-west, -south, east + west, north + south);
     }
 }
