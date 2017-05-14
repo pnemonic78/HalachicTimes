@@ -1,6 +1,6 @@
 /*
  * Zmanim Java API
- * Copyright (C) 2004-2014 Eliyahu Hershfeld
+ * Copyright (C) 2004-2016 Eliyahu Hershfeld
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General
  * Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option)
@@ -23,7 +23,7 @@ import java.util.TimeZone;
  * specific implementations of the {@link AstronomicalCalculator} to see if elevation is calculated as part of the
  * algorithm.
  * 
- * @author &copy; Eliyahu Hershfeld 2004 - 2014
+ * @author &copy; Eliyahu Hershfeld 2004 - 2016
  * @version 1.1
  */
 public class GeoLocation implements Cloneable {
@@ -141,8 +141,8 @@ public class GeoLocation implements Cloneable {
 	 * Method to set the latitude in degrees, minutes and seconds.
 	 * 
 	 * @param degrees
-	 *            The degrees of latitude to set between -90 and 90. An IllegalArgumentException will be thrown if the
-	 *            value exceeds the limit. For example 40 would be used for Lakewood, NJ.
+	 *            The degrees of latitude to set between 0&deg; and 90&deg;. For example 40 would be used for Lakewood, NJ.
+	 *            An IllegalArgumentException will be thrown if the value exceeds the limit. 
 	 * @param minutes
 	 *            <a href="http://en.wikipedia.org/wiki/Minute_of_arc#Cartography">minutes of arc</a>
 	 * @param seconds
@@ -152,7 +152,7 @@ public class GeoLocation implements Cloneable {
 	 */
 	public void setLatitude(int degrees, int minutes, double seconds, String direction) {
 		double tempLat = degrees + ((minutes + (seconds / 60.0)) / 60.0);
-		if (tempLat > 90 || tempLat < 0) {
+		if (tempLat > 90 || tempLat < 0) { //FIXME An exception should be thrown if degrees, minutes or seconds are negative
 			throw new IllegalArgumentException(
 					"Latitude must be between 0 and  90. Use direction of S instead of negative.");
 		}
@@ -192,22 +192,21 @@ public class GeoLocation implements Cloneable {
 	 * Method to set the longitude in degrees, minutes and seconds.
 	 * 
 	 * @param degrees
-	 *            The degrees of longitude to set between -180 and 180. An IllegalArgumentException will be thrown if
-	 *            the value exceeds the limit. For example -74 would be used for Lakewood, NJ. Note: for longitudes east
-	 *            of the <a href="http://en.wikipedia.org/wiki/Prime_Meridian">Prime Meridian </a> (Greenwich) a
-	 *            negative value should be used.
+	 *            The degrees of longitude to set between 0&deg; and 180&deg;. As an example 74 would be set for Lakewood, NJ.
+	 *            An IllegalArgumentException will be thrown if the value exceeds the limits. 
 	 * @param minutes
 	 *            <a href="http://en.wikipedia.org/wiki/Minute_of_arc#Cartography">minutes of arc</a>
 	 * @param seconds
 	 *            <a href="http://en.wikipedia.org/wiki/Minute_of_arc#Cartography">seconds of arc</a>
 	 * @param direction
-	 *            E for east of the Prime Meridian or W for west of it. An IllegalArgumentException will be thrown if
+	 *            E for east of the <a href="http://en.wikipedia.org/wiki/Prime_Meridian">Prime Meridian </a> or W for west of it.
+	 *            An IllegalArgumentException will be thrown if
 	 *            the value is not E or W.
 	 */
 	public void setLongitude(int degrees, int minutes, double seconds, String direction) {
 		double longTemp = degrees + ((minutes + (seconds / 60.0)) / 60.0);
-		if (longTemp > 180 || this.longitude < 0) {
-			throw new IllegalArgumentException("Longitude must be between 0 and  180. Use the ");
+		if (longTemp > 180 || this.longitude < 0) { //FIXME An exception should be thrown if degrees, minutes or seconds are negative
+			throw new IllegalArgumentException("Longitude must be between 0 and  180.  Use a direction of W instead of negative.");
 		}
 		if (direction.equals("W")) {
 			longTemp *= -1;
@@ -489,7 +488,7 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * @see java.lang.Object#equals(Object)
+	 * @see Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
 		if (this == object)
@@ -505,7 +504,7 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * @see java.lang.Object#hashCode()
+	 * @see Object#hashCode()
 	 */
 	public int hashCode() {
 
@@ -526,13 +525,13 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * @see java.lang.Object#toString()
+	 * @see Object#toString()
 	 */
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\nLocation Name:\t\t\t").append(getLocationName());
-		sb.append("\nLatitude:\t\t\t").append(getLatitude()).append("\u00B0");
-		sb.append("\nLongitude:\t\t\t").append(getLongitude()).append("\u00B0");
+		sb.append("\nLatitude:\t\t\t").append(getLatitude()).append("°");
+		sb.append("\nLongitude:\t\t\t").append(getLongitude()).append("°");
 		sb.append("\nElevation:\t\t\t").append(getElevation()).append(" Meters");
 		sb.append("\nTimezone Name:\t\t\t").append(getTimeZone().getID());
 		/*
@@ -544,14 +543,14 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * An implementation of the {@link java.lang.Object#clone()} method that creates a <a
+	 * An implementation of the {@link Object#clone()} method that creates a <a
 	 * href="http://en.wikipedia.org/wiki/Object_copy#Deep_copy">deep copy</a> of the object.
-	 * <b>Note:</b> If the {@link java.util.TimeZone} in the clone will be changed from the original, it is critical
+	 * <b>Note:</b> If the {@link TimeZone} in the clone will be changed from the original, it is critical
 	 * that {@link net.sourceforge.zmanim.AstronomicalCalendar#getCalendar()}.
 	 * {@link java.util.Calendar#setTimeZone(TimeZone) setTimeZone(TimeZone)} is called after cloning in order for the
 	 * AstronomicalCalendar to output times in the expected offset.
-	 * 
-	 * @see java.lang.Object#clone()
+	 *
+	 * @see Object#clone()
 	 * @since 1.1
 	 */
 	public Object clone() {
