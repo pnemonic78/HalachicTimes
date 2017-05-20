@@ -34,6 +34,9 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.text.format.DateUtils;
@@ -105,12 +108,30 @@ public class ZmanimReminder extends BroadcastReceiver {
     /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
     private static final long STOP_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS * 3;
 
+    /** Remind. */
+    private static final int WHAT_REMIND = 0;
+
     private SimpleDateFormat dateFormat;
     /** The adapter. */
     private ZmanimAdapter adapter;
+    /** The handler thread. */
+    private HandlerThread handlerThread;
+    /** The handler. */
+    private Handler handler;
 
     /** No-argument constructor for broadcast receiver. */
     public ZmanimReminder() {
+    }
+
+    /**
+     * Setup the first reminder for today.
+     *
+     * @param context
+     *         the context.
+     */
+    public void remind(final Context context) {
+        ZmanimPreferences settings = new ZmanimPreferences(context);
+        remind(context, settings);
     }
 
     /**
@@ -407,9 +428,8 @@ public class ZmanimReminder extends BroadcastReceiver {
                 }
                 break;
         }
-
         if (update) {
-            remind(context, settings);
+            getHandler().obtainMessage(WHAT_REMIND, context).sendToTarget();
         }
     }
 
@@ -725,5 +745,41 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     protected AlarmManager getAlarmManager(Context context) {
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    /**
+     * Get the handler thread. Too much work on the main thread causes ANRs.
+     *
+     * @return the thread.
+     */
+    private HandlerThread getHandlerThread() {
+        if (handlerThread == null) {
+            handlerThread = new HandlerThread("ZmanimReminderThread");
+            handlerThread.start();
+        }
+        return handlerThread;
+    }
+
+    /**
+     * Get the handler.
+     *
+     * @return the handler to handle some requests.
+     */
+    private Handler getHandler() {
+        if (handler == null) {
+            handler = new Handler(getHandlerThread().getLooper()) {
+                @Override
+                public void handleMessage(Message msg) {
+                    switch (msg.what) {
+                        case WHAT_REMIND:
+                            remind((Context) msg.obj);
+                            return;
+                    }
+
+                    super.handleMessage(msg);
+                }
+            };
+        }
+        return handler;
     }
 }
