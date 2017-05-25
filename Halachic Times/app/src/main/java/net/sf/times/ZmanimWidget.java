@@ -165,7 +165,11 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
             adapter = populateWidgetTimes(appWidgetId, views, activityPendingIntent, viewId, now);
 
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+            try {
+                appWidgetManager.updateAppWidget(appWidgetId, views);
+            } catch (RuntimeException e) {
+                // Caused by: android.os.DeadObjectException
+            }
         }
 
         scheduleNext(context, appWidgetIds, adapter);
