@@ -37,6 +37,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import static net.sf.times.ZmanimAdapter.NEVER;
+
 /**
  * Clock widget with hour and title underneath.<br>
  * Based on the default Android digital clock widget.
@@ -101,7 +103,7 @@ public class ClockWidget extends ZmanimWidget {
     @Override
     protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
         DateFormat timeFormat = getTimeFormat();
-        CharSequence label = timeFormat.format(item.time);
+        CharSequence label = item.time != NEVER ? timeFormat.format(item.time) : "";
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
         spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
