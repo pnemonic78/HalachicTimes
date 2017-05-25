@@ -281,7 +281,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
         }
         return null;
@@ -304,7 +304,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
         }
         return null;
@@ -321,7 +321,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "Network: " + e.getLocalizedMessage(), e);
         }
         return null;
@@ -343,7 +343,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "Network: " + e.getLocalizedMessage(), e);
         }
         return null;
@@ -360,7 +360,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
         }
         return null;
@@ -382,7 +382,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException e) {
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Log.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
         }
         return null;
