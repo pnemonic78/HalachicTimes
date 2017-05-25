@@ -28,7 +28,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.text.TextUtils;
 
-import net.sf.times.ZmanimReminder;
+import net.sf.times.ZmanimReminderService;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -168,8 +168,8 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
     private void remind() {
         Context context = getActivity();
 
-        Intent intent = new Intent(context, ZmanimReminder.class);
-        intent.setAction(ZmanimReminder.ACTION_UPDATE);
-        context.sendBroadcast(intent);
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        intent.setAction(ZmanimReminderService.ACTION_UPDATE);
+        context.startService(intent);
     }
 }

@@ -120,6 +120,9 @@
         </receiver>
 
         <service
+            android:name="net.sf.times.ZmanimReminderService"
+            android:exported="false"/>
+        <service
             android:name="net.sf.times.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 

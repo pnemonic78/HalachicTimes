@@ -786,17 +786,17 @@ public class ZmanimActivity extends LocatedActivity implements
     private void updateReminders() {
         Context context = this;
 
-        Intent intent = new Intent(context, ZmanimReminder.class);
-        intent.setAction(ZmanimReminder.ACTION_UPDATE);
-        context.sendBroadcast(intent);
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        intent.setAction(ZmanimReminderService.ACTION_UPDATE);
+        context.startService(intent);
     }
 
     private void cancelReminders() {
         Context context = this;
 
-        Intent intent = new Intent(context, ZmanimReminder.class);
-        intent.setAction(ZmanimReminder.ACTION_CANCEL);
-        context.sendBroadcast(intent);
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        intent.setAction(ZmanimReminderService.ACTION_CANCEL);
+        context.startService(intent);
     }
 
     @Override
