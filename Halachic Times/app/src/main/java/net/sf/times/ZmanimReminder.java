@@ -44,6 +44,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     }
 
     @Override
+    @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
         String nowFormatted = formatDateTime(System.currentTimeMillis());
         Log.i(TAG, "onReceive " + intent + " [" + nowFormatted + "]");
