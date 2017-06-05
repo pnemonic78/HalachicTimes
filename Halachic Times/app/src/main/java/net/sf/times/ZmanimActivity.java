@@ -456,14 +456,15 @@ public class ZmanimActivity extends LocatedActivity implements
     /**
      * Show/hide the details list.
      *
-     * @param item
-     *         the master item.
      * @param view
      *         the master row view that was clicked.
      */
-    protected void toggleDetails(ZmanimItem item, View view) {
+    protected void toggleDetails(View view) {
+        ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
         if (item == null)
             item = (ZmanimItem) view.getTag();
+        if (item == null)
+            return;
         toggleDetails(item.titleId);
     }
 
@@ -545,8 +546,7 @@ public class ZmanimActivity extends LocatedActivity implements
                 navigateTomorrow();
                 break;
             default:
-                ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
-                toggleDetails(item, view);
+                toggleDetails(view);
                 break;
         }
     }
