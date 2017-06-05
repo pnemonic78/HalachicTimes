@@ -29,6 +29,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static net.sf.times.ZmanimAdapter.NEVER;
 
@@ -215,8 +216,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (context == null)
             return;
 
-        Calendar date = adapter.getCalendar().getCalendar();
-        JewishDate jewishDate = new JewishDate(date);
+        Calendar calendar = adapter.getCalendar().getCalendar();
+        JewishDate jewishDate = new JewishDate(calendar);
         CharSequence dateHebrew;
         int jDayOfMonthPrevious = 0;
         int jDayOfMonth;
@@ -231,8 +232,11 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             if (item.time == NEVER) {
                 continue;
             }
-            date.setTimeInMillis(item.time);
-            jewishDate.setDate(date);
+            calendar.setTimeInMillis(item.time);
+            if (calendar.get(Calendar.ERA) == GregorianCalendar.BC) {
+                continue;
+            }
+            jewishDate.setDate(calendar);
             jDayOfMonth = jewishDate.getJewishDayOfMonth();
             if (jDayOfMonth != jDayOfMonthPrevious) {
                 dateHebrew = adapter.formatDate(context, jewishDate);
