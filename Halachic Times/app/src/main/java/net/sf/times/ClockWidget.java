@@ -47,7 +47,15 @@ import static net.sf.times.ZmanimAdapter.NEVER;
  */
 public class ClockWidget extends ZmanimWidget {
 
-    private DateFormat timeFormat;
+    private final ThreadLocal<DateFormat> formatter = new ThreadLocal<DateFormat>() {
+        @Override
+        protected DateFormat initialValue() {
+            Context context = getContext();
+            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
+            String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
+            return new SimpleDateFormat(pattern, Locale.getDefault());
+        }
+    };
 
     /**
      * Constructs a new widget.
@@ -102,8 +110,7 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
-        DateFormat timeFormat = getTimeFormat();
-        CharSequence label = item.time != NEVER ? timeFormat.format(item.time) : "";
+        CharSequence label = item.time != NEVER ? getTimeFormat().format(item.time) : "";
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
         spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -115,7 +122,7 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected void notifyAppWidgetViewDataChanged(Context context) {
-        timeFormat = null;
+        formatter.remove();
         super.notifyAppWidgetViewDataChanged(context);
     }
 
@@ -125,13 +132,7 @@ public class ClockWidget extends ZmanimWidget {
      * @return the formatter.
      */
     protected DateFormat getTimeFormat() {
-        if (timeFormat == null) {
-            Context context = getContext();
-            boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
-            String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
-            timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-        }
-        return timeFormat;
+        return formatter.get();
     }
 
     @Override
