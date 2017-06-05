@@ -64,6 +64,8 @@ import net.sf.view.animation.LayoutWeightAnimation;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
+import static net.sf.times.ZmanimAdapter.NEVER;
+
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
  *
@@ -95,9 +97,6 @@ public class ZmanimActivity extends LocatedActivity implements
 
     private static final int CHILD_DETAILS_LIST = 0;
     private static final int CHILD_DETAILS_CANDLES = 1;
-
-    /** Unknown date. */
-    private static final long NEVER = ZmanimAdapter.NEVER;
 
     /** The date. */
     private final Calendar calendar = Calendar.getInstance();

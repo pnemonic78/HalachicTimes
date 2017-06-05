@@ -30,6 +30,8 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
+import static net.sf.times.ZmanimAdapter.NEVER;
+
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
  *
@@ -226,7 +228,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
 
-            if (item.time == ZmanimAdapter.NEVER) {
+            if (item.time == NEVER) {
                 continue;
             }
             date.setTimeInMillis(item.time);

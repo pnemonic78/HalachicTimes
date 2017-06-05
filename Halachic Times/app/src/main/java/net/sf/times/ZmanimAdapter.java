@@ -125,7 +125,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
          * @return {@code true} if empty.
          */
         public boolean isEmpty() {
-            return elapsed || (time == ZmanimAdapter.NEVER) || (timeLabel == null);
+            return elapsed || (time == NEVER) || (timeLabel == null);
         }
     }
 
