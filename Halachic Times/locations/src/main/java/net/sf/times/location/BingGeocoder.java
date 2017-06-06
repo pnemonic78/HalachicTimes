@@ -21,6 +21,7 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.text.TextUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -80,6 +81,8 @@ public class BingGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
+        if (TextUtils.isEmpty(API_KEY))
+            return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
@@ -309,6 +312,8 @@ public class BingGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
+        if (TextUtils.isEmpty(API_KEY))
+            return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
         ZmanimLocation location = getElevationXMLFromURL(queryUrl);
         if (location != null) {

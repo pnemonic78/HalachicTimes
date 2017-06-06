@@ -21,6 +21,7 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.text.TextUtils;
 import android.util.Log;
 
 import net.sf.net.HTTPReader;
@@ -101,6 +102,8 @@ public class GeoNamesGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
+        if (TextUtils.isEmpty(USERNAME))
+            return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
@@ -399,6 +402,8 @@ public class GeoNamesGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
+        if (TextUtils.isEmpty(USERNAME))
+            return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
         URL url = new URL(queryUrl);
         byte[] data = HTTPReader.read(url);
