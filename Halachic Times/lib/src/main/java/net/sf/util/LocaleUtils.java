@@ -19,8 +19,11 @@
  */
 package net.sf.util;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 
 import java.util.Locale;
 
@@ -79,7 +82,18 @@ public class LocaleUtils {
      * @return {@code true} if the locale is RTL.
      */
     public static boolean isLocaleRTL(Resources res) {
-        return isLocaleRTL(res.getConfiguration().locale);
+        return isLocaleRTL(res.getConfiguration());
+    }
+
+    /**
+     * Is the locale right-to-left?
+     *
+     * @param config
+     *         the configuration.
+     * @return {@code true} if the locale is RTL.
+     */
+    public static boolean isLocaleRTL(Configuration config) {
+        return isLocaleRTL(getDefaultLocale(config));
     }
 
     /**
@@ -88,8 +102,7 @@ public class LocaleUtils {
      * @return {@code true} if the locale is RTL.
      */
     public static boolean isLocaleRTL(Locale locale) {
-        final String iso639 = locale.getLanguage();
-        switch (iso639) {
+        switch (locale.getLanguage()) {
             case ISO639_ARABIC:
             case ISO639_HAUSA:
             case ISO639_HEBREW:
@@ -103,4 +116,42 @@ public class LocaleUtils {
         return false;
     }
 
+    /**
+     * Get the default locale.
+     *
+     * @param context
+     *         the context.
+     * @return the locale.
+     */
+    public static Locale getDefaultLocale(Context context) {
+        return getDefaultLocale(context.getResources());
+    }
+
+    /**
+     * Get the default locale.
+     *
+     * @param res
+     *         the resources.
+     * @return the locale.
+     */
+    @TargetApi(Build.VERSION_CODES.N)
+    public static Locale getDefaultLocale(Resources res) {
+        return getDefaultLocale(res.getConfiguration());
+    }
+
+    /**
+     * Get the default locale.
+     *
+     * @param config
+     *         the configuration with locales.
+     * @return the locale.
+     */
+    @TargetApi(Build.VERSION_CODES.N)
+    public static Locale getDefaultLocale(Configuration config) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            return config.locale;
+        }
+        Locale locale = config.getLocales().get(0);
+        return locale != null ? locale : Locale.getDefault();
+    }
 }

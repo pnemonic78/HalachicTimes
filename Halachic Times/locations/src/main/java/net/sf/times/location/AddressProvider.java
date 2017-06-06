@@ -35,6 +35,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
+import net.sf.util.LocaleUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -150,7 +151,7 @@ public class AddressProvider {
      *         the context.
      */
     public AddressProvider(Context context) {
-        this(context, context.getResources().getConfiguration().locale);
+        this(context, LocaleUtils.getDefaultLocale(context));
     }
 
     /**

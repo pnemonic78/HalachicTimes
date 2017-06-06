@@ -23,6 +23,8 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 
+import net.sf.util.LocaleUtils;
+
 import java.util.Locale;
 
 /**
@@ -161,6 +163,6 @@ public class DefaultLocationFormatter implements LocationFormatter {
      * @return the context's locale.
      */
     protected Locale getLocale() {
-        return context.getResources().getConfiguration().locale;
+        return LocaleUtils.getDefaultLocale(context);
     }
 }

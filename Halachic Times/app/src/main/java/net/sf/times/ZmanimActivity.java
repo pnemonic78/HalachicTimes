@@ -56,9 +56,9 @@ import net.sf.times.content.res.ZmanimResources;
 import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.LocationsProvider;
-import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimPreferences;
+import net.sf.util.LocaleUtils;
 import net.sf.view.animation.LayoutWeightAnimation;
 
 import java.lang.ref.WeakReference;
@@ -322,7 +322,7 @@ public class ZmanimActivity extends LocatedActivity implements
 
     /** Initialise the location providers. */
     private void initLocation() {
-        localeRTL = ZmanimLocations.isLocaleRTL();
+        localeRTL = LocaleUtils.isLocaleRTL(this);
     }
 
     /**
@@ -653,7 +653,7 @@ public class ZmanimActivity extends LocatedActivity implements
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        localeRTL = ZmanimLocations.isLocaleRTL();
+        localeRTL = LocaleUtils.isLocaleRTL(newConfig);
     }
 
     /**

@@ -31,8 +31,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferences;
+import net.sf.util.LocaleUtils;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -467,7 +467,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         String dayStr;
         String dayPadded;
 
-        if (ZmanimLocations.isLocaleRTL()) {
+        if (LocaleUtils.isLocaleRTL(getContext())) {
             HebrewDateFormatter formatter = getHebrewDateFormatter();
 
             yearStr = formatter.formatHebrewNumber(jewishYear);
@@ -556,7 +556,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         String dayStr;
 
-        if (ZmanimLocations.isLocaleRTL()) {
+        if (LocaleUtils.isLocaleRTL(getContext())) {
             HebrewDateFormatter formatter = getHebrewDateFormatter();
 
             dayStr = formatter.formatHebrewNumber(days);

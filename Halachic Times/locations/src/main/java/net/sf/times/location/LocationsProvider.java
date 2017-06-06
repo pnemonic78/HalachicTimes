@@ -40,8 +40,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 
-import net.sf.util.LocaleUtils;
-
 import java.util.Collection;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -634,15 +632,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         this.location = null;
         manualLocation = location != null;
         onLocationChanged(location);
-    }
-
-    /**
-     * Is the default locale right-to-left?
-     *
-     * @return {@code true} if the locale is either Hebrew or Yiddish.
-     */
-    public static boolean isLocaleRTL() {
-        return LocaleUtils.isLocaleRTL();
     }
 
     private void requestUpdatesBase() {
