@@ -37,7 +37,8 @@ public class ZmanimDetailsAdapter extends ZmanimAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return createViewFromResource(position, convertView, parent, R.layout.times_detail);
+    protected ViewHolder createViewHolder(int position, View convertView, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.times_detail, parent, false);
+        return new ViewHolder(view);
     }
 }

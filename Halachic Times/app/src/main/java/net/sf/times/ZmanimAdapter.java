@@ -21,6 +21,7 @@ package net.sf.times;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.TypedValue;
@@ -184,11 +185,30 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return createViewFromResource(position, convertView, parent, R.layout.times_item);
+        ViewHolder holder = getViewHolder(position, convertView);
+        if (holder == null) {
+            holder = createViewHolder(position, convertView, parent);
+        }
+        bindViewHolder(position, holder);
+        return holder.itemView;
     }
 
     /**
-     * Bind the item to the view.
+     * Get the view holder.
+     *
+     * @param position
+     *         the row index.
+     * @param convertView
+     *         the view.
+     * @return the view holder.
+     */
+    @Nullable
+    protected ViewHolder getViewHolder(int position, View convertView) {
+        return (convertView != null) ? (ViewHolder) convertView.getTag() : null;
+    }
+
+    /**
+     * Create a view holder.
      *
      * @param position
      *         the row index.
@@ -196,60 +216,25 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the view.
      * @param parent
      *         the parent view.
-     * @param resource
-     *         the resource layout.
      * @return the item view.
      */
-    protected View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
-        ZmanimItem item = getItem(position);
-        boolean enabled = !item.elapsed;
+    protected ViewHolder createViewHolder(int position, View convertView, ViewGroup parent) {
+        View view = inflater.inflate(R.layout.times_item, parent, false);
+        return new ViewHolder(view);
+    }
 
-        View view = convertView;
-        ViewHolder holder;
-        TextView title;
-        TextView summary;
-        TextView time;
-
-        if (view == null) {
-            view = inflater.inflate(resource, parent, false);
-
-            title = (TextView) view.findViewById(android.R.id.title);
-            summary = (TextView) view.findViewById(android.R.id.summary);
-            time = (TextView) view.findViewById(R.id.time);
-
-            holder = new ViewHolder(title, summary, time);
-            view.setTag(holder);
-        } else {
-            holder = (ViewHolder) view.getTag();
-            title = holder.title;
-            summary = holder.summary;
-            time = holder.time;
-        }
-        view.setEnabled(enabled);
-        view.setTag(R.id.time, item);
-
-        title.setText(item.titleId);
-        title.setEnabled(enabled);
-        if (item.emphasis) {
-            title.setTypeface(title.getTypeface(), Typeface.BOLD);
-            title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.getTextSize() * emphasisScale);
-        }
-
-        if (summary != null) {
-            summary.setText(item.summary);
-            summary.setEnabled(enabled);
-            if (!summaries || (item.summary == null))
-                summary.setVisibility(View.GONE);
-        }
-
-        time.setText(item.timeLabel);
-        time.setEnabled(enabled);
-        if (item.emphasis) {
-            time.setTypeface(time.getTypeface(), Typeface.BOLD);
-            time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.getTextSize() * emphasisScale);
-        }
-
-        return view;
+    /**
+     * Bind the item to the view.
+     *
+     * @param position
+     *         the row index.
+     * @param holder
+     *         the view holder.
+     * @return the item view.
+     */
+    protected void bindViewHolder(int position, ViewHolder holder) {
+        holder.itemView.setTag(holder);
+        holder.bind(getItem(position), summaries, emphasisScale);
     }
 
     /**
@@ -421,16 +406,46 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *
      * @author Moshe W
      */
-    private static class ViewHolder {
+    protected static class ViewHolder {
 
+        public final View itemView;
         public final TextView title;
         public final TextView summary;
         public final TextView time;
 
-        public ViewHolder(TextView title, TextView summary, TextView time) {
-            this.title = title;
-            this.summary = summary;
-            this.time = time;
+        public ViewHolder(View view) {
+            this.itemView = view;
+            this.title = (TextView) view.findViewById(android.R.id.title);
+            this.summary = (TextView) view.findViewById(android.R.id.summary);
+            this.time = (TextView) view.findViewById(R.id.time);
+        }
+
+        public void bind(ZmanimItem item, boolean summaries, float emphasisScale) {
+            boolean enabled = !item.elapsed;
+
+            itemView.setEnabled(enabled);
+            itemView.setTag(R.id.time, item);
+
+            title.setText(item.titleId);
+            title.setEnabled(enabled);
+            if (item.emphasis) {
+                title.setTypeface(title.getTypeface(), Typeface.BOLD);
+                title.setTextSize(TypedValue.COMPLEX_UNIT_PX, title.getTextSize() * emphasisScale);
+            }
+
+            if (summary != null) {
+                summary.setText(item.summary);
+                summary.setEnabled(enabled);
+                if (!summaries || (item.summary == null))
+                    summary.setVisibility(View.GONE);
+            }
+
+            time.setText(item.timeLabel);
+            time.setEnabled(enabled);
+            if (item.emphasis) {
+                time.setTypeface(time.getTypeface(), Typeface.BOLD);
+                time.setTextSize(TypedValue.COMPLEX_UNIT_PX, time.getTextSize() * emphasisScale);
+            }
         }
     }
 
