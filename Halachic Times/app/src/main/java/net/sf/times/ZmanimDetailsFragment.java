@@ -24,6 +24,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -205,7 +206,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     }
 
     @Override
-    protected void bindViews(ViewGroup list, A adapter) {
+    protected void bindViews(final ViewGroup list, A adapter) {
         if (list == null)
             return;
         list.removeAllViews();
@@ -225,6 +226,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         final int count = adapter.getCount();
         ZmanimItem item;
         View row;
+        final View[] timeViews = new View[count];
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
@@ -244,16 +246,26 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             }
 
             row = adapter.getView(position, null, list);
+            timeViews[position] = row.findViewById(R.id.time);
             bindView(list, position, row, item);
             jDayOfMonthPrevious = jDayOfMonth;
         }
-    }
 
-    @Override
-    protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
-//        if (position >= 0)
-//            return;
-        super.bindViewGrouping(list, position, label);
+        list.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                // Make all time texts same width.
+                int maxWidth = 0;
+                for (View view : timeViews) {
+                    maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
+                }
+                for (View view : timeViews) {
+                    view.setMinimumWidth(maxWidth);
+                }
+            }
+        });
     }
 
     @Override

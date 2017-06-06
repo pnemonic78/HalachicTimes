@@ -32,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -216,7 +217,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param adapter
      *         the list adapter.
      */
-    protected void bindViews(ViewGroup list, A adapter) {
+    protected void bindViews(final ViewGroup list, A adapter) {
         if (list == null)
             return;
         list.removeAllViews();
@@ -237,11 +238,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         ZmanimItem item;
         View row;
         CharSequence groupingText;
+        final View[] timeViews = new View[count];
 
         if (position < count) {
             item = adapter.getItem(position);
             if (item.titleId == R.string.hour) {
                 row = adapter.getView(position, null, list);
+                timeViews[position] = row.findViewById(R.id.time);
                 bindView(list, position, row, item);
                 position++;
             }
@@ -251,6 +254,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             while (position < count) {
                 item = adapter.getItem(position);
                 row = adapter.getView(position, null, list);
+                timeViews[position] = row.findViewById(R.id.time);
                 bindView(list, position, row, item);
 
                 // Start of the next Hebrew day.
@@ -276,6 +280,22 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 position++;
             }
         }
+
+        list.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                // Make all time texts same width.
+                int maxWidth = 0;
+                for (View view : timeViews) {
+                    maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
+                }
+                for (View view : timeViews) {
+                    view.setMinimumWidth(maxWidth);
+                }
+            }
+        });
 
         highlight(highlightItemId);
     }

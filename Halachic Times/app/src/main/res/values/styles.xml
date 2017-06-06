@@ -59,7 +59,9 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Widget.Time" parent="Widget.TextView.Medium"/>
+    <style name="Widget.Time" parent="Widget.TextView.Medium">
+        <item name="android:gravity">right</item>
+    </style>
 
     <style name="Widget.Title.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
