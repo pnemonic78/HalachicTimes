@@ -217,7 +217,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (context == null)
             return;
 
-        Calendar calendar = adapter.getCalendar().getCalendar();
+        Calendar calendar = (Calendar) adapter.getCalendar().getCalendar().clone();
         JewishDate jewishDate = new JewishDate(calendar);
         CharSequence dateHebrew;
         int jDayOfMonthPrevious = 0;
