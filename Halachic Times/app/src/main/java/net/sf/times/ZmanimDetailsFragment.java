@@ -239,6 +239,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                 continue;
             }
             jewishDate.setDate(calendar);
+            if (jewishDate.getJewishYear() < 0) {
+                continue;
+            }
             jDayOfMonth = jewishDate.getJewishDayOfMonth();
             if (jDayOfMonth != jDayOfMonthPrevious) {
                 dateHebrew = adapter.formatDate(context, jewishDate);
