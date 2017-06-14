@@ -98,6 +98,8 @@ public class ZmanimActivity extends LocatedActivity implements
     private static final int CHILD_DETAILS_LIST = 0;
     private static final int CHILD_DETAILS_CANDLES = 1;
 
+    private static final long DATE_MIN = -62167359300528L;// (-1970 + 1) * DateUtils.DAY_IN_MILLIS * 365.25
+
     /** The date. */
     private final Calendar calendar = Calendar.getInstance();
     /** The location header Gregorian date. */
@@ -332,17 +334,15 @@ public class ZmanimActivity extends LocatedActivity implements
      *         the date, in milliseconds.
      */
     private void setDate(long date) {
+        if (date <= DATE_MIN) {
+            // Bad Gregorian dates cause problems for the Jewish dates.
+            return;
+        }
         calendar.setTimeZone(getTimeZone());
         calendar.setTimeInMillis(date);
-        scheduleNextDay();
 
-        TextView textGregorian = this.headerGregorianDate;
-        // Have we been destroyed?
-        if (textGregorian == null)
-            return;
-        CharSequence dateGregorian = DateUtils.formatDateTime(this, calendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                | DateUtils.FORMAT_SHOW_WEEKDAY);
-        textGregorian.setText(dateGregorian);
+        showDate();
+        scheduleNextDay();
     }
 
     /**
@@ -356,11 +356,21 @@ public class ZmanimActivity extends LocatedActivity implements
      *         the day of the month.
      */
     private void setDate(int year, int monthOfYear, int dayOfMonth) {
+        if ((year <= 1) || (monthOfYear < 0) || (dayOfMonth <= 0)) {
+            // Bad Gregorian dates cause problems for the Jewish dates.
+            return;
+        }
+        calendar.setTimeZone(getTimeZone());
+        calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        calendar.setTimeZone(getTimeZone());
 
+        showDate();
+        scheduleNextDay();
+    }
+
+    private void showDate() {
         TextView textGregorian = this.headerGregorianDate;
         // Have we been destroyed?
         if (textGregorian == null)

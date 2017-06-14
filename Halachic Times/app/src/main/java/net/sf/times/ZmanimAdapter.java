@@ -73,6 +73,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /** Unknown date. */
     public static final long NEVER = Long.MIN_VALUE;
 
+    /**
+     * Value of the month field indicating Adar I, the leap (intercalary or embolismic) thirteenth (Undecimber) numeric
+     * month of the year added in Jewish {@link JewishDate#isJewishLeapYear() leap year}). The leap years are years 3, 6, 8, 11,
+     * 14, 17 and 19 of a 19 year cycle. With the year starting at {@link JewishDate#TISHREI}, it would actually be the 7th month
+     * of the year.
+     */
+    protected static final int ADAR_I = JewishDate.ADAR_II + 1;
+
     protected final LayoutInflater inflater;
     protected final ZmanimPreferences settings;
     protected ComplexZmanimCalendar calendar;
@@ -344,23 +352,19 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         format as hour?
      */
     public void add(int titleId, CharSequence summary, long time, boolean remote, boolean hour) {
+        if (time == NEVER) {
+            return;
+        }
+
         ZmanimItem item = new ZmanimItem();
         item.titleId = titleId;
         item.summary = summary;
         item.time = time;
         item.emphasis = settings.isEmphasis(titleId);
+        item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
+        item.elapsed = remote ? (time < now) : (showElapsed || (titleId == R.string.hour)) ? false : (time < now);
 
-        if (time == NEVER) {
-            item.timeLabel = null;
-            item.elapsed = true;
-        } else {
-            item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
-            item.elapsed = remote ? (time < now) : (showElapsed || (titleId == R.string.hour)) ? false : (time < now);
-        }
-
-        if (time != NEVER) {
-            add(item);
-        }
+        add(item);
     }
 
     /**
@@ -463,7 +467,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         int jewishMonth = jewishDate.getJewishMonth();
         int jewishYear = jewishDate.getJewishYear();
         if ((jewishMonth == JewishDate.ADAR) && jewishDate.isJewishLeapYear()) {
-            jewishMonth = 14; // return Adar I, not Adar in a leap year
+            jewishMonth = ADAR_I; // return "Adar I", not just "Adar".
         }
 
         String[] monthNames = this.monthNames;
@@ -503,7 +507,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     }
 
     /**
-     * Set the calendar.
+     * Set the calendar for the relevant day that the adapter is populated.
      *
      * @param calendar
      *         the calendar.
@@ -525,10 +529,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Get the Jewish calendar.
      *
-     * @return the calendar.
+     * @return the calendar - {@code null} if date is invalid.
      */
     public JewishCalendar getJewishCalendar() {
         Calendar gcal = getCalendar().getCalendar();
+        if (gcal.get(Calendar.YEAR) <= 1) {
+            // Avoid future "IllegalArgumentException".
+            return null;
+        }
         JewishCalendar jcal = new JewishCalendar(gcal);
         jcal.setInIsrael(inIsrael);
         return jcal;

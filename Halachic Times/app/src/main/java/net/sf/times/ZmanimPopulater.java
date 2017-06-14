@@ -31,7 +31,6 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_PESACH;
@@ -226,7 +225,15 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         ComplexZmanimCalendar cal = getCalendar();
         Calendar gcal = cal.getCalendar();
+        if (gcal.get(Calendar.YEAR) <= 1) {
+            // Ignore potential "IllegalArgumentException".
+            return;
+        }
         JewishCalendar jcal = getJewishCalendar();
+        if ((jcal == null) || (jcal.getJewishYear() < 0)) {
+            // Ignore potential "IllegalArgumentException".
+            return;
+        }
         int dayOfWeek = jcal.getDayOfWeek();
         int candlesOffset = settings.getCandleLightingOffset();
         int shabbathAfter = settings.getShabbathEndsAfter();
@@ -914,6 +921,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * @return the number of candles to light, the holiday, and when to light.
      */
     protected int getCandles(JewishCalendar jcal) {
+        if (jcal == null) {
+            return 0;
+        }
         final int dayOfWeek = jcal.getDayOfWeek();
 
         // Check if the following day is special, because we can't check EREV_CHANUKAH.
@@ -1045,10 +1055,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish calendar.
      *
-     * @return the calendar.
+     * @return the calendar - {@code null} if date is invalid.
      */
     public JewishCalendar getJewishCalendar() {
         Calendar gcal = getCalendar().getCalendar();
+        if (gcal.get(Calendar.YEAR) <= 1) {
+            // Avoid future "IllegalArgumentException".
+            return null;
+        }
         JewishCalendar jcal = new JewishCalendar(gcal);
         jcal.setInIsrael(inIsrael);
         return jcal;

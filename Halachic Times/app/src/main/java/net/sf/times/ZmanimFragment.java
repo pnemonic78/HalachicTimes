@@ -228,10 +228,12 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (context == null)
             return;
 
-        Calendar date = adapter.getCalendar().getCalendar();
-        JewishDate jewishDate = new JewishDate(date);
-        CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
         JewishCalendar jcal = adapter.getJewishCalendar();
+        if (jcal == null) {
+            // Ignore potential "IllegalArgumentException".
+            return;
+        }
+        CharSequence dateHebrew = adapter.formatDate(context, jcal);
 
         final int count = adapter.getCount();
         int position = 0;
@@ -240,7 +242,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         CharSequence groupingText;
         final View[] timeViews = new View[count];
 
-        if (position < count) {
+        if (count > 0) {
             item = adapter.getItem(position);
             if (item.titleId == R.string.hour) {
                 row = adapter.getView(position, null, list);
@@ -251,7 +253,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
             bindViewGrouping(list, position, dateHebrew);
 
-            while (position < count) {
+            for (; position < count; position++) {
                 item = adapter.getItem(position);
                 row = adapter.getView(position, null, list);
                 timeViews[position] = row.findViewById(R.id.time);
@@ -259,10 +261,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
                 // Start of the next Hebrew day.
                 if (item.titleId == R.string.sunset) {
-                    jewishDate.forward();
                     jcal.forward();
 
-                    dateHebrew = adapter.formatDate(context, jewishDate);
+                    dateHebrew = adapter.formatDate(context, jcal);
                     groupingText = dateHebrew;
 
                     // Sefirat HaOmer?
@@ -276,8 +277,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
                     bindViewGrouping(list, position, groupingText);
                 }
-
-                position++;
             }
         }
 

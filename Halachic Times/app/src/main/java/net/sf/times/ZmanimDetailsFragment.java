@@ -30,9 +30,6 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import static net.sf.times.ZmanimAdapter.NEVER;
 
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
@@ -217,8 +214,12 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (context == null)
             return;
 
-        Calendar calendar = (Calendar) adapter.getCalendar().getCalendar().clone();
-        JewishDate jewishDate = new JewishDate(calendar);
+        JewishDate jcal = adapter.getJewishCalendar();
+        if (jcal == null) {
+            // Ignore potential "IllegalArgumentException".
+            return;
+        }
+        Calendar gcal = Calendar.getInstance();
         CharSequence dateHebrew;
         int jDayOfMonthPrevious = 0;
         int jDayOfMonth;
@@ -231,20 +232,11 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
 
-            if (item.time == NEVER) {
-                continue;
-            }
-            calendar.setTimeInMillis(item.time);
-            if (calendar.get(Calendar.ERA) == GregorianCalendar.BC) {
-                continue;
-            }
-            jewishDate.setDate(calendar);
-            if (jewishDate.getJewishYear() < 0) {
-                continue;
-            }
-            jDayOfMonth = jewishDate.getJewishDayOfMonth();
+            gcal.setTimeInMillis(item.time);
+            jcal.setDate(gcal);
+            jDayOfMonth = jcal.getJewishDayOfMonth();
             if (jDayOfMonth != jDayOfMonthPrevious) {
-                dateHebrew = adapter.formatDate(context, jewishDate);
+                dateHebrew = adapter.formatDate(context, jcal);
                 bindViewGrouping(list, position, dateHebrew);
             }
 
