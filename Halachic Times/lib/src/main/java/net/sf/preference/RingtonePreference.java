@@ -83,7 +83,7 @@ public class RingtonePreference extends DialogPreference {
     private boolean showSilent;
     private List<CharSequence> entries;
     private List<Uri> entryValues;
-    private Uri value;
+    private Uri selected;
     private RingtoneManager ringtoneManager;
     private Ringtone ringtoneSample;
 
@@ -137,8 +137,28 @@ public class RingtonePreference extends DialogPreference {
             }
             ringtoneManager.setType(type);
 
+            // Switch to the other default tone?
+            String value = getValue();
+            boolean preserveDefault = false;
+            if (!TextUtils.isEmpty(value)) {
+                Uri valueUri = Uri.parse(value);
+                Uri defaultUri = (defaultRingtoneUri != null) ? defaultRingtoneUri : RingtoneManager.getDefaultUri(ringtoneType);
+                preserveDefault = valueUri.equals(defaultUri);
+            }
+
             defaultRingtoneUri = RingtoneManager.getDefaultUri(type);
             defaultRingtone = RingtoneManager.getRingtone(context, defaultRingtoneUri);
+
+            if (preserveDefault && (defaultRingtoneUri != null)) {
+                value = defaultRingtoneUri.toString();
+                setDefaultValue(value);
+                getEntries(); // Rebuild the entries for change listener.
+                if (callChangeListener(value)) {
+                    this.selected = defaultRingtoneUri;
+                    onSaveRingtone(defaultRingtoneUri);
+                    notifyChanged();
+                }
+            }
         }
         ringtoneType = type;
 
@@ -312,7 +332,7 @@ public class RingtonePreference extends DialogPreference {
         super.onDialogClosed(positiveResult);
 
         if (positiveResult) {
-            Uri uri = value;
+            Uri uri = selected;
             if (callChangeListener(uri != null ? uri.toString() : SILENT_PATH)) {
                 onSaveRingtone(uri);
             }
@@ -366,7 +386,7 @@ public class RingtonePreference extends DialogPreference {
     }
 
     private void playRingtone(int position, int delay) {
-        value = getRingtoneUri(position);
+        selected = getRingtoneUri(position);
 
         if (ringtoneSample != null) {
             ringtoneSample.stop();
@@ -449,7 +469,7 @@ public class RingtonePreference extends DialogPreference {
         final Parcelable superState = super.onSaveInstanceState();
 
         final SavedState myState = new SavedState(superState);
-        myState.value = this.value;
+        myState.value = this.selected;
         return myState;
     }
 
@@ -463,7 +483,7 @@ public class RingtonePreference extends DialogPreference {
 
         SavedState myState = (SavedState) state;
         super.onRestoreInstanceState(myState.getSuperState());
-        this.value = myState.value;
+        this.selected = myState.value;
     }
 
     private static class SavedState extends BaseSavedState {
