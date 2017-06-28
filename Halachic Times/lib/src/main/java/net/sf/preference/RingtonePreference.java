@@ -150,7 +150,7 @@ public class RingtonePreference extends DialogPreference {
             defaultRingtone = RingtoneManager.getRingtone(context, defaultRingtoneUri);
 
             if (preserveDefault && (defaultRingtoneUri != null)) {
-                value = defaultRingtoneUri.toString();
+                value = ringtoneManager.filterInternal(defaultRingtoneUri);
                 setDefaultValue(value);
                 getEntries(); // Rebuild the entries for change listener.
                 if (callChangeListener(value)) {
