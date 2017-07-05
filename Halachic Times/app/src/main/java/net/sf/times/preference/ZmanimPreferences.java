@@ -790,9 +790,7 @@ public class ZmanimPreferences extends CompassPreferences {
         }
         RingtoneManager ringtoneManager = new RingtoneManager(context);
         ringtoneManager.setType(type);
-        if (!ringtoneManager.isIncludeExternal()) {
-            path = ringtoneManager.filterInternal(path);
-        }
+        path = ringtoneManager.filterInternalMaybe(path);
         return TextUtils.isEmpty(path) ? null : Uri.parse(path);
     }
 

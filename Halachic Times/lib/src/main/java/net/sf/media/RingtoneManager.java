@@ -234,6 +234,14 @@ public class RingtoneManager extends android.media.RingtoneManager {
         return filterInternal(uri != null ? uri.toString() : null);
     }
 
+    public String filterInternalMaybe(Uri uri) {
+        return filterInternalMaybe(uri != null ? uri.toString() : null);
+    }
+
+    public String filterInternalMaybe(String uriString) {
+        return isIncludeExternal() ? uriString : filterInternal(uriString);
+    }
+
     /**
      * Get the 'default' tone title.
      *

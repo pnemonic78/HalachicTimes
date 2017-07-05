@@ -150,7 +150,7 @@ public class RingtonePreference extends DialogPreference {
             defaultRingtone = RingtoneManager.getRingtone(context, defaultRingtoneUri);
 
             if (preserveDefault && (defaultRingtoneUri != null)) {
-                value = ringtoneManager.filterInternal(defaultRingtoneUri);
+                value = ringtoneManager.filterInternalMaybe(defaultRingtoneUri);
                 setDefaultValue(value);
                 getEntries(); // Rebuild the entries for change listener.
                 if (callChangeListener(value)) {
@@ -352,7 +352,7 @@ public class RingtonePreference extends DialogPreference {
             entryValues = new ArrayList<>();
 
             if (showDefault) {
-                String uriPath = ringtoneManager.filterInternal(defaultRingtoneUri);
+                String uriPath = ringtoneManager.filterInternalMaybe(defaultRingtoneUri);
                 if (uriPath != null) {
                     defaultRingtonePos = entryValues.size();
                     entries.add(ringtoneManager.getDefaultTitle());
@@ -426,7 +426,7 @@ public class RingtonePreference extends DialogPreference {
      * @return The value of the key.
      */
     public String getValue() {
-        return ringtoneManager.filterInternal(getPersistedString(DEFAULT_PATH));
+        return ringtoneManager.filterInternalMaybe(getPersistedString(DEFAULT_PATH));
     }
 
     /**
