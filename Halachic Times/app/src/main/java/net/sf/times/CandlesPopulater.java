@@ -39,8 +39,7 @@ public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
     }
 
     @Override
-    public void populate(CandlesAdapter adapter, boolean remote) {
-        super.populate(adapter, remote);
+    protected void populateImpl(CandlesAdapter adapter, boolean remote, Context context, ZmanimPreferences settings) {
         populateCandles(adapter);
     }
 
