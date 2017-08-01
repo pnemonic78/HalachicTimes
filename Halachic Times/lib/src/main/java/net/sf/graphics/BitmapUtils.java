@@ -41,17 +41,22 @@ public class BitmapUtils {
      */
     public static int getWallpaperColor(Context context) {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
-        Drawable wallpaper = wallpaperManager.getDrawable();
-        if ((wallpaper != null) && (wallpaper instanceof BitmapDrawable)) {
-            Bitmap bm = ((BitmapDrawable) wallpaper).getBitmap();
-            Bitmap pixel = Bitmap.createScaledBitmap(bm, 1, 1, true);
-            if (!pixel.isRecycled()) {
-                int bg = pixel.getPixel(0, 0);
-                if (bm != pixel) {
-                    pixel.recycle();
+        try {
+            Drawable wallpaper = wallpaperManager.getDrawable();
+            if ((wallpaper != null) && (wallpaper instanceof BitmapDrawable)) {
+                Bitmap bm = ((BitmapDrawable) wallpaper).getBitmap();
+                Bitmap pixel = Bitmap.createScaledBitmap(bm, 1, 1, true);
+                if (!pixel.isRecycled()) {
+                    int bg = pixel.getPixel(0, 0);
+                    if (bm != pixel) {
+                        pixel.recycle();
+                    }
+                    return bg;
                 }
-                return bg;
             }
+        } catch (RuntimeException e) {
+            // In case of bad WallpaperService.
+            e.printStackTrace();
         }
 
         return Color.TRANSPARENT;
