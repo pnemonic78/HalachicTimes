@@ -137,7 +137,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
 
     private static final long FAST_ENDS_18 = 18 * DateUtils.MINUTE_IN_MILLIS;
-    private static final long FAST_ENDS_24 = 24 * DateUtils.MINUTE_IN_MILLIS;
 
     private final Context context;
     private final ZmanimPreferences settings;
@@ -665,9 +664,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 case FAST_OF_ESTHER:
                     adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset + FAST_ENDS_18, remote);
                     break;
-                case TISHA_BEAV:
-                    adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset + FAST_ENDS_24, remote);
-                    break;
             }
         }
 
@@ -784,7 +780,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.nightfall_8;
         }
         adapter.add(R.string.nightfall, summary, date, remote);
-        if (holidayToday == YOM_KIPPUR) {
+        if ((holidayToday == TISHA_BEAV) || (holidayToday == YOM_KIPPUR)) {
             adapter.add(R.string.fast_ends, SUMMARY_NONE, date, remote);
         }
         Long nightfall = date;
