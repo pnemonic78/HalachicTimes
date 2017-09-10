@@ -9,9 +9,11 @@
     <string name="opinion_value_120_zmanis" translatable="false">120_zmanis</string>
     <string name="opinion_value_13" translatable="false">13.24</string>
     <string name="opinion_value_15" translatable="false">15</string>
+    <string name="opinion_value_15_alos" translatable="false">15_alos</string>
     <string name="opinion_value_16" translatable="false">16.1</string>
     <string name="opinion_value_16_alos" translatable="false">16.1_alos</string>
     <string name="opinion_value_16_sunset" translatable="false">16.1_sunset</string>
+    <string name="opinion_value_168" translatable="false">168</string>
     <string name="opinion_value_18" translatable="false">18</string>
     <string name="opinion_value_19" translatable="false">19.8</string>
     <string name="opinion_value_2" translatable="false">2</string>
@@ -46,7 +48,8 @@
     <string name="opinion_value_default" translatable="false"/>
     <string name="opinion_value_fixed" translatable="false">fixed</string>
     <string name="opinion_value_gra" translatable="false">GRA</string>
-    <string name="opinion_value_half" translatable="false">@string/opinion_value_default</string>
+    <string name="opinion_value_half" translatable="false">half</string>
+    <string name="opinion_value_half_alos" translatable="false">@string/opinion_value_default</string>
     <string name="opinion_value_level" translatable="false">level</string>
     <string name="opinion_value_mga" translatable="false">MGA</string>
     <string name="opinion_value_nightfall" translatable="false">nightfall</string>

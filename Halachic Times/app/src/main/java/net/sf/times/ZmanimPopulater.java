@@ -93,9 +93,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_120_ZMANIS = ZmanimPreferences.OPINION_120_ZMANIS;
     protected static final String OPINION_13 = ZmanimPreferences.OPINION_13;
     protected static final String OPINION_15 = ZmanimPreferences.OPINION_15;
+    protected static final String OPINION_15_ALOS = ZmanimPreferences.OPINION_15_ALOS;
     protected static final String OPINION_16_1 = ZmanimPreferences.OPINION_16_1;
     protected static final String OPINION_16_1_ALOS = ZmanimPreferences.OPINION_16_1_ALOS;
     protected static final String OPINION_16_1_SUNSET = ZmanimPreferences.OPINION_16_1_SUNSET;
+    protected static final String OPINION_168 = ZmanimPreferences.OPINION_168;
     protected static final String OPINION_18 = ZmanimPreferences.OPINION_18;
     protected static final String OPINION_19_8 = ZmanimPreferences.OPINION_19_8;
     protected static final String OPINION_2 = ZmanimPreferences.OPINION_2;
@@ -126,6 +128,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_96_ZMANIS = ZmanimPreferences.OPINION_96_ZMANIS;
     protected static final String OPINION_ATERET = ZmanimPreferences.OPINION_ATERET;
     protected static final String OPINION_GRA = ZmanimPreferences.OPINION_GRA;
+    protected static final String OPINION_HALF = ZmanimPreferences.OPINION_HALF;
     protected static final String OPINION_MGA = ZmanimPreferences.OPINION_MGA;
     protected static final String OPINION_FIXED = ZmanimPreferences.OPINION_FIXED;
     protected static final String OPINION_LEVEL = ZmanimPreferences.OPINION_LEVEL;
@@ -883,6 +886,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             if (OPINION_7.equals(opinion)) {
                 date = cal.getTchilasZmanKidushLevana7Days();
                 summary = R.string.levana_7;
+            } else if (OPINION_72.equals(opinion)) {
+                date = jcal.getTchilasZmanKidushLevana3Days();
+                summary = R.string.levana_72;
+            } else if (OPINION_168.equals(opinion)) {
+                date = jcal.getTchilasZmanKidushLevana7Days();
+                summary = R.string.levana_168;
             } else {
                 date = cal.getTchilasZmanKidushLevana3Days();
                 summary = R.string.levana_3;
@@ -893,11 +902,17 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         else if ((jDayOfMonth > 10) && (jDayOfMonth < 20)) {
             opinion = settings.getLatestKiddushLevana();
             if (OPINION_15.equals(opinion)) {
-                date = cal.getSofZmanKidushLevana15Days();
+                date = jcal.getSofZmanKidushLevana15Days();
                 summary = R.string.levana_15;
+            } else if (OPINION_15_ALOS.equals(opinion)) {
+                date = cal.getSofZmanKidushLevana15Days();
+                summary = R.string.levana_15_alos;
+            } else if (OPINION_HALF.equals(opinion)) {
+                date = jcal.getSofZmanKidushLevanaBetweenMoldos();
+                summary = R.string.levana_halfway;
             } else {
                 date = cal.getSofZmanKidushLevanaBetweenMoldos();
-                summary = R.string.levana_halfway;
+                summary = R.string.levana_halfway_alos;
             }
             adapter.add(R.string.levana_latest, summary, date, remote);
         }

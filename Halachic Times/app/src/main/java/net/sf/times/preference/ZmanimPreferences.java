@@ -167,9 +167,11 @@ public class ZmanimPreferences extends CompassPreferences {
     public static String OPINION_120_ZMANIS;
     public static String OPINION_13;
     public static String OPINION_15;
+    public static String OPINION_15_ALOS;
     public static String OPINION_16_1;
     public static String OPINION_16_1_ALOS;
     public static String OPINION_16_1_SUNSET;
+    public static String OPINION_168;
     public static String OPINION_18;
     public static String OPINION_19_8;
     public static String OPINION_2;
@@ -200,6 +202,7 @@ public class ZmanimPreferences extends CompassPreferences {
     public static String OPINION_96_ZMANIS;
     public static String OPINION_ATERET;
     public static String OPINION_GRA;
+    public static String OPINION_HALF;
     public static String OPINION_MGA;
     public static String OPINION_FIXED;
     public static String OPINION_LEVEL;
@@ -892,9 +895,11 @@ public class ZmanimPreferences extends CompassPreferences {
         OPINION_120_ZMANIS = context.getString(R.string.opinion_value_120_zmanis);
         OPINION_13 = context.getString(R.string.opinion_value_13);
         OPINION_15 = context.getString(R.string.opinion_value_15);
+        OPINION_15_ALOS = context.getString(R.string.opinion_value_15_alos);
         OPINION_16_1 = context.getString(R.string.opinion_value_16);
         OPINION_16_1_ALOS = context.getString(R.string.opinion_value_16_alos);
         OPINION_16_1_SUNSET = context.getString(R.string.opinion_value_16_sunset);
+        OPINION_168 = context.getString(R.string.opinion_value_168);
         OPINION_18 = context.getString(R.string.opinion_value_18);
         OPINION_19_8 = context.getString(R.string.opinion_value_19);
         OPINION_2 = context.getString(R.string.opinion_value_2);
@@ -925,6 +930,7 @@ public class ZmanimPreferences extends CompassPreferences {
         OPINION_96_ZMANIS = context.getString(R.string.opinion_value_96_zmanis);
         OPINION_ATERET = context.getString(R.string.opinion_value_ateret);
         OPINION_GRA = context.getString(R.string.opinion_value_gra);
+        OPINION_HALF = context.getString(R.string.opinion_value_half);
         OPINION_MGA = context.getString(R.string.opinion_value_mga);
         OPINION_FIXED = context.getString(R.string.opinion_value_fixed);
         OPINION_LEVEL = context.getString(R.string.opinion_value_level);
