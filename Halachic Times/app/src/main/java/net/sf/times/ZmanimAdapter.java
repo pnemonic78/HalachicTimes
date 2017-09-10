@@ -41,6 +41,9 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Locale;
 
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static net.sf.util.TimeUtils.roundUp;
+
 /**
  * Adapter for halachic times list.
  * <p/>
@@ -358,7 +361,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         item.summary = summary;
         item.time = time;
         item.emphasis = settings.isEmphasis(titleId);
-        item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
+        item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(roundUp(time, SECOND_IN_MILLIS));
         item.elapsed = remote ? (time < now) : !(showElapsed || hour) && (time < now);
 
         add(item);

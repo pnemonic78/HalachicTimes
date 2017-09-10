@@ -33,7 +33,9 @@ import net.sf.util.LocaleUtils;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static net.sf.times.ZmanimAdapter.NEVER;
+import static net.sf.util.TimeUtils.roundUp;
 
 /**
  * Clock widget with hour and title underneath.<br>
@@ -106,7 +108,7 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
-        CharSequence label = item.time != NEVER ? getTimeFormat().format(item.time) : "";
+        CharSequence label = item.time != NEVER ? getTimeFormat().format(roundUp(item.time, SECOND_IN_MILLIS)) : "";
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
         spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
