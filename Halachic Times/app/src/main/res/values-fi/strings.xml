@@ -139,6 +139,8 @@
     <string name="levana_earliest">Aikaisintaan pyhittäminen uudenkuun (קידוש לבנה)</string>
     <string name="levana_3">3 päivää jälkeen uusikuu</string>
     <string name="levana_7">7 päivää jälkeen uusikuu</string>
+    <string name="levana_72">72 tuntia jälkeen uusikuu</string>
+    <string name="levana_168">168 tuntia jälkeen uusikuu</string>
     <string name="levana_latest">Uusin pyhittäminen uudenkuun (קידוש לבנה)</string>
     <string name="levana_halfway">Puolivälissä uudenkuun</string>
     <string name="levana_15">15 päivää jälkeen uusikuu</string>

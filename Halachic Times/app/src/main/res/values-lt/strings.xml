@@ -139,6 +139,8 @@
     <string name="levana_earliest">Seniausi pašventinimą jaunatį (קידוש לבנה)</string>
     <string name="levana_3">3 dienas po jaunatis</string>
     <string name="levana_7">7 dienas po jaunatis</string>
+    <string name="levana_72">72 valandų po jaunatis</string>
+    <string name="levana_168">168 valandų po jaunatis</string>
     <string name="levana_latest">Vėliausiai pašventinimą jaunatį (קידוש לבנה)</string>
     <string name="levana_halfway">Pusiaukelėje tarp naujų mėnulių</string>
     <string name="levana_15">15 dienas po jaunatis</string>

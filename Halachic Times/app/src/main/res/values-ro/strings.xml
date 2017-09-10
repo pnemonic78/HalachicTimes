@@ -139,6 +139,8 @@
     <string name="levana_earliest">Mai timpurii sfințire a lunii noi (קידוש לבנה)</string>
     <string name="levana_3">3 zile după lună nouă</string>
     <string name="levana_7">7 zile după lună nouă</string>
+    <string name="levana_72">72 ore după lună nouă</string>
+    <string name="levana_168">168 ore după lună nouă</string>
     <string name="levana_latest">Ultima sfințire a lunii noi (קידוש לבנה)</string>
     <string name="levana_halfway">Jumătatea distanței dintre lunile noi</string>
     <string name="levana_15">15 zile după lună nouă</string>

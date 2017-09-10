@@ -139,6 +139,8 @@
     <string name="levana_earliest">Η πιο παλιά αγιασμό της νέας σελήνης (קידוש לבנה)</string>
     <string name="levana_3">3 ημέρες μετά νέα σελήνη</string>
     <string name="levana_7">7 ημέρες μετά νέα σελήνη</string>
+    <string name="levana_72">72 ώρες μετά νέα σελήνη</string>
+    <string name="levana_168">168 ώρες μετά νέα σελήνη</string>
     <string name="levana_latest">Τελευταία αγιασμό το νέας σελήνης (קידוש לבנה)</string>
     <string name="levana_halfway">Μισά του δρόμου μεταξύ νέα φεγγάρια</string>
     <string name="levana_15">15 ημέρες μετά νέα σελήνη</string>
