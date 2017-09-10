@@ -41,6 +41,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Locale;
 
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static net.sf.util.TimeUtils.roundUp;
 
@@ -361,7 +362,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         item.summary = summary;
         item.time = time;
         item.emphasis = settings.isEmphasis(titleId);
-        item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(roundUp(time, SECOND_IN_MILLIS));
+        item.timeLabel = hour ? timeFormatSeasonalHour.format(roundUp(time, SECOND_IN_MILLIS)) : timeFormat.format(roundUp(time, SECOND_IN_MILLIS));
         item.elapsed = remote ? (time < now) : !(showElapsed || hour) && (time < now);
 
         add(item);
@@ -392,7 +393,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time in milliseconds.
      */
     public void addHour(int titleId, int summaryId, long time, boolean remote) {
-        add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time, remote, true);
+        add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time + DAY_IN_MILLIS, remote, true);
     }
 
     /**
