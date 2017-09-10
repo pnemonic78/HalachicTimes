@@ -137,10 +137,10 @@
     <string name="molad">Geboorte van de nieuwe maan (מולד)</string>
     <string name="molad_summary">Gemiddelde nieuwe maan</string>
     <string name="levana_earliest">Vroegste heiliging van de nieuwe maan (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 dagen na de nieuwe maan</string>
+    <string name="levana_3">3 dagen na de nieuwe maan</string>
     <string name="levana_7">7 dagen na de nieuwe maan</string>
     <string name="levana_latest">Laatste heiliging van de nieuwe maan (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Halverwege tussen nieuwe manen</string>
+    <string name="levana_halfway">Halverwege tussen nieuwe manen</string>
     <string name="levana_15">15 dagen na de nieuwe maan</string>
 
     <!-- Fast / Taanis -->

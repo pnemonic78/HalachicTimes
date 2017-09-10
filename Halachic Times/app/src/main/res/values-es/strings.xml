@@ -137,10 +137,10 @@
     <string name="molad">El nacimiento de la luna nueva (מולד)</string>
     <string name="molad_summary">Promedio de luna nueva</string>
     <string name="levana_earliest">Primeras de la santificación de la luna nueva (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 días después de la luna nueva</string>
+    <string name="levana_3">3 días después de la luna nueva</string>
     <string name="levana_7">7 días después de la luna nueva</string>
     <string name="levana_latest">Últimas de la santificación de la luna nueva (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Medio camino entre las nuevas lunas</string>
+    <string name="levana_halfway">Medio camino entre las nuevas lunas</string>
     <string name="levana_15">15 días después de la luna nueva</string>
 
     <!-- Fast / Taanis -->

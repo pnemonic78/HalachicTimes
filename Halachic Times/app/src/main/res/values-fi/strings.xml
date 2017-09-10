@@ -137,10 +137,10 @@
     <string name="molad">Syntymän uusikuu (מולד)</string>
     <string name="molad_summary">Keskimäärin uusikuu</string>
     <string name="levana_earliest">Aikaisintaan pyhittäminen uudenkuun (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 päivää jälkeen uusikuu</string>
+    <string name="levana_3">3 päivää jälkeen uusikuu</string>
     <string name="levana_7">7 päivää jälkeen uusikuu</string>
     <string name="levana_latest">Uusin pyhittäminen uudenkuun (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Puolivälissä uudenkuun</string>
+    <string name="levana_halfway">Puolivälissä uudenkuun</string>
     <string name="levana_15">15 päivää jälkeen uusikuu</string>
 
     <!-- Fast / Taanis -->

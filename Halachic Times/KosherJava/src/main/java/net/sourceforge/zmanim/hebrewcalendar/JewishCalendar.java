@@ -591,7 +591,7 @@ public class JewishCalendar extends JewishDate {
 	 * in the Shulchan Aruch (Orach Chaim 426). It should be noted that some opinions hold that the
 	 * <a href="http://en.wikipedia.org/wiki/Moses_Isserles">Rema</a> who brings down the opinion of the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> of calculating
-	 * {@link #getSofZmanKidushLevanaBetweenMoldos() half way between molad and mold} is of the opinion that Mechaber
+	 * {@link #getSofZmanKidushLevanaBetweenMoldos() half way between molad and molad} is of the opinion that Mechaber
 	 * agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi Dovid
 	 * Heber's very detailed writeup in Siman Daled (chapter 4) of <a
 	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. TODO: Currently returns the time even if it is

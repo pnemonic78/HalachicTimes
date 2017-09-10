@@ -367,7 +367,7 @@
         <item>@string/opinion_value_7</item>
     </string-array>
     <string-array name="levana_earliest_entries" translatable="false">
-        <item>@string/levana_earliest_summary</item>
+        <item>@string/levana_3</item>
         <item>@string/levana_7</item>
     </string-array>
 
@@ -376,7 +376,7 @@
         <item>@string/opinion_value_15</item>
     </string-array>
     <string-array name="levana_latest_entries" translatable="false">
-        <item>@string/levana_latest_summary</item>
+        <item>@string/levana_halfway</item>
         <item>@string/levana_15</item>
     </string-array>
 

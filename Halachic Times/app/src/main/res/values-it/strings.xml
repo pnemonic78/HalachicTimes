@@ -137,10 +137,10 @@
     <string name="molad">Nascita di luna nuova (מולד)</string>
     <string name="molad_summary">Media nuova luna</string>
     <string name="levana_earliest">Prima santificazione del novilunio (qiddùsh levana)</string>
-    <string name="levana_earliest_summary">3 giorni dopo l\'nuova luna</string>
+    <string name="levana_3">3 giorni dopo l\'nuova luna</string>
     <string name="levana_7">7 giorni dopo l\'nuova luna</string>
     <string name="levana_latest">Ultime santificazione del novilunio (qiddùsh levana)</string>
-    <string name="levana_latest_summary">Metà strada tra le nuove lune</string>
+    <string name="levana_halfway">Metà strada tra le nuove lune</string>
     <string name="levana_15">15 giorni dopo l\'nuova luna</string>
 
     <!-- Fast / Taanis -->

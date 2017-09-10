@@ -2454,7 +2454,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * opinion brought down in the Shulchan Aruch (Orach Chaim 426). It should be noted that some opinions hold that the
 	 * <a href="http://en.wikipedia.org/wiki/Moses_Isserles">Rema</a> who brings down the opinion of the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> of calculating
-	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and mold} is of the opinion that
+	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and molad} is of the opinion that
 	 * Mechaber agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi
 	 * Dovid Heber's very detailed writeup in Siman Daled (chapter 4) of <a
 	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. If the time of <em>sof zman Kiddush Levana</em>
@@ -2501,7 +2501,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * in the Shulchan Aruch (Orach Chaim 426). It should be noted that some opinions hold that the
 	 * <a href="http://en.wikipedia.org/wiki/Moses_Isserles">Rema</a> who brings down the opinion of the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> of calculating
-	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and mold} is of the opinion that
+	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and molad} is of the opinion that
 	 * Mechaber agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi
 	 * Dovid Heber's very detailed writeup in Siman Daled (chapter 4) of <a
 	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. If the time of <em>sof zman Kiddush Levana</em>
@@ -2522,7 +2522,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
-	 * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
+	 * be said 3 days after the molad. If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
 	 * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
 	 * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
 	 * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.
@@ -2560,7 +2560,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
-	 * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
+	 * be said 3 days after the molad. If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
 	 * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
 	 * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
 	 * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.

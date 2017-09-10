@@ -845,41 +845,43 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     private void populateEarliestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Long date;
         int title;
+        JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
 
         date = cal.getTchilasZmanKidushLevana3Days();
-        if (date == null) {
-            JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
-            date = jcal.getTchilasZmanKidushLevana3Days();
-        }
-        title = R.string.levana_earliest_summary;
+        title = R.string.levana_3;
+        adapter.add(title, SUMMARY_NONE, date);
+
+        date = jcal.getTchilasZmanKidushLevana3Days();
+        title = R.string.levana_72;
         adapter.add(title, SUMMARY_NONE, date);
 
         date = cal.getTchilasZmanKidushLevana7Days();
-        if (date == null) {
-            JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
-            date = jcal.getTchilasZmanKidushLevana7Days();
-        }
         title = R.string.levana_7;
+        adapter.add(title, SUMMARY_NONE, date);
+
+        date = jcal.getTchilasZmanKidushLevana7Days();
+        title = R.string.levana_168;
         adapter.add(title, SUMMARY_NONE, date);
     }
 
     private void populateLatestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Long date;
         int title;
+        JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
 
         date = cal.getSofZmanKidushLevanaBetweenMoldos();
-        if (date == null) {
-            JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
-            date = jcal.getSofZmanKidushLevanaBetweenMoldos();
-        }
-        title = R.string.levana_latest_summary;
+        title = R.string.levana_halfway_alos;
+        adapter.add(title, SUMMARY_NONE, date);
+
+        date = jcal.getSofZmanKidushLevanaBetweenMoldos();
+        title = R.string.levana_halfway;
         adapter.add(title, SUMMARY_NONE, date);
 
         date = cal.getSofZmanKidushLevana15Days();
-        if (date == null) {
-            JewishCalendar jcal = new JewishCalendar(cal.getCalendar());
-            date = jcal.getSofZmanKidushLevana15Days();
-        }
+        title = R.string.levana_15_alos;
+        adapter.add(title, SUMMARY_NONE, date);
+
+        date = jcal.getSofZmanKidushLevana15Days();
         title = R.string.levana_15;
         adapter.add(title, SUMMARY_NONE, date);
     }

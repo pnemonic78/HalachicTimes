@@ -137,10 +137,10 @@
     <string name="molad">Раждането на новата луна (מולד)</string>
     <string name="molad_summary">Средна новата луна</string>
     <string name="levana_earliest">Най-ранният благословията новолунието (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 дни след новата луна</string>
+    <string name="levana_3">3 дни след новата луна</string>
     <string name="levana_7">7 дни след новата луна</string>
     <string name="levana_latest">Последни благословията новолунието (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Средата между нови луни</string>
+    <string name="levana_halfway">Средата между нови луни</string>
     <string name="levana_15">15 дни след новата луна</string>
 
     <!-- Fast / Taanis -->

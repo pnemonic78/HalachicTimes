@@ -263,11 +263,15 @@
     <string name="molad">Birth of new moon (מולד)</string>
     <string name="molad_summary">Average new moon</string>
     <string name="levana_earliest">Earliest sanctification of the new moon (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 days after the new moon</string>
+    <string name="levana_3">3 days after the new moon</string>
     <string name="levana_7">7 days after the new moon</string>
+    <string name="levana_72">72 hours after the new moon</string>
+    <string name="levana_168">168 hours after the new moon</string>
     <string name="levana_latest">Latest sanctification of the new moon (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Halfway between new moons</string>
+    <string name="levana_halfway">Halfway between new moons</string>
+    <string name="levana_halfway_alos">Halfway between new moons or עלות</string>
     <string name="levana_15">15 days after the new moon</string>
+    <string name="levana_15_alos">15 days after the new moon or עלות</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fast begins</string>

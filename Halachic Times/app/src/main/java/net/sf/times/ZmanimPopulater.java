@@ -885,7 +885,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 summary = R.string.levana_7;
             } else {
                 date = cal.getTchilasZmanKidushLevana3Days();
-                summary = R.string.levana_earliest_summary;
+                summary = R.string.levana_3;
             }
             adapter.add(R.string.levana_earliest, summary, date, remote);
         }
@@ -897,7 +897,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 summary = R.string.levana_15;
             } else {
                 date = cal.getSofZmanKidushLevanaBetweenMoldos();
-                summary = R.string.levana_latest_summary;
+                summary = R.string.levana_halfway;
             }
             adapter.add(R.string.levana_latest, summary, date, remote);
         }

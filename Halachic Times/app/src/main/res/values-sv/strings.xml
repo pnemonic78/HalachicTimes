@@ -137,10 +137,10 @@
     <string name="molad">Födelse av nymånen (מולד)</string>
     <string name="molad_summary">Genomsnitt nymånen</string>
     <string name="levana_earliest">Tidigast helgelse av den nya månen (קידוש לבנה)</string>
-    <string name="levana_earliest_summary">3 dagar efter den nymånen</string>
+    <string name="levana_3">3 dagar efter den nymånen</string>
     <string name="levana_7">7 dagar efter den nymånen</string>
     <string name="levana_latest">Senaste helgelse av den nya månen (קידוש לבנה)</string>
-    <string name="levana_latest_summary">Halvvägs mellan nya månar</string>
+    <string name="levana_halfway">Halvvägs mellan nya månar</string>
     <string name="levana_15">15 dagar efter den nymånen</string>
 
     <!-- Fast / Taanis -->
