@@ -30,57 +30,45 @@ public class TimeTests {
 
     @Test
     public void roundUpSecond() throws Exception {
-        long r;
+        assertEquals(0L, roundUp(0, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(111, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(222, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(333, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(444, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(499, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(500, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(555, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(666, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(777, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(888, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(999, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(1000, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(1111, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(1222, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(1333, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(1444, SECOND_IN_MILLIS));
+        assertEquals(2000L, roundUp(1555, SECOND_IN_MILLIS));
+    }
 
-        r = roundUp(0, SECOND_IN_MILLIS);
-        assertEquals(0L, r);
-
-        r = roundUp(111, SECOND_IN_MILLIS);
-        assertEquals(0L, r);
-
-        r = roundUp(222, SECOND_IN_MILLIS);
-        assertEquals(0L, r);
-
-        r = roundUp(333, SECOND_IN_MILLIS);
-        assertEquals(0L, r);
-
-        r = roundUp(444, SECOND_IN_MILLIS);
-        assertEquals(0L, r);
-
-        r = roundUp(500, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(555, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(600, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(700, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(800, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(900, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(1000, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(1100, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(1200, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(1300, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(1400, SECOND_IN_MILLIS);
-        assertEquals(1000L, r);
-
-        r = roundUp(1500, SECOND_IN_MILLIS);
-        assertEquals(2000L, r);
+    @Test
+    public void roundUpNegativeSecond() throws Exception {
+        assertEquals(0L, roundUp(0, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-111, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-222, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-333, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-444, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-499, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-500, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-555, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-666, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-777, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-888, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-999, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-1000, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-1111, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-1222, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-1333, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-1444, SECOND_IN_MILLIS));
+        assertEquals(-2000L, roundUp(-1555, SECOND_IN_MILLIS));
     }
 }

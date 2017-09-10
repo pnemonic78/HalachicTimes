@@ -35,6 +35,9 @@ public class TimeUtils {
      * @return the rounded time.
      */
     public static long roundUp(long time, long granularity) {
-        return ((time + (granularity / 2)) / granularity) * granularity;
+        if (time >= 0L) {
+            return ((time + (granularity / 2)) / granularity) * granularity;
+        }
+        return ((time - (granularity / 2)) / granularity) * granularity;
     }
 }
