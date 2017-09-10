@@ -233,9 +233,7 @@ public class ZmanimReminderService extends IntentService {
         }
         if (itemFirst != null) {
             item = itemFirst;
-            String whenFormat = formatDateTime(whenFirst);
-            String timeFormat = formatDateTime(item.time);
-            Log.i(TAG, "notify at [" + whenFormat + "] for [" + timeFormat + "]");
+            Log.i(TAG, "notify at [" + formatDateTime(whenFirst) + "] for [" + formatDateTime(item.time) + "]");
             notifyFuture(context, item, whenFirst);
         }
         if (itemUpcoming != null) {
@@ -372,8 +370,7 @@ public class ZmanimReminderService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         Context context = this;
-        String nowFormatted = formatDateTime(System.currentTimeMillis());
-        Log.i(TAG, "onReceive " + intent + " [" + nowFormatted + "]");
+        Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(System.currentTimeMillis()) + "]");
         if (intent == null) {
             return;
         }
@@ -445,7 +442,7 @@ public class ZmanimReminderService extends IntentService {
      */
     private String formatDateTime(Date time) {
         if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
         }
         return dateFormat.format(time);
     }

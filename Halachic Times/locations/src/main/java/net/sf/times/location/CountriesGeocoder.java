@@ -21,6 +21,8 @@ import android.location.Address;
 import android.location.Location;
 import android.text.format.DateUtils;
 
+import net.sf.util.LocaleUtils;
+
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
@@ -75,7 +77,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the context.
      */
     public CountriesGeocoder(Context context) {
-        this(context, Locale.getDefault());
+        this(context, LocaleUtils.getDefaultLocale(context));
     }
 
     /**

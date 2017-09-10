@@ -20,6 +20,7 @@ import android.location.Address;
 import android.text.TextUtils;
 
 import net.sf.net.HTTPReader;
+import net.sf.util.LocaleUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -91,6 +92,16 @@ public abstract class GeocoderBase {
     public GeocoderBase(Context context, Locale locale) {
         this.context = context;
         this.locale = locale;
+    }
+
+    /**
+     * Creates a new geocoder.
+     *
+     * @param context
+     *         the context.
+     */
+    public GeocoderBase(Context context) {
+        this(context, LocaleUtils.getDefaultLocale(context));
     }
 
     protected SAXParserFactory getParserFactory() {

@@ -21,6 +21,7 @@ import android.location.Address;
 import android.location.Location;
 
 import net.sf.database.CursorFilter;
+import net.sf.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -48,7 +49,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *         the address provider.
      */
     public DatabaseGeocoder(Context context, AddressProvider provider) {
-        this(context, provider, Locale.getDefault());
+        this(context, LocaleUtils.getDefaultLocale(context), provider);
     }
 
     /**
@@ -56,12 +57,12 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param context
      *         the context.
-     * @param provider
-     *         the address provider.
      * @param locale
      *         the locale.
+     * @param provider
+     *         the address provider.
      */
-    public DatabaseGeocoder(Context context, AddressProvider provider, Locale locale) {
+    public DatabaseGeocoder(Context context, Locale locale, AddressProvider provider) {
         super(context, locale);
         this.provider = provider;
     }

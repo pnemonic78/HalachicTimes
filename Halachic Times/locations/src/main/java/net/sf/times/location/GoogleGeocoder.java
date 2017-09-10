@@ -18,6 +18,8 @@ package net.sf.times.location;
 import android.content.Context;
 import android.location.Address;
 
+import net.sf.util.LocaleUtils;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -56,7 +58,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *         the context.
      */
     public GoogleGeocoder(Context context) {
-        this(context, Locale.getDefault());
+        this(context, LocaleUtils.getDefaultLocale(context));
     }
 
     /**

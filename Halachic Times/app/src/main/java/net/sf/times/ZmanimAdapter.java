@@ -165,10 +165,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         boolean time24 = DateFormat.is24HourFormat(context);
         String patternSeasonalHour;
+        final Locale locale = LocaleUtils.getDefaultLocale(context);
 
         if (settings.isSeconds()) {
             String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
-            this.timeFormat = new SimpleDateFormat(pattern, Locale.getDefault());
+            this.timeFormat = new SimpleDateFormat(pattern, locale);
 
             patternSeasonalHour = context.getString(R.string.hour_format_seconds);
         } else {
@@ -176,7 +177,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
             patternSeasonalHour = context.getString(R.string.hour_format);
         }
-        this.timeFormatSeasonalHour = new SimpleDateFormat(patternSeasonalHour, Locale.getDefault());
+        this.timeFormatSeasonalHour = new SimpleDateFormat(patternSeasonalHour, locale);
     }
 
     /**

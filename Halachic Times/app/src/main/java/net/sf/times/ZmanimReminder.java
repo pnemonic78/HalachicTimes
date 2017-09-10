@@ -42,8 +42,7 @@ public class ZmanimReminder extends BroadcastReceiver {
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
-        String nowFormatted = formatDateTime(System.currentTimeMillis());
-        Log.i(TAG, "onReceive " + intent + " [" + nowFormatted + "]");
+        Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(System.currentTimeMillis()) + "]");
 
         // Delegate actions to the service.
         Intent service = new Intent(intent);
@@ -61,7 +60,7 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     private String formatDateTime(Date time) {
         if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
         }
         return dateFormat.format(time);
     }

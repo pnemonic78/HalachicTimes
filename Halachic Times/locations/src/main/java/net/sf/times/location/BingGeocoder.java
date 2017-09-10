@@ -19,6 +19,8 @@ import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
 
+import net.sf.util.LocaleUtils;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -56,7 +58,7 @@ public class BingGeocoder extends GeocoderBase {
      *         the context.
      */
     public BingGeocoder(Context context) {
-        this(context, Locale.getDefault());
+        this(context, LocaleUtils.getDefaultLocale(context));
     }
 
     /**

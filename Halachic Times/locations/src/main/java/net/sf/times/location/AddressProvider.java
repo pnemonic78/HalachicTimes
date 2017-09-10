@@ -500,7 +500,7 @@ public class AddressProvider {
         List<Address> addresses = null;
         GeocoderBase geocoder = databaseGeocoder;
         if (geocoder == null) {
-            geocoder = new DatabaseGeocoder(context, this, locale);
+            geocoder = new DatabaseGeocoder(context, locale, this);
             databaseGeocoder = geocoder;
         }
         try {
@@ -882,7 +882,7 @@ public class AddressProvider {
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = databaseGeocoder;
         if (geocoder == null) {
-            geocoder = new DatabaseGeocoder(context, this, locale);
+            geocoder = new DatabaseGeocoder(context, locale, this);
             databaseGeocoder = geocoder;
         }
         try {

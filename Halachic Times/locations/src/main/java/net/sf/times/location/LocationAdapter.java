@@ -27,6 +27,8 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import net.sf.util.LocaleUtils;
+
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -47,7 +49,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
     private LocationComparator comparator;
     private LocationsFilter filter;
     private Collator collator;
-    private final Locale locale = Locale.getDefault();
+    private final Locale locale;
     private OnFavoriteClickListener onFavoriteClickListener;
 
     /**
@@ -63,6 +65,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
         objects = new ArrayList<LocationItem>(items);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);
+        locale = LocaleUtils.getDefaultLocale(context);
         sortNoNotify();
     }
 
