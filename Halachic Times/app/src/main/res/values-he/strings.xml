@@ -144,6 +144,8 @@
     <string name="levana_latest">ברכה האחרונה של הירח החדש (קידוש לבנה)</string>
     <string name="levana_halfway">באמצע בין מולד למולד</string>
     <string name="levana_15">15 ימים לאחר המולד</string>
+    <string name="levana_halfway_alos">באמצע בין מולד למולד או עלות</string>
+    <string name="levana_15_alos">15 ימים לאחר המולד או עלות</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">תחילת התענית</string>

@@ -144,6 +144,8 @@
     <string name="levana_latest">Ultima sfințire a lunii noi (קידוש לבנה)</string>
     <string name="levana_halfway">Jumătatea distanței dintre lunile noi</string>
     <string name="levana_15">15 zile după lună nouă</string>
+    <string name="levana_halfway_alos">Jumătatea distanței dintre lunile noi sau zori</string>
+    <string name="levana_15_alos">15 zile după lună nouă sau zori</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Postului începe</string>

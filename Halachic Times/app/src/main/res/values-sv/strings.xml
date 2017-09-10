@@ -144,6 +144,8 @@
     <string name="levana_latest">Senaste helgelse av den nya månen (קידוש לבנה)</string>
     <string name="levana_halfway">Halvvägs mellan nya månar</string>
     <string name="levana_15">15 dagar efter den nymånen</string>
+    <string name="levana_halfway_alos">Halvvägs mellan nya månar eller gryning</string>
+    <string name="levana_15_alos">15 dagar efter den nymånen eller gryning</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fasta börjar</string>

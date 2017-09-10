@@ -269,9 +269,9 @@
     <string name="levana_168">168 hours after the new moon</string>
     <string name="levana_latest">Latest sanctification of the new moon (קידוש לבנה)</string>
     <string name="levana_halfway">Halfway between new moons</string>
-    <string name="levana_halfway_alos">Halfway between new moons or עלות</string>
     <string name="levana_15">15 days after the new moon</string>
-    <string name="levana_15_alos">15 days after the new moon or עלות</string>
+    <string name="levana_halfway_alos">Halfway between new moons or dawn</string>
+    <string name="levana_15_alos">15 days after the new moon or dawn</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fast begins</string>

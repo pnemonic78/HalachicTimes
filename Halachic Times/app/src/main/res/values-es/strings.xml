@@ -144,6 +144,8 @@
     <string name="levana_latest">Últimas de la santificación de la luna nueva (קידוש לבנה)</string>
     <string name="levana_halfway">Medio camino entre las nuevas lunas</string>
     <string name="levana_15">15 días después de la luna nueva</string>
+    <string name="levana_halfway_alos">Medio camino entre las nuevas lunas o amanecer</string>
+    <string name="levana_15_alos">15 días después de la luna nueva o amanecer</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">El ayuno comienza</string>

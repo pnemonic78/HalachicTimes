@@ -144,6 +144,8 @@
     <string name="levana_latest">Último santificação da lua nova (קידוש לבנה)</string>
     <string name="levana_halfway">Meio caminho entre luas novas</string>
     <string name="levana_15">15 dias após a lua nova</string>
+    <string name="levana_halfway_alos">Meio caminho entre luas novas ou amanhecer</string>
+    <string name="levana_15_alos">15 dias após a lua nova ou amanhecer</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Começa o jejum</string>

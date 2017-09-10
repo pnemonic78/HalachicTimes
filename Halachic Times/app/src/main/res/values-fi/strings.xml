@@ -144,6 +144,8 @@
     <string name="levana_latest">Uusin pyhittäminen uudenkuun (קידוש לבנה)</string>
     <string name="levana_halfway">Puolivälissä uudenkuun</string>
     <string name="levana_15">15 päivää jälkeen uusikuu</string>
+    <string name="levana_halfway_alos">Puolivälissä uudenkuun tai sarastus</string>
+    <string name="levana_15_alos">15 päivää jälkeen uusikuu tai sarastus</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Paastota alkaa</string>

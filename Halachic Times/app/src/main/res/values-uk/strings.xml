@@ -144,6 +144,8 @@
     <string name="levana_latest">Перший освячення нового місяця (קידוש לבנה)</string>
     <string name="levana_halfway">На півдорозі між новими місяцями</string>
     <string name="levana_15">15 дні після нового місяця</string>
+    <string name="levana_halfway_alos">На півдорозі між новими місяцями або світанок</string>
+    <string name="levana_15_alos">15 дні після нового місяця або світанок</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Піст починається</string>

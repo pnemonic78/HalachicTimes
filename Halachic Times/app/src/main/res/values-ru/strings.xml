@@ -144,6 +144,8 @@
     <string name="levana_latest">Самое позднее освящение новой луны (קידוש לבנה)</string>
     <string name="levana_halfway">Между новолуния</string>
     <string name="levana_15">15 дней после новолуние</string>
+    <string name="levana_halfway_alos">Между новолуния или рассвет</string>
+    <string name="levana_15_alos">15 дней после новолуние или рассвет</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Пост начинается</string>

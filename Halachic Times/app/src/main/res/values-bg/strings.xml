@@ -144,6 +144,8 @@
     <string name="levana_latest">Последни благословията новолунието (קידוש לבנה)</string>
     <string name="levana_halfway">Средата между нови луни</string>
     <string name="levana_15">15 дни след новата луна</string>
+    <string name="levana_halfway_alos">Средата между нови луни или зора</string>
+    <string name="levana_15_alos">15 дни след новата луна или зора</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Пости започва</string>
