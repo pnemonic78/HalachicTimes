@@ -99,7 +99,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected static class ZmanimItem implements Comparable<ZmanimItem> {
 
         /** The title id. */
-        public int titleId;
+        public final int titleId;
         /** The summary. */
         public CharSequence summary;
         /** The time. */
@@ -112,7 +112,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         public boolean emphasis;
 
         /** Creates a new row item. */
-        public ZmanimItem() {
+        public ZmanimItem(int titleId) {
+            this.titleId = titleId;
         }
 
         @Override
@@ -330,7 +331,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         hide elapsed times for remote view?
      */
     public void add(int titleId, CharSequence summary, long time, boolean remote) {
-        add(titleId, summary, time, remote, (titleId == R.string.hour));
+        add(titleId, summary, time, remote, titleId == R.string.hour);
     }
 
     /**
@@ -352,13 +353,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             return;
         }
 
-        ZmanimItem item = new ZmanimItem();
-        item.titleId = titleId;
+        ZmanimItem item = new ZmanimItem(titleId);
         item.summary = summary;
         item.time = time;
         item.emphasis = settings.isEmphasis(titleId);
         item.timeLabel = hour ? timeFormatSeasonalHour.format(time) : timeFormat.format(time);
-        item.elapsed = remote ? (time < now) : (showElapsed || (titleId == R.string.hour)) ? false : (time < now);
+        item.elapsed = remote ? (time < now) : !(showElapsed || hour) && (time < now);
 
         add(item);
     }
