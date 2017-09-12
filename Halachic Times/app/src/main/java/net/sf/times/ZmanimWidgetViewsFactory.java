@@ -76,9 +76,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public RemoteViews getViewAt(int position) {
+        final ZmanimAdapter adapter = this.adapter;
+        if (adapter == null) {
+            return null;
+        }
+
         Context context = this.context;
         String pkg = context.getPackageName();
-        ZmanimAdapter adapter = this.adapter;
         RemoteViews view;
 
         if ((position == positionToday) || (position == positionTomorrow)) {
