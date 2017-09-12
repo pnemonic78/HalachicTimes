@@ -29,7 +29,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
@@ -60,6 +59,11 @@ import net.sf.view.animation.LayoutWeightAnimation;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static android.text.format.DateUtils.formatDateTime;
 import static net.sf.times.ZmanimAdapter.NEVER;
 
 /**
@@ -94,7 +98,7 @@ public class ZmanimActivity extends LocatedActivity implements
     private static final int CHILD_DETAILS_LIST = 0;
     private static final int CHILD_DETAILS_CANDLES = 1;
 
-    private static final long DATE_MIN = -62167359300528L;// (-1970 + 1) * DateUtils.DAY_IN_MILLIS * 365.25
+    private static final long DATE_MIN = -62167359300528L;// (-1970 + 1) * DAY_IN_MILLIS * 365.25
 
     /** The date. */
     private final Calendar calendar = Calendar.getInstance();
@@ -250,7 +254,7 @@ public class ZmanimActivity extends LocatedActivity implements
             // We need to wait for the list rows to get their default
             // backgrounds before we can highlight any row.
             Message msg = handler.obtainMessage(WHAT_TOGGLE_DETAILS, itemId, 0);
-            handler.sendMessageDelayed(msg, DateUtils.SECOND_IN_MILLIS);
+            handler.sendMessageDelayed(msg, SECOND_IN_MILLIS);
         }
     }
 
@@ -371,8 +375,7 @@ public class ZmanimActivity extends LocatedActivity implements
         // Have we been destroyed?
         if (textGregorian == null)
             return;
-        CharSequence dateGregorian = DateUtils.formatDateTime(this, calendar.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR
-                | DateUtils.FORMAT_SHOW_WEEKDAY);
+        CharSequence dateGregorian = formatDateTime(this, calendar.getTimeInMillis(), FORMAT_SHOW_DATE | FORMAT_SHOW_YEAR | FORMAT_SHOW_WEEKDAY);
         textGregorian.setText(dateGregorian);
     }
 
@@ -687,8 +690,10 @@ public class ZmanimActivity extends LocatedActivity implements
         detailsListFragment.populateTimes(date);
         candlesFragment.populateTimes(date);
 
-        if (!isValidDetailsShowing())
+        if (!isValidDetailsShowing()) {
+            masterFragment.unhighlight();
             hideDetails();
+        }
     }
 
     /**
@@ -726,7 +731,7 @@ public class ZmanimActivity extends LocatedActivity implements
 
     private void navigateYesterday() {
         Calendar calendar = this.calendar;
-        calendar.add(Calendar.DATE, -1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
 
         if (localeRTL) {
             slideLeft(masterFragment.getView());
@@ -742,7 +747,7 @@ public class ZmanimActivity extends LocatedActivity implements
 
     private void navigateTomorrow() {
         Calendar calendar = this.calendar;
-        calendar.add(Calendar.DATE, +1);
+        calendar.add(Calendar.DAY_OF_MONTH, +1);
 
         if (localeRTL) {
             slideRight(masterFragment.getView());
