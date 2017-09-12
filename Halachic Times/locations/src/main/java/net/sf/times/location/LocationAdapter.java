@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Location adapter.
@@ -44,11 +45,11 @@ import java.util.TreeSet;
  */
 public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> implements OnClickListener {
 
-    protected List<LocationItem> objects;
+    protected final List<LocationItem> objects = new CopyOnWriteArrayList<>();
     private List<LocationItem> originalValues;
     private LocationComparator comparator;
     private LocationsFilter filter;
-    private Collator collator;
+    private final Collator collator;
     private final Locale locale;
     private OnFavoriteClickListener onFavoriteClickListener;
 
@@ -62,7 +63,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
      */
     public LocationAdapter(Context context, List<LocationItem> items) {
         super(context, R.layout.location, android.R.id.title, items);
-        objects = new ArrayList<LocationItem>(items);
+        objects.addAll(items);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);
         locale = LocaleUtils.getDefaultLocale(context);
@@ -307,7 +308,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            objects = (List<LocationItem>) results.values;
+            objects.clear();
+            objects.addAll((List<LocationItem>) results.values);
             if (results.count > 0) {
                 notifyDataSetChanged();
             } else {
