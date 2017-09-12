@@ -18,9 +18,9 @@ package net.sf.times;
 import android.annotation.TargetApi;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.content.Context;
 import android.content.Intent;
 import android.os.PersistableBundle;
+import android.util.Log;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
@@ -32,48 +32,31 @@ import static android.os.Build.VERSION_CODES.LOLLIPOP;
 @TargetApi(LOLLIPOP)
 public class ZmanimReminderJobService extends JobService {
 
-    private static final String TAG = "ZmanimReminderJobService";
+    private static final String TAG = "ZReminderJobService";
 
     public static final String EXTRA_ACTION = "action";
 
-    private ZmanimReminderService reminder;
+    private ZmanimReminder reminder;
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
+        Log.v(TAG, "start job");
         PersistableBundle extras = jobParameters.getExtras();
         String action = extras.getString(EXTRA_ACTION);
         Intent intent = new Intent(action);
 
         if (reminder == null) {
-            reminder = new ZmanimReminderService() {
-                @Override
-                public Context getBaseContext() {
-                    return ZmanimReminderJobService.this.getBaseContext();
-                }
-
-                @Override
-                public Context getApplicationContext() {
-                    return ZmanimReminderJobService.this.getApplicationContext();
-                }
-
-                @Override
-                protected Context getContext() {
-                    return ZmanimReminderJobService.this;
-                }
-            };
-            reminder.onCreate();
+            reminder = new ZmanimReminder(this);
         }
-        reminder.onStart(intent, 0);
+        reminder.process(intent);
 
         return false;
     }
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
-        if (reminder != null) {
-            reminder.onDestroy();
-            reminder = null;
-        }
+        Log.v(TAG, "stop job");
+        reminder = null;
         return true;
     }
 }

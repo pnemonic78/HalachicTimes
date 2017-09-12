@@ -797,7 +797,7 @@ public class ZmanimActivity extends LocatedActivity implements
         Context context = this;
 
         Intent intent = new Intent(context, ZmanimReminderService.class);
-        intent.setAction(ZmanimReminderService.ACTION_UPDATE);
+        intent.setAction(ZmanimReminder.ACTION_UPDATE);
         context.startService(intent);
     }
 
@@ -805,7 +805,7 @@ public class ZmanimActivity extends LocatedActivity implements
         Context context = this;
 
         Intent intent = new Intent(context, ZmanimReminderService.class);
-        intent.setAction(ZmanimReminderService.ACTION_CANCEL);
+        intent.setAction(ZmanimReminder.ACTION_CANCEL);
         context.startService(intent);
     }
 
