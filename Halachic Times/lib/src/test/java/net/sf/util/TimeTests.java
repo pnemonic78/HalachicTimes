@@ -17,8 +17,16 @@ package net.sf.util;
 
 import org.junit.Test;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static java.lang.System.currentTimeMillis;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+import static net.sf.util.TimeUtils.isSameDay;
 import static net.sf.util.TimeUtils.roundUp;
 
 /**
@@ -70,5 +78,41 @@ public class TimeTests {
         assertEquals(-1000L, roundUp(-1333, SECOND_IN_MILLIS));
         assertEquals(-1000L, roundUp(-1444, SECOND_IN_MILLIS));
         assertEquals(-2000L, roundUp(-1555, SECOND_IN_MILLIS));
+    }
+
+    @Test
+    public void sameDay() throws Exception {
+        long time;
+        Calendar cal;
+        final long now = currentTimeMillis();
+
+        time = now;
+        cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("UTC"));
+        cal.setTimeInMillis(now);
+        assertTrue(isSameDay(cal, time));
+
+        cal.setTimeInMillis(time);
+        cal.add(Calendar.DAY_OF_MONTH, -1);
+        assertFalse(isSameDay(cal, time));
+
+        cal.setTimeInMillis(time);
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+        assertFalse(isSameDay(cal, time));
+
+        cal.setTimeInMillis(time);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        time = cal.getTimeInMillis();
+        for (int j = 0; j < 24; j++) {
+            for (int i = 0; i < 24; i++) {
+                cal.setTimeInMillis(now);
+                cal.set(Calendar.HOUR_OF_DAY, i);
+                assertTrue("j=" + j + ",i=" + i, isSameDay(cal, time));
+            }
+            time += HOUR_IN_MILLIS;
+        }
+        assertFalse(isSameDay(cal, time));
     }
 }

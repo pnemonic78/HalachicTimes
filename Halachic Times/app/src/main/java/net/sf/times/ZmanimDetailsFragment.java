@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
 import java.util.Calendar;
 
@@ -210,12 +210,12 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (context == null)
             return;
 
-        JewishDate jcal = adapter.getJewishCalendar();
+        JewishCalendar jcal = adapter.getJewishCalendar();
         if (jcal == null) {
             // Ignore potential "IllegalArgumentException".
             return;
         }
-        Calendar gcal = Calendar.getInstance();
+        Calendar gcal = (Calendar) jcal.getGregorianCalendar().clone();
         CharSequence dateHebrew;
         int jDayOfMonthPrevious = 0;
         int jDayOfMonth;
@@ -228,10 +228,11 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
 
-            gcal.setTimeInMillis(item.time);
-            jcal.setDate(gcal);
-            jDayOfMonth = jcal.getJewishDayOfMonth();
+            jDayOfMonth = item.jewishDay;
             if (jDayOfMonth != jDayOfMonthPrevious) {
+                jDayOfMonthPrevious = jDayOfMonth;
+                gcal.setTimeInMillis(item.time);
+                jcal.setDate(gcal);
                 dateHebrew = adapter.formatDate(context, jcal);
                 bindViewGrouping(list, position, dateHebrew);
             }
@@ -239,7 +240,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             row = adapter.getView(position, null, list);
             timeViews[position] = row.findViewById(R.id.time);
             bindView(list, position, row, item);
-            jDayOfMonthPrevious = jDayOfMonth;
         }
 
         list.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

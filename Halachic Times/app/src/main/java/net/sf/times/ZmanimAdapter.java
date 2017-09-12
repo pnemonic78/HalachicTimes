@@ -42,6 +42,7 @@ import java.util.Comparator;
 import java.util.Locale;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static net.sf.util.TimeUtils.roundUp;
 
@@ -90,6 +91,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected boolean showElapsed;
     private Format timeFormat;
     private Format timeFormatSeasonalHour;
+    private long timeFormatGranularity = SECOND_IN_MILLIS;
     private Comparator<ZmanimItem> comparator;
     private HebrewDateFormatter hebrewDateFormatter;
     private String[] monthNames;
@@ -114,6 +116,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         public boolean elapsed;
         /** Emphasize? */
         public boolean emphasis;
+        /** Jewish day of the month. */
+        public int jewishDay;
 
         /** Creates a new row item. */
         public ZmanimItem(int titleId) {
@@ -174,10 +178,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (settings.isSeconds()) {
             String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
             this.timeFormat = new SimpleDateFormat(pattern, locale);
+            this.timeFormatGranularity = SECOND_IN_MILLIS;
 
             patternSeasonalHour = context.getString(R.string.hour_format_seconds);
         } else {
             this.timeFormat = DateFormat.getTimeFormat(context);
+            this.timeFormatGranularity = MINUTE_IN_MILLIS;
 
             patternSeasonalHour = context.getString(R.string.hour_format);
         }
@@ -256,9 +262,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label id.
      * @param time
      *         the time.
+     * @param jewishDay
+     *         the Jewish day of the month.
      */
-    public void add(int titleId, int summaryId, Long time) {
-        add(titleId, summaryId, time, false);
+    public void add(int titleId, int summaryId, Long time, int jewishDay) {
+        add(titleId, summaryId, time, jewishDay, false);
     }
 
     /**
@@ -270,11 +278,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label id.
      * @param time
      *         the time.
+     * @param jewishDay
+     *         the Jewish day of the month.
      * @param remote
      *         hide elapsed times for remote view?
      */
-    public void add(int titleId, int summaryId, Long time, boolean remote) {
-        add(titleId, summaryId, time == null ? NEVER : time, remote);
+    public void add(int titleId, int summaryId, Long time, int jewishDay, boolean remote) {
+        add(titleId, summaryId, time == null ? NEVER : time, jewishDay, remote);
     }
 
     /**
@@ -286,9 +296,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label id.
      * @param time
      *         the time in milliseconds.
+     * @param jewishDay
+     *         the Jewish day of the month.
      */
-    public void add(int titleId, int summaryId, long time) {
-        add(titleId, summaryId, time, false);
+    public void add(int titleId, int summaryId, long time, int jewishDay) {
+        add(titleId, summaryId, time, jewishDay, false);
     }
 
     /**
@@ -300,11 +312,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label id.
      * @param time
      *         the time in milliseconds.
+     * @param jewishDay
+     *         the Jewish day of the month.
      * @param remote
      *         hide elapsed times for remote view?
      */
-    public void add(int titleId, int summaryId, long time, boolean remote) {
-        add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time, remote);
+    public void add(int titleId, int summaryId, long time, int jewishDay, boolean remote) {
+        add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time, jewishDay, remote);
     }
 
     /**
@@ -316,11 +330,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label.
      * @param time
      *         the time
+     * @param jewishDay
+     *         the Jewish day of the month.
      * @param remote
      *         hide elapsed times for remote view?
      */
-    public void add(int titleId, CharSequence summary, Long time, boolean remote) {
-        add(titleId, summary, time == null ? NEVER : time, remote);
+    public void add(int titleId, CharSequence summary, Long time, int jewishDay, boolean remote) {
+        add(titleId, summary, time == null ? NEVER : time, jewishDay, remote);
     }
 
     /**
@@ -332,11 +348,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label.
      * @param time
      *         the time in milliseconds.
+     * @param jewishDay
+     *         the Jewish day of the month.
      * @param remote
      *         hide elapsed times for remote view?
      */
-    public void add(int titleId, CharSequence summary, long time, boolean remote) {
-        add(titleId, summary, time, remote, titleId == R.string.hour);
+    public void add(int titleId, CharSequence summary, long time, int jewishDay, boolean remote) {
+        add(titleId, summary, time, jewishDay, remote, titleId == R.string.hour);
     }
 
     /**
@@ -348,12 +366,14 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the summary label.
      * @param time
      *         the time in milliseconds.
+     * @param jewishDay
+     *         the Jewish day of the month.
      * @param remote
      *         hide elapsed times for remote view?
      * @param hour
      *         format as hour?
      */
-    public void add(int titleId, CharSequence summary, long time, boolean remote, boolean hour) {
+    public void add(int titleId, CharSequence summary, long time, int jewishDay, boolean remote, boolean hour) {
         if (time == NEVER) {
             return;
         }
@@ -361,8 +381,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         ZmanimItem item = new ZmanimItem(titleId);
         item.summary = summary;
         item.time = time;
+        item.jewishDay = jewishDay;
         item.emphasis = settings.isEmphasis(titleId);
-        item.timeLabel = hour ? timeFormatSeasonalHour.format(roundUp(time, SECOND_IN_MILLIS)) : timeFormat.format(roundUp(time, SECOND_IN_MILLIS));
+        item.timeLabel = hour ? timeFormatSeasonalHour.format(roundUp(time, SECOND_IN_MILLIS)) : timeFormat.format(roundUp(time, timeFormatGranularity));
         item.elapsed = remote ? (time < now) : !(showElapsed || hour) && (time < now);
 
         add(item);
@@ -393,7 +414,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *         the time in milliseconds.
      */
     public void addHour(int titleId, int summaryId, long time, boolean remote) {
-        add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time + DAY_IN_MILLIS, remote, true);
+        add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time + DAY_IN_MILLIS, 0, remote, true);
     }
 
     /**
@@ -464,12 +485,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @return the formatted date.
      */
     public CharSequence formatDate(Context context, JewishDate jewishDate) {
-        int jewishDay = jewishDate.getJewishDayOfMonth();
+        final int jewishYear = jewishDate.getJewishYear();
         int jewishMonth = jewishDate.getJewishMonth();
-        int jewishYear = jewishDate.getJewishYear();
         if ((jewishMonth == JewishDate.ADAR) && jewishDate.isJewishLeapYear()) {
             jewishMonth = ADAR_I; // return "Adar I", not just "Adar".
         }
+        final int jewishDay = jewishDate.getJewishDayOfMonth();
 
         String[] monthNames = this.monthNames;
         if (monthNames == null) {

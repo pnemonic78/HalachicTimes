@@ -994,7 +994,7 @@ public class JewishDate implements Comparable<JewishDate>, Cloneable {
 					+ calendar.get(Calendar.YEAR) + " BC is invalid.");
 		}
 		gregorianMonth = calendar.get(Calendar.MONTH) + 1;
-		gregorianDayOfMonth = calendar.get(Calendar.DATE);
+		gregorianDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 		gregorianYear = calendar.get(Calendar.YEAR);
 		gregorianAbsDate = gregorianDateToAbsDate(gregorianYear, gregorianMonth, gregorianDayOfMonth); // init the date
 		absDateToJewishDate();

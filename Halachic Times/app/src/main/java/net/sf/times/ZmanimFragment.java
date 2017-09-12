@@ -237,6 +237,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         View row;
         CharSequence groupingText;
         final View[] timeViews = new View[count];
+        int jDayOfMonthPrevious = 0;
+        int jDayOfMonth;
 
         if (count > 0) {
             item = adapter.getItem(position);
@@ -245,18 +247,19 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 timeViews[position] = row.findViewById(R.id.time);
                 bindView(list, position, row, item);
                 position++;
+                item = adapter.getItem(position);
             }
+            jDayOfMonthPrevious = item.jewishDay;
 
             bindViewGrouping(list, position, dateHebrew);
 
             for (; position < count; position++) {
                 item = adapter.getItem(position);
-                row = adapter.getView(position, null, list);
-                timeViews[position] = row.findViewById(R.id.time);
-                bindView(list, position, row, item);
 
                 // Start of the next Hebrew day.
-                if (item.titleId == R.string.sunset) {
+                jDayOfMonth = item.jewishDay;
+                if (jDayOfMonth != jDayOfMonthPrevious) {
+                    jDayOfMonthPrevious = jDayOfMonth;
                     jcal.forward();
 
                     dateHebrew = adapter.formatDate(context, jcal);
@@ -273,6 +276,10 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
                     bindViewGrouping(list, position, groupingText);
                 }
+
+                row = adapter.getView(position, null, list);
+                timeViews[position] = row.findViewById(R.id.time);
+                bindView(list, position, row, item);
             }
         }
 
