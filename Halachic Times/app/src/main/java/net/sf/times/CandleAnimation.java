@@ -23,11 +23,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LevelListDrawable;
 import android.os.Handler;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Random;
+
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
  * Flicker animation for 1 candle.
@@ -37,7 +38,7 @@ import java.util.Random;
 public class CandleAnimation implements Runnable {
 
     private static final int LEVELS = 14;
-    private static final long PERIOD = DateUtils.SECOND_IN_MILLIS >> 1;
+    private static final long PERIOD = SECOND_IN_MILLIS >> 1;
     private static final int PERIOD_INT = (int) PERIOD;
 
     private final Handler handler;
