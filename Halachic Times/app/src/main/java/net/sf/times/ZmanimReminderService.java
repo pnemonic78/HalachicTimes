@@ -33,7 +33,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.annotation.Nullable;
-import android.text.format.DateUtils;
 import android.util.Log;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -46,6 +45,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -71,8 +73,8 @@ public class ZmanimReminderService extends IntentService {
     /** Id for alarms for upcoming time notification. */
     private static final int ID_ALARM_UPCOMING = 4;
 
-    private static final long WAS_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
-    private static final long SOON_DELTA = 30 * DateUtils.SECOND_IN_MILLIS;
+    private static final long WAS_DELTA = 30 * SECOND_IN_MILLIS;
+    private static final long SOON_DELTA = 30 * SECOND_IN_MILLIS;
     /** The number of days to check forwards for a reminder. */
     private static final int DAYS_FORWARD = 30;
 
@@ -100,7 +102,7 @@ public class ZmanimReminderService extends IntentService {
     public static final String ACTION_SILENCE = "net.sf.times.action.SILENCE";
 
     /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
-    private static final long STOP_NOTIFICATION_AFTER = DateUtils.MINUTE_IN_MILLIS * 3;
+    private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
 
     private SimpleDateFormat dateFormat;
     /** The adapter. */
@@ -119,6 +121,10 @@ public class ZmanimReminderService extends IntentService {
     /** Constructs a new service. */
     public ZmanimReminderService() {
         this(TAG);
+    }
+
+    protected Context getContext() {
+        return this;
     }
 
     /**
@@ -369,7 +375,7 @@ public class ZmanimReminderService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Context context = this;
+        Context context = getContext();
         Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(System.currentTimeMillis()) + "]");
         if (intent == null) {
             return;
@@ -642,7 +648,7 @@ public class ZmanimReminderService extends IntentService {
         Notification notification = createUpcomingNotification(context, settings, item, contentIntent);
         postUpcomingNotification(context, settings, notification);
 
-        long triggerAt = item.time + DateUtils.MINUTE_IN_MILLIS;
+        long triggerAt = item.time + MINUTE_IN_MILLIS;
         AlarmManager manager = getAlarmManager(context);
         PendingIntent alarmIntent = createUpcomingIntent(context);
         manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);

@@ -15,14 +15,25 @@
  */
 package net.sf.times;
 
+import android.annotation.TargetApi;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.content.Context.JOB_SCHEDULER_SERVICE;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.O;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static net.sf.times.ZmanimReminderJobService.EXTRA_ACTION;
 
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.
@@ -32,6 +43,8 @@ import java.util.Locale;
 public class ZmanimReminder extends BroadcastReceiver {
 
     private static final String TAG = "ZmanimReminder";
+
+    private static final int JOB_REMINDER = 1;
 
     private SimpleDateFormat dateFormat;
 
@@ -45,9 +58,13 @@ public class ZmanimReminder extends BroadcastReceiver {
         Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(System.currentTimeMillis()) + "]");
 
         // Delegate actions to the service.
-        Intent service = new Intent(intent);
-        service.setClass(context, ZmanimReminderService.class);
-        context.startService(service);
+        if (SDK_INT >= O) {
+            startReminderJob(context, intent);
+        } else {
+            Intent service = new Intent(intent);
+            service.setClass(context, ZmanimReminderService.class);
+            context.startService(service);
+        }
     }
 
     /**
@@ -75,5 +92,22 @@ public class ZmanimReminder extends BroadcastReceiver {
      */
     private String formatDateTime(long time) {
         return formatDateTime(new Date(time));
+    }
+
+    @TargetApi(O)
+    private void startReminderJob(Context context, Intent intent) {
+        JobScheduler scheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+        if (scheduler.getAllPendingJobs().isEmpty()) {
+            PersistableBundle extras = new PersistableBundle();
+            extras.putString(EXTRA_ACTION, intent.getAction());
+
+            JobInfo job = new JobInfo.Builder(JOB_REMINDER, new ComponentName(context, ZmanimReminderJobService.class))
+                    .setExtras(extras)
+                    .setPersisted(false)
+                    .setRequiresDeviceIdle(false)
+                    .setOverrideDeadline(MINUTE_IN_MILLIS)
+                    .build();
+            scheduler.schedule(job);
+        }
     }
 }
