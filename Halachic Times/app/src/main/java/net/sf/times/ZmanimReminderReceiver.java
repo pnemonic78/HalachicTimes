@@ -40,16 +40,16 @@ import static net.sf.times.ZmanimReminderJobService.EXTRA_ACTION;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminder extends BroadcastReceiver {
+public class ZmanimReminderReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "ZmanimReminder";
+    private static final String TAG = "ZmanimReminderReceiver";
 
     private static final int JOB_REMINDER = 1;
 
     private SimpleDateFormat dateFormat;
 
     /** No-argument constructor for broadcast receiver. */
-    public ZmanimReminder() {
+    public ZmanimReminderReceiver() {
     }
 
     @Override

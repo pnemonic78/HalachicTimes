@@ -107,7 +107,7 @@
                 android:resource="@xml/widget_clock"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.ZmanimReminder"
+            android:name="net.sf.times.ZmanimReminderReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
