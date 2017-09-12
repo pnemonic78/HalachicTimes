@@ -31,7 +31,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
@@ -43,6 +42,9 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
+
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
@@ -262,7 +264,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
         if (when < Long.MAX_VALUE) {
             // Let the first visible item linger for another minute.
-            scheduleUpdate(context, appWidgetIds, when + DateUtils.MINUTE_IN_MILLIS);
+            scheduleUpdate(context, appWidgetIds, when + MINUTE_IN_MILLIS);
         }
     }
 
@@ -535,7 +537,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         populater.populate(adapter, true);
 
         ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, settings);
-        populater.setCalendar(now + DateUtils.DAY_IN_MILLIS);
+        populater.setCalendar(now + DAY_IN_MILLIS);
         populater.populate(adapterTomorrow, true);
 
         bindViews(views, adapter, adapterTomorrow);

@@ -20,7 +20,6 @@ import android.content.SharedPreferences.Editor;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 
 import net.sf.media.RingtoneManager;
 import net.sf.preference.TimePreference;
@@ -30,6 +29,7 @@ import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
 
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_120MINUTES;
 import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_16POINT1DEGREES;
 import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_18DEGREES;
@@ -583,7 +583,7 @@ public class ZmanimPreferences extends CompassPreferences {
                 return when;
             }
         } else {
-            long before = Long.parseLong(value) * DateUtils.MINUTE_IN_MILLIS;
+            long before = Long.parseLong(value) * MINUTE_IN_MILLIS;
             if (before >= 0L) {
                 return time - before;
             }
