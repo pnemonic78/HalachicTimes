@@ -62,13 +62,20 @@ public class CountriesGeocoder extends GeocoderBase {
     /** The results index for the distance. */
     private static final int INDEX_DISTANCE = 0;
 
-    private static CountryPolygon[] countryBorders;
+    private static CountryPolygon[] immutableCountryBorders;
+    private static String[] immutableCitiesCountries;
+    private static double[] immutableCitiesLatitudes;
+    private static double[] immutableCitiesLongitudes;
+    private static double[] immutableCitiesElevations;
+    private static String[] immutableCitiesTimeZones;
+
+    private CountryPolygon[] countryBorders;
     private String[] citiesNames;
-    private static String[] citiesCountries;
-    private static double[] citiesLatitudes;
-    private static double[] citiesLongitudes;
-    private static double[] citiesElevations;
-    private static String[] citiesTimeZones;
+    private String[] citiesCountries;
+    private double[] citiesLatitudes;
+    private double[] citiesLongitudes;
+    private double[] citiesElevations;
+    private String[] citiesTimeZones;
 
     /**
      * Constructs a new cities provider.
@@ -90,48 +97,69 @@ public class CountriesGeocoder extends GeocoderBase {
      */
     public CountriesGeocoder(Context context, Locale locale) {
         super(context, locale);
+        init(context);
+    }
 
-        // Populate arrays from "countries.xml"
-        Resources res = context.getResources();
-        if (countryBorders == null) {
-            String[] countryCodes = res.getStringArray(R.array.countries);
-            int countriesCount = countryCodes.length;
-            CountryPolygon[] borders = new CountryPolygon[countriesCount];
-            countryBorders = borders;
-            int[] verticesCounts = res.getIntArray(R.array.vertices_count);
-            int[] latitudes = res.getIntArray(R.array.latitudes);
-            int[] longitudes = res.getIntArray(R.array.longitudes);
-            int verticesCount;
-            CountryPolygon country;
-            int i = 0;
+    private void init(Context context) {
+        synchronized (TIMEZONE_PROVIDER) {
+            countryBorders = immutableCountryBorders;
+            citiesCountries = immutableCitiesCountries;
+            citiesLatitudes = immutableCitiesLatitudes;
+            citiesLongitudes = immutableCitiesLongitudes;
+            citiesElevations = immutableCitiesElevations;
+            citiesTimeZones = immutableCitiesTimeZones;
 
-            for (int c = 0; c < countriesCount; c++) {
-                verticesCount = verticesCounts[c];
-                country = new CountryPolygon(countryCodes[c]);
-                for (int v = 0; v < verticesCount; v++, i++) {
-                    country.addPoint(latitudes[i], longitudes[i]);
+            // Populate arrays from "cities.xml"
+            final Resources res = context.getResources();
+            if (countryBorders == null) {
+                final String[] countryCodes = res.getStringArray(R.array.countries);
+                int countriesCount = countryCodes.length;
+                final CountryPolygon[] borders = new CountryPolygon[countriesCount];
+                final int[] verticesCounts = res.getIntArray(R.array.vertices_count);
+                final int[] latitudes = res.getIntArray(R.array.latitudes);
+                final int[] longitudes = res.getIntArray(R.array.longitudes);
+                int verticesCount;
+                CountryPolygon country;
+                int i = 0;
+
+                for (int c = 0; c < countriesCount; c++) {
+                    verticesCount = verticesCounts[c];
+                    country = new CountryPolygon(countryCodes[c]);
+                    for (int v = 0; v < verticesCount; v++, i++) {
+                        country.addPoint(latitudes[i], longitudes[i]);
+                    }
+                    borders[c] = country;
                 }
-                borders[c] = country;
-            }
-        }
-        if (citiesCountries == null) {
-            citiesCountries = res.getStringArray(R.array.cities_countries);
-            citiesTimeZones = res.getStringArray(R.array.cities_time_zones);
 
-            int citiesCount = citiesCountries.length;
-            int[] latitudes = res.getIntArray(R.array.cities_latitudes);
-            int[] longitudes = res.getIntArray(R.array.cities_longitudes);
-            int[] elevations = res.getIntArray(R.array.cities_elevations);
-            citiesLatitudes = new double[citiesCount];
-            citiesLongitudes = new double[citiesCount];
-            citiesElevations = new double[citiesCount];
-            for (int i = 0; i < citiesCount; i++) {
-                citiesLatitudes[i] = latitudes[i] / RATIO;
-                citiesLongitudes[i] = longitudes[i] / RATIO;
-                citiesElevations[i] = elevations[i];
+                countryBorders = borders;
+                immutableCountryBorders = borders;
             }
+            if (citiesCountries == null) {
+                citiesCountries = res.getStringArray(R.array.cities_countries);
+                citiesTimeZones = res.getStringArray(R.array.cities_time_zones);
+
+                final int citiesCount = citiesCountries.length;
+                final int[] latitudes = res.getIntArray(R.array.cities_latitudes);
+                final int[] longitudes = res.getIntArray(R.array.cities_longitudes);
+                final int[] elevations = res.getIntArray(R.array.cities_elevations);
+                citiesLatitudes = new double[citiesCount];
+                citiesLongitudes = new double[citiesCount];
+                citiesElevations = new double[citiesCount];
+                for (int i = 0; i < citiesCount; i++) {
+                    citiesLatitudes[i] = latitudes[i] / RATIO;
+                    citiesLongitudes[i] = longitudes[i] / RATIO;
+                    citiesElevations[i] = elevations[i];
+                }
+
+                immutableCitiesCountries = citiesCountries;
+                immutableCitiesLatitudes = citiesLatitudes;
+                immutableCitiesLongitudes = citiesLongitudes;
+                immutableCitiesElevations = citiesElevations;
+                immutableCitiesTimeZones = citiesTimeZones;
+            }
+
+            citiesNames = res.getStringArray(R.array.cities);
         }
-        citiesNames = res.getStringArray(R.array.cities);
     }
 
     /**
@@ -184,10 +212,13 @@ public class CountriesGeocoder extends GeocoderBase {
     public int findCountryIndex(double latitude, double longitude) {
         final int fixedPointLatitude = (int) Math.rint(latitude * RATIO);
         final int fixedPointLongitude = (int) Math.rint(longitude * RATIO);
+        final CountryPolygon[] borders = countryBorders;
+        if (borders == null) {
+            return -1;
+        }
         double distanceToBorder;
         double distanceMin = Double.MAX_VALUE;
         int found = -1;
-        CountryPolygon[] borders = countryBorders;
         final int countriesSize = borders.length;
         CountryPolygon country;
         int[] matches = new int[MAX_COUNTRIES_OVERLAP];
