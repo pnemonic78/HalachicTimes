@@ -237,29 +237,32 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         View row;
         CharSequence groupingText;
         final View[] timeViews = new View[count];
-        int jDayOfMonthPrevious = 0;
-        int jDayOfMonth;
+        JewishDate jewishDatePrevious = null;
 
         if (count > 0) {
             item = adapter.getItem(position);
-            if (item.titleId == R.string.hour) {
-                row = adapter.getView(position, null, list);
-                timeViews[position] = row.findViewById(R.id.time);
-                bindView(list, position, row, item);
-                position++;
-                item = adapter.getItem(position);
+            if (item != null) {
+                if (item.titleId == R.string.hour) {
+                    row = adapter.getView(position, null, list);
+                    timeViews[position] = row.findViewById(R.id.time);
+                    bindView(list, position, row, item);
+                    position++;
+                    item = adapter.getItem(position);
+                }
+                jewishDatePrevious = item.jewishDate;
             }
-            jDayOfMonthPrevious = item.jewishDay;
 
             bindViewGrouping(list, position, dateHebrew);
 
             for (; position < count; position++) {
                 item = adapter.getItem(position);
+                if (item == null) {
+                    continue;
+                }
 
                 // Start of the next Hebrew day.
-                jDayOfMonth = item.jewishDay;
-                if (jDayOfMonth != jDayOfMonthPrevious) {
-                    jDayOfMonthPrevious = jDayOfMonth;
+                if ((jewishDatePrevious == null) || !jewishDatePrevious.equals(item.jewishDate)) {
+                    jewishDatePrevious = item.jewishDate;
                     jcal.forward();
 
                     dateHebrew = adapter.formatDate(context, jcal);

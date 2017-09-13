@@ -24,6 +24,7 @@ import android.view.ViewTreeObserver;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
@@ -217,8 +218,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         }
         Calendar gcal = (Calendar) jcal.getGregorianCalendar().clone();
         CharSequence dateHebrew;
-        int jDayOfMonthPrevious = 0;
-        int jDayOfMonth;
+        JewishDate jewishDatePrevious = null;
+        JewishDate jewishDate = jcal;
 
         final int count = adapter.getCount();
         ZmanimItem item;
@@ -227,13 +228,20 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
+            if (item == null) {
+                continue;
+            }
 
-            jDayOfMonth = item.jewishDay;
-            if (jDayOfMonth != jDayOfMonthPrevious) {
-                jDayOfMonthPrevious = jDayOfMonth;
-                gcal.setTimeInMillis(item.time);
-                jcal.setDate(gcal);
-                dateHebrew = adapter.formatDate(context, jcal);
+            if ((jewishDatePrevious == null) || ((item.jewishDate != null) && !jewishDatePrevious.equals(item.jewishDate))) {
+                if (item.jewishDate != null) {
+                    jewishDate = item.jewishDate;
+                } else {
+                    gcal.setTimeInMillis(item.time);
+                    jcal.setDate(gcal);
+                    jewishDate = jcal;
+                }
+                jewishDatePrevious = jewishDate;
+                dateHebrew = adapter.formatDate(context, jewishDate);
                 bindViewGrouping(list, position, dateHebrew);
             }
 
