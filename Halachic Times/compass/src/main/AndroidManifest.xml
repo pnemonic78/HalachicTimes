@@ -11,10 +11,12 @@
     <application
         android:name="net.sf.times.compass.CompassApplication"
         android:allowBackup="true"
+        android:appCategory="maps"
         android:backupAgent="net.sf.times.compass.backup.CompassBackupAgent"
         android:fullBackupContent="@xml/full_backup"
         android:icon="@mipmap/ic_compass"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_compass"
         android:supportsRtl="false"
         android:theme="@style/Theme.Compass.Dark">
         <activity

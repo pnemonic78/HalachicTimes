@@ -14,6 +14,7 @@
     <color name="twilight">#509966cc</color>
     <color name="nightfall">#50440044</color>
     <color name="midnight">#50000000</color>
+    <color name="sky">#ccffff</color>
 
     <color name="dawn_light">#c0fbf2db</color>
     <color name="tallis_light">#c0eac599</color>

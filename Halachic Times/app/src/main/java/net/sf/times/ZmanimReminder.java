@@ -476,7 +476,7 @@ public class ZmanimReminder {
                 .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setSound(sound, audioStreamType)
                 .setWhen(when);
@@ -602,7 +602,7 @@ public class ZmanimReminder {
                 .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setWhen(when);
