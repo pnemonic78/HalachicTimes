@@ -239,7 +239,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             // Ignore potential "IllegalArgumentException".
             return;
         }
-        final JewishDate jewishDate = jcal;
+        final JewishDate jewishDate = (JewishDate) jcal.clone();
+        final JewishDate jewishDateTomorrow = (JewishDate) jewishDate.clone();
+        jewishDateTomorrow.forward();
         final int dayOfWeek = jcal.getDayOfWeek();
         final int candlesOffset = settings.getCandleLightingOffset();
         final int shabbathAfter = settings.getShabbathEndsAfter();
@@ -250,8 +252,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final int candlesHow = candles & MOTZE_MASK;
         final int holidayToday = (byte) ((candles >> 12) & HOLIDAY_MASK);
         final int holidayTomorrow = (byte) ((candles >> 4) & HOLIDAY_MASK);
-        final JewishDate jewishDateTomorrow = (JewishDate) jewishDate.clone();
-        jewishDateTomorrow.forward();
 
         Long date;
         int summary;

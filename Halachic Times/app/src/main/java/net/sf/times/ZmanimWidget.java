@@ -30,6 +30,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
@@ -39,9 +40,8 @@ import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
-
-import java.util.Calendar;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -298,34 +298,49 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the list adapter for tomorrow.
      */
     protected void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
-        Context context = getContext();
+        list.removeAllViews(android.R.id.list);
+
+        final Context context = getContext();
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
         ZmanimItem item;
+        JewishCalendar jcal = adapter.getJewishCalendar();
+        JewishDate jewishDate = jcal;
 
+        int positionFirst = -1;
         int positionSunset = -1;
-        list.removeAllViews(android.R.id.list);
 
-        for (int position = 0; position < count; position++) {
+        if (count > 0) {
+            item = adapter.getItem(0);
+            if (item != null) {
+                if (!item.isEmpty()) {
+                    positionFirst = 0;
+                }
+                if (item.jewishDate != null) {
+                    jewishDate = item.jewishDate;
+                }
+            }
+        }
+        for (int position = 1; position < count; position++) {
             item = adapter.getItem(position);
-            if (item.isEmpty()) {
+            if ((item == null) || item.isEmpty()) {
                 continue;
             }
-            if (item.titleId == R.string.sunset) {
-                positionSunset = position;
+            if (positionFirst < 0) {
+                positionFirst = position;
+            }
+            if ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate)) {
+                positionSunset = position - 1;
                 break;
             }
         }
 
         int positionTomorrow = -1;
-        int positionFirst = -1;
         int positionTotal = 0;
         CharSequence dateHebrew, groupingText;
-        Calendar date = adapter.getCalendar().getCalendar();
-        JewishCalendar jewishDate = new JewishCalendar(date);
 
         // If we have a sunset, then show today's header.
-        if (positionSunset >= 0) {
+        if (positionSunset >= positionFirst) {
             dateHebrew = adapter.formatDate(context, jewishDate);
             groupingText = dateHebrew;
             bindViewGrouping(list, 0, groupingText);
@@ -333,11 +348,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            if (bindView(list, position, positionTotal, item)) {
-                if (positionFirst < 0) {
-                    positionFirst = position;
-                }
-            }
+            bindView(list, position, positionTotal, item);
 
             // Start of the next Hebrew day.
             if ((position >= positionSunset) && (positionTomorrow < 0)) {
@@ -345,7 +356,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
                 jewishDate.forward();
                 dateHebrew = adapter.formatDate(context, jewishDate);
                 groupingText = dateHebrew;
-                int omer = jewishDate.getDayOfOmer();
+                int omer = jcal.getDayOfOmer();
                 if (omer >= 1) {
                     CharSequence omerLabel = adapter.formatOmer(context, omer);
                     if (!TextUtils.isEmpty(omerLabel)) {
@@ -361,14 +372,14 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             count = Math.min(adapter.getCount(), positionFirst);
             positionTomorrow = -1;
 
-            if (positionSunset < 0) {
+            if (positionSunset < positionFirst) {
                 for (int position = 0; position < count; position++) {
                     item = adapter.getItem(position);
-                    if (item.isEmpty()) {
+                    if ((item == null) || item.isEmpty()) {
                         continue;
                     }
-                    if (item.titleId == R.string.sunset) {
-                        positionSunset = position;
+                    if ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate)) {
+                        positionSunset = position - 1;
                         break;
                     }
                 }
@@ -384,7 +395,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
                     jewishDate.forward();
                     dateHebrew = adapter.formatDate(context, jewishDate);
                     groupingText = dateHebrew;
-                    int omer = jewishDate.getDayOfOmer();
+                    int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
@@ -410,8 +421,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the zmanim item.
      * @return {@code true} if item was bound to view.
      */
-    protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
-        if (item.isEmpty()) {
+    protected boolean bindView(RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item) {
+        if ((item == null) || item.isEmpty()) {
             return false;
         }
         Context context = getContext();
