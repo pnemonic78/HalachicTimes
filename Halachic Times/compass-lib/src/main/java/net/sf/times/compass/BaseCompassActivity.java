@@ -17,14 +17,12 @@ package net.sf.times.compass;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import net.sf.app.ThemedApplication;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.LocatedActivity;

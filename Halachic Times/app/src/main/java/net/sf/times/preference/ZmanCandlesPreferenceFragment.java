@@ -20,6 +20,8 @@ import android.os.Bundle;
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
 
+import static net.sf.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
+
 /**
  * This fragment shows the preferences for the Candles zman screen.
  */
@@ -29,7 +31,7 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SeekBarDialogPreference seek = (SeekBarDialogPreference) findPreference(ZmanimPreferences.KEY_OPINION_CANDLES);
+        SeekBarDialogPreference seek = (SeekBarDialogPreference) findPreference(KEY_OPINION_CANDLES);
         seek.setSummaryFormat(R.plurals.candles_summary);
         seek.setOnPreferenceChangeListener(this);
     }

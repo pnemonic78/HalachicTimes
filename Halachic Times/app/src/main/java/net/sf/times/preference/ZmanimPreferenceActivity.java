@@ -18,11 +18,12 @@ package net.sf.times.preference;
 import android.os.Bundle;
 
 import net.sf.preference.PreferenceActivity;
-import net.sf.preference.ThemedPreferences;
 import net.sf.times.R;
-import net.sf.times.compass.preference.CompassPreferences;
 
 import java.util.List;
+
+import static net.sf.preference.ThemedPreferences.KEY_THEME;
+import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 
 /**
  * Application preferences that populate the settings.
@@ -50,6 +51,6 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected boolean shouldRestartParentActivityForUi(String key) {
-        return ThemedPreferences.KEY_THEME.equals(key) || CompassPreferences.KEY_THEME_COMPASS.equals(key);
+        return KEY_THEME.equals(key) || KEY_THEME_COMPASS.equals(key);
     }
 }

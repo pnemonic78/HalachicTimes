@@ -21,6 +21,9 @@ import android.preference.ListPreference;
 import net.sf.preference.SeekBarDialogPreference;
 import net.sf.times.R;
 
+import static net.sf.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER;
+import static net.sf.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES;
+
 /**
  * This fragment shows the preferences for the Candles zman screen.
  */
@@ -34,11 +37,11 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        after = (ListPreference) findPreference(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER);
+        after = (ListPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_AFTER);
         int shabbathAfter = getSettings().toId(after.getValue());
         shabbathAfterName = getString(shabbathAfter);
 
-        seek = (SeekBarDialogPreference) findPreference(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES);
+        seek = (SeekBarDialogPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
         seek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
         seek.setOnPreferenceChangeListener(this);
     }

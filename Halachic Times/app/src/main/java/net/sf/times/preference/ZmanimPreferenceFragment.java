@@ -19,6 +19,8 @@ import android.os.Bundle;
 
 import net.sf.times.R;
 
+import static net.sf.times.preference.ZmanimPreferences.KEY_OPINION_OMER;
+
 /**
  * This fragment shows the preferences for the Zmanim header.
  */
@@ -33,6 +35,6 @@ public class ZmanimPreferenceFragment extends net.sf.preference.AbstractPreferen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(ZmanimPreferences.KEY_OPINION_OMER);
+        initList(KEY_OPINION_OMER);
     }
 }

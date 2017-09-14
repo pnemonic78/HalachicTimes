@@ -23,7 +23,10 @@ import android.text.TextUtils;
 
 import net.sf.preference.RingtonePreference;
 import net.sf.times.R;
-import net.sf.times.compass.preference.CompassPreferences;
+
+import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
+import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
+import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
 
 /**
  * This fragment shows the preferences for the General header.
@@ -41,10 +44,10 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        reminderRingtonePreference = initRingtone(ZmanimPreferences.KEY_REMINDER_RINGTONE);
+        reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
 
-        initList(ZmanimPreferences.KEY_REMINDER_STREAM);
-        initList(CompassPreferences.KEY_COMPASS_BEARING);
+        initList(KEY_REMINDER_STREAM);
+        initList(KEY_COMPASS_BEARING);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
         super.onListPreferenceChange(preference, newValue);
 
         String key = preference.getKey();
-        if (ZmanimPreferences.KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
+        if (KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
             String value = newValue.toString();
             int audioStreamType = TextUtils.isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
             int ringType;

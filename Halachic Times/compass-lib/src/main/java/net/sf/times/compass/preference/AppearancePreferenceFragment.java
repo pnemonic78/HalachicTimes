@@ -20,6 +20,10 @@ import android.os.Bundle;
 import net.sf.preference.AbstractPreferenceFragment;
 import net.sf.times.compass.lib.R;
 
+import static net.sf.times.compass.preference.CompassPreferences.KEY_COORDS_FORMAT;
+import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME;
+import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
+
 /**
  * This fragment shows the preferences for the Appearance header.
  */
@@ -34,8 +38,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(CompassPreferences.KEY_COORDS_FORMAT);
-        initList(CompassPreferences.KEY_THEME);
-        initList(CompassPreferences.KEY_THEME_COMPASS);
+        initList(KEY_COORDS_FORMAT);
+        initList(KEY_THEME);
+        initList(KEY_THEME_COMPASS);
     }
 }

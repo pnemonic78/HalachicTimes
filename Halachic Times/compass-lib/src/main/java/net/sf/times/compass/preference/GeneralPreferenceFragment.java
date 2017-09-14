@@ -20,6 +20,8 @@ import android.os.Bundle;
 import net.sf.preference.AbstractPreferenceFragment;
 import net.sf.times.compass.lib.R;
 
+import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
+
 /**
  * This fragment shows the preferences for the General header.
  */
@@ -34,6 +36,6 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(CompassPreferences.KEY_COMPASS_BEARING);
+        initList(KEY_COMPASS_BEARING);
     }
 }

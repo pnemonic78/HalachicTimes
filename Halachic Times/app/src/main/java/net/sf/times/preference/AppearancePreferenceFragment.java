@@ -19,6 +19,11 @@ import android.os.Bundle;
 
 import net.sf.times.R;
 
+import static net.sf.times.preference.ZmanimPreferences.KEY_COORDS_FORMAT;
+import static net.sf.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
+import static net.sf.times.preference.ZmanimPreferences.KEY_THEME;
+import static net.sf.times.preference.ZmanimPreferences.KEY_THEME_COMPASS;
+
 /**
  * This fragment shows the preferences for the Appearance header.
  */
@@ -33,9 +38,9 @@ public class AppearancePreferenceFragment extends net.sf.preference.AbstractPref
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(ZmanimPreferences.KEY_COORDS_FORMAT);
-        initList(ZmanimPreferences.KEY_THEME);
-        initList(ZmanimPreferences.KEY_THEME_COMPASS);
-        initList(ZmanimPreferences.KEY_EMPHASIS_SCALE);
+        initList(KEY_COORDS_FORMAT);
+        initList(KEY_THEME);
+        initList(KEY_THEME_COMPASS);
+        initList(KEY_EMPHASIS_SCALE);
     }
 }
