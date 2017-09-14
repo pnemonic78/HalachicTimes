@@ -47,6 +47,7 @@ import java.util.Locale;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -150,7 +151,7 @@ public class ZmanimReminder {
             return;
 
         ZmanimPopulater<ZmanimAdapter> populater = new ZmanimPopulater<>(context, settings);
-        populater.setCalendar(System.currentTimeMillis());
+        populater.setCalendar(currentTimeMillis());
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
@@ -298,7 +299,7 @@ public class ZmanimReminder {
         Notification notification = createReminderNotification(context, settings, item, contentIntent);
         postReminderNotification(context, settings, notification);
 
-        silenceFuture(context, item, System.currentTimeMillis() + STOP_NOTIFICATION_AFTER);
+        silenceFuture(context, item, currentTimeMillis() + STOP_NOTIFICATION_AFTER);
     }
 
     /**
@@ -370,7 +371,7 @@ public class ZmanimReminder {
 
     public void process(@Nullable Intent intent) {
         Context context = getContext();
-        Log.i(TAG, "process " + intent + " [" + formatDateTime(System.currentTimeMillis()) + "]");
+        Log.i(TAG, "process " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
         if (intent == null) {
             return;
         }
@@ -511,7 +512,7 @@ public class ZmanimReminder {
         nm.notify(ID_NOTIFY, notification);
 
         // This was the last notification.
-        final long now = System.currentTimeMillis();
+        final long now = currentTimeMillis();
         settings.setLatestReminder(now);
     }
 

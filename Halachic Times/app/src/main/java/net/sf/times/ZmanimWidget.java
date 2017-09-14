@@ -45,6 +45,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
@@ -151,7 +152,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         String packageName = context.getPackageName();
         RemoteViews views;
         int layoutId = getLayoutId();
-        long now = System.currentTimeMillis();
+        long now = currentTimeMillis();
         ZmanimAdapter adapter = null;
 
         for (int appWidgetId : appWidgetIds) {
@@ -250,7 +251,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             return;
         }
 
-        long now = System.currentTimeMillis();
+        long now = currentTimeMillis();
         long when = Long.MAX_VALUE;
         ZmanimItem item;
         long time;

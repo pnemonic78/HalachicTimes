@@ -33,6 +33,7 @@ import static android.content.Context.JOB_SCHEDULER_SERVICE;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static java.lang.System.currentTimeMillis;
 import static net.sf.times.ZmanimReminderJobService.EXTRA_ACTION;
 
 /**
@@ -55,7 +56,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(System.currentTimeMillis()) + "]");
+        Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
 
         // Delegate actions to the service.
         if (SDK_INT >= O) {

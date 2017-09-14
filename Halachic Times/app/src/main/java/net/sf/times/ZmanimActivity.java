@@ -64,6 +64,7 @@ import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static android.text.format.DateUtils.formatDateTime;
+import static java.lang.System.currentTimeMillis;
 import static net.sf.times.ZmanimAdapter.NEVER;
 
 /**
@@ -155,7 +156,7 @@ public class ZmanimActivity extends LocatedActivity implements
 
         @Override
         public void handleMessage(Message msg) {
-            ZmanimActivity activity = activityWeakReference.get();
+            final ZmanimActivity activity = activityWeakReference.get();
             if (activity == null) {
                 return;
             }
@@ -169,7 +170,7 @@ public class ZmanimActivity extends LocatedActivity implements
                     activity.startActivity(new Intent(context, CompassActivity.class));
                     break;
                 case WHAT_DATE:
-                    Calendar calendar = activity.calendar;
+                    final Calendar calendar = activity.calendar;
                     final int year = calendar.get(Calendar.YEAR);
                     final int month = calendar.get(Calendar.MONTH);
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -192,7 +193,7 @@ public class ZmanimActivity extends LocatedActivity implements
                     activity.startActivity(new Intent(context, ZmanimPreferenceActivity.class));
                     break;
                 case WHAT_TODAY:
-                    activity.setDate(System.currentTimeMillis());
+                    activity.setDate(currentTimeMillis());
                     activity.populateFragments(activity.calendar);
                     break;
             }
@@ -225,7 +226,7 @@ public class ZmanimActivity extends LocatedActivity implements
         if (date == NEVER) {
             date = intent.getLongExtra(EXTRA_TIME, NEVER);
             if (date == NEVER) {
-                date = System.currentTimeMillis();
+                date = currentTimeMillis();
             }
         }
         setDate(date);
@@ -361,7 +362,7 @@ public class ZmanimActivity extends LocatedActivity implements
             return;
         }
         calendar.setTimeZone(getTimeZone());
-        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.setTimeInMillis(currentTimeMillis());
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);

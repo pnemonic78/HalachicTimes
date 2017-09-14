@@ -33,6 +33,8 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Factory to create views for list widget.
  *
@@ -203,7 +205,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             return;
 
         ZmanimPopulater populater = new ZmanimPopulater(context, settings);
-        populater.setCalendar(System.currentTimeMillis());
+        populater.setCalendar(currentTimeMillis());
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 

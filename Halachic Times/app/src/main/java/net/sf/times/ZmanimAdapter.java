@@ -44,6 +44,7 @@ import java.util.Locale;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static java.lang.System.currentTimeMillis;
 import static net.sf.util.TimeUtils.roundUp;
 
 /**
@@ -86,7 +87,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected final ZmanimPreferences settings;
     protected ComplexZmanimCalendar calendar;
     protected boolean inIsrael;
-    protected long now = System.currentTimeMillis();
+    protected long now = currentTimeMillis();
     protected boolean summaries;
     protected boolean showElapsed;
     private Format timeFormat;
