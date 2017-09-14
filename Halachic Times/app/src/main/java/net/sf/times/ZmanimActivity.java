@@ -234,16 +234,16 @@ public class ZmanimActivity extends LocatedActivity implements
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putLong(EXTRA_DATE, calendar.getTimeInMillis());
         outState.putInt(PARAMETER_DETAILS, selectedId);
-        super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
         setDate(savedInstanceState.getLong(EXTRA_DATE));
         selectedId = savedInstanceState.getInt(PARAMETER_DETAILS, selectedId);
-        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
