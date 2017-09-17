@@ -34,12 +34,12 @@ import net.sf.times.location.LocationsProvider;
  *
  * @author Moshe Waisberg
  */
-public abstract class BaseCompassActivity extends LocatedActivity {
+public abstract class BaseCompassActivity extends LocatedActivity<CompassPreferences> {
 
     /** The main fragment. */
     private CompassFragment fragment;
     /** The settings and preferences. */
-    private CompassPreferences settings;
+    private CompassPreferences preferences;
     /** The location header location. */
     private TextView headerLocation;
     /** The location header for formatted address. */
@@ -49,23 +49,35 @@ public abstract class BaseCompassActivity extends LocatedActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context context = this;
-        settings = new CompassPreferences(context);
-
         setContentView(R.layout.compass);
         headerLocation = (TextView) findViewById(R.id.coordinates);
         headerAddress = (TextView) findViewById(R.id.address);
         fragment = (CompassFragment) getFragmentManager().findFragmentById(R.id.compass);
 
         TextView summary = (TextView) findViewById(android.R.id.summary);
-        if (settings.isSummaries()) {
-            CompassPreferences prefs = settings;
-            TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
+        if (preferences.isSummaries()) {
+            Context context = this;
+            TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassTheme);
             summary.setTextColor(a.getColor(R.styleable.CompassTheme_compassColorTarget, summary.getSolidColor()));
             a.recycle();
         } else {
             summary.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onCreate() {
+        preferences = new CompassPreferences(this);
+        super.onCreate();
+    }
+
+    public CompassPreferences getCompassPreferences() {
+        return preferences;
+    }
+
+    @Override
+    public CompassPreferences getThemedPreferences() {
+        return getCompassPreferences();
     }
 
     @Override
@@ -107,7 +119,7 @@ public abstract class BaseCompassActivity extends LocatedActivity {
 
         // Update the location.
         locationLabel.setText(locationText);
-        locationLabel.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
+        locationLabel.setVisibility(preferences.isCoordinates() ? View.VISIBLE : View.GONE);
         addressLabel.setText(locationName);
     }
 
