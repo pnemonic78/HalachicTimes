@@ -32,10 +32,10 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import net.sf.app.ThemedApplication;
 import net.sf.times.compass.lib.BuildConfig;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
+import net.sf.times.location.LocationApplication;
 
 import java.util.Random;
 
@@ -149,8 +149,8 @@ public class CompassView extends View {
     /** Initialise. */
     private void init(Context context) {
         Resources res = context.getResources();
-        ThemedApplication app = (ThemedApplication) context.getApplicationContext();
-        CompassPreferences prefs = (CompassPreferences) app.getPreferences();
+        LocationApplication app = (LocationApplication) context.getApplicationContext();
+        CompassPreferences prefs = (CompassPreferences) app.getThemedPreferences();
         TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
 
         compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);

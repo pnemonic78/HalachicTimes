@@ -25,15 +25,23 @@ import net.sf.preference.ThemedPreferences;
  *
  * @author Moshe Waisberg
  */
-public abstract class ThemedActivity extends Activity {
+public abstract class ThemedActivity<P extends ThemedPreferences> extends Activity implements ThemedCallbacks<P> {
+
+    protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(getPreferences().getTheme());
+        onCreate();
     }
 
-    public ThemedPreferences getPreferences() {
-        return ((ThemedApplication) getApplication()).getPreferences();
+    @Override
+    public void onCreate() {
+        themedCallbacks.onCreate();
+    }
+
+    @Override
+    public P getThemedPreferences() {
+        return themedCallbacks.getThemedPreferences();
     }
 }

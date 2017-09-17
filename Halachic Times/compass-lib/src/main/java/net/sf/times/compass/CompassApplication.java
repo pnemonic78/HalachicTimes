@@ -40,6 +40,10 @@ public class CompassApplication extends LocationApplication<CompassPreferences, 
         return new CompassPreferences(context);
     }
 
+    public CompassPreferences getCompassPreferences() {
+        return (CompassPreferences) getThemedPreferences();
+    }
+
     @Override
     protected CompassLocations createLocationsProvider(Context context) {
         return new CompassLocations(context);
