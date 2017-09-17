@@ -15,12 +15,8 @@
  */
 package net.sf.graphics;
 
-import android.app.WallpaperManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 
 /**
  * Bitmap utilities.
@@ -33,30 +29,20 @@ public class BitmapUtils {
     }
 
     /**
-     * Get the dominant color of the wallpaper image.
+     * Get the dominant color of the image.
      *
-     * @param context
-     *         the context.
+     * @param bm
+     *         the bitmap.
      * @return the color - {@code {@link android.graphics.Color#TRANSPARENT}} otherwise.
      */
-    public static int getWallpaperColor(Context context) {
-        WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
-        try {
-            Drawable wallpaper = wallpaperManager.getDrawable();
-            if ((wallpaper != null) && (wallpaper instanceof BitmapDrawable)) {
-                Bitmap bm = ((BitmapDrawable) wallpaper).getBitmap();
-                Bitmap pixel = Bitmap.createScaledBitmap(bm, 1, 1, true);
-                if (!pixel.isRecycled()) {
-                    int bg = pixel.getPixel(0, 0);
-                    if (bm != pixel) {
-                        pixel.recycle();
-                    }
-                    return bg;
-                }
+    public static int getPixel(Bitmap bm) {
+        Bitmap pixel = (bm.getWidth() < 8) && (bm.getHeight() < 8) ? bm : Bitmap.createScaledBitmap(bm, 1, 1, true);
+        if (!pixel.isRecycled()) {
+            int bg = pixel.getPixel(0, 0);
+            if (bm != pixel) {
+                pixel.recycle();
             }
-        } catch (RuntimeException e) {
-            // In case of bad WallpaperService.
-            e.printStackTrace();
+            return bg;
         }
 
         return Color.TRANSPARENT;

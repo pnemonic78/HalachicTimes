@@ -112,7 +112,7 @@ public class ZmanimActivity extends LocatedActivity implements
     /** The navigation bar. */
     private View navigationBar;
     /** The settings and preferences. */
-    protected ZmanimPreferences settings;
+    private ZmanimPreferences settings;
     /** The date picker. */
     private DatePickerDialog datePicker;
     /** The master fragment. */

@@ -25,7 +25,6 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.widget.RemoteViews;
 
-import net.sf.graphics.BitmapUtils;
 import net.sf.text.style.TypefaceSpan;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.util.LocaleUtils;
@@ -34,6 +33,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static net.sf.graphics.BitmapUtils.isBright;
+import static net.sf.graphics.DrawableUtils.getWallpaperColor;
 import static net.sf.times.ZmanimAdapter.NEVER;
 import static net.sf.util.TimeUtils.roundUp;
 
@@ -63,8 +64,8 @@ public class ClockWidget extends ZmanimWidget {
 
     @Override
     protected int getLayoutId() {
-        int bg = BitmapUtils.getWallpaperColor(getContext());
-        if ((bg != Color.TRANSPARENT) && BitmapUtils.isBright(bg)) {
+        int bg = getWallpaperColor(getContext());
+        if ((bg != Color.TRANSPARENT) && isBright(bg)) {
             return R.layout.clock_widget_light;
         }
 
