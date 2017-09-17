@@ -25,7 +25,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import net.sf.app.ThemedActivity;
+import net.sf.app.ThemedCallbacks;
+import net.sf.app.ThemedWrapper;
+import net.sf.preference.ThemedPreferences;
 
 import java.util.TimeZone;
 
@@ -34,7 +36,9 @@ import java.util.TimeZone;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocatedActivity extends ThemedActivity implements ZmanimLocationListener {
+public abstract class LocatedActivity<P extends ThemedPreferences> extends Activity implements
+        ThemedCallbacks<P>,
+        ZmanimLocationListener {
 
     /** The location parameter. */
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
@@ -46,6 +50,7 @@ public abstract class LocatedActivity extends ThemedActivity implements ZmanimLo
 
     protected static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
+    protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
     /** Provider for locations. */
     private LocationsProvider locations;
     /** The address location. */
@@ -95,6 +100,7 @@ public abstract class LocatedActivity extends ThemedActivity implements ZmanimLo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onCreate();
 
         LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
@@ -106,6 +112,16 @@ public abstract class LocatedActivity extends ThemedActivity implements ZmanimLo
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initLocationPermissions();
         }
+    }
+
+    @Override
+    public void onCreate() {
+        themedCallbacks.onCreate();
+    }
+
+    @Override
+    public P getThemedPreferences() {
+        return themedCallbacks.getThemedPreferences();
     }
 
     @Override

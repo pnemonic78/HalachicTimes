@@ -38,7 +38,9 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import net.sf.app.ThemedActivity;
+import net.sf.app.ThemedCallbacks;
+import net.sf.app.ThemedWrapper;
+import net.sf.preference.ThemedPreferences;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 
@@ -52,7 +54,8 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocationTabActivity extends ThemedActivity implements
+public abstract class LocationTabActivity<P extends ThemedPreferences> extends Activity implements
+        ThemedCallbacks<P>,
         OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,
@@ -85,6 +88,7 @@ public abstract class LocationTabActivity extends ThemedActivity implements
     private static final int WHAT_FAVORITE = 1;
     private static final int WHAT_ADDED = 2;
 
+    protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
     private SearchView searchText;
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
@@ -104,6 +108,7 @@ public abstract class LocationTabActivity extends ThemedActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onCreate();
         Resources res = getResources();
 
         LocationApplication app = (LocationApplication) getApplication();
@@ -152,6 +157,16 @@ public abstract class LocationTabActivity extends ThemedActivity implements
         if (adapterFavorites.getCount() == 0) {
             tabs.setCurrentTab(1);
         }
+    }
+
+    @Override
+    public void onCreate() {
+        themedCallbacks.onCreate();
+    }
+
+    @Override
+    public P getThemedPreferences() {
+        return themedCallbacks.getThemedPreferences();
     }
 
     @Override
