@@ -112,7 +112,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.scrollView = (ScrollView) view;
-        this.list = (ViewGroup) view.findViewById(android.R.id.list);
+        this.list = view.findViewById(android.R.id.list);
     }
 
     /**
@@ -341,7 +341,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (position > 0)
             inflater.inflate(R.layout.divider, list);
         View row = inflater.inflate(R.layout.date_group, list, false);
-        TextView text = (TextView) row.findViewById(android.R.id.title);
+        TextView text = row.findViewById(android.R.id.title);
         text.setText(label);
         list.addView(row);
     }

@@ -130,8 +130,8 @@ public class SeekBarDialogPreference extends DialogPreference implements OnSeekB
     protected void onBindDialogView(View view) {
         super.onBindDialogView(view);
 
-        SeekBar seekBar = (SeekBar) view.findViewById(android.R.id.edit);
-        this.summaryView = (TextView) view.findViewById(android.R.id.summary);
+        SeekBar seekBar = view.findViewById(android.R.id.edit);
+        this.summaryView = view.findViewById(android.R.id.summary);
         this.seekBar = seekBar;
 
         int progress = getProgress();

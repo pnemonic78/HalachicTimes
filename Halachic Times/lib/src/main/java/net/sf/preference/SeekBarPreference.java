@@ -87,7 +87,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     protected View onCreateView(ViewGroup parent) {
         View view = super.onCreateView(parent);
 
-        TextView title = (TextView) view.findViewById(android.R.id.title);
+        TextView title = view.findViewById(android.R.id.title);
         RelativeLayout host = (RelativeLayout) title.getParent();
 
         seekBar = new SeekBar(getContext());

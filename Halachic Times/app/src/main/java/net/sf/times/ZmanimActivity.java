@@ -285,11 +285,11 @@ public class ZmanimActivity extends LocatedActivity implements
         FragmentManager fragmentManager = getFragmentManager();
         masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) fragmentManager.findFragmentById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
-        detailsFragmentSwitcher = (ViewSwitcher) view.findViewById(R.id.details_fragment);
+        detailsFragmentSwitcher = view.findViewById(R.id.details_fragment);
         detailsListFragment = (ZmanimDetailsFragment) fragmentManager.findFragmentById(R.id.details_list_fragment);
         candlesFragment = (CandlesFragment) fragmentManager.findFragmentById(R.id.candles_fragment);
 
-        viewSwitcher = (ViewSwitcher) view.findViewById(R.id.frame_fragments);
+        viewSwitcher = view.findViewById(R.id.frame_fragments);
         if (viewSwitcher != null) {
             Animation inAnim = AnimationUtils.makeInAnimation(context, false);
             inAnim.setDuration(400L);
@@ -301,9 +301,9 @@ public class ZmanimActivity extends LocatedActivity implements
 
         View header = view.findViewById(R.id.header);
         header.setOnClickListener(this);
-        headerGregorianDate = (TextView) header.findViewById(R.id.date_gregorian);
-        headerLocation = (TextView) header.findViewById(R.id.coordinates);
-        headerAddress = (TextView) header.findViewById(R.id.address);
+        headerGregorianDate = header.findViewById(R.id.date_gregorian);
+        headerLocation = header.findViewById(R.id.coordinates);
+        headerAddress = header.findViewById(R.id.address);
         navigationBar = header.findViewById(R.id.navigation_bar);
 
         View iconBack = navigationBar.findViewById(R.id.nav_yesterday);

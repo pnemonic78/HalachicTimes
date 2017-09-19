@@ -119,11 +119,11 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         }
         setContentView(R.layout.locations);
 
-        SearchView searchText = (SearchView) findViewById(R.id.search_location);
+        SearchView searchText = findViewById(R.id.search_location);
         searchText.setOnQueryTextListener(this);
         this.searchText = searchText;
 
-        TabHost tabs = (TabHost) findViewById(android.R.id.tabhost);
+        TabHost tabs = findViewById(android.R.id.tabhost);
         tabs.setup();
 
         TabSpec tabFavorites = tabs.newTabSpec(TAG_FAVORITES);
@@ -253,21 +253,21 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         LocationAdapter adapter = new LocationAdapter(this, items);
         adapter.setOnFavoriteClickListener(this);
         adapterAll = adapter;
-        ListView list = (ListView) findViewById(android.R.id.list);
+        ListView list = findViewById(android.R.id.list);
         list.setOnItemClickListener(this);
         list.setAdapter(adapter);
 
         adapter = new HistoryLocationAdapter(this, items);
         adapter.setOnFavoriteClickListener(this);
         adapterHistory = adapter;
-        list = (ListView) findViewById(R.id.list_history);
+        list = findViewById(R.id.list_history);
         list.setOnItemClickListener(this);
         list.setAdapter(adapter);
 
         adapter = new FavoritesLocationAdapter(this, items);
         adapter.setOnFavoriteClickListener(this);
         adapterFavorites = adapter;
-        list = (ListView) findViewById(R.id.list_favorites);
+        list = findViewById(R.id.list_favorites);
         list.setOnItemClickListener(this);
         list.setAdapter(adapter);
     }

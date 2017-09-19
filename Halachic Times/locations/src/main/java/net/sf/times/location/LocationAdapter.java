@@ -118,9 +118,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
 
         ViewHolder holder = (ViewHolder) view.getTag();
         if (holder == null) {
-            cityName = (TextView) view.findViewById(android.R.id.title);
-            coordinates = (TextView) view.findViewById(R.id.coordinates);
-            checkbox = (CheckBox) view.findViewById(android.R.id.checkbox);
+            cityName = view.findViewById(android.R.id.title);
+            coordinates = view.findViewById(R.id.coordinates);
+            checkbox = view.findViewById(android.R.id.checkbox);
             checkbox.setOnClickListener(this);
 
             holder = new ViewHolder(cityName, coordinates, checkbox);

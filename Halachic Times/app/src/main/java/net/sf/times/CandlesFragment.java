@@ -124,7 +124,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     // assert candlesCount == YOM_KIPPURIM_CANDLES.length;
                     animationsKippurim = new CandleAnimation[candlesCount];
                     for (int i = 0; i < candlesCount; i++) {
-                        view = (ImageView) group.findViewById(YOM_KIPPURIM_CANDLES[i]);
+                        view = group.findViewById(YOM_KIPPURIM_CANDLES[i]);
                         animationsKippurim[i] = new CandleAnimation(handler, view, random);
                     }
                 }
@@ -141,10 +141,10 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     // assert candlesCount <= allCandlesCount;
                     animationsChannuka = new CandleAnimation[allCandlesCount + 1];
                     for (int i = 0; i < allCandlesCount; i++) {
-                        view = (ImageView) group.findViewById(CHANNUKA_CANDLES[i]);
+                        view = group.findViewById(CHANNUKA_CANDLES[i]);
                         animationsChannuka[i] = new CandleAnimation(handler, view, random);
                     }
-                    view = (ImageView) group.findViewById(R.id.candle_shamash);
+                    view = group.findViewById(R.id.candle_shamash);
                     animationsChannuka[allCandlesCount] = new CandleAnimation(handler, view, random);
                 }
                 list.addView(group);
@@ -166,7 +166,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                         // assert candlesCount == SHABBAT_CANDLES.length;
                         animationsShabbat = new CandleAnimation[candlesCount];
                         for (int i = 0; i < candlesCount; i++) {
-                            view = (ImageView) group.findViewById(SHABBAT_CANDLES[i]);
+                            view = group.findViewById(SHABBAT_CANDLES[i]);
                             animationsShabbat[i] = new CandleAnimation(handler, view, random);
                         }
                     }

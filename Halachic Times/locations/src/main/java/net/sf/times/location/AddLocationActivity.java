@@ -176,43 +176,43 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     }
 
     private void initView() {
-        coordsFormatSpinner = (Spinner) findViewById(R.id.coords_format);
+        coordsFormatSpinner = findViewById(R.id.coords_format);
         coordsFormatSpinner.setOnItemSelectedListener(this);
         coordsFormatSpinnerSelectedFirst = true;
 
-        latitudeSwitcher = (ViewSwitcher) findViewById(R.id.latitude_switch);
-        latitudeDegreesEdit = (NumberPicker) findViewById(R.id.latitude_degrees_edit);
+        latitudeSwitcher = findViewById(R.id.latitude_switch);
+        latitudeDegreesEdit = findViewById(R.id.latitude_degrees_edit);
         latitudeDegreesEdit.setMinValue(DEGREES_MIN);
         latitudeDegreesEdit.setMaxValue((int) LatitudeInputFilter.LATITUDE_MAX);
-        latitudeDecimalEdit = (EditText) findViewById(R.id.latitude_decimal_edit);
+        latitudeDecimalEdit = findViewById(R.id.latitude_decimal_edit);
         latitudeDecimalEdit.setFilters(new InputFilter[]{new RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)});
-        latitudeMinutesEdit = (NumberPicker) findViewById(R.id.latitude_minutes_edit);
+        latitudeMinutesEdit = findViewById(R.id.latitude_minutes_edit);
         latitudeMinutesEdit.setMinValue(MINUTES_MIN);
         latitudeMinutesEdit.setMaxValue(MINUTES_MAX);
-        latitudeSecondsEdit = (NumberPicker) findViewById(R.id.latitude_seconds_edit);
+        latitudeSecondsEdit = findViewById(R.id.latitude_seconds_edit);
         latitudeSecondsEdit.setMinValue(SECONDS_MIN);
         latitudeSecondsEdit.setMaxValue(SECONDS_MAX);
-        latitudeMillisecondsEdit = (EditText) findViewById(R.id.latitude_milliseconds_edit);
+        latitudeMillisecondsEdit = findViewById(R.id.latitude_milliseconds_edit);
         latitudeMillisecondsEdit.setFilters(new InputFilter[]{new RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)});
-        latitudeDirection = (Spinner) findViewById(R.id.latitude_direction);
+        latitudeDirection = findViewById(R.id.latitude_direction);
 
-        longitudeSwitcher = (ViewSwitcher) findViewById(R.id.longitude_switch);
-        longitudeDegreesEdit = (NumberPicker) findViewById(R.id.longitude_degrees_edit);
+        longitudeSwitcher = findViewById(R.id.longitude_switch);
+        longitudeDegreesEdit = findViewById(R.id.longitude_degrees_edit);
         longitudeDegreesEdit.setMinValue(DEGREES_MIN);
         longitudeDegreesEdit.setMaxValue((int) LongitudeInputFilter.LONGITUDE_MAX);
-        longitudeDecimalEdit = (EditText) findViewById(R.id.longitude_decimal_edit);
+        longitudeDecimalEdit = findViewById(R.id.longitude_decimal_edit);
         longitudeDecimalEdit.setFilters(new InputFilter[]{new RangeInputFilter(DECIMAL_MIN, DECIMAL_MAX)});
-        longitudeMinutesEdit = (NumberPicker) findViewById(R.id.longitude_minutes_edit);
+        longitudeMinutesEdit = findViewById(R.id.longitude_minutes_edit);
         longitudeMinutesEdit.setMinValue(MINUTES_MIN);
         longitudeMinutesEdit.setMaxValue(MINUTES_MAX);
-        longitudeSecondsEdit = (NumberPicker) findViewById(R.id.longitude_seconds_edit);
+        longitudeSecondsEdit = findViewById(R.id.longitude_seconds_edit);
         longitudeSecondsEdit.setMinValue(SECONDS_MIN);
         longitudeSecondsEdit.setMaxValue(SECONDS_MAX);
-        longitudeMillisecondsEdit = (EditText) findViewById(R.id.longitude_milliseconds_edit);
+        longitudeMillisecondsEdit = findViewById(R.id.longitude_milliseconds_edit);
         longitudeMillisecondsEdit.setFilters(new InputFilter[]{new RangeInputFilter(MILLISECONDS_MIN, MILLISECONDS_MAX)});
-        longitudeDirection = (Spinner) findViewById(R.id.longitude_direction);
+        longitudeDirection = findViewById(R.id.longitude_direction);
 
-        addressView = (TextView) findViewById(R.id.address);
+        addressView = findViewById(R.id.address);
 
         updateNumberPickers();
     }
