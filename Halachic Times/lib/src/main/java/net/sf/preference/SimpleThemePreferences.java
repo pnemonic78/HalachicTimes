@@ -19,19 +19,16 @@ import android.content.Context;
 
 import net.sf.lib.R;
 
+import static net.sf.preference.ThemePreferences.Themes.THEME_DARK;
+import static net.sf.preference.ThemePreferences.Themes.THEME_DEFAULT;
+import static net.sf.preference.ThemePreferences.Themes.THEME_LIGHT;
+
 /**
  * Theme preferences implementation.
  *
  * @author Moshe Waisberg
  */
 public class SimpleThemePreferences extends SimplePreferences implements ThemePreferences {
-
-    /** Dark theme. */
-    public static String LIST_THEME_DARK;
-    /** Light theme. */
-    public static String LIST_THEME_LIGHT;
-
-    private static String THEME_DEFAULT;
 
     /**
      * Constructs a new settings.
@@ -52,8 +49,8 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
      */
     public static void init(Context context) {
         THEME_DEFAULT = context.getString(R.string.theme_defaultValue);
-        LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
-        LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
+        THEME_DARK = context.getString(R.string.theme_value_dark);
+        THEME_LIGHT = context.getString(R.string.theme_value_light);
     }
 
     @Override
@@ -63,7 +60,7 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
 
     @Override
     public int getTheme(String value) {
-        if (LIST_THEME_LIGHT.equals(value)) {
+        if (THEME_LIGHT.equals(value)) {
             return R.style.Theme_Base_Light;
         }
         return R.style.Theme_Base;

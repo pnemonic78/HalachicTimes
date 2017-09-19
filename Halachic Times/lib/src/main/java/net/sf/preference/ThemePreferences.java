@@ -24,6 +24,15 @@ import android.support.annotation.StyleRes;
  */
 public interface ThemePreferences {
 
+    class Themes {
+        /** Default theme. */
+        public static String THEME_DEFAULT;
+        /** Dark theme. */
+        public static String THEME_DARK;
+        /** Light theme. */
+        public static String THEME_LIGHT;
+    }
+
     /** Preference name for the theme. */
     String KEY_THEME = "theme";
 
