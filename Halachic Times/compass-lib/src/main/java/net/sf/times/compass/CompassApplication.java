@@ -30,18 +30,12 @@ import net.sf.times.location.LocationApplication;
 public class CompassApplication extends LocationApplication<CompassPreferences, AddressProvider, CompassLocations> {
 
     @Override
-    protected void initPreferences() {
-        super.initPreferences();
-        CompassPreferences.init(this);
-    }
-
-    @Override
     protected CompassPreferences createPreferences(Context context) {
         return new CompassPreferences(context);
     }
 
     public CompassPreferences getCompassPreferences() {
-        return (CompassPreferences) getThemedPreferences();
+        return (CompassPreferences) getThemePreferences();
     }
 
     @Override

@@ -20,19 +20,18 @@ import android.content.Context;
 import net.sf.lib.R;
 
 /**
- * Application settings.
+ * Theme preferences implementation.
  *
  * @author Moshe Waisberg
  */
-public class ThemedPreferences extends SimplePreferences {
-
-    /** Preference name for the theme. */
-    public static final String KEY_THEME = "theme";
+public class SimpleThemePreferences extends SimplePreferences implements ThemePreferences {
 
     /** Dark theme. */
     public static String LIST_THEME_DARK;
     /** Light theme. */
     public static String LIST_THEME_LIGHT;
+
+    private static String THEME_DEFAULT;
 
     /**
      * Constructs a new settings.
@@ -40,8 +39,9 @@ public class ThemedPreferences extends SimplePreferences {
      * @param context
      *         the context.
      */
-    public ThemedPreferences(Context context) {
+    public SimpleThemePreferences(Context context) {
         super(context);
+        init(context);
     }
 
     /**
@@ -51,23 +51,31 @@ public class ThemedPreferences extends SimplePreferences {
      *         the context.
      */
     public static void init(Context context) {
+        THEME_DEFAULT = context.getString(R.string.theme_defaultValue);
         LIST_THEME_DARK = context.getString(R.string.theme_value_dark);
         LIST_THEME_LIGHT = context.getString(R.string.theme_value_light);
     }
 
-    /**
-     * Get the application theme.
-     *
-     * @return the theme resource id.
-     */
-    public int getTheme() {
-        return getTheme(preferences.getString(KEY_THEME, context.getString(R.string.theme_defaultValue)));
+    @Override
+    public String getThemeValue() {
+        return preferences.getString(KEY_THEME, THEME_DEFAULT);
     }
 
-    protected int getTheme(String value) {
+    @Override
+    public int getTheme(String value) {
         if (LIST_THEME_LIGHT.equals(value)) {
             return R.style.Theme_Base_Light;
         }
         return R.style.Theme_Base;
+    }
+
+    @Override
+    public int getTheme() {
+        return getTheme(getThemeValue());
+    }
+
+    @Override
+    public void setTheme(String value) {
+        preferences.edit().putString(KEY_THEME, value).apply();
     }
 }

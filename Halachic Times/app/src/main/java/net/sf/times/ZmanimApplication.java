@@ -30,12 +30,6 @@ import net.sf.times.preference.ZmanimPreferences;
 public class ZmanimApplication extends LocationApplication<ZmanimPreferences, AddressProvider, ZmanimLocations> {
 
     @Override
-    protected void initPreferences() {
-        super.initPreferences();
-        ZmanimPreferences.init(this);
-    }
-
-    @Override
     protected ZmanimPreferences createPreferences(Context context) {
         return new ZmanimPreferences(context);
     }

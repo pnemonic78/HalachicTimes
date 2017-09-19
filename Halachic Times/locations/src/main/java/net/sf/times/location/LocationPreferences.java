@@ -19,14 +19,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.SimpleThemePreferences;
 
 /**
  * Location settings.
  *
  * @author Moshe Waisberg
  */
-public class LocationPreferences extends ThemedPreferences {
+public class LocationPreferences extends SimpleThemePreferences {
 
     /** Preference name for the latitude. */
     private static final String KEY_LATITUDE = "latitude";
@@ -61,6 +61,7 @@ public class LocationPreferences extends ThemedPreferences {
     public LocationPreferences(Context context) {
         super(context);
         migrate(context, preferences);
+        init(context);
     }
 
     /**
@@ -85,8 +86,6 @@ public class LocationPreferences extends ThemedPreferences {
      *         the context.
      */
     public static void init(Context context) {
-        ThemedPreferences.init(context);
-
         FORMAT_NONE = context.getString(R.string.coords_format_value_none);
         FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
         FORMAT_SEXAGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);

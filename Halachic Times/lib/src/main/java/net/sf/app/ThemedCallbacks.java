@@ -15,22 +15,22 @@
  */
 package net.sf.app;
 
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.ThemePreferences;
 
 /**
  * Contexts that takes its theme from the application.
  *
  * @author Moshe Waisberg
  */
-public interface ThemedCallbacks<P extends ThemedPreferences> {
+public interface ThemedCallbacks<P extends ThemePreferences> {
 
     /** Apply the theme here. */
     void onCreate();
 
     /**
-     * Get the themed preferences.
+     * Get the theme preferences.
      *
      * @return the preferences.
      */
-    P getThemedPreferences();
+    P getThemePreferences();
 }

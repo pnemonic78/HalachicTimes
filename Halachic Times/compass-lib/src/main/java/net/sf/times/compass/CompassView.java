@@ -150,7 +150,7 @@ public class CompassView extends View {
     private void init(Context context) {
         Resources res = context.getResources();
         LocationApplication app = (LocationApplication) context.getApplicationContext();
-        CompassPreferences prefs = (CompassPreferences) app.getThemedPreferences();
+        CompassPreferences prefs = (CompassPreferences) app.getThemePreferences();
         TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
 
         compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);

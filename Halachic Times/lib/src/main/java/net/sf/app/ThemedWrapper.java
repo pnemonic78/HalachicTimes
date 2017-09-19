@@ -15,18 +15,21 @@
  */
 package net.sf.app;
 
+import android.content.Context;
 import android.content.ContextWrapper;
 
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.SimpleThemePreferences;
+import net.sf.preference.ThemePreferences;
 
 /**
- * Activity that wraps an activity delegate.
+ * Wraps a callback delegate.
  *
  * @author Moshe Waisberg
  */
-public class ThemedWrapper<P extends ThemedPreferences> implements ThemedCallbacks<P> {
+public class ThemedWrapper<P extends ThemePreferences> implements ThemedCallbacks<P> {
 
     private final ContextWrapper context;
+    private P preferences;
 
     public ThemedWrapper(ContextWrapper context) {
         this.context = context;
@@ -34,11 +37,18 @@ public class ThemedWrapper<P extends ThemedPreferences> implements ThemedCallbac
 
     @Override
     public void onCreate() {
-        context.setTheme(getThemedPreferences().getTheme());
+        context.setTheme(getThemePreferences().getTheme());
     }
 
     @Override
-    public P getThemedPreferences() {
-        return (P) ((ThemedApplication) context.getApplicationContext()).getThemedPreferences();
+    public P getThemePreferences() {
+        if (preferences == null) {
+            preferences = createPreferences(context);
+        }
+        return preferences;
+    }
+
+    protected P createPreferences(Context context) {
+        return (P) new SimpleThemePreferences(context);
     }
 }

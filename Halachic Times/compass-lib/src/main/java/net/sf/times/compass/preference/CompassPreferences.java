@@ -56,6 +56,7 @@ public class CompassPreferences extends LocationPreferences {
      */
     public CompassPreferences(Context context) {
         super(context);
+        init(context);
     }
 
     /**
@@ -77,7 +78,7 @@ public class CompassPreferences extends LocationPreferences {
     }
 
     @Override
-    protected int getTheme(String value) {
+    public int getTheme(String value) {
         if (LIST_THEME_LIGHT.equals(value)) {
             return R.style.Theme_Compass_Light;
         }

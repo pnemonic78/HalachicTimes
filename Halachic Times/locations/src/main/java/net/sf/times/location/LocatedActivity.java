@@ -27,7 +27,7 @@ import android.os.Bundle;
 
 import net.sf.app.ThemedCallbacks;
 import net.sf.app.ThemedWrapper;
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.ThemePreferences;
 
 import java.util.TimeZone;
 
@@ -36,7 +36,7 @@ import java.util.TimeZone;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocatedActivity<P extends ThemedPreferences> extends Activity implements
+public abstract class LocatedActivity<P extends ThemePreferences> extends Activity implements
         ThemedCallbacks<P>,
         ZmanimLocationListener {
 
@@ -120,8 +120,8 @@ public abstract class LocatedActivity<P extends ThemedPreferences> extends Activ
     }
 
     @Override
-    public P getThemedPreferences() {
-        return themedCallbacks.getThemedPreferences();
+    public P getThemePreferences() {
+        return themedCallbacks.getThemePreferences();
     }
 
     @Override

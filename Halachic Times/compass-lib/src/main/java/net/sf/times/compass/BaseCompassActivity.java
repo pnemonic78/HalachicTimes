@@ -76,7 +76,7 @@ public abstract class BaseCompassActivity extends LocatedActivity<CompassPrefere
     }
 
     @Override
-    public CompassPreferences getThemedPreferences() {
+    public CompassPreferences getThemePreferences() {
         return getCompassPreferences();
     }
 

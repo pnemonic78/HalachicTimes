@@ -22,7 +22,7 @@ import net.sf.times.R;
 
 import java.util.List;
 
-import static net.sf.preference.ThemedPreferences.KEY_THEME;
+import static net.sf.preference.ThemePreferences.KEY_THEME;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 
 /**

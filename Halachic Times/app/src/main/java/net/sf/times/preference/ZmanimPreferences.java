@@ -233,6 +233,7 @@ public class ZmanimPreferences extends CompassPreferences {
      */
     public ZmanimPreferences(Context context) {
         super(context);
+        init(context);
     }
 
     /**
@@ -272,7 +273,7 @@ public class ZmanimPreferences extends CompassPreferences {
     }
 
     @Override
-    protected int getTheme(String value) {
+    public int getTheme(String value) {
         if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
         }

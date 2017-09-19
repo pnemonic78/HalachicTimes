@@ -35,7 +35,7 @@ import android.widget.ViewSwitcher;
 
 import net.sf.app.ThemedCallbacks;
 import net.sf.app.ThemedWrapper;
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.ThemePreferences;
 import net.sf.text.method.RangeInputFilter;
 import net.sf.times.location.text.LatitudeInputFilter;
 import net.sf.times.location.text.LongitudeInputFilter;
@@ -48,7 +48,7 @@ import java.util.Locale;
  *
  * @author Moshe Waisberg
  */
-public class AddLocationActivity<P extends ThemedPreferences> extends Activity implements
+public class AddLocationActivity<P extends ThemePreferences> extends Activity implements
         ThemedCallbacks<P>,
         AdapterView.OnItemSelectedListener,
         ZmanimLocationListener {
@@ -171,8 +171,8 @@ public class AddLocationActivity<P extends ThemedPreferences> extends Activity i
     }
 
     @Override
-    public P getThemedPreferences() {
-        return themedCallbacks.getThemedPreferences();
+    public P getThemePreferences() {
+        return themedCallbacks.getThemePreferences();
     }
 
     private void initView() {

@@ -40,7 +40,7 @@ import android.widget.TabHost.TabSpec;
 
 import net.sf.app.ThemedCallbacks;
 import net.sf.app.ThemedWrapper;
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.ThemePreferences;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 
@@ -54,7 +54,7 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocationTabActivity<P extends ThemedPreferences> extends Activity implements
+public abstract class LocationTabActivity<P extends ThemePreferences> extends Activity implements
         ThemedCallbacks<P>,
         OnItemClickListener,
         OnFavoriteClickListener,
@@ -165,8 +165,8 @@ public abstract class LocationTabActivity<P extends ThemedPreferences> extends A
     }
 
     @Override
-    public P getThemedPreferences() {
-        return themedCallbacks.getThemedPreferences();
+    public P getThemePreferences() {
+        return themedCallbacks.getThemePreferences();
     }
 
     @Override

@@ -18,14 +18,15 @@ package net.sf.app;
 import android.app.Application;
 import android.content.Context;
 
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.ThemePreferences;
 
 /**
  * Application with a theme.
  *
  * @author Moshe Waisberg
  */
-public abstract class ThemedApplication<P extends ThemedPreferences> extends Application implements ThemedCallbacks<P> {
+@Deprecated
+public abstract class ThemedApplication<P extends ThemePreferences> extends Application implements ThemedCallbacks<P> {
 
     private P preferences;
     protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
@@ -37,19 +38,14 @@ public abstract class ThemedApplication<P extends ThemedPreferences> extends App
     }
 
     @Override
-    public P getThemedPreferences() {
+    public P getThemePreferences() {
         if (preferences == null) {
-            initPreferences();
             preferences = createPreferences(this);
         }
         return preferences;
     }
 
-    protected void initPreferences() {
-        P.init(this);
-    }
-
     protected P createPreferences(Context context) {
-        return (P) new ThemedPreferences(context);
+        return themedCallbacks.getThemePreferences();
     }
 }

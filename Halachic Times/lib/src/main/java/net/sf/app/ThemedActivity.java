@@ -18,14 +18,15 @@ package net.sf.app;
 import android.app.Activity;
 import android.os.Bundle;
 
-import net.sf.preference.ThemedPreferences;
+import net.sf.preference.ThemePreferences;
 
 /**
  * Activity that takes its theme from the application.
  *
  * @author Moshe Waisberg
  */
-public abstract class ThemedActivity<P extends ThemedPreferences> extends Activity implements ThemedCallbacks<P> {
+@Deprecated
+public abstract class ThemedActivity<P extends ThemePreferences> extends Activity implements ThemedCallbacks<P> {
 
     protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
 
@@ -41,7 +42,7 @@ public abstract class ThemedActivity<P extends ThemedPreferences> extends Activi
     }
 
     @Override
-    public P getThemedPreferences() {
-        return themedCallbacks.getThemedPreferences();
+    public P getThemePreferences() {
+        return themedCallbacks.getThemePreferences();
     }
 }

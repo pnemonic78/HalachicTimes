@@ -34,12 +34,6 @@ public abstract class LocationApplication<P extends LocationPreferences, AP exte
     private LP locations;
 
     @Override
-    protected void initPreferences() {
-        super.initPreferences();
-        P.init(this);
-    }
-
-    @Override
     protected P createPreferences(Context context) {
         return (P) new LocationPreferences(context);
     }
