@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.location.Address;
 import android.location.Location;
-import android.text.format.DateUtils;
 
 import net.sf.util.LocaleUtils;
 
@@ -30,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 
 /**
  * Maintains the lists of countries.
@@ -307,7 +308,7 @@ public class CountriesGeocoder extends GeocoderBase {
 
         String tzId = tz.getID();
         long offsetMillis = tz.getRawOffset();
-        double longitudeTZ = (TZ_HOUR * offsetMillis) / DateUtils.HOUR_IN_MILLIS;
+        double longitudeTZ = (TZ_HOUR * offsetMillis) / HOUR_IN_MILLIS;
         if (longitudeTZ > ZmanimLocation.LONGITUDE_MAX) {
             longitudeTZ -= LONGITUDE_GLOBE;
         } else if (longitudeTZ < ZmanimLocation.LONGITUDE_MIN) {
