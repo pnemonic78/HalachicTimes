@@ -62,9 +62,8 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
         return getLocationHolder().getAddresses();
     }
 
-    protected AP createAddressProvider(Context context) {
-        return null;
-    }
+    @NonNull
+    protected abstract AP createAddressProvider(Context context);
 
     /**
      * Get the locations provider instance.
@@ -75,9 +74,8 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
         return getLocationHolder().getLocations();
     }
 
-    protected LP createLocationsProvider(Context context) {
-        return null;
-    }
+    @NonNull
+    protected abstract LP createLocationsProvider(Context context);
 
     @Override
     public void onTerminate() {

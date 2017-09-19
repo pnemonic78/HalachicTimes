@@ -16,6 +16,7 @@
 package net.sf.times.compass;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
@@ -29,6 +30,13 @@ import net.sf.times.location.LocationApplication;
  */
 public class CompassApplication extends LocationApplication<ThemePreferences, AddressProvider, CompassLocations> {
 
+    @NonNull
+    @Override
+    protected AddressProvider createAddressProvider(Context context) {
+        return new AddressProvider(context);
+    }
+
+    @NonNull
     @Override
     protected CompassLocations createLocationsProvider(Context context) {
         return new CompassLocations(context);

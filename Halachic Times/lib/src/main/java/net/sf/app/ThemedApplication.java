@@ -17,6 +17,7 @@ package net.sf.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import net.sf.preference.ThemePreferences;
 
@@ -28,24 +29,26 @@ import net.sf.preference.ThemePreferences;
 @Deprecated
 public abstract class ThemedApplication<P extends ThemePreferences> extends Application implements ThemeCallbacks<P> {
 
-    private P preferences;
-    private final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
+    private ThemeCallbacks<P> themeCallbacks;
+
+    private ThemeCallbacks<P> getThemeCallbacks() {
+        if (themeCallbacks == null) {
+            themeCallbacks = new SimpleThemeCallbacks<P>(this, createPreferences(this));
+        }
+        return themeCallbacks;
+    }
 
     @Override
     public void onCreate() {
-        themeCallbacks.onCreate();
+        getThemeCallbacks().onCreate();
         super.onCreate();
     }
 
     @Override
     public P getThemePreferences() {
-        if (preferences == null) {
-            preferences = createPreferences(this);
-        }
-        return preferences;
+        return getThemeCallbacks().getThemePreferences();
     }
 
-    protected P createPreferences(Context context) {
-        return themeCallbacks.getThemePreferences();
-    }
+    @NonNull
+    protected abstract P createPreferences(Context context);
 }

@@ -32,7 +32,12 @@ public class SimpleThemeCallbacks<P extends ThemePreferences> implements ThemeCa
     private P preferences;
 
     public SimpleThemeCallbacks(ContextWrapper context) {
+        this(context, null);
+    }
+
+    public SimpleThemeCallbacks(ContextWrapper context, P preferences) {
         this.context = context;
+        this.preferences = preferences;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 
 /**
  * Holder for locations.
@@ -24,7 +25,7 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
         this.locationsProvider = null;
     }
 
-    public LocationHolder(AP addressProvider, LP locationsProvider) {
+    public LocationHolder(@NonNull AP addressProvider, @NonNull LP locationsProvider) {
         this.context = null;
         this.addressProvider = addressProvider;
         this.locationsProvider = locationsProvider;
