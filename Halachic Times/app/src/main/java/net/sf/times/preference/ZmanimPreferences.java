@@ -108,39 +108,6 @@ public interface ZmanimPreferences extends LocationPreferences, ThemePreferences
     String EMPHASIS_SUFFIX = ".emphasis";
     String ANIM_SUFFIX = ".anim";
 
-    /** Preference name for Alos reminder. */
-    String KEY_REMINDER_DAWN = KEY_OPINION_DAWN + REMINDER_SUFFIX;
-    /** Preference name for earliest tallis reminder. */
-    String KEY_REMINDER_TALLIS = KEY_OPINION_TALLIS + REMINDER_SUFFIX;
-    /** Preference name for sunrise reminder. */
-    String KEY_REMINDER_SUNRISE = KEY_OPINION_SUNRISE + REMINDER_SUFFIX;
-    /** Preference name for Last Shema reminder. */
-    String KEY_REMINDER_SHEMA = KEY_OPINION_SHEMA + REMINDER_SUFFIX;
-    /** Preference name for Last Morning Tfila reminder. */
-    String KEY_REMINDER_TFILA = KEY_OPINION_TFILA + REMINDER_SUFFIX;
-    /** Preference name for midday / noon reminder. */
-    String KEY_REMINDER_NOON = KEY_OPINION_NOON + REMINDER_SUFFIX;
-    /** Preference name for Earliest Mincha reminder. */
-    String KEY_REMINDER_EARLIEST_MINCHA = KEY_OPINION_EARLIEST_MINCHA + REMINDER_SUFFIX;
-    /** Preference name for Mincha Ketana reminder. */
-    String KEY_REMINDER_MINCHA = KEY_OPINION_MINCHA + REMINDER_SUFFIX;
-    /** Preference name for Plug HaMincha reminder. */
-    String KEY_REMINDER_PLUG_MINCHA = KEY_OPINION_PLUG_MINCHA + REMINDER_SUFFIX;
-    /** Preference name for candle lighting reminder. */
-    String KEY_REMINDER_CANDLES = KEY_OPINION_CANDLES + REMINDER_SUFFIX;
-    /** Preference name for sunset reminder. */
-    String KEY_REMINDER_SUNSET = KEY_OPINION_SUNSET + REMINDER_SUFFIX;
-    /** Preference name for twilight reminder. */
-    String KEY_REMINDER_TWILIGHT = KEY_OPINION_TWILIGHT + REMINDER_SUFFIX;
-    /** Preference name for nightfall reminder. */
-    String KEY_REMINDER_NIGHTFALL = KEY_OPINION_NIGHTFALL + REMINDER_SUFFIX;
-    /** Preference name for midnight reminder. */
-    String KEY_REMINDER_MIDNIGHT = KEY_OPINION_MIDNIGHT + REMINDER_SUFFIX;
-    /** Preference name for earliest kiddush levana reminder. */
-    String KEY_REMINDER_EARLIEST_LEVANA = KEY_OPINION_EARLIEST_LEVANA + REMINDER_SUFFIX;
-    /** Preference name for latest kiddush levana reminder. */
-    String KEY_REMINDER_LATEST_LEVANA = KEY_OPINION_LATEST_LEVANA + REMINDER_SUFFIX;
-
     /** Preference name for candle lighting animations. */
     String KEY_ANIM_CANDLES = KEY_OPINION_CANDLES + ANIM_SUFFIX;
 
