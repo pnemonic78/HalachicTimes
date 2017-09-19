@@ -35,6 +35,7 @@ import android.view.View;
 import net.sf.times.compass.lib.BuildConfig;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
+import net.sf.times.compass.preference.SimpleCompassPreferences;
 
 import java.util.Random;
 
@@ -150,13 +151,12 @@ public class CompassView extends View {
         Resources res = context.getResources();
         CompassPreferences prefs;
         if (context instanceof BaseCompassActivity) {
-            BaseCompassActivity activity = (BaseCompassActivity) context;
-            prefs = activity.getCompassPreferences();
+            prefs = ((BaseCompassActivity) context).getCompassPreferences();
         } else {
-            prefs = new CompassPreferences(context);
+            prefs = new SimpleCompassPreferences(context);
         }
 
-        TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
+        TypedArray a = context.obtainStyledAttributes(prefs.getTheme(), R.styleable.CompassTheme);
 
         compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);
         compassColorGradient = a.getColor(R.styleable.CompassTheme_compassColorGradient, Color.TRANSPARENT);

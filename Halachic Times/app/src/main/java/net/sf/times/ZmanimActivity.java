@@ -410,7 +410,7 @@ public class ZmanimActivity extends LocatedActivity implements
 
         // Update the location.
         locationLabel.setText(locationText);
-        locationLabel.setVisibility(settings.isCoordinatesVisible() ? View.VISIBLE : View.GONE);
+        locationLabel.setVisibility(getLocationPreferences().isCoordinatesVisible() ? View.VISIBLE : View.GONE);
         addressLabel.setText(locationName);
     }
 

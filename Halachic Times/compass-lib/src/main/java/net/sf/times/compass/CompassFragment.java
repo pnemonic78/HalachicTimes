@@ -29,7 +29,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.sf.times.compass.preference.CompassPreferences;
+import net.sf.times.compass.preference.SimpleCompassPreferences;
 import net.sf.times.location.ZmanimLocation;
+
+import static net.sf.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
 
 /**
  * Show the direction in which to pray.
@@ -66,8 +69,8 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     private final float[] matrixR = new float[9];
     /** Orientation matrix. */
     private final float[] orientation = new float[3];
-    /** The settings and preferences. */
-    private CompassPreferences settings;
+    /** The preferences. */
+    private CompassPreferences preferences;
 
     public CompassFragment() {
         holiest = new Location(LocationManager.GPS_PROVIDER);
@@ -89,11 +92,17 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context context = getActivity();
-        settings = new CompassPreferences(context);
+        final Context context = getActivity();
+        if (context instanceof BaseCompassActivity) {
+            preferences = ((BaseCompassActivity) context).getCompassPreferences();
+        } else {
+            preferences = new SimpleCompassPreferences(context);
+        }
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        magnetic = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        if (sensorManager != null) {
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            magnetic = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        }
     }
 
     @Override
@@ -139,8 +148,8 @@ public class CompassFragment extends Fragment implements SensorEventListener {
      */
     public void setLocation(Location location) {
         float bearing;
-        String bearingType = settings.getBearing();
-        if (CompassPreferences.BEARING_GREAT_CIRCLE.equals(bearingType)) {
+        String bearingType = preferences.getBearing();
+        if (BEARING_GREAT_CIRCLE.equals(bearingType)) {
             bearing = location.bearingTo(holiest);
         } else {
             bearing = ZmanimLocation.angleTo(location, holiest);

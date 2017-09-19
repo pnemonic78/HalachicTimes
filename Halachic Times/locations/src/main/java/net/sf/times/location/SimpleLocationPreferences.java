@@ -17,6 +17,7 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.location.Location;
 import android.support.annotation.Nullable;
 
@@ -53,12 +54,14 @@ public class SimpleLocationPreferences extends SimplePreferences implements Loca
      *         the context.
      */
     public static void init(Context context) {
-        FORMAT_DEFAULT = context.getString(R.string.coords_format_defaultValue);
-        FORMAT_NONE = context.getString(R.string.coords_format_value_none);
-        FORMAT_DECIMAL = context.getString(R.string.coords_format_value_decimal);
-        FORMAT_SEXAGESIMAL = context.getString(R.string.coords_format_value_sexagesimal);
+        final Resources res = context.getResources();
 
-        ELEVATION_VISIBLE_DEFAULT = context.getResources().getBoolean(R.bool.coords_elevation_visible_defaultValue);
+        FORMAT_DEFAULT = res.getString(R.string.coords_format_defaultValue);
+        FORMAT_NONE = res.getString(R.string.coords_format_value_none);
+        FORMAT_DECIMAL = res.getString(R.string.coords_format_value_decimal);
+        FORMAT_SEXAGESIMAL = res.getString(R.string.coords_format_value_sexagesimal);
+
+        ELEVATION_VISIBLE_DEFAULT = res.getBoolean(R.bool.coords_elevation_visible_defaultValue);
     }
 
     @Override

@@ -16,6 +16,7 @@
 package net.sf.preference;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import net.sf.lib.R;
 
@@ -48,9 +49,10 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
      *         the context.
      */
     public static void init(Context context) {
-        THEME_DEFAULT = context.getString(R.string.theme_defaultValue);
-        THEME_DARK = context.getString(R.string.theme_value_dark);
-        THEME_LIGHT = context.getString(R.string.theme_value_light);
+        final Resources res = context.getResources();
+        THEME_DEFAULT = res.getString(R.string.theme_defaultValue);
+        THEME_DARK = res.getString(R.string.theme_value_dark);
+        THEME_LIGHT = res.getString(R.string.theme_value_light);
     }
 
     @Override

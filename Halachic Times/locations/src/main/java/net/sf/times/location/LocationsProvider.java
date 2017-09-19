@@ -817,6 +817,15 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         return false;
     }
 
+    /**
+     * Get the location preferences.
+     *
+     * @return the preferences.
+     */
+    public LocationPreferences getLocationPreferences() {
+        return preferences;
+    }
+
     /** The receiver for addresses and date/time settings. */
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override

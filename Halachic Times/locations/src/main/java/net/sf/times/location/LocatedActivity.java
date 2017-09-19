@@ -25,8 +25,8 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import net.sf.app.ThemeCallbacks;
 import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 
 import java.util.TimeZone;
@@ -122,6 +122,10 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     @Override
     public P getThemePreferences() {
         return themeCallbacks.getThemePreferences();
+    }
+
+    protected LocationPreferences getLocationPreferences() {
+        return locations.getLocationPreferences();
     }
 
     @Override

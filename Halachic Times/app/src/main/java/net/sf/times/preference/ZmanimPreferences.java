@@ -17,6 +17,7 @@ package net.sf.times.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -24,7 +25,7 @@ import android.text.TextUtils;
 import net.sf.media.RingtoneManager;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
-import net.sf.times.compass.preference.CompassPreferences;
+import net.sf.times.compass.preference.SimpleCompassPreferences;
 import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
@@ -47,7 +48,7 @@ import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_GRA;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimPreferences extends CompassPreferences {
+public class ZmanimPreferences extends SimpleCompassPreferences {
 
     /** Preference name for showing seconds. */
     public static final String KEY_SECONDS = "seconds.visible";
@@ -888,63 +889,63 @@ public class ZmanimPreferences extends CompassPreferences {
      *         the context.
      */
     public static void init(Context context) {
-        CompassPreferences.init(context);
+        final Resources res = context.getResources();
 
-        OPINION_10_2 = context.getString(R.string.opinion_value_10);
-        OPINION_11 = context.getString(R.string.opinion_value_11);
-        OPINION_12 = context.getString(R.string.opinion_value_12);
-        OPINION_120 = context.getString(R.string.opinion_value_120);
-        OPINION_120_ZMANIS = context.getString(R.string.opinion_value_120_zmanis);
-        OPINION_13 = context.getString(R.string.opinion_value_13);
-        OPINION_15 = context.getString(R.string.opinion_value_15);
-        OPINION_15_ALOS = context.getString(R.string.opinion_value_15_alos);
-        OPINION_16_1 = context.getString(R.string.opinion_value_16);
-        OPINION_16_1_ALOS = context.getString(R.string.opinion_value_16_alos);
-        OPINION_16_1_SUNSET = context.getString(R.string.opinion_value_16_sunset);
-        OPINION_168 = context.getString(R.string.opinion_value_168);
-        OPINION_18 = context.getString(R.string.opinion_value_18);
-        OPINION_19_8 = context.getString(R.string.opinion_value_19);
-        OPINION_2 = context.getString(R.string.opinion_value_2);
-        OPINION_26 = context.getString(R.string.opinion_value_26);
-        OPINION_3 = context.getString(R.string.opinion_value_3);
-        OPINION_3_65 = context.getString(R.string.opinion_value_3_65);
-        OPINION_3_676 = context.getString(R.string.opinion_value_3_676);
-        OPINION_3_7 = context.getString(R.string.opinion_value_3_7);
-        OPINION_3_8 = context.getString(R.string.opinion_value_3_8);
-        OPINION_30 = context.getString(R.string.opinion_value_30);
-        OPINION_4_37 = context.getString(R.string.opinion_value_4_37);
-        OPINION_4_61 = context.getString(R.string.opinion_value_4_61);
-        OPINION_4_8 = context.getString(R.string.opinion_value_4_8);
-        OPINION_5_88 = context.getString(R.string.opinion_value_5_88);
-        OPINION_5_95 = context.getString(R.string.opinion_value_5_95);
-        OPINION_58 = context.getString(R.string.opinion_value_58);
-        OPINION_6 = context.getString(R.string.opinion_value_6);
-        OPINION_60 = context.getString(R.string.opinion_value_60);
-        OPINION_7 = context.getString(R.string.opinion_value_7);
-        OPINION_7_083 = context.getString(R.string.opinion_value_7_083);
-        OPINION_7_083_ZMANIS = context.getString(R.string.opinion_value_7_083_zmanis);
-        OPINION_72 = context.getString(R.string.opinion_value_72);
-        OPINION_72_ZMANIS = context.getString(R.string.opinion_value_72_zmanis);
-        OPINION_8_5 = context.getString(R.string.opinion_value_8);
-        OPINION_90 = context.getString(R.string.opinion_value_90);
-        OPINION_90_ZMANIS = context.getString(R.string.opinion_value_90_zmanis);
-        OPINION_96 = context.getString(R.string.opinion_value_96);
-        OPINION_96_ZMANIS = context.getString(R.string.opinion_value_96_zmanis);
-        OPINION_ATERET = context.getString(R.string.opinion_value_ateret);
-        OPINION_GRA = context.getString(R.string.opinion_value_gra);
-        OPINION_HALF = context.getString(R.string.opinion_value_half);
-        OPINION_MGA = context.getString(R.string.opinion_value_mga);
-        OPINION_FIXED = context.getString(R.string.opinion_value_fixed);
-        OPINION_LEVEL = context.getString(R.string.opinion_value_level);
-        OPINION_SEA = context.getString(R.string.opinion_value_sea);
-        OPINION_TWILIGHT = context.getString(R.string.opinion_value_twilight);
-        OPINION_NIGHT = context.getString(R.string.opinion_value_nightfall);
+        OPINION_10_2 = res.getString(R.string.opinion_value_10);
+        OPINION_11 = res.getString(R.string.opinion_value_11);
+        OPINION_12 = res.getString(R.string.opinion_value_12);
+        OPINION_120 = res.getString(R.string.opinion_value_120);
+        OPINION_120_ZMANIS = res.getString(R.string.opinion_value_120_zmanis);
+        OPINION_13 = res.getString(R.string.opinion_value_13);
+        OPINION_15 = res.getString(R.string.opinion_value_15);
+        OPINION_15_ALOS = res.getString(R.string.opinion_value_15_alos);
+        OPINION_16_1 = res.getString(R.string.opinion_value_16);
+        OPINION_16_1_ALOS = res.getString(R.string.opinion_value_16_alos);
+        OPINION_16_1_SUNSET = res.getString(R.string.opinion_value_16_sunset);
+        OPINION_168 = res.getString(R.string.opinion_value_168);
+        OPINION_18 = res.getString(R.string.opinion_value_18);
+        OPINION_19_8 = res.getString(R.string.opinion_value_19);
+        OPINION_2 = res.getString(R.string.opinion_value_2);
+        OPINION_26 = res.getString(R.string.opinion_value_26);
+        OPINION_3 = res.getString(R.string.opinion_value_3);
+        OPINION_3_65 = res.getString(R.string.opinion_value_3_65);
+        OPINION_3_676 = res.getString(R.string.opinion_value_3_676);
+        OPINION_3_7 = res.getString(R.string.opinion_value_3_7);
+        OPINION_3_8 = res.getString(R.string.opinion_value_3_8);
+        OPINION_30 = res.getString(R.string.opinion_value_30);
+        OPINION_4_37 = res.getString(R.string.opinion_value_4_37);
+        OPINION_4_61 = res.getString(R.string.opinion_value_4_61);
+        OPINION_4_8 = res.getString(R.string.opinion_value_4_8);
+        OPINION_5_88 = res.getString(R.string.opinion_value_5_88);
+        OPINION_5_95 = res.getString(R.string.opinion_value_5_95);
+        OPINION_58 = res.getString(R.string.opinion_value_58);
+        OPINION_6 = res.getString(R.string.opinion_value_6);
+        OPINION_60 = res.getString(R.string.opinion_value_60);
+        OPINION_7 = res.getString(R.string.opinion_value_7);
+        OPINION_7_083 = res.getString(R.string.opinion_value_7_083);
+        OPINION_7_083_ZMANIS = res.getString(R.string.opinion_value_7_083_zmanis);
+        OPINION_72 = res.getString(R.string.opinion_value_72);
+        OPINION_72_ZMANIS = res.getString(R.string.opinion_value_72_zmanis);
+        OPINION_8_5 = res.getString(R.string.opinion_value_8);
+        OPINION_90 = res.getString(R.string.opinion_value_90);
+        OPINION_90_ZMANIS = res.getString(R.string.opinion_value_90_zmanis);
+        OPINION_96 = res.getString(R.string.opinion_value_96);
+        OPINION_96_ZMANIS = res.getString(R.string.opinion_value_96_zmanis);
+        OPINION_ATERET = res.getString(R.string.opinion_value_ateret);
+        OPINION_GRA = res.getString(R.string.opinion_value_gra);
+        OPINION_HALF = res.getString(R.string.opinion_value_half);
+        OPINION_MGA = res.getString(R.string.opinion_value_mga);
+        OPINION_FIXED = res.getString(R.string.opinion_value_fixed);
+        OPINION_LEVEL = res.getString(R.string.opinion_value_level);
+        OPINION_SEA = res.getString(R.string.opinion_value_sea);
+        OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight);
+        OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
 
-        THEME_NONE = context.getString(R.string.theme_value_none);
-        THEME_WHITE = context.getString(R.string.theme_value_white);
+        THEME_NONE = res.getString(R.string.theme_value_none);
+        THEME_WHITE = res.getString(R.string.theme_value_white);
 
-        OMER_NONE = context.getString(R.string.omer_value_off);
-        OMER_B = context.getString(R.string.omer_value_b);
-        OMER_L = context.getString(R.string.omer_value_l);
+        OMER_NONE = res.getString(R.string.omer_value_off);
+        OMER_B = res.getString(R.string.omer_value_b);
+        OMER_L = res.getString(R.string.omer_value_l);
     }
 }

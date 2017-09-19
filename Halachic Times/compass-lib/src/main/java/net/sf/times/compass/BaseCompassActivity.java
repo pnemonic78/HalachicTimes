@@ -26,6 +26,7 @@ import android.widget.TextView;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
+import net.sf.times.compass.preference.SimpleCompassPreferences;
 import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationsProvider;
 
@@ -39,7 +40,7 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
 
     /** The main fragment. */
     private CompassFragment fragment;
-    /** The settings and preferences. */
+    /** The preferences. */
     private CompassPreferences preferences;
     /** The location header location. */
     private TextView headerLocation;
@@ -49,7 +50,8 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferences = new CompassPreferences(this);
+        final Context context = this;
+        preferences = new SimpleCompassPreferences(context);
 
         setContentView(R.layout.compass);
         headerLocation = findViewById(R.id.coordinates);
@@ -57,14 +59,17 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
         fragment = (CompassFragment) getFragmentManager().findFragmentById(R.id.compass);
 
         TextView summary = findViewById(android.R.id.summary);
-        if (preferences.isSummaries()) {
-            Context context = this;
-            TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassTheme);
-            summary.setTextColor(a.getColor(R.styleable.CompassTheme_compassColorTarget, summary.getSolidColor()));
-            a.recycle();
-        } else {
-            summary.setVisibility(View.GONE);
-        }
+        TypedArray a = context.obtainStyledAttributes(preferences.getTheme(), R.styleable.CompassTheme);
+        summary.setTextColor(a.getColor(R.styleable.CompassTheme_compassColorTarget, summary.getSolidColor()));
+        a.recycle();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        TextView summary = findViewById(android.R.id.summary);
+        summary.setVisibility(preferences.isSummariesVisible() ? View.VISIBLE : View.GONE);
     }
 
     public CompassPreferences getCompassPreferences() {
@@ -110,7 +115,7 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
 
         // Update the location.
         locationLabel.setText(locationText);
-        locationLabel.setVisibility(preferences.isCoordinatesVisible() ? View.VISIBLE : View.GONE);
+        locationLabel.setVisibility(getLocationPreferences().isCoordinatesVisible() ? View.VISIBLE : View.GONE);
         addressLabel.setText(locationName);
     }
 
