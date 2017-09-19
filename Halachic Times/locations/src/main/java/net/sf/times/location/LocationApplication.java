@@ -15,27 +15,37 @@
  */
 package net.sf.times.location;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 
-import net.sf.app.ThemedApplication;
+import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
+import net.sf.preference.ThemePreferences;
 
 /**
  * Location application.
  *
  * @author Moshe Waisberg
  */
-public abstract class LocationApplication<P extends LocationPreferences, AP extends AddressProvider, LP extends LocationsProvider> extends ThemedApplication {
+public abstract class LocationApplication<TP extends ThemePreferences, AP extends AddressProvider, LP extends LocationsProvider> extends Application implements ThemeCallbacks<TP> {
 
+    private final ThemeCallbacks<TP> themeCallbacks = new SimpleThemeCallbacks<TP>(this);
     /** Provider for addresses. */
     private AP addressProvider;
     /** Provider for locations. */
     private LP locations;
 
     @Override
-    protected P createPreferences(Context context) {
-        return (P) new LocationPreferences(context);
+    public void onCreate() {
+        themeCallbacks.onCreate();
+        super.onCreate();
+    }
+
+    @Override
+    public TP getThemePreferences() {
+        return themeCallbacks.getThemePreferences();
     }
 
     /**

@@ -22,7 +22,7 @@ import net.sf.preference.ThemePreferences;
  *
  * @author Moshe Waisberg
  */
-public interface ThemedCallbacks<P extends ThemePreferences> {
+public interface ThemeCallbacks<P extends ThemePreferences> {
 
     /** Apply the theme here. */
     void onCreate();

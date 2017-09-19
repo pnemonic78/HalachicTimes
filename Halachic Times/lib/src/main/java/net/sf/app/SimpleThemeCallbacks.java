@@ -22,16 +22,16 @@ import net.sf.preference.SimpleThemePreferences;
 import net.sf.preference.ThemePreferences;
 
 /**
- * Wraps a callback delegate.
+ * Simple theme callback implementation.
  *
  * @author Moshe Waisberg
  */
-public class ThemedWrapper<P extends ThemePreferences> implements ThemedCallbacks<P> {
+public class SimpleThemeCallbacks<P extends ThemePreferences> implements ThemeCallbacks<P> {
 
     private final ContextWrapper context;
     private P preferences;
 
-    public ThemedWrapper(ContextWrapper context) {
+    public SimpleThemeCallbacks(ContextWrapper context) {
         this.context = context;
     }
 

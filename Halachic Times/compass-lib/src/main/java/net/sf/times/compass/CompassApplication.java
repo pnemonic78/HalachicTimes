@@ -17,7 +17,7 @@ package net.sf.times.compass;
 
 import android.content.Context;
 
-import net.sf.times.compass.preference.CompassPreferences;
+import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.CompassLocations;
 import net.sf.times.location.LocationApplication;
@@ -27,16 +27,7 @@ import net.sf.times.location.LocationApplication;
  *
  * @author Moshe Waisberg
  */
-public class CompassApplication extends LocationApplication<CompassPreferences, AddressProvider, CompassLocations> {
-
-    @Override
-    protected CompassPreferences createPreferences(Context context) {
-        return new CompassPreferences(context);
-    }
-
-    public CompassPreferences getCompassPreferences() {
-        return (CompassPreferences) getThemePreferences();
-    }
+public class CompassApplication extends LocationApplication<ThemePreferences, AddressProvider, CompassLocations> {
 
     @Override
     protected CompassLocations createLocationsProvider(Context context) {

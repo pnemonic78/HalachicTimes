@@ -26,14 +26,14 @@ import net.sf.preference.ThemePreferences;
  * @author Moshe Waisberg
  */
 @Deprecated
-public abstract class ThemedApplication<P extends ThemePreferences> extends Application implements ThemedCallbacks<P> {
+public abstract class ThemedApplication<P extends ThemePreferences> extends Application implements ThemeCallbacks<P> {
 
     private P preferences;
-    protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
+    private final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
 
     @Override
     public void onCreate() {
-        themedCallbacks.onCreate();
+        themeCallbacks.onCreate();
         super.onCreate();
     }
 
@@ -46,6 +46,6 @@ public abstract class ThemedApplication<P extends ThemePreferences> extends Appl
     }
 
     protected P createPreferences(Context context) {
-        return themedCallbacks.getThemePreferences();
+        return themeCallbacks.getThemePreferences();
     }
 }

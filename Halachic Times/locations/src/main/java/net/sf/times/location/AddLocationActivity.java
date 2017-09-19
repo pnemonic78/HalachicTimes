@@ -33,8 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import net.sf.app.ThemedCallbacks;
-import net.sf.app.ThemedWrapper;
+import net.sf.app.ThemeCallbacks;
+import net.sf.app.SimpleThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 import net.sf.text.method.RangeInputFilter;
 import net.sf.times.location.text.LatitudeInputFilter;
@@ -49,7 +49,7 @@ import java.util.Locale;
  * @author Moshe Waisberg
  */
 public class AddLocationActivity<P extends ThemePreferences> extends Activity implements
-        ThemedCallbacks<P>,
+        ThemeCallbacks<P>,
         AdapterView.OnItemSelectedListener,
         ZmanimLocationListener {
 
@@ -86,7 +86,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     private static final int MILLISECONDS_MIN = 0;
     private static final int MILLISECONDS_MAX = 9999;
 
-    protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
+    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
     private Location location;
     private Spinner coordsFormatSpinner;
     private ViewSwitcher latitudeSwitcher;
@@ -167,12 +167,12 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
 
     @Override
     public void onCreate() {
-        themedCallbacks.onCreate();
+        themeCallbacks.onCreate();
     }
 
     @Override
     public P getThemePreferences() {
-        return themedCallbacks.getThemePreferences();
+        return themeCallbacks.getThemePreferences();
     }
 
     private void initView() {

@@ -17,22 +17,17 @@ package net.sf.times;
 
 import android.content.Context;
 
+import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.ZmanimPreferences;
 
 /**
  * Zmanim application.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimApplication extends LocationApplication<ZmanimPreferences, AddressProvider, ZmanimLocations> {
-
-    @Override
-    protected ZmanimPreferences createPreferences(Context context) {
-        return new ZmanimPreferences(context);
-    }
+public class ZmanimApplication extends LocationApplication<ThemePreferences, AddressProvider, ZmanimLocations> {
 
     @Override
     protected ZmanimLocations createLocationsProvider(Context context) {

@@ -25,8 +25,8 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
-import net.sf.app.ThemedCallbacks;
-import net.sf.app.ThemedWrapper;
+import net.sf.app.ThemeCallbacks;
+import net.sf.app.SimpleThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 
 import java.util.TimeZone;
@@ -37,7 +37,7 @@ import java.util.TimeZone;
  * @author Moshe Waisberg
  */
 public abstract class LocatedActivity<P extends ThemePreferences> extends Activity implements
-        ThemedCallbacks<P>,
+        ThemeCallbacks<P>,
         ZmanimLocationListener {
 
     /** The location parameter. */
@@ -50,7 +50,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     protected static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-    protected final ThemedCallbacks<P> themedCallbacks = new ThemedWrapper<P>(this);
+    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
     /** Provider for locations. */
     private LocationsProvider locations;
     /** The address location. */
@@ -116,12 +116,12 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onCreate() {
-        themedCallbacks.onCreate();
+        themeCallbacks.onCreate();
     }
 
     @Override
     public P getThemePreferences() {
-        return themedCallbacks.getThemePreferences();
+        return themeCallbacks.getThemePreferences();
     }
 
     @Override
