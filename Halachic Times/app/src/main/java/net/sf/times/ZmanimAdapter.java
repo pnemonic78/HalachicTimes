@@ -45,6 +45,8 @@ import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
+import static net.sf.times.preference.ZmanimPreferences.Values.OMER_B;
+import static net.sf.times.preference.ZmanimPreferences.Values.OMER_L;
 import static net.sf.util.TimeUtils.roundUp;
 
 /**
@@ -161,7 +163,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @param context
      *         the context.
      * @param settings
-     *         the application settings.
+     *         the application preferences.
      */
     public ZmanimAdapter(Context context, ZmanimPreferences settings) {
         super(context, R.layout.times_item);
@@ -582,9 +584,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (TextUtils.isEmpty(suffix)) {
             return null;
         }
-        if (ZmanimPreferences.OMER_B.equals(suffix)) {
+        if (OMER_B.equals(suffix)) {
             suffix = context.getString(R.string.omer_b);
-        } else if (ZmanimPreferences.OMER_L.equals(suffix)) {
+        } else if (OMER_L.equals(suffix)) {
             suffix = context.getString(R.string.omer_l);
         }
 

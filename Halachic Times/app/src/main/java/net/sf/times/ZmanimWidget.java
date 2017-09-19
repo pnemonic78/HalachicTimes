@@ -38,6 +38,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -63,8 +64,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     protected Context context;
     /** Provider for locations. */
     private ZmanimLocations locations;
-    /** The settings and preferences. */
-    private ZmanimPreferences settings;
+    /** The preferences. */
+    private ZmanimPreferences preferences;
     /** The provider name. */
     private ComponentName provider;
 
@@ -75,12 +76,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
             notifyAppWidgetViewDataChanged(context);
         }
     };
-
-    /**
-     * Constructs a new widget.
-     */
-    public ZmanimWidget() {
-    }
 
     /**
      * Get the context.
@@ -526,8 +521,9 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
         final Context context = getContext();
-        if (settings == null)
-            settings = new ZmanimPreferences(context);
+        if (preferences == null) {
+            preferences = new SimpleZmanimPreferences(context);
+        }
 
         ZmanimLocations locations = this.locations;
         if (locations == null) {
@@ -540,15 +536,15 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if (gloc == null)
             return null;
 
-        ZmanimPopulater populater = new ZmanimPopulater(context, settings);
+        ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
         populater.setCalendar(now);
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
-        ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
+        ZmanimAdapter adapter = new ZmanimAdapter(context, preferences);
         populater.populate(adapter, true);
 
-        ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, settings);
+        ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, preferences);
         populater.setCalendar(now + DAY_IN_MILLIS);
         populater.populate(adapterTomorrow, true);
 

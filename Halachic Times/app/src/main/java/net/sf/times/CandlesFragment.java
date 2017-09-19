@@ -84,7 +84,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         if (context == null) {
             return null;
         }
-        return new CandlesAdapter(context, settings);
+        return new CandlesAdapter(context, preferences);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         if (context == null) {
             return null;
         }
-        return new CandlesPopulater(context, settings);
+        return new CandlesPopulater(context, preferences);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
 
         int holiday = adapter.getCandlesHoliday();
         int candlesCount = adapter.getCandlesCount();
-        boolean animate = settings.isCandlesAnimated();
+        boolean animate = preferences.isCandlesAnimated();
         ImageView view;
         ViewGroup group = null;
 

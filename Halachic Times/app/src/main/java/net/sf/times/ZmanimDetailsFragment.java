@@ -54,7 +54,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             return null;
         }
 
-        return (A) new ZmanimDetailsAdapter(context, settings);
+        return (A) new ZmanimDetailsAdapter(context, preferences);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
 
         Resources res = getContextImpl().getResources();
 
-        switch (settings.getTheme()) {
+        switch (preferences.getTheme()) {
             case R.style.Theme_Zmanim_Dark:
                 switch (id) {
                     case R.string.dawn:
@@ -272,6 +272,6 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (context == null) {
             return null;
         }
-        return (P) new ZmanimDetailsPopulater<A>(context, settings);
+        return (P) new ZmanimDetailsPopulater<A>(context, preferences);
     }
 }

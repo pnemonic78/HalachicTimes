@@ -34,6 +34,7 @@ import android.widget.TextView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -57,8 +58,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected ViewGroup list;
     /** Provider for locations. */
     protected ZmanimLocations locations;
-    /** The settings and preferences. */
-    protected ZmanimPreferences settings;
+    /** The preferences. */
+    protected ZmanimPreferences preferences;
     /** The master item selected id. */
     private int highlightItemId;
     /** The master item selected row. */
@@ -97,7 +98,11 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         super.onCreate(savedInstanceState);
 
         final Context context = getContextImpl();
-        settings = new ZmanimPreferences(context);
+        if (context instanceof ZmanimActivity) {
+            preferences = ((ZmanimActivity) context).getZmanimPreferences();
+        } else {
+            preferences = new SimpleZmanimPreferences(context);
+        }
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         locations = app.getLocations();
     }
@@ -126,7 +131,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected A createAdapter(Context context) {
         if (context == null)
             return null;
-        return (A) new ZmanimAdapter(context, settings);
+        return (A) new ZmanimAdapter(context, preferences);
     }
 
     /**
@@ -149,7 +154,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected P createPopulater(Context context) {
         if (context == null)
             return null;
-        return (P) new ZmanimPopulater<A>(context, settings);
+        return (P) new ZmanimPopulater<A>(context, preferences);
     }
 
     /**

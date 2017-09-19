@@ -28,6 +28,7 @@ import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -46,8 +47,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private final Context context;
     /** Provider for locations. */
     private ZmanimLocations locations;
-    /** The settings and preferences. */
-    private ZmanimPreferences settings;
+    /** The preferences. */
+    private ZmanimPreferences preferences;
     /** The adapter. */
     private ZmanimAdapter adapter;
     /** Position index of today's Hebrew day. */
@@ -190,8 +191,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private void populateAdapter() {
         final Context context = this.context;
 
-        if (settings == null)
-            settings = new ZmanimPreferences(context);
+        if (preferences == null) {
+            preferences = new SimpleZmanimPreferences(context);
+        }
 
         ZmanimLocations locations = this.locations;
         if (locations == null) {
@@ -204,13 +206,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         if (gloc == null)
             return;
 
-        ZmanimPopulater populater = new ZmanimPopulater(context, settings);
+        ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
         populater.setCalendar(currentTimeMillis());
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
         // Always create new adapter to avoid concurrency bugs.
-        ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
+        ZmanimAdapter adapter = new ZmanimAdapter(context, preferences);
         populater.populate(adapter, false);
         this.adapter = adapter;
 

@@ -36,6 +36,7 @@ import android.util.Log;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -130,7 +131,7 @@ public class ZmanimReminder {
      *         the context.
      */
     public void remind(final Context context) {
-        ZmanimPreferences settings = new ZmanimPreferences(context);
+        ZmanimPreferences settings = new SimpleZmanimPreferences(context);
         remind(context, settings);
     }
 
@@ -140,7 +141,7 @@ public class ZmanimReminder {
      * @param context
      *         the context.
      * @param settings
-     *         the settings.
+     *         the preferences.
      */
     public void remind(final Context context, ZmanimPreferences settings) {
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
@@ -170,7 +171,7 @@ public class ZmanimReminder {
      * @param context
      *         the context.
      * @param settings
-     *         the settings.
+     *         the preferences.
      * @param adapter
      *         the populated adapter.
      */
@@ -269,7 +270,7 @@ public class ZmanimReminder {
      * @param context
      *         the context.
      * @param settings
-     *         the settings.
+     *         the preferences.
      * @param item
      *         the zmanim item to notify about.
      */
@@ -288,7 +289,7 @@ public class ZmanimReminder {
      * @param context
      *         the context.
      * @param settings
-     *         the settings.
+     *         the preferences.
      * @param item
      *         the reminder item.
      */
@@ -381,7 +382,7 @@ public class ZmanimReminder {
         }
 
         boolean update = false;
-        ZmanimPreferences settings = new ZmanimPreferences(context);
+        ZmanimPreferences settings = new SimpleZmanimPreferences(context);
         Bundle extras;
 
         switch (action) {
@@ -533,7 +534,7 @@ public class ZmanimReminder {
      * Allow the reminder to send a notification?
      *
      * @param settings
-     *         the settings with reminder day flags.
+     *         the preferences with reminder day flags.
      * @param itemId
      *         the item that should be reminded.
      * @param jcal
@@ -633,7 +634,7 @@ public class ZmanimReminder {
      * @param context
      *         the context.
      * @param settings
-     *         the settings.
+     *         the preferences.
      * @param item
      *         the next item.
      */
@@ -703,7 +704,7 @@ public class ZmanimReminder {
      * @param context
      *         the context.
      * @param settings
-     *         the settings.
+     *         the preferences.
      * @param item
      *         the reminder item.
      */

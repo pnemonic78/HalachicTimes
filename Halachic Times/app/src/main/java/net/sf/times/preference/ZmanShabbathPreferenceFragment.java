@@ -38,7 +38,7 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         after = (ListPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_AFTER);
-        int shabbathAfter = getSettings().toId(after.getValue());
+        int shabbathAfter = getPreferences().toId(after.getValue());
         shabbathAfterName = getString(shabbathAfter);
 
         seek = (SeekBarDialogPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
@@ -51,7 +51,7 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         super.onListPreferenceChange(preference, newValue);
         if ((preference == after) && (newValue != null)) {
             // Update "seek" summary.
-            int shabbathAfter = getSettings().toId(newValue.toString());
+            int shabbathAfter = getPreferences().toId(newValue.toString());
             shabbathAfterName = getString(shabbathAfter);
             seek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
         }

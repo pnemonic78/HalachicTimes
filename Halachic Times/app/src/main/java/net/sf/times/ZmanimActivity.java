@@ -45,12 +45,14 @@ import android.widget.ViewSwitcher;
 
 import net.sf.app.TodayDatePickerDialog;
 import net.sf.content.ContextResourcesWrapper;
+import net.sf.preference.ThemePreferences;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.compass.CompassActivity;
 import net.sf.times.content.res.ZmanimResources;
 import net.sf.times.location.LocatedActivity;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.location.LocationsProvider;
+import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sf.util.LocaleUtils;
@@ -111,8 +113,8 @@ public class ZmanimActivity extends LocatedActivity implements
     private TextView headerAddress;
     /** The navigation bar. */
     private View navigationBar;
-    /** The settings and preferences. */
-    private ZmanimPreferences settings;
+    /** The preferences. */
+    private ZmanimPreferences preferences;
     /** The date picker. */
     private DatePickerDialog datePicker;
     /** The master fragment. */
@@ -274,7 +276,7 @@ public class ZmanimActivity extends LocatedActivity implements
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         final Context context = this;
-        settings = new ZmanimPreferences(context);
+        preferences = new SimpleZmanimPreferences(context);
 
         setContentView(R.layout.times);
         View view = getWindow().getDecorView();
@@ -863,5 +865,14 @@ public class ZmanimActivity extends LocatedActivity implements
         handler.removeMessages(WHAT_LOCATION);
         handler.removeMessages(WHAT_SETTINGS);
         handler.removeMessages(WHAT_TODAY);
+    }
+
+    public ZmanimPreferences getZmanimPreferences() {
+        return preferences;
+    }
+
+    @Override
+    public ThemePreferences getThemePreferences() {
+        return getZmanimPreferences();
     }
 }

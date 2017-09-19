@@ -49,7 +49,7 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
     private Preference preferenceReminderThursday;
     private Preference preferenceReminderFriday;
     private Preference preferenceReminderSaturday;
-    private ZmanimPreferences settings;
+    private ZmanimPreferences preferences;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,12 +97,12 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
         return xmlId;
     }
 
-    protected ZmanimPreferences getSettings() {
-        if (settings == null) {
+    protected ZmanimPreferences getPreferences() {
+        if (preferences == null) {
             final Context context = getActivity();
-            settings = new ZmanimPreferences(context);
+            preferences = new SimpleZmanimPreferences(context);
         }
-        return settings;
+        return preferences;
     }
 
     @Override

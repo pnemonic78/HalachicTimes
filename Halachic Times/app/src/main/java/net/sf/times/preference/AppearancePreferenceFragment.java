@@ -19,10 +19,10 @@ import android.os.Bundle;
 
 import net.sf.times.R;
 
+import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 import static net.sf.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 import static net.sf.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_THEME;
-import static net.sf.times.preference.ZmanimPreferences.KEY_THEME_COMPASS;
 
 /**
  * This fragment shows the preferences for the Appearance header.
