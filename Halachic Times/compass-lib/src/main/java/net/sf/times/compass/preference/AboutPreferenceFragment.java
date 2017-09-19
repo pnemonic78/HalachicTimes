@@ -37,7 +37,7 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context context = getActivity();
+        final Context context = getActivity();
         Preference version = findPreference("about.version");
         try {
             version.setSummary(context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);

@@ -71,7 +71,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
-            Context context = getContext();
+            final Context context = getContext();
             notifyAppWidgetViewDataChanged(context);
         }
     };
@@ -201,7 +201,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     @Override
     public void onLocationChanged(Location location) {
-        Context context = getContext();
+        final Context context = getContext();
         notifyAppWidgetViewDataChanged(context);
     }
 
@@ -426,7 +426,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if ((item == null) || item.isEmpty()) {
             return false;
         }
-        Context context = getContext();
+        final Context context = getContext();
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(positionTotal));
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
@@ -475,7 +475,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      *         the remote list.
      */
     protected void bindListView(int appWidgetId, RemoteViews list) {
-        Context context = getContext();
+        final Context context = getContext();
         Intent service = new Intent();
         service.setClassName(context, "net.sf.times.ZmanimWidgetService");
         service.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
@@ -511,7 +511,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         if ((position < 0) || (label == null)) {
             return;
         }
-        Context context = getContext();
+        final Context context = getContext();
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, R.layout.widget_date);
         row.setTextViewText(R.id.date_hebrew, label);
@@ -525,7 +525,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     protected ZmanimAdapter populateStaticTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
-        Context context = getContext();
+        final Context context = getContext();
         if (settings == null)
             settings = new ZmanimPreferences(context);
 
@@ -573,7 +573,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
-            Context context = this.context;
+            final Context context = this.context;
             row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
         }
     }

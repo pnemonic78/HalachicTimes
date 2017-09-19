@@ -37,7 +37,7 @@ public class LocationsTestCase extends ApplicationTestCase<LocationApplication> 
      * Test application.
      */
     public void testApp() {
-        Context context = getContext();
+        final Context context = getContext();
         assertNotNull(context);
         assertEquals("net.sf.times.location.test", context.getPackageName());
 

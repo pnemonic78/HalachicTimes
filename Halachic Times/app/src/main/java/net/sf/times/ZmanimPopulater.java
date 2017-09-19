@@ -204,7 +204,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             Log.e(TAG, "adapter required to populate");
             return;
         }
-        Context context = getContext();
+        final Context context = getContext();
         if (context == null) {
             Log.e(TAG, "context required to populate");
             return;

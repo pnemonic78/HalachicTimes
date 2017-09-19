@@ -207,7 +207,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (adapter == null)
             return;
 
-        Context context = getContextImpl();
+        final Context context = getContextImpl();
         if (context == null)
             return;
 

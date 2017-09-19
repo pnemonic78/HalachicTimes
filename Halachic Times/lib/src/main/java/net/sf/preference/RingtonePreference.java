@@ -123,7 +123,7 @@ public class RingtonePreference extends DialogPreference {
     }
 
     public void setRingtoneType(int type) {
-        Context context = getContext();
+        final Context context = getContext();
 
         if (type != ringtoneType) {
             if (entries != null) {
@@ -452,8 +452,8 @@ public class RingtonePreference extends DialogPreference {
             return entries.get(index);
         }
 
-        Context context = getContext();
-        Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
+        final Context context = getContext();
+        final Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
         if (ringtone != null) {
             return ringtone.getTitle(context);
         }

@@ -99,7 +99,7 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
 
     protected ZmanimPreferences getSettings() {
         if (settings == null) {
-            Context context = getActivity();
+            final Context context = getActivity();
             settings = new ZmanimPreferences(context);
         }
         return settings;
@@ -163,8 +163,7 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
      * Tries to postpone the reminder until after any preferences have changed.
      */
     private void remind() {
-        Context context = getActivity();
-
+        final Context context = getActivity();
         Intent intent = new Intent(context, ZmanimReminderService.class);
         intent.setAction(ZmanimReminder.ACTION_UPDATE);
         context.startService(intent);

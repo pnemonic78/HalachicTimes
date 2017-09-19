@@ -83,7 +83,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             return null;
         }
 
-        Context context = this.context;
+        final Context context = this.context;
         String pkg = context.getPackageName();
         RemoteViews view;
 
@@ -188,7 +188,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     }
 
     private void populateAdapter() {
-        Context context = this.context;
+        final Context context = this.context;
 
         if (settings == null)
             settings = new ZmanimPreferences(context);
@@ -271,7 +271,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
-            Context context = this.context;
+            final Context context = this.context;
             row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
         } else {
             row.setInt(R.id.widget_item, "setBackgroundColor", Color.TRANSPARENT);

@@ -96,7 +96,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Context context = getContextImpl();
+        final Context context = getContextImpl();
         settings = new ZmanimPreferences(context);
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         locations = app.getLocations();
@@ -220,7 +220,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (adapter == null)
             return;
 
-        Context context = getContextImpl();
+        final Context context = getContextImpl();
         if (context == null)
             return;
 

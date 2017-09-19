@@ -54,7 +54,7 @@ public class PreferencesProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        Context context = getContext();
+        final Context context = getContext();
         delegate = PreferenceManager.getDefaultSharedPreferences(context);
 
         String authority = Preferences.getAuthority(context);

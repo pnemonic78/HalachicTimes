@@ -370,7 +370,7 @@ public class ZmanimReminder {
     }
 
     public void process(@Nullable Intent intent) {
-        Context context = getContext();
+        final Context context = getContext();
         Log.i(TAG, "process " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
         if (intent == null) {
             return;

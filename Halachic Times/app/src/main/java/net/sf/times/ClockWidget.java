@@ -49,7 +49,7 @@ public class ClockWidget extends ZmanimWidget {
     private final ThreadLocal<DateFormat> formatter = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
-            Context context = getContext();
+            final Context context = getContext();
             boolean time24 = android.text.format.DateFormat.is24HourFormat(context);
             String pattern = context.getString(time24 ? R.string.clock_24_hours_format : R.string.clock_12_hours_format);
             return new SimpleDateFormat(pattern, LocaleUtils.getDefaultLocale(context));

@@ -34,7 +34,7 @@ public abstract class AbstractPreferenceFragment extends net.sf.preference.Abstr
     }
 
     protected void notifyAppWidgets() {
-        Context context = getActivity();
+        final Context context = getActivity();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final Class<?> clazz = ZmanimWidget.class;
         ComponentName provider = new ComponentName(context, clazz);

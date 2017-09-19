@@ -57,7 +57,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      *         if an error occurs.
      */
     public void testGoogleAddress() throws Exception {
-        Context context = getContext();
+        final Context context = getContext();
         assertNotNull(context);
 
         Locale locale = Locale.getDefault();
@@ -110,7 +110,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      *         if an error occurs.
      */
     public void testGoogleElevation() throws Exception {
-        Context context = getContext();
+        final Context context = getContext();
         assertNotNull(context);
 
         Locale locale = Locale.getDefault();
@@ -151,7 +151,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      *         if an error occurs.
      */
     public void testGeoNamesAddress() throws Exception {
-        Context context = getContext();
+        final Context context = getContext();
         assertNotNull(context);
 
         Locale locale = Locale.getDefault();
@@ -185,7 +185,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      *         if an error occurs.
      */
     public void testBingAddress() throws Exception {
-        Context context = getContext();
+        final Context context = getContext();
         assertNotNull(context);
 
         Locale locale = Locale.getDefault();
