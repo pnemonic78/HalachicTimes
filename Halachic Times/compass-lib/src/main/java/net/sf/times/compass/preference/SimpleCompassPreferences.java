@@ -18,7 +18,7 @@ package net.sf.times.compass.preference;
 import android.content.Context;
 import android.content.res.Resources;
 
-import net.sf.preference.SimplePreferences;
+import net.sf.preference.SimpleThemePreferences;
 import net.sf.times.compass.lib.R;
 
 import static net.sf.preference.ThemePreferences.Values.THEME_DEFAULT;
@@ -36,7 +36,7 @@ import static net.sf.times.compass.preference.CompassPreferences.Values.THEME_SI
  *
  * @author Moshe Waisberg
  */
-public class SimpleCompassPreferences extends SimplePreferences implements CompassPreferences {
+public class SimpleCompassPreferences extends SimpleThemePreferences implements CompassPreferences {
 
     /**
      * Constructs a new settings.
@@ -86,11 +86,6 @@ public class SimpleCompassPreferences extends SimplePreferences implements Compa
             return R.style.Compass_Theme_Classic;
         }
         return R.style.Compass_Theme_Original;
-    }
-
-    @Override
-    public int getTheme() {
-        return getTheme(getThemeValue());
     }
 
     @Override
