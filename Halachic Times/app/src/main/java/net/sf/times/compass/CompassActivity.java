@@ -74,7 +74,7 @@ public class CompassActivity extends BaseCompassActivity {
     }
 
     private void startSettings() {
-        Context context = this;
+        final Context context = this;
         startActivity(new Intent(context, CompassPreferenceActivity.class));
     }
 }

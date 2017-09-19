@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import net.sf.preference.ThemePreferences;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.location.LocatedActivity;
@@ -34,7 +35,7 @@ import net.sf.times.location.LocationsProvider;
  *
  * @author Moshe Waisberg
  */
-public abstract class BaseCompassActivity extends LocatedActivity<CompassPreferences> {
+public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferences> {
 
     /** The main fragment. */
     private CompassFragment fragment;
@@ -48,6 +49,7 @@ public abstract class BaseCompassActivity extends LocatedActivity<CompassPrefere
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = new CompassPreferences(this);
 
         setContentView(R.layout.compass);
         headerLocation = findViewById(R.id.coordinates);
@@ -65,19 +67,8 @@ public abstract class BaseCompassActivity extends LocatedActivity<CompassPrefere
         }
     }
 
-    @Override
-    public void onCreate() {
-        preferences = new CompassPreferences(this);
-        super.onCreate();
-    }
-
     public CompassPreferences getCompassPreferences() {
         return preferences;
-    }
-
-    @Override
-    public CompassPreferences getThemePreferences() {
-        return getCompassPreferences();
     }
 
     @Override
@@ -119,7 +110,7 @@ public abstract class BaseCompassActivity extends LocatedActivity<CompassPrefere
 
         // Update the location.
         locationLabel.setText(locationText);
-        locationLabel.setVisibility(preferences.isCoordinates() ? View.VISIBLE : View.GONE);
+        locationLabel.setVisibility(preferences.isCoordinatesVisible() ? View.VISIBLE : View.GONE);
         addressLabel.setText(locationName);
     }
 

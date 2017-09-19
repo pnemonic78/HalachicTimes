@@ -17,15 +17,19 @@ package net.sf.times.compass.preference;
 
 import android.content.Context;
 
+import net.sf.preference.ThemePreferences;
 import net.sf.times.compass.lib.R;
-import net.sf.times.location.LocationPreferences;
+import net.sf.times.location.SimpleLocationPreferences;
+
+import static net.sf.preference.ThemePreferences.Values.THEME_DEFAULT;
+import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
 
 /**
  * Application settings.
  *
  * @author Moshe Waisberg
  */
-public class CompassPreferences extends LocationPreferences {
+public class CompassPreferences extends SimpleLocationPreferences implements ThemePreferences {
 
     /** Preference name for the compass bearing type. */
     public static final String KEY_COMPASS_BEARING = "compass.bearing";
@@ -78,11 +82,26 @@ public class CompassPreferences extends LocationPreferences {
     }
 
     @Override
+    public String getThemeValue() {
+        return preferences.getString(KEY_THEME_COMPASS, THEME_DEFAULT);
+    }
+
+    @Override
+    public int getTheme() {
+        return getTheme(getThemeValue());
+    }
+
+    @Override
     public int getTheme(String value) {
-        if (LIST_THEME_LIGHT.equals(value)) {
+        if (THEME_LIGHT.equals(value)) {
             return R.style.Theme_Compass_Light;
         }
         return R.style.Theme_Compass_Dark;
+    }
+
+    @Override
+    public void setTheme(String value) {
+        preferences.edit().putString(KEY_THEME_COMPASS, value).apply();
     }
 
     /**
@@ -111,8 +130,6 @@ public class CompassPreferences extends LocationPreferences {
      *         the context.
      */
     public static void init(Context context) {
-        LocationPreferences.init(context);
-
         BEARING_GREAT_CIRCLE = context.getString(R.string.compass_bearing_value_circle);
         BEARING_RHUMB_LINE = context.getString(R.string.compass_bearing_value_rhumb);
 

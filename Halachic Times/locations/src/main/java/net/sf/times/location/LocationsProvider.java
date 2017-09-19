@@ -33,7 +33,6 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.util.Collection;
@@ -41,6 +40,9 @@ import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.text.format.DateUtils.HOUR_IN_MILLIS;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
  * Locations provider.
@@ -52,16 +54,16 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private static final String TAG = "LocationProvider";
 
     /** The maximum time interval between location updates, in milliseconds. */
-    private static final long UPDATE_TIME_MAX = 6 * DateUtils.HOUR_IN_MILLIS;
+    private static final long UPDATE_TIME_MAX = 6 * HOUR_IN_MILLIS;
     /** The time interval between requesting location updates, in milliseconds. */
-    private static final long UPDATE_TIME_START = 30 * DateUtils.SECOND_IN_MILLIS;
+    private static final long UPDATE_TIME_START = 30 * SECOND_IN_MILLIS;
     /**
      * The duration to receive updates, in milliseconds.<br>
      * Should be enough time to get a sufficiently accurate location.
      */
-    private static final long UPDATE_DURATION = DateUtils.MINUTE_IN_MILLIS;
+    private static final long UPDATE_DURATION = MINUTE_IN_MILLIS;
     /** The minimum time interval between location updates, in milliseconds. */
-    private static final long UPDATE_TIME = 5 * DateUtils.SECOND_IN_MILLIS;
+    private static final long UPDATE_TIME = 5 * SECOND_IN_MILLIS;
     /** The minimum distance between location updates, in metres. */
     private static final int UPDATE_DISTANCE = 100;
 
@@ -78,9 +80,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * The offset in milliseconds from UTC of Israeli time zone's standard time.
      */
-    private static final int TZ_OFFSET_ISRAEL = (int) (2 * DateUtils.HOUR_IN_MILLIS);
+    private static final int TZ_OFFSET_ISRAEL = (int) (2 * HOUR_IN_MILLIS);
     /** Israeli time zone offset with daylight savings time. */
-    private static final int TZ_OFFSET_DST_ISRAEL = (int) (TZ_OFFSET_ISRAEL + DateUtils.HOUR_IN_MILLIS);
+    private static final int TZ_OFFSET_DST_ISRAEL = (int) (TZ_OFFSET_ISRAEL + HOUR_IN_MILLIS);
 
     /** Northern-most latitude for Israel. */
     private static final double ISRAEL_NORTH = 33.289212;
@@ -103,7 +105,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private static final int WHAT_ADDRESS = 4;
 
     /** If the current location is older than 1 second, then it is stale. */
-    private static final long LOCATION_EXPIRATION = DateUtils.SECOND_IN_MILLIS;
+    private static final long LOCATION_EXPIRATION = SECOND_IN_MILLIS;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -118,8 +120,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     private final LocationManager locationManager;
     /** The location. */
     private Location location;
-    /** The settings and preferences. */
-    private LocationPreferences settings;
+    /** The preferences. */
+    private final LocationPreferences preferences;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     /** The time zone. */
@@ -148,7 +150,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (app != null)
             context = app;
         this.context = context;
-        settings = new LocationPreferences(context);
+        preferences = new SimpleLocationPreferences(context);
         countriesGeocoder = new CountriesGeocoder(context);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         timeZone = TimeZone.getDefault();
@@ -212,7 +214,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         if (keepLocation) {
             this.location = location;
-            settings.putLocation(location);
+            preferences.putLocation(location);
         }
 
         for (ZmanimLocationListener listener : locationListeners) {
@@ -408,7 +410,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the location - {@code null} otherwise.
      */
     public Location getLocationSaved() {
-        return settings.getLocation();
+        return preferences.getLocation();
     }
 
     /**
@@ -795,7 +797,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the formatter.
      */
     protected LocationFormatter createLocationFormatter(Context context) {
-        return new SimpleLocationFormatter(context);
+        return new SimpleLocationFormatter(context, preferences);
     }
 
     /**

@@ -33,8 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import net.sf.app.ThemeCallbacks;
 import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 import net.sf.text.method.RangeInputFilter;
 import net.sf.times.location.text.LatitudeInputFilter;
@@ -272,17 +272,6 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Create a location formatter helper.
-     *
-     * @param context
-     *         the context.
-     * @return the formatter.
-     */
-    protected LocationFormatter createLocationFormatter(Context context) {
-        return new SimpleLocationFormatter(context);
     }
 
     @Override

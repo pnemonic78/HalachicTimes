@@ -273,7 +273,7 @@ public class ZmanimActivity extends LocatedActivity implements
     /** Initialise. */
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
-        Context context = this;
+        final Context context = this;
         settings = new ZmanimPreferences(context);
 
         setContentView(R.layout.times);
@@ -410,7 +410,7 @@ public class ZmanimActivity extends LocatedActivity implements
 
         // Update the location.
         locationLabel.setText(locationText);
-        locationLabel.setVisibility(settings.isCoordinates() ? View.VISIBLE : View.GONE);
+        locationLabel.setVisibility(settings.isCoordinatesVisible() ? View.VISIBLE : View.GONE);
         addressLabel.setText(locationName);
     }
 
@@ -795,16 +795,14 @@ public class ZmanimActivity extends LocatedActivity implements
     }
 
     private void updateReminders() {
-        Context context = this;
-
+        final Context context = this;
         Intent intent = new Intent(context, ZmanimReminderService.class);
         intent.setAction(ZmanimReminder.ACTION_UPDATE);
         context.startService(intent);
     }
 
     private void cancelReminders() {
-        Context context = this;
-
+        final Context context = this;
         Intent intent = new Intent(context, ZmanimReminderService.class);
         intent.setAction(ZmanimReminder.ACTION_CANCEL);
         context.startService(intent);

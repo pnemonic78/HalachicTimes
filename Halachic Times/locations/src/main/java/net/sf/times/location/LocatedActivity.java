@@ -190,7 +190,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         if (loc == null)
             return;
 
-        Activity activity = this;
+        final Activity activity = this;
         Intent intent = new Intent(activity, getLocationActivityClass());
         intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
         activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);

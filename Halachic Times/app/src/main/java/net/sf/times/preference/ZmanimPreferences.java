@@ -30,6 +30,7 @@ import net.sourceforge.zmanim.ZmanimCalendar;
 import java.util.Calendar;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
 import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_120MINUTES;
 import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_16POINT1DEGREES;
 import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_18DEGREES;
@@ -211,9 +212,9 @@ public class ZmanimPreferences extends CompassPreferences {
     public static String OPINION_TWILIGHT;
 
     /** Show zmanim list without background. */
-    public static String LIST_THEME_NONE;
+    public static String THEME_NONE;
     /** Show zmanim list with white background. */
-    public static String LIST_THEME_WHITE;
+    public static String THEME_WHITE;
 
     /** No omer count. */
     public static String OMER_NONE;
@@ -274,13 +275,13 @@ public class ZmanimPreferences extends CompassPreferences {
 
     @Override
     public int getTheme(String value) {
-        if (TextUtils.isEmpty(value) || LIST_THEME_NONE.equals(value)) {
+        if (TextUtils.isEmpty(value) || THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
         }
-        if (LIST_THEME_LIGHT.equals(value)) {
+        if (THEME_LIGHT.equals(value)) {
             return R.style.Theme_Zmanim_Light;
         }
-        if (LIST_THEME_WHITE.equals(value)) {
+        if (THEME_WHITE.equals(value)) {
             return R.style.Theme_Zmanim_White;
         }
         return R.style.Theme_Zmanim_Dark;
@@ -939,8 +940,8 @@ public class ZmanimPreferences extends CompassPreferences {
         OPINION_TWILIGHT = context.getString(R.string.opinion_value_twilight);
         OPINION_NIGHT = context.getString(R.string.opinion_value_nightfall);
 
-        LIST_THEME_NONE = context.getString(R.string.theme_value_none);
-        LIST_THEME_WHITE = context.getString(R.string.theme_value_white);
+        THEME_NONE = context.getString(R.string.theme_value_none);
+        THEME_WHITE = context.getString(R.string.theme_value_white);
 
         OMER_NONE = context.getString(R.string.omer_value_off);
         OMER_B = context.getString(R.string.omer_value_b);

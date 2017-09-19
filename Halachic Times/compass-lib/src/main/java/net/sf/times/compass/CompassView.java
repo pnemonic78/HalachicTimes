@@ -35,7 +35,6 @@ import android.view.View;
 import net.sf.times.compass.lib.BuildConfig;
 import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
-import net.sf.times.location.LocationApplication;
 
 import java.util.Random;
 
@@ -149,8 +148,14 @@ public class CompassView extends View {
     /** Initialise. */
     private void init(Context context) {
         Resources res = context.getResources();
-        LocationApplication app = (LocationApplication) context.getApplicationContext();
-        CompassPreferences prefs = (CompassPreferences) app.getThemePreferences();
+        CompassPreferences prefs;
+        if (context instanceof BaseCompassActivity) {
+            BaseCompassActivity activity = (BaseCompassActivity) context;
+            prefs = activity.getCompassPreferences();
+        } else {
+            prefs = new CompassPreferences(context);
+        }
+
         TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
 
         compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);

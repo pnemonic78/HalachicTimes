@@ -33,7 +33,11 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
     private final String symbolWest;
 
     public SimpleLocationFormatter(Context context) {
-        super(context);
+        this(context, null);
+    }
+
+    public SimpleLocationFormatter(Context context, LocationPreferences preferences) {
+        super(context, preferences);
 
         symbolNorth = context.getString(R.string.north);
         symbolSouth = context.getString(R.string.south);

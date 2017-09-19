@@ -19,12 +19,12 @@ import android.content.Context;
 
 import net.sf.lib.R;
 
-import static net.sf.preference.ThemePreferences.Themes.THEME_DARK;
-import static net.sf.preference.ThemePreferences.Themes.THEME_DEFAULT;
-import static net.sf.preference.ThemePreferences.Themes.THEME_LIGHT;
+import static net.sf.preference.ThemePreferences.Values.THEME_DARK;
+import static net.sf.preference.ThemePreferences.Values.THEME_DEFAULT;
+import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
 
 /**
- * Theme preferences implementation.
+ * Simple theme preferences implementation.
  *
  * @author Moshe Waisberg
  */

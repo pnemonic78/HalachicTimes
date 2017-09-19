@@ -23,6 +23,8 @@ import net.sf.util.LocaleUtils;
 
 import java.util.Locale;
 
+import static net.sf.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL;
+
 /**
  * Default location formatter.
  *
@@ -32,8 +34,8 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
     /** The context. */
     private final Context context;
-    /** The settings and preferences. */
-    private LocationPreferences settings;
+    /** The preferences. */
+    private LocationPreferences preferences;
     /** The coordinates format for decimal format. */
     private final String formatDecimal;
     /** The coordinates format for decimal format with elevation. */
@@ -46,8 +48,12 @@ public class DefaultLocationFormatter implements LocationFormatter {
     private final String formatElevation;
 
     public DefaultLocationFormatter(Context context) {
+        this(context, null);
+    }
+
+    public DefaultLocationFormatter(Context context, LocationPreferences preferences) {
         this.context = context;
-        settings = new LocationPreferences(context);
+        this.preferences = (preferences != null) ? preferences : new SimpleLocationPreferences(context);
 
         formatDecimal = context.getString(R.string.location_decimal);
         formatDecimalElevation = context.getString(R.string.location_decimal_with_elevation);
@@ -81,11 +87,11 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
     @Override
     public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
-        final String notation = settings.getCoordinatesFormat();
-        if (LocationPreferences.FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatCoordinatesSexagesimal(latitude, longitude, elevation, settings.isElevation());
+        final String notation = preferences.getCoordinatesFormat();
+        if (FORMAT_SEXAGESIMAL.equals(notation)) {
+            return formatCoordinatesSexagesimal(latitude, longitude, elevation, preferences.isElevationVisible());
         }
-        return formatCoordinatesDecimal(latitude, longitude, elevation, settings.isElevation());
+        return formatCoordinatesDecimal(latitude, longitude, elevation, preferences.isElevationVisible());
     }
 
     protected CharSequence formatCoordinatesDecimal(double latitude, double longitude, double elevation, boolean withElevation) {
@@ -112,8 +118,8 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
     @Override
     public CharSequence formatLatitude(double latitude) {
-        final String notation = settings.getCoordinatesFormat();
-        if (LocationPreferences.FORMAT_SEXAGESIMAL.equals(notation)) {
+        final String notation = preferences.getCoordinatesFormat();
+        if (FORMAT_SEXAGESIMAL.equals(notation)) {
             return formatLatitudeSexagesimal(latitude);
         }
         return formatLatitudeDecimal(latitude);
@@ -131,8 +137,8 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
     @Override
     public CharSequence formatLongitude(double coordinate) {
-        final String notation = settings.getCoordinatesFormat();
-        if (LocationPreferences.FORMAT_SEXAGESIMAL.equals(notation)) {
+        final String notation = preferences.getCoordinatesFormat();
+        if (FORMAT_SEXAGESIMAL.equals(notation)) {
             return formatLongitudeSexagesimal(coordinate);
         }
         return formatLongitudeDecimal(coordinate);

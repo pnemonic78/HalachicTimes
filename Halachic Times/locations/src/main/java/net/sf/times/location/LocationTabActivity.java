@@ -109,9 +109,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onCreate();
-        Resources res = getResources();
+        final Resources res = getResources();
 
-        LocationApplication app = (LocationApplication) getApplication();
+        final LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
