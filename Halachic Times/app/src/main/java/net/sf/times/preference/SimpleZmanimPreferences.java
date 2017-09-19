@@ -20,18 +20,19 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.text.TextUtils;
 
 import net.sf.media.RingtoneManager;
+import net.sf.preference.SimplePreferences;
+import net.sf.preference.SimpleThemePreferences;
+import net.sf.preference.ThemePreferences;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
-import net.sf.times.location.SimpleLocationPreferences;
 import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
 
+import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static net.sf.preference.ThemePreferences.Values.THEME_DEFAULT;
 import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_B;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_L;
@@ -103,7 +104,9 @@ import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_GRA;
  *
  * @author Moshe Waisberg
  */
-public class SimpleZmanimPreferences extends SimpleLocationPreferences implements ZmanimPreferences {
+public class SimpleZmanimPreferences extends SimplePreferences implements ZmanimPreferences {
+
+    private final ThemePreferences themePreferences;
 
     /**
      * Constructs a new preferences.
@@ -113,6 +116,7 @@ public class SimpleZmanimPreferences extends SimpleLocationPreferences implement
      */
     public SimpleZmanimPreferences(Context context) {
         super(context);
+        this.themePreferences = new SimpleThemePreferences(context);
         init(context);
     }
 
@@ -138,12 +142,12 @@ public class SimpleZmanimPreferences extends SimpleLocationPreferences implement
 
     @Override
     public String getThemeValue() {
-        return preferences.getString(KEY_THEME, THEME_DEFAULT);
+        return themePreferences.getThemeValue();
     }
 
     @Override
     public int getTheme(String value) {
-        if (TextUtils.isEmpty(value) || THEME_NONE.equals(value)) {
+        if (isEmpty(value) || THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
         }
         if (THEME_LIGHT.equals(value)) {
@@ -157,12 +161,12 @@ public class SimpleZmanimPreferences extends SimpleLocationPreferences implement
 
     @Override
     public int getTheme() {
-        return getTheme(getThemeValue());
+        return themePreferences.getTheme();
     }
 
     @Override
     public void setTheme(String value) {
-        preferences.edit().putString(KEY_THEME, value).apply();
+        themePreferences.setTheme(value);
     }
 
     @Override
@@ -338,7 +342,7 @@ public class SimpleZmanimPreferences extends SimpleLocationPreferences implement
         String keyReminder = key + REMINDER_SUFFIX;
 
         String value = preferences.getString(keyReminder, context.getString(R.string.reminder_defaultValue));
-        if (TextUtils.isEmpty(value)) {
+        if (isEmpty(value)) {
             return NEVER;
         }
 
@@ -517,7 +521,7 @@ public class SimpleZmanimPreferences extends SimpleLocationPreferences implement
         RingtoneManager ringtoneManager = new RingtoneManager(context);
         ringtoneManager.setType(type);
         path = ringtoneManager.filterInternalMaybe(path);
-        return TextUtils.isEmpty(path) ? null : Uri.parse(path);
+        return isEmpty(path) ? null : Uri.parse(path);
     }
 
     @Override

@@ -30,7 +30,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public interface ZmanimPreferences extends LocationPreferences, ThemePreferences {
+public interface ZmanimPreferences extends ThemePreferences {
 
     /** Preference name for showing seconds. */
     String KEY_SECONDS = "seconds.visible";
