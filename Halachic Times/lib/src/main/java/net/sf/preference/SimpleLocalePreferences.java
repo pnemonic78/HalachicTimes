@@ -17,16 +17,16 @@ package net.sf.preference;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import java.util.Locale;
 
 import static net.sf.util.LocaleUtils.getDefaultLocale;
+import static net.sf.util.LocaleUtils.parseLocale;
 
 /**
  * Locale preferences implementation.
  *
- * @author moshe on 2017/09/17.
+ * @author Moshe Waisberg
  */
 public class SimpleLocalePreferences extends SimplePreferences implements LocalePreferences {
 
@@ -42,16 +42,9 @@ public class SimpleLocalePreferences extends SimplePreferences implements Locale
     @Override
     public Locale getLocale() {
         String value = getPreferences().getString(KEY_LOCALE, null);
-        if (!TextUtils.isEmpty(value)) {
-            String[] tokens = value.split("_");
-            switch (tokens.length) {
-                case 1:
-                    return new Locale(tokens[0]);
-                case 2:
-                    return new Locale(tokens[0], tokens[1]);
-                case 3:
-                    return new Locale(tokens[0], tokens[1], tokens[2]);
-            }
+        Locale locale = parseLocale(value);
+        if (locale != null) {
+            return locale;
         }
         return getDefaultLocale(context);
     }

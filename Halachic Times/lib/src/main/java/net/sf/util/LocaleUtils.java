@@ -19,12 +19,18 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
-import android.os.LocaleList;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Locale;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.N;
+import static android.text.TextUtils.isEmpty;
 
 /**
  * Locale utilities.
@@ -49,6 +55,8 @@ public class LocaleUtils {
     public static final String ISO639_PASHTO = "ps";
     /** ISO 639 language code for "Yiddish". */
     public static final String ISO639_YIDDISH = "yi";
+
+    private static Comparator<Locale> localeComparator;
 
     private LocaleUtils() {
     }
@@ -134,7 +142,7 @@ public class LocaleUtils {
      *         the resources.
      * @return the locale.
      */
-    @TargetApi(Build.VERSION_CODES.N)
+    @TargetApi(N)
     @NonNull
     public static Locale getDefaultLocale(Resources res) {
         return getDefaultLocale(res.getConfiguration());
@@ -147,11 +155,11 @@ public class LocaleUtils {
      *         the configuration with locales.
      * @return the locale.
      */
-    @TargetApi(Build.VERSION_CODES.N)
+    @TargetApi(N)
     @NonNull
     public static Locale getDefaultLocale(Configuration config) {
         Locale locale = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (SDK_INT >= N) {
             android.os.LocaleList locales = config.getLocales();
             if (locales.isEmpty()) {
                 locales = android.os.LocaleList.getAdjustedDefault();
@@ -180,12 +188,116 @@ public class LocaleUtils {
     public static void applyLocale(Context context, Locale locale) {
         final Resources res = context.getResources();
         final Configuration config = res.getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
         } else {
             config.locale = locale;
         }
         res.updateConfiguration(config, res.getDisplayMetrics());
         Locale.setDefault(locale);
+    }
+
+    /**
+     * Sort the locales by their display names.
+     *
+     * @param values
+     *         the immutable list of locale values.
+     * @return the sorted list of locale names.
+     */
+    public static Locale[] sortByDisplay(String[] values) {
+        return sortByDisplay(values, (Locale) null);
+    }
+
+    /**
+     * Sort the locales by their display names.
+     *
+     * @param values
+     *         the immutable list of locale values.
+     * @param context
+     *         the display context.
+     * @return the sorted list of locale names.
+     */
+    public static Locale[] sortByDisplay(String[] values, Context context) {
+        return sortByDisplay(values, getDefaultLocale(context));
+    }
+
+    /**
+     * Sort the locales by their display names.
+     *
+     * @param values
+     *         the immutable list of locale values.
+     * @param locale
+     *         the display locale.
+     * @return the sorted list of locales.
+     */
+    public static Locale[] sortByDisplay(String[] values, Locale locale) {
+        if (values == null) {
+            return null;
+        }
+        final int length = values.length;
+        Locale[] locales = new Locale[length];
+        for (int i = 0; i < length; i++) {
+            locales[i] = parseLocale(values[i]);
+        }
+        return sortByDisplay(locales, locale);
+    }
+
+
+    /**
+     * Sort the locales by their display names.
+     *
+     * @param locales
+     *         the list of locales to sort.
+     * @return the sorted list of locales.
+     */
+    public static Locale[] sortByDisplay(Locale[] locales) {
+        return sortByDisplay(locales, null);
+    }
+
+    /**
+     * Sort the locales by their display names.
+     *
+     * @param locales
+     *         the list of locales to sort.
+     * @param locale
+     *         the display locale.
+     * @return the sorted list of locales.
+     */
+    public static Locale[] sortByDisplay(Locale[] locales, Locale locale) {
+        if (locales == null) {
+            return null;
+        }
+        if (localeComparator == null) {
+            localeComparator = new LocaleNameComparator(locale);
+        }
+        Arrays.sort(locales, localeComparator);
+        return locales;
+    }
+
+    /**
+     * Parse the locale
+     *
+     * @param localeValue
+     *         the locale to parse. For example, {@code fr} for "French", or {@code en_UK} for
+     *         "English (United Kingdom)".
+     * @return the locale - {@code null} otherwise.
+     */
+    @Nullable
+    public static Locale parseLocale(String localeValue) {
+        if (!isEmpty(localeValue)) {
+            if (SDK_INT >= LOLLIPOP) {
+                return Locale.forLanguageTag(localeValue);
+            }
+            String[] tokens = localeValue.split("_");
+            switch (tokens.length) {
+                case 1:
+                    return new Locale(tokens[0]);
+                case 2:
+                    return new Locale(tokens[0], tokens[1]);
+                case 3:
+                    return new Locale(tokens[0], tokens[1], tokens[2]);
+            }
+        }
+        return new Locale("");
     }
 }
