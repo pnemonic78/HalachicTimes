@@ -18,6 +18,9 @@ package net.sf.times;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
@@ -29,6 +32,15 @@ import net.sf.times.location.ZmanimLocations;
  * @author Moshe Waisberg
  */
 public class ZmanimApplication extends LocationApplication<ThemePreferences, AddressProvider, ZmanimLocations> {
+
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
+    }
 
     @NonNull
     @Override
