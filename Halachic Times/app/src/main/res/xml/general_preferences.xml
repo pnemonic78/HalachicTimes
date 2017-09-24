@@ -37,6 +37,7 @@
         android:defaultValue="@string/locale_defaultValue"
         android:entries="@array/locale_entries"
         android:entryValues="@array/locale_values"
+        android:icon="@drawable/ic_settings_language"
         android:key="locale"
         android:title="@string/locale"/>
 
