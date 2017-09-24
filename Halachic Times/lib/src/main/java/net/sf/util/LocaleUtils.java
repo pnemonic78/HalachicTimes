@@ -185,16 +185,18 @@ public class LocaleUtils {
      *         the locale to set.
      * @return the locale.
      */
-    public static void applyLocale(Context context, Locale locale) {
+    public static Context applyLocale(Context context, Locale locale) {
+        Locale.setDefault(locale);
+
         final Resources res = context.getResources();
         final Configuration config = res.getConfiguration();
         if (SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
-        } else {
-            config.locale = locale;
+            return context.createConfigurationContext(config);
         }
+        config.locale = locale;
         res.updateConfiguration(config, res.getDisplayMetrics());
-        Locale.setDefault(locale);
+        return context;
     }
 
     /**

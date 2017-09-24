@@ -38,8 +38,8 @@ public class LocaleWrapper<P extends LocalePreferences> implements LocaleCallbac
     }
 
     @Override
-    public void onCreate() {
-        applyLocale(context, preferences.getLocale());
+    public Context attachBaseContext(Context context) {
+        return applyLocale(context, preferences.getLocale());
     }
 
     @Override

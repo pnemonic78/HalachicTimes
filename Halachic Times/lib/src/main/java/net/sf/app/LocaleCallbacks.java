@@ -15,6 +15,8 @@
  */
 package net.sf.app;
 
+import android.content.Context;
+
 import net.sf.preference.LocalePreferences;
 
 /**
@@ -24,8 +26,14 @@ import net.sf.preference.LocalePreferences;
  */
 public interface LocaleCallbacks<P extends LocalePreferences> {
 
-    /** Apply the locale here. */
-    void onCreate();
+    /**
+     * Apply the locale here
+     *
+     * @param context
+     *         the context with locale.
+     * @return the context with the new locale.
+     */
+    Context attachBaseContext(Context context);
 
     /**
      * Get the locale preferences.
