@@ -34,7 +34,7 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
     /** Provider for locations. */
     private LP locationsProvider;
 
-    public LocationHolder(Context context) {
+    public LocationHolder(@NonNull Context context) {
         this.context = context;
         this.addressProvider = null;
         this.locationsProvider = null;
@@ -108,5 +108,4 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
             locationsProvider = null;
         }
     }
-
 }

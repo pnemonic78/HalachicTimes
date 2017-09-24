@@ -47,7 +47,8 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     @NonNull
     protected LocationHolder<AP, LP> getLocationHolder() {
         if (locationHolder == null) {
-            locationHolder = new LocationHolder<>(createAddressProvider(this), createLocationsProvider(this));
+            final Context context = this;
+            locationHolder = new LocationHolder<>(createAddressProvider(context), createLocationsProvider(context));
             registerComponentCallbacks(locationHolder);
         }
         return locationHolder;
@@ -80,8 +81,20 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     @Override
     public void onTerminate() {
         super.onTerminate();
-        final LocationHolder locationHolder = getLocationHolder();
-        unregisterComponentCallbacks(locationHolder);
-        locationHolder.onTerminate();
+        stopLocationHolder();
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        super.onTrimMemory(level);
+        stopLocationHolder();
+    }
+
+    private void stopLocationHolder() {
+        final LocationHolder locationHolder = this.locationHolder;
+        if (locationHolder != null) {
+            unregisterComponentCallbacks(locationHolder);
+            this.locationHolder = null;
+        }
     }
 }
