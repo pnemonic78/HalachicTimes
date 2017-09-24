@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * Preferences provider columns.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class Preferences {
 

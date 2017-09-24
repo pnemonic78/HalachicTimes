@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Cursor wrapper for a single preference value.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class PreferencesCursor extends MatrixCursor {
 

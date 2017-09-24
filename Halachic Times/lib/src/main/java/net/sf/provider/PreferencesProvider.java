@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * Content provider that wraps a real {@link android.content.SharedPreferences}.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class PreferencesProvider extends ContentProvider {
 

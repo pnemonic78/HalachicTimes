@@ -22,7 +22,7 @@ import java.util.Locale;
 /**
  * Locale preferences.
  *
- * @author moshe on 2017/09/17.
+ * @author Moshe Waisberg
  */
 public interface LocalePreferences {
 

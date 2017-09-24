@@ -22,7 +22,7 @@ import static android.text.format.DateUtils.DAY_IN_MILLIS;
 /**
  * Time utilities.
  *
- * @author moshe on 2017/09/10.
+ * @author Moshe Waisberg
  */
 public class TimeUtils {
 

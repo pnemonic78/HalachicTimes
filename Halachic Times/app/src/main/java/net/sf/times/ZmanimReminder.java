@@ -27,7 +27,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -46,6 +45,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
@@ -487,14 +490,14 @@ public class ZmanimReminder {
                     .setLights(LED_COLOR, LED_ON, LED_OFF);
 
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (SDK_INT >= JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (SDK_INT >= LOLLIPOP) {
             builder.setCategory(audioStreamType == AudioManager.STREAM_ALARM ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
         }
         Notification notification;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (SDK_INT >= JELLY_BEAN) {
             notification = builder.build();
         } else {
             notification = builder.getNotification();
@@ -608,14 +611,14 @@ public class ZmanimReminder {
                 .setOngoing(true)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setWhen(when);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if (SDK_INT >= JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (SDK_INT >= LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_REMINDER);
         }
         Notification notification;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (SDK_INT >= JELLY_BEAN) {
             notification = builder.build();
         } else {
             notification = builder.getNotification();

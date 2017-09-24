@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -29,6 +28,9 @@ import net.sf.lib.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.KITKAT;
 
 /**
  * Ringtone manager that can ignore external media when not permitted.
@@ -70,7 +72,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
     public RingtoneManager(Context context) {
         super(context);
         this.context = context;
-        setIncludeExternal((Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+        setIncludeExternal((SDK_INT < KITKAT)
                 || (context.checkCallingOrSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
     }
 

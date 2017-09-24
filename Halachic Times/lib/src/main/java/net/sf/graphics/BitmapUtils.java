@@ -21,7 +21,7 @@ import android.graphics.Color;
 /**
  * Bitmap utilities.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class BitmapUtils {
 
@@ -36,7 +36,7 @@ public class BitmapUtils {
      * @return the color - {@code {@link android.graphics.Color#TRANSPARENT}} otherwise.
      */
     public static int getPixel(Bitmap bm) {
-        Bitmap pixel = (bm.getWidth() < 8) && (bm.getHeight() < 8) ? bm : Bitmap.createScaledBitmap(bm, 1, 1, true);
+        Bitmap pixel = (bm.getWidth() <= 8) && (bm.getHeight() <= 8) ? bm : Bitmap.createScaledBitmap(bm, 1, 1, true);
         if (!pixel.isRecycled()) {
             int bg = pixel.getPixel(0, 0);
             if (bm != pixel) {

@@ -26,7 +26,6 @@ import android.location.Address;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -40,6 +39,8 @@ import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.M;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -288,7 +289,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    @TargetApi(Build.VERSION_CODES.M)
+    @TargetApi(M)
     public Location getLocationGPS() {
         if (locationManager == null)
             return null;
@@ -328,7 +329,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    @TargetApi(Build.VERSION_CODES.M)
+    @TargetApi(M)
     public Location getLocationNetwork() {
         if (locationManager == null)
             return null;
@@ -367,7 +368,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    @TargetApi(Build.VERSION_CODES.M)
+    @TargetApi(M)
     public Location getLocationPassive() {
         if (locationManager == null)
             return null;
@@ -422,7 +423,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         Location loc = location;
         if (isValid(loc))
             return loc;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (SDK_INT < M) {
             loc = getLocationGPSBase();
             if (isValid(loc))
                 return loc;
@@ -657,7 +658,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+    @TargetApi(M)
     private void requestUpdates() {
         if (locationManager == null)
             return;
@@ -739,7 +740,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
             switch (msg.what) {
                 case WHAT_START:
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    if (SDK_INT < M) {
                         requestUpdatesBase();
                     } else {
                         requestUpdates();

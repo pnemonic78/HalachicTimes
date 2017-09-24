@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import net.sf.app.SimpleThemeCallbacks;
@@ -31,6 +30,9 @@ import net.sf.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 
 import java.util.TimeZone;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Activity that needs locations.
@@ -110,7 +112,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
         if (location != null) {
             locations.setLocation(location);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        } else if (SDK_INT >= M) {
             initLocationPermissions();
         }
     }
@@ -262,7 +264,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         return getString(R.string.location_unknown);
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+    @TargetApi(M)
     private void initLocationPermissions() {
         if ((checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                 && (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {

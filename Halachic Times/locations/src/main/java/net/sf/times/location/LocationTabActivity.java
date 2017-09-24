@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,8 +37,8 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import net.sf.app.ThemeCallbacks;
 import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.LocationAdapter.LocationItem;
 import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
@@ -48,6 +47,9 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 /**
  * Pick a city from the list.
@@ -114,7 +116,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+        if (SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.locations);
@@ -193,7 +195,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            if (SDK_INT < JELLY_BEAN) {
                 finish();
                 return true;
             }

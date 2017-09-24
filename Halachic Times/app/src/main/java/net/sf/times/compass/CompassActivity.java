@@ -18,7 +18,6 @@ package net.sf.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +25,9 @@ import android.view.MenuItem;
 import net.sf.times.R;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.preference.CompassPreferenceActivity;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 /**
  * Show the direction in which to pray.
@@ -38,7 +40,7 @@ public class CompassActivity extends BaseCompassActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+        if (SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -53,7 +55,7 @@ public class CompassActivity extends BaseCompassActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                if (SDK_INT < JELLY_BEAN) {
                     finish();
                     return true;
                 }

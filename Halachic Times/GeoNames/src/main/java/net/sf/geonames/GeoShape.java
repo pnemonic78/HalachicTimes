@@ -22,7 +22,7 @@ import java.awt.Shape;
 /**
  * Geonames shape.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class GeoShape {
 

@@ -20,7 +20,7 @@ import java.awt.geom.Rectangle2D;
 /**
  * A rectangular bounding box which is used to describe the bounds of a name.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class BoundingBox extends Rectangle2D.Double {
 

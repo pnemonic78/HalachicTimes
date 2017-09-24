@@ -35,7 +35,7 @@ import java.util.Set;
 /**
  * Shared preferences that are sharable across processes by using a content provider.
  *
- * @author moshe.w
+ * @author Moshe Waisberg
  */
 public class ProviderPreferences implements SharedPreferences, SharedPreferences.Editor {
 

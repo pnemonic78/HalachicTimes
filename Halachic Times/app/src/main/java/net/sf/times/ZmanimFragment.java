@@ -21,7 +21,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -41,6 +40,9 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -398,10 +400,11 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         // Workaround for Samsung ICS bug where the highlight lingers.
         if (bg instanceof StateListDrawable)
             bg = bg.getConstantState().newDrawable();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        if (SDK_INT < JELLY_BEAN) {
             view.setBackgroundDrawable(bg);
-        else
+        } else {
             view.setBackground(bg);
+        }
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         unhighlightBackground = null;
     }
@@ -446,10 +449,11 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         paddingTop = view.getPaddingTop();
         paddingRight = view.getPaddingRight();
         paddingBottom = view.getPaddingBottom();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN)
+        if (SDK_INT < JELLY_BEAN) {
             view.setBackgroundDrawable(getSelectedBackground());
-        else
+        } else {
             view.setBackground(getSelectedBackground());
+        }
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         highlightRow = view;
         // Scroll to the row

@@ -32,7 +32,7 @@ import static net.sf.util.TimeUtils.roundUp;
 /**
  * Test times.
  *
- * @author moshe on 2017/09/10.
+ * @author Moshe Waisberg
  */
 public class TimeTests {
 

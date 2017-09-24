@@ -26,7 +26,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -65,6 +64,8 @@ import net.sf.view.animation.LayoutWeightAnimation;
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
@@ -182,7 +183,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     final int month = calendar.get(Calendar.MONTH);
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     if (activity.datePicker == null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        if (SDK_INT >= LOLLIPOP) {
                             Resources res = context.getResources();
                             res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
                             context = new ContextResourcesWrapper(context, res);
