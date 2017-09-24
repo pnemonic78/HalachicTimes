@@ -216,6 +216,13 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
@@ -333,13 +340,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /** Initialise the location providers. */
     private void initLocation() {
         localeRTL = LocaleUtils.isLocaleRTL(this);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleWrapper(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
     }
 
     /**

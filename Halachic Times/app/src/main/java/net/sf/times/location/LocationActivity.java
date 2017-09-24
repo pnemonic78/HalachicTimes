@@ -15,10 +15,31 @@
  */
 package net.sf.times.location;
 
+import android.app.Activity;
+import android.content.Context;
+
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
+
 /**
  * Pick a city from the list.
  *
  * @author Moshe Waisberg
  */
 public class LocationActivity extends LocationTabActivity {
+
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
+    }
+
+    @Override
+    protected Class<? extends Activity> getAddLocationActivityClass() {
+        return ZmanimAddLocationActivity.class;
+    }
 }

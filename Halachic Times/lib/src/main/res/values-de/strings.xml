@@ -20,7 +20,7 @@
     <string name="settings_label" msgid="1626402585530130914">Einstellungen</string>
     <string name="tts_general_section_title" msgid="4402572014604490502">Allgemein</string>
     <string name="pref_appearance_title">Darstellung</string>
-    <string name="pref_about_title">�ber</string>
+    <string name="pref_about_title">Über</string>
 
     <!-- Theme. -->
     <string name="night_mode_title">Design</string>

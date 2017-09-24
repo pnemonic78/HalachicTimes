@@ -13,29 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.preference;
+package net.sf.times.location;
 
 import android.content.Context;
-import android.os.Bundle;
 
 import net.sf.app.LocaleCallbacks;
 import net.sf.app.LocaleWrapper;
 import net.sf.preference.LocalePreferences;
-import net.sf.preference.PreferenceActivity;
-import net.sf.times.R;
-
-import java.util.List;
-
-import static net.sf.preference.LocalePreferences.KEY_LOCALE;
-import static net.sf.preference.ThemePreferences.KEY_THEME;
-import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
+import net.sf.times.preference.ZmanimPreferences;
 
 /**
- * Application preferences that populate the settings.
+ * Add a location by specifying its coordinates.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimPreferenceActivity extends PreferenceActivity {
+public class ZmanimAddLocationActivity<P extends ZmanimPreferences> extends AddLocationActivity<P> {
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
@@ -44,23 +36,5 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
         this.localeCallbacks = new LocaleWrapper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_Zmanim_Settings);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
-    }
-
-    @Override
-    protected boolean shouldRestartParentActivityForUi(String key) {
-        return KEY_THEME.equals(key)
-                || KEY_THEME_COMPASS.equals(key)
-                || KEY_LOCALE.equals(key);
     }
 }

@@ -22,6 +22,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
 import net.sf.times.R;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.preference.CompassPreferenceActivity;
@@ -36,6 +39,15 @@ import static android.os.Build.VERSION_CODES.JELLY_BEAN;
  * @author Moshe Waisberg
  */
 public class CompassActivity extends BaseCompassActivity {
+
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
