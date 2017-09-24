@@ -20,6 +20,7 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -43,9 +44,10 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
 import net.sf.app.TodayDatePickerDialog;
 import net.sf.content.ContextResourcesWrapper;
-import net.sf.preference.ThemePreferences;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.compass.CompassActivity;
 import net.sf.times.content.res.ZmanimResources;
@@ -74,7 +76,7 @@ import static net.sf.times.ZmanimAdapter.NEVER;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimActivity extends LocatedActivity implements
+public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implements
         OnDateSetListener,
         View.OnClickListener,
         OnGestureListener,
@@ -276,7 +278,6 @@ public class ZmanimActivity extends LocatedActivity implements
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         final Context context = this;
-        preferences = new SimpleZmanimPreferences(context);
 
         setContentView(R.layout.times);
         View view = getWindow().getDecorView();
@@ -868,11 +869,14 @@ public class ZmanimActivity extends LocatedActivity implements
     }
 
     public ZmanimPreferences getZmanimPreferences() {
+        if (preferences == null) {
+            preferences = new SimpleZmanimPreferences(this);
+        }
         return preferences;
     }
 
     @Override
-    public ThemePreferences getThemePreferences() {
-        return getZmanimPreferences();
+    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(ContextWrapper context) {
+        return new SimpleThemeCallbacks(context, getZmanimPreferences());
     }
 }

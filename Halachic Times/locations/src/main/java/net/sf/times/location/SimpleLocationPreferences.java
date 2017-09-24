@@ -127,17 +127,7 @@ public class SimpleLocationPreferences extends SimplePreferences implements Loca
     }
 
     @Override
-    public void setCoordinatesFormat(String format) {
-        preferences.edit().putString(KEY_COORDS_FORMAT, format).apply();
-    }
-
-    @Override
     public boolean isElevationVisible() {
         return preferences.getBoolean(KEY_COORDS_ELEVATION, ELEVATION_VISIBLE_DEFAULT);
-    }
-
-    @Override
-    public void setElevationVisible(boolean visible) {
-        preferences.edit().putBoolean(KEY_COORDS_FORMAT, visible).apply();
     }
 }

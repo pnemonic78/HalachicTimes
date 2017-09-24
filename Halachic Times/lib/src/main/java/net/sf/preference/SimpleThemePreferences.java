@@ -72,9 +72,4 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
     public int getTheme() {
         return getTheme(getThemeValue());
     }
-
-    @Override
-    public void setTheme(String value) {
-        preferences.edit().putString(KEY_THEME, value).apply();
-    }
 }

@@ -61,12 +61,4 @@ public interface ThemePreferences {
      */
     @StyleRes
     int getTheme();
-
-    /**
-     * Set the theme.
-     *
-     * @param value
-     *         the theme value.
-     */
-    void setTheme(String value);
 }

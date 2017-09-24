@@ -83,25 +83,9 @@ public interface LocationPreferences {
     String getCoordinatesFormat();
 
     /**
-     * Set the coordinates format.
-     *
-     * @param format
-     *         the format.
-     */
-    void setCoordinatesFormat(String format);
-
-    /**
      * Are coordinates with elevation (altitude) visible?
      *
      * @return {@code true} to show coordinates with elevation.
      */
     boolean isElevationVisible();
-
-    /**
-     * Set the elevation visibility.
-     *
-     * @param visible
-     *         is visible?
-     */
-    void setElevationVisible(boolean visible);
 }

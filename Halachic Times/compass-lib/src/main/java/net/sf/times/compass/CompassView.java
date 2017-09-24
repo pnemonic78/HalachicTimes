@@ -156,7 +156,7 @@ public class CompassView extends View {
             prefs = new SimpleCompassPreferences(context);
         }
 
-        TypedArray a = context.obtainStyledAttributes(prefs.getTheme(), R.styleable.CompassTheme);
+        TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
 
         compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);
         compassColorGradient = a.getColor(R.styleable.CompassTheme_compassColorGradient, Color.TRANSPARENT);

@@ -15,14 +15,14 @@
  */
 package net.sf.times.compass.preference;
 
-import net.sf.preference.ThemePreferences;
+import android.support.annotation.StyleRes;
 
 /**
  * Compass preferences.
  *
  * @author Moshe Waisberg
  */
-public interface CompassPreferences extends ThemePreferences {
+public interface CompassPreferences {
 
     /** Preference name for the compass bearing type. */
     String KEY_COMPASS_BEARING = "compass.bearing";
@@ -31,7 +31,7 @@ public interface CompassPreferences extends ThemePreferences {
     /** Preference name for showing summaries. */
     String KEY_THEME_COMPASS = "theme.compass";
 
-    class Values extends ThemePreferences.Values {
+    class Values {
         /** Default summaries hidden. */
         public static boolean SUMMARIES_DEFAULT = false;
 
@@ -53,6 +53,32 @@ public interface CompassPreferences extends ThemePreferences {
     }
 
     /**
+     * Get the theme value.
+     *
+     * @return the theme value.
+     */
+    String getCompassThemeValue();
+
+    /**
+     * Get the theme.
+     *
+     * @param value
+     *         the theme value.
+     * @return the theme resource id.
+     * @see #getCompassThemeValue()
+     */
+    @StyleRes
+    int getCompassTheme(String value);
+
+    /**
+     * Get the theme.
+     *
+     * @return the theme resource id.
+     */
+    @StyleRes
+    int getCompassTheme();
+
+    /**
      * Get the type of bearing for calculating compass direction.
      *
      * @return the bearing type - either {@link Values#BEARING_GREAT_CIRCLE} or {@link Values#BEARING_RHUMB_LINE}.
@@ -60,25 +86,9 @@ public interface CompassPreferences extends ThemePreferences {
     String getBearing();
 
     /**
-     * Set the type of bearing for calculating compass direction.
-     *
-     * @param bearing
-     *         the bearing type - either {@link Values#BEARING_GREAT_CIRCLE} or {@link Values#BEARING_RHUMB_LINE}.
-     */
-    void setBearing(String bearing);
-
-    /**
      * Are summaries visible?
      *
      * @return {@code true} to show summaries.
      */
     boolean isSummariesVisible();
-
-    /**
-     * Set the summaries visibility.
-     *
-     * @param visible
-     *         is visible?
-     */
-    void setSummariesVisible(boolean visible);
 }

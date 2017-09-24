@@ -20,7 +20,7 @@ import android.os.Bundle;
 import net.sf.preference.AbstractPreferenceFragment;
 import net.sf.times.compass.lib.R;
 
-import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME;
+import static net.sf.preference.ThemePreferences.KEY_THEME;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 import static net.sf.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 

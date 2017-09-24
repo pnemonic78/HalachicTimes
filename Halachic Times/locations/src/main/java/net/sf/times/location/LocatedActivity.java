@@ -18,6 +18,7 @@ package net.sf.times.location;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -50,7 +51,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     protected static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
+    protected ThemeCallbacks<P> themeCallbacks;
     /** Provider for locations. */
     private LocationsProvider locations;
     /** The address location. */
@@ -116,12 +117,23 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onCreate() {
-        themeCallbacks.onCreate();
+        getThemeCallbacks().onCreate();
     }
 
     @Override
     public P getThemePreferences() {
-        return themeCallbacks.getThemePreferences();
+        return getThemeCallbacks().getThemePreferences();
+    }
+
+    protected ThemeCallbacks<P> getThemeCallbacks() {
+        if (themeCallbacks == null) {
+            themeCallbacks = createThemeCallbacks(this);
+        }
+        return themeCallbacks;
+    }
+
+    protected ThemeCallbacks<P> createThemeCallbacks(ContextWrapper context) {
+        return new SimpleThemeCallbacks<P>(context);
     }
 
     protected LocationPreferences getLocationPreferences() {

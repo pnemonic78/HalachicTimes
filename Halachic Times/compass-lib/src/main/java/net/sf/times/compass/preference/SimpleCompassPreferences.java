@@ -50,32 +50,12 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     }
 
     @Override
-    public String getBearing() {
-        return preferences.getString(KEY_COMPASS_BEARING, BEARING_DEFAULT);
-    }
-
-    @Override
-    public void setBearing(String bearing) {
-        preferences.edit().putString(KEY_COMPASS_BEARING, bearing).apply();
-    }
-
-    @Override
-    public boolean isSummariesVisible() {
-        return preferences.getBoolean(KEY_SUMMARIES, SUMMARIES_DEFAULT);
-    }
-
-    @Override
-    public void setSummariesVisible(boolean visible) {
-        preferences.edit().putBoolean(KEY_SUMMARIES, visible).apply();
-    }
-
-    @Override
-    public String getThemeValue() {
+    public String getCompassThemeValue() {
         return preferences.getString(KEY_THEME_COMPASS, THEME_DEFAULT);
     }
 
     @Override
-    public int getTheme(String value) {
+    public int getCompassTheme(String value) {
         if (THEME_GOLD.equals(value)) {
             return R.style.Compass_Theme_Gold;
         }
@@ -89,8 +69,18 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     }
 
     @Override
-    public void setTheme(String value) {
-        preferences.edit().putString(KEY_THEME_COMPASS, value).apply();
+    public int getCompassTheme() {
+        return getCompassTheme(getCompassThemeValue());
+    }
+
+    @Override
+    public String getBearing() {
+        return preferences.getString(KEY_COMPASS_BEARING, BEARING_DEFAULT);
+    }
+
+    @Override
+    public boolean isSummariesVisible() {
+        return preferences.getBoolean(KEY_SUMMARIES, SUMMARIES_DEFAULT);
     }
 
     /**

@@ -22,9 +22,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 
 import net.sf.media.RingtoneManager;
-import net.sf.preference.SimplePreferences;
 import net.sf.preference.SimpleThemePreferences;
-import net.sf.preference.ThemePreferences;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sourceforge.zmanim.ZmanimCalendar;
@@ -104,9 +102,7 @@ import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_GRA;
  *
  * @author Moshe Waisberg
  */
-public class SimpleZmanimPreferences extends SimplePreferences implements ZmanimPreferences {
-
-    private final ThemePreferences themePreferences;
+public class SimpleZmanimPreferences extends SimpleThemePreferences implements ZmanimPreferences {
 
     /**
      * Constructs a new preferences.
@@ -116,7 +112,6 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
      */
     public SimpleZmanimPreferences(Context context) {
         super(context);
-        this.themePreferences = new SimpleThemePreferences(context);
         init(context);
     }
 
@@ -141,11 +136,6 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
-    public String getThemeValue() {
-        return themePreferences.getThemeValue();
-    }
-
-    @Override
     public int getTheme(String value) {
         if (isEmpty(value) || THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
@@ -157,16 +147,6 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
             return R.style.Theme_Zmanim_White;
         }
         return R.style.Theme_Zmanim_Dark;
-    }
-
-    @Override
-    public int getTheme() {
-        return themePreferences.getTheme();
-    }
-
-    @Override
-    public void setTheme(String value) {
-        themePreferences.setTheme(value);
     }
 
     @Override

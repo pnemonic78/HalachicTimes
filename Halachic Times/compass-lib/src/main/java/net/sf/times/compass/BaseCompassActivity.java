@@ -59,9 +59,11 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
         fragment = (CompassFragment) getFragmentManager().findFragmentById(R.id.compass);
 
         TextView summary = findViewById(android.R.id.summary);
-        TypedArray a = context.obtainStyledAttributes(preferences.getTheme(), R.styleable.CompassTheme);
-        summary.setTextColor(a.getColor(R.styleable.CompassTheme_compassColorTarget, summary.getSolidColor()));
-        a.recycle();
+        TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassTheme);
+        if (a != null) {
+            summary.setTextColor(a.getColor(R.styleable.CompassTheme_compassColorTarget, summary.getSolidColor()));
+            a.recycle();
+        }
     }
 
     @Override
