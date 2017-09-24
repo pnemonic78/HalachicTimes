@@ -283,9 +283,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     private void init() {
         final Context context = this;
 
-        this.localeCallbacks = new LocaleWrapper(this);
-        localeCallbacks.onCreate();
-
         setContentView(R.layout.times);
         View view = getWindow().getDecorView();
 
@@ -336,6 +333,13 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /** Initialise the location providers. */
     private void initLocation() {
         localeRTL = LocaleUtils.isLocaleRTL(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
     }
 
     /**
