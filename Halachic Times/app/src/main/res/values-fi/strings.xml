@@ -203,4 +203,8 @@
     <string name="reminder_wednesday">Muistuta keskiviikkona</string>
     <string name="notification_upcoming_title">Tuleva aika kuin ilmoitus</string>
 
+    <!-- Locale (language) -->
+    <string name="locale">Locale</string>
+    <string name="locale_system">System</string>
+
 </resources>

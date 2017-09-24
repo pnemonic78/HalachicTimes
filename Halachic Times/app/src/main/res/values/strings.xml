@@ -338,4 +338,8 @@
     <string name="reminder_wednesday">Remind on Wednesday</string>
     <string name="notification_upcoming_title">The upcoming time as a notification</string>
 
+    <!-- Locale (language) -->
+    <string name="locale">Locale</string>
+    <string name="locale_system">System</string>
+
 </resources>

@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import net.sf.preference.RingtonePreference;
 import net.sf.times.R;
 
+import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
@@ -48,6 +49,8 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
 
         initList(KEY_REMINDER_STREAM);
         initList(KEY_COMPASS_BEARING);
+        initList(KEY_COMPASS_BEARING);
+        initList(KEY_LOCALE);
     }
 
     @Override

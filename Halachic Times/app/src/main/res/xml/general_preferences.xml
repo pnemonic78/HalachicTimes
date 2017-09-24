@@ -33,4 +33,11 @@
         android:key="compass.bearing"
         android:title="@string/compass_bearing"/>
 
+    <ListPreference
+        android:defaultValue="@string/locale_defaultValue"
+        android:entries="@array/locale_entries"
+        android:entryValues="@array/locale_values"
+        android:key="locale"
+        android:title="@string/locale"/>
+
 </PreferenceScreen>

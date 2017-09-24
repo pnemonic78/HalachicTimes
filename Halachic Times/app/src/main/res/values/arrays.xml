@@ -482,4 +482,11 @@
         <item>@string/emphasis_scale_150</item>
     </string-array>
 
+    <string-array name="locale_values" translatable="false">
+        <item>@string/locale_defaultValue</item>
+    </string-array>
+    <string-array name="locale_entries" translatable="false">
+        <item>@string/locale_system</item>
+    </string-array>
+
 </resources>

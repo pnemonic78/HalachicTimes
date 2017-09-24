@@ -20,14 +20,20 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import net.sf.media.RingtoneManager;
+import net.sf.preference.LocalePreferences;
+import net.sf.preference.SimpleLocalePreferences;
+import net.sf.preference.SimplePreferences;
 import net.sf.preference.SimpleThemePreferences;
+import net.sf.preference.ThemePreferences;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -102,7 +108,10 @@ import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_GRA;
  *
  * @author Moshe Waisberg
  */
-public class SimpleZmanimPreferences extends SimpleThemePreferences implements ZmanimPreferences {
+public class SimpleZmanimPreferences extends SimplePreferences implements ZmanimPreferences {
+
+    private final ThemePreferences themePreferences;
+    private final LocalePreferences localePreferences;
 
     /**
      * Constructs a new preferences.
@@ -112,6 +121,8 @@ public class SimpleZmanimPreferences extends SimpleThemePreferences implements Z
      */
     public SimpleZmanimPreferences(Context context) {
         super(context);
+        this.themePreferences = new SimpleThemePreferences(context);
+        this.localePreferences = new SimpleLocalePreferences(context);
         init(context);
     }
 
@@ -136,6 +147,11 @@ public class SimpleZmanimPreferences extends SimpleThemePreferences implements Z
     }
 
     @Override
+    public String getThemeValue() {
+        return themePreferences.getThemeValue();
+    }
+
+    @Override
     public int getTheme(String value) {
         if (isEmpty(value) || THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
@@ -147,6 +163,11 @@ public class SimpleZmanimPreferences extends SimpleThemePreferences implements Z
             return R.style.Theme_Zmanim_White;
         }
         return R.style.Theme_Zmanim_Dark;
+    }
+
+    @Override
+    public int getTheme() {
+        return getTheme(getThemeValue());
     }
 
     @Override
@@ -658,5 +679,11 @@ public class SimpleZmanimPreferences extends SimpleThemePreferences implements Z
         OMER_NONE = res.getString(R.string.omer_value_off);
         OMER_B = res.getString(R.string.omer_value_b);
         OMER_L = res.getString(R.string.omer_value_l);
+    }
+
+    @NonNull
+    @Override
+    public Locale getLocale() {
+        return localePreferences.getLocale();
     }
 }

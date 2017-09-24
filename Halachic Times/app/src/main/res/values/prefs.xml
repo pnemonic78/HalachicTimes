@@ -116,4 +116,6 @@
     <bool name="past_defaultValue" translatable="false">true</bool>
     <bool name="notification_upcoming_defaultValue" translatable="false">false</bool>
 
+    <string name="locale_defaultValue" translatable="false"/>
+
 </resources>

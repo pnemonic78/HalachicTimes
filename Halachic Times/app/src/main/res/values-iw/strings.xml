@@ -203,4 +203,8 @@
     <string name="reminder_wednesday">תזכיר ביום רביעי</string>
     <string name="notification_upcoming_title">הזמן הקרוב כהתראה</string>
 
+    <!-- Locale (language) -->
+    <string name="locale">Locale</string>
+    <string name="locale_system">System</string>
+
 </resources>

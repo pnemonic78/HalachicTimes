@@ -203,4 +203,8 @@
     <string name="reminder_wednesday">Нагадати середу</string>
     <string name="notification_upcoming_title">Майбутній час як повідомлення</string>
 
+    <!-- Locale (language) -->
+    <string name="locale">Locale</string>
+    <string name="locale_system">System</string>
+
 </resources>

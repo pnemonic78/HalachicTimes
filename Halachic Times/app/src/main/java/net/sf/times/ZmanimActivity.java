@@ -44,6 +44,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
 import net.sf.app.SimpleThemeCallbacks;
 import net.sf.app.ThemeCallbacks;
 import net.sf.app.TodayDatePickerDialog;
@@ -148,6 +150,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /** Show navigation bar animation. */
     private Animation showNavigation;
     private final Handler handler;
+    private LocaleCallbacks<ZmanimPreferences> localeCallbacks;
 
     /** The handler. */
     private static class ActivityHandler extends Handler {
@@ -278,6 +281,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         final Context context = this;
+
+        this.localeCallbacks = new LocaleWrapper(this);
+        localeCallbacks.onCreate();
 
         setContentView(R.layout.times);
         View view = getWindow().getDecorView();

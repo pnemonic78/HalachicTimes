@@ -20,6 +20,9 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.LocaleList;
+import android.support.annotation.NonNull;
+
 
 import java.util.Locale;
 
@@ -119,6 +122,7 @@ public class LocaleUtils {
      *         the context.
      * @return the locale.
      */
+    @NonNull
     public static Locale getDefaultLocale(Context context) {
         return getDefaultLocale(context.getResources());
     }
@@ -131,6 +135,7 @@ public class LocaleUtils {
      * @return the locale.
      */
     @TargetApi(Build.VERSION_CODES.N)
+    @NonNull
     public static Locale getDefaultLocale(Resources res) {
         return getDefaultLocale(res.getConfiguration());
     }
@@ -143,11 +148,44 @@ public class LocaleUtils {
      * @return the locale.
      */
     @TargetApi(Build.VERSION_CODES.N)
+    @NonNull
     public static Locale getDefaultLocale(Configuration config) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            return config.locale;
+        Locale locale = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.os.LocaleList locales = config.getLocales();
+            if (locales.isEmpty()) {
+                locales = android.os.LocaleList.getAdjustedDefault();
+            }
+            if (!locales.isEmpty()) {
+                locale = locales.get(0);
+            }
+        } else {
+            locale = config.locale;
         }
-        Locale locale = config.getLocales().get(0);
-        return locale != null ? locale : Locale.getDefault();
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+        return locale;
+    }
+
+    /**
+     * Apply the default locale.
+     *
+     * @param context
+     *         the context.
+     * @param locale
+     *         the locale to set.
+     * @return the locale.
+     */
+    public static void applyLocale(Context context, Locale locale) {
+        final Resources res = context.getResources();
+        final Configuration config = res.getConfiguration();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(locale);
+        } else {
+            config.locale = locale;
+        }
+        res.updateConfiguration(config, res.getDisplayMetrics());
+        Locale.setDefault(locale);
     }
 }

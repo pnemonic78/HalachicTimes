@@ -19,6 +19,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 
 import net.sf.media.RingtoneManager;
+import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.LocationPreferences;
 import net.sourceforge.zmanim.ZmanimCalendar;
@@ -30,7 +31,7 @@ import java.util.Calendar;
  *
  * @author Moshe Waisberg
  */
-public interface ZmanimPreferences extends ThemePreferences {
+public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
 
     /** Preference name for showing seconds. */
     String KEY_SECONDS = "seconds.visible";
