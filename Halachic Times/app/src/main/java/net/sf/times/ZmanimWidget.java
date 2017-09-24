@@ -34,6 +34,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
@@ -68,6 +71,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     private ZmanimPreferences preferences;
     /** The provider name. */
     private ComponentName provider;
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
     private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
         @Override
@@ -88,6 +92,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        this.localeCallbacks = new LocaleWrapper(context);
+        context = localeCallbacks.attachBaseContext(context);
         super.onReceive(context, intent);
         this.context = context;
 
@@ -113,6 +119,8 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        this.localeCallbacks = new LocaleWrapper(context);
+        context = localeCallbacks.attachBaseContext(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
         this.context = context;
