@@ -18,9 +18,14 @@ package net.sf.times;
 import android.annotation.TargetApi;
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
 import android.content.Intent;
 import android.os.PersistableBundle;
 import android.util.Log;
+
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
@@ -37,6 +42,14 @@ public class ZmanimReminderJobService extends JobService {
     public static final String EXTRA_ACTION = "action";
 
     private ZmanimReminder reminder;
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
+    }
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {

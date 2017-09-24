@@ -15,8 +15,13 @@
  */
 package net.sf.times;
 
+import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
+
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
 
 /**
  * Service that provides the list of halachic times (<em>zmanim</em>) items for
@@ -27,8 +32,13 @@ import android.widget.RemoteViewsService;
 public class ZmanimWidgetService extends RemoteViewsService {
 
     private ZmanimWidgetViewsFactory factory;
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
-    public ZmanimWidgetService() {
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
     }
 
     @Override

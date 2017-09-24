@@ -20,6 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleWrapper;
+import net.sf.preference.LocalePreferences;
+
 /**
  * Check for reminders, and manage the notifications.
  *
@@ -28,6 +32,8 @@ import android.support.annotation.Nullable;
 public class ZmanimReminderService extends IntentService {
 
     private static final String TAG = "ZmanimReminderService";
+
+    private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
     /**
      * Constructs a new service.
@@ -42,6 +48,13 @@ public class ZmanimReminderService extends IntentService {
     /** Constructs a new service. */
     public ZmanimReminderService() {
         this(TAG);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        this.localeCallbacks = new LocaleWrapper(newBase);
+        Context context = localeCallbacks.attachBaseContext(newBase);
+        super.attachBaseContext(context);
     }
 
     protected Context getContext() {
