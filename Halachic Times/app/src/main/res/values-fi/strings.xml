@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 minuuttia jälkeen keskipäivä</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Pieni <i>mincha</i></string>
-    <string name="mincha_summary">Iltapäivän rukoukset</string>
+    <string name="mincha">Iltapäivän rukoukset</string>
+    <string name="mincha_summary">Vähemmän <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

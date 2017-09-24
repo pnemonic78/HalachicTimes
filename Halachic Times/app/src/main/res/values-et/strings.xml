@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Väike <i>mincha</i></string>
-    <string name="mincha_summary">Pärastlõunal palvetes</string>
+    <string name="mincha">Pärastlõunal palvetes</string>
+    <string name="mincha_summary">Väike <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

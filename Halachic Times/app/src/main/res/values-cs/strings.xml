@@ -66,7 +66,7 @@
 
     <!-- Mincha ketana -->
     <string name="mincha">Odpolední modlitby</string>
-    <string name="mincha_summary">Menší <i>mincha</i></string>
+    <string name="mincha_summary">Malá <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

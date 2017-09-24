@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Mažas <i>mincha</i></string>
-    <string name="mincha_summary">Popietė maldas</string>
+    <string name="mincha">Popietė maldas</string>
+    <string name="mincha_summary">Mažas <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

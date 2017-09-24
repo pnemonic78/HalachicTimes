@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 minuti dopo mezzogiorno</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha"><i>Minchà</i> minori</string>
-    <string name="mincha_summary">Pomeriggio preghiere</string>
+    <string name="mincha">Pomeriggio preghiere</string>
+    <string name="mincha_summary"><i>Minchà</i> minore</string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag haminchà</i></string>

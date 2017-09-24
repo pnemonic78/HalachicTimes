@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 Minuten nach der Mittag</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Geringer <i>mincha</i></string>
-    <string name="mincha_summary">Nachmittagsgebet</string>
+    <string name="mincha">Nachmittagsgebet</string>
+    <string name="mincha_summary">Weniger <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

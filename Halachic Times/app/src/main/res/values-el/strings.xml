@@ -66,7 +66,7 @@
 
     <!-- Mincha ketana -->
     <string name="mincha">Απόγευμα προσευχές</string>
-    <string name="mincha_summary">Ελάσσων <i>μινχα</i></string>
+    <string name="mincha_summary">Μικρή <i>μινχα</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Πλαγ μινχα</i></string>

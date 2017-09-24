@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 minuter efter middag</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Smärre <i>mincha</i></string>
-    <string name="mincha_summary">Eftermiddagens böner</string>
+    <string name="mincha">Eftermiddagens böner</string>
+    <string name="mincha_summary">Mindre <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 perc azután dél</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Kisebb <i>mincha</i></string>
-    <string name="mincha_summary">Délutáni ima</string>
+    <string name="mincha">Délutáni ima</string>
+    <string name="mincha_summary">Kisebb <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>

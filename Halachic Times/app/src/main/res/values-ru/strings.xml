@@ -65,8 +65,8 @@
     <string name="earliest_mincha_30">30 минут после полудня</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Минорный <i>минха</i></string>
-    <string name="mincha_summary">Молитва Минха</string>
+    <string name="mincha">Молитва Минха</string>
+    <string name="mincha_summary">Малая <i>минха</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Плаг минха</i></string>
