@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Legkorábbi délutáni ima</string>
-    <string name="earliest_mincha_summary">Nagy <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Nagyobb <i>mincha</i></string>
     <string name="earliest_mincha_30">30 perc azután dél</string>
 
     <!-- Mincha ketana -->

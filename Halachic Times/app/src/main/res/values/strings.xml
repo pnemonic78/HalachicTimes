@@ -120,7 +120,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Earliest afternoon prayers</string>
-    <string name="earliest_mincha_summary">Major <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Greater <i>mincha</i></string>
     <string name="earliest_mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>
     <string name="earliest_mincha_30">30 minutes after midday</string>

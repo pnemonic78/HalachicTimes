@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Najwcześniejsze modlitwy popołudniowe</string>
-    <string name="earliest_mincha_summary">Główne <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Większy <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minut po południa</string>
 
     <!-- Mincha ketana -->

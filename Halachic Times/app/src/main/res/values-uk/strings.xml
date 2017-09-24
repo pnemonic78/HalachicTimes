@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Перший день молитви</string>
-    <string name="earliest_mincha_summary">Основні <i>мінха</i></string>
+    <string name="earliest_mincha_summary">Великі <i>мінха</i></string>
     <string name="earliest_mincha_30">30 мінут після полудня</string>
 
     <!-- Mincha ketana -->

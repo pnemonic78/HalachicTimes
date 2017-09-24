@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Aikaisintaan iltapäivän rukoukset</string>
-    <string name="earliest_mincha_summary">Suuri <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Suurempi <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuuttia jälkeen keskipäivä</string>
 
     <!-- Mincha ketana -->

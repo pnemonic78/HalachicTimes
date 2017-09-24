@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Frühestenachmittagsgebet</string>
-    <string name="earliest_mincha_summary">Haupt <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Größer <i>mincha</i></string>
     <string name="earliest_mincha_30">30 Minuten nach der Mittag</string>
 
     <!-- Mincha ketana -->

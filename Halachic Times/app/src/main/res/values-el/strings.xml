@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Νωρίτερο προσευχές απόγευμα</string>
-    <string name="earliest_mincha_summary">Μείζων <i>μινχα</i></string>
+    <string name="earliest_mincha_summary">Μεγαλύτερη <i>μινχα</i></string>
     <string name="earliest_mincha_30">30 λεπτά μετά το μεσημέρι</string>
 
     <!-- Mincha ketana -->

@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Varaseim pärastlõunal palvetes</string>
-    <string name="earliest_mincha_summary">Suur <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Suurem <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
 
     <!-- Mincha ketana -->

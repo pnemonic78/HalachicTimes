@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Seniausi popietės maldas</string>
-    <string name="earliest_mincha_summary">Pagrindiniai <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Didesnis <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
 
     <!-- Mincha ketana -->

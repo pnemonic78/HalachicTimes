@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Tidligste eftermiddags bønner</string>
-    <string name="earliest_mincha_summary">Stor <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Større <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minutter efter middag</string>
 
     <!-- Mincha ketana -->

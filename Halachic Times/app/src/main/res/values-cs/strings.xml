@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Nejranější odpolední modlitby</string>
-    <string name="earliest_mincha_summary">Hlavní <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Větší <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minut po poledne</string>
 
     <!-- Mincha ketana -->

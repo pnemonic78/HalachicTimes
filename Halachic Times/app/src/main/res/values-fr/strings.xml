@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Min\'ha au plus tôt</string>
-    <string name="earliest_mincha_summary">Majeure <i>min\'ha</i></string>
+    <string name="earliest_mincha_summary">Grand <i>min\'ha</i></string>
     <string name="earliest_mincha_30">30 minutes après midi</string>
 
     <!-- Mincha ketana -->

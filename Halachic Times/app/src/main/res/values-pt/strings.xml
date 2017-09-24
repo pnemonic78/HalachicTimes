@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Primeiro horário para orações do tarde</string>
-    <string name="earliest_mincha_summary"><i>Minchá</i> principais</string>
+    <string name="earliest_mincha_summary"><i>Minchá</i> maior</string>
     <string name="earliest_mincha_30">30 minutos após do meio-dia</string>
 
     <!-- Mincha ketana -->

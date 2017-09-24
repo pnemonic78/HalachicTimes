@@ -61,7 +61,7 @@
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Vroegste middag gebeden</string>
-    <string name="earliest_mincha_summary">Grote <i>mincha</i></string>
+    <string name="earliest_mincha_summary">Groter <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuten na de middag</string>
 
     <!-- Mincha ketana -->
