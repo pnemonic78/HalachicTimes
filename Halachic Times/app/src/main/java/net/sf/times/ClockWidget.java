@@ -56,12 +56,6 @@ public class ClockWidget extends ZmanimWidget {
         }
     };
 
-    /**
-     * Constructs a new widget.
-     */
-    public ClockWidget() {
-    }
-
     @Override
     protected int getLayoutId() {
         int bg = getWallpaperColor(getContext());

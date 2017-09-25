@@ -27,12 +27,6 @@ import android.widget.RemoteViews;
  */
 public class ZmanimListWidget extends ZmanimWidget {
 
-    /**
-     * Constructs a new widget.
-     */
-    public ZmanimListWidget() {
-    }
-
     @Override
     protected int getLayoutId() {
         return R.layout.widget_list;

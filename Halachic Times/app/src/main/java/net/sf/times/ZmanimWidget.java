@@ -47,6 +47,14 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
+import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
+import static android.content.Context.ALARM_SERVICE;
+import static android.content.Intent.ACTION_DATE_CHANGED;
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.content.Intent.ACTION_TIME_CHANGED;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
@@ -103,15 +111,15 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         }
         ContentResolver resolver = context.getContentResolver();
         switch (action) {
-            case AppWidgetManager.ACTION_APPWIDGET_UPDATE:
+            case ACTION_APPWIDGET_UPDATE:
                 resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
                 break;
-            case AppWidgetManager.ACTION_APPWIDGET_DELETED:
+            case ACTION_APPWIDGET_DELETED:
                 resolver.unregisterContentObserver(formatChangeObserver);
                 break;
-            case Intent.ACTION_DATE_CHANGED:
-            case Intent.ACTION_TIME_CHANGED:
-            case Intent.ACTION_TIMEZONE_CHANGED:
+            case ACTION_DATE_CHANGED:
+            case ACTION_TIME_CHANGED:
+            case ACTION_TIMEZONE_CHANGED:
                 notifyAppWidgetViewDataChanged(context);
                 break;
         }
@@ -160,7 +168,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
         for (int appWidgetId : appWidgetIds) {
             activityIntent = new Intent(context, ZmanimActivity.class);
-            activityIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            activityIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
             activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             views = new RemoteViews(packageName, layoutId);
@@ -284,10 +292,10 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      */
     private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
         Intent alarmIntent = new Intent(context, ZmanimWidget.class);
-        alarmIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        alarmIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
+        alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_WIDGET, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarm.set(AlarmManager.RTC, time, alarmPendingIntent);
     }
 
@@ -481,7 +489,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
         final Context context = getContext();
         Intent service = new Intent();
         service.setClassName(context, "net.sf.times.ZmanimWidgetService");
-        service.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        service.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
         service.setData(Uri.parse(service.toUri(Intent.URI_INTENT_SCHEME)));
         list.setRemoteAdapter(android.R.id.list, service);
     }
