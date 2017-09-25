@@ -16,10 +16,12 @@
 package net.sf.preference;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
 import java.util.Locale;
 
+import static android.text.TextUtils.isEmpty;
 import static net.sf.util.LocaleUtils.getDefaultLocale;
 import static net.sf.util.LocaleUtils.parseLocale;
 
@@ -42,10 +44,9 @@ public class SimpleLocalePreferences extends SimplePreferences implements Locale
     @Override
     public Locale getLocale() {
         String value = getPreferences().getString(KEY_LOCALE, null);
-        Locale locale = parseLocale(value);
-        if (locale != null) {
-            return locale;
+        if (isEmpty(value)) {
+            return getDefaultLocale(Resources.getSystem());
         }
-        return getDefaultLocale(context);
+        return parseLocale(value);
     }
 }

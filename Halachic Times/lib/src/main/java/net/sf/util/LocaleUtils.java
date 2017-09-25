@@ -280,9 +280,9 @@ public class LocaleUtils {
      * @param localeValue
      *         the locale to parse. For example, {@code fr} for "French", or {@code en_UK} for
      *         "English (United Kingdom)".
-     * @return the locale - {@code null} otherwise.
+     * @return the locale - empty otherwise.
      */
-    @Nullable
+    @NonNull
     public static Locale parseLocale(String localeValue) {
         if (!isEmpty(localeValue)) {
             if (SDK_INT >= LOLLIPOP) {
