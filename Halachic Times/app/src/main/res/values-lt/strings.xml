@@ -203,8 +203,4 @@
     <string name="reminder_wednesday">Priminti trečiadienį</string>
     <string name="notification_upcoming_title">Artėjantis laikas kaip pranešimo apie</string>
 
-    <!-- Locale (language) -->
-    <string name="locale">Locale</string>
-    <string name="locale_system">System</string>
-
 </resources>

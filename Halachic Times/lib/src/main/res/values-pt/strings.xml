@@ -27,4 +27,8 @@
     <string name="night_mode_no">Claro</string>
     <string name="night_mode_yes">Escuro</string>
 
+    <!-- Locale (language) -->
+    <string name="locale_title">Language</string>
+    <string name="locale_default">Default language</string>
+
 </resources>

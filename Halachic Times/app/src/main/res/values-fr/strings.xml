@@ -203,8 +203,4 @@
     <string name="reminder_wednesday">Rappeler aux mercredi</string>
     <string name="notification_upcoming_title">L\'heure à venir en tant que notification</string>
 
-    <!-- Locale (language) -->
-    <string name="locale">Locale</string>
-    <string name="locale_system">System</string>
-
 </resources>

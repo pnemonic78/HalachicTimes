@@ -27,4 +27,8 @@
     <string name="night_mode_no">Светло</string>
     <string name="night_mode_yes">Тъмно</string>
 
+    <!-- Locale (language) -->
+    <string name="locale_title">Език</string>
+    <string name="locale_default">Стандартен език</string>
+
 </resources>

@@ -27,4 +27,8 @@
     <string name="night_mode_no">Světlý</string>
     <string name="night_mode_yes">Tmavý</string>
 
+    <!-- Locale (language) -->
+    <string name="locale_title">Jazyk</string>
+    <string name="locale_default">Výchozí jazyk</string>
+
 </resources>

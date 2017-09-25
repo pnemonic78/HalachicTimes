@@ -27,4 +27,8 @@
     <string name="night_mode_no" msgid="7682792841791457238">"हल्का"</string>
     <string name="night_mode_yes" msgid="4847655033618591567">"गहरा"</string>
 
+    <!-- Locale (language) -->
+    <string name="locale_title">Language</string>
+    <string name="locale_default">Default language</string>
+
 </resources>

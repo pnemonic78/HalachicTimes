@@ -27,4 +27,8 @@
     <string name="night_mode_no">Luminos</string>
     <string name="night_mode_yes">Întunecat</string>
 
+    <!-- Locale (language) -->
+    <string name="locale_title">Language</string>
+    <string name="locale_default">Default language</string>
+
 </resources>

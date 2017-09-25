@@ -203,8 +203,4 @@
     <string name="reminder_wednesday">Påminn på onsdag</string>
     <string name="notification_upcoming_title">Den kommande tiden som en anmälan</string>
 
-    <!-- Locale (language) -->
-    <string name="locale">Locale</string>
-    <string name="locale_system">System</string>
-
 </resources>

@@ -203,8 +203,4 @@
     <string name="reminder_wednesday">Herinner op woensdag</string>
     <string name="notification_upcoming_title">De komende tijd als een kennisgeving</string>
 
-    <!-- Locale (language) -->
-    <string name="locale">Locale</string>
-    <string name="locale_system">System</string>
-
 </resources>

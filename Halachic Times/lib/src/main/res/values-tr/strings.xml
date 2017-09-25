@@ -27,4 +27,8 @@
     <string name="night_mode_no">Hafif</string>
     <string name="night_mode_yes">Koyu</string>
 
+    <!-- Locale (language) -->
+    <string name="locale_title">Language</string>
+    <string name="locale_default">Default language</string>
+
 </resources>
