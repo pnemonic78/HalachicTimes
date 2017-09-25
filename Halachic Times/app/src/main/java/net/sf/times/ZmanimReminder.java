@@ -49,6 +49,20 @@ import java.util.Locale;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
+import static java.util.Calendar.FRIDAY;
+import static java.util.Calendar.MONDAY;
+import static java.util.Calendar.SATURDAY;
+import static java.util.Calendar.SUNDAY;
+import static java.util.Calendar.THURSDAY;
+import static java.util.Calendar.TUESDAY;
+import static java.util.Calendar.WEDNESDAY;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -546,31 +560,31 @@ public class ZmanimReminder {
         int holidayIndex = jcal.getYomTovIndex();
 
         switch (holidayIndex) {
-            case JewishCalendar.PESACH:
-            case JewishCalendar.SHAVUOS:
-            case JewishCalendar.ROSH_HASHANA:
-            case JewishCalendar.YOM_KIPPUR:
-            case JewishCalendar.SUCCOS:
-            case JewishCalendar.SHEMINI_ATZERES:
-            case JewishCalendar.SIMCHAS_TORAH:
-                dayOfWeek = Calendar.SATURDAY;
+            case PESACH:
+            case SHAVUOS:
+            case ROSH_HASHANA:
+            case YOM_KIPPUR:
+            case SUCCOS:
+            case SHEMINI_ATZERES:
+            case SIMCHAS_TORAH:
+                dayOfWeek = SATURDAY;
                 break;
         }
 
         switch (dayOfWeek) {
-            case Calendar.SUNDAY:
+            case SUNDAY:
                 return settings.isReminderSunday(itemId);
-            case Calendar.MONDAY:
+            case MONDAY:
                 return settings.isReminderMonday(itemId);
-            case Calendar.TUESDAY:
+            case TUESDAY:
                 return settings.isReminderTuesday(itemId);
-            case Calendar.WEDNESDAY:
+            case WEDNESDAY:
                 return settings.isReminderWednesday(itemId);
-            case Calendar.THURSDAY:
+            case THURSDAY:
                 return settings.isReminderThursday(itemId);
-            case Calendar.FRIDAY:
+            case FRIDAY:
                 return settings.isReminderFriday(itemId);
-            case Calendar.SATURDAY:
+            case SATURDAY:
                 return settings.isReminderSaturday(itemId);
         }
 

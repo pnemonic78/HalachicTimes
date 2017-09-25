@@ -32,6 +32,8 @@ import java.util.Calendar;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static java.util.Calendar.FRIDAY;
+import static java.util.Calendar.SATURDAY;
 import static net.sf.times.ZmanimAdapter.NEVER;
 import static net.sf.util.TimeUtils.isSameDay;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
@@ -666,11 +668,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 }
             }
 
-            if ((holidayTomorrow == TISHA_BEAV) || (holidayTomorrow == YOM_KIPPUR)) {
-                adapter.add(R.string.fast_begins, SUMMARY_NONE, sunset, jewishDate, remote);
+            switch (holidayTomorrow) {
+                case TISHA_BEAV:
+                case YOM_KIPPUR:
+                    adapter.add(R.string.fast_begins, SUMMARY_NONE, sunset, jewishDate, remote);
+                    break;
             }
-
-            switch (holidayToday) {
+             switch (holidayToday) {
                 case TENTH_OF_TEVES:
                 case FAST_OF_ESTHER:
                     adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset + FAST_ENDS_18, jewishDateTomorrow, remote);
@@ -829,7 +833,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
                     adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
                 }
-            } else if (dayOfWeek == Calendar.SATURDAY) {
+            } else if (dayOfWeek == SATURDAY) {
                 summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
                 adapter.add(R.string.shabbath_ends, summaryText, date, jewishDateTomorrow, remote);
             } else if (holidayToday >= 0) {
@@ -984,7 +988,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
             case CHANUKAH:
                 count = jcal.getDayOfChanukah();
-                if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY)) {
+                if ((dayOfWeek != FRIDAY) && (dayOfWeek != SATURDAY)) {
                     String opinion = settings.getChanukkaCandles();
                     if (OPINION_TWILIGHT.equals(opinion)) {
                         flags = AT_TWILIGHT;
@@ -996,7 +1000,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 }
                 break;
             default:
-                if (dayOfWeek == Calendar.FRIDAY) {
+                if (dayOfWeek == FRIDAY) {
                     holidayTomorrow = SHABBATH;
                     count = CANDLES_SHABBATH;
                 }
@@ -1005,7 +1009,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         switch (dayOfWeek) {
             // Forbidden to light candles during Shabbath.
-            case Calendar.FRIDAY:
+            case FRIDAY:
                 // Probably never happens that Yom Kippurim falls on a Friday.
                 // Prohibited to light candles on Yom Kippurim for Shabbath.
                 if (holidayToday == YOM_KIPPUR) {
@@ -1013,7 +1017,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 }
                 break;
             // Forbidden to light candles during Shabbath.
-            case Calendar.SATURDAY:
+            case SATURDAY:
                 if (holidayToday == -1) {
                     holidayToday = SHABBATH;
                 }
