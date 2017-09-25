@@ -672,7 +672,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
             switch (holidayToday) {
                 case SEVENTEEN_OF_TAMMUZ:
-                case FAST_OF_GEDALYAH:
                 case TENTH_OF_TEVES:
                 case FAST_OF_ESTHER:
                     adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset + FAST_ENDS_18, jewishDateTomorrow, remote);
@@ -802,6 +801,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             if (hasCandles && (candlesHow == AT_NIGHT) && (holidayTomorrow == CHANUKAH)) {
                 summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
                 adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
+            }
+
+            switch (holidayToday) {
+                case FAST_OF_GEDALYAH:
+                    adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
+                    break;
             }
         }
 
