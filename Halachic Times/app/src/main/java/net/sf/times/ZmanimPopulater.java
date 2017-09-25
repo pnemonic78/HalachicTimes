@@ -147,8 +147,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /** No summary. */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
 
-    private static final long FAST_ENDS_18 = 18 * MINUTE_IN_MILLIS;
-
     private final Context context;
     private final ZmanimPreferences settings;
     protected final ComplexZmanimCalendar calendar;
@@ -853,7 +851,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
             case TENTH_OF_TEVES:
                 adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn, jewishDate, remote);
-                adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset + FAST_ENDS_18, jewishDateTomorrow, remote);
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, twilight, jewishDateTomorrow, remote);
                 break;
         }
         switch (holidayTomorrow) {
