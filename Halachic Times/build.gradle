@@ -14,6 +14,10 @@ allprojects {
     }
 }
 
+def joinStringArray(array) {
+    return "{\"" + array.join("\", \"") + "\"}"
+}
+
 ext {
     androidBuildToolsVersion = "26.0.1"
     androidBuildSdkVersion = 26

@@ -13,7 +13,10 @@ android {
         targetSdkVersion androidBuildTargetSdkVersion
         versionCode versionMajor * 100 + versionMinor
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
-        resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "uk"
+
+        def locales = ["bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "uk"]
+        resConfigs locales
+        buildConfigField "String[]", "LOCALES", joinStringArray(locales)
 
         manifestPlaceholders = [offline: false]
 

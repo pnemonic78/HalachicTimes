@@ -16,7 +16,6 @@
 package net.sf.times.preference;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -24,7 +23,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 
 import net.sf.preference.RingtonePreference;
+import net.sf.times.BuildConfig;
 import net.sf.times.R;
+import net.sf.util.LocaleUtils;
 
 import java.util.Locale;
 
@@ -88,13 +89,13 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
             ListPreference list = (ListPreference) pref;
 
             final Context context = getActivity();
-            final AssetManager assets = context.getAssets();
-            String[] assetsLocales = assets.getLocales();
+            String[] localeNames = BuildConfig.LOCALES;
+            Locale[] unique = LocaleUtils.unique(localeNames);
 
-            Locale[] sorted = sortByDisplay(assetsLocales);
-            final int length = assetsLocales.length;
+            Locale[] sorted = sortByDisplay(unique);
+            final int length = sorted.length;
             int length2 = length;
-            if (!isEmpty(assetsLocales[0])) {
+            if (!isEmpty(sorted[0].getLanguage())) {
                 length2 = length + 1;
             }
 

@@ -23,8 +23,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
@@ -55,8 +58,6 @@ public class LocaleUtils {
     public static final String ISO639_PASHTO = "ps";
     /** ISO 639 language code for "Yiddish". */
     public static final String ISO639_YIDDISH = "yi";
-
-    private static Comparator<Locale> localeComparator;
 
     private LocaleUtils() {
     }
@@ -269,10 +270,7 @@ public class LocaleUtils {
         if (locales == null) {
             return null;
         }
-        if (localeComparator == null) {
-            localeComparator = new LocaleNameComparator(locale);
-        }
-        Arrays.sort(locales, localeComparator);
+        Arrays.sort(locales, new LocaleNameComparator(locale));
         return locales;
     }
 
@@ -301,5 +299,16 @@ public class LocaleUtils {
             }
         }
         return new Locale("");
+    }
+
+    public static Locale[] unique(String[] values) {
+        Map<String, Locale> locales = new HashMap<>();
+        final int length = values.length;
+        Locale locale;
+        for (int i = 0; i < length; i++) {
+            locale = parseLocale(values[i]);
+            locales.put(locale.toString(), locale);
+        }
+        return locales.values().toArray(new Locale[locales.size()]);
     }
 }
