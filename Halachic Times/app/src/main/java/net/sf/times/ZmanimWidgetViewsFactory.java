@@ -222,7 +222,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         int count = adapter.getCount();
         for (int i = 0; i < count; i++) {
             item = adapter.getItem(i);
-            if (item.titleId == R.string.sunset) {
+            if (item == null) {
+                continue;
+            }
+            if (item.titleId == R.string.sunset) {//FIXME using item.jewishDate
                 positionTomorrow = i + (positionToday >= 0 ? 1 : 0) + 1;
                 break;
             }

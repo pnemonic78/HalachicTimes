@@ -36,6 +36,8 @@ public class ZmanimWidgetService extends RemoteViewsService {
 
     @Override
     protected void attachBaseContext(Context newBase) {
+        this.factory = null;//Force the latest locale.
+
         this.localeCallbacks = new LocaleWrapper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
@@ -44,7 +46,8 @@ public class ZmanimWidgetService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         if (factory == null) {
-            factory = new ZmanimWidgetViewsFactory(this, intent);
+            final Context context = this;
+            factory = new ZmanimWidgetViewsFactory(context, intent);
         }
         return factory;
     }

@@ -143,7 +143,6 @@ public class LocaleUtils {
      *         the resources.
      * @return the locale.
      */
-    @TargetApi(N)
     @NonNull
     public static Locale getDefaultLocale(Resources res) {
         return getDefaultLocale(res.getConfiguration());
