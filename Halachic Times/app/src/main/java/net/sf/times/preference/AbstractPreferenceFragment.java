@@ -15,12 +15,13 @@
  */
 package net.sf.times.preference;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 
+import net.sf.times.ClockWidget;
+import net.sf.times.ZmanimListWidget;
 import net.sf.times.ZmanimWidget;
+
+import static net.sf.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
 
 /**
  * This fragment shows the preferences for a header.
@@ -35,16 +36,8 @@ public abstract class AbstractPreferenceFragment extends net.sf.preference.Abstr
 
     protected void notifyAppWidgets() {
         final Context context = getActivity();
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        final Class<?> clazz = ZmanimWidget.class;
-        ComponentName provider = new ComponentName(context, clazz);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0))
-            return;
-
-        Intent intent = new Intent(context, ZmanimWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        context.sendBroadcast(intent);
+        notifyAppWidgetsUpdate(context, ZmanimWidget.class);
+        notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
+        notifyAppWidgetsUpdate(context, ClockWidget.class);
     }
 }
