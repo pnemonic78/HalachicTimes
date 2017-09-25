@@ -47,13 +47,14 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     }
 
     @Override
-    protected void onListPreferenceChange(ListPreference preference, Object newValue) {
-        super.onListPreferenceChange(preference, newValue);
+    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
+        boolean result = super.onListPreferenceChange(preference, newValue);
         if ((preference == after) && (newValue != null)) {
             // Update "seek" summary.
             int shabbathAfter = getPreferences().toId(newValue.toString());
             shabbathAfterName = getString(shabbathAfter);
             seek.setSummaryFormat(R.plurals.shabbath_ends_summary, shabbathAfterName);
         }
+        return result;
     }
 }

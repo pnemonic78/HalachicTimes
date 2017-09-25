@@ -23,6 +23,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
@@ -40,6 +41,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         int xmlId = getPreferencesXml();
         PreferenceManager.setDefaultValues(getActivity(), xmlId, false);
         addPreferencesFromResource(xmlId);
+        addChangeListeners(getPreferenceScreen());
     }
 
     protected abstract int getPreferencesXml();
@@ -92,15 +94,14 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        notifyPreferenceChanged();
         if (preference instanceof CheckBoxPreference) {
             CheckBoxPreference checkBox = (CheckBoxPreference) preference;
             return onCheckBoxPreferenceChange(checkBox, newValue);
         }
         if (preference instanceof ListPreference) {
             ListPreference list = (ListPreference) preference;
-            onListPreferenceChange(list, newValue);
-            notifyPreferenceChanged();
-            return false;
+            return onListPreferenceChange(list, newValue);
         }
         if (preference instanceof RingtonePreference) {
             RingtonePreference ring = (RingtonePreference) preference;
@@ -110,7 +111,6 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             TimePreference time = (TimePreference) preference;
             return onTimePreferenceChange(time, newValue);
         }
-        notifyPreferenceChanged();
         return true;
     }
 
@@ -122,12 +122,14 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      *         the  preference.
      * @param newValue
      *         the possibly new value.
+     * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
-    protected void onListPreferenceChange(ListPreference preference, Object newValue) {
+    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
         String value = (newValue == null) ? null : newValue.toString();
         //Set the value for the summary.
         preference.setValue(value);
         updateSummary(preference, value);
+        return false;
     }
 
     /**
@@ -251,6 +253,20 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         ResolveInfo info = pm.resolveActivity(intent, 0);
         if (info == null) {
             preference.setIntent(null);
+        }
+    }
+
+    protected void addChangeListeners(Preference preference) {
+        preference.setOnPreferenceChangeListener(this);
+        if (preference instanceof PreferenceGroup) {
+            addChangeListeners((PreferenceGroup) preference);
+        }
+    }
+
+    protected void addChangeListeners(PreferenceGroup group) {
+        final int count = group.getPreferenceCount();
+        for (int i = 0; i < count; i++) {
+            addChangeListeners(group.getPreference(i));
         }
     }
 }

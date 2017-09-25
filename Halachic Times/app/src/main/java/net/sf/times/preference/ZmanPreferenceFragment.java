@@ -106,10 +106,10 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
     }
 
     @Override
-    protected void onListPreferenceChange(ListPreference preference, Object newValue) {
+    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
         String oldValue = preference.getValue();
 
-        super.onListPreferenceChange(preference, newValue);
+        boolean result = super.onListPreferenceChange(preference, newValue);
 
         if (!oldValue.equals(newValue) && ((preference == preferenceReminder) || opinionKeys.contains(preference.getKey()))) {
             // Explicitly disable dependencies?
@@ -117,6 +117,7 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
 
             remind();
         }
+        return result;
     }
 
     protected void initReminderDays(Preference reminderTime) {

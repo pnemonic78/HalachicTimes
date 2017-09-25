@@ -27,7 +27,7 @@ import static net.sf.times.preference.ZmanimPreferences.KEY_THEME;
 /**
  * This fragment shows the preferences for the Appearance header.
  */
-public class AppearancePreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {

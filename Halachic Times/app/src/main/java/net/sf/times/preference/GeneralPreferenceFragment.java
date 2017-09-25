@@ -38,7 +38,7 @@ import static net.sf.util.LocaleUtils.sortByDisplay;
 /**
  * This fragment shows the preferences for the General header.
  */
-public class GeneralPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     private RingtonePreference reminderRingtonePreference;
 
@@ -60,8 +60,8 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
     }
 
     @Override
-    protected void onListPreferenceChange(ListPreference preference, Object newValue) {
-        super.onListPreferenceChange(preference, newValue);
+    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
+        boolean result = super.onListPreferenceChange(preference, newValue);
 
         String key = preference.getKey();
         if (KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
@@ -75,6 +75,7 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
             }
             reminderRingtonePreference.setRingtoneType(ringType);
         }
+        return result;
     }
 
     private ListPreference initLocaleList(String key) {
@@ -108,7 +109,7 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
                 entries[j] = locale.getDisplayName(locale);
             }
             if (isEmpty(entries[0])) {
-                entries[0] = context.getString(R.string.locale_system);
+                entries[0] = context.getString(R.string.locale_default);
             }
 
             list.setEntryValues(values);
