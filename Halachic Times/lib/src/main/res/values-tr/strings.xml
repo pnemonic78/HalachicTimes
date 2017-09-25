@@ -28,7 +28,7 @@
     <string name="night_mode_yes">Koyu</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">Dil</string>
+    <string name="locale_default">Varsayılan dil</string>
 
 </resources>

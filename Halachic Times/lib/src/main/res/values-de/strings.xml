@@ -28,7 +28,7 @@
     <string name="night_mode_yes">Dunkel</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">Sprache</string>
+    <string name="locale_default">Standardsprache</string>
 
 </resources>

@@ -28,7 +28,7 @@
     <string name="night_mode_yes">Ciemny</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">Język</string>
+    <string name="locale_default">Domyślny język</string>
 
 </resources>

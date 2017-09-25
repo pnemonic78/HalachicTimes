@@ -28,7 +28,7 @@
     <string name="night_mode_yes">Foncé</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">Langue</string>
+    <string name="locale_default">Langue par défaut</string>
 
 </resources>

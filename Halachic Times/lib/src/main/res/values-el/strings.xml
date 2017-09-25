@@ -28,7 +28,7 @@
     <string name="night_mode_yes">Σκοτεινός</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">Γλώσσα</string>
+    <string name="locale_default">Προεπιλεγμένος γλώσσα</string>
 
 </resources>

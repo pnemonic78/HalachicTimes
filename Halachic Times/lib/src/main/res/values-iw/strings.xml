@@ -28,7 +28,7 @@
     <string name="night_mode_yes">כהה</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">שפה</string>
+    <string name="locale_default">שפת ברירת מחדל</string>
 
 </resources>

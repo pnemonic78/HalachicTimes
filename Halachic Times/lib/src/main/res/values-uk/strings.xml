@@ -28,7 +28,7 @@
     <string name="night_mode_yes">Темна</string>
 
     <!-- Locale (language) -->
-    <string name="locale_title">Language</string>
-    <string name="locale_default">Default language</string>
+    <string name="locale_title">Мова</string>
+    <string name="locale_default">Мова за замовчуванням</string>
 
 </resources>
