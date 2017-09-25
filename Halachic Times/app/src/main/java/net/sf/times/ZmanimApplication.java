@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationsProviderFactory;
 import net.sf.times.location.ZmanimLocations;
 
 /**
@@ -32,13 +33,7 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
 
     @NonNull
     @Override
-    protected AddressProvider createAddressProvider(Context context) {
-        return new AddressProvider(context);
-    }
-
-    @NonNull
-    @Override
-    protected ZmanimLocations createLocationsProvider(Context context) {
-        return new ZmanimLocations(context);
+    protected LocationsProviderFactory<AddressProvider, ZmanimLocations> createProviderFactory(Context context) {
+        return new ZmanimProviderFactoryImpl(context);
     }
 }
