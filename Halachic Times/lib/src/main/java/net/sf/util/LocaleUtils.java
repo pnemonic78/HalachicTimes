@@ -20,14 +20,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
@@ -192,6 +189,7 @@ public class LocaleUtils {
         final Configuration config = res.getConfiguration();
         if (SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
+            res.updateConfiguration(config, res.getDisplayMetrics());// Clear the asset manager cache.
             return context.createConfigurationContext(config);
         }
         config.locale = locale;
