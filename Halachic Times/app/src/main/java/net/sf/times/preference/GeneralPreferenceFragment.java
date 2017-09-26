@@ -76,8 +76,11 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
             }
             reminderRingtonePreference.setRingtoneType(ringType);
         } else if (KEY_LOCALE.equals(key)) {
-            //FIXME: restart the activity to refresh views.
-            getActivity().finish();
+            String oldValue = preference.getValue();
+            if ((newValue != oldValue) || !newValue.equals(oldValue)) {
+                //FIXME: restart the activity to refresh views.
+                getActivity().finish();
+            }
         }
         return result;
     }
