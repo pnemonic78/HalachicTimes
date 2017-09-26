@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.appwidget;
 
 import android.content.Context;
 import android.content.Intent;

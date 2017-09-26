@@ -17,9 +17,9 @@ package net.sf.times.preference;
 
 import android.content.Context;
 
-import net.sf.times.ClockWidget;
-import net.sf.times.ZmanimListWidget;
-import net.sf.times.ZmanimWidget;
+import net.sf.times.appwidget.ClockWidget;
+import net.sf.times.appwidget.ZmanimListWidget;
+import net.sf.times.appwidget.ZmanimWidget;
 
 import static net.sf.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
 

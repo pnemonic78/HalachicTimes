@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.appwidget;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -37,7 +37,12 @@ import android.widget.RemoteViews;
 import net.sf.app.LocaleCallbacks;
 import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
-import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.R;
+import net.sf.times.ZmanimActivity;
+import net.sf.times.ZmanimAdapter;
+import net.sf.times.ZmanimItem;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.ZmanimPopulater;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;
@@ -488,7 +493,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
     protected void bindListView(int appWidgetId, RemoteViews list) {
         final Context context = getContext();
         Intent service = new Intent();
-        service.setClassName(context, "net.sf.times.ZmanimWidgetService");
+        service.setClassName(context, ZmanimWidgetService.class.getCanonicalName());
         service.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
         service.setData(Uri.parse(service.toUri(Intent.URI_INTENT_SCHEME)));
         list.setRemoteAdapter(android.R.id.list, service);

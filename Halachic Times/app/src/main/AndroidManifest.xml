@@ -77,7 +77,7 @@
         </activity>
 
         <receiver
-            android:name="net.sf.times.ZmanimWidget"
+            android:name="net.sf.times.appwidget.ZmanimWidget"
             android:exported="false"
             android:label="@string/title_widget_zmanim">
             <intent-filter>
@@ -92,7 +92,7 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.ZmanimListWidget"
+            android:name="net.sf.times.appwidget.ZmanimListWidget"
             android:exported="false"
             android:label="@string/title_widget_list">
             <intent-filter>
@@ -104,7 +104,7 @@
                 android:resource="@xml/widget_list"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.ClockWidget"
+            android:name="net.sf.times.appwidget.ClockWidget"
             android:exported="false"
             android:label="@string/title_widget_clock">
             <intent-filter>
@@ -137,7 +137,7 @@
             android:name="net.sf.times.ZmanimReminderJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service
-            android:name="net.sf.times.ZmanimWidgetService"
+            android:name="net.sf.times.appwidget.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <meta-data

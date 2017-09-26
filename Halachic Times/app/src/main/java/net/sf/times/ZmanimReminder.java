@@ -33,7 +33,6 @@ import android.os.PowerManager.WakeLock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;

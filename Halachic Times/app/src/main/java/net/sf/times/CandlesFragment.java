@@ -23,8 +23,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import net.sf.times.ZmanimAdapter.ZmanimItem;
-
 import java.util.Calendar;
 import java.util.Random;
 

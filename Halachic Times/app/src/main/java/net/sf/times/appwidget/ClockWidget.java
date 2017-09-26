@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.appwidget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +26,9 @@ import android.text.style.StyleSpan;
 import android.widget.RemoteViews;
 
 import net.sf.text.style.TypefaceSpan;
-import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.R;
+import net.sf.times.ZmanimAdapter;
+import net.sf.times.ZmanimItem;
 import net.sf.util.LocaleUtils;
 
 import java.text.DateFormat;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.appwidget;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,7 +24,11 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
-import net.sf.times.ZmanimAdapter.ZmanimItem;
+import net.sf.times.R;
+import net.sf.times.ZmanimAdapter;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.ZmanimItem;
+import net.sf.times.ZmanimPopulater;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
 import net.sf.times.location.ZmanimLocations;

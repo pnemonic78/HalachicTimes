@@ -49,7 +49,6 @@ import net.sf.app.SimpleThemeCallbacks;
 import net.sf.app.ThemeCallbacks;
 import net.sf.app.TodayDatePickerDialog;
 import net.sf.content.ContextResourcesWrapper;
-import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.compass.CompassActivity;
 import net.sf.times.content.res.ZmanimResources;
 import net.sf.times.location.LocatedActivity;
