@@ -17,13 +17,11 @@ package net.sf.app;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.support.annotation.StringRes;
 
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
 
-import static android.content.pm.PackageManager.GET_META_DATA;
+import static net.sf.app.ActivityUtils.restTitle;
 import static net.sf.util.LocaleUtils.applyLocale;
 
 /**
@@ -57,14 +55,6 @@ public class LocaleHelper<P extends LocalePreferences> implements LocaleCallback
     }
 
     protected void onCreate(Activity activity) {
-        // Reset the title.
-        try {
-            @StringRes int label = activity.getPackageManager().getActivityInfo(activity.getComponentName(), GET_META_DATA).labelRes;
-            if (label != 0) {
-                activity.setTitle(label);
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        restTitle(activity);
     }
 }
