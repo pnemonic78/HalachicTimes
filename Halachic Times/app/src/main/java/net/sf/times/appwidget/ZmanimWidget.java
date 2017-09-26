@@ -40,8 +40,8 @@ import net.sf.preference.LocalePreferences;
 import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimAdapter;
-import net.sf.times.ZmanimItem;
 import net.sf.times.ZmanimApplication;
+import net.sf.times.ZmanimItem;
 import net.sf.times.ZmanimPopulater;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocationListener;
@@ -480,23 +480,6 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
      */
     protected int getIntentViewId() {
         return android.R.id.list;
-    }
-
-    /**
-     * Bind the times to remote list view.
-     *
-     * @param appWidgetId
-     *         the app widget id.
-     * @param list
-     *         the remote list.
-     */
-    protected void bindListView(int appWidgetId, RemoteViews list) {
-        final Context context = getContext();
-        Intent service = new Intent();
-        service.setClassName(context, ZmanimWidgetService.class.getCanonicalName());
-        service.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
-        service.setData(Uri.parse(service.toUri(Intent.URI_INTENT_SCHEME)));
-        list.setRemoteAdapter(android.R.id.list, service);
     }
 
     protected void notifyAppWidgetViewDataChanged(Context context) {
