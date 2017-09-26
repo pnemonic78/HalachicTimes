@@ -24,10 +24,12 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 import net.sf.times.ZmanimAdapter.ZmanimItem;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 
 import java.util.Calendar;
 import java.util.Random;
+
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Shows candle images.
@@ -116,7 +118,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         ViewGroup group = null;
 
         switch (holiday) {
-            case JewishCalendar.YOM_KIPPUR:
+            case YOM_KIPPUR:
                 group = (ViewGroup) adapter.getView(holiday, candlesKippurim, list);
                 if (candlesKippurim == null) {
                     candlesKippurim = group;
@@ -131,7 +133,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                 list.addView(group);
                 animations = animationsKippurim;
                 break;
-            case JewishCalendar.CHANUKAH:
+            case CHANUKAH:
                 group = (ViewGroup) adapter.getView(holiday, candlesChannuka, list);
                 if (candlesChannuka == null) {
                     candlesChannuka = group;

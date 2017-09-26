@@ -9,10 +9,18 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/GeoNames" />
             <option value="$PROJECT_DIR$/KosherJava" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/compass" />
+            <option value="$PROJECT_DIR$/compass-bahai" />
+            <option value="$PROJECT_DIR$/compass-lib" />
+            <option value="$PROJECT_DIR$/lib" />
+            <option value="$PROJECT_DIR$/locations" />
           </set>
         </option>
+        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

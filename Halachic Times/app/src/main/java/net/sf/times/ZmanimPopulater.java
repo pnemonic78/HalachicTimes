@@ -32,6 +32,8 @@ import java.util.Calendar;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static java.util.Calendar.FRIDAY;
+import static java.util.Calendar.SATURDAY;
 import static net.sf.times.ZmanimAdapter.NEVER;
 import static net.sf.util.TimeUtils.isSameDay;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
@@ -144,8 +146,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
     /** No summary. */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
-
-    private static final long FAST_ENDS_18 = 18 * MINUTE_IN_MILLIS;
 
     private final Context context;
     private final ZmanimPreferences settings;
@@ -365,14 +365,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.dawn_120_zmanis;
         }
         adapter.add(R.string.dawn, summary, date, jewishDate, remote);
-        switch (holidayToday) {
-            case SEVENTEEN_OF_TAMMUZ:
-            case FAST_OF_GEDALYAH:
-            case TENTH_OF_TEVES:
-            case FAST_OF_ESTHER:
-                adapter.add(R.string.fast_begins, SUMMARY_NONE, date, jewishDate, remote);
-                break;
-        }
+        final Long dawn = date;
 
         opinion = settings.getTallis();
         if (OPINION_10_2.equals(opinion)) {
@@ -516,24 +509,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.prayers_gra;
         }
         adapter.add(R.string.prayers, summary, date, jewishDate, remote);
-        if (holidayToday == EREV_PESACH) {
-            adapter.add(R.string.eat_chametz, summary, date, jewishDate, remote);
-        }
-
-        if (holidayToday == EREV_PESACH) {
-            opinion = settings.getBurnChametz();
-            if (OPINION_16_1.equals(opinion)) {
-                date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
-                summary = R.string.burn_chametz_16;
-            } else if (OPINION_72.equals(opinion)) {
-                date = cal.getSofZmanBiurChametzMGA72Minutes();
-                summary = R.string.burn_chametz_72;
-            } else {
-                date = cal.getSofZmanBiurChametzGRA();
-                summary = R.string.burn_chametz_gra;
-            }
-            adapter.add(R.string.burn_chametz, summary, date, jewishDate, remote);
-        }
+        final Long sofZmanTfila = date;
 
         opinion = settings.getMidday();
         if (OPINION_FIXED.equals(opinion)) {
@@ -544,7 +520,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.midday_summary;
         }
         adapter.add(R.string.midday, summary, date, jewishDate, remote);
-        Long midday = date;
+        final Long midday = date;
 
         opinion = settings.getEarliestMincha();
         if (OPINION_16_1.equals(opinion)) {
@@ -645,7 +621,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.sunset_summary;
         }
         adapter.add(R.string.sunset, summary, date, jewishDate, remote);
-        Long sunset = date;
+        final Long sunset = date;
 
         if (sunset != null) {
             if (hasCandles) {
@@ -664,19 +640,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                         adapter.add(R.string.candles, summary, sunset, jewishDate, remote);
                     }
                 }
-            }
-
-            if ((holidayTomorrow == TISHA_BEAV) || (holidayTomorrow == YOM_KIPPUR)) {
-                adapter.add(R.string.fast_begins, SUMMARY_NONE, sunset, jewishDate, remote);
-            }
-
-            switch (holidayToday) {
-                case SEVENTEEN_OF_TAMMUZ:
-                case FAST_OF_GEDALYAH:
-                case TENTH_OF_TEVES:
-                case FAST_OF_ESTHER:
-                    adapter.add(R.string.fast_ends, SUMMARY_NONE, sunset + FAST_ENDS_18, jewishDateTomorrow, remote);
-                    break;
             }
         }
 
@@ -701,7 +664,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 summary = R.string.twilight_7_083;
             }
         }
-        Long twilight = date;
+        final Long twilight = date;
         adapter.add(R.string.twilight, summary, date, jewishDateTomorrow, remote);
         if (hasCandles && (candlesHow == AT_TWILIGHT)) {
             if (holidayTomorrow == CHANUKAH) {
@@ -793,10 +756,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.nightfall_8;
         }
         adapter.add(R.string.nightfall, summary, date, jewishDateTomorrow, remote);
-        if ((holidayToday == TISHA_BEAV) || (holidayToday == YOM_KIPPUR)) {
-            adapter.add(R.string.fast_ends, SUMMARY_NONE, date, jewishDateTomorrow, remote);
-        }
-        Long nightfall = date;
+        final Long nightfall = date;
         if (nightfall != null) {
             date = cal.getTimeOffset(nightfall, shabbathOffset * MINUTE_IN_MILLIS);
             if (hasCandles && (candlesHow == AT_NIGHT) && (holidayTomorrow == CHANUKAH)) {
@@ -826,7 +786,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
                     adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
                 }
-            } else if (dayOfWeek == Calendar.SATURDAY) {
+            } else if (dayOfWeek == SATURDAY) {
                 summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
                 adapter.add(R.string.shabbath_ends, summaryText, date, jewishDateTomorrow, remote);
             } else if (holidayToday >= 0) {
@@ -861,6 +821,45 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.midnight_summary;
         }
         adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+
+        switch (holidayToday) {
+            case EREV_PESACH:
+                adapter.add(R.string.eat_chametz, summary, sofZmanTfila, jewishDate, remote);
+
+                opinion = settings.getBurnChametz();
+                if (OPINION_16_1.equals(opinion)) {
+                    date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
+                    summary = R.string.burn_chametz_16;
+                } else if (OPINION_72.equals(opinion)) {
+                    date = cal.getSofZmanBiurChametzMGA72Minutes();
+                    summary = R.string.burn_chametz_72;
+                } else {
+                    date = cal.getSofZmanBiurChametzGRA();
+                    summary = R.string.burn_chametz_gra;
+                }
+                adapter.add(R.string.burn_chametz, summary, date, jewishDate, remote);
+                break;
+            case SEVENTEEN_OF_TAMMUZ:
+            case FAST_OF_GEDALYAH:
+            case FAST_OF_ESTHER:
+                adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn, jewishDate, remote);
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
+                break;
+            case TISHA_BEAV:
+            case YOM_KIPPUR:
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
+                break;
+            case TENTH_OF_TEVES:
+                adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn, jewishDate, remote);
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, twilight, jewishDateTomorrow, remote);
+                break;
+        }
+        switch (holidayTomorrow) {
+            case TISHA_BEAV:
+            case YOM_KIPPUR:
+                adapter.add(R.string.fast_begins, SUMMARY_NONE, sunset, jewishDate, remote);
+                break;
+        }
 
         final int jDayOfMonth = jcal.getJewishDayOfMonth();
         // Molad.
@@ -981,7 +980,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
             case CHANUKAH:
                 count = jcal.getDayOfChanukah();
-                if ((dayOfWeek != Calendar.FRIDAY) && (dayOfWeek != Calendar.SATURDAY)) {
+                if ((dayOfWeek != FRIDAY) && (dayOfWeek != SATURDAY)) {
                     String opinion = settings.getChanukkaCandles();
                     if (OPINION_TWILIGHT.equals(opinion)) {
                         flags = AT_TWILIGHT;
@@ -993,7 +992,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 }
                 break;
             default:
-                if (dayOfWeek == Calendar.FRIDAY) {
+                if (dayOfWeek == FRIDAY) {
                     holidayTomorrow = SHABBATH;
                     count = CANDLES_SHABBATH;
                 }
@@ -1002,7 +1001,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         switch (dayOfWeek) {
             // Forbidden to light candles during Shabbath.
-            case Calendar.FRIDAY:
+            case FRIDAY:
                 // Probably never happens that Yom Kippurim falls on a Friday.
                 // Prohibited to light candles on Yom Kippurim for Shabbath.
                 if (holidayToday == YOM_KIPPUR) {
@@ -1010,7 +1009,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 }
                 break;
             // Forbidden to light candles during Shabbath.
-            case Calendar.SATURDAY:
+            case SATURDAY:
                 if (holidayToday == -1) {
                     holidayToday = SHABBATH;
                 }

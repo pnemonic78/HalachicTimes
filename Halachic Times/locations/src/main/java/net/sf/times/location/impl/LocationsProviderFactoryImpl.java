@@ -13,27 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.compass;
+package net.sf.times.location.impl;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
-import net.sf.times.location.CompassLocations;
-import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationsProvider;
 import net.sf.times.location.LocationsProviderFactory;
 
 /**
- * Compass application.
- *
- * @author Moshe Waisberg
+ * Factory that creates location providers.
  */
-public class CompassApplication extends LocationApplication<ThemePreferences, AddressProvider, CompassLocations> {
+public class LocationsProviderFactoryImpl implements LocationsProviderFactory<AddressProvider, LocationsProvider> {
 
-    @NonNull
+    private final Context context;
+
+    public LocationsProviderFactoryImpl(Context context) {
+        this.context = context.getApplicationContext();
+    }
+
     @Override
-    protected LocationsProviderFactory<AddressProvider, CompassLocations> createProviderFactory(Context context) {
-        return new CompassProviderFactoryImpl(context);
+    public AddressProvider createAddressProvider() {
+        return new AddressProvider(context);
+    }
+
+    @Override
+    public LocationsProvider createLocationsProvider() {
+        return new LocationsProvider(context);
     }
 }

@@ -21,6 +21,8 @@ import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
+import net.sf.times.location.impl.LocationsProviderFactoryImpl;
+
 /**
  * Holder for locations.
  *
@@ -28,22 +30,20 @@ import android.support.annotation.NonNull;
  */
 public class LocationHolder<AP extends AddressProvider, LP extends LocationsProvider> implements ComponentCallbacks2 {
 
-    private final Context context;
+    private final LocationsProviderFactory<AP, LP> factory;
     /** Provider for addresses. */
     private AP addressProvider;
     /** Provider for locations. */
     private LP locationsProvider;
 
-    public LocationHolder(@NonNull Context context) {
-        this.context = context;
-        this.addressProvider = null;
-        this.locationsProvider = null;
+    public LocationHolder(Context context) {
+        this((LocationsProviderFactory<AP, LP>) new LocationsProviderFactoryImpl(context));
     }
 
-    public LocationHolder(@NonNull AP addressProvider, @NonNull LP locationsProvider) {
-        this.context = null;
-        this.addressProvider = addressProvider;
-        this.locationsProvider = locationsProvider;
+    public LocationHolder(@NonNull LocationsProviderFactory<AP, LP> factory) {
+        this.factory = factory;
+        this.addressProvider = null;
+        this.locationsProvider = null;
     }
 
     /**
@@ -53,13 +53,9 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
      */
     public AP getAddresses() {
         if (addressProvider == null) {
-            addressProvider = createAddressProvider(context);
+            addressProvider = factory.createAddressProvider();
         }
         return addressProvider;
-    }
-
-    protected AP createAddressProvider(Context context) {
-        return (AP) new AddressProvider(context);
     }
 
     /**
@@ -69,13 +65,9 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
      */
     public LP getLocations() {
         if (locationsProvider == null) {
-            locationsProvider = createLocationsProvider(context);
+            locationsProvider = factory.createLocationsProvider();
         }
         return locationsProvider;
-    }
-
-    protected LP createLocationsProvider(Context context) {
-        return (LP) new LocationsProvider(context);
     }
 
     @Override

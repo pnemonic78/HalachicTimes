@@ -146,7 +146,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @param context
      *         the context.
      */
-    protected LocationsProvider(Context context) {
+    public LocationsProvider(Context context) {
         Context app = context.getApplicationContext();
         if (app != null)
             context = app;

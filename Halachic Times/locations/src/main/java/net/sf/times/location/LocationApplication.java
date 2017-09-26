@@ -48,7 +48,7 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     protected LocationHolder<AP, LP> getLocationHolder() {
         if (locationHolder == null) {
             final Context context = this;
-            locationHolder = new LocationHolder<>(createAddressProvider(context), createLocationsProvider(context));
+            locationHolder = new LocationHolder(createProviderFactory(context));
             registerComponentCallbacks(locationHolder);
         }
         return locationHolder;
@@ -64,7 +64,7 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     }
 
     @NonNull
-    protected abstract AP createAddressProvider(Context context);
+    protected abstract LocationsProviderFactory<AP, LP> createProviderFactory(Context context);
 
     /**
      * Get the locations provider instance.
@@ -74,9 +74,6 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     public LP getLocations() {
         return getLocationHolder().getLocations();
     }
-
-    @NonNull
-    protected abstract LP createLocationsProvider(Context context);
 
     @Override
     public void onTerminate() {
@@ -94,7 +91,6 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
         final LocationHolder locationHolder = this.locationHolder;
         if (locationHolder != null) {
             unregisterComponentCallbacks(locationHolder);
-            this.locationHolder = null;
         }
     }
 }

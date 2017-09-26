@@ -20,7 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.sf.times.preference.ZmanimPreferences;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Adapter for candles.
@@ -41,12 +43,12 @@ public class CandlesAdapter extends ZmanimAdapter {
         int candlesCount = getCandlesCount();
 
         switch (holiday) {
-            case JewishCalendar.YOM_KIPPUR:
+            case YOM_KIPPUR:
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.candles_kippurim, parent, false);
                 }
                 break;
-            case JewishCalendar.CHANUKAH:
+            case CHANUKAH:
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.candles_channuka, parent, false);
                 }
