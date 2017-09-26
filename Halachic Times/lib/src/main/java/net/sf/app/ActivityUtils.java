@@ -16,10 +16,15 @@
 package net.sf.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 /**
  * Activity utilities.
@@ -48,5 +53,43 @@ public class ActivityUtils {
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "package not found!", e);
         }
+    }
+
+    /**
+     * Restart the activity.
+     *
+     * @param activity
+     *         the activity.
+     * @param savedState
+     *         saved state from either {@link Activity#onSaveInstanceState(Bundle)}
+     *         or {@link Activity#onSaveInstanceState(Bundle, PersistableBundle)}.
+     */
+    public static void restartActivity(Activity activity, Bundle savedState) {
+        Intent intent = activity.getIntent();
+        Bundle extras = intent.getExtras();
+
+        Bundle args = (savedState != null) ? savedState : new Bundle();
+        if (extras != null) {
+            args.putAll(extras);
+        }
+        intent.putExtras(args);
+
+        activity.finish();
+        activity.startActivity(intent);
+    }
+
+    /**
+     * Restart the activity.
+     *
+     * @param activity
+     *         the activity.
+     */
+    public static void restartActivity(Activity activity) {
+        Bundle savedState = null;
+        if (SDK_INT >= LOLLIPOP) {
+            savedState = new Bundle();
+            activity.onSaveInstanceState(savedState, null);
+        }
+        restartActivity(activity, savedState);
     }
 }

@@ -30,6 +30,7 @@ import net.sf.util.LocaleUtils;
 import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
+import static net.sf.app.ActivityUtils.restartActivity;
 import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
@@ -42,6 +43,7 @@ import static net.sf.util.LocaleUtils.sortByDisplay;
 public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     private RingtonePreference reminderRingtonePreference;
+    private ListPreference localePreference;
 
     @Override
     protected int getPreferencesXml() {
@@ -57,7 +59,7 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         initList(KEY_REMINDER_STREAM);
         initList(KEY_COMPASS_BEARING);
         initList(KEY_COMPASS_BEARING);
-        initLocaleList(KEY_LOCALE);
+        localePreference = initLocaleList(KEY_LOCALE);
     }
 
     @Override
@@ -75,12 +77,9 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 ringType = RingtoneManager.TYPE_ALARM;
             }
             reminderRingtonePreference.setRingtoneType(ringType);
-        } else if (KEY_LOCALE.equals(key)) {
-            String oldValue = preference.getValue();
-            if ((newValue != oldValue) || !newValue.equals(oldValue)) {
-                //FIXME: restart the activity to refresh views.
-                getActivity().finish();
-            }
+        } else if (KEY_LOCALE.equals(key) && (localePreference != null)) {
+            // Restart the activity to refresh views.
+            restartActivity(getActivity());
         }
         return result;
     }
