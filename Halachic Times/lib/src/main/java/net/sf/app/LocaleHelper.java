@@ -15,11 +15,15 @@
  */
 package net.sf.app;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.annotation.StringRes;
 
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
 
+import static android.content.pm.PackageManager.GET_META_DATA;
 import static net.sf.util.LocaleUtils.applyLocale;
 
 /**
@@ -29,12 +33,15 @@ import static net.sf.util.LocaleUtils.applyLocale;
  */
 public class LocaleHelper<P extends LocalePreferences> implements LocaleCallbacks<P> {
 
-    private final Context context;
     private final P preferences;
 
     public LocaleHelper(Context context) {
-        this.context = context;
         this.preferences = (P) new SimpleLocalePreferences(context);
+    }
+
+    @Override
+    public P getLocalePreferences() {
+        return preferences;
     }
 
     @Override
@@ -43,7 +50,21 @@ public class LocaleHelper<P extends LocalePreferences> implements LocaleCallback
     }
 
     @Override
-    public P getLocalePreferences() {
-        return preferences;
+    public void onCreate(Context context) {
+        if (context instanceof Activity) {
+            onCreate((Activity) context);
+        }
+    }
+
+    protected void onCreate(Activity activity) {
+        // Reset the title.
+        try {
+            @StringRes int label = activity.getPackageManager().getActivityInfo(activity.getComponentName(), GET_META_DATA).labelRes;
+            if (label != 0) {
+                activity.setTitle(label);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

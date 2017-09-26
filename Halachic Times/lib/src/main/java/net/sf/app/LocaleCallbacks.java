@@ -36,6 +36,14 @@ public interface LocaleCallbacks<P extends LocalePreferences> {
     Context attachBaseContext(Context context);
 
     /**
+     * Re-apply the title here.
+     *
+     * @param context
+     *         the context.
+     */
+    void onCreate(Context context);
+
+    /**
      * Get the locale preferences.
      *
      * @return the preferences.

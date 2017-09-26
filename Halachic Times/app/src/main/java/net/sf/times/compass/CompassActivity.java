@@ -52,6 +52,7 @@ public class CompassActivity extends BaseCompassActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        localeCallbacks.onCreate(this);
         if (SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }

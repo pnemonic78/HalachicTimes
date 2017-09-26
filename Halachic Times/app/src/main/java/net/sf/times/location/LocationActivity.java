@@ -39,6 +39,12 @@ public class LocationActivity extends LocationTabActivity {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        localeCallbacks.onCreate(this);
+    }
+
+    @Override
     protected Class<? extends Activity> getAddLocationActivityClass() {
         return ZmanimAddLocationActivity.class;
     }

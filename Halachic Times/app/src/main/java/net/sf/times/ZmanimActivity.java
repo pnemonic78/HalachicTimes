@@ -225,6 +225,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        localeCallbacks.onCreate(this);
         init();
         initLocation();
         handleIntent(getIntent());

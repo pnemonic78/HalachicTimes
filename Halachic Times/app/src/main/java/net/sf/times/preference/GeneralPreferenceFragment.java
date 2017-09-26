@@ -32,7 +32,6 @@ import java.util.Locale;
 import static android.text.TextUtils.isEmpty;
 import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
-import static net.sf.times.preference.ZmanimPreferences.KEY_PAST;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
 import static net.sf.util.LocaleUtils.sortByDisplay;
@@ -76,6 +75,9 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 ringType = RingtoneManager.TYPE_ALARM;
             }
             reminderRingtonePreference.setRingtoneType(ringType);
+        } else if (KEY_LOCALE.equals(key)) {
+            //FIXME: restart the activity to refresh views.
+            getActivity().finish();
         }
         return result;
     }

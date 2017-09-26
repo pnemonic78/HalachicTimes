@@ -37,4 +37,10 @@ public class ZmanimAddLocationActivity<P extends ZmanimPreferences> extends AddL
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        localeCallbacks.onCreate(this);
+    }
 }
