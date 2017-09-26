@@ -27,17 +27,14 @@ import net.sf.preference.LocalePreferences;
  * Service that provides the list of halachic times (<em>zmanim</em>) items for
  * the scrollable widget.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimWidgetService extends RemoteViewsService {
 
-    private ZmanimWidgetViewsFactory factory;
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.factory = null;//Force the latest locale.
-
         this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
@@ -45,11 +42,7 @@ public class ZmanimWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        if (factory == null) {
-            final Context context = this;
-            factory = new ZmanimWidgetViewsFactory(context, intent);
-        }
-        return factory;
+        final Context context = this;
+        return new ZmanimWidgetViewsFactory(context, intent);
     }
-
 }

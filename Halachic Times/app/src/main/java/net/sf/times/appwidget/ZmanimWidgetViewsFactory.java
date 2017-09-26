@@ -39,12 +39,13 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import static android.widget.AdapterView.INVALID_POSITION;
 import static java.lang.System.currentTimeMillis;
 
 /**
  * Factory to create views for list widget.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
 
@@ -57,9 +58,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     /** The adapter. */
     private ZmanimAdapter adapter;
     /** Position index of today's Hebrew day. */
-    private int positionToday;
+    private int positionToday = 0;
     /** Position index of next Hebrew day. */
-    private int positionTomorrow;
+    private int positionTomorrow = -1;
     private int colorDisabled = Color.DKGRAY;
     private int colorEnabled = Color.WHITE;
 
@@ -69,12 +70,21 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public int getCount() {
-        return (adapter == null) ? 0 : (positionToday >= 0 ? 1 : 0) + adapter.getCount() + (positionTomorrow > positionToday ? 1 : 0);
+        return (positionToday >= 0 ? 1 : 0) + (positionTomorrow > positionToday ? 1 : 0) + ((adapter != null) ? adapter.getCount() : 0);
     }
 
     @Override
     public long getItemId(int position) {
-        return position;
+        if ((position == positionToday) || (position == positionTomorrow)) {
+            return 0L;
+        }
+        if ((positionToday >= 0) && (position > positionToday)) {
+            position--;
+        }
+        if ((positionTomorrow > positionToday) && (position > positionTomorrow)) {
+            position--;
+        }
+        return (adapter != null) ? adapter.getItemId(position) : position;
     }
 
     @Override
@@ -84,13 +94,17 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public RemoteViews getViewAt(int position) {
+        if (position == INVALID_POSITION) {
+            return null;
+        }
+
         final ZmanimAdapter adapter = this.adapter;
         if (adapter == null) {
             return null;
         }
 
         final Context context = this.context;
-        String pkg = context.getPackageName();
+        final String pkg = context.getPackageName();
         RemoteViews view;
 
         if ((position == positionToday) || (position == positionTomorrow)) {
@@ -119,7 +133,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         }
 
         // discount for "today" row.
-        position--;
+        if ((positionToday >= 0) && (position >= positionToday)) {
+            position--;
+        }
         // discount for "tomorrow" row.
         if ((positionTomorrow > 0) && (position >= positionTomorrow)) {
             position--;
@@ -136,7 +152,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public int getViewTypeCount() {
-        return 1 + ((adapter == null) ? 0 : adapter.getViewTypeCount());
+        return 1 + ((adapter != null) ? adapter.getViewTypeCount() : 1);
     }
 
     @Override

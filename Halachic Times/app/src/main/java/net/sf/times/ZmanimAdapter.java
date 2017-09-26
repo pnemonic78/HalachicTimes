@@ -578,4 +578,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         }
         return formatter;
     }
+
+    @Override
+    public long getItemId(int position) {
+        ZmanimItem item = getItem(position);
+        return (item != null) ? item.titleId : position;
+    }
 }
