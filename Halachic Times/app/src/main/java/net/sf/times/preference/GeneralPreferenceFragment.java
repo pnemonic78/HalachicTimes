@@ -25,13 +25,14 @@ import net.sf.preference.RingtonePreference;
 import net.sf.times.R;
 
 import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
+import static net.sf.times.preference.ZmanimPreferences.KEY_PAST;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
 
 /**
  * This fragment shows the preferences for the General header.
  */
-public class GeneralPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     private RingtonePreference reminderRingtonePreference;
 
@@ -44,6 +45,7 @@ public class GeneralPreferenceFragment extends net.sf.preference.AbstractPrefere
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        findPreference(KEY_PAST).setOnPreferenceChangeListener(this);
         reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
 
         initList(KEY_REMINDER_STREAM);

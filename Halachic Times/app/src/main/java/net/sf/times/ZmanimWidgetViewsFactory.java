@@ -253,7 +253,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private void bindView(RemoteViews row, int position, ZmanimItem item) {
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
-        // FIXME - the application must notify the widget that "past times" has changed.
         if (item.elapsed) {
             // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws error.
             row.setTextColor(android.R.id.title, colorDisabled);

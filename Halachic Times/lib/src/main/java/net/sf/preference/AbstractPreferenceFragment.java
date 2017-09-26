@@ -94,6 +94,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference instanceof CheckBoxPreference) {
             CheckBoxPreference checkBox = (CheckBoxPreference) preference;
+            notifyPreferenceChanged();
             return onCheckBoxPreferenceChange(checkBox, newValue);
         }
         if (preference instanceof ListPreference) {
@@ -104,10 +105,12 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         }
         if (preference instanceof RingtonePreference) {
             RingtonePreference ring = (RingtonePreference) preference;
+            notifyPreferenceChanged();
             return onRingtonePreferenceChange(ring, newValue);
         }
         if (preference instanceof TimePreference) {
             TimePreference time = (TimePreference) preference;
+            notifyPreferenceChanged();
             return onTimePreferenceChange(time, newValue);
         }
         notifyPreferenceChanged();
