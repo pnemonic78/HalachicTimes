@@ -53,7 +53,6 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        findPreference(KEY_PAST).setOnPreferenceChangeListener(this);
         reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
 
         initList(KEY_REMINDER_STREAM);
