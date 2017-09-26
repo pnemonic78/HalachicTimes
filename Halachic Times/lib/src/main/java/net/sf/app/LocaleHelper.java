@@ -27,12 +27,12 @@ import static net.sf.util.LocaleUtils.applyLocale;
  *
  * @author Moshe Waisberg
  */
-public class LocaleWrapper<P extends LocalePreferences> implements LocaleCallbacks<P> {
+public class LocaleHelper<P extends LocalePreferences> implements LocaleCallbacks<P> {
 
     private final Context context;
     private final P preferences;
 
-    public LocaleWrapper(Context context) {
+    public LocaleHelper(Context context) {
         this.context = context;
         this.preferences = (P) new SimpleLocalePreferences(context);
     }

@@ -87,13 +87,11 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
         Preference pref = findPreference(key);
         if ((pref != null) && (pref instanceof ListPreference)) {
-            ListPreference list = (ListPreference) pref;
-
             final Context context = getActivity();
-            String[] localeNames = BuildConfig.LOCALES;
-            Locale[] unique = LocaleUtils.unique(localeNames);
+            final String[] localeNames = BuildConfig.LOCALES;
+            final Locale[] unique = LocaleUtils.unique(localeNames);
 
-            Locale[] sorted = sortByDisplay(unique);
+            final Locale[] sorted = sortByDisplay(unique);
             final int length = sorted.length;
             int length2 = length;
             if (!isEmpty(sorted[0].getLanguage())) {
@@ -114,6 +112,7 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 entries[0] = context.getString(R.string.locale_default);
             }
 
+            ListPreference list = (ListPreference) pref;
             list.setEntryValues(values);
             list.setEntries(entries);
         }

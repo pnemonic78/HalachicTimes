@@ -23,7 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.times.R;
 import net.sf.times.location.LocationActivity;
@@ -44,7 +44,7 @@ public class CompassActivity extends BaseCompassActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleWrapper(newBase);
+        this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

@@ -19,7 +19,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.AddressProvider;
@@ -38,7 +38,7 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleWrapper(newBase);
+        this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

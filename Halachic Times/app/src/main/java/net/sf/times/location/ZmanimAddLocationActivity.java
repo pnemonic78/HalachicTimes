@@ -18,7 +18,7 @@ package net.sf.times.location;
 import android.content.Context;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.times.preference.ZmanimPreferences;
 
@@ -33,7 +33,7 @@ public class ZmanimAddLocationActivity<P extends ZmanimPreferences> extends AddL
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleWrapper(newBase);
+        this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

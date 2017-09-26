@@ -19,7 +19,7 @@ import android.app.Activity;
 import android.content.Context;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 
 /**
@@ -33,7 +33,7 @@ public class LocationActivity extends LocationTabActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleWrapper(newBase);
+        this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

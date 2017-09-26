@@ -20,7 +20,7 @@ import android.content.Intent;
 import android.widget.RemoteViewsService;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 
 /**
@@ -38,7 +38,7 @@ public class ZmanimWidgetService extends RemoteViewsService {
     protected void attachBaseContext(Context newBase) {
         this.factory = null;//Force the latest locale.
 
-        this.localeCallbacks = new LocaleWrapper(newBase);
+        this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

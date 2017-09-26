@@ -19,7 +19,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.PreferenceActivity;
 import net.sf.times.R;
@@ -41,7 +41,7 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleWrapper(newBase);
+        this.localeCallbacks = new LocaleHelper(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

@@ -35,7 +35,7 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleWrapper;
+import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.times.ZmanimAdapter.ZmanimItem;
 import net.sf.times.location.ZmanimAddress;
@@ -100,7 +100,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.localeCallbacks = new LocaleWrapper(context);
+        this.localeCallbacks = new LocaleHelper(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onReceive(context, intent);
         this.context = context;
@@ -127,7 +127,7 @@ public class ZmanimWidget extends AppWidgetProvider implements ZmanimLocationLis
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        this.localeCallbacks = new LocaleWrapper(context);
+        this.localeCallbacks = new LocaleHelper(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
