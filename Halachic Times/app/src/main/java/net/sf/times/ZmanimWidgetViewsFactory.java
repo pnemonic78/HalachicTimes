@@ -32,6 +32,7 @@ import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import static java.lang.System.currentTimeMillis;
@@ -64,7 +65,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public int getCount() {
-        return (adapter == null) ? 0 : (positionToday >= 0 ? 1 : 0) + adapter.getCount() + (positionTomorrow > 0 ? 1 : 0);
+        return (adapter == null) ? 0 : (positionToday >= 0 ? 1 : 0) + adapter.getCount() + (positionTomorrow > positionToday ? 1 : 0);
     }
 
     @Override
@@ -116,9 +117,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         // discount for "today" row.
         position--;
         // discount for "tomorrow" row.
-        if ((positionTomorrow > 0) && (position >= positionTomorrow))
+        if ((positionTomorrow > 0) && (position >= positionTomorrow)) {
             position--;
-
+        }
         if ((position < 0) || (position >= adapter.getCount())) {
             return null;
         }
@@ -218,13 +219,23 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
         positionToday = 0;
         positionTomorrow = -1;
-        ZmanimItem item;
-        int count = adapter.getCount();
-        for (int i = 0; i < count; i++) {
-            item = adapter.getItem(i);
-            if (item.titleId == R.string.sunset) {
-                positionTomorrow = i + (positionToday >= 0 ? 1 : 0) + 1;
-                break;
+        final int count = adapter.getCount();
+        if (count > 0) {
+            JewishDate jewishDate = null;
+            ZmanimItem item;
+            for (int i = 0; i < count; i++) {
+                item = adapter.getItem(i);
+                if ((item == null) || item.isEmpty() || (item.jewishDate == null)) {
+                    continue;
+                }
+                if (jewishDate == null) {
+                    jewishDate = item.jewishDate;
+                    continue;
+                }
+                if (!item.jewishDate.equals(jewishDate)) {
+                    positionTomorrow = i + (positionToday >= 0 ? 1 : 0);
+                    break;
+                }
             }
         }
     }
@@ -244,8 +255,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         row.setTextViewText(R.id.time, item.timeLabel);
         // FIXME - the application must notify the widget that "past times" has changed.
         if (item.elapsed) {
-            // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws
-            // error.
+            // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws error.
             row.setTextColor(android.R.id.title, colorDisabled);
             row.setTextColor(R.id.time, colorDisabled);
         } else {
