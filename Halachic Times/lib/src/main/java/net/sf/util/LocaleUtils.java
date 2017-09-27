@@ -189,7 +189,6 @@ public class LocaleUtils {
         final Configuration config = res.getConfiguration();
         if (SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
-            res.updateConfiguration(config, res.getDisplayMetrics());// Clear the asset manager cache.
             return context.createConfigurationContext(config);
         }
         config.locale = locale;

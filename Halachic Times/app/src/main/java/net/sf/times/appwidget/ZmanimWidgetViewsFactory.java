@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
+import net.sf.app.LocaleHelper;
 import net.sf.times.R;
 import net.sf.times.ZmanimAdapter;
 import net.sf.times.ZmanimApplication;
@@ -50,7 +51,7 @@ import static java.lang.System.currentTimeMillis;
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
 
     /** The context. */
-    private final Context context;
+    private Context context;
     /** Provider for locations. */
     private ZmanimLocations locations;
     /** The preferences. */
@@ -63,9 +64,11 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private int positionTomorrow = -1;
     private int colorDisabled = Color.DKGRAY;
     private int colorEnabled = Color.WHITE;
+    private final LocaleHelper localeHelper;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
-        this.context = context;
+        this.localeHelper = new LocaleHelper(context);
+        this.context = localeHelper.attachBaseContext(context);
     }
 
     @Override
@@ -168,6 +171,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onDataSetChanged() {
+        this.context = localeHelper.attachBaseContext(context);//Workaround to clear the asset manager cache.
         populateAdapter();
     }
 
