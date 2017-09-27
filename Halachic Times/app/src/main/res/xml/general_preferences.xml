@@ -5,32 +5,43 @@
         android:defaultValue="@bool/past_defaultValue"
         android:key="past"
         android:title="@string/past_title"/>
-    <SwitchPreference
-        android:defaultValue="@bool/notification_upcoming_defaultValue"
-        android:key="notification.next"
-        android:title="@string/notification_upcoming_title"/>
-    <ListPreference
-        android:defaultValue="@string/reminder_stream_defaultValue"
-        android:entries="@array/reminder_stream_entries"
-        android:entryValues="@array/reminder_stream_values"
-        android:icon="@drawable/ic_settings_alarm"
-        android:key="reminder.stream"
-        android:title="@string/reminder_stream_title"/>
-    <net.sf.preference.RingtonePreference
-        android:defaultValue="@string/reminder_ringtone_defaultValue"
-        android:icon="@drawable/ic_settings_tone"
-        android:key="reminder.ringtone"
-        android:ringtoneType="alarm"
-        android:showDefault="true"
-        android:showSilent="true"
-        android:title="@string/reminder_tone"/>
 
-    <ListPreference
-        android:defaultValue="@string/compass_bearing_defaultValue"
-        android:entries="@array/compass_bearing_entries"
-        android:entryValues="@array/compass_bearing_values"
-        android:icon="@android:drawable/ic_menu_compass"
-        android:key="compass.bearing"
-        android:title="@string/compass_bearing"/>
+    <PreferenceCategory
+        android:title="@string/notifications_title">
+        <SwitchPreference
+            android:defaultValue="@bool/notification_upcoming_defaultValue"
+            android:key="notification.next"
+            android:title="@string/notification_upcoming_title"/>
+        <ListPreference
+            android:defaultValue="@string/reminder_stream_defaultValue"
+            android:entries="@array/reminder_stream_entries"
+            android:entryValues="@array/reminder_stream_values"
+            android:icon="@drawable/ic_settings_alarm"
+            android:key="reminder.stream"
+            android:title="@string/reminder_stream_title"/>
+        <net.sf.preference.RingtonePreference
+            android:defaultValue="@string/reminder_ringtone_defaultValue"
+            android:icon="@drawable/ic_settings_tone"
+            android:key="reminder.ringtone"
+            android:ringtoneType="alarm"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:title="@string/reminder_tone"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/coords_title">
+        <ListPreference
+            android:defaultValue="@string/compass_bearing_defaultValue"
+            android:entries="@array/compass_bearing_entries"
+            android:entryValues="@array/compass_bearing_values"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:key="compass.bearing"
+            android:title="@string/compass_bearing"/>
+        <SwitchPreference
+            android:defaultValue="@bool/coords_elevation_visible_defaultValue"
+            android:key="coords.elevation"
+            android:title="@string/coords_elevation_title"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

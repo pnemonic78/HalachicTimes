@@ -19,12 +19,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 
 import net.sf.lib.R;
@@ -95,8 +95,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         notifyPreferenceChanged();
-        if (preference instanceof CheckBoxPreference) {
-            CheckBoxPreference checkBox = (CheckBoxPreference) preference;
+        if (preference instanceof SwitchPreference) {
+            SwitchPreference checkBox = (SwitchPreference) preference;
             return onCheckBoxPreferenceChange(checkBox, newValue);
         }
         if (preference instanceof ListPreference) {
@@ -157,7 +157,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      *         the new value.
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
-    protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
+    protected boolean onCheckBoxPreferenceChange(SwitchPreference preference, Object newValue) {
         return true;
     }
 

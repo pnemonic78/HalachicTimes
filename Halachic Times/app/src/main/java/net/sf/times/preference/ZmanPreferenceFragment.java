@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 
 import net.sf.times.ZmanimReminder;
@@ -145,7 +146,8 @@ public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreference
         return null;
     }
 
-    protected boolean onCheckBoxPreferenceChange(CheckBoxPreference preference, Object newValue) {
+    @Override
+    protected boolean onCheckBoxPreferenceChange(SwitchPreference preference, Object newValue) {
         if (preference.equals(preferenceReminderSunday)
                 || preference.equals(preferenceReminderMonday)
                 || preference.equals(preferenceReminderTuesday)

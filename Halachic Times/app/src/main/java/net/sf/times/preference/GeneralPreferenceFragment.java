@@ -48,7 +48,6 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
         initList(KEY_REMINDER_STREAM);
         initList(KEY_COMPASS_BEARING);
-        initList(KEY_COMPASS_BEARING);
     }
 
     @Override
