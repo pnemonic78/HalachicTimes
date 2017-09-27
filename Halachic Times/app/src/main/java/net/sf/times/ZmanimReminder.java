@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -46,6 +47,8 @@ import java.util.Date;
 import java.util.Locale;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.media.RingtoneManager.TYPE_ALARM;
+import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
@@ -127,6 +130,7 @@ public class ZmanimReminder {
     private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
 
     private static final String CHANNEL_REMINDER = "reminder";
+    private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
     private static final String CHANNEL_UPCOMING = "upcoming";
 
     private final Context context;
@@ -524,16 +528,22 @@ public class ZmanimReminder {
         final CharSequence contentText = item.text;
         final long when = item.time;
         final int audioStreamType = settings.getReminderStream();
+        final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
         final Uri sound = silent ? null : settings.getReminderRingtone();
 
-        final Notification.Builder builder = createNotificationBuilder(context, contentTitle, contentText, when, contentIntent, CHANNEL_REMINDER);
+        final Notification.Builder builder = createNotificationBuilder(context,
+                contentTitle,
+                contentText,
+                when,
+                contentIntent,
+                alarm ? CHANNEL_REMINDER_ALARM : CHANNEL_REMINDER);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE);
             builder.setLights(LED_COLOR, LED_ON, LED_OFF);
         }
         builder.setSound(sound, audioStreamType);
         if (SDK_INT >= M) {
-            builder.setCategory(audioStreamType == AudioManager.STREAM_ALARM ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
+            builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
         }
         if (SDK_INT < JELLY_BEAN) {
             return builder.getNotification();
@@ -639,7 +649,12 @@ public class ZmanimReminder {
         final long when = item.time;
         Log.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
-        final Notification.Builder builder = createNotificationBuilder(context, contentTitle, contentText, when, contentIntent, CHANNEL_UPCOMING);
+        final Notification.Builder builder = createNotificationBuilder(context,
+                contentTitle,
+                contentText,
+                when,
+                contentIntent,
+                CHANNEL_UPCOMING);
         builder.setOngoing(true);
 
         if (SDK_INT < JELLY_BEAN) {
@@ -781,19 +796,39 @@ public class ZmanimReminder {
 
         channel = nm.getNotificationChannel(CHANNEL_REMINDER);
         if (channel == null) {
-            channel = new android.app.NotificationChannel(CHANNEL_REMINDER, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_DEFAULT);
+            channel = new android.app.NotificationChannel(CHANNEL_REMINDER, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(context.getString(R.string.notification_volume_title));
             channel.enableLights(true);
-            channel.enableVibration(true);
             channel.setLightColor(LED_COLOR);
+            channel.enableVibration(true);
             channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
-            Uri sound = null;
+            Uri sound = RingtoneManager.getDefaultUri(TYPE_NOTIFICATION);
             android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
-                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_UNKNOWN)
                     .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
                     .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
                     .build();
-            channel.setSound(sound, audioAttributes);//FIXME sound from preferences - delete channel and recreate.
+            channel.setSound(sound, audioAttributes);
+
+            nm.createNotificationChannel(channel);
+        }
+
+        channel = nm.getNotificationChannel(CHANNEL_REMINDER_ALARM);
+        if (channel == null) {
+            channel = new android.app.NotificationChannel(CHANNEL_REMINDER_ALARM, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(context.getString(R.string.alarm_volume_title));
+            channel.enableLights(true);
+            channel.setLightColor(LED_COLOR);
+            channel.enableVibration(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+            Uri sound = RingtoneManager.getDefaultUri(TYPE_ALARM);
+            android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
+                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setLegacyStreamType(AudioManager.STREAM_ALARM)
+                    .setUsage(android.media.AudioAttributes.USAGE_ALARM)
+                    .build();
+            channel.setSound(sound, audioAttributes);
 
             nm.createNotificationChannel(channel);
         }
@@ -801,7 +836,10 @@ public class ZmanimReminder {
         channel = nm.getNotificationChannel(CHANNEL_UPCOMING);
         if (channel == null) {
             channel = new android.app.NotificationChannel(CHANNEL_UPCOMING, context.getString(R.string.notification_upcoming_title), NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(context.getString(R.string.notification_upcoming_title));
             channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            channel.setSound(null, null);// Silent
+
             nm.createNotificationChannel(channel);
         }
     }

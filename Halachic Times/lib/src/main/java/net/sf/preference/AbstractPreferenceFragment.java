@@ -25,9 +25,13 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import net.sf.lib.R;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.O;
 
 /**
  * This fragment shows the preferences for a header.
@@ -268,5 +272,48 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
         for (int i = 0; i < count; i++) {
             addChangeListeners(group.getPreference(i));
         }
+    }
+
+    public boolean removePreference(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return false;
+        }
+
+        Preference pref = findPreference(key);
+        if (pref != null) {
+            if (SDK_INT >= O) {
+                return pref.getParent().removePreference(pref);
+            }
+            return findPreferenceParent(key).removePreference(pref);
+        }
+
+        return false;
+    }
+
+    @Nullable
+    public PreferenceGroup findPreferenceParent(CharSequence key) {
+        return findPreferenceParent(key, getPreferenceScreen());
+    }
+
+    @Nullable
+    protected PreferenceGroup findPreferenceParent(CharSequence key, PreferenceGroup parent) {
+        final int preferenceCount = parent.getPreferenceCount();
+        for (int i = 0; i < preferenceCount; i++) {
+            final Preference preference = parent.getPreference(i);
+            final String curKey = preference.getKey();
+
+            if (curKey != null && curKey.equals(key)) {
+                return parent;
+            }
+
+            if (preference instanceof PreferenceGroup) {
+                final PreferenceGroup returnedParent = findPreferenceParent(key, (PreferenceGroup) preference);
+                if (returnedParent != null) {
+                    return returnedParent;
+                }
+            }
+        }
+
+        return null;
     }
 }

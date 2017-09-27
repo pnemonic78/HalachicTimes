@@ -23,6 +23,8 @@ import android.preference.ListPreference;
 import net.sf.preference.RingtonePreference;
 import net.sf.times.R;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.O;
 import static android.text.TextUtils.isEmpty;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
 import static net.sf.times.location.LocationPreferences.KEY_COORDS_FORMAT;
@@ -45,7 +47,11 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
+        if (SDK_INT >= O) {
+            removePreference(KEY_REMINDER_RINGTONE);
+        } else {
+            reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
+        }
 
         initList(KEY_REMINDER_STREAM);
         initList(KEY_COORDS_FORMAT);
