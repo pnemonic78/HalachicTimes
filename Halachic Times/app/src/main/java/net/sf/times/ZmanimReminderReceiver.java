@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.content.Context.JOB_SCHEDULER_SERVICE;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -97,7 +96,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
 
     @TargetApi(O)
     private void startReminderJob(Context context, Intent intent) {
-        JobScheduler scheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+        JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         if (scheduler.getAllPendingJobs().isEmpty()) {
             PersistableBundle extras = new PersistableBundle();
             extras.putString(EXTRA_ACTION, intent.getAction());
