@@ -64,11 +64,11 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private int positionTomorrow = -1;
     private int colorDisabled = Color.DKGRAY;
     private int colorEnabled = Color.WHITE;
-    private final LocaleHelper localeHelper;
+    private final LocaleHelper localeCallbacks;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
-        this.localeHelper = new LocaleHelper(context);
-        this.context = localeHelper.attachBaseContext(context);
+        this.localeCallbacks = new LocaleHelper(context);
+        this.context = localeCallbacks.attachBaseContext(context);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onDataSetChanged() {
-        this.context = localeHelper.attachBaseContext(context);//Workaround to clear the asset manager cache.
+        this.context = localeCallbacks.attachBaseContext(context);//Workaround to clear the asset manager cache.
         populateAdapter();
     }
 
