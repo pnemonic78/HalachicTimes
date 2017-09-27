@@ -22,6 +22,9 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
  */
 public class ZmanimItem implements Comparable<ZmanimItem> {
 
+    /** Unknown date. */
+    public static final long NEVER = Long.MIN_VALUE;
+
     /** The title id. */
     public final int titleId;
     /** The summary. */
@@ -58,6 +61,6 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      * @return {@code true} if empty.
      */
     public boolean isEmpty() {
-        return elapsed || (time == ZmanimAdapter.NEVER) || (timeLabel == null);
+        return elapsed || (time == NEVER) || (timeLabel == null);
     }
 }

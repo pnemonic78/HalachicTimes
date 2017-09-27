@@ -44,6 +44,7 @@ import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
+import static net.sf.times.ZmanimItem.NEVER;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_B;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_L;
 import static net.sf.util.TimeUtils.roundUp;
@@ -72,9 +73,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     private static final String MONTH_VAR = "%B";
     /** The year as a decimal number including the century. */
     private static final String YEAR_VAR = "%Y";
-
-    /** Unknown date. */
-    public static final long NEVER = Long.MIN_VALUE;
 
     /**
      * Value of the month field indicating Adar I, the leap (intercalary or embolismic) thirteenth (Undecimber) numeric

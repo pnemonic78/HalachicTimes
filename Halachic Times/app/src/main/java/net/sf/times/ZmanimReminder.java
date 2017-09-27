@@ -58,6 +58,7 @@ import static java.util.Calendar.SUNDAY;
 import static java.util.Calendar.THURSDAY;
 import static java.util.Calendar.TUESDAY;
 import static java.util.Calendar.WEDNESDAY;
+import static net.sf.times.ZmanimItem.NEVER;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
@@ -229,7 +230,7 @@ public class ZmanimReminder {
 
                 // Is the zman to be reminded?
                 when = settings.getReminder(item.titleId, item.time);
-                if ((when != ZmanimPreferences.NEVER) && allowReminder(settings, item, jcal)) {
+                if ((when != NEVER) && allowReminder(settings, item, jcal)) {
                     if (nextDay && (latest < when) && (was <= when) && (when <= soon)) {
                         notifyNow(context, settings, item);
                         nextDay = false;
@@ -243,7 +244,7 @@ public class ZmanimReminder {
                 // Is the zman to be notified?
                 if (upcomingNotification) {
                     when = item.time;
-                    if ((when != ZmanimPreferences.NEVER) && (now <= when) && (when < whenUpcoming)) {
+                    if ((when != NEVER) && (now <= when) && (when < whenUpcoming)) {
                         itemUpcoming = item;
                         whenUpcoming = when;
                     }

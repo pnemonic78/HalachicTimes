@@ -38,6 +38,7 @@ import java.util.Locale;
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
+import static net.sf.times.ZmanimItem.NEVER;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_B;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_L;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_NONE;

@@ -112,9 +112,6 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /** Preference name for candle lighting animations. */
     String KEY_ANIM_CANDLES = KEY_OPINION_CANDLES + ANIM_SUFFIX;
 
-    /** Unknown date. */
-    long NEVER = Long.MIN_VALUE;
-
     class Values extends LocationPreferences.Values {
         public static String OPINION_10_2;
         public static String OPINION_11;

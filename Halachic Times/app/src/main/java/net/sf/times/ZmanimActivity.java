@@ -71,7 +71,7 @@ import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static android.text.format.DateUtils.formatDateTime;
 import static java.lang.System.currentTimeMillis;
-import static net.sf.times.ZmanimAdapter.NEVER;
+import static net.sf.times.ZmanimItem.NEVER;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.

@@ -37,7 +37,7 @@ import java.text.SimpleDateFormat;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static net.sf.graphics.BitmapUtils.isBright;
 import static net.sf.graphics.DrawableUtils.getWallpaperColor;
-import static net.sf.times.ZmanimAdapter.NEVER;
+import static net.sf.times.ZmanimItem.NEVER;
 import static net.sf.util.TimeUtils.roundUp;
 
 /**
