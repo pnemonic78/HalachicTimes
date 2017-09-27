@@ -41,7 +41,6 @@ public class ZmanimReminderJobService extends JobService {
 
     public static final String EXTRA_ACTION = "action";
 
-    private ZmanimReminder reminder;
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
     @Override
@@ -58,10 +57,9 @@ public class ZmanimReminderJobService extends JobService {
         String action = extras.getString(EXTRA_ACTION);
         Intent intent = new Intent(action);
 
-        if (reminder == null) {
-            reminder = new ZmanimReminder(this);
-        }
-        reminder.process(intent);
+        final Context context = this;
+        ZmanimReminder task = new ZmanimReminder(context);
+        task.process(intent);
 
         return false;
     }
@@ -69,7 +67,6 @@ public class ZmanimReminderJobService extends JobService {
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         Log.v(TAG, "stop job");
-        reminder = null;
         return true;
     }
 }

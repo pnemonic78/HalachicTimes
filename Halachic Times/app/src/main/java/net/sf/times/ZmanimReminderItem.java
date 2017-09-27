@@ -22,51 +22,15 @@ package net.sf.times;
  */
 public class ZmanimReminderItem {
 
-    private final int id;
-    private final CharSequence title;
-    private final CharSequence text;
-    private final long time;
+    public final int id;
+    public final CharSequence title;
+    public final CharSequence text;
+    public final long time;
 
     public ZmanimReminderItem(int id, CharSequence title, CharSequence text, long time) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.time = time;
-    }
-
-    /**
-     * Get the zman id.
-     *
-     * @return the id.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Get the notification title.
-     *
-     * @return the title.
-     */
-    public CharSequence getTitle() {
-        return title;
-    }
-
-    /**
-     * Get the notification text.
-     *
-     * @return the summary.
-     */
-    public CharSequence getText() {
-        return text;
-    }
-
-    /**
-     * Get the notification time when the zman is supposed to occur.
-     *
-     * @return the time.
-     */
-    public long getTime() {
-        return time;
     }
 }

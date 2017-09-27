@@ -16,6 +16,7 @@
 package net.sf.times;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -44,10 +45,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.os.Build.VERSION_CODES.M;
+import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
@@ -121,6 +125,9 @@ public class ZmanimReminder {
 
     /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
     private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
+
+    private static final String CHANNEL_REMINDER = "reminder";
+    private static final String CHANNEL_UPCOMING = "upcoming";
 
     private final Context context;
     private SimpleDateFormat dateFormat;
@@ -311,7 +318,7 @@ public class ZmanimReminder {
      *         the reminder item.
      */
     private void notifyNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
-        Log.i(TAG, "notify now [" + item.getTitle() + "] for [" + formatDateTime(item.getTime()) + "]");
+        Log.i(TAG, "notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
         PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification = createReminderNotification(context, settings, item, contentIntent);
@@ -482,41 +489,56 @@ public class ZmanimReminder {
         return createReminderNotification(context, settings, item, contentIntent, false);
     }
 
-    @SuppressLint("NewApi")
-    private Notification createReminderNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent, boolean silent) {
-        CharSequence contentTitle = item.getTitle();
-        CharSequence contentText = item.getText();
-        long when = item.getTime();
-
-        int audioStreamType = settings.getReminderStream();
-        Uri sound = silent ? null : settings.getReminderRingtone();
-
-        Notification.Builder builder = new Notification.Builder(context)
-                .setContentIntent(contentIntent)
+    private Notification.Builder createNotificationBuilder(Context context,
+                                                           CharSequence contentTitle,
+                                                           CharSequence contentText,
+                                                           long when,
+                                                           PendingIntent contentIntent,
+                                                           String channelId) {
+        Notification.Builder builder;
+        if (SDK_INT >= O) {
+            builder = new Notification.Builder(context, channelId);
+        } else {
+            builder = new Notification.Builder(context);
+        }
+        builder.setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
                 .setSmallIcon(R.drawable.stat_notify_time)
-                .setSound(sound, audioStreamType)
                 .setWhen(when);
-        if (!silent) {
-            builder.setDefaults(Notification.DEFAULT_VIBRATE)
-                    .setLights(LED_COLOR, LED_ON, LED_OFF);
-
-        }
         if (SDK_INT >= JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
         }
-        if (SDK_INT >= LOLLIPOP) {
+        if (SDK_INT >= M) {
+            builder.setCategory(Notification.CATEGORY_REMINDER);
+        } else if (SDK_INT >= LOLLIPOP) {
+            builder.setCategory(Notification.CATEGORY_ALARM);
+        }
+
+        return builder;
+    }
+
+    private Notification createReminderNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent, boolean silent) {
+        final CharSequence contentTitle = item.title;
+        final CharSequence contentText = item.text;
+        final long when = item.time;
+        final int audioStreamType = settings.getReminderStream();
+        final Uri sound = silent ? null : settings.getReminderRingtone();
+
+        final Notification.Builder builder = createNotificationBuilder(context, contentTitle, contentText, when, contentIntent, CHANNEL_REMINDER);
+        if (!silent) {
+            builder.setDefaults(DEFAULT_VIBRATE);
+            builder.setLights(LED_COLOR, LED_ON, LED_OFF);
+        }
+        builder.setSound(sound, audioStreamType);
+        if (SDK_INT >= M) {
             builder.setCategory(audioStreamType == AudioManager.STREAM_ALARM ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
         }
-        Notification notification;
-        if (SDK_INT >= JELLY_BEAN) {
-            notification = builder.build();
-        } else {
-            notification = builder.getNotification();
+        if (SDK_INT < JELLY_BEAN) {
+            return builder.getNotification();
         }
-        return notification;
+        return builder.build();
     }
 
     @SuppressLint("Wakelock")
@@ -524,9 +546,10 @@ public class ZmanimReminder {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         WakeLock wake = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
-        wake.acquire(3000L);// enough time to also hear an alarm tone
+        wake.acquire(5000L);// enough time to also hear an alarm tone
 
         NotificationManager nm = getNotificationManager(context);
+        initChannels(context, nm);
         nm.notify(ID_NOTIFY, notification);
 
         // This was the last notification.
@@ -610,38 +633,24 @@ public class ZmanimReminder {
         manager.set(AlarmManager.RTC, triggerAt, alarmIntent);
     }
 
-    @SuppressLint("NewApi")
     private Notification createUpcomingNotification(Context context, ZmanimPreferences settings, ZmanimItem item, PendingIntent contentIntent) {
-        CharSequence contentTitle = context.getText(item.titleId);
-        CharSequence contentText = item.summary;
-        long when = item.time;
+        final CharSequence contentTitle = context.getText(item.titleId);
+        final CharSequence contentText = item.summary;
+        final long when = item.time;
         Log.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
-        Notification.Builder builder = new Notification.Builder(context)
-                .setContentIntent(contentIntent)
-                .setContentText(contentText)
-                .setContentTitle(contentTitle)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
-                .setOngoing(true)
-                .setSmallIcon(R.drawable.stat_notify_time)
-                .setWhen(when);
-        if (SDK_INT >= JELLY_BEAN_MR1) {
-            builder.setShowWhen(true);
+        final Notification.Builder builder = createNotificationBuilder(context, contentTitle, contentText, when, contentIntent, CHANNEL_UPCOMING);
+        builder.setOngoing(true);
+
+        if (SDK_INT < JELLY_BEAN) {
+            return builder.getNotification();
         }
-        if (SDK_INT >= LOLLIPOP) {
-            builder.setCategory(Notification.CATEGORY_REMINDER);
-        }
-        Notification notification;
-        if (SDK_INT >= JELLY_BEAN) {
-            notification = builder.build();
-        } else {
-            notification = builder.getNotification();
-        }
-        return notification;
+        return builder.build();
     }
 
     private void postUpcomingNotification(Context context, ZmanimPreferences settings, Notification notification) {
         NotificationManager nm = getNotificationManager(context);
+        initChannels(context, nm);
         nm.notify(ID_NOTIFY_UPCOMING, notification);
     }
 
@@ -707,10 +716,10 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, getClass());
         intent.setAction(ACTION_SILENCE);
 
-        intent.putExtra(EXTRA_REMINDER_ID, item.getId());
-        intent.putExtra(EXTRA_REMINDER_TITLE, item.getTitle());
-        intent.putExtra(EXTRA_REMINDER_TEXT, item.getText());
-        intent.putExtra(EXTRA_REMINDER_TIME, item.getTime());
+        intent.putExtra(EXTRA_REMINDER_ID, item.id);
+        intent.putExtra(EXTRA_REMINDER_TITLE, item.title);
+        intent.putExtra(EXTRA_REMINDER_TEXT, item.text);
+        intent.putExtra(EXTRA_REMINDER_TIME, item.time);
 
         return PendingIntent.getService(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -726,7 +735,7 @@ public class ZmanimReminder {
      *         the reminder item.
      */
     private void silence(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
-        Log.i(TAG, "silence now [" + item.getTitle() + "] for [" + formatDateTime(item.getTime()) + "]");
+        Log.i(TAG, "silence now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
         PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification = createSilenceNotification(context, settings, item, contentIntent);
@@ -739,6 +748,7 @@ public class ZmanimReminder {
 
     private void postSilenceNotification(Context context, Notification notification) {
         NotificationManager nm = getNotificationManager(context);
+        initChannels(context, nm);
         nm.cancel(ID_NOTIFY); // Kill the notification so that the sound stops playing.
         nm.notify(ID_NOTIFY, notification);
     }
@@ -763,5 +773,36 @@ public class ZmanimReminder {
      */
     protected AlarmManager getAlarmManager(Context context) {
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    }
+
+    @TargetApi(O)
+    private void initChannels(Context context, NotificationManager nm) {
+        android.app.NotificationChannel channel;
+
+        channel = nm.getNotificationChannel(CHANNEL_REMINDER);
+        if (channel == null) {
+            channel = new android.app.NotificationChannel(CHANNEL_REMINDER, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_DEFAULT);
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            channel.setLightColor(LED_COLOR);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+
+            Uri sound = null;
+            android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
+                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_UNKNOWN)
+                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                    .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                    .build();
+            channel.setSound(sound, audioAttributes);//FIXME sound from preferences - delete channel and recreate.
+
+            nm.createNotificationChannel(channel);
+        }
+
+        channel = nm.getNotificationChannel(CHANNEL_UPCOMING);
+        if (channel == null) {
+            channel = new android.app.NotificationChannel(CHANNEL_UPCOMING, context.getString(R.string.notification_upcoming_title), NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            nm.createNotificationChannel(channel);
+        }
     }
 }
