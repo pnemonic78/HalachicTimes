@@ -5,6 +5,14 @@
         android:defaultValue="@bool/past_defaultValue"
         android:key="past"
         android:title="@string/past_title"/>
+    <SwitchPreference
+        android:defaultValue="@bool/seconds_visible_defaultValue"
+        android:key="seconds.visible"
+        android:title="@string/seconds_title"/>
+    <SwitchPreference
+        android:defaultValue="@bool/summaries_visible_defaultValue"
+        android:key="summaries.visible"
+        android:title="@string/summaries_title"/>
 
     <PreferenceCategory
         android:title="@string/notifications_title">
@@ -32,10 +40,15 @@
     <PreferenceCategory
         android:title="@string/coords_title">
         <ListPreference
+            android:defaultValue="@string/coords_format_defaultValue"
+            android:entries="@array/coords_format_entries"
+            android:entryValues="@array/coords_format_values"
+            android:key="coords.format"
+            android:title="@string/coords_format_title"/>
+        <ListPreference
             android:defaultValue="@string/compass_bearing_defaultValue"
             android:entries="@array/compass_bearing_entries"
             android:entryValues="@array/compass_bearing_values"
-            android:icon="@android:drawable/ic_menu_compass"
             android:key="compass.bearing"
             android:title="@string/compass_bearing"/>
         <SwitchPreference

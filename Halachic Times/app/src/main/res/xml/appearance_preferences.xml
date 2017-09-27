@@ -2,24 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:title="@string/coords_title">
-        <ListPreference
-            android:defaultValue="@string/coords_format_defaultValue"
-            android:entries="@array/coords_format_entries"
-            android:entryValues="@array/coords_format_values"
-            android:key="coords.format"
-            android:title="@string/coords_format_title"/>
-    </PreferenceCategory>
-    <PreferenceCategory
         android:title="@string/pref_appearance_title">
-        <SwitchPreference
-            android:defaultValue="@bool/seconds_visible_defaultValue"
-            android:key="seconds.visible"
-            android:title="@string/seconds_title"/>
-        <SwitchPreference
-            android:defaultValue="@bool/summaries_visible_defaultValue"
-            android:key="summaries.visible"
-            android:title="@string/summaries_title"/>
         <ListPreference
             android:defaultValue="@string/theme_defaultValue"
             android:entries="@array/list_theme_entries"

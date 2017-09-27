@@ -30,7 +30,6 @@ import static android.text.TextUtils.isEmpty;
 import static net.sf.app.ActivityUtils.restartActivity;
 import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
-import static net.sf.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 import static net.sf.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_THEME;
 import static net.sf.util.LocaleUtils.sortByDisplay;
@@ -51,7 +50,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initList(KEY_COORDS_FORMAT);
         initList(KEY_THEME);
         initList(KEY_THEME_COMPASS);
         initList(KEY_EMPHASIS_SCALE);
