@@ -841,6 +841,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
             case SEVENTEEN_OF_TAMMUZ:
             case FAST_OF_GEDALYAH:
+            case TENTH_OF_TEVES:
             case FAST_OF_ESTHER:
                 adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn, jewishDate, remote);
                 adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
@@ -848,10 +849,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             case TISHA_BEAV:
             case YOM_KIPPUR:
                 adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
-                break;
-            case TENTH_OF_TEVES:
-                adapter.add(R.string.fast_begins, SUMMARY_NONE, dawn, jewishDate, remote);
-                adapter.add(R.string.fast_ends, SUMMARY_NONE, twilight, jewishDateTomorrow, remote);
                 break;
         }
         switch (holidayTomorrow) {
