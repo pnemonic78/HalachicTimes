@@ -546,7 +546,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             }
         }
 
-        super.onBackPressed();
+        if (SDK_INT >= LOLLIPOP) {
+            finishAfterTransition();
+        } else {
+            finish();
+        }
     }
 
     @Override
