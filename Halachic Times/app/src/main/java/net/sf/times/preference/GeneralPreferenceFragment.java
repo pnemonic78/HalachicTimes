@@ -15,27 +15,18 @@
  */
 package net.sf.times.preference;
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
-import android.preference.Preference;
 
 import net.sf.preference.RingtonePreference;
-import net.sf.times.BuildConfig;
 import net.sf.times.R;
-import net.sf.util.LocaleUtils;
-
-import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
-import static net.sf.app.ActivityUtils.restartActivity;
-import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
-import static net.sf.util.LocaleUtils.sortByDisplay;
 
 /**
  * This fragment shows the preferences for the General header.
@@ -43,7 +34,6 @@ import static net.sf.util.LocaleUtils.sortByDisplay;
 public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     private RingtonePreference reminderRingtonePreference;
-    private ListPreference localePreference;
 
     @Override
     protected int getPreferencesXml() {
@@ -59,7 +49,6 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         initList(KEY_REMINDER_STREAM);
         initList(KEY_COMPASS_BEARING);
         initList(KEY_COMPASS_BEARING);
-        localePreference = initLocaleList(KEY_LOCALE);
     }
 
     @Override
@@ -77,50 +66,7 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 ringType = RingtoneManager.TYPE_ALARM;
             }
             reminderRingtonePreference.setRingtoneType(ringType);
-        } else if (KEY_LOCALE.equals(key) && (localePreference != null)) {
-            // Restart the activity to refresh views.
-            restartActivity(getActivity());
         }
         return result;
-    }
-
-    private ListPreference initLocaleList(String key) {
-        if (isEmpty(key)) {
-            return null;
-        }
-
-        Preference pref = findPreference(key);
-        if ((pref != null) && (pref instanceof ListPreference)) {
-            final Context context = getActivity();
-            final String[] localeNames = BuildConfig.LOCALES;
-            final Locale[] unique = LocaleUtils.unique(localeNames);
-
-            final Locale[] sorted = sortByDisplay(unique);
-            final int length = sorted.length;
-            int length2 = length;
-            if (!isEmpty(sorted[0].getLanguage())) {
-                length2 = length + 1;
-            }
-
-            final CharSequence[] values = new CharSequence[length2];
-            final CharSequence[] entries = new CharSequence[length2];
-            values[0] = context.getString(R.string.locale_defaultValue);
-
-            Locale locale;
-            for (int i = 0, j = length2 - length; i < length; i++, j++) {
-                locale = sorted[i];
-                values[j] = locale.toString();
-                entries[j] = locale.getDisplayName(locale);
-            }
-            if (isEmpty(entries[0])) {
-                entries[0] = context.getString(R.string.locale_default);
-            }
-
-            ListPreference list = (ListPreference) pref;
-            list.setEntryValues(values);
-            list.setEntries(entries);
-        }
-
-        return initList(key);
     }
 }

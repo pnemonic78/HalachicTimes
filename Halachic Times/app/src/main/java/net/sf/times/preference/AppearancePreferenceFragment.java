@@ -15,19 +15,32 @@
  */
 package net.sf.times.preference;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
 
+import net.sf.times.BuildConfig;
 import net.sf.times.R;
+import net.sf.util.LocaleUtils;
 
+import java.util.Locale;
+
+import static android.text.TextUtils.isEmpty;
+import static net.sf.app.ActivityUtils.restartActivity;
+import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 import static net.sf.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 import static net.sf.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_THEME;
+import static net.sf.util.LocaleUtils.sortByDisplay;
 
 /**
  * This fragment shows the preferences for the Appearance header.
  */
 public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
+
+    private ListPreference localePreference;
 
     @Override
     protected int getPreferencesXml() {
@@ -42,5 +55,58 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         initList(KEY_THEME);
         initList(KEY_THEME_COMPASS);
         initList(KEY_EMPHASIS_SCALE);
+        localePreference = initLocaleList(KEY_LOCALE);
+    }
+
+    @Override
+    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
+        boolean result = super.onListPreferenceChange(preference, newValue);
+
+        String key = preference.getKey();
+        if (KEY_LOCALE.equals(key) && (localePreference != null)) {
+            // Restart the activity to refresh views.
+            restartActivity(getActivity());
+        }
+        return result;
+    }
+
+    private ListPreference initLocaleList(String key) {
+        if (isEmpty(key)) {
+            return null;
+        }
+
+        Preference pref = findPreference(key);
+        if ((pref != null) && (pref instanceof ListPreference)) {
+            final Context context = getActivity();
+            final String[] localeNames = BuildConfig.LOCALES;
+            final Locale[] unique = LocaleUtils.unique(localeNames);
+
+            final Locale[] sorted = sortByDisplay(unique);
+            final int length = sorted.length;
+            int length2 = length;
+            if (!isEmpty(sorted[0].getLanguage())) {
+                length2 = length + 1;
+            }
+
+            final CharSequence[] values = new CharSequence[length2];
+            final CharSequence[] entries = new CharSequence[length2];
+            values[0] = context.getString(R.string.locale_defaultValue);
+
+            Locale locale;
+            for (int i = 0, j = length2 - length; i < length; i++, j++) {
+                locale = sorted[i];
+                values[j] = locale.toString();
+                entries[j] = locale.getDisplayName(locale);
+            }
+            if (isEmpty(entries[0])) {
+                entries[0] = context.getString(R.string.locale_default);
+            }
+
+            ListPreference list = (ListPreference) pref;
+            list.setEntryValues(values);
+            list.setEntries(entries);
+        }
+
+        return initList(key);
     }
 }
