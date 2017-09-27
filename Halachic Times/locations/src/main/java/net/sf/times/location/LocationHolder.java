@@ -72,7 +72,7 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
 
     @Override
     public void onLowMemory() {
-        onTrimMemory(TRIM_MEMORY_RUNNING_LOW);
+        onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
     }
 
     @Override
