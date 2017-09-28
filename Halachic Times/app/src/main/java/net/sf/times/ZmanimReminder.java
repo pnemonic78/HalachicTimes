@@ -559,7 +559,9 @@ public class ZmanimReminder {
         wake.acquire(5000L);// enough time to also hear an alarm tone
 
         NotificationManager nm = getNotificationManager(context);
-        initChannels(context, nm);
+        if (SDK_INT >= O) {
+            initChannels(context, nm);
+        }
         nm.notify(ID_NOTIFY, notification);
 
         // This was the last notification.
@@ -665,7 +667,9 @@ public class ZmanimReminder {
 
     private void postUpcomingNotification(Context context, ZmanimPreferences settings, Notification notification) {
         NotificationManager nm = getNotificationManager(context);
-        initChannels(context, nm);
+        if (SDK_INT >= O) {
+            initChannels(context, nm);
+        }
         nm.notify(ID_NOTIFY_UPCOMING, notification);
     }
 
@@ -763,7 +767,9 @@ public class ZmanimReminder {
 
     private void postSilenceNotification(Context context, Notification notification) {
         NotificationManager nm = getNotificationManager(context);
-        initChannels(context, nm);
+        if (SDK_INT >= O) {
+            initChannels(context, nm);
+        }
         nm.cancel(ID_NOTIFY); // Kill the notification so that the sound stops playing.
         nm.notify(ID_NOTIFY, notification);
     }
