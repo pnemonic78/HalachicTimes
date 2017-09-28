@@ -49,20 +49,16 @@ public class AddressJobService extends JobService implements OnFindAddressListen
 
     private static final boolean PERSIST = true;
 
-    private static final String NAME = "AddressJobService";
-
-    private AddressProvider addressProvider;
-
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Log.v(TAG, "start job");
         LocationApplication app = (LocationApplication) getApplication();
-        addressProvider = app.getAddresses();
+        final AddressProvider addressProvider = app.getAddresses();
 
-        PersistableBundle extras = jobParameters.getExtras();
+        final PersistableBundle extras = jobParameters.getExtras();
         if (extras.isEmpty())
             return false;
-        Location location = LocationUtils.readParcelable(extras, PARAMETER_LOCATION);
+        final Location location = LocationUtils.readParcelable(extras, PARAMETER_LOCATION);
         if (location == null)
             return false;
 
@@ -71,17 +67,30 @@ public class AddressJobService extends JobService implements OnFindAddressListen
             return false;
         String action = extras.getString(EXTRA_ACTION);
         if (ACTION_ADDRESS.equals(action)) {
-            if (extras.containsKey(PARAMETER_PERSIST)) {
-                Bundle locationExtras = location.getExtras();
-                if (locationExtras == null) {
-                    locationExtras = new Bundle();
+            new Thread() {
+                @Override
+                public void run() {
+                    if (extras.containsKey(PARAMETER_PERSIST)) {
+                        Bundle locationExtras = location.getExtras();
+                        if (locationExtras == null) {
+                            locationExtras = new Bundle();
+                        }
+                        locationExtras.putBoolean(PARAMETER_PERSIST, extras.getBoolean(PARAMETER_PERSIST, PERSIST));
+                        location.setExtras(locationExtras);
+                    }
+                    provider.findNearestAddress(location, AddressJobService.this);
                 }
-                locationExtras.putBoolean(PARAMETER_PERSIST, extras.getBoolean(PARAMETER_PERSIST, PERSIST));
-                location.setExtras(locationExtras);
-            }
-            provider.findNearestAddress(location, this);
-        } else if (ACTION_ELEVATION.equals(action)) {
-            provider.findElevation(location, this);
+            }.start();
+            return true;
+        }
+        if (ACTION_ELEVATION.equals(action)) {
+            new Thread() {
+                @Override
+                public void run() {
+                    provider.findElevation(location, AddressJobService.this);
+                }
+            }.start();
+            return true;
         }
 
         return false;
