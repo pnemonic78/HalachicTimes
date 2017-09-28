@@ -16,13 +16,10 @@
 package net.sf.times;
 
 import android.annotation.TargetApi;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.PersistableBundle;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +41,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
 
     private static final String TAG = "ZmanimReminderReceiver";
 
-    private static final int JOB_REMINDER = 1;
+    private static final int JOB_REMINDER = 0x7E312D; // "rEMIND"
 
     private SimpleDateFormat dateFormat;
 
@@ -96,12 +93,12 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
 
     @TargetApi(O)
     private void startReminderJob(Context context, Intent intent) {
-        JobScheduler scheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        android.app.job.JobScheduler scheduler = (android.app.job.JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         if (scheduler.getAllPendingJobs().isEmpty()) {
-            PersistableBundle extras = new PersistableBundle();
+            android.os.PersistableBundle extras = new android.os.PersistableBundle();
             extras.putString(EXTRA_ACTION, intent.getAction());
 
-            JobInfo job = new JobInfo.Builder(JOB_REMINDER, new ComponentName(context, ZmanimReminderJobService.class))
+            android.app.job.JobInfo job = new android.app.job.JobInfo.Builder(JOB_REMINDER, new ComponentName(context, ZmanimReminderJobService.class))
                     .setExtras(extras)
                     .setPersisted(false)
                     .setRequiresDeviceIdle(false)
