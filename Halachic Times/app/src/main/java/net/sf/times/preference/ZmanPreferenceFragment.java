@@ -25,8 +25,8 @@ import android.preference.Preference;
 import android.preference.SwitchPreference;
 import android.text.TextUtils;
 
-import net.sf.times.ZmanimReminder;
-import net.sf.times.ZmanimReminderService;
+import net.sf.times.remind.ZmanimReminder;
+import net.sf.times.remind.ZmanimReminderService;
 
 import java.util.HashSet;
 import java.util.Set;

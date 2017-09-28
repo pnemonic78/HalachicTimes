@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.remind;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -35,6 +35,11 @@ import android.os.PowerManager.WakeLock;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import net.sf.times.R;
+import net.sf.times.ZmanimAdapter;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.ZmanimItem;
+import net.sf.times.ZmanimPopulater;
 import net.sf.times.location.ZmanimLocations;
 import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;

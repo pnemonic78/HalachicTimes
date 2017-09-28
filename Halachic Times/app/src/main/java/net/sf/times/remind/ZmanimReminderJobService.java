@@ -13,42 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.remind;
 
-import android.app.IntentService;
+import android.annotation.TargetApi;
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
+import android.os.PersistableBundle;
+import android.util.Log;
 
 import net.sf.app.LocaleCallbacks;
 import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
+
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 /**
  * Check for reminders, and manage the notifications.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminderService extends IntentService {
+@TargetApi(LOLLIPOP)
+public class ZmanimReminderJobService extends JobService {
 
-    private static final String TAG = "ZmanimReminderService";
+    private static final String TAG = "ZReminderJobService";
+
+    public static final String EXTRA_ACTION = "action";
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
-
-    /**
-     * Constructs a new service.
-     *
-     * @param name
-     *         The worker thread name, important only for debugging.
-     */
-    public ZmanimReminderService(String name) {
-        super(name);
-    }
-
-    /** Constructs a new service. */
-    public ZmanimReminderService() {
-        this(TAG);
-    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -57,16 +50,23 @@ public class ZmanimReminderService extends IntentService {
         super.attachBaseContext(context);
     }
 
-    protected Context getContext() {
-        return this;
+    @Override
+    public boolean onStartJob(JobParameters jobParameters) {
+        Log.v(TAG, "start job");
+        PersistableBundle extras = jobParameters.getExtras();
+        String action = extras.getString(EXTRA_ACTION);
+        Intent intent = new Intent(action);
+
+        final Context context = this;
+        ZmanimReminder task = new ZmanimReminder(context);
+        task.process(intent);
+
+        return false;
     }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent == null) {
-            return;
-        }
-        ZmanimReminder reminder = new ZmanimReminder(getContext());
-        reminder.process(intent);
+    public boolean onStopJob(JobParameters jobParameters) {
+        Log.v(TAG, "stop job");
+        return true;
     }
 }

@@ -118,7 +118,7 @@
                 android:resource="@xml/widget_clock"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.ZmanimReminderReceiver"
+            android:name="net.sf.times.remind.ZmanimReminderReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -132,10 +132,10 @@
         </receiver>
 
         <service
-            android:name="net.sf.times.ZmanimReminderService"
+            android:name="net.sf.times.remind.ZmanimReminderService"
             android:exported="false"/>
         <service
-            android:name="net.sf.times.ZmanimReminderJobService"
+            android:name="net.sf.times.remind.ZmanimReminderJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service
             android:name="net.sf.times.appwidget.ZmanimWidgetService"

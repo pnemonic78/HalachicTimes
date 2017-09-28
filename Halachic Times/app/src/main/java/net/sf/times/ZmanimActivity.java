@@ -57,6 +57,8 @@ import net.sf.times.location.LocationsProvider;
 import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimPreferences;
+import net.sf.times.remind.ZmanimReminder;
+import net.sf.times.remind.ZmanimReminderService;
 import net.sf.util.LocaleUtils;
 import net.sf.view.animation.LayoutWeightAnimation;
 

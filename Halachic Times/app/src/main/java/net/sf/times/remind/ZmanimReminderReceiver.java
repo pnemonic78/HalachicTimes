@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times;
+package net.sf.times.remind;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -30,7 +30,6 @@ import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
-import static net.sf.times.ZmanimReminderJobService.EXTRA_ACTION;
 
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.
@@ -96,7 +95,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
         android.app.job.JobScheduler scheduler = (android.app.job.JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         if (scheduler.getAllPendingJobs().isEmpty()) {
             android.os.PersistableBundle extras = new android.os.PersistableBundle();
-            extras.putString(EXTRA_ACTION, intent.getAction());
+            extras.putString(ZmanimReminderJobService.EXTRA_ACTION, intent.getAction());
 
             android.app.job.JobInfo job = new android.app.job.JobInfo.Builder(JOB_REMINDER, new ComponentName(context, ZmanimReminderJobService.class))
                     .setExtras(extras)
