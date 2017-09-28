@@ -779,6 +779,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 date = null;
                 break;
         }
+        final Long shabbatEnds = date != null ? date : nightfall;
         if (date != null) {
             date = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
             if (hasCandles) {
@@ -847,14 +848,18 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
                 break;
             case TISHA_BEAV:
-            case YOM_KIPPUR:
                 adapter.add(R.string.fast_ends, SUMMARY_NONE, nightfall, jewishDateTomorrow, remote);
+                break;
+            case YOM_KIPPUR:
+                adapter.add(R.string.fast_ends, SUMMARY_NONE, shabbatEnds, jewishDateTomorrow, remote);
                 break;
         }
         switch (holidayTomorrow) {
             case TISHA_BEAV:
-            case YOM_KIPPUR:
                 adapter.add(R.string.fast_begins, SUMMARY_NONE, sunset, jewishDate, remote);
+                break;
+            case YOM_KIPPUR:
+                adapter.add(R.string.fast_begins, SUMMARY_NONE, cal.getTimeOffset(sunset, -candlesOffset * MINUTE_IN_MILLIS), jewishDate, remote);
                 break;
         }
 
