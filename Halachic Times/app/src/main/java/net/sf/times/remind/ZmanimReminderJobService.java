@@ -28,6 +28,7 @@ import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static net.sf.content.IntentUtils.readExtras;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -39,7 +40,7 @@ public class ZmanimReminderJobService extends JobService {
 
     private static final String TAG = "ZReminderJobService";
 
-    public static final String EXTRA_ACTION = "action";
+    public static final String EXTRA_ACTION = "android.intent.ACTION";
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
 
@@ -56,6 +57,7 @@ public class ZmanimReminderJobService extends JobService {
         PersistableBundle extras = jobParameters.getExtras();
         String action = extras.getString(EXTRA_ACTION);
         Intent intent = new Intent(action);
+        readExtras(intent, extras);
 
         final Context context = this;
         ZmanimReminder task = new ZmanimReminder(context);
@@ -67,6 +69,6 @@ public class ZmanimReminderJobService extends JobService {
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         Log.v(TAG, "stop job");
-        return true;
+        return false;
     }
 }

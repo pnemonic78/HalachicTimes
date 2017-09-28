@@ -30,6 +30,8 @@ import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
+import static net.sf.content.IntentUtils.putExtras;
+import static net.sf.times.remind.ZmanimReminderJobService.EXTRA_ACTION;
 
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.
@@ -43,10 +45,6 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     private static final int JOB_REMINDER = 0x7E312D; // "rEMIND"
 
     private SimpleDateFormat dateFormat;
-
-    /** No-argument constructor for broadcast receiver. */
-    public ZmanimReminderReceiver() {
-    }
 
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
@@ -93,9 +91,14 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     @TargetApi(O)
     private void startReminderJob(Context context, Intent intent) {
         android.app.job.JobScheduler scheduler = (android.app.job.JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        if (scheduler.getAllPendingJobs().isEmpty()) {
+        if (scheduler == null) {
+            Log.w(TAG, "scheduler required");
+            return;
+        }
+        if (scheduler.getPendingJob(JOB_REMINDER) == null) {
             android.os.PersistableBundle extras = new android.os.PersistableBundle();
-            extras.putString(ZmanimReminderJobService.EXTRA_ACTION, intent.getAction());
+            extras.putString(EXTRA_ACTION, intent.getAction());
+            putExtras(intent, extras);
 
             android.app.job.JobInfo job = new android.app.job.JobInfo.Builder(JOB_REMINDER, new ComponentName(context, ZmanimReminderJobService.class))
                     .setExtras(extras)

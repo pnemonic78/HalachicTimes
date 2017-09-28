@@ -41,7 +41,7 @@ public class AddressJobService extends JobService implements OnFindAddressListen
 
     private static final String TAG = "AddressJobService";
 
-    public static final String EXTRA_ACTION = "action";
+    public static final String EXTRA_ACTION = "android.intent.ACTION";
 
     private static final String PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION;
     private static final String PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS;
@@ -50,7 +50,7 @@ public class AddressJobService extends JobService implements OnFindAddressListen
     private static final boolean PERSIST = true;
 
     @Override
-    public boolean onStartJob(JobParameters jobParameters) {
+    public boolean onStartJob(final JobParameters jobParameters) {
         Log.v(TAG, "start job");
         LocationApplication app = (LocationApplication) getApplication();
         final AddressProvider addressProvider = app.getAddresses();
@@ -79,6 +79,7 @@ public class AddressJobService extends JobService implements OnFindAddressListen
                         location.setExtras(locationExtras);
                     }
                     provider.findNearestAddress(location, AddressJobService.this);
+                    jobFinished(jobParameters, false);
                 }
             }.start();
             return true;
@@ -88,6 +89,7 @@ public class AddressJobService extends JobService implements OnFindAddressListen
                 @Override
                 public void run() {
                     provider.findElevation(location, AddressJobService.this);
+                    jobFinished(jobParameters, false);
                 }
             }.start();
             return true;
@@ -99,7 +101,7 @@ public class AddressJobService extends JobService implements OnFindAddressListen
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         Log.v(TAG, "stop job");
-        return true;
+        return false;
     }
 
     @Override

@@ -66,7 +66,8 @@ public class ZmanimReminderService extends IntentService {
         if (intent == null) {
             return;
         }
-        ZmanimReminder reminder = new ZmanimReminder(getContext());
+        final Context context = getContext();
+        ZmanimReminder reminder = new ZmanimReminder(context);
         reminder.process(intent);
     }
 }
