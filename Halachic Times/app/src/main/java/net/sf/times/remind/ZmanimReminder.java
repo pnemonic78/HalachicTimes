@@ -21,6 +21,7 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -372,7 +373,7 @@ public class ZmanimReminder {
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
-        Intent intent = new Intent(context, getClass());
+        Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_REMIND);
 
         if (item != null) {
@@ -386,7 +387,7 @@ public class ZmanimReminder {
             intent.putExtra(EXTRA_REMINDER_TIME, when);
         }
 
-        return PendingIntent.getService(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -397,10 +398,10 @@ public class ZmanimReminder {
      * @return the pending intent.
      */
     private PendingIntent createCancelIntent(Context context) {
-        Intent intent = new Intent(context, getClass());
+        Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_CANCEL);
 
-        return PendingIntent.getService(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     public void process(@Nullable Intent intent) {
@@ -701,10 +702,10 @@ public class ZmanimReminder {
     }
 
     private PendingIntent createUpcomingIntent(Context context) {
-        Intent intent = new Intent(context, getClass());
+        Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_UPDATE);
 
-        return PendingIntent.getService(context, ID_ALARM_UPCOMING, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -737,7 +738,7 @@ public class ZmanimReminder {
      * @return the pending intent.
      */
     private PendingIntent createSilenceIntent(Context context, ZmanimReminderItem item) {
-        Intent intent = new Intent(context, getClass());
+        Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_SILENCE);
 
         intent.putExtra(EXTRA_REMINDER_ID, item.id);
@@ -745,7 +746,7 @@ public class ZmanimReminder {
         intent.putExtra(EXTRA_REMINDER_TEXT, item.text);
         intent.putExtra(EXTRA_REMINDER_TIME, item.time);
 
-        return PendingIntent.getService(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
@@ -853,5 +854,14 @@ public class ZmanimReminder {
 
             nm.createNotificationChannel(channel);
         }
+    }
+
+    /**
+     * Get the broadcast receiver that will then start the reminder service.
+     *
+     * @return the receiver class.
+     */
+    private Class<? extends BroadcastReceiver> getReceiverClass() {
+        return ZmanimReminderReceiver.class;
     }
 }
