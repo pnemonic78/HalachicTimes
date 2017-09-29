@@ -78,16 +78,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public long getItemId(int position) {
-        if ((position == positionToday) || (position == positionTomorrow)) {
-            return 0L;
-        }
-        if ((positionToday >= 0) && (position > positionToday)) {
-            position--;
-        }
-        if ((positionTomorrow > positionToday) && (position > positionTomorrow)) {
-            position--;
-        }
-        return (adapter != null) ? adapter.getItemId(position) : position;
+        return position;
     }
 
     @Override
