@@ -44,9 +44,9 @@ public class TimeTests {
         assertEquals(0L, roundUp(333, SECOND_IN_MILLIS));
         assertEquals(0L, roundUp(444, SECOND_IN_MILLIS));
         assertEquals(0L, roundUp(499, SECOND_IN_MILLIS));
-        assertEquals(1000L, roundUp(500, SECOND_IN_MILLIS));
-        assertEquals(1000L, roundUp(555, SECOND_IN_MILLIS));
-        assertEquals(1000L, roundUp(666, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(500, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(555, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(666, SECOND_IN_MILLIS));
         assertEquals(1000L, roundUp(777, SECOND_IN_MILLIS));
         assertEquals(1000L, roundUp(888, SECOND_IN_MILLIS));
         assertEquals(1000L, roundUp(999, SECOND_IN_MILLIS));
@@ -55,7 +55,8 @@ public class TimeTests {
         assertEquals(1000L, roundUp(1222, SECOND_IN_MILLIS));
         assertEquals(1000L, roundUp(1333, SECOND_IN_MILLIS));
         assertEquals(1000L, roundUp(1444, SECOND_IN_MILLIS));
-        assertEquals(2000L, roundUp(1555, SECOND_IN_MILLIS));
+        assertEquals(1000L, roundUp(1555, SECOND_IN_MILLIS));
+        assertEquals(2000L, roundUp(1755, SECOND_IN_MILLIS));
     }
 
     @Test
@@ -66,9 +67,9 @@ public class TimeTests {
         assertEquals(0L, roundUp(-333, SECOND_IN_MILLIS));
         assertEquals(0L, roundUp(-444, SECOND_IN_MILLIS));
         assertEquals(0L, roundUp(-499, SECOND_IN_MILLIS));
-        assertEquals(-1000L, roundUp(-500, SECOND_IN_MILLIS));
-        assertEquals(-1000L, roundUp(-555, SECOND_IN_MILLIS));
-        assertEquals(-1000L, roundUp(-666, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-500, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-555, SECOND_IN_MILLIS));
+        assertEquals(0L, roundUp(-666, SECOND_IN_MILLIS));
         assertEquals(-1000L, roundUp(-777, SECOND_IN_MILLIS));
         assertEquals(-1000L, roundUp(-888, SECOND_IN_MILLIS));
         assertEquals(-1000L, roundUp(-999, SECOND_IN_MILLIS));
@@ -77,7 +78,8 @@ public class TimeTests {
         assertEquals(-1000L, roundUp(-1222, SECOND_IN_MILLIS));
         assertEquals(-1000L, roundUp(-1333, SECOND_IN_MILLIS));
         assertEquals(-1000L, roundUp(-1444, SECOND_IN_MILLIS));
-        assertEquals(-2000L, roundUp(-1555, SECOND_IN_MILLIS));
+        assertEquals(-1000L, roundUp(-1555, SECOND_IN_MILLIS));
+        assertEquals(-2000L, roundUp(-1755, SECOND_IN_MILLIS));
     }
 
     @Test

@@ -40,9 +40,9 @@ public class TimeUtils {
      */
     public static long roundUp(long time, long granularity) {
         if (time >= 0L) {
-            return ((time + (granularity / 2)) / granularity) * granularity;
+            return ((time + (granularity / 4L)) / granularity) * granularity;
         }
-        return ((time - (granularity / 2)) / granularity) * granularity;
+        return ((time - (granularity / 4L)) / granularity) * granularity;
     }
 
     /**
