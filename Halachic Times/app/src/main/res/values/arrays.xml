@@ -252,7 +252,7 @@
 
     <string-array name="sunset_values" translatable="false">
         <item>@string/opinion_value_sea</item>
-        <item>@string/opinion_value_level</item>
+        <item>@string/opinion_value_default</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
         <item>@string/sunset_sea</item>
