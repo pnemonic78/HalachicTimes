@@ -542,7 +542,7 @@ public class ZmanimReminder {
                 contentText,
                 when,
                 contentIntent,
-                alarm ? CHANNEL_REMINDER_ALARM : CHANNEL_REMINDER);
+                CHANNEL_REMINDER);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE);
             builder.setLights(LED_COLOR, LED_ON, LED_OFF);
@@ -825,25 +825,7 @@ public class ZmanimReminder {
             nm.createNotificationChannel(channel);
         }
 
-        channel = nm.getNotificationChannel(CHANNEL_REMINDER_ALARM);
-        if (channel == null) {
-            channel = new android.app.NotificationChannel(CHANNEL_REMINDER_ALARM, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
-            channel.setDescription(context.getString(R.string.alarm_volume_title));
-            channel.enableLights(true);
-            channel.setLightColor(LED_COLOR);
-            channel.enableVibration(true);
-            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-
-            Uri sound = RingtoneManager.getDefaultUri(TYPE_ALARM);
-            android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
-                    .setContentType(android.media.AudioAttributes.CONTENT_TYPE_MUSIC)
-                    .setLegacyStreamType(AudioManager.STREAM_ALARM)
-                    .setUsage(android.media.AudioAttributes.USAGE_ALARM)
-                    .build();
-            channel.setSound(sound, audioAttributes);
-
-            nm.createNotificationChannel(channel);
-        }
+        nm.deleteNotificationChannel(CHANNEL_REMINDER_ALARM);
 
         channel = nm.getNotificationChannel(CHANNEL_UPCOMING);
         if (channel == null) {

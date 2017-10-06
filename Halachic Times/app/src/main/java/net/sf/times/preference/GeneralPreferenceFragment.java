@@ -49,11 +49,12 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
         if (SDK_INT >= O) {
             removePreference(KEY_REMINDER_RINGTONE);
+            removePreference(KEY_REMINDER_STREAM);
         } else {
             reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
+            initList(KEY_REMINDER_STREAM);
         }
 
-        initList(KEY_REMINDER_STREAM);
         initList(KEY_COORDS_FORMAT);
         initList(KEY_COMPASS_BEARING);
     }
