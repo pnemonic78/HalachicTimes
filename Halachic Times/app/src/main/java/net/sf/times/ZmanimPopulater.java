@@ -241,6 +241,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             return;
         }
         final JewishDate jewishDate = (JewishDate) jcal.clone();
+        final int jewishDayOfMonth = jewishDate.getJewishDayOfMonth();
         final JewishDate jewishDateTomorrow = (JewishDate) jewishDate.clone();
         jewishDateTomorrow.forward();
         final int dayOfWeek = jcal.getDayOfWeek();
@@ -865,16 +866,15 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
         }
 
-        final int jDayOfMonth = jcal.getJewishDayOfMonth();
         // Molad.
-        if ((jDayOfMonth <= 1) || (jDayOfMonth >= 25)) {
+        if ((jewishDayOfMonth <= 1) || (jewishDayOfMonth >= 25)) {
             int y = gcal.get(Calendar.YEAR);
             int m = gcal.get(Calendar.MONTH);
             int d = gcal.get(Calendar.DAY_OF_MONTH);
 
             // Molad is always of the previous month.
             int jLastDatOfMonth = jcal.getDaysInJewishMonth();
-            if ((jDayOfMonth > 1) && (jDayOfMonth < jLastDatOfMonth)) {
+            if ((jewishDayOfMonth > 1) && (jewishDayOfMonth < jLastDatOfMonth)) {
                 jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
             }
             jcal.forward();
@@ -892,14 +892,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 summary = R.string.molad_summary;
                 final long moladTime = calMolad.getTimeInMillis();
                 JewishDate moonDate = jewishDate;
-                if ((sunset != null) && (sunset < date)) {
+                if ((sunset != null) && (sunset < moladTime)) {
                     moonDate = jewishDateTomorrow;
                 }
                 adapter.add(R.string.molad, summary, moladTime, moonDate, remote);
             }
         }
         // First Kiddush Levana.
-        else if ((jDayOfMonth >= 2) && (jDayOfMonth <= 8)) {
+        else if ((jewishDayOfMonth >= 2) && (jewishDayOfMonth <= 8)) {
             opinion = settings.getEarliestKiddushLevana();
             if (OPINION_7.equals(opinion)) {
                 date = cal.getTchilasZmanKidushLevana7Days();
@@ -923,7 +923,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
         // Last Kiddush Levana.
-        else if ((jDayOfMonth > 10) && (jDayOfMonth < 20)) {
+        else if ((jewishDayOfMonth > 10) && (jewishDayOfMonth < 20)) {
             opinion = settings.getLatestKiddushLevana();
             if (OPINION_15.equals(opinion)) {
                 date = jcal.getSofZmanKidushLevana15Days();
