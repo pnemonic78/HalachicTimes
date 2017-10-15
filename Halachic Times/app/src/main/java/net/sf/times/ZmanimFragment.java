@@ -235,7 +235,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             // Ignore potential "IllegalArgumentException".
             return;
         }
-        CharSequence dateHebrew = adapter.formatDate(context, jcal);
+        JewishDate jewishDate = jcal;
+        CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
 
         final int count = adapter.getCount();
         int position = 0;
@@ -265,13 +266,14 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 if (item == null) {
                     continue;
                 }
+                jewishDate = item.jewishDate;
 
                 // Start of the next Hebrew day.
-                if ((jewishDatePrevious == null) || !jewishDatePrevious.equals(item.jewishDate)) {
-                    jewishDatePrevious = item.jewishDate;
-                    jcal.forward();
+                if ((jewishDatePrevious == null) || !jewishDatePrevious.equals(jewishDate)) {
+                    jewishDatePrevious = jewishDate;
+                    jcal.setJewishDate(jewishDate.getJewishYear(), jewishDate.getJewishMonth(), jewishDate.getJewishDayOfMonth());
 
-                    dateHebrew = adapter.formatDate(context, jcal);
+                    dateHebrew = adapter.formatDate(context, jewishDate);
                     groupingText = dateHebrew;
 
                     // Sefirat HaOmer?
