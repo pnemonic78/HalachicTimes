@@ -232,8 +232,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         populater.populate(adapter, false);
         this.adapter = adapter;
 
-        positionToday = 0;
-        positionTomorrow = -1;
+        int positionToday = 0;
+        int positionTomorrow = -1;
         final int count = adapter.getCount();
         if (count > 0) {
             JewishDate jewishDate = null;
@@ -253,6 +253,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
                 }
             }
         }
+        this.positionToday = positionToday;
+        this.positionTomorrow = positionTomorrow;
     }
 
     /**
