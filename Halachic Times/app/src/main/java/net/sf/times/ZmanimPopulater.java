@@ -42,6 +42,7 @@ import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_S
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_PESACH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_ESTHER;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_GEDALYAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.HOSHANA_RABBA;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SEVENTEEN_OF_TAMMUZ;
@@ -388,6 +389,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             case YOM_KIPPUR:
             case SUCCOS:
             case CHOL_HAMOED_SUCCOS:
+            case HOSHANA_RABBA:
             case SHEMINI_ATZERES:
             case SIMCHAS_TORAH:
             case TISHA_BEAV:
