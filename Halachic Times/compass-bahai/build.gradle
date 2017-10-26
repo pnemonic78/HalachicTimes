@@ -52,10 +52,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':lib')
-    compile project(':common')
-    compile project(':locations')
-    debugCompile project(path: ':compass-lib', configuration: 'debug')
-    releaseCompile project(path: ':compass-lib', configuration: 'release')
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':lib')
+    api project(':common')
+    api project(':locations')
+    api project(':compass-lib')
 }

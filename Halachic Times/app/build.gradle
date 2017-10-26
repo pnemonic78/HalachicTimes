@@ -47,11 +47,14 @@ android {
         }
     }
 
+    flavorDimensions "internet"
     productFlavors {
         regular {
+            dimension "internet"
         }
 
         offline {
+            dimension "internet"
             manifestPlaceholders = [offline: true]
         }
     }
@@ -69,11 +72,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':KosherJava')
-    compile project(':lib')
-    compile project(':common')
-    compile project(':locations')
-    debugCompile project(path: ':compass-lib', configuration: 'debug')
-    releaseCompile project(path: ':compass-lib', configuration: 'release')
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':KosherJava')
+    api project(':lib')
+    api project(':common')
+    api project(':locations')
+    api project(':compass-lib')
 }
