@@ -135,6 +135,7 @@ public class ZmanimReminder {
     private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
 
     private static final String CHANNEL_REMINDER = "reminder";
+    private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
     private static final String CHANNEL_UPCOMING = "upcoming";
 
     private final Context context;
@@ -822,6 +823,8 @@ public class ZmanimReminder {
 
             nm.createNotificationChannel(channel);
         }
+
+        nm.deleteNotificationChannel(CHANNEL_REMINDER_ALARM);
 
         channel = nm.getNotificationChannel(CHANNEL_UPCOMING);
         if (channel == null) {

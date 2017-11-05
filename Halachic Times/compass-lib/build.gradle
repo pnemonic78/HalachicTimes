@@ -16,6 +16,9 @@ android {
     }
 
     buildTypes {
+        debug {
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -29,8 +32,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':lib')
-    compile project(':common')
-    compile project(':locations')
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':lib')
+    api project(':common')
+    api project(':locations')
 }
