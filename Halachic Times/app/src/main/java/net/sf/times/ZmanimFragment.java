@@ -269,7 +269,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 jewishDate = item.jewishDate;
 
                 // Start of the next Hebrew day.
-                if ((jewishDatePrevious == null) || !jewishDatePrevious.equals(jewishDate)) {
+                if ((jewishDate != null) && ((jewishDatePrevious == null) || !jewishDatePrevious.equals(jewishDate))) {
                     jewishDatePrevious = jewishDate;
                     jcal.setJewishDate(jewishDate.getJewishYear(), jewishDate.getJewishMonth(), jewishDate.getJewishDayOfMonth());
 
