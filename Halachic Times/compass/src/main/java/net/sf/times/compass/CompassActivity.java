@@ -21,10 +21,11 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.sf.compass.R;
 import net.sf.times.compass.preference.CompassPreferenceActivity;
 
 /**
- * Show the compass.
+ * Compass activity.
  *
  * @author Moshe Waisberg
  */
