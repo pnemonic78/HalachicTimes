@@ -367,11 +367,13 @@ public class CompassView extends View {
             canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
         }
 
-        canvas.rotate(45 + holiest, w2, h2);
-        canvas.drawLine(w2, h2, w2, h2r9, paintShadowHoliest);
-        canvas.drawPath(pathShadowHoliest, paintShadowHoliest);
-        canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
-        canvas.drawPath(pathArrowHoliest, paintHoliest);
+        if (!Float.isNaN(holiest)) {
+            canvas.rotate(45 + holiest, w2, h2);
+            canvas.drawLine(w2, h2, w2, h2r9, paintShadowHoliest);
+            canvas.drawPath(pathShadowHoliest, paintShadowHoliest);
+            canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
+            canvas.drawPath(pathArrowHoliest, paintHoliest);
+        }
 
         canvas.drawCircle(w2, h2, radiusPivot, paintPivot);
     }

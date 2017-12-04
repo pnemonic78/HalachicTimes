@@ -22,7 +22,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +29,7 @@ import android.view.ViewGroup;
 
 import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.compass.preference.SimpleCompassPreferences;
+import net.sf.times.location.GeocoderBase;
 import net.sf.times.location.ZmanimLocation;
 
 import static net.sf.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
@@ -73,7 +73,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     private CompassPreferences preferences;
 
     public CompassFragment() {
-        holiest = new Location(LocationManager.GPS_PROVIDER);
+        holiest = new Location(GeocoderBase.USER_PROVIDER);
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
     }
 
@@ -147,6 +147,10 @@ public class CompassFragment extends Fragment implements SensorEventListener {
      *         the location.
      */
     public void setLocation(Location location) {
+        if (Double.isNaN(holiest.getLatitude()) || Double.isNaN(holiest.getLongitude())) {
+            view.setHoliest(Float.NaN);
+            return;
+        }
         float bearing;
         String bearingType = preferences.getBearing();
         if (BEARING_GREAT_CIRCLE.equals(bearingType)) {
