@@ -86,6 +86,7 @@ public class CompassView extends View {
     private Paint paintFill;
     private Paint paintPivot;
     private Paint paintArrow;
+    private Paint paintTick;
     private final Paint[] paintShadow = new Paint[SHADOWS];
     private Paint paintShadowHoliest;
     private final RectF rectFill = new RectF();
@@ -101,6 +102,7 @@ public class CompassView extends View {
     private final Path pathShadowHoliest = new Path();
     private final RectF rectFrameOuter = new RectF();
     private final RectF rectFrameInner = new RectF();
+    private boolean ticks;
 
     private String labelNorth;
     private String labelEast;
@@ -228,7 +230,7 @@ public class CompassView extends View {
         paintEast.setColor(compassColorEast);
 
         paintWest = new TextPaint(paintEast);
-        paintEast.setColor(compassColorWest);
+        paintWest.setColor(compassColorWest);
 
         paintNE = new Paint(paintEast);
         paintNE.setStrokeWidth(res.getDimension(R.dimen.label2_thickness));
@@ -243,6 +245,8 @@ public class CompassView extends View {
         paintFill.setColor(compassColorArrowBg);
         paintFill.setStyle(Paint.Style.STROKE);
         paintFill.setStrokeCap(Paint.Cap.BUTT);
+
+        paintTick = new Paint(paintNE);
 
         Paint paint;
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -275,8 +279,10 @@ public class CompassView extends View {
         final float h2 = heightHalf;
         final float r = radius;
         final float r7 = r * 0.7f;
+        final float r8 = r * 0.8f;
         final float r9 = r * 0.9f;
         final float h2r7 = h2 - r7;
+        final float h2r8 = h2 - r8;
         final float h2r9 = h2 - r9;
 
         canvas.drawCircle(w2, h2, r, paintCircle);
@@ -373,9 +379,24 @@ public class CompassView extends View {
             canvas.drawPath(pathShadowHoliest, paintShadowHoliest);
             canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
             canvas.drawPath(pathArrowHoliest, paintHoliest);
+        } else {
+            canvas.rotate(45, w2, h2);
         }
 
         canvas.drawCircle(w2, h2, radiusPivot, paintPivot);
+
+        if (ticks) {
+            for (int i = 10; i < 360; i += 10) {
+                canvas.rotate(10, w2, h2);
+                switch (i) {
+                    case 90:
+                    case 180:
+                    case 270:
+                        continue;
+                }
+                canvas.drawLine(w2, h2r8, w2, h2r9, paintTick);
+            }
+        }
     }
 
     /**
@@ -545,5 +566,15 @@ public class CompassView extends View {
         pathShadowHoliest.reset();
         pathShadowHoliest.set(pathArrowHoliest);
         pathShadowHoliest.close();
+    }
+
+    /**
+     * Set ticks as visible.
+     *
+     * @param visible
+     *         is visible?
+     */
+    public void setTicks(boolean visible) {
+        this.ticks = visible;
     }
 }

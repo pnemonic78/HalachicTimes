@@ -15,6 +15,11 @@
  */
 package net.sf.compass;
 
+import android.os.Bundle;
+import android.view.View;
+
+import net.sf.times.compass.CompassView;
+
 /**
  * Show the compass.
  *
@@ -24,5 +29,11 @@ public class CompassFragment extends net.sf.times.compass.CompassFragment {
 
     public CompassFragment() {
         setHoliest(Double.NaN, Double.NaN, 0);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((CompassView) view).setTicks(true);
     }
 }
