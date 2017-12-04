@@ -19,7 +19,7 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_compass"
         android:supportsRtl="false"
-        android:theme="@style/Theme.Compass.Dark">
+        android:theme="@style/Theme.Compass.Light">
         <activity
             android:name="net.sf.times.compass.CompassActivity"
             android:label="@string/title_activity_compass">

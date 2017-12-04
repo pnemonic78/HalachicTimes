@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:supportsRtl="false"
-        android:theme="@style/Theme.Zmanim.Dark">
+        android:theme="@style/Theme.Zmanim.Light">
         <activity
             android:name="net.sf.times.ZmanimActivity"
             android:label="@string/title_activity_zmanim">
