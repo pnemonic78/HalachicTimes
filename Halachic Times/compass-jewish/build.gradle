@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+
+def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
+def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
+
+android {
+    compileSdkVersion androidBuildSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        applicationId "net.sf.times.compass"
+        minSdkVersion androidBuildMinSdkVersion
+        targetSdkVersion androidBuildTargetSdkVersion
+        versionCode versionMajor * 100 + versionMinor
+        versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
+        resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "tr", "uk"
+
+        testApplicationId "net.sf.times.compass.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("../release.keystore")
+            storePassword project.STORE_PASSWORD_RELEASE
+            keyAlias "release"
+            keyPassword project.KEY_PASSWORD_RELEASE
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        disable "GoogleAppIndexingWarning"
+        disable "InconsistentLayout"
+        disable "LocaleFolder"
+        disable "Overdraw"
+        disable "PluralsCandidate"
+        disable "UnusedAttribute"
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':lib')
+    api project(':common')
+    api project(':locations')
+    api project(':compass-lib')
+}
