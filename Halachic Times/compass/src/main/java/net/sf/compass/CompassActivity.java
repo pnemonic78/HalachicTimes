@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.compass;
+package net.sf.compass;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import net.sf.compass.R;
+import net.sf.times.compass.BaseCompassActivity;
 import net.sf.times.compass.preference.CompassPreferenceActivity;
 
 /**
