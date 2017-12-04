@@ -22,11 +22,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import net.sf.times.compass.preference.CompassPreferenceActivity;
-import net.sf.times.location.LocationActivity;
 
 /**
- * Show the direction in which to pray.
- * Points to the Holy of Holies in Jerusalem in Israel.
+ * Show the compass.
  *
  * @author Moshe Waisberg
  */
@@ -47,9 +45,6 @@ public class CompassActivity extends BaseCompassActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_location:
-                startLocations();
-                return true;
             case R.id.menu_settings:
                 startSettings();
                 return true;
@@ -59,7 +54,7 @@ public class CompassActivity extends BaseCompassActivity {
 
     @Override
     protected Class<? extends Activity> getLocationActivityClass() {
-        return LocationActivity.class;
+        return null;
     }
 
     protected void startSettings() {
