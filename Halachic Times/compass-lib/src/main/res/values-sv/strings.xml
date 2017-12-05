@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">Kompass</string>
     <string name="title_activity_compass">Riktning av bön</string>
-    <string name="compass_summary">Riktning av bön till Heligaste av Heliga i Jerusalem</string>
     <string name="compass_bearing">Bäring</string>
     <string name="compass_bearing_circle">Storcirkel (kortaste färdvägen)</string>
     <string name="compass_bearing_rhumb">Loxodrom (konstant vinkel)</string>

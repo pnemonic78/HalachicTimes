@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">بوصلة</string>
     <string name="title_activity_compass">اتجاه الصلاة</string>
-    <string name="compass_summary">اتجاه الصلاة إلى قدس الأقداس في القدس</string>
     <string name="compass_bearing">اتجاه</string>
     <string name="compass_bearing_circle">دائرة عظمى (أقصر الطرق)</string>
     <string name="compass_bearing_rhumb">خط أحد إتجاهات البوصلة (زاوية ثابتة)</string>

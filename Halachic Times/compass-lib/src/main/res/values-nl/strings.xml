@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
     <string name="title_activity_compass">Richting van het gebed</string>
-    <string name="compass_summary">Richting van het gebed om de Heilige der Heiligen in Jeruzalem</string>
     <string name="compass_bearing">Peiling</string>
     <string name="compass_bearing_circle">Grootcirkel (kortste verbinding)</string>
     <string name="compass_bearing_rhumb">Loxodroom (vaste koers)</string>

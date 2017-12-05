@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">Kompas</string>
     <string name="title_activity_compass">Směr modlitby</string>
-    <string name="compass_summary">Směr modlitbě nejsvětější svatyně v Jeruzalémě</string>
     <string name="compass_bearing">Chod</string>
     <string name="compass_bearing_circle">Velký kruh (nejkratší cesta)</string>
     <string name="compass_bearing_rhumb">Loxodroma (stejný úhel)</string>

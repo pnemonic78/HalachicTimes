@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">מצפן</string>
     <string name="title_activity_compass">כיוון התפילה</string>
-    <string name="compass_summary">כיוון התפילה לקודש הקודשים בירושלים</string>
     <string name="compass_bearing">כיוון</string>
     <string name="compass_bearing_circle">מעגל גדול (דרך הקצרה ביותר)</string>
     <string name="compass_bearing_rhumb">לוקסודרום (באותה זווית)</string>

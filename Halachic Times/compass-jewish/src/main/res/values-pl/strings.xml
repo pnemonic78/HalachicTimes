@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
+    <string name="compass_summary">Kierunek modlitwy do Świętego Świętych w Jerozolimie</string>
 
 </resources>

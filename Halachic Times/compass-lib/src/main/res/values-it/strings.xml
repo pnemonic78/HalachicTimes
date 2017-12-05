@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">Bussola</string>
     <string name="title_activity_compass">Direzione di orazione</string>
-    <string name="compass_summary">Direzione di orazione a Santo dei Santi a Gerusalemme</string>
     <string name="compass_bearing">Rotta navale</string>
     <string name="compass_bearing_circle">Cerchio massimo (distanza più breve)</string>
     <string name="compass_bearing_rhumb">Lossodromia (stesso angolo)</string>

@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">Brújula</string>
     <string name="title_activity_compass">Dirección de la oración</string>
-    <string name="compass_summary">Dirección de la oración a la Santa de los Santos en Jerusalén</string>
     <string name="compass_bearing">Rumbo</string>
     <string name="compass_bearing_circle">Gran círculo (distancia más corta)</string>
     <string name="compass_bearing_rhumb">Línea de rumbo (mismo ángulo)</string>

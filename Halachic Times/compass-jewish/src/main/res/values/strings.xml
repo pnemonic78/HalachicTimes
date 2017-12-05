@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">Prayer Direction</string>
+    <string name="compass_summary">Direction of prayer to Holy of Holies in Jerusalem</string>
 
 </resources>

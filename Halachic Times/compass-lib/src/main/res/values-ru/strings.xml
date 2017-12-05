@@ -4,7 +4,6 @@
     <!-- Compass -->
     <string name="menu_compass">Компас</string>
     <string name="title_activity_compass">Направление молитвы</string>
-    <string name="compass_summary">Направление молитвы к Святому Святых в Иерусалиме</string>
     <string name="compass_bearing">Пеленг</string>
     <string name="compass_bearing_circle">Большой круг (кратчайшим путём)</string>
     <string name="compass_bearing_rhumb">Локсодрома (постоянным углом)</string>
