@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.sf.times.compass.lib.R;
 import net.sf.times.compass.preference.CompassPreferences;
 import net.sf.times.compass.preference.SimpleCompassPreferences;
 import net.sf.times.location.GeocoderBase;
@@ -79,7 +80,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return new CompassView(inflater.getContext());
+        return inflater.inflate(R.layout.compass_fragment, container, false);
     }
 
     @Override
