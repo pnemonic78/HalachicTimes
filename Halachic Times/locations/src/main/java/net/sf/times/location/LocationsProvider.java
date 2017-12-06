@@ -725,11 +725,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         context.unregisterReceiver(broadcastReceiver);
 
+        handlerThread.interrupt();
         Looper looper = handlerThread.getLooper();
         if (looper != null) {
             looper.quit();
         }
-        handlerThread.interrupt();
     }
 
     private class UpdatesHandler extends Handler {

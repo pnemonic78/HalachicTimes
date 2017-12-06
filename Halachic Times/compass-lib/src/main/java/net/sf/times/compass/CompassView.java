@@ -158,28 +158,28 @@ public class CompassView extends View {
             prefs = new SimpleCompassPreferences(context);
         }
 
-        TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassTheme);
+        TypedArray a = context.obtainStyledAttributes(prefs.getCompassTheme(), R.styleable.CompassView);
 
-        compassColorFace = a.getColor(R.styleable.CompassTheme_compassColorFace, Color.TRANSPARENT);
-        compassColorGradient = a.getColor(R.styleable.CompassTheme_compassColorGradient, Color.TRANSPARENT);
-        compassColorFrame = a.getColor(R.styleable.CompassTheme_compassColorFrame, Color.TRANSPARENT);
-        compassColorFrameHighlight = a.getColor(R.styleable.CompassTheme_compassColorFrameHighlight, Color.TRANSPARENT);
-        compassColorFrameShadow = a.getColor(R.styleable.CompassTheme_compassColorFrameShadow, Color.TRANSPARENT);
-        compassColorLabel = a.getColor(R.styleable.CompassTheme_compassColorLabel, Color.TRANSPARENT);
-        compassColorLabelDark = a.getColor(R.styleable.CompassTheme_compassColorLabelDark, Color.TRANSPARENT);
-        compassColorLabel2 = a.getColor(R.styleable.CompassTheme_compassColorLabel2, Color.TRANSPARENT);
-        compassColorNorth = a.getColor(R.styleable.CompassTheme_compassColorNorth, Color.TRANSPARENT);
-        compassColorNorthDark = a.getColor(R.styleable.CompassTheme_compassColorNorthDark, Color.TRANSPARENT);
-        compassColorSouth = a.getColor(R.styleable.CompassTheme_compassColorSouth, Color.TRANSPARENT);
-        compassColorSouthDark = a.getColor(R.styleable.CompassTheme_compassColorSouthDark, Color.TRANSPARENT);
-        compassColorEast = a.getColor(R.styleable.CompassTheme_compassColorEast, Color.TRANSPARENT);
-        compassColorEastDark = a.getColor(R.styleable.CompassTheme_compassColorEastDark, Color.TRANSPARENT);
-        compassColorWest = a.getColor(R.styleable.CompassTheme_compassColorWest, Color.TRANSPARENT);
-        compassColorWestDark = a.getColor(R.styleable.CompassTheme_compassColorWestDark, Color.TRANSPARENT);
-        compassColorTarget = a.getColor(R.styleable.CompassTheme_compassColorTarget, Color.TRANSPARENT);
-        compassColorArrowBg = a.getColor(R.styleable.CompassTheme_compassColorArrowBg, Color.TRANSPARENT);
-        compassColorPivot = a.getColor(R.styleable.CompassTheme_compassColorPivot, Color.TRANSPARENT);
-        compassColorPivotDark = a.getColor(R.styleable.CompassTheme_compassColorPivotDark, Color.TRANSPARENT);
+        compassColorFace = a.getColor(R.styleable.CompassView_compassColorFace, Color.TRANSPARENT);
+        compassColorGradient = a.getColor(R.styleable.CompassView_compassColorGradient, Color.TRANSPARENT);
+        compassColorFrame = a.getColor(R.styleable.CompassView_compassColorFrame, Color.TRANSPARENT);
+        compassColorFrameHighlight = a.getColor(R.styleable.CompassView_compassColorFrameHighlight, Color.TRANSPARENT);
+        compassColorFrameShadow = a.getColor(R.styleable.CompassView_compassColorFrameShadow, Color.TRANSPARENT);
+        compassColorLabel = a.getColor(R.styleable.CompassView_compassColorLabel, Color.TRANSPARENT);
+        compassColorLabelDark = a.getColor(R.styleable.CompassView_compassColorLabelDark, Color.TRANSPARENT);
+        compassColorLabel2 = a.getColor(R.styleable.CompassView_compassColorLabel2, Color.TRANSPARENT);
+        compassColorNorth = a.getColor(R.styleable.CompassView_compassColorNorth, Color.TRANSPARENT);
+        compassColorNorthDark = a.getColor(R.styleable.CompassView_compassColorNorthDark, Color.TRANSPARENT);
+        compassColorSouth = a.getColor(R.styleable.CompassView_compassColorSouth, Color.TRANSPARENT);
+        compassColorSouthDark = a.getColor(R.styleable.CompassView_compassColorSouthDark, Color.TRANSPARENT);
+        compassColorEast = a.getColor(R.styleable.CompassView_compassColorEast, Color.TRANSPARENT);
+        compassColorEastDark = a.getColor(R.styleable.CompassView_compassColorEastDark, Color.TRANSPARENT);
+        compassColorWest = a.getColor(R.styleable.CompassView_compassColorWest, Color.TRANSPARENT);
+        compassColorWestDark = a.getColor(R.styleable.CompassView_compassColorWestDark, Color.TRANSPARENT);
+        compassColorTarget = a.getColor(R.styleable.CompassView_compassColorTarget, Color.TRANSPARENT);
+        compassColorArrowBg = a.getColor(R.styleable.CompassView_compassColorArrowBg, Color.TRANSPARENT);
+        compassColorPivot = a.getColor(R.styleable.CompassView_compassColorPivot, Color.TRANSPARENT);
+        compassColorPivotDark = a.getColor(R.styleable.CompassView_compassColorPivotDark, Color.TRANSPARENT);
 
         a.recycle();
 
@@ -248,8 +248,7 @@ public class CompassView extends View {
 
         paintTick = new Paint(paintNE);
 
-        Paint paint;
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(res.getDimension(R.dimen.shadow_thickness));
         paint.setColor(res.getColor(R.color.compass_shadow_1));
@@ -368,19 +367,19 @@ public class CompassView extends View {
         canvas.rotate(45, w2, h2);
         canvas.drawPath(pathArrowSmall, paintNE);
 
-        // Samsung has bug with tiny arcs.
-        if (Math.abs(northToHoliest) >= 0.1) {
-            canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
-        }
+        if (Float.isNaN(holiest)) {
+            canvas.rotate(45, w2, h2);
+        } else {
+            // Samsung has bug with tiny arcs.
+            if (Math.abs(northToHoliest) >= 0.1) {
+                canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill);
+            }
 
-        if (!Float.isNaN(holiest)) {
             canvas.rotate(45 + holiest, w2, h2);
             canvas.drawLine(w2, h2, w2, h2r9, paintShadowHoliest);
             canvas.drawPath(pathShadowHoliest, paintShadowHoliest);
             canvas.drawLine(w2, h2, w2, h2r9, paintHoliest);
             canvas.drawPath(pathArrowHoliest, paintHoliest);
-        } else {
-            canvas.rotate(45, w2, h2);
         }
 
         canvas.drawCircle(w2, h2, radiusPivot, paintPivot);

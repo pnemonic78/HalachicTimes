@@ -15,10 +15,11 @@
  */
 package net.sf.compass;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
-
-import net.sf.times.compass.CompassView;
+import android.widget.TextView;
 
 /**
  * Show the compass.
@@ -27,6 +28,8 @@ import net.sf.times.compass.CompassView;
  */
 public class CompassFragment extends net.sf.times.compass.CompassFragment {
 
+    private TextView degreesView;
+
     public CompassFragment() {
         setHoliest(Double.NaN, Double.NaN, 0);
     }
@@ -34,6 +37,21 @@ public class CompassFragment extends net.sf.times.compass.CompassFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ((CompassView) view).setTicks(true);
+        degreesView = view.findViewById(R.id.degrees);
+        compassView.setHoliest(Float.NaN);
+        compassView.setTicks(true);
+
+        Context context = view.getContext();
+        TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassView);
+        if (a != null) {
+            degreesView.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorLabel));
+            a.recycle();
+        }
+    }
+
+    @Override
+    protected void setAzimuth(float azimuth) {
+        super.setAzimuth(azimuth);
+        degreesView.setText(String.valueOf(Math.toDegrees(-azimuth)));
     }
 }

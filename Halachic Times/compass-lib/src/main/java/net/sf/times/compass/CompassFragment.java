@@ -59,9 +59,9 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     /** The magnetic field sensor. */
     private Sensor magnetic;
     /** Location of the Holy of Holies. */
-    private final Location holiest;
+    private final Location holiest = new Location(GeocoderBase.USER_PROVIDER);
     /** The main view. */
-    private CompassView view;
+    protected CompassView compassView;
     /** The gravity values. */
     private final float[] gravity = new float[3];
     /** The geomagnetic field. */
@@ -71,10 +71,9 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     /** Orientation matrix. */
     private final float[] orientation = new float[3];
     /** The preferences. */
-    private CompassPreferences preferences;
+    protected CompassPreferences preferences;
 
     public CompassFragment() {
-        holiest = new Location(GeocoderBase.USER_PROVIDER);
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
     }
 
@@ -86,7 +85,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        this.view = (CompassView) view;
+        compassView = view.findViewById(R.id.compass);
     }
 
     @Override
@@ -137,8 +136,12 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         }
         if (SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic)) {
             SensorManager.getOrientation(matrixR, orientation);
-            view.setAzimuth(orientation[0]);
+            setAzimuth(orientation[0]);
         }
+    }
+
+    protected void setAzimuth(float azimuth) {
+        compassView.setAzimuth(orientation[0]);
     }
 
     /**
@@ -149,7 +152,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
      */
     public void setLocation(Location location) {
         if (Double.isNaN(holiest.getLatitude()) || Double.isNaN(holiest.getLongitude())) {
-            view.setHoliest(Float.NaN);
+            compassView.setHoliest(Float.NaN);
             return;
         }
         float bearing;
@@ -159,7 +162,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         } else {
             bearing = ZmanimLocation.angleTo(location, holiest);
         }
-        view.setHoliest(bearing);
+        compassView.setHoliest(bearing);
     }
 
     public void setHoliest(Location location) {
