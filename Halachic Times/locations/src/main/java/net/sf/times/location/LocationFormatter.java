@@ -119,4 +119,31 @@ public interface LocationFormatter {
      */
     CharSequence formatElevation(double elevation);
 
+    /**
+     * Format a bearing (yaw or compass angle).
+     *
+     * @param bearing
+     *         the bearing.
+     * @return the bearing text.
+     */
+    CharSequence formatBearing(double bearing);
+
+    /**
+     * Format a bearing (yaw or compass angle) using the decimal notation.
+     *
+     * @param bearing
+     *         the bearing.
+     * @return the bearing text.
+     */
+    CharSequence formatBearingDecimal(double bearing);
+
+    /**
+     * Format a bearing (yaw or compass angle) using the sexagesimal notation.
+     *
+     * @param bearing
+     *         the bearing.
+     * @return the bearing text.
+     */
+    CharSequence formatBearingSexagesimal(double bearing);
+
 }

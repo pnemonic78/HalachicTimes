@@ -21,6 +21,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import net.sf.times.location.LocationApplication;
+import net.sf.times.location.LocationFormatter;
+
 /**
  * Show the compass.
  *
@@ -29,9 +32,18 @@ import android.widget.TextView;
 public class CompassFragment extends net.sf.times.compass.CompassFragment {
 
     private TextView degreesView;
+    private LocationFormatter formatter;
 
     public CompassFragment() {
         setHoliest(Double.NaN, Double.NaN, 0);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        LocationApplication app = (LocationApplication) getActivity().getApplication();
+        formatter = app.getLocations();
     }
 
     @Override
@@ -44,7 +56,7 @@ public class CompassFragment extends net.sf.times.compass.CompassFragment {
         Context context = view.getContext();
         TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassView);
         if (a != null) {
-            degreesView.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorLabel));
+            degreesView.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorLabel2));
             a.recycle();
         }
     }
@@ -52,6 +64,6 @@ public class CompassFragment extends net.sf.times.compass.CompassFragment {
     @Override
     protected void setAzimuth(float azimuth) {
         super.setAzimuth(azimuth);
-        degreesView.setText(String.valueOf(Math.toDegrees(-azimuth)));
+        degreesView.setText(formatter.formatBearing(azimuth));
     }
 }

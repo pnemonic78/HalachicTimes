@@ -21,6 +21,7 @@ import android.location.Location;
 
 import net.sf.util.LocaleUtils;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import static net.sf.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL;
@@ -44,8 +45,10 @@ public class DefaultLocationFormatter implements LocationFormatter {
     private final String formatSexagesimal;
     /** The coordinates format for sexagesimal format with elevation. */
     private final String formatSexagesimalElevation;
-    /** The format for elevation. */
+    /** The elevation format. */
     private final String formatElevation;
+    /** The bearing/yaw format for decimal format. */
+    private final DecimalFormat formatBearingDecimal;
 
     public DefaultLocationFormatter(Context context) {
         this(context, null);
@@ -61,6 +64,8 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
         formatSexagesimal = context.getString(R.string.location_sexagesimal);
         formatSexagesimalElevation = context.getString(R.string.location_sexagesimal_with_elevation);
+
+        formatBearingDecimal = new DecimalFormat("###.#\u00B0");
     }
 
     @Override
@@ -95,8 +100,8 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     protected CharSequence formatCoordinatesDecimal(double latitude, double longitude, double elevation, boolean withElevation) {
-        final CharSequence latitudeText = formatLatitude(latitude);
-        final CharSequence longitudeText = formatLongitude(longitude);
+        final CharSequence latitudeText = formatLatitudeDecimal(latitude);
+        final CharSequence longitudeText = formatLongitudeDecimal(longitude);
         final CharSequence elevationText = formatElevation(elevation);
 
         if (withElevation) {
@@ -106,8 +111,8 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     protected CharSequence formatCoordinatesSexagesimal(double latitude, double longitude, double elevation, boolean withElevation) {
-        final CharSequence latitudeText = formatLatitude(latitude);
-        final CharSequence longitudeText = formatLongitude(longitude);
+        final CharSequence latitudeText = formatLatitudeSexagesimal(latitude);
+        final CharSequence longitudeText = formatLongitudeSexagesimal(longitude);
         final CharSequence elevationText = formatElevation(elevation);
 
         if (withElevation) {
@@ -166,5 +171,24 @@ public class DefaultLocationFormatter implements LocationFormatter {
      */
     protected Locale getLocale() {
         return LocaleUtils.getDefaultLocale(context);
+    }
+
+    @Override
+    public CharSequence formatBearing(double bearing) {
+        final String notation = preferences.getCoordinatesFormat();
+        if (FORMAT_SEXAGESIMAL.equals(notation)) {
+            return formatBearingSexagesimal(bearing);
+        }
+        return formatBearingDecimal(bearing);
+    }
+
+    @Override
+    public CharSequence formatBearingDecimal(double bearing) {
+        return formatBearingDecimal.format((Math.toDegrees(bearing) + 360) % 360);
+    }
+
+    @Override
+    public CharSequence formatBearingSexagesimal(double bearing) {
+        return formatBearingDecimal.format((Math.toDegrees(bearing) + 360) % 360);
     }
 }

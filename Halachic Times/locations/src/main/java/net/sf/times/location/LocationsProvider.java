@@ -617,6 +617,21 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         return formatterHelper.formatElevation(elevation);
     }
 
+    @Override
+    public CharSequence formatBearing(double bearing) {
+        return formatterHelper.formatBearing(bearing);
+    }
+
+    @Override
+    public CharSequence formatBearingDecimal(double bearing) {
+        return formatterHelper.formatBearingDecimal(bearing);
+    }
+
+    @Override
+    public CharSequence formatBearingSexagesimal(double bearing) {
+        return formatterHelper.formatBearingSexagesimal(bearing);
+    }
+
     /**
      * Get the time zone.
      *

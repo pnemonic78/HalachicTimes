@@ -25,7 +25,7 @@ import android.content.Context;
 public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
     /** http://en.wikipedia.org/wiki/ISO_6709#Representation_at_the_human_interface_.28Annex_D.29 */
-    protected static final String FORMAT_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
+    protected static final String PATTERN_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
 
     private final String symbolNorth;
     private final String symbolSouth;
@@ -56,7 +56,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate -= minutes;
         coordinate *= 60.0;
         double seconds = coordinate;
-        return String.format(getLocale(), FORMAT_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
+        return String.format(getLocale(), PATTERN_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
     }
 
     @Override
@@ -70,6 +70,6 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate -= minutes;
         coordinate *= 60.0;
         double seconds = coordinate;
-        return String.format(getLocale(), FORMAT_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
+        return String.format(getLocale(), PATTERN_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
     }
 }
