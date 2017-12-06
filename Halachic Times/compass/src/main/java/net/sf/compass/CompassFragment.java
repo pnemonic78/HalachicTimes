@@ -31,7 +31,7 @@ import net.sf.times.location.LocationFormatter;
  */
 public class CompassFragment extends net.sf.times.compass.CompassFragment {
 
-    private TextView degreesView;
+    private TextView bearingView;
     private LocationFormatter formatter;
 
     public CompassFragment() {
@@ -49,14 +49,14 @@ public class CompassFragment extends net.sf.times.compass.CompassFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        degreesView = view.findViewById(R.id.degrees);
+        bearingView = view.findViewById(R.id.bearing);
         compassView.setHoliest(Float.NaN);
         compassView.setTicks(true);
 
         Context context = view.getContext();
         TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassView);
         if (a != null) {
-            degreesView.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorLabel2));
+            bearingView.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorLabel2));
             a.recycle();
         }
     }
@@ -64,6 +64,6 @@ public class CompassFragment extends net.sf.times.compass.CompassFragment {
     @Override
     protected void setAzimuth(float azimuth) {
         super.setAzimuth(azimuth);
-        degreesView.setText(formatter.formatBearing(azimuth));
+        bearingView.setText(formatter.formatBearing(azimuth));
     }
 }

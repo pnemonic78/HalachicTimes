@@ -32,6 +32,11 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
     private final String symbolEast;
     private final String symbolWest;
 
+    /** The bearing/yaw format for decimal format. */
+    private final String formatBearingDecimal;
+    /** The bearing/yaw format for sexagesimal format. */
+    private final String formatBearingSexagesimal;
+
     public SimpleLocationFormatter(Context context) {
         this(context, null);
     }
@@ -43,6 +48,9 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         symbolSouth = context.getString(R.string.south);
         symbolEast = context.getString(R.string.east);
         symbolWest = context.getString(R.string.west);
+
+        formatBearingDecimal = context.getString(R.string.bearing_decimal);
+        formatBearingSexagesimal = context.getString(R.string.bearing_sexagesimal);
     }
 
     @Override
@@ -71,5 +79,17 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate *= 60.0;
         double seconds = coordinate;
         return String.format(getLocale(), PATTERN_SEXAGESIMAL, Math.abs(degrees), minutes, seconds, symbol);
+    }
+
+    @Override
+    public CharSequence formatBearingDecimal(double bearing) {
+        final double degrees = Math.toDegrees(bearing);
+        final double angle = (degrees + 360) % 360;
+        double degreesEW = Math.abs((angle % 180) - 90);
+        double degreesNS = 90 - degreesEW;
+        String symbolNS = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
+        String symbolEW = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
+
+        return String.format(getLocale(), formatBearingDecimal, degreesNS, symbolNS, degreesEW, symbolEW);
     }
 }
