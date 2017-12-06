@@ -1,10 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CompassApp.Dark" parent="Theme.Base"/>
+    <style name="Theme.CompassApp.Dark" parent="Theme.Base">
+        <item name="compassColorTarget">@color/compass_target_original</item>
+    </style>
 
-    <style name="Theme.CompassApp.Light" parent="Theme.Base.Light"/>
+    <style name="Theme.CompassApp.Light" parent="Theme.Base.Light">
+        <item name="compassColorTarget">@color/compass_target_original</item>
+    </style>
 
     <style name="Theme.CompassApp.Settings" parent="Theme.Base.Settings"/>
+
+    <style name="Theme"/>
+
+    <style name="Theme.Compass"/>
+
+    <style name="Theme.Compass.Original">
+        <item name="compassColorFace">@color/compass_face_original</item>
+        <item name="compassColorGradient">@color/compass_gradient_original</item>
+        <item name="compassColorFrame">@color/compass_frame_original</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_original</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_original</item>
+        <item name="compassColorLabel">@color/compass_label_original</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_original</item>
+        <item name="compassColorLabel2">@color/compass_label2_original</item>
+        <item name="compassColorNorth">@color/compass_north_original</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_original</item>
+        <item name="compassColorSouth">@color/compass_south_original</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_original</item>
+        <item name="compassColorEast">@color/compass_east_original</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_original</item>
+        <item name="compassColorWest">@color/compass_west_original</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_original</item>
+        <item name="compassColorTarget">@color/compass_target_original</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_original</item>
+        <item name="compassColorPivot">@color/compass_pivot_original</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_original</item>
+    </style>
+
+    <style name="Theme.Compass.Gold" parent="Theme.Compass.Original">
+        <item name="compassColorFace">@color/compass_face_gold</item>
+        <item name="compassColorGradient">@color/compass_gradient_gold</item>
+        <item name="compassColorFrame">@color/compass_frame_gold</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_gold</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_gold</item>
+        <item name="compassColorLabel">@color/compass_label_gold</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_gold</item>
+        <item name="compassColorLabel2">@color/compass_label2_gold</item>
+        <item name="compassColorNorth">@color/compass_north_gold</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_gold</item>
+        <item name="compassColorSouth">@color/compass_south_gold</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_gold</item>
+        <item name="compassColorEast">@color/compass_east_gold</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_gold</item>
+        <item name="compassColorWest">@color/compass_west_gold</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_gold</item>
+        <item name="compassColorTarget">@color/compass_target_gold</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_gold</item>
+        <item name="compassColorPivot">@color/compass_pivot_gold</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_gold</item>
+    </style>
+
+    <style name="Theme.Compass.Silver" parent="Theme.Compass.Original">
+        <item name="compassColorFace">@color/compass_face_silver</item>
+        <item name="compassColorGradient">@color/compass_gradient_silver</item>
+        <item name="compassColorFrame">@color/compass_frame_silver</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_silver</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_silver</item>
+        <item name="compassColorLabel">@color/compass_label_silver</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_silver</item>
+        <item name="compassColorLabel2">@color/compass_label2_silver</item>
+        <item name="compassColorNorth">@color/compass_north_silver</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_silver</item>
+        <item name="compassColorSouth">@color/compass_south_silver</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_silver</item>
+        <item name="compassColorEast">@color/compass_east_silver</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_silver</item>
+        <item name="compassColorWest">@color/compass_west_silver</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_silver</item>
+        <item name="compassColorTarget">@color/compass_target_silver</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_silver</item>
+        <item name="compassColorPivot">@color/compass_pivot_silver</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_silver</item>
+    </style>
+
+    <style name="Theme.Compass.Classic" parent="Theme.Compass.Original">
+        <item name="compassColorFace">@color/compass_face_classic</item>
+        <item name="compassColorGradient">@color/compass_gradient_classic</item>
+        <item name="compassColorFrame">@color/compass_frame_classic</item>
+        <item name="compassColorFrameHighlight">@color/compass_frame_highlight_classic</item>
+        <item name="compassColorFrameShadow">@color/compass_frame_shadow_classic</item>
+        <item name="compassColorLabel">@color/compass_label_classic</item>
+        <item name="compassColorLabelDark">@color/compass_label_dark_classic</item>
+        <item name="compassColorLabel2">@color/compass_label2_classic</item>
+        <item name="compassColorNorth">@color/compass_north_classic</item>
+        <item name="compassColorNorthDark">@color/compass_north_dark_classic</item>
+        <item name="compassColorSouth">@color/compass_south_classic</item>
+        <item name="compassColorSouthDark">@color/compass_south_dark_classic</item>
+        <item name="compassColorEast">@color/compass_east_classic</item>
+        <item name="compassColorEastDark">@color/compass_east_dark_classic</item>
+        <item name="compassColorWest">@color/compass_west_classic</item>
+        <item name="compassColorWestDark">@color/compass_west_dark_classic</item>
+        <item name="compassColorTarget">@color/compass_target_classic</item>
+        <item name="compassColorArrowBg">@color/compass_arrow_bg_classic</item>
+        <item name="compassColorPivot">@color/compass_pivot_classic</item>
+        <item name="compassColorPivotDark">@color/compass_pivot_dark_classic</item>
+    </style>
 
 </resources>

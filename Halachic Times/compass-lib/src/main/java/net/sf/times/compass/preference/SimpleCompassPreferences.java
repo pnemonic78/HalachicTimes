@@ -57,15 +57,15 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     @Override
     public int getCompassTheme(String value) {
         if (THEME_GOLD.equals(value)) {
-            return R.style.Compass_Theme_Gold;
+            return R.style.Theme_Compass_Gold;
         }
         if (THEME_SILVER.equals(value)) {
-            return R.style.Compass_Theme_Silver;
+            return R.style.Theme_Compass_Silver;
         }
         if (THEME_CLASSIC.equals(value)) {
-            return R.style.Compass_Theme_Classic;
+            return R.style.Theme_Compass_Classic;
         }
-        return R.style.Compass_Theme_Original;
+        return R.style.Theme_Compass_Original;
     }
 
     @Override
