@@ -85,25 +85,23 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
     }
 
     @Override
-    public CharSequence formatBearingDecimal(double bearing) {
-        final double angle = (Math.toDegrees(bearing) + 360) % 360;
-        double longitude = Math.abs((angle % 180) - 90);
-        double latitude = 90 - longitude;
+    public CharSequence formatBearingDecimal(double azimuth) {
+        final double angle = (Math.toDegrees(azimuth) + 360) % 360;
+        double bearing = 90 - Math.abs((angle % 180) - 90);
         String symbolLatitude = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
         String symbolLongitude = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
 
-        return String.format(getLocale(), formatBearingDecimal, latitude, symbolLatitude, longitude, symbolLongitude);
+        return String.format(getLocale(), formatBearingDecimal, symbolLatitude, bearing, symbolLongitude);
     }
 
     @Override
-    public CharSequence formatBearingSexagesimal(double bearing) {
-        final double angle = (Math.toDegrees(bearing) + 360) % 360;
-        double longitude = Math.abs((angle % 180) - 90);
-        double latitude = 90 - longitude;
+    public CharSequence formatBearingSexagesimal(double azimuth) {
+        final double angle = (Math.toDegrees(azimuth) + 360) % 360;
+        double bearing = 90 - Math.abs((angle % 180) - 90);
         String symbolLatitude = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
         String symbolLongitude = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
 
-        double coordinate = latitude;
+        double coordinate = bearing;
         coordinate = Math.abs(coordinate);
         int degrees = (int) Math.floor(coordinate);
         coordinate -= degrees;
@@ -112,19 +110,8 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
         coordinate -= minutes;
         coordinate *= 60.0;
         int seconds = (int) Math.floor(coordinate);
-        final CharSequence latitudeText = String.format(getLocale(), PATTERN_SEXAGESIMAL_ROUND, Math.abs(degrees), minutes, seconds, symbolLatitude);
+        final CharSequence bearingText = String.format(getLocale(), PATTERN_SEXAGESIMAL_ROUND, Math.abs(degrees), minutes, seconds, symbolLongitude);
 
-        coordinate = longitude;
-        coordinate = Math.abs(coordinate);
-        degrees = (int) Math.floor(coordinate);
-        coordinate -= degrees;
-        coordinate *= 60.0;
-        minutes = (int) Math.floor(coordinate);
-        coordinate -= minutes;
-        coordinate *= 60.0;
-        seconds = (int) Math.floor(coordinate);
-        final CharSequence longitudeText = String.format(getLocale(), PATTERN_SEXAGESIMAL_ROUND, Math.abs(degrees), minutes, seconds, symbolLongitude);
-
-        return String.format(Locale.US, formatBearingSexagesimal, latitudeText, longitudeText);
+        return String.format(Locale.US, formatBearingSexagesimal, symbolLatitude, bearingText);
     }
 }

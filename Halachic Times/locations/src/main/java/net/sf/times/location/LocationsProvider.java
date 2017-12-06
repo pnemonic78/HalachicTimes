@@ -618,18 +618,18 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public CharSequence formatBearing(double bearing) {
-        return formatterHelper.formatBearing(bearing);
+    public CharSequence formatBearing(double azimuth) {
+        return formatterHelper.formatBearing(azimuth);
     }
 
     @Override
-    public CharSequence formatBearingDecimal(double bearing) {
-        return formatterHelper.formatBearingDecimal(bearing);
+    public CharSequence formatBearingDecimal(double azimuth) {
+        return formatterHelper.formatBearingDecimal(azimuth);
     }
 
     @Override
-    public CharSequence formatBearingSexagesimal(double bearing) {
-        return formatterHelper.formatBearingSexagesimal(bearing);
+    public CharSequence formatBearingSexagesimal(double azimuth) {
+        return formatterHelper.formatBearingSexagesimal(azimuth);
     }
 
     /**

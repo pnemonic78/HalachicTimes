@@ -174,21 +174,21 @@ public class DefaultLocationFormatter implements LocationFormatter {
     }
 
     @Override
-    public CharSequence formatBearing(double bearing) {
+    public CharSequence formatBearing(double azimuth) {
         final String notation = preferences.getCoordinatesFormat();
         if (FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatBearingSexagesimal(bearing);
+            return formatBearingSexagesimal(azimuth);
         }
-        return formatBearingDecimal(bearing);
+        return formatBearingDecimal(azimuth);
     }
 
     @Override
-    public CharSequence formatBearingDecimal(double bearing) {
-        return formatBearingDecimal.format((Math.toDegrees(bearing) + 360) % 360);
+    public CharSequence formatBearingDecimal(double azimuth) {
+        return formatBearingDecimal.format((Math.toDegrees(azimuth) + 360) % 360);
     }
 
     @Override
-    public CharSequence formatBearingSexagesimal(double bearing) {
-        return formatBearingDecimal.format((Math.toDegrees(bearing) + 360) % 360);
+    public CharSequence formatBearingSexagesimal(double azimuth) {
+        return formatBearingDecimal.format((Math.toDegrees(azimuth) + 360) % 360);
     }
 }
