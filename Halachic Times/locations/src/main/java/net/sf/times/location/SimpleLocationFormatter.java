@@ -17,6 +17,8 @@ package net.sf.times.location;
 
 import android.content.Context;
 
+import java.util.Locale;
+
 /**
  * Simple location formatter.
  *
@@ -26,6 +28,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
     /** http://en.wikipedia.org/wiki/ISO_6709#Representation_at_the_human_interface_.28Annex_D.29 */
     protected static final String PATTERN_SEXAGESIMAL = "%1$02d\u00B0%2$02d\u0027%3$02.3f\u005c\u0022%4$s";
+    protected static final String PATTERN_SEXAGESIMAL_ROUND = "%1$02d\u00B0%2$02d\u0027%3$02d\u005c\u0022%4$s";
 
     private final String symbolNorth;
     private final String symbolSouth;
@@ -83,13 +86,45 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
     @Override
     public CharSequence formatBearingDecimal(double bearing) {
-        final double degrees = Math.toDegrees(bearing);
-        final double angle = (degrees + 360) % 360;
-        double degreesEW = Math.abs((angle % 180) - 90);
-        double degreesNS = 90 - degreesEW;
-        String symbolNS = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
-        String symbolEW = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
+        final double angle = (Math.toDegrees(bearing) + 360) % 360;
+        double longitude = Math.abs((angle % 180) - 90);
+        double latitude = 90 - longitude;
+        String symbolLatitude = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
+        String symbolLongitude = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
 
-        return String.format(getLocale(), formatBearingDecimal, degreesNS, symbolNS, degreesEW, symbolEW);
+        return String.format(getLocale(), formatBearingDecimal, latitude, symbolLatitude, longitude, symbolLongitude);
+    }
+
+    @Override
+    public CharSequence formatBearingSexagesimal(double bearing) {
+        final double angle = (Math.toDegrees(bearing) + 360) % 360;
+        double longitude = Math.abs((angle % 180) - 90);
+        double latitude = 90 - longitude;
+        String symbolLatitude = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
+        String symbolLongitude = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
+
+        double coordinate = latitude;
+        coordinate = Math.abs(coordinate);
+        int degrees = (int) Math.floor(coordinate);
+        coordinate -= degrees;
+        coordinate *= 60.0;
+        int minutes = (int) Math.floor(coordinate);
+        coordinate -= minutes;
+        coordinate *= 60.0;
+        int seconds = (int) Math.floor(coordinate);
+        final CharSequence latitudeText = String.format(getLocale(), PATTERN_SEXAGESIMAL_ROUND, Math.abs(degrees), minutes, seconds, symbolLatitude);
+
+        coordinate = longitude;
+        coordinate = Math.abs(coordinate);
+        degrees = (int) Math.floor(coordinate);
+        coordinate -= degrees;
+        coordinate *= 60.0;
+        minutes = (int) Math.floor(coordinate);
+        coordinate -= minutes;
+        coordinate *= 60.0;
+        seconds = (int) Math.floor(coordinate);
+        final CharSequence longitudeText = String.format(getLocale(), PATTERN_SEXAGESIMAL_ROUND, Math.abs(degrees), minutes, seconds, symbolLongitude);
+
+        return String.format(Locale.US, formatBearingSexagesimal, latitudeText, longitudeText);
     }
 }
