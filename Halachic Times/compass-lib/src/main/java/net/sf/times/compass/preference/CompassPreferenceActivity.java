@@ -40,7 +40,7 @@ public class CompassPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_Compass_Settings);
+        setTheme(R.style.Theme_CompassApp_Settings);
         super.onCreate(savedInstanceState);
     }
 
