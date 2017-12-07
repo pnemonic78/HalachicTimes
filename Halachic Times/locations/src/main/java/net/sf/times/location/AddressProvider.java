@@ -133,7 +133,7 @@ public class AddressProvider {
 
     private final Context context;
     private final Locale locale;
-    private SQLiteOpenHelper openHelper;
+    private SQLiteOpenHelper dbHelper;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     private Geocoder geocoder;
@@ -520,10 +520,11 @@ public class AddressProvider {
      * @return the database - {@code null} otherwise.
      */
     private SQLiteDatabase getReadableDatabase() {
-        if (openHelper == null)
-            openHelper = new AddressOpenHelper(context);
+        if (dbHelper == null) {
+            dbHelper = new AddressOpenHelper(context);
+        }
         try {
-            return openHelper.getReadableDatabase();
+            return dbHelper.getReadableDatabase();
         } catch (SQLiteException e) {
             Log.e(TAG, "no readable db", e);
         }
@@ -536,10 +537,11 @@ public class AddressProvider {
      * @return the database - {@code null} otherwise.
      */
     private SQLiteDatabase getWritableDatabase() {
-        if (openHelper == null)
-            openHelper = new AddressOpenHelper(context);
+        if (dbHelper == null) {
+            dbHelper = new AddressOpenHelper(context);
+        }
         try {
-            return openHelper.getWritableDatabase();
+            return dbHelper.getWritableDatabase();
         } catch (SQLiteException e) {
             Log.e(TAG, "no writable db", e);
         }
@@ -605,8 +607,10 @@ public class AddressProvider {
 
     /** Close database resources. */
     public void close() {
-        if (openHelper != null)
-            openHelper.close();
+        if (dbHelper != null) {
+            dbHelper.close();
+            dbHelper = null;
+        }
     }
 
     /**
