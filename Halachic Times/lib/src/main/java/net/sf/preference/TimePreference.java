@@ -89,6 +89,37 @@ public class TimePreference extends DialogPreference {
         }
     }
 
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        super.onDialogClosed(positiveResult);
+
+        if (positiveResult) {
+            Calendar time = Calendar.getInstance();
+            time.set(Calendar.HOUR_OF_DAY, picker.getCurrentHour());
+            time.set(Calendar.MINUTE, picker.getCurrentMinute());
+            String value = formatIso.format(time.getTime());
+
+            if (callChangeListener(value)) {
+                setTime(time);
+            }
+        }
+    }
+
+    @Override
+    protected String onGetDefaultValue(TypedArray a, int index) {
+        return a.getString(index);
+    }
+
+    @Override
+    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+        setTime(restoreValue ? getPersistedString(value) : (String) defaultValue);
+    }
+
+    @Override
+    public boolean shouldDisableDependents() {
+        return TextUtils.isEmpty(value) || super.shouldDisableDependents();
+    }
+
     /**
      * Saves the time to the {@link SharedPreferences}.
      *
@@ -143,46 +174,6 @@ public class TimePreference extends DialogPreference {
      */
     public Calendar getTime() {
         return time;
-    }
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
-
-        if (positiveResult) {
-            Calendar time = Calendar.getInstance();
-            time.set(Calendar.HOUR_OF_DAY, picker.getCurrentHour());
-            time.set(Calendar.MINUTE, picker.getCurrentMinute());
-            String value = formatIso.format(time.getTime());
-
-            if (callChangeListener(value)) {
-                setTime(time);
-            }
-        }
-    }
-
-    @Override
-    protected String onGetDefaultValue(TypedArray a, int index) {
-        return a.getString(index);
-    }
-
-    @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        setTime(restoreValue ? getPersistedString(value) : (String) defaultValue);
-    }
-
-    @Override
-    public boolean shouldDisableDependents() {
-        return TextUtils.isEmpty(value) || super.shouldDisableDependents();
-    }
-
-    /**
-     * Returns the {@link TimePicker} widget that will be shown in the dialog.
-     *
-     * @return The {@link TimePicker} widget that will be shown in the dialog.
-     */
-    public TimePicker getTimePicker() {
-        return picker;
     }
 
     /**

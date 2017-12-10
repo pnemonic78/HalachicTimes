@@ -209,7 +209,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
      */
     private class PersistTask extends TimerTask {
 
-        private final int mProgress;
+        private final int progress;
 
         /**
          * Constructs a new task.
@@ -218,13 +218,13 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
          *         the progress to save.
          */
         public PersistTask(int progress) {
-            mProgress = progress;
+            this.progress = progress;
         }
 
         @Override
         public void run() {
-            if (callChangeListener(mProgress)) {
-                persistInt(mProgress);
+            if (callChangeListener(progress)) {
+                persistInt(progress);
             }
         }
     }

@@ -16,8 +16,9 @@
 package net.sf.times.preference;
 
 import android.os.Bundle;
+import android.preference.Preference;
 
-import net.sf.preference.SeekBarDialogPreference;
+import net.sf.preference.NumberPickerPreference;
 import net.sf.times.R;
 
 import static net.sf.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
@@ -31,8 +32,17 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SeekBarDialogPreference seek = (SeekBarDialogPreference) findPreference(KEY_OPINION_CANDLES);
-        seek.setSummaryFormat(R.plurals.candles_summary);
-        seek.setOnPreferenceChangeListener(this);
+        NumberPickerPreference candles = (NumberPickerPreference) findPreference(KEY_OPINION_CANDLES);
+        candles.setOnPreferenceChangeListener(this);
+        onPreferenceChange(candles, candles.getValue());
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (KEY_OPINION_CANDLES.equals(preference.getKey())) {
+            preference.setSummary(getResources().getQuantityString(R.plurals.candles_summary, (Integer) newValue, newValue));
+        }
+
+        return super.onPreferenceChange(preference, newValue);
     }
 }
