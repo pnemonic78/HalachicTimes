@@ -21,6 +21,7 @@ import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import net.sf.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
@@ -409,9 +410,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     @Override
     public boolean isEmphasis(int id) {
         String key = toKey(id);
-        if (key != null)
-            return preferences.getBoolean(key + EMPHASIS_SUFFIX, context.getResources().getBoolean(R.bool.emphasis_defaultValue));
-        return false;
+        return (key != null) && preferences.getBoolean(key + EMPHASIS_SUFFIX, context.getResources().getBoolean(R.bool.emphasis_defaultValue));
     }
 
     @Override
@@ -436,6 +435,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return KEY_OPINION_SHEMA;
             case R.string.prayers:
                 return KEY_OPINION_TFILA;
+            case R.string.burn_chametz:
+                return KEY_OPINION_BURN;
             case R.string.midday:
                 return KEY_OPINION_NOON;
             case R.string.earliest_mincha:
@@ -446,6 +447,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return KEY_OPINION_PLUG_MINCHA;
             case R.string.candles:
                 return KEY_OPINION_CANDLES;
+            case R.string.chanukka:
+                return KEY_OPINION_CANDLES_CHANUKKA;
             case R.string.sunset:
                 return KEY_OPINION_SUNSET;
             case R.string.twilight:
@@ -461,6 +464,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return KEY_OPINION_EARLIEST_LEVANA;
             case R.string.levana_latest:
                 return KEY_OPINION_LATEST_LEVANA;
+            case R.string.omer:
+                return KEY_OPINION_OMER;
             default:
                 return null;
         }
@@ -468,7 +473,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
 
     @Override
     public int toId(String key) {
-        if (key == null) {
+        if (TextUtils.isEmpty(key)) {
             return 0;
         }
         switch (key) {
@@ -484,6 +489,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return R.string.shema;
             case KEY_OPINION_TFILA:
                 return R.string.prayers;
+            case KEY_OPINION_BURN:
+                return R.string.burn_chametz;
             case KEY_OPINION_NOON:
                 return R.string.midday;
             case KEY_OPINION_EARLIEST_MINCHA:
@@ -494,6 +501,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return R.string.plug_hamincha;
             case KEY_OPINION_CANDLES:
                 return R.string.candles;
+            case KEY_OPINION_CANDLES_CHANUKKA:
+                return R.string.chanukka;
             case KEY_OPINION_SUNSET:
                 return R.string.sunset;
             case KEY_OPINION_TWILIGHT:
@@ -501,6 +510,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
             case KEY_OPINION_NIGHTFALL:
                 return R.string.nightfall;
             case KEY_OPINION_SHABBATH_ENDS:
+            case KEY_OPINION_SHABBATH_ENDS_AFTER:
+            case KEY_OPINION_SHABBATH_ENDS_MINUTES:
                 return R.string.shabbath_ends;
             case KEY_OPINION_MIDNIGHT:
                 return R.string.midnight;
@@ -508,6 +519,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return R.string.levana_earliest;
             case KEY_OPINION_LATEST_LEVANA:
                 return R.string.levana_latest;
+            case KEY_OPINION_OMER:
+                return R.string.omer;
             default:
                 return 0;
         }
@@ -531,9 +544,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SUNDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_1_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_1_defaultValue));
         }
         return true;
     }
@@ -543,9 +554,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_MONDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_2_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_2_defaultValue));
         }
         return true;
     }
@@ -555,9 +564,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_TUESDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_3_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_3_defaultValue));
         }
         return true;
     }
@@ -567,9 +574,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_WEDNESDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_4_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_4_defaultValue));
         }
         return true;
     }
@@ -579,9 +584,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_THURSDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_5_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_5_defaultValue));
         }
         return true;
     }
@@ -591,9 +594,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_FRIDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_6_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_6_defaultValue));
         }
         return true;
     }
@@ -603,9 +604,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         String key = toKey(id);
         if (key != null) {
             String keyDay = key + REMINDER_SUFFIX + REMINDER_SATURDAY_SUFFIX;
-            if (keyDay != null) {
-                return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_7_defaultValue));
-            }
+            return preferences.getBoolean(keyDay, context.getResources().getBoolean(R.bool.reminder_day_7_defaultValue));
         }
         return true;
     }
