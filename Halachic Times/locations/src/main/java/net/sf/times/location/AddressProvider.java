@@ -119,7 +119,10 @@ public class AddressProvider {
     static final int INDEX_ELEVATIONS_ELEVATION = 3;
     static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
 
-    private static final String[] COLUMNS_CITIES = {BaseColumns._ID, CitiesColumns.TIMESTAMP, CitiesColumns.FAVORITE};
+    private static final String[] COLUMNS_CITIES = {
+            BaseColumns._ID,
+            CitiesColumns.TIMESTAMP,
+            CitiesColumns.FAVORITE};
     static final int INDEX_CITIES_ID = 0;
     static final int INDEX_CITIES_TIMESTAMP = 1;
     static final int INDEX_CITIES_FAVORITE = 2;
@@ -514,17 +517,23 @@ public class AddressProvider {
         return addresses;
     }
 
+    private SQLiteOpenHelper getDatabaseHelper() {
+        if (dbHelper == null) {
+            synchronized (this) {
+                dbHelper = new AddressOpenHelper(context);
+            }
+        }
+        return dbHelper;
+    }
+
     /**
      * Get the readable addresses database.
      *
      * @return the database - {@code null} otherwise.
      */
     private SQLiteDatabase getReadableDatabase() {
-        if (dbHelper == null) {
-            dbHelper = new AddressOpenHelper(context);
-        }
         try {
-            return dbHelper.getReadableDatabase();
+            return getDatabaseHelper().getReadableDatabase();
         } catch (SQLiteException e) {
             Log.e(TAG, "no readable db", e);
         }
@@ -537,11 +546,8 @@ public class AddressProvider {
      * @return the database - {@code null} otherwise.
      */
     private SQLiteDatabase getWritableDatabase() {
-        if (dbHelper == null) {
-            dbHelper = new AddressOpenHelper(context);
-        }
         try {
-            return dbHelper.getWritableDatabase();
+            return getDatabaseHelper().getWritableDatabase();
         } catch (SQLiteException e) {
             Log.e(TAG, "no writable db", e);
         }
