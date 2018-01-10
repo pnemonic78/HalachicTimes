@@ -2,6 +2,5 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="compass_summary">Retning av bønn til Hellige av Hellig i Jerusalem</string>
 
 </resources>

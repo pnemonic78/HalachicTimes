@@ -2,6 +2,5 @@
 <resources>
 
     <string name="app_name">@string/title_activity_compass</string>
-    <string name="compass_summary">Direction de la prière vers le Saint des Saints à Jérusalem</string>
 
 </resources>
