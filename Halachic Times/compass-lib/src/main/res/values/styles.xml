@@ -3,7 +3,7 @@
 
     <style name="Widget.Compass.Holiest.Text" parent="Widget.TextView.Small">
         <item name="android:ellipsize">marquee</item>
-        <item name="android:textColor">?compassColorTarget</item>
+        <item name="android:textColor">@color/compass_target_original</item>
         <item name="android:gravity">center</item>
     </style>
 
