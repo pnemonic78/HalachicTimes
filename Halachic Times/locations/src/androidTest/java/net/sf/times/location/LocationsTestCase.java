@@ -21,10 +21,10 @@ import android.test.ApplicationTestCase;
 
 import java.util.TimeZone;
 
-public class LocationsTestCase extends ApplicationTestCase<LocationApplication> {
+public class LocationsTestCase extends ApplicationTestCase<DefaultLocationApplication> {
 
     public LocationsTestCase() {
-        super(LocationApplication.class);
+        super(DefaultLocationApplication.class);
     }
 
     @Override
