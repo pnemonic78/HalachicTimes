@@ -78,10 +78,10 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         Address address = results.get(0);
         assertNotNull(address);
-        assertNotNull(address.getExtras());
+        assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0234380, address.getLatitude());
         assertEquals(34.7766799, address.getLongitude());
-        assertEquals("Kalischer St 1-5, Holon, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+        assertEquals("1-5, Kalischer St, Holon, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
         results = new ArrayList<>(maxResults);
@@ -97,10 +97,10 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         address = results.get(0);
         assertNotNull(address);
-        assertNotNull(address.getExtras());
+        assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0626167, address.getLatitude());
         assertEquals(34.9717498, address.getLongitude());
-        assertEquals("Unnamed Road, Rosh Haayin, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+        assertEquals("Unnamed Road, Rosh Haayin, Israel", ((ZmanimAddress) address).getFormatted());
     }
 
     /**
@@ -206,10 +206,10 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         Address address = results.get(0);
         assertNotNull(address);
-        assertNotNull(address.getExtras());
+        assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0236, address.getLatitude());
         assertEquals(34.776698, address.getLongitude());
-        assertEquals("Street, Holon, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+        assertEquals("Street, Holon, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
         results = new ArrayList<>(maxResults);
@@ -225,10 +225,10 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         address = results.get(0);
         assertNotNull(address);
-        assertNotNull(address.getExtras());
+        assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.094619750976563, address.getLatitude());
         assertEquals(34.885761260986328, address.getLongitude());
-        assertEquals("Petah Tiqwa, Israel", address.getExtras().getString(ZmanimAddress.KEY_FORMATTED));
+        assertEquals("Petah Tiqwa, Israel", ((ZmanimAddress) address).getFormatted());
     }
 
 }

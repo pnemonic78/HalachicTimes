@@ -17,6 +17,7 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.text.TextUtils;
 
 import net.sf.util.LocaleUtils;
 
@@ -278,7 +279,7 @@ public class GoogleGeocoder extends GeocoderBase {
                     if (TAG_TYPE.equals(localName))
                         state = State.RESULT;
                     if (!TYPE_POLITICAL.equals(text)) {
-                        address = new Address(locale);
+                        address = new ZmanimAddress(locale);
                     }
                     break;
                 case ADDRESS:
@@ -287,31 +288,31 @@ public class GoogleGeocoder extends GeocoderBase {
                             if (addressType != null) {
                                 switch (addressType) {
                                     case TYPE_ADMIN:
-                                        address.setAdminArea(longName);
+                                        address.setAdminArea(TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                     case TYPE_SUBADMIN:
-                                        address.setSubAdminArea(longName);
+                                        address.setSubAdminArea(TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                     case TYPE_COUNTRY:
                                         address.setCountryCode(shortName);
                                         address.setCountryName(longName);
                                         break;
                                     case TYPE_FEATURE:
-                                        address.setFeatureName(longName);
+                                        address.setFeatureName(TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                     case TYPE_LOCALITY:
-                                        address.setLocality(longName);
+                                        address.setLocality(TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                     case TYPE_POSTAL_CODE:
-                                        address.setPostalCode(longName);
+                                        address.setPostalCode(TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                     case TYPE_ROUTE:
                                     case TYPE_STREET:
                                     case TYPE_STREET_NUMBER:
-                                        address.setAddressLine(address.getMaxAddressLineIndex() + 1, longName);
+                                        address.setAddressLine(address.getMaxAddressLineIndex() + 1, TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                     case TYPE_SUBLOCALITY:
-                                        address.setSubLocality(longName);
+                                        address.setSubLocality(TextUtils.isEmpty(shortName) ? longName : shortName);
                                         break;
                                 }
                             }

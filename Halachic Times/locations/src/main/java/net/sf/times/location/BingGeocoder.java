@@ -115,6 +115,7 @@ public class BingGeocoder extends GeocoderBase {
         private static final String TAG_ADDRESS_LINE = "AddressLine";
         private static final String TAG_ADDRESS_DISTRICT = "AdminDistrict";
         private static final String TAG_ADDRESS_COUNTRY = "CountryRegion";
+        private static final String TAG_ADDRESS_FORMATTED = "FormattedAddress";
         private static final String TAG_LOCALITY = "Locality";
         private static final String TAG_POINT = "Point";
         private static final String TAG_LATITUDE = "Latitude";
@@ -290,6 +291,13 @@ public class BingGeocoder extends GeocoderBase {
                             if (address != null) {
                                 prev = address.getLocality();
                                 address.setLocality((prev == null) ? text : prev + text);
+                            }
+                            break;
+                        case TAG_ADDRESS_FORMATTED:
+                            if (address != null) {
+                                if (text.equals(address.getFeatureName())) {
+                                    address.setFeatureName(null);
+                                }
                             }
                             break;
                         case TAG_ADDRESS:

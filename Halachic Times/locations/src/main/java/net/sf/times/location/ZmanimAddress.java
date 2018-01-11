@@ -215,7 +215,9 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
         StringBuilder buf = new StringBuilder();
         String feature = getFeatureName();
-        String street = getThoroughfare();
+        String thoroughfare = getThoroughfare();
+        int addressLinesCount = getMaxAddressLineIndex() + 1;
+        String address;
         String subloc = getSubLocality();
         String locality = getLocality();
         String subadmin = getSubAdminArea();
@@ -227,12 +229,22 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(feature);
         }
-        if (!TextUtils.isEmpty(street) && !street.equals(feature)) {
+        if (!TextUtils.isEmpty(thoroughfare) && !thoroughfare.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
-            buf.append(street);
+            buf.append(thoroughfare);
         }
-        if (!TextUtils.isEmpty(subloc) && !subloc.equals(street) && !subloc.equals(feature)) {
+        if (addressLinesCount >= 0) {
+            for (int i = 0; i < addressLinesCount; i++) {
+                address = getAddressLine(i);
+                if (!TextUtils.isEmpty(address)) {
+                    if (buf.length() > 0)
+                        buf.append(ADDRESS_SEPARATOR);
+                    buf.append(address);
+                }
+            }
+        }
+        if (!TextUtils.isEmpty(subloc) && !subloc.equals(thoroughfare) && !subloc.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subloc);
@@ -242,12 +254,12 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(locality);
         }
-        if (!TextUtils.isEmpty(subadmin) && !subadmin.equals(locality) && !subadmin.equals(subloc) && !subadmin.equals(feature)) {
+        if (TextUtils.isEmpty(locality) && !TextUtils.isEmpty(subadmin) && !subadmin.equals(locality) && !subadmin.equals(subloc) && !subadmin.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subadmin);
         }
-        if (!TextUtils.isEmpty(admin) && !admin.equals(subadmin) && !admin.equals(locality) && !admin.equals(subloc) && !admin.equals(feature)) {
+        if (TextUtils.isEmpty(locality) && !TextUtils.isEmpty(admin) && !admin.equals(subadmin) && !admin.equals(locality) && !admin.equals(subloc) && !admin.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(admin);

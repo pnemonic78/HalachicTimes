@@ -178,10 +178,11 @@ public class GeoNamesGeocoder extends GeocoderBase {
                     switch (localName) {
                         case TAG_GEONAME:
                             state = State.GEONAME;
-                            address = new Address(locale);
+                            address = new ZmanimAddress(locale);
+                            break;
                         case TAG_ADDRESS:
                             state = State.GEONAME;
-                            address = new Address(locale);
+                            address = new ZmanimAddress(locale);
                             break;
                     }
                     break;
