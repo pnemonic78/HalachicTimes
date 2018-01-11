@@ -15,13 +15,13 @@
  */
 package net.sourceforge.zmanim;
 
-import net.sourceforge.zmanim.util.AstronomicalCalculator;
-import net.sourceforge.zmanim.util.GeoLocation;
-import net.sourceforge.zmanim.util.ZmanimFormatter;
-
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.TimeZone;
+
+import net.sourceforge.zmanim.util.AstronomicalCalculator;
+import net.sourceforge.zmanim.util.GeoLocation;
+import net.sourceforge.zmanim.util.ZmanimFormatter;
 
 /**
  * A Java calendar that calculates astronomical times such as {@link #getSunrise() sunrise} and {@link #getSunset()
@@ -35,7 +35,7 @@ import java.util.TimeZone;
  * happen on that date. This is common when calculating twilight with a deep dip below the horizon for locations as far
  * south of the North Pole as London, in the northern hemisphere. The sun never reaches this dip at certain times of the
  * year. When the calculations encounter this condition a null will be returned when a
- * <code>{@link Long}</code> is expected and {@link #NEVER} when a <code>long</code> is expected. The
+ * <code>{@link java.lang.Long}</code> is expected and {@link #NEVER} when a <code>long</code> is expected. The
  * reason that <code>Exception</code>s are not thrown in these cases is because the lack of a rise/set or twilight is
  * not an exception, but an expected condition in many parts of the world.
  *
@@ -48,7 +48,7 @@ import java.util.TimeZone;
  * double longitude = -74.2094; // Lakewood, NJ
  * double elevation = 20; // optional elevation correction in Meters
  * // the String parameter in getTimeZone() has to be a valid timezone listed in
- * // {@link TimeZone#getAvailableIDs()}
+ * // {@link java.util.TimeZone#getAvailableIDs()}
  * TimeZone timeZone = TimeZone.getTimeZone(&quot;America/New_York&quot;);
  * GeoLocation location = new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
  * AstronomicalCalendar ac = new AstronomicalCalendar(location);
@@ -104,7 +104,7 @@ public class AstronomicalCalendar implements Cloneable {
 	static final long HOUR_MILLIS = MINUTE_MILLIS * 60;
 
 	/** Invalid date. */
-	protected static final long NEVER = Long.MIN_VALUE;
+	public static final long NEVER = Long.MIN_VALUE;
 
 	/**
 	 * The Java Calendar encapsulated by this class to track the current date used by the class
@@ -652,7 +652,7 @@ public class AstronomicalCalendar implements Cloneable {
 	 * @return an XML formatted representation of the class. It returns the default output of the
 	 *         {@link net.sourceforge.zmanim.util.ZmanimFormatter#toXML(AstronomicalCalendar) toXML} method.
 	 * @see net.sourceforge.zmanim.util.ZmanimFormatter#toXML(AstronomicalCalendar)
-	 * @see Object#toString()
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		return ZmanimFormatter.toXML(this);
@@ -662,14 +662,14 @@ public class AstronomicalCalendar implements Cloneable {
 	 * @return a JSON formatted representation of the class. It returns the default output of the
 	 *         {@link net.sourceforge.zmanim.util.ZmanimFormatter#toJSON(AstronomicalCalendar) toJSON} method.
 	 * @see net.sourceforge.zmanim.util.ZmanimFormatter#toJSON(AstronomicalCalendar)
-	 * @see Object#toString()
+	 * @see java.lang.Object#toString()
 	 */
 	public String toJSON() {
 		return ZmanimFormatter.toJSON(this);
 	}
 
 	/**
-	 * @see Object#equals(Object)
+	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -684,7 +684,7 @@ public class AstronomicalCalendar implements Cloneable {
 	}
 
 	/**
-	 * @see Object#hashCode()
+	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
 		int result = 17;
@@ -763,13 +763,13 @@ public class AstronomicalCalendar implements Cloneable {
 
 	/**
 	 * A method that creates a <a href="http://en.wikipedia.org/wiki/Object_copy#Deep_copy">deep copy</a> of the object.
-	 * <b>Note:</b> If the {@link TimeZone} in the cloned {@link net.sourceforge.zmanim.util.GeoLocation} will
+	 * <b>Note:</b> If the {@link java.util.TimeZone} in the cloned {@link net.sourceforge.zmanim.util.GeoLocation} will
 	 * be changed from the original, it is critical that
 	 * {@link net.sourceforge.zmanim.AstronomicalCalendar#getCalendar()}.
-	 * {@link Calendar#setTimeZone(TimeZone) setTimeZone(TimeZone)} be called in order for the
+	 * {@link java.util.Calendar#setTimeZone(TimeZone) setTimeZone(TimeZone)} be called in order for the
 	 * AstronomicalCalendar to output times in the expected offset after being cloned.
 	 *
-	 * @see Object#clone()
+	 * @see java.lang.Object#clone()
 	 * @since 1.1
 	 */
 	public Object clone() {

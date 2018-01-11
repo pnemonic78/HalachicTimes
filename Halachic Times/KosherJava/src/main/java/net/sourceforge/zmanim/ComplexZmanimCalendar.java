@@ -15,11 +15,11 @@
  */
 package net.sourceforge.zmanim;
 
+import java.util.Calendar;
+
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.AstronomicalCalculator;
 import net.sourceforge.zmanim.util.GeoLocation;
-
-import java.util.Calendar;
 
 /**
  * This class extends ZmanimCalendar and provides many more zmanim than available in the ZmanimCalendar. The basis for
@@ -88,16 +88,6 @@ import java.util.Calendar;
  * @author &copy; Eliyahu Hershfeld 2004 - 2016
  */
 public class ComplexZmanimCalendar extends ZmanimCalendar {
-
-    public static final int SHAAH_ZMANIS_120MINUTES = 2;
-    public static final int SHAAH_ZMANIS_16POINT1DEGREES = 3;
-    public static final int SHAAH_ZMANIS_18DEGREES = 4;
-    public static final int SHAAH_ZMANIS_19POINT8DEGREES = 5;
-    public static final int SHAAH_ZMANIS_26DEGREES = 6;
-    public static final int SHAAH_ZMANIS_60MINUTES = 7;
-    public static final int SHAAH_ZMANIS_72MINUTES = 8;
-    public static final int SHAAH_ZMANIS_90MINUTES = 9;
-    public static final int SHAAH_ZMANIS_96MINUTES = 10;
 
 	/**
 	 * The zenith of 3.7&deg; below {@link #GEOMETRIC_ZENITH geometric zenith} (90&deg;). This calculation is used for
@@ -526,23 +516,23 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	@Override
 	public long getShaahZmanis() {
 		switch (shaahZmanisType) {
-			case SHAAH_ZMANIS_120MINUTES:
+			case MINUTES_120:
 				return getShaahZmanis120Minutes();
-			case SHAAH_ZMANIS_16POINT1DEGREES:
+			case DEGREES_16POINT1:
 				return getShaahZmanis16Point1Degrees();
-			case SHAAH_ZMANIS_18DEGREES:
+			case DEGREES_18:
 				return getShaahZmanis18Degrees();
-			case SHAAH_ZMANIS_19POINT8DEGREES:
+			case DEGREES_19POINT8:
 				return getShaahZmanis19Point8Degrees();
-			case SHAAH_ZMANIS_26DEGREES:
+			case DEGREES_26:
 				return getShaahZmanis26Degrees();
-			case SHAAH_ZMANIS_60MINUTES:
+			case MINUTES_60:
 				return getShaahZmanis60Minutes();
-			case SHAAH_ZMANIS_72MINUTES:
+			case MINUTES_72:
 				return getShaahZmanis72Minutes();
-			case SHAAH_ZMANIS_90MINUTES:
+			case MINUTES_90:
 				return getShaahZmanis90Minutes();
-			case SHAAH_ZMANIS_96MINUTES:
+			case MINUTES_96:
 				return getShaahZmanis96Minutes();
 			default:
 				return super.getShaahZmanis();
@@ -1762,7 +1752,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 */
 	public Long getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees() {
 		long shaahZmanis = getShaahZmanis();
-		if (shaahZmanis == Long.MIN_VALUE) {
+		if (shaahZmanis == NEVER) {
 			return null;
 		}
 		return getTimeOffset(getSunsetOffsetByDegrees(ZENITH_7_POINT_083), -0.225 * shaahZmanis);
@@ -2454,7 +2444,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * opinion brought down in the Shulchan Aruch (Orach Chaim 426). It should be noted that some opinions hold that the
 	 * <a href="http://en.wikipedia.org/wiki/Moses_Isserles">Rema</a> who brings down the opinion of the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> of calculating
-	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and molad} is of the opinion that
+	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and mold} is of the opinion that
 	 * Mechaber agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi
 	 * Dovid Heber's very detailed writeup in Siman Daled (chapter 4) of <a
 	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. If the time of <em>sof zman Kiddush Levana</em>
@@ -2501,7 +2491,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * in the Shulchan Aruch (Orach Chaim 426). It should be noted that some opinions hold that the
 	 * <a href="http://en.wikipedia.org/wiki/Moses_Isserles">Rema</a> who brings down the opinion of the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> of calculating
-	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and molad} is of the opinion that
+	 * {@link #getSofZmanKidushLevanaBetweenMoldos(Long, Long) half way between molad and mold} is of the opinion that
 	 * Mechaber agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi
 	 * Dovid Heber's very detailed writeup in Siman Daled (chapter 4) of <a
 	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. If the time of <em>sof zman Kiddush Levana</em>
@@ -2522,7 +2512,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
-	 * be said 3 days after the molad. If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
+	 * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
 	 * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
 	 * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
 	 * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.
@@ -2560,7 +2550,7 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 
 	/**
 	 * Returns the earliest time of <em>Kiddush Levana</em> according to <em>Rabbainu Yonah</em>'s opinion that it can
-	 * be said 3 days after the molad. If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
+	 * be said 3 days after the molad.If the time of <em>tchilas zman Kiddush Levana</em> occurs during the day (between
 	 * <em>{@link ZmanimCalendar#getAlos72() Alos}</em> and <em>{@link ZmanimCalendar#getTzais72() tzais}</em>) it
 	 * return the next <em>tzais</em>. This method is available in the 1.3 release of the API but may change or be
 	 * removed in the future since it depends on the still changing {@link JewishCalendar} and related classes.

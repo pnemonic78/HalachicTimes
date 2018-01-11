@@ -488,7 +488,7 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * @see Object#equals(Object)
+	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
 		if (this == object)
@@ -504,7 +504,7 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * @see Object#hashCode()
+	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
 
@@ -525,7 +525,7 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * @see Object#toString()
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -543,14 +543,14 @@ public class GeoLocation implements Cloneable {
 	}
 
 	/**
-	 * An implementation of the {@link Object#clone()} method that creates a <a
+	 * An implementation of the {@link java.lang.Object#clone()} method that creates a <a
 	 * href="http://en.wikipedia.org/wiki/Object_copy#Deep_copy">deep copy</a> of the object.
-	 * <b>Note:</b> If the {@link TimeZone} in the clone will be changed from the original, it is critical
+	 * <b>Note:</b> If the {@link java.util.TimeZone} in the clone will be changed from the original, it is critical
 	 * that {@link net.sourceforge.zmanim.AstronomicalCalendar#getCalendar()}.
 	 * {@link java.util.Calendar#setTimeZone(TimeZone) setTimeZone(TimeZone)} is called after cloning in order for the
 	 * AstronomicalCalendar to output times in the expected offset.
-	 *
-	 * @see Object#clone()
+	 * 
+	 * @see java.lang.Object#clone()
 	 * @since 1.1
 	 */
 	public Object clone() {

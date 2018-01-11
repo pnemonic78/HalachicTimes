@@ -16,11 +16,11 @@
  */
 package net.sourceforge.zmanim.hebrewcalendar;
 
-import net.sourceforge.zmanim.util.GeoLocation;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
+
+import net.sourceforge.zmanim.util.GeoLocation;
 
 /**
  * The JewishCalendar extends the JewishDate class and adds calendar methods.
@@ -38,8 +38,8 @@ import java.util.TimeZone;
  * <li>Daf Yomi Yerushalmi, Mishna yomis etc)</li>
  * </ol>
  *
- * @see Date
- * @see Calendar
+ * @see java.util.Date
+ * @see java.util.Calendar
  * @author &copy; Avrom Finkelstien 2002
  * @author &copy; Eliyahu Hershfeld 2011 - 2016
  * @version 1.0.0
@@ -111,7 +111,7 @@ public class JewishCalendar extends JewishDate {
 	}
 
 	/**
-	 * A constructor that initializes the date to the {@link Date Date} parameter.
+	 * A constructor that initializes the date to the {@link java.util.Date Date} parameter.
 	 *
 	 * @param date
 	 *            the date to set the calendar to
@@ -121,7 +121,7 @@ public class JewishCalendar extends JewishDate {
 	}
 
 	/**
-	 * A constructor that initializes the date to the {@link Calendar Calendar} parameter.
+	 * A constructor that initializes the date to the {@link java.util.Calendar Calendar} parameter.
 	 *
 	 * @param calendar
 	 *            the date to set the calendar to
@@ -216,7 +216,7 @@ public class JewishCalendar extends JewishDate {
 				}
 				if (isUseModernHolidays()
 						&& ((day == 26 && dayOfWeek == 5)
-						|| (day == 28 && dayOfWeek == 1)
+						|| (day == 28 && dayOfWeek == 2)
 						|| (day == 27 && dayOfWeek != 1 && dayOfWeek != 6))) {
 					return YOM_HASHOAH;
 				}
@@ -591,7 +591,7 @@ public class JewishCalendar extends JewishDate {
 	 * in the Shulchan Aruch (Orach Chaim 426). It should be noted that some opinions hold that the
 	 * <a href="http://en.wikipedia.org/wiki/Moses_Isserles">Rema</a> who brings down the opinion of the <a
 	 * href="http://en.wikipedia.org/wiki/Yaakov_ben_Moshe_Levi_Moelin">Maharil's</a> of calculating
-	 * {@link #getSofZmanKidushLevanaBetweenMoldos() half way between molad and molad} is of the opinion that Mechaber
+	 * {@link #getSofZmanKidushLevanaBetweenMoldos() half way between molad and mold} is of the opinion that Mechaber
 	 * agrees to his opinion. Also see the Aruch Hashulchan. For additional details on the subject, See Rabbi Dovid
 	 * Heber's very detailed writeup in Siman Daled (chapter 4) of <a
 	 * href="http://www.worldcat.org/oclc/461326125">Shaarei Zmanim</a>. TODO: Currently returns the time even if it is
@@ -619,6 +619,17 @@ public class JewishCalendar extends JewishDate {
 	public Daf getDafYomiBavli() {
 		return YomiCalculator.getDafYomiBavli(this);
 	}
+	/**
+	 * Returns the Daf Yomi (Yerushalmi) for the date that the calendar is set to. See the
+	 * {@link HebrewDateFormatter#formatDafYomiYerushalmi(Daf)} for the ability to format the daf in Hebrew or transliterated
+	 * masechta names.
+	 *
+	 * @return the daf as a {@link Daf}
+	 */
+	public Daf getDafYomiYerushalmi() {
+		return YerushalmiYomiCalculator.getDafYomiYerushalmi(this);
+	}
+
 
 	@Override
 	public boolean equals(Object object) {

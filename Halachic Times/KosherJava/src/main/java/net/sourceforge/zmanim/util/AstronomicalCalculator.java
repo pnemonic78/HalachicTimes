@@ -116,16 +116,16 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 *            Should the time be adjusted for elevation
 	 * @return The UTC time of sunrise in 24 hour format. 5:45:00 AM will return 5.75.0. If an error was encountered in
 	 *         the calculation (expected behavior for some locations such as near the poles,
-	 *         {@link Double#NaN} will be returned.
+	 *         {@link java.lang.Double#NaN} will be returned.
 	 * @see #getElevationAdjustment(double)
 	 */
 	public abstract double getUTCSunrise(Calendar calendar, GeoLocation geoLocation, double zenith,
-                                         boolean adjustForElevation);
+			boolean adjustForElevation);
 
 	/**
 	 * A method that calculates UTC sunset as well as any time based on an angle above or below sunset. This abstract
 	 * method is implemented by the classes that extend this class.
-	 *
+	 * 
 	 * @param calendar
 	 *            Used to calculate day of year.
 	 * @param geoLocation
@@ -140,11 +140,11 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 *            Should the time be adjusted for elevation
 	 * @return The UTC time of sunset in 24 hour format. 5:45:00 AM will return 5.75.0. If an error was encountered in
 	 *         the calculation (expected behavior for some locations such as near the poles,
-	 *         {@link Double#NaN} will be returned.
+	 *         {@link java.lang.Double#NaN} will be returned.
 	 * @see #getElevationAdjustment(double)
 	 */
 	public abstract double getUTCSunset(Calendar calendar, GeoLocation geoLocation, double zenith,
-                                        boolean adjustForElevation);
+			boolean adjustForElevation);
 
 	/**
 	 * Method to return the adjustment to the zenith required to account for the elevation. Since a person at a higher
@@ -154,19 +154,19 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 * calculations are based on the level of available light at the given dip below the horizon, something that is not
 	 * affected by elevation, the adjustment should only made if the zenith == 90&deg; {@link #adjustZenith adjusted}
 	 * for refraction and solar radius. The algorithm used is
-	 *
+	 * 
 	 * <pre>
 	 * elevationAdjustment = Math.toDegrees(Math.acos(earthRadiusInMeters / (earthRadiusInMeters + elevationMeters)));
 	 * </pre>
-	 *
+	 * 
 	 * The source of this algorthitm is <a href="http://www.calendarists.com">Calendrical Calculations</a> by Edward M.
 	 * Reingold and Nachum Dershowitz. An alternate algorithm that produces an almost identical (but not accurate)
 	 * result found in Ma'aglay Tzedek by Moishe Kosower and other sources is:
-	 *
+	 * 
 	 * <pre>
 	 * elevationAdjustment = 0.0347 * Math.sqrt(elevationMeters);
 	 * </pre>
-	 *
+	 * 
 	 * @param elevation
 	 *            elevation in Meters.
 	 * @return the adjusted zenith
@@ -191,7 +191,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 * of 50 arcminutes. The total value for ZENITH is 90+(5/6) or 90.8333333&deg; for true sunrise/sunset. Since a
 	 * person at an elevation can see blow the horizon of a person at sea level, this will also adjust the zenith to
 	 * account for elevation if available.
-	 *
+	 * 
 	 * @param zenith
 	 *            the azimuth below the vertical zenith of 90&deg;. For sunset typically the {@link #adjustZenith
 	 *            zenith} used for the calculation uses geometric zenith of 90&deg; and {@link #adjustZenith adjusts}
@@ -219,7 +219,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 * Notes for Calendrical Calculations: The Millenium Eddition</a> by Edward M. Reingold and Nachum Dershowitz lists
 	 * the actual average refraction value as 34.478885263888294 or approximately 34' 29". The refraction value as well
 	 * as the solarRadius and elevation adjustment are added to the zenith used to calculate sunrise and sunset.
-	 *
+	 * 
 	 * @return The refraction in arc minutes.
 	 */
 	double getRefraction() {
@@ -230,7 +230,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 * A method to allow overriding the default refraction of the calculator. TODO: At some point in the future, an
 	 * AtmosphericModel or Refraction object that models the atmosphere of different locations might be used for
 	 * increased accuracy.
-	 *
+	 * 
 	 * @param refraction
 	 *            The refraction in arc minutes.
 	 * @see #getRefraction()
@@ -253,7 +253,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	 * Areas farther north show an even greater difference. Note that these test are not real valid test cases because
 	 * they show the extreme difference on days that are not the perihelion or aphelion, but are shown for illustrative
 	 * purposes only.
-	 *
+	 * 
 	 * @return The sun's radius in arc minutes.
 	 */
 	double getSolarRadius() {
@@ -262,7 +262,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 
 	/**
 	 * Method to set the sun's radius.
-	 *
+	 * 
 	 * @param solarRadius
 	 *            The sun's radius in arc minutes.
 	 * @see #getSolarRadius()
@@ -272,7 +272,7 @@ public abstract class AstronomicalCalculator implements Cloneable {
 	}
 
 	/**
-	 * @see Object#clone()
+	 * @see java.lang.Object#clone()
 	 * @since 1.1
 	 */
 	public Object clone() {
