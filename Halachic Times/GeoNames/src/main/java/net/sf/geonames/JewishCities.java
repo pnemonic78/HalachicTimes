@@ -46,7 +46,7 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class JewishCities extends Cities {
 
-    protected static final String[] LANGUAGES = {null, "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "uk"};
+    protected static final String[] LANGUAGES = {null, "bg", "cs", "da", "de", "es", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "uk"};
 
     public static void main(String[] args) throws Exception {
         String pathCities = "GeoNames/res/cities15000.zip";
