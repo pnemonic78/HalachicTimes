@@ -237,7 +237,13 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         if (addressLinesCount >= 0) {
             for (int i = 0; i < addressLinesCount; i++) {
                 address = getAddressLine(i);
-                if (!TextUtils.isEmpty(address)) {
+                if (!TextUtils.isEmpty(address)
+                        && !address.contains(thoroughfare)
+                        && !address.equals(subloc)
+                        && !address.equals(locality)
+                        && !address.equals(subadmin)
+                        && !address.equals(admin)
+                        && !address.equals(country)) {
                     if (buf.length() > 0)
                         buf.append(ADDRESS_SEPARATOR);
                     buf.append(address);
@@ -254,12 +260,21 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(locality);
         }
-        if (TextUtils.isEmpty(locality) && !TextUtils.isEmpty(subadmin) && !subadmin.equals(locality) && !subadmin.equals(subloc) && !subadmin.equals(feature)) {
+        if (TextUtils.isEmpty(locality)
+                && !TextUtils.isEmpty(subadmin)
+                && !subadmin.equals(locality)
+                && !subadmin.equals(subloc)
+                && !subadmin.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subadmin);
         }
-        if (TextUtils.isEmpty(locality) && !TextUtils.isEmpty(admin) && !admin.equals(subadmin) && !admin.equals(locality) && !admin.equals(subloc) && !admin.equals(feature)) {
+        if (TextUtils.isEmpty(locality)
+                && !TextUtils.isEmpty(admin)
+                && !admin.equals(subadmin)
+                && !admin.equals(locality)
+                && !admin.equals(subloc)
+                && !admin.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(admin);
