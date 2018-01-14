@@ -768,13 +768,6 @@ public class AddressProvider {
         }
 
         if (online) {
-            elevated = findElevationGoogle(location);
-            if ((elevated != null) && elevated.hasAltitude()) {
-                if (listener != null)
-                    listener.onFindElevation(this, location, elevated);
-                return elevated;
-            }
-
             elevated = findElevationBing(location);
             if ((elevated != null) && elevated.hasAltitude()) {
                 if (listener != null)
@@ -783,6 +776,13 @@ public class AddressProvider {
             }
 
             elevated = findElevationGeoNames(location);
+            if ((elevated != null) && elevated.hasAltitude()) {
+                if (listener != null)
+                    listener.onFindElevation(this, location, elevated);
+                return elevated;
+            }
+
+            elevated = findElevationGoogle(location);
             if ((elevated != null) && elevated.hasAltitude()) {
                 if (listener != null)
                     listener.onFindElevation(this, location, elevated);

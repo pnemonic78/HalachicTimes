@@ -63,13 +63,6 @@ public class GeoNamesGeocoder extends GeocoderBase {
      * Uses Aster Global Digital Elevation Model data.
      */
     private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
-    /**
-     * URL that accepts latitude and longitude coordinates as parameters for an
-     * elevation.<br>
-     * GTOPO30 is a global digital elevation model (DEM) with a horizontal grid
-     * spacing of 30 arc seconds (approximately 1 kilometre).
-     */
-    private static final String URL_ELEVATION_GTOPO30 = "http://api.geonames.org/gtopo3?lat=%f&lng=%f&username=%s";
 
     /**
      * Creates a new GeoNames geocoder.
@@ -402,7 +395,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("longitude == " + longitude);
         if (TextUtils.isEmpty(USERNAME))
             return null;
-        String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
+        String queryUrl = String.format(Locale.US, URL_ELEVATION_SRTM3, latitude, longitude, USERNAME);
         URL url = new URL(queryUrl);
         byte[] data = HTTPReader.read(url);
         if (data == null)
