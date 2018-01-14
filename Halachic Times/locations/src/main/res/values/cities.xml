@@ -64,20 +64,73 @@
         <item>Kiev</item>
         <item>Durban</item>
         <item>Ashqelon</item>
+        <item>Netivot</item>
+        <item>Sderot</item>
+        <item>Ofakim</item>
         <item>Ashdod</item>
+        <item>Gan Yavne</item>
+        <item>Yavné</item>
+        <item>Bat Yam</item>
+        <item>Jaffa</item>
+        <item>Kiryat Gat</item>
+        <item>Holon</item>
+        <item>Gedera</item>
         <item>Tel Aviv</item>
+        <item>Rishon LeZiyyon</item>
         <item>Beersheba</item>
+        <item>Ness Ziona</item>
+        <item>Azor</item>
+        <item>Ramat Gan</item>
+        <item>Rehovot</item>
+        <item>Giv‘atayim</item>
+        <item>Herzliya</item>
+        <item>Bnei Brak</item>
+        <item>Ramat HaSharon</item>
+        <item>Giv‘at Shmuel</item>
+        <item>Or Yehuda</item>
+        <item>Kiryat Ono</item>
+        <item>Netanya</item>
+        <item>Ganei Tikva</item>
+        <item>Raanana</item>
+        <item>Yehud-Monosson</item>
+        <item>Petah Tikva</item>
+        <item>Even Yehuda</item>
+        <item>Lod</item>
+        <item>Yehud</item>
+        <item>Hod HaSharon</item>
         <item>Hadera</item>
+        <item>Kfar Saba</item>
+        <item>Kfar Yona</item>
+        <item>Shoham</item>
         <item>Eilat</item>
+        <item>Tirah</item>
+        <item>Rosh HaAyin</item>
+        <item>Tirat Carmel</item>
         <item>Haifa</item>
         <item>Bet Shemesh</item>
+        <item>Modiin</item>
+        <item>Dimona</item>
+        <item>Modiin Ilit</item>
+        <item>Nesher</item>
+        <item>Qiryat Yam</item>
         <item>Acre</item>
+        <item>Kiryat Motzkin</item>
+        <item>Kiryat Bialik</item>
         <item>Nahariya</item>
+        <item>Kiryat Ata</item>
+        <item>Mevaseret Zion</item>
         <item>Ariel</item>
+        <item>Tamra</item>
+        <item>Arad</item>
         <item>Jerusalem</item>
+        <item>Migdal HaEmeq</item>
+        <item>Afula</item>
         <item>Nazareth</item>
+        <item>Karmiel</item>
         <item>Safed</item>
+        <item>Bet Shean</item>
         <item>Tiberias</item>
+        <item>Kiryat Shmona</item>
         <item>Moscow</item>
         <item>Addis Ababa</item>
         <item>Mumbai</item>
@@ -150,6 +203,59 @@
         <item>RU</item>
         <item>UA</item>
         <item>ZA</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
+        <item>IL</item>
         <item>IL</item>
         <item>IL</item>
         <item>IL</item>
@@ -238,20 +344,73 @@
         <item>5044630</item>
         <item>-2985790</item>
         <item>3166926</item>
+        <item>3142305</item>
+        <item>3152500</item>
+        <item>3131410</item>
         <item>3179213</item>
+        <item>3178737</item>
+        <item>3187808</item>
+        <item>3202379</item>
+        <item>3205043</item>
+        <item>3160998</item>
+        <item>3201034</item>
+        <item>3181456</item>
         <item>3208088</item>
+        <item>3197102</item>
         <item>3125181</item>
+        <item>3192933</item>
+        <item>3202429</item>
+        <item>3208227</item>
+        <item>3189421</item>
+        <item>3207224</item>
+        <item>3216626</item>
+        <item>3208074</item>
+        <item>3214613</item>
+        <item>3207817</item>
+        <item>3202923</item>
+        <item>3205503</item>
+        <item>3233291</item>
+        <item>3205971</item>
+        <item>3218360</item>
+        <item>3202840</item>
+        <item>3208706</item>
+        <item>3226959</item>
+        <item>3194670</item>
+        <item>3203317</item>
+        <item>3215934</item>
         <item>3244192</item>
+        <item>3217499</item>
+        <item>3231669</item>
+        <item>3199866</item>
         <item>2955805</item>
+        <item>3223410</item>
+        <item>3209556</item>
+        <item>3276021</item>
         <item>3281841</item>
         <item>3173072</item>
+        <item>3189385</item>
+        <item>3107079</item>
+        <item>3193221</item>
+        <item>3276621</item>
+        <item>3284966</item>
         <item>3292814</item>
+        <item>3283706</item>
+        <item>3282750</item>
         <item>3300892</item>
+        <item>3281149</item>
+        <item>3180186</item>
         <item>3210649</item>
+        <item>3285300</item>
+        <item>3125882</item>
         <item>3176904</item>
+        <item>3267597</item>
+        <item>3260907</item>
         <item>3269925</item>
+        <item>3291708</item>
         <item>3296465</item>
+        <item>3249728</item>
         <item>3279220</item>
+        <item>3320733</item>
         <item>5575222</item>
         <item>903506</item>
         <item>1907283</item>
@@ -325,20 +484,73 @@
         <item>3051808</item>
         <item>3102920</item>
         <item>3457148</item>
+        <item>3458911</item>
+        <item>3459693</item>
+        <item>3462025</item>
         <item>3464965</item>
+        <item>3470659</item>
+        <item>3473983</item>
+        <item>3475184</item>
+        <item>3475224</item>
+        <item>3476422</item>
+        <item>3477917</item>
+        <item>3477998</item>
         <item>3478056</item>
+        <item>3478938</item>
         <item>3479130</item>
+        <item>3479867</item>
+        <item>3480632</item>
+        <item>3481065</item>
+        <item>3481199</item>
+        <item>3481253</item>
+        <item>3482536</item>
+        <item>3483379</item>
+        <item>3483940</item>
+        <item>3484858</item>
+        <item>3485788</item>
+        <item>3485788</item>
+        <item>3485992</item>
+        <item>3487319</item>
+        <item>3487386</item>
+        <item>3487960</item>
+        <item>3488747</item>
+        <item>3488759</item>
+        <item>3489030</item>
+        <item>3489091</item>
+        <item>3489320</item>
         <item>3490390</item>
+        <item>3490694</item>
+        <item>3493507</item>
+        <item>3494559</item>
         <item>3494821</item>
+        <item>3495023</item>
+        <item>3495664</item>
+        <item>3497182</item>
         <item>3498850</item>
         <item>3499293</item>
+        <item>3501504</item>
+        <item>3503269</item>
+        <item>3504416</item>
+        <item>3504425</item>
+        <item>3506973</item>
         <item>3507647</item>
+        <item>3507759</item>
+        <item>3508583</item>
         <item>3509814</item>
+        <item>3511323</item>
+        <item>3515072</item>
         <item>3518448</item>
+        <item>3519870</item>
+        <item>3521282</item>
         <item>3521633</item>
+        <item>3523986</item>
+        <item>3528920</item>
         <item>3530483</item>
+        <item>3530501</item>
         <item>3549600</item>
+        <item>3549631</item>
         <item>3553123</item>
+        <item>3557212</item>
         <item>3761556</item>
         <item>3874867</item>
         <item>7288261</item>
@@ -412,20 +624,73 @@
         <item>187</item>
         <item>21</item>
         <item>42</item>
+        <item>151</item>
+        <item>90</item>
+        <item>137</item>
         <item>27</item>
+        <item>52</item>
+        <item>37</item>
+        <item>32</item>
+        <item>26</item>
+        <item>133</item>
+        <item>31</item>
+        <item>64</item>
         <item>15</item>
+        <item>56</item>
         <item>285</item>
+        <item>35</item>
+        <item>25</item>
+        <item>57</item>
+        <item>47</item>
+        <item>50</item>
+        <item>28</item>
+        <item>51</item>
+        <item>68</item>
+        <item>53</item>
+        <item>33</item>
+        <item>0</item>
+        <item>38</item>
+        <item>79</item>
+        <item>49</item>
+        <item>36</item>
+        <item>54</item>
+        <item>49</item>
+        <item>68</item>
+        <item>44</item>
+        <item>57</item>
         <item>13</item>
+        <item>57</item>
+        <item>59</item>
+        <item>82</item>
         <item>63</item>
+        <item>78</item>
+        <item>30</item>
+        <item>47</item>
         <item>40</item>
         <item>282</item>
+        <item>276</item>
+        <item>551</item>
+        <item>280</item>
+        <item>125</item>
+        <item>9</item>
         <item>8</item>
+        <item>10</item>
+        <item>12</item>
         <item>15</item>
+        <item>46</item>
+        <item>711</item>
         <item>560</item>
+        <item>92</item>
+        <item>613</item>
         <item>786</item>
+        <item>227</item>
+        <item>62</item>
         <item>358</item>
+        <item>233</item>
         <item>779</item>
+        <item>-121</item>
         <item>-140</item>
+        <item>124</item>
         <item>144</item>
         <item>2405</item>
         <item>8</item>
@@ -498,6 +763,59 @@
         <item>Europe/Moscow</item>
         <item>Europe/Kiev</item>
         <item>Africa/Johannesburg</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Hebron</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
+        <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>

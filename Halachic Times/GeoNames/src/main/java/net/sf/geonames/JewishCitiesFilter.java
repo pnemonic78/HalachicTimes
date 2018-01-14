@@ -42,12 +42,16 @@ public class JewishCitiesFilter implements NameFilter {
             295721,
             // Addis Ababa, Ethiopia
             ADDIS_ABABA,
+            // Afula, Israel
+            295740,
             // Amsterdam, Netherlands
             2759794,
             // Anchorage, United States
             5879400,
             // Antwerp, Belgium
             ANTWERP,
+            // Arad, Israel
+            295657,
             // Ariel, Israel
             8199394,
             // Ashdod, Israel
@@ -58,8 +62,14 @@ public class JewishCitiesFilter implements NameFilter {
             4180439,
             // Auckland, New Zealand
             2193733,
+            // Azor, Israel
+            295584,
             // Baltimore, United States
             4347778,
+            // Bat Yam, Israel
+            295548,
+            // Beit She’an, Israel
+            295435,
             // Be'er Sheva, Israel
             295530,
             // Beit Shemesh, Israel
@@ -70,6 +80,8 @@ public class JewishCitiesFilter implements NameFilter {
             2950159,
             // Bern, Switzerland
             2661552,
+            // Bnei Brak, Israel
+            295514,
             // Bogota, Colombia
             3688689,
             // Boston, United States
@@ -94,32 +106,64 @@ public class JewishCitiesFilter implements NameFilter {
             5419384,
             // Detroit, United States
             4990729,
+            // Dimona, Israel
+            295328,
             // Durban, South Africa
             1007311,
             // Eilat, Israel
             295277,
+            // Even Yehuda, Israel
+            295122,
+            // Gan Yavne, Israel
+            295080,
+            // Ganei Tikva, Israel
+            295089,
+// Gedera, Israel
+            295064,
             // Geneve, Switzerland
             2660646,
+            // Givat Shmuel, Israel
+            294981,
+            // Givatayim, Israel
+            294999,
             // Hadera, Israel
             294946,
             // Haifa, Israel
             294801,
             // Helsinki, Finland
             658225,
+            // Herzliya, Israel
+            294778,
+// Hod HaSharon, Israel
+            294760,
+// Holon, Israel
+            294751,
             // Houston, United States
             4699066,
             // Istanbul, Turkey
             ISTANBUL,
+            // Jaffa, Israel
+            293253,
             // Jerusalem, Israel
             281184,
             // Johannesburg, South Africa
             993800,
+            // Karmiel, Israel
+            294577,
+            // Kfar Saba, Israel
+            294514,
+// Kfar Yona, Israel
+            294492,
             // Kiev, Ukraine
             KIEV,
+            // Kiryat Ono, Israel
+            11049562,
             // Las Vegas, United States
             5475433,
             // Lisbon, Portugal
             2267057,
+            // Lod, Israel
+            294421,
             // London, United Kingdom
             2643743,
             // Los Angeles, United States
@@ -134,10 +178,18 @@ public class JewishCitiesFilter implements NameFilter {
             2995469,
             // Melbourne, Australia
             2158177,
+            // Mevasseret Zion, Israel
+            294245,
             // Mexico City, Mexico
             3530597,
             // Miami, United States
             4164138,
+            // Migdal Ha‘Emeq, Israel
+            294210,
+            // Modiin, Israel
+            282926,
+            // Modiin Ilit, Israel
+            8199378,
             // Montreal, Canada
             6077243,
             // Moscow, Russia
@@ -150,16 +202,30 @@ public class JewishCitiesFilter implements NameFilter {
             294117,
             // Nazareth, Israel
             294098,
+            // Nesher, Israel
+            294078,
+// Ness Ziona, Israel
+            294074,
+// Netanya, Israel
+            294071,
+// Netivot, Israel
+            294068,
             // New Delhi, India
             1273294,
             // New York, United States
             5128581,
+            // Ofaqim, Israel
+            293992,
+// Or Yehuda, Israel
+            293962,
             // Oslo, Norway
             OSLO,
             // Paris, France
             PARIS,
             // Perth, Australia
             2063523,
+            // Petah Tiqwa, Israel
+            293918,
             // Philadelphia, United States
             4560349,
             // Phoenix, United States
@@ -168,16 +234,42 @@ public class JewishCitiesFilter implements NameFilter {
             5206379,
             // Portland, Oregon, United States
             PORTLAND,
+            // Qiryat Ata, Israel
+            293845,
+// Qiryat Bialik, Israel
+            293844,
+// Qiryat Gat, Israel
+            293842,
+// Qiryat Mozqin, Israel
+            293831,
+// Qiryat Shemona, Israel
+            293825,
+// Qiryat Yam, Israel
+            293822,
+            // Raanana, Israel
+            293807,
+// Ramat Gan, Israel
+            293788,
+// Ramat HaSharon, Israel
+            293783,
+// Rehovot, Israel
+            293725,
             // Rio de Janeiro, Brazil
             RIO_DE_JANEIRO,
+            // Rishon LeZion, Israel
+            293703,
             // Rome, Italy
             3169070,
+            // Rosh Ha‘Ayin, Israel
+            293690,
             // Safed / Zefat, Israel
             293100,
             // Sarajevo, Bosnia and Herzegovina
             3191281,
             // Seattle, United States
             5809844,
+            // Sederot, Israel
+            293619,
             // St Louis, United States
             4407066,
             // St Petersburg, Russia
@@ -188,14 +280,22 @@ public class JewishCitiesFilter implements NameFilter {
             5391959,
             // Sao Paulo, Brazil
             3448439,
+            // Shoham, Israel
+            8428283,
             // Stockholm, Sweden
             2673730,
             // Sydney, Australia
             2147714,
+            // Tamra, Israel
+            293426,
             // Tel Aviv, Israel
             293397,
             // Tiberias, Israel
             293322,
+            // Tirah, Israel
+            295127,
+            // Tirat Karmel, Israel
+            293308,
             // Tokyo, Japan
             1850147,
             // Toronto, Canada
@@ -208,6 +308,12 @@ public class JewishCitiesFilter implements NameFilter {
             756135,
             // Washington D.C., United States
             4140963,
+            // Yavne, Israel
+            293222,
+// Yehud, Israel
+            293207,
+// Yehud Monosson, Israel
+            10227184,
             // Zurich, Switzerland
             2657896
     };
