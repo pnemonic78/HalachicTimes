@@ -46,18 +46,18 @@ import javax.xml.transform.stream.StreamResult;
  */
 public class JewishCities extends Cities {
 
-    protected static final String[] LANGUAGES = {null, "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "tr", "uk"};
+    protected static final String[] LANGUAGES = {null, "bg", "cs", "da", "de", "el", "es", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "uk"};
 
     public static void main(String[] args) throws Exception {
-        String pathCities = "GeoNames/res/cities15000.txt";
-        String pathNames = "GeoNames/res/alternateNames.txt";
+        String pathCities = "GeoNames/res/cities15000.zip";
+        String pathNames = "GeoNames/res/alternateNames.zip";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         JewishCities cities = new JewishCities();
         Collection<GeoName> names;
 
-        names = cities.loadNames(new File(pathCities), new JewishCitiesFilter());
+        names = cities.loadNames(new File(pathCities), new JewishCitiesFilter(), "cities15000.txt");
         cities.populateElevations(names);
-        cities.populateAlternateNames(new File(pathNames), names);
+        cities.populateAlternateNames(new File(pathNames), names, "alternateNames.txt");
         cities.populateAlternateNames(new File(pathNames2), names);
         for (String lang : LANGUAGES) {
             cities.writeAndroidXML(names, lang);

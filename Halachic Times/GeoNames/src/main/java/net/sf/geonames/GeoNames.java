@@ -37,6 +37,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -102,18 +104,45 @@ public class GeoNames {
      *
      * @param file
      *         the file to parse.
-     * @param filter
-     *         the filter.
+     * @param zippedName
+     *         the zipped name.
      * @return the list of names.
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> parseTabbed(File file, NameFilter filter) throws IOException {
-        Collection<GeoName> records = null;
+    public Collection<GeoName> parseTabbed(File file, String zippedName) throws IOException {
+        return parseTabbed(file, null, zippedName);
+    }
+
+    /**
+     * Parse the tab-delimited file with GeoName records.
+     *
+     * @param file
+     *         the file to parse.
+     * @param filter
+     *         the filter.
+     * @param zippedName
+     *         the zipped name.
+     * @return the list of names.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> parseTabbed(File file, NameFilter filter, String zippedName) throws IOException {
+        Collection<GeoName> records;
         Reader reader = null;
         InputStream in = null;
         try {
             in = new FileInputStream(file);
+            if (zippedName != null) {
+                ZipInputStream zin = new ZipInputStream(in);
+                if (!zippedName.isEmpty()) {
+                    ZipEntry entry;
+                    do {
+                        entry = zin.getNextEntry();
+                    } while (!zippedName.equals(entry.getName()));
+                }
+                in = zin;
+            }
             reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             in = null;
             records = parseTabbed(reader, filter);
@@ -383,10 +412,36 @@ public class GeoNames {
      *         if an I/O error occurs.
      */
     public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
+        populateAlternateNames(file, records, null);
+    }
+
+    /**
+     * Parse the file with GeoName alternate names.
+     *
+     * @param file
+     *         the file to parse.
+     * @param records
+     *         the list of names.
+     * @param zippedName
+     *         the zipped file name.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(File file, Collection<GeoName> records, String zippedName) throws IOException {
         Reader reader = null;
         InputStream in = null;
         try {
             in = new FileInputStream(file);
+            if (zippedName != null) {
+                ZipInputStream zin = new ZipInputStream(in);
+                if (!zippedName.isEmpty()) {
+                    ZipEntry entry;
+                    do {
+                        entry = zin.getNextEntry();
+                    } while (!zippedName.equals(entry.getName()));
+                }
+                in = zin;
+            }
             reader = new InputStreamReader(in, StandardCharsets.UTF_8);
             in = null;
             populateAlternateNames(reader, records);

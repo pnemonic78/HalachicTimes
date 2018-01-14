@@ -28,7 +28,8 @@
 0	293100	fi	Safed	
 0	293100	fr	Safed	
 0	293100	hu	Safed	
-0	293100	lt	Safed	
+0	293100	it	Safed
+0	293100	lt	Safed
 0	293100	nl	Safed	
 0	293100	no	Safed	
 0	293100	pl	Safed	
@@ -56,7 +57,8 @@
 0	294117	fi	Nahariya	
 0	294117	fr	Nahariya	
 0	294117	hu	Nahariyá	
-0	294117	lt	Nahariya	
+0	294117	it	Nahariya
+0	294117	lt	Nahariya
 0	294117	no	Nahariya	
 0	294117	pt	Nahariya	
 0	294117	sv	Nahariya	
@@ -70,7 +72,8 @@
 0	294946	fi	Hadera	
 0	294946	he	חדרה	
 0	294946	hu	Haderá	
-0	294946	lt	Hadera	
+0	294946	it	Hadera
+0	294946	lt	Hadera
 0	294946	tr	Hadera	
 0	294946	uk	Хадера	
 0	295277	el	Σαφετ	
@@ -84,7 +87,8 @@
 0	295432	fi	Bet Semeksen	
 0	295432	fr	Bet Shemesh	
 0	295432	hu	Beit Szemesz	
-0	295432	lt	Bet Shemesh	
+0	295432	it	Beit Shemesh
+0	295432	lt	Bet Shemesh
 0	295432	no	Bet Semes	
 0	295432	pt	Bet Semeksen	
 0	295432	tr	Bet Şemeş	
@@ -100,7 +104,8 @@
 0	295620	fi	Askelon	
 0	295620	fr	Ashkelon	
 0	295620	he	אשקלון	1
-0	295620	hu	Aszkelon	
+0	295620	hu	Aszkelon
+0	295620	it	Ashkelon
 0	295620	lt	Aškelonas	
 0	295620	nl	Askelon	
 0	295620	no	Askalon	
@@ -114,7 +119,8 @@
 0	295629	et	Ashdod	
 0	295629	fi	Asdod	
 0	295629	hu	Aszdód	1
-0	295629	no	Asdod	
+0	295629	it	Ashdod
+0	295629	no	Asdod
 0	295721	bg	Акра	
 0	295721	et	Akko	
 0	295721	fa	عکا	
@@ -529,7 +535,8 @@
 0	8199394	fi	Ariel	
 0	8199394	fi	Ariel	
 0	8199394	fr	Ariel	
-0	8199394	hu	Ariel	
+0	8199394	hu	Ariel
+0	8199394	it	Ariel
 0	8199394	lt	Arielis	
 0	8199394	nl	Ariel	
 0	8199394	no	Ariel	

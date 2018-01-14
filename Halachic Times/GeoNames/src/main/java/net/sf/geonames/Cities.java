@@ -107,7 +107,24 @@ public class Cities {
      *         if an I/O error occurs.
      */
     public Collection<GeoName> loadNames(File file, NameFilter filter) throws IOException {
-        return geoNames.parseTabbed(file, filter);
+        return loadNames(file, filter, null);
+    }
+
+    /**
+     * Load the list of names.
+     *
+     * @param file
+     *         the geonames CSV file.
+     * @param filter
+     *         the name filter.
+     * @param zippedName
+     *         the zipped name.
+     * @return the sorted list of records.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public Collection<GeoName> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
+        return geoNames.parseTabbed(file, filter, zippedName);
     }
 
     /**
@@ -325,12 +342,30 @@ public class Cities {
     /**
      * Populate the list of names with alternate names.
      *
+     * @param file
+     *         the alternate names file.
      * @param records
      *         the list of records to populate.
      * @throws IOException
      *         if an I/O error occurs.
      */
     public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
-        geoNames.populateAlternateNames(file, records);
+        populateAlternateNames(file, records, null);
+    }
+
+    /**
+     * Populate the list of names with alternate names.
+     *
+     * @param file
+     *         the alternate names file.
+     * @param records
+     *         the list of records to populate.
+     * @param zippedName
+     *         the zipped file name.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(File file, Collection<GeoName> records, String zippedName) throws IOException {
+        geoNames.populateAlternateNames(file, records, zippedName);
     }
 }
