@@ -4,6 +4,8 @@ apply plugin: 'application'
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
+mainClassName = 'net.sf.geonames.JewishCities'
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'javax.json:javax.json-api:1.0'
