@@ -71,6 +71,7 @@
         <item>Eilat</item>
         <item>Haifa</item>
         <item>Bet Shemesh</item>
+        <item>Acre</item>
         <item>Nahariya</item>
         <item>Ariel</item>
         <item>Jerusalem</item>
@@ -149,6 +150,7 @@
         <item>RU</item>
         <item>UA</item>
         <item>ZA</item>
+        <item>IL</item>
         <item>IL</item>
         <item>IL</item>
         <item>IL</item>
@@ -243,6 +245,7 @@
         <item>2955805</item>
         <item>3281841</item>
         <item>3173072</item>
+        <item>3292814</item>
         <item>3300892</item>
         <item>3210649</item>
         <item>3176904</item>
@@ -329,6 +332,7 @@
         <item>3494821</item>
         <item>3498850</item>
         <item>3499293</item>
+        <item>3507647</item>
         <item>3509814</item>
         <item>3518448</item>
         <item>3521633</item>
@@ -415,6 +419,7 @@
         <item>63</item>
         <item>40</item>
         <item>282</item>
+        <item>8</item>
         <item>15</item>
         <item>560</item>
         <item>786</item>
@@ -493,6 +498,7 @@
         <item>Europe/Moscow</item>
         <item>Europe/Kiev</item>
         <item>Africa/Johannesburg</item>
+        <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>

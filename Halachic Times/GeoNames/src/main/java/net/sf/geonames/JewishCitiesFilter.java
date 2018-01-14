@@ -38,6 +38,8 @@ public class JewishCitiesFilter implements NameFilter {
      * List of Jewish cities' GeoName IDs.
      */
     private static final long[] CITIES = {
+            // Acre, Israel
+            295721,
             // Addis Ababa, Ethiopia
             ADDIS_ABABA,
             // Amsterdam, Netherlands
