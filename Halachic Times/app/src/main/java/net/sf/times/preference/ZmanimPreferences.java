@@ -22,6 +22,7 @@ import net.sf.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.LocationPreferences;
+import net.sourceforge.zmanim.ShaahZmanis;
 import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
@@ -237,10 +238,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * Get the type for temporal hour (<em>shaah zmanis</em>).
      *
      * @return the type.
-     * @see ZmanimCalendar#SHAAH_ZMANIS_GRA
-     * @see ZmanimCalendar#SHAAH_ZMANIS_MGA
      */
-    int getHourType();
+    ShaahZmanis getHourType();
 
     /**
      * Get the opinion for dawn (<em>alos</em>).

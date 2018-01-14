@@ -31,7 +31,7 @@ import net.sf.preference.SimpleThemePreferences;
 import net.sf.preference.ThemePreferences;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
-import net.sourceforge.zmanim.ZmanimCalendar;
+import net.sourceforge.zmanim.ShaahZmanis;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -94,16 +94,6 @@ import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_SEA;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
 import static net.sf.times.preference.ZmanimPreferences.Values.THEME_NONE;
 import static net.sf.times.preference.ZmanimPreferences.Values.THEME_WHITE;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_120MINUTES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_16POINT1DEGREES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_18DEGREES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_19POINT8DEGREES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_26DEGREES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_60MINUTES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_72MINUTES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_90MINUTES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_96MINUTES;
-import static net.sourceforge.zmanim.ComplexZmanimCalendar.SHAAH_ZMANIS_GRA;
 
 /**
  * Simple application preferences implementation.
@@ -193,54 +183,51 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
-    public int getHourType() {
+    public ShaahZmanis getHourType() {
         String opinion = getHour();
         if (OPINION_19_8.equals(opinion)) {
-            return SHAAH_ZMANIS_19POINT8DEGREES;
+            return ShaahZmanis.DEGREES_19POINT8;
         }
         if (OPINION_120.equals(opinion)) {
-            return SHAAH_ZMANIS_120MINUTES;
+            return ShaahZmanis.MINUTES_120;
         }
         if (OPINION_120_ZMANIS.equals(opinion)) {
-            return SHAAH_ZMANIS_120MINUTES;
+            return ShaahZmanis.MINUTES_120;
         }
         if (OPINION_18.equals(opinion)) {
-            return SHAAH_ZMANIS_18DEGREES;
+            return ShaahZmanis.DEGREES_18;
         }
         if (OPINION_26.equals(opinion)) {
-            return SHAAH_ZMANIS_26DEGREES;
+            return ShaahZmanis.DEGREES_26;
         }
         if (OPINION_16_1.equals(opinion)) {
-            return SHAAH_ZMANIS_16POINT1DEGREES;
+            return ShaahZmanis.DEGREES_16POINT1;
         }
         if (OPINION_96.equals(opinion)) {
-            return SHAAH_ZMANIS_96MINUTES;
+            return ShaahZmanis.MINUTES_96;
         }
         if (OPINION_96_ZMANIS.equals(opinion)) {
-            return SHAAH_ZMANIS_96MINUTES;
+            return ShaahZmanis.MINUTES_96;
         }
         if (OPINION_90.equals(opinion)) {
-            return SHAAH_ZMANIS_90MINUTES;
+            return ShaahZmanis.MINUTES_90;
         }
         if (OPINION_90_ZMANIS.equals(opinion)) {
-            return SHAAH_ZMANIS_90MINUTES;
+            return ShaahZmanis.MINUTES_90;
         }
         if (OPINION_72.equals(opinion)) {
-            return SHAAH_ZMANIS_72MINUTES;
+            return ShaahZmanis.MINUTES_72;
         }
         if (OPINION_72_ZMANIS.equals(opinion)) {
-            return SHAAH_ZMANIS_72MINUTES;
+            return ShaahZmanis.MINUTES_72;
         }
         if (OPINION_60.equals(opinion)) {
-            return SHAAH_ZMANIS_60MINUTES;
-        }
-        if (OPINION_ATERET.equals(opinion)) {
-            return SHAAH_ZMANIS_GRA;
+            return ShaahZmanis.MINUTES_60;
         }
         if (OPINION_MGA.equals(opinion)) {
-            return ZmanimCalendar.SHAAH_ZMANIS_MGA;
+            return ShaahZmanis.MGA;
         }
-        return ZmanimCalendar.SHAAH_ZMANIS_GRA;
+        return ShaahZmanis.GRA;
     }
 
     @Override
