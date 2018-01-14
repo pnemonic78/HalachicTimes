@@ -528,7 +528,7 @@ public class GeoNames {
             colloquial = (fields.length > 6) && "1".equals(fields[6]);
             historic = (fields.length > 7) && "1".equals(fields[7]);
 
-            record.putAlternateName(language, name, preferredName, shortName, colloquial, historic);
+            record.putAlternateName(geonameId, language, name, preferredName, shortName, colloquial, historic);
         }
     }
 

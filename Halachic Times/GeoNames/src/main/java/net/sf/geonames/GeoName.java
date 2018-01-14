@@ -175,11 +175,11 @@ public class GeoName extends GeoNameRecord {
         this.fcodeName = fcodeName;
     }
 
-    public void putAlternateName(String language, String name) {
-        putAlternateName(language, name, false, false, false, false);
+    public void putAlternateName(long geonameId, String language, String name) {
+        putAlternateName(geonameId, language, name, false, false, false, false);
     }
 
-    public void putAlternateName(String language, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
+    public void putAlternateName(long geonameId, String language, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
         Locale locale = new Locale(language);
         String languageCode = locale.getLanguage();
         AlternateName alternateName = alternateNamesMap.get(languageCode);
@@ -187,7 +187,7 @@ public class GeoName extends GeoNameRecord {
             alternateName = new AlternateName(language, name, preferred);
             alternateNamesMap.put(languageCode, alternateName);
         } else if (!alternateName.isPreferred() && !shortName && !colloquial && !historic) {
-            System.err.println("Name already exists! language: " + language + " name: [" + name + "]");
+            System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
             alternateName.setName(name);
         }
     }

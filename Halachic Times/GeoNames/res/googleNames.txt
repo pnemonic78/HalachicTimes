@@ -78,8 +78,7 @@
 0	294946	lt	Hadera
 0	294946	tr	Hadera	
 0	294946	uk	Хадера	
-0	295277	el	Σαφετ	
-0	295277	et	Eilat	
+0	295277	et	Eilat
 0	295277	tr	Eilat	
 0	295432	bg	Бейт Шемеш	
 0	295432	cs	Bejt Shemes	
@@ -117,8 +116,7 @@
 0	295620	sv	Ashkelon	
 0	295620	tr	Aşkelon	
 0	295620	uk	Ашкелон	
-0	295629	da	Asjdod	
-0	295629	et	Ashdod	
+0	295629	et	Ashdod
 0	295629	fi	Asdod	
 0	295629	hu	Aszdód	1
 0	295629	it	Ashdod
@@ -202,12 +200,10 @@
 0	1831797	uk	Баттамбанг	
 0	2063523	ro	Perth	
 0	2063523	tr	Perth	
-0	2158177	el	Μελβούρνη	
-0	2158177	uk	Мельбурн	
+0	2158177	uk	Мельбурн
 0	2193733	cs	Auckland	
 0	2193733	da	Auckland	
-0	2193733	el	Όκλαντ	
-0	2193733	es	Auckland	
+0	2193733	es	Auckland
 0	2193733	et	Auckland	
 0	2193733	fi	Auckland	
 0	2193733	hu	Auckland	
@@ -445,8 +441,7 @@
 0	4699066	de	Houston	
 0	4699066	es	Houston	
 0	4699066	hu	Houston	
-0	4887398	hu	Chicagó	
-0	4916732	bg	Уилмет	
+0	4916732	bg	Уилмет
 0	4916732	cs	Wilmette	
 0	4916732	da	Wilmette	
 0	4916732	de	Wilmette	
@@ -513,8 +508,8 @@
 0	5308655	pl	Feniks	1
 0	5308655	ro	Fenix	1
 0	5308655	sv	Fenix	1
-0	5391811	et	San Diego	
-0	5391959	ro	San Francisco	
+0	5391811	et	San Diego
+0	5391959	ro	San Francisco
 0	5419384	cs	Denver	
 0	5419384	et	Denver	
 0	5419384	hu	Denver	
@@ -530,8 +525,7 @@
 0	8199394	el	Άριελ	
 0	8199394	es	Ariel	
 0	8199394	et	Ariel	
-0	8199394	fi	Ariel	
-0	8199394	fi	Ariel	
+0	8199394	fi	Ariel
 0	8199394	fr	Ariel	
 0	8199394	hu	Ariel
 0	8199394	it	Ariel
