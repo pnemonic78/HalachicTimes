@@ -26,4 +26,5 @@ ext {
     androidBuildSdkVersion = 26
     androidBuildMinSdkVersion = 15
     androidBuildTargetSdkVersion = 26
+    supportVersion = '27.0.2'
 }

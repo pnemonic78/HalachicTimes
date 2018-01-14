@@ -18,7 +18,6 @@ package net.sf.times.location;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -41,9 +40,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.LOLLIPOP_MR1;
 import static android.os.Build.VERSION_CODES.M;
-import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -115,8 +112,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
     protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
-
-    private static final int JOB_ADDRESS = 0xADD7E55; // "ADDrESS"
 
     /** The context. */
     private final Context context;
@@ -796,26 +791,16 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     public void findAddress(Location location, boolean persist) {
-        if (SDK_INT >= O) {
-            startAddressJob(context, ACTION_ADDRESS, location, persist);
-        } else {
-            Intent findAddress = new Intent(context, AddressService.class);
-            findAddress.setAction(ACTION_ADDRESS);
-            findAddress.putExtra(EXTRA_LOCATION, location);
-            findAddress.putExtra(EXTRA_PERSIST, persist);
-            context.startService(findAddress);
-        }
+        Intent findAddress = new Intent(ACTION_ADDRESS);
+        findAddress.putExtra(EXTRA_LOCATION, location);
+        findAddress.putExtra(EXTRA_PERSIST, persist);
+        AddressService.enqueueWork(context, findAddress);
     }
 
     public void findElevation(Location location) {
-        if (SDK_INT >= O) {
-            startAddressJob(context, ACTION_ELEVATION, location, false);
-        } else {
-            Intent findElevation = new Intent(context, AddressService.class);
-            findElevation.setAction(ACTION_ELEVATION);
-            findElevation.putExtra(EXTRA_LOCATION, location);
-            context.startService(findElevation);
-        }
+        Intent findElevation = new Intent(ACTION_ELEVATION);
+        findElevation.putExtra(EXTRA_LOCATION, location);
+        AddressService.enqueueWork(context, findElevation);
     }
 
     /**
@@ -908,20 +893,4 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             }
         }
     };
-
-    @TargetApi(LOLLIPOP_MR1)
-    private void startAddressJob(Context context, String action, Location location, boolean persist) {
-        android.app.job.JobScheduler scheduler = (android.app.job.JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        android.os.PersistableBundle extras = new android.os.PersistableBundle();
-        extras.putString(AddressJobService.EXTRA_ACTION, action);
-        LocationUtils.writeParcelable(EXTRA_LOCATION, location, extras);
-        extras.putBoolean(EXTRA_PERSIST, persist);
-
-        android.app.job.JobInfo job = new android.app.job.JobInfo.Builder(JOB_ADDRESS, new ComponentName(context, AddressJobService.class))
-                .setExtras(extras)
-                .setRequiresDeviceIdle(false)
-                .setOverrideDeadline(MINUTE_IN_MILLIS)
-                .build();
-        scheduler.schedule(job);
-    }
 }

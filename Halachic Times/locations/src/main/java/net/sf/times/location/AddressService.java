@@ -15,11 +15,12 @@
  */
 package net.sf.times.location;
 
-import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.JobIntentService;
 
 import net.sf.times.location.AddressProvider.OnFindAddressListener;
 
@@ -31,7 +32,9 @@ import static net.sf.times.location.ZmanimLocationListener.ACTION_ELEVATION;
  *
  * @author Moshe Waisberg
  */
-public class AddressService extends IntentService implements OnFindAddressListener {
+public class AddressService extends JobIntentService implements OnFindAddressListener {
+
+    private static final int JOB_ADDRESS = 0xADD7E55; // "ADDrESS"
 
     private static final String PARAMETER_LOCATION = ZmanimLocationListener.EXTRA_LOCATION;
     private static final String PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS;
@@ -39,42 +42,37 @@ public class AddressService extends IntentService implements OnFindAddressListen
 
     private static final boolean PERSIST = true;
 
-    private static final String NAME = "AddressService";
-
     private AddressProvider addressProvider;
 
-    /**
-     * Constructs a new service.
-     *
-     * @param name
-     *         the worker thread name.
-     */
-    public AddressService(String name) {
-        super(name);
-    }
-
-    /**
-     * Constructs a new service.
-     */
-    public AddressService() {
-        this(NAME);
+    public static void enqueueWork(Context context, Intent intent) {
+        enqueueWork(context, AddressService.class, JOB_ADDRESS, intent);
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
-        if (intent == null)
+    public void onCreate() {
+        super.onCreate();
+        LocationApplication app = (LocationApplication) getApplication();
+        addressProvider = app.getAddresses();
+    }
+
+    @Override
+    protected void onHandleWork(Intent intent) {
+        if (intent == null) {
             return;
-        Bundle extras = intent.getExtras();
-        if (extras == null)
+        }
+        final Bundle extras = intent.getExtras();
+        if ((extras == null) || extras.isEmpty()) {
             return;
-        Location location = extras.getParcelable(PARAMETER_LOCATION);
-        if (location == null)
+        }
+        final Location location = extras.getParcelable(PARAMETER_LOCATION);
+        if (location == null) {
             return;
+        }
 
         final AddressProvider provider = addressProvider;
         if (provider == null)
             return;
-        String action = intent.getAction();
+        final String action = intent.getAction();
         if (ACTION_ADDRESS.equals(action)) {
             if (extras.containsKey(PARAMETER_PERSIST)) {
                 Bundle locationExtras = location.getExtras();
@@ -113,13 +111,6 @@ public class AddressService extends IntentService implements OnFindAddressListen
         result.putExtra(PARAMETER_LOCATION, location);
         result.putExtra(PARAMETER_ADDRESS, addr);
         sendBroadcast(result);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        LocationApplication app = (LocationApplication) getApplication();
-        addressProvider = app.getAddresses();
     }
 
     @Override
