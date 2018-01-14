@@ -60,7 +60,7 @@
         <item>Helsinki</item>
         <item>Johannesburg</item>
         <item>Istanbul</item>
-        <item>Saint Petersburg</item>
+        <item>St.-Petersburg</item>
         <item>Kiev</item>
         <item>Durban</item>
         <item>Ashqelon</item>
@@ -243,7 +243,7 @@
         <item>2955805</item>
         <item>3281841</item>
         <item>3173072</item>
-        <item>3301135</item>
+        <item>3300892</item>
         <item>3210649</item>
         <item>3176904</item>
         <item>3269925</item>
@@ -257,7 +257,7 @@
         <item>3568950</item>
         <item>-3781400</item>
         <item>-3386784</item>
-        <item>-3686667</item>
+        <item>-3684852</item>
     </integer-array>
     <integer-array name="cities_longitudes" translatable="false">
         <item>-14990028</item>
@@ -329,7 +329,7 @@
         <item>3494821</item>
         <item>3498850</item>
         <item>3499293</item>
-        <item>3509467</item>
+        <item>3509814</item>
         <item>3518448</item>
         <item>3521633</item>
         <item>3530483</item>
@@ -343,7 +343,7 @@
         <item>13969171</item>
         <item>14496332</item>
         <item>15120732</item>
-        <item>17476667</item>
+        <item>17476349</item>
     </integer-array>
     <integer-array name="cities_elevations" translatable="false">
         <item>31</item>
@@ -375,7 +375,7 @@
         <item>14</item>
         <item>31</item>
         <item>769</item>
-        <item>5</item>
+        <item>6</item>
         <item>45</item>
         <item>27</item>
         <item>7</item>
@@ -429,7 +429,7 @@
         <item>44</item>
         <item>25</item>
         <item>58</item>
-        <item>79</item>
+        <item>43</item>
     </integer-array>
     <string-array name="cities_time_zones" translatable="false">
         <item>America/Anchorage</item>

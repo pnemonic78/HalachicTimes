@@ -487,7 +487,6 @@ public class GeoNames {
         String line;
         BufferedReader buf = new BufferedReader(reader);
         String[] fields;
-        String field;
 
         long geonameId;
         String language;
@@ -505,27 +504,24 @@ public class GeoNames {
                 continue;
             fields = line.split("\t");
 
-            field = fields[1];
-            geonameId = Long.parseLong(field);
+            geonameId = Long.parseLong(fields[1]);
             record = recordsById.get(geonameId);
             if (record == null) {
                 continue;
             }
-            field = fields[2];
-            if (field.isEmpty() || "post".equals(field)) {
+            language = fields[2];
+            if (language.isEmpty() || "post".equals(language)) {
                 continue;
             }
-            if (field.length() > 3) {
-                continue;
-            }
-            language = field;
 
-            field = fields[3];
+            name = fields[3];
             if ("link".equals(fields[2]) && (record.getWikipediaURL() == null)) {
-                record.setWikipediaURL(field);
+                record.setWikipediaURL(name);
                 continue;
             }
-            name = field;
+            if (language.length() > 3) {
+                continue;
+            }
 
             preferredName = (fields.length > 4) && "1".equals(fields[4]);
             shortName = (fields.length > 5) && "1".equals(fields[5]);

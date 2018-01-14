@@ -19,7 +19,9 @@
 0	232422	cs	Kampala	
 0	232422	et	Kampala	
 0	232422	hu	Kampala	
-0	232422	ro	Kampala	
+0	232422	ro	Kampala
+0	2803138	et	Antwerpen
+0	2803138	hu	Antwerpen
 0	293100	cs	Safed	
 0	293100	da	Safed	
 0	293100	de	Safed	
@@ -493,13 +495,9 @@
 0	4963642	sv	Eliot	
 0	4963642	tr	Eliot	
 0	4963642	uk	Еліот	
-0	4975802	cs	Portland	
-0	4975802	da	Portland	
-0	4975802	es	Portland	
-0	4975802	hu	Portland	
-0	4975802	lt	Portland	
-0	4975802	ro	Portland	
-0	5128581	et	New Yorgi	
+0	5746545	cs	Portland
+0	5746545	hu	Portland
+0	5128581	et	New Yorgi
 0	5150529	et	Cleveland	
 0	5150529	hu	Cleveland	
 0	5206379	cs	Pittsburgh	
