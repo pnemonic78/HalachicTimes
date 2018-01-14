@@ -153,7 +153,8 @@
 0	1007311	et	Durban	
 0	1007311	hu	Durban	
 0	1007311	ro	Durban	
-0	1007311	tr	Durban	
+0	1007311	tr	Durban
+0	10227184	he	יהוד מונוסון
 0	1070940	cs	Antananarivo	
 0	1138958	hu	Kabul	
 0	1174872	ro	Karachi	

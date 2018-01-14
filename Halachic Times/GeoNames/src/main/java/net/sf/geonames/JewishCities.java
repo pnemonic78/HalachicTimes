@@ -135,7 +135,7 @@ public class JewishCities extends Cities {
             name = place.getName(language2);
             if (name == null) {
                 name = place.getName();
-                System.err.println("Unknown translation! id: " + place.getGeoNameId() + " [" + place.getName() + "]");
+                System.err.println("Unknown translation! id: " + place.getGeoNameId() + " language: " + language2 + " name: [" + place.getName() + "]");
             }
 
             city = doc.createElement(ANDROID_ELEMENT_ITEM);

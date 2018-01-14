@@ -118,7 +118,7 @@ public class JewishCitiesFilter implements NameFilter {
             295080,
             // Ganei Tikva, Israel
             295089,
-// Gedera, Israel
+            // Gedera, Israel
             295064,
             // Geneve, Switzerland
             2660646,
@@ -134,9 +134,9 @@ public class JewishCitiesFilter implements NameFilter {
             658225,
             // Herzliya, Israel
             294778,
-// Hod HaSharon, Israel
+            // Hod HaSharon, Israel
             294760,
-// Holon, Israel
+            // Holon, Israel
             294751,
             // Houston, United States
             4699066,
@@ -152,7 +152,7 @@ public class JewishCitiesFilter implements NameFilter {
             294577,
             // Kfar Saba, Israel
             294514,
-// Kfar Yona, Israel
+            // Kfar Yona, Israel
             294492,
             // Kiev, Ukraine
             KIEV,
@@ -204,11 +204,11 @@ public class JewishCitiesFilter implements NameFilter {
             294098,
             // Nesher, Israel
             294078,
-// Ness Ziona, Israel
+            // Ness Ziona, Israel
             294074,
-// Netanya, Israel
+            // Netanya, Israel
             294071,
-// Netivot, Israel
+            // Netivot, Israel
             294068,
             // New Delhi, India
             1273294,
@@ -216,7 +216,7 @@ public class JewishCitiesFilter implements NameFilter {
             5128581,
             // Ofaqim, Israel
             293992,
-// Or Yehuda, Israel
+            // Or Yehuda, Israel
             293962,
             // Oslo, Norway
             OSLO,
@@ -236,23 +236,23 @@ public class JewishCitiesFilter implements NameFilter {
             PORTLAND,
             // Qiryat Ata, Israel
             293845,
-// Qiryat Bialik, Israel
+            // Qiryat Bialik, Israel
             293844,
-// Qiryat Gat, Israel
+            // Qiryat Gat, Israel
             293842,
-// Qiryat Mozqin, Israel
+            // Qiryat Mozqin, Israel
             293831,
-// Qiryat Shemona, Israel
+            // Qiryat Shemona, Israel
             293825,
-// Qiryat Yam, Israel
+            // Qiryat Yam, Israel
             293822,
             // Raanana, Israel
             293807,
-// Ramat Gan, Israel
+            // Ramat Gan, Israel
             293788,
-// Ramat HaSharon, Israel
+            // Ramat HaSharon, Israel
             293783,
-// Rehovot, Israel
+            // Rehovot, Israel
             293725,
             // Rio de Janeiro, Brazil
             RIO_DE_JANEIRO,
@@ -310,9 +310,9 @@ public class JewishCitiesFilter implements NameFilter {
             4140963,
             // Yavne, Israel
             293222,
-// Yehud, Israel
+            // Yehud, Israel
             293207,
-// Yehud Monosson, Israel
+            // Yehud Monosson, Israel
             10227184,
             // Zurich, Switzerland
             2657896
