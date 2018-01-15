@@ -19,9 +19,8 @@
 0	232422	cs	Kampala	
 0	232422	et	Kampala	
 0	232422	hu	Kampala	
-0	232422	ro	Kampala
-0	2803138	et	Antwerpen
-0	2803138	hu	Antwerpen
+0	232422	ro	Kampala	
+0	282926	ru	Модиин Маккаббим Реуут	
 0	293100	cs	Safed	
 0	293100	da	Safed	
 0	293100	de	Safed	
@@ -30,8 +29,8 @@
 0	293100	fi	Safed	
 0	293100	fr	Safed	
 0	293100	hu	Safed	
-0	293100	it	Safed
-0	293100	lt	Safed
+0	293100	it	Safed	
+0	293100	lt	Safed	
 0	293100	nl	Safed	
 0	293100	no	Safed	
 0	293100	pl	Safed	
@@ -49,6 +48,10 @@
 0	293322	ro	Tiberius	
 0	293322	sv	Tiberias	
 0	293397	et	Tel Aviv	
+0	293690	ru	Рош Хааин	
+0	293807	ru	Раанана	
+0	293918	ru	Петах Тиква	
+0	293992	ru	Офаким	
 0	294098	bg	Назарет	
 0	294098	hu	Názáret	
 0	294098	ro	Nazaret	
@@ -59,12 +62,14 @@
 0	294117	fi	Nahariya	
 0	294117	fr	Nahariya	
 0	294117	hu	Nahariyá	
-0	294117	it	Nahariya
-0	294117	lt	Nahariya
+0	294117	it	Nahariya	
+0	294117	lt	Nahariya	
 0	294117	no	Nahariya	
 0	294117	pt	Nahariya	
 0	294117	sv	Nahariya	
 0	294117	tr	Nahariya	
+0	294245	ru	Мевассерет Сион	
+0	294492	ru	Кфар Йона	
 0	294801	et	Haifa	
 0	294801	hu	Haifá	
 0	294946	bg	Хадера	
@@ -74,11 +79,16 @@
 0	294946	fi	Hadera	
 0	294946	he	חדרה	
 0	294946	hu	Haderá	
-0	294946	it	Hadera
-0	294946	lt	Hadera
+0	294946	it	Hadera	
+0	294946	lt	Hadera	
 0	294946	tr	Hadera	
 0	294946	uk	Хадера	
-0	295277	et	Eilat
+0	294981	ru	Гиват Шмуэль	
+0	295080	ru	Ган Явне	
+0	295089	ru	Ганей Тиква	
+0	295122	ru	Эван Иегуда	
+0	295127	ru	Тиры	
+0	295277	et	Eilat	
 0	295277	tr	Eilat	
 0	295432	bg	Бейт Шемеш	
 0	295432	cs	Bejt Shemes	
@@ -88,13 +98,15 @@
 0	295432	fi	Bet Semeksen	
 0	295432	fr	Bet Shemesh	
 0	295432	hu	Beit Szemesz	
-0	295432	it	Beit Shemesh
-0	295432	lt	Bet Shemesh
+0	295432	it	Beit Shemesh	
+0	295432	lt	Bet Shemesh	
 0	295432	no	Bet Semes	
 0	295432	pt	Bet Semeksen	
 0	295432	tr	Bet Şemeş	
 0	295432	uk	Бейт-Шемеш	
+0	295514	ru	Бней Брак	
 0	295530	no	Be'erseba	
+0	295584	ru	Азор	
 0	295620	bg	Ашкелон	
 0	295620	cs	Aškelon	
 0	295620	da	Asjkelon	
@@ -105,8 +117,8 @@
 0	295620	fi	Askelon	
 0	295620	fr	Ashkelon	
 0	295620	he	אשקלון	1
-0	295620	hu	Aszkelon
-0	295620	it	Ashkelon
+0	295620	hu	Aszkelon	
+0	295620	it	Ashkelon	
 0	295620	lt	Aškelonas	
 0	295620	nl	Askelon	
 0	295620	no	Askalon	
@@ -116,11 +128,11 @@
 0	295620	sv	Ashkelon	
 0	295620	tr	Aşkelon	
 0	295620	uk	Ашкелон	
-0	295629	et	Ashdod
+0	295629	et	Ashdod	
 0	295629	fi	Asdod	
 0	295629	hu	Aszdód	1
-0	295629	it	Ashdod
-0	295629	no	Asdod
+0	295629	it	Ashdod	
+0	295629	no	Asdod	
 0	295721	bg	Акра	
 0	295721	et	Akko	
 0	295721	fa	عکا	
@@ -129,6 +141,7 @@
 0	295721	lt	Akas	
 0	295721	ro	Acra	
 0	295721	tr	Akka	
+0	295740	ru	Афула	
 0	344979	ro	Addis Abeba	
 0	360630	hi	काहिरा	
 0	587084	ro	बाकू	
@@ -153,8 +166,7 @@
 0	1007311	et	Durban	
 0	1007311	hu	Durban	
 0	1007311	ro	Durban	
-0	1007311	tr	Durban
-0	10227184	he	יהוד מונוסון
+0	1007311	tr	Durban	
 0	1070940	cs	Antananarivo	
 0	1138958	hu	Kabul	
 0	1174872	ro	Karachi	
@@ -201,10 +213,10 @@
 0	1831797	uk	Баттамбанг	
 0	2063523	ro	Perth	
 0	2063523	tr	Perth	
-0	2158177	uk	Мельбурн
+0	2158177	uk	Мельбурн	
 0	2193733	cs	Auckland	
 0	2193733	da	Auckland	
-0	2193733	es	Auckland
+0	2193733	es	Auckland	
 0	2193733	et	Auckland	
 0	2193733	fi	Auckland	
 0	2193733	hu	Auckland	
@@ -276,6 +288,8 @@
 0	2761369	he	וינה	
 0	2761369	hi	वियना	
 0	2800866	hi	ब्रसेल्स	
+0	2803138	et	Antwerpen	
+0	2803138	hu	Antwerpen	
 0	2950159	hi	बर्लिन	
 0	2990440	cs	Nice	
 0	2990440	tr	Güzel	
@@ -442,7 +456,7 @@
 0	4699066	de	Houston	
 0	4699066	es	Houston	
 0	4699066	hu	Houston	
-0	4916732	bg	Уилмет
+0	4916732	bg	Уилмет	
 0	4916732	cs	Wilmette	
 0	4916732	da	Wilmette	
 0	4916732	de	Wilmette	
@@ -491,9 +505,7 @@
 0	4963642	sv	Eliot	
 0	4963642	tr	Eliot	
 0	4963642	uk	Еліот	
-0	5746545	cs	Portland
-0	5746545	hu	Portland
-0	5128581	et	New Yorgi
+0	5128581	et	New Yorgi	
 0	5150529	et	Cleveland	
 0	5150529	hu	Cleveland	
 0	5206379	cs	Pittsburgh	
@@ -509,16 +521,19 @@
 0	5308655	pl	Feniks	1
 0	5308655	ro	Fenix	1
 0	5308655	sv	Fenix	1
-0	5391811	et	San Diego
-0	5391959	ro	San Francisco
+0	5391811	et	San Diego	
+0	5391959	ro	San Francisco	
 0	5419384	cs	Denver	
 0	5419384	et	Denver	
 0	5419384	hu	Denver	
+0	5746545	cs	Portland	
+0	5746545	hu	Portland	
 0	5809844	et	Seattle	
 0	5879400	et	Anchorage	
 0	5879400	ro	Anchorage	
 0	6077243	hu	Montréal	
 0	6173331	hu	Vancouver	
+0	8199378	ru	Модиин Илит	
 0	8199394	bg	Ариел	
 0	8199394	cs	Ariel	
 0	8199394	da	Ariel	
@@ -526,10 +541,10 @@
 0	8199394	el	Άριελ	
 0	8199394	es	Ariel	
 0	8199394	et	Ariel	
-0	8199394	fi	Ariel
+0	8199394	fi	Ariel	
 0	8199394	fr	Ariel	
-0	8199394	hu	Ariel
-0	8199394	it	Ariel
+0	8199394	hu	Ariel	
+0	8199394	it	Ariel	
 0	8199394	lt	Arielis	
 0	8199394	nl	Ariel	
 0	8199394	no	Ariel	
@@ -540,3 +555,7 @@
 0	8199394	sv	Ariel	
 0	8199394	tr	Ariel	
 0	8199394	uk	Аріель	
+0	8428283	ru	Шоам	
+0	10227184	he	יהוד מונוסון	
+0	10227184	ru	Йехуд-Моноссон	
+0	11049562	ru	Кирьят Оно	
