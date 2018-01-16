@@ -85,13 +85,13 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final int INDEX_ELEVATION_ELEVATION = 3;
     private static final int INDEX_ELEVATION_TIMESTAMP = 4;
 
-    static final String[] PROJECTION_CITY = {
+    private static final String[] PROJECTION_CITY = {
             BaseColumns._ID,
             CitiesColumns.TIMESTAMP,
             CitiesColumns.FAVORITE};
-    static final int INDEX_CITY_ID = 0;
-    static final int INDEX_CITY_TIMESTAMP = 1;
-    static final int INDEX_CITY_FAVORITE = 2;
+    private static final int INDEX_CITY_ID = 0;
+    private static final int INDEX_CITY_TIMESTAMP = 1;
+    private static final int INDEX_CITY_FAVORITE = 2;
 
     private static final String WHERE_ID = BaseColumns._ID + "=?";
 
