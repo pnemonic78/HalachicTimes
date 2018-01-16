@@ -238,7 +238,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             for (int i = 0; i < addressLinesCount; i++) {
                 address = getAddressLine(i);
                 if (!TextUtils.isEmpty(address)
-                        && !address.contains(thoroughfare)
+                        && ((thoroughfare == null) || !address.contains(thoroughfare))
                         && !address.equals(subloc)
                         && !address.equals(locality)
                         && !address.equals(subadmin)
