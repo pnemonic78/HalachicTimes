@@ -31,6 +31,9 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
+import net.sf.times.location.impl.BingGeocoder;
+import net.sf.times.location.impl.GeoNamesGeocoder;
+import net.sf.times.location.impl.GoogleGeocoder;
 import net.sf.util.LocaleUtils;
 
 import java.util.ArrayList;
@@ -429,7 +432,7 @@ public class AddressProvider {
         float distanceMin = radius;
         Address addrMin = null;
         float[] distances = new float[1];
-        List<Address> near = new ArrayList<Address>(addresses.size());
+        List<Address> near = new ArrayList<>(addresses.size());
 
         for (Address a : addresses) {
             if (!a.hasLatitude() || !a.hasLongitude())
@@ -632,7 +635,7 @@ public class AddressProvider {
         List<Address> countries = null;
         Address country = countriesGeocoder.findCountry(location);
         if (country != null) {
-            countries = new ArrayList<Address>();
+            countries = new ArrayList<>();
             countries.add(country);
         }
         return countries;
@@ -671,7 +674,7 @@ public class AddressProvider {
         final String language = locale.getLanguage();
         final String country = locale.getCountry();
 
-        List<ZmanimAddress> addresses = new ArrayList<ZmanimAddress>();
+        List<ZmanimAddress> addresses = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         if (db == null)
             return addresses;
@@ -948,7 +951,7 @@ public class AddressProvider {
      * @return the list of locations with elevations.
      */
     public List<ZmanimLocation> queryElevations(CursorFilter filter) {
-        List<ZmanimLocation> locations = new ArrayList<ZmanimLocation>();
+        List<ZmanimLocation> locations = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         if (db == null)
             return locations;

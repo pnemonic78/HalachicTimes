@@ -13,12 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.location;
+package net.sf.times.location.impl;
 
 import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
 
+import net.sf.times.location.GeocoderBase;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocation;
 import net.sf.util.LocaleUtils;
 
 import org.xml.sax.Attributes;
