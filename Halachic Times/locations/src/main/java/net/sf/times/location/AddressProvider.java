@@ -144,7 +144,7 @@ public class AddressProvider {
     private GeocoderBase googleGeocoder;
     private GeocoderBase bingGeocoder;
     private GeocoderBase geonamesGeocoder;
-    private GeocoderBase databaseGeocoder;
+    private DatabaseGeocoder databaseGeocoder;
     private boolean online = true;
 
     /**
@@ -505,17 +505,20 @@ public class AddressProvider {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         List<Address> addresses = null;
-        GeocoderBase geocoder = databaseGeocoder;
-        if (geocoder == null) {
-            geocoder = new DatabaseGeocoder(context, locale, this);
-            databaseGeocoder = geocoder;
-        }
+        GeocoderBase geocoder = getDatabaseGeocoder();
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
         } catch (Exception e) {
             Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
+    }
+
+    private DatabaseGeocoder getDatabaseGeocoder() {
+        if (databaseGeocoder == null) {
+            databaseGeocoder = new DatabaseGeocoder(context, locale, this);
+        }
+        return databaseGeocoder;
     }
 
     private SQLiteOpenHelper getDatabaseHelper() {
@@ -894,11 +897,7 @@ public class AddressProvider {
     private ZmanimLocation findElevationDatabase(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        GeocoderBase geocoder = databaseGeocoder;
-        if (geocoder == null) {
-            geocoder = new DatabaseGeocoder(context, locale, this);
-            databaseGeocoder = geocoder;
-        }
+        GeocoderBase geocoder = getDatabaseGeocoder();
         try {
             return geocoder.getElevation(latitude, longitude);
         } catch (Exception e) {
