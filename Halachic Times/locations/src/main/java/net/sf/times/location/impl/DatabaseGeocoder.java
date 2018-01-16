@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.location;
+package net.sf.times.location.impl;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,6 +27,15 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
+import net.sf.times.location.AddressColumns;
+import net.sf.times.location.AddressOpenHelper;
+import net.sf.times.location.CitiesColumns;
+import net.sf.times.location.City;
+import net.sf.times.location.Country;
+import net.sf.times.location.ElevationColumns;
+import net.sf.times.location.GeocoderBase;
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.ZmanimLocation;
 import net.sf.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;

@@ -26,6 +26,7 @@ import android.util.Log;
 
 import net.sf.database.CursorFilter;
 import net.sf.times.location.impl.BingGeocoder;
+import net.sf.times.location.impl.DatabaseGeocoder;
 import net.sf.times.location.impl.GeoNamesGeocoder;
 import net.sf.times.location.impl.GoogleGeocoder;
 import net.sf.util.LocaleUtils;
