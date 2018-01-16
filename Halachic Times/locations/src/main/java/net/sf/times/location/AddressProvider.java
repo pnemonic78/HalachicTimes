@@ -88,7 +88,7 @@ public class AddressProvider {
 
     }
 
-    private static final String[] COLUMNS = {
+    private static final String[] PROJECTION_ADDRESS = {
             BaseColumns._ID,
             AddressColumns.LOCATION_LATITUDE,
             AddressColumns.LOCATION_LONGITUDE,
@@ -107,7 +107,7 @@ public class AddressProvider {
     static final int INDEX_LANGUAGE = 6;
     static final int INDEX_FAVORITE = 7;
 
-    private static final String[] COLUMNS_ELEVATIONS = {
+    private static final String[] PROJECTION_ELEVATION = {
             BaseColumns._ID,
             ElevationColumns.LATITUDE,
             ElevationColumns.LONGITUDE,
@@ -120,7 +120,7 @@ public class AddressProvider {
     static final int INDEX_ELEVATIONS_ELEVATION = 3;
     static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
 
-    private static final String[] COLUMNS_CITIES = {
+    private static final String[] PROJECTION_CITY = {
             BaseColumns._ID,
             CitiesColumns.TIMESTAMP,
             CitiesColumns.FAVORITE};
@@ -676,7 +676,7 @@ public class AddressProvider {
         SQLiteDatabase db = getReadableDatabase();
         if (db == null)
             return addresses;
-        Cursor cursor = db.query(TABLE_ADDRESSES, COLUMNS, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_ADDRESSES, PROJECTION_ADDRESS, null, null, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return addresses;
         }
@@ -953,7 +953,7 @@ public class AddressProvider {
         SQLiteDatabase db = getReadableDatabase();
         if (db == null)
             return locations;
-        Cursor cursor = db.query(TABLE_ELEVATIONS, COLUMNS_ELEVATIONS, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_ELEVATIONS, PROJECTION_ELEVATION, null, null, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return locations;
         }
@@ -1004,7 +1004,7 @@ public class AddressProvider {
         SQLiteDatabase db = getReadableDatabase();
         if (db == null)
             return;
-        Cursor cursor = db.query(TABLE_CITIES, COLUMNS_CITIES, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_CITIES, PROJECTION_CITY, null, null, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return;
         }
