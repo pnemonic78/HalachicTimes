@@ -142,6 +142,7 @@ public class AddressProvider {
         this.context = context;
         this.locale = locale;
         this.countriesGeocoder = new CountriesGeocoder(context, locale);
+        this.databaseGeocoder = new DatabaseGeocoder(context, locale, this);
 
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         Bundle metaData = applicationInfo.metaData;
@@ -478,7 +479,7 @@ public class AddressProvider {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         List<Address> addresses = null;
-        GeocoderBase geocoder = getDatabaseGeocoder();
+        GeocoderBase geocoder = databaseGeocoder;
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
         } catch (Exception e) {
@@ -487,26 +488,14 @@ public class AddressProvider {
         return addresses;
     }
 
-    /**
-     * Get the database GeoCoder.
-     *
-     * @return the database helper.
-     */
-    protected DatabaseGeocoder getDatabaseGeocoder() {
-        if (databaseGeocoder == null) {
-            databaseGeocoder = new DatabaseGeocoder(context, locale, this);
-        }
-        return databaseGeocoder;
-    }
-
     @Deprecated
     private SQLiteDatabase getReadableDatabase() {
-        return getDatabaseGeocoder().getReadableDatabase();
+        return databaseGeocoder.getReadableDatabase();
     }
 
     @Deprecated
     private SQLiteDatabase getWritableDatabase() {
-        return getDatabaseGeocoder().getWritableDatabase();
+        return databaseGeocoder.getWritableDatabase();
     }
 
     /**
@@ -568,9 +557,7 @@ public class AddressProvider {
 
     /** Close resources. */
     public void close() {
-        if (databaseGeocoder != null) {
-            databaseGeocoder.close();
-        }
+        databaseGeocoder.close();
     }
 
     /**
@@ -847,7 +834,7 @@ public class AddressProvider {
     private ZmanimLocation findElevationDatabase(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        GeocoderBase geocoder = getDatabaseGeocoder();
+        GeocoderBase geocoder = databaseGeocoder;
         try {
             return geocoder.getElevation(latitude, longitude);
         } catch (Exception e) {
@@ -1018,7 +1005,7 @@ public class AddressProvider {
      * Delete the list of cached addresses.
      */
     public void deleteAddresses() {
-        getDatabaseGeocoder().deleteAddresses();
+        databaseGeocoder.deleteAddresses();
     }
 
     /**
@@ -1036,6 +1023,6 @@ public class AddressProvider {
      * Delete the list of cached cities and re-populate.
      */
     public void deleteCities() {
-        getDatabaseGeocoder().deleteCities();
+        databaseGeocoder.deleteCities();
     }
 }
