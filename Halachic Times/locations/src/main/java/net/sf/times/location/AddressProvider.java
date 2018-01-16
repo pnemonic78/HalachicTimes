@@ -22,7 +22,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -47,6 +46,23 @@ import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
 import static net.sf.times.location.DatabaseGeocoder.DB_PROVIDER;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ADDRESS;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_CITIES_FAVORITE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_CITIES_ID;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_ELEVATION;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_ID;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_LATITUDE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_LONGITUDE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_TIMESTAMP;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_FAVORITE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_ID;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_LANGUAGE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_LATITUDE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_LONGITUDE;
+import static net.sf.times.location.DatabaseGeocoder.PROJECTION_ADDRESS;
+import static net.sf.times.location.DatabaseGeocoder.PROJECTION_CITY;
+import static net.sf.times.location.DatabaseGeocoder.PROJECTION_ELEVATION;
+import static net.sf.times.location.DatabaseGeocoder.WHERE_ID;
 import static net.sf.times.location.GeocoderBase.SAME_CITY;
 import static net.sf.times.location.GeocoderBase.SAME_PLANET;
 import static net.sf.times.location.GeocoderBase.SAME_PLATEAU;
@@ -88,48 +104,6 @@ public class AddressProvider {
 
     }
 
-    private static final String[] PROJECTION_ADDRESS = {
-            BaseColumns._ID,
-            AddressColumns.LOCATION_LATITUDE,
-            AddressColumns.LOCATION_LONGITUDE,
-            AddressColumns.LATITUDE,
-            AddressColumns.LONGITUDE,
-            AddressColumns.ADDRESS,
-            AddressColumns.LANGUAGE,
-            AddressColumns.FAVORITE
-    };
-    static final int INDEX_ID = 0;
-    static final int INDEX_LOCATION_LATITUDE = 1;
-    static final int INDEX_LOCATION_LONGITUDE = 2;
-    static final int INDEX_LATITUDE = 3;
-    static final int INDEX_LONGITUDE = 4;
-    static final int INDEX_ADDRESS = 5;
-    static final int INDEX_LANGUAGE = 6;
-    static final int INDEX_FAVORITE = 7;
-
-    private static final String[] PROJECTION_ELEVATION = {
-            BaseColumns._ID,
-            ElevationColumns.LATITUDE,
-            ElevationColumns.LONGITUDE,
-            ElevationColumns.ELEVATION,
-            ElevationColumns.TIMESTAMP
-    };
-    static final int INDEX_ELEVATIONS_ID = 0;
-    static final int INDEX_ELEVATIONS_LATITUDE = 1;
-    static final int INDEX_ELEVATIONS_LONGITUDE = 2;
-    static final int INDEX_ELEVATIONS_ELEVATION = 3;
-    static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
-
-    private static final String[] PROJECTION_CITY = {
-            BaseColumns._ID,
-            CitiesColumns.TIMESTAMP,
-            CitiesColumns.FAVORITE};
-    static final int INDEX_CITIES_ID = 0;
-    static final int INDEX_CITIES_TIMESTAMP = 1;
-    static final int INDEX_CITIES_FAVORITE = 2;
-
-    private static final String WHERE_ID = BaseColumns._ID + "=?";
-
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
     protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
@@ -137,7 +111,6 @@ public class AddressProvider {
 
     private final Context context;
     private final Locale locale;
-    private SQLiteOpenHelper dbHelper;
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     private Geocoder geocoder;
@@ -514,48 +487,26 @@ public class AddressProvider {
         return addresses;
     }
 
-    private DatabaseGeocoder getDatabaseGeocoder() {
+    /**
+     * Get the database GeoCoder.
+     *
+     * @return the database helper.
+     */
+    protected DatabaseGeocoder getDatabaseGeocoder() {
         if (databaseGeocoder == null) {
             databaseGeocoder = new DatabaseGeocoder(context, locale, this);
         }
         return databaseGeocoder;
     }
 
-    private SQLiteOpenHelper getDatabaseHelper() {
-        if (dbHelper == null) {
-            synchronized (this) {
-                dbHelper = new AddressOpenHelper(context);
-            }
-        }
-        return dbHelper;
-    }
-
-    /**
-     * Get the readable addresses database.
-     *
-     * @return the database - {@code null} otherwise.
-     */
+    @Deprecated
     private SQLiteDatabase getReadableDatabase() {
-        try {
-            return getDatabaseHelper().getReadableDatabase();
-        } catch (SQLiteException e) {
-            Log.e(TAG, "no readable db", e);
-        }
-        return null;
+        return getDatabaseGeocoder().getReadableDatabase();
     }
 
-    /**
-     * Get the writable addresses database.
-     *
-     * @return the database - {@code null} otherwise.
-     */
+    @Deprecated
     private SQLiteDatabase getWritableDatabase() {
-        try {
-            return getDatabaseHelper().getWritableDatabase();
-        } catch (SQLiteException e) {
-            Log.e(TAG, "no writable db", e);
-        }
-        return null;
+        return getDatabaseGeocoder().getWritableDatabase();
     }
 
     /**
@@ -615,11 +566,10 @@ public class AddressProvider {
         }
     }
 
-    /** Close database resources. */
+    /** Close resources. */
     public void close() {
-        if (dbHelper != null) {
-            dbHelper.close();
-            dbHelper = null;
+        if (databaseGeocoder != null) {
+            databaseGeocoder.close();
         }
     }
 
@@ -671,7 +621,7 @@ public class AddressProvider {
      *         a cursor filter.
      * @return the list of addresses.
      */
-    public List<ZmanimAddress> query(CursorFilter filter) {
+    public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
         final String language = locale.getLanguage();
         final String country = locale.getCountry();
 
@@ -1068,12 +1018,14 @@ public class AddressProvider {
      * Delete the list of cached addresses.
      */
     public void deleteAddresses() {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        db.delete(TABLE_ADDRESSES, null, null);
+        getDatabaseGeocoder().deleteAddresses();
     }
 
+    /**
+     * Get the list of internal cities.
+     *
+     * @return the list of cities.
+     */
     public List<City> getCities() {
         List<City> cities = countriesGeocoder.getCities();
         populateCities(cities);
@@ -1084,9 +1036,6 @@ public class AddressProvider {
      * Delete the list of cached cities and re-populate.
      */
     public void deleteCities() {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        db.delete(TABLE_CITIES, null, null);
+        getDatabaseGeocoder().deleteCities();
     }
 }

@@ -238,7 +238,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         LocationApplication app = (LocationApplication) getApplication();
         AddressProvider provider = app.getAddresses();
         LocationFormatter formatter = app.getLocations();
-        List<ZmanimAddress> addresses = provider.query(null);
+        List<ZmanimAddress> addresses = provider.queryAddresses(null);
         List<City> cities = provider.getCities();
 
         // "History" locations take precedence over "built-in" locations.

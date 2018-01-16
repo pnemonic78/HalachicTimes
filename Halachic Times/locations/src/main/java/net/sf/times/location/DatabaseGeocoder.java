@@ -17,8 +17,13 @@ package net.sf.times.location;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Location;
+import android.provider.BaseColumns;
+import android.util.Log;
 
 import net.sf.database.CursorFilter;
 import net.sf.util.LocaleUtils;
@@ -30,6 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
+import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
+
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * Android SQLite database.
@@ -38,10 +46,57 @@ import java.util.Locale;
  */
 public class DatabaseGeocoder extends GeocoderBase {
 
+    private static final String TAG = "DatabaseGeocoder";
+
     /** Database provider. */
     public static final String DB_PROVIDER = "db";
 
+    static final String[] PROJECTION_ADDRESS = {
+            BaseColumns._ID,
+            AddressColumns.LOCATION_LATITUDE,
+            AddressColumns.LOCATION_LONGITUDE,
+            AddressColumns.LATITUDE,
+            AddressColumns.LONGITUDE,
+            AddressColumns.ADDRESS,
+            AddressColumns.LANGUAGE,
+            AddressColumns.FAVORITE
+    };
+    static final int INDEX_ID = 0;
+    static final int INDEX_LOCATION_LATITUDE = 1;
+    static final int INDEX_LOCATION_LONGITUDE = 2;
+    static final int INDEX_LATITUDE = 3;
+    static final int INDEX_LONGITUDE = 4;
+    static final int INDEX_ADDRESS = 5;
+    static final int INDEX_LANGUAGE = 6;
+    static final int INDEX_FAVORITE = 7;
+
+    static final String[] PROJECTION_ELEVATION = {
+            BaseColumns._ID,
+            ElevationColumns.LATITUDE,
+            ElevationColumns.LONGITUDE,
+            ElevationColumns.ELEVATION,
+            ElevationColumns.TIMESTAMP
+    };
+    static final int INDEX_ELEVATIONS_ID = 0;
+    static final int INDEX_ELEVATIONS_LATITUDE = 1;
+    static final int INDEX_ELEVATIONS_LONGITUDE = 2;
+    static final int INDEX_ELEVATIONS_ELEVATION = 3;
+    static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
+
+    static final String[] PROJECTION_CITY = {
+            BaseColumns._ID,
+            CitiesColumns.TIMESTAMP,
+            CitiesColumns.FAVORITE};
+    static final int INDEX_CITIES_ID = 0;
+    static final int INDEX_CITIES_TIMESTAMP = 1;
+    static final int INDEX_CITIES_FAVORITE = 2;
+
+    static final String WHERE_ID = BaseColumns._ID + "=?";
+
+    private final Context context;
+    @Deprecated
     private final AddressProvider provider;
+    private SQLiteOpenHelper dbHelper;
 
     /**
      * Creates a new database geocoder.
@@ -67,7 +122,53 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public DatabaseGeocoder(Context context, Locale locale, AddressProvider provider) {
         super(locale);
+        this.context = context;
         this.provider = provider;
+    }
+
+    private SQLiteOpenHelper getDatabaseHelper() {
+        if (dbHelper == null) {
+            synchronized (this) {
+                dbHelper = new AddressOpenHelper(context);
+            }
+        }
+        return dbHelper;
+    }
+
+    /**
+     * Get the readable addresses database.
+     *
+     * @return the database - {@code null} otherwise.
+     */
+    public SQLiteDatabase getReadableDatabase() {
+        try {
+            return getDatabaseHelper().getReadableDatabase();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "no readable db", e);
+        }
+        return null;
+    }
+
+    /**
+     * Get the writable addresses database.
+     *
+     * @return the database - {@code null} otherwise.
+     */
+    public SQLiteDatabase getWritableDatabase() {
+        try {
+            return getDatabaseHelper().getWritableDatabase();
+        } catch (SQLiteException e) {
+            Log.e(TAG, "no writable db", e);
+        }
+        return null;
+    }
+
+    /** Close database resources. */
+    public void close() {
+        if (dbHelper != null) {
+            dbHelper.close();
+            dbHelper = null;
+        }
     }
 
     @Override
@@ -83,19 +184,19 @@ public class DatabaseGeocoder extends GeocoderBase {
 
             @Override
             public boolean accept(Cursor cursor) {
-                double locationLatitude = cursor.getDouble(AddressProvider.INDEX_LOCATION_LATITUDE);
-                double locationLongitude = cursor.getDouble(AddressProvider.INDEX_LOCATION_LONGITUDE);
+                double locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
+                double locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
                 if (mDistance[0] <= SAME_LOCATION)
                     return true;
 
-                double addressLatitude = cursor.getDouble(AddressProvider.INDEX_LATITUDE);
-                double addressLongitude = cursor.getDouble(AddressProvider.INDEX_LONGITUDE);
+                double addressLatitude = cursor.getDouble(INDEX_LATITUDE);
+                double addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, mDistance);
                 return (mDistance[0] <= SAME_LOCATION);
             }
         };
-        List<ZmanimAddress> q = provider.query(filter);
+        List<ZmanimAddress> q = provider.queryAddresses(filter);
         List<Address> addresses = new ArrayList<Address>(q);
 
         return addresses;
@@ -118,8 +219,8 @@ public class DatabaseGeocoder extends GeocoderBase {
 
             @Override
             public boolean accept(Cursor cursor) {
-                double locationLatitude = cursor.getDouble(AddressProvider.INDEX_ELEVATIONS_LATITUDE);
-                double locationLongitude = cursor.getDouble(AddressProvider.INDEX_ELEVATIONS_LONGITUDE);
+                double locationLatitude = cursor.getDouble(INDEX_ELEVATIONS_LATITUDE);
+                double locationLongitude = cursor.getDouble(INDEX_ELEVATIONS_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
                 return (mDistance[0] <= SAME_PLATEAU);
             }
@@ -170,6 +271,26 @@ public class DatabaseGeocoder extends GeocoderBase {
     @Override
     protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
         return null;
+    }
+
+    /**
+     * Delete the list of cached addresses.
+     */
+    public void deleteAddresses() {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+        db.delete(TABLE_ADDRESSES, null, null);
+    }
+
+    /**
+     * Delete the list of cached cities and re-populate.
+     */
+    public void deleteCities() {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+        db.delete(TABLE_CITIES, null, null);
     }
 
 }
