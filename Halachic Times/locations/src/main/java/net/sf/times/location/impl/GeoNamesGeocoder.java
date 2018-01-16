@@ -75,19 +75,17 @@ public class GeoNamesGeocoder extends GeocoderBase {
      *         the context.
      */
     public GeoNamesGeocoder(Context context) {
-        this(context, LocaleUtils.getDefaultLocale(context));
+        this(LocaleUtils.getDefaultLocale(context));
     }
 
     /**
      * Creates a new GeoNames geocoder.
      *
-     * @param context
-     *         the context.
      * @param locale
      *         the locale.
      */
-    public GeoNamesGeocoder(Context context, Locale locale) {
-        super(context, locale);
+    public GeoNamesGeocoder(Locale locale) {
+        super(locale);
     }
 
     @Override

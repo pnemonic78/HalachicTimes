@@ -62,19 +62,17 @@ public class GoogleGeocoder extends GeocoderBase {
      *         the context.
      */
     public GoogleGeocoder(Context context) {
-        this(context, LocaleUtils.getDefaultLocale(context));
+        this(LocaleUtils.getDefaultLocale(context));
     }
 
     /**
      * Creates a new Google geocoder.
      *
-     * @param context
-     *         the context.
      * @param locale
      *         the locale.
      */
-    public GoogleGeocoder(Context context, Locale locale) {
-        super(context, locale);
+    public GoogleGeocoder(Locale locale) {
+        super(locale);
     }
 
     @Override

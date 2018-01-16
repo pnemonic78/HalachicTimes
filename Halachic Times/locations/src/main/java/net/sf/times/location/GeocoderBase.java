@@ -76,7 +76,6 @@ public abstract class GeocoderBase {
     protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
 
-    protected final Context context;
     protected final Locale locale;
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
@@ -84,13 +83,11 @@ public abstract class GeocoderBase {
     /**
      * Creates a new geocoder.
      *
-     * @param context
-     *         the context.
      * @param locale
      *         the locale.
      */
-    public GeocoderBase(Context context, Locale locale) {
-        this.context = context;
+    public GeocoderBase(Locale locale) {
+//        this.context = context;
         this.locale = locale;
     }
 
@@ -101,7 +98,7 @@ public abstract class GeocoderBase {
      *         the context.
      */
     public GeocoderBase(Context context) {
-        this(context, LocaleUtils.getDefaultLocale(context));
+        this(LocaleUtils.getDefaultLocale(context));
     }
 
     protected SAXParserFactory getParserFactory() {
@@ -338,8 +335,6 @@ public abstract class GeocoderBase {
      *
      * @param data
      *         the XML data.
-     * @param maxResults
-     *         the maximum number of results.
      * @return the location - {@code null} otherwise.
      * @throws ParserConfigurationException
      *         if an XML error occurs.

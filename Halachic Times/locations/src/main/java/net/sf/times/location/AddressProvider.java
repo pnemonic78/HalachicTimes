@@ -46,6 +46,7 @@ import java.util.Map;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
+import static net.sf.times.location.DatabaseGeocoder.DB_PROVIDER;
 import static net.sf.times.location.GeocoderBase.SAME_CITY;
 import static net.sf.times.location.GeocoderBase.SAME_PLANET;
 import static net.sf.times.location.GeocoderBase.SAME_PLATEAU;
@@ -86,9 +87,6 @@ public class AddressProvider {
         void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated);
 
     }
-
-    /** Database provider. */
-    public static final String DB_PROVIDER = "db";
 
     private static final String[] COLUMNS = {
             BaseColumns._ID,
@@ -335,7 +333,7 @@ public class AddressProvider {
         List<Address> addresses = null;
         GeocoderBase geocoder = googleGeocoder;
         if (geocoder == null) {
-            geocoder = new GoogleGeocoder(context, locale);
+            geocoder = new GoogleGeocoder(locale);
             googleGeocoder = geocoder;
         }
         try {
@@ -361,7 +359,7 @@ public class AddressProvider {
         List<Address> addresses = null;
         GeocoderBase geocoder = geonamesGeocoder;
         if (geocoder == null) {
-            geocoder = new GeoNamesGeocoder(context, locale);
+            geocoder = new GeoNamesGeocoder(locale);
             geonamesGeocoder = geocoder;
         }
         try {
@@ -387,7 +385,7 @@ public class AddressProvider {
         List<Address> addresses = null;
         GeocoderBase geocoder = bingGeocoder;
         if (geocoder == null) {
-            geocoder = new BingGeocoder(context, locale);
+            geocoder = new BingGeocoder(locale);
             bingGeocoder = geocoder;
         }
         try {
@@ -827,7 +825,7 @@ public class AddressProvider {
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = googleGeocoder;
         if (geocoder == null) {
-            geocoder = new GoogleGeocoder(context, locale);
+            geocoder = new GoogleGeocoder(locale);
             googleGeocoder = geocoder;
         }
         try {
@@ -850,7 +848,7 @@ public class AddressProvider {
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = geonamesGeocoder;
         if (geocoder == null) {
-            geocoder = new GeoNamesGeocoder(context, locale);
+            geocoder = new GeoNamesGeocoder(locale);
             geonamesGeocoder = geocoder;
         }
         try {
@@ -873,7 +871,7 @@ public class AddressProvider {
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = bingGeocoder;
         if (geocoder == null) {
-            geocoder = new BingGeocoder(context, locale);
+            geocoder = new BingGeocoder(locale);
             bingGeocoder = geocoder;
         }
         try {

@@ -38,6 +38,9 @@ import java.util.Locale;
  */
 public class DatabaseGeocoder extends GeocoderBase {
 
+    /** Database provider. */
+    public static final String DB_PROVIDER = "db";
+
     private final AddressProvider provider;
 
     /**
@@ -63,7 +66,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *         the address provider.
      */
     public DatabaseGeocoder(Context context, Locale locale, AddressProvider provider) {
-        super(context, locale);
+        super(locale);
         this.provider = provider;
     }
 
@@ -155,7 +158,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             weightSum += (1 - (distances[i] / distancesSum)) * elevations[i];
         }
 
-        ZmanimLocation elevated = new ZmanimLocation(AddressProvider.DB_PROVIDER);
+        ZmanimLocation elevated = new ZmanimLocation(DB_PROVIDER);
         elevated.setTime(System.currentTimeMillis());
         elevated.setLatitude(latitude);
         elevated.setLongitude(longitude);

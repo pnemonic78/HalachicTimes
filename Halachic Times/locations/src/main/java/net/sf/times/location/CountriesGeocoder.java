@@ -97,7 +97,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the locale.
      */
     public CountriesGeocoder(Context context, Locale locale) {
-        super(context, locale);
+        super(locale);
         init(context);
     }
 

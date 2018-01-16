@@ -62,19 +62,17 @@ public class BingGeocoder extends GeocoderBase {
      *         the context.
      */
     public BingGeocoder(Context context) {
-        this(context, LocaleUtils.getDefaultLocale(context));
+        this(LocaleUtils.getDefaultLocale(context));
     }
 
     /**
      * Creates a new Bing geocoder.
      *
-     * @param context
-     *         the context.
      * @param locale
      *         the locale.
      */
-    public BingGeocoder(Context context, Locale locale) {
-        super(context, locale);
+    public BingGeocoder(Locale locale) {
+        super(locale);
     }
 
     @Override
