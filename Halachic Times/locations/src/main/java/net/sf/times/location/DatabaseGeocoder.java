@@ -15,6 +15,7 @@
  */
 package net.sf.times.location;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -92,7 +93,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     static final int INDEX_CITY_TIMESTAMP = 1;
     static final int INDEX_CITY_FAVORITE = 2;
 
-    static final String WHERE_ID = BaseColumns._ID + "=?";
+    private static final String WHERE_ID = BaseColumns._ID + "=?";
 
     private final Context context;
     private SQLiteOpenHelper dbHelper;
@@ -268,6 +269,17 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     /**
+     * Format the address.
+     *
+     * @param a
+     *         the address.
+     * @return the formatted address name.
+     */
+    protected static CharSequence formatAddress(ZmanimAddress a) {
+        return a.getFormatted();
+    }
+
+    /**
      * Fetch addresses from the database.
      *
      * @param filter
@@ -334,6 +346,63 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     /**
+     * Insert or update the address in the local database. The local database is
+     * supposed to reduce redundant network requests.
+     *
+     * @param location
+     *         the location.
+     * @param address
+     *         the address.
+     */
+    public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
+        if (address == null)
+            return;
+        long id = address.getId();
+        if (id < 0L)
+            return;
+        // Cities have their own table.
+        if (address instanceof City) {
+            insertOrUpdateCity((City) address);
+            return;
+        }
+        // Nothing to save.
+        if (address instanceof Country) {
+            return;
+        }
+        boolean insert = id == 0L;
+
+        ContentValues values = new ContentValues();
+        if (insert) {
+            if (location == null) {
+                values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
+                values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
+            } else {
+                values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
+                values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
+            }
+        }
+        values.put(AddressColumns.ADDRESS, formatAddress(address).toString());
+        values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
+        values.put(AddressColumns.LATITUDE, address.getLatitude());
+        values.put(AddressColumns.LONGITUDE, address.getLongitude());
+        values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
+        values.put(AddressColumns.FAVORITE, address.isFavorite());
+
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+        if (insert) {
+            id = db.insert(TABLE_ADDRESSES, null, values);
+            if (id > 0L) {
+                address.setId(id);
+            }
+        } else {
+            String[] whereArgs = {Long.toString(id)};
+            db.update(TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
+        }
+    }
+
+    /**
      * Delete the list of cached addresses.
      */
     public void deleteAddresses() {
@@ -387,6 +456,40 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     /**
+     * Insert or update the location with elevation in the local database. The
+     * local database is supposed to reduce redundant network requests.
+     *
+     * @param location
+     *         the location.
+     */
+    public void insertOrUpdateElevation(ZmanimLocation location) {
+        if ((location == null) || !location.hasAltitude())
+            return;
+        long id = location.getId();
+        if (id < 0L)
+            return;
+
+        ContentValues values = new ContentValues();
+        values.put(ElevationColumns.LATITUDE, location.getLatitude());
+        values.put(ElevationColumns.LONGITUDE, location.getLongitude());
+        values.put(ElevationColumns.ELEVATION, location.getAltitude());
+        values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
+
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+        if (id == 0L) {
+            id = db.insert(TABLE_ELEVATIONS, null, values);
+            if (id > 0L) {
+                location.setId(id);
+            }
+        } else {
+            String[] whereArgs = {Long.toString(id)};
+            db.update(TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
+        }
+    }
+
+    /**
      * Delete the list of cached elevations.
      */
     public void deleteElevations() {
@@ -394,6 +497,39 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (db == null)
             return;
         db.delete(TABLE_ELEVATIONS, null, null);
+    }
+
+    /**
+     * Insert or update the city in the local database.
+     *
+     * @param city
+     *         the city.
+     */
+    public void insertOrUpdateCity(City city) {
+        if (city == null)
+            return;
+
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+
+        ContentValues values = new ContentValues();
+        values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
+        values.put(CitiesColumns.FAVORITE, city.isFavorite());
+
+        long id = city.getId();
+        if (id == 0L) {
+            id = City.generateCityId(city);
+
+            values.put(BaseColumns._ID, id);
+            id = db.insert(TABLE_CITIES, null, values);
+            if (id > 0L) {
+                city.setId(id);
+            }
+        } else {
+            String[] whereArgs = {Long.toString(id)};
+            db.update(TABLE_CITIES, values, WHERE_ID, whereArgs);
+        }
     }
 
     /**

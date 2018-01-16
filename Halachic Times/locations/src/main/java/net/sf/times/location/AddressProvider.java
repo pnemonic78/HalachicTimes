@@ -15,7 +15,6 @@
  */
 package net.sf.times.location;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -26,7 +25,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
@@ -42,13 +40,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
-import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
 import static net.sf.times.location.DatabaseGeocoder.INDEX_CITY_FAVORITE;
 import static net.sf.times.location.DatabaseGeocoder.INDEX_CITY_ID;
 import static net.sf.times.location.DatabaseGeocoder.PROJECTION_CITY;
-import static net.sf.times.location.DatabaseGeocoder.WHERE_ID;
 import static net.sf.times.location.GeocoderBase.SAME_CITY;
 import static net.sf.times.location.GeocoderBase.SAME_PLANET;
 import static net.sf.times.location.GeocoderBase.SAME_PLATEAU;
@@ -441,17 +436,6 @@ public class AddressProvider {
     }
 
     /**
-     * Format the address.
-     *
-     * @param a
-     *         the address.
-     * @return the formatted address name.
-     */
-    public static CharSequence formatAddress(ZmanimAddress a) {
-        return a.getFormatted();
-    }
-
-    /**
      * Find addresses that are known to describe the area immediately
      * surrounding the given latitude and longitude.
      * <p/>
@@ -474,16 +458,6 @@ public class AddressProvider {
         return addresses;
     }
 
-    @Deprecated
-    private SQLiteDatabase getReadableDatabase() {
-        return databaseGeocoder.getReadableDatabase();
-    }
-
-    @Deprecated
-    private SQLiteDatabase getWritableDatabase() {
-        return databaseGeocoder.getWritableDatabase();
-    }
-
     /**
      * Insert or update the address in the local database. The local database is
      * supposed to reduce redundant network requests.
@@ -494,51 +468,7 @@ public class AddressProvider {
      *         the address.
      */
     public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
-        if (address == null)
-            return;
-        long id = address.getId();
-        if (id < 0L)
-            return;
-        // Cities have their own table.
-        if (address instanceof City) {
-            insertOrUpdateCity((City) address);
-            return;
-        }
-        // Nothing to save.
-        if (address instanceof Country) {
-            return;
-        }
-        boolean insert = id == 0L;
-
-        ContentValues values = new ContentValues();
-        if (insert) {
-            if (location == null) {
-                values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
-                values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
-            } else {
-                values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
-                values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
-            }
-        }
-        values.put(AddressColumns.ADDRESS, formatAddress(address).toString());
-        values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
-        values.put(AddressColumns.LATITUDE, address.getLatitude());
-        values.put(AddressColumns.LONGITUDE, address.getLongitude());
-        values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
-        values.put(AddressColumns.FAVORITE, address.isFavorite());
-
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        if (insert) {
-            id = db.insert(TABLE_ADDRESSES, null, values);
-            if (id > 0L) {
-                address.setId(id);
-            }
-        } else {
-            String[] whereArgs = {Long.toString(id)};
-            db.update(TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
-        }
+        databaseGeocoder.insertOrUpdateAddress(location, address);
     }
 
     /** Close resources. */
@@ -782,30 +712,7 @@ public class AddressProvider {
      *         the location.
      */
     public void insertOrUpdateElevation(ZmanimLocation location) {
-        if ((location == null) || !location.hasAltitude())
-            return;
-        long id = location.getId();
-        if (id < 0L)
-            return;
-
-        ContentValues values = new ContentValues();
-        values.put(ElevationColumns.LATITUDE, location.getLatitude());
-        values.put(ElevationColumns.LONGITUDE, location.getLongitude());
-        values.put(ElevationColumns.ELEVATION, location.getAltitude());
-        values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
-
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        if (id == 0L) {
-            id = db.insert(TABLE_ELEVATIONS, null, values);
-            if (id > 0L) {
-                location.setId(id);
-            }
-        } else {
-            String[] whereArgs = {Long.toString(id)};
-            db.update(TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
-        }
+        databaseGeocoder.insertOrUpdateElevation(location);
     }
 
     /**
@@ -825,7 +732,7 @@ public class AddressProvider {
             citiesById.put(id, city);
         }
 
-        SQLiteDatabase db = getReadableDatabase();
+        SQLiteDatabase db = databaseGeocoder.getReadableDatabase();
         if (db == null)
             return;
         Cursor cursor = db.query(TABLE_CITIES, PROJECTION_CITY, null, null, null, null, null);
@@ -853,39 +760,6 @@ public class AddressProvider {
             Log.e(TAG, "Populate cities: " + se.getLocalizedMessage(), se);
         } finally {
             cursor.close();
-        }
-    }
-
-    /**
-     * Insert or update the city in the local database.
-     *
-     * @param city
-     *         the city.
-     */
-    public void insertOrUpdateCity(City city) {
-        if (city == null)
-            return;
-
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-
-        ContentValues values = new ContentValues();
-        values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
-        values.put(CitiesColumns.FAVORITE, city.isFavorite());
-
-        long id = city.getId();
-        if (id == 0L) {
-            id = City.generateCityId(city);
-
-            values.put(BaseColumns._ID, id);
-            id = db.insert(TABLE_CITIES, null, values);
-            if (id > 0L) {
-                city.setId(id);
-            }
-        } else {
-            String[] whereArgs = {Long.toString(id)};
-            db.update(TABLE_CITIES, values, WHERE_ID, whereArgs);
         }
     }
 
