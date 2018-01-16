@@ -18,9 +18,6 @@ package net.sf.times.location;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -40,10 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_CITY_FAVORITE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_CITY_ID;
-import static net.sf.times.location.DatabaseGeocoder.PROJECTION_CITY;
 import static net.sf.times.location.GeocoderBase.SAME_CITY;
 import static net.sf.times.location.GeocoderBase.SAME_PLANET;
 import static net.sf.times.location.GeocoderBase.SAME_PLATEAU;
@@ -724,6 +717,7 @@ public class AddressProvider {
     public void populateCities(Collection<City> cities) {
         Map<Long, City> citiesById = new HashMap<>();
         long id;
+
         for (City city : cities) {
             id = city.getId();
             if (id == 0L) {
@@ -732,34 +726,16 @@ public class AddressProvider {
             citiesById.put(id, city);
         }
 
-        SQLiteDatabase db = databaseGeocoder.getReadableDatabase();
-        if (db == null)
-            return;
-        Cursor cursor = db.query(TABLE_CITIES, PROJECTION_CITY, null, null, null, null, null);
-        if ((cursor == null) || cursor.isClosed()) {
-            return;
-        }
+        List<City> citiesDb = databaseGeocoder.queryCities(null);
+        City city;
 
-        try {
-            if (cursor.moveToFirst()) {
-                boolean favorite;
-                City city;
-
-                do {
-                    id = cursor.getLong(INDEX_CITY_ID);
-                    favorite = cursor.getShort(INDEX_CITY_FAVORITE) != 0;
-
-                    city = citiesById.get(id);
-                    if (city != null) {
-                        city.setId(id);
-                        city.setFavorite(favorite);
-                    }
-                } while (cursor.moveToNext());
+        for (City cityDb : citiesDb) {
+            id = cityDb.getId();
+            city = citiesById.get(id);
+            if (city != null) {
+                city.setId(id);
+                city.setFavorite(cityDb.isFavorite());
             }
-        } catch (SQLiteException se) {
-            Log.e(TAG, "Populate cities: " + se.getLocalizedMessage(), se);
-        } finally {
-            cursor.close();
         }
     }
 

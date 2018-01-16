@@ -135,7 +135,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @return the database - {@code null} otherwise.
      */
-    public SQLiteDatabase getReadableDatabase() {
+    protected SQLiteDatabase getReadableDatabase() {
         try {
             return getDatabaseHelper().getReadableDatabase();
         } catch (SQLiteException e) {
@@ -149,7 +149,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @return the database - {@code null} otherwise.
      */
-    public SQLiteDatabase getWritableDatabase() {
+    protected SQLiteDatabase getWritableDatabase() {
         try {
             return getDatabaseHelper().getWritableDatabase();
         } catch (SQLiteException e) {
@@ -301,37 +301,29 @@ public class DatabaseGeocoder extends GeocoderBase {
 
         try {
             if (cursor.moveToFirst()) {
-                long id;
-                double addressLatitude;
-                double addressLongitude;
-                String formatted;
                 String locationLanguage;
                 Locale locale;
                 ZmanimAddress address;
-                boolean favorite;
 
                 do {
                     locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE);
                     if ((locationLanguage == null) || locationLanguage.equals(language)) {
-                        if ((filter != null) && !filter.accept(cursor))
+                        if ((filter != null) && !filter.accept(cursor)) {
                             continue;
+                        }
 
-                        addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE);
-                        addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE);
-                        id = cursor.getLong(INDEX_ADDRESS_ID);
-                        formatted = cursor.getString(INDEX_ADDRESS_ADDRESS);
-                        favorite = cursor.getShort(INDEX_ADDRESS_FAVORITE) != 0;
-                        if (locationLanguage == null)
+                        if (locationLanguage == null) {
                             locale = this.locale;
-                        else
+                        } else {
                             locale = new Locale(locationLanguage, country);
+                        }
 
                         address = new ZmanimAddress(locale);
-                        address.setFormatted(formatted);
-                        address.setId(id);
-                        address.setLatitude(addressLatitude);
-                        address.setLongitude(addressLongitude);
-                        address.setFavorite(favorite);
+                        address.setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS));
+                        address.setId(cursor.getLong(INDEX_ADDRESS_ID));
+                        address.setLatitude(cursor.getDouble(INDEX_ADDRESS_LATITUDE));
+                        address.setLongitude(cursor.getDouble(INDEX_ADDRESS_LONGITUDE));
+                        address.setFavorite(cursor.getShort(INDEX_ADDRESS_FAVORITE) != 0);
                         addresses.add(address);
                     }
                 } while (cursor.moveToNext());
@@ -434,8 +426,9 @@ public class DatabaseGeocoder extends GeocoderBase {
                 ZmanimLocation location;
 
                 do {
-                    if ((filter != null) && !filter.accept(cursor))
+                    if ((filter != null) && !filter.accept(cursor)) {
                         continue;
+                    }
 
                     location = new ZmanimLocation(DB_PROVIDER);
                     location.setId(cursor.getLong(INDEX_ELEVATION_ID));
@@ -497,6 +490,47 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (db == null)
             return;
         db.delete(TABLE_ELEVATIONS, null, null);
+    }
+
+    /**
+     * Fetch cities from the database.
+     *
+     * @param filter
+     *         a cursor filter.
+     * @return the list of cities.
+     */
+    public List<City> queryCities(CursorFilter filter) {
+        List<City> cities = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        if (db == null)
+            return cities;
+        Cursor cursor = db.query(TABLE_CITIES, PROJECTION_CITY, null, null, null, null, null);
+        if ((cursor == null) || cursor.isClosed()) {
+            return cities;
+        }
+
+        try {
+            if (cursor.moveToFirst()) {
+                City city;
+
+                do {
+                    if ((filter != null) && !filter.accept(cursor)) {
+                        continue;
+                    }
+
+                    city = new City(locale);
+                    city.setId(cursor.getLong(INDEX_CITY_ID));
+                    city.setFavorite(cursor.getShort(INDEX_CITY_FAVORITE) != 0);
+                    cities.add(city);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteException se) {
+            Log.e(TAG, "Query cities: " + se.getLocalizedMessage(), se);
+        } finally {
+            cursor.close();
+        }
+
+        return cities;
     }
 
     /**
