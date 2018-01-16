@@ -13,25 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.location;
+package net.sf.times.location.impl;
 
 import android.content.Context;
+
+import net.sf.times.location.ZmanimAddress;
+import net.sf.times.location.impl.SpecificLocationAdapter;
 
 import java.util.List;
 
 /**
- * Location adapter for "favorite" locations.
+ * Location adapter for locations the user has "previously visited".
  *
  * @author Moshe Waisberg
  */
-public class FavoritesLocationAdapter extends SpecificLocationAdapter {
+public class HistoryLocationAdapter extends SpecificLocationAdapter {
 
-    public FavoritesLocationAdapter(Context context, List<LocationItem> items) {
+    public HistoryLocationAdapter(Context context, List<LocationItem> items) {
         super(context, items);
     }
 
     @Override
     protected boolean isSpecific(ZmanimAddress address) {
-        return address.isFavorite();
+        return address.getId() > 0L;
     }
+
 }

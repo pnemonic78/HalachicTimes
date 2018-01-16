@@ -1,4 +1,4 @@
-package net.sf.times.location;
+package net.sf.times.location.util;
 
 import android.annotation.TargetApi;
 import android.location.Location;
