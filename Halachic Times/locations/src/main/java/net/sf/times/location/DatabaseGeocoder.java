@@ -37,6 +37,7 @@ import java.util.Locale;
 
 import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
+import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -48,7 +49,7 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     private static final String TAG = "DatabaseGeocoder";
 
-    /** Database provider. */
+    /** Database  */
     public static final String DB_PROVIDER = "db";
 
     static final String[] PROJECTION_ADDRESS = {
@@ -94,8 +95,6 @@ public class DatabaseGeocoder extends GeocoderBase {
     static final String WHERE_ID = BaseColumns._ID + "=?";
 
     private final Context context;
-    @Deprecated
-    private final AddressProvider provider;
     private SQLiteOpenHelper dbHelper;
 
     /**
@@ -103,11 +102,9 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param context
      *         the context.
-     * @param provider
-     *         the address provider.
      */
-    public DatabaseGeocoder(Context context, AddressProvider provider) {
-        this(context, LocaleUtils.getDefaultLocale(context), provider);
+    public DatabaseGeocoder(Context context) {
+        this(context, LocaleUtils.getDefaultLocale(context));
     }
 
     /**
@@ -117,13 +114,10 @@ public class DatabaseGeocoder extends GeocoderBase {
      *         the context.
      * @param locale
      *         the locale.
-     * @param provider
-     *         the address provider.
      */
-    public DatabaseGeocoder(Context context, Locale locale, AddressProvider provider) {
+    public DatabaseGeocoder(Context context, Locale locale) {
         super(locale);
         this.context = context;
-        this.provider = provider;
     }
 
     private SQLiteOpenHelper getDatabaseHelper() {
@@ -196,7 +190,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 return (mDistance[0] <= SAME_LOCATION);
             }
         };
-        List<ZmanimAddress> q = provider.queryAddresses(filter);
+        List<ZmanimAddress> q = queryAddresses(filter);
         List<Address> addresses = new ArrayList<Address>(q);
 
         return addresses;
@@ -225,7 +219,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 return (mDistance[0] <= SAME_PLATEAU);
             }
         };
-        List<ZmanimLocation> locations = provider.queryElevations(filter);
+        List<ZmanimLocation> locations = queryElevations(filter);
 
         int locationsCount = locations.size();
         if (locationsCount == 0)
@@ -274,6 +268,72 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     /**
+     * Fetch addresses from the database.
+     *
+     * @param filter
+     *         a cursor filter.
+     * @return the list of addresses.
+     */
+    public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
+        final String language = locale.getLanguage();
+        final String country = locale.getCountry();
+
+        List<ZmanimAddress> addresses = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        if (db == null)
+            return addresses;
+        Cursor cursor = db.query(TABLE_ADDRESSES, PROJECTION_ADDRESS, null, null, null, null, null);
+        if ((cursor == null) || cursor.isClosed()) {
+            return addresses;
+        }
+
+        try {
+            if (cursor.moveToFirst()) {
+                long id;
+                double addressLatitude;
+                double addressLongitude;
+                String formatted;
+                String locationLanguage;
+                Locale locale;
+                ZmanimAddress address;
+                boolean favorite;
+
+                do {
+                    locationLanguage = cursor.getString(INDEX_LANGUAGE);
+                    if ((locationLanguage == null) || locationLanguage.equals(language)) {
+                        if ((filter != null) && !filter.accept(cursor))
+                            continue;
+
+                        addressLatitude = cursor.getDouble(INDEX_LATITUDE);
+                        addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+                        id = cursor.getLong(INDEX_ID);
+                        formatted = cursor.getString(INDEX_ADDRESS);
+                        favorite = cursor.getShort(INDEX_FAVORITE) != 0;
+                        if (locationLanguage == null)
+                            locale = this.locale;
+                        else
+                            locale = new Locale(locationLanguage, country);
+
+                        address = new ZmanimAddress(locale);
+                        address.setFormatted(formatted);
+                        address.setId(id);
+                        address.setLatitude(addressLatitude);
+                        address.setLongitude(addressLongitude);
+                        address.setFavorite(favorite);
+                        addresses.add(address);
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteException se) {
+            Log.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
+        } finally {
+            cursor.close();
+        }
+
+        return addresses;
+    }
+
+    /**
      * Delete the list of cached addresses.
      */
     public void deleteAddresses() {
@@ -281,6 +341,59 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (db == null)
             return;
         db.delete(TABLE_ADDRESSES, null, null);
+    }
+
+    /**
+     * Fetch elevations from the database.
+     *
+     * @param filter
+     *         a cursor filter.
+     * @return the list of locations with elevations.
+     */
+    public List<ZmanimLocation> queryElevations(CursorFilter filter) {
+        List<ZmanimLocation> locations = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        if (db == null)
+            return locations;
+        Cursor cursor = db.query(TABLE_ELEVATIONS, PROJECTION_ELEVATION, null, null, null, null, null);
+        if ((cursor == null) || cursor.isClosed()) {
+            return locations;
+        }
+
+        try {
+            if (cursor.moveToFirst()) {
+                ZmanimLocation location;
+
+                do {
+                    if ((filter != null) && !filter.accept(cursor))
+                        continue;
+
+                    location = new ZmanimLocation(DB_PROVIDER);
+                    location.setId(cursor.getLong(INDEX_ELEVATIONS_ID));
+                    location.setLatitude(cursor.getDouble(INDEX_ELEVATIONS_LATITUDE));
+                    location.setLongitude(cursor.getDouble(INDEX_ELEVATIONS_LONGITUDE));
+                    location.setAltitude(cursor.getDouble(INDEX_ELEVATIONS_ELEVATION));
+                    location.setTime(cursor.getLong(INDEX_ELEVATIONS_TIMESTAMP));
+                    locations.add(location);
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteException se) {
+            Log.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
+        } finally {
+            cursor.close();
+        }
+
+        return locations;
+    }
+
+    /**
+     * Delete the list of cached elevations.
+     */
+    public void deleteElevations() {
+        SQLiteDatabase db = getWritableDatabase();
+        if (db == null)
+            return;
+        db.delete(TABLE_ELEVATIONS, null, null);
     }
 
     /**

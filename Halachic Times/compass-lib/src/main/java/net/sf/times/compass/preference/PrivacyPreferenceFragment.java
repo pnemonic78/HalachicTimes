@@ -61,5 +61,7 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
         LocationApplication app = (LocationApplication) getActivity().getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
+        provider.deleteElevations();
+        provider.deleteCities();
     }
 }

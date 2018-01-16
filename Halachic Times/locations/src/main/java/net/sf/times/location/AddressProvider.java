@@ -45,23 +45,9 @@ import java.util.Map;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
-import static net.sf.times.location.DatabaseGeocoder.DB_PROVIDER;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ADDRESS;
 import static net.sf.times.location.DatabaseGeocoder.INDEX_CITIES_FAVORITE;
 import static net.sf.times.location.DatabaseGeocoder.INDEX_CITIES_ID;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_ELEVATION;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_ID;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_LATITUDE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_LONGITUDE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ELEVATIONS_TIMESTAMP;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_FAVORITE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_ID;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_LANGUAGE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_LATITUDE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_LONGITUDE;
-import static net.sf.times.location.DatabaseGeocoder.PROJECTION_ADDRESS;
 import static net.sf.times.location.DatabaseGeocoder.PROJECTION_CITY;
-import static net.sf.times.location.DatabaseGeocoder.PROJECTION_ELEVATION;
 import static net.sf.times.location.DatabaseGeocoder.WHERE_ID;
 import static net.sf.times.location.GeocoderBase.SAME_CITY;
 import static net.sf.times.location.GeocoderBase.SAME_PLANET;
@@ -142,7 +128,7 @@ public class AddressProvider {
         this.context = context;
         this.locale = locale;
         this.countriesGeocoder = new CountriesGeocoder(context, locale);
-        this.databaseGeocoder = new DatabaseGeocoder(context, locale, this);
+        this.databaseGeocoder = new DatabaseGeocoder(context, locale);
 
         ApplicationInfo applicationInfo = context.getApplicationInfo();
         Bundle metaData = applicationInfo.metaData;
@@ -609,62 +595,7 @@ public class AddressProvider {
      * @return the list of addresses.
      */
     public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
-        final String language = locale.getLanguage();
-        final String country = locale.getCountry();
-
-        List<ZmanimAddress> addresses = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        if (db == null)
-            return addresses;
-        Cursor cursor = db.query(TABLE_ADDRESSES, PROJECTION_ADDRESS, null, null, null, null, null);
-        if ((cursor == null) || cursor.isClosed()) {
-            return addresses;
-        }
-
-        try {
-            if (cursor.moveToFirst()) {
-                long id;
-                double addressLatitude;
-                double addressLongitude;
-                String formatted;
-                String locationLanguage;
-                Locale locale;
-                ZmanimAddress address;
-                boolean favorite;
-
-                do {
-                    locationLanguage = cursor.getString(INDEX_LANGUAGE);
-                    if ((locationLanguage == null) || locationLanguage.equals(language)) {
-                        if ((filter != null) && !filter.accept(cursor))
-                            continue;
-
-                        addressLatitude = cursor.getDouble(INDEX_LATITUDE);
-                        addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
-                        id = cursor.getLong(INDEX_ID);
-                        formatted = cursor.getString(INDEX_ADDRESS);
-                        favorite = cursor.getShort(INDEX_FAVORITE) != 0;
-                        if (locationLanguage == null)
-                            locale = this.locale;
-                        else
-                            locale = new Locale(locationLanguage, country);
-
-                        address = new ZmanimAddress(locale);
-                        address.setFormatted(formatted);
-                        address.setId(id);
-                        address.setLatitude(addressLatitude);
-                        address.setLongitude(addressLongitude);
-                        address.setFavorite(favorite);
-                        addresses.add(address);
-                    }
-                } while (cursor.moveToNext());
-            }
-        } catch (SQLiteException se) {
-            Log.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
-        } finally {
-            cursor.close();
-        }
-
-        return addresses;
+        return databaseGeocoder.queryAddresses(filter);
     }
 
     /**
@@ -878,49 +809,6 @@ public class AddressProvider {
     }
 
     /**
-     * Fetch elevations from the database.
-     *
-     * @param filter
-     *         a cursor filter.
-     * @return the list of locations with elevations.
-     */
-    public List<ZmanimLocation> queryElevations(CursorFilter filter) {
-        List<ZmanimLocation> locations = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        if (db == null)
-            return locations;
-        Cursor cursor = db.query(TABLE_ELEVATIONS, PROJECTION_ELEVATION, null, null, null, null, null);
-        if ((cursor == null) || cursor.isClosed()) {
-            return locations;
-        }
-
-        try {
-            if (cursor.moveToFirst()) {
-                ZmanimLocation location;
-
-                do {
-                    if ((filter != null) && !filter.accept(cursor))
-                        continue;
-
-                    location = new ZmanimLocation(DB_PROVIDER);
-                    location.setId(cursor.getLong(INDEX_ELEVATIONS_ID));
-                    location.setLatitude(cursor.getDouble(INDEX_ELEVATIONS_LATITUDE));
-                    location.setLongitude(cursor.getDouble(INDEX_ELEVATIONS_LONGITUDE));
-                    location.setAltitude(cursor.getDouble(INDEX_ELEVATIONS_ELEVATION));
-                    location.setTime(cursor.getLong(INDEX_ELEVATIONS_TIMESTAMP));
-                    locations.add(location);
-                } while (cursor.moveToNext());
-            }
-        } catch (SQLiteException se) {
-            Log.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
-        } finally {
-            cursor.close();
-        }
-
-        return locations;
-    }
-
-    /**
      * Populate the cities with data from the table.
      *
      * @param cities
@@ -1006,6 +894,13 @@ public class AddressProvider {
      */
     public void deleteAddresses() {
         databaseGeocoder.deleteAddresses();
+    }
+
+    /**
+     * Delete the list of cached elevations.
+     */
+    public void deleteElevations() {
+        databaseGeocoder.deleteElevations();
     }
 
     /**

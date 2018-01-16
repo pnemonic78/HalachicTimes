@@ -25,7 +25,7 @@ import net.sf.times.location.LocationApplication;
 /**
  * This fragment shows the preferences for the Privacy and Security header.
  */
-public class PrivacyPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
 
     private Preference clearHistory;
 
@@ -60,6 +60,7 @@ public class PrivacyPreferenceFragment extends net.sf.preference.AbstractPrefere
         LocationApplication app = (LocationApplication) getActivity().getApplication();
         AddressProvider provider = app.getAddresses();
         provider.deleteAddresses();
+        provider.deleteElevations();
         provider.deleteCities();
     }
 }

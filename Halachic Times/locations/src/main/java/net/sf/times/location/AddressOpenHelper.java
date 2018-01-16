@@ -90,11 +90,11 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE " + TABLE_ADDRESSES + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADDRESSES + ";");
         if (oldVersion >= 3) {
-            db.execSQL("DROP TABLE " + TABLE_ELEVATIONS + ";");
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ELEVATIONS + ";");
             if (oldVersion >= 4) {
-                db.execSQL("DROP TABLE " + TABLE_CITIES + ";");
+                db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES + ";");
             }
         }
         onCreate(db);
@@ -105,7 +105,8 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
         super.onOpen(db);
 
         // Delete stale records older than 1 year.
-        String whereClause = "(" + TIMESTAMP + " < " + (currentTimeMillis() - YEAR_IN_MILLIS) + ")";
-        db.delete(TABLE_ADDRESSES, whereClause, null);
+        final String olderThanYear = String.valueOf(currentTimeMillis() - YEAR_IN_MILLIS);
+        db.delete(TABLE_ADDRESSES, AddressColumns.TIMESTAMP + " < " + olderThanYear, null);
+        db.delete(TABLE_ELEVATIONS, ElevationColumns.TIMESTAMP + " < " + olderThanYear, null);
     }
 }
