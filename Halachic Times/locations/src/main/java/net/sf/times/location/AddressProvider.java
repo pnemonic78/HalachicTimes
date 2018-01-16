@@ -45,8 +45,8 @@ import java.util.Map;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
 import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_CITIES_FAVORITE;
-import static net.sf.times.location.DatabaseGeocoder.INDEX_CITIES_ID;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_CITY_FAVORITE;
+import static net.sf.times.location.DatabaseGeocoder.INDEX_CITY_ID;
 import static net.sf.times.location.DatabaseGeocoder.PROJECTION_CITY;
 import static net.sf.times.location.DatabaseGeocoder.WHERE_ID;
 import static net.sf.times.location.GeocoderBase.SAME_CITY;
@@ -839,8 +839,8 @@ public class AddressProvider {
                 City city;
 
                 do {
-                    id = cursor.getLong(INDEX_CITIES_ID);
-                    favorite = cursor.getShort(INDEX_CITIES_FAVORITE) != 0;
+                    id = cursor.getLong(INDEX_CITY_ID);
+                    favorite = cursor.getShort(INDEX_CITY_FAVORITE) != 0;
 
                     city = citiesById.get(id);
                     if (city != null) {

@@ -49,10 +49,10 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     private static final String TAG = "DatabaseGeocoder";
 
-    /** Database  */
-    public static final String DB_PROVIDER = "db";
+    /** Database */
+    private static final String DB_PROVIDER = "db";
 
-    static final String[] PROJECTION_ADDRESS = {
+    private static final String[] PROJECTION_ADDRESS = {
             BaseColumns._ID,
             AddressColumns.LOCATION_LATITUDE,
             AddressColumns.LOCATION_LONGITUDE,
@@ -62,35 +62,35 @@ public class DatabaseGeocoder extends GeocoderBase {
             AddressColumns.LANGUAGE,
             AddressColumns.FAVORITE
     };
-    static final int INDEX_ID = 0;
-    static final int INDEX_LOCATION_LATITUDE = 1;
-    static final int INDEX_LOCATION_LONGITUDE = 2;
-    static final int INDEX_LATITUDE = 3;
-    static final int INDEX_LONGITUDE = 4;
-    static final int INDEX_ADDRESS = 5;
-    static final int INDEX_LANGUAGE = 6;
-    static final int INDEX_FAVORITE = 7;
+    private static final int INDEX_ADDRESS_ID = 0;
+    private static final int INDEX_ADDRESS_LOCATION_LATITUDE = 1;
+    private static final int INDEX_ADDRESS_LOCATION_LONGITUDE = 2;
+    private static final int INDEX_ADDRESS_LATITUDE = 3;
+    private static final int INDEX_ADDRESS_LONGITUDE = 4;
+    private static final int INDEX_ADDRESS_ADDRESS = 5;
+    private static final int INDEX_ADDRESS_LANGUAGE = 6;
+    private static final int INDEX_ADDRESS_FAVORITE = 7;
 
-    static final String[] PROJECTION_ELEVATION = {
+    private static final String[] PROJECTION_ELEVATION = {
             BaseColumns._ID,
             ElevationColumns.LATITUDE,
             ElevationColumns.LONGITUDE,
             ElevationColumns.ELEVATION,
             ElevationColumns.TIMESTAMP
     };
-    static final int INDEX_ELEVATIONS_ID = 0;
-    static final int INDEX_ELEVATIONS_LATITUDE = 1;
-    static final int INDEX_ELEVATIONS_LONGITUDE = 2;
-    static final int INDEX_ELEVATIONS_ELEVATION = 3;
-    static final int INDEX_ELEVATIONS_TIMESTAMP = 4;
+    private static final int INDEX_ELEVATION_ID = 0;
+    private static final int INDEX_ELEVATION_LATITUDE = 1;
+    private static final int INDEX_ELEVATION_LONGITUDE = 2;
+    private static final int INDEX_ELEVATION_ELEVATION = 3;
+    private static final int INDEX_ELEVATION_TIMESTAMP = 4;
 
     static final String[] PROJECTION_CITY = {
             BaseColumns._ID,
             CitiesColumns.TIMESTAMP,
             CitiesColumns.FAVORITE};
-    static final int INDEX_CITIES_ID = 0;
-    static final int INDEX_CITIES_TIMESTAMP = 1;
-    static final int INDEX_CITIES_FAVORITE = 2;
+    static final int INDEX_CITY_ID = 0;
+    static final int INDEX_CITY_TIMESTAMP = 1;
+    static final int INDEX_CITY_FAVORITE = 2;
 
     static final String WHERE_ID = BaseColumns._ID + "=?";
 
@@ -178,14 +178,14 @@ public class DatabaseGeocoder extends GeocoderBase {
 
             @Override
             public boolean accept(Cursor cursor) {
-                double locationLatitude = cursor.getDouble(INDEX_LOCATION_LATITUDE);
-                double locationLongitude = cursor.getDouble(INDEX_LOCATION_LONGITUDE);
+                double locationLatitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE);
+                double locationLongitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
                 if (mDistance[0] <= SAME_LOCATION)
                     return true;
 
-                double addressLatitude = cursor.getDouble(INDEX_LATITUDE);
-                double addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
+                double addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE);
+                double addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, mDistance);
                 return (mDistance[0] <= SAME_LOCATION);
             }
@@ -213,8 +213,8 @@ public class DatabaseGeocoder extends GeocoderBase {
 
             @Override
             public boolean accept(Cursor cursor) {
-                double locationLatitude = cursor.getDouble(INDEX_ELEVATIONS_LATITUDE);
-                double locationLongitude = cursor.getDouble(INDEX_ELEVATIONS_LONGITUDE);
+                double locationLatitude = cursor.getDouble(INDEX_ELEVATION_LATITUDE);
+                double locationLongitude = cursor.getDouble(INDEX_ELEVATION_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
                 return (mDistance[0] <= SAME_PLATEAU);
             }
@@ -299,16 +299,16 @@ public class DatabaseGeocoder extends GeocoderBase {
                 boolean favorite;
 
                 do {
-                    locationLanguage = cursor.getString(INDEX_LANGUAGE);
+                    locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE);
                     if ((locationLanguage == null) || locationLanguage.equals(language)) {
                         if ((filter != null) && !filter.accept(cursor))
                             continue;
 
-                        addressLatitude = cursor.getDouble(INDEX_LATITUDE);
-                        addressLongitude = cursor.getDouble(INDEX_LONGITUDE);
-                        id = cursor.getLong(INDEX_ID);
-                        formatted = cursor.getString(INDEX_ADDRESS);
-                        favorite = cursor.getShort(INDEX_FAVORITE) != 0;
+                        addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE);
+                        addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE);
+                        id = cursor.getLong(INDEX_ADDRESS_ID);
+                        formatted = cursor.getString(INDEX_ADDRESS_ADDRESS);
+                        favorite = cursor.getShort(INDEX_ADDRESS_FAVORITE) != 0;
                         if (locationLanguage == null)
                             locale = this.locale;
                         else
@@ -369,11 +369,11 @@ public class DatabaseGeocoder extends GeocoderBase {
                         continue;
 
                     location = new ZmanimLocation(DB_PROVIDER);
-                    location.setId(cursor.getLong(INDEX_ELEVATIONS_ID));
-                    location.setLatitude(cursor.getDouble(INDEX_ELEVATIONS_LATITUDE));
-                    location.setLongitude(cursor.getDouble(INDEX_ELEVATIONS_LONGITUDE));
-                    location.setAltitude(cursor.getDouble(INDEX_ELEVATIONS_ELEVATION));
-                    location.setTime(cursor.getLong(INDEX_ELEVATIONS_TIMESTAMP));
+                    location.setId(cursor.getLong(INDEX_ELEVATION_ID));
+                    location.setLatitude(cursor.getDouble(INDEX_ELEVATION_LATITUDE));
+                    location.setLongitude(cursor.getDouble(INDEX_ELEVATION_LONGITUDE));
+                    location.setAltitude(cursor.getDouble(INDEX_ELEVATION_ELEVATION));
+                    location.setTime(cursor.getLong(INDEX_ELEVATION_TIMESTAMP));
                     locations.add(location);
                 } while (cursor.moveToNext());
             }
