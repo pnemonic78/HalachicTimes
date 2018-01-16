@@ -162,7 +162,7 @@
 0	295277	et	Eilat	
 0	295277	tr	Eilat	
 0	295432	bg	Бейт Шемеш	
-0	295432	cs	Bejt Shemes	
+0	295432	cs	Bejt Šemes	
 0	295432	da	Beit Sjemesj	
 0	295432	el	Βέιτ Σεμές	
 0	295432	et	Bayt Semesis	

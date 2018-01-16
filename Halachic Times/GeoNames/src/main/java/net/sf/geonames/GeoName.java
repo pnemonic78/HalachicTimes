@@ -15,9 +15,10 @@
  */
 package net.sf.geonames;
 
+import net.sf.geonames.util.LocaleUtils;
+
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -180,15 +181,16 @@ public class GeoName extends GeoNameRecord {
     }
 
     public void putAlternateName(long geonameId, String language, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
-        Locale locale = new Locale(language);
-        String languageCode = locale.getLanguage();
+        String languageCode = LocaleUtils.toLanguageCode(language);
         AlternateName alternateName = alternateNamesMap.get(languageCode);
         if ((alternateName == null) || preferred) {
             alternateName = new AlternateName(language, name, preferred);
             alternateNamesMap.put(languageCode, alternateName);
         } else if (!alternateName.isPreferred() && !shortName && !colloquial && !historic) {
-            System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
-            alternateName.setName(name);
+            if (language.length() == alternateName.getLanguage().length()) {
+                System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
+                alternateName.setName(name);
+            }
         }
     }
 
@@ -198,13 +200,7 @@ public class GeoName extends GeoNameRecord {
     }
 
     public String getName(String language) {
-        String languageCode = language;
-        if (languageCode == null) {
-            languageCode = Locale.ENGLISH.getLanguage();
-        } else {
-            Locale locale = new Locale(language);
-            languageCode = locale.getLanguage();
-        }
+        String languageCode = LocaleUtils.toLanguageCode(language);
         AlternateName alternateName = getAlternateNamesMap().get(languageCode);
         if (alternateName != null) {
             return alternateName.getName();
