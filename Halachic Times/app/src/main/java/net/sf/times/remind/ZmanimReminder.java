@@ -307,7 +307,7 @@ public class ZmanimReminder {
      * @param item
      *         the zmanim item to notify about.
      */
-    private void notifyNow(Context context, ZmanimPreferences settings, ZmanimItem item) {
+    public void notifyNow(Context context, ZmanimPreferences settings, ZmanimItem item) {
         CharSequence contentTitle = context.getText(item.titleId);
         CharSequence contentText = item.summary;
         long when = item.time;
@@ -326,7 +326,7 @@ public class ZmanimReminder {
      * @param item
      *         the reminder item.
      */
-    private void notifyNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
+    public void notifyNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
         Log.i(TAG, "notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
         PendingIntent contentIntent = createActivityIntent(context);
 
@@ -346,7 +346,7 @@ public class ZmanimReminder {
      * @param triggerAt
      *         the upcoming reminder.
      */
-    private void notifyFuture(Context context, ZmanimItem item, long triggerAt) {
+    public void notifyFuture(Context context, ZmanimItem item, long triggerAt) {
         CharSequence contentTitle = context.getText(item.titleId);
         long when = item.time;
 
@@ -547,13 +547,13 @@ public class ZmanimReminder {
             builder.setLights(LED_COLOR, LED_ON, LED_OFF);
         }
         builder.setSound(sound, audioStreamType);
-        if (SDK_INT >= M) {
-            builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
+        if (SDK_INT >= JELLY_BEAN) {
+            if (SDK_INT >= M) {
+                builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
+            }
+            return builder.build();
         }
-        if (SDK_INT < JELLY_BEAN) {
-            return builder.getNotification();
-        }
-        return builder.build();
+        return builder.getNotification();
     }
 
     @SuppressLint("Wakelock")
@@ -688,7 +688,7 @@ public class ZmanimReminder {
      * @param item
      *         the next item.
      */
-    private void notifyUpcoming(Context context, ZmanimPreferences settings, ZmanimItem item) {
+    public void notifyUpcoming(Context context, ZmanimPreferences settings, ZmanimItem item) {
         PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification = createUpcomingNotification(context, settings, item, contentIntent);

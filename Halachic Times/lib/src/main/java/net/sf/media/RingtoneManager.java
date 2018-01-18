@@ -26,11 +26,13 @@ import android.text.TextUtils;
 
 import net.sf.lib.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
+import static android.os.Build.VERSION_CODES.N;
 
 /**
  * Ringtone manager that can ignore external media when not permitted.
@@ -47,6 +49,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
 
     private static final String INTERNAL_PATH = MediaStore.Audio.Media.INTERNAL_CONTENT_URI.toString();
     private static final String EXTERNAL_PATH = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString();
+    private static final String FILE_PATH = ContentResolver.SCHEME_FILE + ":/";
 
     private static final String[] INTERNAL_COLUMNS = new String[]{
             MediaStore.Audio.Media._ID, MediaStore.Audio.Media.TITLE,
@@ -200,7 +203,18 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 return uriString;
             }
 
+            boolean dangerousUri = false;
             if (uriString.startsWith(EXTERNAL_PATH)) {
+                dangerousUri = true;
+            } else if (SDK_INT >= N) {
+                if (uriString.startsWith(FILE_PATH)) {
+                    dangerousUri = true;
+                } else {
+                    File file = new File(uriString);
+                    dangerousUri = file.exists() && file.isFile();
+                }
+            }
+            if (dangerousUri) {
                 // Try a 'default' tone.
                 uriString = getDefaultUri(type).toString();
             }
@@ -221,6 +235,10 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 }
                 if (uriValue.startsWith(EXTERNAL_PATH)) {
                     // 'Default' tone is definitely external.
+                    return SILENT_PATH;
+                }
+                if ((SDK_INT >= N) && uriValue.startsWith(FILE_PATH)) {
+                    // 'Default' tone is exposed.
                     return SILENT_PATH;
                 }
             }
