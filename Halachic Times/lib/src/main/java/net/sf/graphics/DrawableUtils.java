@@ -48,7 +48,7 @@ public class DrawableUtils {
         Drawable wallpaper = null;
         try {
             wallpaper = wallpaperManager.getDrawable();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             // In case of a bad WallpaperService.
             e.printStackTrace();
         }
