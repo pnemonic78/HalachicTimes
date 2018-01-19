@@ -217,6 +217,16 @@ public class RingtoneManager extends android.media.RingtoneManager {
             if (dangerousUri) {
                 // Try a 'default' tone.
                 uriString = getDefaultUri(type).toString();
+
+                if (SDK_INT >= N) {
+                    if (uriString.startsWith(FILE_PATH)) {
+                        return SILENT_PATH;
+                    }
+                    File file = new File(uriString);
+                    if (file.exists() && file.isFile()) {
+                        return SILENT_PATH;
+                    }
+                }
             }
 
             ContentResolver resolver = context.getContentResolver();
@@ -227,7 +237,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 cursor.close();
 
                 if (uriValue == null) {
-                    return null;
+                    return DEFAULT_PATH;
                 }
                 if (uriValue.startsWith(INTERNAL_PATH)) {
                     // Is definitely internal.
@@ -235,10 +245,6 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 }
                 if (uriValue.startsWith(EXTERNAL_PATH)) {
                     // 'Default' tone is definitely external.
-                    return SILENT_PATH;
-                }
-                if ((SDK_INT >= N) && uriValue.startsWith(FILE_PATH)) {
-                    // 'Default' tone is exposed.
                     return SILENT_PATH;
                 }
             }
