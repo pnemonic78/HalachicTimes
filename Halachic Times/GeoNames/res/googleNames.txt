@@ -192,7 +192,7 @@
 0	295620	es	Askelon	
 0	295620	et	Ashkelon	
 0	295620	fi	Askelon	
-0	295620	fr	Ashkelon	
+0	295620	fr	Achkelon	
 0	295620	he	אשקלון	1
 0	295620	hu	Aszkelon	
 0	295620	it	Ashkelon	
@@ -648,3 +648,757 @@
 0	11049562	bg	Кирят Оно	
 0	11049562	ru	Кирьят Оно	
 0	11049562	uk	Кірят Оно	
+0	10227184	cs	Jud Monosson	
+0	10227184	da	Jud Monosson	
+0	10227184	de	Jud Monosson	
+0	10227184	es	Jud Monosson	
+0	10227184	et	Juud Monosson	
+0	10227184	fi	Juud Monosson	
+0	10227184	fr	Yehud Monosson	
+0	10227184	hu	Júd Monosson	
+0	10227184	it	Giud Monosson	
+0	10227184	lt	Jud Monosson	
+0	10227184	nl	Jud Monosson	
+0	10227184	no	Jud Monosson	
+0	10227184	nb	Jud Monosson	
+0	10227184	pl	Jud Monosson	
+0	10227184	pt	Jud Monosson	
+0	10227184	ro	Iud Monosson	
+0	10227184	sv	Jud Monosson	
+0	11049562	cs	Kiryat Ono	
+0	11049562	da	Kiryat Ono	
+0	11049562	de	Kirjat Ono	
+0	11049562	es	Kiryat Ono	
+0	11049562	et	Kiryat Ono	
+0	11049562	fi	Kiryat Ono	
+0	11049562	fr	Kiryat Ono	
+0	11049562	hu	Kiryat Ono	
+0	11049562	it	Kiryat Ono	
+0	11049562	lt	Kiryat Ono	
+0	11049562	nl	Kiryat Ono	
+0	11049562	nb	Kiryat Ono	
+0	11049562	no	Kiryat Ono	
+0	11049562	pl	Kirjat Ono	
+0	11049562	pt	Kiryat Ono	
+0	11049562	ro	Kiryat Ono	
+0	11049562	sv	Kiryat Ono	
+0	293207	cs	Jud	
+0	293207	da	Jud	
+0	293207	de	Jud	
+0	293207	es	Jud	
+0	293207	et	Juud	
+0	293207	fi	Juud	
+0	293207	fr	Yehud	
+0	293207	hu	Júd	
+0	293207	it	Giud	
+0	293207	lt	Jud	
+0	293207	nl	Jud	
+0	293207	nb	Jud	
+0	293207	no	Jud	
+0	293207	pl	Jud	
+0	293207	pt	Jud	
+0	293207	ro	Iud	
+0	293207	sv	Jud	
+0	293253	cs	Jaffa	
+0	293253	da	Jaffa	
+0	293253	et	Jaffa	
+0	293253	fi	Jaffa	
+0	293253	hu	Jaffák	
+0	293253	lt	Jaffa	
+0	293253	ro	Jaffa	
+0	294421	cs	Lod	
+0	294421	et	Lod	
+0	294421	fi	Lod	
+0	294421	hu	Lód	
+0	294421	it	Lod	
+0	294421	nb	Lod	
+0	294421	no	Lod	
+0	294421	ro	Lod	
+0	294421	sv	Lod	
+0	294751	cs	Holon	
+0	294751	et	Holon	
+0	294751	fi	Holon	
+0	294751	hu	Holon	
+0	294751	it	Holon	
+0	294751	lt	Holon	
+0	294751	nb	Holon	
+0	294751	no	Holon	
+0	294751	pt	Holon	
+0	294751	ro	Holon	
+0	294778	cs	Herzliya	
+0	294778	et	Herzliya	
+0	294778	fi	Herzliya	
+0	294778	hu	Herzliya	
+0	294778	it	Herzliya	
+0	294778	lt	Herzlija	
+0	294778	nb	Herzliya	
+0	294778	no	Herzliya	
+0	294778	pt	Herzliya	
+0	294778	ro	Herzliya	
+0	294778	sv	Herzliya	
+0	295328	cs	Dimona	
+0	295328	da	Dimona	
+0	295328	et	Dimona	
+0	295328	hu	Dimona	
+0	295328	lt	Dimona	
+0	295328	nb	Dimona	
+0	295328	no	Dimona	
+0	295328	ro	Dimona	
+0	295328	sv	Dimona	
+0	293992	cs	Ofakim	
+0	293992	da	Ofakim	
+0	293992	de	Ofakim	
+0	293992	es	Ofakim	
+0	293992	et	Ofakim	
+0	293992	fi	Ofakim	
+0	293992	fr	Ofakim	
+0	293992	hu	Ofakim	
+0	293992	it	Ofakim	
+0	293992	lt	Ofakim	
+0	293992	nl	Ofakim	
+0	293992	nb	Ofakim	
+0	293992	no	Ofakim	
+0	293992	pl	Ofakim	
+0	293992	pt	Ofakim	
+0	293992	ro	Ofakim	
+0	293992	sv	Ofakim	
+0	294071	et	Netanya	
+0	294071	fi	Netanya	
+0	294071	it	Netanya	
+0	294071	pt	Netanya	
+0	294068	cs	Netivot	
+0	294068	da	Netivot	
+0	294068	es	Netivot	
+0	294068	et	Netivot	
+0	294068	fi	Netivot	
+0	294068	fr	Netivot	
+0	294068	hu	Netivot	
+0	294068	it	Netivot	
+0	294068	lt	Netivot	
+0	294068	nl	Netivot	
+0	294068	nb	Netivot	
+0	294068	no	Netivot	
+0	294068	pt	Netivot	
+0	294068	ro	Netivot	
+0	294068	sv	Netivot	
+0	293962	da	Or Juda	
+0	293962	es	Or Judá	
+0	293962	et	Or Juuda	
+0	293962	fi	Or Judah	
+0	293962	fr	Or Yehuda	
+0	293962	hu	Or Júda	
+0	293962	it	Or Giuda	
+0	293962	lt	Or Judas	
+0	293962	nl	Or Juda	
+0	293962	nb	Or Juda	
+0	293962	no	Or Juda	
+0	293962	pt	Or Judá	
+0	293962	ro	Or Iuda	
+0	293962	sv	Or Judah	
+0	293619	cs	Sderot	
+0	293619	da	Sederot	
+0	293619	fi	Sederot	
+0	293619	hu	Sederot	
+0	293619	it	Sederot	
+0	293619	lt	Sederotas	
+0	293619	sv	Sederot	
+0	293426	cs	Tamra	
+0	293426	da	Tamra	
+0	293426	de	Tamra	
+0	293426	es	Tamra	
+0	293426	et	Tamra	
+0	293426	fi	Tamra	
+0	293426	fr	Tamra	
+0	293426	hu	Tamra	
+0	293426	it	Tamra	
+0	293426	lt	Tamra	
+0	293426	nl	Tamra	
+0	293426	nb	Tamra	
+0	293426	no	Tamra	
+0	293426	pl	Tamra	
+0	293426	pt	Tamra	
+0	293426	ro	Tamra	
+0	293426	sv	Tamra	
+0	294577	cs	Karmiel	
+0	294577	da	Karmiel	
+0	294577	de	Karmiel	
+0	294577	es	Karmiel	
+0	294577	et	Karmiel	
+0	294577	fi	Karmiel	
+0	294577	fr	Karmiel	
+0	294577	hu	Karmiel	
+0	294577	it	Karmiel	
+0	294577	lt	Karmiel	
+0	294577	nl	Karmiel	
+0	294577	nb	Karmiel	
+0	294577	no	Karmiel	
+0	294577	pl	Karmiel	
+0	294577	pt	Karmiel	
+0	294577	ro	Karmiel	
+0	294577	sv	Karmiel	
+0	8199378	cs	Modiin Ilit	
+0	8199378	da	Modiin Ilit	
+0	8199378	de	Modiin Ilit	
+0	8199378	es	Modiin Ilit	
+0	8199378	et	Modiin Ilit	
+0	8199378	fi	Modiin Ilit	
+0	8199378	fr	Modiin Ilit	
+0	8199378	hu	Modiin Ilit	
+0	8199378	it	Modiin Ilit	
+0	8199378	lt	Modiin Ilit	
+0	8199378	nl	Modiin Ilit	
+0	8199378	nb	Modiin Ilit	
+0	8199378	no	Modiin Ilit	
+0	8199378	pl	Modiin Ilit	
+0	8199378	pt	Modiin Ilit	
+0	8199378	ro	Modiin Ilit	
+0	8199378	sv	Modiin Ilit	
+0	282926	cs	Modiin Maccabim Reut	
+0	282926	da	Modiin Maccabim Reut	
+0	282926	de	Modiin Maccabim Reut	
+0	282926	es	Modiin Maccabim Reut	
+0	282926	et	Modiin Maccabim Reut	
+0	282926	fi	Modiin Maccabim Reut	
+0	282926	fr	Modiin Maccabim Reut	
+0	282926	hu	Modiin Maccabim Reut	
+0	282926	it	Modiin Maccabim Reut	
+0	282926	lt	Modiin Maccabim Reut	
+0	282926	nl	Modiin Maccabim Reut	
+0	282926	nb	Modiin Maccabim Reut	
+0	282926	no	Modiin Maccabim Reut	
+0	282926	pl	Modiin Maccabim Reut	
+0	282926	pt	Modiin Maccabim Reut	
+0	282926	ro	Modiin Maccabim Reut	
+0	282926	sv	Modiin Maccabim Reut	
+0	293222	da	Javne	
+0	293222	es	Yavne	
+0	293222	et	Yavne	
+0	293222	fi	Yavne	
+0	293222	hu	Yavne	
+0	293222	it	Yavne	
+0	293222	nl	Javne	
+0	293222	nb	Yavne	
+0	293222	no	Yavne	
+0	293222	pt	Yavne	
+0	293222	ro	Yavne	
+0	293308	cs	Tirat Carmel	
+0	293308	da	Tirat Carmel	
+0	293308	de	Tirat Carmel	
+0	293308	es	Tirat Carmel	
+0	293308	et	Tirat Carmel	
+0	293308	fi	Tirat Carmel	
+0	293308	fr	Tirat Carmel	
+0	293308	hu	Tirat Carmel	
+0	293308	it	Tirat Carmel	
+0	293308	lt	Tirat Carmel	
+0	293308	nl	Tirat Carmel	
+0	293308	nb	Tirat Carmel	
+0	293308	no	Tirat Carmel	
+0	293308	pl	Tirat Carmel	
+0	293308	pt	Tirat Carmel	
+0	293308	ro	Tirat Carmel	
+0	293308	sv	Tirat Carmel	
+0	293690	cs	Roš HaAyin	
+0	293690	da	Rosj HaAyin	
+0	293690	de	Rosch HaAyin	
+0	293690	es	Rosh HaAyin	
+0	293690	et	Rosh HaAyin	
+0	293690	fi	Rosh HaAyin	
+0	293690	fr	Roch HaAyin	
+0	293690	hu	Rosz HaAyin	
+0	293690	it	Rosh HaAyin	
+0	293690	lt	Roš HaAyin	
+0	293690	nl	Rosh HaAyin	
+0	293690	nb	Rosh HaAyin	
+0	293690	no	Rosh HaAyin	
+0	293690	pl	Rosz HaAyin	
+0	293690	pt	Rosh HaAyin	
+0	293690	ro	Rosh HaAyin	
+0	293690	sv	Rosh HaAyin	
+0	293703	cs	Rišon LeZion	
+0	293703	et	Rishon LeZion	
+0	293703	fi	Rishon LeZion	
+0	293703	hu	Riszon LeZion	
+0	293703	it	Rishon LeZion	
+0	293703	lt	Rišon LeZionas	
+0	293703	pt	Rishon LeSião	
+0	293703	ro	Rishon LeZion	
+0	293703	sv	Rishon LeZion	
+0	293725	cs	Rehovot	
+0	293725	et	Rehovot	
+0	293725	fi	Rehovot	
+0	293725	hu	Rehovot	
+0	293725	it	Rehovot	
+0	293725	lt	Rehovotas	
+0	293725	nb	Rehovot	
+0	293725	no	Rehovot	
+0	293725	sv	Rehovot	
+0	293783	da	Ramat HaSharon	
+0	293783	et	Ramat HaSharon	
+0	293783	fi	Ramat HaSharon	
+0	293783	hu	Ramat HaSharon	
+0	293783	it	Ramat HaSharon	
+0	293783	nb	Ramat HaSharon	
+0	293783	no	Ramat HaSharon	
+0	293783	ro	Ramat HaSharon	
+0	293783	sv	Ramat HaSharon	
+0	293788	cs	Ramat Gan	
+0	293788	fi	Ramat Gan	
+0	293788	hu	Ramat Gan	
+0	293788	it	Ramat Gan	
+0	293788	nb	Ramat Gan	
+0	293788	no	Ramat Gan	
+0	293788	ro	Ramat Gan	
+0	293807	cs	Ra'anana	
+0	293807	da	Ra'anana	
+0	293807	de	Ra'anana	
+0	293807	es	Ra'anana	
+0	293807	et	Ra'anaana	
+0	293807	fi	Ra'anana	
+0	293807	fr	Raanana	
+0	293807	hu	Ra'anana	
+0	293807	it	Ra'anana	
+0	293807	lt	Ra'anana	
+0	293807	nl	Ra'anana	
+0	293807	nb	Ra'anana	
+0	293807	no	Ra'anana	
+0	293807	pl	Ra'anana	
+0	293807	pt	Ra'anana	
+0	293807	ro	Raanana	
+0	293807	sv	Ra'anana	
+0	295127	cs	Tirah	
+0	295127	da	Tirah	
+0	295127	de	Tirah	
+0	295127	es	Tirah	
+0	295127	et	Tirah	
+0	295127	fi	Tirah	
+0	295127	fr	Tirah	
+0	295127	hu	Tirah	
+0	295127	it	Tirah	
+0	295127	lt	Tirah	
+0	295127	nl	Tirah	
+0	295127	nb	Tirah	
+0	295127	no	Tirah	
+0	295127	pl	Tirah	
+0	295127	pt	Tirah	
+0	295127	ro	Tirah	
+0	295127	sv	Tirah	
+0	8428283	cs	Šoham	
+0	8428283	da	Sjoham	
+0	8428283	de	Schoham	
+0	8428283	es	Shoham	
+0	8428283	et	Shoham	
+0	8428283	fi	Shoham	
+0	8428283	fr	Choham	
+0	8428283	hu	Szoham	
+0	8428283	it	Shoham	
+0	8428283	lt	Šoham	
+0	8428283	nl	Shoham	
+0	8428283	nb	Shoham	
+0	8428283	no	Shoham	
+0	8428283	pl	Szoham	
+0	8428283	pt	Shoham	
+0	8428283	ro	Shoham	
+0	8428283	sv	Shoham	
+0	293822	cs	Kirjat Jam	
+0	293822	da	Kirjat Jam	
+0	293822	et	Kiryat Yam	
+0	293822	fi	Kiryat Yam	
+0	293822	hu	Kiryat Yam	
+0	293822	it	Kiryat Yam	
+0	293822	lt	Kiryat Yam	
+0	293822	nl	Kirjat Jam	
+0	293822	nb	Kiryat Yam	
+0	293822	no	Kiryat Yam	
+0	293822	pt	Kiryat Yam	
+0	293822	ro	Kiryat Yam	
+0	293822	sv	Kiryat Yam	
+0	293825	cs	Kirjat Šemona	
+0	293825	da	Kirjat Sjemona	
+0	293825	de	Kirjat Schmona	
+0	293825	es	Kiryat Shemona	
+0	293825	et	Kiryat Shemona	
+0	293825	fi	Kiryat Shemona	
+0	293825	fr	Kiryat Chemona	
+0	293825	hu	Kiryat Szemona	
+0	293825	it	Kiryat Shemona	
+0	293825	lt	Kirjat Šmona	
+0	293825	nl	Kirjat Shemona	
+0	293825	nb	Kiryat Shemona	
+0	293825	no	Kiryat Shemona	
+0	293825	pl	Kiryat Szemona	
+0	293825	pt	Kiryat Shemona	
+0	293825	ro	Kiryat Shemona	
+0	293825	sv	Kiryat Shemona	
+0	293831	cs	Kirjat Motzkin	
+0	293831	da	Kirjat Motzkin	
+0	293831	de	Kirjat Motzkin	
+0	293831	es	Kiryat Motzkin	
+0	293831	et	Kiryat Motzkin	
+0	293831	fi	Kiryat Motzkin	
+0	293831	fr	Kiryat Motzkin	
+0	293831	hu	Kiryat Mozqin	
+0	293831	it	Kiryat Motzkin	
+0	293831	lt	Kirjat Motzkin	
+0	293831	nl	Kirjat Motzkin	
+0	293831	nb	Kiryat Motzkin	
+0	293831	no	Kiryat Motzkin	
+0	293831	pl	Kiryat Motzkin	
+0	293831	pt	Kiryat Motzkin	
+0	293831	ro	Kiryat Motzkin	
+0	293831	sv	Kiryat Motzkin	
+0	293842	cs	Kirjat Gat	
+0	293842	da	Kirjat Gat	
+0	293842	es	Kiryat Gat	
+0	293842	et	Kiryat Gat	
+0	293842	fi	Kiryat Gat	
+0	293842	fr	Kiryat Gat	
+0	293842	hu	Kiryat Gat	
+0	293842	it	Kiryat Gat	
+0	293842	lt	Kirjat Gat	
+0	293842	nb	Kiryat Gat	
+0	293842	no	Kiryat Gat	
+0	293842	pl	Kiryat Gat	
+0	293842	pt	Kiryat Gat	
+0	293842	ro	Kiryat Gat	
+0	293842	sv	Kiryat Gat	
+0	293844	cs	Kirjat Bialik	
+0	293844	da	Kirjat Bialik	
+0	293844	de	Kirjat Bialik	
+0	293844	es	Kiryat Bialik	
+0	293844	et	Kiryat Bialik	
+0	293844	fi	Kiryat Bialik	
+0	293844	fr	Kiryat Bialik	
+0	293844	hu	Kiryat Bialik	
+0	293844	it	Kiryat Bialik	
+0	293844	lt	Kirjat Bialik	
+0	293844	nl	Kirjat Bialik	
+0	293844	nb	Kiryat Bialik	
+0	293844	no	Kiryat Bialik	
+0	293844	pl	Kiryat Bialik	
+0	293844	pt	Kiryat Bialik	
+0	293844	ro	Kiryat Bialik	
+0	293844	sv	Kiryat Bialik	
+0	293845	cs	Kirjat Ata	
+0	293845	da	Kirjat Ata	
+0	293845	de	Kirjat Ata	
+0	293845	es	Kiryat Ata	
+0	293845	et	Kiryat Ata	
+0	293845	fi	Kiryat Ata	
+0	293845	fr	Kiryat Ata	
+0	293845	hu	Kiryat Ata	
+0	293845	it	Kiryat Ata	
+0	293845	lt	Kirjat Ata	
+0	293845	nl	Kirjat Ata	
+0	293845	nb	Kiryat Ata	
+0	293845	no	Kiryat Ata	
+0	293845	pl	Kiryat Ata	
+0	293845	pt	Kiryat Ata	
+0	293845	ro	Kiryat Ata	
+0	293845	sv	Kiryat Ata	
+0	293918	cs	Petah Tikva	
+0	293918	da	Petah Tikwa	
+0	293918	de	Petah Tikwa	
+0	293918	es	Petah Tikva	
+0	293918	et	Petah Tikva	
+0	293918	fi	Petah Tikva	
+0	293918	fr	Petah Tikva	
+0	293918	hu	Petah Tikva	
+0	293918	it	Petah Tikva	
+0	293918	lt	Petah Tikva	
+0	293918	nl	Petah Tikva	
+0	293918	nb	Petah Tikwa	
+0	293918	no	Petah Tikwa	
+0	293918	pl	Petah Tikva	
+0	293918	pt	Petah Tikva	
+0	293918	ro	Petah Tikva	
+0	293918	sv	Petah Tikwa	
+0	294074	da	Ness Ziona	
+0	294074	et	Ness Ziona	
+0	294074	fi	Ness Ziona	
+0	294074	fr	Ness Ziona	
+0	294074	hu	Ness Ziona	
+0	294074	it	Ness Ziona	
+0	294074	lt	Ness Ziona	
+0	294074	nl	Ness Ziona	
+0	294074	nb	Ness Ziona	
+0	294074	no	Ness Ziona	
+0	294074	pt	Ness Ziona	
+0	294074	sv	Ness Ziona	
+0	294078	da	Nesher	
+0	294078	et	Nesher	
+0	294078	fi	Nesher	
+0	294078	hu	Nesher	
+0	294078	it	Nesher	
+0	294078	nl	Nesher	
+0	294078	nb	Nesher	
+0	294078	no	Nesher	
+0	294078	pt	Nesher	
+0	294078	ro	Nesher	
+0	294078	sv	Nesher	
+0	294210	cs	Migdal HaEmek	
+0	294210	da	Migdal HaEmek	
+0	294210	de	Migdal HaEmek	
+0	294210	es	Migdal HaEmek	
+0	294210	et	Migdal HaEmek	
+0	294210	fi	Migdal HaEmek	
+0	294210	fr	Migdal HaEmek	
+0	294210	hu	Migdal HaEmek	
+0	294210	it	Migdal HaEmek	
+0	294210	lt	Migdal HaEmek	
+0	294210	nl	Migdal HaEmek	
+0	294210	nb	Migdal HaEmek	
+0	294210	no	Migdal HaEmek	
+0	294210	pl	Migdal HaEmek	
+0	294210	pt	Migdal HaEmek	
+0	294210	ro	Migdal HaEmek	
+0	294210	sv	Migdal HaEmek	
+0	294245	cs	Mevasseret Zion	
+0	294245	da	Mevasseret Zion	
+0	294245	de	Mevasseret Zion	
+0	294245	es	Mevasseret Zion	
+0	294245	et	Mevasseret Zion	
+0	294245	fi	Mevasseret Zion	
+0	294245	fr	Mevasseret Zion	
+0	294245	hu	Mevasseret Zion	
+0	294245	it	Mevasseret Zion	
+0	294245	lt	Mevasseret Zionas	
+0	294245	nl	Mevasseret Zion	
+0	294245	nb	Mevasseret Zion	
+0	294245	no	Mevasseret Zion	
+0	294245	pl	Mevasseret Zion	
+0	294245	pt	Mevasseret Sião	
+0	294245	ro	Mevasseret Zion	
+0	294245	sv	Mevasseret Zion	
+0	294492	cs	Kfar Jona	
+0	294492	da	Kfar Jona	
+0	294492	de	Kfar Jona	
+0	294492	es	Kfar Yona	
+0	294492	et	Kfar Yona	
+0	294492	fi	Kfar Yona	
+0	294492	fr	Kfar Yona	
+0	294492	hu	Kfar Yona	
+0	294492	it	Kfar Yona	
+0	294492	lt	Kfar Yona	
+0	294492	nl	Kfar Jona	
+0	294492	nb	Kfar Yona	
+0	294492	no	Kfar Yona	
+0	294492	pl	Kfar Yona	
+0	294492	pt	Kfar Yona	
+0	294492	ro	Kfar Yona	
+0	294492	sv	Kfar Yona	
+0	294514	cs	Kfar Saba	
+0	294514	da	Kfar Saba	
+0	294514	de	Kfar Saba	
+0	294514	es	Kfar Saba	
+0	294514	fi	Kfar Saba	
+0	294514	fr	Kfar Saba	
+0	294514	hu	Kfar Saba	
+0	294514	it	Kfar Saba	
+0	294514	lt	Kfar Saba	
+0	294514	nb	Kfar Saba	
+0	294514	no	Kfar Saba	
+0	294514	pt	Kfar Saba	
+0	294514	ro	Kfar Saba	
+0	294514	sv	Kfar Saba	
+0	294760	da	Hod HaSjaron	
+0	294760	es	Hod HaSharon	
+0	294760	et	Hod HaSharon	
+0	294760	fi	Hod HaSharon	
+0	294760	hu	Hod HaSzaron	
+0	294760	it	Hod HaSharon	
+0	294760	lt	Hod HaŠaron	
+0	294760	nb	Hod HaSharon	
+0	294760	no	Hod HaSharon	
+0	294760	pt	Hod HaSharon	
+0	294760	sv	Hod HaSharon	
+0	294981	cs	Givat Šmuel	
+0	294981	da	Givat Sjmuel	
+0	294981	de	Givat Schmuel	
+0	294981	es	Givat Shmuel	
+0	294981	et	Givat Shmuel	
+0	294981	fi	Givat Shmuel	
+0	294981	fr	Givat Chmouel	
+0	294981	hu	Givat Szmuel	
+0	294981	it	Givat Shmuel	
+0	294981	lt	Givat Šmuel	
+0	294981	nl	Givat Shmuel	
+0	294981	nb	Givat Shmuel	
+0	294981	no	Givat Shmuel	
+0	294981	pl	Givat Szmuel	
+0	294981	pt	Givat Shmuel	
+0	294981	ro	Givat Shmuel	
+0	294981	sv	Givat Shmuel	
+0	294999	cs	Givatajim	
+0	294999	da	Givatajim	
+0	294999	de	Givatajim	
+0	294999	es	Givatayim	
+0	294999	et	Givatayim	
+0	294999	fi	Givatayim	
+0	294999	fr	Givatayim	
+0	294999	hu	Givatayim	
+0	294999	it	Givatayim	
+0	294999	lt	Givatajimas	
+0	294999	nl	Givatajim	
+0	294999	nb	Givatayim	
+0	294999	no	Givatayim	
+0	294999	pl	Givatayim	
+0	294999	pt	Givatayim	
+0	294999	ro	Givatayim	
+0	294999	sv	Givatayim	
+0	295064	cs	Gedera	
+0	295064	da	Gedera	
+0	295064	de	Gedera	
+0	295064	es	Gedera	
+0	295064	et	Gedera	
+0	295064	fi	Gedera	
+0	295064	hu	Gedera	
+0	295064	it	Gedera	
+0	295064	lt	Gedera	
+0	295064	nl	Gedera	
+0	295064	nb	Gedera	
+0	295064	no	Gedera	
+0	295064	pl	Gedera	
+0	295064	pt	Gedera	
+0	295064	ro	Gedera	
+0	295064	sv	Gedera	
+0	295080	cs	Gan Javne	
+0	295080	da	Gan Javne	
+0	295080	de	Gan Jawne	
+0	295080	es	Gan Yavne	
+0	295080	et	Gan Yavne	
+0	295080	fi	Gan Yavne	
+0	295080	fr	Gan Yavné	
+0	295080	hu	Gan Yavne	
+0	295080	it	Gan Yavne	
+0	295080	lt	Gan Javnė	
+0	295080	nl	Gan Javne	
+0	295080	nb	Gan Yavne	
+0	295080	no	Gan Yavne	
+0	295080	pl	Gan Jawne	
+0	295080	pt	Gan Yavne	
+0	295080	ro	Gan Yavne	
+0	295080	sv	Gan Javne	
+0	295089	cs	Ganei Tikva	
+0	295089	da	Ganei Tikva	
+0	295089	de	Ganei Tikva	
+0	295089	es	Ganei Tikva	
+0	295089	et	Ganei Tikva	
+0	295089	fi	Ganei Tikva	
+0	295089	fr	Ganei Tikva	
+0	295089	hu	Ganei Tikva	
+0	295089	it	Ganei Tikva	
+0	295089	lt	Ganei Tikva	
+0	295089	nl	Ganei Tikva	
+0	295089	nb	Ganei Tikva	
+0	295089	no	Ganei Tikva	
+0	295089	pl	Ganei Tikva	
+0	295089	pt	Ganei Tikva	
+0	295089	ro	Ganei Tikva	
+0	295089	sv	Ganei Tikva	
+0	295122	cs	Even Jehuda	
+0	295122	da	Even Juda	
+0	295122	de	Even Yehuda	
+0	295122	es	Even Judá	
+0	295122	et	Even Juuda	
+0	295122	fi	Even Judah	
+0	295122	fr	Even Yehuda	
+0	295122	hu	Even Júda	
+0	295122	it	Even Giuda	
+0	295122	lt	Even Judas	
+0	295122	nl	Even Juda	
+0	295122	nb	Even Juda	
+0	295122	no	Even Juda	
+0	295122	pl	Even Jehuda	
+0	295122	pt	Even Judá	
+0	295122	ro	Even Iuda	
+0	295122	sv	Even Judah	
+0	295435	cs	Bejt Shean	
+0	295435	da	Beit Sjean	
+0	295435	et	Bayt Sean	
+0	295435	fi	Beit Shean	
+0	295435	hu	Beit Szean	
+0	295435	it	Beit Shean	
+0	295435	lt	Beit Šeanas	
+0	295435	nl	Bejt Shean	
+0	295435	nb	Bet Sean	
+0	295435	no	Bet Sean	
+0	295435	ro	Beit Shean	
+0	295435	sv	Beit Shean	
+0	295514	cs	Bnei Brak	
+0	295514	da	Bnei Brak	
+0	295514	de	Bnei Brak	
+0	295514	es	Bnei Brak	
+0	295514	et	Bnei Brak	
+0	295514	fi	Bnei Brak	
+0	295514	fr	Bnei Brak	
+0	295514	hu	Bnei Brak	
+0	295514	it	Bnei Brak	
+0	295514	lt	Bnei Brak	
+0	295514	nl	Bnei Brak	
+0	295514	nb	Bnei Brak	
+0	295514	no	Bnei Brak	
+0	295514	pl	Bnei Brak	
+0	295514	pt	Bnei Brak	
+0	295514	ro	Bnei Brak	
+0	295514	sv	Bnei Brak	
+0	295548	da	Bat Jam	
+0	295548	et	Bat Yam	
+0	295548	fi	Bat Yam	
+0	295548	hu	Bat Yam	
+0	295548	nb	Bat Yam	
+0	295548	no	Bat Yam	
+0	295548	pt	Bat Yam	
+0	295548	ro	Bat Yam	
+0	295548	sv	Bat Jam	
+0	295584	cs	Azor	
+0	295584	da	Azor	
+0	295584	de	Azor	
+0	295584	es	Azor	
+0	295584	et	Azor	
+0	295584	fi	Azor	
+0	295584	fr	Azor	
+0	295584	hu	Azor	
+0	295584	it	Azor	
+0	295584	lt	Azoras	
+0	295584	nl	Azor	
+0	295584	nb	Azor	
+0	295584	no	Azor	
+0	295584	pl	Azor	
+0	295584	pt	Azor	
+0	295584	ro	Azor	
+0	295584	sv	Azor	
+0	295657	cs	Arad	
+0	295657	da	Arad	
+0	295657	de	Arad	
+0	295657	es	Arad	
+0	295657	et	Arad	
+0	295657	fi	Arad	
+0	295657	fr	Arad	
+0	295657	hu	Arad	
+0	295657	it	Arad	
+0	295657	lt	Arad	
+0	295657	nl	Arad	
+0	295657	nb	Arad	
+0	295657	no	Arad	
+0	295657	pl	Arad	
+0	295657	pt	Arad	
+0	295657	ro	Arad	
+0	295657	sv	Arad	
+0	295740	cs	Afula	
+0	295740	da	Afula	
+0	295740	de	Afula	
+0	295740	es	Afula	
+0	295740	et	Afula	
+0	295740	fi	Afula	
+0	295740	fr	Afula	
+0	295740	hu	Afula	
+0	295740	it	Afula	
+0	295740	lt	Afula	
+0	295740	nl	Afula	
+0	295740	nb	Afula	
+0	295740	no	Afula	
+0	295740	pl	Afula	
+0	295740	pt	Afula	
+0	295740	ro	Afula	
+0	295740	sv	Afula	
