@@ -44,9 +44,9 @@ import static net.sf.util.TimeUtils.roundUp;
  * Clock widget with hour and title underneath.<br>
  * Based on the default Android digital clock widget.
  *
- * @author Moshe
+ * @author Moshe Waisberg
  */
-public class ClockWidget extends ZmanimWidget {
+public class ClockWidget extends ZmanimAppWidget {
 
     private final ThreadLocal<DateFormat> formatter = new ThreadLocal<DateFormat>() {
         @Override
