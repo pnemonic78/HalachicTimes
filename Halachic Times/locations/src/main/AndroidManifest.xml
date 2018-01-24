@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- For android.support.v4.app.JobIntentService -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!-- The application uses one or more features on the device for determining location, such as GPS location, network location, or cell location. -->
     <uses-feature
