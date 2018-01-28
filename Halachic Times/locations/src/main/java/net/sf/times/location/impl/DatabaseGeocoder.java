@@ -27,13 +27,14 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
-import net.sf.times.location.LocationOpenHelper;
 import net.sf.times.location.City;
 import net.sf.times.location.Country;
 import net.sf.times.location.GeocoderBase;
+import net.sf.times.location.LocationContract;
 import net.sf.times.location.LocationContract.AddressColumns;
 import net.sf.times.location.LocationContract.CityColumns;
 import net.sf.times.location.LocationContract.ElevationColumns;
+import net.sf.times.location.LocationOpenHelper;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.util.LocaleUtils;
@@ -140,20 +141,6 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     /**
-     * Get the readable addresses database.
-     *
-     * @return the database - {@code null} otherwise.
-     */
-    protected SQLiteDatabase getReadableDatabase() {
-        try {
-            return getDatabaseHelper().getReadableDatabase();
-        } catch (SQLiteException e) {
-            Log.e(TAG, "no readable db", e);
-        }
-        return null;
-    }
-
-    /**
      * Get the writable addresses database.
      *
      * @return the database - {@code null} otherwise.
@@ -182,22 +169,23 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
-        CursorFilter filter = new CursorFilter() {
+        final CursorFilter filter = new CursorFilter() {
 
-            private final float[] mDistance = new float[1];
+            private final float[] distance = new float[1];
 
             @Override
             public boolean accept(Cursor cursor) {
                 double locationLatitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE);
                 double locationLongitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE);
-                Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
-                if (mDistance[0] <= SAME_LOCATION)
+                Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
+                if (distance[0] <= SAME_LOCATION) {
                     return true;
+                }
 
                 double addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE);
                 double addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE);
-                Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, mDistance);
-                return (mDistance[0] <= SAME_LOCATION);
+                Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, distance);
+                return (distance[0] <= SAME_LOCATION);
             }
         };
         List<ZmanimAddress> q = queryAddresses(filter);
@@ -218,15 +206,16 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
 
-        CursorFilter filter = new CursorFilter() {
-            private final float[] mDistance = new float[1];
+        final CursorFilter filter = new CursorFilter() {
+
+            private final float[] distance = new float[1];
 
             @Override
             public boolean accept(Cursor cursor) {
                 double locationLatitude = cursor.getDouble(INDEX_ELEVATION_LATITUDE);
                 double locationLongitude = cursor.getDouble(INDEX_ELEVATION_LONGITUDE);
-                Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, mDistance);
-                return (mDistance[0] <= SAME_PLATEAU);
+                Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
+                return (distance[0] <= SAME_PLATEAU);
             }
         };
         List<ZmanimLocation> locations = queryElevations(filter);
@@ -300,10 +289,9 @@ public class DatabaseGeocoder extends GeocoderBase {
         final String country = locale.getCountry();
 
         List<ZmanimAddress> addresses = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        if (db == null)
-            return addresses;
-        Cursor cursor = db.query(TABLE_ADDRESSES, PROJECTION_ADDRESS, null, null, null, null, null);
+        String selection = "(" + AddressColumns.LANGUAGE + " IS NULL) OR (" + AddressColumns.LANGUAGE + "=?)";
+        String[] selectionArgs = {language};
+        Cursor cursor = context.getContentResolver().query(LocationContract.Address.CONTENT_URI, PROJECTION_ADDRESS, selection, selectionArgs, null);
         if ((cursor == null) || cursor.isClosed()) {
             return addresses;
         }
@@ -312,29 +300,26 @@ public class DatabaseGeocoder extends GeocoderBase {
             if (cursor.moveToFirst()) {
                 String locationLanguage;
                 Locale locale;
-                ZmanimAddress address;
 
                 do {
-                    locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE);
-                    if ((locationLanguage == null) || locationLanguage.equals(language)) {
-                        if ((filter != null) && !filter.accept(cursor)) {
-                            continue;
-                        }
-
-                        if (locationLanguage == null) {
-                            locale = this.locale;
-                        } else {
-                            locale = new Locale(locationLanguage, country);
-                        }
-
-                        address = new ZmanimAddress(locale);
-                        address.setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS));
-                        address.setId(cursor.getLong(INDEX_ADDRESS_ID));
-                        address.setLatitude(cursor.getDouble(INDEX_ADDRESS_LATITUDE));
-                        address.setLongitude(cursor.getDouble(INDEX_ADDRESS_LONGITUDE));
-                        address.setFavorite(cursor.getShort(INDEX_ADDRESS_FAVORITE) != 0);
-                        addresses.add(address);
+                    if ((filter != null) && !filter.accept(cursor)) {
+                        continue;
                     }
+
+                    locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE);
+                    if (locationLanguage == null) {
+                        locale = this.locale;
+                    } else {
+                        locale = new Locale(locationLanguage, country);
+                    }
+
+                    ZmanimAddress address = new ZmanimAddress(locale);
+                    address.setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS));
+                    address.setId(cursor.getLong(INDEX_ADDRESS_ID));
+                    address.setLatitude(cursor.getDouble(INDEX_ADDRESS_LATITUDE));
+                    address.setLongitude(cursor.getDouble(INDEX_ADDRESS_LONGITUDE));
+                    address.setFavorite(cursor.getInt(INDEX_ADDRESS_FAVORITE) != 0);
+                    addresses.add(address);
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteException se) {
@@ -422,24 +407,19 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public List<ZmanimLocation> queryElevations(CursorFilter filter) {
         List<ZmanimLocation> locations = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        if (db == null)
-            return locations;
-        Cursor cursor = db.query(TABLE_ELEVATIONS, PROJECTION_ELEVATION, null, null, null, null, null);
+        Cursor cursor = context.getContentResolver().query(LocationContract.Elevation.CONTENT_URI, PROJECTION_ELEVATION, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return locations;
         }
 
         try {
             if (cursor.moveToFirst()) {
-                ZmanimLocation location;
-
                 do {
                     if ((filter != null) && !filter.accept(cursor)) {
                         continue;
                     }
 
-                    location = new ZmanimLocation(DB_PROVIDER);
+                    ZmanimLocation location = new ZmanimLocation(DB_PROVIDER);
                     location.setId(cursor.getLong(INDEX_ELEVATION_ID));
                     location.setLatitude(cursor.getDouble(INDEX_ELEVATION_LATITUDE));
                     location.setLongitude(cursor.getDouble(INDEX_ELEVATION_LONGITUDE));
@@ -510,26 +490,21 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public List<City> queryCities(CursorFilter filter) {
         List<City> cities = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        if (db == null)
-            return cities;
-        Cursor cursor = db.query(TABLE_CITIES, PROJECTION_CITY, null, null, null, null, null);
+        Cursor cursor = context.getContentResolver().query(LocationContract.City.CONTENT_URI, PROJECTION_CITY, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return cities;
         }
 
         try {
             if (cursor.moveToFirst()) {
-                City city;
-
                 do {
                     if ((filter != null) && !filter.accept(cursor)) {
                         continue;
                     }
 
-                    city = new City(locale);
+                    City city = new City(locale);
                     city.setId(cursor.getLong(INDEX_CITY_ID));
-                    city.setFavorite(cursor.getShort(INDEX_CITY_FAVORITE) != 0);
+                    city.setFavorite(cursor.getInt(INDEX_CITY_FAVORITE) != 0);
                     cities.add(city);
                 } while (cursor.moveToNext());
             }

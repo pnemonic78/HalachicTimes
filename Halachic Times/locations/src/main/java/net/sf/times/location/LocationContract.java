@@ -85,13 +85,13 @@ public class LocationContract {
      */
     public static final class Address implements AddressColumns {
         /** Table name for addresses. */
-        public static final String ADDRESSES = "addresses";
+        public static final String ADDRESS = "address";
 
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ADDRESSES);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ADDRESS);
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
@@ -139,13 +139,13 @@ public class LocationContract {
      */
     public static final class Elevation implements ElevationColumns {
         /** Table name for elevations. */
-        public static final String ELEVATIONS = "elevations";
+        public static final String ELEVATION = "elevation";
 
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ELEVATIONS);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ELEVATION);
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
@@ -183,13 +183,13 @@ public class LocationContract {
      */
     public static final class City implements CityColumns {
         /** Table name for cities. */
-        public static final String CITIES = "cities";
+        public static final String CITY = "city";
 
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, CITIES);
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, CITY);
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
