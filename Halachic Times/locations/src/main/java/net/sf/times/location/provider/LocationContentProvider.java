@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.location;
+package net.sf.times.location.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -28,13 +28,13 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import static net.sf.times.location.LocationContract.AUTHORITY;
-import static net.sf.times.location.LocationContract.Addresses;
-import static net.sf.times.location.LocationContract.Cities;
-import static net.sf.times.location.LocationContract.Elevations;
-import static net.sf.times.location.LocationOpenHelper.TABLE_ADDRESSES;
-import static net.sf.times.location.LocationOpenHelper.TABLE_CITIES;
-import static net.sf.times.location.LocationOpenHelper.TABLE_ELEVATIONS;
+import static net.sf.times.location.provider.LocationContract.AUTHORITY;
+import static net.sf.times.location.provider.LocationContract.Addresses;
+import static net.sf.times.location.provider.LocationContract.Cities;
+import static net.sf.times.location.provider.LocationContract.Elevations;
+import static net.sf.times.location.provider.LocationOpenHelper.TABLE_ADDRESSES;
+import static net.sf.times.location.provider.LocationOpenHelper.TABLE_CITIES;
+import static net.sf.times.location.provider.LocationOpenHelper.TABLE_ELEVATIONS;
 
 /**
  * Location content provider.<br>

@@ -31,7 +31,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <provider
-            android:name="net.sf.times.location.LocationContentProvider"
+            android:name="net.sf.times.location.provider.LocationContentProvider"
             android:authorities="net.sf.times.location.locations"
             android:exported="false"/>
     </application>

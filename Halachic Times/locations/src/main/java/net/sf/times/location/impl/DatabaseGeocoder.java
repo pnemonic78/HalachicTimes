@@ -30,11 +30,11 @@ import net.sf.database.CursorFilter;
 import net.sf.times.location.City;
 import net.sf.times.location.Country;
 import net.sf.times.location.GeocoderBase;
-import net.sf.times.location.LocationContract.AddressColumns;
-import net.sf.times.location.LocationContract.CityColumns;
-import net.sf.times.location.LocationContract.ElevationColumns;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
+import net.sf.times.location.provider.LocationContract.AddressColumns;
+import net.sf.times.location.provider.LocationContract.CityColumns;
+import net.sf.times.location.provider.LocationContract.ElevationColumns;
 import net.sf.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
@@ -44,9 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static net.sf.times.location.LocationContract.Addresses;
-import static net.sf.times.location.LocationContract.Cities;
-import static net.sf.times.location.LocationContract.Elevations;
+import static net.sf.times.location.provider.LocationContract.Addresses;
+import static net.sf.times.location.provider.LocationContract.Cities;
+import static net.sf.times.location.provider.LocationContract.Elevations;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the

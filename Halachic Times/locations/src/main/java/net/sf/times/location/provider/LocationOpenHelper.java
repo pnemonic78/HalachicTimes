@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.times.location;
+package net.sf.times.location.provider;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.provider.BaseColumns;
 
-import net.sf.times.location.LocationContract.AddressColumns;
-import net.sf.times.location.LocationContract.CityColumns;
-import net.sf.times.location.LocationContract.ElevationColumns;
+import net.sf.times.location.provider.LocationContract.AddressColumns;
+import net.sf.times.location.provider.LocationContract.CityColumns;
+import net.sf.times.location.provider.LocationContract.ElevationColumns;
 
 import java.io.File;
 
