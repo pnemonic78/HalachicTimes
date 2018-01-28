@@ -19,9 +19,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
@@ -35,7 +33,6 @@ import net.sf.times.location.GeocoderBase;
 import net.sf.times.location.LocationContract.AddressColumns;
 import net.sf.times.location.LocationContract.CityColumns;
 import net.sf.times.location.LocationContract.ElevationColumns;
-import net.sf.times.location.LocationOpenHelper;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
 import net.sf.util.LocaleUtils;
@@ -50,9 +47,6 @@ import java.util.Locale;
 import static net.sf.times.location.LocationContract.Addresses;
 import static net.sf.times.location.LocationContract.Cities;
 import static net.sf.times.location.LocationContract.Elevations;
-import static net.sf.times.location.LocationOpenHelper.TABLE_ADDRESSES;
-import static net.sf.times.location.LocationOpenHelper.TABLE_CITIES;
-import static net.sf.times.location.LocationOpenHelper.TABLE_ELEVATIONS;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -107,11 +101,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final int INDEX_CITY_TIMESTAMP = 1;
     private static final int INDEX_CITY_FAVORITE = 2;
 
-    private static final String WHERE_ID = BaseColumns._ID + "=?";
-
     private final Context context;
-    @Deprecated
-    private SQLiteOpenHelper dbHelper;
 
     /**
      * Creates a new database geocoder.
@@ -136,31 +126,8 @@ public class DatabaseGeocoder extends GeocoderBase {
         this.context = context;
     }
 
-    private SQLiteOpenHelper getDatabaseHelper() {
-        if (dbHelper == null) {
-            synchronized (this) {
-                dbHelper = new LocationOpenHelper(context);
-            }
-        }
-        return dbHelper;
-    }
-
-    @Deprecated
-    protected SQLiteDatabase getWritableDatabase() {
-        try {
-            return getDatabaseHelper().getWritableDatabase();
-        } catch (SQLiteException e) {
-            Log.e(TAG, "no writable db", e);
-        }
-        return null;
-    }
-
     /** Close database resources. */
     public void close() {
-        if (dbHelper != null) {
-            dbHelper.close();
-            dbHelper = null;
-        }
     }
 
     @Override
@@ -384,8 +351,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            String[] whereArgs = {Long.toString(id)};
-            getWritableDatabase().update(TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
+            Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI, id);
+            context.getContentResolver().update(uri, values, null, null);
         }
     }
 
@@ -464,8 +431,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            String[] whereArgs = {Long.toString(id)};
-            getWritableDatabase().update(TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
+            Uri uri = ContentUris.withAppendedId(Elevations.CONTENT_URI, id);
+            context.getContentResolver().update(uri, values, null, null);
         }
     }
 
@@ -538,8 +505,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            String[] whereArgs = {Long.toString(id)};
-            getWritableDatabase().update(TABLE_CITIES, values, WHERE_ID, whereArgs);
+            Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI, id);
+            context.getContentResolver().update(uri, values, null, null);
         }
     }
 

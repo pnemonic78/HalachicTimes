@@ -211,7 +211,38 @@ public class LocationContentProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
         int result = 0;
+        String id;
+
+        switch (uriMatcher.match(uri)) {
+            case CODE_ADDRESSES:
+                result = db.update(TABLE_ADDRESSES, values, selection, selectionArgs);
+                break;
+            case CODE_ADDRESS_ID:
+                id = uri.getLastPathSegment();
+                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
+                result = db.update(TABLE_ADDRESSES, values, selection, selectionArgs);
+                break;
+            case CODE_CITIES:
+                result = db.update(TABLE_CITIES, values, selection, selectionArgs);
+                break;
+            case CODE_CITY_ID:
+                id = uri.getLastPathSegment();
+                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
+                result = db.update(TABLE_CITIES, values, selection, selectionArgs);
+                break;
+            case CODE_ELEVATIONS:
+                result = db.update(TABLE_ELEVATIONS, values, selection, selectionArgs);
+                break;
+            case CODE_ELEVATION_ID:
+                id = uri.getLastPathSegment();
+                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
+                result = db.update(TABLE_ELEVATIONS, values, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
 
         if (result > 0) {
             getContext().getContentResolver().notifyChange(uri, null);
