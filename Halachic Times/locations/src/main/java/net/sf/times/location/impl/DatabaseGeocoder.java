@@ -15,6 +15,7 @@
  */
 package net.sf.times.location.impl;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,6 +24,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.location.Address;
 import android.location.Location;
+import android.net.Uri;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -108,6 +110,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final String WHERE_ID = BaseColumns._ID + "=?";
 
     private final Context context;
+    @Deprecated
     private SQLiteOpenHelper dbHelper;
 
     /**
@@ -142,11 +145,7 @@ public class DatabaseGeocoder extends GeocoderBase {
         return dbHelper;
     }
 
-    /**
-     * Get the writable addresses database.
-     *
-     * @return the database - {@code null} otherwise.
-     */
+    @Deprecated
     protected SQLiteDatabase getWritableDatabase() {
         try {
             return getDatabaseHelper().getWritableDatabase();
@@ -376,17 +375,17 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
         values.put(AddressColumns.FAVORITE, address.isFavorite());
 
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
         if (insert) {
-            id = db.insert(TABLE_ADDRESSES, null, values);
-            if (id > 0L) {
-                address.setId(id);
+            Uri uri = context.getContentResolver().insert(Addresses.CONTENT_URI, values);
+            if (uri != null) {
+                id = ContentUris.parseId(uri);
+                if (id > 0L) {
+                    address.setId(id);
+                }
             }
         } else {
             String[] whereArgs = {Long.toString(id)};
-            db.update(TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
+            getWritableDatabase().update(TABLE_ADDRESSES, values, WHERE_ID, whereArgs);
         }
     }
 
@@ -456,17 +455,17 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(ElevationColumns.ELEVATION, location.getAltitude());
         values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
 
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
         if (id == 0L) {
-            id = db.insert(TABLE_ELEVATIONS, null, values);
-            if (id > 0L) {
-                location.setId(id);
+            Uri uri = context.getContentResolver().insert(Elevations.CONTENT_URI, values);
+            if (uri != null) {
+                id = ContentUris.parseId(uri);
+                if (id > 0L) {
+                    location.setId(id);
+                }
             }
         } else {
             String[] whereArgs = {Long.toString(id)};
-            db.update(TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
+            getWritableDatabase().update(TABLE_ELEVATIONS, values, WHERE_ID, whereArgs);
         }
     }
 
@@ -523,26 +522,24 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (city == null)
             return;
 
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-
         ContentValues values = new ContentValues();
         values.put(CityColumns.TIMESTAMP, System.currentTimeMillis());
         values.put(CityColumns.FAVORITE, city.isFavorite());
 
         long id = city.getId();
         if (id == 0L) {
-            id = City.generateCityId(city);
+            values.put(BaseColumns._ID, City.generateCityId(city));
 
-            values.put(BaseColumns._ID, id);
-            id = db.insert(TABLE_CITIES, null, values);
-            if (id > 0L) {
-                city.setId(id);
+            Uri uri = context.getContentResolver().insert(Cities.CONTENT_URI, values);
+            if (uri != null) {
+                id = ContentUris.parseId(uri);
+                if (id > 0L) {
+                    city.setId(id);
+                }
             }
         } else {
             String[] whereArgs = {Long.toString(id)};
-            db.update(TABLE_CITIES, values, WHERE_ID, whereArgs);
+            getWritableDatabase().update(TABLE_CITIES, values, WHERE_ID, whereArgs);
         }
     }
 

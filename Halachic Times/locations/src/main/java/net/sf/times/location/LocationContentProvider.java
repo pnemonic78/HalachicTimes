@@ -16,6 +16,7 @@
 package net.sf.times.location;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
@@ -135,7 +136,29 @@ public class LocationContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
         Uri result = null;
+        long id = 0L;
+
+        switch (uriMatcher.match(uri)) {
+            case CODE_ADDRESSES:
+            case CODE_ADDRESS_ID:
+                id = db.insert(TABLE_ADDRESSES, null, values);
+                result = ContentUris.withAppendedId(Addresses.CONTENT_URI, id);
+                break;
+            case CODE_CITIES:
+            case CODE_CITY_ID:
+                id = db.insert(TABLE_CITIES, null, values);
+                result = ContentUris.withAppendedId(Cities.CONTENT_URI, id);
+                break;
+            case CODE_ELEVATIONS:
+            case CODE_ELEVATION_ID:
+                id = db.insert(TABLE_ELEVATIONS, null, values);
+                result = ContentUris.withAppendedId(Elevations.CONTENT_URI, id);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
 
         if (result != null) {
             getContext().getContentResolver().notifyChange(uri, null);
