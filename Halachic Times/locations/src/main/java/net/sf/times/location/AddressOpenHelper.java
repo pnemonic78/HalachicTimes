@@ -20,9 +20,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
+import net.sf.times.location.LocationContract.AddressColumns;
+import net.sf.times.location.LocationContract.CitiesColumns;
+import net.sf.times.location.LocationContract.ElevationColumns;
+
 import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
-import static net.sf.times.location.AddressColumns.TIMESTAMP;
 
 /**
  * A helper class to manage database creation and version management for
@@ -64,7 +67,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
         sql.append(AddressColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
         sql.append(AddressColumns.ADDRESS).append(" TEXT NOT NULL,");
         sql.append(AddressColumns.LANGUAGE).append(" TEXT,");
-        sql.append(TIMESTAMP).append(" INTEGER NOT NULL,");
+        sql.append(AddressColumns.TIMESTAMP).append(" INTEGER NOT NULL,");
         sql.append(AddressColumns.FAVORITE).append(" INTEGER NOT NULL");
         sql.append(");");
         db.execSQL(sql.toString());
