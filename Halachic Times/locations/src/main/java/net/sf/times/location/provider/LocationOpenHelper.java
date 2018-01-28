@@ -109,12 +109,9 @@ public class LocationOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADDRESSES + ";");
-        if (oldVersion >= 3) {
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ELEVATIONS + ";");
-            if (oldVersion >= 4) {
-                db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES + ";");
-            }
-        }
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CITIES + ";");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ELEVATIONS + ";");
+
         onCreate(db);
     }
 
