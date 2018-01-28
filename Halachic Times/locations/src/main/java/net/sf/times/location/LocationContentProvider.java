@@ -27,6 +27,14 @@ import android.provider.BaseColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import static net.sf.times.location.LocationContract.AUTHORITY;
+import static net.sf.times.location.LocationContract.Addresses;
+import static net.sf.times.location.LocationContract.Cities;
+import static net.sf.times.location.LocationContract.Elevations;
+import static net.sf.times.location.LocationOpenHelper.TABLE_ADDRESSES;
+import static net.sf.times.location.LocationOpenHelper.TABLE_CITIES;
+import static net.sf.times.location.LocationOpenHelper.TABLE_ELEVATIONS;
+
 /**
  * Location content provider.<br>
  * Fetches addresses, cities, and elevations from the database.
@@ -49,13 +57,13 @@ public class LocationContentProvider extends ContentProvider {
     public boolean onCreate() {
         final Context context = getContext();
 
-        final String authority = LocationContract.AUTHORITY;
-        uriMatcher.addURI(authority, LocationContract.Address.ADDRESS, CODE_ADDRESSES);
-        uriMatcher.addURI(authority, LocationContract.Address.ADDRESS + "/#", CODE_ADDRESS_ID);
-        uriMatcher.addURI(authority, LocationContract.City.CITY, CODE_CITIES);
-        uriMatcher.addURI(authority, LocationContract.City.CITY + "/#", CODE_CITY_ID);
-        uriMatcher.addURI(authority, LocationContract.Elevation.ELEVATION, CODE_ELEVATIONS);
-        uriMatcher.addURI(authority, LocationContract.Elevation.ELEVATION + "/#", CODE_ELEVATION_ID);
+        final String authority = AUTHORITY;
+        uriMatcher.addURI(authority, Addresses.ADDRESS, CODE_ADDRESSES);
+        uriMatcher.addURI(authority, Addresses.ADDRESS + "/#", CODE_ADDRESS_ID);
+        uriMatcher.addURI(authority, Cities.CITY, CODE_CITIES);
+        uriMatcher.addURI(authority, Cities.CITY + "/#", CODE_CITY_ID);
+        uriMatcher.addURI(authority, Elevations.ELEVATION, CODE_ELEVATIONS);
+        uriMatcher.addURI(authority, Elevations.ELEVATION + "/#", CODE_ELEVATION_ID);
 
         openHelper = new LocationOpenHelper(context);
 
@@ -67,17 +75,17 @@ public class LocationContentProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         switch (uriMatcher.match(uri)) {
             case CODE_ADDRESSES:
-                return LocationContract.Address.CONTENT_TYPE;
+                return Addresses.CONTENT_TYPE;
             case CODE_ADDRESS_ID:
-                return LocationContract.Address.CONTENT_ITEM_TYPE;
+                return Addresses.CONTENT_ITEM_TYPE;
             case CODE_CITIES:
-                return LocationContract.City.CONTENT_TYPE;
+                return Cities.CONTENT_TYPE;
             case CODE_CITY_ID:
-                return LocationContract.City.CONTENT_ITEM_TYPE;
+                return Cities.CONTENT_ITEM_TYPE;
             case CODE_ELEVATIONS:
-                return LocationContract.Elevation.CONTENT_TYPE;
+                return Elevations.CONTENT_TYPE;
             case CODE_ELEVATION_ID:
-                return LocationContract.Elevation.CONTENT_ITEM_TYPE;
+                return Elevations.CONTENT_ITEM_TYPE;
             default:
                 return null;
         }
@@ -92,28 +100,28 @@ public class LocationContentProvider extends ContentProvider {
 
         switch (uriMatcher.match(uri)) {
             case CODE_ADDRESSES:
-                cursor = db.query(LocationOpenHelper.TABLE_ADDRESSES, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(TABLE_ADDRESSES, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case CODE_ADDRESS_ID:
                 id = uri.getLastPathSegment();
                 selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                cursor = db.query(LocationOpenHelper.TABLE_ADDRESSES, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(TABLE_ADDRESSES, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case CODE_CITIES:
-                cursor = db.query(LocationOpenHelper.TABLE_CITIES, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(TABLE_CITIES, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case CODE_CITY_ID:
                 id = uri.getLastPathSegment();
                 selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                cursor = db.query(LocationOpenHelper.TABLE_CITIES, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(TABLE_CITIES, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case CODE_ELEVATIONS:
-                cursor = db.query(LocationOpenHelper.TABLE_ELEVATIONS, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(TABLE_ELEVATIONS, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             case CODE_ELEVATION_ID:
                 id = uri.getLastPathSegment();
                 selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                cursor = db.query(LocationOpenHelper.TABLE_ELEVATIONS, projection, selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(TABLE_ELEVATIONS, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -138,7 +146,38 @@ public class LocationContentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        SQLiteDatabase db = openHelper.getWritableDatabase();
         int result = 0;
+        String id;
+
+        switch (uriMatcher.match(uri)) {
+            case CODE_ADDRESSES:
+                result = db.delete(TABLE_ADDRESSES, selection, selectionArgs);
+                break;
+            case CODE_ADDRESS_ID:
+                id = uri.getLastPathSegment();
+                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
+                result = db.delete(TABLE_ADDRESSES, selection, selectionArgs);
+                break;
+            case CODE_CITIES:
+                result = db.delete(TABLE_CITIES, selection, selectionArgs);
+                break;
+            case CODE_CITY_ID:
+                id = uri.getLastPathSegment();
+                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
+                result = db.delete(TABLE_CITIES, selection, selectionArgs);
+                break;
+            case CODE_ELEVATIONS:
+                result = db.delete(TABLE_ELEVATIONS, selection, selectionArgs);
+                break;
+            case CODE_ELEVATION_ID:
+                id = uri.getLastPathSegment();
+                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
+                result = db.delete(TABLE_ELEVATIONS, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
 
         if (result > 0) {
             getContext().getContentResolver().notifyChange(uri, null);

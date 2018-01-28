@@ -83,7 +83,7 @@ public class LocationContract {
     /**
      * Contains the addresses.
      */
-    public static final class Address implements AddressColumns {
+    public static final class Addresses implements AddressColumns {
         /** Table name for addresses. */
         public static final String ADDRESS = "address";
 
@@ -137,7 +137,7 @@ public class LocationContract {
     /**
      * Contains the elevations.
      */
-    public static final class Elevation implements ElevationColumns {
+    public static final class Elevations implements ElevationColumns {
         /** Table name for elevations. */
         public static final String ELEVATION = "elevation";
 
@@ -181,7 +181,7 @@ public class LocationContract {
     /**
      * Contains the cities.
      */
-    public static final class City implements CityColumns {
+    public static final class Cities implements CityColumns {
         /** Table name for cities. */
         public static final String CITY = "city";
 

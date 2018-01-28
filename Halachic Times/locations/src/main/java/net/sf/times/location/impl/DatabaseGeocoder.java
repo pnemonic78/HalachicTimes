@@ -30,7 +30,6 @@ import net.sf.database.CursorFilter;
 import net.sf.times.location.City;
 import net.sf.times.location.Country;
 import net.sf.times.location.GeocoderBase;
-import net.sf.times.location.LocationContract;
 import net.sf.times.location.LocationContract.AddressColumns;
 import net.sf.times.location.LocationContract.CityColumns;
 import net.sf.times.location.LocationContract.ElevationColumns;
@@ -46,6 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static net.sf.times.location.LocationContract.Addresses;
+import static net.sf.times.location.LocationContract.Cities;
+import static net.sf.times.location.LocationContract.Elevations;
 import static net.sf.times.location.LocationOpenHelper.TABLE_ADDRESSES;
 import static net.sf.times.location.LocationOpenHelper.TABLE_CITIES;
 import static net.sf.times.location.LocationOpenHelper.TABLE_ELEVATIONS;
@@ -291,7 +293,7 @@ public class DatabaseGeocoder extends GeocoderBase {
         List<ZmanimAddress> addresses = new ArrayList<>();
         String selection = "(" + AddressColumns.LANGUAGE + " IS NULL) OR (" + AddressColumns.LANGUAGE + "=?)";
         String[] selectionArgs = {language};
-        Cursor cursor = context.getContentResolver().query(LocationContract.Address.CONTENT_URI, PROJECTION_ADDRESS, selection, selectionArgs, null);
+        Cursor cursor = context.getContentResolver().query(Addresses.CONTENT_URI, PROJECTION_ADDRESS, selection, selectionArgs, null);
         if ((cursor == null) || cursor.isClosed()) {
             return addresses;
         }
@@ -392,10 +394,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Delete the list of cached addresses.
      */
     public void deleteAddresses() {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        db.delete(TABLE_ADDRESSES, null, null);
+        context.getContentResolver().delete(Addresses.CONTENT_URI, null, null);
     }
 
     /**
@@ -407,7 +406,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public List<ZmanimLocation> queryElevations(CursorFilter filter) {
         List<ZmanimLocation> locations = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(LocationContract.Elevation.CONTENT_URI, PROJECTION_ELEVATION, null, null, null);
+        Cursor cursor = context.getContentResolver().query(Elevations.CONTENT_URI, PROJECTION_ELEVATION, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return locations;
         }
@@ -475,10 +474,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Delete the list of cached elevations.
      */
     public void deleteElevations() {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        db.delete(TABLE_ELEVATIONS, null, null);
+        context.getContentResolver().delete(Elevations.CONTENT_URI, null, null);
     }
 
     /**
@@ -490,7 +486,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public List<City> queryCities(CursorFilter filter) {
         List<City> cities = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(LocationContract.City.CONTENT_URI, PROJECTION_CITY, null, null, null);
+        Cursor cursor = context.getContentResolver().query(Cities.CONTENT_URI, PROJECTION_CITY, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return cities;
         }
@@ -554,10 +550,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Delete the list of cached cities and re-populate.
      */
     public void deleteCities() {
-        SQLiteDatabase db = getWritableDatabase();
-        if (db == null)
-            return;
-        db.delete(TABLE_CITIES, null, null);
+        context.getContentResolver().delete(Cities.CONTENT_URI, null, null);
     }
 
 }
