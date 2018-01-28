@@ -29,6 +29,11 @@
             android:name="net.sf.times.location.AddressService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <provider
+            android:name="net.sf.times.location.LocationContentProvider"
+            android:authorities="net.sf.times.location.locations"
+            android:exported="false"/>
     </application>
 
 </manifest>

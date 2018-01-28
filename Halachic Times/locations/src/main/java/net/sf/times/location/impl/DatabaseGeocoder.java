@@ -27,12 +27,12 @@ import android.provider.BaseColumns;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
-import net.sf.times.location.AddressOpenHelper;
+import net.sf.times.location.LocationOpenHelper;
 import net.sf.times.location.City;
 import net.sf.times.location.Country;
 import net.sf.times.location.GeocoderBase;
 import net.sf.times.location.LocationContract.AddressColumns;
-import net.sf.times.location.LocationContract.CitiesColumns;
+import net.sf.times.location.LocationContract.CityColumns;
 import net.sf.times.location.LocationContract.ElevationColumns;
 import net.sf.times.location.ZmanimAddress;
 import net.sf.times.location.ZmanimLocation;
@@ -45,9 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import static net.sf.times.location.AddressOpenHelper.TABLE_ADDRESSES;
-import static net.sf.times.location.AddressOpenHelper.TABLE_CITIES;
-import static net.sf.times.location.AddressOpenHelper.TABLE_ELEVATIONS;
+import static net.sf.times.location.LocationOpenHelper.TABLE_ADDRESSES;
+import static net.sf.times.location.LocationOpenHelper.TABLE_CITIES;
+import static net.sf.times.location.LocationOpenHelper.TABLE_ELEVATIONS;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -96,8 +96,8 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     private static final String[] PROJECTION_CITY = {
             BaseColumns._ID,
-            CitiesColumns.TIMESTAMP,
-            CitiesColumns.FAVORITE};
+            CityColumns.TIMESTAMP,
+            CityColumns.FAVORITE};
     private static final int INDEX_CITY_ID = 0;
     private static final int INDEX_CITY_TIMESTAMP = 1;
     private static final int INDEX_CITY_FAVORITE = 2;
@@ -133,7 +133,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     private SQLiteOpenHelper getDatabaseHelper() {
         if (dbHelper == null) {
             synchronized (this) {
-                dbHelper = new AddressOpenHelper(context);
+                dbHelper = new LocationOpenHelper(context);
             }
         }
         return dbHelper;
@@ -557,8 +557,8 @@ public class DatabaseGeocoder extends GeocoderBase {
             return;
 
         ContentValues values = new ContentValues();
-        values.put(CitiesColumns.TIMESTAMP, System.currentTimeMillis());
-        values.put(CitiesColumns.FAVORITE, city.isFavorite());
+        values.put(CityColumns.TIMESTAMP, System.currentTimeMillis());
+        values.put(CityColumns.FAVORITE, city.isFavorite());
 
         long id = city.getId();
         if (id == 0L) {

@@ -18,11 +18,14 @@ package net.sf.times.location;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.provider.BaseColumns;
 
 import net.sf.times.location.LocationContract.AddressColumns;
-import net.sf.times.location.LocationContract.CitiesColumns;
+import net.sf.times.location.LocationContract.CityColumns;
 import net.sf.times.location.LocationContract.ElevationColumns;
+
+import java.io.File;
 
 import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
@@ -33,12 +36,14 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author Moshe Waisberg
  */
-public class AddressOpenHelper extends SQLiteOpenHelper {
+public class LocationOpenHelper extends SQLiteOpenHelper {
 
+    /** Database name for locations. */
+    private static final String DB_NAME = "location";
     /** Database name for times. */
-    private static final String DB_NAME = "times";
+    private static final String DB_NAME_TIMES = "times";
     /** Database version. */
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 1;
     /** Database table for addresses. */
     public static final String TABLE_ADDRESSES = "addresses";
     /** Database table for elevations. */
@@ -52,15 +57,26 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
      * @param context
      *         the context.
      */
-    public AddressOpenHelper(Context context) {
+    public LocationOpenHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        File dbFile = new File(db.getPath());
+        String folder = dbFile.getParent();
+        File oldFile = new File(folder, DB_NAME_TIMES);
+        if (oldFile.exists()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                SQLiteDatabase.deleteDatabase(oldFile);
+            } else {
+                oldFile.delete();
+            }
+        }
+
         StringBuilder sql = new StringBuilder();
         sql.append("CREATE TABLE ").append(TABLE_ADDRESSES).append('(');
-        sql.append(BaseColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
+        sql.append(AddressColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
         sql.append(AddressColumns.LOCATION_LATITUDE).append(" DOUBLE NOT NULL,");
         sql.append(AddressColumns.LOCATION_LONGITUDE).append(" DOUBLE NOT NULL,");
         sql.append(AddressColumns.LATITUDE).append(" DOUBLE NOT NULL,");
@@ -74,7 +90,7 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 
         sql = new StringBuilder();
         sql.append("CREATE TABLE ").append(TABLE_ELEVATIONS).append('(');
-        sql.append(BaseColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
+        sql.append(ElevationColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
         sql.append(ElevationColumns.LATITUDE).append(" DOUBLE NOT NULL,");
         sql.append(ElevationColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
         sql.append(ElevationColumns.ELEVATION).append(" DOUBLE NOT NULL,");
@@ -84,9 +100,9 @@ public class AddressOpenHelper extends SQLiteOpenHelper {
 
         sql = new StringBuilder();
         sql.append("CREATE TABLE ").append(TABLE_CITIES).append('(');
-        sql.append(BaseColumns._ID).append(" INTEGER PRIMARY KEY,");
-        sql.append(CitiesColumns.TIMESTAMP).append(" INTEGER NOT NULL,");
-        sql.append(CitiesColumns.FAVORITE).append(" INTEGER NOT NULL");
+        sql.append(CityColumns._ID).append(" INTEGER PRIMARY KEY,");
+        sql.append(CityColumns.TIMESTAMP).append(" INTEGER NOT NULL,");
+        sql.append(CityColumns.FAVORITE).append(" INTEGER NOT NULL");
         sql.append(");");
         db.execSQL(sql.toString());
     }

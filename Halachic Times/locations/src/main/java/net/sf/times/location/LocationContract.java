@@ -74,7 +74,7 @@ public class LocationContract {
         String TIMESTAMP = "timestamp";
         /**
          * Is favourite address?
-         * <p>Type: BOOLEAN</p>
+         * <P>Type: INTEGER (boolean)</P>
          */
         String FAVORITE = "favorite";
 
@@ -84,19 +84,22 @@ public class LocationContract {
      * Contains the addresses.
      */
     public static final class Address implements AddressColumns {
+        /** Table name for addresses. */
+        public static final String ADDRESSES = "addresses";
+
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, "addresses");
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ADDRESSES);
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.address";
 
         /**
-         * The MIME type of a {@link #CONTENT_URI} item.
+         * The MIME-type of a {@link #CONTENT_URI} item.
          */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.times.location.address";
     }
@@ -130,12 +133,37 @@ public class LocationContract {
         String TIMESTAMP = "timestamp";
 
     }
+
+    /**
+     * Contains the elevations.
+     */
+    public static final class Elevation implements ElevationColumns {
+        /** Table name for elevations. */
+        public static final String ELEVATIONS = "elevations";
+
+        /**
+         * The content:// style URI for this table.  Requests to this URI can be
+         * performed on the UI thread because they are always unblocking.
+         */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ELEVATIONS);
+
+        /**
+         * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.elevation";
+
+        /**
+         * The MIME-type of a {@link #CONTENT_URI} item.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.times.location.elevation";
+    }
+
     /**
      * City table columns.
      *
      * @author Moshe Waisberg
      */
-    public interface CitiesColumns extends BaseColumns {
+    public interface CityColumns extends BaseColumns {
 
         /**
          * The timestamp.
@@ -144,10 +172,37 @@ public class LocationContract {
         String TIMESTAMP = "timestamp";
         /**
          * Is favourite city?
-         * <p>Type: BOOLEAN</p>
+         * <P>Type: INTEGER (boolean)</P>
          */
         String FAVORITE = "favorite";
 
+    }
+
+    /**
+     * Contains the cities.
+     */
+    public static final class City implements CityColumns {
+        /** Table name for cities. */
+        public static final String CITIES = "cities";
+
+        /**
+         * The content:// style URI for this table.  Requests to this URI can be
+         * performed on the UI thread because they are always unblocking.
+         */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, CITIES);
+
+        /**
+         * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
+         */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.city";
+
+        /**
+         * The MIME-type of a {@link #CONTENT_URI} item.
+         */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.times.location.city";
+
+        /** Database table for addresses. */
+        public static final String TABLE_ADDRESSES = "addresses";
     }
 
 }
