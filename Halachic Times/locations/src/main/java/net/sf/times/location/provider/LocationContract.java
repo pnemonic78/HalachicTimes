@@ -15,6 +15,7 @@
  */
 package net.sf.times.location.provider;
 
+import android.content.Context;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -26,9 +27,14 @@ import android.provider.BaseColumns;
 public class LocationContract {
 
     /** The authority for the addresses provider */
-    public static final String AUTHORITY = "net.sf.times.location.locations";
+    public static String AUTHORITY(Context context) {
+        return context.getPackageName() + ".locations";
+    }
+
     /** A content:// style uri to the authority for the addresses provider */
-    public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);
+    public static Uri AUTHORITY_URI(Context context) {
+        return Uri.parse("content://" + AUTHORITY(context));
+    }
 
     /**
      * Address table columns.
@@ -91,7 +97,9 @@ public class LocationContract {
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ADDRESS);
+        public static final Uri CONTENT_URI(Context context) {
+            return Uri.withAppendedPath(AUTHORITY_URI(context), ADDRESS);
+        }
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
@@ -145,7 +153,9 @@ public class LocationContract {
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, ELEVATION);
+        public static final Uri CONTENT_URI(Context context) {
+            return Uri.withAppendedPath(AUTHORITY_URI(context), ELEVATION);
+        }
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
@@ -189,7 +199,9 @@ public class LocationContract {
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(AUTHORITY_URI, CITY);
+        public static final Uri CONTENT_URI(Context context) {
+            return Uri.withAppendedPath(AUTHORITY_URI(context), CITY);
+        }
 
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.

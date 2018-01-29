@@ -58,7 +58,7 @@ public class LocationContentProvider extends ContentProvider {
     public boolean onCreate() {
         final Context context = getContext();
 
-        final String authority = AUTHORITY;
+        final String authority = AUTHORITY(context);
         uriMatcher.addURI(authority, Addresses.ADDRESS, CODE_ADDRESSES);
         uriMatcher.addURI(authority, Addresses.ADDRESS + "/#", CODE_ADDRESS_ID);
         uriMatcher.addURI(authority, Cities.CITY, CODE_CITIES);
@@ -144,17 +144,17 @@ public class LocationContentProvider extends ContentProvider {
             case CODE_ADDRESSES:
             case CODE_ADDRESS_ID:
                 id = db.insert(TABLE_ADDRESSES, null, values);
-                result = ContentUris.withAppendedId(Addresses.CONTENT_URI, id);
+                result = ContentUris.withAppendedId(Addresses.CONTENT_URI(getContext()), id);
                 break;
             case CODE_CITIES:
             case CODE_CITY_ID:
                 id = db.insert(TABLE_CITIES, null, values);
-                result = ContentUris.withAppendedId(Cities.CONTENT_URI, id);
+                result = ContentUris.withAppendedId(Cities.CONTENT_URI(getContext()), id);
                 break;
             case CODE_ELEVATIONS:
             case CODE_ELEVATION_ID:
                 id = db.insert(TABLE_ELEVATIONS, null, values);
-                result = ContentUris.withAppendedId(Elevations.CONTENT_URI, id);
+                result = ContentUris.withAppendedId(Elevations.CONTENT_URI(getContext()), id);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

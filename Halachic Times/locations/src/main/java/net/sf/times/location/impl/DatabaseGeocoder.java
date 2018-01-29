@@ -259,7 +259,7 @@ public class DatabaseGeocoder extends GeocoderBase {
         List<ZmanimAddress> addresses = new ArrayList<>();
         String selection = "(" + AddressColumns.LANGUAGE + " IS NULL) OR (" + AddressColumns.LANGUAGE + "=?)";
         String[] selectionArgs = {language};
-        Cursor cursor = context.getContentResolver().query(Addresses.CONTENT_URI, PROJECTION_ADDRESS, selection, selectionArgs, null);
+        Cursor cursor = context.getContentResolver().query(Addresses.CONTENT_URI(context), PROJECTION_ADDRESS, selection, selectionArgs, null);
         if ((cursor == null) || cursor.isClosed()) {
             return addresses;
         }
@@ -343,7 +343,7 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(AddressColumns.FAVORITE, address.isFavorite());
 
         if (insert) {
-            Uri uri = context.getContentResolver().insert(Addresses.CONTENT_URI, values);
+            Uri uri = context.getContentResolver().insert(Addresses.CONTENT_URI(context), values);
             if (uri != null) {
                 id = ContentUris.parseId(uri);
                 if (id > 0L) {
@@ -351,7 +351,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI, id);
+            Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
             context.getContentResolver().update(uri, values, null, null);
         }
     }
@@ -360,7 +360,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Delete the list of cached addresses.
      */
     public void deleteAddresses() {
-        context.getContentResolver().delete(Addresses.CONTENT_URI, null, null);
+        context.getContentResolver().delete(Addresses.CONTENT_URI(context), null, null);
     }
 
     /**
@@ -372,7 +372,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public List<ZmanimLocation> queryElevations(CursorFilter filter) {
         List<ZmanimLocation> locations = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(Elevations.CONTENT_URI, PROJECTION_ELEVATION, null, null, null);
+        Cursor cursor = context.getContentResolver().query(Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return locations;
         }
@@ -423,7 +423,7 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
 
         if (id == 0L) {
-            Uri uri = context.getContentResolver().insert(Elevations.CONTENT_URI, values);
+            Uri uri = context.getContentResolver().insert(Elevations.CONTENT_URI(context), values);
             if (uri != null) {
                 id = ContentUris.parseId(uri);
                 if (id > 0L) {
@@ -431,7 +431,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            Uri uri = ContentUris.withAppendedId(Elevations.CONTENT_URI, id);
+            Uri uri = ContentUris.withAppendedId(Elevations.CONTENT_URI(context), id);
             context.getContentResolver().update(uri, values, null, null);
         }
     }
@@ -440,7 +440,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Delete the list of cached elevations.
      */
     public void deleteElevations() {
-        context.getContentResolver().delete(Elevations.CONTENT_URI, null, null);
+        context.getContentResolver().delete(Elevations.CONTENT_URI(context), null, null);
     }
 
     /**
@@ -452,7 +452,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      */
     public List<City> queryCities(CursorFilter filter) {
         List<City> cities = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(Cities.CONTENT_URI, PROJECTION_CITY, null, null, null);
+        Cursor cursor = context.getContentResolver().query(Cities.CONTENT_URI(context), PROJECTION_CITY, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
             return cities;
         }
@@ -497,7 +497,7 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (id == 0L) {
             values.put(BaseColumns._ID, City.generateCityId(city));
 
-            Uri uri = context.getContentResolver().insert(Cities.CONTENT_URI, values);
+            Uri uri = context.getContentResolver().insert(Cities.CONTENT_URI(context), values);
             if (uri != null) {
                 id = ContentUris.parseId(uri);
                 if (id > 0L) {
@@ -505,7 +505,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI, id);
+            Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI(context), id);
             context.getContentResolver().update(uri, values, null, null);
         }
     }
@@ -514,7 +514,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Delete the list of cached cities and re-populate.
      */
     public void deleteCities() {
-        context.getContentResolver().delete(Cities.CONTENT_URI, null, null);
+        context.getContentResolver().delete(Cities.CONTENT_URI(context), null, null);
     }
 
 }

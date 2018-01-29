@@ -32,7 +32,7 @@
 
         <provider
             android:name="net.sf.times.location.provider.LocationContentProvider"
-            android:authorities="net.sf.times.location.locations"
+            android:authorities="${applicationId}.locations"
             android:exported="false"/>
     </application>
 
