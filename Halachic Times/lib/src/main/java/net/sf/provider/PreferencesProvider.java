@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static net.sf.provider.Preferences.AUTHORITY;
+
 /**
  * Content provider that wraps a real {@link android.content.SharedPreferences}.
  *
@@ -57,7 +59,7 @@ public class PreferencesProvider extends ContentProvider {
         final Context context = getContext();
         delegate = PreferenceManager.getDefaultSharedPreferences(context);
 
-        String authority = Preferences.getAuthority(context);
+        String authority = AUTHORITY(context);
         uriMatcher.addURI(authority, "", ALL);
         uriMatcher.addURI(authority, "all", ALL);
         uriMatcher.addURI(authority, "all/*", ALL_KEY);

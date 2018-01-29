@@ -18,11 +18,9 @@ package net.sf.content;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.RemoteException;
 
 import net.sf.provider.Preferences;
 
@@ -31,6 +29,10 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static net.sf.provider.Preferences.AUTHORITY;
+import static net.sf.provider.Preferences.CONTENT_URI;
+import static net.sf.provider.Preferences.fromStringSet;
 
 /**
  * Shared preferences that are sharable across processes by using a content provider.
@@ -51,7 +53,7 @@ public class ProviderPreferences implements SharedPreferences, SharedPreferences
     public ProviderPreferences(Context context) {
         this.context = context;
         this.resolver = context.getContentResolver();
-        this.contentUri = Preferences.getContentUri(context);
+        this.contentUri = CONTENT_URI(context);
     }
 
     @Override
@@ -261,7 +263,7 @@ public class ProviderPreferences implements SharedPreferences, SharedPreferences
     public Editor putStringSet(String key, Set<String> values) {
         Uri uri = contentUri.buildUpon().appendPath(Preferences.STRING_SET).appendEncodedPath(key).build();
         ContentProviderOperation op = ContentProviderOperation.newUpdate(uri)
-                .withValue(Preferences.Columns.VALUE, Preferences.fromStringSet(values))
+                .withValue(Preferences.Columns.VALUE, fromStringSet(values))
                 .build();
         ops.add(op);
         return this;
@@ -288,10 +290,10 @@ public class ProviderPreferences implements SharedPreferences, SharedPreferences
     @Override
     public boolean commit() {
         try {
-            resolver.applyBatch(Preferences.getAuthority(context), ops);
+            resolver.applyBatch(AUTHORITY(context), ops);
             ops.clear();
             return true;
-        } catch (RemoteException | OperationApplicationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

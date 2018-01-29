@@ -32,21 +32,21 @@ import java.util.Set;
  */
 public class Preferences {
 
-    public static String getAuthority(Context context) {
+    public static String AUTHORITY(Context context) {
         return context.getPackageName() + ".preferences";
     }
 
-    public static Uri getContentUri(Context context) {
-        return Uri.parse("content://" + getAuthority(context));
+    public static Uri CONTENT_URI(Context context) {
+        return Uri.parse("content://" + AUTHORITY(context));
     }
 
     /**
-     * The MIME type of {@link #getContentUri(Context)} providing a directory of preferences.
+     * The MIME type of {@link #CONTENT_URI} providing a directory of preferences.
      */
     public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.preferences";
 
     /**
-     * The MIME type of a {@link #getContentUri(Context)} sub-directory of a single locale.
+     * The MIME type of a {@link #CONTENT_URI} sub-directory of a single locale.
      */
     public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.preference";
 
