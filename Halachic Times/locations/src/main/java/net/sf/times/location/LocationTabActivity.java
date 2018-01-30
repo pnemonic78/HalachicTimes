@@ -15,8 +15,10 @@
  */
 package net.sf.times.location;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
@@ -29,10 +31,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CompoundButton;
 import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -60,7 +58,7 @@ import static android.os.Build.VERSION_CODES.JELLY_BEAN;
  */
 public abstract class LocationTabActivity<P extends ThemePreferences> extends Activity implements
         ThemeCallbacks<P>,
-        OnItemClickListener,
+        LocationAdapter.OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,
         ZmanimLocationListener {
@@ -80,7 +78,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
             Resources res = Resources.getSystem();
             ic_menu_star = res.getIdentifier("ic_menu_star", "drawable", "android");
             if (ic_menu_star == 0) {
-                Class<?> clazz = Class.forName("com.android.internal.R$drawable");
+                @SuppressLint("PrivateApi") Class<?> clazz = Class.forName("com.android.internal.R$drawable");
                 Field field = clazz.getDeclaredField("ic_menu_star");
                 ic_menu_star = field.getInt(null);
             }
@@ -92,7 +90,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     private static final int WHAT_FAVORITE = 1;
     private static final int WHAT_ADDED = 2;
 
-    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
+    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<>(this);
     private SearchView searchText;
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
@@ -249,50 +247,46 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         // Prepare the common list of items for all adapters.
         // Also to save time formatting the same addresses in each adapter by
         // themselves.
-        List<LocationItem> items = new ArrayList<LocationItem>(addresses.size());
+        List<LocationItem> items = new ArrayList<>(addresses.size());
         for (ZmanimAddress addr : addresses) {
             items.add(new LocationItem(addr, formatter));
         }
 
-        LocationAdapter adapter = new LocationAdapter(this, items);
-        adapter.setOnFavoriteClickListener(this);
+        final Context context = this;
+        final LocationAdapter.OnItemClickListener itemClickListener = this;
+        final OnFavoriteClickListener favoriteClickListener = this;
+
+        LocationAdapter adapter = new LocationAdapter(context, items);
+        adapter.setOnItemClickListener(itemClickListener);
+        adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterAll = adapter;
         RecyclerView list = findViewById(android.R.id.list);
-        //FIXME list.setOnItemClickListener(this);
         list.setAdapter(adapter);
 
-        adapter = new HistoryLocationAdapter(this, items);
-        adapter.setOnFavoriteClickListener(this);
+        adapter = new HistoryLocationAdapter(context, items);
+        adapter.setOnItemClickListener(itemClickListener);
+        adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
-        //FIXME list.setOnItemClickListener(this);
         list.setAdapter(adapter);
 
-        adapter = new FavoritesLocationAdapter(this, items);
-        adapter.setOnFavoriteClickListener(this);
+        adapter = new FavoritesLocationAdapter(context, items);
+        adapter.setOnItemClickListener(itemClickListener);
+        adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterFavorites = adapter;
         list = findViewById(R.id.list_favorites);
-        //FIXME list.setOnItemClickListener(this);
         list.setAdapter(adapter);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> l, View view, int position, long id) {
-        LocationAdapter adapter = adapterAll;
-        int i = l.getId();
-        if (i == R.id.list_favorites) {
-            adapter = adapterFavorites;
-        } else if (i == R.id.list_history) {
-            adapter = adapterHistory;
-        }
-        LocationItem item = adapter.getItem(position);
-        ZmanimAddress addr = item.getAddress();
+    public void onItemClick(ZmanimAddress address) {
         Location loc = new Location(GeocoderBase.USER_PROVIDER);
         loc.setTime(System.currentTimeMillis());
-        loc.setLatitude(addr.getLatitude());
-        loc.setLongitude(addr.getLongitude());
-        if (addr.hasElevation())
-            loc.setAltitude(addr.getElevation());
+        loc.setLatitude(address.getLatitude());
+        loc.setLongitude(address.getLongitude());
+        if (address.hasElevation()) {
+            loc.setAltitude(address.getElevation());
+        }
         setAddress(loc);
     }
 
@@ -360,8 +354,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     }
 
     @Override
-    public void onFavoriteClick(LocationAdapter adapter, CompoundButton button, ZmanimAddress address) {
-        address.setFavorite(button.isChecked());
+    public void onFavoriteClick(ZmanimAddress address, boolean checked) {
+        address.setFavorite(checked);
         handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
     }
 
@@ -484,7 +478,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         private final WeakReference<LocationTabActivity> activityWeakReference;
 
         public ActivityHandler(LocationTabActivity activity) {
-            this.activityWeakReference = new WeakReference<LocationTabActivity>(activity);
+            this.activityWeakReference = new WeakReference<>(activity);
         }
 
         @Override

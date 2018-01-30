@@ -19,8 +19,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
 import android.widget.Filter;
 
 import net.sf.util.LocaleUtils;
@@ -39,13 +37,37 @@ import java.util.TreeSet;
  *
  * @author Moshe Waisberg
  */
-public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, LocationViewHolder> implements OnClickListener {
+public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, LocationViewHolder> {
+
+    /**
+     * Interface definition for a callback to be invoked when an item in this list has been clicked.
+     *
+     * @author Moshe Waisberg
+     */
+    public interface OnItemClickListener {
+
+        void onItemClick(ZmanimAddress address);
+
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when a "favorite"
+     * checkbox in this list has been clicked.
+     *
+     * @author Moshe Waisberg
+     */
+    public interface OnFavoriteClickListener {
+
+        void onFavoriteClick(ZmanimAddress address, boolean checked);
+
+    }
 
     private LocationComparator comparator;
     private LocationsFilter filter;
     private final Collator collator;
     private final Locale locale;
-    private OnFavoriteClickListener onFavoriteClickListener;
+    private OnItemClickListener itemClickListener;
+    private OnFavoriteClickListener favoriteClickListener;
 
     /**
      * Constructs a new adapter.
@@ -56,11 +78,43 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *         the list of addresses' items.
      */
     public LocationAdapter(Context context, List<LocationItem> items) {
+        this(context, items, null);
+    }
+
+    /**
+     * Constructs a new adapter.
+     *
+     * @param context
+     *         the context.
+     * @param items
+     *         the list of addresses' items.
+     * @param itemClickListener
+     *         the item click listener.
+     */
+    public LocationAdapter(Context context, List<LocationItem> items, OnItemClickListener itemClickListener) {
+        this(context, items, itemClickListener, null);
+    }
+
+    /**
+     * Constructs a new adapter.
+     *
+     * @param context
+     *         the context.
+     * @param items
+     *         the list of addresses' items.
+     * @param itemClickListener
+     *         the item click listener.
+     * @param favoriteClickListener
+     *         the favorite click listener.
+     */
+    public LocationAdapter(Context context, List<LocationItem> items, OnItemClickListener itemClickListener, OnFavoriteClickListener favoriteClickListener) {
         super(R.layout.location, android.R.id.title, items);
         setHasStableIds(false);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);
         locale = LocaleUtils.getDefaultLocale(context);
+        setOnItemClickListener(itemClickListener);
+        setOnFavoriteClickListener(favoriteClickListener);
         sortNoNotify();
     }
 
@@ -71,9 +125,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
 
     @Override
     protected LocationViewHolder createArrayViewHolder(View view, int fieldId) {
-        LocationViewHolder viewHolder = new LocationViewHolder(view, fieldId);
-        viewHolder.favorite.setOnClickListener(this);
-        return viewHolder;
+        return new LocationViewHolder(view, fieldId, itemClickListener, favoriteClickListener);
     }
 
     /**
@@ -372,8 +424,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             ZmanimAddress addr2 = item2.getAddress();
 
             // Sort first by name.
-            String format1 = item1.getLabelLower().toString();
-            String format2 = item2.getLabelLower().toString();
+            String format1 = item1.getLabelLower();
+            String format2 = item2.getLabelLower();
             int c = collator.compare(format1, format2);
             if (c != 0)
                 return c;
@@ -402,24 +454,13 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     }
 
     /**
-     * Interface definition for a callback to be invoked when a "favorite"
-     * checkbox in this list has been clicked.
+     * Set the listener for "item" clicked callbacks.
      *
-     * @author Moshe Waisberg
+     * @param listener
+     *         the listener.
      */
-    public interface OnFavoriteClickListener {
-
-        void onFavoriteClick(LocationAdapter adapter, CompoundButton button, ZmanimAddress address);
-
-    }
-
-    /**
-     * Get the listener for "favorite" clicked callbacks.
-     *
-     * @return the listener.
-     */
-    public OnFavoriteClickListener getOnFavoriteClickListener() {
-        return onFavoriteClickListener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     /**
@@ -429,21 +470,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *         the listener.
      */
     public void setOnFavoriteClickListener(OnFavoriteClickListener listener) {
-        this.onFavoriteClickListener = listener;
-    }
-
-    @Override
-    public void onClick(View v) {
-        final int id = v.getId();
-
-        if (id == android.R.id.checkbox) {
-            CompoundButton buttonView = (CompoundButton) v;
-            ZmanimAddress address = (ZmanimAddress) buttonView.getTag();
-
-            if ((address != null) && (onFavoriteClickListener != null)) {
-                onFavoriteClickListener.onFavoriteClick(this, buttonView, address);
-            }
-        }
+        this.favoriteClickListener = listener;
     }
 
 }
