@@ -32,6 +32,7 @@ public class HistoryLocationAdapter extends SpecificLocationAdapter {
 
     @Override
     protected boolean isSpecific(LocationItem item) {
+        //FIXME should only filter on items that user ever clicked (e.g. user only ever clicked the favorite star).
         return item.getId() > 0L;
     }
 
