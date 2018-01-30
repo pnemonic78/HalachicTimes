@@ -36,6 +36,4 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':lib')
     implementation project(':common')
-    implementation "com.android.support:support-compat:$supportVersion"
-    implementation "com.android.support:recyclerview-v7:$supportVersion"
 }
