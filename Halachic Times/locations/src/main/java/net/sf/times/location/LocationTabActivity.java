@@ -24,6 +24,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -32,7 +33,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
@@ -158,7 +158,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         search(query, loc);
 
         // Switch to the first non-empty tab.
-        if (adapterFavorites.getCount() == 0) {
+        if (adapterFavorites.getItemCount() == 0) {
             tabs.setCurrentTab(1);
         }
     }
@@ -257,22 +257,22 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         LocationAdapter adapter = new LocationAdapter(this, items);
         adapter.setOnFavoriteClickListener(this);
         adapterAll = adapter;
-        ListView list = findViewById(android.R.id.list);
-        list.setOnItemClickListener(this);
+        RecyclerView list = findViewById(android.R.id.list);
+        //FIXME list.setOnItemClickListener(this);
         list.setAdapter(adapter);
 
         adapter = new HistoryLocationAdapter(this, items);
         adapter.setOnFavoriteClickListener(this);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
-        list.setOnItemClickListener(this);
+        //FIXME list.setOnItemClickListener(this);
         list.setAdapter(adapter);
 
         adapter = new FavoritesLocationAdapter(this, items);
         adapter.setOnFavoriteClickListener(this);
         adapterFavorites = adapter;
         list = findViewById(R.id.list_favorites);
-        list.setOnItemClickListener(this);
+        //FIXME list.setOnItemClickListener(this);
         list.setAdapter(adapter);
     }
 

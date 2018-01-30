@@ -20,14 +20,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Filter;
-import android.widget.TextView;
 
 import net.sf.util.LocaleUtils;
+import net.sf.widget.ArrayAdapter;
 
 import java.text.Collator;
 import java.util.ArrayList;
@@ -36,17 +33,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Location adapter.
  *
  * @author Moshe Waisberg
  */
-public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> implements OnClickListener {
+public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, LocationViewHolder> implements OnClickListener {
 
-    protected final List<LocationItem> objects = new CopyOnWriteArrayList<>();
-    private List<LocationItem> originalValues;
     private LocationComparator comparator;
     private LocationsFilter filter;
     private final Collator collator;
@@ -62,33 +56,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
      *         the list of addresses' items.
      */
     public LocationAdapter(Context context, List<LocationItem> items) {
-        super(context, R.layout.location, android.R.id.title, items);
-        objects.addAll(items);
+        super(R.layout.location, android.R.id.title, items);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);
         locale = LocaleUtils.getDefaultLocale(context);
         sortNoNotify();
-    }
-
-    @Override
-    public int getCount() {
-        return objects.size();
-    }
-
-    @Override
-    public LocationItem getItem(int position) {
-        return getLocationItem(position);
-    }
-
-    /**
-     * Get the location item.
-     *
-     * @param position
-     *         the position index.
-     * @return the item.
-     */
-    protected LocationItem getLocationItem(int position) {
-        return objects.get(position);
     }
 
     @Override
@@ -97,86 +69,10 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
     }
 
     @Override
-    public int getPosition(LocationItem object) {
-        final int size = objects.size();
-        LocationItem item;
-        for (int i = 0; i < size; i++) {
-            item = objects.get(i);
-            if (item.equals(object))
-                return i;
-        }
-        return super.getPosition(object);
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = super.getView(position, convertView, parent);
-        LocationItem item = getLocationItem(position);
-        TextView cityName;
-        TextView coordinates;
-        CheckBox checkbox;
-
-        ViewHolder holder = (ViewHolder) view.getTag();
-        if (holder == null) {
-            cityName = view.findViewById(android.R.id.title);
-            coordinates = view.findViewById(R.id.coordinates);
-            checkbox = view.findViewById(android.R.id.checkbox);
-            checkbox.setOnClickListener(this);
-
-            holder = new ViewHolder(cityName, coordinates, checkbox);
-            view.setTag(holder);
-        } else {
-            cityName = holder.cityName;
-            coordinates = holder.coordinates;
-            checkbox = holder.checkbox;
-        }
-
-        cityName.setText(item.getLabel());
-        coordinates.setText(item.getCoordinates());
-        checkbox.setChecked(item.isFavorite());
-        checkbox.setTag(item.getAddress());
-
-        return view;
-    }
-
-    @Override
-    public void add(LocationItem object) {
-        if (originalValues != null) {
-            originalValues.add(object);
-        } else {
-            objects.add(object);
-        }
-        super.add(object);
-    }
-
-    @Override
-    public void insert(LocationItem object, int index) {
-        if (originalValues != null) {
-            originalValues.add(index, object);
-        } else {
-            objects.add(index, object);
-        }
-        super.insert(object, index);
-    }
-
-    @Override
-    public void remove(LocationItem object) {
-        if (originalValues != null) {
-            originalValues.remove(object);
-        } else {
-            objects.remove(object);
-        }
-        super.remove(object);
-    }
-
-    @Override
-    public void clear() {
-        if (originalValues != null) {
-            originalValues.clear();
-        } else {
-            objects.clear();
-        }
-        super.clear();
+    protected LocationViewHolder createArrayViewHolder(View view, int fieldId) {
+        LocationViewHolder viewHolder = new LocationViewHolder(view, fieldId);
+        viewHolder.checkbox.setOnClickListener(this);
+        return viewHolder;
     }
 
     /**
@@ -197,15 +93,15 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
      */
     protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
         // Remove duplicate locations.
-        Set<LocationItem> items = new TreeSet<LocationItem>(comparator);
-        if (originalValues != null) {
-            items.addAll(originalValues);
-            originalValues.clear();
-            originalValues.addAll(items);
+        Set<LocationItem> items = new TreeSet<>(comparator);
+        if (mOriginalValues != null) {
+            items.addAll(mOriginalValues);
+            mOriginalValues.clear();
+            mOriginalValues.addAll(items);
         } else {
-            items.addAll(objects);
-            objects.clear();
-            objects.addAll(items);
+            items.addAll(mObjects);
+            mObjects.clear();
+            mObjects.addAll(items);
         }
     }
 
@@ -232,30 +128,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
     }
 
     /**
-     * View holder for location row item.
-     *
-     * @author Moshe W
-     */
-    private static class ViewHolder {
-
-        public final TextView cityName;
-        public final TextView coordinates;
-        public final CheckBox checkbox;
-
-        public ViewHolder(TextView cityName, TextView coordinates, CheckBox checkbox) {
-            this.cityName = cityName;
-            this.coordinates = coordinates;
-            this.checkbox = checkbox;
-        }
-    }
-
-    /**
-     * Filter the list of locations to match cities' names that contain the
-     * constraint.
+     * Filter the list of locations to match cities' names that contain the constraint.
      *
      * @author Moshe Waisberg
      */
-    protected class LocationsFilter extends Filter {
+    protected class LocationsFilter extends ArrayFilter {
 
         /**
          * Constructs a new filter.
@@ -267,11 +144,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
-            if (originalValues == null) {
-                originalValues = new ArrayList<LocationItem>(objects);
+            if (mOriginalValues == null) {
+                mOriginalValues = new ArrayList<LocationItem>(mObjects);
             }
 
-            final List<LocationItem> values = new ArrayList<LocationItem>(originalValues);
+            final List<LocationItem> values = new ArrayList<LocationItem>(mOriginalValues);
             final int count = values.size();
 
             if (TextUtils.isEmpty(constraint)) {
@@ -303,18 +180,6 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
             }
 
             return results;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            objects.clear();
-            objects.addAll((List<LocationItem>) results.values);
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
         }
 
         /**
@@ -466,8 +331,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
     }
 
     /**
-     * Compare two locations by their locations, then by their names, then their
-     * ids.
+     * Compare two locations by their locations, then by their names, then their IDs.
      *
      * @author Moshe Waisberg
      */
@@ -526,7 +390,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem> 
      * Interface definition for a callback to be invoked when a "favorite"
      * checkbox in this list has been clicked.
      *
-     * @author Moshe W
+     * @author Moshe Waisberg
      */
     public interface OnFavoriteClickListener {
 

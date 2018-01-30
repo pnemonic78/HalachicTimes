@@ -41,10 +41,11 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
         specific.clear();
 
         ZmanimAddress address;
-        for (LocationItem item : objects) {
+        for (LocationItem item : mObjects) {
             address = item.getAddress();
-            if (isSpecific(address))
+            if (isSpecific(address)) {
                 specific.add(item);
+            }
         }
     }
 
@@ -58,12 +59,12 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
     protected abstract boolean isSpecific(ZmanimAddress address);
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return specific.size();
     }
 
     @Override
-    protected LocationItem getLocationItem(int position) {
+    public LocationItem getItem(int position) {
         return specific.get(position);
     }
 
@@ -77,18 +78,6 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
                 return i;
         }
         return super.getPosition(object);
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        populateSpecific();
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public void notifyDataSetInvalidated() {
-        populateSpecific();
-        super.notifyDataSetInvalidated();
     }
 
 }
