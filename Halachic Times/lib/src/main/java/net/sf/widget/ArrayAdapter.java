@@ -49,7 +49,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * used by the filter (see {@link #getFilter()} to make a synchronized copy of
      * the original array of data.
      */
-    private final Object mLock = new Object();
+    protected final Object mLock = new Object();
 
     /**
      * The resource indicating what views to inflate to display the content of this

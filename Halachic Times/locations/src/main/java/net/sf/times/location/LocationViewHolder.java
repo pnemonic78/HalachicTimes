@@ -15,21 +15,21 @@ class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.Lo
 
     public final TextView cityName;
     public final TextView coordinates;
-    public final CheckBox checkbox;
+    public final CheckBox favorite;
 
     public LocationViewHolder(View itemView, int fieldId) {
         super(itemView, fieldId);
 
         this.cityName = textView;
         this.coordinates = itemView.findViewById(R.id.coordinates);
-        this.checkbox = itemView.findViewById(android.R.id.checkbox);
+        this.favorite = itemView.findViewById(android.R.id.checkbox);
     }
 
     @Override
     public void bind(LocationAdapter.LocationItem item) {
         cityName.setText(item.getLabel());
         coordinates.setText(item.getCoordinates());
-        checkbox.setChecked(item.isFavorite());
-        checkbox.setTag(item.getAddress());
+        favorite.setChecked(item.isFavorite());
+        favorite.setTag(item.getAddress());
     }
 }

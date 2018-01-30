@@ -489,7 +489,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
         @Override
         public void handleMessage(Message msg) {
-            LocationTabActivity activity = activityWeakReference.get();
+            final LocationTabActivity activity = activityWeakReference.get();
             if (activity == null) {
                 return;
             }
@@ -502,9 +502,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                     AddressProvider provider = app.getAddresses();
                     provider.insertOrUpdateAddress(null, address);
 
-                    activity.adapterAll.notifyDataSetChanged();
-                    activity.adapterFavorites.notifyDataSetChanged();
-                    activity.adapterHistory.notifyDataSetChanged();
+                    activity.adapterAll.notifyItemChanged(address);
+                    activity.adapterFavorites.notifyItemChanged(address);
+                    activity.adapterHistory.notifyItemChanged(address);
                     break;
                 case WHAT_ADDED:
                     // Refresh the lists with the new location's address.

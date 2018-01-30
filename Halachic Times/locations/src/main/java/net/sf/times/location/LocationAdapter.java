@@ -57,6 +57,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      */
     public LocationAdapter(Context context, List<LocationItem> items) {
         super(R.layout.location, android.R.id.title, items);
+        setHasStableIds(false);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);
         locale = LocaleUtils.getDefaultLocale(context);
@@ -71,7 +72,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     @Override
     protected LocationViewHolder createArrayViewHolder(View view, int fieldId) {
         LocationViewHolder viewHolder = new LocationViewHolder(view, fieldId);
-        viewHolder.checkbox.setOnClickListener(this);
+        viewHolder.favorite.setOnClickListener(this);
         return viewHolder;
     }
 
@@ -125,6 +126,20 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             filter = new LocationsFilter();
         }
         return filter;
+    }
+
+    public void notifyItemChanged(ZmanimAddress address) {
+        synchronized (mLock) {
+            final int size = getItemCount();
+            LocationItem item;
+            for (int i = 0; i < size; i++) {
+                item = getItem(i);
+                if (item.address.equals(address)) {
+                    notifyItemChanged(i);
+                    return;
+                }
+            }
+        }
     }
 
     /**
@@ -426,7 +441,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             ZmanimAddress address = (ZmanimAddress) buttonView.getTag();
 
             if ((address != null) && (onFavoriteClickListener != null)) {
-                onFavoriteClickListener.onFavoriteClick(LocationAdapter.this, buttonView, address);
+                onFavoriteClickListener.onFavoriteClick(this, buttonView, address);
             }
         }
     }

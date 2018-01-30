@@ -293,6 +293,12 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
     @Override
     public int compareTo(ZmanimAddress that) {
+        long id1 = this.getId();
+        long id2 = that.getId();
+        if ((id1 != 0L) && (id1 == id2)) {
+            return 0;
+        }
+
         double lat1 = this.getLatitude();
         double lat2 = that.getLatitude();
         double latD = lat1 - lat2;
@@ -317,9 +323,18 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         if (c != 0)
             return c;
 
-        long id1 = this.getId();
-        long id2 = that.getId();
-        return (id1 < id2 ? -1 : (id1 == id2 ? 0 : 1));
+        return (id1 < id2) ? -1 : (id1 == id2 ? 0 : 1);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof ZmanimAddress) {
+            return compareTo((ZmanimAddress) obj) == 0;
+        }
+        return super.equals(obj);
     }
 
     @Override
