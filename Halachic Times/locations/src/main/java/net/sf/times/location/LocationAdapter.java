@@ -17,6 +17,7 @@ package net.sf.times.location;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Filter;
@@ -128,14 +129,19 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         return new LocationViewHolder(view, fieldId, itemClickListener, favoriteClickListener);
     }
 
+    @NonNull
+    protected LocationComparator getComparator() {
+        if (comparator == null) {
+            comparator = new LocationComparator();
+        }
+        return comparator;
+    }
+
     /**
      * Sort without notification.
      */
     protected void sortNoNotify() {
-        if (comparator == null) {
-            comparator = new LocationComparator();
-        }
-        sortNoNotify(comparator);
+        sortNoNotify(getComparator());
     }
 
     /**
@@ -145,17 +151,28 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *         comparator used to sort the objects contained in this adapter.
      */
     protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
-        // Remove duplicate locations.
-        Set<LocationItem> items = new TreeSet<>(comparator);
         if (mOriginalValues != null) {
-            items.addAll(mOriginalValues);
-            mOriginalValues.clear();
-            mOriginalValues.addAll(items);
+            sortNoNotify(mOriginalValues, comparator);
         } else {
-            items.addAll(mObjects);
-            mObjects.clear();
-            mObjects.addAll(items);
+            sortNoNotify(mObjects, comparator);
         }
+    }
+
+    /**
+     * Sort without notification.
+     *
+     * @param objects
+     *         the list of objects to sort.
+     * @param comparator
+     *         comparator used to sort the objects contained in this adapter.
+     */
+    protected void sortNoNotify(List<LocationItem> objects, Comparator<? super LocationItem> comparator) {
+        // Removes duplicate locations.
+        Set<LocationItem> items = new TreeSet<>(comparator);
+
+        items.addAll(objects);
+        objects.clear();
+        objects.addAll(items);
     }
 
     /**
@@ -212,32 +229,25 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             FilterResults results = new FilterResults();
 
             if (mOriginalValues == null) {
-                mOriginalValues = new ArrayList<LocationItem>(mObjects);
+                mOriginalValues = new ArrayList<>(mObjects);
             }
 
-            final List<LocationItem> values = new ArrayList<LocationItem>(mOriginalValues);
+            final List<LocationItem> values = new ArrayList<>(mOriginalValues);
             final int count = values.size();
 
-            if (TextUtils.isEmpty(constraint)) {
+            if (constraint == null) {
                 results.values = values;
                 results.count = values.size();
             } else {
                 final Locale locale = LocationAdapter.this.locale;
                 final String constraintString = constraint.toString().toLowerCase(locale);
-                CharSequence latitude;
-                CharSequence longitude;
 
-                final List<LocationItem> newValues = new ArrayList<LocationItem>();
+                final List<LocationItem> newValues = new ArrayList<>();
                 LocationItem value;
-                String valueText;
 
                 for (int i = 0; i < count; i++) {
                     value = values.get(i);
-                    valueText = value.getLabelLower();
-                    latitude = value.getFormatLatitude();
-                    longitude = value.getFormatLongitude();
-
-                    if (contains(valueText, constraintString) || (TextUtils.indexOf(latitude, constraintString) >= 0) || (TextUtils.indexOf(longitude, constraintString) >= 0)) {
+                    if (accept(value, constraintString)) {
                         newValues.add(value);
                     }
                 }
@@ -247,6 +257,21 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             }
 
             return results;
+        }
+
+        protected boolean accept(LocationItem value, String constraint) {
+            if (TextUtils.isEmpty(constraint)) {
+                return true;
+            }
+
+            String valueText = value.getLabelLower();
+            CharSequence latitude = value.getFormatLatitude();
+            CharSequence longitude = value.getFormatLongitude();
+
+            if (contains(valueText, constraint) || (TextUtils.indexOf(latitude, constraint) >= 0) || (TextUtils.indexOf(longitude, constraint) >= 0)) {
+                return true;
+            }
+            return false;
         }
 
         /**
@@ -377,6 +402,15 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         }
 
         /**
+         * Get the address id.
+         *
+         * @return the id.
+         */
+        public long getId() {
+            return getAddress().getId();
+        }
+
+        /**
          * Is location a favourite?
          *
          * @return {@code true} if a favourite.
@@ -394,6 +428,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             if (o instanceof ZmanimAddress)
                 return getAddress().equals(o);
             return super.equals(o);
+        }
+
+        @Override
+        public String toString() {
+            return getAddress().toString();
         }
     }
 

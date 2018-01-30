@@ -17,9 +17,6 @@ package net.sf.times.location.impl;
 
 import android.content.Context;
 
-import net.sf.times.location.ZmanimAddress;
-import net.sf.times.location.impl.SpecificLocationAdapter;
-
 import java.util.List;
 
 /**
@@ -34,8 +31,8 @@ public class HistoryLocationAdapter extends SpecificLocationAdapter {
     }
 
     @Override
-    protected boolean isSpecific(ZmanimAddress address) {
-        return address.getId() > 0L;
+    protected boolean isSpecific(LocationItem item) {
+        return item.getId() > 0L;
     }
 
 }

@@ -20,64 +20,98 @@ import android.content.Context;
 import net.sf.times.location.LocationAdapter;
 import net.sf.times.location.ZmanimAddress;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
- * Location adapter for specific type of locations.
+ * Location adapter for a specific type of locations.
  *
  * @author Moshe Waisberg
  */
 public abstract class SpecificLocationAdapter extends LocationAdapter {
 
-    private final List<LocationItem> specific = new ArrayList<>();
+    private SpecificFilter filter;
 
     public SpecificLocationAdapter(Context context, List<LocationItem> items) {
         super(context, items);
-        populateSpecific();
+        getFilter().filter("");
     }
 
-    private void populateSpecific() {
-        specific.clear();
-
-        ZmanimAddress address;
-        for (LocationItem item : mObjects) {
-            address = item.getAddress();
-            if (isSpecific(address)) {
-                specific.add(item);
-            }
+    @Override
+    public SpecificFilter getFilter() {
+        if (filter == null) {
+            filter = new SpecificFilter();
         }
+        return filter;
     }
 
     /**
      * Is the address specific to this adapter?
      *
-     * @param address
-     *         the address.
-     * @return {@code true} to include the address.
+     * @param item
+     *         the location item.
+     * @return {@code true} to include the location.
      */
-    protected abstract boolean isSpecific(ZmanimAddress address);
+    protected abstract boolean isSpecific(LocationItem item);
 
-    @Override
-    public int getItemCount() {
-        return specific.size();
-    }
-
-    @Override
-    public LocationItem getItem(int position) {
-        return specific.get(position);
-    }
-
-    @Override
-    public int getPosition(LocationItem object) {
-        final int size = specific.size();
-        LocationItem item;
-        for (int i = 0; i < size; i++) {
-            item = specific.get(i);
-            if (item.equals(object))
-                return i;
+    protected class SpecificFilter extends LocationsFilter {
+        @Override
+        protected boolean accept(LocationItem value, String constraint) {
+            return isSpecific(value) && super.accept(value, constraint);
         }
-        return super.getPosition(object);
     }
 
+    @Override
+    public void notifyItemChanged(ZmanimAddress address) {
+        synchronized (mLock) {
+            final int count = getItemCount();
+            LocationItem item;
+            int position = -1;
+            for (int i = 0; i < count; i++) {
+                item = getItem(i);
+                if (item.getAddress().equals(address)) {
+                    position = i;
+                    break;
+                }
+            }
+
+            if (position >= 0) {
+                item = getItem(position);
+                if (isSpecific(item)) {
+                    notifyItemChanged(position);
+                } else {
+                    // Hide the item.
+                    if (mOriginalValues != null) {
+                        mObjects.remove(position);
+                        notifyItemRemoved(position);
+                    }
+                }
+            } else if (mOriginalValues != null) {
+                final int size = mOriginalValues.size();
+                for (int i = 0; i < size; i++) {
+                    item = mOriginalValues.get(i);
+                    if (item.getAddress().equals(address)) {
+                        position = i;
+                        break;
+                    }
+                }
+                if (position >= 0) {
+                    item = mOriginalValues.get(position);
+                    // Find the sorted position.
+                    int positionInsert = count;
+                    Comparator<LocationItem> comparator = getComparator();
+                    for (int i = 0; i < count; i++) {
+                        if (comparator.compare(item, getItem(i)) < 0) {
+                            positionInsert = i;
+                            break;
+                        }
+                    }
+                    mObjects.add(positionInsert, item);
+                    notifyItemInserted(positionInsert);
+                } else {
+                    // Throw error: item not found!
+                }
+            }
+        }
+    }
 }
