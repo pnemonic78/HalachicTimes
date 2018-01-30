@@ -31,8 +31,9 @@ android {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    api "com.android.support:support-annotations:$supportVersion"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:support-annotations:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
 
     testApi 'junit:junit:4.12'
 }
