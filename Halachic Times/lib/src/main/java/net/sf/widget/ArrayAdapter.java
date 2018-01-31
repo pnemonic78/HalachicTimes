@@ -62,7 +62,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    protected List<T> objects;
+    protected final List<T> objects = new ArrayList<>();
 
     /**
      * If the inflated resource is not a TextView, {@code textFieldId} is used to find
@@ -78,7 +78,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      */
     private boolean notifyOnChange = true;
 
-    /** A copy of the original objects array, initialized from and then used instead as soon as
+    /**
+     * A copy of the original objects array, initialized from and then used instead as soon as
      * the filter is used. objects will then only contain the filtered values.
      */
     protected List<T> originalValues;
@@ -162,9 +163,9 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      *         The objects to represent in the ListView.
      */
     public ArrayAdapter(@LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List<T> objects) {
-        layoutResource = resource;
-        this.objects = objects;
-        textFieldId = textViewResourceId;
+        this.layoutResource = resource;
+        this.objects.addAll(objects);
+        this.textFieldId = textViewResourceId;
         setHasStableIds(true);
     }
 
@@ -471,8 +472,9 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //noinspection unchecked
-            objects = (List<T>) results.values;
+            objects.clear();
             if (results.count > 0) {
+                objects.addAll((List<T>) results.values);
                 notifyDataSetChanged();
                 notifyOnChange = true;
             }
