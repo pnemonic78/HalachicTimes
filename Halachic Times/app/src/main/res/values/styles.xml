@@ -142,7 +142,7 @@
     <style name="Widget.List.Widget" parent="Widget.Static.Widget"/>
 
     <style name="Widget.Date">
-        <item name="android:background">@color/black_50</item>
+        <item name="android:background">@color/black_x80</item>
         <item name="android:gravity">center</item>
     </style>
 
