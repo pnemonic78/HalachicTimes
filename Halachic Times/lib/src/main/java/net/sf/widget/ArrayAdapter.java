@@ -44,47 +44,46 @@ import java.util.List;
 public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends RecyclerView.Adapter<VH> implements Filterable {
 
     /**
-     * Lock used to modify the content of {@link #mObjects}. Any write operation
+     * Lock used to modify the content of {@link #objects}. Any write operation
      * performed on the array should be synchronized on this lock. This lock is also
      * used by the filter (see {@link #getFilter()} to make a synchronized copy of
      * the original array of data.
      */
-    protected final Object mLock = new Object();
+    protected final Object lock = new Object();
 
     /**
      * The resource indicating what views to inflate to display the content of this
      * array adapter.
      */
-    private final int mResource;
+    @LayoutRes
+    private final int layoutResource;
 
     /**
      * Contains the list of objects that represent the data of this ArrayAdapter.
      * The content of this list is referred to as "the array" in the documentation.
      */
-    protected List<T> mObjects;
+    protected List<T> objects;
 
     /**
-     * Indicates whether the contents of {@link #mObjects} came from static resources.
-     */
-    private boolean mObjectsFromResources;
-
-    /**
-     * If the inflated resource is not a TextView, {@code mFieldId} is used to find
+     * If the inflated resource is not a TextView, {@code textFieldId} is used to find
      * a TextView inside the inflated views hierarchy. This field must contain the
      * identifier that matches the one defined in the resource file.
      */
-    private int mFieldId = 0;
+    @IdRes
+    private int textFieldId = 0;
 
     /**
      * Indicates whether or not {@link #notifyDataSetChanged()} must be called whenever
-     * {@link #mObjects} is modified.
+     * {@link #objects} is modified.
      */
-    private boolean mNotifyOnChange = true;
+    private boolean notifyOnChange = true;
 
-    // A copy of the original mObjects array, initialized from and then used instead as soon as
-    // the mFilter ArrayFilter is used. mObjects will then only contain the filtered values.
-    protected ArrayList<T> mOriginalValues;
-    private ArrayFilter mFilter;
+    /** A copy of the original objects array, initialized from and then used instead as soon as
+     * the filter is used. objects will then only contain the filtered values.
+     */
+    protected List<T> originalValues;
+
+    private ArrayFilter filter;
 
     /**
      * Constructor
@@ -163,15 +162,9 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      *         The objects to represent in the ListView.
      */
     public ArrayAdapter(@LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List<T> objects) {
-        this(resource, textViewResourceId, objects, false);
-    }
-
-    private ArrayAdapter(@LayoutRes int resource,
-                         @IdRes int textViewResourceId, @NonNull List<T> objects, boolean objsFromResources) {
-        mResource = resource;
-        mObjects = objects;
-        mObjectsFromResources = objsFromResources;
-        mFieldId = textViewResourceId;
+        layoutResource = resource;
+        this.objects = objects;
+        textFieldId = textViewResourceId;
         setHasStableIds(true);
     }
 
@@ -183,17 +176,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      */
     public void add(@Nullable T object) {
         int position = 0;
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                position = mOriginalValues.size();
-                mOriginalValues.add(object);
+        synchronized (lock) {
+            if (originalValues != null) {
+                position = originalValues.size();
+                originalValues.add(object);
             } else {
-                position = mObjects.size();
-                mObjects.add(object);
+                position = objects.size();
+                objects.add(object);
             }
-            mObjectsFromResources = false;
         }
-        if (mNotifyOnChange) notifyItemInserted(position);
+        if (notifyOnChange) notifyItemInserted(position);
     }
 
     /**
@@ -218,17 +210,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     public void addAll(@NonNull Collection<? extends T> collection) {
         int position = 0;
         int count = collection.size();
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                position = mOriginalValues.size();
-                mOriginalValues.addAll(collection);
+        synchronized (lock) {
+            if (originalValues != null) {
+                position = originalValues.size();
+                originalValues.addAll(collection);
             } else {
-                position = mObjects.size();
-                mObjects.addAll(collection);
+                position = objects.size();
+                objects.addAll(collection);
             }
-            mObjectsFromResources = false;
         }
-        if (mNotifyOnChange) notifyItemRangeInserted(position, count);
+        if (notifyOnChange) notifyItemRangeInserted(position, count);
     }
 
     /**
@@ -240,17 +231,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     public void addAll(T... items) {
         int position = 0;
         int count = items.length;
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                position = mOriginalValues.size();
-                Collections.addAll(mOriginalValues, items);
+        synchronized (lock) {
+            if (originalValues != null) {
+                position = originalValues.size();
+                Collections.addAll(originalValues, items);
             } else {
-                position = mObjects.size();
-                Collections.addAll(mObjects, items);
+                position = objects.size();
+                Collections.addAll(objects, items);
             }
-            mObjectsFromResources = false;
         }
-        if (mNotifyOnChange) notifyItemRangeInserted(position, count);
+        if (notifyOnChange) notifyItemRangeInserted(position, count);
     }
 
     /**
@@ -262,15 +252,14 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      *         The index at which the object must be inserted.
      */
     public void insert(@Nullable T object, int index) {
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                mOriginalValues.add(index, object);
+        synchronized (lock) {
+            if (originalValues != null) {
+                originalValues.add(index, object);
             } else {
-                mObjects.add(index, object);
+                objects.add(index, object);
             }
-            mObjectsFromResources = false;
         }
-        if (mNotifyOnChange) notifyItemInserted(index);
+        if (notifyOnChange) notifyItemInserted(index);
     }
 
     /**
@@ -281,32 +270,30 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      */
     public void remove(@Nullable T object) {
         int position = 0;
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                position = mOriginalValues.indexOf(object);
-                mOriginalValues.remove(position);
+        synchronized (lock) {
+            if (originalValues != null) {
+                position = originalValues.indexOf(object);
+                originalValues.remove(position);
             } else {
-                position = mObjects.indexOf(object);
-                mObjects.remove(position);
+                position = objects.indexOf(object);
+                objects.remove(position);
             }
-            mObjectsFromResources = false;
         }
-        if (mNotifyOnChange) notifyItemRemoved(position);
+        if (notifyOnChange) notifyItemRemoved(position);
     }
 
     /**
      * Remove all elements from the list.
      */
     public void clear() {
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                mOriginalValues.clear();
+        synchronized (lock) {
+            if (originalValues != null) {
+                originalValues.clear();
             } else {
-                mObjects.clear();
+                objects.clear();
             }
-            mObjectsFromResources = false;
         }
-        if (mNotifyOnChange) notifyDataSetChanged();
+        if (notifyOnChange) notifyDataSetChanged();
     }
 
     /**
@@ -318,16 +305,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      */
     public void sort(@NonNull Comparator<? super T> comparator) {
         int count = 0;
-        synchronized (mLock) {
-            if (mOriginalValues != null) {
-                count = mOriginalValues.size();
-                Collections.sort(mOriginalValues, comparator);
+        synchronized (lock) {
+            if (originalValues != null) {
+                count = originalValues.size();
+                Collections.sort(originalValues, comparator);
             } else {
-                count = mObjects.size();
-                Collections.sort(mObjects, comparator);
+                count = objects.size();
+                Collections.sort(objects, comparator);
             }
         }
-        if (mNotifyOnChange) notifyItemRangeChanged(0, count);
+        if (notifyOnChange) notifyItemRangeChanged(0, count);
     }
 
     /**
@@ -344,17 +331,17 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      *         automatically call {@link #notifyDataSetChanged}
      */
     public void setNotifyOnChange(boolean notifyOnChange) {
-        mNotifyOnChange = notifyOnChange;
+        this.notifyOnChange = notifyOnChange;
     }
 
     @Override
     public int getItemCount() {
-        return mObjects.size();
+        return objects.size();
     }
 
     @Nullable
     public T getItem(int position) {
-        return mObjects.get(position);
+        return objects.get(position);
     }
 
     /**
@@ -365,7 +352,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * @return The position of the specified item.
      */
     public int getPosition(@Nullable T item) {
-        return mObjects.indexOf(item);
+        return objects.indexOf(item);
     }
 
     @Override
@@ -375,8 +362,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(mResource, parent, false);
-        return createArrayViewHolder(view, mFieldId);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutResource, parent, false);
+        return createArrayViewHolder(view, textFieldId);
     }
 
     protected VH createArrayViewHolder(View view, int fieldId) {
@@ -391,10 +378,10 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     @Override
     @NonNull
     public Filter getFilter() {
-        if (mFilter == null) {
-            mFilter = new ArrayFilter();
+        if (filter == null) {
+            filter = new ArrayFilter();
         }
-        return mFilter;
+        return filter;
     }
 
     public static class ArrayViewHolder<T> extends RecyclerView.ViewHolder {
@@ -432,16 +419,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         protected FilterResults performFiltering(CharSequence prefix) {
             final FilterResults results = new FilterResults();
 
-            if (mOriginalValues == null) {
-                synchronized (mLock) {
-                    mOriginalValues = new ArrayList<>(mObjects);
+            if (originalValues == null) {
+                synchronized (lock) {
+                    originalValues = new ArrayList<>(objects);
                 }
             }
 
             if (TextUtils.isEmpty(prefix)) {
                 final ArrayList<T> list;
-                synchronized (mLock) {
-                    list = new ArrayList<>(mOriginalValues);
+                synchronized (lock) {
+                    list = new ArrayList<>(originalValues);
                 }
                 results.values = list;
                 results.count = list.size();
@@ -449,8 +436,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
                 final String prefixString = prefix.toString().toLowerCase();
 
                 final ArrayList<T> values;
-                synchronized (mLock) {
-                    values = new ArrayList<>(mOriginalValues);
+                synchronized (lock) {
+                    values = new ArrayList<>(originalValues);
                 }
 
                 final int count = values.size();
@@ -484,10 +471,10 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //noinspection unchecked
-            mObjects = (List<T>) results.values;
+            objects = (List<T>) results.values;
             if (results.count > 0) {
                 notifyDataSetChanged();
-                mNotifyOnChange = true;
+                notifyOnChange = true;
             }
         }
     }

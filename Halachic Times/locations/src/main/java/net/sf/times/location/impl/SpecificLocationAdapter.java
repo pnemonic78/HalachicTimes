@@ -63,7 +63,7 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 
     @Override
     public void notifyItemChanged(ZmanimAddress address) {
-        synchronized (mLock) {
+        synchronized (lock) {
             final int count = getItemCount();
             LocationItem item;
             int position = -1;
@@ -81,22 +81,22 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
                     notifyItemChanged(position);
                 } else {
                     // Hide the item.
-                    if (mOriginalValues != null) {
-                        mObjects.remove(position);
+                    if (originalValues != null) {
+                        objects.remove(position);
                         notifyItemRemoved(position);
                     }
                 }
-            } else if (mOriginalValues != null) {
-                final int size = mOriginalValues.size();
+            } else if (originalValues != null) {
+                final int size = originalValues.size();
                 for (int i = 0; i < size; i++) {
-                    item = mOriginalValues.get(i);
+                    item = originalValues.get(i);
                     if (item.getAddress().equals(address)) {
                         position = i;
                         break;
                     }
                 }
                 if (position >= 0) {
-                    item = mOriginalValues.get(position);
+                    item = originalValues.get(position);
                     // Find the sorted position.
                     int positionInsert = count;
                     Comparator<LocationItem> comparator = getComparator();
@@ -106,7 +106,7 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
                             break;
                         }
                     }
-                    mObjects.add(positionInsert, item);
+                    objects.add(positionInsert, item);
                     notifyItemInserted(positionInsert);
                 } else {
                     // Throw error: item not found!

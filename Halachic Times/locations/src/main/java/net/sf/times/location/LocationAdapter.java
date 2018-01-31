@@ -151,10 +151,10 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *         comparator used to sort the objects contained in this adapter.
      */
     protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
-        if (mOriginalValues != null) {
-            sortNoNotify(mOriginalValues, comparator);
+        if (originalValues != null) {
+            sortNoNotify(originalValues, comparator);
         } else {
-            sortNoNotify(mObjects, comparator);
+            sortNoNotify(objects, comparator);
         }
     }
 
@@ -198,7 +198,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     }
 
     public void notifyItemChanged(ZmanimAddress address) {
-        synchronized (mLock) {
+        synchronized (lock) {
             final int size = getItemCount();
             LocationItem item;
             for (int i = 0; i < size; i++) {
@@ -228,11 +228,11 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
-            if (mOriginalValues == null) {
-                mOriginalValues = new ArrayList<>(mObjects);
+            if (originalValues == null) {
+                originalValues = new ArrayList<>(objects);
             }
 
-            final List<LocationItem> values = new ArrayList<>(mOriginalValues);
+            final List<LocationItem> values = new ArrayList<>(originalValues);
             final int count = values.size();
 
             if (constraint == null) {
