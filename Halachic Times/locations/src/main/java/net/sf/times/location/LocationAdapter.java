@@ -20,7 +20,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Filter;
 
 import net.sf.util.LocaleUtils;
 import net.sf.widget.ArrayAdapter;
@@ -151,7 +150,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *         comparator used to sort the objects contained in this adapter.
      */
     protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
-        if (originalValues != null) {
+        if (objectsFiltered) {
             sortNoNotify(originalValues, comparator);
         } else {
             sortNoNotify(objects, comparator);
@@ -190,11 +189,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     }
 
     @Override
-    public Filter getFilter() {
-        if (filter == null) {
-            filter = new LocationsFilter();
-        }
-        return filter;
+    protected ArrayFilter createFilter() {
+        return new LocationsFilter();
     }
 
     public void notifyItemChanged(ZmanimAddress address) {
@@ -228,33 +224,32 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
 
-            if (originalValues == null) {
-                originalValues = new ArrayList<>(objects);
+            if (!objectsFiltered) {
+                synchronized (lock) {
+                    objectsFiltered = true;
+                    originalValues.clear();
+                    originalValues.addAll(objects);
+                }
             }
 
             final List<LocationItem> values = new ArrayList<>(originalValues);
             final int count = values.size();
 
-            if (constraint == null) {
-                results.values = values;
-                results.count = values.size();
-            } else {
-                final Locale locale = LocationAdapter.this.locale;
-                final String constraintString = constraint.toString().toLowerCase(locale);
+            final Locale locale = LocationAdapter.this.locale;
+            final String constraintString = TextUtils.isEmpty(constraint) ? null : constraint.toString().toLowerCase(locale);
 
-                final List<LocationItem> newValues = new ArrayList<>();
-                LocationItem value;
+            final List<LocationItem> newValues = new ArrayList<>();
+            LocationItem value;
 
-                for (int i = 0; i < count; i++) {
-                    value = values.get(i);
-                    if (accept(value, constraintString)) {
-                        newValues.add(value);
-                    }
+            for (int i = 0; i < count; i++) {
+                value = values.get(i);
+                if (accept(value, constraintString)) {
+                    newValues.add(value);
                 }
-
-                results.values = newValues;
-                results.count = newValues.size();
             }
+
+            results.values = newValues;
+            results.count = newValues.size();
 
             return results;
         }

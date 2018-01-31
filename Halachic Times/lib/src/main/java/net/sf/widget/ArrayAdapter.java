@@ -82,7 +82,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * A copy of the original objects array, initialized from and then used instead as soon as
      * the filter is used. objects will then only contain the filtered values.
      */
-    protected List<T> originalValues;
+    protected final List<T> originalValues = new ArrayList<>();
+    protected boolean objectsFiltered;
 
     private ArrayFilter filter;
 
@@ -178,7 +179,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     public void add(@Nullable T object) {
         int position = 0;
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 position = originalValues.size();
                 originalValues.add(object);
             } else {
@@ -212,7 +213,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         int position = 0;
         int count = collection.size();
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 position = originalValues.size();
                 originalValues.addAll(collection);
             } else {
@@ -233,7 +234,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         int position = 0;
         int count = items.length;
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 position = originalValues.size();
                 Collections.addAll(originalValues, items);
             } else {
@@ -254,7 +255,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      */
     public void insert(@Nullable T object, int index) {
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 originalValues.add(index, object);
             } else {
                 objects.add(index, object);
@@ -272,7 +273,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     public void remove(@Nullable T object) {
         int position = 0;
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 position = originalValues.indexOf(object);
                 originalValues.remove(position);
             } else {
@@ -288,7 +289,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      */
     public void clear() {
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 originalValues.clear();
             } else {
                 objects.clear();
@@ -307,7 +308,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     public void sort(@NonNull Comparator<? super T> comparator) {
         int count = 0;
         synchronized (lock) {
-            if (originalValues != null) {
+            if (objectsFiltered) {
                 count = originalValues.size();
                 Collections.sort(originalValues, comparator);
             } else {
@@ -380,9 +381,13 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     @NonNull
     public Filter getFilter() {
         if (filter == null) {
-            filter = new ArrayFilter();
+            filter = createFilter();
         }
         return filter;
+    }
+
+    protected ArrayFilter createFilter() {
+        return new ArrayFilter();
     }
 
     public static class ArrayViewHolder<T> extends RecyclerView.ViewHolder {
@@ -420,14 +425,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         protected FilterResults performFiltering(CharSequence prefix) {
             final FilterResults results = new FilterResults();
 
-            if (originalValues == null) {
+            if (!objectsFiltered) {
                 synchronized (lock) {
-                    originalValues = new ArrayList<>(objects);
+                    objectsFiltered = true;
+                    originalValues.clear();
+                    originalValues.addAll(objects);
                 }
             }
 
             if (TextUtils.isEmpty(prefix)) {
-                final ArrayList<T> list;
+                final List<T> list;
                 synchronized (lock) {
                     list = new ArrayList<>(originalValues);
                 }
@@ -436,7 +443,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
             } else {
                 final String prefixString = prefix.toString().toLowerCase();
 
-                final ArrayList<T> values;
+                final List<T> values;
                 synchronized (lock) {
                     values = new ArrayList<>(originalValues);
                 }

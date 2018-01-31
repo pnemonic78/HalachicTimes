@@ -34,15 +34,12 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 
     public SpecificLocationAdapter(Context context, List<LocationItem> items) {
         super(context, items);
-        getFilter().filter("");
+        getFilter().filter(null);
     }
 
     @Override
-    public SpecificFilter getFilter() {
-        if (filter == null) {
-            filter = new SpecificFilter();
-        }
-        return filter;
+    protected ArrayFilter createFilter() {
+        return new SpecificFilter();
     }
 
     /**
@@ -81,12 +78,12 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
                     notifyItemChanged(position);
                 } else {
                     // Hide the item.
-                    if (originalValues != null) {
+                    if (objectsFiltered) {
                         objects.remove(position);
                         notifyItemRemoved(position);
                     }
                 }
-            } else if (originalValues != null) {
+            } else if (objectsFiltered) {
                 final int size = originalValues.size();
                 for (int i = 0; i < size; i++) {
                     item = originalValues.get(i);
