@@ -73,37 +73,45 @@ public class LocationOpenHelper extends SQLiteOpenHelper {
             }
         }
 
-        StringBuilder sql = new StringBuilder();
-        sql.append("CREATE TABLE ").append(TABLE_ADDRESSES).append('(');
-        sql.append(AddressColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
-        sql.append(AddressColumns.LOCATION_LATITUDE).append(" DOUBLE NOT NULL,");
-        sql.append(AddressColumns.LOCATION_LONGITUDE).append(" DOUBLE NOT NULL,");
-        sql.append(AddressColumns.LATITUDE).append(" DOUBLE NOT NULL,");
-        sql.append(AddressColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
-        sql.append(AddressColumns.ADDRESS).append(" TEXT NOT NULL,");
-        sql.append(AddressColumns.LANGUAGE).append(" TEXT,");
-        sql.append(AddressColumns.TIMESTAMP).append(" INTEGER NOT NULL,");
-        sql.append(AddressColumns.FAVORITE).append(" INTEGER NOT NULL");
-        sql.append(");");
-        db.execSQL(sql.toString());
+        String sql = new StringBuilder()
+                .append("CREATE TABLE ").append(TABLE_ADDRESSES).append('(')
+                .append(AddressColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
+                .append(AddressColumns.LOCATION_LATITUDE).append(" DOUBLE NOT NULL,")
+                .append(AddressColumns.LOCATION_LONGITUDE).append(" DOUBLE NOT NULL,")
+                .append(AddressColumns.LATITUDE).append(" DOUBLE NOT NULL,")
+                .append(AddressColumns.LONGITUDE).append(" DOUBLE NOT NULL,")
+                .append(AddressColumns.ADDRESS).append(" TEXT NOT NULL,")
+                .append(AddressColumns.LANGUAGE).append(" TEXT,")
+                .append(AddressColumns.TIMESTAMP).append(" INTEGER NOT NULL,")
+                .append(AddressColumns.FAVORITE).append(" INTEGER NOT NULL")
+                .append(");")
+                .toString();
+        db.execSQL(sql);
 
-        sql = new StringBuilder();
-        sql.append("CREATE TABLE ").append(TABLE_ELEVATIONS).append('(');
-        sql.append(ElevationColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
-        sql.append(ElevationColumns.LATITUDE).append(" DOUBLE NOT NULL,");
-        sql.append(ElevationColumns.LONGITUDE).append(" DOUBLE NOT NULL,");
-        sql.append(ElevationColumns.ELEVATION).append(" DOUBLE NOT NULL,");
-        sql.append(ElevationColumns.TIMESTAMP).append(" INTEGER NOT NULL");
-        sql.append(");");
-        db.execSQL(sql.toString());
+        sql = new StringBuilder()
+                .append("CREATE TABLE ").append(TABLE_ELEVATIONS).append('(')
+                .append(ElevationColumns._ID).append(" INTEGER PRIMARY KEY AUTOINCREMENT,")
+                .append(ElevationColumns.LATITUDE).append(" DOUBLE NOT NULL,")
+                .append(ElevationColumns.LONGITUDE).append(" DOUBLE NOT NULL,")
+                .append(ElevationColumns.ELEVATION).append(" DOUBLE NOT NULL,")
+                .append(ElevationColumns.TIMESTAMP).append(" INTEGER NOT NULL,")
+                .append("UNIQUE (")
+                .append(ElevationColumns.LATITUDE)
+                .append(", ")
+                .append(ElevationColumns.LONGITUDE)
+                .append(") ON CONFLICT REPLACE")
+                .append(");")
+                .toString();
+        db.execSQL(sql);
 
-        sql = new StringBuilder();
-        sql.append("CREATE TABLE ").append(TABLE_CITIES).append('(');
-        sql.append(CityColumns._ID).append(" INTEGER PRIMARY KEY,");
-        sql.append(CityColumns.TIMESTAMP).append(" INTEGER NOT NULL,");
-        sql.append(CityColumns.FAVORITE).append(" INTEGER NOT NULL");
-        sql.append(");");
-        db.execSQL(sql.toString());
+        sql = new StringBuilder()
+                .append("CREATE TABLE ").append(TABLE_CITIES).append('(')
+                .append(CityColumns._ID).append(" INTEGER PRIMARY KEY,")
+                .append(CityColumns.TIMESTAMP).append(" INTEGER NOT NULL,")
+                .append(CityColumns.FAVORITE).append(" INTEGER NOT NULL")
+                .append(");")
+                .toString();
+        db.execSQL(sql);
     }
 
     @Override

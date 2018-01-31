@@ -94,8 +94,6 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final int INDEX_ELEVATION_ELEVATION = 3;
     private static final int INDEX_ELEVATION_TIMESTAMP = 4;
 
-    private static final String WHERE_ELEVATION = "(" + ElevationColumns.LATITUDE + "=?) AND (" + ElevationColumns.LONGITUDE + "=?)";
-
     private static final String[] PROJECTION_CITY = {
             BaseColumns._ID,
             CityColumns.TIMESTAMP,
@@ -428,17 +426,6 @@ public class DatabaseGeocoder extends GeocoderBase {
 
         final ContentResolver resolver = context.getContentResolver();
         final Uri contentUri = Elevations.CONTENT_URI(context);
-        if (id == 0L) {
-            String[] whereArgs = {String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())};
-            Cursor cursor = resolver.query(contentUri, PROJECTION_ELEVATION, WHERE_ELEVATION, whereArgs, null);
-            if (cursor != null) {
-                if (cursor.moveToFirst()) {
-                    id = cursor.getLong(INDEX_ELEVATION_ID);
-                }
-                cursor.close();
-            }
-        }
-
         if (id == 0L) {
             Uri uri = resolver.insert(contentUri, values);
             if (uri != null) {
