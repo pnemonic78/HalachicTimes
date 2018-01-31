@@ -15,6 +15,7 @@
  */
 package net.sf.times.location.impl;
 
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -92,6 +93,8 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final int INDEX_ELEVATION_LONGITUDE = 2;
     private static final int INDEX_ELEVATION_ELEVATION = 3;
     private static final int INDEX_ELEVATION_TIMESTAMP = 4;
+
+    private static final String WHERE_ELEVATION = "(" + ElevationColumns.LATITUDE + "=?) AND (" + ElevationColumns.LONGITUDE + "=?)";
 
     private static final String[] PROJECTION_CITY = {
             BaseColumns._ID,
@@ -342,8 +345,9 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
         values.put(AddressColumns.FAVORITE, address.isFavorite());
 
+        final ContentResolver resolver = context.getContentResolver();
         if (insert) {
-            Uri uri = context.getContentResolver().insert(Addresses.CONTENT_URI(context), values);
+            Uri uri = resolver.insert(Addresses.CONTENT_URI(context), values);
             if (uri != null) {
                 id = ContentUris.parseId(uri);
                 if (id > 0L) {
@@ -352,7 +356,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } else {
             Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
-            context.getContentResolver().update(uri, values, null, null);
+            resolver.update(uri, values, null, null);
         }
     }
 
@@ -422,8 +426,21 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(ElevationColumns.ELEVATION, location.getAltitude());
         values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
 
+        final ContentResolver resolver = context.getContentResolver();
+        final Uri contentUri = Elevations.CONTENT_URI(context);
         if (id == 0L) {
-            Uri uri = context.getContentResolver().insert(Elevations.CONTENT_URI(context), values);
+            String[] whereArgs = {String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude())};
+            Cursor cursor = resolver.query(contentUri, PROJECTION_ELEVATION, WHERE_ELEVATION, whereArgs, null);
+            if (cursor != null) {
+                if (cursor.moveToFirst()) {
+                    id = cursor.getLong(INDEX_ELEVATION_ID);
+                }
+                cursor.close();
+            }
+        }
+
+        if (id == 0L) {
+            Uri uri = resolver.insert(contentUri, values);
             if (uri != null) {
                 id = ContentUris.parseId(uri);
                 if (id > 0L) {
@@ -431,8 +448,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                 }
             }
         } else {
-            Uri uri = ContentUris.withAppendedId(Elevations.CONTENT_URI(context), id);
-            context.getContentResolver().update(uri, values, null, null);
+            Uri uri = ContentUris.withAppendedId(contentUri, id);
+            resolver.update(uri, values, null, null);
         }
     }
 
@@ -493,11 +510,12 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(CityColumns.TIMESTAMP, System.currentTimeMillis());
         values.put(CityColumns.FAVORITE, city.isFavorite());
 
+        final ContentResolver resolver = context.getContentResolver();
         long id = city.getId();
         if (id == 0L) {
             values.put(BaseColumns._ID, City.generateCityId(city));
 
-            Uri uri = context.getContentResolver().insert(Cities.CONTENT_URI(context), values);
+            Uri uri = resolver.insert(Cities.CONTENT_URI(context), values);
             if (uri != null) {
                 id = ContentUris.parseId(uri);
                 if (id > 0L) {
@@ -506,7 +524,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } else {
             Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI(context), id);
-            context.getContentResolver().update(uri, values, null, null);
+            resolver.update(uri, values, null, null);
         }
     }
 
