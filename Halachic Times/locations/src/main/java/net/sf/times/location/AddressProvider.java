@@ -535,28 +535,31 @@ public class AddressProvider {
         ZmanimLocation elevated;
 
         if (location.hasAltitude()) {
-            elevated = findElevationCities(location);
+            elevated = findElevationDatabase(location);
             if (elevated == null) {
-                elevated = findElevationDatabase(location);
-                if (elevated == null)
+                elevated = findElevationCities(location);
+                if (elevated == null) {
                     elevated = new ZmanimLocation(location);
-                else if (ZmanimLocation.compareTo(location, elevated) == 0)
+                } else if (ZmanimLocation.compareTo(location, elevated) == 0) {
                     elevated.setAltitude(location.getAltitude());
-            } else if (ZmanimLocation.compareTo(location, elevated) == 0)
+                }
+            } else if (ZmanimLocation.compareTo(location, elevated) == 0) {
                 elevated.setAltitude(location.getAltitude());
-            if (listener != null)
+            }
+            if (listener != null) {
                 listener.onFindElevation(this, location, elevated);
+            }
             return elevated;
         }
 
-        elevated = findElevationCities(location);
+        elevated = findElevationDatabase(location);
         if ((elevated != null) && elevated.hasAltitude()) {
             if (listener != null)
                 listener.onFindElevation(this, location, elevated);
             return elevated;
         }
 
-        elevated = findElevationDatabase(location);
+        elevated = findElevationCities(location);
         if ((elevated != null) && elevated.hasAltitude()) {
             if (listener != null)
                 listener.onFindElevation(this, location, elevated);

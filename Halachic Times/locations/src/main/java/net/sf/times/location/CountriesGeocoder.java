@@ -639,13 +639,14 @@ public class CountriesGeocoder extends GeocoderBase {
             }
         }
 
-        if ((n == 1) && (cityNearest != null)) {
+        if (cityNearest != null) {
             elevated = new ZmanimLocation(USER_PROVIDER);
             elevated.setTime(System.currentTimeMillis());
             elevated.setLatitude(cityNearest.getLatitude());
             elevated.setLongitude(cityNearest.getLongitude());
             elevated.setAltitude(cityNearest.getElevation());
-            elevated.setId(cityNearest.getId());
+            long cityId = cityNearest.getId();
+            elevated.setId(-(cityId != 0L ? cityId : City.generateCityId(cityNearest)));
             return elevated;
         }
         if (n <= 1)
@@ -661,7 +662,7 @@ public class CountriesGeocoder extends GeocoderBase {
         elevated.setLatitude(latitude);
         elevated.setLongitude(longitude);
         elevated.setAltitude(weightSum / (n - 1));
-        elevated.setId(-1);
+        elevated.setId(-1L);
         return elevated;
 
     }
