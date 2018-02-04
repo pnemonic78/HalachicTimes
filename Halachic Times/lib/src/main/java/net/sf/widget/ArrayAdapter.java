@@ -479,9 +479,11 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             //noinspection unchecked
-            objects.clear();
-            if (results.count > 0) {
-                objects.addAll((List<T>) results.values);
+            synchronized (lock) {
+                objects.clear();
+                if (results.count > 0) {
+                    objects.addAll((List<T>) results.values);
+                }
                 notifyDataSetChanged();
                 notifyOnChange = true;
             }
