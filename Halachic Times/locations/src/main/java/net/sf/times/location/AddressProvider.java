@@ -210,7 +210,7 @@ public class AddressProvider {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 10);
                 } catch (Exception e) {
-                    Log.e(TAG, "geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    Log.e(TAG, "Address geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
                     continue;
                 }
                 bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
@@ -269,7 +269,7 @@ public class AddressProvider {
     }
 
     /**
-     * Get the list of remote geocoder providers.
+     * Get the list of remote geocoder providers for addresses.
      *
      * @return the list of providers.
      */
@@ -487,6 +487,18 @@ public class AddressProvider {
      */
     @Nullable
     public Location findElevation(Location location, OnFindAddressListener listener) {
+        if (location == null) {
+            return null;
+        }
+        final double latitude = location.getLatitude();
+        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX)) {
+            return null;
+        }
+        final double longitude = location.getLongitude();
+        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX)) {
+            return null;
+        }
+
         ZmanimLocation elevated;
 
         if (location.hasAltitude()) {
@@ -509,38 +521,34 @@ public class AddressProvider {
 
         elevated = findElevationDatabase(location);
         if ((elevated != null) && elevated.hasAltitude()) {
-            if (listener != null)
+            if (listener != null) {
                 listener.onFindElevation(this, location, elevated);
+            }
             return elevated;
         }
 
         elevated = findElevationCities(location);
         if ((elevated != null) && elevated.hasAltitude()) {
-            if (listener != null)
+            if (listener != null) {
                 listener.onFindElevation(this, location, elevated);
+            }
             return elevated;
         }
 
         if (online) {
-            elevated = findElevationBing(location);
-            if ((elevated != null) && elevated.hasAltitude()) {
-                if (listener != null)
-                    listener.onFindElevation(this, location, elevated);
-                return elevated;
-            }
-
-            elevated = findElevationGeoNames(location);
-            if ((elevated != null) && elevated.hasAltitude()) {
-                if (listener != null)
-                    listener.onFindElevation(this, location, elevated);
-                return elevated;
-            }
-
-            elevated = findElevationGoogle(location);
-            if ((elevated != null) && elevated.hasAltitude()) {
-                if (listener != null)
-                    listener.onFindElevation(this, location, elevated);
-                return elevated;
+            for (GeocoderBase geocoder : getRemoteElevationProviders()) {
+                try {
+                    elevated = geocoder.getElevation(latitude, longitude);
+                } catch (Exception e) {
+                    Log.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    continue;
+                }
+                if ((elevated != null) && elevated.hasAltitude()) {
+                    if (listener != null) {
+                        listener.onFindElevation(this, location, elevated);
+                    }
+                    return elevated;
+                }
             }
         }
 
@@ -568,75 +576,29 @@ public class AddressProvider {
     }
 
     /**
-     * Find elevation according to Google Maps.
+     * Get the list of remote geocoder providers for elevations.
      *
-     * @param location
-     *         the location.
-     * @return the location with elevation - {@code null} otherwise.
+     * @return the list of providers.
      */
-    @Nullable
-    private ZmanimLocation findElevationGoogle(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        GoogleGeocoder geocoder = googleGeocoder;
-        if (geocoder == null) {
-            geocoder = new GoogleGeocoder(locale);
-            googleGeocoder = geocoder;
-        }
-        try {
-            return geocoder.getElevation(latitude, longitude);
-        } catch (Exception e) {
-            Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
-        }
-        return null;
-    }
+    private List<GeocoderBase> getRemoteElevationProviders() {
+        final List<GeocoderBase> providers = new ArrayList<>();
 
-    /**
-     * Find elevation according to GeoNames.
-     *
-     * @param location
-     *         the location.
-     * @return the elevated location - {@code null} otherwise.
-     */
-    @Nullable
-    private ZmanimLocation findElevationGeoNames(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        GeoNamesGeocoder geocoder = geonamesGeocoder;
-        if (geocoder == null) {
-            geocoder = new GeoNamesGeocoder(locale);
-            geonamesGeocoder = geocoder;
+        if (googleGeocoder == null) {
+            googleGeocoder = new GoogleGeocoder(locale);
         }
-        try {
-            return geocoder.getElevation(latitude, longitude);
-        } catch (Exception e) {
-            Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
-        }
-        return null;
-    }
+        providers.add(googleGeocoder);
 
-    /**
-     * Find elevation according to Bing.
-     *
-     * @param location
-     *         the location.
-     * @return the elevated location - {@code null} otherwise.
-     */
-    @Nullable
-    private ZmanimLocation findElevationBing(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        BingGeocoder geocoder = bingGeocoder;
-        if (geocoder == null) {
-            geocoder = new BingGeocoder(locale);
-            bingGeocoder = geocoder;
+        if (geonamesGeocoder == null) {
+            geonamesGeocoder = new GeoNamesGeocoder(locale);
         }
-        try {
-            return geocoder.getElevation(latitude, longitude);
-        } catch (Exception e) {
-            Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+        providers.add(geonamesGeocoder);
+
+        if (bingGeocoder == null) {
+            bingGeocoder = new BingGeocoder(locale);
         }
-        return null;
+        providers.add(bingGeocoder);
+
+        return providers;
     }
 
     /**
