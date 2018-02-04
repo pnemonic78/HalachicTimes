@@ -19,7 +19,7 @@
     <color name="compass_west_original">@color/compass_label_original</color>
     <color name="compass_west_dark_original">@color/compass_label_dark_original</color>
     <color name="compass_target_original">@color/magenta</color>
-    <color name="compass_arrow_bg_original">@color/purple_80</color>
+    <color name="compass_arrow_bg_original">@color/purple_x80</color>
     <color name="compass_pivot_original">@color/compass_frame_highlight_original</color>
     <color name="compass_pivot_dark_original">@color/compass_frame_original</color>
 
@@ -41,7 +41,7 @@
     <color name="compass_west_gold">@color/compass_label_gold</color>
     <color name="compass_west_dark_gold">@color/compass_label_dark_gold</color>
     <color name="compass_target_gold">@color/yellow</color>
-    <color name="compass_arrow_bg_gold">@color/olive_80</color>
+    <color name="compass_arrow_bg_gold">@color/olive_x80</color>
     <color name="compass_pivot_gold">@color/compass_frame_highlight_gold</color>
     <color name="compass_pivot_dark_gold">@color/compass_frame_gold</color>
 
@@ -85,7 +85,7 @@
     <color name="compass_west_classic">@color/compass_label_classic</color>
     <color name="compass_west_dark_classic">@color/compass_label_dark_classic</color>
     <color name="compass_target_classic">@color/cyan</color>
-    <color name="compass_arrow_bg_classic">@color/teal_80</color>
+    <color name="compass_arrow_bg_classic">@color/teal_x80</color>
     <color name="compass_pivot_classic">@color/compass_frame_highlight_classic</color>
     <color name="compass_pivot_dark_classic">@color/compass_frame_classic</color>
 

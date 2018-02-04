@@ -21,22 +21,30 @@
     <color name="grey">#ff808080</color>
     <color name="white">#ffffffff</color>
 
-    <color name="black_80">#80000000</color>
-    <color name="silver_80">#80c0c0c0</color>
-    <color name="navy_80">#80000080</color>
-    <color name="blue_80">#800000ff</color>
-    <color name="green_80">#80008000</color>
-    <color name="lime_80">#8000ff00</color>
-    <color name="teal_80">#80008080</color>
-    <color name="cyan_80">#8000ffff</color>
-    <color name="maroon_80">#80800000</color>
-    <color name="red_80">#80ff0000</color>
-    <color name="purple_80">#80800080</color>
-    <color name="magenta_80">#80ff00ff</color>
-    <color name="olive_80">#80808000</color>
-    <color name="yellow_80">#80ffff00</color>
-    <color name="gray_80">#80808080</color>
-    <color name="grey_80">#80808080</color>
-    <color name="white_80">#80ffffff</color>
+    <color name="black_x80">#80000000</color>
+    <color name="silver_x80">#80c0c0c0</color>
+    <color name="navy_x80">#80000080</color>
+    <color name="blue_x80">#800000ff</color>
+    <color name="green_x80">#80008000</color>
+    <color name="lime_x80">#8000ff00</color>
+    <color name="teal_x80">#80008080</color>
+    <color name="cyan_x80">#8000ffff</color>
+    <color name="maroon_x80">#80800000</color>
+    <color name="red_x80">#80ff0000</color>
+    <color name="purple_x80">#80800080</color>
+    <color name="magenta_x80">#80ff00ff</color>
+    <color name="olive_x80">#80808000</color>
+    <color name="yellow_x80">#80ffff00</color>
+    <color name="gray_x80">#80808080</color>
+    <color name="grey_x80">#80808080</color>
+    <color name="white_x80">#80ffffff</color>
+
+    <color name="black_x10">#10000000</color>
+    <color name="black_x20">#20000000</color>
+    <color name="black_x40">#40000000</color>
+
+    <color name="white_x10">#10ffffff</color>
+    <color name="white_x20">#20ffffff</color>
+    <color name="white_x40">#40ffffff</color>
 
 </resources>
