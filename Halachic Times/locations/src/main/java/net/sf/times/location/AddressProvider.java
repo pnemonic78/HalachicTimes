@@ -90,9 +90,9 @@ public class AddressProvider {
     /** The list of countries. */
     private CountriesGeocoder countriesGeocoder;
     private Geocoder geocoder;
-    private GeocoderBase googleGeocoder;
-    private GeocoderBase bingGeocoder;
-    private GeocoderBase geonamesGeocoder;
+    private GoogleGeocoder googleGeocoder;
+    private BingGeocoder bingGeocoder;
+    private GeoNamesGeocoder geonamesGeocoder;
     private DatabaseGeocoder databaseGeocoder;
     private boolean online = true;
 
@@ -146,14 +146,17 @@ public class AddressProvider {
      */
     @Nullable
     public Address findNearestAddress(Location location, OnFindAddressListener listener) {
-        if (location == null)
+        if (location == null) {
             return null;
+        }
         final double latitude = location.getLatitude();
-        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
+        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX)) {
             return null;
+        }
         final double longitude = location.getLongitude();
-        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
+        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX)) {
             return null;
+        }
 
         List<Address> addresses;
         Address best = null;
@@ -161,71 +164,67 @@ public class AddressProvider {
         Address bestPlateau = null;
         Address bestCity;
 
-        if (listener != null)
+        if (listener != null) {
             listener.onFindAddress(this, location, best);
+        }
 
         // Find the best country.
         addresses = findNearestCountry(location);
         best = findBestAddress(location, addresses, SAME_PLANET);
-        if ((best != null) && (listener != null))
+        if ((best != null) && (listener != null)) {
             listener.onFindAddress(this, location, best);
+        }
         bestCountry = best;
 
         // Find the best XML city.
         addresses = findNearestCity(location);
         best = findBestAddress(location, addresses, SAME_CITY);
-        if ((best != null) && (listener != null))
+        if ((best != null) && (listener != null)) {
             listener.onFindAddress(this, location, best);
+        }
         bestCity = best;
 
         // Find the best cached city.
         addresses = findNearestAddressDatabase(location);
         best = findBestAddress(location, addresses);
-        if ((best != null) && (listener != null))
+        if ((best != null) && (listener != null)) {
             listener.onFindAddress(this, location, best);
+        }
 
         // Find the best city from some Geocoder provider.
         if ((best == null) && online) {
             addresses = findNearestAddressGeocoder(location);
             bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
-            if ((bestPlateau != null) && (listener != null))
+            if ((bestPlateau != null) && (listener != null)) {
                 listener.onFindAddress(this, location, bestPlateau);
+            }
             best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (best != bestPlateau) && (listener != null))
+            if ((best != null) && (best != bestPlateau) && (listener != null)) {
                 listener.onFindAddress(this, location, best);
+            }
         }
 
-        // Find the best city from Google.
+        // Find the best city remotely.
         if ((best == null) && online) {
-            addresses = findNearestAddressGoogle(location);
-            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
-            if ((bestPlateau != null) && (listener != null))
-                listener.onFindAddress(this, location, bestPlateau);
-            best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (best != bestPlateau) && (listener != null))
-                listener.onFindAddress(this, location, best);
-        }
-
-        // Find the best city from Bing.
-        if ((best == null) && online) {
-            addresses = findNearestAddressBing(location);
-            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
-            if ((bestPlateau != null) && (listener != null))
-                listener.onFindAddress(this, location, bestPlateau);
-            best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (best != bestPlateau) && (listener != null))
-                listener.onFindAddress(this, location, best);
-        }
-
-        // Find the best city from GeoNames.
-        if ((best == null) && online) {
-            addresses = findNearestAddressGeoNames(location);
-            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
-            if ((bestPlateau != null) && (listener != null))
-                listener.onFindAddress(this, location, bestPlateau);
-            best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (best != bestPlateau) && (listener != null))
-                listener.onFindAddress(this, location, best);
+            for (GeocoderBase geocoder : getRemoteAddressProviders()) {
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 10);
+                } catch (Exception e) {
+                    Log.e(TAG, "geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    continue;
+                }
+                bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
+                if ((bestPlateau != null) && (listener != null)) {
+                    listener.onFindAddress(this, location, bestPlateau);
+                }
+                best = findBestAddress(location, addresses, SAME_CITY);
+                if (best != null) {
+                    if ((best != bestPlateau) && (listener != null)) {
+                        listener.onFindAddress(this, location, best);
+                    }
+                    break;
+                }
+            }
         }
 
         if (best == null) {
@@ -270,85 +269,29 @@ public class AddressProvider {
     }
 
     /**
-     * Find addresses that are known to describe the area immediately
-     * surrounding the given latitude and longitude.
-     * <p/>
-     * Uses the Google Maps API.
+     * Get the list of remote geocoder providers.
      *
-     * @param location
-     *         the location.
-     * @return the list of addresses.
+     * @return the list of providers.
      */
-    @Nullable
-    private List<Address> findNearestAddressGoogle(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        List<Address> addresses = null;
-        GeocoderBase geocoder = googleGeocoder;
-        if (geocoder == null) {
-            geocoder = new GoogleGeocoder(locale);
-            googleGeocoder = geocoder;
-        }
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (Exception e) {
-            Log.e(TAG, "Google geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
-        }
-        return addresses;
-    }
+    private List<GeocoderBase> getRemoteAddressProviders() {
+        final List<GeocoderBase> providers = new ArrayList<>();
 
-    /**
-     * Finds the nearest street and address for a given lat/lng pair.
-     * <p/>
-     * Uses the GeoNames API.
-     *
-     * @param location
-     *         the location.
-     * @return the list of addresses.
-     */
-    @Nullable
-    private List<Address> findNearestAddressGeoNames(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        List<Address> addresses = null;
-        GeocoderBase geocoder = geonamesGeocoder;
-        if (geocoder == null) {
-            geocoder = new GeoNamesGeocoder(locale);
-            geonamesGeocoder = geocoder;
+        if (googleGeocoder == null) {
+            googleGeocoder = new GoogleGeocoder(locale);
         }
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 10);
-        } catch (Exception e) {
-            Log.e(TAG, "GeoNames geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
-        }
-        return addresses;
-    }
+        providers.add(googleGeocoder);
 
-    /**
-     * Finds the nearest street and address for a given lat/lng pair.
-     * <p/>
-     * Uses the Bing API.
-     *
-     * @param location
-     *         the location.
-     * @return the list of addresses.
-     */
-    @Nullable
-    private List<Address> findNearestAddressBing(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        List<Address> addresses = null;
-        GeocoderBase geocoder = bingGeocoder;
-        if (geocoder == null) {
-            geocoder = new BingGeocoder(locale);
-            bingGeocoder = geocoder;
+        if (geonamesGeocoder == null) {
+            geonamesGeocoder = new GeoNamesGeocoder(locale);
         }
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (Exception e) {
-            Log.e(TAG, "Bing geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+        providers.add(geonamesGeocoder);
+
+        if (bingGeocoder == null) {
+            bingGeocoder = new BingGeocoder(locale);
         }
-        return addresses;
+        providers.add(bingGeocoder);
+
+        return providers;
     }
 
     /**
@@ -635,7 +578,7 @@ public class AddressProvider {
     private ZmanimLocation findElevationGoogle(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        GeocoderBase geocoder = googleGeocoder;
+        GoogleGeocoder geocoder = googleGeocoder;
         if (geocoder == null) {
             geocoder = new GoogleGeocoder(locale);
             googleGeocoder = geocoder;
@@ -659,7 +602,7 @@ public class AddressProvider {
     private ZmanimLocation findElevationGeoNames(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        GeocoderBase geocoder = geonamesGeocoder;
+        GeoNamesGeocoder geocoder = geonamesGeocoder;
         if (geocoder == null) {
             geocoder = new GeoNamesGeocoder(locale);
             geonamesGeocoder = geocoder;
@@ -683,7 +626,7 @@ public class AddressProvider {
     private ZmanimLocation findElevationBing(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
-        GeocoderBase geocoder = bingGeocoder;
+        BingGeocoder geocoder = bingGeocoder;
         if (geocoder == null) {
             geocoder = new BingGeocoder(locale);
             bingGeocoder = geocoder;
@@ -735,7 +678,7 @@ public class AddressProvider {
      * @param cities
      *         the list of cities to populate.
      */
-    public void populateCities(Collection<City> cities) {
+    private void populateCities(Collection<City> cities) {
         Map<Long, City> citiesById = new HashMap<>();
         long id;
 
