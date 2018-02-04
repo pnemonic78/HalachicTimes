@@ -45,7 +45,6 @@
         <item name="listZmanDetail">@style/Widget.Detail.White</item>
     </style>
 
-    <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings">
-    </style>
+    <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>
 
 </resources>

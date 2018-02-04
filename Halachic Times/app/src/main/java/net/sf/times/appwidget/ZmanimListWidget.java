@@ -18,7 +18,6 @@ package net.sf.times.appwidget;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.widget.RemoteViews;
 
@@ -39,11 +38,11 @@ public class ZmanimListWidget extends ZmanimWidget {
 
     @Override
     protected int getLayoutId() {
-        int bg = getWallpaperColor(getContext());
-        if (isBright(bg)) {
-            return R.layout.widget_list;
-        }
-        return R.layout.widget_list_light;
+        /*TODO
+        if (isBright(getWallpaperColor(getContext()))) {
+            return R.layout.widget_list_light;
+        }*/
+        return R.layout.widget_list;
     }
 
     @Override

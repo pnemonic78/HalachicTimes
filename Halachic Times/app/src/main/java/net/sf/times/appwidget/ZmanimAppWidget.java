@@ -102,7 +102,6 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("±!@ onReceive " + intent.getAction() + " " + this);
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onReceive(context, intent);
@@ -131,7 +130,6 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        System.out.println("±!@ onUpdate " + Arrays.toString(appWidgetIds) + " " + this);
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
@@ -203,18 +201,15 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onDisabled(Context context) {
-        System.out.println("±!@ onDisabled enter " + this);
         super.onDisabled(context);
         if (locations != null) {
             locations.stop(this);
         }
         context.unregisterReceiver(this);
-        System.out.println("±!@ onDisabled leave " + this);
     }
 
     @Override
     public void onEnabled(Context context) {
-        System.out.println("±!@ onEnabled enter " + this);
         super.onEnabled(context);
         if (locations != null) {
             locations.start(this);
@@ -225,7 +220,6 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
         intentFilter.addAction(Intent.ACTION_SET_WALLPAPER);
         context.registerReceiver(this, intentFilter);
-        System.out.println("±!@ onEnabled leave " + this);
     }
 
     @Override

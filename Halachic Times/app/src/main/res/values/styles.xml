@@ -123,10 +123,6 @@
         <item name="android:background">@drawable/bg_widget_light</item>
     </style>
 
-    <style name="AppWidget.Static.Nokia">
-        <item name="android:background">@color/background_nokia</item>
-    </style>
-
     <style name="AppWidget.Date" parent="Widget.TextView.Small">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
@@ -140,10 +136,6 @@
     <style name="AppWidget.Item.Odd">
         <item name="android:background">@color/bright</item>
     </style>
-
-    <style name="AppWidget.Item.Nokia"/>
-
-    <style name="AppWidget.Item.Nokia.Odd" parent="AppWidget.Item.Odd"/>
 
     <style name="AppWidget.List" parent="AppWidget.Static"/>
 

@@ -16,7 +16,6 @@
 package net.sf.times.appwidget;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -164,27 +163,13 @@ public class ZmanimWidget extends ZmanimAppWidget {
         return true;
     }
 
-    /**
-     * Is the device made by Nokia?
-     *
-     * @return {@code true} if either the brand or manufacturer start with
-     * {@code "Nokia"}.
-     */
-    protected boolean isDeviceNokia() {
-        return Build.BRAND.startsWith("Nokia") || Build.MANUFACTURER.startsWith("Nokia");
-    }
-
     @Override
     protected int getLayoutId() {
-        if (isDeviceNokia()) {
-            return R.layout.widget_static_nokia;
-        }
-        int bg = getWallpaperColor(getContext());
-        System.out.println("±!@ bg=0x" + Integer.toHexString(bg) + " bright=" + isBright(bg));
-        if (isBright(bg)) {
-            return R.layout.widget_static;
-        }
-        return R.layout.widget_static_light;
+        /*TODO
+        if (isBright(getWallpaperColor(getContext()))) {
+            return R.layout.widget_static_light;
+        }*/
+        return R.layout.widget_static;
     }
 
     @Override
@@ -221,11 +206,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
      * @return the layout id.
      */
     protected int getLayoutItemId(int position) {
-        boolean light = (position & 1) == 1;
-        if (isDeviceNokia()) {
-            return light ? R.layout.widget_item_nokia_odd : R.layout.widget_item_nokia;
-        }
-        return light ? R.layout.widget_item_odd : R.layout.widget_item;
+        return ((position & 1) == 1) ? R.layout.widget_item_odd : R.layout.widget_item;
     }
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
