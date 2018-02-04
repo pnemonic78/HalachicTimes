@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -62,7 +63,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private int positionToday = 0;
     /** Position index of next Hebrew day. */
     private int positionTomorrow = -1;
+    @ColorInt
     private int colorDisabled = Color.DKGRAY;
+    @ColorInt
     private int colorEnabled = Color.WHITE;
     private final LocaleHelper localeCallbacks;
 
