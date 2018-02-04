@@ -20,17 +20,17 @@
 
     <style name="Widget.ListItem.White"/>
 
-    <style name="Widget.Clock">
+    <style name="AppWidget.Clock">
         <item name="android:gravity">top|center_horizontal</item>
     </style>
 
-    <style name="Widget.Clock.Time" parent="Widget.TextView.Large">
+    <style name="AppWidget.Clock.Time" parent="Widget.TextView.Large">
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
 
-    <style name="Widget.Clock.Title" parent="Widget.TextView.Medium">
+    <style name="AppWidget.Clock.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:maxLines">1</item>
@@ -112,12 +112,14 @@
 
     <style name="Widget.Summary.White" parent="Widget.Summary.Light"/>
 
-    <style name="Widget.Static.Widget" parent="Widget">
-        <item name="android:background">@drawable/widget_bg</item>
+    <style name="AppWidget" parent="Widget"/>
+
+    <style name="AppWidget.Static">
+        <item name="android:background">@drawable/bg_widget</item>
         <item name="android:padding">@dimen/widget_padding</item>
     </style>
 
-    <style name="Widget.Static.Nokia.Widget" parent="Widget.Static.Widget">
+    <style name="AppWidget.Static.Nokia">
         <item name="android:background">@color/background_nokia</item>
     </style>
 
@@ -129,17 +131,17 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Widget.Item.Widget" parent="Widget"/>
+    <style name="AppWidget.Item"/>
 
-    <style name="Widget.Item.Light.Widget" parent="Widget.Item.Widget">
+    <style name="AppWidget.Item.Light">
         <item name="android:background">@color/bright</item>
     </style>
 
-    <style name="Widget.Item.Nokia.Widget" parent="Widget.Item.Widget"/>
+    <style name="AppWidget.Item.Nokia"/>
 
-    <style name="Widget.Item.Nokia.Light.Widget" parent="Widget.Item.Light.Widget"/>
+    <style name="AppWidget.Item.Nokia.Light" parent="AppWidget.Item.Light"/>
 
-    <style name="Widget.List.Widget" parent="Widget.Static.Widget"/>
+    <style name="AppWidget.List" parent="AppWidget.Static"/>
 
     <style name="Widget.Date">
         <item name="android:background">@color/black_x80</item>
@@ -150,13 +152,13 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Widget.Clock.Light"/>
+    <style name="AppWidget.Clock.Light"/>
 
-    <style name="Widget.Clock.Time.Light">
+    <style name="AppWidget.Clock.Time.Light">
         <item name="android:textColor">@android:color/primary_text_light</item>
     </style>
 
-    <style name="Widget.Clock.Title.Light">
+    <style name="AppWidget.Clock.Title.Light">
         <item name="android:textColor">@android:color/primary_text_light</item>
     </style>
 
