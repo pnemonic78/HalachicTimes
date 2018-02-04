@@ -22,6 +22,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import net.sf.database.CursorFilter;
@@ -143,6 +144,7 @@ public class AddressProvider {
      *         the listener.
      * @return the address - {@code null} otherwise.
      */
+    @Nullable
     public Address findNearestAddress(Location location, OnFindAddressListener listener) {
         if (location == null)
             return null;
@@ -249,6 +251,7 @@ public class AddressProvider {
      *         the location.
      * @return the list of addresses.
      */
+    @Nullable
     private List<Address> findNearestAddressGeocoder(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -276,6 +279,7 @@ public class AddressProvider {
      *         the location.
      * @return the list of addresses.
      */
+    @Nullable
     private List<Address> findNearestAddressGoogle(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -302,6 +306,7 @@ public class AddressProvider {
      *         the location.
      * @return the list of addresses.
      */
+    @Nullable
     private List<Address> findNearestAddressGeoNames(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -328,6 +333,7 @@ public class AddressProvider {
      *         the location.
      * @return the list of addresses.
      */
+    @Nullable
     private List<Address> findNearestAddressBing(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -354,6 +360,7 @@ public class AddressProvider {
      *         the list of addresses.
      * @return the best address - {@code null} otherwise.
      */
+    @Nullable
     private Address findBestAddress(Location location, List<Address> addresses) {
         return findBestAddress(location, addresses, SAME_CITY);
     }
@@ -369,9 +376,11 @@ public class AddressProvider {
      *         the maximum radius.
      * @return the best address - {@code null} otherwise.
      */
+    @Nullable
     private Address findBestAddress(Location location, List<Address> addresses, float radius) {
-        if ((addresses == null) || addresses.isEmpty())
+        if ((addresses == null) || addresses.isEmpty()) {
             return null;
+        }
 
         // First, find the closest location.
         final double latitude = location.getLatitude();
@@ -439,6 +448,7 @@ public class AddressProvider {
      *         the location.
      * @return the list of addresses.
      */
+    @Nullable
     private List<Address> findNearestAddressDatabase(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -498,6 +508,7 @@ public class AddressProvider {
      *         the location.
      * @return the list of addresses with at most 1 entry.
      */
+    @Nullable
     private List<Address> findNearestCity(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -531,6 +542,7 @@ public class AddressProvider {
      *         the listener.
      * @return the elevated location - {@code null} otherwise.
      */
+    @Nullable
     public Location findElevation(Location location, OnFindAddressListener listener) {
         ZmanimLocation elevated;
 
@@ -600,6 +612,7 @@ public class AddressProvider {
      *         the location.
      * @return the elevated location - {@code null} otherwise.
      */
+    @Nullable
     private ZmanimLocation findElevationCities(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -618,6 +631,7 @@ public class AddressProvider {
      *         the location.
      * @return the location with elevation - {@code null} otherwise.
      */
+    @Nullable
     private ZmanimLocation findElevationGoogle(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -641,6 +655,7 @@ public class AddressProvider {
      *         the location.
      * @return the elevated location - {@code null} otherwise.
      */
+    @Nullable
     private ZmanimLocation findElevationGeoNames(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -664,6 +679,7 @@ public class AddressProvider {
      *         the location.
      * @return the elevated location - {@code null} otherwise.
      */
+    @Nullable
     private ZmanimLocation findElevationBing(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
@@ -689,6 +705,7 @@ public class AddressProvider {
      *         the location.
      * @return the elevated location - {@code null} otherwise.
      */
+    @Nullable
     private ZmanimLocation findElevationDatabase(Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
