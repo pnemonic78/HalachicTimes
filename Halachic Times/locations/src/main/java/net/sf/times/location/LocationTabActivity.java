@@ -26,6 +26,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -259,6 +260,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterAll = adapter;
         RecyclerView list = findViewById(android.R.id.list);
+        list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
 
         adapter = new HistoryLocationAdapter(context, items, filterListener);
@@ -266,6 +268,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
+        list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
 
         adapter = new FavoritesLocationAdapter(context, items, filterListener);
@@ -273,6 +276,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterFavorites = adapter;
         list = findViewById(R.id.list_favorites);
+        list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
     }
 
