@@ -16,8 +16,6 @@
 package net.sf.times.appwidget;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -61,7 +59,7 @@ public class ClockWidget extends ZmanimAppWidget {
     @Override
     protected int getLayoutId() {
         int bg = getWallpaperColor(getContext());
-        if ((bg != Color.TRANSPARENT) && isBright(bg)) {
+        if (isBright(bg)) {
             return R.layout.clock_widget_light;
         }
 
@@ -128,20 +126,5 @@ public class ClockWidget extends ZmanimAppWidget {
      */
     protected DateFormat getTimeFormat() {
         return formatter.get();
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-
-        final String action = intent.getAction();
-        if (action == null) {
-            return;
-        }
-        switch (action) {
-            case Intent.ACTION_WALLPAPER_CHANGED:
-                notifyAppWidgetViewDataChanged(context);
-                break;
-        }
     }
 }

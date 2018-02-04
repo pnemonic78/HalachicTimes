@@ -38,7 +38,7 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper(newBase);
+        this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }

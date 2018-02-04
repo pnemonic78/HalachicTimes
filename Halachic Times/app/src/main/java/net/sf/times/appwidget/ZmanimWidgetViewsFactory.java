@@ -67,7 +67,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private final LocaleHelper localeCallbacks;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
-        this.localeCallbacks = new LocaleHelper(context);
+        this.localeCallbacks = new LocaleHelper<>(context);
         this.context = localeCallbacks.attachBaseContext(context);
     }
 

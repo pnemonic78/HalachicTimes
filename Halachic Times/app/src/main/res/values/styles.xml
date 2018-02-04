@@ -119,11 +119,15 @@
         <item name="android:padding">@dimen/widget_padding</item>
     </style>
 
+    <style name="AppWidget.Static.Light">
+        <item name="android:background">@drawable/bg_widget_light</item>
+    </style>
+
     <style name="AppWidget.Static.Nokia">
         <item name="android:background">@color/background_nokia</item>
     </style>
 
-    <style name="Widget.Date.Widget" parent="Widget.TextView.Small">
+    <style name="AppWidget.Date" parent="Widget.TextView.Small">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
         <item name="android:maxLines">2</item>
@@ -142,6 +146,8 @@
     <style name="AppWidget.Item.Nokia.Light" parent="AppWidget.Item.Light"/>
 
     <style name="AppWidget.List" parent="AppWidget.Static"/>
+
+    <style name="AppWidget.List.Light" parent="AppWidget.Static.Light"/>
 
     <style name="Widget.Date">
         <item name="android:background">@color/black_x80</item>

@@ -23,6 +23,7 @@ import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.location.Location;
 import android.net.Uri;
@@ -47,6 +48,8 @@ import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import java.util.Arrays;
+
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
@@ -55,6 +58,7 @@ import static android.content.Context.ALARM_SERVICE;
 import static android.content.Intent.ACTION_DATE_CHANGED;
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.content.Intent.ACTION_TIME_CHANGED;
+import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
@@ -98,7 +102,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        this.localeCallbacks = new LocaleHelper(context);
+        System.out.println("±!@ onReceive " + intent.getAction() + " " + this);
+        this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onReceive(context, intent);
         this.context = context;
@@ -118,6 +123,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
             case ACTION_DATE_CHANGED:
             case ACTION_TIME_CHANGED:
             case ACTION_TIMEZONE_CHANGED:
+            case ACTION_WALLPAPER_CHANGED:
                 notifyAppWidgetViewDataChanged(context);
                 break;
         }
@@ -125,7 +131,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        this.localeCallbacks = new LocaleHelper(context);
+        System.out.println("±!@ onUpdate " + Arrays.toString(appWidgetIds) + " " + this);
+        this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
@@ -196,18 +203,29 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onDisabled(Context context) {
+        System.out.println("±!@ onDisabled enter " + this);
         super.onDisabled(context);
         if (locations != null) {
             locations.stop(this);
         }
+        context.unregisterReceiver(this);
+        System.out.println("±!@ onDisabled leave " + this);
     }
 
     @Override
     public void onEnabled(Context context) {
+        System.out.println("±!@ onEnabled enter " + this);
         super.onEnabled(context);
         if (locations != null) {
             locations.start(this);
         }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
+        intentFilter.addAction(Intent.ACTION_DATE_CHANGED);
+        intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+        intentFilter.addAction(Intent.ACTION_SET_WALLPAPER);
+        context.registerReceiver(this, intentFilter);
+        System.out.println("±!@ onEnabled leave " + this);
     }
 
     @Override

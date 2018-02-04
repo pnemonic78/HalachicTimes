@@ -60,9 +60,9 @@ public class BitmapUtils {
     public static boolean isBright(int color) {
         int a = Color.alpha(color);
         if (a >= 0x80) {
-            boolean r = Color.red(color) >= 0xcc;
-            boolean g = Color.green(color) >= 0xcc;
-            boolean b = Color.blue(color) >= 0xcc;
+            boolean r = Color.red(color) >= 0xB0;
+            boolean g = Color.green(color) >= 0xB0;
+            boolean b = Color.blue(color) >= 0xB0;
             return ((r && g) || (r && b) || (g && b));
         }
         return false;

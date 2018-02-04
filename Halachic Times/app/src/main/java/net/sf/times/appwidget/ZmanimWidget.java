@@ -16,6 +16,7 @@
 package net.sf.times.appwidget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -26,6 +27,9 @@ import net.sf.times.ZmanimAdapter;
 import net.sf.times.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
+import static net.sf.graphics.BitmapUtils.isBright;
+import static net.sf.graphics.DrawableUtils.getWallpaperColor;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
@@ -173,9 +177,15 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
     @Override
     protected int getLayoutId() {
-        if (isDeviceNokia())
+        if (isDeviceNokia()) {
             return R.layout.widget_static_nokia;
-        return R.layout.widget_static;
+        }
+        int bg = getWallpaperColor(getContext());
+        System.out.println("±!@ bg=0x" + Integer.toHexString(bg) + " bright=" + isBright(bg));
+        if (isBright(bg)) {
+            return R.layout.widget_static;
+        }
+        return R.layout.widget_static_light;
     }
 
     @Override

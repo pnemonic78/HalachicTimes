@@ -47,7 +47,7 @@ public class DrawableUtils {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
         Drawable wallpaper = null;
         try {
-            wallpaper = wallpaperManager.getDrawable();
+            wallpaper = wallpaperManager.peekDrawable();
         } catch (Throwable e) {
             // In case of a bad WallpaperService.
             e.printStackTrace();
@@ -57,7 +57,6 @@ public class DrawableUtils {
                 Bitmap bm = ((BitmapDrawable) wallpaper).getBitmap();
                 return getPixel(bm);
             }
-
             if (wallpaper instanceof ColorDrawable) {
                 return ((ColorDrawable) wallpaper).getColor();
             }

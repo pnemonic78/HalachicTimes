@@ -46,7 +46,7 @@ public class ZmanimReminderJobService extends JobService {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper(newBase);
+        this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
     }
