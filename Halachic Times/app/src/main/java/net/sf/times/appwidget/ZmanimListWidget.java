@@ -25,8 +25,6 @@ import net.sf.times.R;
 import net.sf.times.ZmanimAdapter;
 
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static net.sf.graphics.BitmapUtils.isBright;
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
 
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a
@@ -51,26 +49,27 @@ public class ZmanimListWidget extends ZmanimWidget {
     }
 
     @Override
-    protected ZmanimAdapter populateWidgetTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
-        populateScrollableTimes(appWidgetId, views, activityPendingIntent);
+    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+        populateScrollableTimes(context, appWidgetId, views, activityPendingIntent);
         return null;
     }
 
-    protected void populateScrollableTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
+    protected void populateScrollableTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent) {
         views.setPendingIntentTemplate(android.R.id.list, activityPendingIntent);
-        bindListView(appWidgetId, views);
+        bindListView(context, appWidgetId, views);
     }
 
     /**
      * Bind the times to remote list view.
      *
+     * @param context
+     *         the context.
      * @param appWidgetId
      *         the app widget id.
      * @param list
      *         the remote list.
      */
-    protected void bindListView(int appWidgetId, RemoteViews list) {
-        final Context context = getContext();
+    protected void bindListView(Context context, int appWidgetId, RemoteViews list) {
         Intent adapter = new Intent();
         adapter.setClassName(context, ZmanimWidgetService.class.getCanonicalName());
         adapter.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);

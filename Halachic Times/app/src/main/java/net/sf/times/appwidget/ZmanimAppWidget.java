@@ -48,8 +48,6 @@ import net.sf.times.preference.SimpleZmanimPreferences;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import java.util.Arrays;
-
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
@@ -176,7 +174,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
             views = new RemoteViews(packageName, layoutId);
 
-            adapter = populateWidgetTimes(appWidgetId, views, activityPendingIntent, viewId, now);
+            adapter = populateWidgetTimes(context, appWidgetId, views, activityPendingIntent, viewId, now);
 
             try {
                 appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -314,6 +312,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     /**
      * Bind the times to remote views.
      *
+     * @param context
+     *         the context.
      * @param list
      *         the remote views.
      * @param adapterToday
@@ -321,11 +321,13 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
      * @param adapterTomorrow
      *         the list adapter for tomorrow.
      */
-    protected abstract void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow);
+    protected abstract void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow);
 
     /**
      * Bind the item to remote views.
      *
+     * @param context
+     *         the context.
      * @param list
      *         the remote list.
      * @param position
@@ -336,7 +338,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
      *         the zmanim item.
      * @return {@code true} if item was bound to view.
      */
-    protected abstract boolean bindView(RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item);
+    protected abstract boolean bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item);
 
     /**
      * Get the layout for the container.
@@ -366,14 +368,13 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, getIntentViewId());
     }
 
-    protected ZmanimAdapter populateWidgetTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
-        return populateStaticTimes(appWidgetId, views, activityPendingIntent, viewId, now);
+    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+        return populateStaticTimes(context, appWidgetId, views, activityPendingIntent, viewId, now);
     }
 
-    protected ZmanimAdapter populateStaticTimes(int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+    protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
-        final Context context = getContext();
         if (preferences == null) {
             preferences = new SimpleZmanimPreferences(context);
         }
@@ -401,7 +402,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         populater.setCalendar(now + DAY_IN_MILLIS);
         populater.populate(adapterTomorrow, true);
 
-        bindViews(views, adapter, adapterTomorrow);
+        bindViews(context, views, adapter, adapterTomorrow);
 
         return adapter;
     }

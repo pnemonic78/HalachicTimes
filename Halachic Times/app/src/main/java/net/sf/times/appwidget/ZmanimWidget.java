@@ -26,9 +26,6 @@ import net.sf.times.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
-import static net.sf.graphics.BitmapUtils.isBright;
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
-
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
  *
@@ -37,10 +34,9 @@ import static net.sf.graphics.DrawableUtils.getWallpaperColor;
 public class ZmanimWidget extends ZmanimAppWidget {
 
     @Override
-    protected void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
+    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         list.removeAllViews(android.R.id.list);
 
-        final Context context = getContext();
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
         ZmanimItem item;
@@ -88,7 +84,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            bindView(list, position, positionTotal, item);
+            bindView(context, list, position, positionTotal, item);
 
             // Start of the next Hebrew day.
             if ((position >= positionSunset) && (positionTomorrow < 0)) {
@@ -127,7 +123,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
             for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
-                bindView(list, position, positionTotal, item);
+                bindView(context, list, position, positionTotal, item);
 
                 // Start of the next Hebrew day.
                 if ((position >= positionSunset) && (positionTomorrow < 0)) {
@@ -149,11 +145,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
     }
 
     @Override
-    protected boolean bindView(RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item) {
+    protected boolean bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item) {
         if ((item == null) || item.isEmpty()) {
             return false;
         }
-        final Context context = getContext();
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(positionTotal));
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));

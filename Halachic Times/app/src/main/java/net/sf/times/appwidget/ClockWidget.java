@@ -72,7 +72,7 @@ public class ClockWidget extends ZmanimAppWidget {
     }
 
     @Override
-    protected void bindViews(RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
+    protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
         ZmanimItem item;
@@ -83,7 +83,7 @@ public class ClockWidget extends ZmanimAppWidget {
             item = adapter.getItem(position);
             if (item.isEmpty())
                 continue;
-            bindView(list, position, positionTotal, item);
+            bindView(context, list, position, positionTotal, item);
             found = true;
             break;
         }
@@ -95,14 +95,14 @@ public class ClockWidget extends ZmanimAppWidget {
                 item = adapter.getItem(position);
                 if (item.isEmpty())
                     continue;
-                bindView(list, position, positionTotal, item);
+                bindView(context, list, position, positionTotal, item);
                 break;
             }
         }
     }
 
     @Override
-    protected boolean bindView(RemoteViews list, int position, int positionTotal, ZmanimItem item) {
+    protected boolean bindView(Context context, RemoteViews list, int position, int positionTotal, ZmanimItem item) {
         CharSequence label = item.time != NEVER ? getTimeFormat().format(roundUp(item.time, MINUTE_IN_MILLIS)) : "";
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
