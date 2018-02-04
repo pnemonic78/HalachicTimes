@@ -62,8 +62,22 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
 
     }
 
+    /**
+     * Listener used to receive a notification upon completion of a filtering operation.
+     */
+    public interface FilterListener {
+        /**
+         * <p>Notifies the end of a filtering operation.</p>
+         *
+         * @param adapter
+         *         the adapter.
+         * @param count
+         *         the number of values computed by the filter
+         */
+        void onFilterComplete(LocationAdapter adapter, int count);
+    }
+
     private LocationComparator comparator;
-    private LocationsFilter filter;
     private final Collator collator;
     private final Locale locale;
     private OnItemClickListener itemClickListener;

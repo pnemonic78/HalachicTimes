@@ -61,7 +61,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         LocationAdapter.OnItemClickListener,
         OnFavoriteClickListener,
         SearchView.OnQueryTextListener,
-        ZmanimLocationListener {
+        ZmanimLocationListener,
+        LocationAdapter.FilterListener {
 
     private static final String TAG = "LocationTabActivity";
 
@@ -99,6 +100,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     /** Provider for locations. */
     private LocationsProvider locations;
     private Location locationForAddress;
+    private TabHost tabHost;
 
     /**
      * Constructs a new activity.
@@ -127,6 +129,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
         TabHost tabs = findViewById(android.R.id.tabhost);
         tabs.setup();
+        this.tabHost = tabs;
 
         TabSpec tabFavorites = tabs.newTabSpec(TAG_FAVORITES);
         tabFavorites.setIndicator(null, res.getDrawable(ic_menu_star));
@@ -154,11 +157,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         }
 
         search(query, loc);
-
-        // Switch to the first non-empty tab.
-        if (adapterFavorites.getItemCount() == 0) {
-            tabs.setCurrentTab(1);
-        }
     }
 
     @Override
@@ -254,6 +252,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final Context context = this;
         final LocationAdapter.OnItemClickListener itemClickListener = this;
         final OnFavoriteClickListener favoriteClickListener = this;
+        final LocationAdapter.FilterListener filterListener = this;
 
         LocationAdapter adapter = new LocationAdapter(context, items);
         adapter.setOnItemClickListener(itemClickListener);
@@ -262,14 +261,14 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         RecyclerView list = findViewById(android.R.id.list);
         list.setAdapter(adapter);
 
-        adapter = new HistoryLocationAdapter(context, items);
+        adapter = new HistoryLocationAdapter(context, items, filterListener);
         adapter.setOnItemClickListener(itemClickListener);
         adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
         list.setAdapter(adapter);
 
-        adapter = new FavoritesLocationAdapter(context, items);
+        adapter = new FavoritesLocationAdapter(context, items, filterListener);
         adapter.setOnItemClickListener(itemClickListener);
         adapter.setOnFavoriteClickListener(favoriteClickListener);
         adapterFavorites = adapter;
@@ -470,6 +469,14 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     @Override
     public void onProviderDisabled(String s) {
+    }
+
+    @Override
+    public void onFilterComplete(LocationAdapter adapter, int count) {
+        // Switch to the first non-empty tab.
+        if ((count == 0) && (adapter == adapterFavorites) && (tabHost.getCurrentTab() == 0)) {
+            tabHost.setCurrentTab(1);
+        }
     }
 
     private static class ActivityHandler extends Handler {

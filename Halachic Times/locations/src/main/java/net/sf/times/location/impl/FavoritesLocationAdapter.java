@@ -27,7 +27,11 @@ import java.util.List;
 public class FavoritesLocationAdapter extends SpecificLocationAdapter {
 
     public FavoritesLocationAdapter(Context context, List<LocationItem> items) {
-        super(context, items);
+        this(context, items, null);
+    }
+
+    public FavoritesLocationAdapter(Context context, List<LocationItem> items, FilterListener filterListener) {
+        super(context, items, filterListener);
     }
 
     @Override

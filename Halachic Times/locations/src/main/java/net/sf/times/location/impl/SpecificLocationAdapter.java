@@ -16,6 +16,7 @@
 package net.sf.times.location.impl;
 
 import android.content.Context;
+import android.widget.Filter;
 
 import net.sf.times.location.LocationAdapter;
 import net.sf.times.location.ZmanimAddress;
@@ -33,8 +34,17 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
     private SpecificFilter filter;
 
     public SpecificLocationAdapter(Context context, List<LocationItem> items) {
+        this(context, items, null);
+    }
+
+    public SpecificLocationAdapter(Context context, List<LocationItem> items, final FilterListener filterListener) {
         super(context, items);
-        getFilter().filter(null);
+        getFilter().filter(null, (filterListener == null) ? null : new Filter.FilterListener() {
+            @Override
+            public void onFilterComplete(int count) {
+                filterListener.onFilterComplete(SpecificLocationAdapter.this, count);
+            }
+        });
     }
 
     @Override
