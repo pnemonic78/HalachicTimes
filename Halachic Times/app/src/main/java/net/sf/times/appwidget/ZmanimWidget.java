@@ -16,7 +16,6 @@
 package net.sf.times.appwidget;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -223,9 +222,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
      */
     protected int getLayoutItemId(int position) {
         boolean light = (position & 1) == 1;
-        if (isDeviceNokia())
-            return light ? R.layout.widget_item_nokia_light : R.layout.widget_item_nokia;
-        return light ? R.layout.widget_item_light : R.layout.widget_item;
+        if (isDeviceNokia()) {
+            return light ? R.layout.widget_item_nokia_odd : R.layout.widget_item_nokia;
+        }
+        return light ? R.layout.widget_item_odd : R.layout.widget_item;
     }
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {

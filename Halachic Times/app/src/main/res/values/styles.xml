@@ -137,13 +137,13 @@
 
     <style name="AppWidget.Item"/>
 
-    <style name="AppWidget.Item.Light">
+    <style name="AppWidget.Item.Odd">
         <item name="android:background">@color/bright</item>
     </style>
 
     <style name="AppWidget.Item.Nokia"/>
 
-    <style name="AppWidget.Item.Nokia.Light" parent="AppWidget.Item.Light"/>
+    <style name="AppWidget.Item.Nokia.Odd" parent="AppWidget.Item.Odd"/>
 
     <style name="AppWidget.List" parent="AppWidget.Static"/>
 
