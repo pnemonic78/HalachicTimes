@@ -4,6 +4,7 @@
     <style name="Widget.ListItem">
         <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
     </style>
 
     <style name="Widget.Location.Title" parent="Widget.TextView.Medium">
