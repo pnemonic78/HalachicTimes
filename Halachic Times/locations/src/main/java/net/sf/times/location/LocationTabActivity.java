@@ -247,8 +247,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         // Prepare the common list of items for all adapters.
         // Also to save time formatting the same addresses in each adapter by themselves.
         List<LocationItem> items = new ArrayList<>(addresses.size());
-        for (ZmanimAddress addr : addresses) {
-            items.add(new LocationItem(addr, formatter));
+        for (ZmanimAddress address : addresses) {
+            items.add(new LocationItem(address, formatter));
         }
 
         final Context context = this;

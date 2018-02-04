@@ -93,18 +93,19 @@ public class DefaultLocationFormatter implements LocationFormatter {
     @Override
     public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
         final String notation = preferences.getCoordinatesFormat();
+        final boolean elevated = !Double.isNaN(elevation) && preferences.isElevationVisible();
         if (FORMAT_SEXAGESIMAL.equals(notation)) {
-            return formatCoordinatesSexagesimal(latitude, longitude, elevation, preferences.isElevationVisible());
+            return formatCoordinatesSexagesimal(latitude, longitude, elevation, elevated);
         }
-        return formatCoordinatesDecimal(latitude, longitude, elevation, preferences.isElevationVisible());
+        return formatCoordinatesDecimal(latitude, longitude, elevation, elevated);
     }
 
     protected CharSequence formatCoordinatesDecimal(double latitude, double longitude, double elevation, boolean withElevation) {
         final CharSequence latitudeText = formatLatitudeDecimal(latitude);
         final CharSequence longitudeText = formatLongitudeDecimal(longitude);
-        final CharSequence elevationText = formatElevation(elevation);
 
         if (withElevation) {
+            final CharSequence elevationText = formatElevation(elevation);
             return String.format(Locale.US, formatDecimalElevation, latitudeText, longitudeText, elevationText);
         }
         return String.format(Locale.US, formatDecimal, latitudeText, longitudeText);

@@ -339,7 +339,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             this.labelLower = label.toString().toLowerCase(address.getLocale());
             this.latitude = formatter.formatLatitude(address.getLatitude());
             this.longitude = formatter.formatLongitude(address.getLongitude());
-            this.coordinates = formatter.formatCoordinates(getAddress());
+            this.coordinates = formatter.formatCoordinates(address.getLatitude(), address.getLongitude(), Double.NaN);
         }
 
         /**
