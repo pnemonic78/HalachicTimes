@@ -72,4 +72,17 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
     public int getTheme() {
         return getTheme(getThemeValue());
     }
+
+    @Override
+    public boolean isDarkTheme(String value) {
+        if (THEME_LIGHT.equals(value)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isDarkTheme() {
+        return isDarkTheme(getThemeValue());
+    }
 }

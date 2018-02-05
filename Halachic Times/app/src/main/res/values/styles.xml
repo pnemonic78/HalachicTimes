@@ -146,9 +146,15 @@
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="Widget.Date.Light">
+        <item name="android:background">@color/white_x80</item>
+    </style>
+
     <style name="Widget.Date.Text" parent="Widget.TextView.Small">
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="Widget.Date.Text.Light" parent="Widget.Light.TextView.Small"/>
 
     <style name="AppWidget.Clock.Light"/>
 

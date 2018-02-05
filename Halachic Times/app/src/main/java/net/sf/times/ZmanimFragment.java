@@ -348,7 +348,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
         if (position > 0)
             inflater.inflate(R.layout.divider, list);
-        View row = inflater.inflate(R.layout.date_group, list, false);
+        View row = inflater.inflate(preferences.isDarkTheme() ? R.layout.date_group : R.layout.date_group_light, list, false);
         TextView text = row.findViewById(android.R.id.title);
         text.setText(label);
         list.addView(row);

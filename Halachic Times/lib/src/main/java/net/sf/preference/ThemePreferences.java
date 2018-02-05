@@ -61,4 +61,20 @@ public interface ThemePreferences {
      */
     @StyleRes
     int getTheme();
+
+    /**
+     * Is the theme dark?
+     *
+     * @param value
+     *         the theme value.
+     * @return {@code true} if the theme has dark backgrounds and light texts.
+     */
+    boolean isDarkTheme(String value);
+
+    /**
+     * Is the theme dark?
+     *
+     * @return {@code true} if the theme has dark backgrounds and light texts.
+     */
+    boolean isDarkTheme();
 }

@@ -163,6 +163,19 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
+    public boolean isDarkTheme(String value) {
+        if (THEME_LIGHT.equals(value) || THEME_WHITE.equals(value)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isDarkTheme() {
+        return isDarkTheme(getThemeValue());
+    }
+
+    @Override
     public boolean isHour() {
         return preferences.getBoolean(KEY_HOUR, context.getResources().getBoolean(R.bool.hour_visible_defaultValue));
     }
