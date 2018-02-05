@@ -131,8 +131,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-
         this.context = context;
+
         if (locations == null) {
             ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
             locations = app.getLocations();

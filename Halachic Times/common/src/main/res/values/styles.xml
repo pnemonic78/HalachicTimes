@@ -20,15 +20,15 @@
     </style>
 
     <style name="Widget.Light.TextView.Large">
-        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:textAppearance">?android:textAppearanceLargeInverse</item>
     </style>
 
     <style name="Widget.Light.TextView.Medium">
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:textAppearance">?android:textAppearanceMediumInverse</item>
     </style>
 
     <style name="Widget.Light.TextView.Small">
-        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textAppearance">?android:textAppearanceSmallInverse</item>
     </style>
 
 </resources>

@@ -4,6 +4,10 @@
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
 
+    <string name="design_title" translatable="false">@string/dawn</string>
+    <string name="design_time" translatable="false">06:01</string>
+    <string name="design_summary" translatable="false">@string/dawn_120</string>
+
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
     <string name="opinion_120_zmanis">Day is 120 זמניות minutes before sunrise / after sunset</string>

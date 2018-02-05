@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
-            tools:text="06:00"/>
+            tools:text="@string/design_time"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
                 style="?listZmanTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/dawn"/>
+                tools:text="@string/design_title"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -46,6 +46,6 @@
         style="?listZmanSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/dawn_120"/>
+        tools:text="@string/design_summary"/>
 
 </LinearLayout>

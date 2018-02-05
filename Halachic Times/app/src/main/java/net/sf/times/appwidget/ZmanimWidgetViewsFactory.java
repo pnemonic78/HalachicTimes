@@ -17,10 +17,12 @@ package net.sf.times.appwidget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -43,6 +45,8 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static java.lang.System.currentTimeMillis;
+import static net.sf.graphics.BitmapUtils.isBright;
+import static net.sf.graphics.DrawableUtils.getWallpaperColor;
 
 /**
  * Factory to create views for list widget.
@@ -68,6 +72,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     @ColorInt
     private int colorEnabled = Color.WHITE;
     private final LocaleHelper localeCallbacks;
+    @LayoutRes
+    private int layoutItemId = R.layout.widget_item;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
         this.localeCallbacks = new LocaleHelper<>(context);
@@ -142,7 +148,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         }
 
         ZmanimItem item = adapter.getItem(position);
-        view = new RemoteViews(pkg, R.layout.widget_item);
+        view = new RemoteViews(pkg, layoutItemId);
         bindView(view, position, item);
         return view;
     }
@@ -258,6 +264,15 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         }
         this.positionToday = positionToday;
         this.positionTomorrow = positionTomorrow;
+
+        final Resources res = context.getResources();
+        if (isBright(getWallpaperColor(context))) {
+            this.colorEnabled = res.getColor(R.color.widget_text);
+            this.layoutItemId = R.layout.widget_item;
+        } else {
+            this.colorEnabled = res.getColor(R.color.widget_text_light);
+            this.layoutItemId = R.layout.widget_item_light;
+        }
     }
 
     /**
@@ -298,6 +313,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
      */
     private void bindViewGrouping(RemoteViews row, int position, CharSequence label) {
         row.setTextViewText(R.id.date_hebrew, label);
+        row.setTextColor(R.id.date_hebrew, colorEnabled);
     }
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {

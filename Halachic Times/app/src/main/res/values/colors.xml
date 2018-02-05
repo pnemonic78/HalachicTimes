@@ -37,8 +37,9 @@
     <color name="widget_candles_bg">#60ffff00</color>
     <color name="clock_shadow">@color/black_x80</color>
     <color name="widget_text">@color/primary_text_dark</color>
-    <color name="widget_box_light">@color/white_x40</color>
+    <color name="widget_box_light">@color/white_x80</color>
     <color name="widget_border_light">@color/black_x10</color>
+    <color name="widget_text_light">@color/primary_text_light</color>
 
     <!-- Buttons. -->
     <color name="btn_navigation_pressed">#ccffff00</color>

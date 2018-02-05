@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:id="@+id/widget_item"
-    style="@style/AppWidget.Item"
+    style="@style/AppWidget.Item.Light"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@android:id/title"
-        style="@style/AppWidget.Title"
+        style="@style/AppWidget.Title.Light"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/time"
-        style="@style/AppWidget.Time"
+        style="@style/AppWidget.Time.Light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"

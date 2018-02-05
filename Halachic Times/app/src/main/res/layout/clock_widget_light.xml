@@ -19,13 +19,13 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        tools:text="06:00"/>
+        tools:text="@string/design_time"/>
 
     <TextView
         android:id="@android:id/title"
         style="@style/AppWidget.Clock.Title.Light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="@string/dawn"/>
+        tools:text="@string/design_title"/>
 
 </LinearLayout>

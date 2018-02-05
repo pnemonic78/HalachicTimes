@@ -16,6 +16,9 @@
 package net.sf.times.appwidget;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
@@ -36,9 +39,19 @@ import static net.sf.graphics.DrawableUtils.getWallpaperColor;
  */
 public class ZmanimWidget extends ZmanimAppWidget {
 
+    @ColorInt
+    private int colorEnabled = Color.WHITE;
+
     @Override
     protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         list.removeAllViews(android.R.id.list);
+
+        final Resources res = context.getResources();
+        if (isBright(getWallpaperColor(context))) {
+            this.colorEnabled = res.getColor(R.color.widget_text);
+        } else {
+            this.colorEnabled = res.getColor(R.color.widget_text_light);
+        }
 
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
@@ -156,7 +169,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(positionTotal));
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
         row.setTextViewText(R.id.time, item.timeLabel);
-        bindViewRowSpecial(row, position, item);
+        row.setTextColor(android.R.id.title, colorEnabled);
+        row.setTextColor(R.id.time, colorEnabled);
+        bindViewRowSpecial(context, row, position, item);
         list.addView(android.R.id.list, row);
         return true;
     }
@@ -192,6 +207,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, R.layout.widget_date);
         row.setTextViewText(R.id.date_hebrew, label);
+        row.setTextColor(R.id.date_hebrew, colorEnabled);
         list.addView(android.R.id.list, row);
     }
 
@@ -206,9 +222,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
         return ((position & 1) == 1) ? R.layout.widget_item_odd : R.layout.widget_item;
     }
 
-    protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
+    protected void bindViewRowSpecial(Context context, RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
-            final Context context = this.context;
             row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
         }
     }
