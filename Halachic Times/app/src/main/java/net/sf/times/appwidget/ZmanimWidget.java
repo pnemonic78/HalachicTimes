@@ -26,6 +26,9 @@ import net.sf.times.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
+import static net.sf.graphics.BitmapUtils.isBright;
+import static net.sf.graphics.DrawableUtils.getWallpaperColor;
+
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
  *
@@ -160,11 +163,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
     @Override
     protected int getLayoutId() {
-        /*TODO
         if (isBright(getWallpaperColor(getContext()))) {
-            return R.layout.widget_static_light;
-        }*/
-        return R.layout.widget_static;
+            return R.layout.widget_static;
+        }
+        return R.layout.widget_static_light;
     }
 
     @Override
