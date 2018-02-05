@@ -82,6 +82,8 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
 
+    <style name="AppWidget.Title.Odd"/>
+
     <style name="Widget.Time.Dark">
         <item name="android:textColor">@color/primary_text_dark</item>
     </style>
@@ -95,6 +97,8 @@
     <style name="Widget.Time.White" parent="Widget.Time.Light"/>
 
     <style name="AppWidget.Time" parent="Widget.TextView.Small"/>
+
+    <style name="AppWidget.Time.Odd"/>
 
     <style name="Widget.Summary" parent="Widget.TextView.Small">
         <item name="android:maxLines">3</item>

@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@android:id/title"
-        style="?widgetZmanTitle"
+        style="@style/AppWidget.Title.Odd"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
