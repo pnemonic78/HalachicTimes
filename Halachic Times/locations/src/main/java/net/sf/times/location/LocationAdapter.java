@@ -15,7 +15,6 @@
  */
 package net.sf.times.location;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -40,24 +39,20 @@ import java.util.TreeSet;
 public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, LocationViewHolder> {
 
     /**
-     * Interface definition for a callback to be invoked when an item in this list has been clicked.
+     * Interface definition for callbacks to be invoked when an item in this list has been clicked.
      *
      * @author Moshe Waisberg
      */
-    public interface OnItemClickListener {
+    public interface LocationItemListener {
 
+        /**
+         * Callback to be invoked when an item in this list has been clicked.
+         */
         void onItemClick(ZmanimAddress address);
 
-    }
-
-    /**
-     * Interface definition for a callback to be invoked when a "favorite"
-     * checkbox in this list has been clicked.
-     *
-     * @author Moshe Waisberg
-     */
-    public interface OnFavoriteClickListener {
-
+        /**
+         * Callback to be invoked when a "favorite" checkbox in this list has been clicked.
+         **/
         void onFavoriteClick(ZmanimAddress address, boolean checked);
 
     }
@@ -80,8 +75,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     private LocationComparator comparator;
     private final Collator collator;
     private final Locale locale;
-    private OnItemClickListener itemClickListener;
-    private OnFavoriteClickListener favoriteClickListener;
+    private LocationItemListener listener;
 
     /**
      * Constructs a new adapter.
@@ -102,33 +96,16 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *         the context.
      * @param items
      *         the list of addresses' items.
-     * @param itemClickListener
-     *         the item click listener.
+     * @param listener
+     *         the item listener.
      */
-    public LocationAdapter(Context context, List<LocationItem> items, OnItemClickListener itemClickListener) {
-        this(context, items, itemClickListener, null);
-    }
-
-    /**
-     * Constructs a new adapter.
-     *
-     * @param context
-     *         the context.
-     * @param items
-     *         the list of addresses' items.
-     * @param itemClickListener
-     *         the item click listener.
-     * @param favoriteClickListener
-     *         the favorite click listener.
-     */
-    public LocationAdapter(Context context, List<LocationItem> items, OnItemClickListener itemClickListener, OnFavoriteClickListener favoriteClickListener) {
+    public LocationAdapter(Context context, List<LocationItem> items, LocationItemListener listener) {
         super(R.layout.location, android.R.id.title, items);
         setHasStableIds(false);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);
         locale = LocaleUtils.getDefaultLocale(context);
-        setOnItemClickListener(itemClickListener);
-        setOnFavoriteClickListener(favoriteClickListener);
+        setOnItemListener(listener);
         sortNoNotify();
     }
 
@@ -139,7 +116,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
 
     @Override
     protected LocationViewHolder createArrayViewHolder(View view, int fieldId) {
-        return new LocationViewHolder(view, fieldId, itemClickListener, favoriteClickListener);
+        return new LocationViewHolder(view, fieldId, listener);
     }
 
     @NonNull
@@ -465,7 +442,6 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             collator.setStrength(Collator.PRIMARY);
         }
 
-        @SuppressLint("DefaultLocale")
         @Override
         public int compare(LocationItem item1, LocationItem item2) {
             ZmanimAddress addr1 = item1.getAddress();
@@ -507,18 +483,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      * @param listener
      *         the listener.
      */
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.itemClickListener = listener;
-    }
-
-    /**
-     * Set the listener for "favorite" clicked callbacks.
-     *
-     * @param listener
-     *         the listener.
-     */
-    public void setOnFavoriteClickListener(OnFavoriteClickListener listener) {
-        this.favoriteClickListener = listener;
+    public void setOnItemListener(LocationItemListener listener) {
+        this.listener = listener;
     }
 
 }

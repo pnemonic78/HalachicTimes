@@ -34,11 +34,19 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
     private SpecificFilter filter;
 
     public SpecificLocationAdapter(Context context, List<LocationItem> items) {
-        this(context, items, null);
+        this(context, items, (LocationItemListener) null);
+    }
+
+    public SpecificLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener) {
+        this(context, items, itemListener, null);
     }
 
     public SpecificLocationAdapter(Context context, List<LocationItem> items, final FilterListener filterListener) {
-        super(context, items);
+        this(context, items, null, filterListener);
+    }
+
+    public SpecificLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener, final FilterListener filterListener) {
+        super(context, items, itemListener);
         getFilter().filter(null, (filterListener == null) ? null : new Filter.FilterListener() {
             @Override
             public void onFilterComplete(int count) {

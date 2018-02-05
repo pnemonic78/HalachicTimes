@@ -19,18 +19,16 @@ class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.Lo
 
     protected LocationAdapter.LocationItem item;
 
-    private final LocationAdapter.OnItemClickListener itemClickListener;
-    private final LocationAdapter.OnFavoriteClickListener favoriteClickListener;
+    private final LocationAdapter.LocationItemListener itemListener;
 
-    public LocationViewHolder(View itemView, int fieldId, LocationAdapter.OnItemClickListener itemClickListener, LocationAdapter.OnFavoriteClickListener favoriteClickListener) {
+    public LocationViewHolder(View itemView, int fieldId, LocationAdapter.LocationItemListener itemListener) {
         super(itemView, fieldId);
 
         this.cityName = textView;
         this.coordinates = itemView.findViewById(R.id.coordinates);
         this.favorite = itemView.findViewById(android.R.id.checkbox);
 
-        this.itemClickListener = itemClickListener;
-        this.favoriteClickListener = favoriteClickListener;
+        this.itemListener = itemListener;
         itemView.setOnClickListener(this);
         favorite.setOnClickListener(this);
     }
@@ -51,10 +49,12 @@ class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.Lo
 
     @Override
     public void onClick(View view) {
-        if ((view == favorite) && (favoriteClickListener != null)) {
-            favoriteClickListener.onFavoriteClick(item.getAddress(), favorite.isChecked());
-        } else if (itemClickListener != null) {
-            itemClickListener.onItemClick(item.getAddress());
+        if (itemListener != null) {
+            if (view == favorite) {
+                itemListener.onFavoriteClick(item.getAddress(), favorite.isChecked());
+            } else {
+                itemListener.onItemClick(item.getAddress());
+            }
         }
     }
 }

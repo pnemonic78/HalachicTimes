@@ -40,7 +40,6 @@ import net.sf.app.SimpleThemeCallbacks;
 import net.sf.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.LocationAdapter.LocationItem;
-import net.sf.times.location.LocationAdapter.OnFavoriteClickListener;
 import net.sf.times.location.impl.FavoritesLocationAdapter;
 import net.sf.times.location.impl.HistoryLocationAdapter;
 
@@ -59,8 +58,7 @@ import static android.os.Build.VERSION_CODES.JELLY_BEAN;
  */
 public abstract class LocationTabActivity<P extends ThemePreferences> extends Activity implements
         ThemeCallbacks<P>,
-        LocationAdapter.OnItemClickListener,
-        OnFavoriteClickListener,
+        LocationAdapter.LocationItemListener,
         SearchView.OnQueryTextListener,
         ZmanimLocationListener,
         LocationAdapter.FilterListener {
@@ -149,15 +147,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
         Intent intent = getIntent();
         String query = intent.getStringExtra(SearchManager.QUERY);
-        Location loc = intent.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-        if (loc == null) {
-            Bundle appData = intent.getBundleExtra(SearchManager.APP_DATA);
-            if (appData != null) {
-                loc = appData.getParcelable(LocationManager.KEY_LOCATION_CHANGED);
-            }
-        }
 
-        search(query, loc);
+        search(query);
     }
 
     @Override
@@ -216,10 +207,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
      *
      * @param query
      *         the query.
-     * @param loc
-     *         the location.
      */
-    protected void search(CharSequence query, Location loc) {
+    protected void search(CharSequence query) {
         populateLists();
 
         SearchView searchText = this.searchText;
@@ -251,29 +240,22 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         }
 
         final Context context = this;
-        final LocationAdapter.OnItemClickListener itemClickListener = this;
-        final OnFavoriteClickListener favoriteClickListener = this;
+        final LocationAdapter.LocationItemListener itemListener = this;
         final LocationAdapter.FilterListener filterListener = this;
 
-        LocationAdapter adapter = new LocationAdapter(context, items);
-        adapter.setOnItemClickListener(itemClickListener);
-        adapter.setOnFavoriteClickListener(favoriteClickListener);
+        LocationAdapter adapter = new LocationAdapter(context, items, itemListener);
         adapterAll = adapter;
         RecyclerView list = findViewById(android.R.id.list);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
 
-        adapter = new HistoryLocationAdapter(context, items, filterListener);
-        adapter.setOnItemClickListener(itemClickListener);
-        adapter.setOnFavoriteClickListener(favoriteClickListener);
+        adapter = new HistoryLocationAdapter(context, items, itemListener, filterListener);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
 
-        adapter = new FavoritesLocationAdapter(context, items, filterListener);
-        adapter.setOnItemClickListener(itemClickListener);
-        adapter.setOnFavoriteClickListener(favoriteClickListener);
+        adapter = new FavoritesLocationAdapter(context, items, itemListener, filterListener);
         adapterFavorites = adapter;
         list = findViewById(R.id.list_favorites);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
@@ -487,7 +469,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
         private final WeakReference<LocationTabActivity> activityWeakReference;
 
-        public ActivityHandler(LocationTabActivity activity) {
+        ActivityHandler(LocationTabActivity activity) {
             this.activityWeakReference = new WeakReference<>(activity);
         }
 

@@ -27,11 +27,19 @@ import java.util.List;
 public class HistoryLocationAdapter extends SpecificLocationAdapter {
 
     public HistoryLocationAdapter(Context context, List<LocationItem> items) {
-        this(context, items, null);
+        super(context, items);
+    }
+
+    public HistoryLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener) {
+        super(context, items, itemListener);
     }
 
     public HistoryLocationAdapter(Context context, List<LocationItem> items, FilterListener filterListener) {
         super(context, items, filterListener);
+    }
+
+    public HistoryLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener, FilterListener filterListener) {
+        super(context, items, itemListener, filterListener);
     }
 
     @Override
