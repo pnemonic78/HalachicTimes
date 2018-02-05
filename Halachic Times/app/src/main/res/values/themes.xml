@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim" parent="Theme.Base">
-        <item name="widgetZmanTime">@style/AppWidget.Time</item>
-    </style>
+    <style name="Theme.Zmanim" parent="Theme.Base"/>
 
     <style name="Theme.Zmanim.Dark">
         <item name="listZmanim">@style/Widget.ListView.Dark</item>
@@ -15,8 +13,6 @@
     </style>
 
     <style name="Theme.Zmanim.Light" parent="Theme.Base.Light">
-        <item name="widgetZmanTime">@style/AppWidget.Time</item>
-
         <item name="listZmanim">@style/Widget.ListView.Light</item>
         <item name="listZman">@style/Widget.ListItem.Light</item>
         <item name="listZmanTitle">@style/Widget.Title.Light</item>

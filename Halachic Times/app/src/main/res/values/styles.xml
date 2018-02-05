@@ -80,6 +80,7 @@
 
     <style name="AppWidget.Title" parent="Widget.Title.Dark">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@color/widget_text</item>
     </style>
 
     <style name="AppWidget.Title.Odd"/>
@@ -96,7 +97,9 @@
 
     <style name="Widget.Time.White" parent="Widget.Time.Light"/>
 
-    <style name="AppWidget.Time" parent="Widget.TextView.Small"/>
+    <style name="AppWidget.Time" parent="Widget.TextView.Small">
+        <item name="android:textColor">@color/widget_text</item>
+    </style>
 
     <style name="AppWidget.Time.Odd"/>
 
