@@ -165,8 +165,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onCreate() {
-        if (locations != null)
+        if (locations != null) {
             locations.start(this);
+        }
     }
 
     @Override
@@ -177,8 +178,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onDestroy() {
-        if (locations != null)
+        if (locations != null) {
             locations.stop(this);
+        }
     }
 
     @Override
@@ -228,8 +230,18 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             this.locations = locations;
         }
         GeoLocation gloc = locations.getGeoLocation();
-        if (gloc == null)
+        if (gloc == null) {
             return;
+        }
+
+        final Resources res = context.getResources();
+        if (isBright(getWallpaperColor(context))) {
+            this.colorEnabled = res.getColor(R.color.widget_text);
+            this.layoutItemId = R.layout.widget_item;
+        } else {
+            this.colorEnabled = res.getColor(R.color.widget_text_light);
+            this.layoutItemId = R.layout.widget_item_light;
+        }
 
         ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
         populater.setCalendar(currentTimeMillis());
@@ -257,22 +269,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
                     continue;
                 }
                 if (!item.jewishDate.equals(jewishDate)) {
-                    positionTomorrow = i + (positionToday >= 0 ? 1 : 0);
+                    positionTomorrow = i + 1;
                     break;
                 }
             }
         }
         this.positionToday = positionToday;
         this.positionTomorrow = positionTomorrow;
-
-        final Resources res = context.getResources();
-        if (isBright(getWallpaperColor(context))) {
-            this.colorEnabled = res.getColor(R.color.widget_text);
-            this.layoutItemId = R.layout.widget_item;
-        } else {
-            this.colorEnabled = res.getColor(R.color.widget_text_light);
-            this.layoutItemId = R.layout.widget_item_light;
-        }
     }
 
     /**

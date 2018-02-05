@@ -70,8 +70,7 @@ public class ZmanimListWidget extends ZmanimWidget {
      *         the remote list.
      */
     protected void bindListView(Context context, int appWidgetId, RemoteViews list) {
-        Intent adapter = new Intent();
-        adapter.setClassName(context, ZmanimWidgetService.class.getCanonicalName());
+        Intent adapter = new Intent(context, ZmanimWidgetService.class);
         adapter.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
         adapter.setData(Uri.parse(adapter.toUri(Intent.URI_INTENT_SCHEME)));
         list.setRemoteAdapter(android.R.id.list, adapter);

@@ -113,6 +113,13 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         switch (action) {
             case ACTION_APPWIDGET_UPDATE:
                 resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
+
+                IntentFilter intentFilter = new IntentFilter();
+                intentFilter.addAction(ACTION_DATE_CHANGED);
+                intentFilter.addAction(ACTION_TIME_CHANGED);
+                intentFilter.addAction(ACTION_TIMEZONE_CHANGED);
+                intentFilter.addAction(ACTION_WALLPAPER_CHANGED);
+                context.registerReceiver(this, intentFilter);
                 break;
             case ACTION_APPWIDGET_DELETED:
                 resolver.unregisterContentObserver(formatChangeObserver);
@@ -359,12 +366,15 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     }
 
     protected void notifyAppWidgetViewDataChanged11(Context context) {
+        populateTimes(context);// Force container layout refresh.
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         final Class<?> clazz = getClass();
         ComponentName provider = new ComponentName(context, clazz);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0))
+        if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
             return;
+        }
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, getIntentViewId());
     }
 
