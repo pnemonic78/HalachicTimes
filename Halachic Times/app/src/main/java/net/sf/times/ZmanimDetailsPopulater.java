@@ -125,6 +125,9 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             case R.string.midnight:
                 populateMidnight(adapter, calendar, settings);
                 break;
+            case R.string.morning_guard:
+                populateMorningGuard(adapter, calendar, settings);
+                break;
             case R.string.levana_earliest:
                 populateEarliestKiddushLevana(adapter, calendar, settings);
                 break;
@@ -819,6 +822,17 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         date = cal.getSolarMidnight();
         title = R.string.midnight_summary;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+    }
+
+    private void populateMorningGuard(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        Long date;
+        int title;
+        JewishDate jewishDate = getJewishCalendar();
+        jewishDate.forward();
+
+        date = getMorningGuard(cal, settings);
+        title = R.string.morning_guard_summary;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 

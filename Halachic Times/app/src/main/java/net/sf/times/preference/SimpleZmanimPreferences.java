@@ -460,6 +460,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return KEY_OPINION_SHABBATH_ENDS;
             case R.string.midnight:
                 return KEY_OPINION_MIDNIGHT;
+            case R.string.morning_guard:
+                return KEY_OPINION_MORNING_GUARD;
             case R.string.levana_earliest:
                 return KEY_OPINION_EARLIEST_LEVANA;
             case R.string.levana_latest:
@@ -515,6 +517,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return R.string.shabbath_ends;
             case KEY_OPINION_MIDNIGHT:
                 return R.string.midnight;
+            case KEY_OPINION_MORNING_GUARD:
+                return R.string.morning_guard;
             case KEY_OPINION_EARLIEST_LEVANA:
                 return R.string.levana_earliest;
             case KEY_OPINION_LATEST_LEVANA:

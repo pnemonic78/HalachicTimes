@@ -221,6 +221,17 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:key="morning_guard_screen"
+        android:title="@string/morning_guard">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_morning_guard_preferences"/>
+        <extra
+            android:name="reminder"
+            android:value="morning_guard.reminder"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
         android:key="levana_earliest_screen"
         android:title="@string/levana_earliest">
         <extra
