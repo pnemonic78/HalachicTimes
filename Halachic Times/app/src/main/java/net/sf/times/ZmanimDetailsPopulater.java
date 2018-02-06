@@ -810,16 +810,12 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         jewishDate.forward();
 
         date = getMidday(cal, settings);
-        if (date != null) {
-            title = R.string.midnight_12;
-            adapter.add(title, SUMMARY_NONE, date + TWELVE_HOURS, jewishDate);
-        }
+        title = R.string.midnight_12;
+        adapter.add(title, SUMMARY_NONE, date + TWELVE_HOURS, jewishDate);
 
         date = getNightfall(cal, settings);
-        if (date != null) {
-            title = R.string.midnight_6;
-            adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
-        }
+        title = R.string.midnight_6;
+        adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
 
         date = cal.getSolarMidnight();
         title = R.string.midnight_summary;
@@ -924,77 +920,6 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
                 adapter.add(title, SUMMARY_NONE, date, getJewishDate(date));
             }
         }
-    }
-
-    protected Long getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        Long date;
-        String opinion = settings.getMidday();
-        if (OPINION_FIXED.equals(opinion)) {
-            date = cal.getFixedLocalChatzos();
-        } else {
-            date = cal.getChatzos();
-        }
-        return date;
-    }
-
-    protected Long getNightfall(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        Long date;
-        String opinion = settings.getNightfall();
-        if (OPINION_120.equals(opinion)) {
-            date = cal.getTzais120();
-        } else if (OPINION_120_ZMANIS.equals(opinion)) {
-            date = cal.getTzais120Zmanis();
-        } else if (OPINION_16_1.equals(opinion)) {
-            date = cal.getTzais16Point1Degrees();
-        } else if (OPINION_18.equals(opinion)) {
-            date = cal.getTzais18Degrees();
-        } else if (OPINION_19_8.equals(opinion)) {
-            date = cal.getTzais19Point8Degrees();
-        } else if (OPINION_26.equals(opinion)) {
-            date = cal.getTzais26Degrees();
-        } else if (OPINION_60.equals(opinion)) {
-            date = cal.getTzais60();
-        } else if (OPINION_72.equals(opinion)) {
-            date = cal.getTzais72();
-        } else if (OPINION_72_ZMANIS.equals(opinion)) {
-            date = cal.getTzais72Zmanis();
-        } else if (OPINION_90.equals(opinion)) {
-            date = cal.getTzais90();
-        } else if (OPINION_90_ZMANIS.equals(opinion)) {
-            date = cal.getTzais90Zmanis();
-        } else if (OPINION_96.equals(opinion)) {
-            date = cal.getTzais96();
-        } else if (OPINION_96_ZMANIS.equals(opinion)) {
-            date = cal.getTzais96Zmanis();
-        } else if (OPINION_ATERET.equals(opinion)) {
-            date = cal.getTzaisAteretTorah();
-        } else if (OPINION_3_65.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point65Degrees();
-        } else if (OPINION_3_676.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point676Degrees();
-        } else if (OPINION_3_7.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point7Degrees();
-        } else if (OPINION_3_8.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point8Degrees();
-        } else if (OPINION_4_37.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point37Degrees();
-        } else if (OPINION_4_61.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point61Degrees();
-        } else if (OPINION_4_8.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point8Degrees();
-        } else if (OPINION_5_88.equals(opinion)) {
-            date = cal.getTzaisGeonim5Point88Degrees();
-        } else if (OPINION_5_95.equals(opinion)) {
-            date = cal.getTzaisGeonim5Point95Degrees();
-        } else if (OPINION_7_083.equals(opinion)) {
-            date = cal.getTzaisGeonim7Point083Degrees();
-        } else if (OPINION_8_5.equals(opinion)) {
-            date = cal.getTzaisGeonim8Point5Degrees();
-        } else {
-            date = cal.getTzais();
-        }
-
-        return date;
     }
 
     private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {

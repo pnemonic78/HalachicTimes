@@ -256,6 +256,10 @@
     <string name="midnight_12">12 hours after midday</string>
     <string name="midnight_6">6 hours after nightfall</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Morning guard</string>
+    <string name="morning_guard_summary">Third watch</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Latest time to eat <i>chametz</i></string>
     <string name="burn_chametz">Latest time to burn <i>chametz</i></string>

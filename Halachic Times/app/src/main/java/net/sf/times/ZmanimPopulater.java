@@ -152,7 +152,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     private final ZmanimPreferences settings;
     protected final ComplexZmanimCalendar calendar;
     private boolean inIsrael;
-    private Long sunset;
 
     /**
      * Creates a new populater.
@@ -826,6 +825,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
 
+        date = getMorningGuard(cal, settings);
+        adapter.add(R.string.morning_guard, R.string.morning_guard_summary, date, jewishDateTomorrow, remote);
+
         switch (holidayToday) {
             case EREV_PESACH:
                 adapter.add(R.string.eat_chametz, summary, sofZmanTfila, jewishDate, remote);
@@ -1046,7 +1048,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     public void setCalendar(Calendar calendar) {
         this.calendar.setCalendar(calendar);
-        this.sunset = null;
     }
 
     /**
@@ -1058,7 +1059,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     public void setCalendar(long time) {
         Calendar cal = getCalendar().getCalendar();
         cal.setTimeInMillis(time);
-        this.sunset = null;
     }
 
     /**
@@ -1149,18 +1149,122 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return jewishDate;
     }
 
-    @NonNull
-    protected Long getSunset(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        if (sunset == null) {
-            Long date;
-            String opinion = settings.getSunset();
-            if (OPINION_SEA.equals(opinion)) {
-                date = cal.getSeaLevelSunset();
-            } else {
-                date = cal.getSunset();
-            }
-            this.sunset = (date != null) ? date : NEVER;
+    protected long getSunrise(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        Long date;
+        String opinion = settings.getSunrise();
+        if (OPINION_SEA.equals(opinion)) {
+            date = cal.getSeaLevelSunrise();
+        } else {
+            date = cal.getSunrise();
         }
-        return sunset;
+        return (date != null) ? date : NEVER;
     }
+
+    protected long getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        Long date;
+        String opinion = settings.getMidday();
+        if (OPINION_FIXED.equals(opinion)) {
+            date = cal.getFixedLocalChatzos();
+        } else {
+            date = cal.getChatzos();
+        }
+        return (date != null) ? date : NEVER;
+    }
+
+    protected long getSunset(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        Long date;
+        String opinion = settings.getSunset();
+        if (OPINION_SEA.equals(opinion)) {
+            date = cal.getSeaLevelSunset();
+        } else {
+            date = cal.getSunset();
+        }
+        return (date != null) ? date : NEVER;
+    }
+
+    protected long getNightfall(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        Long date;
+        String opinion = settings.getNightfall();
+        if (OPINION_120.equals(opinion)) {
+            date = cal.getTzais120();
+        } else if (OPINION_120_ZMANIS.equals(opinion)) {
+            date = cal.getTzais120Zmanis();
+        } else if (OPINION_16_1.equals(opinion)) {
+            date = cal.getTzais16Point1Degrees();
+        } else if (OPINION_18.equals(opinion)) {
+            date = cal.getTzais18Degrees();
+        } else if (OPINION_19_8.equals(opinion)) {
+            date = cal.getTzais19Point8Degrees();
+        } else if (OPINION_26.equals(opinion)) {
+            date = cal.getTzais26Degrees();
+        } else if (OPINION_60.equals(opinion)) {
+            date = cal.getTzais60();
+        } else if (OPINION_72.equals(opinion)) {
+            date = cal.getTzais72();
+        } else if (OPINION_72_ZMANIS.equals(opinion)) {
+            date = cal.getTzais72Zmanis();
+        } else if (OPINION_90.equals(opinion)) {
+            date = cal.getTzais90();
+        } else if (OPINION_90_ZMANIS.equals(opinion)) {
+            date = cal.getTzais90Zmanis();
+        } else if (OPINION_96.equals(opinion)) {
+            date = cal.getTzais96();
+        } else if (OPINION_96_ZMANIS.equals(opinion)) {
+            date = cal.getTzais96Zmanis();
+        } else if (OPINION_ATERET.equals(opinion)) {
+            date = cal.getTzaisAteretTorah();
+        } else if (OPINION_3_65.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point65Degrees();
+        } else if (OPINION_3_676.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point676Degrees();
+        } else if (OPINION_3_7.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point7Degrees();
+        } else if (OPINION_3_8.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point8Degrees();
+        } else if (OPINION_4_37.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point37Degrees();
+        } else if (OPINION_4_61.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point61Degrees();
+        } else if (OPINION_4_8.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point8Degrees();
+        } else if (OPINION_5_88.equals(opinion)) {
+            date = cal.getTzaisGeonim5Point88Degrees();
+        } else if (OPINION_5_95.equals(opinion)) {
+            date = cal.getTzaisGeonim5Point95Degrees();
+        } else if (OPINION_7_083.equals(opinion)) {
+            date = cal.getTzaisGeonim7Point083Degrees();
+        } else if (OPINION_8_5.equals(opinion)) {
+            date = cal.getTzaisGeonim8Point5Degrees();
+        } else {
+            date = cal.getTzais();
+        }
+
+        return (date != null) ? date : NEVER;
+    }
+
+    /**
+     * A method that returns "the morning guard" (ashmurat haboker).
+     * <p/>
+     * Nocturnal guard is from sunset until 22:00.<br/>
+     * Midnight guard is from 22:00 until 02:00.<br/>
+     * Morning guard is from 02:00 until sunrise.
+     *
+     * @return the Third Guard.
+     */
+    protected long getMorningGuard(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        long sunset = getSunset(cal, settings);
+        if (sunset == NEVER) {
+            return NEVER;
+        }
+
+        final ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
+        calTomorrow.getCalendar().add(Calendar.DATE, 1);
+        long sunrise = getSunrise(calTomorrow, settings);
+        if (sunrise == NEVER) {
+            return NEVER;
+        }
+
+        return sunset + ((sunrise - sunset) * 2L / 3L);
+    }
+
 }
