@@ -174,7 +174,9 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="Widget.Date.Text.Light" parent="Widget.Light.TextView.Small"/>
+    <style name="Widget.Date.Text.Light" parent="Widget.Light.TextView.Small">
+        <item name="android:gravity">center</item>
+    </style>
 
     <style name="AppWidget.Clock.Light"/>
 
