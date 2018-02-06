@@ -129,6 +129,10 @@
     <string name="midnight_12">12 timmar efter middag</string>
     <string name="midnight_6">6 timmar efter nattens inbrott</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Morgonskift</string>
+    <string name="morning_guard_summary">Tredje skiftet</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Senaste tiden att äter <i>chametz</i></string>
     <string name="burn_chametz">Senaste tiden att bränna <i>chametz</i></string>

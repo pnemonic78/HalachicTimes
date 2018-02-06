@@ -129,6 +129,10 @@
     <string name="midnight_12">12 órával azután dél</string>
     <string name="midnight_6">6 órával azután alkony</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Reggel műszak</string>
+    <string name="morning_guard_summary">Harmadik műszak</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Legutóbbi ideje enni <i>chametz</i></string>
     <string name="burn_chametz">Legutóbbi ideje éget <i>chametz</i></string>

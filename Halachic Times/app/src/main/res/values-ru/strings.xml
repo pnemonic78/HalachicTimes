@@ -129,6 +129,10 @@
     <string name="midnight_12">12 часа после полудня</string>
     <string name="midnight_6">6 часа после наступление темноты</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Утренняя вахта</string>
+    <string name="morning_guard_summary">Третья смена</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Последнее время есть <i>хамец</i></string>
     <string name="burn_chametz">Последнее время сжигания <i>хамеца</i></string>

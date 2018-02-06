@@ -129,6 +129,10 @@
     <string name="midnight_12">12 hodin po poledni</string>
     <string name="midnight_6">6 hodin po setmění</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Ranní posun</string>
+    <string name="morning_guard_summary">Třetí posun</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Poslední čas jíst <i>chametz</i></string>
     <string name="burn_chametz">Poslední čas hořet <i>chametz</i></string>

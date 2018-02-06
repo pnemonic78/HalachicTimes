@@ -129,6 +129,10 @@
     <string name="midnight_12">12 ore după amiază</string>
     <string name="midnight_6">6 ore după căderea nopții</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Dimineața</string>
+    <string name="morning_guard_summary">A treia schimbare</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Ultima moment a manca <i>chametz</i></string>
     <string name="burn_chametz">Ultima moment a arde <i>chametz</i></string>

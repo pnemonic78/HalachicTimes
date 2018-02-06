@@ -129,6 +129,10 @@
     <string name="midnight_12">12 uur na de middag</string>
     <string name="midnight_6">6 uur na de nacht</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Ochtenddienst</string>
+    <string name="morning_guard_summary">Derde dienst</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Laatste tijd om <i>chameets</i> te eten</string>
     <string name="burn_chametz">Laatste tijd om <i>chameets</i> te branden</string>

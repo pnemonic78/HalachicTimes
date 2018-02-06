@@ -129,6 +129,10 @@
     <string name="midnight_12">12 horas após de meio-dia</string>
     <string name="midnight_6">6 horas após de anoitecer</string>
 
+    <!-- Morning Guard -->
+    <string name="morning_guard">Vigília da manhã</string>
+    <string name="morning_guard_summary">Third watch</string>
+
     <!-- Pesach -->
     <string name="eat_chametz">Última hora de comer <i>chametz</i></string>
     <string name="burn_chametz">Última hora de queimar <i>chametz</i></string>
