@@ -210,7 +210,6 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         if (locations != null) {
             locations.stop(this);
         }
-        context.unregisterReceiver(this);
     }
 
     @Override
@@ -219,12 +218,6 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         if (locations != null) {
             locations.start(this);
         }
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
-        intentFilter.addAction(Intent.ACTION_DATE_CHANGED);
-        intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-        intentFilter.addAction(Intent.ACTION_SET_WALLPAPER);
-        context.registerReceiver(this, intentFilter);
     }
 
     @Override
