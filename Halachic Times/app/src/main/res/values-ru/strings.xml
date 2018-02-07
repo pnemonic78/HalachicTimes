@@ -129,7 +129,9 @@
     <string name="midnight_12">12 часа после полудня</string>
     <string name="midnight_6">6 часа после наступление темноты</string>
 
-    <!-- Morning Guard -->
+    <!-- Night Guards -->
+    <string name="midnight_guard">Средняя вахта</string>
+    <string name="midnight_guard_summary">Вторая смена</string>
     <string name="morning_guard">Утренняя вахта</string>
     <string name="morning_guard_summary">Третья смена</string>
 

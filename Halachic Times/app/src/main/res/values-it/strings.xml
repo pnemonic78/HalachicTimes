@@ -129,8 +129,10 @@
     <string name="midnight_12">12 ore dopo mezzogiorno</string>
     <string name="midnight_6">6 ore dopo imbrunire</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Veglia del mattino</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Guardia di mezzo</string>
+    <string name="midnight_guard_summary">Secondo turno</string>
+    <string name="morning_guard">Guardia del mattino</string>
     <string name="morning_guard_summary">Terzo turno</string>
 
     <!-- Pesach -->

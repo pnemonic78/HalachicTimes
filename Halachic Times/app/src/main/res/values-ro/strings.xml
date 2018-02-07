@@ -129,8 +129,10 @@
     <string name="midnight_12">12 ore după amiază</string>
     <string name="midnight_6">6 ore după căderea nopții</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Dimineața</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Garda de mijloc</string>
+    <string name="midnight_guard_summary">A doua schimbare</string>
+    <string name="morning_guard">Paza de dimineata</string>
     <string name="morning_guard_summary">A treia schimbare</string>
 
     <!-- Pesach -->

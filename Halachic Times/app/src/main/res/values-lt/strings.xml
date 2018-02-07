@@ -129,8 +129,10 @@
     <string name="midnight_12">12 valandų po vidurdienį</string>
     <string name="midnight_6">6 valandų po ateinančio naktys</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Ryto poslinkis</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Vidurinė gvardija</string>
+    <string name="midnight_guard_summary">Antroji poslinkis</string>
+    <string name="morning_guard">Ryto gvardija</string>
     <string name="morning_guard_summary">Trečiasis poslinkis</string>
 
     <!-- Pesach -->

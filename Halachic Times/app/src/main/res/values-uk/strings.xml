@@ -129,7 +129,9 @@
     <string name="midnight_12">12 годин після полудень</string>
     <string name="midnight_6">6 годин після настання ночі</string>
 
-    <!-- Morning Guard -->
+    <!-- Night Guards -->
+    <string name="midnight_guard">Середній зсув</string>
+    <string name="midnight_guard_summary">Другий зміна</string>
     <string name="morning_guard">Ранковий зсув</string>
     <string name="morning_guard_summary">Третя зміна</string>
 

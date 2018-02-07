@@ -129,8 +129,10 @@
     <string name="midnight_12">12 órával azután dél</string>
     <string name="midnight_6">6 órával azután alkony</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Reggel műszak</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Középső őrség</string>
+    <string name="midnight_guard_summary">Második műszak</string>
+    <string name="morning_guard">Reggel őrség</string>
     <string name="morning_guard_summary">Harmadik műszak</string>
 
     <!-- Pesach -->

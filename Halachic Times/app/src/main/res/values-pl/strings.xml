@@ -129,8 +129,10 @@
     <string name="midnight_12">12 godziny po południa</string>
     <string name="midnight_6">6 godziny po zmrok</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Poranna zmiana</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Bliski straż</string>
+    <string name="midnight_guard_summary">Druga zmiana</string>
+    <string name="morning_guard">Poranna straż</string>
     <string name="morning_guard_summary">Trzecia zmiana</string>
 
     <!-- Pesach -->

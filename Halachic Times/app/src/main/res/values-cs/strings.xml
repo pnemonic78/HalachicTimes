@@ -129,8 +129,10 @@
     <string name="midnight_12">12 hodin po poledni</string>
     <string name="midnight_6">6 hodin po setmění</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Ranní posun</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Střední stráž</string>
+    <string name="midnight_guard_summary">Druhá posun</string>
+    <string name="morning_guard">Ranní stráž</string>
     <string name="morning_guard_summary">Třetí posun</string>
 
     <!-- Pesach -->

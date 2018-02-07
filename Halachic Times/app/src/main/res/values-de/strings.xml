@@ -129,8 +129,10 @@
     <string name="midnight_12">12 stunden nach der Mittag</string>
     <string name="midnight_6">6 stunden nach Einbruch der Nacht</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Morgenschicht</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Mittlere Garde</string>
+    <string name="midnight_guard_summary">Zweite Schicht</string>
+    <string name="morning_guard">Morgengarde</string>
     <string name="morning_guard_summary">Dritte Schicht</string>
 
     <!-- Pesach -->

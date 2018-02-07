@@ -129,9 +129,11 @@
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
     <string name="midnight_6">6 tundi pärast videvik</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Hommikune nihe</string>
-    <string name="morning_guard_summary">Kolmas muutus</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Lähis valvur</string>
+    <string name="midnight_guard_summary">Teine nihe</string>
+    <string name="morning_guard">Hommik valvur</string>
+    <string name="morning_guard_summary">Kolmas nihe</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Viimane aeg süüa <i>chamets</i></string>

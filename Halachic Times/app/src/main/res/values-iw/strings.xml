@@ -129,8 +129,10 @@
     <string name="midnight_12">12 שעות לאחר צהריים</string>
     <string name="midnight_6">6 שעות לאחר לילה</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">אשמורות הבוקר</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">אשמורת התיכונה</string>
+    <string name="midnight_guard_summary">משמרת שניה</string>
+    <string name="morning_guard">אשמורת הבוקר</string>
     <string name="morning_guard_summary">משמרת שלישית</string>
 
     <!-- Pesach -->

@@ -129,8 +129,10 @@
     <string name="midnight_12">12 tuntia jälkeen keskipäivä</string>
     <string name="midnight_6">6 tuntia jälkeen pimetessä</string>
 
-    <!-- Morning Guard -->
-    <string name="morning_guard">Aamuvuoro</string>
+    <!-- Night Guards -->
+    <string name="midnight_guard">Keskimmäinen vartija</string>
+    <string name="midnight_guard_summary">Toinen siirtymä</string>
+    <string name="morning_guard">Aamu vartija</string>
     <string name="morning_guard_summary">Kolmas siirtymä</string>
 
     <!-- Pesach -->

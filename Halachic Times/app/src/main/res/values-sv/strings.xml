@@ -129,7 +129,9 @@
     <string name="midnight_12">12 timmar efter middag</string>
     <string name="midnight_6">6 timmar efter nattens inbrott</string>
 
-    <!-- Morning Guard -->
+    <!-- Night Guards -->
+    <string name="midnight_guard">Mitt skift</string>
+    <string name="midnight_guard_summary">Andra skiftet</string>
     <string name="morning_guard">Morgonskift</string>
     <string name="morning_guard_summary">Tredje skiftet</string>
 

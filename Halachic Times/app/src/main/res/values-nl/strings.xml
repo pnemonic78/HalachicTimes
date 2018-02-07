@@ -129,7 +129,9 @@
     <string name="midnight_12">12 uur na de middag</string>
     <string name="midnight_6">6 uur na de nacht</string>
 
-    <!-- Morning Guard -->
+    <!-- Night Guards -->
+    <string name="midnight_guard">Midden dienst</string>
+    <string name="midnight_guard_summary">Tweede dienst</string>
     <string name="morning_guard">Ochtenddienst</string>
     <string name="morning_guard_summary">Derde dienst</string>
 
