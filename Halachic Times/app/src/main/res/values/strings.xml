@@ -256,7 +256,9 @@
     <string name="midnight_12">12 hours after midday</string>
     <string name="midnight_6">6 hours after nightfall</string>
 
-    <!-- Morning Guard -->
+    <!-- Guards -->
+    <string name="midnight_guard">Midnight guard</string>
+    <string name="midnight_guard_summary">Second watch</string>
     <string name="morning_guard">Morning guard</string>
     <string name="morning_guard_summary">Third watch</string>
 

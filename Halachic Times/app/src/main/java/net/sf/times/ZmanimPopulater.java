@@ -808,6 +808,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
 
+        date = getMidnightGuard(cal, settings);
+        adapter.add(R.string.midnight_guard, R.string.midnight_guard_summary, date, jewishDateTomorrow, remote);
+
         opinion = settings.getMidnight();
         if (OPINION_12.equals(opinion)) {
             date = midday;
@@ -1243,6 +1246,31 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     }
 
     /**
+     * A method that returns "the midnight guard" (ashmurat hatichona).
+     * <p/>
+     * Nocturnal guard is from sunset until 22:00.<br/>
+     * Midnight guard is from 22:00 until 02:00.<br/>
+     * Morning guard is from 02:00 until sunrise.
+     *
+     * @return the Second Guard.
+     */
+    protected long getMidnightGuard(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        long sunset = getSunset(cal, settings);
+        if (sunset == NEVER) {
+            return NEVER;
+        }
+
+        final ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
+        calTomorrow.getCalendar().add(Calendar.DATE, 1);
+        long sunrise = getSunrise(calTomorrow, settings);
+        if (sunrise == NEVER) {
+            return NEVER;
+        }
+
+        return sunset + ((sunrise - sunset) / 3L);
+    }
+
+    /**
      * A method that returns "the morning guard" (ashmurat haboker).
      * <p/>
      * Nocturnal guard is from sunset until 22:00.<br/>
@@ -1264,7 +1292,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             return NEVER;
         }
 
-        return sunset + ((sunrise - sunset) * 2L / 3L);
+        return sunset + (((sunrise - sunset) << 1) / 3L);
     }
 
 }

@@ -221,6 +221,17 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:key="midnight_guard_screen"
+        android:title="@string/midnight_guard">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_midnight_guard_preferences"/>
+        <extra
+            android:name="reminder"
+            android:value="midnight_guard.reminder"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
         android:key="morning_guard_screen"
         android:title="@string/morning_guard">
         <extra
