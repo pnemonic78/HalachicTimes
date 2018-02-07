@@ -20,16 +20,22 @@ import android.content.Context;
 
 import net.sf.app.LocaleCallbacks;
 import net.sf.app.LocaleHelper;
+import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
 import net.sf.preference.LocalePreferences;
+import net.sf.times.preference.SimpleZmanimPreferences;
+import net.sf.times.preference.ZmanimPreferences;
 
 /**
  * Pick a city from the list.
  *
  * @author Moshe Waisberg
  */
-public class LocationActivity extends LocationTabActivity {
+public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
+    /** The preferences. */
+    private ZmanimPreferences preferences;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -47,5 +53,17 @@ public class LocationActivity extends LocationTabActivity {
     @Override
     protected Class<? extends Activity> getAddLocationActivityClass() {
         return ZmanimAddLocationActivity.class;
+    }
+
+    @Override
+    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks() {
+        return new SimpleThemeCallbacks<>(this, getZmanimPreferences());
+    }
+
+    public ZmanimPreferences getZmanimPreferences() {
+        if (preferences == null) {
+            preferences = new SimpleZmanimPreferences(this);
+        }
+        return preferences;
     }
 }

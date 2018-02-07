@@ -90,7 +90,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     private static final int WHAT_FAVORITE = 1;
     private static final int WHAT_ADDED = 2;
 
-    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<>(this);
+    private ThemeCallbacks<P> themeCallbacks;
     private SearchView searchText;
     private LocationAdapter adapterAll;
     private LocationAdapter adapterFavorites;
@@ -153,12 +153,19 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     @Override
     public void onCreate() {
+        if (themeCallbacks == null) {
+            themeCallbacks = createThemeCallbacks();
+        }
         themeCallbacks.onCreate();
     }
 
     @Override
     public P getThemePreferences() {
         return themeCallbacks.getThemePreferences();
+    }
+
+    protected ThemeCallbacks<P> createThemeCallbacks() {
+        return new SimpleThemeCallbacks<>(this);
     }
 
     @Override
