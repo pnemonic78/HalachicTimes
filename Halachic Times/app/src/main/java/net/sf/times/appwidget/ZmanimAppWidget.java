@@ -119,7 +119,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
                 intentFilter.addAction(ACTION_TIME_CHANGED);
                 intentFilter.addAction(ACTION_TIMEZONE_CHANGED);
                 intentFilter.addAction(ACTION_WALLPAPER_CHANGED);
-                context.registerReceiver(this, intentFilter);
+                context.getApplicationContext().registerReceiver(this, intentFilter);
                 break;
             case ACTION_APPWIDGET_DELETED:
                 resolver.unregisterContentObserver(formatChangeObserver);
