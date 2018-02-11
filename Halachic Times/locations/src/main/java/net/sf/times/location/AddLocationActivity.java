@@ -43,6 +43,8 @@ import net.sf.times.location.text.LongitudeInputFilter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import static net.sf.times.location.GeocoderBase.USER_PROVIDER;
+
 /**
  * Add a location by specifying its coordinates.
  *
@@ -147,7 +149,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
                     location = args.getParcelable(EXTRA_LOCATION);
                 }
                 if (location == null) {
-                    location = new Location(GeocoderBase.USER_PROVIDER);
+                    location = new Location(USER_PROVIDER);
 
                     if (args.containsKey(EXTRA_LATITUDE)) {
                         location.setLatitude(args.getDouble(EXTRA_LATITUDE));
@@ -157,7 +159,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
                     }
                 }
             } else {
-                location = new Location(GeocoderBase.USER_PROVIDER);
+                location = new Location(USER_PROVIDER);
             }
 
             setDecimalTexts(location.getLatitude(), latitudeDegreesEdit, latitudeDecimalEdit, latitudeDirection);

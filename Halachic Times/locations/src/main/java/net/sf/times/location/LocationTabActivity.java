@@ -50,6 +50,7 @@ import java.util.List;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+import static net.sf.times.location.GeocoderBase.USER_PROVIDER;
 
 /**
  * Pick a city from the list.
@@ -271,7 +272,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     @Override
     public void onItemClick(ZmanimAddress address) {
-        Location loc = new Location(GeocoderBase.USER_PROVIDER);
+        Location loc = new Location(USER_PROVIDER);
         loc.setTime(System.currentTimeMillis());
         loc.setLatitude(address.getLatitude());
         loc.setLongitude(address.getLongitude());
@@ -301,26 +302,25 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
             Location loc = null;
             String[] tokens = query.split("[,;]");
             if (tokens.length >= 2) {
-                try {
-                    double latitude = Location.convert(tokens[0].trim());
-                    double longitude = Location.convert(tokens[1].trim());
+                final String token0 = tokens[0].trim();
+                final String token1 = tokens[1].trim();
+                if (!TextUtils.isEmpty(token0) && !TextUtils.isEmpty(token1)) {
+                    try {
+                        double latitude = Location.convert(token0);
+                        double longitude = Location.convert(token1);
 
-                    loc = new Location(GeocoderBase.USER_PROVIDER);
-                    loc.setLatitude(latitude);
-                    loc.setLongitude(longitude);
-                    loc.setTime(System.currentTimeMillis());
+                        loc = new Location(USER_PROVIDER);
+                        loc.setLatitude(latitude);
+                        loc.setLongitude(longitude);
+                        loc.setTime(System.currentTimeMillis());
 
-                    if (tokens.length >= 3) {
-                        double elevation = Double.parseDouble(tokens[2]);
-
-                        loc.setAltitude(elevation);
+                        setAddress(loc);
+                        return true;
+                    } catch (Exception e) {
+                        // Not a valid coordinate.
                     }
-                } catch (IllegalArgumentException e) {
-                    // Not valid coordinate.
                 }
             }
-            setAddress(loc);
-            return true;
         }
 
         return false;
