@@ -41,4 +41,8 @@
 
     <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>
 
+    <style name="Theme.AppWidget.Dark" parent="Theme.Zmanim.Dark"/>
+
+    <style name="Theme.AppWidget.Light" parent="Theme.Zmanim.Light"/>
+
 </resources>

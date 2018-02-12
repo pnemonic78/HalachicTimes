@@ -622,6 +622,40 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         return preferences.getString(KEY_OPINION_OMER, context.getString(R.string.omer_defaultValue));
     }
 
+    @Override
+    public String getAppWidgetThemeValue() {
+        return null;
+    }
+
+    @Override
+    public int getAppWidgetTheme(String value) {
+        if (isEmpty(value) || THEME_NONE.equals(value)) {
+            return 0;
+        }
+        if (THEME_LIGHT.equals(value)) {
+            return R.style.Theme_AppWidget_Light;
+        }
+        return R.style.Theme_AppWidget_Dark;
+    }
+
+    @Override
+    public int getAppWidgetTheme() {
+        return getAppWidgetTheme(getAppWidgetThemeValue());
+    }
+
+    @Override
+    public boolean isAppWidgetDarkTheme(String value) {
+        if (THEME_LIGHT.equals(value)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isAppWidgetDarkTheme() {
+        return isAppWidgetDarkTheme(getAppWidgetThemeValue());
+    }
+
     /**
      * Initialize. Should be called only once when application created.
      *

@@ -17,6 +17,7 @@ package net.sf.times.preference;
 
 import android.media.AudioManager;
 import android.net.Uri;
+import android.support.annotation.StyleRes;
 
 import net.sf.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
@@ -484,4 +485,46 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * @return the opinion.
      */
     String getOmerSuffix();
+
+    /**
+     * Get the widget theme value.
+     *
+     * @return the theme value.
+     */
+    String getAppWidgetThemeValue();
+
+    /**
+     * Get the widget theme.
+     *
+     * @param value
+     *         the theme value.
+     * @return the theme resource id.
+     * @see #getThemeValue()
+     */
+    @StyleRes
+    int getAppWidgetTheme(String value);
+
+    /**
+     * Get the widget theme.
+     *
+     * @return the theme resource id.
+     */
+    @StyleRes
+    int getAppWidgetTheme();
+
+    /**
+     * Is the widget theme dark?
+     *
+     * @param value
+     *         the theme value.
+     * @return {@code true} if the theme has dark backgrounds and light texts.
+     */
+    boolean isAppWidgetDarkTheme(String value);
+
+    /**
+     * Is the widget theme dark?
+     *
+     * @return {@code true} if the theme has dark backgrounds and light texts.
+     */
+    boolean isAppWidgetDarkTheme();
 }
