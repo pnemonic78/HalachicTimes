@@ -52,6 +52,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_HOUR = "hour.visible";
     /** Preference name for the emphasis scale. */
     String KEY_EMPHASIS_SCALE = "emphasis_scale";
+    /** Preference name for the app widget theme. */
+    String KEY_THEME_WIDGET = "theme.appwidget";
 
     /** Preference name for temporal hour type. */
     String KEY_OPINION_HOUR = "hour";

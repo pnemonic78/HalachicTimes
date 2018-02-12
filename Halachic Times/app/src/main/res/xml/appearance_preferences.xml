@@ -15,6 +15,12 @@
             android:entryValues="@array/compass_theme_values"
             android:key="theme.compass"
             android:title="@string/compass_theme_title"/>
+        <ListPreference
+            android:defaultValue="@string/appwidget_theme_defaultValue"
+            android:entries="@array/appwidget_theme_entries"
+            android:entryValues="@array/appwidget_theme_values"
+            android:key="theme.appwidget"
+            android:title="@string/appwidget_theme_title"/>
         <net.sf.preference.HtmlListPreference
             android:defaultValue="@string/emphasis_scale_defaultValue"
             android:entries="@array/emphasis_scale_entries"

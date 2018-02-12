@@ -349,4 +349,10 @@
     <string name="notification_upcoming_title">The upcoming time as a notification</string>
     <string name="notifications_title" translatable="false">@string/reminder</string>
 
+    <!-- App Widget. -->
+    <string name="appwidget_theme_title">Widget Theme</string>
+    <string name="appwidget_theme_default">Default</string>
+    <string name="appwidget_theme_dark" translatable="false">@string/theme_dark</string>
+    <string name="appwidget_theme_light" translatable="false">@string/theme_light</string>
+
 </resources>

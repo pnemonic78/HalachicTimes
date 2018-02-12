@@ -20,8 +20,11 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 
+import net.sf.appwidget.AppWidgetUtils;
 import net.sf.times.BuildConfig;
 import net.sf.times.R;
+import net.sf.times.appwidget.ZmanimListWidget;
+import net.sf.times.appwidget.ZmanimWidget;
 import net.sf.util.LocaleUtils;
 
 import java.util.Locale;
@@ -32,6 +35,7 @@ import static net.sf.preference.LocalePreferences.KEY_LOCALE;
 import static net.sf.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 import static net.sf.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static net.sf.times.preference.ZmanimPreferences.KEY_THEME;
+import static net.sf.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
 import static net.sf.util.LocaleUtils.sortByDisplay;
 
 /**
@@ -52,6 +56,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
         initList(KEY_THEME);
         initList(KEY_THEME_COMPASS);
+        initList(KEY_THEME_WIDGET);
         initList(KEY_EMPHASIS_SCALE);
         localePreference = initLocaleList(KEY_LOCALE);
     }
@@ -64,6 +69,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         if (KEY_LOCALE.equals(key) && (localePreference != null)) {
             // Restart the activity to refresh views.
             restartActivity(getActivity());
+        } else if (KEY_EMPHASIS_SCALE.equals(key)) {
+            notifyAppWidgetViewDataChanged(getActivity());
         }
         return result;
     }
@@ -106,5 +113,10 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         }
 
         return initList(key);
+    }
+
+    private void notifyAppWidgetViewDataChanged(Context context) {
+        AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimWidget.class);
+        AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
     }
 }

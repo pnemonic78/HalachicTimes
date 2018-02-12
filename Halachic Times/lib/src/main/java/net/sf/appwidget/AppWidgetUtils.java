@@ -38,8 +38,9 @@ public class AppWidgetUtils {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         ComponentName provider = new ComponentName(context, appWidgetClass);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0))
+        if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
             return;
+        }
 
         Intent intent = new Intent(context, appWidgetClass);
         intent.setAction(ACTION_APPWIDGET_UPDATE);

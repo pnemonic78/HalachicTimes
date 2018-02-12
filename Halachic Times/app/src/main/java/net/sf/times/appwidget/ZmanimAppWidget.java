@@ -362,13 +362,12 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         populateTimes(context);// Force container layout refresh.
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        final Class<?> clazz = getClass();
+        final Class<? extends ZmanimAppWidget> clazz = getClass();
         ComponentName provider = new ComponentName(context, clazz);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
-            return;
+        if ((appWidgetIds != null) && (appWidgetIds.length > 0)) {
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
         }
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, getIntentViewId());
     }
 
     protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {

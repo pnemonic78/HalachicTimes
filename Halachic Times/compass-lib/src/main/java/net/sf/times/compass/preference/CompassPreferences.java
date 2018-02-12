@@ -28,7 +28,7 @@ public interface CompassPreferences {
     String KEY_COMPASS_BEARING = "compass.bearing";
     /** Preference name for showing summaries. */
     String KEY_SUMMARIES = "summaries.visible";
-    /** Preference name for showing summaries. */
+    /** Preference name for the compass theme. */
     String KEY_THEME_COMPASS = "theme.compass";
 
     class Values {

@@ -118,4 +118,9 @@
 
     <string name="locale_defaultValue" translatable="false"/>
 
+    <string name="appwidget_theme_value_none" translatable="false">@string/theme_value_none</string>
+    <string name="appwidget_theme_value_dark" translatable="false">@string/theme_value_dark</string>
+    <string name="appwidget_theme_value_light" translatable="false">@string/theme_value_light</string>
+    <string name="appwidget_theme_defaultValue" translatable="false">@string/appwidget_theme_value_none</string>
+
 </resources>
