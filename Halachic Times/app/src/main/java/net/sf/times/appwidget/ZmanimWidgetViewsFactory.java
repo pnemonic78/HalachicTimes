@@ -23,6 +23,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -45,8 +46,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static java.lang.System.currentTimeMillis;
-import static net.sf.graphics.BitmapUtils.isBright;
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
+import static net.sf.graphics.BitmapUtils.isBrightWallpaper;
 
 /**
  * Factory to create views for list widget.
@@ -215,12 +215,15 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         return true;
     }
 
-    private void populateAdapter() {
-        final Context context = this.context;
-
+    protected ZmanimPreferences getPreferences() {
         if (preferences == null) {
             preferences = new SimpleZmanimPreferences(context);
         }
+        return preferences;
+    }
+
+    private void populateAdapter() {
+        final Context context = this.context;
 
         ZmanimLocations locations = this.locations;
         if (locations == null) {
@@ -234,14 +237,28 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             return;
         }
 
+        boolean light;
+        switch (getTheme()) {
+            case R.style.Theme_AppWidget_Dark:
+                light = false;
+                break;
+            case R.style.Theme_AppWidget_Light:
+                light = true;
+                break;
+            default:
+                light = isBrightWallpaper(context);
+                break;
+        }
         final Resources res = context.getResources();
-        if (isBright(getWallpaperColor(context))) {
-            this.colorEnabled = res.getColor(R.color.widget_text);
-            this.layoutItemId = R.layout.widget_item;
-        } else {
+        if (light) {
             this.colorEnabled = res.getColor(R.color.widget_text_light);
             this.layoutItemId = R.layout.widget_item_light;
+        } else {
+            this.colorEnabled = res.getColor(R.color.widget_text);
+            this.layoutItemId = R.layout.widget_item;
         }
+
+        ZmanimPreferences preferences = getPreferences();
 
         ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
         populater.setCalendar(currentTimeMillis());
@@ -321,10 +338,14 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
-            final Context context = this.context;
             row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
         } else {
             row.setInt(R.id.widget_item, "setBackgroundColor", Color.TRANSPARENT);
         }
+    }
+
+    @StyleRes
+    protected int getTheme() {
+        return getPreferences().getAppWidgetTheme();
     }
 }

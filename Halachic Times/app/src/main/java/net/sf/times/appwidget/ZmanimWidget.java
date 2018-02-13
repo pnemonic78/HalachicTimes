@@ -29,8 +29,7 @@ import net.sf.times.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
-import static net.sf.graphics.BitmapUtils.isBright;
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
+import static net.sf.graphics.BitmapUtils.isBrightWallpaper;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers in a widget.
@@ -46,12 +45,20 @@ public class ZmanimWidget extends ZmanimAppWidget {
     protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         list.removeAllViews(android.R.id.list);
 
-        final Resources res = context.getResources();
-        if (isBright(getWallpaperColor(context))) {
-            this.colorEnabled = res.getColor(R.color.widget_text);
-        } else {
-            this.colorEnabled = res.getColor(R.color.widget_text_light);
+        boolean light;
+        switch (getTheme()) {
+            case R.style.Theme_AppWidget_Dark:
+                light = false;
+                break;
+            case R.style.Theme_AppWidget_Light:
+                light = true;
+                break;
+            default:
+                light = isBrightWallpaper(context);
+                break;
         }
+        final Resources res = context.getResources();
+        this.colorEnabled = light ? res.getColor(R.color.widget_text_light) : res.getColor(R.color.widget_text);
 
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
@@ -178,10 +185,17 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
     @Override
     protected int getLayoutId() {
-        if (isBright(getWallpaperColor(getContext()))) {
-            return R.layout.widget_static;
+        switch (getTheme()) {
+            case R.style.Theme_AppWidget_Dark:
+                return R.layout.widget_static;
+            case R.style.Theme_AppWidget_Light:
+                return R.layout.widget_static_light;
+            default:
+                if (isBrightWallpaper(getContext())) {
+                    return R.layout.widget_static;
+                }
+                return R.layout.widget_static_light;
         }
-        return R.layout.widget_static_light;
     }
 
     @Override

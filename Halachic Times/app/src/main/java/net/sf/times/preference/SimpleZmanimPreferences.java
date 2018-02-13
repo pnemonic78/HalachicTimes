@@ -624,7 +624,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
 
     @Override
     public String getAppWidgetThemeValue() {
-        return null;
+        return preferences.getString(KEY_THEME_WIDGET, context.getString(R.string.appwidget_theme_defaultValue));
     }
 
     @Override

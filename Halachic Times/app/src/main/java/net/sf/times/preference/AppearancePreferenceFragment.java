@@ -23,6 +23,7 @@ import android.preference.Preference;
 import net.sf.appwidget.AppWidgetUtils;
 import net.sf.times.BuildConfig;
 import net.sf.times.R;
+import net.sf.times.appwidget.ClockWidget;
 import net.sf.times.appwidget.ZmanimListWidget;
 import net.sf.times.appwidget.ZmanimWidget;
 import net.sf.util.LocaleUtils;
@@ -118,5 +119,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     private void notifyAppWidgetViewDataChanged(Context context) {
         AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimWidget.class);
         AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
+        AppWidgetUtils.notifyAppWidgetsUpdate(context, ClockWidget.class);
     }
 }

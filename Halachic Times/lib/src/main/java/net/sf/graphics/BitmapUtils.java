@@ -15,8 +15,11 @@
  */
 package net.sf.graphics;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+
+import static net.sf.graphics.DrawableUtils.getWallpaperColor;
 
 /**
  * Bitmap utilities.
@@ -66,5 +69,18 @@ public class BitmapUtils {
             return ((r && g) || (r && b) || (g && b));
         }
         return false;
+    }
+
+    /**
+     * Is the wallpaper bright?
+     * <br>
+     * Useful for determining whether to use dark color on bright background.
+     *
+     * @param context
+     *         the context.
+     * @return {@code true} if the wallpaper is "bright".
+     */
+    public static boolean isBrightWallpaper(Context context) {
+        return isBright(getWallpaperColor(context));
     }
 }

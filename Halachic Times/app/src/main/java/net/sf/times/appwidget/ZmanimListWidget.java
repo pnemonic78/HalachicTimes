@@ -25,8 +25,7 @@ import net.sf.times.R;
 import net.sf.times.ZmanimAdapter;
 
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static net.sf.graphics.BitmapUtils.isBright;
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
+import static net.sf.graphics.BitmapUtils.isBrightWallpaper;
 
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a widget.
@@ -37,10 +36,17 @@ public class ZmanimListWidget extends ZmanimWidget {
 
     @Override
     protected int getLayoutId() {
-        if (isBright(getWallpaperColor(getContext()))) {
-            return R.layout.widget_list;
+        switch (getTheme()) {
+            case R.style.Theme_AppWidget_Dark:
+                return R.layout.widget_list;
+            case R.style.Theme_AppWidget_Light:
+                return R.layout.widget_list_light;
+            default:
+                if (isBrightWallpaper(getContext())) {
+                    return R.layout.widget_list;
+                }
+                return R.layout.widget_list_light;
         }
-        return R.layout.widget_list_light;
     }
 
     @Override

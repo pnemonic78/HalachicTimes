@@ -33,8 +33,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static net.sf.graphics.BitmapUtils.isBright;
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
+import static net.sf.graphics.BitmapUtils.isBrightWallpaper;
 import static net.sf.times.ZmanimItem.NEVER;
 import static net.sf.util.TimeUtils.roundUp;
 
@@ -58,12 +57,17 @@ public class ClockWidget extends ZmanimAppWidget {
 
     @Override
     protected int getLayoutId() {
-        int bg = getWallpaperColor(getContext());
-        if (isBright(bg)) {
-            return R.layout.clock_widget_light;
+        switch (getTheme()) {
+            case R.style.Theme_AppWidget_Dark:
+                return R.layout.clock_widget;
+            case R.style.Theme_AppWidget_Light:
+                return R.layout.clock_widget_light;
+            default:
+                if (isBrightWallpaper(getContext())) {
+                    return R.layout.clock_widget_light;
+                }
+                return R.layout.clock_widget;
         }
-
-        return R.layout.clock_widget;
     }
 
     @Override

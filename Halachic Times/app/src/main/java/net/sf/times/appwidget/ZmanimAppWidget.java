@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.widget.RemoteViews;
 
 import net.sf.app.LocaleCallbacks;
@@ -370,16 +371,19 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         }
     }
 
+    protected ZmanimPreferences getPreferences() {
+        if (preferences == null) {
+            preferences = new SimpleZmanimPreferences(context);
+        }
+        return preferences;
+    }
+
     protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         return populateStaticTimes(context, appWidgetId, views, activityPendingIntent, viewId, now);
     }
 
     protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
-
-        if (preferences == null) {
-            preferences = new SimpleZmanimPreferences(context);
-        }
 
         ZmanimLocations locations = this.locations;
         if (locations == null) {
@@ -389,8 +393,11 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
             this.locations = locations;
         }
         GeoLocation gloc = locations.getGeoLocation();
-        if (gloc == null)
+        if (gloc == null) {
             return null;
+        }
+
+        ZmanimPreferences preferences = getPreferences();
 
         ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
         populater.setCalendar(now);
@@ -415,5 +422,10 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
             provider = new ComponentName(context, clazz);
         }
         return provider;
+    }
+
+    @StyleRes
+    protected int getTheme() {
+        return getPreferences().getAppWidgetTheme();
     }
 }
