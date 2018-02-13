@@ -193,6 +193,7 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Галахические Времена Часы</string>
+    <string name="appwidget_theme_title">Тема виджета</string>
 
     <!-- Reminder -->
     <string name="reminder">Напоминание</string>

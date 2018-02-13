@@ -193,6 +193,7 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiline Ajad Kell</string>
+    <string name="appwidget_theme_title">Vidinate teema</string>
 
     <!-- Reminder -->
     <string name="reminder">Meeldetuletus</string>

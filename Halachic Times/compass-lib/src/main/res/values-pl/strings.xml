@@ -9,7 +9,7 @@
     <string name="compass_bearing_rhumb">Loksodroma (stały kąt)</string>
 
     <!-- Theme -->
-    <string name="compass_theme_title">Kompas motyw</string>
+    <string name="compass_theme_title">Motyw kompasu</string>
     <string name="compass_theme_classic">Klasyczny</string>
     <string name="compass_theme_original">Oryginalny</string>
     <string name="compass_theme_gold">Złoto</string>

@@ -9,7 +9,7 @@
     <string name="compass_bearing_rhumb">Rumbo linija (pačiu kampu)</string>
 
     <!-- Theme -->
-    <string name="compass_theme_title">Kompasas tema</string>
+    <string name="compass_theme_title">Kompaso tema</string>
     <string name="compass_theme_classic">Klasikinis</string>
     <string name="compass_theme_original">Originalus</string>
     <string name="compass_theme_gold">Auksas</string>

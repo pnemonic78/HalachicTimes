@@ -193,6 +193,7 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Horarios Halájicos Reloj</string>
+    <string name="appwidget_theme_title">Tema de widget</string>
 
     <!-- Reminder -->
     <string name="reminder">Recordatorio</string>

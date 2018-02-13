@@ -9,7 +9,7 @@
     <string name="compass_bearing_rhumb">Ромбоидна линия (същия ъгъл)</string>
 
     <!-- Theme -->
-    <string name="compass_theme_title">Тема компаса</string>
+    <string name="compass_theme_title">Тема на компаса</string>
     <string name="compass_theme_classic">Класически</string>
     <string name="compass_theme_gold">Злато</string>
     <string name="compass_theme_silver">Сребърен</string>

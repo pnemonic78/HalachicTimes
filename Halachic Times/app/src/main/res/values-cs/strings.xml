@@ -193,6 +193,7 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachický Časy Hodiny</string>
+    <string name="appwidget_theme_title">Motiv widgetu</string>
 
     <!-- Reminder -->
     <string name="reminder">Připomenutí</string>

@@ -193,6 +193,7 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Халахичен Време Часовник</string>
+    <string name="appwidget_theme_title">Тема на притурката</string>
 
     <!-- Reminder -->
     <string name="reminder">Напомняне</string>

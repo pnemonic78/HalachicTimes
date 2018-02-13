@@ -9,7 +9,7 @@
     <string name="compass_bearing_rhumb">Loxodrome (gleichen Winkel)</string>
 
     <!-- Theme -->
-    <string name="compass_theme_title">Kompass-Thema</string>
+    <string name="compass_theme_title">Kompass Thema</string>
     <string name="compass_theme_classic">Klassisch</string>
     <string name="compass_theme_original">Original</string>
     <string name="compass_theme_gold">Gold</string>

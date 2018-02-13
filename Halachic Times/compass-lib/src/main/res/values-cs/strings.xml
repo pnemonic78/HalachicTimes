@@ -9,7 +9,7 @@
     <string name="compass_bearing_rhumb">Loxodroma (stejný úhel)</string>
 
     <!-- Theme -->
-    <string name="compass_theme_title">Kompas motiv</string>
+    <string name="compass_theme_title">Motiv kompasu</string>
     <string name="compass_theme_classic">Klasický</string>
     <string name="compass_theme_original">Originál</string>
     <string name="compass_theme_gold">Zlato</string>

@@ -193,6 +193,7 @@
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachikus Szor Óra</string>
+    <string name="appwidget_theme_title">Widget téma</string>
 
     <!-- Reminder -->
     <string name="reminder">Emlékeztető</string>

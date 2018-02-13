@@ -9,7 +9,7 @@
     <string name="compass_bearing_rhumb">Línea de rumbo (mismo ángulo)</string>
 
     <!-- Theme -->
-    <string name="compass_theme_title">Tema de la brújula</string>
+    <string name="compass_theme_title">Tema de brújula</string>
     <string name="compass_theme_classic">Clásico</string>
     <string name="compass_theme_original">Original</string>
     <string name="compass_theme_gold">Oro</string>
