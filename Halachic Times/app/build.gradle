@@ -93,7 +93,7 @@ dependencies {
     implementation project(':common')
     implementation project(':locations')
     implementation project(':compass-lib')
-    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.9.0@aar') {
         transitive = true;
     }
 }
