@@ -42,6 +42,6 @@ Pink line in the compass utility points you towards the Holy of Holies in Jerusa
 
 Set repeating notifications to remind you of an upcoming time.
 
-Calendar library by KosherJava.
+Calendar library by [KosherJava](/KosherJava/zmanim).
 
 Please report spelling and grammatical errors.
