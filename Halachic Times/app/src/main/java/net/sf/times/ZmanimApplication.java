@@ -18,6 +18,8 @@ package net.sf.times;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.crashlytics.android.Crashlytics;
+
 import net.sf.app.LocaleCallbacks;
 import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
@@ -26,6 +28,8 @@ import net.sf.times.location.AddressProvider;
 import net.sf.times.location.LocationApplication;
 import net.sf.times.location.LocationsProviderFactory;
 import net.sf.times.location.ZmanimLocations;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Zmanim application.
@@ -47,5 +51,11 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
     @Override
     protected LocationsProviderFactory<AddressProvider, ZmanimLocations> createProviderFactory(Context context) {
         return new ZmanimProviderFactoryImpl(context);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Fabric.with(this, new Crashlytics());
     }
 }
