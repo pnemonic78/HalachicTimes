@@ -261,6 +261,8 @@
     <string name="midnight_guard_summary">Second watch</string>
     <string name="morning_guard">Morning guard</string>
     <string name="morning_guard_summary">Third watch</string>
+    <string name="guards_3" translatable="false">3</string>
+    <string name="guards_4" translatable="false">4</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Latest time to eat <i>chametz</i></string>

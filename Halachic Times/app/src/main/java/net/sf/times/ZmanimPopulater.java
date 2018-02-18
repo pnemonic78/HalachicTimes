@@ -117,6 +117,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_3_7 = ZmanimPreferences.Values.OPINION_3_7;
     protected static final String OPINION_3_8 = ZmanimPreferences.Values.OPINION_3_8;
     protected static final String OPINION_30 = ZmanimPreferences.Values.OPINION_30;
+    protected static final String OPINION_4 = ZmanimPreferences.Values.OPINION_4;
     protected static final String OPINION_4_37 = ZmanimPreferences.Values.OPINION_4_37;
     protected static final String OPINION_4_61 = ZmanimPreferences.Values.OPINION_4_61;
     protected static final String OPINION_4_8 = ZmanimPreferences.Values.OPINION_4_8;
@@ -156,10 +157,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Creates a new populater.
      *
-     * @param context
-     *         the context.
-     * @param settings
-     *         the application preferences.
+     * @param context  the context.
+     * @param settings the application preferences.
      */
     public ZmanimPopulater(Context context, ZmanimPreferences settings) {
         this.context = context;
@@ -194,10 +193,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Populate the list of times.
      *
-     * @param adapter
-     *         the adapter to populate.
-     * @param remote
-     *         is for remote views?
+     * @param adapter the adapter to populate.
+     * @param remote  is for remote views?
      */
     public void populate(A adapter, boolean remote) {
         if (adapter == null) {
@@ -218,14 +215,10 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Populate the list of times - implementation.
      *
-     * @param adapter
-     *         the adapter to populate.
-     * @param remote
-     *         is for remote views?
-     * @param context
-     *         the context.
-     * @param settings
-     *         the preferences.
+     * @param adapter  the adapter to populate.
+     * @param remote   is for remote views?
+     * @param context  the context.
+     * @param settings the preferences.
      */
     protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         ComplexZmanimCalendar cal = getCalendar();
@@ -958,8 +951,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the number of candles to light.
      *
-     * @param jcal
-     *         the Jewish calendar.
+     * @param jcal the Jewish calendar.
      * @return the number of candles to light, the holiday, and when to light.
      */
     protected int getCandles(JewishCalendar jcal) {
@@ -1046,8 +1038,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Set the calendar.
      *
-     * @param calendar
-     *         the calendar.
+     * @param calendar the calendar.
      */
     public void setCalendar(Calendar calendar) {
         this.calendar.setCalendar(calendar);
@@ -1056,8 +1047,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Set the calendar time.
      *
-     * @param time
-     *         the time in milliseconds.
+     * @param time the time in milliseconds.
      */
     public void setCalendar(long time) {
         Calendar cal = getCalendar().getCalendar();
@@ -1067,8 +1057,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Sets the {@link GeoLocation}.
      *
-     * @param geoLocation
-     *         the location.
+     * @param geoLocation the location.
      */
     public void setGeoLocation(GeoLocation geoLocation) {
         this.calendar.setGeoLocation(geoLocation);
@@ -1077,8 +1066,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Sets whether to use Israel holiday scheme or not.
      *
-     * @param inIsrael
-     *         set to {@code true} for calculations for Israel.
+     * @param inIsrael set to {@code true} for calculations for Israel.
      */
     public void setInIsrael(boolean inIsrael) {
         this.inIsrael = inIsrael;
@@ -1114,8 +1102,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish date.
      *
-     * @param date
-     *         the civil date and time.
+     * @param date the civil date and time.
      * @return the date - {@code null} if time is invalid.
      */
     protected JewishDate getJewishDate(long date) {
@@ -1125,8 +1112,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish date.
      *
-     * @param date
-     *         the civil date and time.
+     * @param date the civil date and time.
      * @return the date - {@code null} if time is invalid.
      */
     protected JewishDate getJewishDate(long date, ComplexZmanimCalendar calendar, ZmanimPreferences settings) {
@@ -1136,10 +1122,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish date.
      *
-     * @param date
-     *         the civil date and time.
-     * @param sunset
-     *         the sunset time.
+     * @param date   the civil date and time.
+     * @param sunset the sunset time.
      * @return the date - {@code null} if time is invalid.
      */
     protected JewishDate getJewishDate(long date, long sunset) {

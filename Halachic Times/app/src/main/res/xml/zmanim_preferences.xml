@@ -227,6 +227,9 @@
             android:name="xml"
             android:value="@xml/zman_midnight_guard_preferences"/>
         <extra
+            android:name="opinion"
+            android:value="guards"/>
+        <extra
             android:name="reminder"
             android:value="midnight_guard.reminder"/>
     </PreferenceScreen>
@@ -237,6 +240,9 @@
         <extra
             android:name="xml"
             android:value="@xml/zman_morning_guard_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="guards"/>
         <extra
             android:name="reminder"
             android:value="morning_guard.reminder"/>

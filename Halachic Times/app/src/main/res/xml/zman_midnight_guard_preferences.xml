@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <ListPreference
+        android:defaultValue="@string/guards_defaultValue"
+        android:dialogIcon="@drawable/ic_settings_opinion"
+        android:entries="@array/guards_entries"
+        android:entryValues="@array/guards_values"
+        android:icon="@drawable/ic_settings_opinion"
+        android:key="guards"
+        android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"
         android:dialogIcon="@drawable/ic_settings_alarm"

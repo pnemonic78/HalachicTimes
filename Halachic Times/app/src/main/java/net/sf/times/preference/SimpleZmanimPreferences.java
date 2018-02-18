@@ -15,14 +15,6 @@
  */
 package net.sf.times.preference;
 
-import android.content.Context;
-import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
-import android.media.AudioManager;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
 import net.sf.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
@@ -32,6 +24,14 @@ import net.sf.preference.ThemePreferences;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sourceforge.zmanim.ShaahZmanis;
+
+import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -65,6 +65,7 @@ import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_3_65;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_3_676;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_3_7;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_3_8;
+import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_4;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_4_37;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_4_61;
 import static net.sf.times.preference.ZmanimPreferences.Values.OPINION_4_8;
@@ -108,8 +109,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     /**
      * Constructs a new preferences.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public SimpleZmanimPreferences(Context context) {
         super(context);
@@ -331,6 +331,11 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     @Override
     public String getLatestKiddushLevana() {
         return preferences.getString(KEY_OPINION_LATEST_LEVANA, context.getString(R.string.levana_latest_defaultValue));
+    }
+
+    @Override
+    public int getGuardsCount() {
+        return Integer.parseInt(preferences.getString(KEY_OPINION_GUARDS, context.getString(R.string.guards_defaultValue)));
     }
 
     @Override
@@ -659,8 +664,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     /**
      * Initialize. Should be called only once when application created.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public static void init(Context context) {
         final Resources res = context.getResources();
@@ -687,6 +691,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_3_7 = res.getString(R.string.opinion_value_3_7);
         OPINION_3_8 = res.getString(R.string.opinion_value_3_8);
         OPINION_30 = res.getString(R.string.opinion_value_30);
+        OPINION_4 = res.getString(R.string.opinion_value_4);
         OPINION_4_37 = res.getString(R.string.opinion_value_4_37);
         OPINION_4_61 = res.getString(R.string.opinion_value_4_61);
         OPINION_4_8 = res.getString(R.string.opinion_value_4_8);

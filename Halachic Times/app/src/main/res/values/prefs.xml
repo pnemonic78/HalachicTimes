@@ -26,6 +26,7 @@
     <string name="opinion_value_3_7" translatable="false">3.7</string>
     <string name="opinion_value_3_8" translatable="false">3.8</string>
     <string name="opinion_value_3_days" translatable="false">@string/opinion_value_default</string>
+    <string name="opinion_value_4" translatable="false">4</string>
     <string name="opinion_value_4_37" translatable="false">4.37</string>
     <string name="opinion_value_4_61" translatable="false">4.61</string>
     <string name="opinion_value_4_8" translatable="false">4.8</string>
@@ -80,6 +81,7 @@
     <string name="sunset_defaultValue" translatable="false">@string/opinion_value_sea</string>
     <string name="tallis_defaultValue" translatable="false">@string/opinion_value_11_5</string>
     <string name="twilight_defaultValue" translatable="false">@string/opinion_value_2_stars</string>
+    <string name="guards_defaultValue" translatable="false">@string/opinion_value_3</string>
 
     <string name="reminder_stream_value_alarm" translatable="false">4</string>
     <string name="reminder_stream_value_notification" translatable="false">5</string>
