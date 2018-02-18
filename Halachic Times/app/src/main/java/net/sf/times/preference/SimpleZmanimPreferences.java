@@ -334,8 +334,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
-    public int getGuardsCount() {
-        return Integer.parseInt(preferences.getString(KEY_OPINION_GUARDS, context.getString(R.string.guards_defaultValue)));
+    public String getGuardsCount() {
+        return preferences.getString(KEY_OPINION_GUARDS, context.getString(R.string.guards_defaultValue));
     }
 
     @Override

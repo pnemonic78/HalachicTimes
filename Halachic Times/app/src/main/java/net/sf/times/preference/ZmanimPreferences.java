@@ -368,7 +368,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      *
      * @return the opinion.
      */
-    int getGuardsCount();
+    String getGuardsCount();
 
     /**
      * Get the opinion for earliest kiddush levana.
