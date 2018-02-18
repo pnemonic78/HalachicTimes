@@ -19,6 +19,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import static android.content.ContentResolver.CURSOR_DIR_BASE_TYPE;
+import static android.content.ContentResolver.CURSOR_ITEM_BASE_TYPE;
+
 /**
  * Location provider contract.
  *
@@ -104,12 +107,12 @@ public class LocationContract {
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.address";
+        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/net.sf.times.location.address";
 
         /**
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.times.location.address";
+        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/net.sf.times.location.address";
     }
 
     /**
@@ -160,12 +163,12 @@ public class LocationContract {
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.elevation";
+        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/net.sf.times.location.elevation";
 
         /**
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.times.location.elevation";
+        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/net.sf.times.location.elevation";
     }
 
     /**
@@ -206,12 +209,12 @@ public class LocationContract {
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.times.location.city";
+        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/net.sf.times.location.city";
 
         /**
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.times.location.city";
+        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/net.sf.times.location.city";
 
         /** Database table for addresses. */
         public static final String TABLE_ADDRESSES = "addresses";
