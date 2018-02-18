@@ -800,12 +800,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
 
-        date = getMidnightGuard(cal, settings);
+        final long sunriseTomorrow = getSunriseTomorrow(cal, settings);
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            summary = R.string.midnight_guard_summary;
+            date = getMidnightGuard4(sunset, sunriseTomorrow);
+            summary = R.string.guard_second;
         } else {
-            summary = R.string.midnight_guard_summary;
+            date = getMidnightGuard3(sunset, sunriseTomorrow);
+            summary = R.string.guard_second;
         }
         adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote);
 
@@ -826,12 +828,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
 
-        date = getMorningGuard(cal, settings);
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            summary = R.string.morning_guard_summary;
+            date = getMorningGuard4(sunset, sunriseTomorrow);
+            summary = R.string.guard_fourth;
         } else {
-            summary = R.string.morning_guard_summary;
+            date = getMorningGuard3(sunset, sunriseTomorrow);
+            summary = R.string.guard_third;
         }
         adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
 

@@ -131,9 +131,9 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Guardia di mezzo</string>
-    <string name="midnight_guard_summary">Secondo turno</string>
+    <string name="guard_second">Secondo turno</string>
     <string name="morning_guard">Guardia del mattino</string>
-    <string name="morning_guard_summary">Terzo turno</string>
+    <string name="guard_third">Terzo turno</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Ultime tempo per mangiare <i>chametz</i></string>

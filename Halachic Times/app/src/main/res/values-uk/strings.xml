@@ -131,9 +131,9 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Середній зсув</string>
-    <string name="midnight_guard_summary">Другий зміна</string>
+    <string name="guard_second">Другий зміна</string>
     <string name="morning_guard">Ранковий зсув</string>
-    <string name="morning_guard_summary">Третя зміна</string>
+    <string name="guard_third">Третя зміна</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Останній час їсти <i>хамец</i></string>

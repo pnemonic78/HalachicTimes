@@ -258,9 +258,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Midnight guard</string>
-    <string name="midnight_guard_summary">Second watch</string>
     <string name="morning_guard">Morning guard</string>
-    <string name="morning_guard_summary">Third watch</string>
+    <string name="guard_first">First watch</string>
+    <string name="guard_second">Second watch</string>
+    <string name="guard_third">Third watch</string>
+    <string name="guard_fourth">Fourth watch</string>
     <string name="guards_3" translatable="false">3</string>
     <string name="guards_4" translatable="false">4</string>
 

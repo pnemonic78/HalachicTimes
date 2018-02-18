@@ -830,29 +830,29 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         long sunrise = getSunriseTomorrow(cal, settings);
 
         date = sunset;
-        title = R.string.sunset;
+        title = R.string.guard_first;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         String opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
             date = getMidnightGuard4(sunset, sunrise);
-            title = R.string.midnight_guard_summary;
+            title = R.string.guard_second;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
             date = getMidnight(cal, settings);
-            title = R.string.midnight;
+            title = R.string.guard_third;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
             date = getMorningGuard4(sunset, sunrise);
-            title = R.string.morning_guard_summary;
+            title = R.string.guard_fourth;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
         } else {
             date = getMidnightGuard3(sunset, sunrise);
-            title = R.string.midnight_guard_summary;
+            title = R.string.guard_second;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
             date = getMorningGuard3(sunset, sunrise);
-            title = R.string.morning_guard_summary;
+            title = R.string.guard_third;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
         }
     }

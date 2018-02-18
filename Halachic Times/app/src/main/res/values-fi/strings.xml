@@ -131,9 +131,9 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Keskimmäinen vartija</string>
-    <string name="midnight_guard_summary">Toinen siirtymä</string>
+    <string name="guard_second">Toinen siirtymä</string>
     <string name="morning_guard">Aamu vartija</string>
-    <string name="morning_guard_summary">Kolmas siirtymä</string>
+    <string name="guard_third">Kolmas siirtymä</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Uusin aika syödä <i>chamez</i></string>

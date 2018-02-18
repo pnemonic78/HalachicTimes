@@ -131,9 +131,9 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Garde du Milieu</string>
-    <string name="midnight_guard_summary">Deuxième quart de travail</string>
+    <string name="guard_second">Deuxième quart de travail</string>
     <string name="morning_guard">Garde du matin</string>
-    <string name="morning_guard_summary">Troisième quart de travail</string>
+    <string name="guard_third">Troisième quart de travail</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Heure limite de consommation de <i>\'hamets</i></string>
