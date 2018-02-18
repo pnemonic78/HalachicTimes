@@ -37,6 +37,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import net.sf.times.R;
+import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimAdapter;
 import net.sf.times.ZmanimApplication;
 import net.sf.times.ZmanimItem;
@@ -146,8 +147,7 @@ public class ZmanimReminder {
     /**
      * Constructs a new service.
      *
-     * @param context
-     *         The context.
+     * @param context The context.
      */
     public ZmanimReminder(Context context) {
         this.context = context;
@@ -168,8 +168,7 @@ public class ZmanimReminder {
     /**
      * Setup the first reminder for today.
      *
-     * @param settings
-     *         the preferences.
+     * @param settings the preferences.
      */
     public void remind(ZmanimPreferences settings) {
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
@@ -196,10 +195,8 @@ public class ZmanimReminder {
     /**
      * Setup the first reminder for the week.
      *
-     * @param settings
-     *         the preferences.
-     * @param adapter
-     *         the populated adapter.
+     * @param settings the preferences.
+     * @param adapter  the populated adapter.
      */
     private void remind(ZmanimPreferences settings, ZmanimPopulater<ZmanimAdapter> populater, ZmanimAdapter adapter) {
         final long latest = settings.getLatestReminder();
@@ -290,10 +287,8 @@ public class ZmanimReminder {
     /**
      * Notify now.
      *
-     * @param settings
-     *         the preferences.
-     * @param item
-     *         the zmanim item to notify about.
+     * @param settings the preferences.
+     * @param item     the zmanim item to notify about.
      */
     public void notifyNow(ZmanimPreferences settings, ZmanimItem item) {
         CharSequence contentTitle = context.getText(item.titleId);
@@ -307,10 +302,8 @@ public class ZmanimReminder {
     /**
      * Notify now.
      *
-     * @param settings
-     *         the preferences.
-     * @param item
-     *         the reminder item.
+     * @param settings the preferences.
+     * @param item     the reminder item.
      */
     public void notifyNow(ZmanimPreferences settings, ZmanimReminderItem item) {
         Log.i(TAG, "notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
@@ -325,10 +318,8 @@ public class ZmanimReminder {
     /**
      * Set alarm manager to alert us for the next reminder.
      *
-     * @param item
-     *         the zmanim item to notify about.
-     * @param triggerAt
-     *         the upcoming reminder.
+     * @param item      the zmanim item to notify about.
+     * @param triggerAt the upcoming reminder.
      */
     public void notifyFuture(ZmanimItem item, long triggerAt) {
         CharSequence contentTitle = context.getText(item.titleId);
@@ -349,6 +340,10 @@ public class ZmanimReminder {
     private PendingIntent createActivityIntent() {
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
+        if (intent == null) {
+            Log.w(TAG, "Launch activity not found!");
+            intent = new Intent(context, ZmanimActivity.class);
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -451,8 +446,7 @@ public class ZmanimReminder {
      * Format the date and time with seconds.<br>
      * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
      *
-     * @param time
-     *         the time to format.
+     * @param time the time to format.
      * @return the formatted time.
      */
     private String formatDateTime(Date time) {
@@ -465,8 +459,7 @@ public class ZmanimReminder {
     /**
      * Format the date and time with seconds.
      *
-     * @param time
-     *         the time to format.
+     * @param time the time to format.
      * @return the formatted time.
      * @see #formatDateTime(Date)
      */
@@ -555,10 +548,8 @@ public class ZmanimReminder {
     /**
      * Allow the reminder to send a notification?
      *
-     * @param item
-     *         the item that should be reminded.
-     * @param jcal
-     *         the Jewish calendar as of now.
+     * @param item the item that should be reminded.
+     * @param jcal the Jewish calendar as of now.
      * @return can the reminder be activated?
      */
     private boolean allowReminder(ZmanimPreferences settings, ZmanimItem item, JewishCalendar jcal) {
@@ -568,12 +559,9 @@ public class ZmanimReminder {
     /**
      * Allow the reminder to send a notification?
      *
-     * @param settings
-     *         the preferences with reminder day flags.
-     * @param itemId
-     *         the item that should be reminded.
-     * @param jcal
-     *         the Jewish calendar as of now.
+     * @param settings the preferences with reminder day flags.
+     * @param itemId   the item that should be reminded.
+     * @param jcal     the Jewish calendar as of now.
      * @return can the reminder be activated?
      */
     private boolean allowReminder(ZmanimPreferences settings, int itemId, JewishCalendar jcal) {
@@ -615,8 +603,7 @@ public class ZmanimReminder {
     /**
      * Set alarm manager to cancel alert reminders.
      *
-     * @param triggerAt
-     *         when to stop.
+     * @param triggerAt when to stop.
      */
     private void cancelFuture(long triggerAt) {
         Log.i(TAG, "cancel future at [" + formatDateTime(triggerAt) + "]");
@@ -656,10 +643,8 @@ public class ZmanimReminder {
     /**
      * Notify upcoming time.
      *
-     * @param settings
-     *         the preferences.
-     * @param item
-     *         the next item.
+     * @param settings the preferences.
+     * @param item     the next item.
      */
     public void notifyUpcoming(ZmanimPreferences settings, ZmanimItem item) {
         PendingIntent contentIntent = createActivityIntent();
@@ -683,10 +668,8 @@ public class ZmanimReminder {
     /**
      * Silence the notification at some time in the future.
      *
-     * @param item
-     *         the item to show.
-     * @param triggerAt
-     *         when to silence.
+     * @param item      the item to show.
+     * @param triggerAt when to silence.
      */
     private void silenceFuture(ZmanimReminderItem item, long triggerAt) {
         Log.i(TAG, "silence future at [" + formatDateTime(triggerAt) + "]");
@@ -720,10 +703,8 @@ public class ZmanimReminder {
     /**
      * Replace the current notification with a silent notification.
      *
-     * @param settings
-     *         the preferences.
-     * @param item
-     *         the reminder item.
+     * @param settings the preferences.
+     * @param item     the reminder item.
      */
     private void silence(ZmanimPreferences settings, ZmanimReminderItem item) {
         Log.i(TAG, "silence now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
