@@ -800,17 +800,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
 
-        final long sunriseTomorrow = getSunriseTomorrow(cal, settings);
-        opinion = settings.getGuardsCount();
-        if (OPINION_4.equals(opinion)) {
-            date = getMidnightGuard4(sunset, sunriseTomorrow);
-            summary = R.string.guard_second;
-        } else {
-            date = getMidnightGuard3(sunset, sunriseTomorrow);
-            summary = R.string.guard_second;
-        }
-        adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote);
-
         opinion = settings.getMidnight();
         if (OPINION_12.equals(opinion)) {
             date = midday;
@@ -827,10 +816,22 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.midnight_summary;
         }
         adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+        final long midnight = date;
+
+        final long sunriseTomorrow = getSunriseTomorrow(cal, settings);
+        opinion = settings.getGuardsCount();
+        if (OPINION_4.equals(opinion)) {
+            date = getMidnightGuard4(sunset, midnight);
+            summary = R.string.guard_second;
+        } else {
+            date = getMidnightGuard3(sunset, sunriseTomorrow);
+            summary = R.string.guard_second;
+        }
+        adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote);
 
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            date = getMorningGuard4(sunset, sunriseTomorrow);
+            date = getMorningGuard4(midnight, sunriseTomorrow);
             summary = R.string.guard_fourth;
         } else {
             date = getMorningGuard3(sunset, sunriseTomorrow);
@@ -1279,13 +1280,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     protected long getMidnightGuard(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         long sunset = getSunset(cal, settings);
-        long sunrise = getSunriseTomorrow(cal, settings);
 
         String opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            return getMidnightGuard4(sunset, sunrise);
+            return getMidnightGuard4(sunset, getMidnight(cal, settings));
         }
-        return getMidnightGuard3(sunset, sunrise);
+        return getMidnightGuard3(sunset, getSunriseTomorrow(cal, settings));
     }
 
     protected long getMidnightGuard3(long sunset, long sunrise) {
@@ -1296,12 +1296,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return sunset + (night / 3L);
     }
 
-    protected long getMidnightGuard4(long sunset, long sunrise) {
-        if ((sunset == NEVER) || (sunrise == NEVER)) {
+    protected long getMidnightGuard4(long sunset, long midnight) {
+        if ((sunset == NEVER) || (midnight == NEVER)) {
             return NEVER;
         }
-        long night = sunrise - sunset;
-        return sunset + (night >> 2);
+        return sunset + ((midnight - sunset) >> 1);
     }
 
     /**
@@ -1314,14 +1313,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * @return the Third Guard.
      */
     protected long getMorningGuard(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        long sunset = getSunset(cal, settings);
         long sunrise = getSunriseTomorrow(cal, settings);
 
         String opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            return getMorningGuard4(sunset, sunrise);
+            return getMorningGuard4(getMidnight(cal, settings), sunrise);
         }
-        return getMorningGuard3(sunset, sunrise);
+        return getMorningGuard3(getSunset(cal, settings), sunrise);
     }
 
     protected long getMorningGuard3(long sunset, long sunrise) {
@@ -1332,12 +1330,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return sunset + ((night << 1) / 3L);//sunset + (night * 2 / 3)
     }
 
-    protected long getMorningGuard4(long sunset, long sunrise) {
-        if ((sunset == NEVER) || (sunrise == NEVER)) {
+    protected long getMorningGuard4(long midnight, long sunrise) {
+        if ((midnight == NEVER) || (sunrise == NEVER)) {
             return NEVER;
         }
-        long night = sunrise - sunset;
-        return sunset + (night >> 1) + (night >> 2);//sunset + (night * 3 / 4)
+        return midnight + ((sunrise - midnight) >> 1);
     }
 
 }

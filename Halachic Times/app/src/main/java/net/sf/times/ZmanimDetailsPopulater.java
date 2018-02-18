@@ -835,15 +835,17 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         String opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            date = getMidnightGuard4(sunset, sunrise);
+            long midnight = getMidnight(cal, settings);
+
+            date = getMidnightGuard4(sunset, midnight);
             title = R.string.guard_second;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
-            date = getMidnight(cal, settings);
+            date = midnight;
             title = R.string.guard_third;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
-            date = getMorningGuard4(sunset, sunrise);
+            date = getMorningGuard4(midnight, sunrise);
             title = R.string.guard_fourth;
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
         } else {
