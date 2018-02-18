@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Garda de mijloc</string>
-    <string name="midnight_guard_summary">A doua schimbare</string>
     <string name="morning_guard">Paza de dimineata</string>
-    <string name="morning_guard_summary">A treia schimbare</string>
+    <string name="guard_first">Primul ceas</string>
+    <string name="guard_second">Al doilea ceas</string>
+    <string name="guard_third">Al treilea ceas</string>
+    <string name="guard_fourth">Al patrulea ceas</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Ultima moment a manca <i>chametz</i></string>

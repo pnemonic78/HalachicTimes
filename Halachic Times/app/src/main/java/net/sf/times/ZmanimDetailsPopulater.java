@@ -36,9 +36,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     /**
      * Creates a new populater.
      *
-     * @param context
-     *         the context.
-     * @param settings
+     * @param context the context.
      */
     public ZmanimDetailsPopulater(Context context, ZmanimPreferences settings) {
         super(context, settings);
@@ -47,8 +45,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     /**
      * Set the master item id.
      *
-     * @param itemId
-     *         the master item id.
+     * @param itemId the master item id.
      */
     public void setItemId(int itemId) {
         this.itemId = itemId;
@@ -57,12 +54,9 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     /**
      * Populate the list of times.
      *
-     * @param adapter
-     *         the adapter to populate.
-     * @param remote
-     *         is for remote views?
-     * @param itemId
-     *         the master item id.
+     * @param adapter the adapter to populate.
+     * @param remote  is for remote views?
+     * @param itemId  the master item id.
      */
     public void populate(A adapter, boolean remote, int itemId) {
         setItemId(itemId);
@@ -832,17 +826,37 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         JewishDate jewishDate = getJewishCalendar();
         jewishDate.forward();
 
-        date = getSunset(cal, settings);
-        title = R.string.sunset;
+        long sunset = getSunset(cal, settings);
+        long sunrise = getSunriseTomorrow(cal, settings);
+
+        date = sunset;
+        title = R.string.guard_first;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
-        date = getMidnightGuard(cal, settings);
-        title = R.string.midnight_guard_summary;
-        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+        String opinion = settings.getGuardsCount();
+        if (OPINION_4.equals(opinion)) {
+            long midnight = getMidnight(cal, settings);
 
-        date = getMorningGuard(cal, settings);
-        title = R.string.morning_guard_summary;
-        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+            date = getMidnightGuard4(sunset, midnight);
+            title = R.string.guard_second;
+            adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+            date = midnight;
+            title = R.string.guard_third;
+            adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+            date = getMorningGuard4(midnight, sunrise);
+            title = R.string.guard_fourth;
+            adapter.add(title, SUMMARY_NONE, date, jewishDate);
+        } else {
+            date = getMidnightGuard3(sunset, sunrise);
+            title = R.string.guard_second;
+            adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+            date = getMorningGuard3(sunset, sunrise);
+            title = R.string.guard_third;
+            adapter.add(title, SUMMARY_NONE, date, jewishDate);
+        }
     }
 
     private void populateEatChametz(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {

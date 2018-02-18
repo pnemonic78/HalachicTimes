@@ -10,7 +10,7 @@
             android:value="@xml/zman_hour_preferences"/>
         <extra
             android:name="opinion"
-            android:value="hour"/>
+            android:value="@string/opinion_name_hour"/>
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
@@ -21,7 +21,7 @@
             android:value="@xml/zman_dawn_preferences"/>
         <extra
             android:name="opinion"
-            android:value="dawn"/>
+            android:value="@string/opinion_name_dawn"/>
         <extra
             android:name="reminder"
             android:value="dawn.reminder"/>
@@ -35,7 +35,7 @@
             android:value="@xml/zman_tallis_preferences"/>
         <extra
             android:name="opinion"
-            android:value="tallis"/>
+            android:value="@string/opinion_name_tallis"/>
         <extra
             android:name="reminder"
             android:value="tallis.reminder"/>
@@ -49,7 +49,7 @@
             android:value="@xml/zman_sunrise_preferences"/>
         <extra
             android:name="opinion"
-            android:value="sunrise"/>
+            android:value="@string/opinion_name_sunrise"/>
         <extra
             android:name="reminder"
             android:value="sunrise.reminder"/>
@@ -63,7 +63,7 @@
             android:value="@xml/zman_shema_preferences"/>
         <extra
             android:name="opinion"
-            android:value="shema"/>
+            android:value="@string/opinion_name_shema"/>
         <extra
             android:name="reminder"
             android:value="shema.reminder"/>
@@ -77,7 +77,7 @@
             android:value="@xml/zman_prayers_preferences"/>
         <extra
             android:name="opinion"
-            android:value="prayers"/>
+            android:value="@string/opinion_name_prayers"/>
         <extra
             android:name="reminder"
             android:value="prayers.reminder"/>
@@ -91,7 +91,7 @@
             android:value="@xml/zman_midday_preferences"/>
         <extra
             android:name="opinion"
-            android:value="midday"/>
+            android:value="@string/opinion_name_midday"/>
         <extra
             android:name="reminder"
             android:value="midday.reminder"/>
@@ -105,7 +105,7 @@
             android:value="@xml/zman_earliest_mincha_preferences"/>
         <extra
             android:name="opinion"
-            android:value="earliest_mincha"/>
+            android:value="@string/opinion_name_earliest_mincha"/>
         <extra
             android:name="reminder"
             android:value="earliest_mincha.reminder"/>
@@ -119,7 +119,7 @@
             android:value="@xml/zman_mincha_preferences"/>
         <extra
             android:name="opinion"
-            android:value="mincha"/>
+            android:value="@string/opinion_name_mincha"/>
         <extra
             android:name="reminder"
             android:value="mincha.reminder"/>
@@ -133,7 +133,7 @@
             android:value="@xml/zman_plug_hamincha_preferences"/>
         <extra
             android:name="opinion"
-            android:value="plug_hamincha"/>
+            android:value="@string/opinion_name_plug_hamincha"/>
         <extra
             android:name="reminder"
             android:value="plug_hamincha.reminder"/>
@@ -147,7 +147,7 @@
             android:value="@xml/zman_candles_preferences"/>
         <extra
             android:name="opinion"
-            android:value="candles_chanukka"/>
+            android:value="@string/opinion_name_candles_chanukka"/>
         <extra
             android:name="reminder"
             android:value="candles.reminder"/>
@@ -161,7 +161,7 @@
             android:value="@xml/zman_sunset_preferences"/>
         <extra
             android:name="opinion"
-            android:value="sunset"/>
+            android:value="@string/opinion_name_sunset"/>
         <extra
             android:name="reminder"
             android:value="sunset.reminder"/>
@@ -175,7 +175,7 @@
             android:value="@xml/zman_twilight_preferences"/>
         <extra
             android:name="opinion"
-            android:value="twilight"/>
+            android:value="@string/opinion_name_twilight"/>
         <extra
             android:name="reminder"
             android:value="twilight.reminder"/>
@@ -189,7 +189,7 @@
             android:value="@xml/zman_nightfall_preferences"/>
         <extra
             android:name="opinion"
-            android:value="nightfall"/>
+            android:value="@string/opinion_name_nightfall"/>
         <extra
             android:name="reminder"
             android:value="nightfall.reminder"/>
@@ -214,7 +214,7 @@
             android:value="@xml/zman_midnight_preferences"/>
         <extra
             android:name="opinion"
-            android:value="midnight"/>
+            android:value="@string/opinion_name_midnight"/>
         <extra
             android:name="reminder"
             android:value="midnight.reminder"/>
@@ -227,6 +227,9 @@
             android:name="xml"
             android:value="@xml/zman_midnight_guard_preferences"/>
         <extra
+            android:name="opinion"
+            android:value="@string/opinion_name_guards"/>
+        <extra
             android:name="reminder"
             android:value="midnight_guard.reminder"/>
     </PreferenceScreen>
@@ -237,6 +240,9 @@
         <extra
             android:name="xml"
             android:value="@xml/zman_morning_guard_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="@string/opinion_name_guards"/>
         <extra
             android:name="reminder"
             android:value="morning_guard.reminder"/>
@@ -250,7 +256,7 @@
             android:value="@xml/zman_levana_earliest_preferences"/>
         <extra
             android:name="opinion"
-            android:value="levana_earliest"/>
+            android:value="@string/opinion_name_levana_earliest"/>
         <extra
             android:name="reminder"
             android:value="levana_earliest.reminder"/>
@@ -264,7 +270,7 @@
             android:value="@xml/zman_levana_latest_preferences"/>
         <extra
             android:name="opinion"
-            android:value="levana_latest"/>
+            android:value="@string/opinion_name_levana_latest"/>
         <extra
             android:name="reminder"
             android:value="levana_latest.reminder"/>
@@ -278,7 +284,7 @@
             android:value="@xml/zman_chametz_preferences"/>
         <extra
             android:name="opinion"
-            android:value="burn_chametz"/>
+            android:value="@string/opinion_name_burn_chametz"/>
         <extra
             android:name="reminder"
             android:value="burn_chametz.reminder"/>
@@ -288,7 +294,7 @@
         android:defaultValue="@string/omer_defaultValue"
         android:entries="@array/omer_entries"
         android:entryValues="@array/omer_values"
-        android:key="omer"
+        android:key="@string/opinion_name_omer"
         android:title="@string/omer"/>
 
 </PreferenceScreen>

@@ -7,7 +7,7 @@
         android:entries="@array/tallis_entries"
         android:entryValues="@array/tallis_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="tallis"
+        android:key="@string/opinion_name_tallis"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"

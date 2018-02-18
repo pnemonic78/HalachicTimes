@@ -107,8 +107,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Creates a new database geocoder.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public DatabaseGeocoder(Context context) {
         this(context, LocaleUtils.getDefaultLocale(context));
@@ -117,10 +116,8 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Creates a new database geocoder.
      *
-     * @param context
-     *         the context.
-     * @param locale
-     *         the locale.
+     * @param context the context.
+     * @param locale  the locale.
      */
     public DatabaseGeocoder(Context context, Locale locale) {
         super(locale);
@@ -238,8 +235,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Format the address.
      *
-     * @param a
-     *         the address.
+     * @param a the address.
      * @return the formatted address name.
      */
     protected static CharSequence formatAddress(ZmanimAddress a) {
@@ -249,8 +245,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Fetch addresses from the database.
      *
-     * @param filter
-     *         a cursor filter.
+     * @param filter a cursor filter.
      * @return the list of addresses.
      */
     public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
@@ -304,10 +299,8 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Insert or update the address in the local database. The local database is
      * supposed to reduce redundant network requests.
      *
-     * @param location
-     *         the location.
-     * @param address
-     *         the address.
+     * @param location the location.
+     * @param address  the address.
      */
     public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
         if (address == null)
@@ -344,17 +337,22 @@ public class DatabaseGeocoder extends GeocoderBase {
         values.put(AddressColumns.FAVORITE, address.isFavorite());
 
         final ContentResolver resolver = context.getContentResolver();
-        if (insert) {
-            Uri uri = resolver.insert(Addresses.CONTENT_URI(context), values);
-            if (uri != null) {
-                id = ContentUris.parseId(uri);
-                if (id > 0L) {
-                    address.setId(id);
+        try {
+            if (insert) {
+                Uri uri = resolver.insert(Addresses.CONTENT_URI(context), values);
+                if (uri != null) {
+                    id = ContentUris.parseId(uri);
+                    if (id > 0L) {
+                        address.setId(id);
+                    }
                 }
+            } else {
+                Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
+                resolver.update(uri, values, null, null);
             }
-        } else {
-            Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
-            resolver.update(uri, values, null, null);
+        } catch (Exception e) {
+            // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
+            Log.e(TAG, "Error inserting address: " + e.getLocalizedMessage(), e);
         }
     }
 
@@ -368,8 +366,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Fetch elevations from the database.
      *
-     * @param filter
-     *         a cursor filter.
+     * @param filter a cursor filter.
      * @return the list of locations with elevations.
      */
     public List<ZmanimLocation> queryElevations(CursorFilter filter) {
@@ -408,8 +405,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * Insert or update the location with elevation in the local database. The
      * local database is supposed to reduce redundant network requests.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      */
     public void insertOrUpdateElevation(ZmanimLocation location) {
         if ((location == null) || !location.hasAltitude())
@@ -426,17 +422,22 @@ public class DatabaseGeocoder extends GeocoderBase {
 
         final ContentResolver resolver = context.getContentResolver();
         final Uri contentUri = Elevations.CONTENT_URI(context);
-        if (id == 0L) {
-            Uri uri = resolver.insert(contentUri, values);
-            if (uri != null) {
-                id = ContentUris.parseId(uri);
-                if (id > 0L) {
-                    location.setId(id);
+        try {
+            if (id == 0L) {
+                Uri uri = resolver.insert(contentUri, values);
+                if (uri != null) {
+                    id = ContentUris.parseId(uri);
+                    if (id > 0L) {
+                        location.setId(id);
+                    }
                 }
+            } else {
+                Uri uri = ContentUris.withAppendedId(contentUri, id);
+                resolver.update(uri, values, null, null);
             }
-        } else {
-            Uri uri = ContentUris.withAppendedId(contentUri, id);
-            resolver.update(uri, values, null, null);
+        } catch (Exception e) {
+            // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/elevation
+            Log.e(TAG, "Error inserting elevation" + e.getLocalizedMessage(), e);
         }
     }
 
@@ -450,8 +451,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Fetch cities from the database.
      *
-     * @param filter
-     *         a cursor filter.
+     * @param filter a cursor filter.
      * @return the list of cities.
      */
     public List<City> queryCities(CursorFilter filter) {
@@ -486,8 +486,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     /**
      * Insert or update the city in the local database.
      *
-     * @param city
-     *         the city.
+     * @param city the city.
      */
     public void insertOrUpdateCity(City city) {
         if (city == null)
@@ -499,19 +498,24 @@ public class DatabaseGeocoder extends GeocoderBase {
 
         final ContentResolver resolver = context.getContentResolver();
         long id = city.getId();
-        if (id == 0L) {
-            values.put(BaseColumns._ID, City.generateCityId(city));
+        try {
+            if (id == 0L) {
+                values.put(BaseColumns._ID, City.generateCityId(city));
 
-            Uri uri = resolver.insert(Cities.CONTENT_URI(context), values);
-            if (uri != null) {
-                id = ContentUris.parseId(uri);
-                if (id > 0L) {
-                    city.setId(id);
+                Uri uri = resolver.insert(Cities.CONTENT_URI(context), values);
+                if (uri != null) {
+                    id = ContentUris.parseId(uri);
+                    if (id > 0L) {
+                        city.setId(id);
+                    }
                 }
+            } else {
+                Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI(context), id);
+                resolver.update(uri, values, null, null);
             }
-        } else {
-            Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI(context), id);
-            resolver.update(uri, values, null, null);
+        } catch (Exception e) {
+            // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
+            Log.e(TAG, "Error inserting city: " + e.getLocalizedMessage(), e);
         }
     }
 

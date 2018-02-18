@@ -104,6 +104,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_OPINION_LATEST_LEVANA = "levana_latest";
     /** Preference name for omer count suffix. */
     String KEY_OPINION_OMER = "omer";
+    /** Preference name for guard count. */
+    String KEY_OPINION_GUARDS = "guards";
 
     String REMINDER_SUFFIX = ".reminder";
     String REMINDER_SUNDAY_SUFFIX = ".day." + Calendar.SUNDAY;
@@ -143,6 +145,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
         public static String OPINION_3_7;
         public static String OPINION_3_8;
         public static String OPINION_30;
+        public static String OPINION_4;
         public static String OPINION_4_37;
         public static String OPINION_4_61;
         public static String OPINION_4_8;
@@ -361,6 +364,13 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String getMidnight();
 
     /**
+     * Get the opinion for the number of night guards.
+     *
+     * @return the opinion.
+     */
+    String getGuardsCount();
+
+    /**
      * Get the opinion for earliest kiddush levana.
      *
      * @return the opinion.
@@ -377,10 +387,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Get reminder of the zman. The reminder is either the number of minutes before the zman, or an absolute time.
      *
-     * @param id
-     *         the zman id.
-     * @param time
-     *         the zman time.
+     * @param id   the zman id.
+     * @param time the zman time.
      * @return the reminder in milliseconds - {@code #NEVER} when no reminder.
      */
     long getReminder(int id, long time);
@@ -395,8 +403,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Set the time that was used for the latest reminder to now.
      *
-     * @param time
-     *         the time.
+     * @param time the time.
      */
     void setLatestReminder(long time);
 
@@ -426,8 +433,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Is the time emphasized?
      *
-     * @param id
-     *         the time id.
+     * @param id the time id.
      * @return {@code true} for emphasis.
      */
     boolean isEmphasis(int id);
@@ -442,8 +448,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Get the preference key name.
      *
-     * @param id
-     *         the time id.
+     * @param id the time id.
      * @return the key - {@code null} otherwise.
      */
     String toKey(int id);
@@ -451,8 +456,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Get the preference title id.
      *
-     * @param key
-     *         the time name.
+     * @param key the time name.
      * @return the id - {@code null} otherwise.
      */
     int toId(String key);
@@ -496,8 +500,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Get the widget theme.
      *
-     * @param value
-     *         the theme value.
+     * @param value the theme value.
      * @return the theme resource id.
      * @see #getThemeValue()
      */
@@ -515,8 +518,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Is the widget theme dark?
      *
-     * @param value
-     *         the theme value.
+     * @param value the theme value.
      * @return {@code true} if the theme has dark backgrounds and light texts.
      */
     boolean isAppWidgetDarkTheme(String value);

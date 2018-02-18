@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Vidurinė gvardija</string>
-    <string name="midnight_guard_summary">Antroji poslinkis</string>
     <string name="morning_guard">Ryto gvardija</string>
-    <string name="morning_guard_summary">Trečiasis poslinkis</string>
+    <string name="guard_first">Pirmasis poslinkis</string>
+    <string name="guard_second">Antroji poslinkis</string>
+    <string name="guard_third">Trečiasis poslinkis</string>
+    <string name="guard_fourth">Ketvirtas poslinkis</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Vėliausiai laikas valgyti <i>chamec</i></string>

@@ -28,7 +28,7 @@ import java.util.Locale;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.O;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
 import static net.sf.content.IntentUtils.putExtras;
 import static net.sf.times.remind.ZmanimReminderJobService.EXTRA_ACTION;
@@ -104,7 +104,8 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
                     .setExtras(extras)
                     .setPersisted(false)
                     .setRequiresDeviceIdle(false)
-                    .setOverrideDeadline(MINUTE_IN_MILLIS)
+                    .setOverrideDeadline(HOUR_IN_MILLIS)
+                    .setMinimumLatency(0L)
                     .build();
             scheduler.schedule(job);
         }

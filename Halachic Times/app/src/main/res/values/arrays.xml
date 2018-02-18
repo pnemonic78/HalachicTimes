@@ -340,6 +340,15 @@
         <item>@string/midnight_6</item>
     </string-array>
 
+    <string-array name="guards_values" translatable="false">
+        <item>@string/opinion_value_3</item>
+        <item>@string/opinion_value_4</item>
+    </string-array>
+    <string-array name="guards_entries" translatable="false">
+        <item>@string/guards_3</item>
+        <item>@string/guards_4</item>
+    </string-array>
+
     <string-array name="candles_chanukka_values" translatable="false">
         <item>@string/opinion_value_default</item>
         <item>@string/opinion_value_twilight</item>

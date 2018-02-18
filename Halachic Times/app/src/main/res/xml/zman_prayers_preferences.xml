@@ -7,7 +7,7 @@
         android:entries="@array/prayers_entries"
         android:entryValues="@array/prayers_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="prayers"
+        android:key="@string/opinion_name_prayers"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"

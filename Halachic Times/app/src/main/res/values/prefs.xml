@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="opinion_name_hour" translatable="false">hour</string>
+    <string name="opinion_name_dawn" translatable="false">dawn</string>
+    <string name="opinion_name_tallis" translatable="false">tallis</string>
+    <string name="opinion_name_sunrise" translatable="false">sunrise</string>
+    <string name="opinion_name_shema" translatable="false">shema</string>
+    <string name="opinion_name_prayers" translatable="false">prayers</string>
+    <string name="opinion_name_midday" translatable="false">midday</string>
+    <string name="opinion_name_earliest_mincha" translatable="false">earliest_mincha</string>
+    <string name="opinion_name_mincha" translatable="false">mincha</string>
+    <string name="opinion_name_plug_hamincha" translatable="false">plug_hamincha</string>
+    <string name="opinion_name_candles_chanukka" translatable="false">candles_chanukka</string>
+    <string name="opinion_name_sunset" translatable="false">sunset</string>
+    <string name="opinion_name_twilight" translatable="false">twilight</string>
+    <string name="opinion_name_nightfall" translatable="false">nightfall</string>
+    <string name="opinion_name_midnight" translatable="false">midnight</string>
+    <string name="opinion_name_guards" translatable="false">guards</string>
+    <string name="opinion_name_levana_earliest" translatable="false">levana_earliest</string>
+    <string name="opinion_name_levana_latest" translatable="false">levana_latest</string>
+    <string name="opinion_name_burn_chametz" translatable="false">burn_chametz</string>
+    <string name="opinion_name_omer" translatable="false">omer</string>
+    <string name="opinion_name_candles" translatable="false">candles</string>
+
     <string name="opinion_value_10" translatable="false">10.2</string>
     <string name="opinion_value_11" translatable="false">11</string>
     <string name="opinion_value_11_5" translatable="false">11.5</string>
@@ -26,6 +48,7 @@
     <string name="opinion_value_3_7" translatable="false">3.7</string>
     <string name="opinion_value_3_8" translatable="false">3.8</string>
     <string name="opinion_value_3_days" translatable="false">@string/opinion_value_default</string>
+    <string name="opinion_value_4" translatable="false">4</string>
     <string name="opinion_value_4_37" translatable="false">4.37</string>
     <string name="opinion_value_4_61" translatable="false">4.61</string>
     <string name="opinion_value_4_8" translatable="false">4.8</string>
@@ -80,6 +103,7 @@
     <string name="sunset_defaultValue" translatable="false">@string/opinion_value_sea</string>
     <string name="tallis_defaultValue" translatable="false">@string/opinion_value_11_5</string>
     <string name="twilight_defaultValue" translatable="false">@string/opinion_value_2_stars</string>
+    <string name="guards_defaultValue" translatable="false">@string/opinion_value_3</string>
 
     <string name="reminder_stream_value_alarm" translatable="false">4</string>
     <string name="reminder_stream_value_notification" translatable="false">5</string>

@@ -7,7 +7,7 @@
         android:entries="@array/levana_latest_entries"
         android:entryValues="@array/levana_latest_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="levana_latest"
+        android:key="@string/opinion_name_levana_latest"
         android:title="@string/opinion"/>
     <net.sf.preference.TimePreference
         android:defaultValue="@string/reminder_defaultValue"

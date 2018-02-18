@@ -7,7 +7,7 @@
         android:entries="@array/shema_entries"
         android:entryValues="@array/shema_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="shema"
+        android:key="@string/opinion_name_shema"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"

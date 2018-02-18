@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Mitt skift</string>
-    <string name="midnight_guard_summary">Andra skiftet</string>
     <string name="morning_guard">Morgonskift</string>
-    <string name="morning_guard_summary">Tredje skiftet</string>
+    <string name="guard_first">Första skiftet</string>
+    <string name="guard_second">Andra skiftet</string>
+    <string name="guard_third">Tredje skiftet</string>
+    <string name="guard_fourth">Fjärde skiftet</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Senaste tiden att äter <i>chametz</i></string>

@@ -7,7 +7,7 @@
         android:entries="@array/sunrise_entries"
         android:entryValues="@array/sunrise_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="sunrise"
+        android:key="@string/opinion_name_sunrise"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"

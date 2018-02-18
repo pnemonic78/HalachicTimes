@@ -7,7 +7,7 @@
         android:entries="@array/earliest_mincha_entries"
         android:entryValues="@array/earliest_mincha_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="earliest_mincha"
+        android:key="@string/opinion_name_earliest_mincha"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"

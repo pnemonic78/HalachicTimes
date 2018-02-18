@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">אשמורת התיכונה</string>
-    <string name="midnight_guard_summary">משמרת שניה</string>
     <string name="morning_guard">אשמורת הבוקר</string>
-    <string name="morning_guard_summary">משמרת שלישית</string>
+    <string name="guard_first">משמרת ראשונה</string>
+    <string name="guard_second">משמרת שנייה</string>
+    <string name="guard_third">משמרת שלישית</string>
+    <string name="guard_fourth">משמרת רביעית</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">סוף זמן אכילת חמץ</string>

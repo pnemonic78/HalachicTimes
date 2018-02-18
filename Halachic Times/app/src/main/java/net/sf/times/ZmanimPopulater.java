@@ -15,17 +15,16 @@
  */
 package net.sf.times;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
-
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
+
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.Calendar;
 
@@ -117,6 +116,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_3_7 = ZmanimPreferences.Values.OPINION_3_7;
     protected static final String OPINION_3_8 = ZmanimPreferences.Values.OPINION_3_8;
     protected static final String OPINION_30 = ZmanimPreferences.Values.OPINION_30;
+    protected static final String OPINION_4 = ZmanimPreferences.Values.OPINION_4;
     protected static final String OPINION_4_37 = ZmanimPreferences.Values.OPINION_4_37;
     protected static final String OPINION_4_61 = ZmanimPreferences.Values.OPINION_4_61;
     protected static final String OPINION_4_8 = ZmanimPreferences.Values.OPINION_4_8;
@@ -156,10 +156,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Creates a new populater.
      *
-     * @param context
-     *         the context.
-     * @param settings
-     *         the application preferences.
+     * @param context  the context.
+     * @param settings the application preferences.
      */
     public ZmanimPopulater(Context context, ZmanimPreferences settings) {
         this.context = context;
@@ -194,10 +192,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Populate the list of times.
      *
-     * @param adapter
-     *         the adapter to populate.
-     * @param remote
-     *         is for remote views?
+     * @param adapter the adapter to populate.
+     * @param remote  is for remote views?
      */
     public void populate(A adapter, boolean remote) {
         if (adapter == null) {
@@ -218,14 +214,10 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Populate the list of times - implementation.
      *
-     * @param adapter
-     *         the adapter to populate.
-     * @param remote
-     *         is for remote views?
-     * @param context
-     *         the context.
-     * @param settings
-     *         the preferences.
+     * @param adapter  the adapter to populate.
+     * @param remote   is for remote views?
+     * @param context  the context.
+     * @param settings the preferences.
      */
     protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         ComplexZmanimCalendar cal = getCalendar();
@@ -808,9 +800,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
 
-        date = getMidnightGuard(cal, settings);
-        adapter.add(R.string.midnight_guard, R.string.midnight_guard_summary, date, jewishDateTomorrow, remote);
-
         opinion = settings.getMidnight();
         if (OPINION_12.equals(opinion)) {
             date = midday;
@@ -827,9 +816,28 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.midnight_summary;
         }
         adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+        final long midnight = date;
 
-        date = getMorningGuard(cal, settings);
-        adapter.add(R.string.morning_guard, R.string.morning_guard_summary, date, jewishDateTomorrow, remote);
+        final long sunriseTomorrow = getSunriseTomorrow(cal, settings);
+        opinion = settings.getGuardsCount();
+        if (OPINION_4.equals(opinion)) {
+            date = getMidnightGuard4(sunset, midnight);
+            summary = R.string.guard_second;
+        } else {
+            date = getMidnightGuard3(sunset, sunriseTomorrow);
+            summary = R.string.guard_second;
+        }
+        adapter.add(R.string.midnight_guard, summary, date, jewishDateTomorrow, remote);
+
+        opinion = settings.getGuardsCount();
+        if (OPINION_4.equals(opinion)) {
+            date = getMorningGuard4(midnight, sunriseTomorrow);
+            summary = R.string.guard_fourth;
+        } else {
+            date = getMorningGuard3(sunset, sunriseTomorrow);
+            summary = R.string.guard_third;
+        }
+        adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
 
         switch (holidayToday) {
             case EREV_PESACH:
@@ -958,8 +966,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the number of candles to light.
      *
-     * @param jcal
-     *         the Jewish calendar.
+     * @param jcal the Jewish calendar.
      * @return the number of candles to light, the holiday, and when to light.
      */
     protected int getCandles(JewishCalendar jcal) {
@@ -1046,8 +1053,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Set the calendar.
      *
-     * @param calendar
-     *         the calendar.
+     * @param calendar the calendar.
      */
     public void setCalendar(Calendar calendar) {
         this.calendar.setCalendar(calendar);
@@ -1056,8 +1062,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Set the calendar time.
      *
-     * @param time
-     *         the time in milliseconds.
+     * @param time the time in milliseconds.
      */
     public void setCalendar(long time) {
         Calendar cal = getCalendar().getCalendar();
@@ -1067,8 +1072,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Sets the {@link GeoLocation}.
      *
-     * @param geoLocation
-     *         the location.
+     * @param geoLocation the location.
      */
     public void setGeoLocation(GeoLocation geoLocation) {
         this.calendar.setGeoLocation(geoLocation);
@@ -1077,8 +1081,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Sets whether to use Israel holiday scheme or not.
      *
-     * @param inIsrael
-     *         set to {@code true} for calculations for Israel.
+     * @param inIsrael set to {@code true} for calculations for Israel.
      */
     public void setInIsrael(boolean inIsrael) {
         this.inIsrael = inIsrael;
@@ -1114,8 +1117,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish date.
      *
-     * @param date
-     *         the civil date and time.
+     * @param date the civil date and time.
      * @return the date - {@code null} if time is invalid.
      */
     protected JewishDate getJewishDate(long date) {
@@ -1125,8 +1127,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish date.
      *
-     * @param date
-     *         the civil date and time.
+     * @param date the civil date and time.
      * @return the date - {@code null} if time is invalid.
      */
     protected JewishDate getJewishDate(long date, ComplexZmanimCalendar calendar, ZmanimPreferences settings) {
@@ -1136,10 +1137,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /**
      * Get the Jewish date.
      *
-     * @param date
-     *         the civil date and time.
-     * @param sunset
-     *         the sunset time.
+     * @param date   the civil date and time.
+     * @param sunset the sunset time.
      * @return the date - {@code null} if time is invalid.
      */
     protected JewishDate getJewishDate(long date, long sunset) {
@@ -1161,6 +1160,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = cal.getSunrise();
         }
         return (date != null) ? date : NEVER;
+    }
+
+    protected long getSunriseTomorrow(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        final ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
+        calTomorrow.getCalendar().add(Calendar.DATE, 1);
+        return getSunrise(calTomorrow, settings);
     }
 
     protected long getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
@@ -1245,6 +1250,25 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return (date != null) ? date : NEVER;
     }
 
+    protected long getMidnight(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        Long date;
+        String opinion = settings.getMidnight();
+        if (OPINION_12.equals(opinion)) {
+            date = getMidday(cal, settings);
+            if (date != NEVER) {
+                date += TWELVE_HOURS;
+            }
+        } else if (OPINION_6.equals(opinion)) {
+            date = getNightfall(cal, settings);
+            if (date != NEVER) {
+                date += SIX_HOURS;
+            }
+        } else {
+            date = cal.getSolarMidnight();
+        }
+        return (date != null) ? date : NEVER;
+    }
+
     /**
      * A method that returns "the midnight guard" (ashmurat hatichona).
      * <p/>
@@ -1256,18 +1280,27 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     protected long getMidnightGuard(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         long sunset = getSunset(cal, settings);
-        if (sunset == NEVER) {
+
+        String opinion = settings.getGuardsCount();
+        if (OPINION_4.equals(opinion)) {
+            return getMidnightGuard4(sunset, getMidnight(cal, settings));
+        }
+        return getMidnightGuard3(sunset, getSunriseTomorrow(cal, settings));
+    }
+
+    protected long getMidnightGuard3(long sunset, long sunrise) {
+        if ((sunset == NEVER) || (sunrise == NEVER)) {
             return NEVER;
         }
+        long night = sunrise - sunset;
+        return sunset + (night / 3L);
+    }
 
-        final ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
-        calTomorrow.getCalendar().add(Calendar.DATE, 1);
-        long sunrise = getSunrise(calTomorrow, settings);
-        if (sunrise == NEVER) {
+    protected long getMidnightGuard4(long sunset, long midnight) {
+        if ((sunset == NEVER) || (midnight == NEVER)) {
             return NEVER;
         }
-
-        return sunset + ((sunrise - sunset) / 3L);
+        return sunset + ((midnight - sunset) >> 1);
     }
 
     /**
@@ -1280,19 +1313,28 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * @return the Third Guard.
      */
     protected long getMorningGuard(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        long sunset = getSunset(cal, settings);
-        if (sunset == NEVER) {
+        long sunrise = getSunriseTomorrow(cal, settings);
+
+        String opinion = settings.getGuardsCount();
+        if (OPINION_4.equals(opinion)) {
+            return getMorningGuard4(getMidnight(cal, settings), sunrise);
+        }
+        return getMorningGuard3(getSunset(cal, settings), sunrise);
+    }
+
+    protected long getMorningGuard3(long sunset, long sunrise) {
+        if ((sunset == NEVER) || (sunrise == NEVER)) {
             return NEVER;
         }
+        long night = sunrise - sunset;
+        return sunset + ((night << 1) / 3L);//sunset + (night * 2 / 3)
+    }
 
-        final ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
-        calTomorrow.getCalendar().add(Calendar.DATE, 1);
-        long sunrise = getSunrise(calTomorrow, settings);
-        if (sunrise == NEVER) {
+    protected long getMorningGuard4(long midnight, long sunrise) {
+        if ((midnight == NEVER) || (sunrise == NEVER)) {
             return NEVER;
         }
-
-        return sunset + (((sunrise - sunset) << 1) / 3L);
+        return midnight + ((sunrise - midnight) >> 1);
     }
 
 }

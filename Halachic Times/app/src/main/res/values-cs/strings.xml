@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Střední stráž</string>
-    <string name="midnight_guard_summary">Druhá posun</string>
     <string name="morning_guard">Ranní stráž</string>
-    <string name="morning_guard_summary">Třetí posun</string>
+    <string name="guard_first">První směna</string>
+    <string name="guard_second">Druhá směna</string>
+    <string name="guard_third">Třetí směna</string>
+    <string name="guard_fourth">Čtvrtá směna</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Poslední čas jíst <i>chametz</i></string>
