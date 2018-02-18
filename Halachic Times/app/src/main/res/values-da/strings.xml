@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Midtvagt</string>
-    <string name="guard_second">Andet skift</string>
     <string name="morning_guard">Morgenvagt</string>
+    <string name="guard_first">Første skift</string>
+    <string name="guard_second">Andet skift</string>
     <string name="guard_third">Tredje skift</string>
+    <string name="guard_fourth">Fjerde skift</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Seneste tid til at spise <i>chamez</i></string>

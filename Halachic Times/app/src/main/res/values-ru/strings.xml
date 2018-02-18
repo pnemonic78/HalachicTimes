@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Средняя вахта</string>
-    <string name="guard_second">Вторая смена</string>
     <string name="morning_guard">Утренняя вахта</string>
+    <string name="guard_first">Первая смена</string>
+    <string name="guard_second">Вторая смена</string>
     <string name="guard_third">Третья смена</string>
+    <string name="guard_fourth">Четвертая смена</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Последнее время есть <i>хамец</i></string>

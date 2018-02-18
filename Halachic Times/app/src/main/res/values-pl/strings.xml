@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Bliski straż</string>
-    <string name="guard_second">Druga zmiana</string>
     <string name="morning_guard">Poranna straż</string>
+    <string name="guard_first">Pierwsza zmiana</string>
+    <string name="guard_second">Druga zmiana</string>
     <string name="guard_third">Trzecia zmiana</string>
+    <string name="guard_fourth">Czwarta zmiana</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Ostatni czas zjeść <i>chamec</i></string>

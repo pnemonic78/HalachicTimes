@@ -131,9 +131,11 @@
 
     <!-- Night Guards -->
     <string name="midnight_guard">Midden dienst</string>
-    <string name="guard_second">Tweede dienst</string>
     <string name="morning_guard">Ochtenddienst</string>
+    <string name="guard_first">Eerste dienst</string>
+    <string name="guard_second">Tweede dienst</string>
     <string name="guard_third">Derde dienst</string>
+    <string name="guard_fourth">Vierde dienst</string>
 
     <!-- Pesach -->
     <string name="eat_chametz">Laatste tijd om <i>chameets</i> te eten</string>
