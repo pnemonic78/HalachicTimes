@@ -7,7 +7,7 @@
         android:entries="@array/hour_entries"
         android:entryValues="@array/hour_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="hour"
+        android:key="@string/opinion_name_hour"
         android:title="@string/opinion"/>
     <CheckBoxPreference
         android:defaultValue="@bool/hour_visible_defaultValue"

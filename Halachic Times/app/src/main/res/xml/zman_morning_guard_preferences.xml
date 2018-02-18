@@ -7,7 +7,7 @@
         android:entries="@array/guards_entries"
         android:entryValues="@array/guards_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="guards"
+        android:key="@string/opinion_name_guards"
         android:title="@string/opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"

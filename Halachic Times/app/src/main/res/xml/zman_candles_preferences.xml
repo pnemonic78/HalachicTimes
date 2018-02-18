@@ -6,7 +6,7 @@
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:dialogTitle="@string/opinion"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="candles"
+        android:key="@string/opinion_name_candles"
         android:max="40"
         android:negativeButtonText="@string/cancel"
         android:positiveButtonText="@string/ok"
@@ -18,7 +18,7 @@
         android:entries="@array/candles_chanukka_entries"
         android:entryValues="@array/candles_chanukka_values"
         android:icon="@drawable/ic_settings_opinion"
-        android:key="candles_chanukka"
+        android:key="@string/opinion_name_candles_chanukka"
         android:title="@string/candles_chanukka_opinion"/>
     <net.sf.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"
