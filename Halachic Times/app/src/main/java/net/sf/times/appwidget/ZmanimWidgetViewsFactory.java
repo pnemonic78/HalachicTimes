@@ -246,7 +246,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
                 light = true;
                 break;
             default:
-                light = isBrightWallpaper(context);
+                light = !isBrightWallpaper(context);
                 break;
         }
         final Resources res = context.getResources();

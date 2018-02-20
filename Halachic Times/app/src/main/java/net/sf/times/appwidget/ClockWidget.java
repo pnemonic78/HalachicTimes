@@ -59,9 +59,9 @@ public class ClockWidget extends ZmanimAppWidget {
     protected int getLayoutId() {
         switch (getTheme()) {
             case R.style.Theme_AppWidget_Dark:
-                return R.layout.clock_widget;
-            case R.style.Theme_AppWidget_Light:
                 return R.layout.clock_widget_light;
+            case R.style.Theme_AppWidget_Light:
+                return R.layout.clock_widget;
             default:
                 if (isBrightWallpaper(getContext())) {
                     return R.layout.clock_widget_light;
