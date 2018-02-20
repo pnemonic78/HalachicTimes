@@ -46,8 +46,7 @@ public interface ThemePreferences {
     /**
      * Get the theme.
      *
-     * @param value
-     *         the theme value.
+     * @param value the theme value.
      * @return the theme resource id.
      * @see #getThemeValue()
      */
@@ -65,8 +64,7 @@ public interface ThemePreferences {
     /**
      * Is the theme dark?
      *
-     * @param value
-     *         the theme value.
+     * @param value the theme value.
      * @return {@code true} if the theme has dark backgrounds and light texts.
      */
     boolean isDarkTheme(String value);

@@ -124,8 +124,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Create a new times adapter.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return the adapter.
      */
     @SuppressWarnings("unchecked")
@@ -147,8 +146,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Create a new times populater.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return the populater.
      */
     @SuppressWarnings("unchecked")
@@ -175,8 +173,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Populate the list with times.
      *
-     * @param date
-     *         the date.
+     * @param date the date.
      */
     public A populateTimes(Calendar date) {
         // Called before attached to activity?
@@ -214,10 +211,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Bind the times to a list.
      *
-     * @param list
-     *         the list.
-     * @param adapter
-     *         the list adapter.
+     * @param list    the list.
+     * @param adapter the list adapter.
      */
     protected void bindViews(final ViewGroup list, A adapter) {
         if (list == null)
@@ -316,14 +311,10 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Bind the time to a list.
      *
-     * @param list
-     *         the list.
-     * @param position
-     *         the position index.
-     * @param row
-     *         the row view.
-     * @param item
-     *         the item.
+     * @param list     the list.
+     * @param position the position index.
+     * @param row      the row view.
+     * @param item     the item.
      */
     protected void bindView(ViewGroup list, int position, View row, ZmanimItem item) {
         if (row == null) {
@@ -337,12 +328,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Bind the date group header to a list.
      *
-     * @param list
-     *         the list.
-     * @param position
-     *         the position index.
-     * @param label
-     *         the formatted Hebrew date label.
+     * @param list     the list.
+     * @param position the position index.
+     * @param label    the formatted Hebrew date label.
      */
     @SuppressLint("InflateParams")
     protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
@@ -387,8 +375,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Mark the row as unselected.
      *
-     * @param view
-     *         the row view.
+     * @param view the row view.
      */
     private void unhighlight(View view) {
         highlightItemId = 0;
@@ -413,8 +400,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Mark the row as selected.
      *
-     * @param itemId
-     *         the row id.
+     * @param itemId the row id.
      */
     public void highlight(int itemId) {
         highlightItemId = itemId;
@@ -464,8 +450,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Set the view's visibility.
      *
-     * @param visibility
-     *         the visibility.
+     * @param visibility the visibility.
      * @see View#VISIBLE
      * @see View#INVISIBLE
      * @see View#GONE

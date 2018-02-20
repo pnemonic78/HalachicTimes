@@ -41,8 +41,7 @@ public class ActivityUtils {
     /**
      * Reset the title.
      *
-     * @param activity
-     *         the activity with a title.
+     * @param activity the activity with a title.
      */
     public static void restTitle(Activity activity) {
         try {
@@ -58,11 +57,9 @@ public class ActivityUtils {
     /**
      * Restart the activity.
      *
-     * @param activity
-     *         the activity.
-     * @param savedState
-     *         saved state from either {@link Activity#onSaveInstanceState(Bundle)}
-     *         or {@link Activity#onSaveInstanceState(Bundle, PersistableBundle)}.
+     * @param activity   the activity.
+     * @param savedState saved state from either {@link Activity#onSaveInstanceState(Bundle)}
+     *                   or {@link Activity#onSaveInstanceState(Bundle, PersistableBundle)}.
      */
     public static void restartActivity(Activity activity, Bundle savedState) {
         Intent intent = activity.getIntent();
@@ -81,8 +78,7 @@ public class ActivityUtils {
     /**
      * Restart the activity.
      *
-     * @param activity
-     *         the activity.
+     * @param activity the activity.
      */
     public static void restartActivity(Activity activity) {
         Bundle savedState = null;

@@ -34,8 +34,7 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
     /**
      * Constructs a new settings.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public SimpleThemePreferences(Context context) {
         super(context);
@@ -45,8 +44,7 @@ public class SimpleThemePreferences extends SimplePreferences implements ThemePr
     /**
      * Initialize. Should be called only once when application created.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public static void init(Context context) {
         final Resources res = context.getResources();

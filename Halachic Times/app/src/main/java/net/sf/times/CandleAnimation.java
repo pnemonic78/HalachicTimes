@@ -51,10 +51,8 @@ public class CandleAnimation implements Runnable {
     /**
      * Create a new animation.
      *
-     * @param handler
-     *         the timer.
-     * @param view
-     *         the image view.
+     * @param handler the timer.
+     * @param view    the image view.
      */
     public CandleAnimation(Handler handler, ImageView view) {
         this(handler, view, null);
@@ -63,12 +61,9 @@ public class CandleAnimation implements Runnable {
     /**
      * Create a new animation.
      *
-     * @param handler
-     *         the timer.
-     * @param view
-     *         the image view.
-     * @param random
-     *         the delay randomizer.
+     * @param handler the timer.
+     * @param view    the image view.
+     * @param random  the delay randomizer.
      */
     public CandleAnimation(Handler handler, ImageView view, Random random) {
         this.handler = handler;

@@ -41,8 +41,7 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     /**
      * Constructs a new settings.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public SimpleCompassPreferences(Context context) {
         super(context);
@@ -86,8 +85,7 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     /**
      * Initialize. Should be called only once when application created.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public static void init(Context context) {
         final Resources res = context.getResources();

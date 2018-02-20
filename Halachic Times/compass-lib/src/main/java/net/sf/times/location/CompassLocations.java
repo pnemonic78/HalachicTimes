@@ -27,8 +27,7 @@ public class CompassLocations extends LocationsProvider {
     /**
      * Constructs a new provider.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public CompassLocations(Context context) {
         super(context);

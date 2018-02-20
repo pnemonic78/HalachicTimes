@@ -68,12 +68,9 @@ public class ZmanimListWidget extends ZmanimWidget {
     /**
      * Bind the times to remote list view.
      *
-     * @param context
-     *         the context.
-     * @param appWidgetId
-     *         the app widget id.
-     * @param list
-     *         the remote list.
+     * @param context     the context.
+     * @param appWidgetId the app widget id.
+     * @param list        the remote list.
      */
     protected void bindListView(Context context, int appWidgetId, RemoteViews list) {
         Intent adapter = new Intent(context, ZmanimWidgetService.class);

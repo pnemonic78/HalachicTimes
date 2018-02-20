@@ -347,8 +347,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Set the date for the list.
      *
-     * @param date
-     *         the date, in milliseconds.
+     * @param date the date, in milliseconds.
      */
     private void setDate(long date) {
         if (date <= DATE_MIN) {
@@ -365,12 +364,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Set the date for the list.
      *
-     * @param year
-     *         the year.
-     * @param monthOfYear
-     *         the month of the year.
-     * @param dayOfMonth
-     *         the day of the month.
+     * @param year        the year.
+     * @param monthOfYear the month of the year.
+     * @param dayOfMonth  the day of the month.
      */
     private void setDate(int year, int monthOfYear, int dayOfMonth) {
         if ((year <= 1) || (monthOfYear < 0) || (dayOfMonth <= 0)) {
@@ -482,8 +478,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Show/hide the details list.
      *
-     * @param view
-     *         the master row view that was clicked.
+     * @param view the master row view that was clicked.
      */
     protected void toggleDetails(View view) {
         ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
@@ -497,8 +492,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Show/hide the details list.
      *
-     * @param itemId
-     *         the master item id.
+     * @param itemId the master item id.
      */
     protected void toggleDetails(int itemId) {
         if (!hasDetails(itemId))
@@ -689,8 +683,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Slide the view in from right to left.
      *
-     * @param view
-     *         the view to animate.
+     * @param view the view to animate.
      */
     protected void slideLeft(View view) {
         view.startAnimation(slideRightToLeft);
@@ -699,8 +692,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Slide the view in from left to right.
      *
-     * @param view
-     *         the view to animate.
+     * @param view the view to animate.
      */
     protected void slideRight(View view) {
         view.startAnimation(slideLeftToRight);
@@ -806,8 +798,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * Is the item a master with detail times?
      *
-     * @param itemId
-     *         the item id.
+     * @param itemId the item id.
      * @return {@code true} if the item has details.
      */
     protected boolean hasDetails(int itemId) {

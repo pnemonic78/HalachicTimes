@@ -112,10 +112,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Creates a new adapter.
      *
-     * @param context
-     *         the context.
-     * @param settings
-     *         the application preferences.
+     * @param context  the context.
+     * @param settings the application preferences.
      */
     public ZmanimAdapter(Context context, ZmanimPreferences settings) {
         super(context, R.layout.times_item);
@@ -168,10 +166,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Get the view holder.
      *
-     * @param position
-     *         the row index.
-     * @param convertView
-     *         the view.
+     * @param position    the row index.
+     * @param convertView the view.
      * @return the view holder.
      */
     @Nullable
@@ -182,12 +178,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Create a view holder.
      *
-     * @param position
-     *         the row index.
-     * @param convertView
-     *         the view.
-     * @param parent
-     *         the parent view.
+     * @param position    the row index.
+     * @param convertView the view.
+     * @param parent      the parent view.
      * @return the item view.
      */
     protected ViewHolder createViewHolder(int position, View convertView, ViewGroup parent) {
@@ -198,10 +191,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Bind the item to the view.
      *
-     * @param position
-     *         the row index.
-     * @param holder
-     *         the view holder.
+     * @param position the row index.
+     * @param holder   the view holder.
      * @return the item view.
      */
     protected void bindViewHolder(int position, ViewHolder holder) {
@@ -212,14 +203,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summaryId
-     *         the summary label id.
-     * @param time
-     *         the time.
-     * @param jewishDate
-     *         the Jewish date.
+     * @param titleId    the title label id.
+     * @param summaryId  the summary label id.
+     * @param time       the time.
+     * @param jewishDate the Jewish date.
      */
     public void add(int titleId, int summaryId, Long time, JewishDate jewishDate) {
         add(titleId, summaryId, time, jewishDate, false);
@@ -228,16 +215,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summaryId
-     *         the summary label id.
-     * @param time
-     *         the time.
-     * @param jewishDate
-     *         the Jewish date.
-     * @param remote
-     *         hide elapsed times for remote view?
+     * @param titleId    the title label id.
+     * @param summaryId  the summary label id.
+     * @param time       the time.
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
      */
     public void add(int titleId, int summaryId, Long time, JewishDate jewishDate, boolean remote) {
         add(titleId, summaryId, time == null ? NEVER : time, jewishDate, remote);
@@ -246,14 +228,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summaryId
-     *         the summary label id.
-     * @param time
-     *         the time in milliseconds.
-     * @param jewishDate
-     *         the Jewish date.
+     * @param titleId    the title label id.
+     * @param summaryId  the summary label id.
+     * @param time       the time in milliseconds.
+     * @param jewishDate the Jewish date.
      */
     public void add(int titleId, int summaryId, long time, JewishDate jewishDate) {
         add(titleId, summaryId, time, jewishDate, false);
@@ -262,16 +240,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summaryId
-     *         the summary label id.
-     * @param time
-     *         the time in milliseconds.
-     * @param jewishDate
-     *         the Jewish date.
-     * @param remote
-     *         hide elapsed times for remote view?
+     * @param titleId    the title label id.
+     * @param summaryId  the summary label id.
+     * @param time       the time in milliseconds.
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
      */
     public void add(int titleId, int summaryId, long time, JewishDate jewishDate, boolean remote) {
         add(titleId, (summaryId == 0) ? null : getContext().getText(summaryId), time, jewishDate, remote);
@@ -280,16 +253,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summary
-     *         the summary label.
-     * @param time
-     *         the time
-     * @param jewishDate
-     *         the Jewish date.
-     * @param remote
-     *         hide elapsed times for remote view?
+     * @param titleId    the title label id.
+     * @param summary    the summary label.
+     * @param time       the time
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
      */
     public void add(int titleId, CharSequence summary, Long time, JewishDate jewishDate, boolean remote) {
         add(titleId, summary, time == null ? NEVER : time, jewishDate, remote);
@@ -298,16 +266,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid date.
      *
-     * @param titleId
-     *         the row layout id.
-     * @param summary
-     *         the summary label.
-     * @param time
-     *         the time in milliseconds.
-     * @param jewishDate
-     *         the Jewish date.
-     * @param remote
-     *         hide elapsed times for remote view?
+     * @param titleId    the row layout id.
+     * @param summary    the summary label.
+     * @param time       the time in milliseconds.
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
      */
     public void add(int titleId, CharSequence summary, long time, JewishDate jewishDate, boolean remote) {
         add(titleId, summary, time, jewishDate, remote, titleId == R.string.hour);
@@ -316,18 +279,12 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid date.
      *
-     * @param titleId
-     *         the row layout id.
-     * @param summary
-     *         the summary label.
-     * @param time
-     *         the time in milliseconds.
-     * @param jewishDate
-     *         the Jewish date.
-     * @param remote
-     *         hide elapsed times for remote view?
-     * @param hour
-     *         format as hour?
+     * @param titleId    the row layout id.
+     * @param summary    the summary label.
+     * @param time       the time in milliseconds.
+     * @param jewishDate the Jewish date.
+     * @param remote     hide elapsed times for remote view?
+     * @param hour       format as hour?
      */
     public void add(int titleId, CharSequence summary, long time, JewishDate jewishDate, boolean remote, boolean hour) {
         if (time == NEVER) {
@@ -347,12 +304,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summaryId
-     *         the summary label id.
-     * @param time
-     *         the time in milliseconds.
+     * @param titleId   the title label id.
+     * @param summaryId the summary label id.
+     * @param time      the time in milliseconds.
      */
     public void addHour(int titleId, int summaryId, long time) {
         addHour(titleId, summaryId, time, false);
@@ -361,12 +315,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Adds the item to the array for a valid time.
      *
-     * @param titleId
-     *         the title label id.
-     * @param summaryId
-     *         the summary label id.
-     * @param time
-     *         the time in milliseconds.
+     * @param titleId   the title label id.
+     * @param summaryId the summary label id.
+     * @param time      the time in milliseconds.
      */
     public void addHour(int titleId, int summaryId, long time, boolean remote) {
         add(titleId, (summaryId == SUMMARY_NONE) ? null : getContext().getText(summaryId), time + DAY_IN_MILLIS, null, remote, true);
@@ -433,10 +384,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Format the Hebrew date.
      *
-     * @param context
-     *         the context.
-     * @param jewishDate
-     *         the date.
+     * @param context    the context.
+     * @param jewishDate the date.
      * @return the formatted date.
      */
     public CharSequence formatDate(Context context, JewishDate jewishDate) {
@@ -486,8 +435,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Set the calendar for the relevant day that the adapter is populated.
      *
-     * @param calendar
-     *         the calendar.
+     * @param calendar the calendar.
      */
     public void setCalendar(ComplexZmanimCalendar calendar) {
         this.calendar = calendar;
@@ -496,8 +444,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Sets whether to use Israel holiday scheme or not.
      *
-     * @param inIsrael
-     *         set to {@code true} for calculations for Israel.
+     * @param inIsrael set to {@code true} for calculations for Israel.
      */
     public void setInIsrael(boolean inIsrael) {
         this.inIsrael = inIsrael;
@@ -522,10 +469,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * Format the number of omer days.
      *
-     * @param context
-     *         the context.
-     * @param days
-     *         the number of days.
+     * @param context the context.
+     * @param days    the number of days.
      * @return the formatted count.
      */
     public CharSequence formatOmer(Context context, int days) {

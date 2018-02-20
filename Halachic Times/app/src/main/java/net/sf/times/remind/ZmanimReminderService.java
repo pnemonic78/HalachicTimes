@@ -38,8 +38,7 @@ public class ZmanimReminderService extends IntentService {
     /**
      * Constructs a new service.
      *
-     * @param name
-     *         The worker thread name, important only for debugging.
+     * @param name The worker thread name, important only for debugging.
      */
     public ZmanimReminderService(String name) {
         super(name);

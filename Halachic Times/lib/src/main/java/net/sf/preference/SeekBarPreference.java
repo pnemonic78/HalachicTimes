@@ -66,14 +66,10 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     /**
      * Creates a new seek bar preference.
      *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the attributes.
-     * @param defStyleAttr
-     *         the default attribute style.
-     * @param defStyleRes
-     *         the default resource style.
+     * @param context      the context.
+     * @param attrs        the attributes.
+     * @param defStyleAttr the default attribute style.
+     * @param defStyleRes  the default resource style.
      */
     public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
@@ -128,8 +124,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     /**
      * Set the progress state and saves it to the {@link SharedPreferences}.
      *
-     * @param progress
-     *         the progress.
+     * @param progress the progress.
      */
     public void setProgress(int progress) {
         if (seekBar == null) {
@@ -148,8 +143,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     /**
      * Set the range of the progress bar to {@code 0}...{@code max}.
      *
-     * @param max
-     *         the upper range of this progress bar.
+     * @param max the upper range of this progress bar.
      */
     public void setMax(int max) {
         this.max = max;
@@ -164,8 +158,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
     /**
      * Set the progress state and saves it to the {@link SharedPreferences}.
      *
-     * @param progress
-     *         the progress.
+     * @param progress the progress.
      */
     protected void persistProgress(int progress) {
         this.progress = progress;
@@ -214,8 +207,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
         /**
          * Constructs a new task.
          *
-         * @param progress
-         *         the progress to save.
+         * @param progress the progress to save.
          */
         public PersistTask(int progress) {
             this.progress = progress;

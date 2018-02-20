@@ -67,8 +67,7 @@ public class CandlesAdapter extends ZmanimAdapter {
     /**
      * Set the candles data.
      *
-     * @param candles
-     *         the candles data.
+     * @param candles the candles data.
      */
     public void setCandles(int candles) {
         this.candles = candles;

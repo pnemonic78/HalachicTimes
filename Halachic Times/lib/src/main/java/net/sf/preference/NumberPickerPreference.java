@@ -102,8 +102,7 @@ public class NumberPickerPreference extends DialogPreference {
     /**
      * Saves the value to the {@link SharedPreferences}.
      *
-     * @param value
-     *         the value.
+     * @param value the value.
      */
     public void setValue(int value) {
         // Always persist/notify the first time; don't assume the field's
@@ -132,8 +131,7 @@ public class NumberPickerPreference extends DialogPreference {
     /**
      * Set the range of the value bar to {@code 0}...{@code max}.
      *
-     * @param max
-     *         the upper range of this value bar.
+     * @param max the upper range of this value bar.
      */
     public void setMax(int max) {
         this.max = max;
@@ -154,8 +152,7 @@ public class NumberPickerPreference extends DialogPreference {
     /**
      * Set the range of the value bar to {@code min}...{@code max}.
      *
-     * @param min
-     *         the lower range of this value bar.
+     * @param min the lower range of this value bar.
      */
     public void setMin(int min) {
         this.min = min;

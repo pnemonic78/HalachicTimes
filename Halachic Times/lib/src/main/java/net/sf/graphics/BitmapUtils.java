@@ -34,8 +34,7 @@ public class BitmapUtils {
     /**
      * Get the dominant color of the image.
      *
-     * @param bm
-     *         the bitmap.
+     * @param bm the bitmap.
      * @return the color - {@code {@link android.graphics.Color#TRANSPARENT}} otherwise.
      */
     public static int getPixel(Bitmap bm) {
@@ -56,8 +55,7 @@ public class BitmapUtils {
      * <br>
      * Useful for determining whether to use dark color on bright background.
      *
-     * @param color
-     *         the color.
+     * @param color the color.
      * @return {@code true} if the color is "bright".
      */
     public static boolean isBright(int color) {
@@ -76,8 +74,7 @@ public class BitmapUtils {
      * <br>
      * Useful for determining whether to use dark color on bright background.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return {@code true} if the wallpaper is "bright".
      */
     public static boolean isBrightWallpaper(Context context) {

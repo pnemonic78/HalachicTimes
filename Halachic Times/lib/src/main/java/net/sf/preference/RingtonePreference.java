@@ -187,8 +187,7 @@ public class RingtonePreference extends DialogPreference {
      * Sets whether to show an item for the default sound/ringtone. The default
      * to use will be deduced from the sound type(s) being shown.
      *
-     * @param showDefault
-     *         Whether to show the default or not.
+     * @param showDefault Whether to show the default or not.
      * @see RingtoneManager#EXTRA_RINGTONE_SHOW_DEFAULT
      */
     public void setShowDefault(boolean showDefault) {
@@ -207,8 +206,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Sets whether to show an item for 'Silent'.
      *
-     * @param showSilent
-     *         Whether to show 'Silent'.
+     * @param showSilent Whether to show 'Silent'.
      * @see RingtoneManager#EXTRA_RINGTONE_SHOW_SILENT
      */
     public void setShowSilent(boolean showSilent) {
@@ -221,8 +219,7 @@ public class RingtonePreference extends DialogPreference {
      * By default, this saves the ringtone URI to the persistent storage as a
      * string.
      *
-     * @param ringtoneUri
-     *         The chosen ringtone's {@link Uri}. Can be {@code null}.
+     * @param ringtoneUri The chosen ringtone's {@link Uri}. Can be {@code null}.
      */
     protected void onSaveRingtone(Uri ringtoneUri) {
         persistString(ringtoneUri != null ? ringtoneUri.toString() : SILENT_PATH);
@@ -274,8 +271,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Returns the index of the given value (in the entry values array).
      *
-     * @param value
-     *         The value whose index should be returned.
+     * @param value The value whose index should be returned.
      * @return The index of the value, or -1 if not found.
      */
     public int findIndexOfValue(Uri value) {
@@ -435,8 +431,7 @@ public class RingtonePreference extends DialogPreference {
     /**
      * Get the ringtone title.
      *
-     * @param uriString
-     *         the Uri path.
+     * @param uriString the Uri path.
      * @return the title.
      */
     public CharSequence getRingtoneTitle(String uriString) {

@@ -33,9 +33,8 @@ public class TypefaceSpan extends android.text.style.TypefaceSpan {
     /**
      * Create a new span.
      *
-     * @param family
-     *         the font family for this typeface. Examples include "monospace", "serif", and
-     *         "sans-serif".
+     * @param family the font family for this typeface. Examples include "monospace", "serif", and
+     *               "sans-serif".
      */
     public TypefaceSpan(String family) {
         super(family);
@@ -45,8 +44,7 @@ public class TypefaceSpan extends android.text.style.TypefaceSpan {
     /**
      * Create a new span.
      *
-     * @param tf
-     *         the typeface.
+     * @param tf the typeface.
      */
     public TypefaceSpan(Typeface tf) {
         super("sans-serif");
@@ -56,8 +54,7 @@ public class TypefaceSpan extends android.text.style.TypefaceSpan {
     /**
      * Create a new span.
      *
-     * @param src
-     *         the parcel with the font family to read.
+     * @param src the parcel with the font family to read.
      */
     public TypefaceSpan(Parcel src) {
         super(src);

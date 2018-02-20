@@ -64,10 +64,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
     /**
      * Populate the list with detailed times.
      *
-     * @param date
-     *         the date.
-     * @param id
-     *         the time id.
+     * @param date the date.
+     * @param id   the time id.
      */
     public A populateTimes(Calendar date, int id) {
         masterId = id;

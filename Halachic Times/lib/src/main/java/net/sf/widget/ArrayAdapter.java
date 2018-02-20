@@ -90,9 +90,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Constructor
      *
-     * @param resource
-     *         The resource ID for a layout file containing a TextView to use when
-     *         instantiating views.
+     * @param resource The resource ID for a layout file containing a TextView to use when
+     *                 instantiating views.
      */
     public ArrayAdapter(@LayoutRes int resource) {
         this(resource, 0);
@@ -101,11 +100,9 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Constructor
      *
-     * @param resource
-     *         The resource ID for a layout file containing a layout to use when
-     *         instantiating views.
-     * @param textViewResourceId
-     *         The id of the TextView within the layout resource to be populated
+     * @param resource           The resource ID for a layout file containing a layout to use when
+     *                           instantiating views.
+     * @param textViewResourceId The id of the TextView within the layout resource to be populated
      */
     public ArrayAdapter(@LayoutRes int resource, @IdRes int textViewResourceId) {
         this(resource, textViewResourceId, new ArrayList<T>());
@@ -114,11 +111,9 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Constructor
      *
-     * @param resource
-     *         The resource ID for a layout file containing a TextView to use when
-     *         instantiating views.
-     * @param objects
-     *         The objects to represent in the ListView.
+     * @param resource The resource ID for a layout file containing a TextView to use when
+     *                 instantiating views.
+     * @param objects  The objects to represent in the ListView.
      */
     public ArrayAdapter(@LayoutRes int resource, @NonNull T[] objects) {
         this(resource, 0, Arrays.asList(objects));
@@ -127,13 +122,10 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Constructor
      *
-     * @param resource
-     *         The resource ID for a layout file containing a layout to use when
-     *         instantiating views.
-     * @param textViewResourceId
-     *         The id of the TextView within the layout resource to be populated
-     * @param objects
-     *         The objects to represent in the ListView.
+     * @param resource           The resource ID for a layout file containing a layout to use when
+     *                           instantiating views.
+     * @param textViewResourceId The id of the TextView within the layout resource to be populated
+     * @param objects            The objects to represent in the ListView.
      */
     public ArrayAdapter(@LayoutRes int resource, @IdRes int textViewResourceId, @NonNull T[] objects) {
         this(resource, textViewResourceId, Arrays.asList(objects));
@@ -142,11 +134,9 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Constructor
      *
-     * @param resource
-     *         The resource ID for a layout file containing a TextView to use when
-     *         instantiating views.
-     * @param objects
-     *         The objects to represent in the ListView.
+     * @param resource The resource ID for a layout file containing a TextView to use when
+     *                 instantiating views.
+     * @param objects  The objects to represent in the ListView.
      */
     public ArrayAdapter(@LayoutRes int resource, @NonNull List<T> objects) {
         this(resource, 0, objects);
@@ -155,13 +145,10 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Constructor
      *
-     * @param resource
-     *         The resource ID for a layout file containing a layout to use when
-     *         instantiating views.
-     * @param textViewResourceId
-     *         The id of the TextView within the layout resource to be populated
-     * @param objects
-     *         The objects to represent in the ListView.
+     * @param resource           The resource ID for a layout file containing a layout to use when
+     *                           instantiating views.
+     * @param textViewResourceId The id of the TextView within the layout resource to be populated
+     * @param objects            The objects to represent in the ListView.
      */
     public ArrayAdapter(@LayoutRes int resource, @IdRes int textViewResourceId, @NonNull List<T> objects) {
         this.layoutResource = resource;
@@ -173,8 +160,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Adds the specified object at the end of the array.
      *
-     * @param object
-     *         The object to add at the end of the array.
+     * @param object The object to add at the end of the array.
      */
     public void add(@Nullable T object) {
         int position = 0;
@@ -193,21 +179,16 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Adds the specified Collection at the end of the array.
      *
-     * @param collection
-     *         The Collection to add at the end of the array.
-     * @throws UnsupportedOperationException
-     *         if the <tt>addAll</tt> operation
-     *         is not supported by this list
-     * @throws ClassCastException
-     *         if the class of an element of the specified
-     *         collection prevents it from being added to this list
-     * @throws NullPointerException
-     *         if the specified collection contains one
-     *         or more null elements and this list does not permit null
-     *         elements, or if the specified collection is null
-     * @throws IllegalArgumentException
-     *         if some property of an element of the
-     *         specified collection prevents it from being added to this list
+     * @param collection The Collection to add at the end of the array.
+     * @throws UnsupportedOperationException if the <tt>addAll</tt> operation
+     *                                       is not supported by this list
+     * @throws ClassCastException            if the class of an element of the specified
+     *                                       collection prevents it from being added to this list
+     * @throws NullPointerException          if the specified collection contains one
+     *                                       or more null elements and this list does not permit null
+     *                                       elements, or if the specified collection is null
+     * @throws IllegalArgumentException      if some property of an element of the
+     *                                       specified collection prevents it from being added to this list
      */
     public void addAll(@NonNull Collection<? extends T> collection) {
         int position = 0;
@@ -227,8 +208,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Adds the specified items at the end of the array.
      *
-     * @param items
-     *         The items to add at the end of the array.
+     * @param items The items to add at the end of the array.
      */
     public void addAll(T... items) {
         int position = 0;
@@ -248,10 +228,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Inserts the specified object at the specified index in the array.
      *
-     * @param object
-     *         The object to insert into the array.
-     * @param index
-     *         The index at which the object must be inserted.
+     * @param object The object to insert into the array.
+     * @param index  The index at which the object must be inserted.
      */
     public void insert(@Nullable T object, int index) {
         synchronized (lock) {
@@ -267,8 +245,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Removes the specified object from the array.
      *
-     * @param object
-     *         The object to remove.
+     * @param object The object to remove.
      */
     public void remove(@Nullable T object) {
         int position = 0;
@@ -301,9 +278,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Sorts the content of this adapter using the specified comparator.
      *
-     * @param comparator
-     *         The comparator used to sort the objects contained
-     *         in this adapter.
+     * @param comparator The comparator used to sort the objects contained
+     *                   in this adapter.
      */
     public void sort(@NonNull Comparator<? super T> comparator) {
         int count = 0;
@@ -328,9 +304,8 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * <p>
      * The default is true, and calling notifyDataSetChanged() resets the flag to true.
      *
-     * @param notifyOnChange
-     *         if true, modifications to the list will
-     *         automatically call {@link #notifyDataSetChanged}
+     * @param notifyOnChange if true, modifications to the list will
+     *                       automatically call {@link #notifyDataSetChanged}
      */
     public void setNotifyOnChange(boolean notifyOnChange) {
         this.notifyOnChange = notifyOnChange;
@@ -349,8 +324,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
     /**
      * Returns the position of the specified item in the array.
      *
-     * @param item
-     *         The item to retrieve the position of.
+     * @param item The item to retrieve the position of.
      * @return The position of the specified item.
      */
     public int getPosition(@Nullable T item) {

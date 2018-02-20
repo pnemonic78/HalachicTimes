@@ -29,8 +29,7 @@ public interface CursorFilter {
      * Indicating whether a specific database cursor should be included in a
      * query list.
      *
-     * @param cursor
-     *         the cursor to check.
+     * @param cursor the cursor to check.
      * @return {@code true} if the current cursor should be included,
      * {@code false} otherwise.
      */

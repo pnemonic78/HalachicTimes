@@ -32,10 +32,8 @@ public class TimeUtils {
     /**
      * Round-up the time.
      *
-     * @param time
-     *         the time, in milliseconds.
-     * @param granularity
-     *         the granularity, in milliseconds.
+     * @param time        the time, in milliseconds.
+     * @param granularity the granularity, in milliseconds.
      * @return the rounded time.
      */
     public static long roundUp(long time, long granularity) {
@@ -48,10 +46,8 @@ public class TimeUtils {
     /**
      * Round-down the time.
      *
-     * @param time
-     *         the time, in milliseconds.
-     * @param granularity
-     *         the granularity, in milliseconds.
+     * @param time        the time, in milliseconds.
+     * @param granularity the granularity, in milliseconds.
      * @return the rounded time.
      */
     public static long roundDown(long time, long granularity) {
@@ -61,10 +57,8 @@ public class TimeUtils {
     /**
      * Is the time on the same day?
      *
-     * @param expected
-     *         the calendar with the expected day to check against.
-     * @param actual
-     *         the calendar with the actual day to check.
+     * @param expected the calendar with the expected day to check against.
+     * @param actual   the calendar with the actual day to check.
      * @return {@code true} if the time occurs on the same day.
      */
     public static boolean isSameDay(Calendar expected, Calendar actual) {
@@ -84,10 +78,8 @@ public class TimeUtils {
     /**
      * Is the time on the same day?
      *
-     * @param expected
-     *         the calendar with the expected day to check against.
-     * @param actual
-     *         the actual time to check.
+     * @param expected the calendar with the expected day to check against.
+     * @param actual   the actual time to check.
      * @return {@code true} if the time occurs on the same day.
      */
     public static boolean isSameDay(Calendar expected, long actual) {
@@ -97,10 +89,8 @@ public class TimeUtils {
     /**
      * Is the time on the same day?
      *
-     * @param expected
-     *         the time with the expected day to check against.
-     * @param actual
-     *         the actual time to check.
+     * @param expected the time with the expected day to check against.
+     * @param actual   the actual time to check.
      * @return {@code true} if the time occurs on the same day.
      */
     public static boolean isSameDay(long expected, long actual) {

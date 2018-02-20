@@ -206,12 +206,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
     /**
      * Bind the date group header to a list.
      *
-     * @param list
-     *         the list.
-     * @param position
-     *         the position index.
-     * @param label
-     *         the formatted Hebrew date label.
+     * @param list     the list.
+     * @param position the position index.
+     * @param label    the formatted Hebrew date label.
      */
     protected void bindViewGrouping(RemoteViews list, int position, CharSequence label) {
         if ((position < 0) || (label == null)) {
@@ -228,8 +225,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
     /**
      * Get the layout for the row item.
      *
-     * @param position
-     *         the position index.
+     * @param position the position index.
      * @return the layout id.
      */
     protected int getLayoutItemId(int position) {

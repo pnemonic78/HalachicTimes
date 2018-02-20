@@ -112,8 +112,7 @@ public class CompassView extends View {
     /**
      * Constructs a new compass view.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public CompassView(Context context) {
         super(context);
@@ -123,10 +122,8 @@ public class CompassView extends View {
     /**
      * Constructs a new compass view.
      *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the attributes.
+     * @param context the context.
+     * @param attrs   the attributes.
      */
     public CompassView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -136,12 +133,9 @@ public class CompassView extends View {
     /**
      * Constructs a new compass view.
      *
-     * @param context
-     *         the context.
-     * @param attrs
-     *         the attributes.
-     * @param defStyle
-     *         the default style.
+     * @param context  the context.
+     * @param attrs    the attributes.
+     * @param defStyle the default style.
      */
     public CompassView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -401,8 +395,7 @@ public class CompassView extends View {
     /**
      * Set the azimuth to magnetic North pole.
      *
-     * @param bearing
-     *         the bearing in radians.
+     * @param bearing the bearing in radians.
      */
     public void setAzimuth(float bearing) {
         north = (float) Math.toDegrees(-bearing);
@@ -412,8 +405,7 @@ public class CompassView extends View {
     /**
      * Set the bearing to some holy place.
      *
-     * @param bearing
-     *         the bearing in degrees.
+     * @param bearing the bearing in degrees.
      */
     public void setHoliest(float bearing) {
         holiest = bearing;
@@ -570,8 +562,7 @@ public class CompassView extends View {
     /**
      * Set ticks as visible.
      *
-     * @param visible
-     *         is visible?
+     * @param visible is visible?
      */
     public void setTicks(boolean visible) {
         this.ticks = visible;

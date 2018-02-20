@@ -65,8 +65,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
      * Format the date and time with seconds.<br>
      * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
      *
-     * @param time
-     *         the time to format.
+     * @param time the time to format.
      * @return the formatted time.
      */
     private String formatDateTime(Date time) {
@@ -79,8 +78,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     /**
      * Format the date and time with seconds.
      *
-     * @param time
-     *         the time to format.
+     * @param time the time to format.
      * @return the formatted time.
      * @see #formatDateTime(Date)
      */

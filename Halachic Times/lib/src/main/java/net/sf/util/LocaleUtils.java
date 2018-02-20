@@ -71,8 +71,7 @@ public class LocaleUtils {
     /**
      * Is the locale right-to-left?
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return {@code true} if the locale is RTL.
      */
     public static boolean isLocaleRTL(Context context) {
@@ -82,19 +81,17 @@ public class LocaleUtils {
     /**
      * Is the locale right-to-left?
      *
-     * @param res
-     *         the resources.
+     * @param res the resources.
      * @return {@code true} if the locale is RTL.
      */
-    public static boolean isLocaleRTL(Resources res) {
+    public static boolean isLocaleRTL(@NonNull Resources res) {
         return isLocaleRTL(res.getConfiguration());
     }
 
     /**
      * Is the locale right-to-left?
      *
-     * @param config
-     *         the configuration.
+     * @param config the configuration.
      * @return {@code true} if the locale is RTL.
      */
     public static boolean isLocaleRTL(Configuration config) {
@@ -124,8 +121,7 @@ public class LocaleUtils {
     /**
      * Get the default locale.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return the locale.
      */
     @NonNull
@@ -136,8 +132,7 @@ public class LocaleUtils {
     /**
      * Get the default locale.
      *
-     * @param res
-     *         the resources.
+     * @param res the resources.
      * @return the locale.
      */
     @NonNull
@@ -148,8 +143,7 @@ public class LocaleUtils {
     /**
      * Get the default locale.
      *
-     * @param config
-     *         the configuration with locales.
+     * @param config the configuration with locales.
      * @return the locale.
      */
     @TargetApi(N)
@@ -176,10 +170,8 @@ public class LocaleUtils {
     /**
      * Apply the default locale.
      *
-     * @param context
-     *         the context.
-     * @param locale
-     *         the locale to set.
+     * @param context the context.
+     * @param locale  the locale to set.
      * @return the locale.
      */
     public static Context applyLocale(Context context, Locale locale) {
@@ -199,8 +191,7 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param values
-     *         the immutable list of locale values.
+     * @param values the immutable list of locale values.
      * @return the sorted list of locale names.
      */
     public static Locale[] sortByDisplay(String[] values) {
@@ -210,10 +201,8 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param values
-     *         the immutable list of locale values.
-     * @param context
-     *         the display context.
+     * @param values  the immutable list of locale values.
+     * @param context the display context.
      * @return the sorted list of locale names.
      */
     public static Locale[] sortByDisplay(String[] values, Context context) {
@@ -223,10 +212,8 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param values
-     *         the immutable list of locale values.
-     * @param locale
-     *         the display locale.
+     * @param values the immutable list of locale values.
+     * @param locale the display locale.
      * @return the sorted list of locales.
      */
     public static Locale[] sortByDisplay(String[] values, Locale locale) {
@@ -245,8 +232,7 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param locales
-     *         the list of locales to sort.
+     * @param locales the list of locales to sort.
      * @return the sorted list of locales.
      */
     public static Locale[] sortByDisplay(Locale[] locales) {
@@ -256,10 +242,8 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param locales
-     *         the list of locales to sort.
-     * @param locale
-     *         the display locale.
+     * @param locales the list of locales to sort.
+     * @param locale  the display locale.
      * @return the sorted list of locales.
      */
     public static Locale[] sortByDisplay(Locale[] locales, Locale locale) {
@@ -273,9 +257,8 @@ public class LocaleUtils {
     /**
      * Parse the locale
      *
-     * @param localeValue
-     *         the locale to parse. For example, {@code fr} for "French", or {@code en_UK} for
-     *         "English (United Kingdom)".
+     * @param localeValue the locale to parse. For example, {@code fr} for "French", or {@code en_UK} for
+     *                    "English (United Kingdom)".
      * @return the locale - empty otherwise.
      */
     @NonNull

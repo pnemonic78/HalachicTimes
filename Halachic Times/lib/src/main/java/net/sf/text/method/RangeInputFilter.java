@@ -34,10 +34,8 @@ public class RangeInputFilter extends DigitsKeyListener {
     /**
      * Creates a new range filter with only non-negative integer values.
      *
-     * @param minimum
-     *         the minimum value.
-     * @param maximum
-     *         the maximum value.
+     * @param minimum the minimum value.
+     * @param maximum the maximum value.
      */
     public RangeInputFilter(int minimum, int maximum) {
         this(false, minimum, maximum);
@@ -46,12 +44,9 @@ public class RangeInputFilter extends DigitsKeyListener {
     /**
      * Creates a new range filter with only integer values.
      *
-     * @param sign
-     *         accepts the minus sign (only at the beginning)?
-     * @param minimum
-     *         the minimum value.
-     * @param maximum
-     *         the maximum value.
+     * @param sign    accepts the minus sign (only at the beginning)?
+     * @param minimum the minimum value.
+     * @param maximum the maximum value.
      */
     public RangeInputFilter(boolean sign, int minimum, int maximum) {
         this(sign, false, minimum, maximum);
@@ -60,14 +55,10 @@ public class RangeInputFilter extends DigitsKeyListener {
     /**
      * Creates a new range filter with only numerical values.
      *
-     * @param sign
-     *         accepts the minus sign (only at the beginning)?
-     * @param decimal
-     *         accepts the decimal point?
-     * @param minimum
-     *         the minimum value.
-     * @param maximum
-     *         the maximum value.
+     * @param sign    accepts the minus sign (only at the beginning)?
+     * @param decimal accepts the decimal point?
+     * @param minimum the minimum value.
+     * @param maximum the maximum value.
      */
     public RangeInputFilter(boolean sign, boolean decimal, double minimum, double maximum) {
         super(sign, decimal);

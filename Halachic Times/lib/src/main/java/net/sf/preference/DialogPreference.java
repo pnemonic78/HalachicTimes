@@ -40,8 +40,7 @@ public class DialogPreference extends android.preference.DialogPreference {
     /**
      * Sets the text of the neutral button of the dialog. This will be shown on subsequent dialogs.
      *
-     * @param neutralButtonText
-     *         The text of the neutral button.
+     * @param neutralButtonText The text of the neutral button.
      */
     public void setNeutralButtonText(CharSequence neutralButtonText) {
         this.neutralButtonText = neutralButtonText;
@@ -50,8 +49,7 @@ public class DialogPreference extends android.preference.DialogPreference {
     /**
      * Sets the text of the neutral button of the dialog. This will be shown on subsequent dialogs.
      *
-     * @param neutralButtonTextResId
-     *         The neutral button text as a resource.
+     * @param neutralButtonTextResId The neutral button text as a resource.
      * @see #setNeutralButtonText(CharSequence)
      */
     public void setNeutralButtonText(int neutralButtonTextResId) {
