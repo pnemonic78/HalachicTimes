@@ -113,8 +113,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
     /**
      * Include external media?
      *
-     * @param include
-     *         whether to include.
+     * @param include whether to include.
      */
     public void setIncludeExternal(boolean include) {
         this.includeExternal = include;
@@ -162,8 +161,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
      * (true). This is used to find all matching sounds for the given sound
      * types (ringtone, notifications, etc.)
      *
-     * @param columns
-     *         The columns that must be true.
+     * @param columns The columns that must be true.
      * @return The where clause.
      */
     private static String constructBooleanTrueWhereClause(List<String> columns) {

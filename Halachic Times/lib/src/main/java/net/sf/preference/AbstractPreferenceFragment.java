@@ -122,10 +122,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      * Called when a list preference has probably changed its value.
      * <br>Updates the summary to the new value.
      *
-     * @param preference
-     *         the  preference.
-     * @param newValue
-     *         the possibly new value.
+     * @param preference the  preference.
+     * @param newValue   the possibly new value.
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
     protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
@@ -140,10 +138,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      * Called when a ringtone preference has changed its value.
      * <br>Updates the summary to the new ringtone title.
      *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
+     * @param preference the preference.
+     * @param newValue   the new value.
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
     protected boolean onRingtonePreferenceChange(RingtonePreference preference, Object newValue) {
@@ -155,10 +151,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     /**
      * Called when a check box preference has changed its value.
      *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
+     * @param preference the preference.
+     * @param newValue   the new value.
      * @return {@code true} if the user value should be set as the preference value (and persisted).
      */
     protected boolean onCheckBoxPreferenceChange(SwitchPreference preference, Object newValue) {
@@ -169,10 +163,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
      * Called when a time preference has probably changed its value.
      * <br>Updates the summary to the new value.
      *
-     * @param preference
-     *         the  preference.
-     * @param newValue
-     *         the possibly new value.
+     * @param preference the  preference.
+     * @param newValue   the possibly new value.
      */
     protected boolean onTimePreferenceChange(TimePreference preference, Object newValue) {
         String value = (newValue == null) ? null : newValue.toString();
@@ -185,10 +177,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     /**
      * Update the summary that was selected from the list.
      *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
+     * @param preference the preference.
+     * @param newValue   the new value.
      */
     private void updateSummary(ListPreference preference, String newValue) {
         CharSequence[] values = preference.getEntryValues();
@@ -207,10 +197,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     /**
      * Update the summary that was selected from the list.
      *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
+     * @param preference the preference.
+     * @param newValue   the new value.
      */
     private void updateSummary(RingtonePreference preference, String newValue) {
         preference.setSummary(preference.getRingtoneTitle(newValue));
@@ -219,10 +207,8 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     /**
      * Update the summary that was selected from the time picker.
      *
-     * @param preference
-     *         the preference.
-     * @param newValue
-     *         the new value.
+     * @param preference the preference.
+     * @param newValue   the new value.
      */
     private void updateSummary(TimePreference preference, String newValue) {
         String summary = preference.formatTime();

@@ -29,8 +29,7 @@ public interface LocaleCallbacks<P extends LocalePreferences> {
     /**
      * Apply the locale here
      *
-     * @param context
-     *         the context with locale.
+     * @param context the context with locale.
      * @return the context with the new locale.
      */
     Context attachBaseContext(Context context);
@@ -38,8 +37,7 @@ public interface LocaleCallbacks<P extends LocalePreferences> {
     /**
      * Re-apply the title here.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     void onCreate(Context context);
 

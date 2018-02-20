@@ -153,12 +153,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     /**
      * Populate the list with times.
      *
-     * @param context
-     *         the context.
-     * @param appWidgetManager
-     *         the widget manager.
-     * @param appWidgetIds
-     *         the widget ids for which an update is needed.
+     * @param context          the context.
+     * @param appWidgetManager the widget manager.
+     * @param appWidgetIds     the widget ids for which an update is needed.
      */
     protected void populateTimes(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
@@ -197,8 +194,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     /**
      * Populate the list with times.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     protected void populateTimes(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -256,12 +252,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     /**
      * Schedule an update for the next relevant zman.
      *
-     * @param context
-     *         the context.
-     * @param appWidgetIds
-     *         the widget ids for which an update is needed.
-     * @param adapter
-     *         the adapter with zmanim.
+     * @param context      the context.
+     * @param appWidgetIds the widget ids for which an update is needed.
+     * @param adapter      the adapter with zmanim.
      */
     private void scheduleNext(Context context, int[] appWidgetIds, ZmanimAdapter adapter) {
         if (adapter == null) {
@@ -294,12 +287,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     /**
      * Schedule an update to populate the day's list.
      *
-     * @param context
-     *         the context.
-     * @param appWidgetIds
-     *         the widget ids for which an update is needed.
-     * @param time
-     *         the time to update.
+     * @param context      the context.
+     * @param appWidgetIds the widget ids for which an update is needed.
+     * @param time         the time to update.
      */
     private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
         Intent alarmIntent = new Intent(context, ZmanimAppWidget.class);
@@ -313,30 +303,21 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     /**
      * Bind the times to remote views.
      *
-     * @param context
-     *         the context.
-     * @param list
-     *         the remote views.
-     * @param adapterToday
-     *         the list adapter for today.
-     * @param adapterTomorrow
-     *         the list adapter for tomorrow.
+     * @param context         the context.
+     * @param list            the remote views.
+     * @param adapterToday    the list adapter for today.
+     * @param adapterTomorrow the list adapter for tomorrow.
      */
     protected abstract void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow);
 
     /**
      * Bind the item to remote views.
      *
-     * @param context
-     *         the context.
-     * @param list
-     *         the remote list.
-     * @param position
-     *         the position index.
-     * @param positionTotal
-     *         the position index relative to all rows.
-     * @param item
-     *         the zmanim item.
+     * @param context       the context.
+     * @param list          the remote list.
+     * @param position      the position index.
+     * @param positionTotal the position index relative to all rows.
+     * @param item          the zmanim item.
      * @return {@code true} if item was bound to view.
      */
     protected abstract boolean bindView(Context context, RemoteViews list, int position, int positionTotal, @Nullable ZmanimItem item);

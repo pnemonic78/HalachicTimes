@@ -246,7 +246,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
                 light = true;
                 break;
             default:
-                light = isBrightWallpaper(context);
+                light = !isBrightWallpaper(context);
                 break;
         }
         final Resources res = context.getResources();
@@ -298,12 +298,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     /**
      * Bind the item to the remote view.
      *
-     * @param row
-     *         the remote list row.
-     * @param position
-     *         the position index.
-     * @param item
-     *         the zman item.
+     * @param row      the remote list row.
+     * @param position the position index.
+     * @param item     the zman item.
      */
     private void bindView(RemoteViews row, int position, ZmanimItem item) {
         row.setTextViewText(android.R.id.title, context.getText(item.titleId));
@@ -324,12 +321,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     /**
      * Bind the date group header to a list.
      *
-     * @param row
-     *         the remote list row.
-     * @param position
-     *         the position index.
-     * @param label
-     *         the formatted Hebrew date label.
+     * @param row      the remote list row.
+     * @param position the position index.
+     * @param label    the formatted Hebrew date label.
      */
     private void bindViewGrouping(RemoteViews row, int position, CharSequence label) {
         row.setTextViewText(R.id.date_hebrew, label);

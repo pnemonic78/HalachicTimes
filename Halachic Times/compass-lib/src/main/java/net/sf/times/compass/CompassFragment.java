@@ -147,8 +147,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     /**
      * Set the current location.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      */
     public void setLocation(Location location) {
         if (Double.isNaN(holiest.getLatitude()) || Double.isNaN(holiest.getLongitude())) {

@@ -32,8 +32,7 @@ public class ZmanimLocations extends LocationsProvider {
     /**
      * Constructs a new provider.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public ZmanimLocations(Context context) {
         super(context);
@@ -42,8 +41,7 @@ public class ZmanimLocations extends LocationsProvider {
     /**
      * Get the location.
      *
-     * @param timeZone
-     *         the time zone.
+     * @param timeZone the time zone.
      * @return the location - {@code null} otherwise.
      */
     public GeoLocation getGeoLocation(TimeZone timeZone) {

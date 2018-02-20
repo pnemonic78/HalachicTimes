@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +40,8 @@ import static android.text.TextUtils.isEmpty;
  * @author Moshe Waisberg
  */
 public class LocaleUtils {
+
+    private static final String TAG = "LocaleUtils";
 
     /** ISO 639 language code for "Arabic". */
     public static final String ISO639_ARABIC = "ar";
@@ -71,33 +75,30 @@ public class LocaleUtils {
     /**
      * Is the locale right-to-left?
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return {@code true} if the locale is RTL.
      */
-    public static boolean isLocaleRTL(Context context) {
+    public static boolean isLocaleRTL(@NonNull Context context) {
         return isLocaleRTL(context.getResources());
     }
 
     /**
      * Is the locale right-to-left?
      *
-     * @param res
-     *         the resources.
+     * @param res the resources.
      * @return {@code true} if the locale is RTL.
      */
-    public static boolean isLocaleRTL(Resources res) {
+    public static boolean isLocaleRTL(@NonNull Resources res) {
         return isLocaleRTL(res.getConfiguration());
     }
 
     /**
      * Is the locale right-to-left?
      *
-     * @param config
-     *         the configuration.
+     * @param config the configuration.
      * @return {@code true} if the locale is RTL.
      */
-    public static boolean isLocaleRTL(Configuration config) {
+    public static boolean isLocaleRTL(@NonNull Configuration config) {
         return isLocaleRTL(getDefaultLocale(config));
     }
 
@@ -106,7 +107,7 @@ public class LocaleUtils {
      *
      * @return {@code true} if the locale is RTL.
      */
-    public static boolean isLocaleRTL(Locale locale) {
+    public static boolean isLocaleRTL(@NonNull Locale locale) {
         switch (locale.getLanguage()) {
             case ISO639_ARABIC:
             case ISO639_HAUSA:
@@ -124,37 +125,34 @@ public class LocaleUtils {
     /**
      * Get the default locale.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return the locale.
      */
     @NonNull
-    public static Locale getDefaultLocale(Context context) {
+    public static Locale getDefaultLocale(@NonNull Context context) {
         return getDefaultLocale(context.getResources());
     }
 
     /**
      * Get the default locale.
      *
-     * @param res
-     *         the resources.
+     * @param res the resources.
      * @return the locale.
      */
     @NonNull
-    public static Locale getDefaultLocale(Resources res) {
+    public static Locale getDefaultLocale(@NonNull Resources res) {
         return getDefaultLocale(res.getConfiguration());
     }
 
     /**
      * Get the default locale.
      *
-     * @param config
-     *         the configuration with locales.
+     * @param config the configuration with locales.
      * @return the locale.
      */
     @TargetApi(N)
     @NonNull
-    public static Locale getDefaultLocale(Configuration config) {
+    public static Locale getDefaultLocale(@NonNull Configuration config) {
         Locale locale = null;
         if (SDK_INT >= N) {
             android.os.LocaleList locales = config.getLocales();
@@ -176,16 +174,18 @@ public class LocaleUtils {
     /**
      * Apply the default locale.
      *
-     * @param context
-     *         the context.
-     * @param locale
-     *         the locale to set.
+     * @param context the context.
+     * @param locale  the locale to set.
      * @return the locale.
      */
-    public static Context applyLocale(Context context, Locale locale) {
+    public static Context applyLocale(@NonNull Context context, @NonNull Locale locale) {
         Locale.setDefault(locale);
 
-        final Resources res = context.getResources();
+        Resources res = context.getResources();
+        if (res == null) {
+            Log.w(TAG, "Context resources missing for applying locale!");
+            res = Resources.getSystem();
+        }
         final Configuration config = res.getConfiguration();
         if (SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
@@ -199,8 +199,7 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param values
-     *         the immutable list of locale values.
+     * @param values the immutable list of locale values.
      * @return the sorted list of locale names.
      */
     public static Locale[] sortByDisplay(String[] values) {
@@ -210,10 +209,8 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param values
-     *         the immutable list of locale values.
-     * @param context
-     *         the display context.
+     * @param values  the immutable list of locale values.
+     * @param context the display context.
      * @return the sorted list of locale names.
      */
     public static Locale[] sortByDisplay(String[] values, Context context) {
@@ -223,10 +220,8 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param values
-     *         the immutable list of locale values.
-     * @param locale
-     *         the display locale.
+     * @param values the immutable list of locale values.
+     * @param locale the display locale.
      * @return the sorted list of locales.
      */
     public static Locale[] sortByDisplay(String[] values, Locale locale) {
@@ -245,8 +240,7 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param locales
-     *         the list of locales to sort.
+     * @param locales the list of locales to sort.
      * @return the sorted list of locales.
      */
     public static Locale[] sortByDisplay(Locale[] locales) {
@@ -256,10 +250,8 @@ public class LocaleUtils {
     /**
      * Sort the locales by their display names.
      *
-     * @param locales
-     *         the list of locales to sort.
-     * @param locale
-     *         the display locale.
+     * @param locales the list of locales to sort.
+     * @param locale  the display locale.
      * @return the sorted list of locales.
      */
     public static Locale[] sortByDisplay(Locale[] locales, Locale locale) {
@@ -273,13 +265,12 @@ public class LocaleUtils {
     /**
      * Parse the locale
      *
-     * @param localeValue
-     *         the locale to parse. For example, {@code fr} for "French", or {@code en_UK} for
-     *         "English (United Kingdom)".
+     * @param localeValue the locale to parse. For example, {@code fr} for "French", or {@code en_UK} for
+     *                    "English (United Kingdom)".
      * @return the locale - empty otherwise.
      */
     @NonNull
-    public static Locale parseLocale(String localeValue) {
+    public static Locale parseLocale(@Nullable String localeValue) {
         if (!isEmpty(localeValue)) {
             if (SDK_INT >= LOLLIPOP) {
                 return Locale.forLanguageTag(localeValue);
@@ -290,7 +281,7 @@ public class LocaleUtils {
                     return new Locale(tokens[0]);
                 case 2:
                     return new Locale(tokens[0], tokens[1]);
-                case 3:
+                default:
                     return new Locale(tokens[0], tokens[1], tokens[2]);
             }
         }

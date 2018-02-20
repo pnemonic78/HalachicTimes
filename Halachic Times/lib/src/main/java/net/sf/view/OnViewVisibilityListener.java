@@ -27,12 +27,10 @@ public interface OnViewVisibilityListener {
      * Called when the visibility of the view or an ancestor of the view has
      * changed.
      *
-     * @param changedView
-     *         The view whose visibility changed. May be
-     *         {@code this} or an ancestor view.
-     * @param visibility
-     *         The new visibility, one of {@link View#VISIBLE},
-     *         {@link View#INVISIBLE} or {@link View#GONE}.
+     * @param changedView The view whose visibility changed. May be
+     *                    {@code this} or an ancestor view.
+     * @param visibility  The new visibility, one of {@link View#VISIBLE},
+     *                    {@link View#INVISIBLE} or {@link View#GONE}.
      * @see View#onVisibilityChanged(View, int)
      */
     void onVisibilityChanged(View changedView, int visibility);

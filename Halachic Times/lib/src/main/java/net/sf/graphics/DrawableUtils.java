@@ -39,8 +39,7 @@ public class DrawableUtils {
     /**
      * Get the dominant color of the wallpaper image.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return the color - {@code {@link android.graphics.Color#TRANSPARENT}} otherwise.
      */
     public static int getWallpaperColor(Context context) {

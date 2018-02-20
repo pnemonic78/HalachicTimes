@@ -30,9 +30,7 @@ public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
     /**
      * Creates a new populater.
      *
-     * @param context
-     *         the context.
-     * @param settings
+     * @param context the context.
      */
     public CandlesPopulater(Context context, ZmanimPreferences settings) {
         super(context, settings);

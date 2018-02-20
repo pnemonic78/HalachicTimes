@@ -62,8 +62,7 @@ public interface CompassPreferences {
     /**
      * Get the theme.
      *
-     * @param value
-     *         the theme value.
+     * @param value the theme value.
      * @return the theme resource id.
      * @see #getCompassThemeValue()
      */
