@@ -47,6 +47,7 @@ import static java.lang.System.currentTimeMillis;
 import static net.sf.times.ZmanimItem.NEVER;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_B;
 import static net.sf.times.preference.ZmanimPreferences.Values.OMER_L;
+import static net.sf.util.LocaleUtils.isLocaleRTL;
 import static net.sf.util.TimeUtils.roundUp;
 
 /**
@@ -412,7 +413,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         String dayStr;
         String dayPadded;
 
-        if (LocaleUtils.isLocaleRTL(getContext())) {
+        if (isLocaleRTL(getContext())) {
             HebrewDateFormatter formatter = getHebrewDateFormatter();
 
             yearStr = formatter.formatHebrewNumber(jewishYear);
@@ -501,7 +502,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         String dayStr;
 
-        if (LocaleUtils.isLocaleRTL(getContext())) {
+        if (isLocaleRTL(getContext())) {
             HebrewDateFormatter formatter = getHebrewDateFormatter();
 
             dayStr = formatter.formatHebrewNumber(days);

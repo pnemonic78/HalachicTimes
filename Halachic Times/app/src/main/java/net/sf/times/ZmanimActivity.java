@@ -74,6 +74,7 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static android.text.format.DateUtils.formatDateTime;
 import static java.lang.System.currentTimeMillis;
 import static net.sf.times.ZmanimItem.NEVER;
+import static net.sf.util.LocaleUtils.isLocaleRTL;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -341,7 +342,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
     /** Initialise the location providers. */
     private void initLocation() {
-        localeRTL = LocaleUtils.isLocaleRTL(this);
+        localeRTL = isLocaleRTL(this);
     }
 
     /**
@@ -677,7 +678,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        localeRTL = LocaleUtils.isLocaleRTL(newConfig);
+        localeRTL = isLocaleRTL(newConfig);
     }
 
     /**
