@@ -202,6 +202,14 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     }
 
     @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        if (locations != null) {
+            locations.stop(this);
+        }
+    }
+
+    @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
         if (locations != null) {
