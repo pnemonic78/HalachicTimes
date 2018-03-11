@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static android.os.Build.VERSION_CODES.N;
 
@@ -75,7 +75,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
     public RingtoneManager(Context context) {
         super(context);
         this.context = context;
-        setIncludeExternal((SDK_INT < KITKAT)
+        setIncludeExternal((VERSION.SDK_INT < KITKAT)
                 || (context.checkCallingOrSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
     }
 
@@ -204,7 +204,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
             boolean dangerousUri = false;
             if (uriString.startsWith(EXTERNAL_PATH)) {
                 dangerousUri = true;
-            } else if (SDK_INT >= N) {
+            } else if (VERSION.SDK_INT >= N) {
                 if (uriString.startsWith(FILE_PATH)) {
                     dangerousUri = true;
                 } else {
@@ -216,7 +216,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 // Try a 'default' tone.
                 uriString = getDefaultUri(type).toString();
 
-                if (SDK_INT >= N) {
+                if (VERSION.SDK_INT >= N) {
                     if (uriString.startsWith(FILE_PATH)) {
                         return SILENT_PATH;
                     }

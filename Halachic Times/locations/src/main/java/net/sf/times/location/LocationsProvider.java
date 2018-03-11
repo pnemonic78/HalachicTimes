@@ -39,7 +39,7 @@ import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.M;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -423,7 +423,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         Location loc = location;
         if (isValid(loc))
             return loc;
-        if (SDK_INT < M) {
+        if (VERSION.SDK_INT < M) {
             loc = getLocationGPSBase();
             if (isValid(loc))
                 return loc;
@@ -755,7 +755,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
             switch (msg.what) {
                 case WHAT_START:
-                    if (SDK_INT < M) {
+                    if (VERSION.SDK_INT < M) {
                         requestUpdatesBase();
                     } else {
                         requestUpdates();
@@ -769,14 +769,15 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     onLocationChanged(location);
                     break;
                 case WHAT_ADDRESS:
-                    if (msg.obj instanceof ZmanimAddress) {
-                        address = (ZmanimAddress) msg.obj;
-                        if (address != null)
+                    if (msg.obj != null) {
+                        if (msg.obj instanceof ZmanimAddress) {
+                            address = (ZmanimAddress) msg.obj;
                             location = address.getExtras().getParcelable(EXTRA_LOCATION);
-                    } else {
-                        location = (Location) msg.obj;
+                        } else if (msg.obj instanceof Location) {
+                            location = (Location) msg.obj;
+                        }
+                        onAddressChanged(location, address);
                     }
-                    onAddressChanged(location, address);
                     break;
                 case WHAT_ELEVATION:
                     location = (Location) msg.obj;

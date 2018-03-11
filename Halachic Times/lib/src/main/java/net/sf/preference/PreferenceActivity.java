@@ -26,7 +26,7 @@ import android.preference.PreferenceManager;
 
 import net.sf.lib.R;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 /**
@@ -52,7 +52,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
         super.onCreate(savedInstanceState);
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 
-        if (SDK_INT < JELLY_BEAN) {
+        if (VERSION.SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -72,7 +72,7 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
     @Override
     public void finish() {
         // Recreate the parent activity in case a theme has changed.
-        if (SDK_INT >= JELLY_BEAN) {
+        if (VERSION.SDK_INT >= JELLY_BEAN) {
             Intent parentIntent = getParentActivityIntent();
             if (parentIntent == null) {
                 try {

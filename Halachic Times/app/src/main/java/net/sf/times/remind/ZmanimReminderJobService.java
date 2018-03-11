@@ -15,17 +15,14 @@
  */
 package net.sf.times.remind;
 
-import android.annotation.TargetApi;
-import android.app.job.JobParameters;
-import android.app.job.JobService;
-import android.content.Context;
-import android.content.Intent;
-import android.os.PersistableBundle;
-import android.util.Log;
-
 import net.sf.app.LocaleCallbacks;
 import net.sf.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static net.sf.content.IntentUtils.readExtras;
@@ -36,7 +33,7 @@ import static net.sf.content.IntentUtils.readExtras;
  * @author Moshe Waisberg
  */
 @TargetApi(LOLLIPOP)
-public class ZmanimReminderJobService extends JobService {
+public class ZmanimReminderJobService extends android.app.job.JobService {
 
     private static final String TAG = "ZReminderJobService";
 
@@ -52,9 +49,9 @@ public class ZmanimReminderJobService extends JobService {
     }
 
     @Override
-    public boolean onStartJob(JobParameters jobParameters) {
+    public boolean onStartJob(android.app.job.JobParameters jobParameters) {
         Log.v(TAG, "start job");
-        PersistableBundle extras = jobParameters.getExtras();
+        android.os.PersistableBundle extras = jobParameters.getExtras();
         String action = extras.getString(EXTRA_ACTION);
         Intent intent = new Intent(action);
         readExtras(intent, extras);
@@ -67,7 +64,7 @@ public class ZmanimReminderJobService extends JobService {
     }
 
     @Override
-    public boolean onStopJob(JobParameters jobParameters) {
+    public boolean onStopJob(android.app.job.JobParameters jobParameters) {
         Log.v(TAG, "stop job");
         return false;
     }

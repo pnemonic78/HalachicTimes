@@ -23,7 +23,7 @@ import android.os.PersistableBundle;
 import android.util.Log;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 /**
@@ -82,7 +82,7 @@ public class ActivityUtils {
      */
     public static void restartActivity(Activity activity) {
         Bundle savedState = null;
-        if (SDK_INT >= LOLLIPOP) {
+        if (VERSION.SDK_INT >= LOLLIPOP) {
             savedState = new Bundle();
             activity.onSaveInstanceState(savedState, null);
         }

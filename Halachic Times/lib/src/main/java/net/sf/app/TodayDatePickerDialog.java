@@ -23,7 +23,7 @@ import net.sf.lib.R;
 
 import java.util.Calendar;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 /**
@@ -51,7 +51,7 @@ public class TodayDatePickerDialog extends DatePickerDialog {
     public void onClick(DialogInterface dialog, int which) {
         if (which == BUTTON_NEUTRAL) {
             setToday();
-            if (SDK_INT >= LOLLIPOP)
+            if (VERSION.SDK_INT >= LOLLIPOP)
                 onClick(dialog, BUTTON_POSITIVE);
         }
         super.onClick(dialog, which);

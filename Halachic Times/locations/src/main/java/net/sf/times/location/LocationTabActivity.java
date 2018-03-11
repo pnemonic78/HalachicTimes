@@ -15,6 +15,13 @@
  */
 package net.sf.times.location;
 
+import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
+import net.sf.preference.ThemePreferences;
+import net.sf.times.location.LocationAdapter.LocationItem;
+import net.sf.times.location.impl.FavoritesLocationAdapter;
+import net.sf.times.location.impl.HistoryLocationAdapter;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -36,19 +43,12 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
-import net.sf.preference.ThemePreferences;
-import net.sf.times.location.LocationAdapter.LocationItem;
-import net.sf.times.location.impl.FavoritesLocationAdapter;
-import net.sf.times.location.impl.HistoryLocationAdapter;
-
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static net.sf.times.location.GeocoderBase.USER_PROVIDER;
 
@@ -101,6 +101,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     private LocationsProvider locations;
     private Location locationForAddress;
     private TabHost tabHost;
+    private AddressProvider addressProvider;
 
     /**
      * Constructs a new activity.
@@ -118,7 +119,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        if (SDK_INT < JELLY_BEAN) {
+        if (VERSION.SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.locations);
@@ -149,6 +150,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         Intent intent = getIntent();
         String query = intent.getStringExtra(SearchManager.QUERY);
 
+        populateLists();
         search(query);
     }
 
@@ -193,7 +195,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            if (SDK_INT < JELLY_BEAN) {
+            if (VERSION.SDK_INT < JELLY_BEAN) {
                 finish();
                 return true;
             }
@@ -213,12 +215,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     /**
      * Do the search.
      *
-     * @param query
-     *         the query.
+     * @param query the query.
      */
     protected void search(CharSequence query) {
-        populateLists();
-
         SearchView searchText = this.searchText;
         if (!TextUtils.isEmpty(query)) {
             searchText.requestFocus();
@@ -231,9 +230,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
      * Populate the lists with cities.
      */
     protected void populateLists() {
-        LocationApplication app = (LocationApplication) getApplication();
-        AddressProvider provider = app.getAddresses();
-        LocationFormatter formatter = app.getLocations();
+        final Context context = this;
+        AddressProvider provider = getAddressProvider();
+        LocationFormatter formatter = getLocations();
         List<ZmanimAddress> addresses = provider.queryAddresses(null);
         List<City> cities = provider.getCities();
 
@@ -247,7 +246,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
             items.add(new LocationItem(address, formatter));
         }
 
-        final Context context = this;
         final LocationAdapter.LocationItemListener itemListener = this;
         final LocationAdapter.FilterListener filterListener = this;
 
@@ -329,8 +327,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     /**
      * Set the result location and close the activity.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      */
     protected void setAddress(Location location) {
         LocationApplication app = (LocationApplication) getApplication();
@@ -404,8 +401,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     /**
      * Add a custom location.
      *
-     * @param location
-     *         the new location.
+     * @param location the new location.
      */
     private void addLocation(Location location) {
         if (location == null) {
@@ -472,6 +468,13 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         }
     }
 
+    protected AddressProvider getAddressProvider() {
+        if (addressProvider == null) {
+            addressProvider = new AddressProvider(this);
+        }
+        return addressProvider;
+    }
+
     private static class ActivityHandler extends Handler {
 
         private final WeakReference<LocationTabActivity> activityWeakReference;
@@ -491,8 +494,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     address = (ZmanimAddress) msg.obj;
-                    LocationApplication app = (LocationApplication) activity.getApplication();
-                    AddressProvider provider = app.getAddresses();
+                    AddressProvider provider = activity.getAddressProvider();
                     provider.insertOrUpdateAddress(null, address);
 
                     activity.adapterAll.notifyItemChanged(address);

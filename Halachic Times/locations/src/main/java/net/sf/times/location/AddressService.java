@@ -15,14 +15,14 @@
  */
 package net.sf.times.location;
 
+import net.sf.times.location.AddressProvider.OnFindAddressListener;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.JobIntentService;
-
-import net.sf.times.location.AddressProvider.OnFindAddressListener;
 
 import static net.sf.times.location.ZmanimLocationListener.ACTION_ADDRESS;
 import static net.sf.times.location.ZmanimLocationListener.ACTION_ELEVATION;
@@ -51,8 +51,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
     @Override
     public void onCreate() {
         super.onCreate();
-        LocationApplication app = (LocationApplication) getApplication();
-        addressProvider = app.getAddresses();
+        addressProvider = new AddressProvider(this);
     }
 
     @Override

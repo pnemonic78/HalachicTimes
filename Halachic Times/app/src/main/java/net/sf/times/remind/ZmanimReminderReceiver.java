@@ -26,12 +26,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
 import static net.sf.content.IntentUtils.putExtras;
-import static net.sf.times.remind.ZmanimReminderJobService.EXTRA_ACTION;
 
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.
@@ -52,7 +51,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
         Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
 
         // Delegate actions to the service.
-        if (SDK_INT >= O) {
+        if (VERSION.SDK_INT >= O) {
             startReminderJob(context, intent);
         } else {
             Intent service = new Intent(intent);
@@ -95,7 +94,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
         }
         if (scheduler.getPendingJob(JOB_REMINDER) == null) {
             android.os.PersistableBundle extras = new android.os.PersistableBundle();
-            extras.putString(EXTRA_ACTION, intent.getAction());
+            extras.putString(ZmanimReminderJobService.EXTRA_ACTION, intent.getAction());
             putExtras(intent, extras);
 
             android.app.job.JobInfo job = new android.app.job.JobInfo.Builder(JOB_REMINDER, new ComponentName(context, ZmanimReminderJobService.class))

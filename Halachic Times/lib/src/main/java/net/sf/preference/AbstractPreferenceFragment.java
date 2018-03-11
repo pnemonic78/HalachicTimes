@@ -30,7 +30,7 @@ import android.text.TextUtils;
 
 import net.sf.lib.R;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.O;
 
 /**
@@ -267,7 +267,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 
         Preference pref = findPreference(key);
         if (pref != null) {
-            if (SDK_INT >= O) {
+            if (VERSION.SDK_INT >= O) {
                 return pref.getParent().removePreference(pref);
             }
             return findPreferenceParent(key).removePreference(pref);
