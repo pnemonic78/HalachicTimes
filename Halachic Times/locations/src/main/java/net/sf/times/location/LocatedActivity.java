@@ -31,7 +31,7 @@ import net.sf.preference.ThemePreferences;
 
 import java.util.TimeZone;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.M;
 
 /**
@@ -112,7 +112,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
         if (location != null) {
             locations.setLocation(location);
-        } else if (SDK_INT >= M) {
+        } else if (VERSION.SDK_INT >= M) {
             initLocationPermissions();
         }
     }

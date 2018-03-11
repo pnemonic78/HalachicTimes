@@ -59,13 +59,12 @@ import net.sf.times.preference.ZmanimPreferenceActivity;
 import net.sf.times.preference.ZmanimPreferences;
 import net.sf.times.remind.ZmanimReminder;
 import net.sf.times.remind.ZmanimReminderService;
-import net.sf.util.LocaleUtils;
 import net.sf.view.animation.LayoutWeightAnimation;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
@@ -185,7 +184,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     final int month = calendar.get(Calendar.MONTH);
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     if (activity.datePicker == null) {
-                        if (SDK_INT >= LOLLIPOP) {
+                        if (VERSION.SDK_INT >= LOLLIPOP) {
                             Resources res = context.getResources();
                             res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
                             context = new ContextResourcesWrapper(context, res);
@@ -543,7 +542,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             }
         }
 
-        if (SDK_INT >= LOLLIPOP) {
+        if (VERSION.SDK_INT >= LOLLIPOP) {
             finishAfterTransition();
         } else {
             finish();

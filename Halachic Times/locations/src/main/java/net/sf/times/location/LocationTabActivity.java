@@ -48,7 +48,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static net.sf.times.location.GeocoderBase.USER_PROVIDER;
 
@@ -119,7 +119,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        if (SDK_INT < JELLY_BEAN) {
+        if (VERSION.SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setContentView(R.layout.locations);
@@ -195,7 +195,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            if (SDK_INT < JELLY_BEAN) {
+            if (VERSION.SDK_INT < JELLY_BEAN) {
                 finish();
                 return true;
             }

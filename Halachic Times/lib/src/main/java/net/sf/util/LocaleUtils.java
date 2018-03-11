@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.os.Build.VERSION_CODES.N;
@@ -154,7 +154,7 @@ public class LocaleUtils {
     @NonNull
     public static Locale getDefaultLocale(@NonNull Configuration config) {
         Locale locale = null;
-        if (SDK_INT >= N) {
+        if (VERSION.SDK_INT >= N) {
             android.os.LocaleList locales = config.getLocales();
             if (locales.isEmpty()) {
                 locales = android.os.LocaleList.getAdjustedDefault();
@@ -187,7 +187,7 @@ public class LocaleUtils {
             res = Resources.getSystem();
         }
         final Configuration config = res.getConfiguration();
-        if (SDK_INT >= JELLY_BEAN_MR1) {
+        if (VERSION.SDK_INT >= JELLY_BEAN_MR1) {
             config.setLocale(locale);
             return context.createConfigurationContext(config);
         }
@@ -272,7 +272,7 @@ public class LocaleUtils {
     @NonNull
     public static Locale parseLocale(@Nullable String localeValue) {
         if (!isEmpty(localeValue)) {
-            if (SDK_INT >= LOLLIPOP) {
+            if (VERSION.SDK_INT >= LOLLIPOP) {
                 return Locale.forLanguageTag(localeValue);
             }
             String[] tokens = localeValue.split("_");

@@ -29,7 +29,7 @@ import net.sf.times.R;
 import net.sf.times.location.LocationActivity;
 import net.sf.times.preference.CompassPreferenceActivity;
 
-import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 /**
@@ -53,7 +53,7 @@ public class CompassActivity extends BaseCompassActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         localeCallbacks.onCreate(this);
-        if (SDK_INT < JELLY_BEAN) {
+        if (VERSION.SDK_INT < JELLY_BEAN) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -68,7 +68,7 @@ public class CompassActivity extends BaseCompassActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (SDK_INT < JELLY_BEAN) {
+                if (VERSION.SDK_INT < JELLY_BEAN) {
                     finish();
                     return true;
                 }
