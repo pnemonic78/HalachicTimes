@@ -1,4 +1,4 @@
-# Halachic Times
+# Halachic Times <img src="Halachic%20Times/app/images/ic_launcher-web.png?raw=true" width="50" height="50"/>
 Halachic Prayer Times.
 
 Times are calculated based on your location. An Internet connection is used to fetch your nearest address, otherwise the nearest country or time zone is used.
