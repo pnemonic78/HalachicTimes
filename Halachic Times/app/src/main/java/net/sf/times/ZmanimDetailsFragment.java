@@ -100,6 +100,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                         list.setBackgroundColor(res.getColor(R.color.shema));
                         break;
                     case R.string.prayers:
+                    case R.string.eat_chametz:
+                    case R.string.burn_chametz:
                         list.setBackgroundColor(res.getColor(R.color.prayers));
                         break;
                     case R.string.midday:
@@ -125,7 +127,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                     case R.string.festival_ends:
                         list.setBackgroundColor(res.getColor(R.color.nightfall));
                         break;
+                    case R.string.midnight_guard:
                     case R.string.midnight:
+                    case R.string.morning_guard:
                         list.setBackgroundColor(res.getColor(R.color.midnight));
                     default:
                         list.setBackgroundColor(Color.TRANSPARENT);
@@ -148,6 +152,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                         list.setBackgroundColor(res.getColor(R.color.shema_light));
                         break;
                     case R.string.prayers:
+                    case R.string.eat_chametz:
+                    case R.string.burn_chametz:
                         list.setBackgroundColor(res.getColor(R.color.prayers_light));
                         break;
                     case R.string.midday:
@@ -173,7 +179,9 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                     case R.string.festival_ends:
                         list.setBackgroundColor(res.getColor(R.color.nightfall_light));
                         break;
+                    case R.string.midnight_guard:
                     case R.string.midnight:
+                    case R.string.morning_guard:
                         list.setBackgroundColor(res.getColor(R.color.midnight_light));
                         break;
                     default:
