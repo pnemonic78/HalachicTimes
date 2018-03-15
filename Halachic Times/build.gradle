@@ -22,9 +22,9 @@ def joinStringArray(array) {
 }
 
 ext {
-    androidBuildToolsVersion = "26.0.2"
+    androidBuildToolsVersion = '27.0.3'
     androidBuildSdkVersion = 26
     androidBuildMinSdkVersion = 15
     androidBuildTargetSdkVersion = 26
-    supportVersion = '27.0.2'
+    supportVersion = '27.1.0'
 }
