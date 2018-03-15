@@ -504,6 +504,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
         adapter.add(R.string.prayers, summary, date, jewishDate, remote);
         final Long sofZmanTfila = date;
+        final int sofZmanTfilaSummary = summary;
 
         opinion = settings.getMidday();
         if (OPINION_FIXED.equals(opinion)) {
@@ -841,7 +842,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         switch (holidayToday) {
             case EREV_PESACH:
-                adapter.add(R.string.eat_chametz, summary, sofZmanTfila, jewishDate, remote);
+                //FIXME date = getSofZmanBiurChametz(cal, dawn, shaahZmanis);
+                adapter.add(R.string.eat_chametz, sofZmanTfilaSummary, sofZmanTfila, jewishDate, remote);
 
                 opinion = settings.getBurnChametz();
                 if (OPINION_16_1.equals(opinion)) {
@@ -1335,6 +1337,10 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             return NEVER;
         }
         return midnight + ((sunrise - midnight) >> 1);
+    }
+
+    protected Long getSofZmanBiurChametz(ComplexZmanimCalendar cal, long dawn, long shaahZmanis) {
+        return cal.getTimeOffset(dawn, shaahZmanis * 5);
     }
 
 }
