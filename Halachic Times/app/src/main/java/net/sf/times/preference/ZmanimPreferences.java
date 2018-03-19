@@ -68,6 +68,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_OPINION_SHEMA = "shema";
     /** Preference name for Last Morning Tfila type. */
     String KEY_OPINION_TFILA = "prayers";
+    /** Preference name for Last Eating Chametz type. */
+    String KEY_OPINION_EAT = "eat_chametz";
     /** Preference name for Last Biur Chametz type. */
     String KEY_OPINION_BURN = "burn_chametz";
     /** Preference name for midday / noon type. */
@@ -285,6 +287,13 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * @return the opinion.
      */
     String getLastTfila();
+
+    /**
+     * Get the opinion for eating chametz (<em>achilat chametz</em>).
+     *
+     * @return the opinion.
+     */
+    String getEatChametz();
 
     /**
      * Get the opinion for burning chametz (<em>biur chametz</em>).

@@ -268,6 +268,9 @@
 
     <!-- Pesach -->
     <string name="eat_chametz">Latest time to eat <i>chametz</i></string>
+    <string name="eat_chametz_gra" translatable="false">@string/opinion_gra</string>
+    <string name="eat_chametz_16" translatable="false">@string/opinion_16</string>
+    <string name="eat_chametz_72" translatable="false">@string/opinion_72</string>
     <string name="burn_chametz">Latest time to burn <i>chametz</i></string>
     <string name="burn_chametz_gra" translatable="false">@string/opinion_gra</string>
     <string name="burn_chametz_16" translatable="false">@string/opinion_16</string>

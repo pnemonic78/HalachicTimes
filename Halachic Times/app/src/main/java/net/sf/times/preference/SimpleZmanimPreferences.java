@@ -269,6 +269,11 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
+    public String getEatChametz() {
+        return preferences.getString(KEY_OPINION_EAT, context.getString(R.string.eat_chametz_defaultValue));
+    }
+
+    @Override
     public String getBurnChametz() {
         return preferences.getString(KEY_OPINION_BURN, context.getString(R.string.burn_chametz_defaultValue));
     }
@@ -440,6 +445,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return KEY_OPINION_SHEMA;
             case R.string.prayers:
                 return KEY_OPINION_TFILA;
+            case R.string.eat_chametz:
+                return KEY_OPINION_EAT;
             case R.string.burn_chametz:
                 return KEY_OPINION_BURN;
             case R.string.midday:
@@ -498,6 +505,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return R.string.shema;
             case KEY_OPINION_TFILA:
                 return R.string.prayers;
+            case KEY_OPINION_EAT:
+                return R.string.eat_chametz;
             case KEY_OPINION_BURN:
                 return R.string.burn_chametz;
             case KEY_OPINION_NOON:

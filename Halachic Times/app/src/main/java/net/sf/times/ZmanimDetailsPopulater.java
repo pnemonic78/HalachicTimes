@@ -860,7 +860,21 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateEatChametz(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        populatePrayers(adapter, cal, settings);
+        Long date;
+        int title;
+        JewishDate jewishDate = getJewishCalendar();
+
+        date = cal.getSofZmanAchilasChametzMGA16Point1Degrees();
+        title = R.string.eat_chametz_16;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+        date = cal.getSofZmanAchilasChametzMGA72Minutes();
+        title = R.string.eat_chametz_72;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+        date = cal.getSofZmanAchilasChametzGRA();
+        title = R.string.eat_chametz_gra;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
     private void populateBurnChametz(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
