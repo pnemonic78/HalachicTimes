@@ -19,6 +19,7 @@
     <string name="opinion_name_guards" translatable="false">guards</string>
     <string name="opinion_name_levana_earliest" translatable="false">levana_earliest</string>
     <string name="opinion_name_levana_latest" translatable="false">levana_latest</string>
+    <string name="opinion_name_eat_chametz" translatable="false">eat_chametz</string>
     <string name="opinion_name_burn_chametz" translatable="false">burn_chametz</string>
     <string name="opinion_name_omer" translatable="false">omer</string>
     <string name="opinion_name_candles" translatable="false">candles</string>
@@ -81,6 +82,7 @@
     <string name="opinion_value_sunset" translatable="false">sunset</string>
     <string name="opinion_value_twilight" translatable="false">twilight</string>
 
+    <string name="eat_chametz_defaultValue" translatable="false">@string/opinion_value_gra</string>
     <string name="burn_chametz_defaultValue" translatable="false">@string/opinion_value_gra</string>
     <string name="candles_chanukka_defaultValue" translatable="false">@string/opinion_value_default</string>
     <integer name="candles_defaultValue" translatable="false">22</integer>

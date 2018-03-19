@@ -163,6 +163,17 @@
         <item>@string/prayers_gra</item>
     </string-array>
 
+    <string-array name="eat_chametz_values" translatable="false">
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_gra</item>
+    </string-array>
+    <string-array name="eat_chametz_entries" translatable="false">
+        <item>@string/eat_chametz_16</item>
+        <item>@string/eat_chametz_72</item>
+        <item>@string/eat_chametz_gra</item>
+    </string-array>
+
     <string-array name="burn_chametz_values" translatable="false">
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_72</item>

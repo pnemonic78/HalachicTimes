@@ -277,6 +277,20 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:key="eat_chametz_screen"
+        android:title="@string/eat_chametz">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_eat_chametz_preferences"/>
+        <extra
+            android:name="opinion"
+            android:value="@string/opinion_name_eat_chametz"/>
+        <extra
+            android:name="reminder"
+            android:value="eat_chametz.reminder"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
         android:key="burn_chametz_screen"
         android:title="@string/burn_chametz">
         <extra
