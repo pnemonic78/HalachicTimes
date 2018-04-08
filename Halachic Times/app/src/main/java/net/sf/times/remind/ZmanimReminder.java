@@ -491,11 +491,6 @@ public class ZmanimReminder {
         if (VERSION.SDK_INT >= JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
         }
-        if (VERSION.SDK_INT >= M) {
-            builder.setCategory(Notification.CATEGORY_REMINDER);
-        } else if (VERSION.SDK_INT >= LOLLIPOP) {
-            builder.setCategory(Notification.CATEGORY_ALARM);
-        }
 
         return builder;
     }
@@ -521,6 +516,8 @@ public class ZmanimReminder {
         if (VERSION.SDK_INT >= JELLY_BEAN) {
             if (VERSION.SDK_INT >= M) {
                 builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
+            } else if (VERSION.SDK_INT >= LOLLIPOP) {
+                builder.setCategory(Notification.CATEGORY_ALARM);
             }
             return builder.build();
         }
