@@ -15,28 +15,6 @@
  */
 package net.sf.times.remind;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-
 import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimAdapter;
@@ -49,6 +27,32 @@ import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,10 +61,7 @@ import java.util.Locale;
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static android.os.Build.VERSION_CODES.M;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -510,6 +511,19 @@ public class ZmanimReminder {
             builder.setDefaults(DEFAULT_VIBRATE)
                     .setLights(LED_COLOR, LED_ON, LED_OFF);
         }
+
+        // Dynamically generate the large icon.
+        final Resources res = context.getResources();
+        int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
+        int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
+        Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
+        Bitmap layerBottom = BitmapFactory.decodeResource(res, (VERSION.SDK_INT >= LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+        Bitmap layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
+        Canvas canvas = new Canvas(largeIcon);
+        Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
+        canvas.drawBitmap(layerBottom, null, largeIconRect, null);
+        canvas.drawBitmap(layerTop, null, largeIconRect, null);
+        builder.setLargeIcon(largeIcon);
 
         return builder.build();
     }
