@@ -113,6 +113,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
             if ((position >= positionSunset) && (positionTomorrow < 0)) {
                 positionTomorrow = position;
                 jewishDate.forward();
+                jcal.forward();
                 dateHebrew = adapter.formatDate(context, jewishDate);
                 groupingText = dateHebrew;
                 int omer = jcal.getDayOfOmer();
@@ -152,6 +153,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 if ((position >= positionSunset) && (positionTomorrow < 0)) {
                     positionTomorrow = position;
                     jewishDate.forward();
+                    jcal.forward();
                     dateHebrew = adapter.formatDate(context, jewishDate);
                     groupingText = dateHebrew;
                     int omer = jcal.getDayOfOmer();

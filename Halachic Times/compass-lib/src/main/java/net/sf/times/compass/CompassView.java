@@ -393,12 +393,12 @@ public class CompassView extends View {
     }
 
     /**
-     * Set the azimuth to magnetic North pole.
+     * Set the azimuth to true North pole.
      *
-     * @param bearing the bearing in radians.
+     * @param azimuth the azimuth in degrees.
      */
-    public void setAzimuth(float bearing) {
-        north = (float) Math.toDegrees(-bearing);
+    public void setAzimuth(float azimuth) {
+        north = azimuth;
         setNorthToHoliest();
     }
 
@@ -414,10 +414,11 @@ public class CompassView extends View {
 
     private void setNorthToHoliest() {
         northToHoliest = north + holiest;
-        if (northToHoliest > 180f)
+        if (northToHoliest > 180f) {
             northToHoliest -= 360f;
-        else if (northToHoliest < -180f)
+        } else if (northToHoliest < -180f) {
             northToHoliest += 360f;
+        }
 
         invalidate();
     }

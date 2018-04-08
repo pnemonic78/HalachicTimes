@@ -15,27 +15,6 @@
  */
 package net.sf.times.remind;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.PowerManager;
-import android.os.PowerManager.WakeLock;
-import android.support.annotation.Nullable;
-import android.util.Log;
-
 import net.sf.times.R;
 import net.sf.times.ZmanimActivity;
 import net.sf.times.ZmanimAdapter;
@@ -48,6 +27,32 @@ import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
+import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,10 +61,7 @@ import java.util.Locale;
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN_MR1;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static android.os.Build.VERSION_CODES.M;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -292,7 +294,7 @@ public class ZmanimReminder {
      */
     public void notifyNow(ZmanimPreferences settings, ZmanimItem item) {
         CharSequence contentTitle = context.getText(item.titleId);
-        CharSequence contentText = item.summary;
+        CharSequence contentText = context.getText(R.string.reminder);
         long when = item.time;
         ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, when);
 
@@ -471,31 +473,20 @@ public class ZmanimReminder {
         return createReminderNotification(settings, item, contentIntent, false);
     }
 
-    private Notification.Builder createNotificationBuilder(CharSequence contentTitle,
-                                                           CharSequence contentText,
-                                                           long when,
-                                                           PendingIntent contentIntent,
-                                                           String channelId) {
-        Notification.Builder builder;
-        if (VERSION.SDK_INT >= O) {
-            builder = new Notification.Builder(context, channelId);
-        } else {
-            builder = new Notification.Builder(context);
-        }
-        builder.setContentIntent(contentIntent)
+    private NotificationCompat.Builder createNotificationBuilder(CharSequence contentTitle,
+                                                                 CharSequence contentText,
+                                                                 long when,
+                                                                 PendingIntent contentIntent,
+                                                                 String channelId) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
+                .setShowWhen(true)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setWhen(when);
-        if (VERSION.SDK_INT >= JELLY_BEAN_MR1) {
-            builder.setShowWhen(true);
-        }
-        if (VERSION.SDK_INT >= M) {
-            builder.setCategory(Notification.CATEGORY_REMINDER);
-        } else if (VERSION.SDK_INT >= LOLLIPOP) {
-            builder.setCategory(Notification.CATEGORY_ALARM);
-        }
 
         return builder;
     }
@@ -508,23 +499,33 @@ public class ZmanimReminder {
         final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
         final Uri sound = silent ? null : settings.getReminderRingtone();
 
-        final Notification.Builder builder = createNotificationBuilder(contentTitle,
+        final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
                 contentText,
                 when,
                 contentIntent,
-                CHANNEL_REMINDER);
+                CHANNEL_REMINDER)
+                .setAutoCancel(true)
+                .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
+                .setSound(sound, audioStreamType);
         if (!silent) {
-            builder.setDefaults(DEFAULT_VIBRATE);
-            builder.setLights(LED_COLOR, LED_ON, LED_OFF);
+            builder.setDefaults(DEFAULT_VIBRATE)
+                    .setLights(LED_COLOR, LED_ON, LED_OFF);
         }
-        builder.setSound(sound, audioStreamType);
-        if (VERSION.SDK_INT >= JELLY_BEAN) {
-            if (VERSION.SDK_INT >= M) {
-                builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
-            }
-            return builder.build();
-        }
-        return builder.getNotification();
+
+        // Dynamically generate the large icon.
+        final Resources res = context.getResources();
+        int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
+        int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
+        Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
+        Bitmap layerBottom = BitmapFactory.decodeResource(res, (VERSION.SDK_INT >= LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+        Bitmap layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
+        Canvas canvas = new Canvas(largeIcon);
+        Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
+        canvas.drawBitmap(layerBottom, null, largeIconRect, null);
+        canvas.drawBitmap(layerTop, null, largeIconRect, null);
+        builder.setLargeIcon(largeIcon);
+
+        return builder.build();
     }
 
     @SuppressLint("Wakelock")
@@ -619,16 +620,13 @@ public class ZmanimReminder {
         final long when = item.time;
         Log.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
-        final Notification.Builder builder = createNotificationBuilder(contentTitle,
+        final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
                 contentText,
                 when,
                 contentIntent,
-                CHANNEL_UPCOMING);
-        builder.setOngoing(true);
+                CHANNEL_UPCOMING)
+                .setOngoing(true);
 
-        if (VERSION.SDK_INT < JELLY_BEAN) {
-            return builder.getNotification();
-        }
         return builder.build();
     }
 

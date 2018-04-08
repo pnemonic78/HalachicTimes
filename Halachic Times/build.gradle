@@ -5,7 +5,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.google.gms:google-services:3.1.0'
     }
 }
@@ -23,8 +23,8 @@ def joinStringArray(array) {
 
 ext {
     androidBuildToolsVersion = '27.0.3'
-    androidBuildSdkVersion = 26
+    androidBuildSdkVersion = 27
     androidBuildMinSdkVersion = 15
-    androidBuildTargetSdkVersion = 26
-    supportVersion = '27.1.0'
+    androidBuildTargetSdkVersion = 27
+    supportVersion = '27.1.1'
 }

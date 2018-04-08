@@ -112,16 +112,16 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
         if ((position == positionToday) || (position == positionTomorrow)) {
             ComplexZmanimCalendar zmanCal = adapter.getCalendar();
-            JewishCalendar jewishDate = new JewishCalendar(zmanCal.getCalendar());
+            JewishCalendar jcal = new JewishCalendar(zmanCal.getCalendar());
             if (position == positionTomorrow) {
-                jewishDate.forward();
+                jcal.forward();
             }
-            CharSequence dateHebrew = adapter.formatDate(context, jewishDate);
+            CharSequence dateHebrew = adapter.formatDate(context, jcal);
             CharSequence groupingText = dateHebrew;
 
             // Sefirat HaOmer?
             if (position == positionTomorrow) {
-                int omer = jewishDate.getDayOfOmer();
+                int omer = jcal.getDayOfOmer();
                 if (omer >= 1) {
                     CharSequence omerLabel = adapter.formatOmer(context, omer);
                     if (!TextUtils.isEmpty(omerLabel)) {

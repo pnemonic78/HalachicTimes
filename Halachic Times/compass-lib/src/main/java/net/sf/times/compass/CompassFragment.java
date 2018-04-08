@@ -17,6 +17,7 @@ package net.sf.times.compass;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -72,6 +73,8 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     private final float[] orientation = new float[3];
     /** The preferences. */
     protected CompassPreferences preferences;
+    /** The location's geomagnetic field. */
+    private GeomagneticField geomagneticField;
 
     public CompassFragment() {
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
@@ -136,12 +139,16 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         }
         if (SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic)) {
             SensorManager.getOrientation(matrixR, orientation);
-            setAzimuth(orientation[0]);
+            float azimuth = (float) Math.toDegrees(-orientation[0]);
+            if (geomagneticField != null) {
+                azimuth += geomagneticField.getDeclination(); // converts magnetic north to true north
+            }
+            setAzimuth(azimuth);
         }
     }
 
     protected void setAzimuth(float azimuth) {
-        compassView.setAzimuth(orientation[0]);
+        compassView.setAzimuth(azimuth);
     }
 
     /**
@@ -154,6 +161,12 @@ public class CompassFragment extends Fragment implements SensorEventListener {
             compassView.setHoliest(Float.NaN);
             return;
         }
+        geomagneticField = new GeomagneticField(
+                (float) location.getLatitude(),
+                (float) location.getLongitude(),
+                (float) location.getAltitude(),
+                location.getTime());
+
         float bearing;
         String bearingType = preferences.getBearing();
         if (BEARING_GREAT_CIRCLE.equals(bearingType)) {
@@ -165,7 +178,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     public void setHoliest(Location location) {
-        this.holiest.set(location);
+        holiest.set(location);
     }
 
     public void setHoliest(double latitude, double longitude, double elevation) {
@@ -180,7 +193,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         }
         final int length = Math.min(input.length, output.length);
         for (int i = 0; i < length; i++) {
-            output[i] = output[i] + ALPHA * (input[i] - output[i]);
+            output[i] += ALPHA * (input[i] - output[i]);
         }
         return output;
     }

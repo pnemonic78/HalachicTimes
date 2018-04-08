@@ -36,5 +36,5 @@ dependencies {
     api "com.android.support:support-compat:$supportVersion"
     api "com.android.support:recyclerview-v7:$supportVersion"
 
-    testApi 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
