@@ -34,6 +34,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import net.sf.times.R;
@@ -471,29 +472,20 @@ public class ZmanimReminder {
         return createReminderNotification(settings, item, contentIntent, false);
     }
 
-    private Notification.Builder createNotificationBuilder(CharSequence contentTitle,
-                                                           CharSequence contentText,
-                                                           long when,
-                                                           PendingIntent contentIntent,
-                                                           String channelId) {
-        Notification.Builder builder;
-        if (VERSION.SDK_INT >= O) {
-            builder = new Notification.Builder(context, channelId);
-        } else {
-            builder = new Notification.Builder(context);
-        }
-        builder.setContentIntent(contentIntent)
+    private NotificationCompat.Builder createNotificationBuilder(CharSequence contentTitle,
+                                                                 CharSequence contentText,
+                                                                 long when,
+                                                                 PendingIntent contentIntent,
+                                                                 String channelId) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
+                .setShowWhen(true)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setWhen(when);
-        if (VERSION.SDK_INT >= JELLY_BEAN_MR1) {
-            builder.setShowWhen(true);
-            if (VERSION.SDK_INT >= M) {
-                builder.setCategory(Notification.CATEGORY_REMINDER);
-            }
-        }
 
         return builder;
     }
@@ -506,26 +498,20 @@ public class ZmanimReminder {
         final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
         final Uri sound = silent ? null : settings.getReminderRingtone();
 
-        final Notification.Builder builder = createNotificationBuilder(contentTitle,
+        final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
                 contentText,
                 when,
                 contentIntent,
-                CHANNEL_REMINDER);
-        builder.setAutoCancel(true)
+                CHANNEL_REMINDER)
+                .setAutoCancel(true)
+                .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
                 .setSound(sound, audioStreamType);
         if (!silent) {
-            builder.setDefaults(DEFAULT_VIBRATE);
-            builder.setLights(LED_COLOR, LED_ON, LED_OFF);
+            builder.setDefaults(DEFAULT_VIBRATE)
+                    .setLights(LED_COLOR, LED_ON, LED_OFF);
         }
-        if (VERSION.SDK_INT >= JELLY_BEAN) {
-            if (VERSION.SDK_INT >= M) {
-                builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
-            } else if (VERSION.SDK_INT >= LOLLIPOP) {
-                builder.setCategory(Notification.CATEGORY_ALARM);
-            }
-            return builder.build();
-        }
-        return builder.getNotification();
+
+        return builder.build();
     }
 
     @SuppressLint("Wakelock")
@@ -620,16 +606,13 @@ public class ZmanimReminder {
         final long when = item.time;
         Log.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
-        final Notification.Builder builder = createNotificationBuilder(contentTitle,
+        final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
                 contentText,
                 when,
                 contentIntent,
-                CHANNEL_UPCOMING);
-        builder.setOngoing(true);
+                CHANNEL_UPCOMING)
+                .setOngoing(true);
 
-        if (VERSION.SDK_INT < JELLY_BEAN) {
-            return builder.getNotification();
-        }
         return builder.build();
     }
 
