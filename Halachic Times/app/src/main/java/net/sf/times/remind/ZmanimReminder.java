@@ -292,7 +292,7 @@ public class ZmanimReminder {
      */
     public void notifyNow(ZmanimPreferences settings, ZmanimItem item) {
         CharSequence contentTitle = context.getText(item.titleId);
-        CharSequence contentText = item.summary;
+        CharSequence contentText = context.getText(R.string.reminder);
         long when = item.time;
         ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, when);
 
@@ -511,11 +511,12 @@ public class ZmanimReminder {
                 when,
                 contentIntent,
                 CHANNEL_REMINDER);
+        builder.setAutoCancel(true)
+                .setSound(sound, audioStreamType);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE);
             builder.setLights(LED_COLOR, LED_ON, LED_OFF);
         }
-        builder.setSound(sound, audioStreamType);
         if (VERSION.SDK_INT >= JELLY_BEAN) {
             if (VERSION.SDK_INT >= M) {
                 builder.setCategory(alarm ? Notification.CATEGORY_ALARM : Notification.CATEGORY_REMINDER);
