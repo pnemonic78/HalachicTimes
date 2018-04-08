@@ -490,6 +490,9 @@ public class ZmanimReminder {
                 .setWhen(when);
         if (VERSION.SDK_INT >= JELLY_BEAN_MR1) {
             builder.setShowWhen(true);
+            if (VERSION.SDK_INT >= M) {
+                builder.setCategory(Notification.CATEGORY_REMINDER);
+            }
         }
 
         return builder;
