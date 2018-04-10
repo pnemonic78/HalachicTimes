@@ -23,6 +23,7 @@ import android.util.Log;
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
+import com.github.util.LogUtils;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.github.content.IntentUtils.readExtras;
@@ -50,7 +51,7 @@ public class ZmanimReminderJobService extends android.app.job.JobService {
 
     @Override
     public boolean onStartJob(android.app.job.JobParameters jobParameters) {
-        Log.v(TAG, "start job");
+        LogUtils.v(TAG, "start job");
         android.os.PersistableBundle extras = jobParameters.getExtras();
         String action = extras.getString(EXTRA_ACTION);
         Intent intent = new Intent(action);
@@ -65,7 +66,7 @@ public class ZmanimReminderJobService extends android.app.job.JobService {
 
     @Override
     public boolean onStopJob(android.app.job.JobParameters jobParameters) {
-        Log.v(TAG, "stop job");
+        LogUtils.v(TAG, "stop job");
         return false;
     }
 }

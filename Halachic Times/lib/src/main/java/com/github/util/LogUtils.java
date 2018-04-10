@@ -19,6 +19,10 @@ public class LogUtils {
         Log.i(tag, msg);
     }
 
+    public static void v(String tag, String msg) {
+        Log.v(tag, msg);
+    }
+
     public static void w(String tag, String msg) {
         Log.w(tag, msg);
     }
