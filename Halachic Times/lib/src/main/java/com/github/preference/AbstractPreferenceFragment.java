@@ -30,7 +30,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import net.sf.lib.R;
-import com.github.util.LogWrapper;
+import com.github.util.LogUtils;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION;
@@ -254,7 +254,7 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
                     try {
                         context.startActivity(intent);
                     } catch (Exception e) {
-                        LogWrapper.e(TAG, "Error launching intent: " + intent, e);
+                        LogUtils.e(TAG, "Error launching intent: " + intent, e);
                     }
                     return true;
                 }

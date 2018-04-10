@@ -26,6 +26,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
+import com.github.util.LogUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -211,7 +213,7 @@ public class TimePreference extends DialogPreference {
                 time.setTime(date);
                 return time;
             } catch (ParseException e) {
-                Log.e(TAG, "parseTime: " + e.getLocalizedMessage(), e);
+                LogUtils.e(TAG, "parseTime: " + e.getLocalizedMessage(), e);
             }
         }
         return null;

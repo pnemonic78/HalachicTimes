@@ -31,6 +31,7 @@ import com.github.times.location.impl.DatabaseGeocoder;
 import com.github.times.location.impl.GeoNamesGeocoder;
 import com.github.times.location.impl.GoogleGeocoder;
 import com.github.util.LocaleUtils;
+import com.github.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -210,7 +211,7 @@ public class AddressProvider {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 10);
                 } catch (Exception e) {
-                    Log.e(TAG, "Address geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    LogUtils.e(TAG, "Address geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
                     continue;
                 }
                 bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
@@ -263,7 +264,7 @@ public class AddressProvider {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
         } catch (Exception e) {
-            Log.e(TAG, "Geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            LogUtils.e(TAG, "Geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -400,7 +401,7 @@ public class AddressProvider {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
         } catch (Exception e) {
-            Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            LogUtils.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -460,7 +461,7 @@ public class AddressProvider {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
         } catch (Exception e) {
-            Log.e(TAG, "City: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            LogUtils.e(TAG, "City: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return addresses;
     }
@@ -540,7 +541,7 @@ public class AddressProvider {
                 try {
                     elevated = geocoder.getElevation(latitude, longitude);
                 } catch (Exception e) {
-                    Log.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    LogUtils.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
                     continue;
                 }
                 if ((elevated != null) && elevated.hasAltitude()) {
@@ -570,7 +571,7 @@ public class AddressProvider {
         try {
             return countriesGeocoder.getElevation(latitude, longitude);
         } catch (Exception e) {
-            Log.e(TAG, "Countries geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            LogUtils.e(TAG, "Countries geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }
@@ -618,7 +619,7 @@ public class AddressProvider {
         try {
             return geocoder.getElevation(latitude, longitude);
         } catch (Exception e) {
-            Log.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            LogUtils.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
         }
         return null;
     }

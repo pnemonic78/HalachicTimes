@@ -18,9 +18,10 @@ package com.github.times;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.github.times.preference.ZmanimPreferences;
+import com.github.util.LogUtils;
+
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
@@ -197,12 +198,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     public void populate(A adapter, boolean remote) {
         if (adapter == null) {
-            Log.e(TAG, "adapter required to populate");
+            LogUtils.e(TAG, "adapter required to populate");
             return;
         }
         final Context context = getContext();
         if (context == null) {
-            Log.e(TAG, "context required to populate");
+            LogUtils.e(TAG, "context required to populate");
             return;
         }
         ZmanimPreferences settings = getSettings();

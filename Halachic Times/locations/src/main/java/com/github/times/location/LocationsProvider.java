@@ -34,6 +34,8 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.github.util.LogUtils;
+
 import java.util.Collection;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -276,7 +278,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -299,7 +301,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -316,7 +318,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "Network: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Network: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -338,7 +340,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "Network: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Network: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -355,7 +357,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -377,7 +379,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -654,7 +656,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
         }
 
         // Let the updates run for only a small while to save battery.
@@ -685,7 +687,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Log.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
         }
 
         // Let the updates run for only a small while to save battery.
@@ -698,7 +700,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             try {
                 locationManager.removeUpdates(this);
             } catch (SecurityException e) {
-                Log.e(TAG, "remove updates: " + e.getLocalizedMessage(), e);
+                LogUtils.e(TAG, "remove updates: " + e.getLocalizedMessage(), e);
             }
         }
 

@@ -37,6 +37,7 @@ import com.github.times.location.provider.LocationContract.AddressColumns;
 import com.github.times.location.provider.LocationContract.CityColumns;
 import com.github.times.location.provider.LocationContract.ElevationColumns;
 import com.github.util.LocaleUtils;
+import com.github.util.LogUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -287,7 +288,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteException se) {
-            Log.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
+            LogUtils.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
         } finally {
             cursor.close();
         }
@@ -352,7 +353,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            Log.e(TAG, "Error inserting address: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Error inserting address: " + e.getLocalizedMessage(), e);
         }
     }
 
@@ -393,7 +394,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteException se) {
-            Log.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
+            LogUtils.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
         } finally {
             cursor.close();
         }
@@ -437,7 +438,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/elevation
-            Log.e(TAG, "Error inserting elevation" + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Error inserting elevation" + e.getLocalizedMessage(), e);
         }
     }
 
@@ -475,7 +476,7 @@ public class DatabaseGeocoder extends GeocoderBase {
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteException se) {
-            Log.e(TAG, "Query cities: " + se.getLocalizedMessage(), se);
+            LogUtils.e(TAG, "Query cities: " + se.getLocalizedMessage(), se);
         } finally {
             cursor.close();
         }
@@ -515,7 +516,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
-            Log.e(TAG, "Error inserting city: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Error inserting city: " + e.getLocalizedMessage(), e);
         }
     }
 

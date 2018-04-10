@@ -20,7 +20,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.util.Log;
+
+import com.github.util.LogUtils;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
 import static android.os.Build.VERSION;
@@ -50,7 +51,7 @@ public class ActivityUtils {
                 activity.setTitle(label);
             }
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "package not found!", e);
+            LogUtils.e(TAG, "package not found!", e);
         }
     }
 

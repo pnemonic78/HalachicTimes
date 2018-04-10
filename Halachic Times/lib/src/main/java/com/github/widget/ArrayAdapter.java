@@ -29,6 +29,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.github.util.LogUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -374,7 +376,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
             try {
                 textView = (TextView) ((fieldId == 0) ? itemView : itemView.findViewById(fieldId));
             } catch (ClassCastException e) {
-                Log.e("ArrayAdapter", "You must supply a resource ID for a TextView");
+                LogUtils.e("ArrayAdapter", "You must supply a resource ID for a TextView");
                 throw new IllegalStateException(
                         "ArrayAdapter requires the resource ID to be a TextView", e);
             }

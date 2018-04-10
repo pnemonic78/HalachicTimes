@@ -26,6 +26,7 @@ import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
 import com.github.util.LocaleUtils;
+import com.github.util.LogUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -416,7 +417,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
             elevated.setAltitude(elevation);
             return elevated;
         } catch (NumberFormatException nfe) {
-            Log.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
+            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
         }
         return null;
     }
