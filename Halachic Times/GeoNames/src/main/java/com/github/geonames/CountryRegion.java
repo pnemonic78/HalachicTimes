@@ -27,7 +27,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.github.geonames.CountryInfo.*;
+import static com.github.geonames.CountryInfo.ISO639_ISRAEL;
+import static com.github.geonames.CountryInfo.ISO639_PALESTINE;
 
 /**
  * Country region.
