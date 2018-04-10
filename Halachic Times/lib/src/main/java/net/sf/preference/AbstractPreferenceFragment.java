@@ -15,6 +15,7 @@
  */
 package net.sf.preference;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -29,7 +30,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import net.sf.lib.R;
+import net.sf.util.LogWrapper;
 
+import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.O;
 
@@ -37,6 +40,8 @@ import static android.os.Build.VERSION_CODES.O;
  * This fragment shows the preferences for a header.
  */
 public abstract class AbstractPreferenceFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
+
+    private static final String TAG = "AbstractPreferenceFrag";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -235,13 +240,26 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
     }
 
     protected void validateIntent(Preference preference) {
-        Intent intent = preference.getIntent();
+        final Intent intent = preference.getIntent();
         if (intent == null) {
             return;
         }
-        PackageManager pm = getActivity().getPackageManager();
-        ResolveInfo info = pm.resolveActivity(intent, 0);
-        if (info == null) {
+        final Context context = preference.getContext();
+        PackageManager pm = context.getPackageManager();
+        ResolveInfo info = pm.resolveActivity(intent, MATCH_DEFAULT_ONLY);
+        if (info != null) {
+            preference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    try {
+                        context.startActivity(intent);
+                    } catch (Exception e) {
+                        LogWrapper.e(TAG, "Error launching intent: " + intent, e);
+                    }
+                    return true;
+                }
+            });
+        } else {
             preference.setIntent(null);
         }
     }
