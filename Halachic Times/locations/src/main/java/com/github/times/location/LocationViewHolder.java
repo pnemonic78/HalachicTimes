@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import net.sf.widget.ArrayAdapter;
+import com.github.widget.ArrayAdapter;
 
 /**
  * View holder for location row item.
