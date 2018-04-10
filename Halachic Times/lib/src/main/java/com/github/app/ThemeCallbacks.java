@@ -13,38 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.app;
+package com.github.app;
 
-import android.content.Context;
-
-import net.sf.preference.LocalePreferences;
+import net.sf.preference.ThemePreferences;
 
 /**
- * Contexts that overrides the system locale.
+ * Contexts that takes its theme from the application.
  *
  * @author Moshe Waisberg
  */
-public interface LocaleCallbacks<P extends LocalePreferences> {
+public interface ThemeCallbacks<P extends ThemePreferences> {
+
+    /** Apply the theme here. */
+    void onCreate();
 
     /**
-     * Apply the locale here
-     *
-     * @param context the context with locale.
-     * @return the context with the new locale.
-     */
-    Context attachBaseContext(Context context);
-
-    /**
-     * Re-apply the title here.
-     *
-     * @param context the context.
-     */
-    void onCreate(Context context);
-
-    /**
-     * Get the locale preferences.
+     * Get the theme preferences.
      *
      * @return the preferences.
      */
-    P getLocalePreferences();
+    P getThemePreferences();
 }

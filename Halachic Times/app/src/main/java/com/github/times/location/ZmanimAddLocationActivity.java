@@ -17,8 +17,8 @@ package com.github.times.location;
 
 import android.content.Context;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import com.github.times.preference.ZmanimPreferences;
 

@@ -18,8 +18,8 @@ package com.github.times;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import com.github.times.location.AddressProvider;

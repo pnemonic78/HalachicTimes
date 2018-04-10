@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.app;
+package com.github.app;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,7 @@ import android.content.Context;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
 
-import static net.sf.app.ActivityUtils.restTitle;
+import static com.github.app.ActivityUtils.restTitle;
 import static net.sf.util.LocaleUtils.applyLocale;
 
 /**

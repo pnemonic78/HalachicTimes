@@ -37,8 +37,8 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 import com.github.times.location.LocationAdapter.LocationItem;
 import com.github.times.location.impl.FavoritesLocationAdapter;

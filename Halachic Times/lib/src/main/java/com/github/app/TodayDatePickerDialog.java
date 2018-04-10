@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.app;
+package com.github.app;
 
 import android.app.DatePickerDialog;
 import android.content.Context;

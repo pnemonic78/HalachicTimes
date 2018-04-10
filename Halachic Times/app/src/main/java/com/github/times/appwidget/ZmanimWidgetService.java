@@ -19,8 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 
 /**

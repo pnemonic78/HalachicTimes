@@ -19,8 +19,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 
 /**

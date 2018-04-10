@@ -28,7 +28,7 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleHelper;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;

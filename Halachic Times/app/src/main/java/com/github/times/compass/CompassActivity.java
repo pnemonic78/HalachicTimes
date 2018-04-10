@@ -23,8 +23,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import com.github.times.R;
 import com.github.times.location.LocationActivity;

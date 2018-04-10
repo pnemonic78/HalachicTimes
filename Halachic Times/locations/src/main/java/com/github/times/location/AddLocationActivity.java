@@ -33,8 +33,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 import net.sf.text.method.RangeInputFilter;
 import com.github.times.location.text.LatitudeInputFilter;

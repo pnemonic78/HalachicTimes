@@ -25,8 +25,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
 import net.sf.preference.ThemePreferences;
 
 import java.util.TimeZone;

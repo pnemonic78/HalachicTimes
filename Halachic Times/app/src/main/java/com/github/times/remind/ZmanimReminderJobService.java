@@ -20,8 +20,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;

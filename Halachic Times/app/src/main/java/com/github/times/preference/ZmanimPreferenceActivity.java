@@ -18,8 +18,8 @@ package com.github.times.preference;
 import android.content.Context;
 import android.os.Bundle;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.PreferenceActivity;
 import com.github.times.R;

@@ -34,8 +34,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.widget.RemoteViews;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;

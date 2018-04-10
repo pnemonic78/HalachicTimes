@@ -43,11 +43,11 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
-import net.sf.app.TodayDatePickerDialog;
+import com.github.app.LocaleCallbacks;
+import com.github.app.LocaleHelper;
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
+import com.github.app.TodayDatePickerDialog;
 import net.sf.content.ContextResourcesWrapper;
 import com.github.times.compass.CompassActivity;
 import com.github.times.content.res.ZmanimResources;
