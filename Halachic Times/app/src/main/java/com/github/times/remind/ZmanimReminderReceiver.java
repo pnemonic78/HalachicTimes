@@ -50,7 +50,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "onReceive " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
+        LogUtils.i(TAG, "onReceive " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
 
         // Delegate actions to the service.
         if (VERSION.SDK_INT >= O) {
