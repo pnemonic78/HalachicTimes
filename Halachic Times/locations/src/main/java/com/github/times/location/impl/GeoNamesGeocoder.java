@@ -18,7 +18,6 @@ package com.github.times.location.impl;
 import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.github.net.HTTPReader;
 import com.github.times.location.BuildConfig;

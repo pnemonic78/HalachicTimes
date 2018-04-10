@@ -25,7 +25,6 @@ import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 import com.github.database.CursorFilter;
 import com.github.times.location.City;

@@ -22,7 +22,6 @@ import android.test.AndroidTestCase;
 import com.github.times.location.impl.BingGeocoder;
 import com.github.times.location.impl.GeoNamesGeocoder;
 import com.github.times.location.impl.GoogleGeocoder;
-import com.github.times.location.test.R;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
