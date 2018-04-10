@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.text.method;
+package com.github.text.method;
 
 import android.text.Spanned;
 import android.text.TextUtils;

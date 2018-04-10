@@ -23,7 +23,7 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.widget.RemoteViews;
 
-import net.sf.text.style.TypefaceSpan;
+import com.github.text.style.TypefaceSpan;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;

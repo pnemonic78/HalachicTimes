@@ -15,7 +15,7 @@
  */
 package com.github.times.location.text;
 
-import net.sf.text.method.RangeInputFilter;
+import com.github.text.method.RangeInputFilter;
 import com.github.times.location.ZmanimLocation;
 
 /**

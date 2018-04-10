@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.text.style;
+package com.github.text.style;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;
