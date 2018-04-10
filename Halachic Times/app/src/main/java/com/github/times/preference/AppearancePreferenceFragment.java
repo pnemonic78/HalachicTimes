@@ -20,7 +20,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 
-import net.sf.appwidget.AppWidgetUtils;
+import com.github.appwidget.AppWidgetUtils;
 import com.github.times.BuildConfig;
 import com.github.times.R;
 import com.github.times.appwidget.ClockWidget;

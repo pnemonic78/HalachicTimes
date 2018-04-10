@@ -21,7 +21,7 @@ import com.github.times.appwidget.ClockWidget;
 import com.github.times.appwidget.ZmanimListWidget;
 import com.github.times.appwidget.ZmanimWidget;
 
-import static net.sf.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
+import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
 
 /**
  * This fragment shows the preferences for a header.
