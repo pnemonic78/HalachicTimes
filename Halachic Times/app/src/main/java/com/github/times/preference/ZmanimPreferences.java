@@ -19,7 +19,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.support.annotation.StyleRes;
 
-import net.sf.media.RingtoneManager;
+import com.github.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import com.github.times.location.LocationPreferences;

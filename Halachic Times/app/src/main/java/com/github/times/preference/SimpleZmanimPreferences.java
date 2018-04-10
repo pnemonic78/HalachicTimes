@@ -23,7 +23,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import net.sf.media.RingtoneManager;
+import com.github.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
 import net.sf.preference.SimplePreferences;

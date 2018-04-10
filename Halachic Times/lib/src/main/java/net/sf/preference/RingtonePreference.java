@@ -32,7 +32,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import net.sf.lib.R;
-import net.sf.media.RingtoneManager;
+import com.github.media.RingtoneManager;
 
 import java.util.ArrayList;
 import java.util.List;
