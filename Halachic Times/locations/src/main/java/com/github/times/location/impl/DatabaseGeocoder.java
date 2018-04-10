@@ -27,7 +27,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import net.sf.database.CursorFilter;
+import com.github.database.CursorFilter;
 import com.github.times.location.City;
 import com.github.times.location.Country;
 import com.github.times.location.GeocoderBase;
