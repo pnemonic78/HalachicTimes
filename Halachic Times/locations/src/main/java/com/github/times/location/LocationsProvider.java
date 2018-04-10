@@ -143,8 +143,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Constructs a new provider.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public LocationsProvider(Context context) {
         Context app = context.getApplicationContext();
@@ -172,8 +171,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Register a location listener to receive location notifications.
      *
-     * @param listener
-     *         the listener.
+     * @param listener the listener.
      */
     private void addLocationListener(ZmanimLocationListener listener) {
         if (!locationListeners.contains(listener) && (listener != this)) {
@@ -184,8 +182,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Unregister a location listener to stop receiving location notifications.
      *
-     * @param listener
-     *         the listener.
+     * @param listener the listener.
      */
     private void removeLocationListener(ZmanimLocationListener listener) {
         locationListeners.remove(listener);
@@ -397,8 +394,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Get a location from the time zone.
      *
-     * @param timeZone
-     *         the time zone.
+     * @param timeZone the time zone.
      * @return the location - {@code null} otherwise.
      */
     public Location getLocationTZ(TimeZone timeZone) {
@@ -454,8 +450,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Is the location valid?
      *
-     * @param location
-     *         the location to check.
+     * @param location the location to check.
      * @return {@code false} if location is invalid.
      */
     public boolean isValid(Location location) {
@@ -473,8 +468,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Stop listening.
      *
-     * @param listener
-     *         the listener who wants to stop listening.
+     * @param listener the listener who wants to stop listening.
      */
     public void stop(ZmanimLocationListener listener) {
         if (listener != null) {
@@ -488,8 +482,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Start or resume listening.
      *
-     * @param listener
-     *         the listener who wants to resume listening.
+     * @param listener the listener who wants to resume listening.
      */
     public void start(ZmanimLocationListener listener) {
         if (listener == null) {
@@ -504,7 +497,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         if (!listener.isPassive()) {
             startTaskDelay = UPDATE_TIME_START;
-            handler.sendEmptyMessage(WHAT_START);
+            sendEmptyMessage(WHAT_START);
         }
     }
 
@@ -512,10 +505,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * Is the location in Israel?<br>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
-     * @param location
-     *         the location.
-     * @param timeZone
-     *         the time zone.
+     * @param location the location.
+     * @param timeZone the time zone.
      * @return {@code true} if user is in Israel - {@code false} otherwise.
      */
     public boolean isInIsrael(Location location, TimeZone timeZone) {
@@ -544,8 +535,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * Is the current location in Israel?<br>
      * Used to determine if user is in diaspora for 2-day festivals.
      *
-     * @param timeZone
-     *         the time zone.
+     * @param timeZone the time zone.
      * @return {@code true} if user is in Israel - {@code false} otherwise.
      */
     public boolean isInIsrael(TimeZone timeZone) {
@@ -639,8 +629,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Set the location.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      */
     public void setLocation(Location location) {
         this.location = null;
@@ -669,7 +658,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
 
         // Let the updates run for only a small while to save battery.
-        handler.sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
+        sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
         startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
     }
 
@@ -700,7 +689,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
 
         // Let the updates run for only a small while to save battery.
-        handler.sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
+        sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
         startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
     }
 
@@ -714,7 +703,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
 
         if (hasActiveListeners()) {
-            handler.sendEmptyMessageDelayed(WHAT_START, startTaskDelay);
+            sendEmptyMessageDelayed(WHAT_START, startTaskDelay);
         } else {
             handler.removeMessages(WHAT_START);
         }
@@ -735,16 +724,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         context.unregisterReceiver(broadcastReceiver);
 
+        handlerThread.quit();
         handlerThread.interrupt();
-        Looper looper = handlerThread.getLooper();
-        if (looper != null) {
-            looper.quit();
-        }
     }
 
     private class UpdatesHandler extends Handler {
 
-        public UpdatesHandler(Looper looper) {
+        UpdatesHandler(Looper looper) {
             super(looper);
         }
 
@@ -807,8 +793,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Create a location formatter helper.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      * @return the formatter.
      */
     protected LocationFormatter createLocationFormatter(Context context) {
@@ -894,4 +879,18 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             }
         }
     };
+
+    private boolean sendEmptyMessage(int what) {
+        if (handlerThread.isAlive()) {
+            return handler.sendEmptyMessage(what);
+        }
+        return false;
+    }
+
+    private boolean sendEmptyMessageDelayed(int what, long delayMillis) {
+        if (handlerThread.isAlive()) {
+            return handler.sendEmptyMessageDelayed(what, delayMillis);
+        }
+        return false;
+    }
 }
