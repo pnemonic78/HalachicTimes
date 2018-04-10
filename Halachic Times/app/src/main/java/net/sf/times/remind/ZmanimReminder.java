@@ -145,6 +145,8 @@ public class ZmanimReminder {
     private SimpleDateFormat dateFormat;
     /** The adapter. */
     private ZmanimAdapter adapter;
+    private Bitmap largeIconSolar;
+    private Bitmap largeIconReminder;
 
     /**
      * Constructs a new service.
@@ -265,7 +267,7 @@ public class ZmanimReminder {
             notifyFuture(item, whenFirst);
         }
         if (itemUpcoming != null) {
-            notifyUpcoming(settings, itemUpcoming);
+            notifyUpcoming(itemUpcoming);
         }
     }
 
@@ -478,17 +480,19 @@ public class ZmanimReminder {
                                                                  long when,
                                                                  PendingIntent contentIntent,
                                                                  String channelId) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
+        if (largeIconSolar == null) {
+            largeIconSolar = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar);
+        }
+
+        return new NotificationCompat.Builder(context, channelId)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentIntent(contentIntent)
                 .setContentText(contentText)
                 .setContentTitle(contentTitle)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar))
+                .setLargeIcon(largeIconSolar)
                 .setShowWhen(true)
                 .setSmallIcon(R.drawable.stat_notify_time)
                 .setWhen(when);
-
-        return builder;
     }
 
     private Notification createReminderNotification(ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent, boolean silent) {
@@ -513,17 +517,23 @@ public class ZmanimReminder {
         }
 
         // Dynamically generate the large icon.
-        final Resources res = context.getResources();
-        int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
-        int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
-        Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
-        Bitmap layerBottom = BitmapFactory.decodeResource(res, (VERSION.SDK_INT >= LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
-        Bitmap layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
-        Canvas canvas = new Canvas(largeIcon);
-        Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
-        canvas.drawBitmap(layerBottom, null, largeIconRect, null);
-        canvas.drawBitmap(layerTop, null, largeIconRect, null);
-        builder.setLargeIcon(largeIcon);
+        if (largeIconReminder == null) {
+            final Resources res = context.getResources();
+            int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
+            int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
+            Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
+            Bitmap layerBottom = BitmapFactory.decodeResource(res, (VERSION.SDK_INT >= LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+            if (largeIconSolar == null) {
+                largeIconSolar = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
+            }
+            Bitmap layerTop = largeIconSolar;
+            Canvas canvas = new Canvas(largeIcon);
+            Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
+            canvas.drawBitmap(layerBottom, null, largeIconRect, null);
+            canvas.drawBitmap(layerTop, null, largeIconRect, null);
+            largeIconReminder = largeIcon;
+        }
+        builder.setLargeIcon(largeIconReminder);
 
         return builder.build();
     }
@@ -532,8 +542,10 @@ public class ZmanimReminder {
     private void postReminderNotification(ZmanimPreferences settings, Notification notification) {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);
-        wake.acquire(5000L);// enough time to also hear an alarm tone
+        if (pm != null) {
+            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);
+            wake.acquire(5000L);// enough time to also hear an alarm tone
+        }
 
         NotificationManager nm = getNotificationManager();
         if (VERSION.SDK_INT >= O) {
@@ -614,7 +626,7 @@ public class ZmanimReminder {
         manager.set(AlarmManager.RTC, triggerAt, alarmIntent);
     }
 
-    private Notification createUpcomingNotification(ZmanimPreferences settings, ZmanimItem item, PendingIntent contentIntent) {
+    private Notification createUpcomingNotification(ZmanimItem item, PendingIntent contentIntent) {
         final CharSequence contentTitle = context.getText(item.titleId);
         final CharSequence contentText = item.summary;
         final long when = item.time;
@@ -630,7 +642,7 @@ public class ZmanimReminder {
         return builder.build();
     }
 
-    private void postUpcomingNotification(ZmanimPreferences settings, Notification notification) {
+    private void postUpcomingNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
         if (VERSION.SDK_INT >= O) {
             initChannels(nm);
@@ -641,14 +653,13 @@ public class ZmanimReminder {
     /**
      * Notify upcoming time.
      *
-     * @param settings the preferences.
-     * @param item     the next item.
+     * @param item the next item.
      */
-    public void notifyUpcoming(ZmanimPreferences settings, ZmanimItem item) {
+    public void notifyUpcoming(ZmanimItem item) {
         PendingIntent contentIntent = createActivityIntent();
 
-        Notification notification = createUpcomingNotification(settings, item, contentIntent);
-        postUpcomingNotification(settings, notification);
+        Notification notification = createUpcomingNotification(item, contentIntent);
+        postUpcomingNotification(notification);
 
         long triggerAt = item.time + MINUTE_IN_MILLIS;
         AlarmManager manager = getAlarmManager();

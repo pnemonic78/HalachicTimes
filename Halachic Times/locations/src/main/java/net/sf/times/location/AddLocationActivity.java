@@ -17,7 +17,6 @@ package net.sf.times.location;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -89,7 +88,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     private static final int MILLISECONDS_MIN = 0;
     private static final int MILLISECONDS_MAX = 9999;
 
-    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<P>(this);
+    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<>(this);
     private Location location;
     private Spinner coordsFormatSpinner;
     private ViewSwitcher latitudeSwitcher;
