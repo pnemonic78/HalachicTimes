@@ -15,14 +15,14 @@
  */
 package net.sf.times.remind;
 
-import net.sf.app.LocaleCallbacks;
-import net.sf.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import net.sf.app.LocaleCallbacks;
+import net.sf.app.LocaleHelper;
+import net.sf.preference.LocalePreferences;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static net.sf.content.IntentUtils.readExtras;

@@ -15,13 +15,6 @@
  */
 package net.sf.times.location;
 
-import net.sf.app.SimpleThemeCallbacks;
-import net.sf.app.ThemeCallbacks;
-import net.sf.preference.ThemePreferences;
-import net.sf.times.location.LocationAdapter.LocationItem;
-import net.sf.times.location.impl.FavoritesLocationAdapter;
-import net.sf.times.location.impl.HistoryLocationAdapter;
-
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -43,6 +36,13 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+
+import net.sf.app.SimpleThemeCallbacks;
+import net.sf.app.ThemeCallbacks;
+import net.sf.preference.ThemePreferences;
+import net.sf.times.location.LocationAdapter.LocationItem;
+import net.sf.times.location.impl.FavoritesLocationAdapter;
+import net.sf.times.location.impl.HistoryLocationAdapter;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;

@@ -15,6 +15,14 @@
  */
 package net.sf.times.preference;
 
+import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
 import net.sf.media.RingtoneManager;
 import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
@@ -24,14 +32,6 @@ import net.sf.preference.ThemePreferences;
 import net.sf.preference.TimePreference;
 import net.sf.times.R;
 import net.sourceforge.zmanim.ShaahZmanis;
-
-import android.content.Context;
-import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
-import android.media.AudioManager;
-import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import java.util.Calendar;
 import java.util.Locale;

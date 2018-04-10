@@ -15,18 +15,6 @@
  */
 package net.sf.times.remind;
 
-import net.sf.times.R;
-import net.sf.times.ZmanimActivity;
-import net.sf.times.ZmanimAdapter;
-import net.sf.times.ZmanimApplication;
-import net.sf.times.ZmanimItem;
-import net.sf.times.ZmanimPopulater;
-import net.sf.times.location.ZmanimLocations;
-import net.sf.times.preference.SimpleZmanimPreferences;
-import net.sf.times.preference.ZmanimPreferences;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -52,6 +40,18 @@ import android.os.PowerManager.WakeLock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import net.sf.times.R;
+import net.sf.times.ZmanimActivity;
+import net.sf.times.ZmanimAdapter;
+import net.sf.times.ZmanimApplication;
+import net.sf.times.ZmanimItem;
+import net.sf.times.ZmanimPopulater;
+import net.sf.times.location.ZmanimLocations;
+import net.sf.times.preference.SimpleZmanimPreferences;
+import net.sf.times.preference.ZmanimPreferences;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

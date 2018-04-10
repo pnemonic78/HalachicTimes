@@ -15,16 +15,16 @@
  */
 package net.sf.times;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.Nullable;
+import android.util.Log;
+
 import net.sf.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
-
-import android.content.Context;
-import android.content.res.Resources;
-import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.Calendar;
 

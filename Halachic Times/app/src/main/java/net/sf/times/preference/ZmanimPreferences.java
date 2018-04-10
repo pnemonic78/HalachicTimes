@@ -24,7 +24,6 @@ import net.sf.preference.LocalePreferences;
 import net.sf.preference.ThemePreferences;
 import net.sf.times.location.LocationPreferences;
 import net.sourceforge.zmanim.ShaahZmanis;
-import net.sourceforge.zmanim.ZmanimCalendar;
 
 import java.util.Calendar;
 
