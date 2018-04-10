@@ -6,6 +6,7 @@ def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 android {
     compileSdkVersion androidBuildSdkVersion
     buildToolsVersion androidBuildToolsVersion
+    publishNonDefault true
 
     defaultConfig {
         minSdkVersion androidBuildMinSdkVersion
