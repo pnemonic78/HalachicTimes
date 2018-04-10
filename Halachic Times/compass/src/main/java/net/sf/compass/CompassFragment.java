@@ -21,15 +21,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import net.sf.times.location.LocationApplication;
-import net.sf.times.location.LocationFormatter;
+import com.github.times.location.LocationApplication;
+import com.github.times.location.LocationFormatter;
 
 /**
  * Show the compass.
  *
  * @author Moshe Waisberg
  */
-public class CompassFragment extends net.sf.times.compass.CompassFragment {
+public class CompassFragment extends com.github.times.compass.CompassFragment {
 
     private TextView bearingView;
     private LocationFormatter formatter;

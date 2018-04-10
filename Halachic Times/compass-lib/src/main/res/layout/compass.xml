@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/compass"
-        android:name="net.sf.times.compass.CompassFragment"
+        android:name="com.github.times.compass.CompassFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
 

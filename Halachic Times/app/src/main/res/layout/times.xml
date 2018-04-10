@@ -18,7 +18,7 @@
 
         <fragment
             android:id="@+id/list_fragment"
-            class="net.sf.times.ZmanimFragment"
+            class="com.github.times.ZmanimFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             tools:layout="@layout/times_list"/>
@@ -30,14 +30,14 @@
 
             <fragment
                 android:id="@+id/details_list_fragment"
-                android:name="net.sf.times.ZmanimDetailsFragment"
+                android:name="com.github.times.ZmanimDetailsFragment"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 tools:layout="@layout/times_list"/>
 
             <fragment
                 android:id="@+id/candles_fragment"
-                android:name="net.sf.times.CandlesFragment"
+                android:name="com.github.times.CandlesFragment"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 tools:layout="@layout/times_list"/>

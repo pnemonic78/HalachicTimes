@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="net.sf.times"
+    package="com.github.times"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -13,10 +13,10 @@
         android:required="false"/>
 
     <application
-        android:name="net.sf.times.ZmanimApplication"
+        android:name="com.github.times.ZmanimApplication"
         android:allowBackup="true"
         android:appCategory="maps"
-        android:backupAgent="net.sf.times.backup.ZmanimBackupAgent"
+        android:backupAgent="com.github.times.backup.ZmanimBackupAgent"
         android:fullBackupContent="@xml/full_backup"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,7 +24,7 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.Zmanim.Light">
         <activity
-            android:name="net.sf.times.ZmanimActivity"
+            android:name="com.github.times.ZmanimActivity"
             android:label="@string/title_activity_zmanim">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,30 +34,30 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="net.sf.times.location.LocationActivity"/>
+                android:value="com.github.times.location.LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.preference.ZmanimPreferenceActivity"
+            android:name="com.github.times.preference.ZmanimPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
+            android:parentActivityName="com.github.times.ZmanimActivity">
         </activity>
         <activity
-            android:name="net.sf.times.compass.CompassActivity"
+            android:name="com.github.times.compass.CompassActivity"
             android:label="@string/title_activity_compass"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
+            android:parentActivityName="com.github.times.ZmanimActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="net.sf.times.location.LocationActivity"/>
+                android:value="com.github.times.location.LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.preference.CompassPreferenceActivity"
+            android:name="com.github.times.preference.CompassPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="net.sf.times.compass.CompassActivity">
+            android:parentActivityName="com.github.times.compass.CompassActivity">
         </activity>
         <activity
-            android:name="net.sf.times.location.LocationActivity"
+            android:name="com.github.times.location.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName="net.sf.times.ZmanimActivity">
+            android:parentActivityName="com.github.times.ZmanimActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -67,7 +67,7 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
-            android:name="net.sf.times.location.ZmanimAddLocationActivity"
+            android:name="com.github.times.location.ZmanimAddLocationActivity"
             android:label="@string/title_activity_add_location">
             <intent-filter android:label="@string/title_activity_add_location">
                 <action android:name="android.intent.action.INSERT"/>
@@ -78,7 +78,7 @@
         </activity>
 
         <receiver
-            android:name="net.sf.times.appwidget.ZmanimWidget"
+            android:name="com.github.times.appwidget.ZmanimWidget"
             android:exported="false"
             android:label="@string/title_widget_zmanim">
             <intent-filter>
@@ -94,7 +94,7 @@
                 android:resource="@xml/widget_info"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.appwidget.ZmanimListWidget"
+            android:name="com.github.times.appwidget.ZmanimListWidget"
             android:exported="false"
             android:label="@string/title_widget_list">
             <intent-filter>
@@ -110,7 +110,7 @@
                 android:resource="@xml/widget_list"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.appwidget.ClockWidget"
+            android:name="com.github.times.appwidget.ClockWidget"
             android:exported="false"
             android:label="@string/title_widget_clock">
             <intent-filter>
@@ -126,31 +126,31 @@
                 android:resource="@xml/widget_clock"/>
         </receiver>
         <receiver
-            android:name="net.sf.times.remind.ZmanimReminderReceiver"
+            android:name="com.github.times.remind.ZmanimReminderReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.DATE_CHANGED"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
                 <action android:name="android.intent.action.TIME_SET"/>
-                <action android:name="net.sf.times.action.REMIND"/>
+                <action android:name="com.github.times.action.REMIND"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
 
         <service
-            android:name="net.sf.times.remind.ZmanimReminderService"
+            android:name="com.github.times.remind.ZmanimReminderService"
             android:exported="false"/>
         <service
-            android:name="net.sf.times.remind.ZmanimReminderJobService"
+            android:name="com.github.times.remind.ZmanimReminderJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service
-            android:name="net.sf.times.appwidget.ZmanimWidgetService"
+            android:name="com.github.times.appwidget.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <meta-data
-            android:name="net.sf.times.offline"
+            android:name="com.github.times.offline"
             android:value="${offline}"/>
         <meta-data
             android:name="com.google.android.backup.api_key"

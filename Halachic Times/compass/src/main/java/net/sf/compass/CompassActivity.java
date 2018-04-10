@@ -21,8 +21,8 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import net.sf.times.compass.BaseCompassActivity;
-import net.sf.times.compass.preference.CompassPreferenceActivity;
+import com.github.times.compass.BaseCompassActivity;
+import com.github.times.compass.preference.CompassPreferenceActivity;
 
 /**
  * Compass activity.

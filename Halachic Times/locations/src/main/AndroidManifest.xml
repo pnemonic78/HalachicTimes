@@ -1,5 +1,5 @@
 <manifest
-    package="net.sf.times.location"
+    package="com.github.times.location"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -15,7 +15,7 @@
 
     <application>
         <activity
-            android:name="net.sf.times.location.AddLocationActivity"
+            android:name="com.github.times.location.AddLocationActivity"
             android:label="@string/title_activity_add_location">
             <intent-filter android:label="@string/title_activity_add_location">
                 <action android:name="android.intent.action.INSERT"/>
@@ -26,12 +26,12 @@
         </activity>
 
         <service
-            android:name="net.sf.times.location.AddressService"
+            android:name="com.github.times.location.AddressService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <provider
-            android:name="net.sf.times.location.provider.LocationContentProvider"
+            android:name="com.github.times.location.provider.LocationContentProvider"
             android:authorities="${applicationId}.locations"
             android:exported="false"/>
     </application>
