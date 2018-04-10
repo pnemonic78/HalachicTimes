@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.view.animation;
+package com.github.view.animation;
 
 import android.view.View;
 import android.view.animation.Animation;

@@ -59,7 +59,7 @@ import com.github.times.preference.ZmanimPreferenceActivity;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
-import net.sf.view.animation.LayoutWeightAnimation;
+import com.github.view.animation.LayoutWeightAnimation;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
