@@ -39,7 +39,7 @@ public class LocationsTestCase extends ApplicationTestCase<DefaultLocationApplic
     public void testApp() {
         final Context context = getContext();
         assertNotNull(context);
-        assertEquals("net.sf.times.location.test", context.getPackageName());
+        assertEquals("com.github.times.location.test", context.getPackageName());
 
         LocationApplication app = getApplication();
         assertNotNull(app);

@@ -107,12 +107,12 @@ public class LocationContract {
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/net.sf.times.location.address";
+        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/com.github.times.location.address";
 
         /**
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
-        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/net.sf.times.location.address";
+        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.address";
     }
 
     /**
@@ -163,12 +163,12 @@ public class LocationContract {
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/net.sf.times.location.elevation";
+        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/com.github.times.location.elevation";
 
         /**
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
-        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/net.sf.times.location.elevation";
+        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.elevation";
     }
 
     /**
@@ -209,12 +209,12 @@ public class LocationContract {
         /**
          * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/net.sf.times.location.city";
+        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/com.github.times.location.city";
 
         /**
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
-        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/net.sf.times.location.city";
+        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.city";
 
         /** Database table for addresses. */
         public static final String TABLE_ADDRESSES = "addresses";

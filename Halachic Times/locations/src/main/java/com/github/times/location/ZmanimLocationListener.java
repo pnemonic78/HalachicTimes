@@ -22,9 +22,9 @@ import android.location.LocationManager;
 public interface ZmanimLocationListener extends LocationListener {
 
     /** The intent action for an address that was found. */
-    String ACTION_ADDRESS = "net.sf.times.location.ADDRESS";
+    String ACTION_ADDRESS = "com.github.times.location.ADDRESS";
     /** The intent action for a location with elevation that was found. */
-    String ACTION_ELEVATION = "net.sf.times.location.ELEVATION";
+    String ACTION_ELEVATION = "com.github.times.location.ELEVATION";
 
     /** The location parameter. */
     String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;

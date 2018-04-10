@@ -126,13 +126,13 @@ public class ZmanimReminder {
     private static final String EXTRA_REMINDER_TIME = "reminder_time";
 
     /** Action to remind. */
-    public static final String ACTION_REMIND = "net.sf.times.action.REMIND";
+    public static final String ACTION_REMIND = "com.github.times.action.REMIND";
     /** Action to update reminders. */
-    public static final String ACTION_UPDATE = "net.sf.times.action.UPDATE";
+    public static final String ACTION_UPDATE = "com.github.times.action.UPDATE";
     /** Action to cancel reminders. */
-    public static final String ACTION_CANCEL = "net.sf.times.action.CANCEL";
+    public static final String ACTION_CANCEL = "com.github.times.action.CANCEL";
     /** Action to silence reminders. */
-    public static final String ACTION_SILENCE = "net.sf.times.action.SILENCE";
+    public static final String ACTION_SILENCE = "com.github.times.action.SILENCE";
 
     /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
     private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
