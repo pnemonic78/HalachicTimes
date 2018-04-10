@@ -25,7 +25,7 @@ import com.github.app.LocaleHelper;
 import net.sf.preference.LocalePreferences;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static net.sf.content.IntentUtils.readExtras;
+import static com.github.content.IntentUtils.readExtras;
 
 /**
  * Check for reminders, and manage the notifications.

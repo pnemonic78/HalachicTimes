@@ -48,7 +48,7 @@ import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.app.TodayDatePickerDialog;
-import net.sf.content.ContextResourcesWrapper;
+import com.github.content.ContextResourcesWrapper;
 import com.github.times.compass.CompassActivity;
 import com.github.times.content.res.ZmanimResources;
 import com.github.times.location.LocatedActivity;

@@ -19,7 +19,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import net.sf.content.ProviderPreferences;
+import com.github.content.ProviderPreferences;
 
 /**
  * Application settings.

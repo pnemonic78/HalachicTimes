@@ -30,7 +30,7 @@ import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static java.lang.System.currentTimeMillis;
-import static net.sf.content.IntentUtils.putExtras;
+import static com.github.content.IntentUtils.putExtras;
 
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.
