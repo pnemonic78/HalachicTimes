@@ -15,6 +15,8 @@
  */
 package net.sf.times.backup;
 
+import com.github.times.backup.DefaultBackupAgent;
+
 /**
  * Backup agent helper for the application.
  */

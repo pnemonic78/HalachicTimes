@@ -15,7 +15,7 @@
  */
 package net.sf.times.compass.backup;
 
-import net.sf.times.backup.DefaultBackupAgent;
+import com.github.times.backup.DefaultBackupAgent;
 
 /**
  * Backup agent helper for the application.
