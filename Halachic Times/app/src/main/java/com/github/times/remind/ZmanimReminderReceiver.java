@@ -22,6 +22,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.github.util.LogUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -89,7 +91,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     private void startReminderJob(Context context, Intent intent) {
         android.app.job.JobScheduler scheduler = (android.app.job.JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         if (scheduler == null) {
-            Log.w(TAG, "scheduler required");
+            LogUtils.w(TAG, "scheduler required");
             return;
         }
         if (scheduler.getPendingJob(JOB_REMINDER) == null) {

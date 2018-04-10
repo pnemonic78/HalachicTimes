@@ -183,7 +183,7 @@ public class LocaleUtils {
 
         Resources res = context.getResources();
         if (res == null) {
-            Log.w(TAG, "Context resources missing for applying locale!");
+            LogUtils.w(TAG, "Context resources missing for applying locale!");
             res = Resources.getSystem();
         }
         final Configuration config = res.getConfiguration();

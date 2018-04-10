@@ -488,7 +488,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     public void start(ZmanimLocationListener listener) {
         if (listener == null) {
-            Log.w(TAG, "start with listener null");
+            LogUtils.w(TAG, "start with listener null");
             return;
         }
         addLocationListener(listener);
@@ -650,7 +650,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {
-            Log.w(TAG, "No location provider");
+            LogUtils.w(TAG, "No location provider");
             return;
         }
         try {
@@ -676,7 +676,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {
-            Log.w(TAG, "No location provider");
+            LogUtils.w(TAG, "No location provider");
             return;
         }
 

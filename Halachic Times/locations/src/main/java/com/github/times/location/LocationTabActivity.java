@@ -43,6 +43,7 @@ import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationAdapter.LocationItem;
 import com.github.times.location.impl.FavoritesLocationAdapter;
 import com.github.times.location.impl.HistoryLocationAdapter;
+import com.github.util.LogUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -408,7 +409,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
      */
     private void addLocation(Location location) {
         if (location == null) {
-            Log.w(TAG, "location empty");
+            LogUtils.w(TAG, "location empty");
             return;
         }
 

@@ -50,6 +50,8 @@ import com.github.times.ZmanimPopulater;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
+import com.github.util.LogUtils;
+
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
@@ -345,7 +347,7 @@ public class ZmanimReminder {
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
         if (intent == null) {
-            Log.w(TAG, "Launch activity not found!");
+            LogUtils.w(TAG, "Launch activity not found!");
             intent = new Intent(context, ZmanimActivity.class);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
