@@ -15,6 +15,7 @@
  */
 package net.sf.times.compass;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -54,7 +55,10 @@ public class CompassActivity extends BaseCompassActivity {
         super.onCreate(savedInstanceState);
         localeCallbacks.onCreate(this);
         if (VERSION.SDK_INT < JELLY_BEAN) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 

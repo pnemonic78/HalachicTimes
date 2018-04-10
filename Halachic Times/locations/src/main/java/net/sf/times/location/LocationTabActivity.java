@@ -23,6 +23,7 @@ import net.sf.times.location.impl.FavoritesLocationAdapter;
 import net.sf.times.location.impl.HistoryLocationAdapter;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -120,7 +121,10 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         locations = app.getLocations();
 
         if (VERSION.SDK_INT < JELLY_BEAN) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
         setContentView(R.layout.locations);
 
@@ -297,7 +301,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     @Override
     public boolean onQueryTextSubmit(String query) {
         if (!TextUtils.isEmpty(query)) {
-            Location loc = null;
             String[] tokens = query.split("[,;]");
             if (tokens.length >= 2) {
                 final String token0 = tokens[0].trim();
@@ -307,7 +310,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                         double latitude = Location.convert(token0);
                         double longitude = Location.convert(token1);
 
-                        loc = new Location(USER_PROVIDER);
+                        Location loc = new Location(USER_PROVIDER);
                         loc.setLatitude(latitude);
                         loc.setLongitude(longitude);
                         loc.setTime(System.currentTimeMillis());

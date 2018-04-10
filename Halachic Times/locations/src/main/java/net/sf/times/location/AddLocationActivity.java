@@ -15,6 +15,7 @@
  */
 package net.sf.times.location;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -138,7 +139,10 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
         LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         setContentView(R.layout.location_add);
         initView();
 

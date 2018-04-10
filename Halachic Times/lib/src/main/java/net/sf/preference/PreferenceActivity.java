@@ -16,6 +16,7 @@
 package net.sf.preference;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -53,7 +54,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity im
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 
         if (VERSION.SDK_INT < JELLY_BEAN) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 
