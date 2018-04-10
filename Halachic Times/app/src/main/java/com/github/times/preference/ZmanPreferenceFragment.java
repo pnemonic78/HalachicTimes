@@ -34,7 +34,7 @@ import java.util.Set;
 /**
  * This fragment shows the preferences for a zman screen.
  */
-public class ZmanPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public class ZmanPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     public static final String EXTRA_XML = "xml";
     public static final String EXTRA_OPINION = "opinion";

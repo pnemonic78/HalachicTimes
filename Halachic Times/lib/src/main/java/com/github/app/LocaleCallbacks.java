@@ -17,7 +17,7 @@ package com.github.app;
 
 import android.content.Context;
 
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 
 /**
  * Contexts that overrides the system locale.

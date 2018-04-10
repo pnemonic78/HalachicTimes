@@ -20,7 +20,7 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
 
-import net.sf.preference.RingtonePreference;
+import com.github.preference.RingtonePreference;
 import com.github.times.R;
 
 import static android.os.Build.VERSION;

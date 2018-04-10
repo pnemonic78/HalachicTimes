@@ -36,7 +36,7 @@ import android.widget.RemoteViews;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;

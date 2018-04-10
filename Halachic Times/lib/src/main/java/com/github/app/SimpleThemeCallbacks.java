@@ -18,8 +18,8 @@ package com.github.app;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-import net.sf.preference.SimpleThemePreferences;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.SimpleThemePreferences;
+import com.github.preference.ThemePreferences;
 
 /**
  * Simple theme callback implementation.

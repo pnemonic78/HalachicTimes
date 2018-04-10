@@ -21,7 +21,7 @@ import android.support.annotation.NonNull;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 
 /**
  * Location application.

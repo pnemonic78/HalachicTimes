@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <net.sf.preference.NumberPickerPreference
+    <com.github.preference.NumberPickerPreference
         android:defaultValue="@integer/candles_defaultValue"
         android:dialogIcon="@drawable/ic_settings_opinion"
         android:dialogTitle="@string/opinion"

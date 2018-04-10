@@ -17,12 +17,12 @@ package com.github.times.compass.preference;
 
 import android.os.Bundle;
 
-import net.sf.preference.PreferenceActivity;
+import com.github.preference.PreferenceActivity;
 import com.github.times.compass.lib.R;
 
 import java.util.List;
 
-import static net.sf.preference.ThemePreferences.KEY_THEME;
+import static com.github.preference.ThemePreferences.KEY_THEME;
 import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 
 /**

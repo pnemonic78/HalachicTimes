@@ -15,7 +15,7 @@
  */
 package com.github.app;
 
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 
 /**
  * Contexts that takes its theme from the application.

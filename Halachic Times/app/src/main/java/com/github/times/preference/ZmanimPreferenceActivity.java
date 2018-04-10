@@ -20,14 +20,14 @@ import android.os.Bundle;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
-import net.sf.preference.PreferenceActivity;
+import com.github.preference.LocalePreferences;
+import com.github.preference.PreferenceActivity;
 import com.github.times.R;
 
 import java.util.List;
 
-import static net.sf.preference.LocalePreferences.KEY_LOCALE;
-import static net.sf.preference.ThemePreferences.KEY_THEME;
+import static com.github.preference.LocalePreferences.KEY_LOCALE;
+import static com.github.preference.ThemePreferences.KEY_THEME;
 import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 
 /**

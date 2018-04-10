@@ -18,7 +18,7 @@ package com.github.app;
 import android.app.Activity;
 import android.os.Bundle;
 
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 
 /**
  * Activity that takes its theme from the application.

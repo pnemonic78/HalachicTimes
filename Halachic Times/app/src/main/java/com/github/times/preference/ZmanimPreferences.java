@@ -20,8 +20,8 @@ import android.net.Uri;
 import android.support.annotation.StyleRes;
 
 import com.github.media.RingtoneManager;
-import net.sf.preference.LocalePreferences;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.LocalePreferences;
+import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationPreferences;
 import net.sourceforge.zmanim.ShaahZmanis;
 

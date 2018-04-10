@@ -35,7 +35,7 @@ import android.widget.ViewSwitcher;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 import com.github.text.method.RangeInputFilter;
 import com.github.times.location.text.LatitudeInputFilter;
 import com.github.times.location.text.LongitudeInputFilter;

@@ -18,8 +18,8 @@ package com.github.app;
 import android.app.Activity;
 import android.content.Context;
 
-import net.sf.preference.LocalePreferences;
-import net.sf.preference.SimpleLocalePreferences;
+import com.github.preference.LocalePreferences;
+import com.github.preference.SimpleLocalePreferences;
 
 import static com.github.app.ActivityUtils.restTitle;
 import static com.github.util.LocaleUtils.applyLocale;

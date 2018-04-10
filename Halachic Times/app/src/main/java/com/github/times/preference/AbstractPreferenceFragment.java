@@ -26,7 +26,7 @@ import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
 /**
  * This fragment shows the preferences for a header.
  */
-public abstract class AbstractPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public abstract class AbstractPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     @Override
     protected void notifyPreferenceChanged() {

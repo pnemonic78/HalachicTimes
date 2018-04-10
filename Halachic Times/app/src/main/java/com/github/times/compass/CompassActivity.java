@@ -25,7 +25,7 @@ import android.view.MenuItem;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 import com.github.times.R;
 import com.github.times.location.LocationActivity;
 import com.github.times.preference.CompassPreferenceActivity;

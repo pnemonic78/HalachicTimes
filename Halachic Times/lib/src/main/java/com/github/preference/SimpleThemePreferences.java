@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.preference;
+package com.github.preference;
 
 import android.content.Context;
 import android.content.res.Resources;
 
 import net.sf.lib.R;
 
-import static net.sf.preference.ThemePreferences.Values.THEME_DARK;
-import static net.sf.preference.ThemePreferences.Values.THEME_DEFAULT;
-import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
+import static com.github.preference.ThemePreferences.Values.THEME_DARK;
+import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;
+import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 
 /**
  * Simple theme preferences implementation.

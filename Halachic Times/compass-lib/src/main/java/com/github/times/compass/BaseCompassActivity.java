@@ -23,7 +23,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 import com.github.times.compass.lib.R;
 import com.github.times.compass.preference.CompassPreferences;
 import com.github.times.compass.preference.SimpleCompassPreferences;

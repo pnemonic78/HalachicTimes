@@ -22,7 +22,7 @@ import android.support.annotation.Nullable;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 
 /**
  * Check for reminders, and manage the notifications.

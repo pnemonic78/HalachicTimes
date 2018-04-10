@@ -19,7 +19,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 
-import net.sf.preference.NumberPickerPreference;
+import com.github.preference.NumberPickerPreference;
 import com.github.times.R;
 
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER;

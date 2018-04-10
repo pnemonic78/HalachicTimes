@@ -24,12 +24,12 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.github.media.RingtoneManager;
-import net.sf.preference.LocalePreferences;
-import net.sf.preference.SimpleLocalePreferences;
-import net.sf.preference.SimplePreferences;
-import net.sf.preference.SimpleThemePreferences;
-import net.sf.preference.ThemePreferences;
-import net.sf.preference.TimePreference;
+import com.github.preference.LocalePreferences;
+import com.github.preference.SimpleLocalePreferences;
+import com.github.preference.SimplePreferences;
+import com.github.preference.SimpleThemePreferences;
+import com.github.preference.ThemePreferences;
+import com.github.preference.TimePreference;
 import com.github.times.R;
 import net.sourceforge.zmanim.ShaahZmanis;
 
@@ -38,7 +38,7 @@ import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static net.sf.preference.ThemePreferences.Values.THEME_LIGHT;
+import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;

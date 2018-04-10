@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_settings_opinion"
         android:key="@string/opinion_name_levana_earliest"
         android:title="@string/opinion"/>
-    <net.sf.preference.TimePreference
+    <com.github.preference.TimePreference
         android:defaultValue="@string/reminder_defaultValue"
         android:dialogIcon="@drawable/ic_settings_alarm"
         android:icon="@drawable/ic_settings_alarm"

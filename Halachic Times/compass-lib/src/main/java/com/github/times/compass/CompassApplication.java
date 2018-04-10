@@ -18,7 +18,7 @@ package com.github.times.compass;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 import com.github.times.location.AddressProvider;
 import com.github.times.location.CompassLocations;
 import com.github.times.location.LocationApplication;

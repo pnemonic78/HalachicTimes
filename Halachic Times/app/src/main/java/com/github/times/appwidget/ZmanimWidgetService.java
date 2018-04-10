@@ -21,7 +21,7 @@ import android.widget.RemoteViewsService;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 
 /**
  * Service that provides the list of halachic times (<em>zmanim</em>) items for

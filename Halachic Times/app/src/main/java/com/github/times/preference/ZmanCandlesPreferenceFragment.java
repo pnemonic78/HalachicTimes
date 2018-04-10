@@ -18,7 +18,7 @@ package com.github.times.preference;
 import android.os.Bundle;
 import android.preference.Preference;
 
-import net.sf.preference.NumberPickerPreference;
+import com.github.preference.NumberPickerPreference;
 import com.github.times.R;
 
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;

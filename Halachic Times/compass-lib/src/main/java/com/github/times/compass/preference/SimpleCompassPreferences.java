@@ -18,10 +18,10 @@ package com.github.times.compass.preference;
 import android.content.Context;
 import android.content.res.Resources;
 
-import net.sf.preference.SimpleThemePreferences;
+import com.github.preference.SimpleThemePreferences;
 import com.github.times.compass.lib.R;
 
-import static net.sf.preference.ThemePreferences.Values.THEME_DEFAULT;
+import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_RHUMB_LINE;

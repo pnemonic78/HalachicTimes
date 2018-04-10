@@ -24,7 +24,7 @@ import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_OMER;
 /**
  * This fragment shows the preferences for the Zmanim header.
  */
-public class ZmanimPreferenceFragment extends net.sf.preference.AbstractPreferenceFragment {
+public class ZmanimPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     @Override
     protected int getPreferencesXml() {

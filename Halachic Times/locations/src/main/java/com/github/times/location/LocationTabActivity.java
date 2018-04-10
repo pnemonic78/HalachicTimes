@@ -39,7 +39,7 @@ import android.widget.TabHost.TabSpec;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationAdapter.LocationItem;
 import com.github.times.location.impl.FavoritesLocationAdapter;
 import com.github.times.location.impl.HistoryLocationAdapter;

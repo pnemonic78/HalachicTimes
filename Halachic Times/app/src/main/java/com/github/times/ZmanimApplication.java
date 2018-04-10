@@ -20,8 +20,8 @@ import android.support.annotation.NonNull;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.LocalePreferences;
+import com.github.preference.ThemePreferences;
 import com.github.times.location.AddressProvider;
 import com.github.times.location.LocationApplication;
 import com.github.times.location.LocationsProviderFactory;

@@ -32,7 +32,7 @@ import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static com.github.app.ActivityUtils.restartActivity;
-import static net.sf.preference.LocalePreferences.KEY_LOCALE;
+import static com.github.preference.LocalePreferences.KEY_LOCALE;
 import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME;

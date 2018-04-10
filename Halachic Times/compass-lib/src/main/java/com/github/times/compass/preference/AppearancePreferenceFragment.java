@@ -17,10 +17,10 @@ package com.github.times.compass.preference;
 
 import android.os.Bundle;
 
-import net.sf.preference.AbstractPreferenceFragment;
+import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
 
-import static net.sf.preference.ThemePreferences.KEY_THEME;
+import static com.github.preference.ThemePreferences.KEY_THEME;
 import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 

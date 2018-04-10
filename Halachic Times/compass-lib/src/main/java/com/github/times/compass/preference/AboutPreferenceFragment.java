@@ -20,7 +20,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.Preference;
 
-import net.sf.preference.AbstractPreferenceFragment;
+import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
 
 /**

@@ -22,7 +22,7 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 

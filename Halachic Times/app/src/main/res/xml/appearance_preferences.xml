@@ -21,7 +21,7 @@
             android:entryValues="@array/appwidget_theme_values"
             android:key="theme.appwidget"
             android:title="@string/appwidget_theme_title"/>
-        <net.sf.preference.HtmlListPreference
+        <com.github.preference.HtmlListPreference
             android:defaultValue="@string/emphasis_scale_defaultValue"
             android:entries="@array/emphasis_scale_entries"
             android:entryValues="@array/emphasis_scale_values"

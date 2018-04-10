@@ -19,7 +19,7 @@ import android.content.Context;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 import com.github.times.preference.ZmanimPreferences;
 
 /**

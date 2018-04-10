@@ -21,7 +21,7 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.support.annotation.Nullable;
 
-import net.sf.preference.SimplePreferences;
+import com.github.preference.SimplePreferences;
 
 import static com.github.times.location.LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT;
 import static com.github.times.location.LocationPreferences.Values.FORMAT_DECIMAL;

@@ -18,7 +18,7 @@ package com.github.times.compass.preference;
 import android.os.Bundle;
 import android.preference.Preference;
 
-import net.sf.preference.AbstractPreferenceFragment;
+import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
 import com.github.times.location.AddressProvider;
 import com.github.times.location.LocationApplication;

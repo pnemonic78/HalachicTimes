@@ -17,7 +17,7 @@ package com.github.times.compass.preference;
 
 import android.os.Bundle;
 
-import net.sf.preference.AbstractPreferenceFragment;
+import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
 
 import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;

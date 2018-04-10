@@ -27,7 +27,7 @@ import android.os.Bundle;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
-import net.sf.preference.ThemePreferences;
+import com.github.preference.ThemePreferences;
 
 import java.util.TimeZone;
 

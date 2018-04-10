@@ -22,7 +22,7 @@ import android.util.Log;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
-import net.sf.preference.LocalePreferences;
+import com.github.preference.LocalePreferences;
 
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.github.content.IntentUtils.readExtras;
