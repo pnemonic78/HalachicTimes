@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.io;
+package com.github.io;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -30,9 +30,11 @@ public class StreamUtils {
     /**
      * Read all the bytes from the input stream.
      *
-     * @param in the input.
+     * @param in
+     *         the input.
      * @return the array of bytes.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException
+     *         if an I/O error occurs.
      */
     public static ByteArrayOutputStream readFully(InputStream in) throws IOException {
         in = new BufferedInputStream(in);
@@ -42,10 +44,13 @@ public class StreamUtils {
     /**
      * Read all the bytes from the input stream.
      *
-     * @param in   the input.
-     * @param size the initial buffer size.
+     * @param in
+     *         the input.
+     * @param size
+     *         the initial buffer size.
      * @return the array of bytes.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException
+     *         if an I/O error occurs.
      */
     public static ByteArrayOutputStream readFully(InputStream in, int size) throws IOException {
         size = Math.max(size, 32);

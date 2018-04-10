@@ -15,7 +15,7 @@
  */
 package net.sf.net;
 
-import net.sf.io.StreamUtils;
+import com.github.io.StreamUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
