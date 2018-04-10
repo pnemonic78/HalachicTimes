@@ -2,19 +2,19 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
 
     <header
-        android:fragment="net.sf.times.preference.GeneralPreferenceFragment"
+        android:fragment="com.github.times.preference.GeneralPreferenceFragment"
         android:title="@string/pref_general_title"/>
     <header
-        android:fragment="net.sf.times.preference.AppearancePreferenceFragment"
+        android:fragment="com.github.times.preference.AppearancePreferenceFragment"
         android:title="@string/pref_appearance_title"/>
     <header
-        android:fragment="net.sf.times.preference.ZmanimPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanimPreferenceFragment"
         android:title="@string/pref_zmanim_title"/>
     <header
-        android:fragment="net.sf.times.preference.PrivacyPreferenceFragment"
+        android:fragment="com.github.times.preference.PrivacyPreferenceFragment"
         android:title="@string/pref_privacy_security_title"/>
     <header
-        android:fragment="net.sf.times.preference.AboutPreferenceFragment"
+        android:fragment="com.github.times.preference.AboutPreferenceFragment"
         android:title="@string/pref_about_title"/>
 
 </preference-headers>

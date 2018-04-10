@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="hour_screen"
         android:title="@string/hour">
         <extra
@@ -13,7 +13,7 @@
             android:value="@string/opinion_name_hour"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="dawn_screen"
         android:title="@string/dawn">
         <extra
@@ -27,7 +27,7 @@
             android:value="dawn.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="tallis_screen"
         android:title="@string/tallis">
         <extra
@@ -41,7 +41,7 @@
             android:value="tallis.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="sunrise_screen"
         android:title="@string/sunrise">
         <extra
@@ -55,7 +55,7 @@
             android:value="sunrise.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="shema_screen"
         android:title="@string/shema">
         <extra
@@ -69,7 +69,7 @@
             android:value="shema.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="prayers_screen"
         android:title="@string/prayers">
         <extra
@@ -83,7 +83,7 @@
             android:value="prayers.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="midday_screen"
         android:title="@string/midday">
         <extra
@@ -97,7 +97,7 @@
             android:value="midday.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="earliest_mincha_screen"
         android:title="@string/earliest_mincha">
         <extra
@@ -111,7 +111,7 @@
             android:value="earliest_mincha.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="mincha_screen"
         android:title="@string/mincha">
         <extra
@@ -125,7 +125,7 @@
             android:value="mincha.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="plug_hamincha_screen"
         android:title="@string/plug_hamincha">
         <extra
@@ -139,7 +139,7 @@
             android:value="plug_hamincha.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanCandlesPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanCandlesPreferenceFragment"
         android:key="candles_screen"
         android:title="@string/candles">
         <extra
@@ -153,7 +153,7 @@
             android:value="candles.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="sunset_screen"
         android:title="@string/sunset">
         <extra
@@ -167,7 +167,7 @@
             android:value="sunset.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="twilight_screen"
         android:title="@string/twilight">
         <extra
@@ -181,7 +181,7 @@
             android:value="twilight.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="nightfall_screen"
         android:title="@string/nightfall">
         <extra
@@ -195,7 +195,7 @@
             android:value="nightfall.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanShabbathPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanShabbathPreferenceFragment"
         android:key="shabbath_screen"
         android:title="@string/shabbath_ends">
         <extra
@@ -206,7 +206,7 @@
             android:value="shabbath_ends.after;shabbath_ends.minutes"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="midnight_screen"
         android:title="@string/midnight">
         <extra
@@ -220,7 +220,7 @@
             android:value="midnight.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="midnight_guard_screen"
         android:title="@string/midnight_guard">
         <extra
@@ -234,7 +234,7 @@
             android:value="midnight_guard.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="morning_guard_screen"
         android:title="@string/morning_guard">
         <extra
@@ -248,7 +248,7 @@
             android:value="morning_guard.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="levana_earliest_screen"
         android:title="@string/levana_earliest">
         <extra
@@ -262,7 +262,7 @@
             android:value="levana_earliest.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="levana_latest_screen"
         android:title="@string/levana_latest">
         <extra
@@ -276,7 +276,7 @@
             android:value="levana_latest.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="eat_chametz_screen"
         android:title="@string/eat_chametz">
         <extra
@@ -290,7 +290,7 @@
             android:value="eat_chametz.reminder"/>
     </PreferenceScreen>
     <PreferenceScreen
-        android:fragment="net.sf.times.preference.ZmanPreferenceFragment"
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="burn_chametz_screen"
         android:title="@string/burn_chametz">
         <extra

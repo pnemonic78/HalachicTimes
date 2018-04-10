@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.sf.lib">
+    package="com.github.lib">
 
     <application>
         <provider
-            android:name="net.sf.provider.PreferencesProvider"
+            android:name="com.github.provider.PreferencesProvider"
             android:authorities="${applicationId}.preferences"
             android:exported="false" />
     </application>

@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_settings_opinion"
         android:key="@string/opinion_name_plug_hamincha"
         android:title="@string/opinion"/>
-    <net.sf.times.preference.ZmanReminderPreference
+    <com.github.times.preference.ZmanReminderPreference
         android:defaultValue="@string/reminder_defaultValue"
         android:dialogIcon="@drawable/ic_settings_alarm"
         android:entries="@array/reminder_entries"

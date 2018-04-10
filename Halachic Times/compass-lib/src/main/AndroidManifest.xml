@@ -1,4 +1,4 @@
 <manifest
-    package="net.sf.times.compass.lib"
+    package="com.github.times.compass.lib"
     xmlns:android="http://schemas.android.com/apk/res/android">
 </manifest>

@@ -16,7 +16,7 @@
         android:textColor="?compassColorTarget"
         tools:text="123\u00B0"/>
 
-    <net.sf.times.compass.CompassView
+    <com.github.times.compass.CompassView
         android:id="@+id/compass"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

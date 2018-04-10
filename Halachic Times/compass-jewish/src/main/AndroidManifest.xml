@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="net.sf.times.compass"
+    package="com.github.times.compass"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
@@ -9,10 +9,10 @@
         android:required="true"/>
 
     <application
-        android:name="net.sf.times.compass.CompassApplication"
+        android:name="com.github.times.compass.CompassApplication"
         android:allowBackup="true"
         android:appCategory="maps"
-        android:backupAgent="net.sf.times.compass.backup.CompassBackupAgent"
+        android:backupAgent="com.github.times.compass.backup.CompassBackupAgent"
         android:fullBackupContent="@xml/full_backup"
         android:icon="@mipmap/ic_compass"
         android:label="@string/app_name"
@@ -21,7 +21,7 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.CompassApp.Light">
         <activity
-            android:name="net.sf.times.compass.CompassActivity"
+            android:name="com.github.times.compass.CompassActivity"
             android:label="@string/title_activity_compass">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN"/>
@@ -31,17 +31,17 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="net.sf.times.location.LocationActivity"/>
+                android:value="com.github.times.location.LocationActivity"/>
         </activity>
         <activity
-            android:name="net.sf.times.compass.preference.CompassPreferenceActivity"
+            android:name="com.github.times.compass.preference.CompassPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="net.sf.times.compass.CompassActivity">
+            android:parentActivityName="com.github.times.compass.CompassActivity">
         </activity>
         <activity
-            android:name="net.sf.times.location.LocationActivity"
+            android:name="com.github.times.location.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName="net.sf.times.compass.CompassActivity">
+            android:parentActivityName="com.github.times.compass.CompassActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>

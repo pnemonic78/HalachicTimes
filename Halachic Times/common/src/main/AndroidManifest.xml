@@ -1,5 +1,5 @@
 <manifest
-    package="net.sf.times.common"
+    package="com.github.times.common"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 </manifest>
