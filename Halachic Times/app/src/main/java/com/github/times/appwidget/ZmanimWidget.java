@@ -26,6 +26,7 @@ import android.widget.RemoteViews;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
+
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 

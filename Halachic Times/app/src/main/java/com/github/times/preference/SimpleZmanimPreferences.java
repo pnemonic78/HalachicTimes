@@ -31,6 +31,7 @@ import com.github.preference.SimpleThemePreferences;
 import com.github.preference.ThemePreferences;
 import com.github.preference.TimePreference;
 import com.github.times.R;
+
 import net.sourceforge.zmanim.ShaahZmanis;
 
 import java.util.Calendar;

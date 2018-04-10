@@ -47,6 +47,7 @@ import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
+
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;

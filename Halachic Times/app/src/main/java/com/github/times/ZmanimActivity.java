@@ -71,9 +71,9 @@ import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static android.text.format.DateUtils.formatDateTime;
-import static java.lang.System.currentTimeMillis;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.LocaleUtils.isLocaleRTL;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.

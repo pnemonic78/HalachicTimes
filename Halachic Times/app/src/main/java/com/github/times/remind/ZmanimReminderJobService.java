@@ -18,7 +18,6 @@ package com.github.times.remind;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;

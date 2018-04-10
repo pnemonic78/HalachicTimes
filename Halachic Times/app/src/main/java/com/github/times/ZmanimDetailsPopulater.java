@@ -18,6 +18,7 @@ package com.github.times;
 import android.content.Context;
 
 import com.github.times.preference.ZmanimPreferences;
+
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;

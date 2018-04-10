@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
+
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -43,12 +44,12 @@ import java.util.Locale;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static java.lang.System.currentTimeMillis;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
 import static com.github.util.LocaleUtils.isLocaleRTL;
 import static com.github.util.TimeUtils.roundUp;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Adapter for halachic times list.

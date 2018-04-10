@@ -39,14 +39,15 @@ import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
+
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.widget.AdapterView.INVALID_POSITION;
-import static java.lang.System.currentTimeMillis;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Factory to create views for list widget.

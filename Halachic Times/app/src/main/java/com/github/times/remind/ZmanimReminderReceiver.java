@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.github.util.LogUtils;
 
@@ -31,8 +30,8 @@ import java.util.Locale;
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
-import static java.lang.System.currentTimeMillis;
 import static com.github.content.IntentUtils.putExtras;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Reminders. Receive alarm events, or date-time events, to update reminders.

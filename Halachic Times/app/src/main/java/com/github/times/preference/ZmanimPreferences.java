@@ -23,6 +23,7 @@ import com.github.media.RingtoneManager;
 import com.github.preference.LocalePreferences;
 import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationPreferences;
+
 import net.sourceforge.zmanim.ShaahZmanis;
 
 import java.util.Calendar;
