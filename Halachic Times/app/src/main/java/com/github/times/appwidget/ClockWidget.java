@@ -27,7 +27,7 @@ import net.sf.text.style.TypefaceSpan;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +35,7 @@ import java.text.SimpleDateFormat;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 import static com.github.times.ZmanimItem.NEVER;
-import static net.sf.util.TimeUtils.roundUp;
+import static com.github.util.TimeUtils.roundUp;
 
 /**
  * Clock widget with hour and title underneath.<br>

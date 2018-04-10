@@ -26,7 +26,7 @@ import com.github.times.R;
 import com.github.times.appwidget.ClockWidget;
 import com.github.times.appwidget.ZmanimListWidget;
 import com.github.times.appwidget.ZmanimWidget;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import java.util.Locale;
 
@@ -37,7 +37,7 @@ import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_C
 import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
-import static net.sf.util.LocaleUtils.sortByDisplay;
+import static com.github.util.LocaleUtils.sortByDisplay;
 
 /**
  * This fragment shows the preferences for the Appearance header.

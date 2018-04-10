@@ -28,7 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.github.times.preference.ZmanimPreferences;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -47,8 +47,8 @@ import static java.lang.System.currentTimeMillis;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
-import static net.sf.util.LocaleUtils.isLocaleRTL;
-import static net.sf.util.TimeUtils.roundUp;
+import static com.github.util.LocaleUtils.isLocaleRTL;
+import static com.github.util.TimeUtils.roundUp;
 
 /**
  * Adapter for halachic times list.

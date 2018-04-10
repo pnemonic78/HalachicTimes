@@ -36,7 +36,7 @@ import com.github.times.location.ZmanimLocation;
 import com.github.times.location.provider.LocationContract.AddressColumns;
 import com.github.times.location.provider.LocationContract.CityColumns;
 import com.github.times.location.provider.LocationContract.ElevationColumns;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
 

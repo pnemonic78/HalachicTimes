@@ -73,7 +73,7 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static android.text.format.DateUtils.formatDateTime;
 import static java.lang.System.currentTimeMillis;
 import static com.github.times.ZmanimItem.NEVER;
-import static net.sf.util.LocaleUtils.isLocaleRTL;
+import static com.github.util.LocaleUtils.isLocaleRTL;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.

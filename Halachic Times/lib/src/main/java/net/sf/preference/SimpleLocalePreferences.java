@@ -22,8 +22,8 @@ import android.support.annotation.NonNull;
 import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
-import static net.sf.util.LocaleUtils.getDefaultLocale;
-import static net.sf.util.LocaleUtils.parseLocale;
+import static com.github.util.LocaleUtils.getDefaultLocale;
+import static com.github.util.LocaleUtils.parseLocale;
 
 /**
  * Locale preferences implementation.

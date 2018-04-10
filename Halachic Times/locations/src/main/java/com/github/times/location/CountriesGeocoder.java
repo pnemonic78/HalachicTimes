@@ -20,7 +20,7 @@ import android.content.res.Resources;
 import android.location.Address;
 import android.location.Location;
 
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
 

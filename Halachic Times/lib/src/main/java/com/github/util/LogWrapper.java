@@ -1,4 +1,4 @@
-package net.sf.util;
+package com.github.util;
 
 import android.util.Log;
 

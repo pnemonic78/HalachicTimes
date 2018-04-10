@@ -25,7 +25,7 @@ import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

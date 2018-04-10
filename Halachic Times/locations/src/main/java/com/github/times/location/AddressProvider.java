@@ -30,7 +30,7 @@ import com.github.times.location.impl.BingGeocoder;
 import com.github.times.location.impl.DatabaseGeocoder;
 import com.github.times.location.impl.GeoNamesGeocoder;
 import com.github.times.location.impl.GoogleGeocoder;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -20,7 +20,7 @@ import android.location.Address;
 import android.text.TextUtils;
 
 import com.github.net.HTTPReader;
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.util;
+package com.github.util;
 
 import org.junit.Test;
 
@@ -26,8 +26,8 @@ import static java.lang.System.currentTimeMillis;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static net.sf.util.TimeUtils.isSameDay;
-import static net.sf.util.TimeUtils.roundUp;
+import static com.github.util.TimeUtils.isSameDay;
+import static com.github.util.TimeUtils.roundUp;
 
 /**
  * Test times.

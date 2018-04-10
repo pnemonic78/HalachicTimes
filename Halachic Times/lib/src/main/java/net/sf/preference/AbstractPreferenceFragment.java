@@ -30,7 +30,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import net.sf.lib.R;
-import net.sf.util.LogWrapper;
+import com.github.util.LogWrapper;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION;

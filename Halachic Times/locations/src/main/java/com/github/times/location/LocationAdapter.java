@@ -20,7 +20,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 import net.sf.widget.ArrayAdapter;
 
 import java.text.Collator;

@@ -22,7 +22,7 @@ import net.sf.preference.LocalePreferences;
 import net.sf.preference.SimpleLocalePreferences;
 
 import static com.github.app.ActivityUtils.restTitle;
-import static net.sf.util.LocaleUtils.applyLocale;
+import static com.github.util.LocaleUtils.applyLocale;
 
 /**
  * Wraps a callback delegate.

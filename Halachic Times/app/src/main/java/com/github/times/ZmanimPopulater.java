@@ -34,7 +34,7 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static java.util.Calendar.FRIDAY;
 import static java.util.Calendar.SATURDAY;
 import static com.github.times.ZmanimItem.NEVER;
-import static net.sf.util.TimeUtils.isSameDay;
+import static com.github.util.TimeUtils.isSameDay;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_PESACH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_SUCCOS;

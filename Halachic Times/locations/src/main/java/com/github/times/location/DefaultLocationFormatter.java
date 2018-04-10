@@ -19,7 +19,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 
-import net.sf.util.LocaleUtils;
+import com.github.util.LocaleUtils;
 
 import java.text.DecimalFormat;
 import java.util.Locale;
