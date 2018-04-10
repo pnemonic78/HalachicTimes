@@ -6,7 +6,6 @@ def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 android {
     compileSdkVersion androidBuildSdkVersion
     buildToolsVersion androidBuildToolsVersion
-    publishNonDefault true
 
     defaultConfig {
         minSdkVersion androidBuildMinSdkVersion
@@ -16,9 +15,6 @@ android {
     }
 
     buildTypes {
-        debug {
-        }
-
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
