@@ -4,7 +4,7 @@ apply plugin: 'application'
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
-mainClassName = 'net.sf.geonames.JewishCities'
+mainClassName = 'com.github.geonames.JewishCities'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

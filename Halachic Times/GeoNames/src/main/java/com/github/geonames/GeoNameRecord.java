@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.geonames;
+package com.github.geonames;
 
-import static net.sf.geonames.CountryInfo.ISO639_ISRAEL;
-import static net.sf.geonames.CountryInfo.ISO639_PALESTINE;
+import static com.github.geonames.CountryInfo.ISO639_ISRAEL;
+import static com.github.geonames.CountryInfo.ISO639_PALESTINE;
 
 /**
  * GeoName data record.

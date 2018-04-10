@@ -20,7 +20,7 @@ import android.location.Address;
 import android.text.TextUtils;
 import android.util.Log;
 
-import net.sf.net.HTTPReader;
+import com.github.net.HTTPReader;
 import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimAddress;

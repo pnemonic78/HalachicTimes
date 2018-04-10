@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.net;
+package com.github.net;
 
 import com.github.io.StreamUtils;
 
@@ -45,11 +45,9 @@ public class HTTPReader {
     /**
      * Read bytes from the network.
      *
-     * @param url
-     *         the URL.
+     * @param url the URL.
      * @return the data - {@code null} otherwise.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public static byte[] read(URL url) throws IOException {
         return read(url, (String[]) null);
@@ -58,13 +56,10 @@ public class HTTPReader {
     /**
      * Read bytes from the network.
      *
-     * @param url
-     *         the URL.
-     * @param contentTypeExpected
-     *         the expected content type.
+     * @param url                 the URL.
+     * @param contentTypeExpected the expected content type.
      * @return the data - {@code null} otherwise.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public static byte[] read(URL url, String contentTypeExpected) throws IOException {
         return read(url, new String[]{contentTypeExpected});
@@ -73,13 +68,10 @@ public class HTTPReader {
     /**
      * Read bytes from the network.
      *
-     * @param url
-     *         the URL.
-     * @param contentTypesExpected
-     *         the expected content types.
+     * @param url                  the URL.
+     * @param contentTypesExpected the expected content types.
      * @return the data - {@code null} otherwise.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public static byte[] read(URL url, String[] contentTypesExpected) throws IOException {
         URLConnection conn = url.openConnection();

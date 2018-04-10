@@ -19,7 +19,7 @@ import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
 
-import net.sf.net.HTTPReader;
+import com.github.net.HTTPReader;
 import net.sf.util.LocaleUtils;
 
 import org.xml.sax.Attributes;
