@@ -22,7 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 
-import net.sf.provider.Preferences;
+import com.github.provider.Preferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +30,9 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static net.sf.provider.Preferences.AUTHORITY;
-import static net.sf.provider.Preferences.CONTENT_URI;
-import static net.sf.provider.Preferences.fromStringSet;
+import static com.github.provider.Preferences.AUTHORITY;
+import static com.github.provider.Preferences.CONTENT_URI;
+import static com.github.provider.Preferences.fromStringSet;
 
 /**
  * Shared preferences that are sharable across processes by using a content provider.
