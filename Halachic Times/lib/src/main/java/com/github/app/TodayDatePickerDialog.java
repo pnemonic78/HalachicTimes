@@ -19,7 +19,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 
 import java.util.Calendar;
 

@@ -29,7 +29,7 @@ import android.preference.SwitchPreference;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 import com.github.util.LogUtils;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;

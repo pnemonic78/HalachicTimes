@@ -18,7 +18,7 @@ package com.github.preference;
 import android.content.Context;
 import android.content.res.Resources;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 
 import static com.github.preference.ThemePreferences.Values.THEME_DARK;
 import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;

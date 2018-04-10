@@ -43,12 +43,12 @@ public class Preferences {
     /**
      * The MIME type of {@link #CONTENT_URI} providing a directory of preferences.
      */
-    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/net.sf.preferences";
+    public static final String CONTENT_TYPE = "vnd.android.cursor.dir/com.github.preferences";
 
     /**
      * The MIME type of a {@link #CONTENT_URI} sub-directory of a single locale.
      */
-    public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/net.sf.preference";
+    public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/com.github.preference";
 
     /**
      * All of the preferences.

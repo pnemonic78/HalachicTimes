@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.NumberPicker;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 
 /**
  * Preference that shows a number picker.

@@ -22,12 +22,12 @@ import java.util.TimeZone;
 
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.util.TimeUtils.isSameDay;
+import static com.github.util.TimeUtils.roundUp;
 import static java.lang.System.currentTimeMillis;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static com.github.util.TimeUtils.isSameDay;
-import static com.github.util.TimeUtils.roundUp;
 
 /**
  * Test times.

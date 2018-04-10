@@ -31,7 +31,7 @@ import android.support.annotation.StyleableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 import com.github.media.RingtoneManager;
 
 import java.util.ArrayList;

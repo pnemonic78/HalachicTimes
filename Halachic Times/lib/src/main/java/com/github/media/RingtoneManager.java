@@ -24,7 +24,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -25,7 +25,7 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import net.sf.lib.R;
+import com.github.lib.R;
 
 public class SeekBarDialogPreference extends DialogPreference implements OnSeekBarChangeListener {
 
