@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.graphics;
+package com.github.graphics;
 
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -24,7 +24,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
-import static net.sf.graphics.BitmapUtils.getPixel;
+import static com.github.graphics.BitmapUtils.getPixel;
 
 /**
  * Drawable utilities.

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.sf.graphics;
+package com.github.graphics;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
-import static net.sf.graphics.DrawableUtils.getWallpaperColor;
+import static com.github.graphics.DrawableUtils.getWallpaperColor;
 
 /**
  * Bitmap utilities.

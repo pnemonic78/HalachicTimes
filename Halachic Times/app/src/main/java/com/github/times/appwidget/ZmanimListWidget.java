@@ -25,7 +25,7 @@ import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static net.sf.graphics.BitmapUtils.isBrightWallpaper;
+import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 
 /**
  * Shows a scrollable list of halachic times (<em>zmanim</em>) for prayers in a widget.

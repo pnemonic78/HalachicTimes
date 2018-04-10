@@ -46,7 +46,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static java.lang.System.currentTimeMillis;
-import static net.sf.graphics.BitmapUtils.isBrightWallpaper;
+import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 
 /**
  * Factory to create views for list widget.
