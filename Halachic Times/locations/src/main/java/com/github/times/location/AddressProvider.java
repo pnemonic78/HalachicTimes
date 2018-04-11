@@ -281,15 +281,15 @@ public class AddressProvider {
         }
         providers.add(googleGeocoder);
 
-        if (geonamesGeocoder == null) {
-            geonamesGeocoder = new GeoNamesGeocoder(locale);
-        }
-        providers.add(geonamesGeocoder);
-
         if (bingGeocoder == null) {
             bingGeocoder = new BingGeocoder(locale);
         }
         providers.add(bingGeocoder);
+
+        if (geonamesGeocoder == null) {
+            geonamesGeocoder = new GeoNamesGeocoder(locale);
+        }
+        providers.add(geonamesGeocoder);
 
         return providers;
     }

@@ -19,9 +19,10 @@ import android.location.Address;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 import java.util.Locale;
+
+import static android.text.TextUtils.isEmpty;
 
 /**
  * Address that is stored in the local database.
@@ -224,12 +225,12 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         String admin = getAdminArea();
         String country = getCountryName();
 
-        if (!TextUtils.isEmpty(feature)) {
+        if (!isEmpty(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(feature);
         }
-        if (!TextUtils.isEmpty(thoroughfare) && !thoroughfare.equals(feature)) {
+        if (!isEmpty(thoroughfare) && !thoroughfare.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(thoroughfare);
@@ -237,7 +238,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         if (addressLinesCount >= 0) {
             for (int i = 0; i < addressLinesCount; i++) {
                 address = getAddressLine(i);
-                if (!TextUtils.isEmpty(address)
+                if (!isEmpty(address)
                         && ((thoroughfare == null) || !address.contains(thoroughfare))
                         && !address.equals(subloc)
                         && !address.equals(locality)
@@ -250,18 +251,21 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 }
             }
         }
-        if (!TextUtils.isEmpty(subloc) && !subloc.equals(thoroughfare) && !subloc.equals(feature)) {
+        if (!isEmpty(subloc)
+                && !subloc.equals(thoroughfare)
+                && !subloc.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subloc);
         }
-        if (!TextUtils.isEmpty(locality) && !locality.equals(subloc) && !locality.equals(feature)) {
+        if (!isEmpty(locality)
+                && !locality.equals(subloc)
+                && !locality.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(locality);
         }
-        if (TextUtils.isEmpty(locality)
-                && !TextUtils.isEmpty(subadmin)
+        if (!isEmpty(subadmin)
                 && !subadmin.equals(locality)
                 && !subadmin.equals(subloc)
                 && !subadmin.equals(feature)) {
@@ -269,8 +273,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subadmin);
         }
-        if (TextUtils.isEmpty(locality)
-                && !TextUtils.isEmpty(admin)
+        if (!isEmpty(admin)
                 && !admin.equals(subadmin)
                 && !admin.equals(locality)
                 && !admin.equals(subloc)
@@ -279,7 +282,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(admin);
         }
-        if (!TextUtils.isEmpty(country) && !country.equals(feature)) {
+        if (!isEmpty(country) && !country.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(country);
