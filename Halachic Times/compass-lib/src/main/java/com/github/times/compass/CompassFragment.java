@@ -15,6 +15,7 @@
  */
 package com.github.times.compass;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.hardware.GeomagneticField;
@@ -25,6 +26,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,37 +46,73 @@ import static com.github.times.compass.preference.CompassPreferences.Values.BEAR
  */
 public class CompassFragment extends Fragment implements SensorEventListener {
 
-    /** Latitude of the Holy of Holies. */
+    /**
+     * Latitude of the Holy of Holies.
+     */
     private static final double HOLIEST_LATITUDE = 31.778;
-    /** Longitude of the Holy of Holies. */
+    /**
+     * Longitude of the Holy of Holies.
+     */
     private static final double HOLIEST_LONGITUDE = 35.2353;
-    /** Elevation of the Holy of Holies, according to Google. */
+    /**
+     * Elevation of the Holy of Holies, according to Google.
+     */
     private static final double HOLIEST_ELEVATION = 744.5184937;
 
-    private static final float ALPHA = 0.25f; // if ALPHA = 1 OR 0, no filter applies.
+    private static final float ALPHA = 0.35f; // if ALPHA = 1 OR 0, no filter applies.
 
-    /** The sensor manager. */
+    /**
+     * The sensor manager.
+     */
     private SensorManager sensorManager;
-    /** The accelerometer sensor. */
+    /**
+     * The accelerometer sensor.
+     */
     private Sensor accelerometer;
-    /** The magnetic field sensor. */
+    /**
+     * The magnetic field sensor.
+     */
     private Sensor magnetic;
-    /** Location of the Holy of Holies. */
+    /**
+     * Location of the Holy of Holies.
+     */
     private final Location holiest = new Location(GeocoderBase.USER_PROVIDER);
-    /** The main view. */
+    /**
+     * The main view.
+     */
     protected CompassView compassView;
-    /** The gravity values. */
+    /**
+     * The gravity values.
+     */
     private final float[] gravity = new float[3];
-    /** The geomagnetic field. */
+    /**
+     * The geomagnetic field.
+     */
     private final float[] geomagnetic = new float[3];
-    /** Rotation matrix. */
+    /**
+     * Rotation matrix.
+     */
     private final float[] matrixR = new float[9];
-    /** Orientation matrix. */
+    /**
+     * Remapped rotation matrix.
+     */
+    private final float[] mapR = new float[9];
+    /**
+     * Orientation matrix.
+     */
     private final float[] orientation = new float[3];
-    /** The preferences. */
+    /**
+     * The preferences.
+     */
     protected CompassPreferences preferences;
-    /** The location's geomagnetic field. */
+    /**
+     * The location's geomagnetic field.
+     */
     private GeomagneticField geomagneticField;
+    /**
+     * The display orientation.
+     */
+    private int displayRotation = Surface.ROTATION_0;
 
     public CompassFragment() {
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
@@ -122,9 +160,16 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+    }
+
+    @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
+    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     public void onSensorChanged(SensorEvent event) {
         switch (event.sensor.getType()) {
@@ -138,8 +183,22 @@ public class CompassFragment extends Fragment implements SensorEventListener {
                 return;
         }
         if (SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic)) {
-            SensorManager.getOrientation(matrixR, orientation);
-            float azimuth = (float) Math.toDegrees(-orientation[0]);
+            switch (displayRotation) {
+                case Surface.ROTATION_90:
+                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, mapR);
+                    break;
+                case Surface.ROTATION_180:
+                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Y, mapR);
+                    break;
+                case Surface.ROTATION_270:
+                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X, mapR);
+                    break;
+                default:
+                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_Y, mapR);
+                    break;
+            }
+            SensorManager.getOrientation(mapR, orientation);
+            float azimuth = (float) Math.toDegrees(orientation[0]);
             if (geomagneticField != null) {
                 azimuth += geomagneticField.getDeclination(); // converts magnetic north to true north
             }
@@ -148,7 +207,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     protected void setAzimuth(float azimuth) {
-        compassView.setAzimuth(azimuth);
+        compassView.setAzimuth(-azimuth);
     }
 
     /**

@@ -185,11 +185,11 @@ public class DefaultLocationFormatter implements LocationFormatter {
 
     @Override
     public CharSequence formatBearingDecimal(double azimuth) {
-        return formatBearingDecimal.format((Math.toDegrees(azimuth) + 360) % 360);
+        return formatBearingDecimal.format((azimuth + 360) % 360);
     }
 
     @Override
     public CharSequence formatBearingSexagesimal(double azimuth) {
-        return formatBearingDecimal.format((Math.toDegrees(azimuth) + 360) % 360);
+        return formatBearingDecimal.format((azimuth + 360) % 360);
     }
 }
