@@ -198,7 +198,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
                     break;
             }
             SensorManager.getOrientation(mapR, orientation);
-            float azimuth = (float) Math.toDegrees(-orientation[0]);
+            float azimuth = (float) Math.toDegrees(orientation[0]);
             if (geomagneticField != null) {
                 azimuth += geomagneticField.getDeclination(); // converts magnetic north to true north
             }
@@ -207,7 +207,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     protected void setAzimuth(float azimuth) {
-        compassView.setAzimuth(azimuth);
+        compassView.setAzimuth(-azimuth);
     }
 
     /**

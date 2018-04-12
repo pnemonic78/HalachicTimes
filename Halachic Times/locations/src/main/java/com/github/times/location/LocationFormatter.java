@@ -123,7 +123,7 @@ public interface LocationFormatter {
      * Format a azimuth (bearing or yaw or compass angle).
      *
      * @param azimuth
-     *         the azimuth.
+     *         the azimuth, in degrees.
      * @return the azimuth text.
      */
     CharSequence formatBearing(double azimuth);
@@ -132,7 +132,7 @@ public interface LocationFormatter {
      * Format a azimuth (bearing or yaw or compass angle) using the decimal notation.
      *
      * @param azimuth
-     *         the azimuth.
+     *         the azimuth, in degrees.
      * @return the azimuth text.
      */
     CharSequence formatBearingDecimal(double azimuth);
@@ -141,7 +141,7 @@ public interface LocationFormatter {
      * Format a azimuth (bearing or yaw or compass angle) using the sexagesimal notation.
      *
      * @param azimuth
-     *         the azimuth.
+     *         the azimuth, in degrees.
      * @return the azimuth text.
      */
     CharSequence formatBearingSexagesimal(double azimuth);

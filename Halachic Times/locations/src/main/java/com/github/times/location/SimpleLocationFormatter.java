@@ -86,7 +86,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
     @Override
     public CharSequence formatBearingDecimal(double azimuth) {
-        final double angle = (Math.toDegrees(azimuth) + 360) % 360;
+        final double angle = (azimuth + 360) % 360;
         double bearing = 90 - Math.abs((angle % 180) - 90);
         String symbolLatitude = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
         String symbolLongitude = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
@@ -96,7 +96,7 @@ public class SimpleLocationFormatter extends DefaultLocationFormatter {
 
     @Override
     public CharSequence formatBearingSexagesimal(double azimuth) {
-        final double angle = (Math.toDegrees(azimuth) + 360) % 360;
+        final double angle = (azimuth + 360) % 360;
         double bearing = 90 - Math.abs((angle % 180) - 90);
         String symbolLatitude = ((angle <= 90) || (angle >= 270)) ? symbolNorth : symbolSouth;
         String symbolLongitude = ((angle >= 0) && (angle <= 180)) ? symbolEast : symbolWest;
