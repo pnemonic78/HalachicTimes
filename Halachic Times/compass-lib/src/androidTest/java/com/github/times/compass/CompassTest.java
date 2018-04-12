@@ -37,7 +37,7 @@ import static junit.framework.Assert.assertTrue;
 public class CompassTest {
 
     @Test
-    public void rotationMatrix() {
+    public void rotationMatrixPortrait() {
         float[] gravity = {0.0f, 9.8f, 0.0f};
         float[] geomagnetic = {22.0f, 5.90f, -43.10f};
 
@@ -58,6 +58,30 @@ public class CompassTest {
         assertEquals(-0.0f, orientation[0]);
         assertEquals((float) (Math.PI / -2), orientation[1]);
         assertEquals(-0.0f, orientation[2]);
+    }
+
+    @Test
+    public void rotationMatrixLandscape() {
+        float[] gravity = {9.8f, 0.0f, 0.0f};
+        float[] geomagnetic = {5.90f, -22.0f, -43.10f};
+
+        float[] matrixR = new float[9];
+        assertTrue(SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic));
+        assertEquals(0.0f, matrixR[0]);
+        assertEquals(-0.8906765f, matrixR[1]);
+        assertEquals(0.45463768f, matrixR[2]);
+        assertEquals(0.0f, matrixR[3]);
+        assertEquals(-0.45463768f, matrixR[4]);
+        assertEquals(-0.8906765f, matrixR[5]);
+        assertEquals(1.0f, matrixR[6]);
+        assertEquals(0.0f, matrixR[7]);
+        assertEquals(0.0f, matrixR[8]);
+
+        float[] orientation = new float[3];
+        SensorManager.getOrientation(matrixR, orientation);
+        assertEquals(-2.0427618f, orientation[0]);
+        assertEquals(-0.0f, orientation[1]);
+        assertEquals((float) (Math.PI / -2), orientation[2]);
     }
 
 }
