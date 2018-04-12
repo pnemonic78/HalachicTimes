@@ -177,6 +177,51 @@ public class CompassTest {
         assertEquals(orientationMappedExpected[2], orientation[2]);
     }
 
+    @Test
+    public void rotationMatrixLandscape180_LG() {
+        float[] gravity = {-0.14660645f, -0.5656891f, 9.577408f};
+        float[] geomagnetic = {22.807312f, -37.033463f, 53.443718f};
+        float[] matrixRExpected = {-0.81935644f, -0.5714123f, -0.046292763f, 0.5730808f, -0.8185428f, -0.039574735f, -0.015279113f, -0.058955304f, 0.9981437f};
+        float[] mapRExpected = {-0.81935644f, 0.5714123f, 0.046292763f, 0.5730808f, 0.8185428f, 0.039574735f, -0.015279113f, 0.058955304f, -0.9981437f};
+        float[] orientationExpected = {-2.5321531f, 0.05898951f, 0.015306334f};
+        float[] orientationMappedExpected = {0.6094395f, -0.05898951f, 3.1262863f};
+
+        float[] matrixR = new float[9];
+        assertTrue(SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic));
+        assertEquals(matrixRExpected[0], matrixR[0]);
+        assertEquals(matrixRExpected[1], matrixR[1]);
+        assertEquals(matrixRExpected[2], matrixR[2]);
+        assertEquals(matrixRExpected[3], matrixR[3]);
+        assertEquals(matrixRExpected[4], matrixR[4]);
+        assertEquals(matrixRExpected[5], matrixR[5]);
+        assertEquals(matrixRExpected[6], matrixR[6]);
+        assertEquals(matrixRExpected[7], matrixR[7]);
+        assertEquals(matrixRExpected[8], matrixR[8]);
+
+        float[] orientation = new float[3];
+        SensorManager.getOrientation(matrixR, orientation);
+        assertEquals(orientationExpected[0], orientation[0]);
+        assertEquals(orientationExpected[1], orientation[1]);
+        assertEquals(orientationExpected[2], orientation[2]);
+
+        float[] mapR = new float[9];
+        SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Y, mapR);
+        assertEquals(mapRExpected[0], mapR[0]);
+        assertEquals(mapRExpected[1], mapR[1]);
+        assertEquals(mapRExpected[2], mapR[2]);
+        assertEquals(mapRExpected[3], mapR[3]);
+        assertEquals(mapRExpected[4], mapR[4]);
+        assertEquals(mapRExpected[5], mapR[5]);
+        assertEquals(mapRExpected[6], mapR[6]);
+        assertEquals(mapRExpected[7], mapR[7]);
+        assertEquals(mapRExpected[8], mapR[8]);
+
+        SensorManager.getOrientation(mapR, orientation);
+        assertEquals(orientationMappedExpected[0], orientation[0]);
+        assertEquals(orientationMappedExpected[1], orientation[1]);
+        assertEquals(orientationMappedExpected[2], orientation[2]);
+    }
+
     @SuppressWarnings("SuspiciousNameCombination")
     @Test
     public void rotationMatrixLandscape270_LG() {
