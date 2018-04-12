@@ -28,6 +28,7 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -223,7 +224,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         ComplexZmanimCalendar cal = getCalendar();
         Calendar gcal = cal.getCalendar();
-        if (gcal.get(Calendar.YEAR) <= 1) {
+        if (gcal.get(Calendar.ERA) < GregorianCalendar.AD) {
             // Ignore potential "IllegalArgumentException".
             return;
         }
@@ -1116,7 +1117,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     @Nullable
     public JewishCalendar getJewishCalendar() {
         Calendar gcal = getCalendar().getCalendar();
-        if (gcal.get(Calendar.YEAR) <= 1) {
+        if (gcal.get(Calendar.ERA) < GregorianCalendar.AD) {
             // Avoid future "IllegalArgumentException".
             return null;
         }

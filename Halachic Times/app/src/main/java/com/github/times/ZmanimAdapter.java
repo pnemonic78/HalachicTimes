@@ -39,6 +39,7 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
@@ -459,7 +460,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      */
     public JewishCalendar getJewishCalendar() {
         Calendar gcal = getCalendar().getCalendar();
-        if (gcal.get(Calendar.YEAR) <= 1) {
+        if (gcal.get(Calendar.ERA) < GregorianCalendar.AD) {
             // Avoid future "IllegalArgumentException".
             return null;
         }
