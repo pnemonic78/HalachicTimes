@@ -17,12 +17,17 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import com.github.times.location.impl.BingGeocoder;
 import com.github.times.location.impl.GeoNamesGeocoder;
 import com.github.times.location.impl.GoogleGeocoder;
+import com.github.times.location.test.R;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -35,6 +40,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+@RunWith(AndroidJUnit4.class)
+@SmallTest
 public class GeocoderTestCase extends AndroidTestCase {
 
     private static SAXParserFactory parserFactory;
@@ -58,6 +65,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      * @throws Exception
      *         if an error occurs.
      */
+    @Test
     public void testGoogleAddress() throws Exception {
         final Context context = getContext();
         assertNotNull(context);
@@ -83,7 +91,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0234380, address.getLatitude());
         assertEquals(34.7766799, address.getLongitude());
-        assertEquals("1-5, Kalischer St, Holon, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("1-5, Kalischer St, Holon, Center District, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
         results = new ArrayList<>(maxResults);
@@ -102,7 +110,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0626167, address.getLatitude());
         assertEquals(34.9717498, address.getLongitude());
-        assertEquals("Unnamed Road, Rosh Haayin, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("Unnamed Road, Rosh Haayin, Petach Tikva, Center District, Israel", ((ZmanimAddress) address).getFormatted());
     }
 
     /**
@@ -111,6 +119,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      * @throws Exception
      *         if an error occurs.
      */
+    @Test
     public void testGoogleElevation() throws Exception {
         final Context context = getContext();
         assertNotNull(context);
@@ -152,6 +161,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      * @throws Exception
      *         if an error occurs.
      */
+    @Test
     public void testGeoNamesAddress() throws Exception {
         final Context context = getContext();
         assertNotNull(context);
@@ -186,6 +196,7 @@ public class GeocoderTestCase extends AndroidTestCase {
      * @throws Exception
      *         if an error occurs.
      */
+    @Test
     public void testBingAddress() throws Exception {
         final Context context = getContext();
         assertNotNull(context);
@@ -211,7 +222,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0236, address.getLatitude());
         assertEquals(34.776698, address.getLongitude());
-        assertEquals("Street, Holon, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("Street, Holon, Tel Aviv, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
         results = new ArrayList<>(maxResults);
@@ -230,7 +241,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.094619750976563, address.getLatitude());
         assertEquals(34.885761260986328, address.getLongitude());
-        assertEquals("Petah Tiqwa, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("Petah Tiqwa, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
     }
 
 }
