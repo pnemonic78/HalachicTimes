@@ -124,7 +124,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertNotNull(in);
         SAXParser parser = getParser();
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createElevationResponseHandler(results);
+        DefaultHandler handler = geocoder.createElevationResponseHandler(0.0, 0.0, results);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertEquals(0, results.size());
@@ -135,7 +135,7 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertNotNull(in);
         parser = getParser();
         assertNotNull(parser);
-        handler = geocoder.createElevationResponseHandler(results);
+        handler = geocoder.createElevationResponseHandler(0.0, 0.0, results);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertEquals(1, results.size());

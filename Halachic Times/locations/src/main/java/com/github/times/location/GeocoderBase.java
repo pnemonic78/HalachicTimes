@@ -21,6 +21,7 @@ import android.text.TextUtils;
 
 import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
+import com.github.util.LogUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -45,11 +46,16 @@ import javax.xml.parsers.SAXParserFactory;
  * @author Moshe Waisberg
  */
 public abstract class GeocoderBase {
+    private static final String TAG = "GeocoderBase";
 
-    /** The "user pick a city" location provider. */
+    /**
+     * The "user pick a city" location provider.
+     */
     public static final String USER_PROVIDER = "user";
 
-    /** Maximum radius to consider two locations in the same vicinity. */
+    /**
+     * Maximum radius to consider two locations in the same vicinity.
+     */
     protected static final float SAME_LOCATION = 250f;// 250 metres.
     /**
      * Maximum radius to consider a location near the same city.
@@ -70,6 +76,10 @@ public abstract class GeocoderBase {
      * Maximum radius to consider a location near the same planet.
      */
     protected static final float SAME_PLANET = 6000000f;// 6000 kilometres.
+    /**
+     * Lowest possible natural elevation on the surface of the earth.
+     */
+    protected static final double ELEVATION_LOWEST_SURFACE = -500;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -83,8 +93,7 @@ public abstract class GeocoderBase {
     /**
      * Creates a new geocoder.
      *
-     * @param locale
-     *         the locale.
+     * @param locale the locale.
      */
     public GeocoderBase(Locale locale) {
 //        this.context = context;
@@ -94,8 +103,7 @@ public abstract class GeocoderBase {
     /**
      * Creates a new geocoder.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public GeocoderBase(Context context) {
         this(LocaleUtils.getDefaultLocale(context));
@@ -117,18 +125,13 @@ public abstract class GeocoderBase {
      * Returns an array of Addresses that are known to describe the area
      * immediately surrounding the given latitude and longitude.
      *
-     * @param latitude
-     *         the latitude a point for the search.
-     * @param longitude
-     *         the longitude a point for the search.
-     * @param maxResults
-     *         maximum number of addresses to return. Smaller numbers (1 to
-     *         5) are recommended.
+     * @param latitude   the latitude a point for the search.
+     * @param longitude  the longitude a point for the search.
+     * @param maxResults maximum number of addresses to return. Smaller numbers (1 to
+     *                   5) are recommended.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     public abstract List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException;
 
@@ -144,16 +147,12 @@ public abstract class GeocoderBase {
      * meaningful or correct. It may be useful to call this method from a thread
      * separate from your primary UI thread.
      *
-     * @param locationName
-     *         a user-supplied description of a location.
-     * @param maxResults
-     *         max number of addresses to return. Smaller numbers (1 to 5)
-     *         are recommended.
+     * @param locationName a user-supplied description of a location.
+     * @param maxResults   max number of addresses to return. Smaller numbers (1 to 5)
+     *                     are recommended.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
         return null;
@@ -175,24 +174,16 @@ public abstract class GeocoderBase {
      * meaningful or correct. It may be useful to call this method from a thread
      * separate from your primary UI thread.
      *
-     * @param locationName
-     *         a user-supplied description of a location.
-     * @param maxResults
-     *         max number of addresses to return. Smaller numbers (1 to 5)
-     *         are recommended.
-     * @param lowerLeftLatitude
-     *         the latitude of the lower left corner of the bounding box.
-     * @param lowerLeftLongitude
-     *         the longitude of the lower left corner of the bounding box.
-     * @param upperRightLatitude
-     *         the latitude of the upper right corner of the bounding box.
-     * @param upperRightLongitude
-     *         the longitude of the upper right corner of the bounding box.
+     * @param locationName        a user-supplied description of a location.
+     * @param maxResults          max number of addresses to return. Smaller numbers (1 to 5)
+     *                            are recommended.
+     * @param lowerLeftLatitude   the latitude of the lower left corner of the bounding box.
+     * @param lowerLeftLongitude  the longitude of the lower left corner of the bounding box.
+     * @param upperRightLatitude  the latitude of the upper right corner of the bounding box.
+     * @param upperRightLongitude the longitude of the upper right corner of the bounding box.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     public List<Address> getFromLocationName(String locationName, int maxResults, double lowerLeftLatitude, double lowerLeftLongitude, double upperRightLatitude,
                                              double upperRightLongitude) throws IOException {
@@ -212,15 +203,11 @@ public abstract class GeocoderBase {
     /**
      * Get the address by parsing the XML results.
      *
-     * @param queryUrl
-     *         the URL.
-     * @param maxResults
-     *         the maximum number of results.
+     * @param queryUrl   the URL.
+     * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     protected List<Address> getAddressXMLFromURL(String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
@@ -237,24 +224,19 @@ public abstract class GeocoderBase {
     /**
      * Parse the XML response for addresses.
      *
-     * @param data
-     *         the XML data.
-     * @param maxResults
-     *         the maximum number of results.
+     * @param data       the XML data.
+     * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws ParserConfigurationException
-     *         if an XML error occurs.
-     * @throws SAXException
-     *         if an XML error occurs.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws ParserConfigurationException if an XML error occurs.
+     * @throws SAXException                 if an XML error occurs.
+     * @throws IOException                  if the network is unavailable or any other I/O problem occurs.
      */
     protected List<Address> parseLocations(byte[] data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
-        if ((data == null) || (data.length <= 4))
+        if ((data == null) || (data.length <= 4)) {
             return null;
+        }
 
         List<Address> results = new ArrayList<Address>(maxResults);
         InputStream in = new ByteArrayInputStream(data);
@@ -268,12 +250,9 @@ public abstract class GeocoderBase {
     /**
      * Create an SAX XML handler for addresses.
      *
-     * @param results
-     *         the list of results to populate.
-     * @param maxResults
-     *         the maximum number of results.
-     * @param locale
-     *         the locale.
+     * @param results    the list of results to populate.
+     * @param maxResults the maximum number of results.
+     * @param locale     the locale.
      * @return the XML handler.
      */
     protected abstract DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
@@ -297,32 +276,27 @@ public abstract class GeocoderBase {
     /**
      * Get the location with elevation.
      *
-     * @param latitude
-     *         the latitude a point for the search.
-     * @param longitude
-     *         the longitude a point for the search.
+     * @param latitude  the latitude a point for the search.
+     * @param longitude the longitude a point for the search.
      * @return the location - {@code null} otherwise.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     public abstract ZmanimLocation getElevation(double latitude, double longitude) throws IOException;
 
     /**
      * Get the elevation by parsing the XML results.
      *
-     * @param queryUrl
-     *         the URL.
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param queryUrl  the URL.
      * @return the location - {@code null} otherwise.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected ZmanimLocation getElevationXMLFromURL(String queryUrl) throws IOException {
+    protected ZmanimLocation getElevationXMLFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
         try {
-            return parseElevation(data);
+            return parseElevationXML(latitude, longitude, data);
         } catch (ParserConfigurationException pce) {
             throw new IOException(pce);
         } catch (SAXException se) {
@@ -333,42 +307,93 @@ public abstract class GeocoderBase {
     /**
      * Parse the XML response for an elevation.
      *
-     * @param data
-     *         the XML data.
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param data      the XML data.
      * @return the location - {@code null} otherwise.
-     * @throws ParserConfigurationException
-     *         if an XML error occurs.
-     * @throws SAXException
-     *         if an XML error occurs.
-     * @throws IOException
-     *         if the network is unavailable or any other I/O problem
-     *         occurs.
+     * @throws ParserConfigurationException if an XML error occurs.
+     * @throws SAXException                 if an XML error occurs.
+     * @throws IOException                  if the network is unavailable or any other I/O problem occurs.
      */
-    protected ZmanimLocation parseElevation(byte[] data) throws ParserConfigurationException, SAXException, IOException {
+    protected ZmanimLocation parseElevationXML(double latitude, double longitude, byte[] data) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
-        if ((data == null) || (data.length <= 4))
+        if ((data == null) || (data.length <= 4)) {
             return null;
+        }
 
         List<ZmanimLocation> results = new ArrayList<ZmanimLocation>(1);
         InputStream in = new ByteArrayInputStream(data);
         SAXParser parser = getParser();
-        DefaultHandler handler = createElevationResponseHandler(results);
+        DefaultHandler handler = createElevationResponseHandler(latitude, longitude, results);
         parser.parse(in, handler);
 
-        if (results.isEmpty())
+        if (results.isEmpty()) {
             return null;
-
+        }
         return results.get(0);
+    }
+
+    /**
+     * Get the elevation by parsing the plain text result.
+     *
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param queryUrl  the URL.
+     * @return the location - {@code null} otherwise.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
+     */
+    protected ZmanimLocation getElevationTextFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+        URL url = new URL(queryUrl);
+        byte[] data = HTTPReader.read(url);
+        return parseElevationText(latitude, longitude, data);
+    }
+
+    /**
+     * Parse the plain text response for an elevation.
+     *
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param data      the textual data.
+     * @return the location - {@code null} otherwise.
+     */
+    protected ZmanimLocation parseElevationText(double latitude, double longitude, byte[] data) {
+        // Minimum length for "0"
+        if ((data == null) || (data.length <= 0)) {
+            return null;
+        }
+        String text = new String(data);
+        char first = text.charAt(0);
+        if (!Character.isDigit(first) && (first != '-')) {
+            return null;
+        }
+        double elevation;
+        ZmanimLocation elevated;
+        try {
+            elevation = Double.parseDouble(text);
+            if (elevation <= ELEVATION_LOWEST_SURFACE) {
+                return null;
+            }
+            elevated = new ZmanimLocation(USER_PROVIDER);
+            elevated.setTime(System.currentTimeMillis());
+            elevated.setLatitude(latitude);
+            elevated.setLongitude(longitude);
+            elevated.setAltitude(elevation);
+            return elevated;
+        } catch (NumberFormatException nfe) {
+            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
+        }
+        return null;
     }
 
     /**
      * Create an SAX XML handler for elevations.
      *
-     * @param results
-     *         the list of results to populate.
+     * @param latitude
+     * @param longitude
+     * @param results   the list of results to populate.
      * @return the XML handler.
      */
-    protected abstract DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results);
+    protected abstract DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results);
 
     /**
      * Handler for parsing the XML response.
