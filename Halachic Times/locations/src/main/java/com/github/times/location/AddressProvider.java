@@ -522,7 +522,7 @@ public class AddressProvider {
                 try {
                     elevated = geocoder.getElevation(latitude, longitude);
                 } catch (Exception e) {
-                    LogUtils.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    LogUtils.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " for " + longitude + ";" + latitude, e);
                     continue;
                 }
                 if ((elevated != null) && elevated.hasAltitude()) {
@@ -569,15 +569,15 @@ public class AddressProvider {
         }
         providers.add(googleGeocoder);
 
-        if (geonamesGeocoder == null) {
-            geonamesGeocoder = new GeoNamesGeocoder(locale);
-        }
-        providers.add(geonamesGeocoder);
-
         if (bingGeocoder == null) {
             bingGeocoder = new BingGeocoder(locale);
         }
         providers.add(bingGeocoder);
+
+        if (geonamesGeocoder == null) {
+            geonamesGeocoder = new GeoNamesGeocoder(locale);
+        }
+        providers.add(geonamesGeocoder);
 
         return providers;
     }
