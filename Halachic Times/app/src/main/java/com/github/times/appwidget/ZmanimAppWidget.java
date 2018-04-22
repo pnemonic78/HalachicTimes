@@ -47,6 +47,7 @@ import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
+import com.github.util.LocaleUtils;
 
 import net.sourceforge.zmanim.util.GeoLocation;
 
@@ -70,18 +71,29 @@ import static java.lang.System.currentTimeMillis;
  */
 public abstract class ZmanimAppWidget extends AppWidgetProvider implements ZmanimLocationListener {
 
-    /** Reminder id for alarms. */
+    /**
+     * Reminder id for alarms.
+     */
     private static final int ID_ALARM_WIDGET = 10;
 
-    /** The context. */
+    /**
+     * The context.
+     */
     protected Context context;
-    /** Provider for locations. */
+    /**
+     * Provider for locations.
+     */
     private ZmanimLocations locations;
-    /** The preferences. */
+    /**
+     * The preferences.
+     */
     private ZmanimPreferences preferences;
-    /** The provider name. */
+    /**
+     * The provider name.
+     */
     private ComponentName provider;
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
+    protected boolean directionRTL = false;
 
     private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
         @Override
@@ -106,6 +118,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         context = localeCallbacks.attachBaseContext(context);
         super.onReceive(context, intent);
         this.context = context;
+        this.directionRTL = LocaleUtils.isLocaleRTL(context);
 
         final String action = intent.getAction();
         if (action == null) {
@@ -141,6 +154,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         context = localeCallbacks.attachBaseContext(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         this.context = context;
+        this.directionRTL = LocaleUtils.isLocaleRTL(context);
 
         if (locations == null) {
             ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();

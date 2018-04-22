@@ -232,7 +232,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
      * @return the layout id.
      */
     protected int getLayoutItemId(int position) {
-        return ((position & 1) == 1) ? R.layout.widget_item_odd : R.layout.widget_item;
+        if ((position & 1) == 1) {
+            return directionRTL ? R.layout.widget_item_odd_rtl : R.layout.widget_item_odd;
+        }
+        return directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
     }
 
     protected void bindViewRowSpecial(Context context, RemoteViews row, int position, ZmanimItem item) {
