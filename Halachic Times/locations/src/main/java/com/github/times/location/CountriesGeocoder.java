@@ -664,11 +664,10 @@ public class CountriesGeocoder extends GeocoderBase {
         elevated.setAltitude(weightSum / (n - 1));
         elevated.setId(-1L);
         return elevated;
-
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
         return null;
     }
 }

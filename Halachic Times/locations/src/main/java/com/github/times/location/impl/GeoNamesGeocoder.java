@@ -19,20 +19,17 @@ import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
 
-import com.github.net.HTTPReader;
 import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
 import com.github.util.LocaleUtils;
-import com.github.util.LogUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,10 +47,14 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
     private static final String TAG = "GeoNamesGeocoder";
 
-    /** GeoNames user name. */
+    /**
+     * GeoNames user name.
+     */
     private static final String USERNAME = BuildConfig.GEONAMES_USERNAME;
 
-    /** URL that accepts latitude and longitude coordinates as parameters. */
+    /**
+     * URL that accepts latitude and longitude coordinates as parameters.
+     */
     private static final String URL_LATLNG = "http://api.geonames.org/extendedFindNearby?lat=%f&lng=%f&lang=%s&username=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
@@ -71,8 +72,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     /**
      * Creates a new GeoNames geocoder.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public GeoNamesGeocoder(Context context) {
         this(LocaleUtils.getDefaultLocale(context));
@@ -81,8 +81,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     /**
      * Creates a new GeoNames geocoder.
      *
-     * @param locale
-     *         the locale.
+     * @param locale the locale.
      */
     public GeoNamesGeocoder(Locale locale) {
         super(locale);
@@ -112,7 +111,9 @@ public class GeoNamesGeocoder extends GeocoderBase {
      */
     protected static class AddressResponseHandler extends DefaultAddressResponseHandler {
 
-        /** Parse state. */
+        /**
+         * Parse state.
+         */
         private enum State {
             START, ROOT, GEONAME, TOPONYM, TOPONYM_NAME, COUNTRY_CODE, COUNTRY, LATITUDE, LONGITUDE, STREET, STREET_NUMBER, MTFCC, LOCALITY, POSTAL_CODE, ADMIN_CODE, ADMIN, SUBADMIN_CODE, SUBADMIN, FINISH
         }
@@ -147,10 +148,8 @@ public class GeoNamesGeocoder extends GeocoderBase {
         /**
          * Constructs a new parse handler.
          *
-         * @param results
-         *         the destination results.
-         * @param maxResults
-         *         the maximum number of results.
+         * @param results    the destination results.
+         * @param maxResults the maximum number of results.
          */
         public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
             this.results = results;
@@ -398,31 +397,11 @@ public class GeoNamesGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION_SRTM3, latitude, longitude, USERNAME);
-        URL url = new URL(queryUrl);
-        byte[] data = HTTPReader.read(url);
-        if (data == null)
-            return null;
-        String text = new String(data);
-        double elevation;
-        ZmanimLocation elevated;
-        try {
-            elevation = Double.parseDouble(text);
-            if (elevation <= -9999)
-                return null;
-            elevated = new ZmanimLocation(USER_PROVIDER);
-            elevated.setTime(System.currentTimeMillis());
-            elevated.setLatitude(latitude);
-            elevated.setLongitude(longitude);
-            elevated.setAltitude(elevation);
-            return elevated;
-        } catch (NumberFormatException nfe) {
-            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
-        }
-        return null;
+        return getElevationTextFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
         return null;
     }
 

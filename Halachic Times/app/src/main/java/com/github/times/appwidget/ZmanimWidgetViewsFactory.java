@@ -39,6 +39,7 @@ import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
+import com.github.util.LocaleUtils;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -56,29 +57,43 @@ import static java.lang.System.currentTimeMillis;
  */
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
 
-    /** The context. */
+    /**
+     * The context.
+     */
     private Context context;
-    /** Provider for locations. */
+    /**
+     * Provider for locations.
+     */
     private ZmanimLocations locations;
-    /** The preferences. */
+    /**
+     * The preferences.
+     */
     private ZmanimPreferences preferences;
-    /** The adapter. */
+    /**
+     * The adapter.
+     */
     private ZmanimAdapter adapter;
-    /** Position index of today's Hebrew day. */
+    /**
+     * Position index of today's Hebrew day.
+     */
     private int positionToday = 0;
-    /** Position index of next Hebrew day. */
+    /**
+     * Position index of next Hebrew day.
+     */
     private int positionTomorrow = -1;
     @ColorInt
     private int colorDisabled = Color.DKGRAY;
     @ColorInt
     private int colorEnabled = Color.WHITE;
     private final LocaleHelper localeCallbacks;
+    protected boolean directionRTL = false;
     @LayoutRes
     private int layoutItemId = R.layout.widget_item;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
         this.localeCallbacks = new LocaleHelper<>(context);
         this.context = localeCallbacks.attachBaseContext(context);
+        this.directionRTL = LocaleUtils.isLocaleRTL(context);
     }
 
     @Override
@@ -253,10 +268,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
         final Resources res = context.getResources();
         if (light) {
             this.colorEnabled = res.getColor(R.color.widget_text_light);
-            this.layoutItemId = R.layout.widget_item_light;
+            this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
         } else {
             this.colorEnabled = res.getColor(R.color.widget_text);
-            this.layoutItemId = R.layout.widget_item;
+            this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
         }
 
         ZmanimPreferences preferences = getPreferences();

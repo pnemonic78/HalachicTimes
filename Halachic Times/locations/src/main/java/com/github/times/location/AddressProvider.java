@@ -57,24 +57,18 @@ public class AddressProvider {
         /**
          * Called when an address is found.
          *
-         * @param provider
-         *         the address provider.
-         * @param location
-         *         the requested location.
-         * @param address
-         *         the found address.
+         * @param provider the address provider.
+         * @param location the requested location.
+         * @param address  the found address.
          */
         void onFindAddress(AddressProvider provider, Location location, Address address);
 
         /**
          * Called when a location with an elevation is found.
          *
-         * @param provider
-         *         the address provider.
-         * @param location
-         *         the requested location.
-         * @param elevated
-         *         the location with elevation.
+         * @param provider the address provider.
+         * @param location the requested location.
+         * @param elevated the location with elevation.
          */
         void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated);
 
@@ -87,7 +81,9 @@ public class AddressProvider {
 
     private final Context context;
     private final Locale locale;
-    /** The list of countries. */
+    /**
+     * The list of countries.
+     */
     private CountriesGeocoder countriesGeocoder;
     private Geocoder geocoder;
     private GoogleGeocoder googleGeocoder;
@@ -99,8 +95,7 @@ public class AddressProvider {
     /**
      * Constructs a new provider.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public AddressProvider(Context context) {
         this(context, LocaleUtils.getDefaultLocale(context));
@@ -109,10 +104,8 @@ public class AddressProvider {
     /**
      * Constructs a new provider.
      *
-     * @param context
-     *         the context.
-     * @param locale
-     *         the locale.
+     * @param context the context.
+     * @param locale  the locale.
      */
     public AddressProvider(Context context, Locale locale) {
         this.context = context;
@@ -138,10 +131,8 @@ public class AddressProvider {
     /**
      * Find the nearest address of the location.
      *
-     * @param location
-     *         the location.
-     * @param listener
-     *         the listener.
+     * @param location the location.
+     * @param listener the listener.
      * @return the address - {@code null} otherwise.
      */
     @Nullable
@@ -246,8 +237,7 @@ public class AddressProvider {
      * <p/>
      * Uses the built-in Android {@link Geocoder} API.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      * @return the list of addresses.
      */
     @Nullable
@@ -263,7 +253,10 @@ public class AddressProvider {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
         } catch (Exception e) {
-            LogUtils.e(TAG, "Geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            String msg = e.getMessage();
+            if (!"grpc failed".equals(msg)) {
+                LogUtils.e(TAG, "Geocoder: " + msg + " at " + longitude + ";" + latitude, e);
+            }
         }
         return addresses;
     }
@@ -297,10 +290,8 @@ public class AddressProvider {
     /**
      * Find the best address by checking relevant fields.
      *
-     * @param location
-     *         the location.
-     * @param addresses
-     *         the list of addresses.
+     * @param location  the location.
+     * @param addresses the list of addresses.
      * @return the best address - {@code null} otherwise.
      */
     @Nullable
@@ -311,12 +302,9 @@ public class AddressProvider {
     /**
      * Find the best address by checking relevant fields.
      *
-     * @param location
-     *         the location.
-     * @param addresses
-     *         the list of addresses.
-     * @param radius
-     *         the maximum radius.
+     * @param location  the location.
+     * @param addresses the list of addresses.
+     * @param radius    the maximum radius.
      * @return the best address - {@code null} otherwise.
      */
     @Nullable
@@ -387,8 +375,7 @@ public class AddressProvider {
      * <p/>
      * Uses the local database.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      * @return the list of addresses.
      */
     @Nullable
@@ -409,16 +396,16 @@ public class AddressProvider {
      * Insert or update the address in the local database. The local database is
      * supposed to reduce redundant network requests.
      *
-     * @param location
-     *         the location.
-     * @param address
-     *         the address.
+     * @param location the location.
+     * @param address  the address.
      */
     public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
         databaseGeocoder.insertOrUpdateAddress(location, address);
     }
 
-    /** Close resources. */
+    /**
+     * Close resources.
+     */
     public void close() {
         databaseGeocoder.close();
     }
@@ -428,8 +415,7 @@ public class AddressProvider {
      * <p/>
      * Uses the pre-compiled array of countries from GeoNames.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      * @return the list of addresses with at most 1 entry.
      */
     private List<Address> findNearestCountry(Location location) {
@@ -447,8 +433,7 @@ public class AddressProvider {
      * <p/>
      * Uses the pre-compiled array of cities from GeoNames.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      * @return the list of addresses with at most 1 entry.
      */
     @Nullable
@@ -468,8 +453,7 @@ public class AddressProvider {
     /**
      * Fetch addresses from the database.
      *
-     * @param filter
-     *         a cursor filter.
+     * @param filter a cursor filter.
      * @return the list of addresses.
      */
     public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
@@ -479,10 +463,8 @@ public class AddressProvider {
     /**
      * Find the elevation (altitude).
      *
-     * @param location
-     *         the location.
-     * @param listener
-     *         the listener.
+     * @param location the location.
+     * @param listener the listener.
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
@@ -540,7 +522,7 @@ public class AddressProvider {
                 try {
                     elevated = geocoder.getElevation(latitude, longitude);
                 } catch (Exception e) {
-                    LogUtils.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    LogUtils.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " for " + longitude + ";" + latitude, e);
                     continue;
                 }
                 if ((elevated != null) && elevated.hasAltitude()) {
@@ -559,8 +541,7 @@ public class AddressProvider {
      * Find elevation of nearest cities. Calculates the average elevation of
      * neighbouring cities if more than {@code 1} is found.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
@@ -588,15 +569,15 @@ public class AddressProvider {
         }
         providers.add(googleGeocoder);
 
-        if (geonamesGeocoder == null) {
-            geonamesGeocoder = new GeoNamesGeocoder(locale);
-        }
-        providers.add(geonamesGeocoder);
-
         if (bingGeocoder == null) {
             bingGeocoder = new BingGeocoder(locale);
         }
         providers.add(bingGeocoder);
+
+        if (geonamesGeocoder == null) {
+            geonamesGeocoder = new GeoNamesGeocoder(locale);
+        }
+        providers.add(geonamesGeocoder);
 
         return providers;
     }
@@ -606,8 +587,7 @@ public class AddressProvider {
      * the average elevation of neighbouring locations if more than {@code 1} is
      * found.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
@@ -627,8 +607,7 @@ public class AddressProvider {
      * Insert or update the location with elevation in the local database. The
      * local database is supposed to reduce redundant network requests.
      *
-     * @param location
-     *         the location.
+     * @param location the location.
      */
     public void insertOrUpdateElevation(ZmanimLocation location) {
         databaseGeocoder.insertOrUpdateElevation(location);
@@ -637,8 +616,7 @@ public class AddressProvider {
     /**
      * Populate the cities with data from the table.
      *
-     * @param cities
-     *         the list of cities to populate.
+     * @param cities the list of cities to populate.
      */
     private void populateCities(Collection<City> cities) {
         Map<Long, City> citiesById = new HashMap<>();

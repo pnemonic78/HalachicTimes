@@ -43,11 +43,17 @@ import java.util.Locale;
  */
 public class GoogleGeocoder extends GeocoderBase {
 
-    /** URL that accepts latitude and longitude coordinates as parameters. */
+    /**
+     * URL that accepts latitude and longitude coordinates as parameters.
+     */
     private static final String URL_LATLNG = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=%f,%f&language=%s&sensor=true";
-    /** URL that accepts an address as parameters. */
+    /**
+     * URL that accepts an address as parameters.
+     */
     private static final String URL_ADDRESS = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&language=%s&sensor=true";
-    /** URL that accepts a bounded address as parameters. */
+    /**
+     * URL that accepts a bounded address as parameters.
+     */
     private static final String URL_ADDRESS_BOUNDED = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&sensor=true";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
@@ -58,8 +64,7 @@ public class GoogleGeocoder extends GeocoderBase {
     /**
      * Creates a new Google geocoder.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public GoogleGeocoder(Context context) {
         this(LocaleUtils.getDefaultLocale(context));
@@ -68,8 +73,7 @@ public class GoogleGeocoder extends GeocoderBase {
     /**
      * Creates a new Google geocoder.
      *
-     * @param locale
-     *         the locale.
+     * @param locale the locale.
      */
     public GoogleGeocoder(Locale locale) {
         super(locale);
@@ -123,7 +127,9 @@ public class GoogleGeocoder extends GeocoderBase {
      */
     protected static class GeocodeResponseHandler extends DefaultAddressResponseHandler {
 
-        /** Parse state. */
+        /**
+         * Parse state.
+         */
         private enum State {
             START, ROOT, STATUS, RESULT, RESULT_TYPE, ADDRESS, ADDRESS_TYPE, ADDRESS_LONG, ADDRESS_SHORT, GEOMETRY, LOCATION, LATITUDE, LONGITUDE, FINISH
         }
@@ -166,10 +172,8 @@ public class GoogleGeocoder extends GeocoderBase {
         /**
          * Constructs a new parse handler.
          *
-         * @param results
-         *         the destination results.
-         * @param maxResults
-         *         the maximum number of results.
+         * @param results    the destination results.
+         * @param maxResults the maximum number of results.
          */
         public GeocodeResponseHandler(List<Address> results, int maxResults, Locale locale) {
             this.results = results;
@@ -387,12 +391,12 @@ public class GoogleGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude);
-        return getElevationXMLFromURL(queryUrl);
+        return getElevationXMLFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
-        return new ElevationResponseHandler(results);
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+        return new ElevationResponseHandler(latitude, longitude, results);
     }
 
     /**
@@ -402,7 +406,9 @@ public class GoogleGeocoder extends GeocoderBase {
      */
     protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
 
-        /** Parse state. */
+        /**
+         * Parse state.
+         */
         private enum State {
             START, ROOT, STATUS, RESULT, LOCATION, FINISH
         }
@@ -418,16 +424,21 @@ public class GoogleGeocoder extends GeocoderBase {
         private static final String TAG_ELEVATION = "elevation";
 
         private State state = State.START;
+        private final double latitude;
+        private final double longitude;
         private final List<ZmanimLocation> results;
         private ZmanimLocation location;
 
         /**
          * Constructs a new parse handler.
          *
-         * @param results
-         *         the destination results.
+         * @param latitude  the latitude.
+         * @param longitude the longitude.
+         * @param results the destination results.
          */
-        public ElevationResponseHandler(List<ZmanimLocation> results) {
+        public ElevationResponseHandler(double latitude, double longitude,List<ZmanimLocation> results) {
+            this.latitude = latitude;
+            this.longitude = longitude;
             this.results = results;
         }
 
@@ -456,6 +467,8 @@ public class GoogleGeocoder extends GeocoderBase {
                     if (TAG_LOCATION.equals(localName)) {
                         location = new ZmanimLocation(USER_PROVIDER);
                         location.setTime(System.currentTimeMillis());
+                        location.setLatitude(latitude);
+                        location.setLongitude(longitude);
                         state = State.LOCATION;
                     }
                     break;

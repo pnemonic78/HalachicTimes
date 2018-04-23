@@ -44,10 +44,14 @@ import java.util.Locale;
  */
 public class BingGeocoder extends GeocoderBase {
 
-    /** Bing API key. */
+    /**
+     * Bing API key.
+     */
     private static final String API_KEY = BuildConfig.BING_API_KEY;
 
-    /** URL that accepts latitude and longitude coordinates as parameters. */
+    /**
+     * URL that accepts latitude and longitude coordinates as parameters.
+     */
     private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
@@ -58,8 +62,7 @@ public class BingGeocoder extends GeocoderBase {
     /**
      * Creates a new Bing geocoder.
      *
-     * @param context
-     *         the context.
+     * @param context the context.
      */
     public BingGeocoder(Context context) {
         this(LocaleUtils.getDefaultLocale(context));
@@ -68,8 +71,7 @@ public class BingGeocoder extends GeocoderBase {
     /**
      * Creates a new Bing geocoder.
      *
-     * @param locale
-     *         the locale.
+     * @param locale the locale.
      */
     public BingGeocoder(Locale locale) {
         super(locale);
@@ -99,7 +101,9 @@ public class BingGeocoder extends GeocoderBase {
      */
     protected static class AddressResponseHandler extends DefaultAddressResponseHandler {
 
-        /** Parse state. */
+        /**
+         * Parse state.
+         */
         private enum State {
             START, ROOT, STATUS, RESOURCE_SETS, RESOURCE_SET, RESOURCES, LOCATION, POINT, ADDRESS, FINISH
         }
@@ -133,10 +137,8 @@ public class BingGeocoder extends GeocoderBase {
         /**
          * Constructs a new parse handler.
          *
-         * @param results
-         *         the destination results.
-         * @param maxResults
-         *         the maximum number of results.
+         * @param results    the destination results.
+         * @param maxResults the maximum number of results.
          */
         public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
             this.results = results;
@@ -330,17 +332,12 @@ public class BingGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(API_KEY))
             return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
-        ZmanimLocation location = getElevationXMLFromURL(queryUrl);
-        if (location != null) {
-            location.setLatitude(latitude);
-            location.setLongitude(longitude);
-        }
-        return location;
+        return getElevationXMLFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
-        return new ElevationResponseHandler(results);
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+        return new ElevationResponseHandler(latitude, longitude, results);
     }
 
     /**
@@ -350,7 +347,9 @@ public class BingGeocoder extends GeocoderBase {
      */
     protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
 
-        /** Parse state. */
+        /**
+         * Parse state.
+         */
         private enum State {
             START, ROOT, STATUS, RESOURCE_SETS, RESOURCE_SET, RESOURCES, ELEVATION_DATA, ELEVATION, FINISH
         }
@@ -367,16 +366,21 @@ public class BingGeocoder extends GeocoderBase {
         private static final String TAG_ELEVATION = "int";
 
         private State state = State.START;
+        private final double latitude;
+        private final double longitude;
         private final List<ZmanimLocation> results;
         private ZmanimLocation location;
 
         /**
          * Constructs a new parse handler.
          *
-         * @param results
-         *         the destination results.
+         * @param latitude  the latitude.
+         * @param longitude the longitude.
+         * @param results   the destination results.
          */
-        public ElevationResponseHandler(List<ZmanimLocation> results) {
+        public ElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+            this.latitude = latitude;
+            this.longitude = longitude;
             this.results = results;
         }
 
@@ -414,6 +418,8 @@ public class BingGeocoder extends GeocoderBase {
                         state = State.ELEVATION_DATA;
                         location = new ZmanimLocation(USER_PROVIDER);
                         location.setTime(System.currentTimeMillis());
+                        location.setLatitude(latitude);
+                        location.setLongitude(longitude);
                     }
                     break;
                 case ELEVATION_DATA:

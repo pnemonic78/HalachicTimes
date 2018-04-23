@@ -127,6 +127,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         compassView = view.findViewById(R.id.compass);
+        displayRotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
     }
 
     @Override
@@ -191,7 +192,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
                     SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Y, mapR);
                     break;
                 case Surface.ROTATION_270:
-                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_X, mapR);
+                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_MINUS_X, mapR);
                     break;
                 default:
                     SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_Y, mapR);

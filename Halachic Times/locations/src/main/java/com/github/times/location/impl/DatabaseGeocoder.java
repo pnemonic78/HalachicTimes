@@ -59,7 +59,9 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     private static final String TAG = "DatabaseGeocoder";
 
-    /** Database */
+    /**
+     * Database
+     */
     private static final String DB_PROVIDER = "db";
 
     private static final String[] PROJECTION_ADDRESS = {
@@ -124,7 +126,9 @@ public class DatabaseGeocoder extends GeocoderBase {
         this.context = context;
     }
 
-    /** Close database resources. */
+    /**
+     * Close database resources.
+     */
     public void close() {
     }
 
@@ -208,10 +212,12 @@ public class DatabaseGeocoder extends GeocoderBase {
             n++;
         }
 
-        if ((n == 1) && (distanceLoc[0] <= SAME_CITY))
+        if ((n == 1) && (distanceLoc[0] <= SAME_CITY)) {
             return locations.get(0);
-        if (n <= 1)
+        }
+        if (n <= 1) {
             return null;
+        }
 
         double weightSum = 0;
         for (int i = 0; i < n; i++) {
@@ -228,7 +234,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(List<ZmanimLocation> results) {
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
         return null;
     }
 

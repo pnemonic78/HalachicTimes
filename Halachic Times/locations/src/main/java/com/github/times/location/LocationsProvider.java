@@ -16,7 +16,6 @@
 package com.github.times.location;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,7 +40,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.M;
+import static android.os.Build.VERSION_CODES;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -55,58 +54,98 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     private static final String TAG = "LocationProvider";
 
-    /** The maximum time interval between location updates, in milliseconds. */
+    /**
+     * The maximum time interval between location updates, in milliseconds.
+     */
     private static final long UPDATE_TIME_MAX = 6 * HOUR_IN_MILLIS;
-    /** The time interval between requesting location updates, in milliseconds. */
+    /**
+     * The time interval between requesting location updates, in milliseconds.
+     */
     private static final long UPDATE_TIME_START = 30 * SECOND_IN_MILLIS;
     /**
      * The duration to receive updates, in milliseconds.<br>
      * Should be enough time to get a sufficiently accurate location.
      */
     private static final long UPDATE_DURATION = MINUTE_IN_MILLIS;
-    /** The minimum time interval between location updates, in milliseconds. */
+    /**
+     * The minimum time interval between location updates, in milliseconds.
+     */
     private static final long UPDATE_TIME = 5 * SECOND_IN_MILLIS;
-    /** The minimum distance between location updates, in metres. */
+    /**
+     * The minimum distance between location updates, in metres.
+     */
     private static final int UPDATE_DISTANCE = 100;
 
-    /** Time zone ID for Jerusalem. */
+    /**
+     * Time zone ID for Jerusalem.
+     */
     private static final String TZ_JERUSALEM = "Asia/Jerusalem";
-    /** Time zone ID for Israeli Standard Time. */
+    /**
+     * Time zone ID for Israeli Standard Time.
+     */
     private static final String TZ_IST = "IST";
-    /** Time zone ID for Israeli Daylight Time. */
+    /**
+     * Time zone ID for Israeli Daylight Time.
+     */
     private static final String TZ_IDT = "IDT";
-    /** Time zone ID for Jerusalem Standard Time. */
+    /**
+     * Time zone ID for Jerusalem Standard Time.
+     */
     private static final String TZ_JST = "JST";
-    /** Time zone ID for Beirut (patch for Israeli law of DST 2013). */
+    /**
+     * Time zone ID for Beirut (patch for Israeli law of DST 2013).
+     */
     private static final String TZ_BEIRUT = "Asia/Beirut";
     /**
      * The offset in milliseconds from UTC of Israeli time zone's standard time.
      */
     private static final int TZ_OFFSET_ISRAEL = (int) (2 * HOUR_IN_MILLIS);
-    /** Israeli time zone offset with daylight savings time. */
+    /**
+     * Israeli time zone offset with daylight savings time.
+     */
     private static final int TZ_OFFSET_DST_ISRAEL = (int) (TZ_OFFSET_ISRAEL + HOUR_IN_MILLIS);
 
-    /** Northern-most latitude for Israel. */
+    /**
+     * Northern-most latitude for Israel.
+     */
     private static final double ISRAEL_NORTH = 33.289212;
-    /** Southern-most latitude for Israel. */
+    /**
+     * Southern-most latitude for Israel.
+     */
     private static final double ISRAEL_SOUTH = 29.489218;
-    /** Eastern-most longitude for Israel. */
+    /**
+     * Eastern-most longitude for Israel.
+     */
     private static final double ISRAEL_EAST = 35.891876;
-    /** Western-most longitude for Israel. */
+    /**
+     * Western-most longitude for Israel.
+     */
     private static final double ISRAEL_WEST = 34.215317;
 
-    /** Start seeking locations. */
+    /**
+     * Start seeking locations.
+     */
     private static final int WHAT_START = 0;
-    /** Stop seeking locations. */
+    /**
+     * Stop seeking locations.
+     */
     private static final int WHAT_STOP = 1;
-    /** Location has changed. */
+    /**
+     * Location has changed.
+     */
     private static final int WHAT_CHANGED = 2;
-    /** Found an elevation. */
+    /**
+     * Found an elevation.
+     */
     private static final int WHAT_ELEVATION = 3;
-    /** Found an address. */
+    /**
+     * Found an address.
+     */
     private static final int WHAT_ADDRESS = 4;
 
-    /** If the current location is older than 1 second, then it is stale. */
+    /**
+     * If the current location is older than 1 second, then it is stale.
+     */
     private static final long LOCATION_EXPIRATION = SECOND_IN_MILLIS;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
@@ -114,31 +153,57 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     protected static final double LONGITUDE_MIN = ZmanimLocation.LONGITUDE_MIN;
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
 
-    /** The context. */
+    /**
+     * The context.
+     */
     private final Context context;
-    /** The owner location listeners. */
+    /**
+     * The owner location listeners.
+     */
     private final Collection<ZmanimLocationListener> locationListeners = new CopyOnWriteArrayList<>();
-    /** Service provider for locations. */
+    /**
+     * Service provider for locations.
+     */
     private final LocationManager locationManager;
-    /** The location. */
+    /**
+     * The location.
+     */
     private Location location;
-    /** The preferences. */
+    /**
+     * The preferences.
+     */
     private final LocationPreferences preferences;
-    /** The list of countries. */
+    /**
+     * The list of countries.
+     */
     private CountriesGeocoder countriesGeocoder;
-    /** The time zone. */
+    /**
+     * The time zone.
+     */
     private TimeZone timeZone;
-    /** The handler thread. */
+    /**
+     * The handler thread.
+     */
     private final HandlerThread handlerThread;
-    /** The handler. */
+    /**
+     * The handler.
+     */
     private final Handler handler;
-    /** The next time to start update locations. */
+    /**
+     * The next time to start update locations.
+     */
     private long startTaskDelay = UPDATE_TIME_START;
-    /** The next time to stop update locations. */
+    /**
+     * The next time to stop update locations.
+     */
     private final long stopTaskDelay = UPDATE_DURATION;
-    /** The location is externally set? */
+    /**
+     * The location is externally set?
+     */
     private boolean manualLocation;
-    /** The location formatter. */
+    /**
+     * The location formatter.
+     */
     private final LocationFormatter formatterHelper;
 
     /**
@@ -265,21 +330,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         return false;
     }
 
-    /**
-     * Get a location from GPS.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    public Location getLocationGPSBase() {
-        if (locationManager == null)
-            return null;
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            LogUtils.e(TAG, "GPS: " + e.getLocalizedMessage(), e);
+    private boolean hasLocationPermission(Context context) {
+        if (VERSION.SDK_INT < VERSION_CODES.M) {
+            return (context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    || (context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
         }
-        return null;
+        return (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                || (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
     }
 
     /**
@@ -287,13 +344,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    @TargetApi(M)
     public Location getLocationGPS() {
-        if (locationManager == null)
-            return null;
-
-        if ((context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                && (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+        if ((locationManager == null) || !hasLocationPermission(context)) {
             return null;
         }
 
@@ -310,29 +362,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    public Location getLocationNetworkBase() {
-        if (locationManager == null)
-            return null;
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            LogUtils.e(TAG, "Network: " + e.getLocalizedMessage(), e);
-        }
-        return null;
-    }
-
-    /**
-     * Get a location from the GSM network.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    @TargetApi(M)
     public Location getLocationNetwork() {
-        if (locationManager == null)
-            return null;
-
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if ((locationManager == null) || !hasLocationPermission(context)) {
             return null;
         }
 
@@ -349,29 +380,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
-    public Location getLocationPassiveFroyo() {
-        if (locationManager == null)
-            return null;
-
-        try {
-            return locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            LogUtils.e(TAG, "Passive: " + e.getLocalizedMessage(), e);
-        }
-        return null;
-    }
-
-    /**
-     * Get a passive location from other application's GPS.
-     *
-     * @return the location - {@code null} otherwise.
-     */
-    @TargetApi(M)
     public Location getLocationPassive() {
-        if (locationManager == null)
-            return null;
-
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if ((locationManager == null) || !hasLocationPermission(context)) {
             return null;
         }
 
@@ -420,27 +430,15 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         Location loc = location;
         if (isValid(loc))
             return loc;
-        if (VERSION.SDK_INT < M) {
-            loc = getLocationGPSBase();
-            if (isValid(loc))
-                return loc;
-            loc = getLocationNetworkBase();
-            if (isValid(loc))
-                return loc;
-            loc = getLocationPassiveFroyo();
-            if (isValid(loc))
-                return loc;
-        } else {
-            loc = getLocationGPS();
-            if (isValid(loc))
-                return loc;
-            loc = getLocationNetwork();
-            if (isValid(loc))
-                return loc;
-            loc = getLocationPassive();
-            if (isValid(loc))
-                return loc;
-        }
+        loc = getLocationGPS();
+        if (isValid(loc))
+            return loc;
+        loc = getLocationNetwork();
+        if (isValid(loc))
+            return loc;
+        loc = getLocationPassive();
+        if (isValid(loc))
+            return loc;
         loc = getLocationSaved();
         if (isValid(loc))
             return loc;
@@ -638,35 +636,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         onLocationChanged(location);
     }
 
-    private void requestUpdatesBase() {
-        if (locationManager == null)
-            return;
-
-        Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-        criteria.setAltitudeRequired(true);
-        criteria.setCostAllowed(true);
-
-        String provider = locationManager.getBestProvider(criteria, true);
-        if (provider == null) {
-            LogUtils.w(TAG, "No location provider");
-            return;
-        }
-        try {
-            locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
-        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            LogUtils.e(TAG, "request updates: " + e.getLocalizedMessage(), e);
-        }
-
-        // Let the updates run for only a small while to save battery.
-        sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
-        startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
-    }
-
-    @TargetApi(M)
     private void requestUpdates() {
-        if (locationManager == null)
+        if ((locationManager == null) || !hasLocationPermission(context)) {
             return;
+        }
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
@@ -676,10 +649,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         String provider = locationManager.getBestProvider(criteria, true);
         if (provider == null) {
             LogUtils.w(TAG, "No location provider");
-            return;
-        }
-
-        if ((context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) && (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             return;
         }
 
@@ -742,11 +711,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
             switch (msg.what) {
                 case WHAT_START:
-                    if (VERSION.SDK_INT < M) {
-                        requestUpdatesBase();
-                    } else {
-                        requestUpdates();
-                    }
+                    requestUpdates();
                     break;
                 case WHAT_STOP:
                     removeUpdates();
@@ -827,7 +792,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         return preferences;
     }
 
-    /** The receiver for addresses and date/time settings. */
+    /**
+     * The receiver for addresses and date/time settings.
+     */
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
