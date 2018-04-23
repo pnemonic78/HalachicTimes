@@ -75,6 +75,7 @@ import static java.util.Calendar.SUNDAY;
 import static java.util.Calendar.THURSDAY;
 import static java.util.Calendar.TUESDAY;
 import static java.util.Calendar.WEDNESDAY;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
@@ -591,6 +592,11 @@ public class ZmanimReminder {
             case SHEMINI_ATZERES:
             case SIMCHAS_TORAH:
                 dayOfWeek = SATURDAY;
+                break;
+            case CHANUKAH:
+                if (dayOfWeek == SATURDAY){
+                    return settings.isReminderSunday(itemId);
+                }
                 break;
         }
 
