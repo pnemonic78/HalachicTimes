@@ -252,11 +252,7 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (Exception e) {
-            String msg = e.getMessage();
-            if (!"grpc failed".equals(msg)) {
-                LogUtils.e(TAG, "Geocoder: " + msg + " at " + longitude + ";" + latitude, e);
-            }
+        } catch (Exception ignore) {
         }
         return addresses;
     }
