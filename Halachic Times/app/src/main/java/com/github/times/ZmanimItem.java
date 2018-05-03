@@ -24,6 +24,8 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
 
     /** Unknown date. */
     public static final long NEVER = Long.MIN_VALUE;
+    /** Start date of the Julian calendar. */
+    public static final long YEAR_1 = -62135863199554L;
 
     /** The title id. */
     public final int titleId;
@@ -61,6 +63,6 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      * @return {@code true} if empty.
      */
     public boolean isEmpty() {
-        return elapsed || (time == NEVER) || (timeLabel == null);
+        return elapsed || (time == NEVER) || (time < YEAR_1) || (timeLabel == null);
     }
 }
