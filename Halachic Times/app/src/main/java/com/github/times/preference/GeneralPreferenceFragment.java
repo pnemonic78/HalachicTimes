@@ -15,20 +15,25 @@
  */
 package com.github.times.preference;
 
+import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.Preference;
+import android.provider.Settings;
 
 import com.github.preference.RingtonePreference;
 import com.github.times.R;
 
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.O;
+import static android.os.Build.VERSION_CODES;
 import static android.text.TextUtils.isEmpty;
 import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
 import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
+import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_SETTINGS;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
 
 /**
@@ -47,9 +52,20 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (VERSION.SDK_INT >= O) {
-            removePreference(KEY_REMINDER_RINGTONE);
-            removePreference(KEY_REMINDER_STREAM);
+        if (VERSION.SDK_INT >= VERSION_CODES.O) {
+            Preference pref = findPreference(KEY_REMINDER_SETTINGS);
+            if (pref != null) {
+                pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        final Context context = preference.getContext();
+                        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                        startActivity(intent);
+                        return true;
+                    }
+                });
+            }
         } else {
             reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
             initList(KEY_REMINDER_STREAM);

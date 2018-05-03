@@ -49,6 +49,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_REMINDER_STREAM = "reminder.stream";
     /** Preference name for the reminder ringtone. */
     String KEY_REMINDER_RINGTONE = "reminder.ringtone";
+    /** Preference name for the reminder notification channel settings. */
+    String KEY_REMINDER_SETTINGS = "reminder.settings";
     /** Preference name for the temporal hour visibility. */
     String KEY_HOUR = "hour.visible";
     /** Preference name for the emphasis scale. */
