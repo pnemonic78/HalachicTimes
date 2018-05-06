@@ -336,7 +336,7 @@ public class AstronomicalCalendar implements Cloneable {
 	 * @return the {@link Long} with the offset in milliseconds added to it
 	 */
 	public Long getTimeOffset(Long time, long offset) {
-		if (time == null || offset == NEVER) {
+		if (time == null || time == NEVER || offset == NEVER) {
 			return null;
 		}
 		return time + offset;
