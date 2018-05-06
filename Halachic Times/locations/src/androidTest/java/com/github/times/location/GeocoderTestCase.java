@@ -21,9 +21,9 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.github.times.location.impl.BingGeocoder;
-import com.github.times.location.impl.GeoNamesGeocoder;
-import com.github.times.location.impl.GoogleGeocoder;
+import com.github.times.location.bing.BingGeocoder;
+import com.github.times.location.geonames.GeoNamesGeocoder;
+import com.github.times.location.google.GoogleGeocoder;
 import com.github.times.location.test.R;
 
 import org.junit.Test;

@@ -25,10 +25,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.github.database.CursorFilter;
-import com.github.times.location.impl.BingGeocoder;
+import com.github.times.location.bing.BingGeocoder;
+import com.github.times.location.geonames.GeoNamesGeocoder;
+import com.github.times.location.google.GoogleGeocoder;
 import com.github.times.location.impl.DatabaseGeocoder;
-import com.github.times.location.impl.GeoNamesGeocoder;
-import com.github.times.location.impl.GoogleGeocoder;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
