@@ -242,7 +242,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onLocationChanged(Location location) {
-        final Context context = getContext();
+        final Context context = getContext().getApplicationContext();
         notifyAppWidgetViewDataChanged(context);
     }
 
