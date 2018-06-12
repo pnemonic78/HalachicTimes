@@ -12,7 +12,7 @@ android {
         versionCode versionMajor * 100 + versionMinor
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -34,6 +34,6 @@ dependencies {
     implementation project(':common')
     implementation project(':locations')
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test:rules:1.0.1'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'
+    androidTestImplementation 'androidx.test:rules:1.1.0-alpha3'
 }

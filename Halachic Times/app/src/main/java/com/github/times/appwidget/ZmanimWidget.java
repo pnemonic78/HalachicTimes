@@ -18,8 +18,6 @@ package com.github.times.appwidget;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
@@ -29,6 +27,9 @@ import com.github.times.ZmanimItem;
 
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 

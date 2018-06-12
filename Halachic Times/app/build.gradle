@@ -20,7 +20,7 @@ android {
         manifestPlaceholders = [offline: false]
 
         testApplicationId "net.sf.times.test"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {

@@ -17,7 +17,6 @@ package com.github.times.preference;
 
 import android.media.AudioManager;
 import android.net.Uri;
-import android.support.annotation.StyleRes;
 
 import com.github.media.RingtoneManager;
 import com.github.preference.LocalePreferences;
@@ -27,6 +26,8 @@ import com.github.times.location.LocationPreferences;
 import net.sourceforge.zmanim.ShaahZmanis;
 
 import java.util.Calendar;
+
+import androidx.annotation.StyleRes;
 
 /**
  * Application preferences.

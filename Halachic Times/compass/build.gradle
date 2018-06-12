@@ -14,7 +14,7 @@ android {
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
 
         testApplicationId "net.sf.compass.test"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {

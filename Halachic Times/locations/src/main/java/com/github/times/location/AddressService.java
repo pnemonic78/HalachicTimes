@@ -20,9 +20,10 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.JobIntentService;
 
 import com.github.times.location.AddressProvider.OnFindAddressListener;
+
+import androidx.core.app.JobIntentService;
 
 import static com.github.times.location.ZmanimLocationListener.ACTION_ADDRESS;
 import static com.github.times.location.ZmanimLocationListener.ACTION_ELEVATION;

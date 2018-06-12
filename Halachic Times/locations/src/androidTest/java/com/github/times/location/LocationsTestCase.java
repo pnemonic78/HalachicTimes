@@ -17,25 +17,38 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Location;
-import android.test.ApplicationTestCase;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.TimeZone;
 
-public class LocationsTestCase extends ApplicationTestCase<DefaultLocationApplication> {
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
 
-    public LocationsTestCase() {
-        super(DefaultLocationApplication.class);
-    }
+import static androidx.test.InstrumentationRegistry.getContext;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        createApplication();
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class LocationsTestCase {
+
+    protected LocationApplication getApplication() {
+        final Context context = getContext();
+        assertNotNull(context);
+        Context applicationContext = context.getApplicationContext();
+        assertNotNull(applicationContext);
+        assertTrue(applicationContext instanceof LocationApplication);
+        return (LocationApplication) applicationContext;
     }
 
     /**
      * Test application.
      */
+    @Test
     public void testApp() {
         final Context context = getContext();
         assertNotNull(context);
@@ -52,11 +65,9 @@ public class LocationsTestCase extends ApplicationTestCase<DefaultLocationApplic
      * <p/>
      * Loop through all TZs and check that their longitude and latitude are
      * valid.
-     *
-     * @throws Exception
-     *         if an error occurs.
      */
-    public void testTZ() throws Exception {
+    @Test
+    public void testTZ() {
         LocationApplication app = getApplication();
         assertNotNull(app);
         LocationsProvider locations = app.getLocations();
@@ -89,6 +100,7 @@ public class LocationsTestCase extends ApplicationTestCase<DefaultLocationApplic
     /**
      * Test Rhumb Line angles.
      */
+    @Test
     public void testAngle() {
         ZmanimLocation temple = new ZmanimLocation("temple");
         temple.setLatitude(toDegrees(31, 46, 40, Hemisphere.NORTH));
@@ -229,10 +241,10 @@ public class LocationsTestCase extends ApplicationTestCase<DefaultLocationApplic
     private void assertLocation(Location location) {
         final double latitude = location.getLatitude();
         if ((latitude < ZmanimLocation.LATITUDE_MIN) || (latitude > ZmanimLocation.LATITUDE_MAX))
-            throw new AssertionError("Invalid latitude: " + latitude);
+            fail("Invalid latitude: " + latitude);
         final double longitude = location.getLongitude();
         if ((longitude < ZmanimLocation.LONGITUDE_MIN) || (longitude > ZmanimLocation.LONGITUDE_MAX))
-            throw new AssertionError("Invalid longitude: " + longitude);
+            fail("Invalid longitude: " + longitude);
     }
 
     private enum Hemisphere {

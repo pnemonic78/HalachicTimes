@@ -20,7 +20,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.github.media.RingtoneManager;
@@ -36,6 +35,8 @@ import net.sourceforge.zmanim.ShaahZmanis;
 
 import java.util.Calendar;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;

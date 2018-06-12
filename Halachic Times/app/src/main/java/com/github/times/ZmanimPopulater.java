@@ -17,7 +17,6 @@ package com.github.times;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.Nullable;
 
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LogUtils;
@@ -29,6 +28,8 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import androidx.annotation.Nullable;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;

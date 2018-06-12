@@ -22,7 +22,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.github.database.CursorFilter;
 import com.github.times.location.bing.BingGeocoder;
@@ -38,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import androidx.annotation.Nullable;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLANET;

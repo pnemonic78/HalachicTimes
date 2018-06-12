@@ -16,9 +16,10 @@
 package com.github.times.location;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.github.times.location.impl.LocationsProviderFactoryImpl;
+
+import androidx.annotation.NonNull;
 
 /**
  * Default location application.

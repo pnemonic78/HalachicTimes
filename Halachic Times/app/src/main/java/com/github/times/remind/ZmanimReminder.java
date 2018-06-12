@@ -37,8 +37,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 
 import com.github.times.R;
 import com.github.times.ZmanimActivity;
@@ -58,6 +56,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;

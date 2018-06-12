@@ -21,9 +21,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -45,6 +42,10 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.StyleRes;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;

@@ -11,11 +11,11 @@ android {
         targetSdkVersion androidBuildTargetSdkVersion
         versionCode versionMajor * 100 + versionMinor
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
-    }
-    buildTypes {
-        debug {
-        }
 
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -31,9 +31,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api "com.android.support:support-annotations:$supportVersion"
-    api "com.android.support:support-compat:$supportVersion"
-    api "com.android.support:recyclerview-v7:$supportVersion"
+    api 'androidx.annotation:annotation:1.0.0-alpha3'
+    api 'androidx.core:core:1.0.0-alpha3'
+    api 'androidx.recyclerview:recyclerview:1.0.0-alpha3'
 
     testImplementation 'junit:junit:4.12'
 }
