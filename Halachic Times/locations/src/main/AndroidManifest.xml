@@ -13,7 +13,7 @@
         android:name="android.hardware.location"
         android:required="false"/>
 
-    <application>
+    <application android:name="com.github.times.location.DefaultLocationApplication">
         <activity
             android:name="com.github.times.location.AddLocationActivity"
             android:label="@string/title_activity_add_location">

@@ -27,6 +27,7 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import static androidx.test.InstrumentationRegistry.getContext;
+import static androidx.test.InstrumentationRegistry.getTargetContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -37,7 +38,7 @@ import static org.junit.Assert.fail;
 public class LocationsTestCase {
 
     protected LocationApplication getApplication() {
-        final Context context = getContext();
+        final Context context = getTargetContext();
         assertNotNull(context);
         Context applicationContext = context.getApplicationContext();
         assertNotNull(applicationContext);
