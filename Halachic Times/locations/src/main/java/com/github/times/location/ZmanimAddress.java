@@ -288,8 +288,10 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             buf.append(country);
         }
 
-        if (buf.length() == 0)
-            return getLocale().getDisplayCountry();
+        if (buf.length() == 0) {
+            Locale locale = getLocale();
+            return locale.getDisplayCountry(locale);
+        }
 
         return buf.toString();
     }
@@ -370,8 +372,8 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     public void setCountryCode(String countryCode) {
         if (ISO639_PALESTINE.equals(countryCode)) {
             countryCode = ISO639_ISRAEL;
-            Locale locale = new Locale(Locale.getDefault().getLanguage(), countryCode);
-            setCountryName(locale.getDisplayCountry());
+            Locale locale = new Locale(getLocale().getLanguage(), countryCode);
+            setCountryName(locale.getDisplayCountry(locale));
         }
         super.setCountryCode(countryCode);
     }

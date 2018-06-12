@@ -77,8 +77,8 @@ public class GeocoderTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new GoogleGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GoogleGeocoder(locale);
         int maxResults = 10;
 
         // Holon
@@ -131,8 +131,8 @@ public class GeocoderTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new GoogleGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GoogleGeocoder(locale);
 
         // Access Denied
         List<ZmanimLocation> results = new ArrayList<>();
@@ -173,8 +173,8 @@ public class GeocoderTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new GeoNamesGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GeoNamesGeocoder(locale);
         int maxResults = 10;
 
         // Near Elad
@@ -208,8 +208,8 @@ public class GeocoderTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new BingGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new BingGeocoder(locale);
         int maxResults = 10;
 
         // Holon
