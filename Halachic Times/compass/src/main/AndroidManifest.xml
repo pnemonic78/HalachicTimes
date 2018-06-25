@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     package="com.github.compass"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
@@ -19,7 +20,8 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_compass"
         android:supportsRtl="false"
-        android:theme="@style/Theme.CompassApp.Light">
+        android:theme="@style/Theme.CompassApp.Light"
+        tools:replace="android:name">
         <activity
             android:name="com.github.compass.CompassActivity"
             android:label="@string/title_activity_compass">
