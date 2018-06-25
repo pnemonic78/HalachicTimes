@@ -21,7 +21,7 @@ def joinStringArray(array) {
 }
 
 ext {
-    androidBuildSdkVersion = 'android-P'
+    androidBuildSdkVersion = 28
     androidBuildMinSdkVersion = 15
     androidBuildTargetSdkVersion = 27
 }
