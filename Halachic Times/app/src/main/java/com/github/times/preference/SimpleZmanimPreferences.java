@@ -95,6 +95,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_MGA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_NONE;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
 
@@ -241,6 +242,9 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         }
         if (OPINION_MGA.equals(opinion)) {
             return ShaahZmanis.MGA;
+        }
+        if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            return ShaahZmanis.BAAL_HATANYA;
         }
         return ShaahZmanis.GRA;
     }
@@ -730,6 +734,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_SEA = res.getString(R.string.opinion_value_sea);
         OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight);
         OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
+        OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya);
 
         THEME_NONE = res.getString(R.string.theme_value_none);
         THEME_WHITE = res.getString(R.string.theme_value_white);
