@@ -14,4 +14,7 @@
     <dimen name="min_digital_widget_resize_width">@dimen/min_digital_widget_width</dimen>
     <dimen name="min_digital_widget_resize_height">@dimen/min_digital_widget_height</dimen>
 
+    <dimen name="reminder_time">90sp</dimen>
+    <dimen name="reminder_title">20sp</dimen>
+
 </resources>

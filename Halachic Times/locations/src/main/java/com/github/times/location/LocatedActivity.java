@@ -53,7 +53,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     protected static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
-    protected ThemeCallbacks<P> themeCallbacks;
+    private ThemeCallbacks<P> themeCallbacks;
     /** Provider for locations. */
     private LocationsProvider locations;
     /** The address location. */

@@ -10,6 +10,8 @@
         <item name="listZmanTime">@style/Widget.Time.Dark</item>
         <item name="listZmanSummary">@style/Widget.Summary.Dark</item>
         <item name="listZmanDetail">@style/Widget.Detail.Dark</item>
+        <item name="reminderZmanTitle">@style/Widget.Reminder.Title.Dark</item>
+        <item name="reminderZmanTime">@style/Widget.Reminder.Time.Dark</item>
     </style>
 
     <style name="Theme.Zmanim.Light" parent="Theme.Base.Light">
@@ -19,6 +21,8 @@
         <item name="listZmanTime">@style/Widget.Time.Light</item>
         <item name="listZmanSummary">@style/Widget.Summary.Light</item>
         <item name="listZmanDetail">@style/Widget.Detail.Light</item>
+        <item name="reminderZmanTitle">@style/Widget.Reminder.Title.Light</item>
+        <item name="reminderZmanTime">@style/Widget.Reminder.Time.Light</item>
     </style>
 
     <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim">
@@ -28,6 +32,8 @@
         <item name="listZmanTime">@style/Widget.Time.NoGradient</item>
         <item name="listZmanSummary">@style/Widget.Summary.NoGradient</item>
         <item name="listZmanDetail">@style/Widget.Detail.NoGradient</item>
+        <item name="reminderZmanTitle">@style/Widget.Reminder.Title.NoGradient</item>
+        <item name="reminderZmanTime">@style/Widget.Reminder.Time.NoGradient</item>
     </style>
 
     <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Light">
@@ -37,6 +43,8 @@
         <item name="listZmanTime">@style/Widget.Time.White</item>
         <item name="listZmanSummary">@style/Widget.Summary.White</item>
         <item name="listZmanDetail">@style/Widget.Detail.White</item>
+        <item name="reminderZmanTitle">@style/Widget.Reminder.Title.White</item>
+        <item name="reminderZmanTime">@style/Widget.Reminder.Time.White</item>
     </style>
 
     <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>

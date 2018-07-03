@@ -78,6 +78,11 @@
                 <action android:name="android.intent.action.INSERT_OR_EDIT"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.github.times.remind.ReminderActivity"
+            android:label="@string/title_activity_reminder"
+            android:parentActivityName="com.github.times.ZmanimActivity">
+        </activity>
 
         <receiver
             android:name="com.github.times.appwidget.ZmanimWidget"

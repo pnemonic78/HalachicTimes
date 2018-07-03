@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Widget.ListView" parent="android:Widget.DeviceDefault.ListView"/>
+    <style name="Widget.ListView" parent="android:Widget.DeviceDefault.ListView" />
 
     <style name="Widget.ListItem">
         <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
@@ -12,13 +12,13 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Widget.ListItem.Dark"/>
+    <style name="Widget.ListItem.Dark" />
 
-    <style name="Widget.ListItem.Light"/>
+    <style name="Widget.ListItem.Light" />
 
-    <style name="Widget.ListItem.NoGradient"/>
+    <style name="Widget.ListItem.NoGradient" />
 
-    <style name="Widget.ListItem.White"/>
+    <style name="Widget.ListItem.White" />
 
     <style name="AppWidget.Clock">
         <item name="android:gravity">top|center_horizontal</item>
@@ -74,16 +74,16 @@
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
-    <style name="Widget.Title.NoGradient" parent="Widget.Title.Dark"/>
+    <style name="Widget.Title.NoGradient" parent="Widget.Title.Dark" />
 
-    <style name="Widget.Title.White" parent="Widget.Title.Light"/>
+    <style name="Widget.Title.White" parent="Widget.Title.Light" />
 
     <style name="AppWidget.Title" parent="Widget.Title.Dark">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">@color/widget_text</item>
     </style>
 
-    <style name="AppWidget.Title.Odd"/>
+    <style name="AppWidget.Title.Odd" />
 
     <style name="AppWidget.Title.Light" parent="Widget.Light.TextView.Small">
         <item name="android:ellipsize">marquee</item>
@@ -100,15 +100,15 @@
         <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
-    <style name="Widget.Time.NoGradient" parent="Widget.Time.Dark"/>
+    <style name="Widget.Time.NoGradient" parent="Widget.Time.Dark" />
 
-    <style name="Widget.Time.White" parent="Widget.Time.Light"/>
+    <style name="Widget.Time.White" parent="Widget.Time.Light" />
 
     <style name="AppWidget.Time" parent="Widget.TextView.Small">
         <item name="android:textColor">@color/widget_text</item>
     </style>
 
-    <style name="AppWidget.Time.Odd"/>
+    <style name="AppWidget.Time.Odd" />
 
     <style name="AppWidget.Time.Light" parent="Widget.Light.TextView.Small">
         <item name="android:textColor">@color/widget_text_light</item>
@@ -119,18 +119,18 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="Widget.Summary.Dark"/>
+    <style name="Widget.Summary.Dark" />
 
     <style name="Widget.Summary.Light" parent="Widget.Light.TextView.Small">
         <item name="android:maxLines">3</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="Widget.Summary.NoGradient"/>
+    <style name="Widget.Summary.NoGradient" />
 
-    <style name="Widget.Summary.White" parent="Widget.Summary.Light"/>
+    <style name="Widget.Summary.White" parent="Widget.Summary.Light" />
 
-    <style name="AppWidget" parent="Widget"/>
+    <style name="AppWidget" parent="Widget" />
 
     <style name="AppWidget.Static">
         <item name="android:background">@drawable/bg_widget</item>
@@ -149,17 +149,17 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="AppWidget.Item"/>
+    <style name="AppWidget.Item" />
 
     <style name="AppWidget.Item.Odd">
         <item name="android:background">@color/bright</item>
     </style>
 
-    <style name="AppWidget.Item.Light"/>
+    <style name="AppWidget.Item.Light" />
 
-    <style name="AppWidget.List" parent="AppWidget.Static"/>
+    <style name="AppWidget.List" parent="AppWidget.Static" />
 
-    <style name="AppWidget.List.Light" parent="AppWidget.Static.Light"/>
+    <style name="AppWidget.List.Light" parent="AppWidget.Static.Light" />
 
     <style name="Widget.Date">
         <item name="android:background">@color/black_x80</item>
@@ -178,7 +178,7 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="AppWidget.Clock.Light"/>
+    <style name="AppWidget.Clock.Light" />
 
     <style name="AppWidget.Clock.Time.Light">
         <item name="android:textColor">@android:color/primary_text_light</item>
@@ -203,5 +203,40 @@
     <style name="Widget.Detail.White" parent="Widget.Title.White">
         <item name="android:maxLines">3</item>
     </style>
+
+    <style name="Widget.Reminder.Time" parent="Widget.TextView.Large">
+        <item name="android:textSize">@dimen/reminder_time</item>
+    </style>
+
+    <style name="Widget.Reminder.Time.Dark">
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+
+    <style name="Widget.Reminder.Time.Light">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="Widget.Reminder.Time.NoGradient" parent="Widget.Reminder.Time.Dark" />
+
+    <style name="Widget.Reminder.Time.White" parent="Widget.Reminder.Time.Light" />
+
+    <style name="Widget.Reminder.Title" parent="Widget.TextView.Medium">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/reminder_title</item>
+    </style>
+
+    <style name="Widget.Reminder.Title.Dark">
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+    </style>
+
+    <style name="Widget.Reminder.Title.Light">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="Widget.Reminder.Title.NoGradient" parent="Widget.Reminder.Title.Dark" />
+
+    <style name="Widget.Reminder.Title.White" parent="Widget.Reminder.Title.Light" />
 
 </resources>
