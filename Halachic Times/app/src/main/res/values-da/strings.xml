@@ -21,9 +21,10 @@
     <string name="opinion_96">Dag er 96 minutter før solopgang / efter solnedgang</string>
     <string name="opinion_96_zmanis">Dag er 96 זמניות minutter før solopgang / efter solnedgang</string>
     <string name="opinion_ateret">Ifølge Jeshivat Ateret Tora</string>
-    <string name="opinion_gra">Ifølge GRA og Baal Tanya</string>
+    <string name="opinion_gra">Ifølge GRA</string>
     <string name="opinion_mga">Ifølge Magen Avraham</string>
     <string name="opinion_tam">Ifølge Rabbeinu Tam</string>
+    <string name="opinion_baal_hatanya">Ifølge Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Sæsonmæssige time</string>

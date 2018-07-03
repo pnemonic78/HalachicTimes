@@ -21,9 +21,10 @@
     <string name="opinion_96">Tag ist 96 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_96_zmanis">Tag ist 96 זמניות Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_ateret">Nach Yeshivat Ateret Tora</string>
-    <string name="opinion_gra">Nach GRA und Baal Tanya</string>
+    <string name="opinion_gra">Nach GRA</string>
     <string name="opinion_mga">Nach Magen Avraham</string>
     <string name="opinion_tam">Nach Rabbenu Tam</string>
+    <string name="opinion_baal_hatanya">Nach Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Saison Stunde</string>
