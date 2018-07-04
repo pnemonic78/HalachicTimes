@@ -24,11 +24,13 @@
         <item name="android:gravity">top|center_horizontal</item>
     </style>
 
-    <style name="AppWidget.Clock.Time" parent="Widget.TextView.Large">
+    <style name="Base.AppWidget.Clock.Time" parent="Widget.TextView.Large">
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/widget_big_font_size</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
+
+    <style name="AppWidget.Clock.Time" parent="Base.AppWidget.Clock.Time" />
 
     <style name="AppWidget.Clock.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
@@ -204,9 +206,11 @@
         <item name="android:maxLines">3</item>
     </style>
 
-    <style name="Widget.Reminder.Time" parent="Widget.TextView.Large">
+    <style name="Base.Widget.Reminder.Time" parent="Widget.TextView.Large">
         <item name="android:textSize">@dimen/reminder_time</item>
     </style>
+
+    <style name="Widget.Reminder.Time" parent="Base.Widget.Reminder.Time" />
 
     <style name="Widget.Reminder.Time.Dark">
         <item name="android:textColor">@android:color/primary_text_dark</item>
@@ -232,7 +236,7 @@
     </style>
 
     <style name="Widget.Reminder.Title.Light">
-        <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textColor">@color/primary_text_light</item>
     </style>
 
     <style name="Widget.Reminder.Title.NoGradient" parent="Widget.Reminder.Title.Dark" />
