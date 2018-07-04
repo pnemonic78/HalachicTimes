@@ -38,7 +38,7 @@
         android:layout_weight="5" />
 
     <ImageButton
-        android:id="@+id/reminder_cancel"
+        android:id="@+id/reminder_dismiss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/cancel"

@@ -64,7 +64,7 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
 
     private TextView timeView;
     private TextView titleView;
-    private View cancelView;
+    private View dismissView;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -86,8 +86,8 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
         setContentView(R.layout.reminder);
         timeView = findViewById(R.id.time);
         titleView = findViewById(android.R.id.title);
-        cancelView = findViewById(R.id.reminder_cancel);
-        cancelView.setOnClickListener(this);
+        dismissView = findViewById(R.id.reminder_dismiss);
+        dismissView.setOnClickListener(this);
 
         final Context context = this;
         final Locale locale = LocaleUtils.getDefaultLocale(context);
@@ -213,8 +213,8 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
 
     @Override
     public void onClick(View view) {
-        if (view == cancelView) {
-            cancel();
+        if (view == dismissView) {
+            dismiss();
         }
     }
 
@@ -224,9 +224,9 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
     }
 
     /**
-     * Cancel the reminder.
+     * Dismiss the reminder.
      */
-    public void cancel() {
+    public void dismiss() {
         stopNoise();
         cancelNotification();
         setResult(RESULT_CANCELED);
