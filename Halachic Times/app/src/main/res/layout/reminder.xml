@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".remind.ReminderActivity">
 
     <TextView
         android:id="@+id/time"
@@ -14,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.8"
         tools:text="@string/design_time" />
 
     <TextView
@@ -21,21 +23,22 @@
         style="?reminderZmanTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/design_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/design_title" />
 
-    <Image
+    <ImageView
         android:id="@+id/reminder_dismiss"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:background="@color/red"
         android:contentDescription="@string/cancel"
         android:src="@android:drawable/ic_menu_close_clear_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@android:id/title" />
+        app:layout_constraintTop_toBottomOf="@android:id/title"
+        app:layout_constraintVertical_bias="0.66" />
 </androidx.constraintlayout.widget.ConstraintLayout>
