@@ -182,6 +182,8 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
 
         timeView.setText(timeLabel);
         titleView.setText(item.title);
+
+        startNoise();
     }
 
     /**
@@ -216,6 +218,11 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // User must explicitly cancel the reminder.
+    }
+
     /**
      * Cancel the reminder.
      */
@@ -226,16 +233,34 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
         finish();
     }
 
-    private void stopNoise() {
-        //TODO implement me!
-    }
-
     private void cancelNotification() {
         //TODO implement me!
     }
 
-    @Override
-    public void onBackPressed() {
-        // User must explicitly cancel the reminder.
+    private void startNoise() {
+        playSound();
+        vibrate();
+    }
+
+    private void stopNoise() {
+        stopSound();
+        stopVibrate();
+    }
+
+    private void playSound() {
+        //TODO play a repeating sound for "alarm"
+        //TODO play a singular sound for "notification"
+    }
+
+    private void stopSound() {
+        //TODO implement me!
+    }
+
+    private void vibrate() {
+        //TODO implement me!
+    }
+
+    private void stopVibrate() {
+        //TODO implement me!
     }
 }
