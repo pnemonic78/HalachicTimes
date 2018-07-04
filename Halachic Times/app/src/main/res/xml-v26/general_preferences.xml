@@ -20,10 +20,24 @@
             android:defaultValue="@bool/notification_upcoming_defaultValue"
             android:key="notification.next"
             android:title="@string/notification_upcoming_title"/>
-        <Preference
+        <ListPreference
+            android:defaultValue="@string/reminder_stream_defaultValue"
+            android:entries="@array/reminder_stream_entries"
+            android:entryValues="@array/reminder_stream_values"
+            android:icon="@drawable/ic_settings_alarm"
+            android:key="reminder.stream"
+            android:title="@string/reminder_stream_title"/>
+        <com.github.preference.RingtonePreference
             android:defaultValue="@string/reminder_ringtone_defaultValue"
-            android:key="reminder.settings"
+            android:icon="@drawable/ic_settings_tone"
+            android:key="reminder.ringtone"
+            android:ringtoneType="alarm"
+            android:showDefault="true"
+            android:showSilent="true"
             android:title="@string/reminder_tone"/>
+        <Preference
+            android:key="reminder.settings"
+            android:title="@string/reminder_settings"/>
     </PreferenceCategory>
 
     <PreferenceCategory

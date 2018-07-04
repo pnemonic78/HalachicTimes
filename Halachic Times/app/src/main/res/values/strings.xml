@@ -360,5 +360,6 @@
     <string name="notification_upcoming_title">The upcoming time as a notification</string>
     <string name="notifications_title" translatable="false">@string/reminder</string>
     <string name="title_activity_reminder" translatable="false">@string/reminder</string>
+    <string name="reminder_settings" translatable="false">@string/reminder</string>
 
 </resources>

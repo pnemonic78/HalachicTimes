@@ -66,10 +66,9 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                     }
                 });
             }
-        } else {
-            reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
-            initList(KEY_REMINDER_STREAM);
         }
+        reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
+        initList(KEY_REMINDER_STREAM);
 
         initList(KEY_COORDS_FORMAT);
         initList(KEY_COMPASS_BEARING);
