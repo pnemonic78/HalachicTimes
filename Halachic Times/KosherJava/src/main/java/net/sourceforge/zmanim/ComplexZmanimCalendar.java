@@ -2999,11 +2999,12 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 *         explanation on top of the {@link AstronomicalCalendar} documentation.
 	 */
 	public Long getMinchaGedolaBaalHatanyaGreaterThan30() {
-		if (getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5) == null || getMinchaGedolaBaalHatanya() == null) {
+		Long minchag30 = getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5);
+		Long minchagz = getMinchaGedolaBaalHatanya();
+		if (minchag30 == null || minchagz == null) {
 			return null;
 		} else {
-			return getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5).compareTo(getMinchaGedolaBaalHatanya()) > 0
-					? getTimeOffset(getSunriseBaalHatanya(), getShaahZmanisBaalHatanya() * 6.5) : getMinchaGedolaBaalHatanya();
+			return minchag30.compareTo(minchagz) > 0 ? minchag30 : minchagz;
 		}
 	}
 
@@ -3055,6 +3056,6 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #ZENITH_6_DEGREES
 	 */
 	public Long getTzaisBaalHatanya() {
-		return this.getSunsetOffsetByDegrees(ZENITH_6_DEGREES);
+		return getSunsetOffsetByDegrees(ZENITH_6_DEGREES);
 	}
 }

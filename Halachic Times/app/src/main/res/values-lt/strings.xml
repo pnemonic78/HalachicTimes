@@ -21,6 +21,7 @@
     <string name="opinion_96">Dieną yra 96 minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_96_zmanis">Dieną yra 96 זמניות minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_ateret">Pasak Yešivat Ateret Tora</string>
+    <string name="opinion_gra">Pasak GRA</string>
     <string name="opinion_mga">Pasak Magen Abraomas</string>
     <string name="opinion_tam">Pasak Rabbeinu Tam</string>
     <string name="opinion_baal_hatanya">Pasak Bąl Tanya</string>
@@ -211,6 +212,5 @@
     <string name="reminder_tuesday">Priminti antradien</string>
     <string name="reminder_wednesday">Priminti trečiadienį</string>
     <string name="notification_upcoming_title">Artėjantis laikas kaip pranešimo apie</string>
-    <string name="opinion_gra">Pasak GRA</string>
 
 </resources>

@@ -25,8 +25,8 @@
     <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
     <string name="opinion_96_zmanis">Day is 96 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_gra">According to GRA</string>
     <string name="opinion_baal_hatanya">According to Baal Hatanya</string>
+    <string name="opinion_gra">According to GRA</string>
     <string name="opinion_mga">According to Magen Avraham</string>
     <string name="opinion_tam">According to Rabbeinu Tam</string>
 
