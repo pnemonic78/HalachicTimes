@@ -178,6 +178,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
         public static String OPINION_NIGHT;
         public static String OPINION_SEA;
         public static String OPINION_TWILIGHT;
+        public static String OPINION_BAAL_HATANYA;
 
         /** Show zmanim list without background. */
         public static String THEME_NONE;

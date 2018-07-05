@@ -147,6 +147,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_SEA = ZmanimPreferences.Values.OPINION_SEA;
     protected static final String OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT;
     protected static final String OPINION_NIGHT = ZmanimPreferences.Values.OPINION_NIGHT;
+    protected static final String OPINION_BAAL_HATANYA = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
 
     /** No summary. */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
@@ -304,6 +305,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             } else if (OPINION_MGA.equals(opinion)) {
                 time = cal.getShaahZmanisMGA();
                 summary = R.string.hour_mga;
+            } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+                time = cal.getShaahZmanisBaalHatanya();
+                summary = R.string.hour_baal_hatanya;
             } else {
                 time = cal.getShaahZmanisGra();
                 summary = R.string.hour_gra;
@@ -352,6 +356,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_60.equals(opinion)) {
             date = cal.getAlos60();
             summary = R.string.dawn_60;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getAlosBaalHatanya();
+            summary = R.string.dawn_baal_hatanya;
         } else {
             date = cal.getAlosHashachar();
             summary = R.string.dawn_16;
@@ -370,6 +377,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_11.equals(opinion)) {
             date = cal.getMisheyakir11Degrees();
             summary = R.string.tallis_11;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getMisheyakir10Point2Degrees();
+            summary = R.string.tallis_baal_hatanya;
         } else {
             date = cal.getMisheyakir11Point5Degrees();
             summary = R.string.tallis_summary;
@@ -397,6 +407,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_SEA.equals(opinion)) {
             date = cal.getSeaLevelSunrise();
             summary = R.string.sunrise_sea;
+        }else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getSeaLevelSunrise();
+            summary = R.string.sunrise_baal_hatanya;
         } else {
             date = cal.getSunrise();
             summary = R.string.sunrise_summary;
@@ -452,6 +465,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_FIXED.equals(opinion)) {
             date = cal.getSofZmanShmaFixedLocal();
             summary = R.string.shema_fixed;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getSofZmanShmaBaalHatanya();
+            summary = R.string.shema_baal_hatanya;
         } else {
             date = cal.getSofZmanShmaGRA();
             summary = R.string.shema_gra;
@@ -501,6 +517,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_MGA.equals(opinion)) {
             date = cal.getSofZmanTfilaMGA();
             summary = R.string.prayers_mga;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getSofZmanTfilaBaalHatanya();
+            summary = R.string.prayers_baal_hatanya;
         } else {
             date = cal.getSofZmanTfilaGRA();
             summary = R.string.prayers_gra;
@@ -511,6 +530,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_FIXED.equals(opinion)) {
             date = cal.getFixedLocalChatzos();
             summary = R.string.midday_fixed;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getChatzosBaalHatanya();
+            summary = R.string.midday_baal_hatanya;
         } else {
             date = cal.getChatzos();
             summary = R.string.midday_summary;
@@ -531,6 +553,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_72.equals(opinion)) {
             date = cal.getMinchaGedola72Minutes();
             summary = R.string.earliest_mincha_72;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getMinchaGedolaBaalHatanyaGreaterThan30();
+            summary = R.string.earliest_mincha_baal_hatanya;
         } else {
             date = cal.getMinchaGedola();
             summary = R.string.earliest_mincha_summary;
@@ -547,6 +572,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_ATERET.equals(opinion)) {
             date = cal.getMinchaKetanaAteretTorah();
             summary = R.string.mincha_ateret;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getMinchaKetanaBaalHatanya();
+            summary = R.string.mincha_baal_hatanya;
         } else {
             date = cal.getMinchaKetana();
             summary = R.string.mincha_summary;
@@ -602,6 +630,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_26.equals(opinion)) {
             date = cal.getPlagHamincha26Degrees();
             summary = R.string.plug_hamincha_26;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getPlagHaminchaBaalHatanya();
+            summary = R.string.plug_hamincha_baal_hatanya;
         } else {
             date = cal.getPlagHamincha();
             summary = R.string.plug_hamincha_gra;
@@ -612,6 +643,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_SEA.equals(opinion)) {
             date = cal.getSeaLevelSunset();
             summary = R.string.sunset_sea;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getSeaLevelSunset();
+            summary = R.string.sunset_baal_hatanya;
         } else {
             date = cal.getSunset();
             summary = R.string.sunset_summary;
@@ -747,6 +781,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_8_5.equals(opinion)) {
             date = cal.getTzaisGeonim8Point5Degrees();
             summary = R.string.nightfall_8;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getTzaisBaalHatanya();
+            summary = R.string.nightfall_baal_hatanya;
         } else {
             date = cal.getTzaisGeonim8Point5Degrees();
             summary = R.string.nightfall_8;
@@ -1256,6 +1293,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = cal.getTzaisGeonim7Point083Degrees();
         } else if (OPINION_8_5.equals(opinion)) {
             date = cal.getTzaisGeonim8Point5Degrees();
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getTzaisBaalHatanya();
         } else {
             date = cal.getTzais();
         }

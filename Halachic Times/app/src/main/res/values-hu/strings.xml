@@ -21,9 +21,10 @@
     <string name="opinion_96">Nap 96 perc napkelte előtt / napnyugta után</string>
     <string name="opinion_96_zmanis">Nap 96 זמניות perc napkelte előtt / napnyugta után</string>
     <string name="opinion_ateret">Szerint Yeshivat Ateret Tóra</string>
-    <string name="opinion_gra">Szerint GRA és Baal Tanya</string>
     <string name="opinion_mga">Szerint Magen Avraham</string>
     <string name="opinion_tam">Szerint Rabbénu Tam</string>
+    <string name="opinion_gra">Szerint GRA</string>
+    <string name="opinion_baal_hatanya">Szerint Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Szezonális óra</string>
