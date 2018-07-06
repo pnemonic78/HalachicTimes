@@ -148,6 +148,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT;
     protected static final String OPINION_NIGHT = ZmanimPreferences.Values.OPINION_NIGHT;
     protected static final String OPINION_BAAL_HATANYA = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
+    protected static final String OPINION_2_STARS = ZmanimPreferences.Values.OPINION_2_STARS;
+    protected static final String OPINION_ELEVATION = ZmanimPreferences.Values.OPINION_ELEVATION;
 
     /** No summary. */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
@@ -241,7 +243,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         jewishDateTomorrow.forward();
         final int dayOfWeek = jcal.getDayOfWeek();
         final int candlesOffset = settings.getCandleLightingOffset();
-        final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
         final int candles = getCandles(jcal);
         final int candlesCount = candles & CANDLES_MASK;
@@ -255,7 +256,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         String opinion;
         CharSequence summaryText;
         final Resources res = context.getResources();
-        final String shabbathAfterName = res.getString(shabbathAfter);
 
         if (!remote && settings.isHour()) {
             long time;
@@ -798,30 +798,119 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
 
-        switch (shabbathAfter) {
-            case R.string.sunset:
-                date = sunset;
-                break;
-            case R.string.twilight:
-                date = twilight;
-                break;
-            case R.string.nightfall:
-                date = nightfall;
-                break;
-            default:
-                date = null;
-                break;
+        opinion = settings.getShabbathEndsAfter();
+        if (OPINION_SEA.equals(opinion)) {
+            date = cal.getSeaLevelSunset();
+            summary = R.string.shabbath_ends_after_sea;
+        } else if (OPINION_ELEVATION.equals(opinion)) {
+            date = cal.getSunset();
+            summary = R.string.shabbath_ends_after_summary;
+        } else if (OPINION_2_STARS.equals(opinion)) {
+            date = cal.getBainHasmashosRT2Stars();
+            summary = R.string.shabbath_ends_after_2stars;
+        } else if (OPINION_7_083.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
+            summary = R.string.shabbath_ends_after_7_083;
+        } else if (OPINION_7_083_ZMANIS.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
+            summary = R.string.shabbath_ends_after_7_083_zmanis;
+        } else if (OPINION_58.equals(opinion)) {
+            date = cal.getBainHasmashosRT58Point5Minutes();
+            summary = R.string.shabbath_ends_after_58;
+        } else if (OPINION_13.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point24Degrees();
+            summary = R.string.shabbath_ends_after_13;
+        } else if (OPINION_120.equals(opinion)) {
+            date = cal.getTzais120();
+            summary = R.string.shabbath_ends_after_120;
+        } else if (OPINION_120_ZMANIS.equals(opinion)) {
+            date = cal.getTzais120Zmanis();
+            summary = R.string.shabbath_ends_after_120_zmanis;
+        } else if (OPINION_16_1.equals(opinion)) {
+            date = cal.getTzais16Point1Degrees();
+            summary = R.string.shabbath_ends_after_16;
+        } else if (OPINION_18.equals(opinion)) {
+            date = cal.getTzais18Degrees();
+            summary = R.string.shabbath_ends_after_18;
+        } else if (OPINION_19_8.equals(opinion)) {
+            date = cal.getTzais19Point8Degrees();
+            summary = R.string.shabbath_ends_after_19;
+        } else if (OPINION_26.equals(opinion)) {
+            date = cal.getTzais26Degrees();
+            summary = R.string.shabbath_ends_after_26;
+        } else if (OPINION_60.equals(opinion)) {
+            date = cal.getTzais60();
+            summary = R.string.shabbath_ends_after_60;
+        } else if (OPINION_72.equals(opinion)) {
+            date = cal.getTzais72();
+            summary = R.string.shabbath_ends_after_72;
+        } else if (OPINION_72_ZMANIS.equals(opinion)) {
+            date = cal.getTzais72Zmanis();
+            summary = R.string.shabbath_ends_after_72_zmanis;
+        } else if (OPINION_90.equals(opinion)) {
+            date = cal.getTzais90();
+            summary = R.string.shabbath_ends_after_90;
+        } else if (OPINION_90_ZMANIS.equals(opinion)) {
+            date = cal.getTzais90Zmanis();
+            summary = R.string.shabbath_ends_after_90_zmanis;
+        } else if (OPINION_96.equals(opinion)) {
+            date = cal.getTzais96();
+            summary = R.string.shabbath_ends_after_96;
+        } else if (OPINION_96_ZMANIS.equals(opinion)) {
+            date = cal.getTzais96Zmanis();
+            summary = R.string.shabbath_ends_after_96_zmanis;
+        } else if (OPINION_ATERET.equals(opinion)) {
+            date = cal.getTzaisAteretTorah();
+            summary = R.string.shabbath_ends_after_ateret;
+        } else if (OPINION_3_65.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point65Degrees();
+            summary = R.string.shabbath_ends_after_3_65;
+        } else if (OPINION_3_676.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point676Degrees();
+            summary = R.string.shabbath_ends_after_3_676;
+        } else if (OPINION_3_7.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point7Degrees();
+            summary = R.string.shabbath_ends_after_3_7;
+        } else if (OPINION_3_8.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point8Degrees();
+            summary = R.string.shabbath_ends_after_3_8;
+        } else if (OPINION_4_37.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point37Degrees();
+            summary = R.string.shabbath_ends_after_4_37;
+        } else if (OPINION_4_61.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point61Degrees();
+            summary = R.string.shabbath_ends_after_4_61;
+        } else if (OPINION_4_8.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point8Degrees();
+            summary = R.string.shabbath_ends_after_4_8;
+        } else if (OPINION_5_88.equals(opinion)) {
+            date = cal.getTzaisGeonim5Point88Degrees();
+            summary = R.string.shabbath_ends_after_5_88;
+        } else if (OPINION_5_95.equals(opinion)) {
+            date = cal.getTzaisGeonim5Point95Degrees();
+            summary = R.string.shabbath_ends_after_5_95;
+        } else if (OPINION_7_083.equals(opinion)) {
+            date = cal.getTzaisGeonim7Point083Degrees();
+            summary = R.string.shabbath_ends_after_7;
+        } else if (OPINION_8_5.equals(opinion)) {
+            date = cal.getTzaisGeonim8Point5Degrees();
+            summary = R.string.shabbath_ends_after_8;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getTzaisGeonim8Point5Degrees();
+            summary = R.string.shabbath_ends_after_baal_hatanya;
+        } else {
+            date = cal.getTzaisGeonim8Point5Degrees();
+            summary = R.string.shabbath_ends_after_8;
         }
-        final long shabbatEnds = date != null ? date : nightfall;
         if (date != null) {
             date = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
             if (hasCandles) {
                 if ((candlesHow == AT_NIGHT) && (holidayTomorrow != CHANUKAH)) {
-                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
+                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, res.getString(summary));
                     adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
                 }
             } else if (dayOfWeek == SATURDAY) {
-                summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
+                summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, res.getString(summary));
                 adapter.add(R.string.shabbath_ends, summaryText, date, jewishDateTomorrow, remote);
             } else if (holidayToday >= 0) {
                 switch (holidayToday) {
@@ -832,12 +921,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     case SUCCOS:
                     case SHEMINI_ATZERES:
                     case SIMCHAS_TORAH:
-                        summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
+                        summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, res.getString(summary));
                         adapter.add(R.string.festival_ends, summaryText, date, jewishDateTomorrow, remote);
                         break;
                 }
             }
         }
+        final long shabbatEnds = toDate(date);
 
         opinion = settings.getMidnight();
         if (OPINION_12.equals(opinion)) {

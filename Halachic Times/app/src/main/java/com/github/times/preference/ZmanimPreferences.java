@@ -179,6 +179,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
         public static String OPINION_SEA;
         public static String OPINION_TWILIGHT;
         public static String OPINION_BAAL_HATANYA;
+        public static String OPINION_2_STARS;
+        public static String OPINION_ELEVATION;
 
         /** Show zmanim list without background. */
         public static String THEME_NONE;
@@ -358,9 +360,9 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /**
      * Get the time when Shabbath ends after.
      *
-     * @return the time id.
+     * @return the opinion.
      */
-    int getShabbathEndsAfter();
+    String getShabbathEndsAfter();
 
     /**
      * Get the number of minutes when Shabbath ends after nightfall.
