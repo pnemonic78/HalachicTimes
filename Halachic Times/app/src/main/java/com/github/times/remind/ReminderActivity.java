@@ -252,7 +252,21 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
     }
 
     private void stopSound() {
-        //TODO implement me!
+        Log.v(TAG, "stop sound");
+        Ringtone ringtone = this.ringtone;
+        if ((ringtone != null) && ringtone.isPlaying()) {
+            ringtone.stop();
+        }
+    }
+
+    private Ringtone getRingtone(Context context) {
+        if (ringtone == null) {
+            Uri prefRingtone = getZmanimPreferences().getReminderRingtone();
+            if (prefRingtone != null) {
+                this.ringtone = RingtoneManager.getRingtone(context, prefRingtone);
+            }
+        }
+        return ringtone;
     }
 
     private void vibrate() {
