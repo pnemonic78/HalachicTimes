@@ -83,14 +83,6 @@
         <item name="android:textColor">@color/widget_text_light</item>
     </style>
 
-    <style name="Widget.Time.Dark"/>
-
-    <style name="Widget.Time.Light"/>
-
-    <style name="Widget.Time.NoGradient" parent="Widget.Time.Dark" />
-
-    <style name="Widget.Time.White" parent="Widget.Time.Light" />
-
     <style name="AppWidget.Time" parent="Widget.TextView.Small">
         <item name="android:textColor">@color/widget_text</item>
     </style>
