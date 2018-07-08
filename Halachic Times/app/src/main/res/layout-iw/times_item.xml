@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@android:id/summary"
-        style="?listZmanSummary"
+        style="@style/Widget.Summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/design_summary"/>

@@ -98,17 +98,6 @@
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
-    <style name="Widget.Summary.Dark" />
-
-    <style name="Widget.Summary.Light" parent="Widget.Light.TextView.Small">
-        <item name="android:maxLines">3</item>
-        <item name="android:textColor">?android:textColorSecondary</item>
-    </style>
-
-    <style name="Widget.Summary.NoGradient" />
-
-    <style name="Widget.Summary.White" parent="Widget.Summary.Light" />
-
     <style name="AppWidget" parent="Widget" />
 
     <style name="AppWidget.Static">

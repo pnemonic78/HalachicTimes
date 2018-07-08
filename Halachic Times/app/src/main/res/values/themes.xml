@@ -8,7 +8,6 @@
 
         <item name="listZmanim">@style/Widget.ListView.Dark</item>
         <item name="listZmanTitle">@style/Widget.Title.Dark</item>
-        <item name="listZmanSummary">@style/Widget.Summary.Dark</item>
         <item name="listZmanDetail">@style/Widget.Detail.Dark</item>
     </style>
 
@@ -17,20 +16,17 @@
 
         <item name="listZmanim">@style/Widget.ListView.Light</item>
         <item name="listZmanTitle">@style/Widget.Title.Light</item>
-        <item name="listZmanSummary">@style/Widget.Summary.Light</item>
         <item name="listZmanDetail">@style/Widget.Detail.Light</item>
     </style>
 
     <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim.Dark">
         <item name="listZmanim">@style/Widget.ListView.NoGradient</item>
         <item name="listZmanTitle">@style/Widget.Title.NoGradient</item>
-        <item name="listZmanSummary">@style/Widget.Summary.NoGradient</item>
         <item name="listZmanDetail">@style/Widget.Detail.NoGradient</item>
     </style>
 
     <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Light">
         <item name="listZmanim">@style/Widget.ListView.White</item>
-        <item name="listZmanSummary">@style/Widget.Summary.White</item>
         <item name="listZmanDetail">@style/Widget.Detail.White</item>
     </style>
 
