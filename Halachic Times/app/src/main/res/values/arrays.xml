@@ -396,14 +396,72 @@
     </string-array>
 
     <string-array name="shabbath_ends_after_values" translatable="false">
-        <item>@string/opinion_value_sunset</item>
-        <item>@string/opinion_value_twilight</item>
-        <item>@string/opinion_value_nightfall</item>
+        <item>@string/opinion_value_sea</item>
+        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_7_083_zmanis</item>
+        <item>@string/opinion_value_2_stars</item>
+        <item>@string/opinion_value_13</item>
+        <item>@string/opinion_value_58</item>
+        <item>@string/opinion_value_3_65</item>
+        <item>@string/opinion_value_3_676</item>
+        <item>@string/opinion_value_3_7</item>
+        <item>@string/opinion_value_3_8</item>
+        <item>@string/opinion_value_4_37</item>
+        <item>@string/opinion_value_4_61</item>
+        <item>@string/opinion_value_4_8</item>
+        <item>@string/opinion_value_5_88</item>
+        <item>@string/opinion_value_5_95</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_8</item>
+        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
+        <item>@string/opinion_value_26</item>
     </string-array>
     <string-array name="shabbath_ends_after_entries" translatable="false">
-        <item>@string/sunset</item>
-        <item>@string/twilight</item>
-        <item>@string/nightfall</item>
+        <item>@string/shabbath_ends_after_sea</item>
+        <item>@string/shabbath_ends_after_summary</item>
+        <item>@string/shabbath_ends_after_7_083</item>
+        <item>@string/shabbath_ends_after_7_083_zmanis</item>
+        <item>@string/shabbath_ends_after_2stars</item>
+        <item>@string/shabbath_ends_after_13</item>
+        <item>@string/shabbath_ends_after_58</item>
+        <item>@string/shabbath_ends_after_3_65</item>
+        <item>@string/shabbath_ends_after_3_676</item>
+        <item>@string/shabbath_ends_after_3_7</item>
+        <item>@string/shabbath_ends_after_3_8</item>
+        <item>@string/shabbath_ends_after_4_37</item>
+        <item>@string/shabbath_ends_after_4_61</item>
+        <item>@string/shabbath_ends_after_4_8</item>
+        <item>@string/shabbath_ends_after_5_88</item>
+        <item>@string/shabbath_ends_after_5_95</item>
+        <item>@string/shabbath_ends_after_7</item>
+        <item>@string/shabbath_ends_after_8</item>
+        <item>@string/shabbath_ends_after_ateret</item>
+        <item>@string/shabbath_ends_after_60</item>
+        <item>@string/shabbath_ends_after_72</item>
+        <item>@string/shabbath_ends_after_72_zmanis</item>
+        <item>@string/shabbath_ends_after_16</item>
+        <item>@string/shabbath_ends_after_18</item>
+        <item>@string/shabbath_ends_after_90</item>
+        <item>@string/shabbath_ends_after_90_zmanis</item>
+        <item>@string/shabbath_ends_after_19</item>
+        <item>@string/shabbath_ends_after_96</item>
+        <item>@string/shabbath_ends_after_96_zmanis</item>
+        <item>@string/shabbath_ends_after_120</item>
+        <item>@string/shabbath_ends_after_120_zmanis</item>
+        <item>@string/shabbath_ends_after_26</item>
     </string-array>
 
     <string-array name="levana_earliest_values" translatable="false">

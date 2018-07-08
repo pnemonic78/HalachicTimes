@@ -46,14 +46,15 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (KEY_OPINION_SHABBATH_ENDS_AFTER.equals(preference.getKey())) {
-            int shabbathAfterId = getPreferences().toId(newValue.toString());
-            String shabbathAfterName = getString(shabbathAfterId);
+            ListPreference newpreference = (ListPreference) preference;
+            int shabbathAfterId = newpreference.findIndexOfValue(newValue.toString());
+            CharSequence[] entries = newpreference.getEntries();
+            String shabbathAfterName = entries[shabbathAfterId].toString();
 
             int value = minutesPreference.getValue();
             minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
         } else if (KEY_OPINION_SHABBATH_ENDS_MINUTES.equals(preference.getKey())) {
-            int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
-            String shabbathAfterName = getString(shabbathAfterId);
+            String shabbathAfterName = afterPreference.getEntry().toString();
 
             int value = (int) newValue;
             minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));

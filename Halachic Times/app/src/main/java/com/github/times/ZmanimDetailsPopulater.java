@@ -1011,18 +1011,202 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        int endsAfter = settings.getShabbathEndsAfter();
         long offset = settings.getShabbathEnds() * MINUTE_IN_MILLIS;
-        switch (endsAfter) {
-            case R.string.sunset:
-                populateSunset(adapter, cal, settings, offset);
-                break;
-            case R.string.twilight:
-                populateTwilight(adapter, cal, settings, offset);
-                break;
-            case R.string.nightfall:
-                populateNightfall(adapter, cal, settings, offset);
-                break;
+        Long date;
+        int title;
+        JewishDate jewishDate = getJewishCalendar();
+        jewishDate.forward();
+
+        date = cal.getSeaLevelSunset();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_sea;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getSunset();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_summary;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_7_083;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_7_083_zmanis;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getBainHasmashosRT58Point5Minutes();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_58;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getBainHasmashosRT13Point24Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_13;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getBainHasmashosRT2Stars();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_2stars;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais120();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_120;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais120Zmanis();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_120_zmanis;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais16Point1Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_16;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais18Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_18;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais19Point8Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_19;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais26Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_26;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais60();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_60;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais72();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_72;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais72Zmanis();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_72_zmanis;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais90();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_90;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais90Zmanis();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_90_zmanis;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais96();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_96;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzais96Zmanis();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_96_zmanis;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisAteretTorah();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_ateret;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim3Point65Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_3_65;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim3Point676Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_3_676;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim3Point7Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_3_7;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim3Point8Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_3_8;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim4Point37Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_4_37;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim4Point61Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_4_61;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim4Point8Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_4_8;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim5Point88Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_5_88;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim5Point95Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_5_95;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim7Point083Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_7;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim8Point5Degrees();
+        if (date != null) {
+            title = R.string.shabbath_ends_after_8;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
     }
 }

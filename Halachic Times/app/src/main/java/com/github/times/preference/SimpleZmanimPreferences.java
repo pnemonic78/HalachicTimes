@@ -96,6 +96,8 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2_STARS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_ELEVATION;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_NONE;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
 
@@ -320,8 +322,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
-    public int getShabbathEndsAfter() {
-        return toId(preferences.getString(KEY_OPINION_SHABBATH_ENDS_AFTER, context.getString(R.string.shabbath_ends_after_defaultValue)));
+    public String getShabbathEndsAfter() {
+        return preferences.getString(KEY_OPINION_SHABBATH_ENDS_AFTER, context.getString(R.string.shabbath_ends_after_defaultValue));
     }
 
     @Override
@@ -735,6 +737,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight);
         OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
         OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya);
+        OPINION_2_STARS = res.getString(R.string.opinion_value_2_stars);
+        OPINION_ELEVATION = res.getString(R.string.opinion_value_default);
 
         THEME_NONE = res.getString(R.string.theme_value_none);
         THEME_WHITE = res.getString(R.string.theme_value_white);

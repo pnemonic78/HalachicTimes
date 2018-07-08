@@ -262,6 +262,39 @@
         <item quantity="other">@string/minutes_after_other</item>
     </plurals>
     <string name="festival_ends">Festival ends</string>
+    <string name="shabbath_ends_after_summary" translatable="false">@string/sunrise_summary</string>
+    <string name="shabbath_ends_after_sea" translatable="false">@string/sunrise_sea</string>
+    <string name="shabbath_ends_after_2stars" translatable="false">@string/twilight_2stars</string>
+    <string name="shabbath_ends_after_7_083" translatable="false">@string/twilight_7_083</string>
+    <string name="shabbath_ends_after_7_083_zmanis" translatable="false">@string/twilight_7_083_zmanis</string>
+    <string name="shabbath_ends_after_58" translatable="false">@string/twilight_58</string>
+    <string name="shabbath_ends_after_13" translatable="false">@string/twilight_13</string>
+    <string name="shabbath_ends_after_120" translatable="false">@string/opinion_120</string>
+    <string name="shabbath_ends_after_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
+    <string name="shabbath_ends_after_16" translatable="false">@string/opinion_16</string>
+    <string name="shabbath_ends_after_18" translatable="false">@string/opinion_18</string>
+    <string name="shabbath_ends_after_19" translatable="false">@string/opinion_19</string>
+    <string name="shabbath_ends_after_26" translatable="false">@string/opinion_26</string>
+    <string name="shabbath_ends_after_60" translatable="false">@string/opinion_60</string>
+    <string name="shabbath_ends_after_72" translatable="false">@string/opinion_tam</string>
+    <string name="shabbath_ends_after_72_zmanis" translatable="false">@string/opinion_72_zmanis</string>
+    <string name="shabbath_ends_after_90" translatable="false">@string/opinion_90</string>
+    <string name="shabbath_ends_after_90_zmanis" translatable="false">@string/opinion_90_zmanis</string>
+    <string name="shabbath_ends_after_96" translatable="false">@string/opinion_96</string>
+    <string name="shabbath_ends_after_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
+    <string name="shabbath_ends_after_ateret" translatable="false">@string/opinion_ateret</string>
+    <string name="shabbath_ends_after_3_65" translatable="false">@string/nightfall_3_65</string>
+    <string name="shabbath_ends_after_3_676" translatable="false">@string/nightfall_3_676</string>
+    <string name="shabbath_ends_after_3_7" translatable="false">@string/nightfall_3_7</string>
+    <string name="shabbath_ends_after_3_8" translatable="false">@string/nightfall_3_8</string>
+    <string name="shabbath_ends_after_4_37" translatable="false">@string/nightfall_4_37</string>
+    <string name="shabbath_ends_after_4_61" translatable="false">@string/nightfall_4_61</string>
+    <string name="shabbath_ends_after_4_8" translatable="false">@string/nightfall_4_8</string>
+    <string name="shabbath_ends_after_5_88" translatable="false">@string/nightfall_5_88</string>
+    <string name="shabbath_ends_after_5_95" translatable="false">@string/nightfall_5_95</string>
+    <string name="shabbath_ends_after_7" translatable="false">@string/nightfall_7</string>
+    <string name="shabbath_ends_after_8" translatable="false">@string/nightfall_8</string>
+
 
     <!-- Midnight -->
     <string name="midnight">Midnight</string>
