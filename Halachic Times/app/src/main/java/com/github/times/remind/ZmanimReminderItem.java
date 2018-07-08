@@ -15,6 +15,10 @@
  */
 package com.github.times.remind;
 
+import androidx.annotation.NonNull;
+
+import static com.github.times.ZmanimItem.NEVER;
+
 /**
  * Reminder item for a notification.
  *
@@ -27,10 +31,14 @@ public class ZmanimReminderItem {
     public final CharSequence text;
     public final long time;
 
-    public ZmanimReminderItem(int id, CharSequence title, CharSequence text, long time) {
+    public ZmanimReminderItem(int id, @NonNull CharSequence title, CharSequence text, long time) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.time = time;
+    }
+
+    public boolean isEmpty() {
+        return (id == 0) || (time == NEVER) || (title == null);
     }
 }

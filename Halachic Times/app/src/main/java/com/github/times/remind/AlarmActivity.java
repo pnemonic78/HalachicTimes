@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -12,8 +13,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +27,7 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
+import com.github.text.style.TypefaceSpan;
 import com.github.times.R;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
@@ -36,6 +42,7 @@ import java.util.Locale;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.TimeUtils.roundUp;
 
 /**
@@ -181,7 +188,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                 ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, null, when);
                 notifyNow(reminderItem);
             } else {
-                finish();
+                close();
             }
         }
     }
@@ -193,10 +200,25 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      */
     public void notifyNow(ZmanimReminderItem item) {
         LogUtils.i(TAG, "remind now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+        if (item.isEmpty()) {
+            close();
+            return;
+        }
 
-        String timeLabel = timeFormat.format(roundUp(item.time, timeFormatGranularity));
+        CharSequence timeLabel = timeFormat.format(roundUp(item.time, timeFormatGranularity));
+        SpannableStringBuilder spans = SpannableStringBuilder.valueOf(timeLabel);
+        int indexMinutes = TextUtils.indexOf(timeLabel, ':');
+        if (indexMinutes >= 0) {
+            // Regular "sans-serif" is like bold for "sans-serif-thin".
+            spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-        timeView.setText(timeLabel);
+            int indexSeconds = TextUtils.indexOf(timeLabel, ':', indexMinutes + 1);
+            if (indexSeconds > indexMinutes) {
+                spans.setSpan(new RelativeSizeSpan(0.5f), indexSeconds, timeLabel.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+        }
+
+        timeView.setText(spans);
         titleView.setText(item.title);
 
         startNoise();
@@ -224,6 +246,9 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * @see #formatDateTime(Date)
      */
     private String formatDateTime(long time) {
+        if (time == NEVER) {
+            return "NEVER";
+        }
         return formatDateTime(new Date(time));
     }
 
@@ -249,6 +274,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             ringtone.release();
         }
         setResult(RESULT_CANCELED);
+        close();
+    }
+
+    private void close() {
         finish();
     }
 
@@ -284,7 +313,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     private MediaPlayer getRingtone(Context context) {
         if (ringtone == null) {
-            P prefs = getZmanimPreferences();
+            final P prefs = getZmanimPreferences();
             Uri prefRingtone = prefs.getReminderRingtone();
             if (prefRingtone != null) {
                 MediaPlayer ringtone = MediaPlayer.create(context, prefRingtone);
