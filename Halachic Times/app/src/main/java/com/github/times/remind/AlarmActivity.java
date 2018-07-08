@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.format.DateFormat;
@@ -115,10 +118,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
         final Context context = this;
         final Locale locale = LocaleUtils.getDefaultLocale(context);
-        final P settings = getZmanimPreferences();
+        final P prefs = getZmanimPreferences();
         boolean time24 = DateFormat.is24HourFormat(context);
 
-        if (settings.isSeconds()) {
+        if (prefs.isSeconds()) {
             String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
             this.timeFormat = new SimpleDateFormat(pattern, locale);
             this.timeFormatGranularity = SECOND_IN_MILLIS;
@@ -183,23 +186,12 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             }
         }
     }
-
     /**
      * Notify now.
      *
-     * @param item the reminder item.
-     */
-    public void notifyNow(ZmanimReminderItem item) {
-        notifyNow(getZmanimPreferences(), item);
-    }
-
-    /**
-     * Notify now.
-     *
-     * @param settings the preferences.
      * @param item     the reminder item.
      */
-    public void notifyNow(P settings, ZmanimReminderItem item) {
+    public void notifyNow(ZmanimReminderItem item) {
         LogUtils.i(TAG, "remind now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
 
         String timeLabel = timeFormat.format(roundUp(item.time, timeFormatGranularity));
@@ -274,7 +266,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         Ringtone ringtone = getRingtone(context);
         Log.v(TAG, "play sound: " + (ringtone != null ? ringtone.getTitle(context) : "(none)"));
         if ((ringtone != null) && !ringtone.isPlaying()) {
-            // TODO repeat the sound if reminder type is "alarm".
             ringtone.play();
         }
     }
@@ -289,9 +280,29 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     private Ringtone getRingtone(Context context) {
         if (ringtone == null) {
-            Uri prefRingtone = getZmanimPreferences().getReminderRingtone();
+            P prefs = getZmanimPreferences();
+            Uri prefRingtone = prefs.getReminderRingtone();
             if (prefRingtone != null) {
-                this.ringtone = RingtoneManager.getRingtone(context, prefRingtone);
+                Ringtone ringtone = RingtoneManager.getRingtone(context, prefRingtone);
+                if (ringtone != null) {
+                    int audioStreamType = prefs.getReminderStream();
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .setLegacyStreamType(audioStreamType)
+                                .setUsage(AudioAttributes.USAGE_ALARM)
+                                .build();
+                        ringtone.setAudioAttributes(audioAttributes);
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
+                        }
+                    } else {
+                        ringtone.setStreamType(audioStreamType);
+                    }
+                }
+                this.ringtone = ringtone;
             }
         }
         return ringtone;
