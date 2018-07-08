@@ -8,8 +8,6 @@
         <attr name="listZmanTime" format="reference"/>
         <attr name="listZmanSummary" format="reference"/>
         <attr name="listZmanDetail" format="reference"/>
-        <attr name="reminderZmanTitle" format="reference"/>
-        <attr name="reminderZmanTime" format="reference"/>
     </declare-styleable>
 
 </resources>
