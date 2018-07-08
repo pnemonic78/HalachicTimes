@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@android:id/title"
-                style="?listZmanTitle"
+                style="@style/Widget.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="@string/design_title"/>

@@ -57,19 +57,7 @@
         <item name="android:gravity">right</item>
     </style>
 
-    <style name="Widget.Title.Dark"/>
-
-    <style name="Widget.Title.Light" parent="Widget.Light.TextView.Medium">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:maxLines">1</item>
-    </style>
-
-    <style name="Widget.Title.NoGradient" parent="Widget.Title.Dark" />
-
-    <style name="Widget.Title.White" parent="Widget.Title.Light" />
-
-    <style name="AppWidget.Title" parent="Widget.Title.Dark">
+    <style name="AppWidget.Title" parent="Widget.Title">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">@color/widget_text</item>
     </style>
@@ -156,19 +144,19 @@
         <item name="android:textColor">@android:color/primary_text_light</item>
     </style>
 
-    <style name="Widget.Detail.Dark" parent="Widget.Title.Dark">
+    <style name="Widget.Detail.Dark" parent="Widget.Title">
         <item name="android:maxLines">3</item>
     </style>
 
-    <style name="Widget.Detail.Light" parent="Widget.Title.Light">
+    <style name="Widget.Detail.Light" parent="Widget.Title">
         <item name="android:maxLines">3</item>
     </style>
 
-    <style name="Widget.Detail.NoGradient" parent="Widget.Title.NoGradient">
+    <style name="Widget.Detail.NoGradient" parent="Widget.Title">
         <item name="android:maxLines">3</item>
     </style>
 
-    <style name="Widget.Detail.White" parent="Widget.Title.White">
+    <style name="Widget.Detail.White" parent="Widget.Title">
         <item name="android:maxLines">3</item>
     </style>
 
