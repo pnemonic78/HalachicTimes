@@ -41,10 +41,10 @@ import static com.github.util.TimeUtils.roundUp;
  *
  * @author Moshe Waisberg
  */
-public class ReminderActivity<P extends ZmanimPreferences> extends Activity implements
+public class AlarmActivity<P extends ZmanimPreferences> extends Activity implements
         ThemeCallbacks<P>, View.OnClickListener {
 
-    private static final String TAG = "ReminderActivity";
+    private static final String TAG = "AlarmActivity";
 
     /**
      * Extras name for the reminder id.

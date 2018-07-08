@@ -79,8 +79,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.github.times.remind.ReminderActivity"
-            android:label="@string/title_activity_reminder"
+            android:name="com.github.times.remind.AlarmActivity"
+            android:label="@string/title_activity_alarm"
             android:parentActivityName="com.github.times.ZmanimActivity">
         </activity>
 
