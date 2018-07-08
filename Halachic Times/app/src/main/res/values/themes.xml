@@ -5,26 +5,24 @@
 
     <style name="Theme.Zmanim.Dark">
         <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
 
         <item name="listZmanim">@style/Widget.ListView.Dark</item>
-        <item name="listZmanDetail">@style/Widget.Detail.Dark</item>
     </style>
 
     <style name="Theme.Zmanim.Light" parent="Theme.Base.Light">
         <item name="android:textColor">@android:color/primary_text_light</item>
+        <item name="android:textColorPrimary">@android:color/primary_text_light</item>
 
         <item name="listZmanim">@style/Widget.ListView.Light</item>
-        <item name="listZmanDetail">@style/Widget.Detail.Light</item>
     </style>
 
     <style name="Theme.Zmanim.NoGradient" parent="Theme.Zmanim.Dark">
         <item name="listZmanim">@style/Widget.ListView.NoGradient</item>
-        <item name="listZmanDetail">@style/Widget.Detail.NoGradient</item>
     </style>
 
     <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Light">
         <item name="listZmanim">@style/Widget.ListView.White</item>
-        <item name="listZmanDetail">@style/Widget.Detail.White</item>
     </style>
 
     <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>

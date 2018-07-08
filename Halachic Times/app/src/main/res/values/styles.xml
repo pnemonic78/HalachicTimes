@@ -144,19 +144,7 @@
         <item name="android:textColor">@android:color/primary_text_light</item>
     </style>
 
-    <style name="Widget.Detail.Dark" parent="Widget.Title">
-        <item name="android:maxLines">3</item>
-    </style>
-
-    <style name="Widget.Detail.Light" parent="Widget.Title">
-        <item name="android:maxLines">3</item>
-    </style>
-
-    <style name="Widget.Detail.NoGradient" parent="Widget.Title">
-        <item name="android:maxLines">3</item>
-    </style>
-
-    <style name="Widget.Detail.White" parent="Widget.Title">
+    <style name="Widget.Detail" parent="Widget.Title">
         <item name="android:maxLines">3</item>
     </style>
 
