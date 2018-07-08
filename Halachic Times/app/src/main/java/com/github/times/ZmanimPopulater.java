@@ -895,9 +895,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_8_5.equals(opinion)) {
             date = cal.getTzaisGeonim8Point5Degrees();
             summary = R.string.shabbath_ends_after_8;
-        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getTzaisGeonim8Point5Degrees();
-            summary = R.string.shabbath_ends_after_baal_hatanya;
         } else {
             date = cal.getTzaisGeonim8Point5Degrees();
             summary = R.string.shabbath_ends_after_8;

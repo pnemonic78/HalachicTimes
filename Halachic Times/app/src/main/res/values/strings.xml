@@ -294,7 +294,6 @@
     <string name="shabbath_ends_after_5_95" translatable="false">@string/nightfall_5_95</string>
     <string name="shabbath_ends_after_7" translatable="false">@string/nightfall_7</string>
     <string name="shabbath_ends_after_8" translatable="false">@string/nightfall_8</string>
-    <string name="shabbath_ends_after_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
 
     <!-- Midnight -->

@@ -1059,12 +1059,6 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
 
-        date = cal.getTzaisGeonim8Point5Degrees();
-        if (date != null) {
-            title = R.string.shabbath_ends_after_baal_hatanya;
-            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
-        }
-
         date = cal.getTzais120();
         if (date != null) {
             title = R.string.shabbath_ends_after_120;
