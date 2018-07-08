@@ -5,8 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.format.DateFormat;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +25,7 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
+import com.google.android.material.behavior.SwipeDismissBehavior;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -61,6 +68,7 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
     private SimpleDateFormat dateFormat;
     private Format timeFormat;
     private long timeFormatGranularity;
+    private Ringtone ringtone;
 
     private TextView timeView;
     private TextView titleView;
@@ -84,10 +92,26 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
         }
 
         setContentView(R.layout.reminder);
+
+        final SwipeDismissBehavior swipe = new SwipeDismissBehavior();
+        swipe.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY);
+        swipe.setListener(new SwipeDismissBehavior.OnDismissListener() {
+            @Override
+            public void onDismiss(View view) {
+                Log.d(TAG, "swiped!");
+            }
+
+            @Override
+            public void onDragStateChanged(int state) {
+            }
+        });
+
         timeView = findViewById(R.id.time);
         titleView = findViewById(android.R.id.title);
         dismissView = findViewById(R.id.reminder_dismiss);
         dismissView.setOnClickListener(this);
+//        CoordinatorLayout.LayoutParams dismissViewParams = (CoordinatorLayout.LayoutParams) dismissView.getLayoutParams();
+//        dismissViewParams.setBehavior(swipe);
 
         final Context context = this;
         final Locale locale = LocaleUtils.getDefaultLocale(context);
@@ -232,23 +256,27 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
         finish();
     }
 
-    private void cancelNotification() {
-        //TODO implement me!
-    }
-
     private void startNoise() {
-        playSound();
-        vibrate();
+        Log.v(TAG, "start noise");
+        Context context = this;
+        playSound(context);
+        vibrate(context, true);
     }
 
     private void stopNoise() {
+        Log.v(TAG, "stop noise");
+        Context context = this;
         stopSound();
-        stopVibrate();
+        vibrate(context, false);
     }
 
-    private void playSound() {
-        //TODO play a repeating sound for "alarm"
-        //TODO play a singular sound for "notification"
+    private void playSound(Context context) {
+        Ringtone ringtone = getRingtone(context);
+        Log.v(TAG, "play sound: " + (ringtone != null ? ringtone.getTitle(context) : "(none)"));
+        if ((ringtone != null) && !ringtone.isPlaying()) {
+            // TODO repeat the sound if reminder type is "alarm".
+            ringtone.play();
+        }
     }
 
     private void stopSound() {
@@ -269,11 +297,21 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
         return ringtone;
     }
 
-    private void vibrate() {
-        //TODO implement me!
-    }
-
-    private void stopVibrate() {
-        //TODO implement me!
+    /**
+     * Vibrate the device.
+     *
+     * @param context the context.
+     * @param vibrate {@code true} to start vibrating - {@code false} to stop.
+     */
+    private void vibrate(Context context, boolean vibrate) {
+        Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
+        if ((vibrator == null) || !vibrator.hasVibrator()) {
+            return;
+        }
+        if (vibrate) {
+            vibrator.vibrate(DateUtils.SECOND_IN_MILLIS);
+        } else {
+            vibrator.cancel();
+        }
     }
 }
