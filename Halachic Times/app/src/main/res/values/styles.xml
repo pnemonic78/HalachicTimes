@@ -12,14 +12,6 @@
         <item name="android:maxLines">1</item>
     </style>
 
-    <style name="Widget.ListItem.Dark" />
-
-    <style name="Widget.ListItem.Light" />
-
-    <style name="Widget.ListItem.NoGradient" />
-
-    <style name="Widget.ListItem.White" />
-
     <style name="AppWidget.Clock">
         <item name="android:gravity">top|center_horizontal</item>
     </style>
