@@ -7,8 +7,7 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,7 +70,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     private SimpleDateFormat dateFormat;
     private Format timeFormat;
     private long timeFormatGranularity;
-    private Ringtone ringtone;
+    private MediaPlayer ringtone;
 
     private TextView timeView;
     private TextView titleView;
@@ -186,10 +185,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             }
         }
     }
+
     /**
      * Notify now.
      *
-     * @param item     the reminder item.
+     * @param item the reminder item.
      */
     public void notifyNow(ZmanimReminderItem item) {
         LogUtils.i(TAG, "remind now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
@@ -244,6 +244,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      */
     public void dismiss() {
         stopNoise();
+        MediaPlayer ringtone = this.ringtone;
+        if (ringtone != null) {
+            ringtone.release();
+        }
         setResult(RESULT_CANCELED);
         finish();
     }
@@ -263,29 +267,31 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     private void playSound(Context context) {
-        Ringtone ringtone = getRingtone(context);
-        Log.v(TAG, "play sound: " + (ringtone != null ? ringtone.getTitle(context) : "(none)"));
+        MediaPlayer ringtone = getRingtone(context);
+        Log.v(TAG, "play sound");
         if ((ringtone != null) && !ringtone.isPlaying()) {
-            ringtone.play();
+            ringtone.start();
         }
     }
 
     private void stopSound() {
         Log.v(TAG, "stop sound");
-        Ringtone ringtone = this.ringtone;
+        MediaPlayer ringtone = this.ringtone;
         if ((ringtone != null) && ringtone.isPlaying()) {
             ringtone.stop();
         }
     }
 
-    private Ringtone getRingtone(Context context) {
+    private MediaPlayer getRingtone(Context context) {
         if (ringtone == null) {
             P prefs = getZmanimPreferences();
             Uri prefRingtone = prefs.getReminderRingtone();
             if (prefRingtone != null) {
-                Ringtone ringtone = RingtoneManager.getRingtone(context, prefRingtone);
+                MediaPlayer ringtone = MediaPlayer.create(context, prefRingtone);
                 if (ringtone != null) {
                     int audioStreamType = prefs.getReminderStream();
+
+                    ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         AudioAttributes audioAttributes = new AudioAttributes.Builder()
@@ -294,12 +300,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                                 .setUsage(AudioAttributes.USAGE_ALARM)
                                 .build();
                         ringtone.setAudioAttributes(audioAttributes);
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                            ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
-                        }
                     } else {
-                        ringtone.setStreamType(audioStreamType);
+                        ringtone.setAudioStreamType(audioStreamType);
                     }
                 }
                 this.ringtone = ringtone;
