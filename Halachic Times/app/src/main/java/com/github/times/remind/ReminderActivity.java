@@ -228,7 +228,6 @@ public class ReminderActivity<P extends ZmanimPreferences> extends Activity impl
      */
     public void dismiss() {
         stopNoise();
-        cancelNotification();
         setResult(RESULT_CANCELED);
         finish();
     }
