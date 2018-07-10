@@ -21,6 +21,7 @@ import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.github.app.LocaleCallbacks;
@@ -96,6 +97,13 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         onCreate();
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        final Window win = getWindow();
+        // Turn on the screen.
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         setContentView(R.layout.reminder);
 
