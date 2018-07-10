@@ -1,6 +1,5 @@
 package com.github.times.remind;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -21,6 +20,7 @@ import android.text.format.DateUtils;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.github.app.LocaleCallbacks;
@@ -95,10 +95,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         super.onCreate(savedInstanceState);
         onCreate();
 
-        final ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.reminder);
 
