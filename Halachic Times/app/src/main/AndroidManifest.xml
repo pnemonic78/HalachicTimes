@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.github.times">
 
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
         android:name="android.hardware.sensor.compass"
-        android:required="false" />
+        android:required="false"/>
 
     <application
         android:name="com.github.times.ZmanimApplication"
@@ -29,51 +29,53 @@
             android:name="com.github.times.ZmanimActivity"
             android:label="@string/title_activity_zmanim">
             <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.github.times.location.LocationActivity" />
+                android:value="com.github.times.location.LocationActivity"/>
         </activity>
         <activity
             android:name="com.github.times.preference.ZmanimPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.times.ZmanimActivity"></activity>
+            android:parentActivityName="com.github.times.ZmanimActivity"
+            android:theme="@style/Theme.Zmanim.Settings"/>
         <activity
             android:name="com.github.times.compass.CompassActivity"
             android:label="@string/title_activity_compass"
             android:parentActivityName="com.github.times.ZmanimActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.github.times.location.LocationActivity" />
+                android:value="com.github.times.location.LocationActivity"/>
         </activity>
         <activity
             android:name="com.github.times.preference.CompassPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.times.compass.CompassActivity"></activity>
+            android:parentActivityName="com.github.times.compass.CompassActivity"
+            android:theme="@style/Theme.Zmanim.Settings"/>
         <activity
             android:name="com.github.times.location.LocationActivity"
             android:label="@string/title_activity_location"
             android:parentActivityName="com.github.times.ZmanimActivity">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:name="com.github.times.location.ZmanimAddLocationActivity"
             android:label="@string/title_activity_add_location">
             <intent-filter android:label="@string/title_activity_add_location">
-                <action android:name="android.intent.action.INSERT" />
+                <action android:name="android.intent.action.INSERT"/>
             </intent-filter>
             <intent-filter android:label="@string/title_activity_add_location">
-                <action android:name="android.intent.action.INSERT_OR_EDIT" />
+                <action android:name="android.intent.action.INSERT_OR_EDIT"/>
             </intent-filter>
         </activity>
         <activity
@@ -81,86 +83,86 @@
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
             android:label="@string/title_activity_alarm"
             android:launchMode="singleInstance"
-            android:parentActivityName="com.github.times.ZmanimActivity" />
+            android:parentActivityName="com.github.times.ZmanimActivity"/>
 
         <receiver
             android:name="com.github.times.appwidget.ZmanimWidget"
             android:exported="false"
             android:label="@string/title_widget_zmanim">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.WALLPAPER_CHANGED"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/widget_info"/>
         </receiver>
         <receiver
             android:name="com.github.times.appwidget.ZmanimListWidget"
             android:exported="false"
             android:label="@string/title_widget_list">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.WALLPAPER_CHANGED"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_list" />
+                android:resource="@xml/widget_list"/>
         </receiver>
         <receiver
             android:name="com.github.times.appwidget.ClockWidget"
             android:exported="false"
             android:label="@string/title_widget_clock">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.WALLPAPER_CHANGED"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_clock" />
+                android:resource="@xml/widget_clock"/>
         </receiver>
         <receiver
             android:name="com.github.times.remind.ZmanimReminderReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.DATE_CHANGED" />
-                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-                <action android:name="android.intent.action.TIME_SET" />
-                <action android:name="com.github.times.action.REMIND" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.DATE_CHANGED"/>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
+                <action android:name="android.intent.action.TIME_SET"/>
+                <action android:name="com.github.times.action.REMIND"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </receiver>
 
         <service
             android:name="com.github.times.remind.ZmanimReminderService"
-            android:exported="false" />
+            android:exported="false"/>
         <service
             android:name="com.github.times.remind.ZmanimReminderJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service
             android:name="com.github.times.appwidget.ZmanimWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <meta-data
             android:name="com.github.times.offline"
-            android:value="${offline}" />
+            android:value="${offline}"/>
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="@string/google_backup_api_key" />
+            android:value="@string/google_backup_api_key"/>
     </application>
 
 </manifest>
