@@ -58,15 +58,15 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Extras name for the reminder id.
      */
-    public static final String EXTRA_REMINDER_ID = "reminder_id";
+    public static final String EXTRA_REMINDER_ID = "alarm_id";
     /**
      * Extras name for the reminder title.
      */
-    public static final String EXTRA_REMINDER_TITLE = "reminder_title";
+    public static final String EXTRA_REMINDER_TITLE = "alarm_title";
     /**
      * Extras name for the reminder time.
      */
-    public static final String EXTRA_REMINDER_TIME = "reminder_time";
+    public static final String EXTRA_REMINDER_TIME = "alarm_time";
 
     private LocaleCallbacks<P> localeCallbacks;
     private ThemeCallbacks<P> themeCallbacks;
@@ -174,8 +174,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                 if ((id != 0) && (contentTitle == null)) {
                     contentTitle = getString(id);
                 }
-                ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, null, when);
-                notifyNow(reminderItem);
+                ZmanimReminderItem item = new ZmanimReminderItem(id, contentTitle, null, when);
+                notifyNow(item);
             } else {
                 close();
             }
