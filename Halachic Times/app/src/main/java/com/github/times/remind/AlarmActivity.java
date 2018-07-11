@@ -34,7 +34,6 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
-import com.google.android.material.behavior.SwipeDismissBehavior;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -107,25 +106,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
         setContentView(R.layout.alarm_activity);
 
-        final SwipeDismissBehavior swipe = new SwipeDismissBehavior();
-        swipe.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY);
-        swipe.setListener(new SwipeDismissBehavior.OnDismissListener() {
-            @Override
-            public void onDismiss(View view) {
-                Log.d(TAG, "swiped!");
-            }
-
-            @Override
-            public void onDragStateChanged(int state) {
-            }
-        });
-
         timeView = findViewById(R.id.time);
         titleView = findViewById(android.R.id.title);
         dismissView = findViewById(R.id.reminder_dismiss);
         dismissView.setOnClickListener(this);
-//        CoordinatorLayout.LayoutParams dismissViewParams = (CoordinatorLayout.LayoutParams) dismissView.getLayoutParams();
-//        dismissViewParams.setBehavior(swipe);
 
         final Context context = this;
         final Locale locale = LocaleUtils.getDefaultLocale(context);
