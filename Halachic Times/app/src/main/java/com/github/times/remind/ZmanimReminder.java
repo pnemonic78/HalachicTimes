@@ -126,21 +126,9 @@ public class ZmanimReminder {
     private static final int LED_OFF = 500;
 
     /**
-     * Extras name for the reminder id.
+     * Extras name for the reminder.
      */
-    private static final String EXTRA_REMINDER_ID = "reminder_id";
-    /**
-     * Extras name for the reminder title.
-     */
-    private static final String EXTRA_REMINDER_TITLE = "reminder_title";
-    /**
-     * Extras name for the reminder text.
-     */
-    private static final String EXTRA_REMINDER_TEXT = "reminder_text";
-    /**
-     * Extras name for the reminder time.
-     */
-    private static final String EXTRA_REMINDER_TIME = "reminder_time";
+    private static final String EXTRA_REMINDER = "reminder";
 
     /**
      * Action to remind.
@@ -398,11 +386,8 @@ public class ZmanimReminder {
             CharSequence contentTitle = context.getText(item.titleId);
             CharSequence contentText = item.summary;
             long when = item.time;
-
-            intent.putExtra(EXTRA_REMINDER_ID, item.titleId);
-            intent.putExtra(EXTRA_REMINDER_TITLE, contentTitle);
-            intent.putExtra(EXTRA_REMINDER_TEXT, contentText);
-            intent.putExtra(EXTRA_REMINDER_TIME, when);
+            ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, when);
+            intent.putExtra(EXTRA_REMINDER, reminderItem);
         }
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -448,14 +433,9 @@ public class ZmanimReminder {
                 break;
             case ACTION_REMIND:
                 extras = intent.getExtras();
-                if (extras != null) {
-                    int id = extras.getInt(EXTRA_REMINDER_ID);
-                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
-                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
-
-                    if ((contentTitle != null) && (when > 0L)) {
-                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, contentText, when);
+                if ((extras != null) && extras.containsKey(EXTRA_REMINDER)) {
+                    ZmanimReminderItem reminderItem = extras.getParcelable(EXTRA_REMINDER);
+                    if ((reminderItem != null) && (reminderItem.time > 0L)) {
                         notifyNow(settings, reminderItem);
                     }
                     update = true;
@@ -463,14 +443,9 @@ public class ZmanimReminder {
                 break;
             case ACTION_SILENCE:
                 extras = intent.getExtras();
-                if (extras != null) {
-                    int id = extras.getInt(EXTRA_REMINDER_ID);
-                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
-                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
-
-                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
-                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, contentText, when);
+                if ((extras != null) && extras.containsKey(EXTRA_REMINDER)) {
+                    ZmanimReminderItem reminderItem = extras.getParcelable(EXTRA_REMINDER);
+                    if ((reminderItem != null) && (reminderItem.time > 0L)) {
                         silence(settings, reminderItem);
                     }
                     update = true;
@@ -743,11 +718,7 @@ public class ZmanimReminder {
     private PendingIntent createSilenceIntent(ZmanimReminderItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_SILENCE);
-
-        intent.putExtra(EXTRA_REMINDER_ID, item.id);
-        intent.putExtra(EXTRA_REMINDER_TITLE, item.title);
-        intent.putExtra(EXTRA_REMINDER_TEXT, item.text);
-        intent.putExtra(EXTRA_REMINDER_TIME, item.time);
+        intent.putExtra(EXTRA_REMINDER, item);
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -852,9 +823,7 @@ public class ZmanimReminder {
 
         final Context context = getContext();
         Intent intent = new Intent(context, AlarmActivity.class);
-        intent.putExtra(AlarmActivity.EXTRA_REMINDER_ID, item.id);
-        intent.putExtra(AlarmActivity.EXTRA_REMINDER_TITLE, item.title);
-        intent.putExtra(AlarmActivity.EXTRA_REMINDER_TIME, item.time);
+        intent.putExtra(AlarmActivity.EXTRA_REMINDER, item);
         context.startActivity(intent);
     }
 }

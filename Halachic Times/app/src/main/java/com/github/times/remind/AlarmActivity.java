@@ -56,17 +56,21 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     private static final String TAG = "AlarmActivity";
 
     /**
+     * Extras name for the reminder.
+     */
+    public static final String EXTRA_REMINDER = "reminder";
+    /**
      * Extras name for the reminder id.
      */
-    public static final String EXTRA_REMINDER_ID = "alarm_id";
+    public static final String EXTRA_REMINDER_ID = "reminder_id";
     /**
      * Extras name for the reminder title.
      */
-    public static final String EXTRA_REMINDER_TITLE = "alarm_title";
+    public static final String EXTRA_REMINDER_TITLE = "reminder_title";
     /**
      * Extras name for the reminder time.
      */
-    public static final String EXTRA_REMINDER_TIME = "alarm_time";
+    public static final String EXTRA_REMINDER_TIME = "reminder_time";
 
     private LocaleCallbacks<P> localeCallbacks;
     private ThemeCallbacks<P> themeCallbacks;
@@ -166,15 +170,21 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     protected void handleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
+            ZmanimReminderItem item;
 
-            if (when > 0L) {
+            if (extras.containsKey(EXTRA_REMINDER)) {
+                item = extras.getParcelable(EXTRA_REMINDER);
+            } else {
                 int id = extras.getInt(EXTRA_REMINDER_ID);
                 CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
                 if ((id != 0) && (contentTitle == null)) {
                     contentTitle = getString(id);
                 }
-                ZmanimReminderItem item = new ZmanimReminderItem(id, contentTitle, null, when);
+                long when = extras.getLong(EXTRA_REMINDER_TIME, NEVER);
+                item = new ZmanimReminderItem(id, contentTitle, null, when);
+            }
+
+            if ((item != null) && (item.time > 0L)) {
                 notifyNow(item);
             } else {
                 close();

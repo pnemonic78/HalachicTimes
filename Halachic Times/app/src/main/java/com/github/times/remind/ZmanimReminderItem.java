@@ -15,6 +15,10 @@
  */
 package com.github.times.remind;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
 import androidx.annotation.NonNull;
 
 import static com.github.times.ZmanimItem.NEVER;
@@ -24,7 +28,7 @@ import static com.github.times.ZmanimItem.NEVER;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminderItem {
+public class ZmanimReminderItem implements Parcelable {
 
     public final int id;
     public final CharSequence title;
@@ -38,7 +42,39 @@ public class ZmanimReminderItem {
         this.time = time;
     }
 
+    protected ZmanimReminderItem(Parcel in) {
+        id = in.readInt();
+        title = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        text = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        time = in.readLong();
+    }
+
     public boolean isEmpty() {
         return (id == 0) || (time == NEVER) || (title == null);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        TextUtils.writeToParcel(title, parcel, flags);
+        TextUtils.writeToParcel(text, parcel, flags);
+        parcel.writeLong(time);
+    }
+
+    public static final Creator<ZmanimReminderItem> CREATOR = new Creator<ZmanimReminderItem>() {
+        @Override
+        public ZmanimReminderItem createFromParcel(Parcel in) {
+            return new ZmanimReminderItem(in);
+        }
+
+        @Override
+        public ZmanimReminderItem[] newArray(int size) {
+            return new ZmanimReminderItem[size];
+        }
+    };
 }
