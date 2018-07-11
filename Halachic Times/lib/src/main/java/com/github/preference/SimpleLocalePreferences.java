@@ -18,10 +18,9 @@ package com.github.preference;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.support.annotation.NonNull;
 
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
 
 import static android.os.Build.VERSION_CODES.N;
 import static android.text.TextUtils.isEmpty;

@@ -15,7 +15,7 @@
  */
 package com.github.times.compass.preference;
 
-import androidx.annotation.StyleRes;
+import android.support.annotation.StyleRes;
 
 /**
  * Compass preferences.

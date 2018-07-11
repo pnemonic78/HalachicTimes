@@ -19,10 +19,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.location.Location;
+import android.support.annotation.Nullable;
 
 import com.github.preference.SimplePreferences;
-
-import androidx.annotation.Nullable;
 
 import static com.github.times.location.LocationPreferences.Values.ELEVATION_VISIBLE_DEFAULT;
 import static com.github.times.location.LocationPreferences.Values.FORMAT_DECIMAL;

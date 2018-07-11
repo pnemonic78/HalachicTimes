@@ -17,10 +17,9 @@ package com.github.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.github.preference.ThemePreferences;
-
-import androidx.annotation.NonNull;
 
 /**
  * Application with a theme.
