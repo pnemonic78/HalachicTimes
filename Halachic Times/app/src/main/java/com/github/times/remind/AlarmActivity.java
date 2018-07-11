@@ -105,7 +105,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
-        setContentView(R.layout.reminder);
+        setContentView(R.layout.alarm_activity);
 
         final SwipeDismissBehavior swipe = new SwipeDismissBehavior();
         swipe.setSwipeDirection(SwipeDismissBehavior.SWIPE_DIRECTION_ANY);

@@ -361,5 +361,6 @@
     <string name="notifications_title" translatable="false">@string/reminder</string>
     <string name="title_activity_alarm" translatable="false">@string/alarm_volume_title</string>
     <string name="reminder_settings" translatable="false">@string/reminder</string>
+    <string name="dismiss" translatable="false">@string/cancel</string>
 
 </resources>
