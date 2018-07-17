@@ -60,6 +60,7 @@ import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LogUtils;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
@@ -154,6 +155,8 @@ public class ZmanimReminder {
     private static final String CHANNEL_REMINDER = "reminder";
     private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
     private static final String CHANNEL_UPCOMING = "upcoming";
+
+    private static final String WAKE_TAG = TAG + ":wake";
 
     private final Context context;
     private SimpleDateFormat dateFormat;
@@ -555,7 +558,7 @@ public class ZmanimReminder {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         if (pm != null) {
-            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);
+            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG);
             wake.acquire(5000L);// enough time to also hear an alarm tone
         }
 
@@ -823,6 +826,7 @@ public class ZmanimReminder {
         final Context context = getContext();
         Intent intent = new Intent(context, AlarmActivity.class);
         intent.putExtra(AlarmActivity.EXTRA_REMINDER, item);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 }
