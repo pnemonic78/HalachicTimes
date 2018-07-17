@@ -22,8 +22,10 @@ package net.sourceforge.zmanim;
  */
 public enum ShaahZmanis {
 
-    /** According to the opinion of the <em>GRA</em> and the <em>Baal Hatanya</em>. */
+    /** According to the opinion of the <em>GRA</em>. */
     GRA,
+    /** According to the opinion of the <em>Baal Hatanya</em>. */
+    BAAL_HATANYA,
     /** According to the opinion of the Magen Avraham. */
     MGA,
     /** Calculated using a dip of 60 minutes. */

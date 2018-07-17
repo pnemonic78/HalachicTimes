@@ -21,9 +21,10 @@
     <string name="opinion_96">День 96 мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_96_zmanis">День 96 זמניות мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_ateret">Відповідно до Ешіват Атэрэт Тора</string>
-    <string name="opinion_gra">Відповідно до ГРА і Ваал Таня</string>
+    <string name="opinion_gra">Відповідно до ГРА</string>
     <string name="opinion_mga">Відповідно до Маген Авраам</string>
     <string name="opinion_tam">Відповідно до Рабейну Там</string>
+    <string name="opinion_baal_hatanya">Відповідно до Ваал Таня</string>
 
     <!-- Temporal hour -->
     <string name="hour">Сезонний годину</string>

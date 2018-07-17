@@ -21,9 +21,10 @@
     <string name="opinion_96">Dia é de 96 minutos antes do nascer do sol / depois do sol</string>
     <string name="opinion_96_zmanis">Dia é de 96 minutos זמניות antes do nascer do sol / depois do sol</string>
     <string name="opinion_ateret">Acordo com a Yechivat Ateret Torah</string>
-    <string name="opinion_gra">Acordo com a GRA e Baal Tanya</string>
+    <string name="opinion_gra">Acordo com a GRA</string>
     <string name="opinion_mga">Acordo com a Maguen Avraham</string>
     <string name="opinion_tam">Acordo com a Rabbeinu Tam</string>
+    <string name="opinion_baal_hatanya">Acordo com a Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Hora sazonal</string>

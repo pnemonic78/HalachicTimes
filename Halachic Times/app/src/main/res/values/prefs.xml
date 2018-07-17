@@ -69,6 +69,7 @@
     <string name="opinion_value_96" translatable="false">96</string>
     <string name="opinion_value_96_zmanis" translatable="false">96_zmanis</string>
     <string name="opinion_value_ateret" translatable="false">AT</string>
+    <string name="opinion_value_baal_hatanya" translatable="false">baal_hatanya</string>
     <string name="opinion_value_default" translatable="false"/>
     <string name="opinion_value_fixed" translatable="false">fixed</string>
     <string name="opinion_value_gra" translatable="false">GRA</string>
