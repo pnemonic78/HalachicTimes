@@ -15,15 +15,15 @@
  */
 package com.github.times;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
@@ -265,10 +265,14 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                 // Make all time texts same width.
                 int maxWidth = 0;
                 for (View view : timeViews) {
-                    maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
+                    if (view != null) {
+                        maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
+                    }
                 }
                 for (View view : timeViews) {
-                    view.setMinimumWidth(maxWidth);
+                    if (view != null) {
+                        view.setMinimumWidth(maxWidth);
+                    }
                 }
             }
         });
