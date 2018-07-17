@@ -15,6 +15,8 @@
  */
 package com.github.times.appwidget;
 
+import net.sourceforge.zmanim.util.GeoLocation;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -48,8 +50,6 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
-
-import net.sourceforge.zmanim.util.GeoLocation;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -242,7 +242,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onLocationChanged(Location location) {
-        final Context context = getContext();
+        final Context context = getContext().getApplicationContext();
         notifyAppWidgetViewDataChanged(context);
     }
 

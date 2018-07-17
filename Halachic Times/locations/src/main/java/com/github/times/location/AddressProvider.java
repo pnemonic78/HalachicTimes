@@ -22,13 +22,12 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.github.database.CursorFilter;
-import com.github.times.location.impl.BingGeocoder;
+import com.github.times.location.bing.BingGeocoder;
+import com.github.times.location.geonames.GeoNamesGeocoder;
+import com.github.times.location.google.GoogleGeocoder;
 import com.github.times.location.impl.DatabaseGeocoder;
-import com.github.times.location.impl.GeoNamesGeocoder;
-import com.github.times.location.impl.GoogleGeocoder;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
@@ -38,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import android.support.annotation.Nullable;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLANET;
@@ -252,11 +253,7 @@ public class AddressProvider {
         }
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 5);
-        } catch (Exception e) {
-            String msg = e.getMessage();
-            if (!"grpc failed".equals(msg)) {
-                LogUtils.e(TAG, "Geocoder: " + msg + " at " + longitude + ";" + latitude, e);
-            }
+        } catch (Exception ignore) {
         }
         return addresses;
     }

@@ -25,9 +25,9 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.util.TimeUtils.isSameDay;
 import static com.github.util.TimeUtils.roundUp;
 import static java.lang.System.currentTimeMillis;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test times.

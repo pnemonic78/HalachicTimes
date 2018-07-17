@@ -31,11 +31,11 @@ import android.support.annotation.StyleableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.github.lib.R;
-import com.github.media.RingtoneManager;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.github.lib.R;
+import com.github.media.RingtoneManager;
 
 /**
  * A {@link Preference} that allows the user to choose a ringtone from those on the device.

@@ -17,13 +17,10 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
-import android.support.test.runner.AndroidJUnit4;
-import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.SmallTest;
 
-import com.github.times.location.impl.BingGeocoder;
-import com.github.times.location.impl.GeoNamesGeocoder;
-import com.github.times.location.impl.GoogleGeocoder;
+import com.github.times.location.bing.BingGeocoder;
+import com.github.times.location.geonames.GeoNamesGeocoder;
+import com.github.times.location.google.GoogleGeocoder;
 import com.github.times.location.test.R;
 
 import org.junit.Test;
@@ -40,9 +37,19 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import androidx.test.filters.SmallTest;
+import androidx.test.runner.AndroidJUnit4;
+
+import static androidx.test.InstrumentationRegistry.getContext;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class GeocoderTestCase extends AndroidTestCase {
+public class GeocoderTestCase {
+
+    private static final double DELTA = 1e-6;
 
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
@@ -70,8 +77,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new GoogleGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GoogleGeocoder(locale);
         int maxResults = 10;
 
         // Holon
@@ -89,8 +96,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         Address address = results.get(0);
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
-        assertEquals(32.0234380, address.getLatitude());
-        assertEquals(34.7766799, address.getLongitude());
+        assertEquals(32.0234380, address.getLatitude(), DELTA);
+        assertEquals(34.7766799, address.getLongitude(), DELTA);
         assertEquals("1-5, Kalischer St, Holon, Center District, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
@@ -108,8 +115,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         address = results.get(0);
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
-        assertEquals(32.0626167, address.getLatitude());
-        assertEquals(34.9717498, address.getLongitude());
+        assertEquals(32.0626167, address.getLatitude(), DELTA);
+        assertEquals(34.9717498, address.getLongitude(), DELTA);
         assertEquals("Unnamed Road, Rosh Haayin, Petach Tikva, Center District, Israel", ((ZmanimAddress) address).getFormatted());
     }
 
@@ -124,8 +131,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new GoogleGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GoogleGeocoder(locale);
 
         // Access Denied
         List<ZmanimLocation> results = new ArrayList<>();
@@ -150,9 +157,9 @@ public class GeocoderTestCase extends AndroidTestCase {
         assertEquals(1, results.size());
         ZmanimLocation location = results.get(0);
         assertNotNull(location);
-        assertEquals(32.0629985, location.getLatitude());
-        assertEquals(34.9768113, location.getLongitude());
-        assertEquals(94.6400452, location.getAltitude());
+        assertEquals(32.0629985, location.getLatitude(), DELTA);
+        assertEquals(34.9768113, location.getLongitude(), DELTA);
+        assertEquals(94.6400452, location.getAltitude(), DELTA);
     }
 
     /**
@@ -166,8 +173,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new GeoNamesGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GeoNamesGeocoder(locale);
         int maxResults = 10;
 
         // Near Elad
@@ -184,8 +191,8 @@ public class GeocoderTestCase extends AndroidTestCase {
 
         Address address = results.get(4);
         assertNotNull(address);
-        assertEquals(32.04984, address.getLatitude());
-        assertEquals(34.95382, address.getLongitude());
+        assertEquals(32.04984, address.getLatitude(), DELTA);
+        assertEquals(34.95382, address.getLongitude(), DELTA);
         assertEquals("Israel", address.getCountryName());
         assertEquals("El‘ad", address.getFeatureName());
     }
@@ -201,8 +208,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         final Context context = getContext();
         assertNotNull(context);
 
-        Locale locale = Locale.getDefault();
-        GeocoderBase geocoder = new BingGeocoder(context);
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new BingGeocoder(locale);
         int maxResults = 10;
 
         // Holon
@@ -220,8 +227,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         Address address = results.get(0);
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
-        assertEquals(32.0236, address.getLatitude());
-        assertEquals(34.776698, address.getLongitude());
+        assertEquals(32.0236, address.getLatitude(), DELTA);
+        assertEquals(34.776698, address.getLongitude(), DELTA);
         assertEquals("Street, Holon, Tel Aviv, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
@@ -239,8 +246,8 @@ public class GeocoderTestCase extends AndroidTestCase {
         address = results.get(0);
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
-        assertEquals(32.094619750976563, address.getLatitude());
-        assertEquals(34.885761260986328, address.getLongitude());
+        assertEquals(32.094619750976563, address.getLatitude(), DELTA);
+        assertEquals(34.885761260986328, address.getLongitude(), DELTA);
         assertEquals("Petah Tiqwa, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
     }
 

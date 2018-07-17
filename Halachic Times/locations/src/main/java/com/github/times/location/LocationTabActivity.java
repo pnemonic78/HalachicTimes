@@ -317,7 +317,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
                         setAddress(loc);
                         return true;
-                    } catch (Exception e) {
+                    } catch (Exception ignore) {
                         // Not a valid coordinate.
                     }
                 }

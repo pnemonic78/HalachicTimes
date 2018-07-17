@@ -147,6 +147,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         // Offset is added back when formatted.
         long offset = cal.getCalendar().getTimeZone().getRawOffset();
 
+        time = cal.getShaahZmanisBaalHatanya();
+        title = R.string.hour_baal_hatanya;
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
+
         time = cal.getShaahZmanis120Minutes();
         title = R.string.hour_120;
         adapter.addHour(title, SUMMARY_NONE, time - offset);
@@ -217,6 +221,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishDate jewishDate = getJewishCalendar();
 
+        date = cal.getAlosBaalHatanya();
+        title = R.string.dawn_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getAlos19Point8Degrees();
         title = R.string.dawn_19;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
@@ -276,6 +284,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         JewishDate jewishDate = getJewishCalendar();
 
         date = cal.getMisheyakir10Point2Degrees();
+        title = R.string.tallis_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+        date = cal.getMisheyakir10Point2Degrees();
         title = R.string.tallis_10;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
@@ -306,6 +318,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
+
+        date = cal.getSofZmanShmaBaalHatanya();
+        title = R.string.shema_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanShmaAlos16Point1ToSunset();
         title = R.string.shema_16_sunset;
@@ -381,6 +397,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishDate jewishDate = getJewishCalendar();
 
+        date = cal.getSofZmanTfilaBaalHatanya();
+        title = R.string.prayers_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getSofZmanTfilaMGA120Minutes();
         title = R.string.prayers_120;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
@@ -447,6 +467,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishDate jewishDate = getJewishCalendar();
 
+        date = cal.getChatzosBaalHatanya();
+        title = R.string.midday_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getFixedLocalChatzos();
         title = R.string.midday_fixed;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
@@ -460,6 +484,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
+
+        date = cal.getMinchaGedolaBaalHatanyaGreaterThan30();
+        title = R.string.earliest_mincha_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMinchaGedola16Point1Degrees();
         title = R.string.earliest_mincha_16;
@@ -487,6 +515,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishDate jewishDate = getJewishCalendar();
 
+        date = cal.getMinchaKetanaBaalHatanya();
+        title = R.string.mincha_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getMinchaKetana16Point1Degrees();
         title = R.string.mincha_16;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
@@ -508,6 +540,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
+
+        date = cal.getPlagHaminchaBaalHatanya();
+        title = R.string.plug_hamincha_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getPlagAlosToSunset();
         title = R.string.plug_hamincha_16_sunset;
@@ -650,6 +686,12 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishDate jewishDate = getJewishCalendar();
         jewishDate.forward();
+
+        date = cal.getTzaisBaalHatanya();
+        if (date != null) {
+            title = R.string.nightfall_baal_hatanya;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
 
         date = cal.getTzais120();
         if (date != null) {
@@ -865,6 +907,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishDate jewishDate = getJewishCalendar();
 
+        date = cal.getSofZmanAchilasChametzBaalHatanya();
+        title = R.string.eat_chametz_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getSofZmanAchilasChametzMGA16Point1Degrees();
         title = R.string.eat_chametz_16;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
@@ -882,6 +928,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
+
+        date = cal.getSofZmanBiurChametzBaalHatanya();
+        title = R.string.burn_chametz_baal_hatanya;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
         title = R.string.burn_chametz_16;
@@ -961,18 +1011,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        int endsAfter = settings.getShabbathEndsAfter();
         long offset = settings.getShabbathEnds() * MINUTE_IN_MILLIS;
-        switch (endsAfter) {
-            case R.string.sunset:
-                populateSunset(adapter, cal, settings, offset);
-                break;
-            case R.string.twilight:
-                populateTwilight(adapter, cal, settings, offset);
-                break;
-            case R.string.nightfall:
-                populateNightfall(adapter, cal, settings, offset);
-                break;
-        }
+
+        populateSunset(adapter, cal, settings, offset);
+        populateTwilight(adapter, cal, settings, offset);
+        populateNightfall(adapter, cal, settings, offset);
     }
 }

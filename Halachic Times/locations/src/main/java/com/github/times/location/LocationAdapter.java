@@ -20,9 +20,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.github.util.LocaleUtils;
-import com.github.widget.ArrayAdapter;
-
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,6 +27,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+
+import com.github.util.LocaleUtils;
+import com.github.widget.ArrayAdapter;
 
 /**
  * Location adapter.

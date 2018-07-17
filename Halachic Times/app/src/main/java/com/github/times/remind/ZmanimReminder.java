@@ -15,6 +15,9 @@
  */
 package com.github.times.remind;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.util.GeoLocation;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -40,6 +43,11 @@ import android.os.PowerManager.WakeLock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import com.github.times.R;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
@@ -51,15 +59,8 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LogUtils;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
@@ -98,19 +99,25 @@ public class ZmanimReminder {
      * Newer notifications will override current notifications.
      */
     private static final int ID_NOTIFY = 1;
-    /** Id for alarms. */
+    /**
+     * Id for alarms.
+     */
     private static final int ID_ALARM_REMINDER = 2;
     /**
      * Id for upcoming time notification.<br>
      * Newer notifications will override current notifications.
      */
     private static final int ID_NOTIFY_UPCOMING = 3;
-    /** Id for alarms for upcoming time notification. */
+    /**
+     * Id for alarms for upcoming time notification.
+     */
     private static final int ID_ALARM_UPCOMING = 4;
 
     private static final long WAS_DELTA = 30 * SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * SECOND_IN_MILLIS;
-    /** The number of days to check forwards for a reminder. */
+    /**
+     * The number of days to check forwards for a reminder.
+     */
     private static final int DAYS_FORWARD = 30;
 
     /* Yellow represents the sun or a candle flame. */
@@ -118,34 +125,44 @@ public class ZmanimReminder {
     private static final int LED_ON = 750;
     private static final int LED_OFF = 500;
 
-    /** Extras name for the reminder id. */
-    private static final String EXTRA_REMINDER_ID = "reminder_id";
-    /** Extras name for the reminder title. */
-    private static final String EXTRA_REMINDER_TITLE = "reminder_title";
-    /** Extras name for the reminder text. */
-    private static final String EXTRA_REMINDER_TEXT = "reminder_text";
-    /** Extras name for the reminder time. */
-    private static final String EXTRA_REMINDER_TIME = "reminder_time";
+    /**
+     * Extras name for the reminder.
+     */
+    private static final String EXTRA_REMINDER = "reminder";
 
-    /** Action to remind. */
+    /**
+     * Action to remind.
+     */
     public static final String ACTION_REMIND = "com.github.times.action.REMIND";
-    /** Action to update reminders. */
+    /**
+     * Action to update reminders.
+     */
     public static final String ACTION_UPDATE = "com.github.times.action.UPDATE";
-    /** Action to cancel reminders. */
+    /**
+     * Action to cancel reminders.
+     */
     public static final String ACTION_CANCEL = "com.github.times.action.CANCEL";
-    /** Action to silence reminders. */
+    /**
+     * Action to silence reminders.
+     */
     public static final String ACTION_SILENCE = "com.github.times.action.SILENCE";
 
-    /** How much time to wait for the notification sound once entered into a day not allowed to disturb. */
+    /**
+     * How much time to wait for the notification sound once entered into a day not allowed to disturb.
+     */
     private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
 
     private static final String CHANNEL_REMINDER = "reminder";
     private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
     private static final String CHANNEL_UPCOMING = "upcoming";
 
+    private static final String WAKE_TAG = TAG + ":wake";
+
     private final Context context;
     private SimpleDateFormat dateFormat;
-    /** The adapter. */
+    /**
+     * The adapter.
+     */
     private ZmanimAdapter adapter;
     private Bitmap largeIconSolar;
     private Bitmap largeIconReminder;
@@ -313,12 +330,21 @@ public class ZmanimReminder {
      */
     public void notifyNow(ZmanimPreferences settings, ZmanimReminderItem item) {
         LogUtils.i(TAG, "notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
-        PendingIntent contentIntent = createActivityIntent();
 
-        Notification notification = createReminderNotification(settings, item, contentIntent);
-        postReminderNotification(settings, notification);
+        switch (settings.getReminderType()) {
+            case RingtoneManager.TYPE_ALARM:
+                alarmNow(item);
+                break;
+            case RingtoneManager.TYPE_NOTIFICATION:
+            default:
+                PendingIntent contentIntent = createActivityIntent();
 
-        silenceFuture(item, currentTimeMillis() + STOP_NOTIFICATION_AFTER);
+                Notification notification = createReminderNotification(settings, item, contentIntent);
+                postReminderNotification(settings, notification);
+
+                silenceFuture(item, currentTimeMillis() + STOP_NOTIFICATION_AFTER);
+                break;
+        }
     }
 
     /**
@@ -362,11 +388,8 @@ public class ZmanimReminder {
             CharSequence contentTitle = context.getText(item.titleId);
             CharSequence contentText = item.summary;
             long when = item.time;
-
-            intent.putExtra(EXTRA_REMINDER_ID, item.titleId);
-            intent.putExtra(EXTRA_REMINDER_TITLE, contentTitle);
-            intent.putExtra(EXTRA_REMINDER_TEXT, contentText);
-            intent.putExtra(EXTRA_REMINDER_TIME, when);
+            ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, when);
+            intent.putExtra(EXTRA_REMINDER, reminderItem);
         }
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -412,14 +435,9 @@ public class ZmanimReminder {
                 break;
             case ACTION_REMIND:
                 extras = intent.getExtras();
-                if (extras != null) {
-                    int id = extras.getInt(EXTRA_REMINDER_ID);
-                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
-                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
-
-                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
-                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, contentText, when);
+                if ((extras != null) && extras.containsKey(EXTRA_REMINDER)) {
+                    ZmanimReminderItem reminderItem = extras.getParcelable(EXTRA_REMINDER);
+                    if ((reminderItem != null) && (reminderItem.time > 0L)) {
                         notifyNow(settings, reminderItem);
                     }
                     update = true;
@@ -427,14 +445,9 @@ public class ZmanimReminder {
                 break;
             case ACTION_SILENCE:
                 extras = intent.getExtras();
-                if (extras != null) {
-                    int id = extras.getInt(EXTRA_REMINDER_ID);
-                    CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                    CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
-                    long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
-
-                    if ((contentTitle != null) && (contentText != null) && (when > 0L)) {
-                        ZmanimReminderItem reminderItem = new ZmanimReminderItem(id, contentTitle, contentText, when);
+                if ((extras != null) && extras.containsKey(EXTRA_REMINDER)) {
+                    ZmanimReminderItem reminderItem = extras.getParcelable(EXTRA_REMINDER);
+                    if ((reminderItem != null) && (reminderItem.time > 0L)) {
                         silence(settings, reminderItem);
                     }
                     update = true;
@@ -545,7 +558,7 @@ public class ZmanimReminder {
         // Wake up the device to notify the user.
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         if (pm != null) {
-            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, TAG);
+            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG);
             wake.acquire(5000L);// enough time to also hear an alarm tone
         }
 
@@ -594,7 +607,7 @@ public class ZmanimReminder {
                 dayOfWeek = SATURDAY;
                 break;
             case CHANUKAH:
-                if (dayOfWeek == SATURDAY){
+                if (dayOfWeek == SATURDAY) {
                     return settings.isReminderSunday(itemId);
                 }
                 break;
@@ -707,11 +720,7 @@ public class ZmanimReminder {
     private PendingIntent createSilenceIntent(ZmanimReminderItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_SILENCE);
-
-        intent.putExtra(EXTRA_REMINDER_ID, item.id);
-        intent.putExtra(EXTRA_REMINDER_TITLE, item.title);
-        intent.putExtra(EXTRA_REMINDER_TEXT, item.text);
-        intent.putExtra(EXTRA_REMINDER_TIME, item.time);
+        intent.putExtra(EXTRA_REMINDER, item);
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -804,5 +813,20 @@ public class ZmanimReminder {
      */
     private Class<? extends BroadcastReceiver> getReceiverClass() {
         return ZmanimReminderReceiver.class;
+    }
+
+    /**
+     * Notify now.
+     *
+     * @param item the reminder item.
+     */
+    public void alarmNow(ZmanimReminderItem item) {
+        LogUtils.i(TAG, "alarm now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+
+        final Context context = getContext();
+        Intent intent = new Intent(context, AlarmActivity.class);
+        intent.putExtra(AlarmActivity.EXTRA_REMINDER, item);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

@@ -20,7 +20,6 @@ def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 
 android {
     compileSdkVersion androidBuildSdkVersion
-    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
         applicationId "net.sf.times"
@@ -36,7 +35,7 @@ android {
         manifestPlaceholders = [offline: false]
 
         testApplicationId "net.sf.times.test"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {

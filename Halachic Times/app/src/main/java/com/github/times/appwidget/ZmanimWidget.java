@@ -15,6 +15,9 @@
  */
 package com.github.times.appwidget;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -26,9 +29,6 @@ import android.widget.RemoteViews;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
-
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 

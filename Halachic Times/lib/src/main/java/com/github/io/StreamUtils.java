@@ -15,11 +15,21 @@
  */
 package com.github.io;
 
+import com.github.nio.charset.StandardCharsets;
+
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 
+/**
+ * Stream utilities.
+ *
+ * @author Moshe Waisberg
+ */
 public class StreamUtils {
 
     private static final int BUFFER_SIZE = 1024;
@@ -34,9 +44,9 @@ public class StreamUtils {
      * @return the array of bytes.
      * @throws IOException if an I/O error occurs.
      */
-    public static ByteArrayOutputStream readFully(InputStream in) throws IOException {
+    public static InputStream readFully(InputStream in) throws IOException {
         in = new BufferedInputStream(in);
-        return readFully(in, Math.max(in.available(), 32));
+        return readFully(in, in.available());
     }
 
     /**
@@ -47,16 +57,68 @@ public class StreamUtils {
      * @return the array of bytes.
      * @throws IOException if an I/O error occurs.
      */
-    public static ByteArrayOutputStream readFully(InputStream in, int size) throws IOException {
+    public static InputStream readFully(InputStream in, int size) throws IOException {
         size = Math.max(size, 32);
-        ByteArrayOutputStream out = new ByteArrayOutputStream(size);
+        RawByteArrayOutputStream out = new RawByteArrayOutputStream(size);
         final byte[] buf = new byte[BUFFER_SIZE];
-        int count = in.read(buf);
-        while (count >= 0) {
+        int count;
+        while ((count = in.read(buf)) >= 0) {
             out.write(buf, 0, count);
-            count = in.read(buf);
         }
         out.close();
+        return new ByteArrayInputStream(out.getByteArray(), 0, out.size());
+    }
+
+    /**
+     * Convert the stream bytes to a sequence of characters.
+     *
+     * @param in the input.
+     * @return the characters.
+     * @throws IOException if an I/O error occurs.
+     */
+    public static CharSequence toCharSequence(InputStream in) throws IOException {
+        return toCharSequence(in, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Convert the stream bytes to a sequence of characters.
+     *
+     * @param in      the input.
+     * @param charset the character encoding.
+     * @return the characters.
+     * @throws IOException if an I/O error occurs.
+     */
+    public static CharSequence toCharSequence(InputStream in, Charset charset) throws IOException {
+        Reader reader = new InputStreamReader(in, charset);
+        StringBuilder out = new StringBuilder(in.available());
+        final char[] buf = new char[BUFFER_SIZE];
+        int count;
+        while ((count = reader.read(buf)) >= 0) {
+            out.append(buf, 0, count);
+        }
         return out;
+    }
+
+    /**
+     * Convert the stream bytes to a string.
+     *
+     * @param in the input.
+     * @return the string.
+     * @throws IOException if an I/O error occurs.
+     */
+    public static String toString(InputStream in) throws IOException {
+        return toCharSequence(in).toString();
+    }
+
+    /**
+     * Convert the stream bytes to a string.
+     *
+     * @param in      the input.
+     * @param charset the character encoding.
+     * @return the string.
+     * @throws IOException if an I/O error occurs.
+     */
+    public static String toString(InputStream in, Charset charset) throws IOException {
+        return toCharSequence(in, charset).toString();
     }
 }

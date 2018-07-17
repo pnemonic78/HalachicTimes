@@ -17,12 +17,13 @@ package com.github.net;
 
 import com.github.io.StreamUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 /**
  * HTTP reader.
@@ -31,57 +32,57 @@ import java.net.URLConnection;
  */
 public class HTTPReader {
 
-    /** Content type that is XML text. */
+    /**
+     * Content type that is XML text.
+     */
     public static final String CONTENT_APP_XML = "application/xml";
-    /** Content type that is XML text. */
+    /**
+     * Content type that is XML text.
+     */
     public static final String CONTENT_TEXT_XML = "text/xml";
-    /** Content type that is XML text. */
+    /**
+     * Content type that is XML text.
+     */
     public static final String[] CONTENT_XML = {CONTENT_APP_XML, CONTENT_TEXT_XML};
 
-    /** Creates a new reader. */
+    /**
+     * Creates a new reader.
+     */
     private HTTPReader() {
     }
 
     /**
      * Read bytes from the network.
      *
-     * @param url
-     *         the URL.
+     * @param url the URL.
      * @return the data - {@code null} otherwise.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    public static byte[] read(URL url) throws IOException {
+    public static InputStream read(URL url) throws IOException {
         return read(url, (String[]) null);
     }
 
     /**
      * Read bytes from the network.
      *
-     * @param url
-     *         the URL.
-     * @param contentTypeExpected
-     *         the expected content type.
+     * @param url                 the URL.
+     * @param contentTypeExpected the expected content type.
      * @return the data - {@code null} otherwise.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    public static byte[] read(URL url, String contentTypeExpected) throws IOException {
+    public static InputStream read(URL url, String contentTypeExpected) throws IOException {
         return read(url, new String[]{contentTypeExpected});
     }
 
     /**
      * Read bytes from the network.
      *
-     * @param url
-     *         the URL.
-     * @param contentTypesExpected
-     *         the expected content types.
+     * @param url                  the URL.
+     * @param contentTypesExpected the expected content types.
      * @return the data - {@code null} otherwise.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    public static byte[] read(URL url, String[] contentTypesExpected) throws IOException {
+    public static InputStream read(URL url, String[] contentTypesExpected) throws IOException {
         URLConnection conn = url.openConnection();
         HttpURLConnection hconn = null;
         if (conn instanceof HttpURLConnection) {
@@ -91,12 +92,14 @@ public class HTTPReader {
                 return null;
         }
         String contentType = conn.getContentType();
-        if (contentType == null)
+        if (isEmpty(contentType)) {
             return null;
-        int indexSemi = contentType.indexOf(';');
-        if (indexSemi >= 0)
-            contentType = contentType.substring(0, indexSemi);
+        }
         if (contentTypesExpected != null) {
+            int indexSemi = contentType.indexOf(';');
+            if (indexSemi >= 0) {
+                contentType = contentType.substring(0, indexSemi);
+            }
             boolean hasType = false;
             for (String contentTypeExpected : contentTypesExpected) {
                 if (contentType.equals(contentTypeExpected)) {
@@ -104,24 +107,24 @@ public class HTTPReader {
                     break;
                 }
             }
-            if (!hasType)
+            if (!hasType) {
                 return null;
+            }
         }
 
-        byte[] data = null;
+        InputStream data;
         InputStream in = null;
         try {
             in = conn.getInputStream();
             // Do NOT use Content-Length header for an exact buffer size!
             // It is not always reliable / accurate.
-            final int outSize = Math.max(in.available(), conn.getContentLength());
-            ByteArrayOutputStream out = StreamUtils.readFully(in, outSize);
-            data = out.toByteArray();
+            final int dataSize = Math.max(in.available(), conn.getContentLength());
+            data = StreamUtils.readFully(in, dataSize);
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (Exception e) {
+                } catch (Exception ignore) {
                 }
             }
             if (hconn != null) {

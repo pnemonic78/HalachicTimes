@@ -21,9 +21,10 @@
     <string name="opinion_96">Päivä on 96 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_96_zmanis">Päivä on 96 זמניות minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_ateret">Mukainen Ješivat Ateret Tora</string>
-    <string name="opinion_gra">Mukainen GRA ja Baal Tanja</string>
+    <string name="opinion_gra">Mukainen GRA</string>
     <string name="opinion_mga">Mukainen Magen Avraham</string>
     <string name="opinion_tam">Mukainen Rabbeinu Tam</string>
+    <string name="opinion_baal_hatanya">Mukainen Baal Tanja</string>
 
     <!-- Temporal hour -->
     <string name="hour">Kausiluonteinen tunti</string>

@@ -42,21 +42,37 @@ public class LocaleUtils {
 
     private static final String TAG = "LocaleUtils";
 
-    /** ISO 639 language code for "Arabic". */
+    /**
+     * ISO 639 language code for "Arabic".
+     */
     public static final String ISO639_ARABIC = "ar";
-    /** ISO 639 language code for "Hausa". */
+    /**
+     * ISO 639 language code for "Hausa".
+     */
     public static final String ISO639_HAUSA = "ha";
-    /** ISO 639 language code for "Hebrew". */
+    /**
+     * ISO 639 language code for "Hebrew".
+     */
     public static final String ISO639_HEBREW_FORMER = "he";
-    /** ISO 639 language code for "Hebrew" (Java compatibility). */
+    /**
+     * ISO 639 language code for "Hebrew" (Java compatibility).
+     */
     public static final String ISO639_HEBREW = "iw";
-    /** ISO 639 language code for "Yiddish" (Java compatibility). */
+    /**
+     * ISO 639 language code for "Yiddish" (Java compatibility).
+     */
     public static final String ISO639_YIDDISH_FORMER = "ji";
-    /** ISO 639 language code for "Persian (Farsi)". */
+    /**
+     * ISO 639 language code for "Persian (Farsi)".
+     */
     public static final String ISO639_PERSIAN = "fa";
-    /** ISO 639 language code for "Pashto, Pushto". */
+    /**
+     * ISO 639 language code for "Pashto, Pushto".
+     */
     public static final String ISO639_PASHTO = "ps";
-    /** ISO 639 language code for "Yiddish". */
+    /**
+     * ISO 639 language code for "Yiddish".
+     */
     public static final String ISO639_YIDDISH = "yi";
 
     private LocaleUtils() {
@@ -154,15 +170,30 @@ public class LocaleUtils {
     public static Locale getDefaultLocale(@NonNull Configuration config) {
         Locale locale = null;
         if (VERSION.SDK_INT >= N) {
-            android.os.LocaleList locales = config.getLocales();
-            if (locales.isEmpty()) {
-                locales = android.os.LocaleList.getAdjustedDefault();
-            }
-            if (!locales.isEmpty()) {
-                locale = locales.get(0);
-            }
-        } else {
-            locale = config.locale;
+            return getDefaultLocale(config.getLocales());
+        }
+        locale = config.locale;
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
+        return locale;
+    }
+
+    /**
+     * Get the default locale.
+     *
+     * @param locales the list of locales.
+     * @return the locale.
+     */
+    @TargetApi(N)
+    @NonNull
+    public static Locale getDefaultLocale(@NonNull android.os.LocaleList locales) {
+        Locale locale = null;
+        if (locales.isEmpty()) {
+            locales = android.os.LocaleList.getAdjustedDefault();
+        }
+        if (!locales.isEmpty()) {
+            locale = locales.get(0);
         }
         if (locale == null) {
             locale = Locale.getDefault();

@@ -94,7 +94,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected boolean showElapsed;
     private Format timeFormat;
     private Format timeFormatSeasonalHour;
-    private long timeFormatGranularity = SECOND_IN_MILLIS;
+    private long timeFormatGranularity;
     private Comparator<ZmanimItem> comparator;
     private HebrewDateFormatter hebrewDateFormatter;
     private String[] monthNames;

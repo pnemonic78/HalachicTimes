@@ -15,6 +15,8 @@
  */
 package com.github.times.preference;
 
+import net.sourceforge.zmanim.ShaahZmanis;
+
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
@@ -22,6 +24,9 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 import com.github.media.RingtoneManager;
 import com.github.preference.LocalePreferences;
@@ -31,11 +36,6 @@ import com.github.preference.SimpleThemePreferences;
 import com.github.preference.ThemePreferences;
 import com.github.preference.TimePreference;
 import com.github.times.R;
-
-import net.sourceforge.zmanim.ShaahZmanis;
-
-import java.util.Calendar;
-import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -60,6 +60,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_18;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_19_8;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_26;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2_STARS;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_30;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_65;
@@ -94,6 +95,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_MGA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_NONE;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
 
@@ -240,6 +242,9 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         }
         if (OPINION_MGA.equals(opinion)) {
             return ShaahZmanis.MGA;
+        }
+        if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            return ShaahZmanis.BAAL_HATANYA;
         }
         return ShaahZmanis.GRA;
     }
@@ -694,6 +699,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_18 = res.getString(R.string.opinion_value_18);
         OPINION_19_8 = res.getString(R.string.opinion_value_19);
         OPINION_2 = res.getString(R.string.opinion_value_2);
+        OPINION_2_STARS = res.getString(R.string.opinion_value_2_stars);
         OPINION_26 = res.getString(R.string.opinion_value_26);
         OPINION_3 = res.getString(R.string.opinion_value_3);
         OPINION_3_65 = res.getString(R.string.opinion_value_3_65);
@@ -721,14 +727,15 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_96 = res.getString(R.string.opinion_value_96);
         OPINION_96_ZMANIS = res.getString(R.string.opinion_value_96_zmanis);
         OPINION_ATERET = res.getString(R.string.opinion_value_ateret);
+        OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya);
+        OPINION_FIXED = res.getString(R.string.opinion_value_fixed);
         OPINION_GRA = res.getString(R.string.opinion_value_gra);
         OPINION_HALF = res.getString(R.string.opinion_value_half);
-        OPINION_MGA = res.getString(R.string.opinion_value_mga);
-        OPINION_FIXED = res.getString(R.string.opinion_value_fixed);
         OPINION_LEVEL = res.getString(R.string.opinion_value_level);
+        OPINION_MGA = res.getString(R.string.opinion_value_mga);
+        OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
         OPINION_SEA = res.getString(R.string.opinion_value_sea);
         OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight);
-        OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
 
         THEME_NONE = res.getString(R.string.theme_value_none);
         THEME_WHITE = res.getString(R.string.theme_value_white);

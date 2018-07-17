@@ -5,7 +5,6 @@ def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 
 android {
     compileSdkVersion androidBuildSdkVersion
-    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
         applicationId "net.sf.times.compass"
@@ -16,7 +15,7 @@ android {
         resConfigs "bg", "cs", "da", "de", "el", "en", "es", "es_US", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "nl", "no", "pl", "pt", "pt_PT", "ro", "ru", "sv", "tr", "uk"
 
         testApplicationId "net.sf.times.compass.test"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {

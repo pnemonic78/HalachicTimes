@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.impl;
+package com.github.times.location.geonames;
 
 import android.content.Context;
 import android.location.Address;
@@ -32,6 +32,8 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import static android.text.TextUtils.isEmpty;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -93,7 +95,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
-        if (TextUtils.isEmpty(USERNAME))
+        if (isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
         return getAddressXMLFromURL(queryUrl, maxResults);
@@ -293,8 +295,10 @@ public class GeoNamesGeocoder extends GeocoderBase {
                 case COUNTRY_CODE:
                     if (address != null) {
                         address.setCountryCode(text);
-                        if (address.getCountryName() == null)
-                            address.setCountryName(new Locale(locale.getLanguage(), text).getDisplayCountry());
+                        if (!isEmpty(text) && (address.getCountryName() == null)) {
+                            Locale countryLocale = new Locale(locale.getLanguage(), text);
+                            address.setCountryName(countryLocale.getDisplayCountry(countryLocale));
+                        }
                     }
                     if (TAG_CC.equals(localName))
                         state = State.GEONAME;
@@ -394,7 +398,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
-        if (TextUtils.isEmpty(USERNAME))
+        if (isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION_SRTM3, latitude, longitude, USERNAME);
         return getElevationTextFromURL(latitude, longitude, queryUrl);

@@ -25,7 +25,8 @@
     <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
     <string name="opinion_96_zmanis">Day is 96 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_gra">According to GRA and Baal Tanya</string>
+    <string name="opinion_baal_hatanya">According to Baal Hatanya</string>
+    <string name="opinion_gra">According to GRA</string>
     <string name="opinion_mga">According to Magen Avraham</string>
     <string name="opinion_tam">According to Rabbeinu Tam</string>
 
@@ -33,6 +34,7 @@
     <string name="hour">Seasonal hour</string>
     <string name="hour_mga" translatable="false">@string/opinion_mga</string>
     <string name="hour_gra" translatable="false">@string/opinion_gra</string>
+    <string name="hour_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
     <string name="hour_120" translatable="false">@string/opinion_120</string>
     <string name="hour_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
     <string name="hour_16" translatable="false">@string/opinion_16</string>
@@ -66,6 +68,7 @@
     <string name="dawn_72" translatable="false">@string/opinion_72</string>
     <string name="dawn_72_zmanis" translatable="false">@string/opinion_72_zmanis</string>
     <string name="dawn_60" translatable="false">@string/opinion_60</string>
+    <string name="dawn_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Tallis and Tefillin -->
     <string name="tallis">Earliest <i>tallis</i> and <i>tefillin</i> (משיכיר)</string>
@@ -73,11 +76,13 @@
     <string name="tallis_summary">Sun is 11.5° below horizon</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
     <string name="tallis_10">Sun is 10.2° below horizon</string>
+    <string name="tallis_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Sunrise</string>
     <string name="sunrise_summary">Adjusted for elevation</string>
     <string name="sunrise_sea">At sea level</string>
+    <string name="sunrise_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Latest shema -->
     <string name="shema">Latest <i>shema</i></string>
@@ -98,6 +103,7 @@
     <string name="shema_3">3 hours before midday</string>
     <string name="shema_fixed">3 hours before fixed local midday</string>
     <string name="shema_gra" translatable="false">@string/opinion_gra</string>
+    <string name="shema_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Latest shacharis -->
     <string name="prayers">Latest morning prayers</string>
@@ -116,11 +122,13 @@
     <string name="prayers_2">2 hours before midday</string>
     <string name="prayers_mga" translatable="false">@string/opinion_mga</string>
     <string name="prayers_gra" translatable="false">@string/opinion_gra</string>
+    <string name="prayers_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Midday -->
     <string name="midday">Midday</string>
     <string name="midday_summary">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
+    <string name="midday_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Earliest afternoon prayers</string>
@@ -129,6 +137,7 @@
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>
     <string name="earliest_mincha_30">30 minutes after midday</string>
     <string name="earliest_mincha_16" translatable="false">@string/opinion_16</string>
+    <string name="earliest_mincha_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Afternoon prayers</string>
@@ -136,6 +145,7 @@
     <string name="mincha_72" translatable="false">@string/opinion_72</string>
     <string name="mincha_16" translatable="false">@string/opinion_16</string>
     <string name="mincha_ateret" translatable="false">@string/opinion_ateret</string>
+    <string name="mincha_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -156,6 +166,7 @@
     <string name="plug_hamincha_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
     <string name="plug_hamincha_16_sunset" translatable="false">@string/opinion_16_sunset</string>
     <string name="plug_hamincha_ateret" translatable="false">@string/opinion_ateret</string>
+    <string name="plug_hamincha_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Candle lighting -->
     <string name="candles">Candle lighting</string>
@@ -195,6 +206,7 @@
     <string name="sunset">Sunset</string>
     <string name="sunset_summary" translatable="false">@string/sunrise_summary</string>
     <string name="sunset_sea" translatable="false">@string/sunrise_sea</string>
+    <string name="sunset_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Twilight -->
     <string name="twilight">Twilight</string>
@@ -231,6 +243,7 @@
     <string name="nightfall_5_95">Sun is 5.95° below sea level</string>
     <string name="nightfall_7">Sun is 7.083° below sea level</string>
     <string name="nightfall_8">Sun is 8.5° below sea level</string>
+    <string name="nightfall_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Shabbath ends</string>
@@ -271,10 +284,12 @@
     <string name="eat_chametz_gra" translatable="false">@string/opinion_gra</string>
     <string name="eat_chametz_16" translatable="false">@string/opinion_16</string>
     <string name="eat_chametz_72" translatable="false">@string/opinion_72</string>
+    <string name="eat_chametz_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
     <string name="burn_chametz">Latest time to burn <i>chametz</i></string>
     <string name="burn_chametz_gra" translatable="false">@string/opinion_gra</string>
     <string name="burn_chametz_16" translatable="false">@string/opinion_16</string>
     <string name="burn_chametz_72" translatable="false">@string/opinion_72</string>
+    <string name="burn_chametz_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Moon -->
     <string name="molad">Birth of new moon (מולד)</string>
@@ -359,5 +374,8 @@
     <string name="reminder_wednesday">Remind on Wednesday</string>
     <string name="notification_upcoming_title">The upcoming time as a notification</string>
     <string name="notifications_title" translatable="false">@string/reminder</string>
+    <string name="title_activity_alarm" translatable="false">@string/alarm_volume_title</string>
+    <string name="reminder_settings" translatable="false">@string/reminder</string>
+    <string name="dismiss" translatable="false">@string/cancel</string>
 
 </resources>

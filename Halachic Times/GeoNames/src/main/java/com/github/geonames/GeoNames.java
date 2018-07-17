@@ -316,8 +316,8 @@ public class GeoNames {
         double longitude = geoName.getLongitude();
         String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
         URL url = new URL(queryUrl);
-        byte[] data = HTTPReader.read(url);
-        String elevationValue = new String(data).trim();
+        InputStream data = HTTPReader.read(url);
+        String elevationValue = new BufferedReader(new InputStreamReader(data)).readLine().trim();
         double elevation = Double.parseDouble(elevationValue);
         geoName.setElevation((int) elevation);
     }
@@ -327,11 +327,10 @@ public class GeoNames {
         double longitude = geoName.getLongitude();
         String queryUrl = String.format(Locale.US, URL_ELEVATION_GOOGLE, latitude, longitude);
         URL url = new URL(queryUrl);
-        byte[] data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-        InputStream source = new ByteArrayInputStream(data);
+        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(source);
+        Document doc = builder.parse(data);
         Element root = doc.getDocumentElement();
         Element statusNode = (Element) root.getElementsByTagName(TAG_ELEVATION_STATUS).item(0);
         String status = statusNode.getTextContent();
@@ -378,8 +377,8 @@ public class GeoNames {
         String queryUrl = String.format(Locale.US, URL_GEONAME_GET, record.getGeoNameId(), USERNAME);
         //queryUrl = "GeoNames/res/524901.json";
         URL url = new URL(queryUrl);
-        byte[] data = HTTPReader.read(url);
-        JsonReader reader = Json.createReader(new ByteArrayInputStream(data));
+        InputStream data = HTTPReader.read(url);
+        JsonReader reader = Json.createReader(data);
         JsonObject json = reader.readObject();
         JsonArray arr = json.getJsonArray("alternateNames");
 

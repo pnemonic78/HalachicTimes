@@ -195,7 +195,7 @@ public class CountriesGeocoder extends GeocoderBase {
         country.setLatitude(latitude);
         country.setLongitude(longitude);
         country.setCountryCode(locale.getCountry());
-        country.setCountryName(locale.getDisplayCountry());
+        country.setCountryName(locale.getDisplayCountry(locale));
         country.setId(Country.generateCountryId(country));
 
         return country;
@@ -501,7 +501,7 @@ public class CountriesGeocoder extends GeocoderBase {
             city.setLongitude(longitudes[nearestCityIndex]);
             city.setElevation(elevations[nearestCityIndex]);
             city.setCountryCode(cityLocale.getCountry());
-            city.setCountryName(cityLocale.getDisplayCountry());
+            city.setCountryName(cityLocale.getDisplayCountry(locale));
             city.setLocality(names[nearestCityIndex]);
         }
 
@@ -542,7 +542,7 @@ public class CountriesGeocoder extends GeocoderBase {
             city.setLongitude(longitude);
             city.setElevation(elevation);
             city.setCountryCode(cityLocale.getCountry());
-            city.setCountryName(cityLocale.getDisplayCountry());
+            city.setCountryName(cityLocale.getDisplayCountry(locale));
             city.setLocality(cityName);
 
             cities.add(city);
@@ -584,7 +584,7 @@ public class CountriesGeocoder extends GeocoderBase {
                 city.setLongitude(cityLongitude);
                 city.setElevation(elevations[i]);
                 city.setCountryCode(cityLocale.getCountry());
-                city.setCountryName(cityLocale.getDisplayCountry());
+                city.setCountryName(cityLocale.getDisplayCountry(locale));
                 city.setLocality(names[i]);
                 city.setId(-1 - i);//Don't persist in db.
 
