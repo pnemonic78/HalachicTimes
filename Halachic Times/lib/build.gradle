@@ -31,9 +31,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api 'androidx.annotation:annotation:1.0.0-alpha3'
-    api 'androidx.core:core:1.0.0-alpha3'
-    api 'androidx.recyclerview:recyclerview:1.0.0-alpha3'
+    api 'androidx.annotation:annotation:1.0.0-beta01'
+    api 'androidx.core:core:1.0.0-beta01'
+    api 'androidx.recyclerview:recyclerview:1.0.0-beta01'
 
     testImplementation 'junit:junit:4.12'
 }
