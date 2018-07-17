@@ -1011,18 +1011,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
     }
 
     private void populateShabbathEnds(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        int endsAfter = settings.getShabbathEndsAfter();
         long offset = settings.getShabbathEnds() * MINUTE_IN_MILLIS;
-        switch (endsAfter) {
-            case R.string.sunset:
-                populateSunset(adapter, cal, settings, offset);
-                break;
-            case R.string.twilight:
-                populateTwilight(adapter, cal, settings, offset);
-                break;
-            case R.string.nightfall:
-                populateNightfall(adapter, cal, settings, offset);
-                break;
-        }
+
+        populateSunset(adapter, cal, settings, offset);
+        populateTwilight(adapter, cal, settings, offset);
+        populateNightfall(adapter, cal, settings, offset);
     }
 }

@@ -61,6 +61,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_18;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_19_8;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_26;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2_STARS;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_30;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_65;
@@ -699,6 +700,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_18 = res.getString(R.string.opinion_value_18);
         OPINION_19_8 = res.getString(R.string.opinion_value_19);
         OPINION_2 = res.getString(R.string.opinion_value_2);
+        OPINION_2_STARS = res.getString(R.string.opinion_value_2_stars);
         OPINION_26 = res.getString(R.string.opinion_value_26);
         OPINION_3 = res.getString(R.string.opinion_value_3);
         OPINION_3_65 = res.getString(R.string.opinion_value_3_65);
@@ -726,15 +728,15 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_96 = res.getString(R.string.opinion_value_96);
         OPINION_96_ZMANIS = res.getString(R.string.opinion_value_96_zmanis);
         OPINION_ATERET = res.getString(R.string.opinion_value_ateret);
+        OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya);
+        OPINION_FIXED = res.getString(R.string.opinion_value_fixed);
         OPINION_GRA = res.getString(R.string.opinion_value_gra);
         OPINION_HALF = res.getString(R.string.opinion_value_half);
-        OPINION_MGA = res.getString(R.string.opinion_value_mga);
-        OPINION_FIXED = res.getString(R.string.opinion_value_fixed);
         OPINION_LEVEL = res.getString(R.string.opinion_value_level);
+        OPINION_MGA = res.getString(R.string.opinion_value_mga);
+        OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
         OPINION_SEA = res.getString(R.string.opinion_value_sea);
         OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight);
-        OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
-        OPINION_BAAL_HATANYA = res.getString(R.string.opinion_value_baal_hatanya);
 
         THEME_NONE = res.getString(R.string.theme_value_none);
         THEME_WHITE = res.getString(R.string.theme_value_white);

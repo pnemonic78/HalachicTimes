@@ -112,6 +112,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_18 = ZmanimPreferences.Values.OPINION_18;
     protected static final String OPINION_19_8 = ZmanimPreferences.Values.OPINION_19_8;
     protected static final String OPINION_2 = ZmanimPreferences.Values.OPINION_2;
+    protected static final String OPINION_2_STARS = ZmanimPreferences.Values.OPINION_2_STARS;
     protected static final String OPINION_26 = ZmanimPreferences.Values.OPINION_26;
     protected static final String OPINION_3 = ZmanimPreferences.Values.OPINION_3;
     protected static final String OPINION_3_65 = ZmanimPreferences.Values.OPINION_3_65;
@@ -139,15 +140,15 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_96 = ZmanimPreferences.Values.OPINION_96;
     protected static final String OPINION_96_ZMANIS = ZmanimPreferences.Values.OPINION_96_ZMANIS;
     protected static final String OPINION_ATERET = ZmanimPreferences.Values.OPINION_ATERET;
+    protected static final String OPINION_BAAL_HATANYA = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
+    protected static final String OPINION_FIXED = ZmanimPreferences.Values.OPINION_FIXED;
     protected static final String OPINION_GRA = ZmanimPreferences.Values.OPINION_GRA;
     protected static final String OPINION_HALF = ZmanimPreferences.Values.OPINION_HALF;
-    protected static final String OPINION_MGA = ZmanimPreferences.Values.OPINION_MGA;
-    protected static final String OPINION_FIXED = ZmanimPreferences.Values.OPINION_FIXED;
     protected static final String OPINION_LEVEL = ZmanimPreferences.Values.OPINION_LEVEL;
+    protected static final String OPINION_MGA = ZmanimPreferences.Values.OPINION_MGA;
+    protected static final String OPINION_NIGHT = ZmanimPreferences.Values.OPINION_NIGHT;
     protected static final String OPINION_SEA = ZmanimPreferences.Values.OPINION_SEA;
     protected static final String OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT;
-    protected static final String OPINION_NIGHT = ZmanimPreferences.Values.OPINION_NIGHT;
-    protected static final String OPINION_BAAL_HATANYA = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
 
     /** No summary. */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
@@ -407,7 +408,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_SEA.equals(opinion)) {
             date = cal.getSeaLevelSunrise();
             summary = R.string.sunrise_sea;
-        }else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
             date = cal.getSeaLevelSunrise();
             summary = R.string.sunrise_baal_hatanya;
         } else {
@@ -806,13 +807,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 date = twilight;
                 break;
             case R.string.nightfall:
+            default:
                 date = nightfall;
                 break;
-            default:
-                date = null;
-                break;
         }
-        final long shabbatEnds = date != null ? date : nightfall;
+        final long shabbatEnds = date;
         if (date != null) {
             date = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
             if (hasCandles) {
