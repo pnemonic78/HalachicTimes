@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.github.times"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.github.times">
 
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -41,8 +41,8 @@
         <activity
             android:name="com.github.times.preference.ZmanimPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.times.ZmanimActivity">
-        </activity>
+            android:parentActivityName="com.github.times.ZmanimActivity"
+            android:theme="@style/Theme.Zmanim.Settings"/>
         <activity
             android:name="com.github.times.compass.CompassActivity"
             android:label="@string/title_activity_compass"
@@ -54,8 +54,8 @@
         <activity
             android:name="com.github.times.preference.CompassPreferenceActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.times.compass.CompassActivity">
-        </activity>
+            android:parentActivityName="com.github.times.compass.CompassActivity"
+            android:theme="@style/Theme.Zmanim.Settings"/>
         <activity
             android:name="com.github.times.location.LocationActivity"
             android:label="@string/title_activity_location"
@@ -79,10 +79,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.github.times.remind.ReminderActivity"
-            android:label="@string/title_activity_reminder"
-            android:parentActivityName="com.github.times.ZmanimActivity">
-        </activity>
+            android:name="com.github.times.remind.AlarmActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:label="@string/title_activity_alarm"
+            android:launchMode="singleInstance"
+            android:parentActivityName="com.github.times.ZmanimActivity"/>
 
         <receiver
             android:name="com.github.times.appwidget.ZmanimWidget"

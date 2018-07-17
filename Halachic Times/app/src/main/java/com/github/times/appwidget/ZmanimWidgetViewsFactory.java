@@ -15,12 +15,20 @@
  */
 package com.github.times.appwidget;
 
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.StyleRes;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -37,15 +45,6 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
-
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.StyleRes;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;

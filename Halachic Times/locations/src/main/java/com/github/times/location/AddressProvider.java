@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
+import android.support.annotation.Nullable;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLANET;

@@ -48,7 +48,6 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_Zmanim_Settings);
         super.onCreate(savedInstanceState);
         localeCallbacks.onCreate(this);
     }

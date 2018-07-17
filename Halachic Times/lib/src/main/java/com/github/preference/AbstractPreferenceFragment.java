@@ -26,12 +26,11 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.github.lib.R;
 import com.github.util.LogUtils;
-
-import androidx.annotation.Nullable;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    style="?listZman"
+    style="@style/Widget.ListItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -18,7 +18,7 @@
 
         <TextView
             android:id="@android:id/title"
-            style="?listZmanTitle"
+            style="@style/Widget.Title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/time"
-            style="?listZmanTime"
+            style="@style/Widget.Time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
@@ -35,7 +35,7 @@
 
     <TextView
         android:id="@android:id/summary"
-        style="?listZmanSummary"
+        style="@style/Widget.Summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="@string/design_summary"/>

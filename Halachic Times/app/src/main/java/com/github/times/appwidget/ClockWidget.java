@@ -110,8 +110,10 @@ public class ClockWidget extends ZmanimAppWidget {
         CharSequence label = item.time != NEVER ? getTimeFormat().format(roundUp(item.time, MINUTE_IN_MILLIS)) : "";
         SpannableStringBuilder spans = SpannableStringBuilder.valueOf(label);
         int indexMinutes = TextUtils.indexOf(label, ':');
-        spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        spans.setSpan(new StyleSpan(Typeface.BOLD), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        if (indexMinutes >= 0) {
+            spans.setSpan(new TypefaceSpan(Typeface.SANS_SERIF), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            spans.setSpan(new StyleSpan(Typeface.BOLD), 0, indexMinutes, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        }
         list.setTextViewText(R.id.time, spans);
         list.setTextViewText(android.R.id.title, context.getText(item.titleId));
         return true;
