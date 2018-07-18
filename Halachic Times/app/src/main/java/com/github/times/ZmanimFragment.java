@@ -215,7 +215,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @param list    the list.
      * @param adapter the list adapter.
      */
-    protected void bindViews(final ViewGroup list, A adapter) {
+    protected void bindViews(final ViewGroup list, final A adapter) {
         if (list == null)
             return;
         list.removeAllViews();
@@ -226,7 +226,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         if (context == null)
             return;
 
-        JewishCalendar jcal = adapter.getJewishCalendar();
+        final JewishCalendar jcal = adapter.getJewishCalendar();
         if (jcal == null) {
             // Ignore potential "IllegalArgumentException".
             return;
@@ -294,14 +294,11 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             @Override
             public void onGlobalLayout() {
                 list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
                 // Make all time texts same width.
-                int maxWidth = 0;
-                for (View view : timeViews) {
-                    maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
-                }
-                for (View view : timeViews) {
-                    view.setMinimumWidth(maxWidth);
+                try {
+                    applyMinWidth(timeViews);
+                } catch (NullPointerException e) {
+                    throw new NullPointerException("null object reference on " + jcal);
                 }
             }
         });
@@ -460,6 +457,24 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         View view = getView();
         if (view != null) {
             view.setVisibility(visibility);
+        }
+    }
+
+
+    /**
+     * Make all views at least the same width.
+     *
+     * @param views the array of views.
+     */
+    protected void applyMinWidth(View[] views) {
+        int maxWidth = 0;
+        // First, calculate the maximum widths of the views.
+        for (View view : views) {
+            maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
+        }
+        // Then, apply the maximum width to all the views.
+        for (View view : views) {
+            view.setMinimumWidth(maxWidth);
         }
     }
 }
