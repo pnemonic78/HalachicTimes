@@ -885,6 +885,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 } else if (OPINION_72.equals(opinion)) {
                     date = cal.getSofZmanAchilasChametzMGA72Minutes();
                     summary = R.string.eat_chametz_72;
+                } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+                    date = cal.getSofZmanAchilasChametzBaalHatanya();
+                    summary = R.string.eat_chametz_baal_hatanya;
                 } else {
                     date = cal.getSofZmanAchilasChametzGRA();
                     summary = R.string.eat_chametz_gra;
@@ -898,6 +901,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 } else if (OPINION_72.equals(opinion)) {
                     date = cal.getSofZmanBiurChametzMGA72Minutes();
                     summary = R.string.burn_chametz_72;
+                } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+                    date = cal.getSofZmanBiurChametzBaalHatanya();
+                    summary = R.string.burn_chametz_baal_hatanya;
                 } else {
                     date = cal.getSofZmanBiurChametzGRA();
                     summary = R.string.burn_chametz_gra;
