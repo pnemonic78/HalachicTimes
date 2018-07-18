@@ -57,11 +57,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * The maximum time interval between location updates, in milliseconds.
      */
-    private static final long UPDATE_TIME_MAX = 6 * HOUR_IN_MILLIS;
+    private static final long UPDATE_INTERVAL_MAX = 6 * HOUR_IN_MILLIS;
     /**
      * The time interval between requesting location updates, in milliseconds.
      */
-    private static final long UPDATE_TIME_START = 30 * SECOND_IN_MILLIS;
+    private static final long UPDATE_INTERVAL_START = 30 * SECOND_IN_MILLIS;
     /**
      * The duration to receive updates, in milliseconds.<br>
      * Should be enough time to get a sufficiently accurate location.
@@ -70,11 +70,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * The minimum time interval between location updates, in milliseconds.
      */
-    private static final long UPDATE_TIME = 5 * SECOND_IN_MILLIS;
+    private static final long UPDATE_TIME = SECOND_IN_MILLIS;
     /**
      * The minimum distance between location updates, in metres.
      */
-    private static final int UPDATE_DISTANCE = 100;
+    private static final int UPDATE_DISTANCE = 10;
 
     /**
      * Time zone ID for Jerusalem.
@@ -192,7 +192,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * The next time to start update locations.
      */
-    private long startTaskDelay = UPDATE_TIME_START;
+    private long startTaskDelay = UPDATE_INTERVAL_START;
     /**
      * The next time to stop update locations.
      */
@@ -495,7 +495,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
 
         if (!listener.isPassive()) {
-            startTaskDelay = UPDATE_TIME_START;
+            startTaskDelay = UPDATE_INTERVAL_START;
             sendEmptyMessage(WHAT_START);
         }
     }
@@ -660,7 +660,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         // Let the updates run for only a small while to save battery.
         sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
-        startTaskDelay = Math.min(UPDATE_TIME_MAX, startTaskDelay << 1);
+        startTaskDelay = Math.min(UPDATE_INTERVAL_MAX, startTaskDelay << 1);
     }
 
     private void removeUpdates() {
