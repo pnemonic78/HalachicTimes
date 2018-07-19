@@ -24,7 +24,7 @@
     <string name="opinion_gra">Selon le GRA</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>
     <string name="opinion_tam">Selon le Rabbenou Tam</string>
-    <string name="opinion_baal_hatanya">Selon le Baal Tanya</string>
+    <string name="opinion_baal_hatanya">Selon le Baal haTanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Heure saisonnière</string>
