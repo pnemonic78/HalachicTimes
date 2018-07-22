@@ -24,7 +24,7 @@
     <string name="opinion_gra">Selon le GRA</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>
     <string name="opinion_tam">Selon le Rabbenou Tam</string>
-    <string name="opinion_baal_hatanya">Selon le Baal Tanya</string>
+    <string name="opinion_baal_hatanya">Selon le Baal haTanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Heure saisonnière</string>
@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Temps qui se sont écoulées</string>
     <string name="seconds_title">Secondes</string>
-    <string name="theme_none">Aucun</string>
+    <string name="none">Aucun</string>
     <string name="theme_white">Blanc</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normale</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Moyen</h5>]]></string>

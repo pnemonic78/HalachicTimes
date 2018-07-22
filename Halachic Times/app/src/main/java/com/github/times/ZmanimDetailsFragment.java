@@ -15,15 +15,15 @@
  */
 package com.github.times;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
@@ -221,10 +221,10 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             // Ignore potential "IllegalArgumentException".
             return;
         }
-        Calendar gcal = (Calendar) jcal.getGregorianCalendar().clone();
+        final Calendar gcal = (Calendar) jcal.getGregorianCalendar().clone();
         CharSequence dateHebrew;
         JewishDate jewishDatePrevious = null;
-        JewishDate jewishDate = jcal;
+        JewishDate jewishDate;
 
         final int count = adapter.getCount();
         ZmanimItem item;
@@ -261,14 +261,11 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             @Override
             public void onGlobalLayout() {
                 list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
                 // Make all time texts same width.
-                int maxWidth = 0;
-                for (View view : timeViews) {
-                    maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
-                }
-                for (View view : timeViews) {
-                    view.setMinimumWidth(maxWidth);
+                try {
+                    applyMinWidth(timeViews);
+                } catch (NullPointerException e) {
+                    throw new NullPointerException("null object reference on " + gcal);
                 }
             }
         });

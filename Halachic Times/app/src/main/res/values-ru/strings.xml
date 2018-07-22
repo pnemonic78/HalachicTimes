@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Прошедшие времена</string>
     <string name="seconds_title">Секунды</string>
-    <string name="theme_none">Ни одной</string>
+    <string name="none">Ни одной</string>
     <string name="theme_white">Белый</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормальный</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Средний</h5>]]></string>

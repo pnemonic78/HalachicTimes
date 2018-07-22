@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Ajat että kulunut</string>
     <string name="seconds_title">Sekuntia</string>
-    <string name="theme_none">Ei yhtään</string>
+    <string name="none">Ei yhtään</string>
     <string name="theme_white">Valkoinen</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normaali</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Keskikokoinen</h5>]]></string>

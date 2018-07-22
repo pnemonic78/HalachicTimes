@@ -93,6 +93,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_HALF;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_LEVEL;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_MGA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
@@ -325,6 +326,21 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     }
 
     @Override
+    public String getShabbathEndsSunset() {
+        return preferences.getString(KEY_OPINION_SHABBATH_ENDS_SUNSET, context.getString(R.string.shabbath_ends_sunset_defaultValue));
+    }
+
+    @Override
+    public String getShabbathEndsTwilight() {
+        return preferences.getString(KEY_OPINION_SHABBATH_ENDS_TWILIGHT, context.getString(R.string.shabbath_ends_twilight_defaultValue));
+    }
+
+    @Override
+    public String getShabbathEndsNightfall() {
+        return preferences.getString(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL, context.getString(R.string.shabbath_ends_nightfall_defaultValue));
+    }
+
+    @Override
     public int getShabbathEnds() {
         return preferences.getInt(KEY_OPINION_SHABBATH_ENDS_MINUTES, context.getResources().getInteger(R.integer.shabbath_ends_defaultValue));
     }
@@ -528,10 +544,13 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
             case KEY_OPINION_CANDLES_CHANUKKA:
                 return R.string.chanukka;
             case KEY_OPINION_SUNSET:
+            case KEY_OPINION_SHABBATH_ENDS_SUNSET:
                 return R.string.sunset;
             case KEY_OPINION_TWILIGHT:
+            case KEY_OPINION_SHABBATH_ENDS_TWILIGHT:
                 return R.string.twilight;
             case KEY_OPINION_NIGHTFALL:
+            case KEY_OPINION_SHABBATH_ENDS_NIGHTFALL:
                 return R.string.nightfall;
             case KEY_OPINION_SHABBATH_ENDS:
             case KEY_OPINION_SHABBATH_ENDS_AFTER:
@@ -734,6 +753,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_LEVEL = res.getString(R.string.opinion_value_level);
         OPINION_MGA = res.getString(R.string.opinion_value_mga);
         OPINION_NIGHT = res.getString(R.string.opinion_value_nightfall);
+        OPINION_NONE = res.getString(R.string.opinion_value_none);
         OPINION_SEA = res.getString(R.string.opinion_value_sea);
         OPINION_TWILIGHT = res.getString(R.string.opinion_value_twilight);
 

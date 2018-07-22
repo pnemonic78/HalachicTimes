@@ -23,6 +23,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.util.Pair;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -146,6 +147,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_LEVEL = ZmanimPreferences.Values.OPINION_LEVEL;
     protected static final String OPINION_MGA = ZmanimPreferences.Values.OPINION_MGA;
     protected static final String OPINION_NIGHT = ZmanimPreferences.Values.OPINION_NIGHT;
+    protected static final String OPINION_NONE = ZmanimPreferences.Values.OPINION_NONE;
     protected static final String OPINION_SEA = ZmanimPreferences.Values.OPINION_SEA;
     protected static final String OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT;
 
@@ -252,6 +254,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         Long date;
         int summary;
+        Pair<Long, Integer> dateAndSummary;
         String opinion;
         CharSequence summaryText;
         final Resources res = context.getResources();
@@ -404,16 +407,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(tallisTitle, summary, date, jewishDate, remote);
 
         opinion = settings.getSunrise();
-        if (OPINION_SEA.equals(opinion)) {
-            date = cal.getSeaLevelSunrise();
-            summary = R.string.sunrise_sea;
-        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getSeaLevelSunrise();
-            summary = R.string.sunrise_baal_hatanya;
-        } else {
-            date = cal.getSunrise();
-            summary = R.string.sunrise_summary;
-        }
+        dateAndSummary = getSunrise(cal, opinion);
+        date = dateAndSummary.first;
+        summary = dateAndSummary.second;
         adapter.add(R.string.sunrise, summary, date, jewishDate, remote);
 
         opinion = settings.getLastShema();
@@ -527,18 +523,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.prayers, summary, date, jewishDate, remote);
 
         opinion = settings.getMidday();
-        if (OPINION_FIXED.equals(opinion)) {
-            date = cal.getFixedLocalChatzos();
-            summary = R.string.midday_fixed;
-        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getChatzosBaalHatanya();
-            summary = R.string.midday_baal_hatanya;
-        } else {
-            date = cal.getChatzos();
-            summary = R.string.midday_summary;
-        }
+        dateAndSummary = getMidday(cal, opinion);
+        date = dateAndSummary.first;
+        summary = dateAndSummary.second;
         adapter.add(R.string.midday, summary, date, jewishDate, remote);
-        final long midday = toDate(date);
+        final long midday = date;
 
         opinion = settings.getEarliestMincha();
         if (OPINION_16_1.equals(opinion)) {
@@ -640,18 +629,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.plug_hamincha, summary, date, jewishDate, remote);
 
         opinion = settings.getSunset();
-        if (OPINION_SEA.equals(opinion)) {
-            date = cal.getSeaLevelSunset();
-            summary = R.string.sunset_sea;
-        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getSeaLevelSunset();
-            summary = R.string.sunset_baal_hatanya;
-        } else {
-            date = cal.getSunset();
-            summary = R.string.sunset_summary;
-        }
+        dateAndSummary = getSunset(cal, opinion);
+        date = dateAndSummary.first;
+        summary = dateAndSummary.second;
         adapter.add(R.string.sunset, summary, date, jewishDate, remote);
-        final long sunset = toDate(date);
+        final long sunset = date;
 
         if (sunset != NEVER) {
             if (hasCandles) {
@@ -674,27 +656,10 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
 
         opinion = settings.getTwilight();
-        if (OPINION_7_083.equals(opinion)) {
-            date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
-            summary = R.string.twilight_7_083;
-        } else if (OPINION_7_083_ZMANIS.equals(opinion)) {
-            date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
-            summary = R.string.twilight_7_083_zmanis;
-        } else if (OPINION_58.equals(opinion)) {
-            date = cal.getBainHasmashosRT58Point5Minutes();
-            summary = R.string.twilight_58;
-        } else if (OPINION_13.equals(opinion)) {
-            date = cal.getBainHasmashosRT13Point24Degrees();
-            summary = R.string.twilight_13;
-        } else {
-            date = cal.getBainHasmashosRT2Stars();
-            summary = R.string.twilight_2stars;
-            if (date == null) {
-                date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
-                summary = R.string.twilight_7_083;
-            }
-        }
-        final long twilight = toDate(date);
+        dateAndSummary = getTwilight(cal, opinion);
+        date = dateAndSummary.first;
+        summary = dateAndSummary.second;
+        final long twilight = date;
         adapter.add(R.string.twilight, summary, date, jewishDateTomorrow, remote);
         if (hasCandles && (candlesHow == AT_TWILIGHT)) {
             if (holidayTomorrow == CHANUKAH) {
@@ -706,90 +671,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
 
         opinion = settings.getNightfall();
-        if (OPINION_120.equals(opinion)) {
-            date = cal.getTzais120();
-            summary = R.string.nightfall_120;
-        } else if (OPINION_120_ZMANIS.equals(opinion)) {
-            date = cal.getTzais120Zmanis();
-            summary = R.string.nightfall_120_zmanis;
-        } else if (OPINION_16_1.equals(opinion)) {
-            date = cal.getTzais16Point1Degrees();
-            summary = R.string.nightfall_16;
-        } else if (OPINION_18.equals(opinion)) {
-            date = cal.getTzais18Degrees();
-            summary = R.string.nightfall_18;
-        } else if (OPINION_19_8.equals(opinion)) {
-            date = cal.getTzais19Point8Degrees();
-            summary = R.string.nightfall_19;
-        } else if (OPINION_26.equals(opinion)) {
-            date = cal.getTzais26Degrees();
-            summary = R.string.nightfall_26;
-        } else if (OPINION_60.equals(opinion)) {
-            date = cal.getTzais60();
-            summary = R.string.nightfall_60;
-        } else if (OPINION_72.equals(opinion)) {
-            date = cal.getTzais72();
-            summary = R.string.nightfall_72;
-        } else if (OPINION_72_ZMANIS.equals(opinion)) {
-            date = cal.getTzais72Zmanis();
-            summary = R.string.nightfall_72_zmanis;
-        } else if (OPINION_90.equals(opinion)) {
-            date = cal.getTzais90();
-            summary = R.string.nightfall_90;
-        } else if (OPINION_90_ZMANIS.equals(opinion)) {
-            date = cal.getTzais90Zmanis();
-            summary = R.string.nightfall_90_zmanis;
-        } else if (OPINION_96.equals(opinion)) {
-            date = cal.getTzais96();
-            summary = R.string.nightfall_96;
-        } else if (OPINION_96_ZMANIS.equals(opinion)) {
-            date = cal.getTzais96Zmanis();
-            summary = R.string.nightfall_96_zmanis;
-        } else if (OPINION_ATERET.equals(opinion)) {
-            date = cal.getTzaisAteretTorah();
-            summary = R.string.nightfall_ateret;
-        } else if (OPINION_3_65.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point65Degrees();
-            summary = R.string.nightfall_3_65;
-        } else if (OPINION_3_676.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point676Degrees();
-            summary = R.string.nightfall_3_676;
-        } else if (OPINION_3_7.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point7Degrees();
-            summary = R.string.nightfall_3_7;
-        } else if (OPINION_3_8.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point8Degrees();
-            summary = R.string.nightfall_3_8;
-        } else if (OPINION_4_37.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point37Degrees();
-            summary = R.string.nightfall_4_37;
-        } else if (OPINION_4_61.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point61Degrees();
-            summary = R.string.nightfall_4_61;
-        } else if (OPINION_4_8.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point8Degrees();
-            summary = R.string.nightfall_4_8;
-        } else if (OPINION_5_88.equals(opinion)) {
-            date = cal.getTzaisGeonim5Point88Degrees();
-            summary = R.string.nightfall_5_88;
-        } else if (OPINION_5_95.equals(opinion)) {
-            date = cal.getTzaisGeonim5Point95Degrees();
-            summary = R.string.nightfall_5_95;
-        } else if (OPINION_7_083.equals(opinion)) {
-            date = cal.getTzaisGeonim7Point083Degrees();
-            summary = R.string.nightfall_7;
-        } else if (OPINION_8_5.equals(opinion)) {
-            date = cal.getTzaisGeonim8Point5Degrees();
-            summary = R.string.nightfall_8;
-        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getTzaisBaalHatanya();
-            summary = R.string.nightfall_baal_hatanya;
-        } else {
-            date = cal.getTzaisGeonim8Point5Degrees();
-            summary = R.string.nightfall_8;
-        }
+        dateAndSummary = getNightfall(cal, opinion);
+        date = dateAndSummary.first;
+        summary = dateAndSummary.second;
         adapter.add(R.string.nightfall, summary, date, jewishDateTomorrow, remote);
-        final long nightfall = toDate(date);
+        final long nightfall = date;
         if (nightfall != NEVER) {
             date = cal.getTimeOffset(nightfall, shabbathOffset * MINUTE_IN_MILLIS);
             if (hasCandles && (candlesHow == AT_NIGHT) && (holidayTomorrow == CHANUKAH)) {
@@ -800,18 +686,33 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         switch (shabbathAfter) {
             case R.string.sunset:
-                date = sunset;
+                opinion = settings.getShabbathEndsSunset();
+                if (OPINION_NONE.equals(opinion)) {
+                    date = sunset;
+                } else {
+                    date = getSunset(cal, opinion).first;
+                }
                 break;
             case R.string.twilight:
-                date = twilight;
+                opinion = settings.getShabbathEndsTwilight();
+                if (OPINION_NONE.equals(opinion)) {
+                    date = twilight;
+                } else {
+                    date = getTwilight(cal, opinion).first;
+                }
                 break;
             case R.string.nightfall:
             default:
-                date = nightfall;
+                opinion = settings.getShabbathEndsNightfall();
+                if (OPINION_NONE.equals(opinion)) {
+                    date = nightfall;
+                } else {
+                    date = getNightfall(cal, opinion).first;
+                }
                 break;
         }
         final long shabbatEnds = date;
-        if (date != null) {
+        if ((date != null) && (date != NEVER)) {
             date = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
             if (hasCandles) {
                 if ((candlesHow == AT_NIGHT) && (holidayTomorrow != CHANUKAH)) {
@@ -838,22 +739,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
 
         opinion = settings.getMidnight();
-        if (OPINION_12.equals(opinion)) {
-            date = midday;
-            if (midday != NEVER)
-                date += TWELVE_HOURS;
-            summary = R.string.midnight_12;
-        } else if (OPINION_6.equals(opinion)) {
-            date = nightfall;
-            if (nightfall != NEVER)
-                date += SIX_HOURS;
-            summary = R.string.midnight_6;
-        } else {
-            date = cal.getSolarMidnight();
-            summary = R.string.midnight_summary;
-        }
+        dateAndSummary = getMidnight(cal, opinion, midday, nightfall);
+        date = dateAndSummary.first;
+        summary = dateAndSummary.second;
         adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
-        final long midnight = toDate(date);
+        final long midnight = date;
 
         final long sunriseTomorrow = getSunriseTomorrow(cal, settings);
         opinion = settings.getGuardsCount();
@@ -885,6 +775,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 } else if (OPINION_72.equals(opinion)) {
                     date = cal.getSofZmanAchilasChametzMGA72Minutes();
                     summary = R.string.eat_chametz_72;
+                } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+                    date = cal.getSofZmanAchilasChametzBaalHatanya();
+                    summary = R.string.eat_chametz_baal_hatanya;
                 } else {
                     date = cal.getSofZmanAchilasChametzGRA();
                     summary = R.string.eat_chametz_gra;
@@ -898,6 +791,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 } else if (OPINION_72.equals(opinion)) {
                     date = cal.getSofZmanBiurChametzMGA72Minutes();
                     summary = R.string.burn_chametz_72;
+                } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+                    date = cal.getSofZmanBiurChametzBaalHatanya();
+                    summary = R.string.burn_chametz_baal_hatanya;
                 } else {
                     date = cal.getSofZmanBiurChametzGRA();
                     summary = R.string.burn_chametz_gra;
@@ -1199,15 +1095,27 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return jewishDate;
     }
 
-    protected long getSunrise(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+    protected Pair<Long, Integer> getSunrise(ComplexZmanimCalendar cal, String opinion) {
         Long date;
-        String opinion = settings.getSunrise();
+        int summary;
+
         if (OPINION_SEA.equals(opinion)) {
             date = cal.getSeaLevelSunrise();
+            summary = R.string.sunrise_sea;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getSeaLevelSunrise();
+            summary = R.string.sunrise_baal_hatanya;
         } else {
             date = cal.getSunrise();
+            summary = R.string.sunrise_summary;
         }
-        return toDate(date);
+
+        return new Pair<>(toDate(date), summary);
+    }
+
+    protected long getSunrise(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        String opinion = settings.getSunrise();
+        return getSunrise(cal, opinion).first;
     }
 
     protected long getSunriseTomorrow(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
@@ -1216,107 +1124,198 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return getSunrise(calTomorrow, settings);
     }
 
-    protected long getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+    protected Pair<Long, Integer> getMidday(ComplexZmanimCalendar cal, String opinion) {
         Long date;
-        String opinion = settings.getMidday();
+        int summary;
+
         if (OPINION_FIXED.equals(opinion)) {
             date = cal.getFixedLocalChatzos();
+            summary = R.string.midday_fixed;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getChatzosBaalHatanya();
+            summary = R.string.midday_baal_hatanya;
         } else {
             date = cal.getChatzos();
+            summary = R.string.midday_summary;
         }
-        return toDate(date);
+
+        return new Pair<>(toDate(date), summary);
+    }
+
+    protected long getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+        String opinion = settings.getMidday();
+        return getMidday(cal, opinion).first;
+    }
+
+    protected Pair<Long, Integer> getSunset(ComplexZmanimCalendar cal, String opinion) {
+        Long date;
+        int summary;
+
+        if (OPINION_SEA.equals(opinion)) {
+            date = cal.getSeaLevelSunset();
+            summary = R.string.sunset_sea;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getSeaLevelSunset();
+            summary = R.string.sunset_baal_hatanya;
+        } else {
+            date = cal.getSunset();
+            summary = R.string.sunset_summary;
+        }
+
+        return new Pair<>(toDate(date), summary);
     }
 
     protected long getSunset(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        Long date;
         String opinion = settings.getSunset();
-        if (OPINION_SEA.equals(opinion)) {
-            date = cal.getSeaLevelSunset();
+        return getSunset(cal, opinion).first;
+    }
+
+    protected Pair<Long, Integer> getTwilight(ComplexZmanimCalendar cal, String opinion) {
+        Long date;
+        int summary;
+
+        if (OPINION_7_083.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
+            summary = R.string.twilight_7_083;
+        } else if (OPINION_7_083_ZMANIS.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
+            summary = R.string.twilight_7_083_zmanis;
+        } else if (OPINION_58.equals(opinion)) {
+            date = cal.getBainHasmashosRT58Point5Minutes();
+            summary = R.string.twilight_58;
+        } else if (OPINION_13.equals(opinion)) {
+            date = cal.getBainHasmashosRT13Point24Degrees();
+            summary = R.string.twilight_13;
         } else {
-            date = cal.getSunset();
+            date = cal.getBainHasmashosRT2Stars();
+            summary = R.string.twilight_2stars;
         }
-        return toDate(date);
+
+        return new Pair<>(toDate(date), summary);
+    }
+
+    protected Pair<Long, Integer> getNightfall(ComplexZmanimCalendar cal, String opinion) {
+        Long date;
+        int summary;
+
+        if (OPINION_120.equals(opinion)) {
+            date = cal.getTzais120();
+            summary = R.string.nightfall_120;
+        } else if (OPINION_120_ZMANIS.equals(opinion)) {
+            date = cal.getTzais120Zmanis();
+            summary = R.string.nightfall_120_zmanis;
+        } else if (OPINION_16_1.equals(opinion)) {
+            date = cal.getTzais16Point1Degrees();
+            summary = R.string.nightfall_16;
+        } else if (OPINION_18.equals(opinion)) {
+            date = cal.getTzais18Degrees();
+            summary = R.string.nightfall_18;
+        } else if (OPINION_19_8.equals(opinion)) {
+            date = cal.getTzais19Point8Degrees();
+            summary = R.string.nightfall_19;
+        } else if (OPINION_26.equals(opinion)) {
+            date = cal.getTzais26Degrees();
+            summary = R.string.nightfall_26;
+        } else if (OPINION_60.equals(opinion)) {
+            date = cal.getTzais60();
+            summary = R.string.nightfall_60;
+        } else if (OPINION_72.equals(opinion)) {
+            date = cal.getTzais72();
+            summary = R.string.nightfall_72;
+        } else if (OPINION_72_ZMANIS.equals(opinion)) {
+            date = cal.getTzais72Zmanis();
+            summary = R.string.nightfall_72_zmanis;
+        } else if (OPINION_90.equals(opinion)) {
+            date = cal.getTzais90();
+            summary = R.string.nightfall_90;
+        } else if (OPINION_90_ZMANIS.equals(opinion)) {
+            date = cal.getTzais90Zmanis();
+            summary = R.string.nightfall_90_zmanis;
+        } else if (OPINION_96.equals(opinion)) {
+            date = cal.getTzais96();
+            summary = R.string.nightfall_96;
+        } else if (OPINION_96_ZMANIS.equals(opinion)) {
+            date = cal.getTzais96Zmanis();
+            summary = R.string.nightfall_96_zmanis;
+        } else if (OPINION_ATERET.equals(opinion)) {
+            date = cal.getTzaisAteretTorah();
+            summary = R.string.nightfall_ateret;
+        } else if (OPINION_3_65.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point65Degrees();
+            summary = R.string.nightfall_3_65;
+        } else if (OPINION_3_676.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point676Degrees();
+            summary = R.string.nightfall_3_676;
+        } else if (OPINION_3_7.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point7Degrees();
+            summary = R.string.nightfall_3_7;
+        } else if (OPINION_3_8.equals(opinion)) {
+            date = cal.getTzaisGeonim3Point8Degrees();
+            summary = R.string.nightfall_3_8;
+        } else if (OPINION_4_37.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point37Degrees();
+            summary = R.string.nightfall_4_37;
+        } else if (OPINION_4_61.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point61Degrees();
+            summary = R.string.nightfall_4_61;
+        } else if (OPINION_4_8.equals(opinion)) {
+            date = cal.getTzaisGeonim4Point8Degrees();
+            summary = R.string.nightfall_4_8;
+        } else if (OPINION_5_88.equals(opinion)) {
+            date = cal.getTzaisGeonim5Point88Degrees();
+            summary = R.string.nightfall_5_88;
+        } else if (OPINION_5_95.equals(opinion)) {
+            date = cal.getTzaisGeonim5Point95Degrees();
+            summary = R.string.nightfall_5_95;
+        } else if (OPINION_7_083.equals(opinion)) {
+            date = cal.getTzaisGeonim7Point083Degrees();
+            summary = R.string.nightfall_7;
+        } else if (OPINION_8_5.equals(opinion)) {
+            date = cal.getTzaisGeonim8Point5Degrees();
+            summary = R.string.nightfall_8;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getTzaisBaalHatanya();
+            summary = R.string.nightfall_baal_hatanya;
+        } else {
+            date = cal.getTzaisGeonim8Point5Degrees();
+            summary = R.string.nightfall_8;
+        }
+
+        return new Pair<>(toDate(date), summary);
     }
 
     protected long getNightfall(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        Long date;
         String opinion = settings.getNightfall();
-        if (OPINION_120.equals(opinion)) {
-            date = cal.getTzais120();
-        } else if (OPINION_120_ZMANIS.equals(opinion)) {
-            date = cal.getTzais120Zmanis();
-        } else if (OPINION_16_1.equals(opinion)) {
-            date = cal.getTzais16Point1Degrees();
-        } else if (OPINION_18.equals(opinion)) {
-            date = cal.getTzais18Degrees();
-        } else if (OPINION_19_8.equals(opinion)) {
-            date = cal.getTzais19Point8Degrees();
-        } else if (OPINION_26.equals(opinion)) {
-            date = cal.getTzais26Degrees();
-        } else if (OPINION_60.equals(opinion)) {
-            date = cal.getTzais60();
-        } else if (OPINION_72.equals(opinion)) {
-            date = cal.getTzais72();
-        } else if (OPINION_72_ZMANIS.equals(opinion)) {
-            date = cal.getTzais72Zmanis();
-        } else if (OPINION_90.equals(opinion)) {
-            date = cal.getTzais90();
-        } else if (OPINION_90_ZMANIS.equals(opinion)) {
-            date = cal.getTzais90Zmanis();
-        } else if (OPINION_96.equals(opinion)) {
-            date = cal.getTzais96();
-        } else if (OPINION_96_ZMANIS.equals(opinion)) {
-            date = cal.getTzais96Zmanis();
-        } else if (OPINION_ATERET.equals(opinion)) {
-            date = cal.getTzaisAteretTorah();
-        } else if (OPINION_3_65.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point65Degrees();
-        } else if (OPINION_3_676.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point676Degrees();
-        } else if (OPINION_3_7.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point7Degrees();
-        } else if (OPINION_3_8.equals(opinion)) {
-            date = cal.getTzaisGeonim3Point8Degrees();
-        } else if (OPINION_4_37.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point37Degrees();
-        } else if (OPINION_4_61.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point61Degrees();
-        } else if (OPINION_4_8.equals(opinion)) {
-            date = cal.getTzaisGeonim4Point8Degrees();
-        } else if (OPINION_5_88.equals(opinion)) {
-            date = cal.getTzaisGeonim5Point88Degrees();
-        } else if (OPINION_5_95.equals(opinion)) {
-            date = cal.getTzaisGeonim5Point95Degrees();
-        } else if (OPINION_7_083.equals(opinion)) {
-            date = cal.getTzaisGeonim7Point083Degrees();
-        } else if (OPINION_8_5.equals(opinion)) {
-            date = cal.getTzaisGeonim8Point5Degrees();
-        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getTzaisBaalHatanya();
+        return getNightfall(cal, opinion).first;
+    }
+
+    protected Pair<Long, Integer> getMidnight(ComplexZmanimCalendar cal, String opinion, long midday, long nightfall) {
+        Long date;
+        int summary;
+
+        if (OPINION_12.equals(opinion)) {
+            date = midday;
+            if (midday != NEVER)
+                date += TWELVE_HOURS;
+            summary = R.string.midnight_12;
+        } else if (OPINION_6.equals(opinion)) {
+            date = nightfall;
+            if (nightfall != NEVER)
+                date += SIX_HOURS;
+            summary = R.string.midnight_6;
         } else {
-            date = cal.getTzais();
+            date = cal.getSolarMidnight();
+            summary = R.string.midnight_summary;
         }
 
-        return toDate(date);
+        return new Pair<>(toDate(date), summary);
     }
 
     protected long getMidnight(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
-        Long date;
         String opinion = settings.getMidnight();
-        if (OPINION_12.equals(opinion)) {
-            date = getMidday(cal, settings);
-            if (date != NEVER) {
-                date += TWELVE_HOURS;
-            }
-        } else if (OPINION_6.equals(opinion)) {
-            date = getNightfall(cal, settings);
-            if (date != NEVER) {
-                date += SIX_HOURS;
-            }
-        } else {
-            date = cal.getSolarMidnight();
-        }
-        return toDate(date);
+        long midday = getMidday(cal, settings);
+        long nightfall = getNightfall(cal, settings);
+        return getMidnight(cal, opinion, midday, nightfall).first;
     }
 
     /**

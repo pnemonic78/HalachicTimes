@@ -88,7 +88,7 @@
 
     <string-array name="sunrise_values" translatable="false">
         <item>@string/opinion_value_sea</item>
-        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_elevation</item>
     </string-array>
     <string-array name="sunrise_entries" translatable="false">
         <item>@string/sunrise_sea</item>
@@ -285,7 +285,7 @@
 
     <string-array name="sunset_values" translatable="false">
         <item>@string/opinion_value_sea</item>
-        <item>@string/opinion_value_default</item>
+        <item>@string/opinion_value_elevation</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
         <item>@string/sunset_sea</item>

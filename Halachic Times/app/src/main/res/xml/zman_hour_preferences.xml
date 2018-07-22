@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ListPreference
-        android:defaultValue="@string/hour_defaultValue"
-        android:dialogIcon="@drawable/ic_settings_opinion"
-        android:entries="@array/hour_entries"
-        android:entryValues="@array/hour_values"
-        android:icon="@drawable/ic_settings_opinion"
-        android:key="@string/opinion_name_hour"
-        android:title="@string/opinion"/>
-    <CheckBoxPreference
-        android:defaultValue="@bool/hour_visible_defaultValue"
-        android:key="hour.visible"
-        android:title="@string/hour_title"/>
-    <CheckBoxPreference
-        android:defaultValue="@bool/emphasis_defaultValue"
-        android:key="hour.emphasis"
-        android:title="@string/emphasis_title"/>
+    <PreferenceCategory android:title="@string/opinion">
+        <ListPreference
+            android:defaultValue="@string/hour_defaultValue"
+            android:dialogIcon="@drawable/ic_settings_opinion"
+            android:entries="@array/hour_entries"
+            android:entryValues="@array/hour_values"
+            android:icon="@drawable/ic_settings_opinion"
+            android:key="@string/opinion_name_hour"
+            android:title="@string/opinion"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_appearance_title">
+        <CheckBoxPreference
+            android:defaultValue="@bool/hour_visible_defaultValue"
+            android:key="hour.visible"
+            android:title="@string/hour_title"/>
+        <CheckBoxPreference
+            android:defaultValue="@bool/emphasis_defaultValue"
+            android:key="hour.emphasis"
+            android:title="@string/emphasis_title"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

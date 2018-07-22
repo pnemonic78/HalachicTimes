@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Минулі разів</string>
     <string name="seconds_title">Секунди</string>
-    <string name="theme_none">Ні</string>
+    <string name="none">Ні</string>
     <string name="theme_white">Білий</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормальний</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Середній</h5>]]></string>

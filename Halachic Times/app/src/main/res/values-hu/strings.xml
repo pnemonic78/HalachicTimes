@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Szor hogy az eltelt</string>
     <string name="seconds_title">Másodperc</string>
-    <string name="theme_none">Semmi</string>
+    <string name="none">Semmi</string>
     <string name="theme_white">Fehér</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normál</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Közepes</h5>]]></string>

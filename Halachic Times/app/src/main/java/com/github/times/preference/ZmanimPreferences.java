@@ -95,6 +95,9 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     /** Preference name for Shabbath ends after nightfall. */
     String KEY_OPINION_SHABBATH_ENDS = "shabbath_ends";
     String KEY_OPINION_SHABBATH_ENDS_AFTER = KEY_OPINION_SHABBATH_ENDS + ".after";
+    String KEY_OPINION_SHABBATH_ENDS_SUNSET = KEY_OPINION_SHABBATH_ENDS + "." + KEY_OPINION_SUNSET;
+    String KEY_OPINION_SHABBATH_ENDS_TWILIGHT = KEY_OPINION_SHABBATH_ENDS + "." + KEY_OPINION_TWILIGHT;
+    String KEY_OPINION_SHABBATH_ENDS_NIGHTFALL = KEY_OPINION_SHABBATH_ENDS + "." + KEY_OPINION_NIGHTFALL;
     String KEY_OPINION_SHABBATH_ENDS_MINUTES = KEY_OPINION_SHABBATH_ENDS + ".minutes";
     /** Preference name for midnight type. */
     String KEY_OPINION_MIDNIGHT = "midnight";
@@ -177,6 +180,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
         public static String OPINION_LEVEL;
         public static String OPINION_MGA;
         public static String OPINION_NIGHT;
+        public static String OPINION_NONE;
         public static String OPINION_SEA;
         public static String OPINION_TWILIGHT;
 
@@ -363,11 +367,32 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     int getShabbathEndsAfter();
 
     /**
-     * Get the number of minutes when Shabbath ends after nightfall.
+     * Get the number of minutes when Shabbath ends after the specified opinion.
      *
      * @return the opinion.
      */
     int getShabbathEnds();
+
+    /**
+     * Get the opinion for Shabbath ends at sunset.
+     *
+     * @return the opinion.
+     */
+    String getShabbathEndsSunset();
+
+    /**
+     * Get the opinion for Shabbath ends at twilight.
+     *
+     * @return the opinion.
+     */
+    String getShabbathEndsTwilight();
+
+    /**
+     * Get the opinion for Shabbath ends at nightfall.
+     *
+     * @return the opinion.
+     */
+    String getShabbathEndsNightfall();
 
     /**
      * Get the opinion for midnight (<em>chatzos layla</em>).
