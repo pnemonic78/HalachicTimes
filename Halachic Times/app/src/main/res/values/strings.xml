@@ -321,7 +321,8 @@
     <string name="pref_zmanim_title" translatable="false">@string/app_name</string>
     <string name="past_title">Times that have elapsed</string>
     <string name="seconds_title">Seconds</string>
-    <string name="theme_none">None</string>
+    <string name="none">None</string>
+    <string name="theme_none" translatable="false">@string/none</string>
     <string name="theme_white">White</string>
     <string name="emphasis_scale_title" translatable="false">@string/emphasis_title</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>

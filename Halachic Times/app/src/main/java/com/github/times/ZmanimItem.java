@@ -54,6 +54,13 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
         long t2 = that.time;
         if (t1 != t2)
             return (t1 < t2) ? -1 : +1;
+
+        JewishDate j1 = this.jewishDate;
+        JewishDate j2 = that.jewishDate;
+        if ((j1 != null) && (j2 != null)) {
+            return j1.compareTo(j2);
+        }
+
         return this.titleId - that.titleId;
     }
 

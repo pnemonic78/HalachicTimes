@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Czasy które upłynęły</string>
     <string name="seconds_title">Sekund</string>
-    <string name="theme_none">Żaden</string>
+    <string name="none">Żaden</string>
     <string name="theme_white">Biały</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normalny</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Średni</h5>]]></string>

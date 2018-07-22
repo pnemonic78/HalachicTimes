@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Tider som förflutit</string>
     <string name="seconds_title">Sekunder</string>
-    <string name="theme_none">Inget</string>
+    <string name="none">Inget</string>
     <string name="theme_white">Vit</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>

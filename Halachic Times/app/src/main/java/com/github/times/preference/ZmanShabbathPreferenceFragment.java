@@ -15,6 +15,7 @@
  */
 package com.github.times.preference;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -24,6 +25,9 @@ import com.github.times.R;
 
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER;
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES;
+import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL;
+import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET;
+import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT;
 
 /**
  * This fragment shows the preferences for the Shabbath Ends screen.
@@ -31,6 +35,9 @@ import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH
 public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
     private ListPreference afterPreference;
+    private ListPreference sunsetPreference;
+    private ListPreference twilightPreference;
+    private ListPreference nightfallPreference;
     private NumberPickerPreference minutesPreference;
 
     @Override
@@ -38,20 +45,47 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         super.onCreate(savedInstanceState);
 
         afterPreference = (ListPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_AFTER);
+        sunsetPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_SUNSET);
+        twilightPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_TWILIGHT);
+        nightfallPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL);
         minutesPreference = (NumberPickerPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
 
-        onPreferenceChange(minutesPreference, minutesPreference.getValue());
+        onPreferenceChange(afterPreference, afterPreference.getValue());
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (KEY_OPINION_SHABBATH_ENDS_AFTER.equals(preference.getKey())) {
+        final String key = preference.getKey();
+        if (KEY_OPINION_SHABBATH_ENDS_AFTER.equals(key)) {
             int shabbathAfterId = getPreferences().toId(newValue.toString());
             String shabbathAfterName = getString(shabbathAfterId);
 
+            switch (shabbathAfterId) {
+                case R.string.sunset:
+                    sunsetPreference.setEnabled(true);
+                    twilightPreference.setEnabled(false);
+                    nightfallPreference.setEnabled(false);
+                    break;
+                case R.string.twilight:
+                    sunsetPreference.setEnabled(false);
+                    twilightPreference.setEnabled(true);
+                    nightfallPreference.setEnabled(false);
+                    break;
+                case R.string.nightfall:
+                    sunsetPreference.setEnabled(false);
+                    twilightPreference.setEnabled(false);
+                    nightfallPreference.setEnabled(true);
+                    break;
+                default:
+                    sunsetPreference.setEnabled(false);
+                    twilightPreference.setEnabled(false);
+                    nightfallPreference.setEnabled(false);
+                    break;
+            }
+
             int value = minutesPreference.getValue();
             minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
-        } else if (KEY_OPINION_SHABBATH_ENDS_MINUTES.equals(preference.getKey())) {
+        } else if (KEY_OPINION_SHABBATH_ENDS_MINUTES.equals(key)) {
             int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
             String shabbathAfterName = getString(shabbathAfterId);
 
@@ -60,5 +94,32 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         }
 
         return super.onPreferenceChange(preference, newValue);
+    }
+
+    private ListPreference addDefaultOption(String key) {
+        ListPreference preference = (ListPreference) findPreference(key);
+        return addDefaultOption(preference);
+    }
+
+    private ListPreference addDefaultOption(ListPreference preference) {
+        final Context context = preference.getContext();
+
+        CharSequence[] oldValues = preference.getEntryValues();
+        final int oldSize = oldValues.length;
+        final int newSize = oldSize + 1;
+        CharSequence[] newValues = new CharSequence[newSize];
+        System.arraycopy(oldValues, 0, newValues, 1, oldSize);
+        CharSequence defaultValue = context.getText(R.string.opinion_value_none);
+        newValues[0] = defaultValue;
+        preference.setEntryValues(newValues);
+
+        CharSequence[] oldEntries = preference.getEntries();
+        CharSequence[] newEntries = new CharSequence[newSize];
+        System.arraycopy(oldEntries, 0, newEntries, 1, oldSize);
+        CharSequence defaultEntry = context.getText(R.string.none);
+        newEntries[0] = defaultEntry;
+        preference.setEntries(newEntries);
+
+        return preference;
     }
 }

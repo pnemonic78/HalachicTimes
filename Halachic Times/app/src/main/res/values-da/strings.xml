@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Tider der er gået</string>
     <string name="seconds_title">Sekunder</string>
-    <string name="theme_none">Ingen</string>
+    <string name="none">Ingen</string>
     <string name="theme_white">Hvid</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Medium</h5>]]></string>

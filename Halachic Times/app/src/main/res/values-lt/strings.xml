@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Kartų didesnis praėjo</string>
     <string name="seconds_title">Sekundės</string>
-    <string name="theme_none">Nė vienas</string>
+    <string name="none">Nė vienas</string>
     <string name="theme_white">Baltųjų</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Įprastas</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Vidutinis</h5>]]></string>

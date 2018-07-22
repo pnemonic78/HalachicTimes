@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">זמנים שחלפו</string>
     <string name="seconds_title">שניות</string>
-    <string name="theme_none">ללא</string>
+    <string name="none">ללא</string>
     <string name="theme_white">לבן</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>רגיל</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>בינוני</h5>]]></string>

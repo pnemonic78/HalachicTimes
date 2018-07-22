@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
-    <string name="theme_none">Mitte ükski</string>
+    <string name="none">Mitte ükski</string>
     <string name="theme_white">Valge</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Tavaline</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Keskmise</h5>]]></string>

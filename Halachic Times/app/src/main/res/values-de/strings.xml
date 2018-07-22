@@ -171,7 +171,7 @@
     <!-- Preferences -->
     <string name="past_title">Vergangenen Zeiten</string>
     <string name="seconds_title">Sekunden</string>
-    <string name="theme_none">Keine</string>
+    <string name="none">Keine</string>
     <string name="theme_white">Weiß</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normal</h6>]]></string>
     <string name="emphasis_scale_110"><![CDATA[<h5>Mittel</h5>]]></string>
