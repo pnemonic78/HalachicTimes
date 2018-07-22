@@ -35,6 +35,7 @@ import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -305,7 +306,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     private void stopSound() {
         Log.v(TAG, "stop sound");
         MediaPlayer ringtone = this.ringtone;
-        if ((ringtone != null) && ringtone.isPlaying()) {
+        if (ringtone != null) {
             ringtone.stop();
         }
     }
@@ -315,12 +316,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             final P prefs = getZmanimPreferences();
             Uri prefRingtone = prefs.getReminderRingtone();
             if (prefRingtone != null) {
-                MediaPlayer ringtone = MediaPlayer.create(context, prefRingtone);
-                if (ringtone != null) {
+                MediaPlayer ringtone = new MediaPlayer();
+                try {
+                    ringtone.setDataSource(context, prefRingtone);
+
                     int audioStreamType = prefs.getReminderStream();
-
-                    ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
-
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -331,6 +331,12 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     } else {
                         ringtone.setAudioStreamType(audioStreamType);
                     }
+
+                    ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
+                    ringtone.prepare();
+                } catch (IOException e) {
+                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage(), e);
+                    ringtone = null;
                 }
                 this.ringtone = ringtone;
             }
