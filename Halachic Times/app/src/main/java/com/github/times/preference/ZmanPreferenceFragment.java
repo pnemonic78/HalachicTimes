@@ -77,11 +77,11 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
                 String[] tokens = opinionKey.split(";");
                 int length = tokens.length;
                 for (int i = 0; i < length; i++) {
-                    initList(tokens[i]);
+                    initPreference(tokens[i]);
                     opinionKeys.add(tokens[i]);
                 }
             } else {
-                initList(opinionKey);
+                initPreference(opinionKey);
                 opinionKeys.add(opinionKey);
             }
         }

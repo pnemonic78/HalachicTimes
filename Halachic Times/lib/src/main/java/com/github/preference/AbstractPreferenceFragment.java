@@ -55,6 +55,25 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
 
     protected abstract int getPreferencesXml();
 
+    protected Preference initPreference(String key) {
+        Preference pref;
+
+        pref = initList(key);
+        if (pref != null) {
+            return pref;
+        }
+        pref = initRingtone(key);
+        if (pref != null) {
+            return pref;
+        }
+        pref = initTime(key);
+        if (pref != null) {
+            return pref;
+        }
+
+        return null;
+    }
+
     protected ListPreference initList(String key) {
         if (TextUtils.isEmpty(key)) {
             return null;
