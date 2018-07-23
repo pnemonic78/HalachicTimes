@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.github.compass"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.github.compass">
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
@@ -33,9 +32,9 @@
         </activity>
         <activity
             android:name="com.github.times.compass.preference.CompassPreferenceActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.compass.CompassActivity">
-        </activity>
+            android:parentActivityName="com.github.compass.CompassActivity"/>
 
         <meta-data
             android:name="com.google.android.backup.api_key"

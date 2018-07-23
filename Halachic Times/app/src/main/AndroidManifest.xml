@@ -40,6 +40,7 @@
         </activity>
         <activity
             android:name="com.github.times.preference.ZmanimPreferenceActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings"
             android:parentActivityName="com.github.times.ZmanimActivity"
             android:theme="@style/Theme.Zmanim.Settings"/>
@@ -53,6 +54,7 @@
         </activity>
         <activity
             android:name="com.github.times.preference.CompassPreferenceActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings"
             android:parentActivityName="com.github.times.compass.CompassActivity"
             android:theme="@style/Theme.Zmanim.Settings"/>
