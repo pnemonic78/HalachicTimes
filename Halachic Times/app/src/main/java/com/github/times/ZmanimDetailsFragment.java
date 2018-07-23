@@ -27,6 +27,8 @@ import android.view.ViewTreeObserver;
 
 import java.util.Calendar;
 
+import static com.github.view.ViewUtils.applyMaxWidth;
+
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
  *
@@ -263,7 +265,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                 list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 // Make all time texts same width.
                 try {
-                    applyMinWidth(timeViews);
+                    applyMaxWidth(timeViews);
                 } catch (NullPointerException e) {
                     throw new NullPointerException("null object reference on " + gcal);
                 }
