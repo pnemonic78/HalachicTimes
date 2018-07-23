@@ -58,7 +58,7 @@ public class StreamUtils {
      * @throws IOException if an I/O error occurs.
      */
     public static InputStream readFully(InputStream in, int size) throws IOException {
-        size = Math.max(size, 32);
+        size = Math.max(size, BUFFER_SIZE);
         RawByteArrayOutputStream out = new RawByteArrayOutputStream(size);
         final byte[] buf = new byte[BUFFER_SIZE];
         int count;
