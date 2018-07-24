@@ -307,7 +307,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         Log.v(TAG, "stop sound");
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
-            ringtone.stop();
+            try {
+                ringtone.stop();
+            } catch (IllegalStateException e) {
+                LogUtils.e(TAG, "error stopping sound: " + e.getLocalizedMessage(), e);
+            }
         }
     }
 
