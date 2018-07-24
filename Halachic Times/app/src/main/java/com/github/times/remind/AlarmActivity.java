@@ -342,7 +342,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
                     ringtone.prepare();
                 } catch (IOException e) {
-                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage(), e);
+                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone, e);
                     ringtone = null;
                 }
                 this.ringtone = ringtone;
