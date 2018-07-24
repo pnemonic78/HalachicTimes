@@ -52,18 +52,6 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         this.itemId = itemId;
     }
 
-    /**
-     * Populate the list of times.
-     *
-     * @param adapter the adapter to populate.
-     * @param remote  is for remote views?
-     * @param itemId  the master item id.
-     */
-    public void populate(A adapter, boolean remote, int itemId) {
-        setItemId(itemId);
-        super.populate(adapter, remote);
-    }
-
     @Override
     protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings) {
         populateImpl(adapter, remote, context, settings, itemId);

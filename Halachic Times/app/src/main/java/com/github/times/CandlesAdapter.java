@@ -21,6 +21,10 @@ import android.view.ViewGroup;
 
 import com.github.times.preference.ZmanimPreferences;
 
+import static com.github.times.ZmanimPopulater.CANDLES_MASK;
+import static com.github.times.ZmanimPopulater.CANDLES_MASK_OFFSET;
+import static com.github.times.ZmanimPopulater.HOLIDAY_MASK;
+import static com.github.times.ZmanimPopulater.HOLIDAY_MASK_OFFSET;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
@@ -79,7 +83,7 @@ public class CandlesAdapter extends ZmanimAdapter {
      * @return the number of candles.
      */
     public int getCandlesCount() {
-        return candles & CANDLES_MASK;
+        return (candles >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
     }
 
     /**
@@ -88,6 +92,6 @@ public class CandlesAdapter extends ZmanimAdapter {
      * @return the candles holiday.
      */
     public int getCandlesHoliday() {
-        return (candles >> 4) & HOLIDAY_MASK;
+        return (candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK;
     }
 }
