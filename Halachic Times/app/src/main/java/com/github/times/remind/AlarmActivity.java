@@ -142,6 +142,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         handleIntent(intent);
     }
 
@@ -262,6 +263,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     @Override
     public void onBackPressed() {
         // User must explicitly cancel the reminder.
+        setResult(RESULT_CANCELED);
     }
 
     /**
@@ -272,8 +274,9 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
             ringtone.release();
+            this.ringtone = null;
         }
-        setResult(RESULT_CANCELED);
+        setResult(RESULT_OK);
         close();
     }
 
