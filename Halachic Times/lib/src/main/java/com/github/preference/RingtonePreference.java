@@ -15,18 +15,15 @@
  */
 package com.github.preference;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.Preference;
@@ -76,8 +73,6 @@ public class RingtonePreference extends DialogPreference {
     private static final Uri SILENT_URI = RingtoneManager.SILENT_URI;
 
     private static final int POS_UNKNOWN = -1;
-
-    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
     private int ringtoneType;
     private boolean showDefault;
@@ -510,20 +505,5 @@ public class RingtonePreference extends DialogPreference {
                         return new SavedState[size];
                     }
                 };
-    }
-
-    @Override
-    protected void onClick() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final Context context = getContext();
-            if (context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (context instanceof Activity) {
-                    Activity activity = (Activity) context;
-                    activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
-                    return;
-                }
-            }
-        }
-        super.onClick();
     }
 }
