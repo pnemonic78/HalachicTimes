@@ -31,8 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.KITKAT;
-import static android.os.Build.VERSION_CODES.N;
+import static android.os.Build.VERSION_CODES;
 
 /**
  * Ringtone manager that can ignore external media when not permitted.
@@ -75,7 +74,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
     public RingtoneManager(Context context) {
         super(context);
         this.context = context;
-        setIncludeExternal((VERSION.SDK_INT < KITKAT)
+        setIncludeExternal((VERSION.SDK_INT < VERSION_CODES.KITKAT)
                 || (context.checkCallingOrSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED));
     }
 
@@ -204,7 +203,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
             boolean dangerousUri = false;
             if (uriString.startsWith(EXTERNAL_PATH)) {
                 dangerousUri = true;
-            } else if (VERSION.SDK_INT >= N) {
+            } else if (VERSION.SDK_INT >= VERSION_CODES.N) {
                 if (uriString.startsWith(FILE_PATH)) {
                     dangerousUri = true;
                 } else {
@@ -216,7 +215,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 // Try a 'default' tone.
                 uriString = getDefaultUri(type).toString();
 
-                if (VERSION.SDK_INT >= N) {
+                if (VERSION.SDK_INT >= VERSION_CODES.N) {
                     if (uriString.startsWith(FILE_PATH)) {
                         return SILENT_PATH;
                     }
