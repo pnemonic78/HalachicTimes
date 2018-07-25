@@ -15,6 +15,11 @@
  */
 package com.github.times;
 
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
@@ -27,20 +32,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.github.times.preference.ZmanimPreferences;
-import com.github.util.LocaleUtils;
-
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import com.github.times.preference.ZmanimPreferences;
+import com.github.util.LocaleUtils;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -61,9 +61,6 @@ import static java.lang.System.currentTimeMillis;
  * @author Moshe Waisberg
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
-
-    protected static final int CANDLES_MASK = ZmanimPopulater.CANDLES_MASK;
-    protected static final int HOLIDAY_MASK = ZmanimPopulater.HOLIDAY_MASK;
 
     /** No summary. */
     protected static final int SUMMARY_NONE = 0;

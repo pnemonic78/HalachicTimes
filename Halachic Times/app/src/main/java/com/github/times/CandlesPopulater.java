@@ -39,12 +39,12 @@ public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
 
     @Override
     protected void populateImpl(CandlesAdapter adapter, boolean remote, Context context, ZmanimPreferences settings) {
-        populateCandles(adapter);
+        populateCandles(adapter, settings);
     }
 
-    protected void populateCandles(CandlesAdapter adapter) {
+    protected void populateCandles(CandlesAdapter adapter, ZmanimPreferences settings) {
         JewishCalendar jcal = getJewishCalendar();
-        int candles = getCandles(jcal);
+        int candles = calculateCandles(jcal, settings);
         adapter.setCandles(candles);
     }
 }

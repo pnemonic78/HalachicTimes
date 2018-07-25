@@ -44,19 +44,33 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        afterPreference = (ListPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_AFTER);
         sunsetPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_SUNSET);
         twilightPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_TWILIGHT);
         nightfallPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL);
         minutesPreference = (NumberPickerPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
-
-        onPreferenceChange(afterPreference, afterPreference.getValue());
+        afterPreference = initList(KEY_OPINION_SHABBATH_ENDS_AFTER);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final String key = preference.getKey();
-        if (KEY_OPINION_SHABBATH_ENDS_AFTER.equals(key)) {
+
+        if (KEY_OPINION_SHABBATH_ENDS_MINUTES.equals(key)) {
+            int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
+            String shabbathAfterName = getString(shabbathAfterId);
+
+            int value = (int) newValue;
+            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
+        }
+
+        return super.onPreferenceChange(preference, newValue);
+    }
+
+    @Override
+    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
+        final String key = preference.getKey();
+
+        if (KEY_OPINION_SHABBATH_ENDS_AFTER.equals(key) && (sunsetPreference != null)) {
             int shabbathAfterId = getPreferences().toId(newValue.toString());
             String shabbathAfterName = getString(shabbathAfterId);
 
@@ -85,15 +99,9 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
             int value = minutesPreference.getValue();
             minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
-        } else if (KEY_OPINION_SHABBATH_ENDS_MINUTES.equals(key)) {
-            int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
-            String shabbathAfterName = getString(shabbathAfterId);
-
-            int value = (int) newValue;
-            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
         }
 
-        return super.onPreferenceChange(preference, newValue);
+        return super.onListPreferenceChange(preference, newValue);
     }
 
     private ListPreference addDefaultOption(String key) {
@@ -119,6 +127,8 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         CharSequence defaultEntry = context.getText(R.string.none);
         newEntries[0] = defaultEntry;
         preference.setEntries(newEntries);
+
+        onListPreferenceChange(preference, preference.getValue());
 
         return preference;
     }

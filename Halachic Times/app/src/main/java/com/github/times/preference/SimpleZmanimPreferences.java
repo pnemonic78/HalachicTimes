@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -583,7 +584,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         RingtoneManager ringtoneManager = new RingtoneManager(context);
         ringtoneManager.setType(type);
         path = ringtoneManager.filterInternalMaybe(path);
-        return isEmpty(path) ? null : Uri.parse(path);
+        return isEmpty(path) ? null : (path.charAt(0) == File.separatorChar ? Uri.fromFile(new File(path)) : Uri.parse(path));
     }
 
     @Override

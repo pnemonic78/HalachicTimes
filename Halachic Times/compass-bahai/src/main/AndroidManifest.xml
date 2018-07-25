@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.github.times.compass.bahai"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.github.times.compass.bahai">
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
@@ -37,9 +36,9 @@
         </activity>
         <activity
             android:name="com.github.times.compass.preference.CompassPreferenceActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.times.compass.CompassActivity">
-        </activity>
+            android:parentActivityName="com.github.times.compass.CompassActivity"/>
         <activity
             android:name="com.github.times.location.LocationActivity"
             android:label="@string/title_activity_location"

@@ -82,20 +82,30 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     /** Number of candles to light for Yom Kippurim. */
     private static final int CANDLES_YOM_KIPPUR = 1;
 
-    /** Flag indicating lighting times before sunset. */
-    private static final int BEFORE_SUNSET = 0x00000000;
-    /** Flag indicating lighting times at sunset. */
-    private static final int AT_SUNSET = 0x10000000;
-    /** Flag indicating lighting times at twilight. */
-    private static final int AT_TWILIGHT = 0x20000000;
-    /** Flag indicating lighting times after nightfall. */
-    private static final int AT_NIGHT = 0x40000000;
-    /** Flag indicating lighting times after Shabbath. */
-    private static final int MOTZE_SHABBATH = AT_NIGHT;
+    static final int CANDLES_MASK_OFFSET = 0;
+    private static final int CANDLES_MASK_BITS = 4;
+    static final int CANDLES_MASK = (1 << CANDLES_MASK_BITS) - 1;
+    static final int HOLIDAY_MASK_OFFSET = CANDLES_MASK_OFFSET + CANDLES_MASK_BITS;
+    private static final int HOLIDAY_MASK_BITS = 8;
+    static final int HOLIDAY_MASK = (1 << HOLIDAY_MASK_BITS) - 1;
+    private static final int HOLIDAY_TOMORROW_MASK_OFFSET = HOLIDAY_MASK_OFFSET + HOLIDAY_MASK_BITS;
+    private static final int MOTZE_MASK_OFFSET = HOLIDAY_TOMORROW_MASK_OFFSET + HOLIDAY_MASK_BITS;
+    private static final int MOTZE_MASK_BITS = 4;
+    private static final int MOTZE_MASK = (1 << MOTZE_MASK_BITS) - 1;
+    private static final int OFFSET_MASK_OFFSET = MOTZE_MASK_OFFSET + MOTZE_MASK_BITS;
+    private static final int OFFSET_MASK_BITS = 12;
+    private static final int OFFSET_MASK = (1 << OFFSET_MASK_BITS) - 1;
 
-    protected static final int CANDLES_MASK = 0x0000000F;
-    protected static final int HOLIDAY_MASK = 0x000000FF;
-    protected static final int MOTZE_MASK = 0xF0000000;
+    /** Flag indicating lighting times before sunset. */
+    private static final int BEFORE_SUNSET = 0;
+    /** Flag indicating lighting times at sunset. */
+    private static final int AT_SUNSET = 1;
+    /** Flag indicating lighting times at twilight. */
+    private static final int AT_TWILIGHT = 2;
+    /** Flag indicating lighting times after nightfall. */
+    private static final int AT_NIGHT = 3;
+    /** Flag indicating lighting times after Shabbath. */
+    private static final int MOTZE_SHABBATH = 4;
 
     protected static final String OPINION_10_2 = ZmanimPreferences.Values.OPINION_10_2;
     protected static final String OPINION_11 = ZmanimPreferences.Values.OPINION_11;
@@ -242,15 +252,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final JewishDate jewishDateTomorrow = (JewishDate) jewishDate.clone();
         jewishDateTomorrow.forward();
         final int dayOfWeek = jcal.getDayOfWeek();
-        final int candlesOffset = settings.getCandleLightingOffset();
         final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
-        final int candles = getCandles(jcal);
-        final int candlesCount = candles & CANDLES_MASK;
-        final boolean hasCandles = candlesCount > 0;
-        final int candlesHow = candles & MOTZE_MASK;
-        final int holidayToday = (byte) ((candles >> 12) & HOLIDAY_MASK);
-        final int holidayTomorrow = (byte) ((candles >> 4) & HOLIDAY_MASK);
+        final int candles = calculateCandles(jcal, settings);
+        final int candlesCount = (candles >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
+        final int holidayToday = (byte) ((candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK);
+        final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);
+        final int candlesOffset = (candles >> OFFSET_MASK_OFFSET) & OFFSET_MASK;
+        final int candlesWhen = (candles >> MOTZE_MASK_OFFSET) & MOTZE_MASK;
 
         Long date;
         int summary;
@@ -634,41 +643,15 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         summary = dateAndSummary.second;
         adapter.add(R.string.sunset, summary, date, jewishDate, remote);
         final long sunset = date;
-
-        if (sunset != NEVER) {
-            if (hasCandles) {
-                if (candlesHow == BEFORE_SUNSET) {
-                    if (holidayTomorrow == CHANUKAH) {
-                        summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                    } else {
-                        summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
-                    }
-                    adapter.add(R.string.candles, summaryText, sunset - (candlesOffset * MINUTE_IN_MILLIS), jewishDate, remote);
-                } else if (candlesHow == AT_SUNSET) {
-                    if (holidayTomorrow == CHANUKAH) {
-                        summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                        adapter.add(R.string.candles, summaryText, sunset, jewishDate, remote);
-                    } else {
-                        adapter.add(R.string.candles, summary, sunset, jewishDate, remote);
-                    }
-                }
-            }
-        }
+        final int summarySunset = summary;
 
         opinion = settings.getTwilight();
         dateAndSummary = getTwilight(cal, opinion);
         date = dateAndSummary.first;
         summary = dateAndSummary.second;
-        final long twilight = date;
         adapter.add(R.string.twilight, summary, date, jewishDateTomorrow, remote);
-        if (hasCandles && (candlesHow == AT_TWILIGHT)) {
-            if (holidayTomorrow == CHANUKAH) {
-                summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
-            } else {
-                adapter.add(R.string.candles, summary, date, jewishDateTomorrow, remote);
-            }
-        }
+        final long twilight = date;
+        final int summaryTwilight = summary;
 
         opinion = settings.getNightfall();
         dateAndSummary = getNightfall(cal, opinion);
@@ -676,13 +659,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         summary = dateAndSummary.second;
         adapter.add(R.string.nightfall, summary, date, jewishDateTomorrow, remote);
         final long nightfall = date;
-        if (nightfall != NEVER) {
-            date = cal.getTimeOffset(nightfall, shabbathOffset * MINUTE_IN_MILLIS);
-            if (hasCandles && (candlesHow == AT_NIGHT) && (holidayTomorrow == CHANUKAH)) {
-                summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
-                adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
-            }
-        }
+        final int summaryNightfall = summary;
 
         switch (shabbathAfter) {
             case R.string.sunset:
@@ -711,17 +688,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 }
                 break;
         }
-        final long shabbatEnds = date;
-        if ((date != null) && (date != NEVER)) {
-            date = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
-            if (hasCandles) {
-                if ((candlesHow == AT_NIGHT) && (holidayTomorrow != CHANUKAH)) {
-                    summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
-                    adapter.add(R.string.candles, summaryText, date, jewishDateTomorrow, remote);
-                }
-            } else if (dayOfWeek == SATURDAY) {
+        long shabbatEnds = NEVER;
+        CharSequence summaryShabbatEnds = null;
+        if (date != NEVER) {
+            if (dayOfWeek == SATURDAY) {
+                shabbatEnds = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
                 summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
-                adapter.add(R.string.shabbath_ends, summaryText, date, jewishDateTomorrow, remote);
+                adapter.add(R.string.shabbath_ends, summaryText, shabbatEnds, jewishDateTomorrow, remote);
+                summaryShabbatEnds = summaryText;
             } else if (holidayToday >= 0) {
                 switch (holidayToday) {
                     case PESACH:
@@ -731,10 +705,68 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     case SUCCOS:
                     case SHEMINI_ATZERES:
                     case SIMCHAS_TORAH:
+                        shabbatEnds = cal.getTimeOffset(date, shabbathOffset * MINUTE_IN_MILLIS);
                         summaryText = res.getQuantityString(R.plurals.shabbath_ends_summary, shabbathOffset, shabbathOffset, shabbathAfterName);
-                        adapter.add(R.string.festival_ends, summaryText, date, jewishDateTomorrow, remote);
+                        adapter.add(R.string.festival_ends, summaryText, shabbatEnds, jewishDateTomorrow, remote);
+                        summaryShabbatEnds = summaryText;
                         break;
                 }
+            }
+        }
+
+        if (candlesCount > 0) {
+            switch (candlesWhen) {
+                case BEFORE_SUNSET:
+                    if (sunset != NEVER) {
+                        date = sunset - (candlesOffset * MINUTE_IN_MILLIS);
+                        if (holidayTomorrow == CHANUKAH) {
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                        } else {
+                            summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
+                        }
+                        adapter.add(R.string.candles, summaryText, date, jewishDate, remote);
+                    }
+                    break;
+                case AT_SUNSET:
+                    if (sunset != NEVER) {
+                        if (holidayTomorrow == CHANUKAH) {
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            adapter.add(R.string.candles, summaryText, sunset, jewishDate, remote);
+                        } else {
+                            adapter.add(R.string.candles, summarySunset, sunset, jewishDate, remote);
+                        }
+                    }
+                    break;
+                case AT_TWILIGHT:
+                    if (twilight != NEVER) {
+                        if (holidayTomorrow == CHANUKAH) {
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            adapter.add(R.string.candles, summaryText, twilight, jewishDateTomorrow, remote);
+                        } else {
+                            adapter.add(R.string.candles, summaryTwilight, twilight, jewishDateTomorrow, remote);
+                        }
+                    }
+                    break;
+                case AT_NIGHT:
+                    if (nightfall != NEVER) {
+                        if (holidayTomorrow == CHANUKAH) {
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            adapter.add(R.string.candles, summaryText, nightfall, jewishDateTomorrow, remote);
+                        } else {
+                            adapter.add(R.string.candles, summaryNightfall, nightfall, jewishDateTomorrow, remote);
+                        }
+                    }
+                    break;
+                case MOTZE_SHABBATH:
+                    if (shabbatEnds != NEVER) {
+                        if (holidayTomorrow == CHANUKAH) {
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            adapter.add(R.string.candles, summaryText, shabbatEnds, jewishDateTomorrow, remote);
+                        } else {
+                            adapter.add(R.string.candles, summaryShabbatEnds, shabbatEnds, jewishDateTomorrow, remote);
+                        }
+                    }
+                    break;
             }
         }
 
@@ -908,12 +940,65 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     }
 
     /**
-     * Get the number of candles to light.
+     * Calculate candle parameters, e.g. the number of candles to light.
+     * <p>
+     * Some rules for showing candles:
+     * <table>
+     * <tr>
+     * <th>Today \ Tomorrow</th>
+     * <td>weekday</td>
+     * <td>Saturday</td>
+     * <td>festival</td>
+     * <td>Yom Kippur</td>
+     * <td>Channuka</td>
+     * </tr>
+     * <tr>
+     * <td>weekday</td>
+     * <td>x</td>
+     * <td>sunset</td>
+     * <td>sunset</td>
+     * <td>sunset</td>
+     * <td>Channuka</td>
+     * </tr>
+     * <tr>
+     * <td>Saturday</td>
+     * <td>x</td>
+     * <td>x</td>
+     * <td>Shabbath ends</td>
+     * <td>x</td>
+     * <td>Shabbath ends</td>
+     * </tr>
+     * <tr>
+     * <td>festival</td>
+     * <td>x</td>
+     * <td>sunset</td>
+     * <td>Shabbath ends</td>
+     * <td>x</td>
+     * <td>x</td>
+     * </tr>
+     * <tr>
+     * <td>Yom Kippur</td>
+     * <td>x</td>
+     * <td>x</td>
+     * <td>x</td>
+     * <td>x</td>
+     * <td>x</td>
+     * </tr>
+     * <tr>
+     * <td>Channuka</td>
+     * <td>x</td>
+     * <td>sunset</td>
+     * <td>x</td>
+     * <td>x</td>
+     * <td>Channuka</td>
+     * </tr>
+     * </table>
+     * </p>
      *
      * @param jcal the Jewish calendar.
      * @return the number of candles to light, the holiday, and when to light.
      */
-    protected int getCandles(JewishCalendar jcal) {
+    protected int calculateCandles(JewishCalendar jcal, ZmanimPreferences settings) {
         if (jcal == null) {
             return 0;
         }
@@ -924,7 +1009,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         jcal.forward();
         int holidayTomorrow = jcal.getYomTovIndex();
         int count = CANDLES_NONE;
-        int flags = BEFORE_SUNSET;
+        int when = BEFORE_SUNSET;
 
         switch (holidayTomorrow) {
             case PESACH:
@@ -943,11 +1028,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 if ((dayOfWeek != FRIDAY) && (dayOfWeek != SATURDAY)) {
                     String opinion = settings.getChanukkaCandles();
                     if (OPINION_TWILIGHT.equals(opinion)) {
-                        flags = AT_TWILIGHT;
+                        when = AT_TWILIGHT;
                     } else if (OPINION_NIGHT.equals(opinion)) {
-                        flags = AT_NIGHT;
+                        when = AT_NIGHT;
                     } else {
-                        flags = AT_SUNSET;
+                        when = AT_SUNSET;
                     }
                 }
                 break;
@@ -961,37 +1046,40 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         switch (dayOfWeek) {
             // Forbidden to light candles during Shabbath.
+            // Never happens that Yom Kippurim falls on a Friday.
             case FRIDAY:
-                // Probably never happens that Yom Kippurim falls on a Friday.
-                // Prohibited to light candles on Yom Kippurim for Shabbath.
-                if (holidayToday == YOM_KIPPUR) {
-                    count = CANDLES_NONE;
-                }
+                when = BEFORE_SUNSET;
                 break;
             // Forbidden to light candles during Shabbath.
             case SATURDAY:
                 if (holidayToday == -1) {
                     holidayToday = SHABBATH;
                 }
-                flags = MOTZE_SHABBATH;
+                when = MOTZE_SHABBATH;
                 break;
             default:
                 // During a holiday, we can light for the next day from an existing flame,
                 // but preferable to light havdala candle after the Yom Tov.
                 switch (holidayToday) {
+                    case PESACH:
+                    case SHAVUOS:
                     case ROSH_HASHANA:
                     case SUCCOS:
                     case SHEMINI_ATZERES:
                     case SIMCHAS_TORAH:
-                    case PESACH:
-                    case SHAVUOS:
-                        flags = AT_NIGHT;
+                        when = MOTZE_SHABBATH;
                         break;
                 }
                 break;
         }
 
-        return flags | ((holidayToday & HOLIDAY_MASK) << 12) | ((holidayTomorrow & HOLIDAY_MASK) << 4) | (count & CANDLES_MASK);
+        final int candlesOffset = settings.getCandleLightingOffset();
+
+        return ((when & MOTZE_MASK) << MOTZE_MASK_OFFSET)
+                | ((candlesOffset & OFFSET_MASK) << OFFSET_MASK_OFFSET)
+                | ((holidayTomorrow & HOLIDAY_MASK) << HOLIDAY_TOMORROW_MASK_OFFSET)
+                | ((holidayToday & HOLIDAY_MASK) << HOLIDAY_MASK_OFFSET)
+                | ((count & CANDLES_MASK) << CANDLES_MASK_OFFSET);
     }
 
     /**
@@ -1110,7 +1198,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.sunrise_summary;
         }
 
-        return new Pair<>(toDate(date), summary);
+        return Pair.create(toDate(date), summary);
     }
 
     protected long getSunrise(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
@@ -1139,7 +1227,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.midday_summary;
         }
 
-        return new Pair<>(toDate(date), summary);
+        return Pair.create(toDate(date), summary);
     }
 
     protected long getMidday(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
@@ -1162,7 +1250,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.sunset_summary;
         }
 
-        return new Pair<>(toDate(date), summary);
+        return Pair.create(toDate(date), summary);
     }
 
     protected long getSunset(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
@@ -1191,7 +1279,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.twilight_2stars;
         }
 
-        return new Pair<>(toDate(date), summary);
+        return Pair.create(toDate(date), summary);
     }
 
     protected Pair<Long, Integer> getNightfall(ComplexZmanimCalendar cal, String opinion) {
@@ -1281,7 +1369,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.nightfall_8;
         }
 
-        return new Pair<>(toDate(date), summary);
+        return Pair.create(toDate(date), summary);
     }
 
     protected long getNightfall(ComplexZmanimCalendar cal, ZmanimPreferences settings) {
@@ -1308,7 +1396,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             summary = R.string.midnight_summary;
         }
 
-        return new Pair<>(toDate(date), summary);
+        return Pair.create(toDate(date), summary);
     }
 
     protected long getMidnight(ComplexZmanimCalendar cal, ZmanimPreferences settings) {

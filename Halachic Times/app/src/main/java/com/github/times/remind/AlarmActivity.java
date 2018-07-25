@@ -142,6 +142,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         handleIntent(intent);
     }
 
@@ -262,6 +263,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     @Override
     public void onBackPressed() {
         // User must explicitly cancel the reminder.
+        setResult(RESULT_CANCELED);
     }
 
     /**
@@ -272,8 +274,9 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
             ringtone.release();
+            this.ringtone = null;
         }
-        setResult(RESULT_CANCELED);
+        setResult(RESULT_OK);
         close();
     }
 
@@ -307,7 +310,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         Log.v(TAG, "stop sound");
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
-            ringtone.stop();
+            try {
+                ringtone.stop();
+            } catch (IllegalStateException e) {
+                LogUtils.e(TAG, "error stopping sound: " + e.getLocalizedMessage(), e);
+            }
         }
     }
 
@@ -335,7 +342,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
                     ringtone.prepare();
                 } catch (IOException e) {
-                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage(), e);
+                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone, e);
                     ringtone = null;
                 }
                 this.ringtone = ringtone;

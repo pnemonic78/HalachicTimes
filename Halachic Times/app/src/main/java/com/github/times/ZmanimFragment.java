@@ -43,6 +43,7 @@ import java.util.Calendar;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
+import static com.github.view.ViewUtils.applyMaxWidth;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -296,7 +297,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 list.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 // Make all time texts same width.
                 try {
-                    applyMinWidth(timeViews);
+                    applyMaxWidth(timeViews);
                 } catch (NullPointerException e) {
                     throw new NullPointerException("null object reference on " + jcal);
                 }
@@ -457,24 +458,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         View view = getView();
         if (view != null) {
             view.setVisibility(visibility);
-        }
-    }
-
-
-    /**
-     * Make all views at least the same width.
-     *
-     * @param views the array of views.
-     */
-    protected void applyMinWidth(View[] views) {
-        int maxWidth = 0;
-        // First, calculate the maximum widths of the views.
-        for (View view : views) {
-            maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
-        }
-        // Then, apply the maximum width to all the views.
-        for (View view : views) {
-            view.setMinimumWidth(maxWidth);
         }
     }
 }
