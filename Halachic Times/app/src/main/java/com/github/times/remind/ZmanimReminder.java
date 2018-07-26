@@ -816,7 +816,7 @@ public class ZmanimReminder {
     }
 
     /**
-     * Notify now.
+     * Alarm screen now.
      *
      * @param item the reminder item.
      */
