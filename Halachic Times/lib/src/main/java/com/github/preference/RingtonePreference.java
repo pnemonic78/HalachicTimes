@@ -27,11 +27,11 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.Preference;
-import android.support.annotation.StyleableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.github.lib.R;
@@ -58,13 +58,7 @@ public class RingtonePreference extends DialogPreference {
      */
     public static final int URI_COLUMN_INDEX = 2;
 
-    private static final int[] ATTRIBUTES = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
-    @StyleableRes
-    private static final int ATTRIBUTE_RINGTONE_TYPE = 0;
-    @StyleableRes
-    private static final int ATTRIBUTE_SHOW_DEFAULT = 1;
-    @StyleableRes
-    private static final int ATTRIBUTE_SHOW_SILENT = 2;
+    private static final int[] ATTRIBUTES = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent, android.R.attr.defaultValue};
 
     private static final String DEFAULT_PATH = RingtoneManager.DEFAULT_PATH;
     private static final Uri DEFAULT_URI = null;
@@ -92,6 +86,8 @@ public class RingtonePreference extends DialogPreference {
     /** The Uri to play when the 'Default' item is clicked. */
     private Uri defaultRingtoneUri;
 
+    private String defaultValue = DEFAULT_PATH;
+
     /**
      * A Ringtone for the default ringtone. In most cases, the RingtoneManager
      * will stop the previous ringtone. However, the RingtoneManager doesn't
@@ -102,10 +98,31 @@ public class RingtonePreference extends DialogPreference {
     public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
 
+        int ringtoneType = RingtoneManager.TYPE_RINGTONE;
+        boolean showDefault = false;
+        boolean showSilent = false;
+
+        Arrays.sort(ATTRIBUTES);
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
-        int ringtoneType = a.getInt(ATTRIBUTE_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
-        boolean showDefault = a.getBoolean(ATTRIBUTE_SHOW_DEFAULT, true);
-        boolean showSilent = a.getBoolean(ATTRIBUTE_SHOW_SILENT, true);
+        final int count = a.getIndexCount();
+        for (int i = 0; i < count; i++) {
+            int index = a.getIndex(i);
+            int attr = ATTRIBUTES[i];
+            switch (attr) {
+                case android.R.attr.ringtoneType:
+                    ringtoneType = a.getInt(index, ringtoneType);
+                    break;
+                case android.R.attr.showDefault:
+                    showDefault = a.getBoolean(index, showDefault);
+                    break;
+                case android.R.attr.showSilent:
+                    showSilent = a.getBoolean(index, showSilent);
+                    break;
+                case android.R.attr.defaultValue:
+                    defaultValue = onGetDefaultValue(a, index);
+                    break;
+            }
+        }
         a.recycle();
 
         ringtoneManager = new RingtoneManager(context);
@@ -302,9 +319,13 @@ public class RingtonePreference extends DialogPreference {
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         super.onPrepareDialogBuilder(builder);
 
+        if (selected == null) {
+            selected = onRestoreRingtone();
+        }
+
         List<CharSequence> entries = getEntries();
         CharSequence[] items = entries.toArray(new CharSequence[entries.size()]);
-        builder.setSingleChoiceItems(items, getValueIndex(), this);
+        builder.setSingleChoiceItems(items, findIndexOfValue(selected), this);
         builder.setPositiveButton(R.string.ok, this);
         builder.setNegativeButton(R.string.cancel, this);
     }
@@ -418,7 +439,7 @@ public class RingtonePreference extends DialogPreference {
      * @return The value of the key.
      */
     public String getValue() {
-        return ringtoneManager.filterInternalMaybe(getPersistedString(DEFAULT_PATH));
+        return ringtoneManager.filterInternalMaybe(getPersistedString(defaultValue));
     }
 
     /**
