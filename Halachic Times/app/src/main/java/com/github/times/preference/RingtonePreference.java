@@ -16,11 +16,13 @@
 package com.github.times.preference;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.preference.Preference;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.PermissionChecker;
 import android.util.AttributeSet;
 
 import com.github.app.ActivityUtils;
@@ -53,12 +55,17 @@ public class RingtonePreference extends com.github.preference.RingtonePreference
     protected void onClick() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final Context context = getContext();
-            if (requestPermissions && (context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) && (requestPermissionsCode != 0)) {
-                final int requestCode = requestPermissionsCode;
-                final Fragment owner = requestPermissionsFragment;
-                if (owner != null) {
-                    owner.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
-                    return;
+            if (requestPermissions) {
+                if (PermissionChecker.checkCallingOrSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED) {
+                    final Fragment owner = requestPermissionsFragment;
+                    final int requestCode = requestPermissionsCode;
+                    if (owner != null) {
+                        Activity activity = owner.getActivity();
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            owner.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
+                            return;
+                        }
+                    }
                 }
             }
         }
