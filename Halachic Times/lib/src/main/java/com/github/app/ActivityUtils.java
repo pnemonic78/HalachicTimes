@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 
 import com.github.util.LogUtils;
 
@@ -88,5 +89,15 @@ public class ActivityUtils {
             activity.onSaveInstanceState(savedState, null);
         }
         restartActivity(activity, savedState);
+    }
+
+    public static boolean isPermissionGranted(@NonNull String permission, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        final int length = Math.min(permissions.length, grantResults.length);
+        for (int i = 0; i < length; i++) {
+            if (permission.equals(permissions[i]) && (grantResults[i] == PackageManager.PERMISSION_GRANTED)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

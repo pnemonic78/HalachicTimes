@@ -22,13 +22,13 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StyleRes;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -265,12 +265,11 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
                 light = !isBrightWallpaper(context);
                 break;
         }
-        final Resources res = context.getResources();
         if (light) {
-            this.colorEnabled = res.getColor(R.color.widget_text_light);
+            this.colorEnabled = ContextCompat.getColor(context, R.color.widget_text_light);
             this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
         } else {
-            this.colorEnabled = res.getColor(R.color.widget_text);
+            this.colorEnabled = ContextCompat.getColor(context, R.color.widget_text);
             this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
         }
 
@@ -348,7 +347,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
-            row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
+            row.setInt(R.id.widget_item, "setBackgroundColor", ContextCompat.getColor(context, R.color.widget_candles_bg));
         } else {
             row.setInt(R.id.widget_item, "setBackgroundColor", Color.TRANSPARENT);
         }

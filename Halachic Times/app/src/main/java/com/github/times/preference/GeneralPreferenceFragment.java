@@ -23,8 +23,8 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 
-import com.github.preference.RingtonePreference;
 import com.github.times.R;
 
 import static android.os.Build.VERSION;
@@ -40,6 +40,8 @@ import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
  * This fragment shows the preferences for the General header.
  */
 public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
+
+    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
     private RingtonePreference reminderRingtonePreference;
 
@@ -67,7 +69,8 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 });
             }
         }
-        reminderRingtonePreference = initRingtone(KEY_REMINDER_RINGTONE);
+        reminderRingtonePreference = (RingtonePreference) initRingtone(KEY_REMINDER_RINGTONE);
+        reminderRingtonePreference.setRequestPermissionsCode(this, REQUEST_PERMISSIONS);
         initList(KEY_REMINDER_STREAM);
 
         initList(KEY_COORDS_FORMAT);
@@ -91,5 +94,14 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
             reminderRingtonePreference.setRingtoneType(ringType);
         }
         return result;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_PERMISSIONS) {
+            reminderRingtonePreference.onRequestPermissionsResult(permissions, grantResults);
+        }
     }
 }

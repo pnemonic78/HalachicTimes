@@ -27,7 +27,7 @@
             android:icon="@drawable/ic_settings_alarm"
             android:key="reminder.stream"
             android:title="@string/reminder_stream_title"/>
-        <com.github.preference.RingtonePreference
+        <com.github.times.preference.RingtonePreference
             android:defaultValue="@string/reminder_ringtone_defaultValue"
             android:icon="@drawable/ic_settings_tone"
             android:key="reminder.ringtone"

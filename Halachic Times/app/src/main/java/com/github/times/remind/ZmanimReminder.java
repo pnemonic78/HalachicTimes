@@ -328,8 +328,17 @@ public class ZmanimReminder {
      * @param settings the preferences.
      * @param item     the reminder item.
      */
+    @SuppressLint("Wakelock")
     public void notifyNow(ZmanimPreferences settings, ZmanimReminderItem item) {
         LogUtils.i(TAG, "notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+        final long now = currentTimeMillis();
+
+        // Wake up the device to notify the user.
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        if (pm != null) {
+            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG);
+            wake.acquire(5000L);// enough time to also hear a tone
+        }
 
         switch (settings.getReminderType()) {
             case RingtoneManager.TYPE_ALARM:
@@ -338,13 +347,14 @@ public class ZmanimReminder {
             case RingtoneManager.TYPE_NOTIFICATION:
             default:
                 PendingIntent contentIntent = createActivityIntent();
-
                 Notification notification = createReminderNotification(settings, item, contentIntent);
                 postReminderNotification(settings, notification);
-
-                silenceFuture(item, currentTimeMillis() + STOP_NOTIFICATION_AFTER);
+                silenceFuture(item, now + STOP_NOTIFICATION_AFTER);
                 break;
         }
+
+        // This was the last notification.
+        settings.setLatestReminder(now);
     }
 
     /**
@@ -553,24 +563,12 @@ public class ZmanimReminder {
         return builder.build();
     }
 
-    @SuppressLint("Wakelock")
     private void postReminderNotification(ZmanimPreferences settings, Notification notification) {
-        // Wake up the device to notify the user.
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-        if (pm != null) {
-            WakeLock wake = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, WAKE_TAG);
-            wake.acquire(5000L);// enough time to also hear an alarm tone
-        }
-
         NotificationManager nm = getNotificationManager();
         if (VERSION.SDK_INT >= O) {
             initChannels(nm);
         }
         nm.notify(ID_NOTIFY, notification);
-
-        // This was the last notification.
-        final long now = currentTimeMillis();
-        settings.setLatestReminder(now);
     }
 
     /**
@@ -816,7 +814,7 @@ public class ZmanimReminder {
     }
 
     /**
-     * Notify now.
+     * Alarm screen now.
      *
      * @param item the reminder item.
      */

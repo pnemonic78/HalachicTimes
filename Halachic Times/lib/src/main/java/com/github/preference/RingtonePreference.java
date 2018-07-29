@@ -15,26 +15,23 @@
  */
 package com.github.preference;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.Preference;
-import android.support.annotation.StyleableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.github.lib.R;
@@ -61,13 +58,7 @@ public class RingtonePreference extends DialogPreference {
      */
     public static final int URI_COLUMN_INDEX = 2;
 
-    private static final int[] ATTRIBUTES = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent};
-    @StyleableRes
-    private static final int ATTRIBUTE_RINGTONE_TYPE = 0;
-    @StyleableRes
-    private static final int ATTRIBUTE_SHOW_DEFAULT = 1;
-    @StyleableRes
-    private static final int ATTRIBUTE_SHOW_SILENT = 2;
+    private static final int[] ATTRIBUTES = {android.R.attr.ringtoneType, android.R.attr.showDefault, android.R.attr.showSilent, android.R.attr.defaultValue};
 
     private static final String DEFAULT_PATH = RingtoneManager.DEFAULT_PATH;
     private static final Uri DEFAULT_URI = null;
@@ -76,8 +67,6 @@ public class RingtonePreference extends DialogPreference {
     private static final Uri SILENT_URI = RingtoneManager.SILENT_URI;
 
     private static final int POS_UNKNOWN = -1;
-
-    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
     private int ringtoneType;
     private boolean showDefault;
@@ -97,6 +86,8 @@ public class RingtonePreference extends DialogPreference {
     /** The Uri to play when the 'Default' item is clicked. */
     private Uri defaultRingtoneUri;
 
+    private String defaultValue = DEFAULT_PATH;
+
     /**
      * A Ringtone for the default ringtone. In most cases, the RingtoneManager
      * will stop the previous ringtone. However, the RingtoneManager doesn't
@@ -107,10 +98,31 @@ public class RingtonePreference extends DialogPreference {
     public RingtonePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr);
 
+        int ringtoneType = RingtoneManager.TYPE_RINGTONE;
+        boolean showDefault = false;
+        boolean showSilent = false;
+
+        Arrays.sort(ATTRIBUTES);
         final TypedArray a = context.obtainStyledAttributes(attrs, ATTRIBUTES, defStyleAttr, defStyleRes);
-        int ringtoneType = a.getInt(ATTRIBUTE_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
-        boolean showDefault = a.getBoolean(ATTRIBUTE_SHOW_DEFAULT, true);
-        boolean showSilent = a.getBoolean(ATTRIBUTE_SHOW_SILENT, true);
+        final int count = a.getIndexCount();
+        for (int i = 0; i < count; i++) {
+            int index = a.getIndex(i);
+            int attr = ATTRIBUTES[i];
+            switch (attr) {
+                case android.R.attr.ringtoneType:
+                    ringtoneType = a.getInt(index, ringtoneType);
+                    break;
+                case android.R.attr.showDefault:
+                    showDefault = a.getBoolean(index, showDefault);
+                    break;
+                case android.R.attr.showSilent:
+                    showSilent = a.getBoolean(index, showSilent);
+                    break;
+                case android.R.attr.defaultValue:
+                    defaultValue = onGetDefaultValue(a, index);
+                    break;
+            }
+        }
         a.recycle();
 
         ringtoneManager = new RingtoneManager(context);
@@ -128,9 +140,13 @@ public class RingtonePreference extends DialogPreference {
     }
 
     public void setRingtoneType(int type) {
+        setRingtoneType(type, false);
+    }
+
+    protected void setRingtoneType(int type, boolean force) {
         final Context context = getContext();
 
-        if (type != ringtoneType) {
+        if ((type != ringtoneType) || force) {
             if (entries != null) {
                 ringtoneManager = new RingtoneManager(context);
                 entries = null;
@@ -307,9 +323,13 @@ public class RingtonePreference extends DialogPreference {
     protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         super.onPrepareDialogBuilder(builder);
 
+        if (selected == null) {
+            selected = onRestoreRingtone();
+        }
+
         List<CharSequence> entries = getEntries();
         CharSequence[] items = entries.toArray(new CharSequence[entries.size()]);
-        builder.setSingleChoiceItems(items, getValueIndex(), this);
+        builder.setSingleChoiceItems(items, findIndexOfValue(selected), this);
         builder.setPositiveButton(R.string.ok, this);
         builder.setNegativeButton(R.string.cancel, this);
     }
@@ -423,7 +443,7 @@ public class RingtonePreference extends DialogPreference {
      * @return The value of the key.
      */
     public String getValue() {
-        return ringtoneManager.filterInternalMaybe(getPersistedString(DEFAULT_PATH));
+        return ringtoneManager.filterInternalMaybe(getPersistedString(defaultValue));
     }
 
     /**
@@ -510,20 +530,5 @@ public class RingtonePreference extends DialogPreference {
                         return new SavedState[size];
                     }
                 };
-    }
-
-    @Override
-    protected void onClick() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            final Context context = getContext();
-            if (context.checkCallingOrSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                if (context instanceof Activity) {
-                    Activity activity = (Activity) context;
-                    activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
-                    return;
-                }
-            }
-        }
-        super.onClick();
     }
 }
