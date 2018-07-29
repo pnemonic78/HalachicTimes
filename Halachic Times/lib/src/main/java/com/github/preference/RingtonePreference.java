@@ -140,9 +140,13 @@ public class RingtonePreference extends DialogPreference {
     }
 
     public void setRingtoneType(int type) {
+        setRingtoneType(type, false);
+    }
+
+    protected void setRingtoneType(int type, boolean force) {
         final Context context = getContext();
 
-        if (type != ringtoneType) {
+        if ((type != ringtoneType) || force) {
             if (entries != null) {
                 ringtoneManager = new RingtoneManager(context);
                 entries = null;

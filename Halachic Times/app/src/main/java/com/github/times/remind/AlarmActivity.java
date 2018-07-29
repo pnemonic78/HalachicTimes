@@ -147,6 +147,12 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismiss();
+    }
+
+    @Override
     public P getThemePreferences() {
         return getThemeCallbacks().getThemePreferences();
     }
