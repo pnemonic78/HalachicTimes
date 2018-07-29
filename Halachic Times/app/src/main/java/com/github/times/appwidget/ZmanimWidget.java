@@ -19,10 +19,10 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
@@ -58,8 +58,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 light = !isBrightWallpaper(context);
                 break;
         }
-        final Resources res = context.getResources();
-        this.colorEnabled = light ? res.getColor(R.color.widget_text_light) : res.getColor(R.color.widget_text);
+        this.colorEnabled = light ? ContextCompat.getColor(context, R.color.widget_text_light) : ContextCompat.getColor(context, R.color.widget_text);
 
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
@@ -240,7 +239,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
     protected void bindViewRowSpecial(Context context, RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
-            row.setInt(R.id.widget_item, "setBackgroundColor", context.getResources().getColor(R.color.widget_candles_bg));
+            row.setInt(R.id.widget_item, "setBackgroundColor", ContextCompat.getColor(context, R.color.widget_candles_bg));
         }
     }
 }

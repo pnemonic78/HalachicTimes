@@ -83,7 +83,8 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             adapter = super.populateTimes(date);
         }
 
-        Resources res = getContextImpl().getResources();
+        final Context context = getContextImpl();
+        Resources res = context.getResources();
 
         switch (preferences.getTheme()) {
             case R.style.Theme_Zmanim_Dark:
