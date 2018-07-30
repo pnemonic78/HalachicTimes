@@ -26,6 +26,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -337,6 +338,15 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             }
         }
 
+        return null;
+    }
+
+    @Nullable
+    protected CharSequence findEntry(@NonNull ListPreference preference, String value) {
+        int index = preference.findIndexOfValue(value);
+        if (index >= 0) {
+            return preference.getEntries()[index];
+        }
         return null;
     }
 }

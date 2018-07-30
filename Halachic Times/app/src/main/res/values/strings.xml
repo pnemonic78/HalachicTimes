@@ -261,6 +261,20 @@
         <item quantity="many">@string/minutes_after_many</item>
         <item quantity="other">@string/minutes_after_other</item>
     </plurals>
+    <string name="minutes_after_specific_zero">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_one">%1$d minute after %2$s (%3$s)</string>
+    <string name="minutes_after_specific_two">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_few">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_many">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_other">%1$d minutes after %2$s (%3$s)</string>
+    <plurals name="shabbath_ends_specific_summary" translatable="false">
+        <item quantity="zero">@string/minutes_after_specific_zero</item>
+        <item quantity="one">@string/minutes_after_specific_one</item>
+        <item quantity="two">@string/minutes_after_specific_two</item>
+        <item quantity="few">@string/minutes_after_specific_few</item>
+        <item quantity="many">@string/minutes_after_specific_many</item>
+        <item quantity="other">@string/minutes_after_specific_other</item>
+    </plurals>
     <string name="festival_ends">Festival ends</string>
 
     <!-- Midnight -->
