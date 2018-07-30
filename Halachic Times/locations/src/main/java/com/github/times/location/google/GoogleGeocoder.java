@@ -117,7 +117,7 @@ public class GoogleGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-        return new GeocodeResponseHandler(results, maxResults, locale);
+        return new GoogleAddressResponseHandler(results, maxResults, locale);
     }
 
     /**
@@ -125,7 +125,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class GeocodeResponseHandler extends DefaultAddressResponseHandler {
+    protected static class GoogleAddressResponseHandler extends DefaultAddressResponseHandler {
 
         /**
          * Parse state.
@@ -175,7 +175,7 @@ public class GoogleGeocoder extends GeocoderBase {
          * @param results    the destination results.
          * @param maxResults the maximum number of results.
          */
-        public GeocodeResponseHandler(List<Address> results, int maxResults, Locale locale) {
+        public GoogleAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
             this.results = results;
             this.maxResults = maxResults;
             this.locale = locale;
@@ -396,7 +396,7 @@ public class GoogleGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
-        return new ElevationResponseHandler(latitude, longitude, results);
+        return new GoogleElevationResponseHandler(latitude, longitude, results);
     }
 
     /**
@@ -404,7 +404,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
+    protected static class GoogleElevationResponseHandler extends DefaultAddressResponseHandler {
 
         /**
          * Parse state.
@@ -434,9 +434,9 @@ public class GoogleGeocoder extends GeocoderBase {
          *
          * @param latitude  the latitude.
          * @param longitude the longitude.
-         * @param results the destination results.
+         * @param results   the destination results.
          */
-        public ElevationResponseHandler(double latitude, double longitude,List<ZmanimLocation> results) {
+        public GoogleElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
             this.latitude = latitude;
             this.longitude = longitude;
             this.results = results;

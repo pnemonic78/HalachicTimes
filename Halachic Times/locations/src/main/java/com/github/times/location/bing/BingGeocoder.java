@@ -91,7 +91,7 @@ public class BingGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-        return new AddressResponseHandler(results, maxResults, locale);
+        return new BingAddressResponseHandler(results, maxResults, locale);
     }
 
     /**
@@ -99,7 +99,7 @@ public class BingGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class AddressResponseHandler extends DefaultAddressResponseHandler {
+    protected static class BingAddressResponseHandler extends DefaultAddressResponseHandler {
 
         /**
          * Parse state.
@@ -140,7 +140,7 @@ public class BingGeocoder extends GeocoderBase {
          * @param results    the destination results.
          * @param maxResults the maximum number of results.
          */
-        public AddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+        public BingAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
             this.results = results;
             this.maxResults = maxResults;
             this.locale = locale;
@@ -337,7 +337,7 @@ public class BingGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
-        return new ElevationResponseHandler(latitude, longitude, results);
+        return new BingElevationResponseHandler(latitude, longitude, results);
     }
 
     /**
@@ -345,7 +345,7 @@ public class BingGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
+    protected static class BingElevationResponseHandler extends DefaultAddressResponseHandler {
 
         /**
          * Parse state.
@@ -378,7 +378,7 @@ public class BingGeocoder extends GeocoderBase {
          * @param longitude the longitude.
          * @param results   the destination results.
          */
-        public ElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+        public BingElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
             this.latitude = latitude;
             this.longitude = longitude;
             this.results = results;
