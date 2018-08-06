@@ -215,8 +215,10 @@ public abstract class GeocoderBase {
         try {
             return parseLocations(data, maxResults);
         } catch (ParserConfigurationException pce) {
+            LogUtils.e(TAG, queryUrl, pce);
             throw new IOException(pce);
         } catch (SAXException se) {
+            LogUtils.e(TAG, queryUrl, se);
             throw new IOException(se);
         }
     }
@@ -297,8 +299,10 @@ public abstract class GeocoderBase {
         try {
             return parseElevationXML(latitude, longitude, data);
         } catch (ParserConfigurationException pce) {
+            LogUtils.e(TAG, queryUrl, pce);
             throw new IOException(pce);
         } catch (SAXException se) {
+            LogUtils.e(TAG, queryUrl, se);
             throw new IOException(se);
         }
     }
