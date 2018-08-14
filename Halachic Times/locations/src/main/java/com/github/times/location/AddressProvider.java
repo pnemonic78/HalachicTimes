@@ -202,7 +202,7 @@ public class AddressProvider {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 10);
                 } catch (Exception e) {
-                    LogUtils.e(TAG, "Address geocoder: " + geocoder + " at " + longitude + "," + latitude + "; error: " + e.getLocalizedMessage(), e);
+                    LogUtils.e(TAG, "Address geocoder: " + geocoder + " at " + latitude + "," + longitude + "; error: " + e.getLocalizedMessage(), e);
                     continue;
                 }
                 bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
