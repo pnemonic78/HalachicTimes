@@ -16,7 +16,6 @@
 package com.github.times.location;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -30,6 +29,8 @@ import java.util.TreeSet;
 
 import com.github.util.LocaleUtils;
 import com.github.widget.ArrayAdapter;
+
+import androidx.annotation.NonNull;
 
 /**
  * Location adapter.

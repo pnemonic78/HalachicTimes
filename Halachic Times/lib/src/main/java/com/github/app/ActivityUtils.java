@@ -20,9 +20,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
 
 import com.github.util.LogUtils;
+
+import androidx.annotation.NonNull;
 
 import static android.content.pm.PackageManager.GET_META_DATA;
 import static android.os.Build.VERSION;

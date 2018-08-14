@@ -31,12 +31,12 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api "com.android.support:support-annotations:$supportVersion"
-    api "com.android.support:support-compat:$supportVersion"
+    api "androidx.annotation:annotation:$supportVersion"
+    api "androidx.core:core:$supportVersion"
 
     // Views
-    api "com.android.support:recyclerview-v7:$supportVersion"
-    api 'com.android.support.constraint:constraint-layout:1.1.2'
+    api "androidx.recyclerview:recyclerview:$supportVersion"
+    api 'androidx.constraintlayout:constraintlayout:1.1.2'
 
     // Testing
     testImplementation 'junit:junit:4.12'

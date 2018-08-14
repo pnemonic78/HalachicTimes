@@ -23,6 +23,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import com.github.database.CursorFilter;
 import com.github.times.location.bing.BingGeocoder;
 import com.github.times.location.geonames.GeoNamesGeocoder;
@@ -31,14 +38,7 @@ import com.github.times.location.impl.DatabaseGeocoder;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLANET;

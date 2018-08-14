@@ -23,9 +23,10 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 
 import com.github.times.R;
+
+import androidx.annotation.NonNull;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES;

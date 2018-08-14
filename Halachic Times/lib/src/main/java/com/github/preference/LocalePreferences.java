@@ -15,9 +15,9 @@
  */
 package com.github.preference;
 
-import android.support.annotation.NonNull;
-
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 /**
  * Locale preferences.

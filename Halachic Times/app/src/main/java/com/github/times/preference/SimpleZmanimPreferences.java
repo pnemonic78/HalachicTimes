@@ -22,7 +22,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -37,6 +36,8 @@ import com.github.preference.SimpleThemePreferences;
 import com.github.preference.ThemePreferences;
 import com.github.preference.TimePreference;
 import com.github.times.R;
+
+import androidx.annotation.NonNull;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -88,6 +89,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_90_ZM
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_96;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_96_ZMANIS;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_ATERET;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_FIXED;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_GRA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_HALF;
@@ -97,7 +99,6 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
 import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_NONE;
 import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
 

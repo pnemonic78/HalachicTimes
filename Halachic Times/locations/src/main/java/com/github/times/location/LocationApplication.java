@@ -17,11 +17,12 @@ package com.github.times.location;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
+
+import androidx.annotation.NonNull;
 
 /**
  * Location application.

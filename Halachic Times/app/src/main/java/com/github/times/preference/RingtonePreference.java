@@ -21,11 +21,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.preference.Preference;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.PermissionChecker;
 import android.util.AttributeSet;
 
 import com.github.app.ActivityUtils;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
 
 /**
  * A {@link Preference} that allows the user to choose a ringtone from those on the device.

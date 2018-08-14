@@ -40,8 +40,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -58,6 +56,9 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LogUtils;
+
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;

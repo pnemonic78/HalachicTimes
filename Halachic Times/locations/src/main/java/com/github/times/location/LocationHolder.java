@@ -19,9 +19,10 @@ import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.NonNull;
 
 import com.github.times.location.impl.LocationsProviderFactoryImpl;
+
+import androidx.annotation.NonNull;
 
 /**
  * Holder for locations.
