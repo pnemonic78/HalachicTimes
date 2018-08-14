@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -93,7 +94,7 @@ public class GoogleGeocoder extends GeocoderBase {
     public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
-        String queryUrl = String.format(Locale.US, URL_ADDRESS, locationName, getLanguage());
+        String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage());
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
@@ -110,8 +111,7 @@ public class GoogleGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
         if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
-        String queryUrl = String
-                .format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
+        String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
