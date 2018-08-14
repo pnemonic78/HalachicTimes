@@ -329,22 +329,25 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case ADDRESS_LONG:
-                    longName = text;
-                    if (TAG_LONG_NAME.equals(localName))
+                    if (TAG_LONG_NAME.equals(localName)) {
+                        longName = text;
                         state = State.ADDRESS;
+                    }
                     break;
                 case ADDRESS_SHORT:
-                    shortName = text;
-                    if (TAG_SHORT_NAME.equals(localName))
+                    if (TAG_SHORT_NAME.equals(localName)) {
+                        shortName = text;
                         state = State.ADDRESS;
+                    }
                     break;
                 case ADDRESS_TYPE:
-                    if (TAG_TYPE.equals(localName))
+                    if (TAG_TYPE.equals(localName)) {
+                        if (addressType == null)
+                            addressType = text;
                         state = State.ADDRESS;
+                    }
                     if (TYPE_POLITICAL.equals(text))
                         break;
-                    if (addressType == null)
-                        addressType = text;
                     break;
                 case GEOMETRY:
                     if (TAG_GEOMETRY.equals(localName))
@@ -355,26 +358,28 @@ public class GoogleGeocoder extends GeocoderBase {
                         state = State.GEOMETRY;
                     break;
                 case LATITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLatitude(Double.parseDouble(text));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
+                    if (TAG_LATITUDE.equals(localName)) {
+                        if (address != null) {
+                            try {
+                                address.setLatitude(Double.parseDouble(text));
+                            } catch (NumberFormatException nfe) {
+                                throw new SAXException(nfe);
+                            }
                         }
-                    }
-                    if (TAG_LATITUDE.equals(localName))
                         state = State.LOCATION;
+                    }
                     break;
                 case LONGITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLongitude(Double.parseDouble(text));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
+                    if (TAG_LONGITUDE.equals(localName)) {
+                        if (address != null) {
+                            try {
+                                address.setLongitude(Double.parseDouble(text));
+                            } catch (NumberFormatException nfe) {
+                                throw new SAXException(nfe);
+                            }
                         }
-                    }
-                    if (TAG_LONGITUDE.equals(localName))
                         state = State.LOCATION;
+                    }
                     break;
                 case FINISH:
                     return;

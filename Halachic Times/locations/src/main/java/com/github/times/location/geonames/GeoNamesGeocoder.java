@@ -249,7 +249,6 @@ public class GeoNamesGeocoder extends GeocoderBase {
                 case GEONAME:
                     switch (localName) {
                         case TAG_GEONAME:
-                            state = State.ROOT;
                             if (address != null) {
                                 if ((results.size() < maxResults) && address.hasLatitude() && address.hasLongitude())
                                     results.add(address);
@@ -257,9 +256,9 @@ public class GeoNamesGeocoder extends GeocoderBase {
                                     state = State.FINISH;
                                 address = null;
                             }
+                            state = State.ROOT;
                             break;
                         case TAG_ADDRESS:
-                            state = State.ROOT;
                             if (address != null) {
                                 if (results.size() < maxResults)
                                     results.add(address);
@@ -272,118 +271,132 @@ public class GeoNamesGeocoder extends GeocoderBase {
                     }
                     break;
                 case ADMIN:
-                    if (address != null) {
-                        address.setAdminArea(text);
-                    }
-                    if (TAG_ADMIN.equals(localName))
+                    if (TAG_ADMIN.equals(localName)) {
+                        if (address != null) {
+                            address.setAdminArea(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case ADMIN_CODE:
-                    if ((address != null) && (address.getAdminArea() == null)) {
-                        address.setAdminArea(text);
-                    }
-                    if (TAG_ADMIN_CODE.equals(localName))
+                    if (TAG_ADMIN_CODE.equals(localName)) {
+                        if ((address != null) && (address.getAdminArea() == null)) {
+                            address.setAdminArea(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case COUNTRY:
-                    if (address != null) {
-                        address.setCountryName(text);
-                    }
-                    if (TAG_COUNTRY.equals(localName))
+                    if (TAG_COUNTRY.equals(localName)) {
+                        if (address != null) {
+                            address.setCountryName(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case COUNTRY_CODE:
-                    if (address != null) {
-                        address.setCountryCode(text);
-                        if (!isEmpty(text) && (address.getCountryName() == null)) {
-                            Locale countryLocale = new Locale(locale.getLanguage(), text);
-                            address.setCountryName(countryLocale.getDisplayCountry(countryLocale));
+                    if (TAG_CC.equals(localName)) {
+                        if (address != null) {
+                            address.setCountryCode(text);
+                            if (!isEmpty(text) && (address.getCountryName() == null)) {
+                                Locale countryLocale = new Locale(locale.getLanguage(), text);
+                                address.setCountryName(countryLocale.getDisplayCountry(countryLocale));
+                            }
                         }
-                    }
-                    if (TAG_CC.equals(localName))
                         state = State.GEONAME;
+                    }
                     break;
                 case LATITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLatitude(Double.parseDouble(text));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
+                    if (TAG_LATITUDE.equals(localName)) {
+                        if (address != null) {
+                            try {
+                                address.setLatitude(Double.parseDouble(text));
+                            } catch (NumberFormatException nfe) {
+                                throw new SAXException(nfe);
+                            }
                         }
-                    }
-                    if (TAG_LATITUDE.equals(localName))
                         state = State.GEONAME;
+                    }
                     break;
                 case LOCALITY:
-                    if (address != null) {
-                        address.setLocality(text);
-                    }
-                    if (TAG_LOCALITY.equals(localName))
+                    if (TAG_LOCALITY.equals(localName)) {
+                        if (address != null) {
+                            address.setLocality(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case LONGITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLongitude(Double.parseDouble(text));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
+                    if (TAG_LONGITUDE.equals(localName)) {
+                        if (address != null) {
+                            try {
+                                address.setLongitude(Double.parseDouble(text));
+                            } catch (NumberFormatException nfe) {
+                                throw new SAXException(nfe);
+                            }
                         }
-                    }
-                    if (TAG_LONGITUDE.equals(localName))
                         state = State.GEONAME;
+                    }
                     break;
                 case MTFCC:
                     if (TAG_MTFCC.equals(localName))
                         state = State.GEONAME;
                     break;
                 case POSTAL_CODE:
-                    if (address != null) {
-                        address.setPostalCode(text);
-                    }
-                    if (TAG_POSTAL_CODE.equals(localName))
+                    if (TAG_POSTAL_CODE.equals(localName)) {
+                        if (address != null) {
+                            address.setPostalCode(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case STREET:
-                    if (address != null) {
-                        address.setAddressLine(1, text);
-                    }
-                    if (TAG_STREET.equals(localName))
+                    if (TAG_STREET.equals(localName)) {
+                        if (address != null) {
+                            address.setAddressLine(1, text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case STREET_NUMBER:
-                    if (address != null) {
-                        address.setAddressLine(0, text);
-                    }
-                    if (TAG_STREET_NUMBER.equals(localName))
+                    if (TAG_STREET_NUMBER.equals(localName)) {
+                        if (address != null) {
+                            address.setAddressLine(0, text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case SUBADMIN:
-                    if (address != null) {
-                        address.setSubAdminArea(text);
-                    }
-                    if (TAG_SUBADMIN.equals(localName))
+                    if (TAG_SUBADMIN.equals(localName)) {
+                        if (address != null) {
+                            address.setSubAdminArea(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case SUBADMIN_CODE:
-                    if ((address != null) && (address.getSubAdminArea() == null)) {
-                        address.setSubAdminArea(text);
-                    }
-                    if (TAG_SUBADMIN_CODE.equals(localName))
+                    if (TAG_SUBADMIN_CODE.equals(localName)) {
+                        if ((address != null) && (address.getSubAdminArea() == null)) {
+                            address.setSubAdminArea(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case TOPONYM:
-                    if ((address != null) && (address.getFeatureName() == null)) {
-                        address.setFeatureName(text);
-                    }
-                    if (TAG_TOPONYM.equals(localName))
+                    if (TAG_TOPONYM.equals(localName)) {
+                        if ((address != null) && (address.getFeatureName() == null)) {
+                            address.setFeatureName(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case TOPONYM_NAME:
-                    if (address != null) {
-                        address.setFeatureName(text);
-                    }
-                    if (TAG_NAME.equals(localName))
+                    if (TAG_NAME.equals(localName)) {
+                        if (address != null) {
+                            address.setFeatureName(text);
+                        }
                         state = State.GEONAME;
+                    }
                     break;
                 case FINISH:
                 default:
