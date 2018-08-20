@@ -15,13 +15,13 @@
  */
 package com.github.times.location;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,14 +33,11 @@ import androidx.recyclerview.widget.RecyclerView;
 class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
 
     private final LocationAdapter.LocationItemListener itemListener;
-    @ColorInt
-    private int deleteColor = Color.RED;
-    private final Paint deletePaint = new Paint();
+    private Drawable deleteBg = null;
 
     public LocationSwipeHandler(@NonNull LocationAdapter.LocationItemListener itemListener) {
         super(0, ItemTouchHelper.START);
         this.itemListener = itemListener;
-        deletePaint.setColor(deleteColor);
     }
 
     @Override
@@ -91,10 +88,15 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
         final View itemView = viewHolder.itemView;
 
         // Draw the red delete background
-        float right = itemView.getRight();
-        float top = itemView.getTop();
-        float left = right + dX;
-        float bottom = itemView.getBottom();
-        c.drawRect(left, top, right, bottom, deletePaint);
+        int right = itemView.getRight();
+        int top = itemView.getTop();
+        int left = (int) (right + dX);
+        int bottom = itemView.getBottom();
+        if (deleteBg == null) {
+            final Context context = recyclerView.getContext();
+            deleteBg = ContextCompat.getDrawable(context, R.drawable.bg_swipe_delete);
+        }
+        deleteBg.setBounds(left, top, right, bottom);
+        deleteBg.draw(c);
     }
 }
