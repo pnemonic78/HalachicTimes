@@ -204,6 +204,20 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         }
     }
 
+    public void notifyItemRemoved(ZmanimAddress address) {
+        synchronized (lock) {
+            final int size = getItemCount();
+            LocationItem item;
+            for (int i = 0; i < size; i++) {
+                item = getItem(i);
+                if (item.address.equals(address)) {
+                    notifyItemRemoved(i);
+                    return;
+                }
+            }
+        }
+    }
+
     /**
      * Filter the list of locations to match cities' names that contain the constraint.
      *

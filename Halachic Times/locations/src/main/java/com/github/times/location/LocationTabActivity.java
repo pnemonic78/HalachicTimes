@@ -93,6 +93,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     private static final int WHAT_FAVORITE = 1;
     private static final int WHAT_ADDED = 2;
+    private static final int WHAT_DELETE = 3;
 
     private ThemeCallbacks<P> themeCallbacks;
     private SearchView searchText;
@@ -305,10 +306,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     @Override
     public void onItemSwipe(LocationItem item) {
-        adapterAll.remove(item);
-        adapterFavorites.remove(item);
-        adapterHistory.remove(item);
-        //TODO delete the item from database.
+        ZmanimAddress address = item.getAddress();
+        handler.obtainMessage(WHAT_DELETE, address).sendToTarget();
     }
 
     @Override
@@ -514,12 +513,13 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                 return;
             }
             ZmanimAddress address;
+            AddressProvider addressProvider;
 
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     address = (ZmanimAddress) msg.obj;
-                    AddressProvider provider = activity.getAddressProvider();
-                    provider.insertOrUpdateAddress(null, address);
+                    addressProvider = activity.getAddressProvider();
+                    addressProvider.insertOrUpdateAddress(null, address);
 
                     activity.adapterAll.notifyItemChanged(address);
                     activity.adapterFavorites.notifyItemChanged(address);
@@ -535,6 +535,15 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                     searchText.setIconified(false);
                     searchText.requestFocus();
                     searchText.setQuery(query, false);
+                    break;
+                case WHAT_DELETE:
+                    address = (ZmanimAddress) msg.obj;
+                    addressProvider = activity.getAddressProvider();
+                    if (addressProvider.deleteAddress(address)) {
+                        activity.adapterAll.notifyItemRemoved(address);
+                        activity.adapterFavorites.notifyItemRemoved(address);
+                        activity.adapterHistory.notifyItemRemoved(address);
+                    }
                     break;
             }
         }
