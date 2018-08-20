@@ -48,6 +48,7 @@ import com.github.times.location.impl.HistoryLocationAdapter;
 import com.github.util.LogUtils;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static android.os.Build.VERSION;
@@ -259,22 +260,32 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         RecyclerView list = findViewById(android.R.id.list);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
+        LocationSwipeHandler swipeHandler = new LocationSwipeHandler(this);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHandler);
+        itemTouchHelper.attachToRecyclerView(list);
 
         adapter = new HistoryLocationAdapter(context, items, itemListener, filterListener);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
+        swipeHandler = new LocationSwipeHandler(this);
+        itemTouchHelper = new ItemTouchHelper(swipeHandler);
+        itemTouchHelper.attachToRecyclerView(list);
 
         adapter = new FavoritesLocationAdapter(context, items, itemListener, filterListener);
         adapterFavorites = adapter;
         list = findViewById(R.id.list_favorites);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
+        swipeHandler = new LocationSwipeHandler(this);
+        itemTouchHelper = new ItemTouchHelper(swipeHandler);
+        itemTouchHelper.attachToRecyclerView(list);
     }
 
     @Override
-    public void onItemClick(ZmanimAddress address) {
+    public void onItemClick(LocationItem item) {
+        ZmanimAddress address = item.getAddress();
         Location loc = new Location(USER_PROVIDER);
         loc.setTime(System.currentTimeMillis());
         loc.setLatitude(address.getLatitude());
@@ -283,6 +294,21 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
             loc.setAltitude(address.getElevation());
         }
         setAddress(loc);
+    }
+
+    @Override
+    public void onFavoriteClick(LocationItem item, boolean checked) {
+        ZmanimAddress address = item.getAddress();
+        address.setFavorite(checked);
+        handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
+    }
+
+    @Override
+    public void onItemSwipe(LocationItem item) {
+        adapterAll.remove(item);
+        adapterFavorites.remove(item);
+        adapterHistory.remove(item);
+        //TODO delete the item from database.
     }
 
     @Override
@@ -343,12 +369,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         setResult(RESULT_OK, intent);
 
         finish();
-    }
-
-    @Override
-    public void onFavoriteClick(ZmanimAddress address, boolean checked) {
-        address.setFavorite(checked);
-        handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
     }
 
     /**

@@ -312,8 +312,9 @@ public class DatabaseGeocoder extends GeocoderBase {
         if (address == null)
             return;
         long id = address.getId();
-        if (id < 0L)
+        if (id < 0L) {
             return;
+        }
         // Cities have their own table.
         if (address instanceof City) {
             insertOrUpdateCity((City) address);

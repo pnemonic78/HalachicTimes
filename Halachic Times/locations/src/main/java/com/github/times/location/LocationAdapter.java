@@ -49,12 +49,17 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         /**
          * Callback to be invoked when an item in this list has been clicked.
          */
-        void onItemClick(ZmanimAddress address);
+        void onItemClick(LocationItem item);
 
         /**
          * Callback to be invoked when a "favorite" checkbox in this list has been clicked.
          **/
-        void onFavoriteClick(ZmanimAddress address, boolean checked);
+        void onFavoriteClick(LocationItem item, boolean checked);
+
+        /**
+         * Callback to be invoked when an item in this list has been swiped.
+         **/
+        void onItemSwipe(LocationItem item);
 
     }
 
