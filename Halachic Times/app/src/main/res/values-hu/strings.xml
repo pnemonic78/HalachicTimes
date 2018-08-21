@@ -122,6 +122,12 @@
     <string name="minutes_after_few">@string/minutes_after_other</string>
     <string name="minutes_after_many">@string/minutes_after_other</string>
     <string name="minutes_after_other">%1$d perccel azután %2$s</string>
+    <string name="minutes_after_specific_zero">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_one">%1$d perc azután %2$s (%3$s)</string>
+    <string name="minutes_after_specific_two">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_few">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_many">@string/minutes_after_specific_other</string>
+    <string name="minutes_after_specific_other">%1$d perccel azután %2$s (%3$s)</string>
     <string name="festival_ends">Fesztivál véget ér</string>
 
     <!-- Midnight -->

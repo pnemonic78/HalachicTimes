@@ -2,7 +2,6 @@ package com.github.times.remind;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
@@ -11,6 +10,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -18,11 +18,16 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
@@ -35,16 +40,11 @@ import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
-import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.TimeUtils.roundUp;
+import static java.lang.System.currentTimeMillis;
 
 /**
  * Shows a reminder alarm for a (<em>zman</em>).
@@ -52,7 +52,8 @@ import static com.github.util.TimeUtils.roundUp;
  * @author Moshe Waisberg
  */
 public class AlarmActivity<P extends ZmanimPreferences> extends Activity implements
-        ThemeCallbacks<P>, View.OnClickListener {
+        ThemeCallbacks<P>,
+        View.OnClickListener {
 
     private static final String TAG = "AlarmActivity";
 
@@ -72,6 +73,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * Extras name for the reminder time.
      */
     public static final String EXTRA_REMINDER_TIME = "reminder_time";
+    /**
+     * Extras name to silence to alarm.
+     */
+    public static final String EXTRA_SILENCE_TIME = "silence_time";
 
     private LocaleCallbacks<P> localeCallbacks;
     private ThemeCallbacks<P> themeCallbacks;
@@ -87,6 +92,9 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     private TextView timeView;
     private TextView titleView;
     private View dismissView;
+
+    private final Handler handler = new Handler();
+    private Runnable silenceRunnable;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -164,7 +172,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         return themeCallbacks;
     }
 
-    protected ThemeCallbacks<P> createThemeCallbacks(ContextWrapper context) {
+    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
     }
 
@@ -196,6 +204,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                 notifyNow(item);
             } else {
                 close();
+            }
+
+            if (extras.containsKey(EXTRA_SILENCE_TIME)) {
+                long triggerAt = extras.getLong(EXTRA_SILENCE_TIME);
+                silenceFuture(triggerAt);
             }
         }
     }
@@ -282,6 +295,9 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             ringtone.release();
             this.ringtone = null;
         }
+        if (silenceRunnable != null) {
+            handler.removeCallbacks(silenceRunnable);
+        }
         setResult(RESULT_OK);
         close();
     }
@@ -291,14 +307,14 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     private void startNoise() {
-        Log.v(TAG, "start noise");
+        LogUtils.v(TAG, "start noise");
         Context context = this;
         playSound(context);
         vibrate(context, true);
     }
 
     private void stopNoise() {
-        Log.v(TAG, "stop noise");
+        LogUtils.v(TAG, "stop noise");
         Context context = this;
         stopSound();
         vibrate(context, false);
@@ -306,14 +322,14 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     private void playSound(Context context) {
         MediaPlayer ringtone = getRingtone(context);
-        Log.v(TAG, "play sound");
+        LogUtils.v(TAG, "play sound");
         if ((ringtone != null) && !ringtone.isPlaying()) {
             ringtone.start();
         }
     }
 
     private void stopSound() {
-        Log.v(TAG, "stop sound");
+        LogUtils.v(TAG, "stop sound");
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
             try {
@@ -373,5 +389,26 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         } else {
             vibrator.cancel();
         }
+    }
+
+    /**
+     * Set timer to silence the alert.
+     *
+     * @param triggerAt when to silence.
+     */
+    private void silenceFuture(long triggerAt) {
+        LogUtils.i(TAG, "silence future at [" + formatDateTime(triggerAt) + "]");
+
+        if (silenceRunnable == null) {
+            silenceRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    stopNoise();
+                }
+            };
+        }
+        final long now = currentTimeMillis();
+        long delayMillis = triggerAt - now;
+        handler.postDelayed(silenceRunnable, delayMillis);
     }
 }

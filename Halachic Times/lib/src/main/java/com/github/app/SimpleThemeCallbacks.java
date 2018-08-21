@@ -16,7 +16,6 @@
 package com.github.app;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 
 import com.github.preference.SimpleThemePreferences;
 import com.github.preference.ThemePreferences;
@@ -26,16 +25,16 @@ import com.github.preference.ThemePreferences;
  *
  * @author Moshe Waisberg
  */
-public class SimpleThemeCallbacks<P extends ThemePreferences> implements ThemeCallbacks<P> {
+public class SimpleThemeCallbacks<TP extends ThemePreferences> implements ThemeCallbacks<TP> {
 
-    private final ContextWrapper context;
-    private P preferences;
+    private final Context context;
+    private TP preferences;
 
-    public SimpleThemeCallbacks(ContextWrapper context) {
+    public SimpleThemeCallbacks(Context context) {
         this(context, null);
     }
 
-    public SimpleThemeCallbacks(ContextWrapper context, P preferences) {
+    public SimpleThemeCallbacks(Context context, TP preferences) {
         this.context = context;
         this.preferences = preferences;
     }
@@ -46,14 +45,14 @@ public class SimpleThemeCallbacks<P extends ThemePreferences> implements ThemeCa
     }
 
     @Override
-    public P getThemePreferences() {
+    public TP getThemePreferences() {
         if (preferences == null) {
             preferences = createPreferences(context);
         }
         return preferences;
     }
 
-    protected P createPreferences(Context context) {
-        return (P) new SimpleThemePreferences(context);
+    protected TP createPreferences(Context context) {
+        return (TP) new SimpleThemePreferences(context);
     }
 }

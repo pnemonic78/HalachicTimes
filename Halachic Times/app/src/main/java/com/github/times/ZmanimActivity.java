@@ -20,7 +20,6 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -43,6 +42,9 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import java.lang.ref.WeakReference;
+import java.util.Calendar;
+
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -60,9 +62,6 @@ import com.github.times.preference.ZmanimPreferences;
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
 import com.github.view.animation.LayoutWeightAnimation;
-
-import java.lang.ref.WeakReference;
-import java.util.Calendar;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
@@ -100,6 +99,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     private static final int WHAT_LOCATION = 3;
     private static final int WHAT_SETTINGS = 4;
     private static final int WHAT_TODAY = 5;
+    private static final int WHAT_CANCEL_REMINDERS = 6;
+    private static final int WHAT_UPDATE_REMINDERS = 7;
 
     private static final int CHILD_MAIN = 0;
     private static final int CHILD_DETAILS = 1;
@@ -205,6 +206,12 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     activity.setDate(currentTimeMillis());
                     activity.populateFragments(activity.calendar);
                     break;
+                case WHAT_CANCEL_REMINDERS:
+                    activity.cancelReminders();
+                    break;
+                case WHAT_UPDATE_REMINDERS:
+                    activity.updateReminders();
+                    break;
             }
         }
     }
@@ -266,7 +273,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     protected void onResume() {
         super.onResume();
-        cancelReminders();
+        handler.sendEmptyMessage(WHAT_CANCEL_REMINDERS);
         int itemId = selectedId;
         if (itemId != 0) {
             // We need to wait for the list rows to get their default
@@ -283,7 +290,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             hideDetails();
             selectedId = itemId;
         }
-        updateReminders();
+        handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS);
         super.onPause();
     }
 
@@ -884,7 +891,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(ContextWrapper context) {
-        return new SimpleThemeCallbacks(context, getZmanimPreferences());
+    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
     }
 }

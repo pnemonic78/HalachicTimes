@@ -15,7 +15,7 @@
  */
 package com.github.preference;
 
-import android.support.annotation.StyleRes;
+import androidx.annotation.StyleRes;
 
 /**
  * Theme preferences.

@@ -25,7 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import static com.github.view.ViewUtils.applyMaxWidth;
 
@@ -232,7 +234,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         final int count = adapter.getCount();
         ZmanimItem item;
         View row;
-        final View[] timeViews = new View[count];
+        final List<View> timeViews = new ArrayList<>(count);
 
         for (int position = 0; position < count; position++) {
             item = adapter.getItem(position);
@@ -256,7 +258,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             }
 
             row = adapter.getView(position, null, list);
-            timeViews[position] = row.findViewById(R.id.time);
+            timeViews.add(row.findViewById(R.id.time));
             bindView(list, position, row, item);
         }
 
@@ -268,7 +270,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                 try {
                     applyMaxWidth(timeViews);
                 } catch (NullPointerException e) {
-                    throw new NullPointerException("null object reference on " + gcal);
+                    throw new NullPointerException("null object reference for " + context.getString(masterId) + " on " + gcal);
                 }
             }
         });

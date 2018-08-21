@@ -18,11 +18,12 @@ package com.github.times.remind;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
+
+import androidx.annotation.Nullable;
 
 /**
  * Check for reminders, and manage the notifications.

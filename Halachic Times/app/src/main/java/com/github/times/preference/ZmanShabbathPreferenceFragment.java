@@ -23,11 +23,13 @@ import android.preference.Preference;
 import com.github.preference.NumberPickerPreference;
 import com.github.times.R;
 
+import static android.text.TextUtils.isEmpty;
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_AFTER;
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES;
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_NIGHTFALL;
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_SUNSET;
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_TWILIGHT;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
 
 /**
  * This fragment shows the preferences for the Shabbath Ends screen.
@@ -44,10 +46,11 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Must be in reverse order for non-null dependencies.
+        minutesPreference = (NumberPickerPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
         sunsetPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_SUNSET);
         twilightPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_TWILIGHT);
         nightfallPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL);
-        minutesPreference = (NumberPickerPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
         afterPreference = initList(KEY_OPINION_SHABBATH_ENDS_AFTER);
     }
 
@@ -57,10 +60,8 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
         if (KEY_OPINION_SHABBATH_ENDS_MINUTES.equals(key)) {
             int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
-            String shabbathAfterName = getString(shabbathAfterId);
-
-            int value = (int) newValue;
-            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
+            int minutes = (int) newValue;
+            updateMinutesSummary(shabbathAfterId, null, minutes);
         }
 
         return super.onPreferenceChange(preference, newValue);
@@ -72,33 +73,13 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
         if (KEY_OPINION_SHABBATH_ENDS_AFTER.equals(key) && (sunsetPreference != null)) {
             int shabbathAfterId = getPreferences().toId(newValue.toString());
-            String shabbathAfterName = getString(shabbathAfterId);
-
-            switch (shabbathAfterId) {
-                case R.string.sunset:
-                    sunsetPreference.setEnabled(true);
-                    twilightPreference.setEnabled(false);
-                    nightfallPreference.setEnabled(false);
-                    break;
-                case R.string.twilight:
-                    sunsetPreference.setEnabled(false);
-                    twilightPreference.setEnabled(true);
-                    nightfallPreference.setEnabled(false);
-                    break;
-                case R.string.nightfall:
-                    sunsetPreference.setEnabled(false);
-                    twilightPreference.setEnabled(false);
-                    nightfallPreference.setEnabled(true);
-                    break;
-                default:
-                    sunsetPreference.setEnabled(false);
-                    twilightPreference.setEnabled(false);
-                    nightfallPreference.setEnabled(false);
-                    break;
-            }
-
-            int value = minutesPreference.getValue();
-            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, value, value, shabbathAfterName));
+            updateMinutesSummary(shabbathAfterId, null);
+        } else if (KEY_OPINION_SHABBATH_ENDS_SUNSET.equals(key) && (sunsetPreference != null)) {
+            updateMinutesSummary(R.string.sunset, newValue.toString());
+        } else if (KEY_OPINION_SHABBATH_ENDS_TWILIGHT.equals(key) && (twilightPreference != null)) {
+            updateMinutesSummary(R.string.twilight, newValue.toString());
+        } else if (KEY_OPINION_SHABBATH_ENDS_NIGHTFALL.equals(key) && (nightfallPreference != null)) {
+            updateMinutesSummary(R.string.nightfall, newValue.toString());
         }
 
         return super.onListPreferenceChange(preference, newValue);
@@ -131,5 +112,66 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         onListPreferenceChange(preference, preference.getValue());
 
         return preference;
+    }
+
+    private void updateMinutesSummary(final int shabbathAfterId, final String specificOpinionValue) {
+        if (minutesPreference == null) {
+            return;
+        }
+        int minutes = minutesPreference.getValue();
+        updateMinutesSummary(shabbathAfterId, specificOpinionValue, minutes);
+    }
+
+    private void updateMinutesSummary(final int shabbathAfterId, String specificOpinionValue, final int minutes) {
+        String shabbathAfterName = getString(shabbathAfterId);
+        CharSequence specificOpinionLabel = null;
+
+        switch (shabbathAfterId) {
+            case R.string.sunset:
+                sunsetPreference.setEnabled(true);
+                twilightPreference.setEnabled(false);
+                nightfallPreference.setEnabled(false);
+                if (specificOpinionValue == null) {
+                    specificOpinionValue = sunsetPreference.getValue();
+                    specificOpinionLabel = sunsetPreference.getEntry();
+                } else {
+                    specificOpinionLabel = findEntry(sunsetPreference, specificOpinionValue);
+                }
+                break;
+            case R.string.twilight:
+                sunsetPreference.setEnabled(false);
+                twilightPreference.setEnabled(true);
+                nightfallPreference.setEnabled(false);
+                if (specificOpinionValue == null) {
+                    specificOpinionValue = twilightPreference.getValue();
+                    specificOpinionLabel = twilightPreference.getEntry();
+                } else {
+                    specificOpinionLabel = findEntry(twilightPreference, specificOpinionValue);
+                }
+
+                break;
+            case R.string.nightfall:
+                sunsetPreference.setEnabled(false);
+                twilightPreference.setEnabled(false);
+                nightfallPreference.setEnabled(true);
+                if (specificOpinionValue == null) {
+                    specificOpinionValue = nightfallPreference.getValue();
+                    specificOpinionLabel = nightfallPreference.getEntry();
+                } else {
+                    specificOpinionLabel = findEntry(nightfallPreference, specificOpinionValue);
+                }
+                break;
+            default:
+                sunsetPreference.setEnabled(false);
+                twilightPreference.setEnabled(false);
+                nightfallPreference.setEnabled(false);
+                break;
+        }
+
+        if (isEmpty(specificOpinionLabel) || OPINION_NONE.equals(specificOpinionValue)) {
+            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_summary, minutes, minutes, shabbathAfterName));
+        } else {
+            minutesPreference.setSummary(getResources().getQuantityString(R.plurals.shabbath_ends_specific_summary, minutes, minutes, shabbathAfterName, specificOpinionLabel));
+        }
     }
 }

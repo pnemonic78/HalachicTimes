@@ -15,11 +15,6 @@
  */
 package com.github.widget;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,14 +23,20 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
-import com.github.util.LogUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.github.util.LogUtils;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Array adapter ported from {@link android.widget.ArrayAdapter} to {@link RecyclerView}.
@@ -249,7 +250,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * @param object The object to remove.
      */
     public void remove(@Nullable T object) {
-        int position = 0;
+        int position;
         synchronized (lock) {
             if (objectsFiltered) {
                 position = originalValues.indexOf(object);
@@ -463,5 +464,24 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
                 notifyOnChange = true;
             }
         }
+    }
+
+    /**
+     * Permanently removes the specified object from the array.
+     *
+     * @param object The object to delete.
+     */
+    public void delete(@Nullable T object) {
+        int position;
+        synchronized (lock) {
+            position = originalValues.indexOf(object);
+            originalValues.remove(position);
+
+            position = objects.indexOf(object);
+            if (position >= 0) {
+                objects.remove(position);
+            }
+        }
+        if (notifyOnChange) notifyItemRemoved(position);
     }
 }

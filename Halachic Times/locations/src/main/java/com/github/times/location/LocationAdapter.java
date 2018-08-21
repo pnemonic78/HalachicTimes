@@ -16,7 +16,6 @@
 package com.github.times.location;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -30,6 +29,8 @@ import java.util.TreeSet;
 
 import com.github.util.LocaleUtils;
 import com.github.widget.ArrayAdapter;
+
+import androidx.annotation.NonNull;
 
 /**
  * Location adapter.
@@ -48,12 +49,17 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         /**
          * Callback to be invoked when an item in this list has been clicked.
          */
-        void onItemClick(ZmanimAddress address);
+        void onItemClick(LocationItem item);
 
         /**
          * Callback to be invoked when a "favorite" checkbox in this list has been clicked.
          **/
-        void onFavoriteClick(ZmanimAddress address, boolean checked);
+        void onFavoriteClick(LocationItem item, boolean checked);
+
+        /**
+         * Callback to be invoked when an item in this list has been swiped.
+         **/
+        void onItemSwipe(LocationItem item);
 
     }
 
@@ -64,10 +70,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         /**
          * <p>Notifies the end of a filtering operation.</p>
          *
-         * @param adapter
-         *         the adapter.
-         * @param count
-         *         the number of values computed by the filter
+         * @param adapter the adapter.
+         * @param count   the number of values computed by the filter
          */
         void onFilterComplete(LocationAdapter adapter, int count);
     }
@@ -80,10 +84,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     /**
      * Constructs a new adapter.
      *
-     * @param context
-     *         the context.
-     * @param items
-     *         the list of addresses' items.
+     * @param context the context.
+     * @param items   the list of addresses' items.
      */
     public LocationAdapter(Context context, List<LocationItem> items) {
         this(context, items, null);
@@ -92,12 +94,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     /**
      * Constructs a new adapter.
      *
-     * @param context
-     *         the context.
-     * @param items
-     *         the list of addresses' items.
-     * @param listener
-     *         the item listener.
+     * @param context  the context.
+     * @param items    the list of addresses' items.
+     * @param listener the item listener.
      */
     public LocationAdapter(Context context, List<LocationItem> items, LocationItemListener listener) {
         super(R.layout.location, android.R.id.title, items);
@@ -137,8 +136,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     /**
      * Sort without notification.
      *
-     * @param comparator
-     *         comparator used to sort the objects contained in this adapter.
+     * @param comparator comparator used to sort the objects contained in this adapter.
      */
     protected void sortNoNotify(Comparator<? super LocationItem> comparator) {
         if (objectsFiltered) {
@@ -151,10 +149,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     /**
      * Sort without notification.
      *
-     * @param objects
-     *         the list of objects to sort.
-     * @param comparator
-     *         comparator used to sort the objects contained in this adapter.
+     * @param objects    the list of objects to sort.
+     * @param comparator comparator used to sort the objects contained in this adapter.
      */
     protected void sortNoNotify(List<LocationItem> objects, Comparator<? super LocationItem> comparator) {
         // Removes duplicate locations.
@@ -192,6 +188,34 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
                 item = getItem(i);
                 if (item.address.equals(address)) {
                     notifyItemChanged(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void remove(ZmanimAddress address) {
+        synchronized (lock) {
+            final int size = getItemCount();
+            LocationItem item;
+            for (int i = 0; i < size; i++) {
+                item = getItem(i);
+                if (item.address.equals(address)) {
+                    remove(item);
+                    return;
+                }
+            }
+        }
+    }
+
+    public void delete(ZmanimAddress address) {
+        synchronized (lock) {
+            final int size = getItemCount();
+            LocationItem item;
+            for (int i = 0; i < size; i++) {
+                item = getItem(i);
+                if (item.address.equals(address)) {
+                    delete(item);
                     return;
                 }
             }
@@ -263,10 +287,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         /**
          * Does the first string contain the other string?
          *
-         * @param s
-         *         the source string.
-         * @param search
-         *         the character sequence to search for.
+         * @param s      the source string.
+         * @param search the character sequence to search for.
          * @return {@code true} if {@code s} contains {@code search}.
          */
         private boolean contains(String s, String search) {
@@ -321,8 +343,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         /**
          * Constructs a new item.
          *
-         * @param address
-         *         the address.
+         * @param address the address.
          */
         public LocationItem(ZmanimAddress address, LocationFormatter formatter) {
             this.address = address;
@@ -480,8 +501,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
     /**
      * Set the listener for "item" clicked callbacks.
      *
-     * @param listener
-     *         the listener.
+     * @param listener the listener.
      */
     public void setOnItemListener(LocationItemListener listener) {
         this.listener = listener;

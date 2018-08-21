@@ -20,15 +20,16 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 

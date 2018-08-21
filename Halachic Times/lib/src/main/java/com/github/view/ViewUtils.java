@@ -43,4 +43,21 @@ public class ViewUtils {
             view.setMinimumWidth(maxWidth);
         }
     }
+
+    /**
+     * Make all views at least the same width.
+     *
+     * @param views the list of views.
+     */
+    public static void applyMaxWidth(Iterable<View> views) {
+        int maxWidth = 0;
+        // First, calculate the maximum widths of the views.
+        for (View view : views) {
+            maxWidth = Math.max(maxWidth, view.getMeasuredWidth());
+        }
+        // Then, apply the maximum width to all the views.
+        for (View view : views) {
+            view.setMinimumWidth(maxWidth);
+        }
+    }
 }

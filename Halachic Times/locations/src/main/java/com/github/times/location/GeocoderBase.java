@@ -215,8 +215,10 @@ public abstract class GeocoderBase {
         try {
             return parseLocations(data, maxResults);
         } catch (ParserConfigurationException pce) {
+            LogUtils.e(TAG, queryUrl, pce);
             throw new IOException(pce);
         } catch (SAXException se) {
+            LogUtils.e(TAG, queryUrl, se);
             throw new IOException(se);
         }
     }
@@ -297,8 +299,10 @@ public abstract class GeocoderBase {
         try {
             return parseElevationXML(latitude, longitude, data);
         } catch (ParserConfigurationException pce) {
+            LogUtils.e(TAG, queryUrl, pce);
             throw new IOException(pce);
         } catch (SAXException se) {
+            LogUtils.e(TAG, queryUrl, se);
             throw new IOException(se);
         }
     }
@@ -387,8 +391,8 @@ public abstract class GeocoderBase {
     /**
      * Create an SAX XML handler for elevations.
      *
-     * @param latitude
-     * @param longitude
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
      * @param results   the list of results to populate.
      * @return the XML handler.
      */

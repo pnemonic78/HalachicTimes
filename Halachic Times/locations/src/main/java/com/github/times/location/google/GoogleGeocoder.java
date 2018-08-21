@@ -29,6 +29,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -93,7 +94,7 @@ public class GoogleGeocoder extends GeocoderBase {
     public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
-        String queryUrl = String.format(Locale.US, URL_ADDRESS, locationName, getLanguage());
+        String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage());
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
@@ -110,14 +111,13 @@ public class GoogleGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
         if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
-        String queryUrl = String
-                .format(Locale.US, URL_ADDRESS_BOUNDED, locationName, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
+        String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
     @Override
     protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-        return new GeocodeResponseHandler(results, maxResults, locale);
+        return new GoogleAddressResponseHandler(results, maxResults, locale);
     }
 
     /**
@@ -125,7 +125,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class GeocodeResponseHandler extends DefaultAddressResponseHandler {
+    protected static class GoogleAddressResponseHandler extends DefaultAddressResponseHandler {
 
         /**
          * Parse state.
@@ -175,7 +175,7 @@ public class GoogleGeocoder extends GeocoderBase {
          * @param results    the destination results.
          * @param maxResults the maximum number of results.
          */
-        public GeocodeResponseHandler(List<Address> results, int maxResults, Locale locale) {
+        public GoogleAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
             this.results = results;
             this.maxResults = maxResults;
             this.locale = locale;
@@ -329,22 +329,25 @@ public class GoogleGeocoder extends GeocoderBase {
                     }
                     break;
                 case ADDRESS_LONG:
-                    longName = text;
-                    if (TAG_LONG_NAME.equals(localName))
+                    if (TAG_LONG_NAME.equals(localName)) {
+                        longName = text;
                         state = State.ADDRESS;
+                    }
                     break;
                 case ADDRESS_SHORT:
-                    shortName = text;
-                    if (TAG_SHORT_NAME.equals(localName))
+                    if (TAG_SHORT_NAME.equals(localName)) {
+                        shortName = text;
                         state = State.ADDRESS;
+                    }
                     break;
                 case ADDRESS_TYPE:
-                    if (TAG_TYPE.equals(localName))
+                    if (TAG_TYPE.equals(localName)) {
+                        if (addressType == null)
+                            addressType = text;
                         state = State.ADDRESS;
+                    }
                     if (TYPE_POLITICAL.equals(text))
                         break;
-                    if (addressType == null)
-                        addressType = text;
                     break;
                 case GEOMETRY:
                     if (TAG_GEOMETRY.equals(localName))
@@ -355,26 +358,28 @@ public class GoogleGeocoder extends GeocoderBase {
                         state = State.GEOMETRY;
                     break;
                 case LATITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLatitude(Double.parseDouble(text));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
+                    if (TAG_LATITUDE.equals(localName)) {
+                        if (address != null) {
+                            try {
+                                address.setLatitude(Double.parseDouble(text));
+                            } catch (NumberFormatException nfe) {
+                                throw new SAXException(nfe);
+                            }
                         }
-                    }
-                    if (TAG_LATITUDE.equals(localName))
                         state = State.LOCATION;
+                    }
                     break;
                 case LONGITUDE:
-                    if (address != null) {
-                        try {
-                            address.setLongitude(Double.parseDouble(text));
-                        } catch (NumberFormatException nfe) {
-                            throw new SAXException(nfe);
+                    if (TAG_LONGITUDE.equals(localName)) {
+                        if (address != null) {
+                            try {
+                                address.setLongitude(Double.parseDouble(text));
+                            } catch (NumberFormatException nfe) {
+                                throw new SAXException(nfe);
+                            }
                         }
-                    }
-                    if (TAG_LONGITUDE.equals(localName))
                         state = State.LOCATION;
+                    }
                     break;
                 case FINISH:
                     return;
@@ -396,7 +401,7 @@ public class GoogleGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
-        return new ElevationResponseHandler(latitude, longitude, results);
+        return new GoogleElevationResponseHandler(latitude, longitude, results);
     }
 
     /**
@@ -404,7 +409,7 @@ public class GoogleGeocoder extends GeocoderBase {
      *
      * @author Moshe
      */
-    protected static class ElevationResponseHandler extends DefaultAddressResponseHandler {
+    protected static class GoogleElevationResponseHandler extends DefaultAddressResponseHandler {
 
         /**
          * Parse state.
@@ -434,9 +439,9 @@ public class GoogleGeocoder extends GeocoderBase {
          *
          * @param latitude  the latitude.
          * @param longitude the longitude.
-         * @param results the destination results.
+         * @param results   the destination results.
          */
-        public ElevationResponseHandler(double latitude, double longitude,List<ZmanimLocation> results) {
+        public GoogleElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
             this.latitude = latitude;
             this.longitude = longitude;
             this.results = results;

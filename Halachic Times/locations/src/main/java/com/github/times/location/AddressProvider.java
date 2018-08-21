@@ -23,6 +23,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
 import com.github.database.CursorFilter;
 import com.github.times.location.bing.BingGeocoder;
 import com.github.times.location.geonames.GeoNamesGeocoder;
@@ -31,14 +38,8 @@ import com.github.times.location.impl.DatabaseGeocoder;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLANET;
@@ -98,7 +99,7 @@ public class AddressProvider {
      *
      * @param context the context.
      */
-    public AddressProvider(Context context) {
+    public AddressProvider(@NonNull Context context) {
         this(context, LocaleUtils.getDefaultLocale(context));
     }
 
@@ -108,7 +109,7 @@ public class AddressProvider {
      * @param context the context.
      * @param locale  the locale.
      */
-    public AddressProvider(Context context, Locale locale) {
+    public AddressProvider(@NonNull Context context, Locale locale) {
         this.context = context;
         this.locale = locale;
         this.countriesGeocoder = new CountriesGeocoder(context, locale);
@@ -137,7 +138,7 @@ public class AddressProvider {
      * @return the address - {@code null} otherwise.
      */
     @Nullable
-    public Address findNearestAddress(Location location, OnFindAddressListener listener) {
+    public Address findNearestAddress(@NonNull Location location, @Nullable OnFindAddressListener listener) {
         if (location == null) {
             return null;
         }
@@ -202,7 +203,7 @@ public class AddressProvider {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 10);
                 } catch (Exception e) {
-                    LogUtils.e(TAG, "Address geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+                    LogUtils.e(TAG, "Address geocoder: " + geocoder + " at " + latitude + "," + longitude + "; error: " + e.getLocalizedMessage(), e);
                     continue;
                 }
                 bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
@@ -242,7 +243,7 @@ public class AddressProvider {
      * @return the list of addresses.
      */
     @Nullable
-    private List<Address> findNearestAddressGeocoder(Location location) {
+    private List<Address> findNearestAddressGeocoder(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         List<Address> addresses = null;
@@ -292,7 +293,7 @@ public class AddressProvider {
      * @return the best address - {@code null} otherwise.
      */
     @Nullable
-    private Address findBestAddress(Location location, List<Address> addresses) {
+    private Address findBestAddress(@NonNull Location location, @Nullable List<Address> addresses) {
         return findBestAddress(location, addresses, SAME_CITY);
     }
 
@@ -305,7 +306,7 @@ public class AddressProvider {
      * @return the best address - {@code null} otherwise.
      */
     @Nullable
-    private Address findBestAddress(Location location, List<Address> addresses, float radius) {
+    private Address findBestAddress(@NonNull Location location, @Nullable List<Address> addresses, float radius) {
         if ((addresses == null) || addresses.isEmpty()) {
             return null;
         }
@@ -376,7 +377,7 @@ public class AddressProvider {
      * @return the list of addresses.
      */
     @Nullable
-    private List<Address> findNearestAddressDatabase(Location location) {
+    private List<Address> findNearestAddressDatabase(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         List<Address> addresses = null;
@@ -396,7 +397,7 @@ public class AddressProvider {
      * @param location the location.
      * @param address  the address.
      */
-    public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
+    public void insertOrUpdateAddress(@NonNull Location location, @NonNull ZmanimAddress address) {
         databaseGeocoder.insertOrUpdateAddress(location, address);
     }
 
@@ -434,7 +435,7 @@ public class AddressProvider {
      * @return the list of addresses with at most 1 entry.
      */
     @Nullable
-    private List<Address> findNearestCity(Location location) {
+    private List<Address> findNearestCity(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         List<Address> addresses = null;
@@ -453,7 +454,7 @@ public class AddressProvider {
      * @param filter a cursor filter.
      * @return the list of addresses.
      */
-    public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
+    public List<ZmanimAddress> queryAddresses(@Nullable CursorFilter filter) {
         return databaseGeocoder.queryAddresses(filter);
     }
 
@@ -465,7 +466,7 @@ public class AddressProvider {
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
-    public Location findElevation(Location location, OnFindAddressListener listener) {
+    public Location findElevation(@NonNull Location location, @Nullable OnFindAddressListener listener) {
         if (location == null) {
             return null;
         }
@@ -542,7 +543,7 @@ public class AddressProvider {
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
-    private ZmanimLocation findElevationCities(Location location) {
+    private ZmanimLocation findElevationCities(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         try {
@@ -588,7 +589,7 @@ public class AddressProvider {
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
-    private ZmanimLocation findElevationDatabase(Location location) {
+    private ZmanimLocation findElevationDatabase(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = databaseGeocoder;
@@ -606,7 +607,7 @@ public class AddressProvider {
      *
      * @param location the location.
      */
-    public void insertOrUpdateElevation(ZmanimLocation location) {
+    public void insertOrUpdateElevation(@NonNull ZmanimLocation location) {
         databaseGeocoder.insertOrUpdateElevation(location);
     }
 
@@ -615,7 +616,7 @@ public class AddressProvider {
      *
      * @param cities the list of cities to populate.
      */
-    private void populateCities(Collection<City> cities) {
+    private void populateCities(@NonNull Collection<City> cities) {
         Map<Long, City> citiesById = new HashMap<>();
         long id;
 
@@ -670,5 +671,9 @@ public class AddressProvider {
      */
     public void deleteCities() {
         databaseGeocoder.deleteCities();
+    }
+
+    public boolean deleteAddress(@NonNull ZmanimAddress address) {
+        return databaseGeocoder.deleteAddress(address);
     }
 }

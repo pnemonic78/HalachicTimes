@@ -16,7 +16,6 @@
 package com.github.times;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -28,6 +27,8 @@ import com.github.times.location.AddressProvider;
 import com.github.times.location.LocationApplication;
 import com.github.times.location.LocationsProviderFactory;
 import com.github.times.location.ZmanimLocations;
+
+import androidx.annotation.NonNull;
 
 import io.fabric.sdk.android.Fabric;
 

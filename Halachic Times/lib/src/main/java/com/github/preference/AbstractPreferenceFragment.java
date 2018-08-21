@@ -26,11 +26,13 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.github.lib.R;
 import com.github.util.LogUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION;
@@ -337,6 +339,15 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragment impl
             }
         }
 
+        return null;
+    }
+
+    @Nullable
+    protected CharSequence findEntry(@NonNull ListPreference preference, String value) {
+        int index = preference.findIndexOfValue(value);
+        if (index >= 0) {
+            return preference.getEntries()[index];
+        }
         return null;
     }
 }

@@ -27,14 +27,17 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
@@ -44,10 +47,9 @@ import com.github.times.location.impl.FavoritesLocationAdapter;
 import com.github.times.location.impl.HistoryLocationAdapter;
 import com.github.util.LogUtils;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
@@ -91,6 +93,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     private static final int WHAT_FAVORITE = 1;
     private static final int WHAT_ADDED = 2;
+    private static final int WHAT_DELETE = 3;
 
     private ThemeCallbacks<P> themeCallbacks;
     private SearchView searchText;
@@ -258,22 +261,32 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         RecyclerView list = findViewById(android.R.id.list);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
+        LocationSwipeHandler swipeHandler = new LocationSwipeHandler(this);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHandler);
+        itemTouchHelper.attachToRecyclerView(list);
 
         adapter = new HistoryLocationAdapter(context, items, itemListener, filterListener);
         adapterHistory = adapter;
         list = findViewById(R.id.list_history);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
+        swipeHandler = new LocationSwipeHandler(this);
+        itemTouchHelper = new ItemTouchHelper(swipeHandler);
+        itemTouchHelper.attachToRecyclerView(list);
 
         adapter = new FavoritesLocationAdapter(context, items, itemListener, filterListener);
         adapterFavorites = adapter;
         list = findViewById(R.id.list_favorites);
         list.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
         list.setAdapter(adapter);
+        swipeHandler = new LocationSwipeHandler(this);
+        itemTouchHelper = new ItemTouchHelper(swipeHandler);
+        itemTouchHelper.attachToRecyclerView(list);
     }
 
     @Override
-    public void onItemClick(ZmanimAddress address) {
+    public void onItemClick(LocationItem item) {
+        ZmanimAddress address = item.getAddress();
         Location loc = new Location(USER_PROVIDER);
         loc.setTime(System.currentTimeMillis());
         loc.setLatitude(address.getLatitude());
@@ -282,6 +295,19 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
             loc.setAltitude(address.getElevation());
         }
         setAddress(loc);
+    }
+
+    @Override
+    public void onFavoriteClick(LocationItem item, boolean checked) {
+        ZmanimAddress address = item.getAddress();
+        address.setFavorite(checked);
+        handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
+    }
+
+    @Override
+    public void onItemSwipe(LocationItem item) {
+        ZmanimAddress address = item.getAddress();
+        handler.obtainMessage(WHAT_DELETE, address).sendToTarget();
     }
 
     @Override
@@ -342,12 +368,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         setResult(RESULT_OK, intent);
 
         finish();
-    }
-
-    @Override
-    public void onFavoriteClick(ZmanimAddress address, boolean checked) {
-        address.setFavorite(checked);
-        handler.obtainMessage(WHAT_FAVORITE, address).sendToTarget();
     }
 
     /**
@@ -493,12 +513,13 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                 return;
             }
             ZmanimAddress address;
+            AddressProvider addressProvider;
 
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     address = (ZmanimAddress) msg.obj;
-                    AddressProvider provider = activity.getAddressProvider();
-                    provider.insertOrUpdateAddress(null, address);
+                    addressProvider = activity.getAddressProvider();
+                    addressProvider.insertOrUpdateAddress(null, address);
 
                     activity.adapterAll.notifyItemChanged(address);
                     activity.adapterFavorites.notifyItemChanged(address);
@@ -514,6 +535,15 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                     searchText.setIconified(false);
                     searchText.requestFocus();
                     searchText.setQuery(query, false);
+                    break;
+                case WHAT_DELETE:
+                    address = (ZmanimAddress) msg.obj;
+                    addressProvider = activity.getAddressProvider();
+                    if (addressProvider.deleteAddress(address)) {
+                        activity.adapterAll.delete(address);
+                        activity.adapterFavorites.delete(address);
+                        activity.adapterHistory.delete(address);
+                    }
                     break;
             }
         }

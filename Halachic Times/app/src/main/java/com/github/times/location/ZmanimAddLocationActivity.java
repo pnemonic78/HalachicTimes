@@ -19,7 +19,10 @@ import android.content.Context;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
 import com.github.preference.LocalePreferences;
+import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 
 /**
@@ -27,9 +30,11 @@ import com.github.times.preference.ZmanimPreferences;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimAddLocationActivity<P extends ZmanimPreferences> extends AddLocationActivity<P> {
+public class ZmanimAddLocationActivity extends AddLocationActivity<ZmanimPreferences> {
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
+    /** The preferences. */
+    private ZmanimPreferences preferences;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -42,5 +47,17 @@ public class ZmanimAddLocationActivity<P extends ZmanimPreferences> extends AddL
     public void onCreate() {
         super.onCreate();
         localeCallbacks.onCreate(this);
+    }
+
+    @Override
+    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
+    }
+
+    public ZmanimPreferences getZmanimPreferences() {
+        if (preferences == null) {
+            preferences = new SimpleZmanimPreferences(this);
+        }
+        return preferences;
     }
 }

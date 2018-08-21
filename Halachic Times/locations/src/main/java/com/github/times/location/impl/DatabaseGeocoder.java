@@ -45,6 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import static com.github.times.location.provider.LocationContract.Addresses;
 import static com.github.times.location.provider.LocationContract.Cities;
 import static com.github.times.location.provider.LocationContract.Elevations;
@@ -244,7 +247,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param a the address.
      * @return the formatted address name.
      */
-    protected static CharSequence formatAddress(ZmanimAddress a) {
+    protected static CharSequence formatAddress(@NonNull ZmanimAddress a) {
         return a.getFormatted();
     }
 
@@ -254,7 +257,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param filter a cursor filter.
      * @return the list of addresses.
      */
-    public List<ZmanimAddress> queryAddresses(CursorFilter filter) {
+    public List<ZmanimAddress> queryAddresses(@Nullable CursorFilter filter) {
         final String language = locale.getLanguage();
         final String country = locale.getCountry();
 
@@ -308,12 +311,13 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param location the location.
      * @param address  the address.
      */
-    public void insertOrUpdateAddress(Location location, ZmanimAddress address) {
+    public void insertOrUpdateAddress(@Nullable Location location, @NonNull ZmanimAddress address) {
         if (address == null)
             return;
         long id = address.getId();
-        if (id < 0L)
+        if (id < 0L) {
             return;
+        }
         // Cities have their own table.
         if (address instanceof City) {
             insertOrUpdateCity((City) address);
@@ -326,14 +330,18 @@ public class DatabaseGeocoder extends GeocoderBase {
         boolean insert = id == 0L;
 
         ContentValues values = new ContentValues();
+        double latitude;
+        double longitude;
+        if (location == null) {
+            latitude = address.getLatitude();
+            longitude = address.getLongitude();
+        } else {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
         if (insert) {
-            if (location == null) {
-                values.put(AddressColumns.LOCATION_LATITUDE, address.getLatitude());
-                values.put(AddressColumns.LOCATION_LONGITUDE, address.getLongitude());
-            } else {
-                values.put(AddressColumns.LOCATION_LATITUDE, location.getLatitude());
-                values.put(AddressColumns.LOCATION_LONGITUDE, location.getLongitude());
-            }
+            values.put(AddressColumns.LOCATION_LATITUDE, latitude);
+            values.put(AddressColumns.LOCATION_LONGITUDE, longitude);
         }
         values.put(AddressColumns.ADDRESS, formatAddress(address).toString());
         values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
@@ -358,7 +366,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            LogUtils.e(TAG, "Error inserting address: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Error inserting address at " + latitude + "," + longitude + ": " + e.getLocalizedMessage(), e);
         }
     }
 
@@ -375,7 +383,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param filter a cursor filter.
      * @return the list of locations with elevations.
      */
-    public List<ZmanimLocation> queryElevations(CursorFilter filter) {
+    public List<ZmanimLocation> queryElevations(@Nullable CursorFilter filter) {
         List<ZmanimLocation> locations = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
@@ -413,7 +421,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param location the location.
      */
-    public void insertOrUpdateElevation(ZmanimLocation location) {
+    public void insertOrUpdateElevation(@NonNull ZmanimLocation location) {
         if ((location == null) || !location.hasAltitude())
             return;
         long id = location.getId();
@@ -443,7 +451,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/elevation
-            LogUtils.e(TAG, "Error inserting elevation" + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Error inserting elevation at " + location.getLatitude() + "," + location.getLongitude() + ": " + e.getLocalizedMessage(), e);
         }
     }
 
@@ -460,7 +468,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param filter a cursor filter.
      * @return the list of cities.
      */
-    public List<City> queryCities(CursorFilter filter) {
+    public List<City> queryCities(@Nullable CursorFilter filter) {
         List<City> cities = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(Cities.CONTENT_URI(context), PROJECTION_CITY, null, null, null);
         if ((cursor == null) || cursor.isClosed()) {
@@ -494,7 +502,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param city the city.
      */
-    public void insertOrUpdateCity(City city) {
+    public void insertOrUpdateCity(@NonNull City city) {
         if (city == null)
             return;
 
@@ -521,7 +529,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
-            LogUtils.e(TAG, "Error inserting city: " + e.getLocalizedMessage(), e);
+            LogUtils.e(TAG, "Error inserting city for " + city.getFormatted() + ": " + e.getLocalizedMessage(), e);
         }
     }
 
@@ -532,4 +540,35 @@ public class DatabaseGeocoder extends GeocoderBase {
         context.getContentResolver().delete(Cities.CONTENT_URI(context), null, null);
     }
 
+    /**
+     * Delete the address from the local database.
+     *
+     * @param address the address.
+     */
+    public boolean deleteAddress(@NonNull ZmanimAddress address) {
+        if (address == null)
+            return false;
+        long id = address.getId();
+        if (id < 0L) {
+            return false;
+        }
+        // Cities have their own table.
+        if (address instanceof City) {
+            return false;
+        }
+        // Nothing to delete.
+        if (address instanceof Country) {
+            return false;
+        }
+
+        final ContentResolver resolver = context.getContentResolver();
+        try {
+            Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
+            return resolver.delete(uri, null, null) > 0;
+        } catch (Exception e) {
+            // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
+            LogUtils.e(TAG, "Error deleting address " + address.getId() + " at " + address.getLatitude() + "," + address.getLongitude() + ": " + e.getLocalizedMessage(), e);
+        }
+        return false;
+    }
 }

@@ -16,7 +16,8 @@
 package com.github.times.location;
 
 import android.location.Location;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 /**
  * Location preferences.
