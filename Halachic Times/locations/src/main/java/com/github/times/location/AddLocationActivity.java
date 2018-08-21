@@ -17,6 +17,7 @@ package com.github.times.location;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -33,15 +34,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 import com.github.text.method.RangeInputFilter;
 import com.github.times.location.text.LatitudeInputFilter;
 import com.github.times.location.text.LongitudeInputFilter;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
@@ -88,7 +89,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     private static final int MILLISECONDS_MIN = 0;
     private static final int MILLISECONDS_MAX = 9999;
 
-    protected final ThemeCallbacks<P> themeCallbacks = new SimpleThemeCallbacks<>(this);
+    private ThemeCallbacks<P> themeCallbacks;
     private Location location;
     private Spinner coordsFormatSpinner;
     private ViewSwitcher latitudeSwitcher;
@@ -172,12 +173,23 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
 
     @Override
     public void onCreate() {
-        themeCallbacks.onCreate();
+        getThemeCallbacks().onCreate();
     }
 
     @Override
     public P getThemePreferences() {
-        return themeCallbacks.getThemePreferences();
+        return getThemeCallbacks().getThemePreferences();
+    }
+
+    protected ThemeCallbacks<P> getThemeCallbacks() {
+        if (themeCallbacks == null) {
+            themeCallbacks = createThemeCallbacks(this);
+        }
+        return themeCallbacks;
+    }
+
+    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<>(context);
     }
 
     private void initView() {

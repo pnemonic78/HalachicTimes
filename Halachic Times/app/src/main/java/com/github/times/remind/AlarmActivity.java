@@ -2,7 +2,6 @@ package com.github.times.remind;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
@@ -24,6 +23,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -34,12 +39,6 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
-
-import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -52,7 +51,8 @@ import static com.github.util.TimeUtils.roundUp;
  * @author Moshe Waisberg
  */
 public class AlarmActivity<P extends ZmanimPreferences> extends Activity implements
-        ThemeCallbacks<P>, View.OnClickListener {
+        ThemeCallbacks<P>,
+        View.OnClickListener {
 
     private static final String TAG = "AlarmActivity";
 
@@ -164,7 +164,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         return themeCallbacks;
     }
 
-    protected ThemeCallbacks<P> createThemeCallbacks(ContextWrapper context) {
+    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
     }
 

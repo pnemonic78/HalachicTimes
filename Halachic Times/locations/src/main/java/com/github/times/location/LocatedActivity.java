@@ -18,18 +18,18 @@ package com.github.times.location;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContextWrapper;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import java.util.TimeZone;
+
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
-
-import java.util.TimeZone;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.M;
@@ -134,8 +134,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         return themeCallbacks;
     }
 
-    protected ThemeCallbacks<P> createThemeCallbacks(ContextWrapper context) {
-        return new SimpleThemeCallbacks<P>(context);
+    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<>(context);
     }
 
     protected LocationPreferences getLocationPreferences() {
