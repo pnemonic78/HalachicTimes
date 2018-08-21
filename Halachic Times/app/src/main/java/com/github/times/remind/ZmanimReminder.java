@@ -825,6 +825,7 @@ public class ZmanimReminder {
         final Context context = getContext();
         Intent intent = new Intent(context, AlarmActivity.class);
         intent.putExtra(AlarmActivity.EXTRA_REMINDER, item);
+        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, item.time + STOP_NOTIFICATION_AFTER);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
