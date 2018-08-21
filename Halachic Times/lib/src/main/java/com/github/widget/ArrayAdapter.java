@@ -250,7 +250,7 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
      * @param object The object to remove.
      */
     public void remove(@Nullable T object) {
-        int position = 0;
+        int position;
         synchronized (lock) {
             if (objectsFiltered) {
                 position = originalValues.indexOf(object);
@@ -464,5 +464,24 @@ public class ArrayAdapter<T, VH extends ArrayAdapter.ArrayViewHolder> extends Re
                 notifyOnChange = true;
             }
         }
+    }
+
+    /**
+     * Permanently removes the specified object from the array.
+     *
+     * @param object The object to delete.
+     */
+    public void delete(@Nullable T object) {
+        int position;
+        synchronized (lock) {
+            position = originalValues.indexOf(object);
+            originalValues.remove(position);
+
+            position = objects.indexOf(object);
+            if (position >= 0) {
+                objects.remove(position);
+            }
+        }
+        if (notifyOnChange) notifyItemRemoved(position);
     }
 }

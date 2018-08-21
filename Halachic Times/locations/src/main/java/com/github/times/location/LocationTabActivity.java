@@ -540,9 +540,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
                     address = (ZmanimAddress) msg.obj;
                     addressProvider = activity.getAddressProvider();
                     if (addressProvider.deleteAddress(address)) {
-                        activity.adapterAll.notifyItemRemoved(address);
-                        activity.adapterFavorites.notifyItemRemoved(address);
-                        activity.adapterHistory.notifyItemRemoved(address);
+                        activity.adapterAll.delete(address);
+                        activity.adapterFavorites.delete(address);
+                        activity.adapterHistory.delete(address);
                     }
                     break;
             }
