@@ -152,7 +152,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     private Animation hideNavigation;
     /** Show navigation bar animation. */
     private Animation showNavigation;
-    private final Handler handler;
+    private final ActivityHandler handler = new ActivityHandler(this);
     private LocaleCallbacks<ZmanimPreferences> localeCallbacks;
 
     /** The handler. */
@@ -161,7 +161,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         private final WeakReference<ZmanimActivity> activityWeakReference;
 
         public ActivityHandler(ZmanimActivity activity) {
-            this.activityWeakReference = new WeakReference<ZmanimActivity>(activity);
+            this.activityWeakReference = new WeakReference<>(activity);
         }
 
         @Override
@@ -214,13 +214,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     break;
             }
         }
-    }
-
-    /**
-     * Creates a new activity.
-     */
-    public ZmanimActivity() {
-        this.handler = new ActivityHandler(this);
     }
 
     @Override
@@ -292,6 +285,20 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         }
         handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS);
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        handler.removeMessages(WHAT_TOGGLE_DETAILS);
+        handler.removeMessages(WHAT_COMPASS);
+        handler.removeMessages(WHAT_DATE);
+        handler.removeMessages(WHAT_LOCATION);
+        handler.removeMessages(WHAT_SETTINGS);
+        handler.removeMessages(WHAT_TODAY);
+        handler.removeMessages(WHAT_CANCEL_REMINDERS);
+        handler.removeMessages(WHAT_UPDATE_REMINDERS);
     }
 
     /** Initialise. */
@@ -869,18 +876,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
         return (whenYear == todayYear) && (whenMonth == todayMonth) && (whenDay == todayDay);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        handler.removeMessages(WHAT_TOGGLE_DETAILS);
-        handler.removeMessages(WHAT_COMPASS);
-        handler.removeMessages(WHAT_DATE);
-        handler.removeMessages(WHAT_LOCATION);
-        handler.removeMessages(WHAT_SETTINGS);
-        handler.removeMessages(WHAT_TODAY);
     }
 
     public ZmanimPreferences getZmanimPreferences() {
