@@ -26,8 +26,11 @@ public class AlternateName {
 
     private String name;
     private String languageCode;
-    private boolean preferred;
     private Locale locale;
+    private boolean preferred;
+    private boolean historic;
+    private boolean shortName;
+    private boolean colloquial;
 
     public AlternateName() {
     }
@@ -37,9 +40,16 @@ public class AlternateName {
     }
 
     public AlternateName(String languageCode, String name, boolean preferred) {
+        this(languageCode, name, preferred, false, false, false);
+    }
+
+    public AlternateName(String languageCode, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
         setLanguage(languageCode);
         setName(name);
         setPreferred(preferred);
+        setShortName(shortName);
+        setColloquial(colloquial);
+        setHistoric(historic);
     }
 
     public String getName() {
@@ -47,6 +57,9 @@ public class AlternateName {
     }
 
     public void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("name required");
+        }
         this.name = name;
     }
 
@@ -55,21 +68,11 @@ public class AlternateName {
     }
 
     public void setLanguage(String languageCode) {
+        if (languageCode == null) {
+            throw new IllegalArgumentException("language code required");
+        }
         this.languageCode = languageCode;
         this.locale = null;
-    }
-
-    public boolean isPreferred() {
-        return preferred;
-    }
-
-    public void setPreferred(boolean preferred) {
-        this.preferred = preferred;
-    }
-
-    @Override
-    public String toString() {
-        return languageCode + ": " + name;
     }
 
     /**
@@ -86,5 +89,42 @@ public class AlternateName {
             locale = new Locale(getLanguage());
         }
         return locale;
+    }
+
+    @Override
+    public String toString() {
+        return languageCode + ": " + name;
+    }
+
+    public boolean isPreferred() {
+        return preferred;
+    }
+
+    public void setPreferred(boolean preferred) {
+        this.preferred = preferred;
+    }
+
+    public boolean isHistoric() {
+        return historic;
+    }
+
+    public void setHistoric(boolean historic) {
+        this.historic = historic;
+    }
+
+    public boolean isShortName() {
+        return shortName;
+    }
+
+    public void setShortName(boolean shortName) {
+        this.shortName = shortName;
+    }
+
+    public boolean isColloquial() {
+        return colloquial;
+    }
+
+    public void setColloquial(boolean colloquial) {
+        this.colloquial = colloquial;
     }
 }

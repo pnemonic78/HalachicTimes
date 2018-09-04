@@ -50,14 +50,14 @@ public class JewishCities extends Cities {
 
     public static void main(String[] args) throws Exception {
         String pathCities = "GeoNames/res/cities15000.zip";
-        String pathNames = "GeoNames/res/alternateNames.zip";
+        String pathNames = "GeoNames/res/alternateNamesV2.zip";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         JewishCities cities = new JewishCities();
         Collection<GeoName> names;
 
         names = cities.loadNames(new File(pathCities), new JewishCitiesFilter(), "cities15000.txt");
         cities.populateElevations(names);
-        cities.populateAlternateNames(new File(pathNames), names, "alternateNames.txt");
+        cities.populateAlternateNames(new File(pathNames), names, "alternateNamesV2.txt");
         cities.populateAlternateNames(new File(pathNames2), names);
         for (String lang : LANGUAGES) {
             cities.writeAndroidXML(names, lang);

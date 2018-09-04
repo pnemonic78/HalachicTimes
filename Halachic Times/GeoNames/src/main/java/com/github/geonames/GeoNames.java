@@ -22,7 +22,6 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,8 +34,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -82,6 +83,80 @@ public class GeoNames {
      */
     private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
 
+    /** integer id of record in geonames database */
+    private static final int FIELD_GEONAME_ID = 0;
+    /** name of geographical point (utf8) varchar(200) */
+    private static final int FIELD_GEONAME_NAME = 1;
+    /** name of geographical point in plain ascii characters, varchar(200) */
+    private static final int FIELD_GEONAME_ASCIINAME = 2;
+    /** alternatenames, comma separated, ascii names automatically transliterated, convenience attribute from alternatename table, varchar(10000) */
+    private static final int FIELD_GEONAME_ALTERNATENAMES = 3;
+    /** latitude in decimal degrees (wgs84) */
+    private static final int FIELD_GEONAME_LATITUDE = 4;
+    /** longitude in decimal degrees (wgs84) */
+    private static final int FIELD_GEONAME_LONGITUDE = 5;
+    /** see http://www.geonames.org/export/codes.html, char(1) */
+    private static final int FIELD_GEONAME_FEATURE_CLASS = 6;
+    /** see http://www.geonames.org/export/codes.html, varchar(10) */
+    private static final int FIELD_GEONAME_FC = 7;
+    /** ISO-3166 2-letter country code, 2 characters */
+    private static final int FIELD_GEONAME_CC = 8;
+    /** alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters */
+    private static final int FIELD_GEONAME_CC2 = 9;
+    /** fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20) */
+    private static final int FIELD_GEONAME_ADMIN1_CODE = 10;
+    /** code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80) */
+    private static final int FIELD_GEONAME_ADMIN2_CODE = 11;
+    /** code for third level administrative division, varchar(20) */
+    private static final int FIELD_GEONAME_ADMIN3_CODE = 12;
+    /** code for fourth level administrative division, varchar(20) */
+    private static final int FIELD_GEONAME_ADMIN4_CODE = 13;
+    /** bigint (8 byte int) */
+    private static final int FIELD_GEONAME_POPULATION = 14;
+    /** in meters, integer */
+    private static final int FIELD_GEONAME_ELEVATION = 15;
+    /** digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat. */
+    private static final int FIELD_GEONAME_DEM = 16;
+    /** the iana timezone id (see file timeZone.txt) varchar(40) */
+    private static final int FIELD_GEONAME_TIMEZONE = 17;
+    /** date of last modification in yyyy-MM-dd format */
+    private static final int FIELD_GEONAME_MODIFICATION = 18;
+
+    /** the id of this alternate name, int */
+    private static final int FIELD_ALTERNATE_NAMES_ID = 0;
+    /** geonameId referring to id in table 'geoname', int */
+    private static final int FIELD_ALTERNATE_NAMES_GEONAME_ID = 1;
+    /** iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7) */
+    private static final int FIELD_ALTERNATE_NAMES_LANGUAGE = 2;
+    /** alternate name or name variant, varchar(400) */
+    private static final int FIELD_ALTERNATE_NAMES_NAME = 3;
+    /** '1', if this alternate name is an official/preferred name */
+    private static final int FIELD_ALTERNATE_NAMES_PREFERRED = 4;
+    /** '1', if this is a short name like 'California' for 'State of California' */
+    private static final int FIELD_ALTERNATE_NAMES_SHORT = 5;
+    /** '1', if this alternate name is a colloquial or slang term. Example: 'Big Apple' for 'New York'. */
+    private static final int FIELD_ALTERNATE_NAMES_COLLOQUIAL = 6;
+    /** '1', if this alternate name is historic and was used in the past. Example 'Bombay' for 'Mumbai'. */
+    private static final int FIELD_ALTERNATE_NAMES_HISTORIC = 7;
+    /** from period when the name was used */
+    private static final int FIELD_ALTERNATE_NAMES_FROM = 8;
+    /** to period when the name was used */
+    private static final int FIELD_ALTERNATE_NAMES_TO = 9;
+
+    /** airport codes */
+    private static final String ALTERNATE_NAMES_FAAC = "faac";
+    /** French Revolution names */
+    private static final String ALTERNATE_NAMES_FR_1793 = "fr_1793";
+    /** airport codes */
+    private static final String ALTERNATE_NAMES_IATA = "iata";
+    /** airport codes */
+    private static final String ALTERNATE_NAMES_ICAO = "icao";
+    /** a website */
+    private static final String ALTERNATE_NAMES_LINK = "link";
+    /** postal codes */
+    private static final String ALTERNATE_NAMES_POST = "post";
+    private static final String ALTERNATE_NAMES_UNLC = "unlc";
+
     public GeoNames() {
         super();
     }
@@ -89,11 +164,9 @@ public class GeoNames {
     /**
      * Parse the tab-delimited file with GeoName records.
      *
-     * @param file
-     *         the file to parse.
+     * @param file the file to parse.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<GeoName> parseTabbed(File file) throws IOException {
         return parseTabbed(file, null);
@@ -102,13 +175,10 @@ public class GeoNames {
     /**
      * Parse the tab-delimited file with GeoName records.
      *
-     * @param file
-     *         the file to parse.
-     * @param zippedName
-     *         the zipped name.
+     * @param file       the file to parse.
+     * @param zippedName the zipped name.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<GeoName> parseTabbed(File file, String zippedName) throws IOException {
         return parseTabbed(file, null, zippedName);
@@ -117,15 +187,11 @@ public class GeoNames {
     /**
      * Parse the tab-delimited file with GeoName records.
      *
-     * @param file
-     *         the file to parse.
-     * @param filter
-     *         the filter.
-     * @param zippedName
-     *         the zipped name.
+     * @param file       the file to parse.
+     * @param filter     the filter.
+     * @param zippedName the zipped name.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<GeoName> parseTabbed(File file, NameFilter filter, String zippedName) throws IOException {
         Collection<GeoName> records;
@@ -158,11 +224,9 @@ public class GeoNames {
     /**
      * Parse the tab-delimited file with GeoName records.
      *
-     * @param reader
-     *         the reader.
+     * @param reader the reader.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<GeoName> parseTabbed(Reader reader) throws IOException {
         return parseTabbed(reader, null);
@@ -196,13 +260,10 @@ public class GeoNames {
      * </code>
      * </p>
      *
-     * @param reader
-     *         the reader.
-     * @param filter
-     *         the filter.
+     * @param reader the reader.
+     * @param filter the filter.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<GeoName> parseTabbed(Reader reader, NameFilter filter) throws IOException {
         Collection<GeoName> records = new ArrayList<GeoName>();
@@ -210,7 +271,6 @@ public class GeoNames {
         String line;
         BufferedReader buf = new BufferedReader(reader);
         String[] fields;
-        int column;
         String field;
 
         while (true) {
@@ -222,44 +282,43 @@ public class GeoNames {
             fields = line.split("\t");
             record = new GeoName();
 
-            column = 0;
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ID];
             record.setGeoNameId(Long.parseLong(field));
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_NAME];
             record.setName(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ASCIINAME];
             record.setAsciiName(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ALTERNATENAMES];
             record.setAlternateNames(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_LATITUDE];
             record.setLatitude(Double.parseDouble(field));
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_LONGITUDE];
             record.setLongitude(Double.parseDouble(field));
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_FEATURE_CLASS];
             record.setFeatureClass(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_FC];
             record.setFeatureCode(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_CC];
             record.setCountryCode(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_CC2];
             record.setAlternateCountryCodes(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ADMIN1_CODE];
             record.setAdminCode1(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ADMIN2_CODE];
             record.setAdminCode2(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ADMIN3_CODE];
             record.setAdminCode3(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ADMIN4_CODE];
             record.setAdminCode4(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_POPULATION];
             record.setPopulation(Long.parseLong(field));
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_ELEVATION];
             if (field.length() > 0)
                 record.setElevation(Integer.parseInt(field));
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_DEM];
             if (field.length() > 0)
                 record.setDigitalElevation(Integer.parseInt(field));
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_TIMEZONE];
             if (field.length() == 0) {
                 // throw new NullPointerException("time zone required for " +
                 // record.getGeoNameId());
@@ -268,7 +327,7 @@ public class GeoNames {
                 continue;
             }
             record.setTimeZone(field);
-            field = fields[column++];
+            field = fields[FIELD_GEONAME_MODIFICATION];
             record.setModification(field);
 
             if ((filter == null) || filter.accept(record)) {
@@ -285,8 +344,7 @@ public class GeoNames {
     /**
      * Populate the list of names with elevations.
      *
-     * @param geoNames
-     *         the list of names to populate.
+     * @param geoNames the list of names to populate.
      */
     public void populateElevations(Collection<GeoName> geoNames) {
         int elevation;
@@ -348,8 +406,7 @@ public class GeoNames {
     /**
      * Populate the list of names with alternate names.
      *
-     * @param records
-     *         the list of records to populate.
+     * @param records the list of records to populate.
      * @see #populateAlternateNamesInternet(GeoName)
      */
     public void populateAlternateNames(Collection<GeoName> records) {
@@ -369,8 +426,7 @@ public class GeoNames {
     /**
      * Populate the list of names with alternate names from the Internet.
      *
-     * @param record
-     *         the name to populate.
+     * @param record the name to populate.
      * @see {@linktourl http://download.geonames.org/export/dump/readme.txt}
      */
     protected void populateAlternateNamesInternet(GeoName record) throws IOException {
@@ -403,12 +459,9 @@ public class GeoNames {
     /**
      * Parse the file with GeoName alternate names.
      *
-     * @param file
-     *         the file to parse.
-     * @param records
-     *         the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @param file    the file to parse.
+     * @param records the list of names.
+     * @throws IOException if an I/O error occurs.
      */
     public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
         populateAlternateNames(file, records, null);
@@ -417,14 +470,10 @@ public class GeoNames {
     /**
      * Parse the file with GeoName alternate names.
      *
-     * @param file
-     *         the file to parse.
-     * @param records
-     *         the list of names.
-     * @param zippedName
-     *         the zipped file name.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @param file       the file to parse.
+     * @param records    the list of names.
+     * @param zippedName the zipped file name.
+     * @throws IOException if an I/O error occurs.
      */
     public void populateAlternateNames(File file, Collection<GeoName> records, String zippedName) throws IOException {
         Reader reader = null;
@@ -469,12 +518,9 @@ public class GeoNames {
      * </code>
      * </p>
      *
-     * @param reader
-     *         the reader.
-     * @param records
-     *         the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @param reader  the reader.
+     * @param records the list of names.
+     * @throws IOException if an I/O error occurs.
      */
     public void populateAlternateNames(Reader reader, Collection<GeoName> records) throws IOException {
         Map<Long, GeoName> recordsById = new HashMap<>();
@@ -495,6 +541,8 @@ public class GeoNames {
         boolean colloquial;
         boolean historic;
 
+        Set<Long> finished = new HashSet<>();
+
         while (true) {
             line = buf.readLine();
             if (line == null)
@@ -503,29 +551,41 @@ public class GeoNames {
                 continue;
             fields = line.split("\t");
 
-            geonameId = Long.parseLong(fields[1]);
+            geonameId = Long.parseLong(fields[FIELD_ALTERNATE_NAMES_GEONAME_ID]);
+            if (finished.contains(geonameId)) {
+                continue;
+            }
             record = recordsById.get(geonameId);
             if (record == null) {
                 continue;
             }
-            language = fields[2];
-            if (language.isEmpty() || "post".equals(language)) {
+            language = fields[FIELD_ALTERNATE_NAMES_LANGUAGE];
+            if (language.isEmpty()
+                    || ALTERNATE_NAMES_FAAC.equals(language)
+                    || ALTERNATE_NAMES_FR_1793.equals(language)
+                    || ALTERNATE_NAMES_IATA.equals(language)
+                    || ALTERNATE_NAMES_ICAO.equals(language)
+                    || ALTERNATE_NAMES_POST.equals(language)) {
+                continue;
+            }
+            // "unlc" is almost always the last record in the group, so anything following is probably a mistake.
+            if (ALTERNATE_NAMES_UNLC.equals(language)) {
+                finished.add(geonameId);
                 continue;
             }
 
-            name = fields[3];
-            if ("link".equals(fields[2]) && (record.getWikipediaURL() == null)) {
-                record.setWikipediaURL(name);
-                continue;
-            }
-            if (language.length() > 3) {
+            name = fields[FIELD_ALTERNATE_NAMES_NAME];
+            if (ALTERNATE_NAMES_LINK.equals(language)) {
+                if (record.getWikipediaURL() == null) {
+                    record.setWikipediaURL(name);
+                }
                 continue;
             }
 
-            preferredName = (fields.length > 4) && "1".equals(fields[4]);
-            shortName = (fields.length > 5) && "1".equals(fields[5]);
-            colloquial = (fields.length > 6) && "1".equals(fields[6]);
-            historic = (fields.length > 7) && "1".equals(fields[7]);
+            preferredName = (fields.length > FIELD_ALTERNATE_NAMES_PREFERRED) && "1".equals(fields[FIELD_ALTERNATE_NAMES_PREFERRED]);
+            shortName = (fields.length > FIELD_ALTERNATE_NAMES_SHORT) && "1".equals(fields[FIELD_ALTERNATE_NAMES_SHORT]);
+            colloquial = (fields.length > FIELD_ALTERNATE_NAMES_COLLOQUIAL) && "1".equals(fields[FIELD_ALTERNATE_NAMES_COLLOQUIAL]);
+            historic = (fields.length > FIELD_ALTERNATE_NAMES_HISTORIC) && "1".equals(fields[FIELD_ALTERNATE_NAMES_HISTORIC]);
 
             record.putAlternateName(geonameId, language, name, preferredName, shortName, colloquial, historic);
         }
@@ -534,11 +594,9 @@ public class GeoNames {
     /**
      * Parse the tab-delimited file with country records.
      *
-     * @param file
-     *         the file to parse.
+     * @param file the file to parse.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<CountryInfo> parseCountries(File file) throws IOException {
         Reader reader = null;
@@ -560,11 +618,9 @@ public class GeoNames {
     /**
      * Parse the tab-delimited file with GeoName records.
      *
-     * @param reader
-     *         the reader.
+     * @param reader the reader.
      * @return the list of names.
-     * @throws IOException
-     *         if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     public Collection<CountryInfo> parseCountries(Reader reader) throws IOException {
         Collection<CountryInfo> records = new ArrayList<CountryInfo>();

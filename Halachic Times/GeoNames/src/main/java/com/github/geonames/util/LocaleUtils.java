@@ -32,9 +32,11 @@ public class LocaleUtils {
         if (languageCode == null) {
             languageCode = Locale.ENGLISH.getLanguage();
         } else {
-            Locale locale = new Locale(language);
+            String[] tokens = language.split("-");
+            String s1 = tokens[0];
+            String s2 = tokens.length > 1 ? tokens[1] : "";
+            Locale locale = new Locale(s1, s2);
             languageCode = locale.getLanguage();
-            languageCode = getISOLanguage(languageCode);
         }
         return languageCode;
     }

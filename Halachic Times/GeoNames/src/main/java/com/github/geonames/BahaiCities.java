@@ -34,7 +34,7 @@ public class BahaiCities extends JewishCities {
 
     public static void main(String[] args) throws Exception {
         String pathCities = "GeoNames/res/cities1000.txt";
-        String pathNames = "GeoNames/res/alternateNames.txt";
+        String pathNames = "GeoNames/res/alternateNamesV2.txt";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         BahaiCities cities = new BahaiCities();
         Collection<GeoName> names;
