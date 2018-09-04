@@ -62,7 +62,7 @@
         <item>Johannesburg</item>
         <item>Istanbul</item>
         <item>Kigali</item>
-        <item>Kiev</item>
+        <item>Kyiv</item>
         <item>Cairo</item>
         <item>Kampala</item>
         <item>Lilongwe</item>
@@ -202,16 +202,16 @@
         <item>-1204318</item>
         <item>1799702</item>
         <item>460971</item>
-        <item>1853916</item>
+        <item>1854348</item>
         <item>4315314</item>
         <item>-3345694</item>
-        <item>1850012</item>
+        <item>1847186</item>
         <item>-1650000</item>
         <item>1048801</item>
         <item>-3461314</item>
         <item>-2530066</item>
         <item>-3490328</item>
-        <item>-2290278</item>
+        <item>-2290642</item>
         <item>6413548</item>
         <item>1469370</item>
         <item>3871667</item>
@@ -225,7 +225,7 @@
         <item>5085045</item>
         <item>5237403</item>
         <item>4694809</item>
-        <item>402420</item>
+        <item>402356</item>
         <item>3681897</item>
         <item>5991273</item>
         <item>386667</item>
@@ -260,7 +260,7 @@
         <item>-1891368</item>
         <item>4037767</item>
         <item>3569439</item>
-        <item>2490560</item>
+        <item>2486080</item>
         <item>3452812</item>
         <item>1907283</item>
         <item>2865195</item>
@@ -268,13 +268,13 @@
         <item>1310271</item>
         <item>-621462</item>
         <item>2220056</item>
-        <item>2228552</item>
+        <item>2227832</item>
         <item>1460420</item>
         <item>3122222</item>
         <item>2504776</item>
         <item>3568950</item>
         <item>-3386784</item>
-        <item>-3686667</item>
+        <item>-3684852</item>
         <item>-1814161</item>
     </integer-array>
     <integer-array name="cities_longitudes" translatable="false">
@@ -294,16 +294,16 @@
         <item>-7702824</item>
         <item>-7679358</item>
         <item>-7408175</item>
-        <item>-7233499</item>
+        <item>-7233880</item>
         <item>-7080006</item>
         <item>-7064827</item>
-        <item>-6998857</item>
+        <item>-6989232</item>
         <item>-6815000</item>
         <item>-6687918</item>
         <item>-5837723</item>
         <item>-5763591</item>
         <item>-5618816</item>
-        <item>-4320750</item>
+        <item>-4318223</item>
         <item>-2189541</item>
         <item>-1744406</item>
         <item>-913333</item>
@@ -317,7 +317,7 @@
         <item>434877</item>
         <item>488969</item>
         <item>744744</item>
-        <item>921490</item>
+        <item>920607</item>
         <item>1016579</item>
         <item>1074609</item>
         <item>1151667</item>
@@ -352,7 +352,7 @@
         <item>4753613</item>
         <item>4989201</item>
         <item>5142151</item>
-        <item>6708220</item>
+        <item>6701040</item>
         <item>6917233</item>
         <item>7288261</item>
         <item>7723148</item>
@@ -360,13 +360,13 @@
         <item>10319822</item>
         <item>10684513</item>
         <item>11354611</item>
-        <item>11415769</item>
+        <item>11417469</item>
         <item>12098220</item>
         <item>12145806</item>
         <item>12153185</item>
         <item>13969171</item>
         <item>15120732</item>
-        <item>17476667</item>
+        <item>17476349</item>
         <item>17844149</item>
     </integer-array>
     <integer-array name="cities_elevations" translatable="false">
@@ -386,16 +386,16 @@
         <item>152</item>
         <item>65</item>
         <item>2582</item>
-        <item>44</item>
+        <item>53</item>
         <item>9</item>
         <item>556</item>
-        <item>55</item>
+        <item>9</item>
         <item>3782</item>
         <item>887</item>
         <item>31</item>
         <item>133</item>
         <item>34</item>
-        <item>5</item>
+        <item>6</item>
         <item>37</item>
         <item>12</item>
         <item>45</item>
@@ -409,7 +409,7 @@
         <item>28</item>
         <item>13</item>
         <item>549</item>
-        <item>69</item>
+        <item>74</item>
         <item>23</item>
         <item>26</item>
         <item>726</item>
@@ -444,7 +444,7 @@
         <item>1274</item>
         <item>-23</item>
         <item>1178</item>
-        <item>38</item>
+        <item>8</item>
         <item>1798</item>
         <item>8</item>
         <item>227</item>
@@ -452,13 +452,13 @@
         <item>18</item>
         <item>16</item>
         <item>22</item>
-        <item>3</item>
+        <item>60</item>
         <item>13</item>
         <item>12</item>
         <item>10</item>
         <item>44</item>
         <item>58</item>
-        <item>79</item>
+        <item>43</item>
         <item>57</item>
     </integer-array>
     <string-array name="cities_time_zones" translatable="false">
@@ -540,7 +540,7 @@
         <item>Asia/Kabul</item>
         <item>Asia/Kolkata</item>
         <item>Asia/Kolkata</item>
-        <item>Asia/Rangoon</item>
+        <item>Asia/Yangon</item>
         <item>Asia/Phnom_Penh</item>
         <item>Asia/Jakarta</item>
         <item>Asia/Macau</item>
