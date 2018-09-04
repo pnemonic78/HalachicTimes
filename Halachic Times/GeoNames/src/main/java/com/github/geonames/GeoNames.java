@@ -143,6 +143,8 @@ public class GeoNames {
     /** to period when the name was used */
     private static final int FIELD_ALTERNATE_NAMES_TO = 9;
 
+    /** abbreviation */
+    private static final String ALTERNATE_NAMES_ABBR = "abbr";
     /** airport codes */
     private static final String ALTERNATE_NAMES_FAAC = "faac";
     /** French Revolution names */
@@ -153,9 +155,18 @@ public class GeoNames {
     private static final String ALTERNATE_NAMES_ICAO = "icao";
     /** a website */
     private static final String ALTERNATE_NAMES_LINK = "link";
+    /** phonetics */
+    private static final String ALTERNATE_NAMES_PHON = "phon";
+    /** pinyin */
+    private static final String ALTERNATE_NAMES_PINY = "piny";
     /** postal codes */
     private static final String ALTERNATE_NAMES_POST = "post";
+    /** airport codes */
+    private static final String ALTERNATE_NAMES_TCID = "tcid";
+    /** UNLOCODE */
     private static final String ALTERNATE_NAMES_UNLC = "unlc";
+    /** wikidataid */
+    private static final String ALTERNATE_NAMES_WKDT = "wkdt";
 
     public GeoNames() {
         super();
@@ -561,11 +572,17 @@ public class GeoNames {
             }
             language = fields[FIELD_ALTERNATE_NAMES_LANGUAGE];
             if (language.isEmpty()
+                    || ALTERNATE_NAMES_ABBR.equals(language)
                     || ALTERNATE_NAMES_FAAC.equals(language)
                     || ALTERNATE_NAMES_FR_1793.equals(language)
                     || ALTERNATE_NAMES_IATA.equals(language)
                     || ALTERNATE_NAMES_ICAO.equals(language)
-                    || ALTERNATE_NAMES_POST.equals(language)) {
+                    || ALTERNATE_NAMES_PHON.equals(language)
+                    || ALTERNATE_NAMES_PINY.equals(language)
+                    || ALTERNATE_NAMES_POST.equals(language)
+                    || ALTERNATE_NAMES_TCID.equals(language)
+                    || ALTERNATE_NAMES_WKDT.equals(language)
+                    ) {
                 continue;
             }
             // "unlc" is almost always the last record in the group, so anything following is probably a mistake.
