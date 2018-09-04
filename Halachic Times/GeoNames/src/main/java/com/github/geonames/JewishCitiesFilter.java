@@ -232,6 +232,8 @@ public class JewishCitiesFilter implements NameFilter {
             5206379,
             // Portland, Oregon, United States
             PORTLAND,
+            // Qatsrin, Israel
+            443093,
             // Qiryat Ata, Israel
             293845,
             // Qiryat Bialik, Israel
