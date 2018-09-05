@@ -48,6 +48,7 @@ public class RingtoneManager extends android.media.RingtoneManager {
 
     private static final String INTERNAL_PATH = MediaStore.Audio.Media.INTERNAL_CONTENT_URI.toString();
     private static final String EXTERNAL_PATH = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI.toString();
+    private static final String SETTINGS_PATH = Settings.System.CONTENT_URI.toString();
     private static final String FILE_PATH = ContentResolver.SCHEME_FILE + ":/";
 
     private static final String[] INTERNAL_COLUMNS = new String[]{
@@ -112,7 +113,8 @@ public class RingtoneManager extends android.media.RingtoneManager {
     /**
      * Include external media?
      *
-     * @param include whether to include.
+     * @param include
+     *         whether to include.
      */
     public void setIncludeExternal(boolean include) {
         this.includeExternal = include;
@@ -160,7 +162,8 @@ public class RingtoneManager extends android.media.RingtoneManager {
      * (true). This is used to find all matching sounds for the given sound
      * types (ringtone, notifications, etc.)
      *
-     * @param columns The columns that must be true.
+     * @param columns
+     *         The columns that must be true.
      * @return The where clause.
      */
     private static String constructBooleanTrueWhereClause(List<String> columns) {
@@ -226,27 +229,42 @@ public class RingtoneManager extends android.media.RingtoneManager {
                 }
             }
 
-            ContentResolver resolver = context.getContentResolver();
             Uri uri = Uri.parse(uriString);
-            Cursor cursor = resolver.query(uri, SETTINGS_COLUMNS, null, null, null);
-            if ((cursor != null) && cursor.moveToFirst()) {
-                String uriValue = cursor.getString(URI_COLUMN_INDEX);
-                cursor.close();
-
-                if (uriValue == null) {
+            Uri uriResolved = resolveUri(context, uri);
+            if (uri != uriResolved) {
+                if (uriResolved == null) {
                     return DEFAULT_PATH;
                 }
-                if (uriValue.startsWith(INTERNAL_PATH)) {
+                String uriResolvedString = uriResolved.toString();
+                if (uriResolvedString.startsWith(INTERNAL_PATH)) {
                     // Is definitely internal.
                     return uriString;
                 }
-                if (uriValue.startsWith(EXTERNAL_PATH)) {
+                if (uriResolvedString.startsWith(EXTERNAL_PATH)) {
                     // 'Default' tone is definitely external.
                     return SILENT_PATH;
                 }
             }
         }
         return uriString;
+    }
+
+    public static Uri resolveUri(Context context, Uri uri) {
+        String uriString = uri.toString();
+        if (uriString.startsWith(SETTINGS_PATH)) {
+            ContentResolver resolver = context.getContentResolver();
+            Cursor cursor = resolver.query(uri, SETTINGS_COLUMNS, null, null, null);
+            if ((cursor != null) && cursor.moveToFirst()) {
+                String path = cursor.getString(URI_COLUMN_INDEX);
+                cursor.close();
+
+                if (path == null) {
+                    return null;
+                }
+                return Uri.parse(path);
+            }
+        }
+        return uri;
     }
 
     public String filterInternal(Uri uri) {
