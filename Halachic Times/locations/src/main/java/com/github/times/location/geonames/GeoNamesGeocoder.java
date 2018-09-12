@@ -312,7 +312,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
                             try {
                                 address.setLatitude(Double.parseDouble(text));
                             } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                                throw new SAXException(text, nfe);
                             }
                         }
                         state = State.GEONAME;
@@ -332,7 +332,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
                             try {
                                 address.setLongitude(Double.parseDouble(text));
                             } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                                throw new SAXException(text, nfe);
                             }
                         }
                         state = State.GEONAME;

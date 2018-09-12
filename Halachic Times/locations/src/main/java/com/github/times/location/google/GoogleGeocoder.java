@@ -363,7 +363,7 @@ public class GoogleGeocoder extends GeocoderBase {
                             try {
                                 address.setLatitude(Double.parseDouble(text));
                             } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                                throw new SAXException(text, nfe);
                             }
                         }
                         state = State.LOCATION;
@@ -375,7 +375,7 @@ public class GoogleGeocoder extends GeocoderBase {
                             try {
                                 address.setLongitude(Double.parseDouble(text));
                             } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                                throw new SAXException(text, nfe);
                             }
                         }
                         state = State.LOCATION;
@@ -506,7 +506,7 @@ public class GoogleGeocoder extends GeocoderBase {
                                     location.setAltitude(Double.parseDouble(text));
                                     results.add(location);
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
@@ -523,7 +523,7 @@ public class GoogleGeocoder extends GeocoderBase {
                                 try {
                                     location.setLatitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
@@ -532,7 +532,7 @@ public class GoogleGeocoder extends GeocoderBase {
                                 try {
                                     location.setLongitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;

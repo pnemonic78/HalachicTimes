@@ -255,7 +255,7 @@ public class BingGeocoder extends GeocoderBase {
                                 try {
                                     address.setLatitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
@@ -264,7 +264,7 @@ public class BingGeocoder extends GeocoderBase {
                                 try {
                                     address.setLongitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
@@ -481,7 +481,7 @@ public class BingGeocoder extends GeocoderBase {
                                 try {
                                     location.setAltitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
