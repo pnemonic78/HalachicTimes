@@ -151,7 +151,7 @@ public class ZmanimReminder {
     /**
      * How much time to wait for the notification sound once entered into a day not allowed to disturb.
      */
-    private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 3;
+    private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 2;
 
     private static final String CHANNEL_REMINDER = "reminder";
     private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";

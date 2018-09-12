@@ -33,15 +33,15 @@ public class BahaiCities extends JewishCities {
     }
 
     public static void main(String[] args) throws Exception {
-        String pathCities = "GeoNames/res/cities1000.txt";
-        String pathNames = "GeoNames/res/alternateNames.txt";
+        String pathCities = "GeoNames/res/cities1000.zip";
+        String pathNames = "GeoNames/res/alternateNamesV2.zip";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         BahaiCities cities = new BahaiCities();
         Collection<GeoName> names;
 
-        names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter());
+        names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter(), "cities1000.txt");
         cities.populateElevations(names);
-        cities.populateAlternateNames(new File(pathNames), names);
+        cities.populateAlternateNames(new File(pathNames), names, "alternateNamesV2.txt");
         cities.populateAlternateNames(new File(pathNames2), names);
         for (String lang : LANGUAGES) {
             cities.writeAndroidXML(names, lang);

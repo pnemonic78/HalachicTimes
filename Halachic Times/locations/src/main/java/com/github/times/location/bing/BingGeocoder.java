@@ -45,11 +45,6 @@ import java.util.Locale;
 public class BingGeocoder extends GeocoderBase {
 
     /**
-     * Bing API key.
-     */
-    private static final String API_KEY = BuildConfig.BING_API_KEY;
-
-    /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
     private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";
@@ -58,6 +53,11 @@ public class BingGeocoder extends GeocoderBase {
      * elevation.
      */
     private static final String URL_ELEVATION = "http://dev.virtualearth.net/REST/v1/Elevation/List?o=xml&points=%f,%f&key=%s";
+
+    /**
+     * Bing API key.
+     */
+    private static final String API_KEY = BuildConfig.BING_API_KEY;
 
     /**
      * Creates a new Bing geocoder.
@@ -255,7 +255,7 @@ public class BingGeocoder extends GeocoderBase {
                                 try {
                                     address.setLatitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
@@ -264,7 +264,7 @@ public class BingGeocoder extends GeocoderBase {
                                 try {
                                     address.setLongitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;
@@ -481,7 +481,7 @@ public class BingGeocoder extends GeocoderBase {
                                 try {
                                     location.setAltitude(Double.parseDouble(text));
                                 } catch (NumberFormatException nfe) {
-                                    throw new SAXException(nfe);
+                                    throw new SAXException(text, nfe);
                                 }
                             }
                             break;

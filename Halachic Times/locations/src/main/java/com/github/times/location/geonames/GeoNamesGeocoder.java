@@ -50,11 +50,6 @@ public class GeoNamesGeocoder extends GeocoderBase {
     private static final String TAG = "GeoNamesGeocoder";
 
     /**
-     * GeoNames user name.
-     */
-    private static final String USERNAME = BuildConfig.GEONAMES_USERNAME;
-
-    /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
     private static final String URL_LATLNG = "http://api.geonames.org/extendedFindNearby?lat=%f&lng=%f&lang=%s&username=%s";
@@ -70,6 +65,11 @@ public class GeoNamesGeocoder extends GeocoderBase {
      * Uses Aster Global Digital Elevation Model data.
      */
     private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
+
+    /**
+     * GeoNames user name.
+     */
+    private static final String USERNAME = BuildConfig.GEONAMES_USERNAME;
 
     /**
      * Creates a new GeoNames geocoder.
@@ -312,7 +312,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
                             try {
                                 address.setLatitude(Double.parseDouble(text));
                             } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                                throw new SAXException(text, nfe);
                             }
                         }
                         state = State.GEONAME;
@@ -332,7 +332,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
                             try {
                                 address.setLongitude(Double.parseDouble(text));
                             } catch (NumberFormatException nfe) {
-                                throw new SAXException(nfe);
+                                throw new SAXException(text, nfe);
                             }
                         }
                         state = State.GEONAME;

@@ -182,15 +182,25 @@ public class GeoName extends GeoNameRecord {
 
     public void putAlternateName(long geonameId, String language, String name, boolean preferred, boolean shortName, boolean colloquial, boolean historic) {
         String languageCode = LocaleUtils.toLanguageCode(language);
-        AlternateName alternateName = alternateNamesMap.get(languageCode);
+        String languageCodeISO = LocaleUtils.getISOLanguage(languageCode);
+        AlternateName alternateName = alternateNamesMap.get(languageCodeISO);
         if ((alternateName == null) || preferred) {
-            alternateName = new AlternateName(language, name, preferred);
-            alternateNamesMap.put(languageCode, alternateName);
-        } else if (!alternateName.isPreferred() && !shortName && !colloquial && !historic) {
-            if (language.length() == alternateName.getLanguage().length()) {
+            alternateName = new AlternateName(language, name, preferred, shortName, colloquial, historic);
+            alternateNamesMap.put(languageCodeISO, alternateName);
+        } else if (!alternateName.isPreferred()) {
+            if ((alternateName.isShortName() && !shortName)
+                    || (alternateName.isColloquial() && !colloquial)
+                    || (alternateName.isHistoric() && !historic)) {
+                alternateName = new AlternateName(language, name, preferred, shortName, colloquial, historic);
+                alternateNamesMap.put(languageCodeISO, alternateName);
+            } else if (!historic && !colloquial && (languageCode.length() <= alternateName.getLanguage().length())) {
+                alternateName = new AlternateName(language, name, preferred, shortName, colloquial, historic);
+                alternateNamesMap.put(languageCodeISO, alternateName);
+            } else {
                 System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
-                alternateName.setName(name);
             }
+        } else {
+            System.err.println("Duplicate name! id: " + geonameId + " language: " + language + " name: [" + name + "]");
         }
     }
 

@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.provider.Settings;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
+import com.github.media.RingtoneManager;
 import com.github.text.style.TypefaceSpan;
 import com.github.times.R;
 import com.github.times.preference.SimpleZmanimPreferences;
@@ -216,7 +218,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Notify now.
      *
-     * @param item the reminder item.
+     * @param item
+     *         the reminder item.
      */
     public void notifyNow(ZmanimReminderItem item) {
         LogUtils.i(TAG, "remind now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
@@ -248,7 +251,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * Format the date and time with seconds.<br>
      * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
      *
-     * @param time the time to format.
+     * @param time
+     *         the time to format.
      * @return the formatted time.
      */
     private String formatDateTime(Date time) {
@@ -261,7 +265,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Format the date and time with seconds.
      *
-     * @param time the time to format.
+     * @param time
+     *         the time to format.
      * @return the formatted time.
      * @see #formatDateTime(Date)
      */
@@ -318,6 +323,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         Context context = this;
         stopSound();
         vibrate(context, false);
+
+        final Window win = getWindow();
+        // Allow the screen to sleep.
+        win.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void playSound(Context context) {
@@ -345,9 +354,13 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             final P prefs = getZmanimPreferences();
             Uri prefRingtone = prefs.getReminderRingtone();
             if (prefRingtone != null) {
+                Uri uri = RingtoneManager.resolveUri(context, prefRingtone);
+                if (uri == null) {
+                    uri = Settings.System.DEFAULT_ALARM_ALERT_URI;
+                }
                 MediaPlayer ringtone = new MediaPlayer();
                 try {
-                    ringtone.setDataSource(context, prefRingtone);
+                    ringtone.setDataSource(context, uri);
 
                     int audioStreamType = prefs.getReminderStream();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -364,7 +377,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
                     ringtone.prepare();
                 } catch (IOException e) {
-                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone, e);
+                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone + " ~ " + uri, e);
                     ringtone = null;
                 }
                 this.ringtone = ringtone;
@@ -376,8 +389,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Vibrate the device.
      *
-     * @param context the context.
-     * @param vibrate {@code true} to start vibrating - {@code false} to stop.
+     * @param context
+     *         the context.
+     * @param vibrate
+     *         {@code true} to start vibrating - {@code false} to stop.
      */
     private void vibrate(Context context, boolean vibrate) {
         Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
@@ -394,7 +409,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Set timer to silence the alert.
      *
-     * @param triggerAt when to silence.
+     * @param triggerAt
+     *         when to silence.
      */
     private void silenceFuture(long triggerAt) {
         LogUtils.i(TAG, "silence future at [" + formatDateTime(triggerAt) + "]");

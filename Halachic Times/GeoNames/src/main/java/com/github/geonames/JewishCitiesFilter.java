@@ -156,8 +156,6 @@ public class JewishCitiesFilter implements NameFilter {
             294492,
             // Kiev, Ukraine
             KIEV,
-            // Kiryat Ono, Israel
-            11049562,
             // Las Vegas, United States
             5475433,
             // Lisbon, Portugal
@@ -234,6 +232,8 @@ public class JewishCitiesFilter implements NameFilter {
             5206379,
             // Portland, Oregon, United States
             PORTLAND,
+            // Qatsrin, Israel
+            443093,
             // Qiryat Ata, Israel
             293845,
             // Qiryat Bialik, Israel
@@ -242,6 +242,8 @@ public class JewishCitiesFilter implements NameFilter {
             293842,
             // Qiryat Mozqin, Israel
             293831,
+            // Qiryat Ono, Israel
+            11049562,
             // Qiryat Shemona, Israel
             293825,
             // Qiryat Yam, Israel
