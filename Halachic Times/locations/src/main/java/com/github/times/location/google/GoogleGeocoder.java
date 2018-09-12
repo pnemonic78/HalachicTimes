@@ -19,6 +19,7 @@ import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
 
+import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
@@ -47,20 +48,25 @@ public class GoogleGeocoder extends GeocoderBase {
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
-    private static final String URL_LATLNG = "http://maps.googleapis.com/maps/api/geocode/xml?latlng=%f,%f&language=%s&sensor=true";
+    private static final String URL_LATLNG = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=%f,%f&language=%s&key=%s&sensor=true";
     /**
      * URL that accepts an address as parameters.
      */
-    private static final String URL_ADDRESS = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&language=%s&sensor=true";
+    private static final String URL_ADDRESS = "https://maps.googleapis.com/maps/api/geocode/xml?address=%s&language=%s&key=%s&sensor=true";
     /**
      * URL that accepts a bounded address as parameters.
      */
-    private static final String URL_ADDRESS_BOUNDED = "http://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&sensor=true";
+    private static final String URL_ADDRESS_BOUNDED = "https://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&key=%s&sensor=true";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.
      */
-    private static final String URL_ELEVATION = "http://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f";
+    private static final String URL_ELEVATION = "https://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f&key=%s";
+
+    /**
+     * Google API key.
+     */
+    private static final String API_KEY = BuildConfig.GOOGLE_API_KEY;
 
     /**
      * Creates a new Google geocoder.
@@ -86,7 +92,7 @@ public class GoogleGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
-        String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage());
+        String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
@@ -94,7 +100,7 @@ public class GoogleGeocoder extends GeocoderBase {
     public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
-        String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage());
+        String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage(), API_KEY);
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
@@ -111,7 +117,7 @@ public class GoogleGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("upperRightLatitude == " + upperRightLatitude);
         if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
-        String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage());
+        String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage(), API_KEY);
         return getAddressXMLFromURL(queryUrl, maxResults);
     }
 
@@ -395,7 +401,7 @@ public class GoogleGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
-        String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude);
+        String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
         return getElevationXMLFromURL(latitude, longitude, queryUrl);
     }
 
