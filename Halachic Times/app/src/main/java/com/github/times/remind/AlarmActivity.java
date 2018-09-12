@@ -323,6 +323,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         Context context = this;
         stopSound();
         vibrate(context, false);
+
+        final Window win = getWindow();
+        // Allow the screen to sleep.
+        win.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void playSound(Context context) {
