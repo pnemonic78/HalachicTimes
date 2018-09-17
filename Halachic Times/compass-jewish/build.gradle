@@ -53,7 +53,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':lib')
+    implementation project(':android-lib:lib')
     implementation project(':common')
     implementation project(':locations')
     implementation project(':compass-lib')

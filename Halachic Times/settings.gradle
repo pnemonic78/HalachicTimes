@@ -1,6 +1,6 @@
 include ':GeoNames'
 include ':KosherJava'
-include ':lib'
+include ':android-lib:lib'
 include ':common'
 include ':locations'
 include ':compass-lib'
