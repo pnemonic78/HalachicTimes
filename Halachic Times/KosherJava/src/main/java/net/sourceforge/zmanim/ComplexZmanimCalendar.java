@@ -2454,16 +2454,17 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSofZmanKidushLevana15Days(Long, Long)
 	 */
 	public Long getSofZmanKidushLevanaBetweenMoldos(Long alos, Long tzais) {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
-		Calendar sofZmanKidushLevanaCalendar = (Calendar) getCalendar().clone();
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
+		Calendar sofZmanKidushLevanaCalendar = (Calendar) calendar.clone();
 		Long sofZmanKidushLevana = jewishCalendar.getSofZmanKidushLevanaBetweenMoldos();
 		sofZmanKidushLevanaCalendar.setTimeInMillis(sofZmanKidushLevana);
 		if (alos != null && tzais != null
-				&& sofZmanKidushLevanaCalendar.get(Calendar.YEAR) == getCalendar().get(Calendar.YEAR)
-				&& sofZmanKidushLevanaCalendar.get(Calendar.MONTH) == getCalendar().get(Calendar.MONTH)
-				&& sofZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == getCalendar().get(Calendar.DAY_OF_MONTH)) {
+				&& sofZmanKidushLevanaCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+				&& sofZmanKidushLevanaCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+				&& sofZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
 			if ((sofZmanKidushLevana > alos) && (sofZmanKidushLevana < tzais)) {
 				return alos;
 			} else {
@@ -2521,16 +2522,17 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getSofZmanKidushLevanaBetweenMoldos(Long, Long)
 	 */
 	public Long getSofZmanKidushLevana15Days(Long alos, Long tzais) {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
 		Calendar sofZmanKidushLevanaCalendar = (Calendar) getCalendar().clone();
 		Long sofZmanKidushLevana = jewishCalendar.getSofZmanKidushLevana15Days();
 		sofZmanKidushLevanaCalendar.setTimeInMillis(sofZmanKidushLevana);
 		if (alos != null && tzais != null
-				&& sofZmanKidushLevanaCalendar.get(Calendar.YEAR) == getCalendar().get(Calendar.YEAR)
-				&& sofZmanKidushLevanaCalendar.get(Calendar.MONTH) == getCalendar().get(Calendar.MONTH)
-				&& sofZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == getCalendar().get(Calendar.DAY_OF_MONTH)) {
+				&& sofZmanKidushLevanaCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+				&& sofZmanKidushLevanaCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+				&& sofZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)) {
 			if ((sofZmanKidushLevana > alos) && (sofZmanKidushLevana < tzais)) {
 				return alos;
 			} else {
@@ -2581,17 +2583,18 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTchilasZmanKidushLevana7Days(Long, Long)
 	 */
 	public Long getTchilasZmanKidushLevana3Days(Long alos, Long tzais) {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
 		Long tchilasZmanKidushLevana = jewishCalendar.getTchilasZmanKidushLevana3Days();
 		Calendar tchilasZmanKidushLevanaCalendar = (Calendar) getCalendar().clone();
 		tchilasZmanKidushLevanaCalendar.setTimeInMillis(tchilasZmanKidushLevana);
 		if (alos != null
 				&& tzais != null
-				&& tchilasZmanKidushLevanaCalendar.get(Calendar.YEAR) == getCalendar().get(Calendar.YEAR)
-				&& tchilasZmanKidushLevanaCalendar.get(Calendar.MONTH) == getCalendar().get(Calendar.MONTH)
-				&& tchilasZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == getCalendar().get(
+				&& tchilasZmanKidushLevanaCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+				&& tchilasZmanKidushLevanaCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+				&& tchilasZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(
 				Calendar.DAY_OF_MONTH)) {
 			if ((tchilasZmanKidushLevana > alos) && (tchilasZmanKidushLevana < tzais)) {
 				return tzais;
@@ -2635,18 +2638,19 @@ public class ComplexZmanimCalendar extends ZmanimCalendar {
 	 * @see #getTchilasZmanKidushLevana7Days()
 	 */
 	public Long getTchilasZmanKidushLevana7Days(Long alos, Long tzais) {
+		final Calendar calendar = getCalendar();
 		JewishCalendar jewishCalendar = new JewishCalendar();
-		jewishCalendar.setGregorianDate(getCalendar().get(Calendar.YEAR), getCalendar().get(Calendar.MONTH),
-				getCalendar().get(Calendar.DAY_OF_MONTH));
+		jewishCalendar.setGregorianDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH));
 
-		Calendar tchilasZmanKidushLevanaCalendar = (Calendar) getCalendar().clone();
+		Calendar tchilasZmanKidushLevanaCalendar = (Calendar) calendar.clone();
 		Long tchilasZmanKidushLevana = jewishCalendar.getTchilasZmanKidushLevana7Days();
 		tchilasZmanKidushLevanaCalendar.setTimeInMillis(tchilasZmanKidushLevana);
 		if (alos != null
 				&& tzais != null
-				&& tchilasZmanKidushLevanaCalendar.get(Calendar.YEAR) == getCalendar().get(Calendar.YEAR)
-				&& tchilasZmanKidushLevanaCalendar.get(Calendar.MONTH) == getCalendar().get(Calendar.MONTH)
-				&& tchilasZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == getCalendar().get(
+				&& tchilasZmanKidushLevanaCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)
+				&& tchilasZmanKidushLevanaCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH)
+				&& tchilasZmanKidushLevanaCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(
 				Calendar.DAY_OF_MONTH)) {
 			if ((tchilasZmanKidushLevana > alos) && (tchilasZmanKidushLevana < tzais)) {
 				return tzais;
