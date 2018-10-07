@@ -42,6 +42,8 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 
+import java.util.Calendar;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.StyleRes;
@@ -131,7 +133,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             ComplexZmanimCalendar zmanCal = adapter.getCalendar();
             JewishCalendar jcal = new JewishCalendar(zmanCal.getCalendar());
             if (position == positionTomorrow) {
-                jcal.forward();
+                jcal.forward(Calendar.DATE, 1);
             }
             CharSequence dateHebrew = adapter.formatDate(context, jcal);
             CharSequence groupingText = dateHebrew;

@@ -1,5 +1,5 @@
 include ':GeoNames'
-include ':KosherJava'
+include ':zmanim:lib-android'
 include ':android-lib:lib'
 include ':common'
 include ':locations'

@@ -23,6 +23,8 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
+import java.util.Calendar;
+
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 
 /**
@@ -632,7 +634,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
         if (date != null) {
@@ -673,7 +675,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         date = cal.getTzaisBaalHatanya();
         if (date != null) {
@@ -836,7 +838,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         date = getMidday(cal, settings);
         title = R.string.midnight_12;
@@ -855,7 +857,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         long sunset = getSunset(cal, settings);
         long sunrise = getSunriseTomorrow(cal, settings);

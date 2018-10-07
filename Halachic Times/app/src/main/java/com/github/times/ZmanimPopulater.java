@@ -251,7 +251,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final JewishDate jewishDate = (JewishDate) jcal.clone();
         final int jewishDayOfMonth = jewishDate.getJewishDayOfMonth();
         final JewishDate jewishDateTomorrow = (JewishDate) jewishDate.clone();
-        jewishDateTomorrow.forward();
+        jewishDateTomorrow.forward(Calendar.DATE, 1);
         final int dayOfWeek = jcal.getDayOfWeek();
         final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
@@ -867,7 +867,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             if ((jewishDayOfMonth > 1) && (jewishDayOfMonth < jLastDatOfMonth)) {
                 jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
             }
-            jcal.forward();
+            jcal.forward(Calendar.DATE, 1);
 
             JewishDate molad = jcal.getMolad();
             int moladYear = molad.getGregorianYear();
@@ -1007,7 +1007,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         // Check if the following day is special, because we can't check EREV_CHANUKAH.
         int holidayToday = jcal.getYomTovIndex();
-        jcal.forward();
+        jcal.forward(Calendar.DATE, 1);
         int holidayTomorrow = jcal.getYomTovIndex();
         int count = CANDLES_NONE;
         int when = BEFORE_SUNSET;
@@ -1179,7 +1179,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         cal.setTimeInMillis(date);
         JewishDate jewishDate = new JewishDate(cal);
         if (date > sunset) {
-            jewishDate.forward();
+            jewishDate.forward(Calendar.DATE, 1);
         }
         return jewishDate;
     }
