@@ -45,5 +45,6 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
             // Never should happen with our own package!
         }
         validateIntent(version);
+        validateIntent("about.issue");
     }
 }

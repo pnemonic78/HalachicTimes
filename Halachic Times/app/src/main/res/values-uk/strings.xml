@@ -197,8 +197,8 @@
     <string name="animations">Анімації</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Автор. право \u00A9 2004–2011 Еліягу Хиршфельд</string>
+    <string name="kosherjava">Календар KosherJava</string>
+    <string name="kosherjava_version">Автор. право \u00A9 2004–2018 Еліягу Хиршфельд</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Галахических Разів Годинник</string>

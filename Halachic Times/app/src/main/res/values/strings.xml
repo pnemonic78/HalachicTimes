@@ -357,8 +357,8 @@
     <string name="animations">Animations</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Copyright \u00A9 2004–2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava">KosherJava calendar</string>
+    <string name="kosherjava_version">Copyright \u00A9 2004–2018 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>
 
     <!-- Widget -->

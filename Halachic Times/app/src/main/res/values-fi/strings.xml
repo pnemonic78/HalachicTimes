@@ -197,8 +197,8 @@
     <string name="animations">Animaatiot</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004–2011 Elia Hirschfeldin</string>
+    <string name="kosherjava">KosherJava kalenteri</string>
+    <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004–2018 Elia Hirschfeldin</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachinen Ajat Kello</string>

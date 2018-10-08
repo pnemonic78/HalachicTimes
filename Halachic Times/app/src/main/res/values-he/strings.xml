@@ -197,8 +197,8 @@
     <string name="animations">אנימציות</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">זכויות יוצרים \u00A9 2004–2011 אליהו הירשפלד</string>
+    <string name="kosherjava">לוח שנה KosherJava</string>
+    <string name="kosherjava_version">זכויות יוצרים \u00A9 2004–2018 אליהו הירשפלד</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">שעון זמנים הלכתיים</string>

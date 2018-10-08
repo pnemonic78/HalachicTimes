@@ -197,8 +197,8 @@
     <string name="animations">Анимации</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Авторски права \u00A9 2004–2011 Илия Хиршфелд</string>
+    <string name="kosherjava">KosherJava календар</string>
+    <string name="kosherjava_version">Авторски права \u00A9 2004–2018 Илия Хиршфелд</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Халахичен Време Часовник</string>

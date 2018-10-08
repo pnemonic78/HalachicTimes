@@ -197,8 +197,8 @@
     <string name="animations">Animatsioonid</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Autoriõigus \u00A9 2004–2011 Eelija Hershfeld</string>
+    <string name="kosherjava">KosherJava kalender</string>
+    <string name="kosherjava_version">Autoriõigus \u00A9 2004–2018 Eelija Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachiline Ajad Kell</string>

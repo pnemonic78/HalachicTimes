@@ -197,8 +197,8 @@
     <string name="animations">Animationen</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Urheberrecht \u00A9 2004–2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava">KosherJava Kalender</string>
+    <string name="kosherjava_version">Urheberrecht \u00A9 2004–2018 Eliyahu Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Zeiten Uhr</string>

@@ -197,8 +197,8 @@
     <string name="animations">Animasjoner</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Opphavsrett \u00A9 2004–2011 Elijahu Hershfeld</string>
+    <string name="kosherjava">KosherJava-kalender</string>
+    <string name="kosherjava_version">Opphavsrett \u00A9 2004–2018 Elijahu Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachisk Tider Klokke</string>

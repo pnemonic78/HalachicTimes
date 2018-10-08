@@ -13,5 +13,8 @@
     <!-- About -->
     <string name="version_title">Application version</string>
     <string name="support_url" translatable="false">http://pnemonic78.github.io/HalachicTimes</string>
+    <string name="issue_title">Issues</string>
+    <string name="issue_summary">Report a problem, or request a new feature.</string>
+    <string name="issue_url" translatable="false">mailto:pnemonic@gmail.com?subject=Halachic+Times</string>
 
 </resources>

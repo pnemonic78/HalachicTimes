@@ -197,8 +197,8 @@
     <string name="animations">Animations</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Droits d\'auteur \u00A9 2004–2011 Élie Hershfeld</string>
+    <string name="kosherjava">Calendrier KosherJava</string>
+    <string name="kosherjava_version">Droits d\'auteur \u00A9 2004–2018 Élie Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Horaires Halakhiques Horloge</string>

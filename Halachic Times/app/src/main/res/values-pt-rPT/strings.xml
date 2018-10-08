@@ -2,7 +2,7 @@
 <resources>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Direitos de autor \u00A9 2004–2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava">Calendário KosherJava</string>
+    <string name="kosherjava_version">Direitos de autor \u00A9 2004–2018 Eliyahu Hershfeld</string>
 
 </resources>
