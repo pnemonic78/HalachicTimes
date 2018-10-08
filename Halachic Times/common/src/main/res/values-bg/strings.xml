@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Версия на приложението</string>
+    <string name="issue_title">Проблеми</string>
+    <string name="issue_summary">Подайте сигнал за проблем или поискайте нова функция.</string>
 
 </resources>

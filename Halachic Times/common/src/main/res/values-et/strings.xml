@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Rakenduse versioon</string>
+    <string name="issue_title">Probleemid</string>
+    <string name="issue_summary">Teavitage probleemist või küsige uut funktsiooni.</string>
 
 </resources>

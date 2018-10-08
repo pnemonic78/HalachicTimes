@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Apper versjon</string>
+    <string name="issue_title">Problemer</string>
+    <string name="issue_summary">Rapporter et problem, eller be om en ny funksjon.</string>
 
 </resources>

@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Anwendungsversion</string>
+    <string name="issue_title">Probleme</string>
+    <string name="issue_summary">Melden Sie ein Problem oder fordern Sie eine neue Funktion an.</string>
 
 </resources>

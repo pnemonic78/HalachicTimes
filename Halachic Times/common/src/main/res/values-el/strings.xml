@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Έκδοση της εφαρμογής</string>
+    <string name="issue_title">Προβλήματα</string>
+    <string name="issue_summary">Αναφέρετε ένα πρόβλημα ή ζητήστε μια νέα λειτουργία.</string>
 
 </resources>

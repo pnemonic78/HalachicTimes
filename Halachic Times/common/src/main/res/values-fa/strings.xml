@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">نسخه نرم افزار</string>
+    <string name="issue_title">مشکلات</string>
+    <string name="issue_summary">گزارش مشکل یا درخواست یک ویژگی جدید</string>
 
 </resources>
