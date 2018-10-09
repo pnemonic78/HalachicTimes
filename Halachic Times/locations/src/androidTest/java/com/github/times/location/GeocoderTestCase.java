@@ -17,6 +17,7 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 
 import com.github.times.location.bing.BingGeocoder;
@@ -46,6 +47,7 @@ import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLATEAU;
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -281,5 +283,33 @@ public class GeocoderTestCase {
         assertEquals(32.094619750976563, address.getLatitude(), DELTA);
         assertEquals(34.885761260986328, address.getLongitude(), DELTA);
         assertEquals("Petah Tiqwa, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
+    }
+
+    /**
+     * Test internal address geocoder.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testInrernalGeocoderAddress() throws Exception {
+        final Context context = getContext();
+        assertNotNull(context);
+
+        Geocoder geocoder = new Geocoder(context);
+        int maxResults = 5;
+
+        // Bar Yochai
+        List<Address> results = geocoder.getFromLocation(32.99505, 35.44968, maxResults);
+        assertNotNull(results);
+        assertTrue(maxResults >= results.size());
+        assertEquals(5, results.size());
+
+        Address address = results.get(0);
+        assertNotNull(address);
+        assertFalse(address instanceof ZmanimAddress);
+        assertEquals(32.99505, address.getLatitude(), DELTA);
+        assertEquals(35.44968, address.getLongitude(), DELTA);
+        ZmanimAddress zmanimAddress =  new ZmanimAddress(address);
+        assertEquals("331, Bar Yohai, Tzfat, North District, Israel", zmanimAddress.getFormatted());
     }
 }

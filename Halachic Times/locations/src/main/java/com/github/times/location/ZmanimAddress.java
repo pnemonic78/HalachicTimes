@@ -250,12 +250,12 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 address = getAddressLine(i);
                 if (!isEmpty(address)
                         && ((thoroughfare == null) || !address.contains(thoroughfare))
-                        && !address.equals(premises)
-                        && !address.equals(subloc)
-                        && !address.equals(locality)
-                        && !address.equals(subadmin)
-                        && !address.equals(admin)
-                        && !address.equals(country)) {
+                        && ((premises == null) || !address.contains(premises))
+                        && ((subloc == null) || !address.contains(subloc))
+                        && ((locality == null) || !address.contains(locality))
+                        && ((subadmin == null) || !address.contains(subadmin))
+                        && ((admin == null) || !address.contains(admin))
+                        && ((country == null) || !address.contains(country))) {
                     if (buf.length() > 0)
                         buf.append(ADDRESS_SEPARATOR);
                     buf.append(address);
