@@ -1,6 +1,7 @@
-[submodule "Halachic Times/android-lib"]
-	path = Halachic Times/android-lib
-	url = https://github.com/pnemonic78/android-lib.git
 [submodule "Halachic Times/zmanim"]
 	path = Halachic Times/zmanim
 	url = https://github.com/pnemonic78/zmanim.git
+[submodule "Halachic Times/android-lib"]
+	path = Halachic Times/android-lib
+	url = https://github.com/pnemonic78/android-lib.git
+	branch = master

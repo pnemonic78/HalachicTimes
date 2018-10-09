@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/GeoNames/GeoNames.iml" filepath="$PROJECT_DIR$/GeoNames/GeoNames.iml" />
       <module fileurl="file://$PROJECT_DIR$/Halachic Times.iml" filepath="$PROJECT_DIR$/Halachic Times.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-lib/android-lib.iml" filepath="$PROJECT_DIR$/android-lib/android-lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android-lib/lib/android-lib-lib.iml" filepath="$PROJECT_DIR$/android-lib/lib/android-lib-lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
       <module fileurl="file://$PROJECT_DIR$/compass/compass.iml" filepath="$PROJECT_DIR$/compass/compass.iml" />
