@@ -217,6 +217,13 @@ public abstract class GeocoderBase {
         } catch (SAXException se) {
             LogUtils.e(TAG, queryUrl, se);
             throw new IOException(se);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
         }
     }
 

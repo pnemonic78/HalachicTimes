@@ -16,7 +16,6 @@
 package com.github.times.location.google;
 
 import android.location.Address;
-import android.text.TextUtils;
 
 import com.github.times.location.DefaultAddressResponseHandler;
 import com.github.times.location.ZmanimAddress;
@@ -26,6 +25,8 @@ import org.xml.sax.SAXException;
 
 import java.util.List;
 import java.util.Locale;
+
+import static android.text.TextUtils.isEmpty;
 
 /**
  * Handler for parsing the XML response for addresses.
@@ -61,6 +62,7 @@ class GoogleAddressResponseHandler extends DefaultAddressResponseHandler {
     private static final String TYPE_LOCALITY = "locality";
     private static final String TYPE_POLITICAL = "political";
     private static final String TYPE_POSTAL_CODE = "postal_code";
+    private static final String TYPE_PREMISE = "premise";
     private static final String TYPE_ROUTE = "route";
     private static final String TYPE_STREET = "street_address";
     private static final String TYPE_STREET_NUMBER = "street_number";
@@ -202,31 +204,34 @@ class GoogleAddressResponseHandler extends DefaultAddressResponseHandler {
                         if (addressType != null) {
                             switch (addressType) {
                                 case TYPE_ADMIN:
-                                    address.setAdminArea(TextUtils.isEmpty(shortName) ? longName : shortName);
-                                    break;
-                                case TYPE_SUBADMIN:
-                                    address.setSubAdminArea(TextUtils.isEmpty(shortName) ? longName : shortName);
+                                    address.setAdminArea(isEmpty(shortName) ? longName : shortName);
                                     break;
                                 case TYPE_COUNTRY:
                                     address.setCountryCode(shortName);
                                     address.setCountryName(longName);
                                     break;
                                 case TYPE_FEATURE:
-                                    address.setFeatureName(TextUtils.isEmpty(shortName) ? longName : shortName);
+                                    address.setFeatureName(isEmpty(shortName) ? longName : shortName);
                                     break;
                                 case TYPE_LOCALITY:
-                                    address.setLocality(TextUtils.isEmpty(shortName) ? longName : shortName);
+                                    address.setLocality(isEmpty(shortName) ? longName : shortName);
                                     break;
                                 case TYPE_POSTAL_CODE:
-                                    address.setPostalCode(TextUtils.isEmpty(shortName) ? longName : shortName);
+                                    address.setPostalCode(isEmpty(shortName) ? longName : shortName);
+                                    break;
+                                case TYPE_PREMISE:
+                                    address.setPremises(isEmpty(shortName) ? longName : shortName);
                                     break;
                                 case TYPE_ROUTE:
                                 case TYPE_STREET:
                                 case TYPE_STREET_NUMBER:
-                                    address.setAddressLine(address.getMaxAddressLineIndex() + 1, TextUtils.isEmpty(shortName) ? longName : shortName);
+                                    address.setAddressLine(address.getMaxAddressLineIndex() + 1, isEmpty(shortName) ? longName : shortName);
+                                    break;
+                                case TYPE_SUBADMIN:
+                                    address.setSubAdminArea(isEmpty(shortName) ? longName : shortName);
                                     break;
                                 case TYPE_SUBLOCALITY:
-                                    address.setSubLocality(TextUtils.isEmpty(shortName) ? longName : shortName);
+                                    address.setSubLocality(isEmpty(shortName) ? longName : shortName);
                                     break;
                             }
                         }

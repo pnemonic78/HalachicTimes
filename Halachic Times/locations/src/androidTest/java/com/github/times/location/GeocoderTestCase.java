@@ -17,6 +17,7 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 
 import com.github.times.location.bing.BingGeocoder;
 import com.github.times.location.geonames.GeoNamesGeocoder;
@@ -41,6 +42,9 @@ import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
 
 import static androidx.test.InstrumentationRegistry.getContext;
+import static com.github.times.location.GeocoderBase.SAME_CITY;
+import static com.github.times.location.GeocoderBase.SAME_PLATEAU;
+import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -49,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 @SmallTest
 public class GeocoderTestCase {
 
-    private static final double DELTA = 1e-6;
+    private static final double DELTA = 1e-3;
 
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
@@ -69,8 +73,7 @@ public class GeocoderTestCase {
     /**
      * Test Google address geocoder.
      *
-     * @throws Exception
-     *         if an error occurs.
+     * @throws Exception if an error occurs.
      */
     @Test
     public void testGoogleAddress() throws Exception {
@@ -118,13 +121,44 @@ public class GeocoderTestCase {
         assertEquals(32.0626167, address.getLatitude(), DELTA);
         assertEquals(34.9717498, address.getLongitude(), DELTA);
         assertEquals("Unnamed Road, Rosh Haayin, Petach Tikva, Center District, Israel", ((ZmanimAddress) address).getFormatted());
+
+        // Bar Yochai
+        results = new ArrayList<>(maxResults);
+        in = context.getResources().openRawResource(R.raw.google_bar_yohai);
+        assertNotNull(in);
+        parser = getParser();
+        assertNotNull(parser);
+        handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        assertNotNull(handler);
+        parser.parse(in, handler);
+        assertTrue(maxResults >= results.size());
+        assertEquals(9, results.size());
+
+        address = results.get(0);
+        assertNotNull(address);
+        assertTrue(address instanceof ZmanimAddress);
+        assertEquals(32.99505, address.getLatitude(), DELTA);
+        assertEquals(35.44968, address.getLongitude(), DELTA);
+        assertEquals("331, Bar Yohai, Tzfat, North District, Israel", ((ZmanimAddress) address).getFormatted());
+
+        AddressProvider addressProvider = new AddressProvider(context);
+        Location location = new Location(USER_PROVIDER);
+        location.setLatitude(32.99505);
+        location.setLongitude(35.44968);
+        address = addressProvider.findBestAddress(location, results, SAME_PLATEAU);
+        assertNotNull(address);
+        assertTrue(address instanceof ZmanimAddress);
+        assertEquals(results.get(0), address);
+        address = addressProvider.findBestAddress(location, results, SAME_CITY);
+        assertNotNull(address);
+        assertTrue(address instanceof ZmanimAddress);
+        assertEquals(results.get(0), address);
     }
 
     /**
      * Test Google elevation geocoder.
      *
-     * @throws Exception
-     *         if an error occurs.
+     * @throws Exception if an error occurs.
      */
     @Test
     public void testGoogleElevation() throws Exception {
@@ -165,8 +199,7 @@ public class GeocoderTestCase {
     /**
      * Test GeoNames address geocoder.
      *
-     * @throws Exception
-     *         if an error occurs.
+     * @throws Exception if an error occurs.
      */
     @Test
     public void testGeoNamesAddress() throws Exception {
@@ -200,8 +233,7 @@ public class GeocoderTestCase {
     /**
      * Test Bing address geocoder.
      *
-     * @throws Exception
-     *         if an error occurs.
+     * @throws Exception if an error occurs.
      */
     @Test
     public void testBingAddress() throws Exception {
@@ -250,5 +282,4 @@ public class GeocoderTestCase {
         assertEquals(34.885761260986328, address.getLongitude(), DELTA);
         assertEquals("Petah Tiqwa, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
     }
-
 }

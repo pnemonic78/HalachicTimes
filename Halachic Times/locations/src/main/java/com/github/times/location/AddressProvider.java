@@ -306,7 +306,7 @@ public class AddressProvider {
      * @return the best address - {@code null} otherwise.
      */
     @Nullable
-    private Address findBestAddress(@NonNull Location location, @Nullable List<Address> addresses, float radius) {
+    protected Address findBestAddress(@NonNull Location location, @Nullable List<Address> addresses, float radius) {
         if ((addresses == null) || addresses.isEmpty()) {
             return null;
         }
