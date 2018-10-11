@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/compass-bahai/compass-bahai.iml" filepath="$PROJECT_DIR$/compass-bahai/compass-bahai.iml" />
       <module fileurl="file://$PROJECT_DIR$/compass-jewish/compass-jewish.iml" filepath="$PROJECT_DIR$/compass-jewish/compass-jewish.iml" />
       <module fileurl="file://$PROJECT_DIR$/compass-lib/compass-lib.iml" filepath="$PROJECT_DIR$/compass-lib/compass-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-lib/lib/lib.iml" filepath="$PROJECT_DIR$/android-lib/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" filepath="$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/locations/locations.iml" filepath="$PROJECT_DIR$/locations/locations.iml" />
       <module fileurl="file://$PROJECT_DIR$/zmanim/zmanim.iml" filepath="$PROJECT_DIR$/zmanim/zmanim.iml" />
