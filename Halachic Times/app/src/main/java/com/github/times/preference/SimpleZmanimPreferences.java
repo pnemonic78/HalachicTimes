@@ -772,4 +772,9 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     public Locale getLocale() {
         return localePreferences.getLocale();
     }
+
+    @Override
+    public boolean isUseElevation() {
+        return !OPINION_SEA.equals(getSunrise());
+    }
 }

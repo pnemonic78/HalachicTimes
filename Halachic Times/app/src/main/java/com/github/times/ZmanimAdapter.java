@@ -119,12 +119,13 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     public ZmanimAdapter(Context context, ZmanimPreferences settings) {
         super(context, R.layout.times_item);
         this.inflater = LayoutInflater.from(context);
-        this.calendar = new ComplexZmanimCalendar();
-        calendar.setShaahZmanisType(settings.getHourType());
         this.settings = settings;
         this.summaries = settings.isSummaries();
         this.showElapsed = settings.isPast();
         this.emphasisScale = settings.getEmphasisScale();
+        this.calendar = new ComplexZmanimCalendar();
+        calendar.setShaahZmanisType(settings.getHourType());
+        calendar.setUseElevation(settings.isUseElevation());
 
         boolean time24 = DateFormat.is24HourFormat(context);
         String patternSeasonalHour;

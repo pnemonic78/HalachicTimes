@@ -181,6 +181,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         this.settings = settings;
         this.calendar = new ComplexZmanimCalendar();
         calendar.setShaahZmanisType(settings.getHourType());
+        calendar.setUseElevation(settings.isUseElevation());
     }
 
     protected Context getContext() {

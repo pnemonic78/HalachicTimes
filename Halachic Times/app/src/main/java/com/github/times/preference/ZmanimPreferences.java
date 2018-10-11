@@ -568,4 +568,10 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * @return {@code true} if the theme has dark backgrounds and light texts.
      */
     boolean isAppWidgetDarkTheme();
+
+    /**
+     * Use adjusted elevation for calendar sunrise/sunset?
+     * @return {@code true} if sunrise/sunset should be adjusted for elevation.
+     */
+    boolean isUseElevation();
 }
