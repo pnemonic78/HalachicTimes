@@ -2,88 +2,89 @@
 <resources>
 
     <string-array name="hour_values" translatable="false">
+        <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_gra</item>
-        <item>@string/opinion_value_ateret</item>
-        <item>@string/opinion_value_60</item>
-        <item>@string/opinion_value_72</item>
-        <item>@string/opinion_value_72_zmanis</item>
         <item>@string/opinion_value_mga</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_18</item>
-        <item>@string/opinion_value_19</item>
+        <item>@string/opinion_value_19_8</item>
+        <item>@string/opinion_value_26</item>
+        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
         <item>@string/opinion_value_90</item>
         <item>@string/opinion_value_90_zmanis</item>
         <item>@string/opinion_value_96</item>
         <item>@string/opinion_value_96_zmanis</item>
-        <item>@string/opinion_value_26</item>
         <item>@string/opinion_value_120</item>
         <item>@string/opinion_value_120_zmanis</item>
     </string-array>
     <string-array name="hour_entries" translatable="false">
+        <item>@string/hour_ateret</item>
         <item>@string/hour_baal_hatanya</item>
         <item>@string/hour_gra</item>
-        <item>@string/hour_ateret</item>
-        <item>@string/hour_60</item>
-        <item>@string/hour_72</item>
-        <item>@string/hour_72_zmanis</item>
         <item>@string/hour_mga</item>
         <item>@string/hour_16</item>
         <item>@string/hour_18</item>
-        <item>@string/hour_19</item>
+        <item>@string/hour_19_8</item>
+        <item>@string/hour_26</item>
+        <item>@string/hour_60</item>
+        <item>@string/hour_72</item>
+        <item>@string/hour_72_zmanis</item>
         <item>@string/hour_90</item>
         <item>@string/hour_90_zmanis</item>
         <item>@string/hour_96</item>
         <item>@string/hour_96_zmanis</item>
-        <item>@string/hour_26</item>
         <item>@string/hour_120</item>
         <item>@string/hour_120_zmanis</item>
     </string-array>
 
     <string-array name="dawn_values" translatable="false">
         <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_19</item>
-        <item>@string/opinion_value_120</item>
-        <item>@string/opinion_value_120_zmanis</item>
-        <item>@string/opinion_value_18</item>
-        <item>@string/opinion_value_26</item>
         <item>@string/opinion_value_16</item>
-        <item>@string/opinion_value_96</item>
-        <item>@string/opinion_value_96_zmanis</item>
-        <item>@string/opinion_value_90</item>
-        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19_8</item>
+        <item>@string/opinion_value_26</item>
+        <item>@string/opinion_value_60</item>
         <item>@string/opinion_value_72</item>
         <item>@string/opinion_value_72_zmanis</item>
-        <item>@string/opinion_value_60</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
+        <item>@string/opinion_value_120_zmanis</item>
     </string-array>
     <string-array name="dawn_entries" translatable="false">
         <item>@string/dawn_baal_hatanya</item>
-        <item>@string/dawn_19</item>
-        <item>@string/dawn_120</item>
-        <item>@string/dawn_120_zmanis</item>
-        <item>@string/dawn_18</item>
-        <item>@string/dawn_26</item>
         <item>@string/dawn_16</item>
-        <item>@string/dawn_96</item>
-        <item>@string/dawn_96_zmanis</item>
-        <item>@string/dawn_90</item>
-        <item>@string/dawn_90_zmanis</item>
+        <item>@string/dawn_18</item>
+        <item>@string/dawn_19_8</item>
+        <item>@string/dawn_19_8</item>
+        <item>@string/dawn_26</item>
+        <item>@string/dawn_60</item>
         <item>@string/dawn_72</item>
         <item>@string/dawn_72_zmanis</item>
-        <item>@string/dawn_60</item>
+        <item>@string/dawn_90</item>
+        <item>@string/dawn_90_zmanis</item>
+        <item>@string/dawn_96</item>
+        <item>@string/dawn_96_zmanis</item>
+        <item>@string/dawn_120</item>
+        <item>@string/dawn_120_zmanis</item>
     </string-array>
 
     <string-array name="tallis_values" translatable="false">
         <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_11_5</item>
-        <item>@string/opinion_value_11</item>
         <item>@string/opinion_value_10</item>
+        <item>@string/opinion_value_11</item>
+        <item>@string/opinion_value_11_5</item>
     </string-array>
     <string-array name="tallis_entries" translatable="false">
         <item>@string/tallis_baal_hatanya</item>
-        <item>@string/tallis_summary</item>
-        <item>@string/tallis_11</item>
         <item>@string/tallis_10</item>
+        <item>@string/tallis_11</item>
+        <item>@string/tallis_11_5</item>
     </string-array>
 
     <string-array name="sunrise_values" translatable="false">
@@ -92,222 +93,223 @@
     </string-array>
     <string-array name="sunrise_entries" translatable="false">
         <item>@string/sunrise_sea</item>
-        <item>@string/sunrise_summary</item>
+        <item>@string/sunrise_elevated</item>
     </string-array>
 
     <string-array name="shema_values" translatable="false">
-        <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_16_sunset</item>
-        <item>@string/opinion_value_7_083</item>
-        <item>@string/opinion_value_19</item>
-        <item>@string/opinion_value_120</item>
-        <item>@string/opinion_value_18</item>
-        <item>@string/opinion_value_16</item>
-        <item>@string/opinion_value_96</item>
-        <item>@string/opinion_value_96_zmanis</item>
-        <item>@string/opinion_value_90</item>
-        <item>@string/opinion_value_90_zmanis</item>
-        <item>@string/opinion_value_72</item>
-        <item>@string/opinion_value_72_zmanis</item>
-        <item>@string/opinion_value_mga</item>
         <item>@string/opinion_value_ateret</item>
-        <item>@string/opinion_value_3</item>
+        <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_fixed</item>
         <item>@string/opinion_value_gra</item>
+        <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_3</item>
+        <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19_8</item>
+        <item>@string/opinion_value_72</item>
+        <item>@string/opinion_value_72_zmanis</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
     </string-array>
     <string-array name="shema_entries" translatable="false">
-        <item>@string/shema_baal_hatanya</item>
-        <item>@string/shema_16_sunset</item>
-        <item>@string/shema_7</item>
-        <item>@string/shema_19</item>
-        <item>@string/shema_120</item>
-        <item>@string/shema_18</item>
-        <item>@string/shema_16</item>
-        <item>@string/shema_96</item>
-        <item>@string/shema_96_zmanis</item>
-        <item>@string/shema_90</item>
-        <item>@string/shema_90_zmanis</item>
-        <item>@string/shema_72</item>
-        <item>@string/shema_72_zmanis</item>
-        <item>@string/shema_mga</item>
         <item>@string/shema_ateret</item>
-        <item>@string/shema_3</item>
+        <item>@string/shema_baal_hatanya</item>
         <item>@string/shema_fixed</item>
         <item>@string/shema_gra</item>
+        <item>@string/shema_mga</item>
+        <item>@string/shema_3</item>
+        <item>@string/shema_7</item>
+        <item>@string/shema_16</item>
+        <item>@string/shema_16_sunset</item>
+        <item>@string/shema_18</item>
+        <item>@string/shema_19_8</item>
+        <item>@string/shema_72</item>
+        <item>@string/shema_72_zmanis</item>
+        <item>@string/shema_90</item>
+        <item>@string/shema_90_zmanis</item>
+        <item>@string/shema_96</item>
+        <item>@string/shema_96_zmanis</item>
+        <item>@string/shema_120</item>
     </string-array>
 
     <string-array name="prayers_values" translatable="false">
-        <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_120</item>
-        <item>@string/opinion_value_96</item>
-        <item>@string/opinion_value_96_zmanis</item>
-        <item>@string/opinion_value_19</item>
-        <item>@string/opinion_value_90</item>
-        <item>@string/opinion_value_90_zmanis</item>
         <item>@string/opinion_value_ateret</item>
-        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_fixed</item>
-        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_gra</item>
         <item>@string/opinion_value_mga</item>
+        <item>@string/opinion_value_2</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19_8</item>
         <item>@string/opinion_value_72</item>
         <item>@string/opinion_value_72_zmanis</item>
-        <item>@string/opinion_value_2</item>
-        <item>@string/opinion_value_gra</item>
+        <item>@string/opinion_value_90</item>
+        <item>@string/opinion_value_90_zmanis</item>
+        <item>@string/opinion_value_96</item>
+        <item>@string/opinion_value_96_zmanis</item>
+        <item>@string/opinion_value_120</item>
     </string-array>
     <string-array name="prayers_entries" translatable="false">
-        <item>@string/prayers_baal_hatanya</item>
-        <item>@string/prayers_120</item>
-        <item>@string/prayers_96</item>
-        <item>@string/prayers_96_zmanis</item>
-        <item>@string/prayers_19</item>
-        <item>@string/prayers_90</item>
-        <item>@string/prayers_90_zmanis</item>
         <item>@string/prayers_ateret</item>
-        <item>@string/prayers_18</item>
+        <item>@string/prayers_baal_hatanya</item>
         <item>@string/prayers_fixed</item>
-        <item>@string/prayers_16</item>
+        <item>@string/prayers_gra</item>
         <item>@string/prayers_mga</item>
+        <item>@string/prayers_2</item>
+        <item>@string/prayers_16</item>
+        <item>@string/prayers_18</item>
+        <item>@string/prayers_19_8</item>
         <item>@string/prayers_72</item>
         <item>@string/prayers_72_zmanis</item>
-        <item>@string/prayers_2</item>
-        <item>@string/prayers_gra</item>
+        <item>@string/prayers_90</item>
+        <item>@string/prayers_90_zmanis</item>
+        <item>@string/prayers_96</item>
+        <item>@string/prayers_96_zmanis</item>
+        <item>@string/prayers_120</item>
     </string-array>
 
     <string-array name="eat_chametz_values" translatable="false">
         <item>@string/opinion_value_baal_hatanya</item>
+        <item>@string/opinion_value_gra</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_72</item>
-        <item>@string/opinion_value_gra</item>
     </string-array>
     <string-array name="eat_chametz_entries" translatable="false">
         <item>@string/eat_chametz_baal_hatanya</item>
+        <item>@string/eat_chametz_gra</item>
         <item>@string/eat_chametz_16</item>
         <item>@string/eat_chametz_72</item>
-        <item>@string/eat_chametz_gra</item>
     </string-array>
 
     <string-array name="burn_chametz_values" translatable="false">
         <item>@string/opinion_value_baal_hatanya</item>
+        <item>@string/opinion_value_gra</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_72</item>
-        <item>@string/opinion_value_gra</item>
     </string-array>
     <string-array name="burn_chametz_entries" translatable="false">
         <item>@string/burn_chametz_baal_hatanya</item>
+        <item>@string/burn_chametz_gra</item>
         <item>@string/burn_chametz_16</item>
         <item>@string/burn_chametz_72</item>
-        <item>@string/burn_chametz_gra</item>
     </string-array>
 
     <string-array name="midday_values" translatable="false">
         <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_solar</item>
         <item>@string/opinion_value_fixed</item>
+        <item>@string/opinion_value_solar</item>
     </string-array>
     <string-array name="midday_entries" translatable="false">
         <item>@string/midday_baal_hatanya</item>
-        <item>@string/midday_summary</item>
         <item>@string/midday_fixed</item>
+        <item>@string/midday_solar</item>
     </string-array>
 
     <string-array name="earliest_mincha_values" translatable="false">
-        <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_default</item>
-        <item>@string/opinion_value_72</item>
-        <item>@string/opinion_value_30</item>
         <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_30</item>
+        <item>@string/opinion_value_72</item>
     </string-array>
     <string-array name="earliest_mincha_entries" translatable="false">
-        <item>@string/earliest_mincha_baal_hatanya</item>
         <item>@string/earliest_mincha_ateret</item>
-        <item>@string/earliest_mincha_summary</item>
-        <item>@string/earliest_mincha_72</item>
-        <item>@string/earliest_mincha_30</item>
+        <item>@string/earliest_mincha_baal_hatanya</item>
+        <item>@string/earliest_mincha_greater</item>
         <item>@string/earliest_mincha_16</item>
+        <item>@string/earliest_mincha_30</item>
+        <item>@string/earliest_mincha_72</item>
     </string-array>
 
     <string-array name="mincha_values" translatable="false">
+        <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_default</item>
-        <item>@string/opinion_value_ateret</item>
-        <item>@string/opinion_value_72</item>
         <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_72</item>
     </string-array>
     <string-array name="mincha_entries" translatable="false">
-        <item>@string/mincha_baal_hatanya</item>
-        <item>@string/mincha_summary</item>
         <item>@string/mincha_ateret</item>
-        <item>@string/mincha_72</item>
+        <item>@string/mincha_baal_hatanya</item>
+        <item>@string/mincha_lesser</item>
         <item>@string/mincha_16</item>
+        <item>@string/mincha_72</item>
     </string-array>
 
     <string-array name="plug_hamincha_values" translatable="false">
-        <item>@string/opinion_value_baal_hatanya</item>
-        <item>@string/opinion_value_16_sunset</item>
-        <item>@string/opinion_value_gra</item>
-        <item>@string/opinion_value_16_alos</item>
         <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_baal_hatanya</item>
+        <item>@string/opinion_value_gra</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_16_alos</item>
+        <item>@string/opinion_value_16_sunset</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19_8</item>
+        <item>@string/opinion_value_26</item>
         <item>@string/opinion_value_60</item>
         <item>@string/opinion_value_72</item>
         <item>@string/opinion_value_72_zmanis</item>
-        <item>@string/opinion_value_16</item>
-        <item>@string/opinion_value_18</item>
         <item>@string/opinion_value_90</item>
         <item>@string/opinion_value_90_zmanis</item>
-        <item>@string/opinion_value_19</item>
         <item>@string/opinion_value_96</item>
         <item>@string/opinion_value_96_zmanis</item>
         <item>@string/opinion_value_120</item>
         <item>@string/opinion_value_120_zmanis</item>
-        <item>@string/opinion_value_26</item>
     </string-array>
     <string-array name="plug_hamincha_entries" translatable="false">
-        <item>@string/plug_hamincha_baal_hatanya</item>
-        <item>@string/plug_hamincha_16_sunset</item>
-        <item>@string/plug_hamincha_gra</item>
-        <item>@string/plug_hamincha_16_alos</item>
         <item>@string/plug_hamincha_ateret</item>
+        <item>@string/plug_hamincha_baal_hatanya</item>
+        <item>@string/plug_hamincha_gra</item>
+        <item>@string/plug_hamincha_16</item>
+        <item>@string/plug_hamincha_16_alos</item>
+        <item>@string/plug_hamincha_16_sunset</item>
+        <item>@string/plug_hamincha_18</item>
+        <item>@string/plug_hamincha_19_8</item>
+        <item>@string/plug_hamincha_26</item>
         <item>@string/plug_hamincha_60</item>
         <item>@string/plug_hamincha_72</item>
         <item>@string/plug_hamincha_72_zmanis</item>
-        <item>@string/plug_hamincha_16</item>
-        <item>@string/plug_hamincha_18</item>
         <item>@string/plug_hamincha_90</item>
         <item>@string/plug_hamincha_90_zmanis</item>
-        <item>@string/plug_hamincha_19</item>
         <item>@string/plug_hamincha_96</item>
         <item>@string/plug_hamincha_96_zmanis</item>
         <item>@string/plug_hamincha_120</item>
         <item>@string/plug_hamincha_120_zmanis</item>
-        <item>@string/plug_hamincha_26</item>
     </string-array>
 
     <string-array name="sunset_values" translatable="false">
-        <item>@string/opinion_value_sea</item>
         <item>@string/opinion_value_elevation</item>
+        <item>@string/opinion_value_sea</item>
     </string-array>
     <string-array name="sunset_entries" translatable="false">
+        <item>@string/sunset_elevated</item>
         <item>@string/sunset_sea</item>
-        <item>@string/sunset_summary</item>
     </string-array>
 
     <string-array name="twilight_values" translatable="false">
+        <item>@string/opinion_value_2_stars</item>
         <item>@string/opinion_value_7_083</item>
         <item>@string/opinion_value_7_083_zmanis</item>
-        <item>@string/opinion_value_2_stars</item>
         <item>@string/opinion_value_13</item>
         <item>@string/opinion_value_58</item>
     </string-array>
     <string-array name="twilight_entries" translatable="false">
+        <item>@string/twilight_2stars</item>
         <item>@string/twilight_7_083</item>
         <item>@string/twilight_7_083_zmanis</item>
-        <item>@string/twilight_2stars</item>
         <item>@string/twilight_13</item>
         <item>@string/twilight_58</item>
     </string-array>
 
     <string-array name="nightfall_values" translatable="false">
+        <item>@string/opinion_value_ateret</item>
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_3_65</item>
         <item>@string/opinion_value_3_676</item>
@@ -320,22 +322,22 @@
         <item>@string/opinion_value_5_95</item>
         <item>@string/opinion_value_7_083</item>
         <item>@string/opinion_value_8</item>
-        <item>@string/opinion_value_ateret</item>
+        <item>@string/opinion_value_16</item>
+        <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19_8</item>
+        <item>@string/opinion_value_26</item>
         <item>@string/opinion_value_60</item>
         <item>@string/opinion_value_72</item>
         <item>@string/opinion_value_72_zmanis</item>
-        <item>@string/opinion_value_16</item>
-        <item>@string/opinion_value_18</item>
         <item>@string/opinion_value_90</item>
         <item>@string/opinion_value_90_zmanis</item>
-        <item>@string/opinion_value_19</item>
         <item>@string/opinion_value_96</item>
         <item>@string/opinion_value_96_zmanis</item>
         <item>@string/opinion_value_120</item>
         <item>@string/opinion_value_120_zmanis</item>
-        <item>@string/opinion_value_26</item>
     </string-array>
     <string-array name="nightfall_entries" translatable="false">
+        <item>@string/nightfall_ateret</item>
         <item>@string/nightfall_baal_hatanya</item>
         <item>@string/nightfall_3_65</item>
         <item>@string/nightfall_3_676</item>
@@ -348,31 +350,30 @@
         <item>@string/nightfall_5_95</item>
         <item>@string/nightfall_7</item>
         <item>@string/nightfall_8</item>
-        <item>@string/nightfall_ateret</item>
+        <item>@string/nightfall_16</item>
+        <item>@string/nightfall_18</item>
+        <item>@string/nightfall_19_8</item>
+        <item>@string/nightfall_26</item>
         <item>@string/nightfall_60</item>
         <item>@string/nightfall_72</item>
         <item>@string/nightfall_72_zmanis</item>
-        <item>@string/nightfall_16</item>
-        <item>@string/nightfall_18</item>
         <item>@string/nightfall_90</item>
         <item>@string/nightfall_90_zmanis</item>
-        <item>@string/nightfall_19</item>
         <item>@string/nightfall_96</item>
         <item>@string/nightfall_96_zmanis</item>
         <item>@string/nightfall_120</item>
         <item>@string/nightfall_120_zmanis</item>
-        <item>@string/nightfall_26</item>
     </string-array>
 
     <string-array name="midnight_values" translatable="false">
         <item>@string/opinion_value_solar</item>
-        <item>@string/opinion_value_12</item>
         <item>@string/opinion_value_6</item>
+        <item>@string/opinion_value_12</item>
     </string-array>
     <string-array name="midnight_entries" translatable="false">
-        <item>@string/midnight_summary</item>
-        <item>@string/midnight_12</item>
+        <item>@string/midnight_solar</item>
         <item>@string/midnight_6</item>
+        <item>@string/midnight_12</item>
     </string-array>
 
     <string-array name="guards_values" translatable="false">

@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">Dzień jest od świtu 16,1° do poziomu morza słońca</string>
     <string name="opinion_16_night">Dzień jest od świtu 16,1° do zmroku</string>
     <string name="opinion_26">Dzień jest 26° poniżej wschodem słońca / zachodzie słońca</string>
-    <string name="opinion_19">Dzień jest 19,8° poniżej wschodem słońca / zachodzie słońca</string>
+    <string name="opinion_19_8">Dzień jest 19,8° poniżej wschodem słońca / zachodzie słońca</string>
     <string name="opinion_18">Dzień jest 18° poniżej wschodem słońca / zachodzie słońca</string>
     <string name="opinion_60">Dzień jest 60 minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_72">Dzień jest 72 minut przed wschodem słońca / po zachodzie słońca</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Najwcześniejsze <i>tallis</i> i <i>tefilin</i> (משיכיר)</string>
     <string name="tallis_only">Najwcześniejsze <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Słońce jest 11,5° poniżej horyzontu</string>
+    <string name="tallis_11_5">Słońce jest 11,5° poniżej horyzontu</string>
     <string name="tallis_11">Słońce jest 11° poniżej horyzontu</string>
     <string name="tallis_10">Słońce jest 10,2° poniżej horyzontu</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Wschód słońca</string>
-    <string name="sunrise_summary">Skorygowane o elewacji</string>
+    <string name="sunrise_elevated">Skorygowane o elewacji</string>
     <string name="sunrise_sea">Na poziomie morza</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Południe</string>
-    <string name="midday_summary">Słoneczne południe</string>
+    <string name="midday_solar">Słoneczne południe</string>
     <string name="midday_fixed">Południe skorygowane o lokalnym szerokości geograficznej</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Najwcześniejsze modlitwy popołudniowe</string>
-    <string name="earliest_mincha_summary">Większy <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Większy <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minut po południa</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Modły popołudniowe</string>
-    <string name="mincha_summary">Mniejszy <i>mincha</i></string>
+    <string name="mincha_lesser">Mniejszy <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Północ</string>
-    <string name="midnight_summary">Słoneczne północ</string>
+    <string name="midnight_solar">Słoneczne północ</string>
     <string name="midnight_12">12 godziny po południa</string>
     <string name="midnight_6">6 godziny po zmrok</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Narodziny nowego księżyca (מולד)</string>
-    <string name="molad_summary">Średnia nowego księżyca</string>
+    <string name="molad_average">Średnia nowego księżyca</string>
     <string name="levana_earliest">Najwcześniej uświęcenie nowiu (קידוש לבנה)</string>
     <string name="levana_3">3 dni po nowego księżyca</string>
     <string name="levana_7">7 dni po nowego księżyca</string>

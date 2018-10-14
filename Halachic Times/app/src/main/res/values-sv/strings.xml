@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">Dag är från gryning 16,1° till havsnivå solnedgången</string>
     <string name="opinion_16_night">Dag är från gryning 16,1° till kvällen</string>
     <string name="opinion_26">Dag är 26° under oluppgången / solnedgången</string>
-    <string name="opinion_19">Dag är 19,8° under oluppgången / solnedgången</string>
+    <string name="opinion_19_8">Dag är 19,8° under oluppgången / solnedgången</string>
     <string name="opinion_18">Dag är 18° under oluppgången / solnedgången</string>
     <string name="opinion_60">Dag är 60 minuter före soluppgången / efter solnedgången</string>
     <string name="opinion_72">Dag är 72 minuter före soluppgången / efter solnedgången</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Tidigast <i>tallis</i> och <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Tidigast <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Solen är 11,5° under horisonten</string>
+    <string name="tallis_11_5">Solen är 11,5° under horisonten</string>
     <string name="tallis_11">Solen är 11° under horisonten</string>
     <string name="tallis_10">Solen är 10,2° under horisonten</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Soluppgången</string>
-    <string name="sunrise_summary">Justerat för upphöjande</string>
+    <string name="sunrise_elevated">Justerat för upphöjande</string>
     <string name="sunrise_sea">På havsnivå</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Middag</string>
-    <string name="midday_summary">Solens middagstid</string>
+    <string name="midday_solar">Solens middagstid</string>
     <string name="midday_fixed">Middagstid justerat för den lokala latitud</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Tidigast eftermiddagens böner</string>
-    <string name="earliest_mincha_summary">Större <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Större <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuter efter middag</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Eftermiddagens böner</string>
-    <string name="mincha_summary">Mindre <i>mincha</i></string>
+    <string name="mincha_lesser">Mindre <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Midnatt</string>
-    <string name="midnight_summary">Solens midnatt</string>
+    <string name="midnight_solar">Solens midnatt</string>
     <string name="midnight_12">12 timmar efter middag</string>
     <string name="midnight_6">6 timmar efter nattens inbrott</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Födelse av nymånen (מולד)</string>
-    <string name="molad_summary">Genomsnitt nymånen</string>
+    <string name="molad_average">Genomsnitt nymånen</string>
     <string name="levana_earliest">Tidigast helgelse av den nya månen (קידוש לבנה)</string>
     <string name="levana_3">3 dagar efter den nymånen</string>
     <string name="levana_7">7 dagar efter den nymånen</string>

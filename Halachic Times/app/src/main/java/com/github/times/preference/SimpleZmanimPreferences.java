@@ -718,7 +718,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_16_1_SUNSET = res.getString(R.string.opinion_value_16_sunset);
         OPINION_168 = res.getString(R.string.opinion_value_168);
         OPINION_18 = res.getString(R.string.opinion_value_18);
-        OPINION_19_8 = res.getString(R.string.opinion_value_19);
+        OPINION_19_8 = res.getString(R.string.opinion_value_19_8);
         OPINION_2 = res.getString(R.string.opinion_value_2);
         OPINION_2_STARS = res.getString(R.string.opinion_value_2_stars);
         OPINION_26 = res.getString(R.string.opinion_value_26);

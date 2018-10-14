@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">Nap-tól hajnal 16,1° tengerszint napnyugta</string>
     <string name="opinion_16_night">Nap-tól hajnal 16,1° alkony</string>
     <string name="opinion_26">Nap 26° alábbi napkelte / napnyugta</string>
-    <string name="opinion_19">Nap 19,8° alábbi napkelte / napnyugta</string>
+    <string name="opinion_19_8">Nap 19,8° alábbi napkelte / napnyugta</string>
     <string name="opinion_18">Nap 18° alábbi napkelte / napnyugta</string>
     <string name="opinion_60">Nap 60 perc napkelte előtt / napnyugta után</string>
     <string name="opinion_72">Nap 72 perc napkelte előtt / napnyugta után</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Legkorábbi <i>tallis</i> és <i>tfilint</i> (משיכיר)</string>
     <string name="tallis_only">Legkorábbi <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Nap 11,5° alatt horizont</string>
+    <string name="tallis_11_5">Nap 11,5° alatt horizont</string>
     <string name="tallis_11">Nap 11° alatt horizont</string>
     <string name="tallis_10">Nap 10,2° alatt horizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Napkelte</string>
-    <string name="sunrise_summary">Igazított magaslati</string>
+    <string name="sunrise_elevated">Igazított magaslati</string>
     <string name="sunrise_sea">A tengerszint</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Dél</string>
-    <string name="midday_summary">Szolár délig</string>
+    <string name="midday_solar">Szolár délig</string>
     <string name="midday_fixed">Noon igazítani a helyi szélességi</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Legkorábbi délutáni ima</string>
-    <string name="earliest_mincha_summary">Nagyobb <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Nagyobb <i>mincha</i></string>
     <string name="earliest_mincha_30">30 perc azután dél</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Délutáni ima</string>
-    <string name="mincha_summary">Kisebb <i>mincha</i></string>
+    <string name="mincha_lesser">Kisebb <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Éjfél</string>
-    <string name="midnight_summary">Szolár éjfél</string>
+    <string name="midnight_solar">Szolár éjfél</string>
     <string name="midnight_12">12 órával azután dél</string>
     <string name="midnight_6">6 órával azután alkony</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Születése újhold (מולד)</string>
-    <string name="molad_summary">Átlagos újhold</string>
+    <string name="molad_average">Átlagos újhold</string>
     <string name="levana_earliest">Legkorábbi megszentelése újhold (קידוש לבנה)</string>
     <string name="levana_3">3 nap után a újhold</string>
     <string name="levana_7">7 nap után a újhold</string>

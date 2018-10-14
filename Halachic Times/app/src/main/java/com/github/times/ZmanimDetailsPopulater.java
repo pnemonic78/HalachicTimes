@@ -158,7 +158,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis19Point8Degrees();
-        title = R.string.hour_19;
+        title = R.string.hour_19_8;
         adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis26Degrees();
@@ -216,7 +216,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getAlos19Point8Degrees();
-        title = R.string.dawn_19;
+        title = R.string.dawn_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getAlos120();
@@ -286,7 +286,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMisheyakir11Point5Degrees();
-        title = R.string.tallis_summary;
+        title = R.string.tallis_11_5;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -300,7 +300,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSunrise();
-        title = R.string.sunrise_summary;
+        title = R.string.sunrise_elevated;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -322,7 +322,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanShmaMGA19Point8Degrees();
-        title = R.string.shema_19;
+        title = R.string.shema_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanShmaMGA120Minutes();
@@ -404,7 +404,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanTfilaMGA19Point8Degrees();
-        title = R.string.prayers_19;
+        title = R.string.prayers_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanTfilaMGA90Minutes();
@@ -466,7 +466,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getChatzos();
-        title = R.string.midday_summary;
+        title = R.string.midday_solar;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -496,7 +496,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMinchaGedola();
-        title = R.string.earliest_mincha_summary;
+        title = R.string.earliest_mincha_greater;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -522,7 +522,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMinchaKetana();
-        title = R.string.mincha_summary;
+        title = R.string.mincha_lesser;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -576,7 +576,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getPlagHamincha19Point8Degrees();
-        title = R.string.plug_hamincha_19;
+        title = R.string.plug_hamincha_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getPlagHamincha96Minutes();
@@ -621,7 +621,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         date = cal.getSunset();
         if (date != null) {
-            title = R.string.sunset_summary;
+            title = R.string.sunset_elevated;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
     }
@@ -709,7 +709,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         date = cal.getTzais19Point8Degrees();
         if (date != null) {
-            title = R.string.nightfall_19;
+            title = R.string.nightfall_19_8;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
 
@@ -849,7 +849,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
 
         date = cal.getSolarMidnight();
-        title = R.string.midnight_summary;
+        title = R.string.midnight_solar;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 

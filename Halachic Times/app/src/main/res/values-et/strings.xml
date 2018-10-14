@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">Päeval on ära koidust 16,1° kuni merepinnast loojang</string>
     <string name="opinion_16_night">Päeval on ära koidust 16,1° kuni öö</string>
     <string name="opinion_26">Päeval on 26° alla päikese tõusu / loojangu</string>
-    <string name="opinion_19">Päeval on 19,8° alla päikese tõusu / loojangu</string>
+    <string name="opinion_19_8">Päeval on 19,8° alla päikese tõusu / loojangu</string>
     <string name="opinion_18">Päeval on 18° alla päikese tõusu / loojangu</string>
     <string name="opinion_60">Päeval on 60 minut enne päikesetõusu / pärast päikeseloojangut</string>
     <string name="opinion_72">Päeval on 72 minut enne päikesetõusu / pärast päikeseloojangut</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Varaseim <i>tallis</i> ja <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Varaseim <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Päike on 11,5° alla horisonti</string>
+    <string name="tallis_11_5">Päike on 11,5° alla horisonti</string>
     <string name="tallis_11">Päike on 11° alla horisonti</string>
     <string name="tallis_10">Päike on 10,2° alla horisonti</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Päikesetõus</string>
-    <string name="sunrise_summary">Korrigeeritud kõrguse</string>
+    <string name="sunrise_elevated">Korrigeeritud kõrguse</string>
     <string name="sunrise_sea">Tasemel regioon</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Keskpäeva</string>
-    <string name="midday_summary">Päikese keskpäeval</string>
+    <string name="midday_solar">Päikese keskpäeval</string>
     <string name="midday_fixed">Keskpäev korrigeeritud kohalike laius</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Varaseim pärastlõunal palvetes</string>
-    <string name="earliest_mincha_summary">Suurem <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Suurem <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minutit pärast keskpäeva</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Pärastlõunal palvetes</string>
-    <string name="mincha_summary">Väike <i>mincha</i></string>
+    <string name="mincha_lesser">Väike <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Kesköö</string>
-    <string name="midnight_summary">Päikese keskööd</string>
+    <string name="midnight_solar">Päikese keskööd</string>
     <string name="midnight_12">12 tundi pärast keskpäeva</string>
     <string name="midnight_6">6 tundi pärast videvik</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Sündi noorkuu (מולד)</string>
-    <string name="molad_summary">Keskmine noorkuu</string>
+    <string name="molad_average">Keskmine noorkuu</string>
     <string name="levana_earliest">Varaseim pühitsemise noorkuu (קידוש לבנה)</string>
     <string name="levana_3">3 päeva pärast noorkuu</string>
     <string name="levana_7">7 päeva pärast noorkuu</string>

@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">Tag vom Morgengrauen 16,1° auf dem Meeresspiegel Sonnenuntergang</string>
     <string name="opinion_16_night">Tag vom morgengrauen 16,1° auf nacht</string>
     <string name="opinion_26">Tag ist 26° unter Sonnenaufgang / Sonnenuntergang</string>
-    <string name="opinion_19">Tag ist 19,8° unter Sonnenaufgang / Sonnenuntergang</string>
+    <string name="opinion_19_8">Tag ist 19,8° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_18">Tag ist 18° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_60">Tag ist 60 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
     <string name="opinion_72">Tag ist 72 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Früheste <i>tallis</i> und <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Früheste <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Sonne ist 11,5° unter dem Horizont</string>
+    <string name="tallis_11_5">Sonne ist 11,5° unter dem Horizont</string>
     <string name="tallis_11">Sonne ist 11° unter dem Horizont</string>
     <string name="tallis_10">Sonne ist 10,2° unter dem Horizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Sonnenaufgang</string>
-    <string name="sunrise_summary">Höhenverstellbar</string>
+    <string name="sunrise_elevated">Höhenverstellbar</string>
     <string name="sunrise_sea">Auf Meereshöhe</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Mittag</string>
-    <string name="midday_summary">Solar Mittag</string>
+    <string name="midday_solar">Solar Mittag</string>
     <string name="midday_fixed">Mittag für die lokale Breitengrad eingestellt</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Frühestenachmittagsgebet</string>
-    <string name="earliest_mincha_summary">Größer <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Größer <i>mincha</i></string>
     <string name="earliest_mincha_30">30 Minuten nach der Mittag</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Nachmittagsgebet</string>
-    <string name="mincha_summary">Weniger <i>mincha</i></string>
+    <string name="mincha_lesser">Weniger <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Mitternacht</string>
-    <string name="midnight_summary">Solar Mitternacht</string>
+    <string name="midnight_solar">Solar Mitternacht</string>
     <string name="midnight_12">12 stunden nach der Mittag</string>
     <string name="midnight_6">6 stunden nach Einbruch der Nacht</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Geburt der Neumond (מולד)</string>
-    <string name="molad_summary">Durchschnittliche Neumond</string>
+    <string name="molad_average">Durchschnittliche Neumond</string>
     <string name="levana_earliest">Frühest Segen des Neumondes (קידוש לבנה)</string>
     <string name="levana_3">3 Tage nach der Neumond</string>
     <string name="levana_7">7 Tage nach der Neumond</string>

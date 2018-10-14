@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">Ziua este din zori 16,1° la nivelul mării apus de soare</string>
     <string name="opinion_16_night">Ziua este din zori 16,1° la căderea nopții</string>
     <string name="opinion_26">Ziua este 26° sub răsărit / apus</string>
-    <string name="opinion_19">Ziua este 19,8° sub răsărit / apus</string>
+    <string name="opinion_19_8">Ziua este 19,8° sub răsărit / apus</string>
     <string name="opinion_18">Ziua este 18° sub răsărit / apus</string>
     <string name="opinion_60">Ziua este 60 minute înainte de răsărit / după apus</string>
     <string name="opinion_72">Ziua este 72 minute înainte de răsărit / după apus</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Cazarea cel devreme <i>tallis</i> și <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Cazarea cel devreme <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Soarele este de 11,5° sub orizont</string>
+    <string name="tallis_11_5">Soarele este de 11,5° sub orizont</string>
     <string name="tallis_11">Soarele este de 11° sub orizont</string>
     <string name="tallis_10">Soarele este de 10,2° sub orizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Răsărit</string>
-    <string name="sunrise_summary">Ajustată pentru elevație</string>
+    <string name="sunrise_elevated">Ajustată pentru elevație</string>
     <string name="sunrise_sea">La nivelul mării</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Amiază</string>
-    <string name="midday_summary">Miezul zilei</string>
+    <string name="midday_solar">Miezul zilei</string>
     <string name="midday_fixed">Amiază ajustate pentru latitudine locală</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Mai timpurii de după-amiază rugăciunile</string>
-    <string name="earliest_mincha_summary"><i>Mincha</i> mai mare</string>
+    <string name="earliest_mincha_greater"><i>Mincha</i> mai mare</string>
     <string name="earliest_mincha_30">30 minute după amiază</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">De după-amiază rugăciunile</string>
-    <string name="mincha_summary"><i>Mincha</i> mai mică</string>
+    <string name="mincha_lesser"><i>Mincha</i> mai mică</string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Miezul nopții</string>
-    <string name="midnight_summary">Solar miezul nopții</string>
+    <string name="midnight_solar">Solar miezul nopții</string>
     <string name="midnight_12">12 ore după amiază</string>
     <string name="midnight_6">6 ore după căderea nopții</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Nașterea din lună nouă (מולד)</string>
-    <string name="molad_summary">Medie lună nouă</string>
+    <string name="molad_average">Medie lună nouă</string>
     <string name="levana_earliest">Mai timpurii sfințire a lunii noi (קידוש לבנה)</string>
     <string name="levana_3">3 zile după lună nouă</string>
     <string name="levana_7">7 zile după lună nouă</string>

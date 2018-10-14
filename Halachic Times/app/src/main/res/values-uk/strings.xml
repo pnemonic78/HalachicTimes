@@ -11,7 +11,7 @@
     <string name="opinion_16_sunset">День від світанку 16,1° до заходу рівнем моря</string>
     <string name="opinion_16_night">День від світанку 16,1° до настання ночі</string>
     <string name="opinion_26">День 26° нижче схід / захід</string>
-    <string name="opinion_19">День 19,8° нижче схід / захід</string>
+    <string name="opinion_19_8">День 19,8° нижче схід / захід</string>
     <string name="opinion_18">День 18° нижче схід / захід</string>
     <string name="opinion_60">День 60 мінут перед сходом сонця / після заходу сонця</string>
     <string name="opinion_72">День 72 мінут перед сходом сонця / після заходу сонця</string>
@@ -35,13 +35,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Перший <i>талес</i> і <i>тфілін</i> (мішякір)</string>
     <string name="tallis_only">Перший <i>талес</i> (мішякір)</string>
-    <string name="tallis_summary">Сонце 11,5° нижче обрію</string>
+    <string name="tallis_11_5">Сонце 11,5° нижче обрію</string>
     <string name="tallis_11">Сонце 11° нижче обрію</string>
     <string name="tallis_10">Сонце 10,2° нижче обрію</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Схід сонця</string>
-    <string name="sunrise_summary">З поправкою на висоті</string>
+    <string name="sunrise_elevated">З поправкою на висоті</string>
     <string name="sunrise_sea">На рівні моря</string>
 
     <!-- Latest shema -->
@@ -57,17 +57,17 @@
 
     <!-- Midday -->
     <string name="midday">Полудень</string>
-    <string name="midday_summary">Апогей</string>
+    <string name="midday_solar">Апогей</string>
     <string name="midday_fixed">Полудень з поправкою на місцевій широти</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Перший день молитви</string>
-    <string name="earliest_mincha_summary">Великі <i>мінха</i></string>
+    <string name="earliest_mincha_greater">Великі <i>мінха</i></string>
     <string name="earliest_mincha_30">30 мінут після полудня</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">День молитви</string>
-    <string name="mincha_summary">Менша <i>мінха</i></string>
+    <string name="mincha_lesser">Менша <i>мінха</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Плаг мінха</i></string>
@@ -132,7 +132,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Опівночі</string>
-    <string name="midnight_summary">Сонячна опівночі</string>
+    <string name="midnight_solar">Сонячна опівночі</string>
     <string name="midnight_12">12 годин після полудень</string>
     <string name="midnight_6">6 годин після настання ночі</string>
 
@@ -150,7 +150,7 @@
 
     <!-- Moon -->
     <string name="molad">Народження нового місяця (מולד)</string>
-    <string name="molad_summary">Середня нового місяця</string>
+    <string name="molad_average">Середня нового місяця</string>
     <string name="levana_earliest">Найстарші освячення нового місяця (קידוש לבנה)</string>
     <string name="levana_3">3 дні після нового місяця</string>
     <string name="levana_7">7 дні після нового місяця</string>
