@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="4dp"
-        tools:text="@string/design_time"/>
+        tools:text="@tools:sample/date/hhmm"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -28,7 +28,7 @@
             style="@style/AppWidget.Title.Light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@string/design_title"/>
+            tools:text="@tools:sample/lorem"/>
     </LinearLayout>
 
 </LinearLayout>
