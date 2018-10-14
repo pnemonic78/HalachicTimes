@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">День від світанку 16,1° до заходу рівнем моря</string>
     <string name="opinion_16_night">День від світанку 16,1° до настання ночі</string>
     <string name="opinion_26">День 26° нижче схід / захід</string>
+    <string name="opinion_19">День 19° нижче схід / захід</string>
     <string name="opinion_19_8">День 19,8° нижче схід / захід</string>
     <string name="opinion_18">День 18° нижче схід / захід</string>
     <string name="opinion_60">День 60 мінут перед сходом сонця / після заходу сонця</string>

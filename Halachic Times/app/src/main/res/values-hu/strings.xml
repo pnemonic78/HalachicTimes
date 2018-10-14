@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Nap-tól hajnal 16,1° tengerszint napnyugta</string>
     <string name="opinion_16_night">Nap-tól hajnal 16,1° alkony</string>
     <string name="opinion_26">Nap 26° alábbi napkelte / napnyugta</string>
+    <string name="opinion_19">Nap 19° alábbi napkelte / napnyugta</string>
     <string name="opinion_19_8">Nap 19,8° alábbi napkelte / napnyugta</string>
     <string name="opinion_18">Nap 18° alábbi napkelte / napnyugta</string>
     <string name="opinion_60">Nap 60 perc napkelte előtt / napnyugta után</string>

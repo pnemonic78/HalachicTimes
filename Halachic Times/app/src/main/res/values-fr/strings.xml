@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Jour est de l\'aube 16,1° à niveau de la mer coucher de soleil</string>
     <string name="opinion_16_night">Jour est de l\'aube 16,1° à tombée de la nuit</string>
     <string name="opinion_26">Jour est 26° sous de lever / coucher du soleil</string>
+    <string name="opinion_19">Jour est 19° sous de lever / coucher du soleil</string>
     <string name="opinion_19_8">Jour est 19,8° sous de lever / coucher du soleil</string>
     <string name="opinion_18">Jour est 18° sous de lever / coucher du soleil</string>
     <string name="opinion_60">Jour est 60 minutes avant le lever / après le coucher du soleil</string>

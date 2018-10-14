@@ -44,6 +44,7 @@
         <item>@string/opinion_value_baal_hatanya</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_18</item>
+        <item>@string/opinion_value_19</item>
         <item>@string/opinion_value_19_8</item>
         <item>@string/opinion_value_26</item>
         <item>@string/opinion_value_60</item>
@@ -60,7 +61,7 @@
         <item>@string/dawn_baal_hatanya</item>
         <item>@string/dawn_16</item>
         <item>@string/dawn_18</item>
-        <item>@string/dawn_19_8</item>
+        <item>@string/dawn_19</item>
         <item>@string/dawn_19_8</item>
         <item>@string/dawn_26</item>
         <item>@string/dawn_60</item>

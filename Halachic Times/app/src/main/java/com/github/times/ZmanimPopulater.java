@@ -121,6 +121,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_16_1_SUNSET = ZmanimPreferences.Values.OPINION_16_1_SUNSET;
     protected static final String OPINION_168 = ZmanimPreferences.Values.OPINION_168;
     protected static final String OPINION_18 = ZmanimPreferences.Values.OPINION_18;
+    protected static final String OPINION_19 = ZmanimPreferences.Values.OPINION_19;
     protected static final String OPINION_19_8 = ZmanimPreferences.Values.OPINION_19_8;
     protected static final String OPINION_2 = ZmanimPreferences.Values.OPINION_2;
     protected static final String OPINION_2_STARS = ZmanimPreferences.Values.OPINION_2_STARS;
@@ -331,7 +332,10 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         }
 
         opinion = settings.getDawn();
-        if (OPINION_19_8.equals(opinion)) {
+        if (OPINION_19.equals(opinion)) {
+            date = cal.getAlos19Degrees();
+            summary = R.string.dawn_19;
+        } else if (OPINION_19_8.equals(opinion)) {
             date = cal.getAlos19Point8Degrees();
             summary = R.string.dawn_19_8;
         } else if (OPINION_120.equals(opinion)) {

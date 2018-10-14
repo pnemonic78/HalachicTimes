@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Dag är från gryning 16,1° till havsnivå solnedgången</string>
     <string name="opinion_16_night">Dag är från gryning 16,1° till kvällen</string>
     <string name="opinion_26">Dag är 26° under oluppgången / solnedgången</string>
+    <string name="opinion_19">Dag är 19° under oluppgången / solnedgången</string>
     <string name="opinion_19_8">Dag är 19,8° under oluppgången / solnedgången</string>
     <string name="opinion_18">Dag är 18° under oluppgången / solnedgången</string>
     <string name="opinion_60">Dag är 60 minuter före soluppgången / efter solnedgången</string>

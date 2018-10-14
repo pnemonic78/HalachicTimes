@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Dag er fra daggry 16,1° til havoverfladen solnedgang</string>
     <string name="opinion_16_night">Dag er fra daggry 16,1° til mřrkets frembrud</string>
     <string name="opinion_26">Dag er 26° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_19">Dag er 19° nedenfor solopgang / solnedgang</string>
     <string name="opinion_19_8">Dag er 19,8° nedenfor solopgang / solnedgang</string>
     <string name="opinion_18">Dag er 18° nedenfor solopgang / solnedgang</string>
     <string name="opinion_60">Dag er 60 minutter før solopgang / efter solnedgang</string>

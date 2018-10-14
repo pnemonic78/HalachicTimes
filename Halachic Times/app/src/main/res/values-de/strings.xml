@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Tag vom Morgengrauen 16,1° auf dem Meeresspiegel Sonnenuntergang</string>
     <string name="opinion_16_night">Tag vom morgengrauen 16,1° auf nacht</string>
     <string name="opinion_26">Tag ist 26° unter Sonnenaufgang / Sonnenuntergang</string>
+    <string name="opinion_19">Tag ist 19° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_19_8">Tag ist 19,8° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_18">Tag ist 18° unter Sonnenaufgang / Sonnenuntergang</string>
     <string name="opinion_60">Tag ist 60 Minuten vor Sonnenaufgang / nach Sonnenuntergang</string>

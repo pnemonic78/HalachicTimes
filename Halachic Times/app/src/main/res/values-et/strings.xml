@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Päeval on ära koidust 16,1° kuni merepinnast loojang</string>
     <string name="opinion_16_night">Päeval on ära koidust 16,1° kuni öö</string>
     <string name="opinion_26">Päeval on 26° alla päikese tõusu / loojangu</string>
+    <string name="opinion_19">Päeval on 19° alla päikese tõusu / loojangu</string>
     <string name="opinion_19_8">Päeval on 19,8° alla päikese tõusu / loojangu</string>
     <string name="opinion_18">Päeval on 18° alla päikese tõusu / loojangu</string>
     <string name="opinion_60">Päeval on 60 minut enne päikesetõusu / pärast päikeseloojangut</string>

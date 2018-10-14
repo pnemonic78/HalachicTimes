@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">День с 16,1° рассвета до заката на уровне моря</string>
     <string name="opinion_16_night">День с 16,1°  рассвета до темноты</string>
     <string name="opinion_26">День 26° ниже восхода / заката</string>
+    <string name="opinion_19">День 19° ниже восхода / заката</string>
     <string name="opinion_19_8">День 19,8° ниже восхода / заката</string>
     <string name="opinion_18">День 18° ниже восхода / заката</string>
     <string name="opinion_60">День 60 минут до восхода / после заката</string>

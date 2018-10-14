@@ -215,6 +215,10 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         title = R.string.dawn_baal_hatanya;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
+        date = cal.getAlos19Degrees();
+        title = R.string.dawn_19;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getAlos19Point8Degrees();
         title = R.string.dawn_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);

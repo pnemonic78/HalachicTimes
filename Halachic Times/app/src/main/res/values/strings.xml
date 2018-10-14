@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
     <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
     <string name="opinion_26">Day is 26° below sunrise / sunset</string>
+    <string name="opinion_19">Day is 19° below sunrise / sunset</string>
     <string name="opinion_19_8">Day is 19.8° below sunrise / sunset</string>
     <string name="opinion_18">Day is 18° below sunrise / sunset</string>
     <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
@@ -51,6 +52,7 @@
 
     <!-- Dawn -->
     <string name="dawn">Dawn</string>
+    <string name="dawn_19" translatable="false">@string/opinion_19</string>
     <string name="dawn_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="dawn_120" translatable="false">@string/opinion_120</string>
     <string name="dawn_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>

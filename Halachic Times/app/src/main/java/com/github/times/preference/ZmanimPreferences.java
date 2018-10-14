@@ -144,6 +144,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
         public static String OPINION_16_1;
         public static String OPINION_168;
         public static String OPINION_18;
+        public static String OPINION_19;
         public static String OPINION_19_8;
         public static String OPINION_2_STARS;
         public static String OPINION_2;

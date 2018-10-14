@@ -11,6 +11,7 @@
     <string name="opinion_16_sunset">Dag is van dageraad 16,1° tot zeeniveau zonsondergang</string>
     <string name="opinion_16_night">Dag is van dageraad 16,1° tot vallen van de avond</string>
     <string name="opinion_26">Dag is 26° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_19">Dag is 19° onder zonsopgang / zonsondergang</string>
     <string name="opinion_19_8">Dag is 19,8° onder zonsopgang / zonsondergang</string>
     <string name="opinion_18">Dag is 18° onder zonsopgang / zonsondergang</string>
     <string name="opinion_60">Dag is 60 minuten vóór zonsopgang / na zonsondergang</string>
