@@ -16,6 +16,7 @@
 package com.github.times.preference;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -30,10 +31,14 @@ import com.github.util.LocaleUtils;
 
 import java.util.Locale;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import static android.content.Intent.ACTION_LOCALE_CHANGED;
 import static android.text.TextUtils.isEmpty;
 import static com.github.app.ActivityUtils.restartActivity;
 import static com.github.preference.LocalePreferences.KEY_LOCALE;
 import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
+import static com.github.times.location.LocationPreferences.EXTRA_LOCALE;
 import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
@@ -68,8 +73,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
         String key = preference.getKey();
         if (KEY_LOCALE.equals(key) && (localePreference != null)) {
-            // Restart the activity to refresh views.
-            restartActivity(getActivity());
+            notifyConfigurationChanged(localePreference.getValue());
         } else if (KEY_EMPHASIS_SCALE.equals(key)) {
             notifyAppWidgetViewDataChanged(getActivity());
         }
@@ -120,5 +124,20 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimWidget.class);
         AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
         AppWidgetUtils.notifyAppWidgetsUpdate(context, ClockWidget.class);
+    }
+
+    private void notifyConfigurationChanged(String newLocale) {
+        final Context context = getActivity();
+
+        Locale locale = LocaleUtils.parseLocale(newLocale);
+        LocaleUtils.applyLocale(context.getApplicationContext(), locale);
+
+        Intent notification = new Intent(ACTION_LOCALE_CHANGED);
+        notification.setPackage(context.getPackageName());
+        notification.putExtra(EXTRA_LOCALE, newLocale);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(notification);
+
+        // Restart the activity to refresh views.
+        restartActivity(getActivity());
     }
 }
