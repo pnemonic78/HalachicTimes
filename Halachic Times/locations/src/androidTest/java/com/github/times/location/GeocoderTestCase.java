@@ -17,7 +17,6 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 
 import com.github.times.location.bing.BingGeocoder;
@@ -287,19 +286,16 @@ public class GeocoderTestCase {
 
     /**
      * Test internal address geocoder.
-     *
-     * @throws Exception if an error occurs.
      */
     @Test
-    public void testInrernalGeocoderAddress() throws Exception {
+    public void testInternalGeocoderAddress() {
         final Context context = getContext();
         assertNotNull(context);
 
-        Geocoder geocoder = new Geocoder(context);
         int maxResults = 5;
 
         // Bar Yochai
-        List<Address> results = geocoder.getFromLocation(32.99505, 35.44968, maxResults);
+        List<Address> results = createInternalGeocoderAddresses();
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
@@ -309,7 +305,77 @@ public class GeocoderTestCase {
         assertFalse(address instanceof ZmanimAddress);
         assertEquals(32.99505, address.getLatitude(), DELTA);
         assertEquals(35.44968, address.getLongitude(), DELTA);
-        ZmanimAddress zmanimAddress =  new ZmanimAddress(address);
+        ZmanimAddress zmanimAddress = new ZmanimAddress(address);
         assertEquals("331, Bar Yohai, Tzfat, North District, Israel", zmanimAddress.getFormatted());
+    }
+
+    private List<Address> createInternalGeocoderAddresses() {
+        List<Address> results = new ArrayList<>(5);
+        Address address;
+        Locale locale = Locale.US;
+
+        address = new Address(locale);
+        address.setAddressLine(0, "331, Bar Yohai, Israel");
+        address.setAdminArea("North District");
+        address.setCountryCode("IL");
+        address.setCountryName("Israel");
+        address.setFeatureName("331");
+        address.setLatitude(32.9959042);
+        address.setLocality("Bar Yohai");
+        address.setLongitude(35.450468199999996);
+        address.setPremises("331");
+        address.setSubAdminArea("Tzfat");
+        results.add(address);
+
+        address = new Address(locale);
+        address.setAddressLine(0, "86, Bar Yohai, Israel");
+        address.setAdminArea("North District");
+        address.setCountryCode("IL");
+        address.setCountryName("Israel");
+        address.setFeatureName("86");
+        address.setLatitude(32.9964071);
+        address.setLocality("Bar Yohai");
+        address.setLongitude(35.4495705);
+        address.setPremises("86");
+        address.setSubAdminArea("Tzfat");
+        results.add(address);
+
+        address = new Address(locale);
+        address.setAddressLine(0, "Derech HaZayit, Bar Yohai, Israel");
+        address.setAdminArea("North District");
+        address.setCountryCode("IL");
+        address.setCountryName("Israel");
+        address.setFeatureName("Derech HaZayit");
+        address.setLatitude(32.996314999999996);
+        address.setLocality("Bar Yohai");
+        address.setLongitude(35.4487106);
+        address.setSubAdminArea("Tzfat");
+        address.setThoroughfare("Derech HaZayit");
+        results.add(address);
+
+        address = new Address(locale);
+        address.setAddressLine(0, "Bar Yohai, Israel");
+        address.setAdminArea("North District");
+        address.setCountryCode("IL");
+        address.setCountryName("Israel");
+        address.setFeatureName("Bar Yohai");
+        address.setLatitude(32.997704);
+        address.setLocality("Bar Yohai");
+        address.setLongitude(35.44819);
+        address.setSubAdminArea("Tzfat");
+        results.add(address);
+
+        address = new Address(locale);
+        address.setAddressLine(0, "Merom HaGalil Regional Council, Israel");
+        address.setAdminArea("North District");
+        address.setCountryCode("IL");
+        address.setCountryName("Israel");
+        address.setFeatureName("Merom HaGalil Regional Council");
+        address.setLatitude(32.9916546);
+        address.setLongitude(35.467236799999995);
+        address.setSubAdminArea("Merom HaGalil Regional Council");
+        results.add(address);
+
+        return results;
     }
 }
