@@ -158,8 +158,6 @@
     <string name="levana_latest">Ultime santificazione del novilunio (qiddùsh levana)</string>
     <string name="levana_halfway">Metà strada tra le nuove lune</string>
     <string name="levana_15">15 giorni dopo l\'nuova luna</string>
-    <string name="levana_halfway_alos">Metà strada tra le nuove lune o alba</string>
-    <string name="levana_15_alos">15 giorni dopo l\'nuova luna o alba</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Quaresima inizia</string>

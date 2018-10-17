@@ -914,18 +914,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         // Last Kiddush Levana.
         else if ((jewishDayOfMonth > 10) && (jewishDayOfMonth < 20)) {
             opinion = settings.getLatestKiddushLevana();
-            if (OPINION_15.equals(opinion)) {
-                date = jcal.getSofZmanKidushLevana15Days();
-                summary = R.string.levana_15;
-            } else if (OPINION_15_ALOS.equals(opinion)) {
+            if (OPINION_15.equals(opinion) || OPINION_15_ALOS.equals(opinion)) {
                 date = cal.getSofZmanKidushLevana15Days();
-                summary = R.string.levana_15_alos;
-            } else if (OPINION_HALF.equals(opinion)) {
-                date = jcal.getSofZmanKidushLevanaBetweenMoldos();
-                summary = R.string.levana_halfway;
+                summary = R.string.levana_15;
             } else {
                 date = cal.getSofZmanKidushLevanaBetweenMoldos();
-                summary = R.string.levana_halfway_alos;
+                summary = R.string.levana_halfway;
             }
             if ((date != null) && isSameDay(gcal, date)) {
                 JewishDate moonDate = jewishDate;

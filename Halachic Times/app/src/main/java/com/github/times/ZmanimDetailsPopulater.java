@@ -945,62 +945,49 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         int title;
         JewishCalendar jcal = getJewishCalendar();
 
-        if (jcal != null) {
+        date = cal.getTchilasZmanKidushLevana3Days();
+        if ((date == null) && (jcal != null)) {
             date = jcal.getTchilasZmanKidushLevana3Days();
             if (date != null) {
-                title = R.string.levana_3;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
+                ComplexZmanimCalendar cal2 = (ComplexZmanimCalendar) cal.clone();
+                cal2.getCalendar().setTimeInMillis(date);
+                date = cal2.getTchilasZmanKidushLevana3Days();
             }
+        }
+        if (date != null) {
+            title = R.string.levana_3;
+            adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
+        }
 
+        date = cal.getTchilasZmanKidushLevana7Days();
+        if ((date == null) && (jcal != null)) {
             date = jcal.getTchilasZmanKidushLevana7Days();
             if (date != null) {
-                title = R.string.levana_7;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
+                ComplexZmanimCalendar cal2 = (ComplexZmanimCalendar) cal.clone();
+                cal2.getCalendar().setTimeInMillis(date);
+                date = cal2.getTchilasZmanKidushLevana7Days();
             }
-        } else {
-            date = cal.getTchilasZmanKidushLevana3Days();
-            if (date != null) {
-                title = R.string.levana_3;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-            }
-
-            date = cal.getTchilasZmanKidushLevana7Days();
-            if (date != null) {
-                title = R.string.levana_7;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-            }
+        }
+        if (date != null) {
+            title = R.string.levana_7;
+            adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
         }
     }
 
     private void populateLatestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Long date;
         int title;
-        JewishCalendar jcal = getJewishCalendar();
 
         date = cal.getSofZmanKidushLevanaBetweenMoldos();
         if (date != null) {
-            title = R.string.levana_halfway_alos;
+            title = R.string.levana_halfway;
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
         }
 
         date = cal.getSofZmanKidushLevana15Days();
         if (date != null) {
-            title = R.string.levana_15_alos;
+            title = R.string.levana_15;
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-        }
-
-        if (jcal != null) {
-            date = jcal.getSofZmanKidushLevanaBetweenMoldos();
-            if (date != null) {
-                title = R.string.levana_halfway;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-            }
-
-            date = jcal.getSofZmanKidushLevana15Days();
-            if (date != null) {
-                title = R.string.levana_15;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-            }
         }
     }
 

@@ -158,8 +158,6 @@
     <string name="levana_latest">Laatste heiliging van de nieuwe maan (קידוש לבנה)</string>
     <string name="levana_halfway">Halverwege tussen nieuwe manen</string>
     <string name="levana_15">15 dagen na de nieuwe maan</string>
-    <string name="levana_halfway_alos">Halverwege tussen nieuwe manen of dageraad</string>
-    <string name="levana_15_alos">15 dagen na de nieuwe maan of dageraad</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Vasten begint</string>

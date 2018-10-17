@@ -158,8 +158,6 @@
     <string name="levana_latest">Legutóbbi megszentelése újhold (קידוש לבנה)</string>
     <string name="levana_halfway">Között félúton újholdak</string>
     <string name="levana_15">15 nap után a újhold</string>
-    <string name="levana_halfway_alos">Között félúton újholdak vagy hajnal</string>
-    <string name="levana_15_alos">15 nap után a újhold vagy hajnal</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Böjtölés kezdődik </string>

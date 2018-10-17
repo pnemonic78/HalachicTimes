@@ -158,8 +158,6 @@
     <string name="levana_latest">Sanctification de la nouvelle lune au plus tard (קידוש לבנה)</string>
     <string name="levana_halfway">A mi-chemin entre nouvelles lunes</string>
     <string name="levana_15">15 jours après le nouvelle lune</string>
-    <string name="levana_halfway_alos">A mi-chemin entre nouvelles lunes ou aube</string>
-    <string name="levana_15_alos">15 jours après le nouvelle lune ou aube</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Le jeûne commence</string>
