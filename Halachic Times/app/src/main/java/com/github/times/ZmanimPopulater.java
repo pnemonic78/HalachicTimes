@@ -896,15 +896,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         // First Kiddush Levana.
         else if ((jewishDayOfMonth >= 2) && (jewishDayOfMonth <= 8)) {
             opinion = settings.getEarliestKiddushLevana();
-            if (OPINION_7.equals(opinion)) {
+            if (OPINION_7.equals(opinion) || OPINION_168.equals(opinion)) {
                 date = cal.getTchilasZmanKidushLevana7Days();
                 summary = R.string.levana_7;
-            } else if (OPINION_72.equals(opinion)) {
-                date = jcal.getTchilasZmanKidushLevana3Days();
-                summary = R.string.levana_72;
-            } else if (OPINION_168.equals(opinion)) {
-                date = jcal.getTchilasZmanKidushLevana7Days();
-                summary = R.string.levana_168;
             } else {
                 date = cal.getTchilasZmanKidushLevana3Days();
                 summary = R.string.levana_3;

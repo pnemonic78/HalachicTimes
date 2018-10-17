@@ -155,8 +155,6 @@
     <string name="levana_earliest">Самое раннее время освящение новой луны (קידוש לבנה)</string>
     <string name="levana_3">3 дня после новолуние</string>
     <string name="levana_7">7 дня после новолуние</string>
-    <string name="levana_72">72 часа после новолуние</string>
-    <string name="levana_168">168 часа после новолуние</string>
     <string name="levana_latest">Самое позднее освящение новой луны (קידוש לבנה)</string>
     <string name="levana_halfway">Между новолуния</string>
     <string name="levana_15">15 дней после новолуние</string>

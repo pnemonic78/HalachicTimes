@@ -155,8 +155,6 @@
     <string name="levana_earliest">Primeiro santificação da lua nova (קידוש לבנה)</string>
     <string name="levana_3">3 dias após a lua nova</string>
     <string name="levana_7">7 dias após a lua nova</string>
-    <string name="levana_72">72 horas após a lua nova</string>
-    <string name="levana_168">168 horas após a lua nova</string>
     <string name="levana_latest">Último santificação da lua nova (קידוש לבנה)</string>
     <string name="levana_halfway">Meio caminho entre luas novas</string>
     <string name="levana_15">15 dias após a lua nova</string>

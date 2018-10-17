@@ -309,8 +309,6 @@
     <string name="levana_earliest">Earliest sanctification of the new moon (קידוש לבנה)</string>
     <string name="levana_3">3 days after the new moon</string>
     <string name="levana_7">7 days after the new moon</string>
-    <string name="levana_72">72 hours after the new moon</string>
-    <string name="levana_168">168 hours after the new moon</string>
     <string name="levana_latest">Latest sanctification of the new moon (קידוש לבנה)</string>
     <string name="levana_halfway">Halfway between new moons</string>
     <string name="levana_15">15 days after the new moon</string>

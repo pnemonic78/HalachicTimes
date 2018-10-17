@@ -411,14 +411,10 @@
     <string-array name="levana_earliest_values" translatable="false">
         <item>@string/opinion_value_3_days</item>
         <item>@string/opinion_value_7</item>
-        <item>@string/opinion_value_72</item>
-        <item>@string/opinion_value_168</item>
     </string-array>
     <string-array name="levana_earliest_entries" translatable="false">
         <item>@string/levana_3</item>
         <item>@string/levana_7</item>
-        <item>@string/levana_72</item>
-        <item>@string/levana_168</item>
     </string-array>
 
     <string-array name="levana_latest_values" translatable="false">

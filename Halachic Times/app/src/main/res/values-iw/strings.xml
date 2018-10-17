@@ -155,8 +155,6 @@
     <string name="levana_earliest">ברכה המוקדמת ביותר של הירח החדש (קידוש לבנה)</string>
     <string name="levana_3">3 ימים לאחר המולד</string>
     <string name="levana_7">7 ימים לאחר המולד</string>
-    <string name="levana_72">72 שעות לאחר המולד</string>
-    <string name="levana_168">168 שעות לאחר המולד</string>
     <string name="levana_latest">ברכה האחרונה של הירח החדש (קידוש לבנה)</string>
     <string name="levana_halfway">באמצע בין מולד למולד</string>
     <string name="levana_15">15 ימים לאחר המולד</string>
