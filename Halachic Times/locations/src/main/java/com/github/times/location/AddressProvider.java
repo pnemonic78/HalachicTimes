@@ -72,7 +72,7 @@ public class AddressProvider {
          * @param location the requested location.
          * @param elevated the location with elevation.
          */
-        void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated);
+        void onFindElevation(AddressProvider provider, Location location, Location elevated);
 
     }
 
@@ -479,7 +479,7 @@ public class AddressProvider {
             return null;
         }
 
-        ZmanimLocation elevated;
+        Location elevated;
 
         if (location.hasAltitude()) {
             elevated = findElevationDatabase(location);
@@ -543,7 +543,7 @@ public class AddressProvider {
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
-    private ZmanimLocation findElevationCities(@NonNull Location location) {
+    private Location findElevationCities(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         try {
@@ -589,7 +589,7 @@ public class AddressProvider {
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
-    private ZmanimLocation findElevationDatabase(@NonNull Location location) {
+    private Location findElevationDatabase(@NonNull Location location) {
         final double latitude = location.getLatitude();
         final double longitude = location.getLongitude();
         GeocoderBase geocoder = databaseGeocoder;

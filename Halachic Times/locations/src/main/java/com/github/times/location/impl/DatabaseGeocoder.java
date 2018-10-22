@@ -179,7 +179,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    public ZmanimLocation getElevation(final double latitude, final double longitude) throws IOException {
+    public Location getElevation(final double latitude, final double longitude) throws IOException {
         if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
@@ -243,7 +243,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results) {
         return null;
     }
 

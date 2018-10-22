@@ -114,9 +114,9 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
     }
 
     @Override
-    public void onFindElevation(AddressProvider provider, Location location, ZmanimLocation elevated) {
-        if (elevated != null) {
-            provider.insertOrUpdateElevation(elevated);
+    public void onFindElevation(AddressProvider provider, Location location, Location elevated) {
+        if (elevated instanceof ZmanimLocation) {
+            provider.insertOrUpdateElevation((ZmanimLocation) elevated);
 
             Intent result = new Intent(ACTION_ELEVATION);
             result.setPackage(getPackageName());

@@ -17,13 +17,13 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 
 import com.github.io.StreamUtils;
 import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
-import org.json.JSONException;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -337,7 +337,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    public abstract ZmanimLocation getElevation(double latitude, double longitude) throws IOException;
+    public abstract Location getElevation(double latitude, double longitude) throws IOException;
 
     /**
      * Get the elevation by parsing the XML results.
@@ -348,7 +348,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected ZmanimLocation getElevationXMLFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+    protected Location getElevationXMLFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
@@ -378,13 +378,13 @@ public abstract class GeocoderBase {
      * @throws SAXException                 if an XML error occurs.
      * @throws IOException                  if an I/O error occurs.
      */
-    protected ZmanimLocation parseElevationXML(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
+    protected Location parseElevationXML(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
         if ((data == null) || (data.available() <= 4)) {
             return null;
         }
 
-        List<ZmanimLocation> results = new ArrayList<>(1);
+        List<Location> results = new ArrayList<>(1);
         SAXParser parser = getXmlParser();
         DefaultHandler handler = createElevationResponseHandler(latitude, longitude, results);
         parser.parse(data, handler);
@@ -404,7 +404,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected ZmanimLocation getElevationTextFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+    protected Location getElevationTextFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
@@ -429,7 +429,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if an I/O error occurs.
      */
-    protected ZmanimLocation parseElevationText(double latitude, double longitude, InputStream data) throws IOException {
+    protected Location parseElevationText(double latitude, double longitude, InputStream data) throws IOException {
         // Minimum length for "0"
         if ((data == null) || (data.available() <= 0)) {
             return null;
@@ -466,5 +466,5 @@ public abstract class GeocoderBase {
      * @param results   the list of results to populate.
      * @return the XML handler.
      */
-    protected abstract DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results);
+    protected abstract DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results);
 }

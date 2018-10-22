@@ -170,7 +170,7 @@ public class GeocoderTestCase {
         GeocoderBase geocoder = new GoogleGeocoder(locale);
 
         // Access Denied
-        List<ZmanimLocation> results = new ArrayList<>();
+        List<Location> results = new ArrayList<>();
         InputStream in = context.getResources().openRawResource(R.raw.google_elevation_denied);
         assertNotNull(in);
         SAXParser parser = getXmlParser();
@@ -190,7 +190,7 @@ public class GeocoderTestCase {
         assertNotNull(handler);
         parser.parse(in, handler);
         assertEquals(1, results.size());
-        ZmanimLocation location = results.get(0);
+        Location location = results.get(0);
         assertNotNull(location);
         assertEquals(32.0629985, location.getLatitude(), DELTA);
         assertEquals(34.9768113, location.getLongitude(), DELTA);

@@ -26,6 +26,7 @@ import org.xml.sax.ext.DefaultHandler2;
  *
  * @author Moshe Waisberg
  */
+@Deprecated
 public abstract class DefaultAddressResponseHandler extends DefaultHandler2 {
 
     private final StringBuffer text = new StringBuffer();

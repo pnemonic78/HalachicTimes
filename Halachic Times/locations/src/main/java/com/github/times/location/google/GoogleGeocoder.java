@@ -17,11 +17,11 @@ package com.github.times.location.google;
 
 import android.content.Context;
 import android.location.Address;
+import android.location.Location;
 
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
-import com.github.times.location.ZmanimLocation;
 import com.github.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
@@ -129,7 +129,7 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
+    public Location getElevation(double latitude, double longitude) throws IOException {
         if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
@@ -139,7 +139,7 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results) {
         return new GoogleElevationResponseHandler(latitude, longitude, results);
     }
 }

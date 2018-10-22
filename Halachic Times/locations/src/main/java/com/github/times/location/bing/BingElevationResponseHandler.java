@@ -15,6 +15,8 @@
  */
 package com.github.times.location.bing;
 
+import android.location.Location;
+
 import com.github.times.location.DefaultAddressResponseHandler;
 import com.github.times.location.ZmanimLocation;
 
@@ -53,7 +55,7 @@ class BingElevationResponseHandler extends DefaultAddressResponseHandler {
     private State state = State.START;
     private final double latitude;
     private final double longitude;
-    private final List<ZmanimLocation> results;
+    private final List<Location> results;
     private ZmanimLocation location;
 
     /**
@@ -63,7 +65,7 @@ class BingElevationResponseHandler extends DefaultAddressResponseHandler {
      * @param longitude the longitude.
      * @param results   the destination results.
      */
-    public BingElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+    public BingElevationResponseHandler(double latitude, double longitude, List<Location> results) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.results = results;
