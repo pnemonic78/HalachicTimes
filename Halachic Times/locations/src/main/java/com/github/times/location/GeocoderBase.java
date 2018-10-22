@@ -209,15 +209,13 @@ public abstract class GeocoderBase {
      */
     protected List<Address> getAddressXMLFromURL(String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+        InputStream data = null;
         try {
+            data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
             return parseXmlLocations(data, maxResults);
-        } catch (ParserConfigurationException pce) {
-            LogUtils.e(TAG, queryUrl, pce);
-            throw new IOException(pce);
-        } catch (SAXException se) {
-            LogUtils.e(TAG, queryUrl, se);
-            throw new IOException(se);
+        } catch (ParserConfigurationException | SAXException e) {
+            LogUtils.e(TAG, queryUrl, e);
+            throw new LocationException(e);
         } finally {
             if (data != null) {
                 try {
@@ -239,12 +237,10 @@ public abstract class GeocoderBase {
      */
     protected List<Address> getAddressJsonFromURL(String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+        InputStream data = null;
         try {
+            data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
             return parseJsonLocations(data, maxResults);
-        } catch (JSONException je) {
-            LogUtils.e(TAG, queryUrl, je);
-            throw new IOException(je);
         } finally {
             if (data != null) {
                 try {
@@ -287,10 +283,10 @@ public abstract class GeocoderBase {
      * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws JSONException if a JSON error occurs.
-     * @throws IOException   if an I/O error occurs.
+     * @throws IOException       if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
      */
-    protected List<Address> parseJsonLocations(InputStream data, int maxResults) throws JSONException, IOException {
+    protected List<Address> parseJsonLocations(InputStream data, int maxResults) throws IOException, LocationException {
         // Minimum length for "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
@@ -354,15 +350,20 @@ public abstract class GeocoderBase {
      */
     protected ZmanimLocation getElevationXMLFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+        InputStream data = null;
         try {
+            data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
             return parseElevationXML(latitude, longitude, data);
-        } catch (ParserConfigurationException pce) {
-            LogUtils.e(TAG, queryUrl, pce);
-            throw new IOException(pce);
-        } catch (SAXException se) {
-            LogUtils.e(TAG, queryUrl, se);
-            throw new IOException(se);
+        } catch (ParserConfigurationException | SAXException e) {
+            LogUtils.e(TAG, queryUrl, e);
+            throw new LocationException(e);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
         }
     }
 
@@ -375,7 +376,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws ParserConfigurationException if an XML error occurs.
      * @throws SAXException                 if an XML error occurs.
-     * @throws @throws                      IOException if an I/O error occurs.
+     * @throws IOException                  if an I/O error occurs.
      */
     protected ZmanimLocation parseElevationXML(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
@@ -405,8 +406,18 @@ public abstract class GeocoderBase {
      */
     protected ZmanimLocation getElevationTextFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url);
-        return parseElevationText(latitude, longitude, data);
+        InputStream data = null;
+        try {
+            data = HTTPReader.read(url);
+            return parseElevationText(latitude, longitude, data);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
+        }
     }
 
     /**

@@ -20,11 +20,12 @@ import android.net.Uri;
 
 import com.github.json.UriAdapter;
 import com.github.times.location.AddressResponseJsonParser;
+import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,18 +47,22 @@ import static android.text.TextUtils.isEmpty;
  */
 public class BingAddressResponseJsonParser implements AddressResponseJsonParser {
     @Override
-    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws JSONException, IOException {
+    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws IOException, LocationException {
         List<Address> results = new ArrayList<>(maxResults);
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Uri.class, new UriAdapter())
             .create();
-        Reader reader = new InputStreamReader(data);
-        BingAddressResponse response = gson.fromJson(reader, BingAddressResponse.class);
-        handleResponse(response, results, maxResults, locale);
+        try {
+            Reader reader = new InputStreamReader(data);
+            BingAddressResponse response = gson.fromJson(reader, BingAddressResponse.class);
+            handleResponse(response, results, maxResults, locale);
+        } catch (JsonSyntaxException | JsonIOException e) {
+            throw new LocationException(e);
+        }
         return results;
     }
 
-    private void handleResponse(BingAddressResponse response, List<Address> results, int maxResults, Locale locale) throws JSONException, IOException {
+    private void handleResponse(BingAddressResponse response, List<Address> results, int maxResults, Locale locale) {
         results.clear();
         if (response.statusCode != BingAddressResponse.STATUS_OK) {
             return;
