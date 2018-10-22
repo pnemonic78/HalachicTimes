@@ -18,6 +18,7 @@ package com.github.times.location.google;
 import android.content.Context;
 import android.location.Address;
 
+import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimLocation;
@@ -120,6 +121,11 @@ public class GoogleGeocoder extends GeocoderBase {
     @Override
     protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
         return new GoogleAddressResponseHandler(results, maxResults, locale);
+    }
+
+    @Override
+    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+        return null;
     }
 
     @Override

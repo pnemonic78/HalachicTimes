@@ -59,15 +59,15 @@ public class GeocoderTestCase {
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
 
-    protected SAXParserFactory getParserFactory() {
+    protected SAXParserFactory getXmlParserFactory() {
         if (parserFactory == null)
             parserFactory = SAXParserFactory.newInstance();
         return parserFactory;
     }
 
-    protected SAXParser getParser() throws ParserConfigurationException, SAXException {
+    protected SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
         if (parser == null)
-            parser = getParserFactory().newSAXParser();
+            parser = getXmlParserFactory().newSAXParser();
         return parser;
     }
 
@@ -89,7 +89,7 @@ public class GeocoderTestCase {
         List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.google_holon);
         assertNotNull(in);
-        SAXParser parser = getParser();
+        SAXParser parser = getXmlParser();
         assertNotNull(parser);
         DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
@@ -108,7 +108,7 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.google_near_elad);
         assertNotNull(in);
-        parser = getParser();
+        parser = getXmlParser();
         assertNotNull(parser);
         handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
@@ -127,7 +127,7 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.google_bar_yohai);
         assertNotNull(in);
-        parser = getParser();
+        parser = getXmlParser();
         assertNotNull(parser);
         handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
@@ -173,7 +173,7 @@ public class GeocoderTestCase {
         List<ZmanimLocation> results = new ArrayList<>();
         InputStream in = context.getResources().openRawResource(R.raw.google_elevation_denied);
         assertNotNull(in);
-        SAXParser parser = getParser();
+        SAXParser parser = getXmlParser();
         assertNotNull(parser);
         DefaultHandler handler = geocoder.createElevationResponseHandler(0.0, 0.0, results);
         assertNotNull(handler);
@@ -184,7 +184,7 @@ public class GeocoderTestCase {
         results = new ArrayList<>();
         in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
         assertNotNull(in);
-        parser = getParser();
+        parser = getXmlParser();
         assertNotNull(parser);
         handler = geocoder.createElevationResponseHandler(0.0, 0.0, results);
         assertNotNull(handler);
@@ -215,7 +215,7 @@ public class GeocoderTestCase {
         List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.geonames_near_elad);
         assertNotNull(in);
-        SAXParser parser = getParser();
+        SAXParser parser = getXmlParser();
         assertNotNull(parser);
         DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
@@ -244,31 +244,31 @@ public class GeocoderTestCase {
         Locale locale = Locale.US;
         GeocoderBase geocoder = new BingGeocoder(locale);
         int maxResults = 10;
+        DefaultHandler handler;
+        List<Address> results;
+        SAXParser parser;
 
         // Holon
-        List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        SAXParser parser = getParser();
-        assertNotNull(parser);
-        DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        AddressResponseJsonParser jsonParser = geocoder.createAddressResponseJsonParser();
+        assertNotNull(jsonParser);
+        results = jsonParser.parse(in, maxResults, locale);
         assertTrue(maxResults >= results.size());
-        assertEquals(1, results.size());
+        assertEquals(5, results.size());
 
         Address address = results.get(0);
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0236, address.getLatitude(), DELTA);
         assertEquals(34.776698, address.getLongitude(), DELTA);
-        assertEquals("Street, Holon, Tel Aviv, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("Shenkar Arye, Holon, Tel-Aviv, Tel Aviv, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
         results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        parser = getParser();
+        parser = getXmlParser();
         assertNotNull(parser);
         handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);

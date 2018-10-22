@@ -23,6 +23,7 @@ import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
+import org.json.JSONException;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -106,15 +107,15 @@ public abstract class GeocoderBase {
         this(LocaleUtils.getDefaultLocale(context));
     }
 
-    protected SAXParserFactory getParserFactory() {
+    protected SAXParserFactory getXmlParserFactory() {
         if (parserFactory == null)
             parserFactory = SAXParserFactory.newInstance();
         return parserFactory;
     }
 
-    protected SAXParser getParser() throws ParserConfigurationException, SAXException {
+    protected SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
         if (parser == null)
-            parser = getParserFactory().newSAXParser();
+            parser = getXmlParserFactory().newSAXParser();
         return parser;
     }
 
@@ -210,13 +211,40 @@ public abstract class GeocoderBase {
         URL url = new URL(queryUrl);
         InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
         try {
-            return parseLocations(data, maxResults);
+            return parseXmlLocations(data, maxResults);
         } catch (ParserConfigurationException pce) {
             LogUtils.e(TAG, queryUrl, pce);
             throw new IOException(pce);
         } catch (SAXException se) {
             LogUtils.e(TAG, queryUrl, se);
             throw new IOException(se);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the address by parsing the XML results.
+     *
+     * @param queryUrl   the URL.
+     * @param maxResults the maximum number of results.
+     * @return a list of addresses. Returns {@code null} or empty list if no
+     * matches were found or there is no backend service available.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
+     */
+    protected List<Address> getAddressJsonFromURL(String queryUrl, int maxResults) throws IOException {
+        URL url = new URL(queryUrl);
+        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+        try {
+            return parseJsonLocations(data, maxResults);
+        } catch (JSONException je) {
+            LogUtils.e(TAG, queryUrl, je);
+            throw new IOException(je);
         } finally {
             if (data != null) {
                 try {
@@ -238,18 +266,38 @@ public abstract class GeocoderBase {
      * @throws SAXException                 if an XML error occurs.
      * @throws IOException                  if an I/O error occurs.
      */
-    protected List<Address> parseLocations(InputStream data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
+    protected List<Address> parseXmlLocations(InputStream data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
         if ((data == null) || (data.available() <= 4)) {
             return null;
         }
 
-        List<Address> results = new ArrayList<Address>(maxResults);
-        SAXParser parser = getParser();
+        List<Address> results = new ArrayList<>(maxResults);
+        SAXParser parser = getXmlParser();
         DefaultHandler handler = createAddressResponseHandler(results, maxResults, locale);
         parser.parse(data, handler);
 
         return results;
+    }
+
+    /**
+     * Parse the JSON response for addresses.
+     *
+     * @param data       the JSON data.
+     * @param maxResults the maximum number of results.
+     * @return a list of addresses. Returns {@code null} or empty list if no
+     * matches were found or there is no backend service available.
+     * @throws JSONException if a JSON error occurs.
+     * @throws IOException   if an I/O error occurs.
+     */
+    protected List<Address> parseJsonLocations(InputStream data, int maxResults) throws JSONException, IOException {
+        // Minimum length for "{}"
+        if ((data == null) || (data.available() <= 2)) {
+            return null;
+        }
+
+        AddressResponseJsonParser parser = createAddressResponseJsonParser();
+        return parser.parse(data, maxResults, locale);
     }
 
     /**
@@ -261,6 +309,13 @@ public abstract class GeocoderBase {
      * @return the XML handler.
      */
     protected abstract DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
+
+    /**
+     * Create a JSON parser for addresses.
+     *
+     * @return the JSON parser.
+     */
+    protected abstract AddressResponseJsonParser createAddressResponseJsonParser();
 
     /**
      * Get the ISO 639 language code.
@@ -328,8 +383,8 @@ public abstract class GeocoderBase {
             return null;
         }
 
-        List<ZmanimLocation> results = new ArrayList<ZmanimLocation>(1);
-        SAXParser parser = getParser();
+        List<ZmanimLocation> results = new ArrayList<>(1);
+        SAXParser parser = getXmlParser();
         DefaultHandler handler = createElevationResponseHandler(latitude, longitude, results);
         parser.parse(data, handler);
 

@@ -31,6 +31,7 @@ import java.util.Locale;
  *
  * @author Moshe Waisberg
  */
+@Deprecated
 class BingAddressResponseHandler extends DefaultAddressResponseHandler {
 
     /**

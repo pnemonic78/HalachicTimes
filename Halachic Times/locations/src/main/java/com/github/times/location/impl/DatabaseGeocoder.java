@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.github.database.CursorFilter;
+import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.City;
 import com.github.times.location.Country;
 import com.github.times.location.GeocoderBase;
@@ -169,6 +170,11 @@ public class DatabaseGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+        return null;
+    }
+
+    @Override
+    protected AddressResponseJsonParser createAddressResponseJsonParser() {
         return null;
     }
 

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.location.Address;
 import android.text.TextUtils;
 
+import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimLocation;
@@ -44,7 +45,7 @@ public class BingGeocoder extends GeocoderBase {
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
-    private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=xml&c=%s&key=%s";
+    private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=json&c=%s&key=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.
@@ -83,12 +84,17 @@ public class BingGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(API_KEY))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getAddressXMLFromURL(queryUrl, maxResults);
+        return getAddressJsonFromURL(queryUrl, maxResults);
     }
 
     @Override
     protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
         return new BingAddressResponseHandler(results, maxResults, locale);
+    }
+
+    @Override
+    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+        return new BingAddressResponseJsonParser();
     }
 
     @Override

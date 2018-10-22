@@ -601,6 +601,11 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
+    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+        return null;
+    }
+
+    @Override
     public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
         if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
