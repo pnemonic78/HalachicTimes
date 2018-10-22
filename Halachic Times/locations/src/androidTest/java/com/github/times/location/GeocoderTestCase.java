@@ -244,9 +244,7 @@ public class GeocoderTestCase {
         Locale locale = Locale.US;
         GeocoderBase geocoder = new BingGeocoder(locale);
         int maxResults = 10;
-        DefaultHandler handler;
         List<Address> results;
-        SAXParser parser;
 
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
@@ -265,14 +263,11 @@ public class GeocoderTestCase {
         assertEquals("Shenkar Arye, Holon, Tel-Aviv, Tel Aviv, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
-        results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        parser = getXmlParser();
-        assertNotNull(parser);
-        handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        jsonParser = geocoder.createAddressResponseJsonParser();
+        assertNotNull(jsonParser);
+        results = jsonParser.parse(in, maxResults, locale);
         assertTrue(maxResults >= results.size());
         assertEquals(1, results.size());
 
@@ -281,7 +276,7 @@ public class GeocoderTestCase {
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.094619750976563, address.getLatitude(), DELTA);
         assertEquals(34.885761260986328, address.getLongitude(), DELTA);
-        assertEquals("Petah Tiqwa, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("Orlov Ze'Ev & Bar Kokhva, Petah Tikva, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
     }
 
     /**
