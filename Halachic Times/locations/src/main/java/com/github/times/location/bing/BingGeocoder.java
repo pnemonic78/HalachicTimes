@@ -90,7 +90,7 @@ public class BingGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-        return new BingAddressResponseHandler(results, maxResults, locale);
+        return null;
     }
 
     @Override
@@ -112,7 +112,7 @@ public class BingGeocoder extends GeocoderBase {
 
     @Override
     protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
-        return new BingElevationResponseHandler(latitude, longitude, results);
+        return null;
     }
 
     @Override

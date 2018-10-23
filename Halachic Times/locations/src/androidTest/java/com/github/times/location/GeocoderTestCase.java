@@ -59,13 +59,13 @@ public class GeocoderTestCase {
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
 
-    protected SAXParserFactory getXmlParserFactory() {
+    private SAXParserFactory getXmlParserFactory() {
         if (parserFactory == null)
             parserFactory = SAXParserFactory.newInstance();
         return parserFactory;
     }
 
-    protected SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
+    private SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
         if (parser == null)
             parser = getXmlParserFactory().newSAXParser();
         return parser;
@@ -249,9 +249,9 @@ public class GeocoderTestCase {
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        AddressResponseJsonParser jsonParser = geocoder.createJsonAddressResponseParser();
-        assertNotNull(jsonParser);
-        results = jsonParser.parse(in, maxResults, locale);
+        AddressResponseJsonParser parser = geocoder.createJsonAddressResponseParser();
+        assertNotNull(parser);
+        results = parser.parse(in, maxResults, locale);
         assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
 
@@ -265,9 +265,9 @@ public class GeocoderTestCase {
         // Near Elad
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        jsonParser = geocoder.createJsonAddressResponseParser();
-        assertNotNull(jsonParser);
-        results = jsonParser.parse(in, maxResults, locale);
+        parser = geocoder.createJsonAddressResponseParser();
+        assertNotNull(parser);
+        results = parser.parse(in, maxResults, locale);
         assertTrue(maxResults >= results.size());
         assertEquals(1, results.size());
 
