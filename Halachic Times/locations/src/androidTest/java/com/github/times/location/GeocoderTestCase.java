@@ -228,6 +228,34 @@ public class GeocoderTestCase {
     }
 
     /**
+     * Test GeoNames elevation geocoder.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testGeoNamesElevation() throws Exception {
+        final Context context = getContext();
+        assertNotNull(context);
+
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new GeoNamesGeocoder(locale);
+        List<Location> results = new ArrayList<>();
+
+        // Near Elad
+        InputStream in = context.getResources().openRawResource(R.raw.geonames_elevation_near_elad);
+        assertNotNull(in);
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.04984, 34.95382, results, 1);
+        assertNotNull(parser);
+        parser.parse(in);
+        assertEquals(1, results.size());
+        Location location = results.get(0);
+        assertNotNull(location);
+        assertEquals(32.04984, location.getLatitude(), DELTA);
+        assertEquals(34.95382, location.getLongitude(), DELTA);
+        assertEquals(30, location.getAltitude(), DELTA);
+    }
+
+    /**
      * Test Bing address geocoder.
      *
      * @throws Exception if an error occurs.

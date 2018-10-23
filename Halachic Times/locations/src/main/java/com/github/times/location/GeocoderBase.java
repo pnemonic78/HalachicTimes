@@ -19,10 +19,8 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 
-import com.github.io.StreamUtils;
 import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
-import com.github.util.LogUtils;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -74,10 +72,6 @@ public abstract class GeocoderBase {
      * Maximum radius to consider a location near the same planet.
      */
     protected static final float SAME_PLANET = 6000000f;// 6000 kilometres.
-    /**
-     * Lowest possible natural elevation on the surface of the earth.
-     */
-    protected static final double ELEVATION_LOWEST_SURFACE = -500;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -402,7 +396,7 @@ public abstract class GeocoderBase {
         InputStream data = null;
         try {
             data = HTTPReader.read(url);
-            return parseTextElevation(latitude, longitude, data);
+            return parseElevation(latitude, longitude, data);
         } finally {
             if (data != null) {
                 try {
@@ -410,45 +404,6 @@ public abstract class GeocoderBase {
                 } catch (Exception ignore) {
                 }
             }
-        }
-    }
-
-    /**
-     * Parse the plain text response for an elevation.
-     *
-     * @param latitude  the latitude.
-     * @param longitude the longitude.
-     * @param data      the textual data.
-     * @return the location - {@code null} otherwise.
-     * @throws LocationException if a location error occurs.
-     * @throws IOException       if an I/O error occurs.
-     */
-    protected Location parseTextElevation(double latitude, double longitude, InputStream data) throws LocationException, IOException {
-        // Minimum length for "0"
-        if ((data == null) || (data.available() <= 0)) {
-            return null;
-        }
-        String text = StreamUtils.toString(data);
-        char first = text.charAt(0);
-        if (!Character.isDigit(first) && (first != '-')) {
-            return null;
-        }
-        double elevation;
-        ZmanimLocation elevated;
-        try {
-            elevation = Double.parseDouble(text);
-            if (elevation <= ELEVATION_LOWEST_SURFACE) {
-                return null;
-            }
-            elevated = new ZmanimLocation(USER_PROVIDER);
-            elevated.setTime(System.currentTimeMillis());
-            elevated.setLatitude(latitude);
-            elevated.setLongitude(longitude);
-            elevated.setAltitude(elevation);
-            return elevated;
-        } catch (NumberFormatException nfe) {
-            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
-            throw new LocationException(nfe);
         }
     }
 

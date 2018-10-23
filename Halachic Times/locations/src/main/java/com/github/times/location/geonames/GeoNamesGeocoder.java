@@ -24,6 +24,7 @@ import com.github.times.location.BuildConfig;
 import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.LocationException;
+import com.github.times.location.TextElevationResponseParser;
 import com.github.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
@@ -124,6 +125,6 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
     @Override
     protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
-        return null;
+        return new TextElevationResponseParser(latitude, longitude, results, maxResults);
     }
 }
