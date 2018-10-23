@@ -20,10 +20,15 @@ import android.location.Address;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
 
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
+
+import javax.xml.parsers.SAXParser;
 
 /**
  * Handler for parsing the GeoNames response for addresses.
@@ -32,18 +37,20 @@ import java.util.Locale;
  */
 public class GeoNamesAddressResponseParser extends AddressResponseParser {
 
-    /**
-     * Construct a new elevation parser.
-     *
-     * @param locale     the addresses' locale.
-     * @param results    the list of results to populate.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    protected GeoNamesAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+    private final SAXParser parser;
+
+    protected GeoNamesAddressResponseParser(Locale locale, List<Address> results, int maxResults, SAXParser parser) {
         super(locale, results, maxResults);
+        this.parser = parser;
     }
 
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
+        DefaultHandler handler = new GeoNamesAddressResponseHandler(results, maxResults, locale);
+        try {
+            parser.parse(data, handler);
+        } catch (SAXException e) {
+            throw new LocationException(e);
+        }
     }
 }

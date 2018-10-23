@@ -205,11 +205,9 @@ public class GeocoderTestCase {
         List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.geonames_near_elad);
         assertNotNull(in);
-        SAXParser parser = getXmlParser();
+        AddressResponseParser parser = geocoder.createAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createXmlAddressResponseHandler(locale, results, maxResults);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        parser.parse(in);
         assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
 
