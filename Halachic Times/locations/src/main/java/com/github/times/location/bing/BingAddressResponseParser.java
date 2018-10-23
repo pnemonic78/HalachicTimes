@@ -20,6 +20,7 @@ import android.net.Uri;
 
 import com.github.json.UriAdapter;
 import com.github.times.location.AddressResponseJsonParser;
+import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
 import com.google.gson.Gson;
@@ -31,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,10 +45,21 @@ import static android.text.TextUtils.isEmpty;
  *
  * @author Moshe Waisberg
  */
-public class BingAddressResponseParser implements AddressResponseJsonParser {
+public class BingAddressResponseParser extends AddressResponseParser implements AddressResponseJsonParser {
+
+    /**
+     * Construct a new elevation parser.
+     *
+     * @param locale     the addresses' locale.
+     * @param results    the list of results to populate.
+     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
+     */
+    protected BingAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+        super(locale, results, maxResults);
+    }
+
     @Override
-    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws IOException, LocationException {
-        List<Address> results = new ArrayList<>(maxResults);
+    public void parse(InputStream data) throws LocationException, IOException {
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Uri.class, new UriAdapter())
             .create();
@@ -61,7 +72,6 @@ public class BingAddressResponseParser implements AddressResponseJsonParser {
         } catch (JsonSyntaxException e) {
             throw new LocationException(e);
         }
-        return results;
     }
 
     private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) {

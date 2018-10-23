@@ -126,12 +126,12 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults) {
         return new GoogleAddressResponseHandler(results, maxResults, locale);
     }
 
     @Override
-    protected AddressResponseJsonParser createJsonAddressResponseParser() {
+    protected AddressResponseJsonParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
         return null;
     }
 

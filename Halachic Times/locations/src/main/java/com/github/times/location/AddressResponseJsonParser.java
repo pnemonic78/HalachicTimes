@@ -15,12 +15,8 @@
  */
 package com.github.times.location;
 
-import android.location.Address;
-
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Handler for parsing the JSON response.
@@ -32,10 +28,8 @@ public interface AddressResponseJsonParser {
      * Parse the data to extract addresses.
      *
      * @param data       the JSON data.
-     * @param maxResults the maximum number of results.
-     * @param locale     the locale.
      * @return the list of addresses.
      * @throws IOException       if an I/O error occurs.
      */
-    List<Address> parse(InputStream data, int maxResults, Locale locale) throws IOException;
+    void parse(InputStream data) throws IOException;
 }

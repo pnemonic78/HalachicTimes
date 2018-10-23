@@ -233,7 +233,7 @@ public abstract class GeocoderBase {
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
-            return parseJsonAddresses(data, maxResults);
+            return parseJsonAddresses(data, locale, maxResults);
         } finally {
             if (data != null) {
                 try {
@@ -263,7 +263,7 @@ public abstract class GeocoderBase {
 
         List<Address> results = new ArrayList<>(maxResults);
         SAXParser parser = getXmlParser();
-        DefaultHandler handler = createXmlAddressResponseHandler(results, maxResults, locale);
+        DefaultHandler handler = createXmlAddressResponseHandler(locale, results, maxResults);
         parser.parse(data, handler);
 
         return results;
@@ -273,19 +273,22 @@ public abstract class GeocoderBase {
      * Parse the JSON response for addresses.
      *
      * @param data       the JSON data.
+     * @param locale     the locale.
      * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if an I/O error occurs.
      */
-    protected List<Address> parseJsonAddresses(InputStream data, int maxResults) throws IOException {
+    protected List<Address> parseJsonAddresses(InputStream data, Locale locale, int maxResults) throws IOException {
         // Minimum length for "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
-        AddressResponseJsonParser parser = createJsonAddressResponseParser();
-        return parser.parse(data, maxResults, locale);
+        List<Address> results = new ArrayList<>(maxResults);
+        AddressResponseJsonParser parser = createJsonAddressResponseParser(locale, results, maxResults);
+        parser.parse(data);
+        return results;
     }
 
     /**
@@ -296,14 +299,14 @@ public abstract class GeocoderBase {
      * @param locale     the locale.
      * @return the XML handler.
      */
-    protected abstract DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
+    protected abstract DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults);
 
     /**
      * Create a JSON parser for addresses.
      *
      * @return the JSON parser.
      */
-    protected abstract AddressResponseJsonParser createJsonAddressResponseParser();
+    protected abstract AddressResponseJsonParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults);
 
     /**
      * Get the ISO 639 language code.
