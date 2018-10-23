@@ -95,8 +95,8 @@ public class BingGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        return new BingAddressResponseParser(locale,  results,  maxResults);
+    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+        return new BingAddressResponseParser(locale, results, maxResults);
     }
 
     @Override

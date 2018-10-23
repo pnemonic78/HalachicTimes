@@ -233,7 +233,7 @@ public abstract class GeocoderBase {
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
-            return parseJsonAddresses(data, locale, maxResults);
+            return parseAddresses(data, locale, maxResults);
         } finally {
             if (data != null) {
                 try {
@@ -279,14 +279,14 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if an I/O error occurs.
      */
-    protected List<Address> parseJsonAddresses(InputStream data, Locale locale, int maxResults) throws IOException {
-        // Minimum length for "{}"
+    protected List<Address> parseAddresses(InputStream data, Locale locale, int maxResults) throws IOException {
+        // Minimum length for either "<>" or "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
         List<Address> results = new ArrayList<>(maxResults);
-        AddressResponseParser parser = createJsonAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = createAddressResponseParser(locale, results, maxResults);
         parser.parse(data);
         return results;
     }
@@ -298,15 +298,17 @@ public abstract class GeocoderBase {
      * @param maxResults the maximum number of results.
      * @param locale     the locale.
      * @return the XML handler.
+     * @throws LocationException if a location error occurs.
      */
     protected abstract DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults);
 
     /**
-     * Create a JSON parser for addresses.
+     * Create a parser for addresses.
      *
-     * @return the JSON parser.
+     * @return the parser.
+     * @throws LocationException if a location error occurs.
      */
-    protected abstract AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults);
+    protected abstract AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException;
 
     /**
      * Get the ISO 639 language code.
@@ -370,7 +372,7 @@ public abstract class GeocoderBase {
      * @throws IOException       if an I/O error occurs.
      */
     protected Location parseElevation(double latitude, double longitude, InputStream data) throws LocationException, IOException {
-        // Minimum length for "<>" or "{}"
+        // Minimum length for either "<>" or "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }

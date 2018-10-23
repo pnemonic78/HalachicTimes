@@ -89,11 +89,9 @@ public class GeocoderTestCase {
         List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.google_holon);
         assertNotNull(in);
-        SAXParser parser = getXmlParser();
+        AddressResponseParser parser = geocoder.createAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createXmlAddressResponseHandler(locale, results, maxResults);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        parser.parse(in);
         assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
 
@@ -108,11 +106,9 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.google_near_elad);
         assertNotNull(in);
-        parser = getXmlParser();
+        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
-        handler = geocoder.createXmlAddressResponseHandler(locale, results, maxResults);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        parser.parse(in);
         assertTrue(maxResults >= results.size());
         assertEquals(6, results.size());
 
@@ -127,11 +123,9 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.google_bar_yohai);
         assertNotNull(in);
-        parser = getXmlParser();
+        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
-        handler = geocoder.createXmlAddressResponseHandler(locale,results, maxResults);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        parser.parse(in);
         assertTrue(maxResults >= results.size());
         assertEquals(9, results.size());
 
@@ -274,7 +268,7 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createJsonAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = geocoder.createAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
         parser.parse(in);
         assertTrue(maxResults >= results.size());
@@ -291,7 +285,7 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        parser = geocoder.createJsonAddressResponseParser(locale, results, maxResults);
+        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
         parser.parse(in);
         assertTrue(maxResults >= results.size());

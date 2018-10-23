@@ -131,8 +131,14 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        return null;
+    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException {
+        final SAXParser parser;
+        try {
+            parser = getXmlParser();
+        } catch (ParserConfigurationException | SAXException e) {
+            throw new LocationException(e);
+        }
+        return new GoogleAddressResponseParser(locale, results, maxResults, parser);
     }
 
     @Override
