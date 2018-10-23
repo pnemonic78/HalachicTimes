@@ -27,8 +27,6 @@ import com.github.times.location.GeocoderBase;
 import com.github.times.location.LocationException;
 import com.github.util.LocaleUtils;
 
-import org.xml.sax.helpers.DefaultHandler;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -87,11 +85,6 @@ public class BingGeocoder extends GeocoderBase {
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
         return getJsonAddressesFromURL(queryUrl, maxResults);
-    }
-
-    @Override
-    protected DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults) {
-        return null;
     }
 
     @Override

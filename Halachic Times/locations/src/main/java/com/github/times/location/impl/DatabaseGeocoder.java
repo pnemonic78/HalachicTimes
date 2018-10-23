@@ -41,8 +41,6 @@ import com.github.times.location.provider.LocationContract.ElevationColumns;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
 
-import org.xml.sax.helpers.DefaultHandler;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -168,11 +166,6 @@ public class DatabaseGeocoder extends GeocoderBase {
         List<Address> addresses = new ArrayList<Address>(q);
 
         return addresses;
-    }
-
-    @Override
-    protected DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults) {
-        return null;
     }
 
     @Override

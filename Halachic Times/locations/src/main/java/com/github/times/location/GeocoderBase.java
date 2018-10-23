@@ -23,7 +23,6 @@ import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -206,9 +205,7 @@ public abstract class GeocoderBase {
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-            return parseXmlAddresses(data, maxResults);
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new LocationException(queryUrl, e);
+            return parseAddresses(data, locale, maxResults);
         } finally {
             if (data != null) {
                 try {
@@ -245,31 +242,6 @@ public abstract class GeocoderBase {
     }
 
     /**
-     * Parse the XML response for addresses.
-     *
-     * @param data       the XML data.
-     * @param maxResults the maximum number of results.
-     * @return a list of addresses. Returns {@code null} or empty list if no
-     * matches were found or there is no backend service available.
-     * @throws ParserConfigurationException if an XML error occurs.
-     * @throws SAXException                 if an XML error occurs.
-     * @throws IOException                  if an I/O error occurs.
-     */
-    protected List<Address> parseXmlAddresses(InputStream data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
-        // Minimum length for "<X/>"
-        if ((data == null) || (data.available() <= 4)) {
-            return null;
-        }
-
-        List<Address> results = new ArrayList<>(maxResults);
-        SAXParser parser = getXmlParser();
-        DefaultHandler handler = createXmlAddressResponseHandler(locale, results, maxResults);
-        parser.parse(data, handler);
-
-        return results;
-    }
-
-    /**
      * Parse the JSON response for addresses.
      *
      * @param data       the JSON data.
@@ -290,17 +262,6 @@ public abstract class GeocoderBase {
         parser.parse(data);
         return results;
     }
-
-    /**
-     * Create an SAX XML handler for addresses.
-     *
-     * @param results    the list of results to populate.
-     * @param maxResults the maximum number of results.
-     * @param locale     the locale.
-     * @return the XML handler.
-     * @throws LocationException if a location error occurs.
-     */
-    protected abstract DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults);
 
     /**
      * Create a parser for addresses.
@@ -420,9 +381,8 @@ public abstract class GeocoderBase {
      * @param queryUrl  the URL.
      * @return the location - {@code null} otherwise.
      * @throws IOException       if an I/O error occurs.
-     * @throws LocationException if a location error occurs.
      */
-    protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws LocationException, IOException {
+    protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {

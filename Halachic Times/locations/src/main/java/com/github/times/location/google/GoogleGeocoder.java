@@ -27,7 +27,6 @@ import com.github.times.location.LocationException;
 import com.github.util.LocaleUtils;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -123,11 +122,6 @@ public class GoogleGeocoder extends GeocoderBase {
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
         String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage(), API_KEY);
         return getXmlAddressesFromURL(queryUrl, maxResults);
-    }
-
-    @Override
-    protected DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults) {
-        return new GoogleAddressResponseHandler(results, maxResults, locale);
     }
 
     @Override

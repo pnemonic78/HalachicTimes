@@ -28,7 +28,6 @@ import com.github.times.location.TextElevationResponseParser;
 import com.github.util.LocaleUtils;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.util.List;
@@ -103,11 +102,6 @@ public class GeoNamesGeocoder extends GeocoderBase {
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
         return getXmlAddressesFromURL(queryUrl, maxResults);
-    }
-
-    @Override
-    protected DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults) {
-        return new GeoNamesAddressResponseHandler(results, maxResults, locale);
     }
 
     @Override

@@ -22,8 +22,6 @@ import android.location.Location;
 
 import com.github.util.LocaleUtils;
 
-import org.xml.sax.helpers.DefaultHandler;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -593,11 +591,6 @@ public class CountriesGeocoder extends GeocoderBase {
         }
 
         return cities;
-    }
-
-    @Override
-    protected DefaultHandler createXmlAddressResponseHandler(Locale locale, List<Address> results, int maxResults) {
-        return null;
     }
 
     @Override
