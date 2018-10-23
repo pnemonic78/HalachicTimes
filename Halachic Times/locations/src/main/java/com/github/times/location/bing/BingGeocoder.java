@@ -96,7 +96,7 @@ public class BingGeocoder extends GeocoderBase {
 
     @Override
     protected AddressResponseJsonParser createJsonAddressResponseParser() {
-        return new BingAddressResponseJsonParser();
+        return new BingAddressResponseParser();
     }
 
     @Override
@@ -113,6 +113,6 @@ public class BingGeocoder extends GeocoderBase {
 
     @Override
     protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
-        return new BingElevationResponseJsonParser(latitude, longitude, results, maxResults);
+        return new BingElevationResponseParser(latitude, longitude, results, maxResults);
     }
 }

@@ -49,7 +49,7 @@ public abstract class ElevationResponseParser {
     }
 
     /**
-     * Parse the data to extract an elevation.
+     * Parse the data to extract elevations.
      *
      * @param data the JSON data.
      * @throws LocationException if a location error occurs.

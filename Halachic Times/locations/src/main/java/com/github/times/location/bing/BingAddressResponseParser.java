@@ -15,14 +15,13 @@
  */
 package com.github.times.location.bing;
 
-import android.location.Location;
+import android.location.Address;
 import android.net.Uri;
 
 import com.github.json.UriAdapter;
-import com.github.nio.charset.StandardCharsets;
-import com.github.times.location.ElevationResponseParser;
+import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.LocationException;
-import com.github.times.location.ZmanimLocation;
+import com.github.times.location.ZmanimAddress;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -32,41 +31,41 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+import static android.text.TextUtils.isEmpty;
 
 /**
- * Handler for parsing the Bing response for elevations.
+ * Handler for parsing the JSON response for addresses.
  *
  * @author Moshe Waisberg
  */
-public class BingElevationResponseJsonParser extends ElevationResponseParser {
-
-    public BingElevationResponseJsonParser(double latitude, double longitude, List<Location> results, int maxResults) {
-        super(latitude, longitude, results, maxResults);
-    }
-
+public class BingAddressResponseParser implements AddressResponseJsonParser {
     @Override
-    public void parse(InputStream data) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws IOException, LocationException {
+        List<Address> results = new ArrayList<>(maxResults);
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Uri.class, new UriAdapter())
             .create();
         try {
-            Reader reader = new InputStreamReader(data, StandardCharsets.UTF_8);
+            Reader reader = new InputStreamReader(data);
             BingResponse response = gson.fromJson(reader, BingResponse.class);
-            handleResponse(response);
+            handleResponse(response, results, maxResults, locale);
         } catch (JsonIOException e) {
             throw new IOException(e);
         } catch (JsonSyntaxException e) {
             throw new LocationException(e);
         }
+        return results;
     }
 
-    private void handleResponse(BingResponse response) {
+    private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) {
+        results.clear();
         if (response.statusCode != BingResponse.STATUS_OK) {
             return;
         }
@@ -82,36 +81,47 @@ public class BingElevationResponseJsonParser extends ElevationResponseParser {
             return;
         }
 
-        Location location;
-        final int size = Math.min(maxResults, resources.size());
-        for (BingResource resource : resources) {
-            location = toLocation(resource, latitude, longitude);
-            if (location != null) {
-                results.add(location);
-                if (results.size() >= size) {
-                    return;
-                }
+        BingResource resource;
+        Address address;
+
+        final int size = Math.min(resources.size(), maxResults);
+        for (int i = 0; i < size; i++) {
+            resource = resources.get(i);
+            address = toAddress(resource, locale);
+            if (address != null) {
+                results.add(address);
             }
         }
     }
 
     @Nullable
-    private Location toLocation(@NonNull BingResource resource, double latitude, double longitude) {
-        Location result = new ZmanimLocation(USER_PROVIDER);
-        result.setLatitude(latitude);
-        result.setLongitude(longitude);
+    private Address toAddress(@NonNull BingResource resource, Locale locale) {
+        Address result = new ZmanimAddress(locale);
+        result.setFeatureName(resource.name);
 
         BingPoint point = resource.point;
-        if ((point != null) && (point.coordinates != null) && (point.coordinates.length >= 2)) {
-            result.setLatitude(point.coordinates[0]);
-            result.setLongitude(point.coordinates[1]);
-        }
-
-        Double[] elevations = resource.elevations;
-        if ((elevations == null) || (elevations.length < 1)) {
+        if ((point == null) || (point.coordinates == null) || (point.coordinates.length < 2)) {
             return null;
         }
-        result.setAltitude(elevations[0]);
+        result.setLatitude(point.coordinates[0]);
+        result.setLongitude(point.coordinates[1]);
+
+        BingAddress address = resource.address;
+        if (address == null) {
+            return null;
+        }
+        if (!isEmpty(address.addressLine)) {
+            result.setAddressLine(0, address.addressLine);
+        }
+        result.setAdminArea(address.adminDistrict);
+        result.setSubAdminArea(address.adminDistrict2);
+        result.setCountryName(address.countryRegion);
+        result.setLocality(address.locality);
+        result.setPostalCode(address.postalCode);
+        String formatted = address.formattedAddress;
+        if ((formatted != null) && formatted.equals(resource.name)) {
+            result.setFeatureName(null);
+        }
         return result;
     }
 }
