@@ -108,7 +108,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
     @Override
     protected AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        return null;
+        return new GeoNamesAddressResponseParser(locale, results, maxResults);
     }
 
     @Override

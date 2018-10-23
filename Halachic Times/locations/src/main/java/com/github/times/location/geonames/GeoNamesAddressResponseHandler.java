@@ -29,7 +29,7 @@ import java.util.Locale;
 import static android.text.TextUtils.isEmpty;
 
 /**
- * Handler for parsing the XML response for addresses.
+ * Handler for parsing addresses from a GeoNames XML response.
  *
  * @author Moshe Waisberg
  */
