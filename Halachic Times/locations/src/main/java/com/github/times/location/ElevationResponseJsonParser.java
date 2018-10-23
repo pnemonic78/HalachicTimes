@@ -15,27 +15,26 @@
  */
 package com.github.times.location;
 
-import android.location.Address;
+import android.location.Location;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Handler for parsing the JSON response.
  *
  * @author Moshe Waisberg
  */
-public interface AddressResponseJsonParser {
+public interface ElevationResponseJsonParser {
     /**
-     * Parse the data to extract addresses.
+     * Parse the data to extract an elevation.
      *
-     * @param data       the JSON data.
-     * @param maxResults the maximum number of results.
-     * @param locale     the locale.
-     * @return the list of addresses.
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param data      the JSON data.
+     * @return the location.
      * @throws IOException       if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
      */
-    List<Address> parse(InputStream data, int maxResults, Locale locale) throws IOException;
+    Location parse(double latitude, double longitude, InputStream data) throws IOException, LocationException;
 }

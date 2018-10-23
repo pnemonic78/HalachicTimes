@@ -21,6 +21,7 @@ import android.location.Location;
 
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
+import com.github.times.location.ElevationResponseJsonParser;
 import com.github.times.location.GeocoderBase;
 import com.github.util.LocaleUtils;
 
@@ -90,7 +91,7 @@ public class GoogleGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getAddressXMLFromURL(queryUrl, maxResults);
+        return getXmlAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
@@ -98,12 +99,13 @@ public class GoogleGeocoder extends GeocoderBase {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
         String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage(), API_KEY);
-        return getAddressXMLFromURL(queryUrl, maxResults);
+        return getXmlAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
-    public List<Address> getFromLocationName(String locationName, int maxResults, double lowerLeftLatitude, double lowerLeftLongitude, double upperRightLatitude,
-                                             double upperRightLongitude) throws IOException {
+    public List<Address> getFromLocationName(String locationName, int maxResults,
+                                             double lowerLeftLatitude, double lowerLeftLongitude,
+                                             double upperRightLatitude, double upperRightLongitude) throws IOException {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
         if (lowerLeftLatitude < LATITUDE_MIN || lowerLeftLatitude > LATITUDE_MAX)
@@ -115,16 +117,16 @@ public class GoogleGeocoder extends GeocoderBase {
         if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
         String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage(), API_KEY);
-        return getAddressXMLFromURL(queryUrl, maxResults);
+        return getXmlAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
-    protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
         return new GoogleAddressResponseHandler(results, maxResults, locale);
     }
 
     @Override
-    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+    protected AddressResponseJsonParser createJsonAddressResponseParser() {
         return null;
     }
 
@@ -135,11 +137,16 @@ public class GoogleGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
-        return getElevationXMLFromURL(latitude, longitude, queryUrl);
+        return getXmlElevationFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results) {
+    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
         return new GoogleElevationResponseHandler(latitude, longitude, results);
+    }
+
+    @Override
+    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
+        return null;
     }
 }

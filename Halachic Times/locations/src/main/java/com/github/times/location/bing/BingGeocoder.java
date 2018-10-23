@@ -22,6 +22,7 @@ import android.text.TextUtils;
 
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
+import com.github.times.location.ElevationResponseJsonParser;
 import com.github.times.location.GeocoderBase;
 import com.github.util.LocaleUtils;
 
@@ -45,12 +46,12 @@ public class BingGeocoder extends GeocoderBase {
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
-    private static final String URL_LATLNG = "http://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=json&c=%s&key=%s";
+    private static final String URL_LATLNG = "https://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=json&c=%s&key=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.
      */
-    private static final String URL_ELEVATION = "http://dev.virtualearth.net/REST/v1/Elevation/List?o=xml&points=%f,%f&key=%s";
+    private static final String URL_ELEVATION = "https://dev.virtualearth.net/REST/v1/Elevation/List?o=json&points=%f,%f&key=%s";
 
     /**
      * Bing API key.
@@ -84,16 +85,16 @@ public class BingGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(API_KEY))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getAddressJsonFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
-    protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
         return new BingAddressResponseHandler(results, maxResults, locale);
     }
 
     @Override
-    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+    protected AddressResponseJsonParser createJsonAddressResponseParser() {
         return new BingAddressResponseJsonParser();
     }
 
@@ -106,11 +107,16 @@ public class BingGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(API_KEY))
             return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
-        return getElevationXMLFromURL(latitude, longitude, queryUrl);
+        return getJsonElevationFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results) {
+    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
         return new BingElevationResponseHandler(latitude, longitude, results);
+    }
+
+    @Override
+    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
+        return new BingElevationResponseJsonParser();
     }
 }

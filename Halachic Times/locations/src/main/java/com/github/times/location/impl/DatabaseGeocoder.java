@@ -30,6 +30,7 @@ import com.github.database.CursorFilter;
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.City;
 import com.github.times.location.Country;
+import com.github.times.location.ElevationResponseJsonParser;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
@@ -169,12 +170,12 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
         return null;
     }
 
     @Override
-    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+    protected AddressResponseJsonParser createJsonAddressResponseParser() {
         return null;
     }
 
@@ -243,7 +244,12 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results) {
+    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
+        return null;
+    }
+
+    @Override
+    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
         return null;
     }
 

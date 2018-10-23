@@ -207,15 +207,14 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected List<Address> getAddressXMLFromURL(String queryUrl, int maxResults) throws IOException {
+    protected List<Address> getXmlAddressesFromURL(String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-            return parseXmlLocations(data, maxResults);
+            return parseXmlAddresses(data, maxResults);
         } catch (ParserConfigurationException | SAXException e) {
-            LogUtils.e(TAG, queryUrl, e);
-            throw new LocationException(e);
+            throw new LocationException(queryUrl, e);
         } finally {
             if (data != null) {
                 try {
@@ -235,12 +234,12 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected List<Address> getAddressJsonFromURL(String queryUrl, int maxResults) throws IOException {
+    protected List<Address> getJsonAddressesFromURL(String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
-            return parseJsonLocations(data, maxResults);
+            return parseJsonAddresses(data, maxResults);
         } finally {
             if (data != null) {
                 try {
@@ -262,7 +261,7 @@ public abstract class GeocoderBase {
      * @throws SAXException                 if an XML error occurs.
      * @throws IOException                  if an I/O error occurs.
      */
-    protected List<Address> parseXmlLocations(InputStream data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
+    protected List<Address> parseXmlAddresses(InputStream data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
         if ((data == null) || (data.available() <= 4)) {
             return null;
@@ -270,7 +269,7 @@ public abstract class GeocoderBase {
 
         List<Address> results = new ArrayList<>(maxResults);
         SAXParser parser = getXmlParser();
-        DefaultHandler handler = createAddressResponseHandler(results, maxResults, locale);
+        DefaultHandler handler = createXmlAddressResponseHandler(results, maxResults, locale);
         parser.parse(data, handler);
 
         return results;
@@ -283,16 +282,15 @@ public abstract class GeocoderBase {
      * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws IOException       if an I/O error occurs.
-     * @throws LocationException if a location error occurs.
+     * @throws IOException if an I/O error occurs.
      */
-    protected List<Address> parseJsonLocations(InputStream data, int maxResults) throws IOException, LocationException {
+    protected List<Address> parseJsonAddresses(InputStream data, int maxResults) throws IOException {
         // Minimum length for "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
-        AddressResponseJsonParser parser = createAddressResponseJsonParser();
+        AddressResponseJsonParser parser = createJsonAddressResponseParser();
         return parser.parse(data, maxResults, locale);
     }
 
@@ -304,14 +302,14 @@ public abstract class GeocoderBase {
      * @param locale     the locale.
      * @return the XML handler.
      */
-    protected abstract DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
+    protected abstract DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
 
     /**
      * Create a JSON parser for addresses.
      *
      * @return the JSON parser.
      */
-    protected abstract AddressResponseJsonParser createAddressResponseJsonParser();
+    protected abstract AddressResponseJsonParser createJsonAddressResponseParser();
 
     /**
      * Get the ISO 639 language code.
@@ -348,15 +346,14 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected Location getElevationXMLFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+    protected Location getXmlElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-            return parseElevationXML(latitude, longitude, data);
+            return parseXmlElevation(latitude, longitude, data);
         } catch (ParserConfigurationException | SAXException e) {
-            LogUtils.e(TAG, queryUrl, e);
-            throw new LocationException(e);
+            throw new LocationException(queryUrl, e);
         } finally {
             if (data != null) {
                 try {
@@ -378,7 +375,7 @@ public abstract class GeocoderBase {
      * @throws SAXException                 if an XML error occurs.
      * @throws IOException                  if an I/O error occurs.
      */
-    protected Location parseElevationXML(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
+    protected Location parseXmlElevation(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
         // Minimum length for "<X/>"
         if ((data == null) || (data.available() <= 4)) {
             return null;
@@ -386,7 +383,7 @@ public abstract class GeocoderBase {
 
         List<Location> results = new ArrayList<>(1);
         SAXParser parser = getXmlParser();
-        DefaultHandler handler = createElevationResponseHandler(latitude, longitude, results);
+        DefaultHandler handler = createXmlElevationResponseHandler(latitude, longitude, results);
         parser.parse(data, handler);
 
         if (results.isEmpty()) {
@@ -404,12 +401,12 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected Location getElevationTextFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+    protected Location getTextElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
             data = HTTPReader.read(url);
-            return parseElevationText(latitude, longitude, data);
+            return parseTextElevation(latitude, longitude, data);
         } finally {
             if (data != null) {
                 try {
@@ -427,9 +424,10 @@ public abstract class GeocoderBase {
      * @param longitude the longitude.
      * @param data      the textual data.
      * @return the location - {@code null} otherwise.
-     * @throws IOException if an I/O error occurs.
+     * @throws IOException       if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
      */
-    protected Location parseElevationText(double latitude, double longitude, InputStream data) throws IOException {
+    protected Location parseTextElevation(double latitude, double longitude, InputStream data) throws IOException, LocationException {
         // Minimum length for "0"
         if ((data == null) || (data.available() <= 0)) {
             return null;
@@ -454,8 +452,53 @@ public abstract class GeocoderBase {
             return elevated;
         } catch (NumberFormatException nfe) {
             LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
+            throw new LocationException(nfe);
         }
-        return null;
+    }
+
+    /**
+     * Get the elevation by parsing the JSON results.
+     *
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param queryUrl  the URL.
+     * @return the location - {@code null} otherwise.
+     * @throws IOException       if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
+     */
+    protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException, LocationException {
+        URL url = new URL(queryUrl);
+        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+        try {
+            return parseJsonElevation(latitude, longitude, data);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse the JSON response for an elevation.
+     *
+     * @param latitude  the latitude.
+     * @param longitude the longitude.
+     * @param data      the JSON data.
+     * @return the location - {@code null} otherwise.
+     * @throws IOException       if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
+     */
+    protected Location parseJsonElevation(double latitude, double longitude, InputStream data) throws IOException, LocationException {
+        // Minimum length for "{}"
+        if ((data == null) || (data.available() <= 2)) {
+            return null;
+        }
+
+        ElevationResponseJsonParser parser = createJsonElevationResponseParser();
+        return parser.parse(latitude, longitude, data);
     }
 
     /**
@@ -466,5 +509,12 @@ public abstract class GeocoderBase {
      * @param results   the list of results to populate.
      * @return the XML handler.
      */
-    protected abstract DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results);
+    protected abstract DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results);
+
+    /**
+     * Create a JSON handler for elevations.
+     *
+     * @return the JSON handler.
+     */
+    protected abstract ElevationResponseJsonParser createJsonElevationResponseParser();
 }

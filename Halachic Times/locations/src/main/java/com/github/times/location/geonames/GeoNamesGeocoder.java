@@ -21,6 +21,7 @@ import android.location.Location;
 
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
+import com.github.times.location.ElevationResponseJsonParser;
 import com.github.times.location.GeocoderBase;
 import com.github.util.LocaleUtils;
 
@@ -95,16 +96,16 @@ public class GeoNamesGeocoder extends GeocoderBase {
         if (isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
-        return getAddressXMLFromURL(queryUrl, maxResults);
+        return getXmlAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
-    protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected DefaultHandler createXmlAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
         return new GeoNamesAddressResponseHandler(results, maxResults, locale);
     }
 
     @Override
-    protected AddressResponseJsonParser createAddressResponseJsonParser() {
+    protected AddressResponseJsonParser createJsonAddressResponseParser() {
         return null;
     }
 
@@ -117,12 +118,16 @@ public class GeoNamesGeocoder extends GeocoderBase {
         if (isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_ELEVATION_SRTM3, latitude, longitude, USERNAME);
-        return getElevationTextFromURL(latitude, longitude, queryUrl);
+        return getTextElevationFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<Location> results) {
+    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
         return null;
     }
 
+    @Override
+    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
+        return null;
+    }
 }

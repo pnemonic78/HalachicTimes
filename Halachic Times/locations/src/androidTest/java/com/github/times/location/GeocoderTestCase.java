@@ -91,7 +91,7 @@ public class GeocoderTestCase {
         assertNotNull(in);
         SAXParser parser = getXmlParser();
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        DefaultHandler handler = geocoder.createXmlAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertTrue(maxResults >= results.size());
@@ -110,7 +110,7 @@ public class GeocoderTestCase {
         assertNotNull(in);
         parser = getXmlParser();
         assertNotNull(parser);
-        handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        handler = geocoder.createXmlAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertTrue(maxResults >= results.size());
@@ -129,7 +129,7 @@ public class GeocoderTestCase {
         assertNotNull(in);
         parser = getXmlParser();
         assertNotNull(parser);
-        handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        handler = geocoder.createXmlAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertTrue(maxResults >= results.size());
@@ -175,7 +175,7 @@ public class GeocoderTestCase {
         assertNotNull(in);
         SAXParser parser = getXmlParser();
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createElevationResponseHandler(0.0, 0.0, results);
+        DefaultHandler handler = geocoder.createXmlElevationResponseHandler(0.0, 0.0, results);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertEquals(0, results.size());
@@ -186,7 +186,7 @@ public class GeocoderTestCase {
         assertNotNull(in);
         parser = getXmlParser();
         assertNotNull(parser);
-        handler = geocoder.createElevationResponseHandler(0.0, 0.0, results);
+        handler = geocoder.createXmlElevationResponseHandler(0.0, 0.0, results);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertEquals(1, results.size());
@@ -217,7 +217,7 @@ public class GeocoderTestCase {
         assertNotNull(in);
         SAXParser parser = getXmlParser();
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createAddressResponseHandler(results, maxResults, locale);
+        DefaultHandler handler = geocoder.createXmlAddressResponseHandler(results, maxResults, locale);
         assertNotNull(handler);
         parser.parse(in, handler);
         assertTrue(maxResults >= results.size());
@@ -249,7 +249,7 @@ public class GeocoderTestCase {
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        AddressResponseJsonParser jsonParser = geocoder.createAddressResponseJsonParser();
+        AddressResponseJsonParser jsonParser = geocoder.createJsonAddressResponseParser();
         assertNotNull(jsonParser);
         results = jsonParser.parse(in, maxResults, locale);
         assertTrue(maxResults >= results.size());
@@ -265,7 +265,7 @@ public class GeocoderTestCase {
         // Near Elad
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        jsonParser = geocoder.createAddressResponseJsonParser();
+        jsonParser = geocoder.createJsonAddressResponseParser();
         assertNotNull(jsonParser);
         results = jsonParser.parse(in, maxResults, locale);
         assertTrue(maxResults >= results.size());
@@ -277,6 +277,31 @@ public class GeocoderTestCase {
         assertEquals(32.094619750976563, address.getLatitude(), DELTA);
         assertEquals(34.885761260986328, address.getLongitude(), DELTA);
         assertEquals("Orlov Ze'Ev & Bar Kokhva, Petah Tikva, Merkaz, Israel", ((ZmanimAddress) address).getFormatted());
+    }
+
+    /**
+     * Test Bing elevation geocoder.
+     *
+     * @throws Exception if an error occurs.
+     */
+    @Test
+    public void testBingElevation() throws Exception {
+        final Context context = getContext();
+        assertNotNull(context);
+
+        Locale locale = Locale.US;
+        GeocoderBase geocoder = new BingGeocoder(locale);
+
+        // Holon
+        InputStream in = context.getResources().openRawResource(R.raw.bing_elevation_holon);
+        assertNotNull(in);
+        ElevationResponseJsonParser jsonParser = geocoder.createJsonElevationResponseParser();
+        assertNotNull(jsonParser);
+        Location location = jsonParser.parse(32.0236, 34.776698, in);
+        assertNotNull(location);
+        assertEquals(32.0236, location.getLatitude(), DELTA);
+        assertEquals(34.776698, location.getLongitude(), DELTA);
+        assertEquals(35, location.getAltitude(), DELTA);
     }
 
     /**

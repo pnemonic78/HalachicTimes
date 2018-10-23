@@ -56,7 +56,9 @@ public class BingAddressResponseJsonParser implements AddressResponseJsonParser 
             Reader reader = new InputStreamReader(data);
             BingResponse response = gson.fromJson(reader, BingResponse.class);
             handleResponse(response, results, maxResults, locale);
-        } catch (JsonSyntaxException | JsonIOException e) {
+        } catch (JsonIOException e) {
+            throw new IOException(e);
+        } catch (JsonSyntaxException e) {
             throw new LocationException(e);
         }
         return results;

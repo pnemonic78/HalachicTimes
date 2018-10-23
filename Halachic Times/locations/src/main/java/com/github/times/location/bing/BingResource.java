@@ -38,11 +38,15 @@ class BingResource {
     public BingAddress address;
     @SerializedName("confidence")
     public String confidence;
+    @SerializedName("elevations")
+    public Double[] elevations;
     @SerializedName("entityType")
     public String entityType;
     @SerializedName("geocodePoints")
     public List<Object> geocodePoints;
     @SerializedName("matchCodes")
     public List<Object> matchCodes;
+    @SerializedName("zoomLevel")
+    public Double zoomLevel;
 
 }
