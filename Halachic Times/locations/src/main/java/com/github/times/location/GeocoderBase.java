@@ -351,9 +351,7 @@ public abstract class GeocoderBase {
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-            return parseXmlElevation(latitude, longitude, data);
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new LocationException(queryUrl, e);
+            return parseElevation(latitude, longitude, data);
         } finally {
             if (data != null) {
                 try {
@@ -371,20 +369,18 @@ public abstract class GeocoderBase {
      * @param longitude the longitude.
      * @param data      the XML data.
      * @return the location - {@code null} otherwise.
-     * @throws ParserConfigurationException if an XML error occurs.
-     * @throws SAXException                 if an XML error occurs.
-     * @throws IOException                  if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
+     * @throws IOException       if an I/O error occurs.
      */
-    protected Location parseXmlElevation(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
-        // Minimum length for "<X/>"
-        if ((data == null) || (data.available() <= 4)) {
+    protected Location parseElevation(double latitude, double longitude, InputStream data) throws LocationException, IOException {
+        // Minimum length for "<>" or "{}"
+        if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
         List<Location> results = new ArrayList<>(1);
-        SAXParser parser = getXmlParser();
-        DefaultHandler handler = createXmlElevationResponseHandler(latitude, longitude, results);
-        parser.parse(data, handler);
+        ElevationResponseParser handler = createElevationResponseHandler(latitude, longitude, results, 1);
+        handler.parse(data);
 
         if (results.isEmpty()) {
             return null;
@@ -424,10 +420,10 @@ public abstract class GeocoderBase {
      * @param longitude the longitude.
      * @param data      the textual data.
      * @return the location - {@code null} otherwise.
-     * @throws IOException       if an I/O error occurs.
      * @throws LocationException if a location error occurs.
+     * @throws IOException       if an I/O error occurs.
      */
-    protected Location parseTextElevation(double latitude, double longitude, InputStream data) throws IOException, LocationException {
+    protected Location parseTextElevation(double latitude, double longitude, InputStream data) throws LocationException, IOException {
         // Minimum length for "0"
         if ((data == null) || (data.available() <= 0)) {
             return null;
@@ -466,11 +462,12 @@ public abstract class GeocoderBase {
      * @throws IOException       if an I/O error occurs.
      * @throws LocationException if a location error occurs.
      */
-    protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException, LocationException {
+    protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws LocationException, IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+        InputStream data = null;
         try {
-            return parseJsonElevation(latitude, longitude, data);
+            data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+            return parseElevation(latitude, longitude, data);
         } finally {
             if (data != null) {
                 try {
@@ -482,39 +479,14 @@ public abstract class GeocoderBase {
     }
 
     /**
-     * Parse the JSON response for an elevation.
+     * Create a handler to parse elevations.
      *
-     * @param latitude  the latitude.
-     * @param longitude the longitude.
-     * @param data      the JSON data.
-     * @return the location - {@code null} otherwise.
-     * @throws IOException       if an I/O error occurs.
+     * @param latitude   the latitude.
+     * @param longitude  the longitude.
+     * @param results    the list of results to populate.
+     * @param maxResults the maximum number of results.
+     * @return the handler.
      * @throws LocationException if a location error occurs.
      */
-    protected Location parseJsonElevation(double latitude, double longitude, InputStream data) throws IOException, LocationException {
-        // Minimum length for "{}"
-        if ((data == null) || (data.available() <= 2)) {
-            return null;
-        }
-
-        ElevationResponseJsonParser parser = createJsonElevationResponseParser();
-        return parser.parse(latitude, longitude, data);
-    }
-
-    /**
-     * Create an SAX XML handler for elevations.
-     *
-     * @param latitude  the latitude.
-     * @param longitude the longitude.
-     * @param results   the list of results to populate.
-     * @return the XML handler.
-     */
-    protected abstract DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results);
-
-    /**
-     * Create a JSON handler for elevations.
-     *
-     * @return the JSON handler.
-     */
-    protected abstract ElevationResponseJsonParser createJsonElevationResponseParser();
+    protected abstract ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException;
 }

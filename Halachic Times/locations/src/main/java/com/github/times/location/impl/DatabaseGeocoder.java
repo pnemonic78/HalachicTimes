@@ -30,8 +30,9 @@ import com.github.database.CursorFilter;
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.City;
 import com.github.times.location.Country;
-import com.github.times.location.ElevationResponseJsonParser;
+import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.GeocoderBase;
+import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
 import com.github.times.location.provider.LocationContract.AddressColumns;
@@ -244,12 +245,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
-        return null;
-    }
-
-    @Override
-    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
         return null;
     }
 

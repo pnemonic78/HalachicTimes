@@ -20,7 +20,7 @@ import android.net.Uri;
 
 import com.github.json.UriAdapter;
 import com.github.nio.charset.StandardCharsets;
-import com.github.times.location.ElevationResponseJsonParser;
+import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimLocation;
 import com.google.gson.Gson;
@@ -40,20 +40,25 @@ import androidx.annotation.Nullable;
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 /**
- * Handler for parsing the JSON response for elevations.
+ * Handler for parsing the Bing response for elevations.
  *
  * @author Moshe Waisberg
  */
-public class BingElevationResponseJsonParser implements ElevationResponseJsonParser {
+public class BingElevationResponseJsonParser extends ElevationResponseParser {
+
+    public BingElevationResponseJsonParser(double latitude, double longitude, List<Location> results, int maxResults) {
+        super(latitude, longitude, results, maxResults);
+    }
+
     @Override
-    public Location parse(double latitude, double longitude, InputStream data) throws IOException, LocationException {
+    public void parse(InputStream data) throws LocationException, IOException {
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Uri.class, new UriAdapter())
             .create();
         try {
             Reader reader = new InputStreamReader(data, StandardCharsets.UTF_8);
             BingResponse response = gson.fromJson(reader, BingResponse.class);
-            return handleResponse(latitude, longitude, response);
+            handleResponse(response);
         } catch (JsonIOException e) {
             throw new IOException(e);
         } catch (JsonSyntaxException e) {
@@ -61,24 +66,33 @@ public class BingElevationResponseJsonParser implements ElevationResponseJsonPar
         }
     }
 
-    private Location handleResponse(double latitude, double longitude, BingResponse response) {
+    private void handleResponse(BingResponse response) {
         if (response.statusCode != BingResponse.STATUS_OK) {
-            return null;
+            return;
         }
 
         final List<BingResponse.ResourceSet> resourceSets = response.resourceSets;
         if ((resourceSets == null) || resourceSets.isEmpty()) {
-            return null;
+            return;
         }
 
         BingResponse.ResourceSet resourceSet = resourceSets.get(0);
         List<BingResource> resources = resourceSet.resources;
         if ((resources == null) || resources.isEmpty()) {
-            return null;
+            return;
         }
 
-        BingResource resource = resources.get(0);
-        return toLocation(resource, latitude, longitude);
+        Location location;
+        final int size = Math.min(maxResults, resources.size());
+        for (BingResource resource : resources) {
+            location = toLocation(resource, latitude, longitude);
+            if (location != null) {
+                results.add(location);
+                if (results.size() >= size) {
+                    return;
+                }
+            }
+        }
     }
 
     @Nullable

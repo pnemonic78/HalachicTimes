@@ -102,7 +102,7 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     @Override
     public void onTerminate() {
         super.onTerminate();
-        stopLocationHolder();
+        stopLocationHolder(true);
     }
 
     @Override
@@ -118,8 +118,15 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     }
 
     private void stopLocationHolder() {
+        stopLocationHolder(false);
+    }
+
+    private void stopLocationHolder(boolean terminate) {
         final LocationHolder locationHolder = this.locationHolder;
         if (locationHolder != null) {
+            if (terminate) {
+                locationHolder.onTerminate();
+            }
             unregisterComponentCallbacks(locationHolder);
             this.locationHolder = null;
         }

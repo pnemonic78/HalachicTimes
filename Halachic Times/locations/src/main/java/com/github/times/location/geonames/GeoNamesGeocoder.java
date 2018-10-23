@@ -21,8 +21,9 @@ import android.location.Location;
 
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
-import com.github.times.location.ElevationResponseJsonParser;
+import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.GeocoderBase;
+import com.github.times.location.LocationException;
 import com.github.util.LocaleUtils;
 
 import org.xml.sax.helpers.DefaultHandler;
@@ -122,12 +123,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
-        return null;
-    }
-
-    @Override
-    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
         return null;
     }
 }

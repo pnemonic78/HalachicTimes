@@ -173,22 +173,18 @@ public class GeocoderTestCase {
         List<Location> results = new ArrayList<>();
         InputStream in = context.getResources().openRawResource(R.raw.google_elevation_denied);
         assertNotNull(in);
-        SAXParser parser = getXmlParser();
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler(0.0, 0.0, results, 1);
         assertNotNull(parser);
-        DefaultHandler handler = geocoder.createXmlElevationResponseHandler(0.0, 0.0, results);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        parser.parse(in);
         assertEquals(0, results.size());
 
         // Near Elad
         results = new ArrayList<>();
         in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
         assertNotNull(in);
-        parser = getXmlParser();
+        parser = geocoder.createElevationResponseHandler(0.0, 0.0, results, 1);
         assertNotNull(parser);
-        handler = geocoder.createXmlElevationResponseHandler(0.0, 0.0, results);
-        assertNotNull(handler);
-        parser.parse(in, handler);
+        parser.parse(in);
         assertEquals(1, results.size());
         Location location = results.get(0);
         assertNotNull(location);
@@ -291,13 +287,16 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new BingGeocoder(locale);
+        List<Location> results = new ArrayList<>();
 
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_elevation_holon);
         assertNotNull(in);
-        ElevationResponseJsonParser jsonParser = geocoder.createJsonElevationResponseParser();
-        assertNotNull(jsonParser);
-        Location location = jsonParser.parse(32.0236, 34.776698, in);
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.0236, 34.776698, results, 1);
+        assertNotNull(parser);
+        parser.parse(in);
+        assertEquals(1, results.size());
+        Location location = results.get(0);
         assertNotNull(location);
         assertEquals(32.0236, location.getLatitude(), DELTA);
         assertEquals(34.776698, location.getLongitude(), DELTA);

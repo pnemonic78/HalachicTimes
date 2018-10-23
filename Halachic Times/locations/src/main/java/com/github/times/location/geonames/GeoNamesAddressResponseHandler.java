@@ -64,23 +64,10 @@ class GeoNamesAddressResponseHandler extends DefaultAddressResponseHandler {
     private static final String TAG_ADMIN = "adminName1";
 
     private State state = State.START;
-    private final List<Address> results;
-    private final int maxResults;
-    private final Locale locale;
     private Address address;
 
-    /**
-     * Constructs a new parse handler.
-     *
-     * @param results
-     *         the destination results.
-     * @param maxResults
-     *         the maximum number of results.
-     */
     public GeoNamesAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-        this.results = results;
-        this.maxResults = maxResults;
-        this.locale = locale;
+        super(results, maxResults, locale);
     }
 
     @Override

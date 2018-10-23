@@ -15,11 +15,15 @@
  */
 package com.github.times.location;
 
+import android.location.Address;
 import android.text.TextUtils;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.ext.DefaultHandler2;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Handler for parsing the XML response.
@@ -29,7 +33,23 @@ import org.xml.sax.ext.DefaultHandler2;
 @Deprecated
 public abstract class DefaultAddressResponseHandler extends DefaultHandler2 {
 
+    protected final List<Address> results;
+    protected final int maxResults;
+    protected final Locale locale;
     private final StringBuffer text = new StringBuffer();
+
+    /**
+     * Constructs a new parse handler.
+     *
+     * @param results    the destination results.
+     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
+     * @param locale     the addresses' locale.
+     */
+    public DefaultAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+        this.results = results;
+        this.maxResults = maxResults;
+        this.locale = locale;
+    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {

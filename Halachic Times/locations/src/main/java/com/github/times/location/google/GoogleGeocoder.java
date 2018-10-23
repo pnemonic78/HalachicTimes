@@ -21,16 +21,21 @@ import android.location.Location;
 
 import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.BuildConfig;
-import com.github.times.location.ElevationResponseJsonParser;
+import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.GeocoderBase;
+import com.github.times.location.LocationException;
 import com.github.util.LocaleUtils;
 
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -141,12 +146,13 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
-        return new GoogleElevationResponseHandler(latitude, longitude, results);
-    }
-
-    @Override
-    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
-        return null;
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
+        final SAXParser parser;
+        try {
+            parser = getXmlParser();
+        } catch (ParserConfigurationException | SAXException e) {
+            throw new LocationException(e);
+        }
+        return new GoogleElevationResponseParser(latitude, longitude, results, maxResults, parser);
     }
 }

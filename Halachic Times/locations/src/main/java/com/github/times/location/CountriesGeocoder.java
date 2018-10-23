@@ -672,12 +672,7 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createXmlElevationResponseHandler(double latitude, double longitude, List<Location> results) {
-        return null;
-    }
-
-    @Override
-    protected ElevationResponseJsonParser createJsonElevationResponseParser() {
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
         return null;
     }
 }

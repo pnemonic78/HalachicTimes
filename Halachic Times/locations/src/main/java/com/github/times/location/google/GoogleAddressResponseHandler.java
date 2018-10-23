@@ -70,26 +70,13 @@ class GoogleAddressResponseHandler extends DefaultAddressResponseHandler {
     private static final String TYPE_SUBLOCALITY = "sublocality";
 
     private State state = State.START;
-    private final List<Address> results;
-    private final int maxResults;
-    private final Locale locale;
     private Address address;
     private String longName;
     private String shortName;
     private String addressType;
 
-    /**
-     * Constructs a new parse handler.
-     *
-     * @param results
-     *         the destination results.
-     * @param maxResults
-     *         the maximum number of results.
-     */
     GoogleAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
-        this.results = results;
-        this.maxResults = maxResults;
-        this.locale = locale;
+        super(results, maxResults, locale);
     }
 
     @Override
