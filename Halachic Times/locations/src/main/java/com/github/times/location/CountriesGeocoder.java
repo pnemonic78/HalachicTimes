@@ -601,7 +601,7 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseJsonParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+    protected AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
         return null;
     }
 

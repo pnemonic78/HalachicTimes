@@ -286,7 +286,7 @@ public abstract class GeocoderBase {
         }
 
         List<Address> results = new ArrayList<>(maxResults);
-        AddressResponseJsonParser parser = createJsonAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = createJsonAddressResponseParser(locale, results, maxResults);
         parser.parse(data);
         return results;
     }
@@ -306,7 +306,7 @@ public abstract class GeocoderBase {
      *
      * @return the JSON parser.
      */
-    protected abstract AddressResponseJsonParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults);
+    protected abstract AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults);
 
     /**
      * Get the ISO 639 language code.

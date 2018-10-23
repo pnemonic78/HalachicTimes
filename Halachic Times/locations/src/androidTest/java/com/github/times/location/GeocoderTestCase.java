@@ -274,7 +274,7 @@ public class GeocoderTestCase {
         results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        AddressResponseJsonParser parser = geocoder.createJsonAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = geocoder.createJsonAddressResponseParser(locale, results, maxResults);
         assertNotNull(parser);
         parser.parse(in);
         assertTrue(maxResults >= results.size());

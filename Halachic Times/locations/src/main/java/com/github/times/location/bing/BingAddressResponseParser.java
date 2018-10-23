@@ -19,7 +19,6 @@ import android.location.Address;
 import android.net.Uri;
 
 import com.github.json.UriAdapter;
-import com.github.times.location.AddressResponseJsonParser;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
@@ -45,7 +44,7 @@ import static android.text.TextUtils.isEmpty;
  *
  * @author Moshe Waisberg
  */
-public class BingAddressResponseParser extends AddressResponseParser implements AddressResponseJsonParser {
+public class BingAddressResponseParser extends AddressResponseParser {
 
     /**
      * Construct a new elevation parser.

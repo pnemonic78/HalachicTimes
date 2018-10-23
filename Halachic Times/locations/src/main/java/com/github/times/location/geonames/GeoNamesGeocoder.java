@@ -19,7 +19,7 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 
-import com.github.times.location.AddressResponseJsonParser;
+import com.github.times.location.AddressResponseParser;
 import com.github.times.location.BuildConfig;
 import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.GeocoderBase;
@@ -107,7 +107,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseJsonParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+    protected AddressResponseParser createJsonAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
         return null;
     }
 
