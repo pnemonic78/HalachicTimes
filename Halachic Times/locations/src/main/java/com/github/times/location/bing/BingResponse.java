@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Moshe Waisberg
  */
-class BingAddressResponse {
+class BingResponse {
 
     public static final int STATUS_OK = 200;
 

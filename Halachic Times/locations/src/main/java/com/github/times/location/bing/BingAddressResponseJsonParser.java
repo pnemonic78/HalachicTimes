@@ -54,7 +54,7 @@ public class BingAddressResponseJsonParser implements AddressResponseJsonParser 
             .create();
         try {
             Reader reader = new InputStreamReader(data);
-            BingAddressResponse response = gson.fromJson(reader, BingAddressResponse.class);
+            BingResponse response = gson.fromJson(reader, BingResponse.class);
             handleResponse(response, results, maxResults, locale);
         } catch (JsonSyntaxException | JsonIOException e) {
             throw new LocationException(e);
@@ -62,18 +62,18 @@ public class BingAddressResponseJsonParser implements AddressResponseJsonParser 
         return results;
     }
 
-    private void handleResponse(BingAddressResponse response, List<Address> results, int maxResults, Locale locale) {
+    private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) {
         results.clear();
-        if (response.statusCode != BingAddressResponse.STATUS_OK) {
+        if (response.statusCode != BingResponse.STATUS_OK) {
             return;
         }
 
-        final List<BingAddressResponse.ResourceSet> resourceSets = response.resourceSets;
+        final List<BingResponse.ResourceSet> resourceSets = response.resourceSets;
         if ((resourceSets == null) || resourceSets.isEmpty()) {
             return;
         }
 
-        BingAddressResponse.ResourceSet resourceSet = resourceSets.get(0);
+        BingResponse.ResourceSet resourceSet = resourceSets.get(0);
         List<BingResource> resources = resourceSet.resources;
         if ((resources == null) || resources.isEmpty()) {
             return;
