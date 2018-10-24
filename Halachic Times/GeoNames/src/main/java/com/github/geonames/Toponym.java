@@ -17,6 +17,8 @@ package com.github.geonames;
 
 import com.github.geonames.util.LocaleUtils;
 
+import org.geonames.BoundingBox;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
