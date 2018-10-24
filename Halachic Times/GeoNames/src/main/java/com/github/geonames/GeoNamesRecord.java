@@ -28,40 +28,11 @@ import static com.github.geonames.CountryInfo.ISO639_PALESTINE;
  */
 public class GeoNamesRecord extends Toponym {
 
-    private String name;
     private String asciiName;
-    private String alternateNames;
-    private double latitude;
-    private double longitude;
-    private String featureCode;
-    private String countryCode;
     private String cc2;
-    private String adminCode1;
-    private String adminCode2;
-    private String adminCode3;
-    private String adminCode4;
-    private String adminCode5;
     private int dem = Integer.MIN_VALUE;
     private String timezone;
     private String modification;
-
-    /**
-     * Get the name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set the name.
-     *
-     * @param name the name.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
 
     /**
      * Get the ASCII name.
@@ -82,96 +53,16 @@ public class GeoNamesRecord extends Toponym {
     }
 
     /**
-     * Get the alternate names.
-     *
-     * @return the alternateNames
-     */
-    public String getAlternateNames() {
-        return alternateNames;
-    }
-
-    /**
-     * Set the alternate names.
-     *
-     * @param alternateNames the alternate names.
-     */
-    public void setAlternateNames(String alternateNames) {
-        this.alternateNames = alternateNames;
-    }
-
-    /**
-     * Get the latitude.
-     *
-     * @return the latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Set the latitude.
-     *
-     * @param latitude the latitude.
-     */
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    /**
-     * Get the longitude.
-     *
-     * @return the longitude
-     */
-    public double getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * Set the longitude.
-     *
-     * @param longitude the longitude.
-     */
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    /**
-     * Get the featureCode.
-     *
-     * @return the featureCode
-     */
-    public String getFeatureCode() {
-        return featureCode;
-    }
-
-    /**
-     * Set the featureCode.
-     *
-     * @param featureCode the featureCode.
-     */
-    public void setFeatureCode(String featureCode) {
-        this.featureCode = featureCode;
-    }
-
-    /**
-     * Get the countryCode.
-     *
-     * @return the countryCode
-     */
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    /**
      * Set the countryCode.
      *
      * @param countryCode the countryCode.
      */
+    @Override
     public void setCountryCode(String countryCode) {
         if (ISO639_PALESTINE.equals(countryCode)) {
             countryCode = ISO639_ISRAEL;
         }
-        this.countryCode = countryCode;
+        super.setCountryCode(countryCode);
     }
 
     /**
@@ -190,96 +81,6 @@ public class GeoNamesRecord extends Toponym {
      */
     public void setAlternateCountryCodes(String cc2) {
         this.cc2 = cc2;
-    }
-
-    /**
-     * Get the admin 1 code.
-     *
-     * @return the code.
-     */
-    public String getAdminCode1() {
-        return adminCode1;
-    }
-
-    /**
-     * Set the admin 1 code.
-     *
-     * @param code the code.
-     */
-    public void setAdminCode1(String code) {
-        this.adminCode1 = code;
-    }
-
-    /**
-     * Get the admin 2 code.
-     *
-     * @return the code.
-     */
-    public String getAdminCode2() {
-        return adminCode2;
-    }
-
-    /**
-     * Set the admin 2 code.
-     *
-     * @param code the code.
-     */
-    public void setAdminCode2(String code) {
-        this.adminCode2 = code;
-    }
-
-    /**
-     * Get the admin 3 code.
-     *
-     * @return the code.
-     */
-    public String getAdminCode3() {
-        return adminCode3;
-    }
-
-    /**
-     * Set the admin 3 code.
-     *
-     * @param code the code.
-     */
-    public void setAdminCode3(String code) {
-        this.adminCode3 = code;
-    }
-
-    /**
-     * Get the admin 4 code.
-     *
-     * @return the code.
-     */
-    public String getAdminCode4() {
-        return adminCode4;
-    }
-
-    /**
-     * Set the admin 5 code.
-     *
-     * @param code the code.
-     */
-    public void setAdminCode4(String code) {
-        this.adminCode4 = code;
-    }
-
-    /**
-     * Get the admin 5 code.
-     *
-     * @return the code.
-     */
-    public String getAdminCode5() {
-        return adminCode5;
-    }
-
-    /**
-     * Set the admin 4 code.
-     *
-     * @param code the code.
-     */
-    public void setAdminCode5(String code) {
-        this.adminCode5 = code;
     }
 
     /**
