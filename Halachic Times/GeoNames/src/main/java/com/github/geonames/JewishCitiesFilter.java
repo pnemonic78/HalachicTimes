@@ -325,12 +325,12 @@ public class JewishCitiesFilter implements NameFilter {
     }
 
     @Override
-    public boolean accept(Toponym name) {
+    public boolean accept(GeoNamesToponym name) {
         return Arrays.binarySearch(CITIES, name.getGeoNameId()) >= 0;
     }
 
     @Override
-    public void replaceLocation(Toponym name) {
+    public void replaceLocation(GeoNamesToponym name) {
         final long id = name.getGeoNameId();
 
         if (id == ADDIS_ABABA) {

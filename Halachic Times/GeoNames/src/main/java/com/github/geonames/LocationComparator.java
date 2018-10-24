@@ -22,7 +22,7 @@ import java.util.Comparator;
  *
  * @author Moshe Waisberg
  */
-public class LocationComparator implements Comparator<Toponym> {
+public class LocationComparator implements Comparator<GeoNamesToponym> {
 
     /** ISO 639 code for Norwegian Bokmål. */
     public static final String ISO_639_NB = "nb";
@@ -34,7 +34,7 @@ public class LocationComparator implements Comparator<Toponym> {
     }
 
     @Override
-    public int compare(Toponym geo0, Toponym geo1) {
+    public int compare(GeoNamesToponym geo0, GeoNamesToponym geo1) {
         // West < East
         double lng0 = geo0.getLongitude();
         double lng1 = geo1.getLongitude();

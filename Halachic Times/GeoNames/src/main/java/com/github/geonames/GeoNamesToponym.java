@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author Moshe Waisberg
  */
-public class Toponym extends GeoNamesRecord {
+public class GeoNamesToponym extends GeoNamesRecord {
 
     private String wikipediaURL;
     private final Map<String, AlternateName> alternateNamesMap = new HashMap<>();

@@ -52,7 +52,7 @@ public class JewishCities extends Cities {
         String pathNames = "GeoNames/res/alternateNamesV2.zip";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         JewishCities cities = new JewishCities();
-        Collection<Toponym> names;
+        Collection<GeoNamesToponym> names;
 
         names = cities.loadNames(new File(pathCities), new JewishCitiesFilter(), "cities15000.txt");
         cities.populateElevations(names);
@@ -76,10 +76,10 @@ public class JewishCities extends Cities {
      *         if a DOM error occurs.
      */
     @Override
-    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
-        List<Toponym> sorted;
+    public void writeAndroidXML(Collection<GeoNamesToponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
+        List<GeoNamesToponym> sorted;
         if (names instanceof List)
-            sorted = (List<Toponym>) names;
+            sorted = (List<GeoNamesToponym>) names;
         else
             sorted = new ArrayList<>(names);
         Collections.sort(sorted, new LocationComparator());
@@ -130,7 +130,7 @@ public class JewishCities extends Cities {
         String name;
         String language2 = getLanguageCode(language);
 
-        for (Toponym place : sorted) {
+        for (GeoNamesToponym place : sorted) {
             name = place.getName(language2);
             if (name == null) {
                 name = place.getName();

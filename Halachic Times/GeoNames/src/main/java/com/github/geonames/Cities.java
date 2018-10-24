@@ -110,8 +110,8 @@ public class Cities {
         System.out.println(res.getAbsolutePath());
         Cities cities = new Cities();
 
-        Collection<Toponym> names = cities.loadNames(res, new CityFilter());
-        Collection<Toponym> capitals = cities.filterCapitals(names);
+        Collection<GeoNamesToponym> names = cities.loadNames(res, new CityFilter());
+        Collection<GeoNamesToponym> capitals = cities.filterCapitals(names);
         cities.writeAndroidXML(capitals, null);
     }
 
@@ -126,7 +126,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<Toponym> loadNames(File file, NameFilter filter) throws IOException {
+    public Collection<GeoNamesToponym> loadNames(File file, NameFilter filter) throws IOException {
         return loadNames(file, filter, null);
     }
 
@@ -143,7 +143,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<Toponym> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
+    public Collection<GeoNamesToponym> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
         return geoNames.parseTabbed(file, filter, zippedName);
     }
 
@@ -154,11 +154,11 @@ public class Cities {
      *         the list of cites.
      * @return the list of capitals.
      */
-    public Collection<Toponym> filterCapitals(Collection<Toponym> names) throws InsufficientStyleException {
-        Collection<Toponym> capitals = new ArrayList<Toponym>();
+    public Collection<GeoNamesToponym> filterCapitals(Collection<GeoNamesToponym> names) throws InsufficientStyleException {
+        Collection<GeoNamesToponym> capitals = new ArrayList<GeoNamesToponym>();
         Collection<String> countries = getCountries();
 
-        for (Toponym name : names) {
+        for (GeoNamesToponym name : names) {
             if (FEATURE_PPLC.equals(name.getFeatureCode())) {
                 capitals.add(name);
                 countries.remove(name.getCountryCode());
@@ -167,10 +167,10 @@ public class Cities {
 
         // For all countries without capitals, find the next best matching city type.
         if (!countries.isEmpty()) {
-            Map<String, Toponym> best = new TreeMap<String, Toponym>();
-            Toponym place;
+            Map<String, GeoNamesToponym> best = new TreeMap<String, GeoNamesToponym>();
+            GeoNamesToponym place;
             String cc;
-            for (Toponym name : names) {
+            for (GeoNamesToponym name : names) {
                 cc = name.getCountryCode();
 
                 if (countries.contains(cc)) {
@@ -199,7 +199,7 @@ public class Cities {
      *         a name.
      * @return the better name.
      */
-    private Toponym betterPlace(Toponym name1, Toponym name2) throws InsufficientStyleException {
+    private GeoNamesToponym betterPlace(GeoNamesToponym name1, GeoNamesToponym name2) throws InsufficientStyleException {
         String feature1 = name1.getFeatureCode();
         String feature2 = name2.getFeatureCode();
         int rank1 = getFeatureCodeRank(feature1);
@@ -265,10 +265,10 @@ public class Cities {
      * @throws TransformerException
      *         if a DOM error occurs.
      */
-    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
-        List<Toponym> sorted = null;
+    public void writeAndroidXML(Collection<GeoNamesToponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
+        List<GeoNamesToponym> sorted = null;
         if (names instanceof List)
-            sorted = (List<Toponym>) names;
+            sorted = (List<GeoNamesToponym>) names;
         else
             sorted = new ArrayList<>(names);
         Collections.sort(sorted, new LocationComparator());
@@ -311,7 +311,7 @@ public class Cities {
 
         Element country, latitude, longitude, zone;
 
-        for (Toponym place : sorted) {
+        for (GeoNamesToponym place : sorted) {
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
@@ -355,7 +355,7 @@ public class Cities {
         return countries;
     }
 
-    public void populateElevations(Collection<Toponym> records) {
+    public void populateElevations(Collection<GeoNamesToponym> records) {
         geoNames.populateElevations(records);
     }
 
@@ -369,7 +369,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<Toponym> records) throws IOException {
+    public void populateAlternateNames(File file, Collection<GeoNamesToponym> records) throws IOException {
         populateAlternateNames(file, records, null);
     }
 
@@ -385,7 +385,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<Toponym> records, String zippedName) throws IOException {
+    public void populateAlternateNames(File file, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
         geoNames.populateAlternateNames(file, records, zippedName);
     }
 }

@@ -25,11 +25,11 @@ import static com.github.geonames.Features.FEATURE_P;
 public class CityFilter implements NameFilter {
 
     @Override
-    public boolean accept(Toponym name) {
+    public boolean accept(GeoNamesToponym name) {
         return FEATURE_P.equals(name.getFeatureClass());
     }
 
     @Override
-    public void replaceLocation(Toponym name) {
+    public void replaceLocation(GeoNamesToponym name) {
     }
 }
