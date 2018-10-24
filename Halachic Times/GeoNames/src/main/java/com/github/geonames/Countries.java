@@ -15,8 +15,6 @@
  */
 package com.github.geonames;
 
-import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -182,7 +180,7 @@ public class Countries extends Cities {
         TransformerFactory xformerFactory = TransformerFactory.newInstance();
         Transformer transformer = xformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
+        transformer.setOutputProperty(S_KEY_INDENT_AMOUNT, "4");
         transformer.transform(src, result);
     }
 

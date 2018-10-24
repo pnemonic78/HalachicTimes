@@ -44,7 +44,22 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import static com.github.geonames.Features.*;
+import static com.github.geonames.Features.FEATURE_P;
+import static com.github.geonames.Features.FEATURE_PPL;
+import static com.github.geonames.Features.FEATURE_PPLA;
+import static com.github.geonames.Features.FEATURE_PPLA2;
+import static com.github.geonames.Features.FEATURE_PPLA3;
+import static com.github.geonames.Features.FEATURE_PPLA4;
+import static com.github.geonames.Features.FEATURE_PPLC;
+import static com.github.geonames.Features.FEATURE_PPLF;
+import static com.github.geonames.Features.FEATURE_PPLG;
+import static com.github.geonames.Features.FEATURE_PPLL;
+import static com.github.geonames.Features.FEATURE_PPLQ;
+import static com.github.geonames.Features.FEATURE_PPLR;
+import static com.github.geonames.Features.FEATURE_PPLS;
+import static com.github.geonames.Features.FEATURE_PPLW;
+import static com.github.geonames.Features.FEATURE_PPLX;
+import static com.github.geonames.Features.FEATURE_STLMT;
 
 /**
  * Cities.
@@ -63,6 +78,8 @@ public class Cities {
     protected static final String HEADER = "Generated from geonames.org data";
 
     private static final String APP_RES = "/src/main/res";
+
+    protected static final String S_KEY_INDENT_AMOUNT = OutputPropertiesFactory.S_KEY_INDENT_AMOUNT;
 
     protected final GeoNames geoNames = new GeoNames();
     private String moduleName;
@@ -322,7 +339,7 @@ public class Cities {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
+        transformer.setOutputProperty(S_KEY_INDENT_AMOUNT, "4");
         transformer.transform(src, result);
     }
 
