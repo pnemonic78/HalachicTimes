@@ -17,8 +17,6 @@ package com.github.geonames;
 
 import com.github.geonames.util.LocaleUtils;
 
-import org.geonames.BoundingBox;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,18 +28,11 @@ import java.util.Map;
  */
 public class Toponym extends GeoNamesRecord {
 
-    private BoundingBox bbox;
     private String countryId;
-    private String countryName;
     private String adminId1;
     private String continentCode;
     private String toponymName;
     private String wikipediaURL;
-    private String adminName1;
-    private String adminName2;
-    private String adminName3;
-    private String adminName4;
-    private String adminName5;
     private final Map<String, AlternateName> alternateNamesMap = new HashMap<>();
     private String fclName;
     private String fcodeName;
@@ -66,28 +57,12 @@ public class Toponym extends GeoNamesRecord {
         }
     }
 
-    public BoundingBox getBounds() {
-        return bbox;
-    }
-
-    public void setBounds(BoundingBox bbox) {
-        this.bbox = bbox;
-    }
-
     public String getCountryId() {
         return countryId;
     }
 
     public void setCountryId(String countryId) {
         this.countryId = countryId;
-    }
-
-    public String getCountryName() {
-        return countryName;
-    }
-
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
     }
 
     public String getAdminId1() {
@@ -120,46 +95,6 @@ public class Toponym extends GeoNamesRecord {
 
     public void setWikipediaURL(String wikipediaURL) {
         this.wikipediaURL = wikipediaURL;
-    }
-
-    public String getAdminName1() {
-        return adminName1;
-    }
-
-    public void setAdminName1(String adminName1) {
-        this.adminName1 = adminName1;
-    }
-
-    public String getAdminName2() {
-        return adminName2;
-    }
-
-    public void setAdminName2(String adminName2) {
-        this.adminName2 = adminName2;
-    }
-
-    public String getAdminName3() {
-        return adminName3;
-    }
-
-    public void setAdminName3(String adminName3) {
-        this.adminName3 = adminName3;
-    }
-
-    public String getAdminName4() {
-        return adminName4;
-    }
-
-    public void setAdminName4(String adminName4) {
-        this.adminName4 = adminName4;
-    }
-
-    public String getAdminName5() {
-        return adminName5;
-    }
-
-    public void setAdminName5(String adminName5) {
-        this.adminName5 = adminName5;
     }
 
     public String getFeatureClassName() {
