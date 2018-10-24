@@ -90,8 +90,8 @@ public class Cities {
         System.out.println(res.getAbsolutePath());
         Cities cities = new Cities();
 
-        Collection<GeoName> names = cities.loadNames(res, new CityFilter());
-        Collection<GeoName> capitals = cities.filterCapitals(names);
+        Collection<Toponym> names = cities.loadNames(res, new CityFilter());
+        Collection<Toponym> capitals = cities.filterCapitals(names);
         cities.writeAndroidXML(capitals, null);
     }
 
@@ -106,7 +106,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> loadNames(File file, NameFilter filter) throws IOException {
+    public Collection<Toponym> loadNames(File file, NameFilter filter) throws IOException {
         return loadNames(file, filter, null);
     }
 
@@ -123,7 +123,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
+    public Collection<Toponym> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
         return geoNames.parseTabbed(file, filter, zippedName);
     }
 
@@ -134,12 +134,12 @@ public class Cities {
      *         the list of cites.
      * @return the list of capitals.
      */
-    public Collection<GeoName> filterCapitals(Collection<GeoName> names) {
-        Collection<GeoName> capitals = new ArrayList<GeoName>();
+    public Collection<Toponym> filterCapitals(Collection<Toponym> names) {
+        Collection<Toponym> capitals = new ArrayList<Toponym>();
         Collection<String> countries = getCountries();
 
-        for (GeoName name : names) {
-            if (GeoName.FEATURE_PPLC.equals(name.getFeatureCode())) {
+        for (Toponym name : names) {
+            if (Toponym.FEATURE_PPLC.equals(name.getFeatureCode())) {
                 capitals.add(name);
                 countries.remove(name.getCountryCode());
             }
@@ -147,10 +147,10 @@ public class Cities {
 
         // For all countries without capitals, find the next best matching city type.
         if (!countries.isEmpty()) {
-            Map<String, GeoName> best = new TreeMap<String, GeoName>();
-            GeoName place;
+            Map<String, Toponym> best = new TreeMap<String, Toponym>();
+            Toponym place;
             String cc;
-            for (GeoName name : names) {
+            for (Toponym name : names) {
                 cc = name.getCountryCode();
 
                 if (countries.contains(cc)) {
@@ -179,7 +179,7 @@ public class Cities {
      *         a name.
      * @return the better name.
      */
-    private GeoName betterPlace(GeoName name1, GeoName name2) {
+    private Toponym betterPlace(Toponym name1, Toponym name2) {
         String feature1 = name1.getFeatureCode();
         String feature2 = name2.getFeatureCode();
         int rank1 = getFeatureCodeRank(feature1);
@@ -213,22 +213,22 @@ public class Cities {
         if (ranks == null) {
             ranks = new TreeMap<String, Integer>();
             int rank = -2;
-            ranks.put(GeoName.FEATURE_PPLW, rank++);
-            ranks.put(GeoName.FEATURE_PPLQ, rank++);
-            ranks.put(GeoName.FEATURE_P, rank++);
-            ranks.put(GeoName.FEATURE_PPLX, rank++);
-            ranks.put(GeoName.FEATURE_PPL, rank++);
-            ranks.put(GeoName.FEATURE_PPLS, rank++);
-            ranks.put(GeoName.FEATURE_PPLL, rank++);
-            ranks.put(GeoName.FEATURE_PPLF, rank++);
-            ranks.put(GeoName.FEATURE_PPLR, rank++);
-            ranks.put(GeoName.FEATURE_STLMT, rank++);
-            ranks.put(GeoName.FEATURE_PPLA4, rank++);
-            ranks.put(GeoName.FEATURE_PPLA3, rank++);
-            ranks.put(GeoName.FEATURE_PPLA2, rank++);
-            ranks.put(GeoName.FEATURE_PPLA, rank++);
-            ranks.put(GeoName.FEATURE_PPLG, rank++);
-            ranks.put(GeoName.FEATURE_PPLC, rank++);
+            ranks.put(Toponym.FEATURE_PPLW, rank++);
+            ranks.put(Toponym.FEATURE_PPLQ, rank++);
+            ranks.put(Toponym.FEATURE_P, rank++);
+            ranks.put(Toponym.FEATURE_PPLX, rank++);
+            ranks.put(Toponym.FEATURE_PPL, rank++);
+            ranks.put(Toponym.FEATURE_PPLS, rank++);
+            ranks.put(Toponym.FEATURE_PPLL, rank++);
+            ranks.put(Toponym.FEATURE_PPLF, rank++);
+            ranks.put(Toponym.FEATURE_PPLR, rank++);
+            ranks.put(Toponym.FEATURE_STLMT, rank++);
+            ranks.put(Toponym.FEATURE_PPLA4, rank++);
+            ranks.put(Toponym.FEATURE_PPLA3, rank++);
+            ranks.put(Toponym.FEATURE_PPLA2, rank++);
+            ranks.put(Toponym.FEATURE_PPLA, rank++);
+            ranks.put(Toponym.FEATURE_PPLG, rank++);
+            ranks.put(Toponym.FEATURE_PPLC, rank++);
         }
         return ranks.get(code);
     }
@@ -245,12 +245,12 @@ public class Cities {
      * @throws TransformerException
      *         if a DOM error occurs.
      */
-    public void writeAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
-        List<GeoName> sorted = null;
+    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException {
+        List<Toponym> sorted = null;
         if (names instanceof List)
-            sorted = (List<GeoName>) names;
+            sorted = (List<Toponym>) names;
         else
-            sorted = new ArrayList<GeoName>(names);
+            sorted = new ArrayList<>(names);
         Collections.sort(sorted, new LocationComparator());
 
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -291,7 +291,7 @@ public class Cities {
 
         Element country, latitude, longitude, zone;
 
-        for (GeoName place : sorted) {
+        for (Toponym place : sorted) {
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
@@ -335,7 +335,7 @@ public class Cities {
         return countries;
     }
 
-    public void populateElevations(Collection<GeoName> records) {
+    public void populateElevations(Collection<Toponym> records) {
         geoNames.populateElevations(records);
     }
 
@@ -349,7 +349,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
+    public void populateAlternateNames(File file, Collection<Toponym> records) throws IOException {
         populateAlternateNames(file, records, null);
     }
 
@@ -365,7 +365,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoName> records, String zippedName) throws IOException {
+    public void populateAlternateNames(File file, Collection<Toponym> records, String zippedName) throws IOException {
         geoNames.populateAlternateNames(file, records, zippedName);
     }
 }

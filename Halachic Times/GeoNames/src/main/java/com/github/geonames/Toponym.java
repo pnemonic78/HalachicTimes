@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * GeoName POJO.
+ * GeoNames toponym POJO.
  *
  * @author Moshe Waisberg
  */
-public class GeoName extends GeoNamesRecord {
+public class Toponym extends GeoNamesRecord {
 
     private BoundingBox bbox;
     private String countryId;

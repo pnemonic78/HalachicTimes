@@ -23,8 +23,8 @@ package com.github.geonames;
 public interface NameFilter {
 
     /** Accept the GeoName record? */
-    boolean accept(GeoName name);
+    boolean accept(Toponym name);
 
     /** Replace the default location. */
-    void replaceLocation(GeoName name);
+    void replaceLocation(Toponym name);
 }

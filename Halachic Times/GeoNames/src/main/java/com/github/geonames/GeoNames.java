@@ -179,7 +179,7 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoName> parseTabbed(File file) throws IOException {
+    public Collection<Toponym> parseTabbed(File file) throws IOException {
         return parseTabbed(file, null);
     }
 
@@ -191,7 +191,7 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoName> parseTabbed(File file, String zippedName) throws IOException {
+    public Collection<Toponym> parseTabbed(File file, String zippedName) throws IOException {
         return parseTabbed(file, null, zippedName);
     }
 
@@ -204,8 +204,8 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoName> parseTabbed(File file, NameFilter filter, String zippedName) throws IOException {
-        Collection<GeoName> records;
+    public Collection<Toponym> parseTabbed(File file, NameFilter filter, String zippedName) throws IOException {
+        Collection<Toponym> records;
         Reader reader = null;
         InputStream in = null;
         try {
@@ -239,7 +239,7 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoName> parseTabbed(Reader reader) throws IOException {
+    public Collection<Toponym> parseTabbed(Reader reader) throws IOException {
         return parseTabbed(reader, null);
     }
 
@@ -276,9 +276,9 @@ public class GeoNames {
      * @return the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public Collection<GeoName> parseTabbed(Reader reader, NameFilter filter) throws IOException {
-        Collection<GeoName> records = new ArrayList<GeoName>();
-        GeoName record;
+    public Collection<Toponym> parseTabbed(Reader reader, NameFilter filter) throws IOException {
+        Collection<Toponym> records = new ArrayList<Toponym>();
+        Toponym record;
         String line;
         BufferedReader buf = new BufferedReader(reader);
         String[] fields;
@@ -291,7 +291,7 @@ public class GeoNames {
             if (line.isEmpty() || line.startsWith("#"))
                 continue;
             fields = line.split("\t");
-            record = new GeoName();
+            record = new Toponym();
 
             field = fields[FIELD_GEONAME_ID];
             record.setGeoNameId(Long.parseLong(field));
@@ -357,9 +357,9 @@ public class GeoNames {
      *
      * @param geoNames the list of names to populate.
      */
-    public void populateElevations(Collection<GeoName> geoNames) {
+    public void populateElevations(Collection<Toponym> geoNames) {
         int elevation;
-        for (GeoName name : geoNames) {
+        for (Toponym name : geoNames) {
             elevation = name.getGrossElevation();
             if (elevation == Integer.MIN_VALUE) {
                 try {
@@ -371,7 +371,7 @@ public class GeoNames {
         }
     }
 
-    public void populateElevation(GeoName geoName) throws IOException, ParserConfigurationException, SAXException {
+    public void populateElevation(Toponym geoName) throws IOException, ParserConfigurationException, SAXException {
         geoName.setElevation(0);
         try {
             populateElevationGeoNames(geoName);
@@ -380,7 +380,7 @@ public class GeoNames {
         }
     }
 
-    public void populateElevationGeoNames(GeoName geoName) throws IOException, ParserConfigurationException, SAXException {
+    public void populateElevationGeoNames(Toponym geoName) throws IOException, ParserConfigurationException, SAXException {
         double latitude = geoName.getLatitude();
         double longitude = geoName.getLongitude();
         String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
@@ -391,7 +391,7 @@ public class GeoNames {
         geoName.setElevation((int) elevation);
     }
 
-    public void populateElevationGoogle(GeoName geoName) throws IOException, ParserConfigurationException, SAXException {
+    public void populateElevationGoogle(Toponym geoName) throws IOException, ParserConfigurationException, SAXException {
         double latitude = geoName.getLatitude();
         double longitude = geoName.getLongitude();
         String queryUrl = String.format(Locale.US, URL_ELEVATION_GOOGLE, latitude, longitude);
@@ -418,11 +418,11 @@ public class GeoNames {
      * Populate the list of names with alternate names.
      *
      * @param records the list of records to populate.
-     * @see #populateAlternateNamesInternet(GeoName)
+     * @see #populateAlternateNamesInternet(Toponym)
      */
-    public void populateAlternateNames(Collection<GeoName> records) {
+    public void populateAlternateNames(Collection<Toponym> records) {
         Map<String, AlternateName> alternateNames;
-        for (GeoName record : records) {
+        for (Toponym record : records) {
             alternateNames = record.getAlternateNamesMap();
             if (alternateNames.size() <= 1) {
                 try {
@@ -440,7 +440,7 @@ public class GeoNames {
      * @param record the name to populate.
      * @see {@linktourl http://download.geonames.org/export/dump/readme.txt}
      */
-    protected void populateAlternateNamesInternet(GeoName record) throws IOException {
+    protected void populateAlternateNamesInternet(Toponym record) throws IOException {
         String queryUrl = String.format(Locale.US, URL_GEONAME_GET, record.getGeoNameId(), USERNAME);
         //queryUrl = "GeoNames/res/524901.json";
         URL url = new URL(queryUrl);
@@ -474,7 +474,7 @@ public class GeoNames {
      * @param records the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
+    public void populateAlternateNames(File file, Collection<Toponym> records) throws IOException {
         populateAlternateNames(file, records, null);
     }
 
@@ -486,7 +486,7 @@ public class GeoNames {
      * @param zippedName the zipped file name.
      * @throws IOException if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoName> records, String zippedName) throws IOException {
+    public void populateAlternateNames(File file, Collection<Toponym> records, String zippedName) throws IOException {
         Reader reader = null;
         InputStream in = null;
         try {
@@ -533,13 +533,13 @@ public class GeoNames {
      * @param records the list of names.
      * @throws IOException if an I/O error occurs.
      */
-    public void populateAlternateNames(Reader reader, Collection<GeoName> records) throws IOException {
-        Map<Long, GeoName> recordsById = new HashMap<>();
-        for (GeoName record : records) {
+    public void populateAlternateNames(Reader reader, Collection<Toponym> records) throws IOException {
+        Map<Long, Toponym> recordsById = new HashMap<>();
+        for (Toponym record : records) {
             recordsById.put(record.getGeoNameId(), record);
         }
 
-        GeoName record;
+        Toponym record;
         String line;
         BufferedReader buf = new BufferedReader(reader);
         String[] fields;

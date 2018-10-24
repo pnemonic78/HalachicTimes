@@ -78,12 +78,12 @@ public class Countries extends Cities {
      *         the list of places.
      * @return the list of regions.
      */
-    public Collection<CountryRegion> toRegions(Collection<GeoName> names) {
+    public Collection<CountryRegion> toRegions(Collection<Toponym> names) {
         Map<String, CountryRegion> regions = new TreeMap<String, CountryRegion>();
         String countryCode;
         CountryRegion region;
 
-        for (GeoName name : names) {
+        for (Toponym name : names) {
             countryCode = name.getCountryCode();
 
             if (!regions.containsKey(countryCode)) {
