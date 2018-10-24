@@ -28,14 +28,8 @@ import java.util.Map;
  */
 public class Toponym extends GeoNamesRecord {
 
-    private String countryId;
-    private String adminId1;
-    private String continentCode;
-    private String toponymName;
     private String wikipediaURL;
     private final Map<String, AlternateName> alternateNamesMap = new HashMap<>();
-    private String fclName;
-    private String fcodeName;
 
     public Map<String, AlternateName> getAlternateNamesMap() {
         return alternateNamesMap;
@@ -43,50 +37,18 @@ public class Toponym extends GeoNamesRecord {
 
     public void setAlternateNames(Map<String, AlternateName> alternateNames) {
         this.alternateNamesMap.clear();
-        if (alternateNamesMap != null) {
-            this.alternateNamesMap.putAll(alternateNamesMap);
+        if (alternateNames != null) {
+            this.alternateNamesMap.putAll(alternateNames);
         }
     }
 
     public void setAlternateNames(Collection<AlternateName> alternateNames) {
         this.alternateNamesMap.clear();
-        if (alternateNamesMap != null) {
+        if (alternateNames != null) {
             for (AlternateName name : alternateNames) {
                 this.alternateNamesMap.put(name.getName(), name);
             }
         }
-    }
-
-    public String getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(String countryId) {
-        this.countryId = countryId;
-    }
-
-    public String getAdminId1() {
-        return adminId1;
-    }
-
-    public void setAdminId1(String adminId1) {
-        this.adminId1 = adminId1;
-    }
-
-    public String getContinentCode() {
-        return continentCode;
-    }
-
-    public void setContinentCode(String continentCode) {
-        this.continentCode = continentCode;
-    }
-
-    public String getToponymName() {
-        return toponymName;
-    }
-
-    public void setToponymName(String toponymName) {
-        this.toponymName = toponymName;
     }
 
     public String getWikipediaURL() {
@@ -95,22 +57,6 @@ public class Toponym extends GeoNamesRecord {
 
     public void setWikipediaURL(String wikipediaURL) {
         this.wikipediaURL = wikipediaURL;
-    }
-
-    public String getFeatureClassName() {
-        return fclName;
-    }
-
-    public void setFeatureClassName(String fclName) {
-        this.fclName = fclName;
-    }
-
-    public String getFeatureCodeName() {
-        return fcodeName;
-    }
-
-    public void setFeatureCodeName(String fcodeName) {
-        this.fcodeName = fcodeName;
     }
 
     public void putAlternateName(long geonameId, String language, String name) {
