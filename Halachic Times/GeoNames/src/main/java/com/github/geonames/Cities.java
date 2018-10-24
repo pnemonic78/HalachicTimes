@@ -248,7 +248,7 @@ public class Cities {
      * @throws TransformerException
      *         if a DOM error occurs.
      */
-    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException {
+    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
         List<Toponym> sorted = null;
         if (names instanceof List)
             sorted = (List<Toponym>) names;
@@ -302,7 +302,7 @@ public class Cities {
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
             longitude.setTextContent(Integer.toString((int) (place.getLongitude() * CountryRegion.FACTOR_TO_INT)));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-            zone.setTextContent(place.getTimeZone());
+            zone.setTextContent(place.getTimezone().getTimezoneId());
 
             countriesElement.appendChild(country);
             latitudesElement.appendChild(latitude);

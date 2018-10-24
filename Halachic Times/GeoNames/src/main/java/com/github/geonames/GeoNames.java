@@ -18,6 +18,7 @@ package com.github.geonames;
 import com.github.net.HTTPReader;
 
 import org.geonames.FeatureClass;
+import org.geonames.Timezone;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -368,6 +369,7 @@ public class GeoNames {
         BufferedReader buf = new BufferedReader(reader);
         String[] fields;
         String field;
+        Timezone timezone;
 
         while (true) {
             line = buf.readLine();
@@ -422,7 +424,9 @@ public class GeoNames {
                 System.err.println(line);
                 continue;
             }
-            record.setTimeZone(field);
+            timezone = new Timezone();
+            timezone.setTimezoneId(field);
+            record.setTimezone(timezone);
             field = fields[FIELD_GEONAME_MODIFICATION];
             record.setModification(field);
 

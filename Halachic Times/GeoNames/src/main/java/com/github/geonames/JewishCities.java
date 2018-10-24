@@ -17,6 +17,7 @@ package com.github.geonames;
 
 import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
 
+import org.geonames.InsufficientStyleException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -77,7 +78,7 @@ public class JewishCities extends Cities {
      *         if a DOM error occurs.
      */
     @Override
-    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException {
+    public void writeAndroidXML(Collection<Toponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
         List<Toponym> sorted;
         if (names instanceof List)
             sorted = (List<Toponym>) names;
@@ -149,7 +150,7 @@ public class JewishCities extends Cities {
             elevation = doc.createElement(ANDROID_ELEMENT_ITEM);
             elevation.setTextContent(Integer.toString(place.getGrossElevation()));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-            zone.setTextContent(place.getTimeZone());
+            zone.setTextContent(place.getTimezone().getTimezoneId());
 
             citiesElement.appendChild(city);
             countriesElement.appendChild(country);

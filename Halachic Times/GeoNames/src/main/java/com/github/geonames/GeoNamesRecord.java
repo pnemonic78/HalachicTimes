@@ -31,7 +31,6 @@ public class GeoNamesRecord extends Toponym {
     private String asciiName;
     private String cc2;
     private int dem = Integer.MIN_VALUE;
-    private String timezone;
     private String modification;
 
     /**
@@ -99,24 +98,6 @@ public class GeoNamesRecord extends Toponym {
      */
     public void setDigitalElevation(int dem) {
         this.dem = dem;
-    }
-
-    /**
-     * Get the timezone.
-     *
-     * @return the timezone
-     */
-    public String getTimeZone() {
-        return timezone;
-    }
-
-    /**
-     * Set the timezone.
-     *
-     * @param timezone the timezone.
-     */
-    public void setTimeZone(String timezone) {
-        this.timezone = timezone;
     }
 
     /**
