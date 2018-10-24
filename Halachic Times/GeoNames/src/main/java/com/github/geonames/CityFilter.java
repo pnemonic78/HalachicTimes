@@ -15,6 +15,8 @@
  */
 package com.github.geonames;
 
+import static com.github.geonames.Features.FEATURE_P;
+
 /**
  * Name filter for capital cities.
  *
@@ -24,7 +26,7 @@ public class CityFilter implements NameFilter {
 
     @Override
     public boolean accept(Toponym name) {
-        return Toponym.FEATURE_P.equals(name.getFeatureClass());
+        return FEATURE_P.equals(name.getFeatureClass());
     }
 
     @Override

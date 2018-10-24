@@ -43,6 +43,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import static com.github.geonames.Features.*;
+
 /**
  * Cities.
  *
@@ -139,7 +141,7 @@ public class Cities {
         Collection<String> countries = getCountries();
 
         for (Toponym name : names) {
-            if (Toponym.FEATURE_PPLC.equals(name.getFeatureCode())) {
+            if (FEATURE_PPLC.equals(name.getFeatureCode())) {
                 capitals.add(name);
                 countries.remove(name.getCountryCode());
             }
@@ -211,24 +213,24 @@ public class Cities {
      */
     private int getFeatureCodeRank(String code) {
         if (ranks == null) {
-            ranks = new TreeMap<String, Integer>();
+            ranks = new TreeMap<>();
             int rank = -2;
-            ranks.put(Toponym.FEATURE_PPLW, rank++);
-            ranks.put(Toponym.FEATURE_PPLQ, rank++);
-            ranks.put(Toponym.FEATURE_P, rank++);
-            ranks.put(Toponym.FEATURE_PPLX, rank++);
-            ranks.put(Toponym.FEATURE_PPL, rank++);
-            ranks.put(Toponym.FEATURE_PPLS, rank++);
-            ranks.put(Toponym.FEATURE_PPLL, rank++);
-            ranks.put(Toponym.FEATURE_PPLF, rank++);
-            ranks.put(Toponym.FEATURE_PPLR, rank++);
-            ranks.put(Toponym.FEATURE_STLMT, rank++);
-            ranks.put(Toponym.FEATURE_PPLA4, rank++);
-            ranks.put(Toponym.FEATURE_PPLA3, rank++);
-            ranks.put(Toponym.FEATURE_PPLA2, rank++);
-            ranks.put(Toponym.FEATURE_PPLA, rank++);
-            ranks.put(Toponym.FEATURE_PPLG, rank++);
-            ranks.put(Toponym.FEATURE_PPLC, rank++);
+            ranks.put(FEATURE_PPLW, rank++);
+            ranks.put(FEATURE_PPLQ, rank++);
+            ranks.put(FEATURE_P, rank++);
+            ranks.put(FEATURE_PPLX, rank++);
+            ranks.put(FEATURE_PPL, rank++);
+            ranks.put(FEATURE_PPLS, rank++);
+            ranks.put(FEATURE_PPLL, rank++);
+            ranks.put(FEATURE_PPLF, rank++);
+            ranks.put(FEATURE_PPLR, rank++);
+            ranks.put(FEATURE_STLMT, rank++);
+            ranks.put(FEATURE_PPLA4, rank++);
+            ranks.put(FEATURE_PPLA3, rank++);
+            ranks.put(FEATURE_PPLA2, rank++);
+            ranks.put(FEATURE_PPLA, rank++);
+            ranks.put(FEATURE_PPLG, rank++);
+            ranks.put(FEATURE_PPLC, rank++);
         }
         return ranks.get(code);
     }
