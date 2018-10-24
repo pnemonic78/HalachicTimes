@@ -19,11 +19,11 @@ import static com.github.geonames.CountryInfo.ISO639_ISRAEL;
 import static com.github.geonames.CountryInfo.ISO639_PALESTINE;
 
 /**
- * GeoName data record.
+ * GeoNames data record.
  *
  * @author Moshe Waisberg
  */
-public class GeoNameRecord {
+public class GeoNamesRecord {
 
     /** Feature class for a populated city. */
     public static final String FEATURE_P = "P";

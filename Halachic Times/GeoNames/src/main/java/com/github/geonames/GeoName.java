@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author Moshe Waisberg
  */
-public class GeoName extends GeoNameRecord {
+public class GeoName extends GeoNamesRecord {
 
     private BoundingBox bbox;
     private String countryId;
