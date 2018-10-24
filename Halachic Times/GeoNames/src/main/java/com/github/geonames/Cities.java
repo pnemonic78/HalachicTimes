@@ -17,6 +17,7 @@ package com.github.geonames;
 
 import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
 
+import org.geonames.InsufficientStyleException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -136,7 +137,7 @@ public class Cities {
      *         the list of cites.
      * @return the list of capitals.
      */
-    public Collection<Toponym> filterCapitals(Collection<Toponym> names) {
+    public Collection<Toponym> filterCapitals(Collection<Toponym> names) throws InsufficientStyleException {
         Collection<Toponym> capitals = new ArrayList<Toponym>();
         Collection<String> countries = getCountries();
 
@@ -181,7 +182,7 @@ public class Cities {
      *         a name.
      * @return the better name.
      */
-    private Toponym betterPlace(Toponym name1, Toponym name2) {
+    private Toponym betterPlace(Toponym name1, Toponym name2) throws InsufficientStyleException {
         String feature1 = name1.getFeatureCode();
         String feature2 = name2.getFeatureCode();
         int rank1 = getFeatureCodeRank(feature1);

@@ -17,6 +17,7 @@ package com.github.geonames;
 
 import com.github.net.HTTPReader;
 
+import org.geonames.FeatureClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -59,7 +60,9 @@ import javax.xml.parsers.ParserConfigurationException;
  */
 public class GeoNames {
 
-    /** GeoNames user name. */
+    /**
+     * GeoNames user name.
+     */
     private static final String USERNAME = "";
 
     private static final String TAG_ELEVATION_STATUS = "status";
@@ -83,89 +86,171 @@ public class GeoNames {
      */
     private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
 
-    /** integer id of record in geonames database */
+    /**
+     * integer id of record in geonames database
+     */
     private static final int FIELD_GEONAME_ID = 0;
-    /** name of geographical point (utf8) varchar(200) */
+    /**
+     * name of geographical point (utf8) varchar(200)
+     */
     private static final int FIELD_GEONAME_NAME = 1;
-    /** name of geographical point in plain ascii characters, varchar(200) */
+    /**
+     * name of geographical point in plain ascii characters, varchar(200)
+     */
     private static final int FIELD_GEONAME_ASCIINAME = 2;
-    /** alternatenames, comma separated, ascii names automatically transliterated, convenience attribute from alternatename table, varchar(10000) */
+    /**
+     * alternatenames, comma separated, ascii names automatically transliterated, convenience attribute from alternatename table, varchar(10000)
+     */
     private static final int FIELD_GEONAME_ALTERNATENAMES = 3;
-    /** latitude in decimal degrees (wgs84) */
+    /**
+     * latitude in decimal degrees (wgs84)
+     */
     private static final int FIELD_GEONAME_LATITUDE = 4;
-    /** longitude in decimal degrees (wgs84) */
+    /**
+     * longitude in decimal degrees (wgs84)
+     */
     private static final int FIELD_GEONAME_LONGITUDE = 5;
-    /** see http://www.geonames.org/export/codes.html, char(1) */
+    /**
+     * see http://www.geonames.org/export/codes.html, char(1)
+     */
     private static final int FIELD_GEONAME_FEATURE_CLASS = 6;
-    /** see http://www.geonames.org/export/codes.html, varchar(10) */
+    /**
+     * see http://www.geonames.org/export/codes.html, varchar(10)
+     */
     private static final int FIELD_GEONAME_FC = 7;
-    /** ISO-3166 2-letter country code, 2 characters */
+    /**
+     * ISO-3166 2-letter country code, 2 characters
+     */
     private static final int FIELD_GEONAME_CC = 8;
-    /** alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters */
+    /**
+     * alternate country codes, comma separated, ISO-3166 2-letter country code, 200 characters
+     */
     private static final int FIELD_GEONAME_CC2 = 9;
-    /** fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20) */
+    /**
+     * fipscode (subject to change to iso code), see exceptions below, see file admin1Codes.txt for display names of this code; varchar(20)
+     */
     private static final int FIELD_GEONAME_ADMIN1_CODE = 10;
-    /** code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80) */
+    /**
+     * code for the second administrative division, a county in the US, see file admin2Codes.txt; varchar(80)
+     */
     private static final int FIELD_GEONAME_ADMIN2_CODE = 11;
-    /** code for third level administrative division, varchar(20) */
+    /**
+     * code for third level administrative division, varchar(20)
+     */
     private static final int FIELD_GEONAME_ADMIN3_CODE = 12;
-    /** code for fourth level administrative division, varchar(20) */
+    /**
+     * code for fourth level administrative division, varchar(20)
+     */
     private static final int FIELD_GEONAME_ADMIN4_CODE = 13;
-    /** bigint (8 byte int) */
+    /**
+     * bigint (8 byte int)
+     */
     private static final int FIELD_GEONAME_POPULATION = 14;
-    /** in meters, integer */
+    /**
+     * in meters, integer
+     */
     private static final int FIELD_GEONAME_ELEVATION = 15;
-    /** digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat. */
+    /**
+     * digital elevation model, srtm3 or gtopo30, average elevation of 3''x3'' (ca 90mx90m) or 30''x30'' (ca 900mx900m) area in meters, integer. srtm processed by cgiar/ciat.
+     */
     private static final int FIELD_GEONAME_DEM = 16;
-    /** the iana timezone id (see file timeZone.txt) varchar(40) */
+    /**
+     * the iana timezone id (see file timeZone.txt) varchar(40)
+     */
     private static final int FIELD_GEONAME_TIMEZONE = 17;
-    /** date of last modification in yyyy-MM-dd format */
+    /**
+     * date of last modification in yyyy-MM-dd format
+     */
     private static final int FIELD_GEONAME_MODIFICATION = 18;
 
-    /** the id of this alternate name, int */
+    /**
+     * the id of this alternate name, int
+     */
     private static final int FIELD_ALTERNATE_NAMES_ID = 0;
-    /** geonameId referring to id in table 'geoname', int */
+    /**
+     * geonameId referring to id in table 'geoname', int
+     */
     private static final int FIELD_ALTERNATE_NAMES_GEONAME_ID = 1;
-    /** iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7) */
+    /**
+     * iso 639 language code 2- or 3-characters; 4-characters 'post' for postal codes and 'iata','icao' and faac for airport codes, fr_1793 for French Revolution names,  abbr for abbreviation, link to a website (mostly to wikipedia), wkdt for the wikidataid, varchar(7)
+     */
     private static final int FIELD_ALTERNATE_NAMES_LANGUAGE = 2;
-    /** alternate name or name variant, varchar(400) */
+    /**
+     * alternate name or name variant, varchar(400)
+     */
     private static final int FIELD_ALTERNATE_NAMES_NAME = 3;
-    /** '1', if this alternate name is an official/preferred name */
+    /**
+     * '1', if this alternate name is an official/preferred name
+     */
     private static final int FIELD_ALTERNATE_NAMES_PREFERRED = 4;
-    /** '1', if this is a short name like 'California' for 'State of California' */
+    /**
+     * '1', if this is a short name like 'California' for 'State of California'
+     */
     private static final int FIELD_ALTERNATE_NAMES_SHORT = 5;
-    /** '1', if this alternate name is a colloquial or slang term. Example: 'Big Apple' for 'New York'. */
+    /**
+     * '1', if this alternate name is a colloquial or slang term. Example: 'Big Apple' for 'New York'.
+     */
     private static final int FIELD_ALTERNATE_NAMES_COLLOQUIAL = 6;
-    /** '1', if this alternate name is historic and was used in the past. Example 'Bombay' for 'Mumbai'. */
+    /**
+     * '1', if this alternate name is historic and was used in the past. Example 'Bombay' for 'Mumbai'.
+     */
     private static final int FIELD_ALTERNATE_NAMES_HISTORIC = 7;
-    /** from period when the name was used */
+    /**
+     * from period when the name was used
+     */
     private static final int FIELD_ALTERNATE_NAMES_FROM = 8;
-    /** to period when the name was used */
+    /**
+     * to period when the name was used
+     */
     private static final int FIELD_ALTERNATE_NAMES_TO = 9;
 
-    /** abbreviation */
+    /**
+     * abbreviation
+     */
     private static final String ALTERNATE_NAMES_ABBR = "abbr";
-    /** airport codes */
+    /**
+     * airport codes
+     */
     private static final String ALTERNATE_NAMES_FAAC = "faac";
-    /** French Revolution names */
+    /**
+     * French Revolution names
+     */
     private static final String ALTERNATE_NAMES_FR_1793 = "fr_1793";
-    /** airport codes */
+    /**
+     * airport codes
+     */
     private static final String ALTERNATE_NAMES_IATA = "iata";
-    /** airport codes */
+    /**
+     * airport codes
+     */
     private static final String ALTERNATE_NAMES_ICAO = "icao";
-    /** a website */
+    /**
+     * a website
+     */
     private static final String ALTERNATE_NAMES_LINK = "link";
-    /** phonetics */
+    /**
+     * phonetics
+     */
     private static final String ALTERNATE_NAMES_PHON = "phon";
-    /** pinyin */
+    /**
+     * pinyin
+     */
     private static final String ALTERNATE_NAMES_PINY = "piny";
-    /** postal codes */
+    /**
+     * postal codes
+     */
     private static final String ALTERNATE_NAMES_POST = "post";
-    /** airport codes */
+    /**
+     * airport codes
+     */
     private static final String ALTERNATE_NAMES_TCID = "tcid";
-    /** UNLOCODE */
+    /**
+     * UNLOCODE
+     */
     private static final String ALTERNATE_NAMES_UNLC = "unlc";
-    /** wikidataid */
+    /**
+     * wikidataid
+     */
     private static final String ALTERNATE_NAMES_WKDT = "wkdt";
 
     public GeoNames() {
@@ -277,7 +362,7 @@ public class GeoNames {
      * @throws IOException if an I/O error occurs.
      */
     public Collection<Toponym> parseTabbed(Reader reader, NameFilter filter) throws IOException {
-        Collection<Toponym> records = new ArrayList<Toponym>();
+        Collection<Toponym> records = new ArrayList<>();
         Toponym record;
         String line;
         BufferedReader buf = new BufferedReader(reader);
@@ -294,7 +379,7 @@ public class GeoNames {
             record = new Toponym();
 
             field = fields[FIELD_GEONAME_ID];
-            record.setGeoNameId(Long.parseLong(field));
+            record.setGeoNameId(Integer.parseInt(field));
             field = fields[FIELD_GEONAME_NAME];
             record.setName(field);
             field = fields[FIELD_GEONAME_ASCIINAME];
@@ -306,7 +391,7 @@ public class GeoNames {
             field = fields[FIELD_GEONAME_LONGITUDE];
             record.setLongitude(Double.parseDouble(field));
             field = fields[FIELD_GEONAME_FEATURE_CLASS];
-            record.setFeatureClass(field);
+            record.setFeatureClass(FeatureClass.fromValue(field));
             field = fields[FIELD_GEONAME_FC];
             record.setFeatureCode(field);
             field = fields[FIELD_GEONAME_CC];
@@ -358,15 +443,15 @@ public class GeoNames {
      * @param geoNames the list of names to populate.
      */
     public void populateElevations(Collection<Toponym> geoNames) {
-        int elevation;
+        Integer elevation;
         for (Toponym name : geoNames) {
-            elevation = name.getGrossElevation();
-            if (elevation == Integer.MIN_VALUE) {
-                try {
+            try {
+                elevation = name.getGrossElevation();
+                if (elevation == null) {
                     populateElevation(name);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -534,7 +619,7 @@ public class GeoNames {
      * @throws IOException if an I/O error occurs.
      */
     public void populateAlternateNames(Reader reader, Collection<Toponym> records) throws IOException {
-        Map<Long, Toponym> recordsById = new HashMap<>();
+        Map<Integer, Toponym> recordsById = new HashMap<>();
         for (Toponym record : records) {
             recordsById.put(record.getGeoNameId(), record);
         }
@@ -544,7 +629,7 @@ public class GeoNames {
         BufferedReader buf = new BufferedReader(reader);
         String[] fields;
 
-        long geonameId;
+        int geonameId;
         String language;
         String name;
         boolean preferredName;
@@ -552,7 +637,7 @@ public class GeoNames {
         boolean colloquial;
         boolean historic;
 
-        Set<Long> finished = new HashSet<>();
+        Set<Integer> finished = new HashSet<>();
 
         while (true) {
             line = buf.readLine();
@@ -562,7 +647,7 @@ public class GeoNames {
                 continue;
             fields = line.split("\t");
 
-            geonameId = Long.parseLong(fields[FIELD_ALTERNATE_NAMES_GEONAME_ID]);
+            geonameId = Integer.parseInt(fields[FIELD_ALTERNATE_NAMES_GEONAME_ID]);
             if (finished.contains(geonameId)) {
                 continue;
             }
@@ -572,17 +657,17 @@ public class GeoNames {
             }
             language = fields[FIELD_ALTERNATE_NAMES_LANGUAGE];
             if (language.isEmpty()
-                    || ALTERNATE_NAMES_ABBR.equals(language)
-                    || ALTERNATE_NAMES_FAAC.equals(language)
-                    || ALTERNATE_NAMES_FR_1793.equals(language)
-                    || ALTERNATE_NAMES_IATA.equals(language)
-                    || ALTERNATE_NAMES_ICAO.equals(language)
-                    || ALTERNATE_NAMES_PHON.equals(language)
-                    || ALTERNATE_NAMES_PINY.equals(language)
-                    || ALTERNATE_NAMES_POST.equals(language)
-                    || ALTERNATE_NAMES_TCID.equals(language)
-                    || ALTERNATE_NAMES_WKDT.equals(language)
-                    ) {
+                || ALTERNATE_NAMES_ABBR.equals(language)
+                || ALTERNATE_NAMES_FAAC.equals(language)
+                || ALTERNATE_NAMES_FR_1793.equals(language)
+                || ALTERNATE_NAMES_IATA.equals(language)
+                || ALTERNATE_NAMES_ICAO.equals(language)
+                || ALTERNATE_NAMES_PHON.equals(language)
+                || ALTERNATE_NAMES_PINY.equals(language)
+                || ALTERNATE_NAMES_POST.equals(language)
+                || ALTERNATE_NAMES_TCID.equals(language)
+                || ALTERNATE_NAMES_WKDT.equals(language)
+                ) {
                 continue;
             }
             // "unlc" is almost always the last record in the group, so anything following is probably a mistake.
