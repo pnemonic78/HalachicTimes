@@ -217,6 +217,23 @@ public class GeocoderTestCase {
         assertEquals(34.95382, address.getLongitude(), DELTA);
         assertEquals("Israel", address.getCountryName());
         assertEquals("El‘ad", address.getFeatureName());
+
+        // Tel-Aviv
+        results.clear();
+        in = context.getResources().openRawResource(R.raw.geonames_telaviv);
+        assertNotNull(in);
+        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        assertNotNull(parser);
+        parser.parse(in);
+        assertTrue(maxResults >= results.size());
+        assertEquals(6, results.size());
+
+        address = results.get(5);
+        assertNotNull(address);
+        assertEquals(32.06948, address.getLatitude(), DELTA);
+        assertEquals(34.7689, address.getLongitude(), DELTA);
+        assertEquals("Israel", address.getCountryName());
+        assertEquals("Kerem HaTemanim", address.getFeatureName());
     }
 
     /**
