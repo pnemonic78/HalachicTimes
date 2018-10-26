@@ -39,7 +39,14 @@ class GoogleAddressResponseParser extends AddressResponseParser {
 
     private final SAXParser parser;
 
-    public GoogleAddressResponseParser(Locale locale, List<Address> results, int maxResults, SAXParser parser) {
+    /**
+     * Construct a new address parser.
+     *
+     * @param locale     the addresses' locale.
+     * @param results    the list of results to populate.
+     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
+     */
+    GoogleAddressResponseParser(Locale locale, List<Address> results, int maxResults, SAXParser parser) {
         super(locale, results, maxResults);
         this.parser = parser;
     }

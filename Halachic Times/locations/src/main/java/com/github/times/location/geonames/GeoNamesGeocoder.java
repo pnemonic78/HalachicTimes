@@ -27,14 +27,9 @@ import com.github.times.location.LocationException;
 import com.github.times.location.TextElevationResponseParser;
 import com.github.util.LocaleUtils;
 
-import org.xml.sax.SAXException;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -106,13 +101,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
 
     @Override
     protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException {
-        final SAXParser parser;
-        try {
-            parser = getXmlParser();
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new LocationException(e);
-        }
-        return new GeoNamesAddressResponseParser(locale, results, maxResults, parser);
+        return new GeoNamesAddressResponseParser(locale, results, maxResults);
     }
 
     @Override

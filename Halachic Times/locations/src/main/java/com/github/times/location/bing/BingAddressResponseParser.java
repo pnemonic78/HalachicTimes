@@ -47,13 +47,13 @@ import static android.text.TextUtils.isEmpty;
 public class BingAddressResponseParser extends AddressResponseParser {
 
     /**
-     * Construct a new elevation parser.
+     * Construct a new address parser.
      *
      * @param locale     the addresses' locale.
      * @param results    the list of results to populate.
      * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
      */
-    protected BingAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+    BingAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
         super(locale, results, maxResults);
     }
 
@@ -74,7 +74,6 @@ public class BingAddressResponseParser extends AddressResponseParser {
     }
 
     private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) {
-        results.clear();
         if (response.statusCode != BingResponse.STATUS_OK) {
             return;
         }
@@ -105,32 +104,32 @@ public class BingAddressResponseParser extends AddressResponseParser {
 
     @Nullable
     private Address toAddress(@NonNull BingResource resource, Locale locale) {
-        Address result = new ZmanimAddress(locale);
-        result.setFeatureName(resource.name);
+        Address address = new ZmanimAddress(locale);
+        address.setFeatureName(resource.name);
 
         BingPoint point = resource.point;
         if ((point == null) || (point.coordinates == null) || (point.coordinates.length < 2)) {
             return null;
         }
-        result.setLatitude(point.coordinates[0]);
-        result.setLongitude(point.coordinates[1]);
+        address.setLatitude(point.coordinates[0]);
+        address.setLongitude(point.coordinates[1]);
 
-        BingAddress address = resource.address;
-        if (address == null) {
+        BingAddress bingAddress = resource.address;
+        if (bingAddress == null) {
             return null;
         }
-        if (!isEmpty(address.addressLine)) {
-            result.setAddressLine(0, address.addressLine);
+        if (!isEmpty(bingAddress.addressLine)) {
+            address.setAddressLine(0, bingAddress.addressLine);
         }
-        result.setAdminArea(address.adminDistrict);
-        result.setSubAdminArea(address.adminDistrict2);
-        result.setCountryName(address.countryRegion);
-        result.setLocality(address.locality);
-        result.setPostalCode(address.postalCode);
-        String formatted = address.formattedAddress;
+        address.setAdminArea(bingAddress.adminDistrict);
+        address.setSubAdminArea(bingAddress.adminDistrict2);
+        address.setCountryName(bingAddress.countryRegion);
+        address.setLocality(bingAddress.locality);
+        address.setPostalCode(bingAddress.postalCode);
+        String formatted = bingAddress.formattedAddress;
         if ((formatted != null) && formatted.equals(resource.name)) {
-            result.setFeatureName(null);
+            address.setFeatureName(null);
         }
-        return result;
+        return address;
     }
 }

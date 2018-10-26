@@ -30,7 +30,7 @@ public class GeoNamesRecord extends Toponym {
 
     private String asciiName;
     private String cc2;
-    private int dem = Integer.MIN_VALUE;
+    private Integer dem = null;
     private String modification;
 
     /**
@@ -87,7 +87,7 @@ public class GeoNamesRecord extends Toponym {
      *
      * @return the elevation.
      */
-    public int getDigitalElevation() {
+    public Integer getDigitalElevation() {
         return dem;
     }
 
@@ -127,8 +127,7 @@ public class GeoNamesRecord extends Toponym {
         Integer elevation = null;
         try {
             elevation = getElevation();
-        } catch (InsufficientStyleException e) {
-            e.printStackTrace();
+        } catch (InsufficientStyleException ignore) {
         }
         if (elevation == null) {
             elevation = getDigitalElevation();
