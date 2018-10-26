@@ -28,7 +28,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
+import org.geonames.BoundingBox;
 import org.geonames.InsufficientStyleException;
+import org.geonames.Timezone;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,6 +67,9 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Uri.class, new UriAdapter())
             .registerTypeAdapter(GeoNamesRecord.class, new GeoNamesTypeAdapter())
+            .registerTypeAdapter(BoundingBox.class, new GeoNamesBoxTypeAdapter())
+            .registerTypeAdapter(Timezone.class, new GeoNamesTimezoneAdapter())
+            .setDateFormat("yyyy-MM-dd HH:mm")
             .create();
         try {
             Reader reader = new InputStreamReader(data);

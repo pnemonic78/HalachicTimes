@@ -15,12 +15,17 @@
  */
 package com.github.times.location.geonames;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
+import org.geonames.BoundingBox;
 import org.geonames.FeatureClass;
+import org.geonames.InsufficientStyleException;
+import org.geonames.Timezone;
 
 import java.io.IOException;
 
@@ -30,13 +35,20 @@ import java.io.IOException;
  * @author Moshe Waisberg
  */
 public class GeoNamesTypeAdapter extends TypeAdapter<GeoNamesRecord> {
+
+    // TODO inject via constructor that created via factory
+    private final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(BoundingBox.class, new GeoNamesBoxTypeAdapter())
+        .registerTypeAdapter(Timezone.class, new GeoNamesTimezoneAdapter())
+        .create();
+
     @Override
     public GeoNamesRecord read(JsonReader in) throws IOException {
         if (in.peek() == JsonToken.NULL) {
             in.nextNull();
             return null;
         }
-        return getToponymFromElement(in);
+        return readToponym(in);
     }
 
     @Override
@@ -47,10 +59,38 @@ public class GeoNamesTypeAdapter extends TypeAdapter<GeoNamesRecord> {
         }
         out.beginObject();
         out.name("name").value(value.getName());
+        out.name("lat").value(value.getLatitude());
+        out.name("lng").value(value.getLongitude());
+        out.name("geonameId").value(value.getGeoNameId());
+        out.name("countryCode").value(value.getCountryCode());
+        out.name("countryName").value(value.getCountryName());
+        out.name("fcl").value(value.getFeatureClass().name());
+        out.name("fcode").value(value.getFeatureCode());
+        out.name("fclName").value(value.getFeatureClassName());
+        out.name("fCodeName").value(value.getFeatureCodeName());
+        try {
+            out.name("alternateNames").value(value.getAlternateNames());
+            out.name("continentCode").value(value.getContinentCode());
+            out.name("population").value(value.getPopulation());
+            out.name("elevation").value(value.getElevation());
+            out.name("adminCode1").value(value.getAdminCode1());
+            out.name("adminName1").value(value.getAdminName1());
+            out.name("adminCode2").value(value.getAdminCode2());
+            out.name("adminName2").value(value.getAdminName2());
+            out.name("adminCode3").value(value.getAdminCode3());
+            out.name("adminCode4").value(value.getAdminCode4());
+            //TODO out.name( "timezone").value(value.getTimezone());
+            //TODO out.name( "bbox").value(value.getBoundingBox());
+        } catch (InsufficientStyleException e) {
+        }
+        out.name("adminName3").value(value.getAdminName3());
+        out.name("adminName4").value(value.getAdminName4());
+        out.name("adminCode5").value(value.getAdminCode5());
+        out.name("adminName5").value(value.getAdminName5());
         out.endObject();
     }
 
-    private static GeoNamesRecord getToponymFromElement(JsonReader in) throws IOException {
+    private GeoNamesRecord readToponym(JsonReader in) throws IOException {
         GeoNamesRecord toponym = new GeoNamesRecord();
 
         in.beginObject();
@@ -129,31 +169,10 @@ public class GeoNamesTypeAdapter extends TypeAdapter<GeoNamesRecord> {
                     toponym.setAdminName5(in.nextString());
                     break;
                 case "timezone":
-                    in.beginObject();
-                    in.skipValue();
-//                Element timezoneElement = toponymElement.getChild();
-//                if (timezoneElement != null) {
-//                    Timezone timezone = new Timezone();
-//                    timezone.setTimezoneId(timezoneElement.getValue());
-//                    timezone.setDstOffset(Double.parseDouble(timezoneElement.getAttributeValue("dstOffset")));
-//                    timezone.setGmtOffset(Double.parseDouble(timezoneElement.getAttributeValue("gmtOffset")));
-//                    toponym.setTimezone(timezone);
-//                }
-                    in.endObject();
+                    toponym.setTimezone(readTimezone(in));
                     break;
                 case "bbox":
-                    in.beginObject();
-                    in.skipValue();
-//                Element bboxElement = toponymElement.getChild();
-//                if (bboxElement != null) {
-//                    BoundingBox boundingBox = new BoundingBox(
-//                        Double.parseDouble(bboxElement.getChildText("west")),
-//                        Double.parseDouble(bboxElement.getChildText("east")),
-//                        Double.parseDouble(bboxElement.getChildText("south")),
-//                        Double.parseDouble(bboxElement.getChildText("north")));
-//                    toponym.setBoundingBox(boundingBox);
-//                }
-                    in.endObject();
+                    toponym.setBoundingBox(readBoundingBox(in));
                     break;
                 default:
                     in.skipValue();
@@ -163,5 +182,13 @@ public class GeoNamesTypeAdapter extends TypeAdapter<GeoNamesRecord> {
         in.endObject();
 
         return toponym;
+    }
+
+    private BoundingBox readBoundingBox(JsonReader in) throws IOException {
+        return gson.getAdapter(BoundingBox.class).read(in);
+    }
+
+    private Timezone readTimezone(JsonReader in) throws IOException {
+        return gson.getAdapter(Timezone.class).read(in);
     }
 }

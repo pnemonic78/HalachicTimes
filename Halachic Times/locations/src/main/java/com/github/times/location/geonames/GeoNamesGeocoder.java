@@ -50,7 +50,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
-    private static final String URL_LATLNG = "http://api.geonames.org/extendedFindNearby?lat=%f&lng=%f&lang=%s&username=%s";
+    private static final String URL_LATLNG = "http://api.geonames.org/findNearbyJSON?lat=%f&lng=%f&lang=%s&username=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.<br>
