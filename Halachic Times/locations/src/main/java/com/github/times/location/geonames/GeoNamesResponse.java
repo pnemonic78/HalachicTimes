@@ -27,6 +27,6 @@ import java.util.List;
 class GeoNamesResponse {
 
     @SerializedName("geonames")
-    public List<GeoNamesRecord> records;
+    public List<Toponym> records;
 
 }

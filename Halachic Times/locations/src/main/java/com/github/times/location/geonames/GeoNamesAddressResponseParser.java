@@ -66,7 +66,6 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
     public void parse(InputStream data) throws LocationException, IOException {
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Uri.class, new UriAdapter())
-            .registerTypeAdapter(GeoNamesRecord.class, new GeoNamesTypeAdapter())
             .registerTypeAdapter(BoundingBox.class, new GeoNamesBoxTypeAdapter())
             .registerTypeAdapter(Timezone.class, new GeoNamesTimezoneAdapter())
             .setDateFormat("yyyy-MM-dd HH:mm")
@@ -83,12 +82,12 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
     }
 
     private void handleResponse(GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) {
-        final List<GeoNamesRecord> records = response.records;
+        final List<Toponym> records = response.records;
         if ((records == null) || records.isEmpty()) {
             return;
         }
 
-        GeoNamesRecord toponym;
+        Toponym toponym;
         Address address;
 
         final int size = Math.min(records.size(), maxResults);
@@ -106,21 +105,21 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
     }
 
     @Nullable
-    private Address toAddress(@NonNull GeoNamesRecord toponym, Locale locale) throws InsufficientStyleException {
+    private Address toAddress(@NonNull Toponym toponym, Locale locale) throws InsufficientStyleException {
         ZmanimAddress address = new ZmanimAddress(locale);
-        address.setFeatureName(toponym.getName());
+        address.setFeatureName(toponym.name);
 
-        address.setLatitude(toponym.getLatitude());
-        address.setLongitude(toponym.getLongitude());
+        address.setLatitude(toponym.latitude);
+        address.setLongitude(toponym.longitude);
 
-        address.setAdminArea(toponym.getAdminName1());
-        address.setCountryCode(toponym.getCountryCode());
-        address.setCountryName(toponym.getCountryName());
-        Integer elevation = toponym.getElevation();
+        address.setAdminArea(toponym.adminName1);
+        address.setCountryCode(toponym.countryCode);
+        address.setCountryName(toponym.countryName);
+        Integer elevation = toponym.elevation;
         if (elevation != null) {
             address.setElevation(elevation);
         }
-        address.setSubAdminArea(toponym.getAdminName2());
+        address.setSubAdminArea(toponym.adminName2);
         return address;
     }
 }
