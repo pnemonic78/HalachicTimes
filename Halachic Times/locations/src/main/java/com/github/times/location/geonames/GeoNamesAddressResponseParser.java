@@ -22,14 +22,12 @@ import com.github.json.UriAdapter;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
-import com.github.util.LogUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import org.geonames.BoundingBox;
-import org.geonames.InsufficientStyleException;
 import org.geonames.Timezone;
 
 import java.io.IOException;
@@ -93,19 +91,15 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         final int size = Math.min(records.size(), maxResults);
         for (int i = 0; i < size; i++) {
             toponym = records.get(i);
-            try {
-                address = toAddress(toponym, locale);
-                if (address != null) {
-                    results.add(address);
-                }
-            } catch (InsufficientStyleException e) {
-                LogUtils.e(TAG, e);
+            address = toAddress(toponym, locale);
+            if (address != null) {
+                results.add(address);
             }
         }
     }
 
     @Nullable
-    private Address toAddress(@NonNull Toponym toponym, Locale locale) throws InsufficientStyleException {
+    private Address toAddress(@NonNull Toponym toponym, Locale locale) {
         ZmanimAddress address = new ZmanimAddress(locale);
         address.setFeatureName(toponym.name);
 
