@@ -39,6 +39,8 @@ dependencies {
     implementation project(':android-lib:lib')
     implementation project(':common')
 
+    implementation 'com.google.code.geocoder-java:geocoder-java:0.16'
+
     // Testing
     testImplementation 'junit:junit:4.12'
     androidTestImplementation "androidx.test:runner:$supportTestVersion"

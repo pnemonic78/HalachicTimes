@@ -1,0 +1,463 @@
+{
+    "plus_code" : {
+        "compound_code" : "XFW2+95 Bar Yohai, Israel",
+        "global_code" : "8G4QXFW2+95"
+    },
+    "results" : [
+        {
+            "address_components" : [
+                {
+                    "long_name" : "331",
+                    "short_name" : "331",
+                    "types" : [ "premise" ]
+                },
+                {
+                    "long_name" : "Bar Yohai",
+                    "short_name" : "Bar Yohai",
+                    "types" : [ "locality", "political" ]
+                },
+                {
+                    "long_name" : "Tzfat",
+                    "short_name" : "Tzfat",
+                    "types" : [ "administrative_area_level_2", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "331, Bar Yohai, Israel",
+            "geometry" : {
+                "location" : {
+                    "lat" : 32.9959042,
+                    "lng" : 35.4504682
+                },
+                "location_type" : "ROOFTOP",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 32.99725318029149,
+                        "lng" : 35.4518171802915
+                    },
+                    "southwest" : {
+                        "lat" : 32.9945552197085,
+                        "lng" : 35.4491192197085
+                    }
+                }
+            },
+            "place_id" : "ChIJFR4HXjskHBURYCzx84fH1X4",
+            "plus_code" : {
+                "compound_code" : "XFW2+95 Bar Yohai, Israel",
+                "global_code" : "8G4QXFW2+95"
+            },
+            "types" : [ "establishment", "point_of_interest" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "331",
+                    "short_name" : "331",
+                    "types" : [ "premise" ]
+                },
+                {
+                    "long_name" : "Bar Yohai",
+                    "short_name" : "Bar Yohai",
+                    "types" : [ "locality", "political" ]
+                },
+                {
+                    "long_name" : "Tzfat",
+                    "short_name" : "Tzfat",
+                    "types" : [ "administrative_area_level_2", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "331, Bar Yohai, Israel",
+            "geometry" : {
+                "location" : {
+                    "lat" : 32.996316,
+                    "lng" : 35.450765
+                },
+                "location_type" : "ROOFTOP",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 32.9976649802915,
+                        "lng" : 35.4521139802915
+                    },
+                    "southwest" : {
+                        "lat" : 32.9949670197085,
+                        "lng" : 35.4494160197085
+                    }
+                }
+            },
+            "place_id" : "ChIJJ-hyWDskHBURP0Xf0Bfkpt8",
+            "plus_code" : {
+                "compound_code" : "XFW2+G8 Bar Yohai, Israel",
+                "global_code" : "8G4QXFW2+G8"
+            },
+            "types" : [ "street_address" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "Derech HaEla",
+                    "short_name" : "Derech HaEla",
+                    "types" : [ "route" ]
+                },
+                {
+                    "long_name" : "Bar Yohai",
+                    "short_name" : "Bar Yohai",
+                    "types" : [ "locality", "political" ]
+                },
+                {
+                    "long_name" : "Tzfat",
+                    "short_name" : "Tzfat",
+                    "types" : [ "administrative_area_level_2", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "Derech HaEla, Bar Yohai, Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 32.9966631,
+                        "lng" : 35.4513567
+                    },
+                    "southwest" : {
+                        "lat" : 32.996298,
+                        "lng" : 35.4506216
+                    }
+                },
+                "location" : {
+                    "lat" : 32.9963121,
+                    "lng" : 35.450999
+                },
+                "location_type" : "GEOMETRIC_CENTER",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 32.9978295302915,
+                        "lng" : 35.45233813029149
+                    },
+                    "southwest" : {
+                        "lat" : 32.9951315697085,
+                        "lng" : 35.44964016970849
+                    }
+                }
+            },
+            "place_id" : "ChIJx-UBqTwkHBURQKSKgZTy8Z8",
+            "types" : [ "route" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "Bar Yohai",
+                    "short_name" : "Bar Yohai",
+                    "types" : [ "locality", "political" ]
+                },
+                {
+                    "long_name" : "Tzfat",
+                    "short_name" : "Tzfat",
+                    "types" : [ "administrative_area_level_2", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "Bar Yohai, Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 33.0016649,
+                        "lng" : 35.453478
+                    },
+                    "southwest" : {
+                        "lat" : 32.9940149,
+                        "lng" : 35.443869
+                    }
+                },
+                "location" : {
+                    "lat" : 32.997704,
+                    "lng" : 35.44819
+                },
+                "location_type" : "APPROXIMATE",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 33.0016649,
+                        "lng" : 35.453478
+                    },
+                    "southwest" : {
+                        "lat" : 32.9940149,
+                        "lng" : 35.443869
+                    }
+                }
+            },
+            "place_id" : "ChIJczD4KjskHBURezemwnK02p4",
+            "types" : [ "locality", "political" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "Merom HaGalil Regional Council",
+                    "short_name" : "Merom HaGalil Regional Council",
+                    "types" : [ "administrative_area_level_4", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "Merom HaGalil Regional Council, Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 33.0930423,
+                        "lng" : 35.5484579
+                    },
+                    "southwest" : {
+                        "lat" : 32.8556009,
+                        "lng" : 35.325618
+                    }
+                },
+                "location" : {
+                    "lat" : 32.9916546,
+                    "lng" : 35.46723679999999
+                },
+                "location_type" : "APPROXIMATE",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 33.0930423,
+                        "lng" : 35.5484579
+                    },
+                    "southwest" : {
+                        "lat" : 32.8556009,
+                        "lng" : 35.325618
+                    }
+                }
+            },
+            "place_id" : "ChIJoTZsThskHBUR4vIIdAs801c",
+            "types" : [ "administrative_area_level_4", "political" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "Eastern Upper Galilee",
+                    "short_name" : "Eastern Upper Galilee",
+                    "types" : [ "administrative_area_level_3", "political" ]
+                },
+                {
+                    "long_name" : "Tzfat",
+                    "short_name" : "Tzfat",
+                    "types" : [ "administrative_area_level_2", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "Eastern Upper Galilee, Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 33.2599649,
+                        "lng" : 35.57311809999999
+                    },
+                    "southwest" : {
+                        "lat" : 32.876831,
+                        "lng" : 35.3617891
+                    }
+                },
+                "location" : {
+                    "lat" : 33.0104664,
+                    "lng" : 35.5000999
+                },
+                "location_type" : "APPROXIMATE",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 33.2599649,
+                        "lng" : 35.57311809999999
+                    },
+                    "southwest" : {
+                        "lat" : 32.876831,
+                        "lng" : 35.3617891
+                    }
+                }
+            },
+            "place_id" : "ChIJL3nIgyIgHBURiygbwl1Npd8",
+            "types" : [ "administrative_area_level_3", "political" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "Tzfat",
+                    "short_name" : "Tzfat",
+                    "types" : [ "administrative_area_level_2", "political" ]
+                },
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "Tzfat, Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 33.2908349,
+                        "lng" : 35.685049
+                    },
+                    "southwest" : {
+                        "lat" : 32.8768309,
+                        "lng" : 35.3617889
+                    }
+                },
+                "location" : {
+                    "lat" : 33.0229939,
+                    "lng" : 35.5220012
+                },
+                "location_type" : "APPROXIMATE",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 33.2908349,
+                        "lng" : 35.685049
+                    },
+                    "southwest" : {
+                        "lat" : 32.8768309,
+                        "lng" : 35.3617889
+                    }
+                }
+            },
+            "place_id" : "ChIJl21OH7WfHhURUnJ3rYxKBBE",
+            "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "North District",
+                    "short_name" : "North District",
+                    "types" : [ "administrative_area_level_1", "political" ]
+                },
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "North District, Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 33.33280500000001,
+                        "lng" : 35.896244
+                    },
+                    "southwest" : {
+                        "lat" : 32.3869671,
+                        "lng" : 35.0272979
+                    }
+                },
+                "location" : {
+                    "lat" : 32.8972246,
+                    "lng" : 35.3027226
+                },
+                "location_type" : "APPROXIMATE",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 33.33280500000001,
+                        "lng" : 35.896244
+                    },
+                    "southwest" : {
+                        "lat" : 32.3869671,
+                        "lng" : 35.0272979
+                    }
+                }
+            },
+            "place_id" : "ChIJdVSqdIk3HBURL7ZpTXHxZaU",
+            "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+            "address_components" : [
+                {
+                    "long_name" : "Israel",
+                    "short_name" : "IL",
+                    "types" : [ "country", "political" ]
+                }
+            ],
+            "formatted_address" : "Israel",
+            "geometry" : {
+                "bounds" : {
+                    "northeast" : {
+                        "lat" : 33.33280500000001,
+                        "lng" : 35.896244
+                    },
+                    "southwest" : {
+                        "lat" : 29.47969999999999,
+                        "lng" : 34.2673871
+                    }
+                },
+                "location" : {
+                    "lat" : 31.046051,
+                    "lng" : 34.851612
+                },
+                "location_type" : "APPROXIMATE",
+                "viewport" : {
+                    "northeast" : {
+                        "lat" : 33.33280500000001,
+                        "lng" : 35.896244
+                    },
+                    "southwest" : {
+                        "lat" : 29.47969999999999,
+                        "lng" : 34.2673871
+                    }
+                }
+            },
+            "place_id" : "ChIJi8mnMiRJABURuiw1EyBCa2o",
+            "types" : [ "country", "political" ]
+        }
+    ],
+    "status" : "OK"
+}

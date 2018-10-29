@@ -50,15 +50,15 @@ public class GoogleGeocoder extends GeocoderBase {
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
-    private static final String URL_LATLNG = "https://maps.googleapis.com/maps/api/geocode/xml?latlng=%f,%f&language=%s&key=%s&sensor=true";
+    private static final String URL_LATLNG = "https://maps.googleapis.com/maps/api/geocode/json?latlng=%f,%f&language=%s&key=%s&sensor=true";
     /**
      * URL that accepts an address as parameters.
      */
-    private static final String URL_ADDRESS = "https://maps.googleapis.com/maps/api/geocode/xml?address=%s&language=%s&key=%s&sensor=true";
+    private static final String URL_ADDRESS = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&language=%s&key=%s&sensor=true";
     /**
      * URL that accepts a bounded address as parameters.
      */
-    private static final String URL_ADDRESS_BOUNDED = "https://maps.googleapis.com/maps/api/geocode/xml?address=%s&bounds=%f,%f|%f,%f&language=%s&key=%s&sensor=true";
+    private static final String URL_ADDRESS_BOUNDED = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&bounds=%f,%f|%f,%f&language=%s&key=%s&sensor=true";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.
@@ -95,7 +95,7 @@ public class GoogleGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getXmlAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class GoogleGeocoder extends GeocoderBase {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
         String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage(), API_KEY);
-        return getXmlAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
@@ -121,18 +121,12 @@ public class GoogleGeocoder extends GeocoderBase {
         if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
         String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage(), API_KEY);
-        return getXmlAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(queryUrl, maxResults);
     }
 
     @Override
     protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException {
-        final SAXParser parser;
-        try {
-            parser = getXmlParser();
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new LocationException(e);
-        }
-        return new GoogleAddressResponseParser(locale, results, maxResults, parser);
+        return new GoogleAddressResponseParser(locale, results, maxResults);
     }
 
     @Override

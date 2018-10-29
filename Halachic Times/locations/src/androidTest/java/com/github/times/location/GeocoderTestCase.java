@@ -93,14 +93,14 @@ public class GeocoderTestCase {
         assertNotNull(parser);
         parser.parse(in);
         assertTrue(maxResults >= results.size());
-        assertEquals(5, results.size());
+        assertEquals(9, results.size());
 
         Address address = results.get(0);
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(32.0234380, address.getLatitude(), DELTA);
         assertEquals(34.7766799, address.getLongitude(), DELTA);
-        assertEquals("1-5, Kalischer St, Holon, Center District, Israel", ((ZmanimAddress) address).getFormatted());
+        assertEquals("1, Kalischer St, Holon, Center District, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
         results = new ArrayList<>(maxResults);
