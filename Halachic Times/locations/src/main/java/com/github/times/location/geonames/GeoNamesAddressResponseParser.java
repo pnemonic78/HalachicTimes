@@ -47,7 +47,12 @@ import androidx.annotation.Nullable;
  */
 public class GeoNamesAddressResponseParser extends AddressResponseParser {
 
-    private static final String TAG = "GeoNamesAddressResponseParser";
+    private final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(Uri.class, new UriAdapter())
+        .registerTypeAdapter(BoundingBox.class, new GeoNamesBoxTypeAdapter())
+        .registerTypeAdapter(Timezone.class, new GeoNamesTimezoneAdapter())
+        .setDateFormat("yyyy-MM-dd HH:mm")
+        .create();
 
     /**
      * Construct a new address parser.
@@ -62,12 +67,6 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
 
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Uri.class, new UriAdapter())
-            .registerTypeAdapter(BoundingBox.class, new GeoNamesBoxTypeAdapter())
-            .registerTypeAdapter(Timezone.class, new GeoNamesTimezoneAdapter())
-            .setDateFormat("yyyy-MM-dd HH:mm")
-            .create();
         try {
             Reader reader = new InputStreamReader(data);
             GeoNamesResponse response = gson.fromJson(reader, GeoNamesResponse.class);

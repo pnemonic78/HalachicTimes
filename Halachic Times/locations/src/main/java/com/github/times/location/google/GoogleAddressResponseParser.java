@@ -63,6 +63,10 @@ class GoogleAddressResponseParser extends AddressResponseParser {
     private static final String TYPE_SUBADMIN = "administrative_area_level_2";
     private static final String TYPE_SUBLOCALITY = "sublocality";
 
+    private final Gson gson = new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
+
     /**
      * Construct a new address parser.
      *
@@ -76,9 +80,6 @@ class GoogleAddressResponseParser extends AddressResponseParser {
 
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
-        Gson gson = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create();
         try {
             Reader reader = new InputStreamReader(data);
             GeocodeResponse response = gson.fromJson(reader, GeocodeResponse.class);

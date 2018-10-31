@@ -46,15 +46,16 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  */
 public class BingElevationResponseParser extends ElevationResponseParser {
 
+    private final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(Uri.class, new UriAdapter())
+        .create();
+
     public BingElevationResponseParser(double latitude, double longitude, List<Location> results, int maxResults) {
         super(latitude, longitude, results, maxResults);
     }
 
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Uri.class, new UriAdapter())
-            .create();
         try {
             Reader reader = new InputStreamReader(data, StandardCharsets.UTF_8);
             BingResponse response = gson.fromJson(reader, BingResponse.class);

@@ -46,6 +46,10 @@ import static android.text.TextUtils.isEmpty;
  */
 public class BingAddressResponseParser extends AddressResponseParser {
 
+    private final Gson gson = new GsonBuilder()
+        .registerTypeAdapter(Uri.class, new UriAdapter())
+        .create();
+
     /**
      * Construct a new address parser.
      *
@@ -59,9 +63,6 @@ public class BingAddressResponseParser extends AddressResponseParser {
 
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
-        Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Uri.class, new UriAdapter())
-            .create();
         try {
             Reader reader = new InputStreamReader(data);
             BingResponse response = gson.fromJson(reader, BingResponse.class);
