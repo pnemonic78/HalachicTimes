@@ -26,17 +26,11 @@ import com.github.times.location.test.R;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import androidx.test.filters.SmallTest;
 import androidx.test.runner.AndroidJUnit4;
@@ -55,21 +49,6 @@ import static org.junit.Assert.assertTrue;
 public class GeocoderTestCase {
 
     private static final double DELTA = 1e-3;
-
-    private static SAXParserFactory parserFactory;
-    private static SAXParser parser;
-
-    private SAXParserFactory getXmlParserFactory() {
-        if (parserFactory == null)
-            parserFactory = SAXParserFactory.newInstance();
-        return parserFactory;
-    }
-
-    private SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
-        if (parser == null)
-            parser = getXmlParserFactory().newSAXParser();
-        return parser;
-    }
 
     /**
      * Test Google address geocoder.
@@ -164,16 +143,12 @@ public class GeocoderTestCase {
         GeocoderBase geocoder = new GoogleGeocoder(locale);
 
         // Access Denied
-        List<Location> results = new ArrayList<>();
-        InputStream in = context.getResources().openRawResource(R.raw.google_elevation_denied);
-        assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler(0.0, 0.0, results, 1);
-        assertNotNull(parser);
-        parser.parse(in);
-        assertEquals(0, results.size());
+        List<Location> results = new ArrayList<>(1);
+        InputStream in;
+        ElevationResponseParser parser;
 
         // Near Elad
-        results = new ArrayList<>(1);
+        results.clear();
         in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
         assertNotNull(in);
         parser = geocoder.createElevationResponseHandler(0.0, 0.0, results, 1);

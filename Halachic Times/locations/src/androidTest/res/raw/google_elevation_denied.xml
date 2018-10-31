@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ElevationResponse>
-    <status>REQUEST_DENIED</status>
-    <error_message>Invalid request. Invalid 'locations' parameter.</error_message>
-</ElevationResponse>

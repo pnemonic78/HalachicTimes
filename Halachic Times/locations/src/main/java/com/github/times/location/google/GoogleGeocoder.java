@@ -26,15 +26,10 @@ import com.github.times.location.GeocoderBase;
 import com.github.times.location.LocationException;
 import com.github.util.LocaleUtils;
 
-import org.xml.sax.SAXException;
-
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -63,7 +58,7 @@ public class GoogleGeocoder extends GeocoderBase {
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.
      */
-    private static final String URL_ELEVATION = "https://maps.googleapis.com/maps/api/elevation/xml?locations=%f,%f&key=%s";
+    private static final String URL_ELEVATION = "https://maps.googleapis.com/maps/api/elevation/json?locations=%f,%f&key=%s";
 
     /**
      * Google API key.
@@ -136,17 +131,11 @@ public class GoogleGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
-        return getXmlElevationFromURL(latitude, longitude, queryUrl);
+        return getJsonElevationFromURL(latitude, longitude, queryUrl);
     }
 
     @Override
     protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
-        final SAXParser parser;
-        try {
-            parser = getXmlParser();
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new LocationException(e);
-        }
-        return new GoogleElevationResponseParser(latitude, longitude, results, maxResults, parser);
+        return new GoogleElevationResponseParser(latitude, longitude, results, maxResults);
     }
 }
