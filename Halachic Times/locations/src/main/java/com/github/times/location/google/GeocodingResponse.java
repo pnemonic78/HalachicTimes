@@ -17,18 +17,18 @@ package com.github.times.location.google;
 
 import com.google.maps.errors.ApiException;
 import com.google.maps.internal.ApiResponse;
-import com.google.maps.model.ElevationResult;
+import com.google.maps.model.GeocodingResult;
 
 /**
- * Elevation response.
+ * Geocoder response.
  *
  * @author Moshe Waisberg
  */
-public class ElevationResponse implements ApiResponse<ElevationResult> {
+public class GeocodingResponse implements ApiResponse<GeocodingResult[]> {
 
     public String status;
     public String errorMessage;
-    public ElevationResult[] results;
+    public GeocodingResult[] results;
 
     @Override
     public boolean successful() {
@@ -36,8 +36,8 @@ public class ElevationResponse implements ApiResponse<ElevationResult> {
     }
 
     @Override
-    public ElevationResult getResult() {
-        return results[0];
+    public GeocodingResult[] getResult() {
+        return results;
     }
 
     @Override

@@ -40,7 +40,6 @@ dependencies {
     implementation project(':common')
 
     // Maps
-    implementation 'com.google.code.geocoder-java:geocoder-java:0.16'
     implementation 'com.google.maps:google-maps-services:0.9.0'
 
     // Testing

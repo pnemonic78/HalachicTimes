@@ -20,16 +20,16 @@ import android.location.Address;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderAddressComponent;
-import com.google.code.geocoder.model.GeocoderResult;
-import com.google.code.geocoder.model.GeocoderStatus;
-import com.google.code.geocoder.model.LatLng;
+import com.github.util.LogUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.maps.model.AddressComponent;
+import com.google.maps.model.AddressComponentType;
+import com.google.maps.model.GeocodingResult;
+import com.google.maps.model.LatLng;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,21 +50,11 @@ import static android.text.TextUtils.isEmpty;
  */
 class GoogleAddressResponseParser extends AddressResponseParser {
 
-    private static final String TYPE_ADMIN = "administrative_area_level_1";
-    private static final String TYPE_COUNTRY = "country";
-    private static final String TYPE_FEATURE = "feature_name";
-    private static final String TYPE_LOCALITY = "locality";
-    private static final String TYPE_POLITICAL = "political";
-    private static final String TYPE_POSTAL_CODE = "postal_code";
-    private static final String TYPE_PREMISE = "premise";
-    private static final String TYPE_ROUTE = "route";
-    private static final String TYPE_STREET = "street_address";
-    private static final String TYPE_STREET_NUMBER = "street_number";
-    private static final String TYPE_SUBADMIN = "administrative_area_level_2";
-    private static final String TYPE_SUBLOCALITY = "sublocality";
+    private static final String TAG = "GoogleAddressResponseParser";
 
     private final Gson gson = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .registerTypeAdapter(AddressComponentType.class, new AddressComponentTypeAdapter())
         .create();
 
     /**
@@ -82,7 +72,7 @@ class GoogleAddressResponseParser extends AddressResponseParser {
     public void parse(InputStream data) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
-            GeocodeResponse response = gson.fromJson(reader, GeocodeResponse.class);
+            GeocodingResponse response = gson.fromJson(reader, GeocodingResponse.class);
             handleResponse(response, results, maxResults, locale);
         } catch (JsonIOException e) {
             throw new IOException(e);
@@ -91,22 +81,23 @@ class GoogleAddressResponseParser extends AddressResponseParser {
         }
     }
 
-    private void handleResponse(GeocodeResponse response, List<Address> results, int maxResults, Locale locale) {
-        if (response.getStatus() != GeocoderStatus.OK) {
+    private void handleResponse(GeocodingResponse response, List<Address> results, int maxResults, Locale locale) {
+        if (!response.successful()) {
+            LogUtils.e(TAG, response.errorMessage);
             return;
         }
 
-        final List<GeocoderResult> responseResults = response.getResults();
-        if ((responseResults == null) || responseResults.isEmpty()) {
+        final GeocodingResult[] responseResults = response.results;
+        if ((responseResults == null) || (responseResults.length == 0)) {
             return;
         }
 
-        GeocoderResult geocoderResult;
+        GeocodingResult geocoderResult;
         Address address;
 
-        final int size = Math.min(responseResults.size(), maxResults);
+        final int size = Math.min(responseResults.length, maxResults);
         for (int i = 0; i < size; i++) {
-            geocoderResult = responseResults.get(i);
+            geocoderResult = responseResults[i];
             address = toAddress(geocoderResult, locale);
             if (address != null) {
                 results.add(address);
@@ -115,57 +106,60 @@ class GoogleAddressResponseParser extends AddressResponseParser {
     }
 
     @Nullable
-    private Address toAddress(@NonNull GeocoderResult result, Locale locale) {
+    private Address toAddress(@NonNull GeocodingResult result, Locale locale) {
         ZmanimAddress address = new ZmanimAddress(locale);
         //address.setFormatted(result.getFormattedAddress());
 
-        LatLng location = result.getGeometry().getLocation();
-        address.setLatitude(location.getLat().doubleValue());
-        address.setLongitude(location.getLng().doubleValue());
+        LatLng location = result.geometry.location;
+        address.setLatitude(location.lat);
+        address.setLongitude(location.lng);
 
         String longName;
         String shortName;
+        AddressComponentType addressComponentType;
 
-        List<GeocoderAddressComponent> components = result.getAddressComponents();
-        for (GeocoderAddressComponent component : components) {
-            longName = component.getLongName();
-            shortName = component.getShortName();
+        AddressComponent[] components = result.addressComponents;
+        for (AddressComponent component : components) {
+            longName = component.longName;
+            shortName = component.shortName;
+            addressComponentType = component.types[0];
+            if (addressComponentType == null) {
+                continue;
+            }
 
-            switch (component.getTypes().get(0)) {
-                case TYPE_ADMIN:
+            switch (addressComponentType) {
+                case ADMINISTRATIVE_AREA_LEVEL_1:
                     address.setAdminArea(isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_COUNTRY:
+                case ADMINISTRATIVE_AREA_LEVEL_2:
+                    address.setSubAdminArea(isEmpty(shortName) ? longName : shortName);
+                    break;
+                case COUNTRY:
                     address.setCountryCode(shortName);
                     address.setCountryName(longName);
                     break;
-                case TYPE_FEATURE:
-                    address.setFeatureName(isEmpty(shortName) ? longName : shortName);
-                    break;
-                case TYPE_LOCALITY:
+                case LOCALITY:
                     address.setLocality(isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_POLITICAL:
+                case NATURAL_FEATURE:
+                    address.setFeatureName(isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_POSTAL_CODE:
+                case POSTAL_CODE:
                     address.setPostalCode(isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_PREMISE:
+                case PREMISE:
                     address.setPremises(isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_ROUTE:
+                case ROUTE:
                     address.setAddressLine(2, isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_STREET:
+                case STREET_ADDRESS:
                     address.setAddressLine(1, isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_STREET_NUMBER:
+                case STREET_NUMBER:
                     address.setAddressLine(0, isEmpty(shortName) ? longName : shortName);
                     break;
-                case TYPE_SUBADMIN:
-                    address.setSubAdminArea(isEmpty(shortName) ? longName : shortName);
-                    break;
-                case TYPE_SUBLOCALITY:
+                case SUBLOCALITY:
                     address.setSubLocality(isEmpty(shortName) ? longName : shortName);
                     break;
             }
