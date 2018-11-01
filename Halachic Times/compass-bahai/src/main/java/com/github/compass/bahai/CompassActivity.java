@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.compass.bahai;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,12 +21,12 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.times.compass.BaseCompassActivity;
 import com.github.times.compass.preference.CompassPreferenceActivity;
-import com.github.times.location.LocationActivity;
 
 /**
  * Show the direction in which to pray.
- * Points to the Holy of Holies in Jerusalem in Israel.
+ * Points to the Points to to the tomb of Bahá'u'lláh in Bahjí in Israel.
  *
  * @author Moshe Waisberg
  */

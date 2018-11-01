@@ -13,12 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.compass.bahai;
+
+import com.github.util.LogUtils;
+
+import timber.log.Timber;
 
 /**
- * Pick a city from the list.
+ * Compass application.
  *
  * @author Moshe Waisberg
  */
-public class LocationActivity extends LocationTabActivity {
+public class CompassApplication extends com.github.times.compass.CompassApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
+    }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass.bahai;
+package com.github.compass.bahai;
 
 /**
  * Show the direction in which to pray.

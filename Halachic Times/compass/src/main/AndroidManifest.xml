@@ -9,7 +9,7 @@
         android:required="true"/>
 
     <application
-        android:name="com.github.times.compass.CompassApplication"
+        android:name="com.github.compass.CompassApplication"
         android:allowBackup="true"
         android:appCategory="maps"
         android:backupAgent="com.github.times.compass.backup.CompassBackupAgent"

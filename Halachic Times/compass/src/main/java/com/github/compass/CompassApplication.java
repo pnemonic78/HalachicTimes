@@ -13,32 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.compass;
 
-import android.content.Context;
-
-import com.github.times.location.impl.LocationsProviderFactoryImpl;
 import com.github.util.LogUtils;
 
-import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**
- * Default location application.
+ * Compass application.
  *
  * @author Moshe Waisberg
  */
-public class DefaultLocationApplication extends LocationApplication {
+public class CompassApplication extends com.github.times.compass.CompassApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
         Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
-    }
-
-    @NonNull
-    @Override
-    protected LocationsProviderFactory createProviderFactory(Context context) {
-        return new LocationsProviderFactoryImpl(context);
     }
 }
