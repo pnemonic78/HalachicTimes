@@ -488,6 +488,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             LogUtils.w(TAG, "start with listener null");
             return;
         }
+        if (!handlerThread.isAlive()) {
+            LogUtils.w(TAG, "start with dead handler");
+            return;
+        }
         addLocationListener(listener);
 
         // Give the listener our latest known location, and address.

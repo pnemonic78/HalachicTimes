@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import com.github.times.location.AddressProvider.OnFindAddressListener;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 
 import static com.github.times.location.ZmanimLocationListener.ACTION_ADDRESS;
@@ -41,7 +42,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
     private static final String PARAMETER_ADDRESS = ZmanimLocationListener.EXTRA_ADDRESS;
     private static final String PARAMETER_PERSIST = ZmanimLocationListener.EXTRA_PERSIST;
 
-    private static final boolean PERSIST = true;
+    private static final boolean PERSIST_DEFAULT = true;
 
     private AddressProvider addressProvider;
 
@@ -56,10 +57,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
     }
 
     @Override
-    protected void onHandleWork(Intent intent) {
-        if (intent == null) {
-            return;
-        }
+    protected void onHandleWork(@NonNull Intent intent) {
         final Bundle extras = intent.getExtras();
         if ((extras == null) || extras.isEmpty()) {
             return;
@@ -79,7 +77,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
                 if (locationExtras == null) {
                     locationExtras = new Bundle();
                 }
-                locationExtras.putBoolean(PARAMETER_PERSIST, extras.getBoolean(PARAMETER_PERSIST, PERSIST));
+                locationExtras.putBoolean(PARAMETER_PERSIST, extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT));
                 location.setExtras(locationExtras);
             }
             provider.findNearestAddress(location, this);
@@ -101,7 +99,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
                 }
             }
             Bundle extras = location.getExtras();
-            if ((extras == null) || extras.getBoolean(PARAMETER_PERSIST, PERSIST)) {
+            if ((extras == null) || extras.getBoolean(PARAMETER_PERSIST, PERSIST_DEFAULT)) {
                 provider.insertOrUpdateAddress(location, addr);
             }
         }

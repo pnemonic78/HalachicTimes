@@ -42,9 +42,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import java.lang.ref.WeakReference;
-import java.util.Calendar;
-
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -63,6 +60,9 @@ import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
 import com.github.view.animation.LayoutWeightAnimation;
 
+import java.lang.ref.WeakReference;
+import java.util.Calendar;
+
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
@@ -80,17 +80,23 @@ import static java.lang.System.currentTimeMillis;
  * @author Moshe Waisberg
  */
 public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implements
-        OnDateSetListener,
-        View.OnClickListener,
-        OnGestureListener,
-        GestureDetector.OnDoubleTapListener,
-        Animation.AnimationListener {
+    OnDateSetListener,
+    View.OnClickListener,
+    OnGestureListener,
+    GestureDetector.OnDoubleTapListener,
+    Animation.AnimationListener {
 
-    /** The date parameter. */
+    /**
+     * The date parameter.
+     */
     public static final String EXTRA_DATE = "date";
-    /** The time parameter. */
+    /**
+     * The time parameter.
+     */
     public static final String EXTRA_TIME = "time";
-    /** The details list parameter. */
+    /**
+     * The details list parameter.
+     */
     private static final String PARAMETER_DETAILS = "details";
 
     private static final int WHAT_TOGGLE_DETAILS = 0;
@@ -110,52 +116,96 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
     private static final long DATE_MIN = -62167359300528L;// (-1970 + 1) * DAY_IN_MILLIS * 365.25
 
-    /** The date. */
+    /**
+     * The date.
+     */
     private final Calendar calendar = Calendar.getInstance();
-    /** The location header Gregorian date. */
+    /**
+     * The location header Gregorian date.
+     */
     private TextView headerGregorianDate;
-    /** The location header location. */
+    /**
+     * The location header location.
+     */
     private TextView headerLocation;
-    /** The location header for formatted address. */
+    /**
+     * The location header for formatted address.
+     */
     private TextView headerAddress;
-    /** The navigation bar. */
+    /**
+     * The navigation bar.
+     */
     private View navigationBar;
-    /** The preferences. */
+    /**
+     * The preferences.
+     */
     private ZmanimPreferences preferences;
-    /** The date picker. */
+    /**
+     * The date picker.
+     */
     private DatePickerDialog datePicker;
-    /** The master fragment. */
+    /**
+     * The master fragment.
+     */
     private ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>> masterFragment;
-    /** The details fragment switcher. */
+    /**
+     * The details fragment switcher.
+     */
     private ViewSwitcher detailsFragmentSwitcher;
-    /** The details fragment. */
+    /**
+     * The details fragment.
+     */
     private ZmanimDetailsFragment detailsListFragment;
-    /** The candles fragment. */
+    /**
+     * The candles fragment.
+     */
     private CandlesFragment candlesFragment;
-    /** Is master fragment switched with details fragment? */
+    /**
+     * Is master fragment switched with details fragment?
+     */
     private ViewSwitcher viewSwitcher;
-    /** The master item selected id. */
+    /**
+     * The master item selected id.
+     */
     private int selectedId;
-    /** The gesture detector. */
+    /**
+     * The gesture detector.
+     */
     private GestureDetector gestureDetector;
-    /** Is locale RTL? */
+    /**
+     * Is locale RTL?
+     */
     private boolean localeRTL;
-    /** Slide left-to-right animation. */
+    /**
+     * Slide left-to-right animation.
+     */
     private Animation slideLeftToRight;
-    /** Slide right-to-left animation. */
+    /**
+     * Slide right-to-left animation.
+     */
     private Animation slideRightToLeft;
-    /** Grow details animation. */
+    /**
+     * Grow details animation.
+     */
     private Animation detailsGrow;
-    /** Shrink details animation. */
+    /**
+     * Shrink details animation.
+     */
     private Animation detailsShrink;
-    /** Hide navigation bar animation. */
+    /**
+     * Hide navigation bar animation.
+     */
     private Animation hideNavigation;
-    /** Show navigation bar animation. */
+    /**
+     * Show navigation bar animation.
+     */
     private Animation showNavigation;
     private final ActivityHandler handler = new ActivityHandler(this);
     private LocaleCallbacks<ZmanimPreferences> localeCallbacks;
 
-    /** The handler. */
+    /**
+     * The handler.
+     */
     private static class ActivityHandler extends Handler {
 
         private final WeakReference<ZmanimActivity> activityWeakReference;
@@ -283,8 +333,14 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             hideDetails();
             selectedId = itemId;
         }
-        handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS);
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS);
     }
 
     @Override
@@ -297,11 +353,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         handler.removeMessages(WHAT_LOCATION);
         handler.removeMessages(WHAT_SETTINGS);
         handler.removeMessages(WHAT_TODAY);
-        handler.removeMessages(WHAT_CANCEL_REMINDERS);
-        handler.removeMessages(WHAT_UPDATE_REMINDERS);
     }
 
-    /** Initialise. */
+    /**
+     * Initialise.
+     */
     @SuppressWarnings({"unchecked", "InflateParams"})
     private void init() {
         final Context context = this;
@@ -353,7 +409,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         showNavigation.setAnimationListener(this);
     }
 
-    /** Initialise the location providers. */
+    /**
+     * Initialise the location providers.
+     */
     private void initLocation() {
         localeRTL = isLocaleRTL(this);
     }
@@ -417,7 +475,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         };
     }
 
-    /** Populate the header item. */
+    /**
+     * Populate the header item.
+     */
     private void populateHeader() {
         TextView locationLabel = headerLocation;
         TextView addressLabel = headerAddress;
@@ -821,16 +881,14 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
     private void updateReminders() {
         final Context context = this;
-        Intent intent = new Intent(context, ZmanimReminderService.class);
-        intent.setAction(ZmanimReminder.ACTION_UPDATE);
-        context.startService(intent);
+        Intent intent = new Intent(ZmanimReminder.ACTION_UPDATE);
+        ZmanimReminderService.enqueueWork(context, intent);
     }
 
     private void cancelReminders() {
         final Context context = this;
-        Intent intent = new Intent(context, ZmanimReminderService.class);
-        intent.setAction(ZmanimReminder.ACTION_CANCEL);
-        context.startService(intent);
+        Intent intent = new Intent(ZmanimReminder.ACTION_CANCEL);
+        ZmanimReminderService.enqueueWork(context, intent);
     }
 
     @Override

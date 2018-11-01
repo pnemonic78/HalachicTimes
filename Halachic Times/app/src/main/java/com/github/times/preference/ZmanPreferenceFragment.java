@@ -167,8 +167,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
      */
     private void remind() {
         final Context context = getActivity();
-        Intent intent = new Intent(context, ZmanimReminderService.class);
-        intent.setAction(ZmanimReminder.ACTION_UPDATE);
-        context.startService(intent);
+        Intent intent = new Intent(ZmanimReminder.ACTION_UPDATE);
+        ZmanimReminderService.enqueueWork(context, intent);
     }
 }

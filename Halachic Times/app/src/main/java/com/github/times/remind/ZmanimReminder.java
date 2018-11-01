@@ -15,9 +15,6 @@
  */
 package com.github.times.remind;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -41,11 +38,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
+import com.github.times.BuildConfig;
 import com.github.times.R;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
@@ -56,6 +49,14 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LogUtils;
+
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.util.GeoLocation;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -127,9 +128,21 @@ public class ZmanimReminder {
     private static final int LED_OFF = 500;
 
     /**
-     * Extras name for the reminder.
+     * Extras' name for the reminder id.
      */
-    private static final String EXTRA_REMINDER = "reminder";
+    private static final String EXTRA_REMINDER_ID = BuildConfig.APPLICATION_ID + ".REMINDER_ID";
+    /**
+     * Extras' name for the reminder title.
+     */
+    private static final String EXTRA_REMINDER_TITLE = BuildConfig.APPLICATION_ID + ".REMINDER_TITLE";
+    /**
+     * Extras' name for the reminder text.
+     */
+    private static final String EXTRA_REMINDER_TEXT = BuildConfig.APPLICATION_ID + ".REMINDER_TEXT";
+    /**
+     * Extras' name for the reminder time.
+     */
+    private static final String EXTRA_REMINDER_TIME = BuildConfig.APPLICATION_ID + ".REMINDER_TIME";
 
     /**
      * Action to remind.
@@ -399,8 +412,10 @@ public class ZmanimReminder {
             CharSequence contentTitle = context.getText(item.titleId);
             CharSequence contentText = item.summary;
             long when = item.time;
-            ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, when);
-            intent.putExtra(EXTRA_REMINDER, reminderItem);
+            intent.putExtra(EXTRA_REMINDER_ID, item.titleId);
+            intent.putExtra(EXTRA_REMINDER_TITLE, contentTitle);
+            intent.putExtra(EXTRA_REMINDER_TEXT, contentText);
+            intent.putExtra(EXTRA_REMINDER_TIME, when);
         }
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -420,7 +435,7 @@ public class ZmanimReminder {
 
     public void process(@Nullable Intent intent) {
         final Context context = getContext();
-        LogUtils.i(TAG, "process " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
+        LogUtils.v(TAG, "process " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
         if (intent == null) {
             return;
         }
@@ -446,9 +461,9 @@ public class ZmanimReminder {
                 break;
             case ACTION_REMIND:
                 extras = intent.getExtras();
-                if ((extras != null) && extras.containsKey(EXTRA_REMINDER)) {
-                    ZmanimReminderItem reminderItem = extras.getParcelable(EXTRA_REMINDER);
-                    if ((reminderItem != null) && (reminderItem.time > 0L)) {
+                if (extras != null) {
+                    ZmanimReminderItem reminderItem = toReminderItem(extras);
+                    if (reminderItem != null) {
                         notifyNow(settings, reminderItem);
                     }
                     update = true;
@@ -456,9 +471,9 @@ public class ZmanimReminder {
                 break;
             case ACTION_SILENCE:
                 extras = intent.getExtras();
-                if ((extras != null) && extras.containsKey(EXTRA_REMINDER)) {
-                    ZmanimReminderItem reminderItem = extras.getParcelable(EXTRA_REMINDER);
-                    if ((reminderItem != null) && (reminderItem.time > 0L)) {
+                if (extras != null) {
+                    ZmanimReminderItem reminderItem = toReminderItem(extras);
+                    if (reminderItem != null) {
                         silence(settings, reminderItem);
                     }
                     update = true;
@@ -511,14 +526,14 @@ public class ZmanimReminder {
         }
 
         return new NotificationCompat.Builder(context, channelId)
-                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .setContentIntent(contentIntent)
-                .setContentText(contentText)
-                .setContentTitle(contentTitle)
-                .setLargeIcon(largeIconSolar)
-                .setShowWhen(true)
-                .setSmallIcon(R.drawable.stat_notify_time)
-                .setWhen(when);
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setContentIntent(contentIntent)
+            .setContentText(contentText)
+            .setContentTitle(contentTitle)
+            .setLargeIcon(largeIconSolar)
+            .setShowWhen(true)
+            .setSmallIcon(R.drawable.stat_notify_time)
+            .setWhen(when);
     }
 
     private Notification createReminderNotification(ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent, boolean silent) {
@@ -530,16 +545,16 @@ public class ZmanimReminder {
         final Uri sound = silent ? null : settings.getReminderRingtone();
 
         final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
-                contentText,
-                when,
-                contentIntent,
-                CHANNEL_REMINDER)
-                .setAutoCancel(true)
-                .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
-                .setSound(sound, audioStreamType);
+            contentText,
+            when,
+            contentIntent,
+            CHANNEL_REMINDER)
+            .setAutoCancel(true)
+            .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
+            .setSound(sound, audioStreamType);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE)
-                    .setLights(LED_COLOR, LED_ON, LED_OFF);
+                .setLights(LED_COLOR, LED_ON, LED_OFF);
         }
 
         // Dynamically generate the large icon.
@@ -652,11 +667,11 @@ public class ZmanimReminder {
         LogUtils.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
         final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
-                contentText,
-                when,
-                contentIntent,
-                CHANNEL_UPCOMING)
-                .setOngoing(true);
+            contentText,
+            when,
+            contentIntent,
+            CHANNEL_UPCOMING)
+            .setOngoing(true);
 
         return builder.build();
     }
@@ -719,7 +734,10 @@ public class ZmanimReminder {
     private PendingIntent createSilenceIntent(ZmanimReminderItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_SILENCE);
-        intent.putExtra(EXTRA_REMINDER, item);
+        intent.putExtra(EXTRA_REMINDER_ID, item.id);
+        intent.putExtra(EXTRA_REMINDER_TITLE, item.title);
+        intent.putExtra(EXTRA_REMINDER_TEXT, item.text);
+        intent.putExtra(EXTRA_REMINDER_TIME, item.time);
 
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -784,9 +802,9 @@ public class ZmanimReminder {
 
             Uri sound = RingtoneManager.getDefaultUri(TYPE_NOTIFICATION);
             android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
-                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                    .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
-                    .build();
+                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                .build();
             channel.setSound(sound, audioAttributes);
 
             nm.createNotificationChannel(channel);
@@ -828,5 +846,19 @@ public class ZmanimReminder {
         intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, item.time + STOP_NOTIFICATION_AFTER);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    @Nullable
+    private ZmanimReminderItem toReminderItem(Bundle extras) {
+        if (extras.containsKey(EXTRA_REMINDER_ID)) {
+            int id = extras.getInt(EXTRA_REMINDER_ID);
+            CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
+            CharSequence contentText = extras.getCharSequence(EXTRA_REMINDER_TEXT);
+            long when = extras.getLong(EXTRA_REMINDER_TIME, 0L);
+            if ((contentTitle != null) && (when > 0L)) {
+                return new ZmanimReminderItem(id, contentTitle, contentText, when);
+            }
+        }
+        return null;
     }
 }
