@@ -55,17 +55,12 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
         super.onCreate();
         localeCallbacks.onCreate(this);
         Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
+        Fabric.with(this, new Crashlytics());
     }
 
     @NonNull
     @Override
     protected LocationsProviderFactory<AddressProvider, ZmanimLocations> createProviderFactory(Context context) {
         return new ZmanimProviderFactoryImpl(context);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Fabric.with(this, new Crashlytics());
     }
 }
