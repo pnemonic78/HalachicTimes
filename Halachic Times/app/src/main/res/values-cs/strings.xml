@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Den je od úsvitu 16,1° do mořem západ slunce</string>
     <string name="opinion_16_night">Den je od úsvitu 16,1° do soumraku</string>
     <string name="opinion_26">Den je 26° pod východu / západ slunce</string>
-    <string name="opinion_19">Den je 19,8° pod východu / západ slunce</string>
+    <string name="opinion_19">Den je 19° pod východu / západ slunce</string>
+    <string name="opinion_19_8">Den je 19,8° pod východu / západ slunce</string>
     <string name="opinion_18">Den je 18° pod východu / západ slunce</string>
     <string name="opinion_60">Den je 60 minut před východem slunce / po západu slunce</string>
     <string name="opinion_72">Den je 72 minut před východem slunce / po západu slunce</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Nástup na pobyt nejdřív <i>tallis</i> a <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Nástup na pobyt nejdřív <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Slunce je 11,5° pod obzorem</string>
+    <string name="tallis_11_5">Slunce je 11,5° pod obzorem</string>
     <string name="tallis_11">Slunce je 11° pod obzorem</string>
     <string name="tallis_10">Slunce je 10.2° pod obzorem</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Východ slunce</string>
-    <string name="sunrise_summary">Po očištění o elevaci</string>
+    <string name="sunrise_elevated">Po očištění o elevaci</string>
     <string name="sunrise_sea">Na úrovni moře</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Poledne</string>
-    <string name="midday_summary">Solární poledne</string>
+    <string name="midday_solar">Solární poledne</string>
     <string name="midday_fixed">Poledne upraveny pro lokální zeměpisné šířky</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Nejranější odpolední modlitby</string>
-    <string name="earliest_mincha_summary">Větší <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Větší <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minut po poledne</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Odpolední modlitby</string>
-    <string name="mincha_summary">Malá <i>mincha</i></string>
+    <string name="mincha_lesser">Malá <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Půlnoc</string>
-    <string name="midnight_summary">Solární půlnoci</string>
+    <string name="midnight_solar">Solární půlnoci</string>
     <string name="midnight_12">12 hodin po poledni</string>
     <string name="midnight_6">6 hodin po setmění</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Zrod nového měsíce (מולד)</string>
-    <string name="molad_summary">Průměrná nového měsíc</string>
+    <string name="molad_average">Průměrná nového měsíc</string>
     <string name="levana_earliest">Nejranější požehnání na nový měsíc (קידוש לבנה)</string>
     <string name="levana_3">3 dny po nového měsíc</string>
     <string name="levana_7">7 dny po nového měsíc</string>
-    <string name="levana_72">72 hodin po nového měsíc</string>
-    <string name="levana_168">168 hodin po nového měsíc</string>
     <string name="levana_latest">Poslední požehnání na nový měsíc (קידוש לבנה)</string>
     <string name="levana_halfway">Půli cesty mezi novoměsíčné</string>
     <string name="levana_15">15 dny po nového měsíc</string>
-    <string name="levana_halfway_alos">Půli cesty mezi novoměsíčné nebo svítání</string>
-    <string name="levana_15_alos">15 dny po nového měsíc nebo svítání</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Půst začíná</string>
@@ -197,8 +194,8 @@
     <string name="animations">Animace</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Autorská práva \u00A9 2004–2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava">KosherJava kalendář</string>
+    <string name="kosherjava_version">Autorská práva \u00A9 2004–2018 Eliyahu Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachický Časy Hodiny</string>

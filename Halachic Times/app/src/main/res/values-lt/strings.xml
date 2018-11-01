@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Dieną yra nuo aušros 16,1° jūros lygio saulėlydžio</string>
     <string name="opinion_16_night">Dieną yra nuo aušros 16,1° prieš ateina tamsa</string>
     <string name="opinion_26">Dieną yra 26° žemiau saulėtekį / saulėlydžio</string>
-    <string name="opinion_19">Dieną yra 19,8° žemiau saulėtekį / saulėlydžio</string>
+    <string name="opinion_19">Dieną yra 19° žemiau saulėtekį / saulėlydžio</string>
+    <string name="opinion_19_8">Dieną yra 19,8° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_18">Dieną yra 18° žemiau saulėtekį / saulėlydžio</string>
     <string name="opinion_60">Dieną yra 60 minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_72">Dieną yra 72 minučių prieš saulėtekį / po saulėlydžio</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Seniausi <i>tallis</i> ir <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Seniausi <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Saulė yra 11,5° žemiau horizonto</string>
+    <string name="tallis_11_5">Saulė yra 11,5° žemiau horizonto</string>
     <string name="tallis_11">Saulė yra 11° žemiau horizonto</string>
     <string name="tallis_10">Saulė yra 10,2° žemiau horizonto</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Saulėtekis</string>
-    <string name="sunrise_summary">Pritaikytas aukštis</string>
+    <string name="sunrise_elevated">Pritaikytas aukštis</string>
     <string name="sunrise_sea">Jūros lygyje</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Vidurdienis</string>
-    <string name="midday_summary">Saulės vidurdienį</string>
+    <string name="midday_solar">Saulės vidurdienį</string>
     <string name="midday_fixed">Vidurdienis pakoreguota vietos platumos</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Seniausi popietės maldas</string>
-    <string name="earliest_mincha_summary">Didesnis <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Didesnis <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minučių po vidurdienį</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Popietė maldas</string>
-    <string name="mincha_summary">Mažas <i>mincha</i></string>
+    <string name="mincha_lesser">Mažas <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Vidurnakčio</string>
-    <string name="midnight_summary">Saulės vidurnakčio</string>
+    <string name="midnight_solar">Saulės vidurnakčio</string>
     <string name="midnight_12">12 valandų po vidurdienį</string>
     <string name="midnight_6">6 valandų po ateinančio naktys</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Gimimo jaunatį (מולד)</string>
-    <string name="molad_summary">Vidutinė jaunatis</string>
+    <string name="molad_average">Vidutinė jaunatis</string>
     <string name="levana_earliest">Seniausi pašventinimą jaunatį (קידוש לבנה)</string>
     <string name="levana_3">3 dienas po jaunatis</string>
     <string name="levana_7">7 dienas po jaunatis</string>
-    <string name="levana_72">72 valandų po jaunatis</string>
-    <string name="levana_168">168 valandų po jaunatis</string>
     <string name="levana_latest">Vėliausiai pašventinimą jaunatį (קידוש לבנה)</string>
     <string name="levana_halfway">Pusiaukelėje tarp naujų mėnulių</string>
     <string name="levana_15">15 dienas po jaunatis</string>
-    <string name="levana_halfway_alos">Pusiaukelėje tarp naujų mėnulių ar aušra</string>
-    <string name="levana_15_alos">15 dienas po jaunatis ar aušra</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Pasninkas prasideda</string>
@@ -197,8 +194,8 @@
     <string name="animations">Animacijos</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Autorių teisės \u00A9 2004–2011 Elijas Hershfeld</string>
+    <string name="kosherjava">KosherJava kalendorius</string>
+    <string name="kosherjava_version">Autorių teisės \u00A9 2004–2018 Elijas Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachinis Kartų Laikrodis</string>

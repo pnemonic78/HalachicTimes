@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="theme_defaultValue" translatable="false">@string/theme_value_light</string>
-
-</resources>

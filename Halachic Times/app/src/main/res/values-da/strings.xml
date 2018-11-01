@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Dag er fra daggry 16,1° til havoverfladen solnedgang</string>
     <string name="opinion_16_night">Dag er fra daggry 16,1° til mřrkets frembrud</string>
     <string name="opinion_26">Dag er 26° nedenfor solopgang / solnedgang</string>
-    <string name="opinion_19">Dag er 19,8° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_19">Dag er 19° nedenfor solopgang / solnedgang</string>
+    <string name="opinion_19_8">Dag er 19,8° nedenfor solopgang / solnedgang</string>
     <string name="opinion_18">Dag er 18° nedenfor solopgang / solnedgang</string>
     <string name="opinion_60">Dag er 60 minutter før solopgang / efter solnedgang</string>
     <string name="opinion_72">Dag er 72 minutter før solopgang / efter solnedgang</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Tidligste <i>tallis</i> og <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Tidligste <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Sol er 11,5° nedenfor horisonten</string>
+    <string name="tallis_11_5">Sol er 11,5° nedenfor horisonten</string>
     <string name="tallis_11">Sol er 11° nedenfor horisonten</string>
     <string name="tallis_10">Sol er 10,2° nedenfor horisonten</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Solopgang</string>
-    <string name="sunrise_summary">Korrigeret for højde</string>
+    <string name="sunrise_elevated">Korrigeret for højde</string>
     <string name="sunrise_sea">På havoverfladen</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Middag</string>
-    <string name="midday_summary">Solen middag</string>
+    <string name="midday_solar">Solen middag</string>
     <string name="midday_fixed">Middag korrigeret for den lokale bredde</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Tidligste eftermiddags bønner</string>
-    <string name="earliest_mincha_summary">Større <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Større <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minutter efter middag</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Eftermiddagen bønner</string>
-    <string name="mincha_summary">Mindre <i>mincha</i></string>
+    <string name="mincha_lesser">Mindre <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Midnat</string>
-    <string name="midnight_summary">Solen midnat</string>
+    <string name="midnight_solar">Solen midnat</string>
     <string name="midnight_12">12 timer efter middag</string>
     <string name="midnight_6">6 timer efter mørkets frembrud</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Fødslen af nymåne (מולד)</string>
-    <string name="molad_summary">Gennemsnitlige nymåne</string>
+    <string name="molad_average">Gennemsnitlige nymåne</string>
     <string name="levana_earliest">Tidligste velsignelse af nymåne (קידוש לבנה)</string>
     <string name="levana_3">3 dage efter nymåne</string>
     <string name="levana_7">7 dage efter nymåne</string>
-    <string name="levana_72">72 timer efter nymåne</string>
-    <string name="levana_168">168 timer efter nymåne</string>
     <string name="levana_latest">Seneste velsignelse af nymåne (קידוש לבנה)</string>
     <string name="levana_halfway">Halvvejs mellem nye måner</string>
     <string name="levana_15">15 dage efter nymåne</string>
-    <string name="levana_halfway_alos">Halvvejs mellem nye måner eller daggry</string>
-    <string name="levana_15_alos">15 dage efter nymåne eller daggry</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Faste begynder </string>
@@ -197,8 +194,8 @@
     <string name="animations">Animationer</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Ophavsret \u00A9 2004–2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava">KosherJava kalender</string>
+    <string name="kosherjava_version">Ophavsret \u00A9 2004–2018 Eliyahu Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachisk Tider Ur</string>

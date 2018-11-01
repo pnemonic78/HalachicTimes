@@ -22,8 +22,6 @@ import android.location.Location;
 
 import com.github.util.LocaleUtils;
 
-import org.xml.sax.helpers.DefaultHandler;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -596,12 +594,12 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
         return null;
     }
 
     @Override
-    public ZmanimLocation getElevation(double latitude, double longitude) throws IOException {
+    public Location getElevation(double latitude, double longitude) throws IOException {
         if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
@@ -667,7 +665,7 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
         return null;
     }
 }

@@ -27,8 +27,10 @@ import com.github.times.location.AddressProvider;
 import com.github.times.location.LocationApplication;
 import com.github.times.location.LocationsProviderFactory;
 import com.github.times.location.ZmanimLocations;
+import com.github.util.LogUtils;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -46,6 +48,13 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        localeCallbacks.onCreate(this);
+        Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
     }
 
     @NonNull

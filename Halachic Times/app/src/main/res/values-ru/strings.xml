@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">День с 16,1° рассвета до заката на уровне моря</string>
     <string name="opinion_16_night">День с 16,1°  рассвета до темноты</string>
     <string name="opinion_26">День 26° ниже восхода / заката</string>
-    <string name="opinion_19">День 19,8° ниже восхода / заката</string>
+    <string name="opinion_19">День 19° ниже восхода / заката</string>
+    <string name="opinion_19_8">День 19,8° ниже восхода / заката</string>
     <string name="opinion_18">День 18° ниже восхода / заката</string>
     <string name="opinion_60">День 60 минут до восхода / после заката</string>
     <string name="opinion_72">День 72 минут до восхода / после заката</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Самое раннее время для <i>талита</i> и <i>тфилина</i> (משיכיר)</string>
     <string name="tallis_only">Самое раннее время для <i>талита</i> (משיכיר)</string>
-    <string name="tallis_summary">Солнце 11,5° ниже горизонта</string>
+    <string name="tallis_11_5">Солнце 11,5° ниже горизонта</string>
     <string name="tallis_11">Солнце 11° ниже горизонта</string>
     <string name="tallis_10">Солнце 10,2° ниже горизонта</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Восход солнца</string>
-    <string name="sunrise_summary">С поправкой на высоте</string>
+    <string name="sunrise_elevated">С поправкой на высоте</string>
     <string name="sunrise_sea">На уровне моря</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Полдень</string>
-    <string name="midday_summary">Середина дня</string>
+    <string name="midday_solar">Середина дня</string>
     <string name="midday_fixed">Середина дня с поправкой на местную широту</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Самое раннее время молитв днем</string>
-    <string name="earliest_mincha_summary">Большая <i>минха</i></string>
+    <string name="earliest_mincha_greater">Большая <i>минха</i></string>
     <string name="earliest_mincha_30">30 минут после полудня</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Молитва Минха</string>
-    <string name="mincha_summary">Малая <i>минха</i></string>
+    <string name="mincha_lesser">Малая <i>минха</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Плаг минха</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Полночь</string>
-    <string name="midnight_summary">Солнечная полночь</string>
+    <string name="midnight_solar">Солнечная полночь</string>
     <string name="midnight_12">12 часа после полудня</string>
     <string name="midnight_6">6 часа после наступление темноты</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Рождение новолуние (מולד)</string>
-    <string name="molad_summary">Средний новолуние</string>
+    <string name="molad_average">Средний новолуние</string>
     <string name="levana_earliest">Самое раннее время освящение новой луны (קידוש לבנה)</string>
     <string name="levana_3">3 дня после новолуние</string>
     <string name="levana_7">7 дня после новолуние</string>
-    <string name="levana_72">72 часа после новолуние</string>
-    <string name="levana_168">168 часа после новолуние</string>
     <string name="levana_latest">Самое позднее освящение новой луны (קידוש לבנה)</string>
     <string name="levana_halfway">Между новолуния</string>
     <string name="levana_15">15 дней после новолуние</string>
-    <string name="levana_halfway_alos">Между новолуния или рассвет</string>
-    <string name="levana_15_alos">15 дней после новолуние или рассвет</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Пост начинается</string>
@@ -197,8 +194,8 @@
     <string name="animations">Анимации</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Авторские права \u00A9 2004–2011 Элиягу Хиршфельд</string>
+    <string name="kosherjava">Календарь KosherJava</string>
+    <string name="kosherjava_version">Авторские права \u00A9 2004–2018 Элиягу Хиршфельд</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Галахические Времена Часы</string>

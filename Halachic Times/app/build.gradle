@@ -87,8 +87,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':KosherJava')
-    implementation project(':lib')
+    implementation project(':zmanim:lib-android')
+    implementation project(':android-lib:lib')
     implementation project(':common')
     implementation project(':locations')
     implementation project(':compass-lib')

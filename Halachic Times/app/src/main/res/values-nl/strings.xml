@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Dag is van dageraad 16,1° tot zeeniveau zonsondergang</string>
     <string name="opinion_16_night">Dag is van dageraad 16,1° tot vallen van de avond</string>
     <string name="opinion_26">Dag is 26° onder zonsopgang / zonsondergang</string>
-    <string name="opinion_19">Dag is 19,8° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_19">Dag is 19° onder zonsopgang / zonsondergang</string>
+    <string name="opinion_19_8">Dag is 19,8° onder zonsopgang / zonsondergang</string>
     <string name="opinion_18">Dag is 18° onder zonsopgang / zonsondergang</string>
     <string name="opinion_60">Dag is 60 minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_72">Dag is 72 minuten vóór zonsopgang / na zonsondergang</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Vroegste <i>tallis</i> en <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Vroegste <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Zon is 11,5° onder de horizon</string>
+    <string name="tallis_11_5">Zon is 11,5° onder de horizon</string>
     <string name="tallis_11">Zon is 11° onder de horizon</string>
     <string name="tallis_10">Zon is onder de horizon</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Zonsopgang</string>
-    <string name="sunrise_summary">Aangepast vóór elevatie</string>
+    <string name="sunrise_elevated">Aangepast vóór elevatie</string>
     <string name="sunrise_sea">Op zeeniveau</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Middag</string>
-    <string name="midday_summary">Middaghoogte</string>
+    <string name="midday_solar">Middaghoogte</string>
     <string name="midday_fixed">Middag aangepast vóór de lokale breedtegraad</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Vroegste middag gebeden</string>
-    <string name="earliest_mincha_summary">Groter <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Groter <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuten na de middag</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Middag gebeden</string>
-    <string name="mincha_summary">Kleiner <i>mincha</i></string>
+    <string name="mincha_lesser">Kleiner <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Middernacht</string>
-    <string name="midnight_summary">Zonne-middernacht</string>
+    <string name="midnight_solar">Zonne-middernacht</string>
     <string name="midnight_12">12 uur na de middag</string>
     <string name="midnight_6">6 uur na de nacht</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Geboorte van de nieuwe maan (מולד)</string>
-    <string name="molad_summary">Gemiddelde nieuwe maan</string>
+    <string name="molad_average">Gemiddelde nieuwe maan</string>
     <string name="levana_earliest">Vroegste heiliging van de nieuwe maan (קידוש לבנה)</string>
     <string name="levana_3">3 dagen na de nieuwe maan</string>
     <string name="levana_7">7 dagen na de nieuwe maan</string>
-    <string name="levana_72">72 uur na de nieuwe maan</string>
-    <string name="levana_168">168 uur na de nieuwe maan</string>
     <string name="levana_latest">Laatste heiliging van de nieuwe maan (קידוש לבנה)</string>
     <string name="levana_halfway">Halverwege tussen nieuwe manen</string>
     <string name="levana_15">15 dagen na de nieuwe maan</string>
-    <string name="levana_halfway_alos">Halverwege tussen nieuwe manen of dageraad</string>
-    <string name="levana_15_alos">15 dagen na de nieuwe maan of dageraad</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Vasten begint</string>
@@ -197,8 +194,8 @@
     <string name="animations">Animaties</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Auteursrecht \u00A9 2004–2011 Elijahoe Hershfeld</string>
+    <string name="kosherjava">KosherJava-kalender</string>
+    <string name="kosherjava_version">Auteursrecht \u00A9 2004–2018 Elijahoe Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Tijden Klok</string>

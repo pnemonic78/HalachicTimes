@@ -43,64 +43,7 @@ import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 import static com.github.times.ZmanimItem.NEVER;
-import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
-import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
-import static com.github.times.preference.ZmanimPreferences.Values.OMER_NONE;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_10_2;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_11;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_12;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_120;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_120_ZMANIS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_13;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_15;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_15_ALOS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_168;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_16_1;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_16_1_ALOS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_16_1_SUNSET;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_18;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_19_8;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_26;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2_STARS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_30;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_65;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_676;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_7;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_8;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4_37;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4_61;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4_8;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_58;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_5_88;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_5_95;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_6;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_60;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_72;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_72_ZMANIS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7_083;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7_083_ZMANIS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_8_5;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_90;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_90_ZMANIS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_96;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_96_ZMANIS;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_ATERET;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_FIXED;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_GRA;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_HALF;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_LEVEL;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_MGA;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
-import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
-import static com.github.times.preference.ZmanimPreferences.Values.THEME_NONE;
-import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
+import static com.github.times.preference.ZmanimPreferences.Values.*;
 
 /**
  * Simple application preferences implementation.
@@ -718,7 +661,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         OPINION_16_1_SUNSET = res.getString(R.string.opinion_value_16_sunset);
         OPINION_168 = res.getString(R.string.opinion_value_168);
         OPINION_18 = res.getString(R.string.opinion_value_18);
-        OPINION_19_8 = res.getString(R.string.opinion_value_19);
+        OPINION_19 = res.getString(R.string.opinion_value_19);
+        OPINION_19_8 = res.getString(R.string.opinion_value_19_8);
         OPINION_2 = res.getString(R.string.opinion_value_2);
         OPINION_2_STARS = res.getString(R.string.opinion_value_2_stars);
         OPINION_26 = res.getString(R.string.opinion_value_26);
@@ -771,5 +715,10 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     @Override
     public Locale getLocale() {
         return localePreferences.getLocale();
+    }
+
+    @Override
+    public boolean isUseElevation() {
+        return !OPINION_SEA.equals(getSunrise());
     }
 }

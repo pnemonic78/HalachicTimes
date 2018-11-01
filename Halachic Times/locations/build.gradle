@@ -23,6 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'proguard-rules.pro'
         }
     }
 
@@ -36,8 +37,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':lib')
+    implementation project(':android-lib:lib')
     implementation project(':common')
+
+    // Maps
+    implementation 'com.google.maps:google-maps-services:0.9.0'
 
     // Testing
     testImplementation 'junit:junit:4.12'

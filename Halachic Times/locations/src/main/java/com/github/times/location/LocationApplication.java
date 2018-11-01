@@ -16,13 +16,20 @@
 package com.github.times.location;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import static android.content.Intent.ACTION_LOCALE_CHANGED;
 
 /**
  * Location application.
@@ -31,8 +38,19 @@ import androidx.annotation.NonNull;
  */
 public abstract class LocationApplication<TP extends ThemePreferences, AP extends AddressProvider, LP extends LocationsProvider> extends Application implements ThemeCallbacks<TP> {
 
-    private final ThemeCallbacks<TP> themeCallbacks = new SimpleThemeCallbacks<TP>(this);
+    private final ThemeCallbacks<TP> themeCallbacks = new SimpleThemeCallbacks<>(this);
     private LocationHolder<AP, LP> locationHolder;
+    private final BroadcastReceiver localeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if (ACTION_LOCALE_CHANGED.equals(action)) {
+                Configuration newConfig = context.getResources().getConfiguration();
+                onConfigurationChanged(newConfig);
+            }
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -47,12 +65,17 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
 
     @NonNull
     protected LocationHolder<AP, LP> getLocationHolder() {
-        if (locationHolder == null) {
-            final Context context = this;
-            locationHolder = new LocationHolder(createProviderFactory(context));
-            registerComponentCallbacks(locationHolder);
+        LocationHolder<AP, LP> holder = locationHolder;
+        if (holder == null) {
+            final Context context = getApplicationContext();
+            holder = new LocationHolder<>(createProviderFactory(context));
+            this.locationHolder = holder;
+            registerComponentCallbacks(holder);
+
+            IntentFilter intentFilter = new IntentFilter(ACTION_LOCALE_CHANGED);
+            LocalBroadcastManager.getInstance(context).registerReceiver(localeReceiver, intentFilter);
         }
-        return locationHolder;
+        return holder;
     }
 
     /**
@@ -79,7 +102,7 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     @Override
     public void onTerminate() {
         super.onTerminate();
-        stopLocationHolder();
+        stopLocationHolder(true);
     }
 
     @Override
@@ -88,10 +111,24 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
         stopLocationHolder();
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        stopLocationHolder();
+    }
+
     private void stopLocationHolder() {
+        stopLocationHolder(false);
+    }
+
+    private void stopLocationHolder(boolean terminate) {
         final LocationHolder locationHolder = this.locationHolder;
         if (locationHolder != null) {
+            if (terminate) {
+                locationHolder.onTerminate();
+            }
             unregisterComponentCallbacks(locationHolder);
+            this.locationHolder = null;
         }
     }
 }

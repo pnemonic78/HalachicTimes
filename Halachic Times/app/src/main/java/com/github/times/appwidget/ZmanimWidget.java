@@ -27,6 +27,8 @@ import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
 
+import java.util.Calendar;
+
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -113,8 +115,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
             // Start of the next Hebrew day.
             if ((position >= positionSunset) && (positionTomorrow < 0)) {
                 positionTomorrow = position;
-                jewishDate.forward();
-                jcal.forward();
+                jewishDate.forward(Calendar.DATE, 1);
+                jcal.forward(Calendar.DATE, 1);
                 dateHebrew = adapter.formatDate(context, jewishDate);
                 groupingText = dateHebrew;
                 int omer = jcal.getDayOfOmer();
@@ -153,8 +155,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 // Start of the next Hebrew day.
                 if ((position >= positionSunset) && (positionTomorrow < 0)) {
                     positionTomorrow = position;
-                    jewishDate.forward();
-                    jcal.forward();
+                    jewishDate.forward(Calendar.DATE, 1);
+                    jcal.forward(Calendar.DATE, 1);
                     dateHebrew = adapter.formatDate(context, jewishDate);
                     groupingText = dateHebrew;
                     int omer = jcal.getDayOfOmer();

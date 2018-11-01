@@ -17,17 +17,12 @@ package com.github.times.location;
 
 import android.content.Context;
 import android.location.Address;
-import android.text.TextUtils;
+import android.location.Location;
 
-import com.github.io.StreamUtils;
 import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
-import com.github.util.LogUtils;
 
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-import org.xml.sax.ext.DefaultHandler2;
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,10 +71,6 @@ public abstract class GeocoderBase {
      * Maximum radius to consider a location near the same planet.
      */
     protected static final float SAME_PLANET = 6000000f;// 6000 kilometres.
-    /**
-     * Lowest possible natural elevation on the surface of the earth.
-     */
-    protected static final double ELEVATION_LOWEST_SURFACE = -500;
 
     protected static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
     protected static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
@@ -109,15 +100,15 @@ public abstract class GeocoderBase {
         this(LocaleUtils.getDefaultLocale(context));
     }
 
-    protected SAXParserFactory getParserFactory() {
+    protected SAXParserFactory getXmlParserFactory() {
         if (parserFactory == null)
             parserFactory = SAXParserFactory.newInstance();
         return parserFactory;
     }
 
-    protected SAXParser getParser() throws ParserConfigurationException, SAXException {
+    protected SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
         if (parser == null)
-            parser = getParserFactory().newSAXParser();
+            parser = getXmlParserFactory().newSAXParser();
         return parser;
     }
 
@@ -209,54 +200,76 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected List<Address> getAddressXMLFromURL(String queryUrl, int maxResults) throws IOException {
+    protected List<Address> getXmlAddressesFromURL(String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+        InputStream data = null;
         try {
-            return parseLocations(data, maxResults);
-        } catch (ParserConfigurationException pce) {
-            LogUtils.e(TAG, queryUrl, pce);
-            throw new IOException(pce);
-        } catch (SAXException se) {
-            LogUtils.e(TAG, queryUrl, se);
-            throw new IOException(se);
+            data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+            return parseAddresses(data, locale, maxResults);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
         }
     }
 
     /**
-     * Parse the XML response for addresses.
+     * Get the address by parsing the XML results.
      *
-     * @param data       the XML data.
+     * @param queryUrl   the URL.
      * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
-     * @throws ParserConfigurationException if an XML error occurs.
-     * @throws SAXException                 if an XML error occurs.
-     * @throws IOException                  if an I/O error occurs.
+     * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected List<Address> parseLocations(InputStream data, int maxResults) throws ParserConfigurationException, SAXException, IOException {
-        // Minimum length for "<X/>"
-        if ((data == null) || (data.available() <= 4)) {
+    protected List<Address> getJsonAddressesFromURL(String queryUrl, int maxResults) throws IOException {
+        URL url = new URL(queryUrl);
+        InputStream data = null;
+        try {
+            data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+            return parseAddresses(data, locale, maxResults);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse the JSON response for addresses.
+     *
+     * @param data       the JSON data.
+     * @param locale     the locale.
+     * @param maxResults the maximum number of results.
+     * @return a list of addresses. Returns {@code null} or empty list if no
+     * matches were found or there is no backend service available.
+     * @throws IOException if an I/O error occurs.
+     */
+    protected List<Address> parseAddresses(InputStream data, Locale locale, int maxResults) throws IOException {
+        // Minimum length for either "<>" or "{}"
+        if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
-        List<Address> results = new ArrayList<Address>(maxResults);
-        SAXParser parser = getParser();
-        DefaultHandler handler = createAddressResponseHandler(results, maxResults, locale);
-        parser.parse(data, handler);
-
+        List<Address> results = new ArrayList<>(maxResults);
+        AddressResponseParser parser = createAddressResponseParser(locale, results, maxResults);
+        parser.parse(data);
         return results;
     }
 
     /**
-     * Create an SAX XML handler for addresses.
+     * Create a parser for addresses.
      *
-     * @param results    the list of results to populate.
-     * @param maxResults the maximum number of results.
-     * @param locale     the locale.
-     * @return the XML handler.
+     * @return the parser.
+     * @throws LocationException if a location error occurs.
      */
-    protected abstract DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale);
+    protected abstract AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException;
 
     /**
      * Get the ISO 639 language code.
@@ -282,7 +295,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    public abstract ZmanimLocation getElevation(double latitude, double longitude) throws IOException;
+    public abstract Location getElevation(double latitude, double longitude) throws IOException;
 
     /**
      * Get the elevation by parsing the XML results.
@@ -293,17 +306,19 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected ZmanimLocation getElevationXMLFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+    protected Location getXmlElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+        InputStream data = null;
         try {
-            return parseElevationXML(latitude, longitude, data);
-        } catch (ParserConfigurationException pce) {
-            LogUtils.e(TAG, queryUrl, pce);
-            throw new IOException(pce);
-        } catch (SAXException se) {
-            LogUtils.e(TAG, queryUrl, se);
-            throw new IOException(se);
+            data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
+            return parseElevation(latitude, longitude, data);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
         }
     }
 
@@ -314,20 +329,18 @@ public abstract class GeocoderBase {
      * @param longitude the longitude.
      * @param data      the XML data.
      * @return the location - {@code null} otherwise.
-     * @throws ParserConfigurationException if an XML error occurs.
-     * @throws SAXException                 if an XML error occurs.
-     * @throws @throws                      IOException if an I/O error occurs.
+     * @throws LocationException if a location error occurs.
+     * @throws IOException       if an I/O error occurs.
      */
-    protected ZmanimLocation parseElevationXML(double latitude, double longitude, InputStream data) throws ParserConfigurationException, SAXException, IOException {
-        // Minimum length for "<X/>"
-        if ((data == null) || (data.available() <= 4)) {
+    protected Location parseElevation(double latitude, double longitude, InputStream data) throws LocationException, IOException {
+        // Minimum length for either "<>" or "{}"
+        if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
-        List<ZmanimLocation> results = new ArrayList<ZmanimLocation>(1);
-        SAXParser parser = getParser();
-        DefaultHandler handler = createElevationResponseHandler(latitude, longitude, results);
-        parser.parse(data, handler);
+        List<Location> results = new ArrayList<>(1);
+        ElevationResponseParser handler = createElevationResponseHandler(latitude, longitude, results, 1);
+        handler.parse(data);
 
         if (results.isEmpty()) {
             return null;
@@ -344,102 +357,56 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected ZmanimLocation getElevationTextFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+    protected Location getTextElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
-        InputStream data = HTTPReader.read(url);
-        return parseElevationText(latitude, longitude, data);
-    }
-
-    /**
-     * Parse the plain text response for an elevation.
-     *
-     * @param latitude  the latitude.
-     * @param longitude the longitude.
-     * @param data      the textual data.
-     * @return the location - {@code null} otherwise.
-     * @throws IOException if an I/O error occurs.
-     */
-    protected ZmanimLocation parseElevationText(double latitude, double longitude, InputStream data) throws IOException {
-        // Minimum length for "0"
-        if ((data == null) || (data.available() <= 0)) {
-            return null;
-        }
-        String text = StreamUtils.toString(data);
-        char first = text.charAt(0);
-        if (!Character.isDigit(first) && (first != '-')) {
-            return null;
-        }
-        double elevation;
-        ZmanimLocation elevated;
+        InputStream data = null;
         try {
-            elevation = Double.parseDouble(text);
-            if (elevation <= ELEVATION_LOWEST_SURFACE) {
-                return null;
+            data = HTTPReader.read(url);
+            return parseElevation(latitude, longitude, data);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
             }
-            elevated = new ZmanimLocation(USER_PROVIDER);
-            elevated.setTime(System.currentTimeMillis());
-            elevated.setLatitude(latitude);
-            elevated.setLongitude(longitude);
-            elevated.setAltitude(elevation);
-            return elevated;
-        } catch (NumberFormatException nfe) {
-            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
         }
-        return null;
     }
 
     /**
-     * Create an SAX XML handler for elevations.
+     * Get the elevation by parsing the JSON results.
      *
      * @param latitude  the latitude.
      * @param longitude the longitude.
-     * @param results   the list of results to populate.
-     * @return the XML handler.
+     * @param queryUrl  the URL.
+     * @return the location - {@code null} otherwise.
+     * @throws IOException       if an I/O error occurs.
      */
-    protected abstract DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results);
-
-    /**
-     * Handler for parsing the XML response.
-     *
-     * @author Moshe
-     */
-    protected abstract static class DefaultAddressResponseHandler extends DefaultHandler2 {
-
-        private final StringBuffer text = new StringBuffer();
-
-        @Override
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            super.startElement(uri, localName, qName, attributes);
-
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            text.delete(0, text.length());
-
-            startElement(uri, localName, attributes);
-        }
-
-        protected void startElement(String uri, String localName, Attributes attributes) throws SAXException {
-        }
-
-        @Override
-        public void characters(char[] ch, int start, int length) throws SAXException {
-            super.characters(ch, start, length);
-            if (length == 0)
-                return;
-            text.append(ch, start, length);
-        }
-
-        @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            super.endElement(uri, localName, qName);
-            if (TextUtils.isEmpty(localName))
-                localName = qName;
-
-            endElement(uri, localName, qName, text.toString().trim());
-        }
-
-        protected void endElement(String uri, String localName, String qName, String text) throws SAXException {
+    protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
+        URL url = new URL(queryUrl);
+        InputStream data = null;
+        try {
+            data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
+            return parseElevation(latitude, longitude, data);
+        } finally {
+            if (data != null) {
+                try {
+                    data.close();
+                } catch (Exception ignore) {
+                }
+            }
         }
     }
+
+    /**
+     * Create a handler to parse elevations.
+     *
+     * @param latitude   the latitude.
+     * @param longitude  the longitude.
+     * @param results    the list of results to populate.
+     * @param maxResults the maximum number of results.
+     * @return the handler.
+     * @throws LocationException if a location error occurs.
+     */
+    protected abstract ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException;
 }

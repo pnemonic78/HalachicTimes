@@ -1,0 +1,308 @@
+{
+  "plus_code" : {
+    "compound_code" : "3X7C+2M Rosh Haayin, Israel",
+    "global_code" : "8G4P3X7C+2M"
+  },
+  "results" : [
+    {
+      "address_components" : [
+        {
+          "long_name" : "Unnamed Road",
+          "short_name" : "Unnamed Road",
+          "types" : [ "route" ]
+        },
+        {
+          "long_name" : "Rosh Haayin",
+          "short_name" : "Rosh Haayin",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Petach Tikva",
+          "short_name" : "Petach Tikva",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Unnamed Road, Rosh Haayin, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.0628155,
+            "lng" : 34.9726186
+          },
+          "southwest" : {
+            "lat" : 32.0624015,
+            "lng" : 34.9708787
+          }
+        },
+        "location" : {
+          "lat" : 32.0626167,
+          "lng" : 34.9717498
+        },
+        "location_type" : "GEOMETRIC_CENTER",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.0639574802915,
+            "lng" : 34.9730976302915
+          },
+          "southwest" : {
+            "lat" : 32.0612595197085,
+            "lng" : 34.97039966970851
+          }
+        }
+      },
+      "place_id" : "ChIJBZVhlkIxHRURWOhxyZEbhY4",
+      "types" : [ "route" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Rosh Haayin",
+          "short_name" : "Rosh Haayin",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Petach Tikva",
+          "short_name" : "Petach Tikva",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Rosh Haayin, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.117834,
+            "lng" : 34.9994091
+          },
+          "southwest" : {
+            "lat" : 32.051418,
+            "lng" : 34.932534
+          }
+        },
+        "location" : {
+          "lat" : 32.095838,
+          "lng" : 34.952177
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.117834,
+            "lng" : 34.9994091
+          },
+          "southwest" : {
+            "lat" : 32.051418,
+            "lng" : 34.932534
+          }
+        }
+      },
+      "place_id" : "ChIJTbFX6ioxHRURHn9WS3zh798",
+      "types" : [ "locality", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Ezor Petah Tikva",
+          "short_name" : "Ezor Petah Tikva",
+          "types" : [ "administrative_area_level_3", "political" ]
+        },
+        {
+          "long_name" : "Petach Tikva",
+          "short_name" : "Petach Tikva",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Ezor Petah Tikva, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.143925,
+            "lng" : 35.004896
+          },
+          "southwest" : {
+            "lat" : 32.001291,
+            "lng" : 34.8432169
+          }
+        },
+        "location" : {
+          "lat" : 32.0847355,
+          "lng" : 34.9286096
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.143925,
+            "lng" : 35.004896
+          },
+          "southwest" : {
+            "lat" : 32.001291,
+            "lng" : 34.8432169
+          }
+        }
+      },
+      "place_id" : "ChIJhyI0i3k1HRUR98WdIlGv_lk",
+      "types" : [ "administrative_area_level_3", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Petach Tikva",
+          "short_name" : "Petach Tikva",
+          "types" : [ "administrative_area_level_2", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Petach Tikva, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.2487936,
+            "lng" : 35.0238042
+          },
+          "southwest" : {
+            "lat" : 32.0012909,
+            "lng" : 34.8367079
+          }
+        },
+        "location" : {
+          "lat" : 32.1245739,
+          "lng" : 34.9286096
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.2487936,
+            "lng" : 35.0238042
+          },
+          "southwest" : {
+            "lat" : 32.0012909,
+            "lng" : 34.8367079
+          }
+        }
+      },
+      "place_id" : "ChIJEWWGa0A3HRURX13ymBg8WKs",
+      "types" : [ "administrative_area_level_2", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Center District, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.4126018,
+            "lng" : 35.051422
+          },
+          "southwest" : {
+            "lat" : 31.7571918,
+            "lng" : 34.66654279999999
+          }
+        },
+        "location" : {
+          "lat" : 31.9521108,
+          "lng" : 34.906551
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.4126018,
+            "lng" : 35.051422
+          },
+          "southwest" : {
+            "lat" : 31.7571918,
+            "lng" : 34.66654279999999
+          }
+        }
+      },
+      "place_id" : "ChIJ1dI8PjMVHRURwtHEUjGbcmU",
+      "types" : [ "administrative_area_level_1", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 33.33280500000001,
+            "lng" : 35.896244
+          },
+          "southwest" : {
+            "lat" : 29.47969999999999,
+            "lng" : 34.2673871
+          }
+        },
+        "location" : {
+          "lat" : 31.046051,
+          "lng" : 34.851612
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 33.33280500000001,
+            "lng" : 35.896244
+          },
+          "southwest" : {
+            "lat" : 29.47969999999999,
+            "lng" : 34.2673871
+          }
+        }
+      },
+      "place_id" : "ChIJi8mnMiRJABURuiw1EyBCa2o",
+      "types" : [ "country", "political" ]
+    }
+  ],
+  "status" : "OK"
+}

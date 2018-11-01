@@ -15,8 +15,7 @@
  */
 package com.github.geonames;
 
-import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
-
+import org.geonames.InsufficientStyleException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -53,7 +52,7 @@ public class JewishCities extends Cities {
         String pathNames = "GeoNames/res/alternateNamesV2.zip";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         JewishCities cities = new JewishCities();
-        Collection<GeoName> names;
+        Collection<GeoNamesToponym> names;
 
         names = cities.loadNames(new File(pathCities), new JewishCitiesFilter(), "cities15000.txt");
         cities.populateElevations(names);
@@ -77,12 +76,12 @@ public class JewishCities extends Cities {
      *         if a DOM error occurs.
      */
     @Override
-    public void writeAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
-        List<GeoName> sorted;
+    public void writeAndroidXML(Collection<GeoNamesToponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
+        List<GeoNamesToponym> sorted;
         if (names instanceof List)
-            sorted = (List<GeoName>) names;
+            sorted = (List<GeoNamesToponym>) names;
         else
-            sorted = new ArrayList<GeoName>(names);
+            sorted = new ArrayList<>(names);
         Collections.sort(sorted, new LocationComparator());
 
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -131,7 +130,7 @@ public class JewishCities extends Cities {
         String name;
         String language2 = getLanguageCode(language);
 
-        for (GeoName place : sorted) {
+        for (GeoNamesToponym place : sorted) {
             name = place.getName(language2);
             if (name == null) {
                 name = place.getName();
@@ -149,7 +148,7 @@ public class JewishCities extends Cities {
             elevation = doc.createElement(ANDROID_ELEMENT_ITEM);
             elevation.setTextContent(Integer.toString(place.getGrossElevation()));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-            zone.setTextContent(place.getTimeZone());
+            zone.setTextContent(place.getTimezone().getTimezoneId());
 
             citiesElement.appendChild(city);
             countriesElement.appendChild(country);
@@ -171,7 +170,7 @@ public class JewishCities extends Cities {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
+        transformer.setOutputProperty(S_KEY_INDENT_AMOUNT, "4");
         transformer.transform(src, result);
     }
 

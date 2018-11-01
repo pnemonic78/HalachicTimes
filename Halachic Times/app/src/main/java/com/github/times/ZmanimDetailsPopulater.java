@@ -23,6 +23,8 @@ import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
+import java.util.Calendar;
+
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 
 /**
@@ -156,7 +158,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis19Point8Degrees();
-        title = R.string.hour_19;
+        title = R.string.hour_19_8;
         adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis26Degrees();
@@ -213,8 +215,12 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         title = R.string.dawn_baal_hatanya;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
-        date = cal.getAlos19Point8Degrees();
+        date = cal.getAlos19Degrees();
         title = R.string.dawn_19;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+        date = cal.getAlos19Point8Degrees();
+        title = R.string.dawn_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getAlos120();
@@ -284,7 +290,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMisheyakir11Point5Degrees();
-        title = R.string.tallis_summary;
+        title = R.string.tallis_11_5;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -298,7 +304,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSunrise();
-        title = R.string.sunrise_summary;
+        title = R.string.sunrise_elevated;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -320,7 +326,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanShmaMGA19Point8Degrees();
-        title = R.string.shema_19;
+        title = R.string.shema_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanShmaMGA120Minutes();
@@ -402,7 +408,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanTfilaMGA19Point8Degrees();
-        title = R.string.prayers_19;
+        title = R.string.prayers_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getSofZmanTfilaMGA90Minutes();
@@ -464,7 +470,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getChatzos();
-        title = R.string.midday_summary;
+        title = R.string.midday_solar;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -494,7 +500,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMinchaGedola();
-        title = R.string.earliest_mincha_summary;
+        title = R.string.earliest_mincha_greater;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -520,7 +526,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getMinchaKetana();
-        title = R.string.mincha_summary;
+        title = R.string.mincha_lesser;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -574,7 +580,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getPlagHamincha19Point8Degrees();
-        title = R.string.plug_hamincha_19;
+        title = R.string.plug_hamincha_19_8;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
         date = cal.getPlagHamincha96Minutes();
@@ -619,7 +625,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         date = cal.getSunset();
         if (date != null) {
-            title = R.string.sunset_summary;
+            title = R.string.sunset_elevated;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
     }
@@ -632,7 +638,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
         if (date != null) {
@@ -673,7 +679,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         date = cal.getTzaisBaalHatanya();
         if (date != null) {
@@ -707,7 +713,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         date = cal.getTzais19Point8Degrees();
         if (date != null) {
-            title = R.string.nightfall_19;
+            title = R.string.nightfall_19_8;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
 
@@ -836,7 +842,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         date = getMidday(cal, settings);
         title = R.string.midnight_12;
@@ -847,7 +853,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
 
         date = cal.getSolarMidnight();
-        title = R.string.midnight_summary;
+        title = R.string.midnight_solar;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
     }
 
@@ -855,7 +861,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward();
+        jewishDate.forward(Calendar.DATE, 1);
 
         long sunset = getSunset(cal, settings);
         long sunrise = getSunriseTomorrow(cal, settings);
@@ -940,61 +946,48 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         JewishCalendar jcal = getJewishCalendar();
 
         date = cal.getTchilasZmanKidushLevana3Days();
+        if ((date == null) && (jcal != null)) {
+            date = jcal.getTchilasZmanKidushLevana3Days();
+            if (date != null) {
+                ComplexZmanimCalendar cal2 = (ComplexZmanimCalendar) cal.clone();
+                cal2.getCalendar().setTimeInMillis(date);
+                date = cal2.getTchilasZmanKidushLevana3Days();
+            }
+        }
         if (date != null) {
             title = R.string.levana_3;
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
         }
 
         date = cal.getTchilasZmanKidushLevana7Days();
+        if ((date == null) && (jcal != null)) {
+            date = jcal.getTchilasZmanKidushLevana7Days();
+            if (date != null) {
+                ComplexZmanimCalendar cal2 = (ComplexZmanimCalendar) cal.clone();
+                cal2.getCalendar().setTimeInMillis(date);
+                date = cal2.getTchilasZmanKidushLevana7Days();
+            }
+        }
         if (date != null) {
             title = R.string.levana_7;
             adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-        }
-
-        if (jcal != null) {
-            date = jcal.getTchilasZmanKidushLevana3Days();
-            if (date != null) {
-                title = R.string.levana_72;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-            }
-
-            date = jcal.getTchilasZmanKidushLevana7Days();
-            if (date != null) {
-                title = R.string.levana_168;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
-            }
         }
     }
 
     private void populateLatestKiddushLevana(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
         Long date;
         int title;
-        JewishCalendar jcal = getJewishCalendar();
 
         date = cal.getSofZmanKidushLevanaBetweenMoldos();
         if (date != null) {
-            title = R.string.levana_halfway_alos;
-            adapter.add(title, SUMMARY_NONE, date, getJewishDate(date));
+            title = R.string.levana_halfway;
+            adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
         }
 
         date = cal.getSofZmanKidushLevana15Days();
         if (date != null) {
-            title = R.string.levana_15_alos;
-            adapter.add(title, SUMMARY_NONE, date, getJewishDate(date));
-        }
-
-        if (jcal != null) {
-            date = jcal.getSofZmanKidushLevanaBetweenMoldos();
-            if (date != null) {
-                title = R.string.levana_halfway;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date));
-            }
-
-            date = jcal.getSofZmanKidushLevana15Days();
-            if (date != null) {
-                title = R.string.levana_15;
-                adapter.add(title, SUMMARY_NONE, date, getJewishDate(date));
-            }
+            title = R.string.levana_15;
+            adapter.add(title, SUMMARY_NONE, date, getJewishDate(date, cal, settings));
         }
     }
 

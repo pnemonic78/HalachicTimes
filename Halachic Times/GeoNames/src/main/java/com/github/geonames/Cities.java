@@ -17,6 +17,7 @@ package com.github.geonames;
 
 import com.sun.org.apache.xml.internal.serializer.OutputPropertiesFactory;
 
+import org.geonames.InsufficientStyleException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -43,6 +44,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import static com.github.geonames.Features.FEATURE_P;
+import static com.github.geonames.Features.FEATURE_PPL;
+import static com.github.geonames.Features.FEATURE_PPLA;
+import static com.github.geonames.Features.FEATURE_PPLA2;
+import static com.github.geonames.Features.FEATURE_PPLA3;
+import static com.github.geonames.Features.FEATURE_PPLA4;
+import static com.github.geonames.Features.FEATURE_PPLC;
+import static com.github.geonames.Features.FEATURE_PPLF;
+import static com.github.geonames.Features.FEATURE_PPLG;
+import static com.github.geonames.Features.FEATURE_PPLL;
+import static com.github.geonames.Features.FEATURE_PPLQ;
+import static com.github.geonames.Features.FEATURE_PPLR;
+import static com.github.geonames.Features.FEATURE_PPLS;
+import static com.github.geonames.Features.FEATURE_PPLW;
+import static com.github.geonames.Features.FEATURE_PPLX;
+import static com.github.geonames.Features.FEATURE_STLMT;
+
 /**
  * Cities.
  *
@@ -60,6 +78,8 @@ public class Cities {
     protected static final String HEADER = "Generated from geonames.org data";
 
     private static final String APP_RES = "/src/main/res";
+
+    protected static final String S_KEY_INDENT_AMOUNT = OutputPropertiesFactory.S_KEY_INDENT_AMOUNT;
 
     protected final GeoNames geoNames = new GeoNames();
     private String moduleName;
@@ -90,8 +110,8 @@ public class Cities {
         System.out.println(res.getAbsolutePath());
         Cities cities = new Cities();
 
-        Collection<GeoName> names = cities.loadNames(res, new CityFilter());
-        Collection<GeoName> capitals = cities.filterCapitals(names);
+        Collection<GeoNamesToponym> names = cities.loadNames(res, new CityFilter());
+        Collection<GeoNamesToponym> capitals = cities.filterCapitals(names);
         cities.writeAndroidXML(capitals, null);
     }
 
@@ -106,7 +126,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> loadNames(File file, NameFilter filter) throws IOException {
+    public Collection<GeoNamesToponym> loadNames(File file, NameFilter filter) throws IOException {
         return loadNames(file, filter, null);
     }
 
@@ -123,7 +143,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public Collection<GeoName> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
+    public Collection<GeoNamesToponym> loadNames(File file, NameFilter filter, String zippedName) throws IOException {
         return geoNames.parseTabbed(file, filter, zippedName);
     }
 
@@ -134,12 +154,12 @@ public class Cities {
      *         the list of cites.
      * @return the list of capitals.
      */
-    public Collection<GeoName> filterCapitals(Collection<GeoName> names) {
-        Collection<GeoName> capitals = new ArrayList<GeoName>();
+    public Collection<GeoNamesToponym> filterCapitals(Collection<GeoNamesToponym> names) throws InsufficientStyleException {
+        Collection<GeoNamesToponym> capitals = new ArrayList<GeoNamesToponym>();
         Collection<String> countries = getCountries();
 
-        for (GeoName name : names) {
-            if (GeoName.FEATURE_PPLC.equals(name.getFeatureCode())) {
+        for (GeoNamesToponym name : names) {
+            if (FEATURE_PPLC.equals(name.getFeatureCode())) {
                 capitals.add(name);
                 countries.remove(name.getCountryCode());
             }
@@ -147,10 +167,10 @@ public class Cities {
 
         // For all countries without capitals, find the next best matching city type.
         if (!countries.isEmpty()) {
-            Map<String, GeoName> best = new TreeMap<String, GeoName>();
-            GeoName place;
+            Map<String, GeoNamesToponym> best = new TreeMap<String, GeoNamesToponym>();
+            GeoNamesToponym place;
             String cc;
-            for (GeoName name : names) {
+            for (GeoNamesToponym name : names) {
                 cc = name.getCountryCode();
 
                 if (countries.contains(cc)) {
@@ -179,7 +199,7 @@ public class Cities {
      *         a name.
      * @return the better name.
      */
-    private GeoName betterPlace(GeoName name1, GeoName name2) {
+    private GeoNamesToponym betterPlace(GeoNamesToponym name1, GeoNamesToponym name2) throws InsufficientStyleException {
         String feature1 = name1.getFeatureCode();
         String feature2 = name2.getFeatureCode();
         int rank1 = getFeatureCodeRank(feature1);
@@ -211,24 +231,24 @@ public class Cities {
      */
     private int getFeatureCodeRank(String code) {
         if (ranks == null) {
-            ranks = new TreeMap<String, Integer>();
+            ranks = new TreeMap<>();
             int rank = -2;
-            ranks.put(GeoName.FEATURE_PPLW, rank++);
-            ranks.put(GeoName.FEATURE_PPLQ, rank++);
-            ranks.put(GeoName.FEATURE_P, rank++);
-            ranks.put(GeoName.FEATURE_PPLX, rank++);
-            ranks.put(GeoName.FEATURE_PPL, rank++);
-            ranks.put(GeoName.FEATURE_PPLS, rank++);
-            ranks.put(GeoName.FEATURE_PPLL, rank++);
-            ranks.put(GeoName.FEATURE_PPLF, rank++);
-            ranks.put(GeoName.FEATURE_PPLR, rank++);
-            ranks.put(GeoName.FEATURE_STLMT, rank++);
-            ranks.put(GeoName.FEATURE_PPLA4, rank++);
-            ranks.put(GeoName.FEATURE_PPLA3, rank++);
-            ranks.put(GeoName.FEATURE_PPLA2, rank++);
-            ranks.put(GeoName.FEATURE_PPLA, rank++);
-            ranks.put(GeoName.FEATURE_PPLG, rank++);
-            ranks.put(GeoName.FEATURE_PPLC, rank++);
+            ranks.put(FEATURE_PPLW, rank++);
+            ranks.put(FEATURE_PPLQ, rank++);
+            ranks.put(FEATURE_P, rank++);
+            ranks.put(FEATURE_PPLX, rank++);
+            ranks.put(FEATURE_PPL, rank++);
+            ranks.put(FEATURE_PPLS, rank++);
+            ranks.put(FEATURE_PPLL, rank++);
+            ranks.put(FEATURE_PPLF, rank++);
+            ranks.put(FEATURE_PPLR, rank++);
+            ranks.put(FEATURE_STLMT, rank++);
+            ranks.put(FEATURE_PPLA4, rank++);
+            ranks.put(FEATURE_PPLA3, rank++);
+            ranks.put(FEATURE_PPLA2, rank++);
+            ranks.put(FEATURE_PPLA, rank++);
+            ranks.put(FEATURE_PPLG, rank++);
+            ranks.put(FEATURE_PPLC, rank++);
         }
         return ranks.get(code);
     }
@@ -245,12 +265,12 @@ public class Cities {
      * @throws TransformerException
      *         if a DOM error occurs.
      */
-    public void writeAndroidXML(Collection<GeoName> names, String language) throws ParserConfigurationException, TransformerException {
-        List<GeoName> sorted = null;
+    public void writeAndroidXML(Collection<GeoNamesToponym> names, String language) throws ParserConfigurationException, TransformerException, InsufficientStyleException {
+        List<GeoNamesToponym> sorted = null;
         if (names instanceof List)
-            sorted = (List<GeoName>) names;
+            sorted = (List<GeoNamesToponym>) names;
         else
-            sorted = new ArrayList<GeoName>(names);
+            sorted = new ArrayList<>(names);
         Collections.sort(sorted, new LocationComparator());
 
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
@@ -291,7 +311,7 @@ public class Cities {
 
         Element country, latitude, longitude, zone;
 
-        for (GeoName place : sorted) {
+        for (GeoNamesToponym place : sorted) {
             country = doc.createElement(ANDROID_ELEMENT_ITEM);
             country.setTextContent(place.getCountryCode());
             latitude = doc.createElement(ANDROID_ELEMENT_ITEM);
@@ -299,7 +319,7 @@ public class Cities {
             longitude = doc.createElement(ANDROID_ELEMENT_ITEM);
             longitude.setTextContent(Integer.toString((int) (place.getLongitude() * CountryRegion.FACTOR_TO_INT)));
             zone = doc.createElement(ANDROID_ELEMENT_ITEM);
-            zone.setTextContent(place.getTimeZone());
+            zone.setTextContent(place.getTimezone().getTimezoneId());
 
             countriesElement.appendChild(country);
             latitudesElement.appendChild(latitude);
@@ -319,7 +339,7 @@ public class Cities {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty(OutputPropertiesFactory.S_KEY_INDENT_AMOUNT, "4");
+        transformer.setOutputProperty(S_KEY_INDENT_AMOUNT, "4");
         transformer.transform(src, result);
     }
 
@@ -335,7 +355,7 @@ public class Cities {
         return countries;
     }
 
-    public void populateElevations(Collection<GeoName> records) {
+    public void populateElevations(Collection<GeoNamesToponym> records) {
         geoNames.populateElevations(records);
     }
 
@@ -349,7 +369,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoName> records) throws IOException {
+    public void populateAlternateNames(File file, Collection<GeoNamesToponym> records) throws IOException {
         populateAlternateNames(file, records, null);
     }
 
@@ -365,7 +385,7 @@ public class Cities {
      * @throws IOException
      *         if an I/O error occurs.
      */
-    public void populateAlternateNames(File file, Collection<GeoName> records, String zippedName) throws IOException {
+    public void populateAlternateNames(File file, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
         geoNames.populateAlternateNames(file, records, zippedName);
     }
 }

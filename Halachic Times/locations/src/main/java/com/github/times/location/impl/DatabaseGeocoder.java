@@ -27,9 +27,12 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.github.database.CursorFilter;
+import com.github.times.location.AddressResponseParser;
 import com.github.times.location.City;
 import com.github.times.location.Country;
+import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.GeocoderBase;
+import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocation;
 import com.github.times.location.provider.LocationContract.AddressColumns;
@@ -37,8 +40,6 @@ import com.github.times.location.provider.LocationContract.CityColumns;
 import com.github.times.location.provider.LocationContract.ElevationColumns;
 import com.github.util.LocaleUtils;
 import com.github.util.LogUtils;
-
-import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -168,12 +169,12 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createAddressResponseHandler(List<Address> results, int maxResults, Locale locale) {
+    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
         return null;
     }
 
     @Override
-    public ZmanimLocation getElevation(final double latitude, final double longitude) throws IOException {
+    public Location getElevation(final double latitude, final double longitude) throws IOException {
         if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
             throw new IllegalArgumentException("latitude == " + latitude);
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
@@ -237,7 +238,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected DefaultHandler createElevationResponseHandler(double latitude, double longitude, List<ZmanimLocation> results) {
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
         return null;
     }
 

@@ -1,0 +1,463 @@
+{
+  "plus_code" : {
+    "compound_code" : "2QFG+9M Holon, Israel",
+    "global_code" : "8G4P2QFG+9M"
+  },
+  "results" : [
+    {
+      "address_components" : [
+        {
+          "long_name" : "1",
+          "short_name" : "1",
+          "types" : [ "street_number" ]
+        },
+        {
+          "long_name" : "Kalischer Street",
+          "short_name" : "Kalischer St",
+          "types" : [ "route" ]
+        },
+        {
+          "long_name" : "Holon",
+          "short_name" : "Holon",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Kalischer St 1, Holon, Israel",
+      "geometry" : {
+        "location" : {
+          "lat" : 32.0234866,
+          "lng" : 34.7766504
+        },
+        "location_type" : "ROOFTOP",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.02483558029149,
+            "lng" : 34.7779993802915
+          },
+          "southwest" : {
+            "lat" : 32.0221376197085,
+            "lng" : 34.77530141970851
+          }
+        }
+      },
+      "place_id" : "ChIJ4Q6yY6i0AhUR8Wr-MGmjsbc",
+      "plus_code" : {
+        "compound_code" : "2QFG+9M Holon, Israel",
+        "global_code" : "8G4P2QFG+9M"
+      },
+      "types" : [ "street_address" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "1",
+          "short_name" : "1",
+          "types" : [ "street_number" ]
+        },
+        {
+          "long_name" : "Kalischer Street",
+          "short_name" : "Kalischer St",
+          "types" : [ "route" ]
+        },
+        {
+          "long_name" : "Holon",
+          "short_name" : "Holon",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Kalischer St 1, Holon, Israel",
+      "geometry" : {
+        "location" : {
+          "lat" : 32.0235053,
+          "lng" : 34.7766591
+        },
+        "location_type" : "ROOFTOP",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.0248542802915,
+            "lng" : 34.7780080802915
+          },
+          "southwest" : {
+            "lat" : 32.0221563197085,
+            "lng" : 34.7753101197085
+          }
+        }
+      },
+      "place_id" : "ChIJUzVsY6i0AhURelfXu0mArHM",
+      "plus_code" : {
+        "compound_code" : "2QFG+CM Holon, Israel",
+        "global_code" : "8G4P2QFG+CM"
+      },
+      "types" : [ "clothing_store", "establishment", "point_of_interest", "store" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "38",
+          "short_name" : "38",
+          "types" : [ "street_number" ]
+        },
+        {
+          "long_name" : "Arye Shenkar Street",
+          "short_name" : "Arye Shenkar St",
+          "types" : [ "route" ]
+        },
+        {
+          "long_name" : "Holon",
+          "short_name" : "Holon",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Arye Shenkar St 38, Holon, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.0241067,
+            "lng" : 34.776357
+          },
+          "southwest" : {
+            "lat" : 32.0237656,
+            "lng" : 34.7759339
+          }
+        },
+        "location" : {
+          "lat" : 32.0238885,
+          "lng" : 34.7761076
+        },
+        "location_type" : "ROOFTOP",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.02528513029151,
+            "lng" : 34.7774944302915
+          },
+          "southwest" : {
+            "lat" : 32.02258716970851,
+            "lng" : 34.77479646970851
+          }
+        }
+      },
+      "place_id" : "ChIJ8bV4aKi0AhURhcMENB-Mn84",
+      "types" : [ "premise" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "1",
+          "short_name" : "1",
+          "types" : [ "street_number" ]
+        },
+        {
+          "long_name" : "Kalischer Street",
+          "short_name" : "Kalischer St",
+          "types" : [ "route" ]
+        },
+        {
+          "long_name" : "Holon",
+          "short_name" : "Holon",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Kalischer St 1, Holon, Israel",
+      "geometry" : {
+        "location" : {
+          "lat" : 32.0234249,
+          "lng" : 34.7766435
+        },
+        "location_type" : "RANGE_INTERPOLATED",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.0247738802915,
+            "lng" : 34.77799248029149
+          },
+          "southwest" : {
+            "lat" : 32.0220759197085,
+            "lng" : 34.7752945197085
+          }
+        }
+      },
+      "place_id" : "Eh1LYWxpc2NoZXIgU3QgMSwgSG9sb24sIElzcmFlbCIaEhgKFAoSCZGKf2KotAIVEZd4gH2qmdBYEAE",
+      "types" : [ "street_address" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "45-43",
+          "short_name" : "45-43",
+          "types" : [ "street_number" ]
+        },
+        {
+          "long_name" : "Arye Shenkar Street",
+          "short_name" : "Arye Shenkar St",
+          "types" : [ "route" ]
+        },
+        {
+          "long_name" : "Holon",
+          "short_name" : "Holon",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Arye Shenkar St 45-43, Holon, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.0234456,
+            "lng" : 34.7763857
+          },
+          "southwest" : {
+            "lat" : 32.022699,
+            "lng" : 34.776284
+          }
+        },
+        "location" : {
+          "lat" : 32.0230723,
+          "lng" : 34.7763348
+        },
+        "location_type" : "GEOMETRIC_CENTER",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.0244212802915,
+            "lng" : 34.7776838302915
+          },
+          "southwest" : {
+            "lat" : 32.0217233197085,
+            "lng" : 34.7749858697085
+          }
+        }
+      },
+      "place_id" : "ChIJk02Ceai0AhURW6xyXLffTP8",
+      "types" : [ "route" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Holon",
+          "short_name" : "Holon",
+          "types" : [ "locality", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Holon, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.038017,
+            "lng" : 34.814042
+          },
+          "southwest" : {
+            "lat" : 31.9887447,
+            "lng" : 34.7483765
+          }
+        },
+        "location" : {
+          "lat" : 32.015833,
+          "lng" : 34.787384
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.038017,
+            "lng" : 34.814042
+          },
+          "southwest" : {
+            "lat" : 31.9887447,
+            "lng" : 34.7483765
+          }
+        }
+      },
+      "place_id" : "ChIJOb8zDLu0AhURLeclBWR53fs",
+      "types" : [ "locality", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Ezor Holon",
+          "short_name" : "Ezor Holon",
+          "types" : [ "administrative_area_level_3", "political" ]
+        },
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Ezor Holon, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.046815,
+            "lng" : 34.8293839
+          },
+          "southwest" : {
+            "lat" : 31.988736,
+            "lng" : 34.733055
+          }
+        },
+        "location" : {
+          "lat" : 32.0167556,
+          "lng" : 34.779603
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.046815,
+            "lng" : 34.8293839
+          },
+          "southwest" : {
+            "lat" : 31.988736,
+            "lng" : 34.733055
+          }
+        }
+      },
+      "place_id" : "ChIJvaj-ISZLHRURTijUzXm_7sw",
+      "types" : [ "administrative_area_level_3", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Center District",
+          "short_name" : "Center District",
+          "types" : [ "administrative_area_level_1", "political" ]
+        },
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Center District, Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 32.4126018,
+            "lng" : 35.051422
+          },
+          "southwest" : {
+            "lat" : 31.7571918,
+            "lng" : 34.66654279999999
+          }
+        },
+        "location" : {
+          "lat" : 31.9521108,
+          "lng" : 34.906551
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 32.4126018,
+            "lng" : 35.051422
+          },
+          "southwest" : {
+            "lat" : 31.7571918,
+            "lng" : 34.66654279999999
+          }
+        }
+      },
+      "place_id" : "ChIJ1dI8PjMVHRURwtHEUjGbcmU",
+      "types" : [ "administrative_area_level_1", "political" ]
+    },
+    {
+      "address_components" : [
+        {
+          "long_name" : "Israel",
+          "short_name" : "IL",
+          "types" : [ "country", "political" ]
+        }
+      ],
+      "formatted_address" : "Israel",
+      "geometry" : {
+        "bounds" : {
+          "northeast" : {
+            "lat" : 33.33280500000001,
+            "lng" : 35.896244
+          },
+          "southwest" : {
+            "lat" : 29.47969999999999,
+            "lng" : 34.2673871
+          }
+        },
+        "location" : {
+          "lat" : 31.046051,
+          "lng" : 34.851612
+        },
+        "location_type" : "APPROXIMATE",
+        "viewport" : {
+          "northeast" : {
+            "lat" : 33.33280500000001,
+            "lng" : 35.896244
+          },
+          "southwest" : {
+            "lat" : 29.47969999999999,
+            "lng" : 34.2673871
+          }
+        }
+      },
+      "place_id" : "ChIJi8mnMiRJABURuiw1EyBCa2o",
+      "types" : [ "country", "political" ]
+    }
+  ],
+  "status" : "OK"
+}

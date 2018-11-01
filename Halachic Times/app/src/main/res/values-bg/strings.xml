@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Ден е от зората 16,1° до ниво залез на морето</string>
     <string name="opinion_16_night">Ден е от зората 16,1° до свечеряване</string>
     <string name="opinion_26">Ден е 26° под изгрев / залез</string>
-    <string name="opinion_19">Ден е 19,8° под изгрев / залез</string>
+    <string name="opinion_19">Ден е 19° под изгрев / залез</string>
+    <string name="opinion_19_8">Ден е 19,8° под изгрев / залез</string>
     <string name="opinion_18">Ден е 18° под изгрев / залез</string>
     <string name="opinion_60">Ден е 60 минути преди изгрев / след залез</string>
     <string name="opinion_72">Ден е 72 минути преди изгрев / след залез</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Най-рано <i>талис</i> и <i>тфилин</i> (משיכיר)</string>
     <string name="tallis_only">Най-рано <i>талис</i> (משיכיר)</string>
-    <string name="tallis_summary">Слънцето е 11,5° под хоризонта</string>
+    <string name="tallis_11_5">Слънцето е 11,5° под хоризонта</string>
     <string name="tallis_11">Слънцето е 11° под хоризонта</string>
     <string name="tallis_10">Слънцето е 10,2° под хоризонта</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Изгрев</string>
-    <string name="sunrise_summary">Коригирани за кота</string>
+    <string name="sunrise_elevated">Коригирани за кота</string>
     <string name="sunrise_sea">На морското равнище</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Пладне</string>
-    <string name="midday_summary">Слънчевата обяд</string>
+    <string name="midday_solar">Слънчевата обяд</string>
     <string name="midday_fixed">Обяд коригирани за местната ширина</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Най-ранните молитвите следобед</string>
-    <string name="earliest_mincha_summary">По-голямо <i>минха</i></string>
+    <string name="earliest_mincha_greater">По-голямо <i>минха</i></string>
     <string name="earliest_mincha_30">30 минути след пладне</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Следобедни молитвите</string>
-    <string name="mincha_summary">По-малки <i>минха</i></string>
+    <string name="mincha_lesser">По-малки <i>минха</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Плаг минха</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Полунощ</string>
-    <string name="midnight_summary">Слънчевата полунощ</string>
+    <string name="midnight_solar">Слънчевата полунощ</string>
     <string name="midnight_12">12 часа след пладне</string>
     <string name="midnight_6">6 часа след свечеряване</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Раждането на новата луна (מולד)</string>
-    <string name="molad_summary">Средна новата луна</string>
+    <string name="molad_average">Средна новата луна</string>
     <string name="levana_earliest">Най-ранният благословията новолунието (קידוש לבנה)</string>
     <string name="levana_3">3 дни след новата луна</string>
     <string name="levana_7">7 дни след новата луна</string>
-    <string name="levana_72">72 часа след новата луна</string>
-    <string name="levana_168">168 часа след новата луна</string>
     <string name="levana_latest">Последни благословията новолунието (קידוש לבנה)</string>
     <string name="levana_halfway">Средата между нови луни</string>
     <string name="levana_15">15 дни след новата луна</string>
-    <string name="levana_halfway_alos">Средата между нови луни или зора</string>
-    <string name="levana_15_alos">15 дни след новата луна или зора</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Пости започва</string>
@@ -197,8 +194,8 @@
     <string name="animations">Анимации</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Авторски права \u00A9 2004–2011 Илия Хиршфелд</string>
+    <string name="kosherjava">KosherJava календар</string>
+    <string name="kosherjava_version">Авторски права \u00A9 2004–2018 Илия Хиршфелд</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Халахичен Време Часовник</string>

@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Verze aplikace</string>
+    <string name="issue_title">Problémy</string>
+    <string name="issue_summary">Nahlásit problém nebo požádat o novou funkci.</string>
 
 </resources>

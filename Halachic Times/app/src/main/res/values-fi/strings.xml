@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Päivä on sarastus 16,1° joilla merenpinnan auringonlasku</string>
     <string name="opinion_16_night">Päivä on sarastus 16,1° ja pimetessä</string>
     <string name="opinion_26">Päivä on 26° alla auringonnousu / auringonlasku</string>
-    <string name="opinion_19">Päivä on 19,8° alla auringonnousu / auringonlasku</string>
+    <string name="opinion_19">Päivä on 19° alla auringonnousu / auringonlasku</string>
+    <string name="opinion_19_8">Päivä on 19,8° alla auringonnousu / auringonlasku</string>
     <string name="opinion_18">Päivä on 18° alla auringonnousu / auringonlasku</string>
     <string name="opinion_60">Päivä on 60 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
     <string name="opinion_72">Päivä on 72 minuuttia ennen auringonnousu / jälkeen auringonlasku</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Aikaisintaan <i>tallis</i> ja <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Aikaisintaan <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Aurinko on 11,5° horisontin alapuolella</string>
+    <string name="tallis_11_5">Aurinko on 11,5° horisontin alapuolella</string>
     <string name="tallis_11">Aurinko on 11° horisontin alapuolella</string>
     <string name="tallis_10">Aurinko on 10,2° horisontin alapuolella</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Auringonnousu</string>
-    <string name="sunrise_summary">Oikaistu korkeus</string>
+    <string name="sunrise_elevated">Oikaistu korkeus</string>
     <string name="sunrise_sea">Merenpinnan tasolla</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Keskipäivä</string>
-    <string name="midday_summary">Aurinko keskipäivä</string>
+    <string name="midday_solar">Aurinko keskipäivä</string>
     <string name="midday_fixed">Keskipäivä oikaistu paikallisia leveysaste</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Aikaisintaan iltapäivän rukoukset</string>
-    <string name="earliest_mincha_summary">Suurempi <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Suurempi <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuuttia jälkeen keskipäivä</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Iltapäivän rukoukset</string>
-    <string name="mincha_summary">Vähemmän <i>mincha</i></string>
+    <string name="mincha_lesser">Vähemmän <i>mincha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Keskiyö</string>
-    <string name="midnight_summary">Aurinko keskiyön</string>
+    <string name="midnight_solar">Aurinko keskiyön</string>
     <string name="midnight_12">12 tuntia jälkeen keskipäivä</string>
     <string name="midnight_6">6 tuntia jälkeen pimetessä</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Syntymän uusikuu (מולד)</string>
-    <string name="molad_summary">Keskimäärin uusikuu</string>
+    <string name="molad_average">Keskimäärin uusikuu</string>
     <string name="levana_earliest">Aikaisintaan pyhittäminen uudenkuun (קידוש לבנה)</string>
     <string name="levana_3">3 päivää jälkeen uusikuu</string>
     <string name="levana_7">7 päivää jälkeen uusikuu</string>
-    <string name="levana_72">72 tuntia jälkeen uusikuu</string>
-    <string name="levana_168">168 tuntia jälkeen uusikuu</string>
     <string name="levana_latest">Uusin pyhittäminen uudenkuun (קידוש לבנה)</string>
     <string name="levana_halfway">Puolivälissä uudenkuun</string>
     <string name="levana_15">15 päivää jälkeen uusikuu</string>
-    <string name="levana_halfway_alos">Puolivälissä uudenkuun tai sarastus</string>
-    <string name="levana_15_alos">15 päivää jälkeen uusikuu tai sarastus</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Paastota alkaa</string>
@@ -197,8 +194,8 @@
     <string name="animations">Animaatiot</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004–2011 Elia Hirschfeldin</string>
+    <string name="kosherjava">KosherJava kalenteri</string>
+    <string name="kosherjava_version">Tekijänoikeudet \u00A9 2004–2018 Elia Hirschfeldin</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachinen Ajat Kello</string>

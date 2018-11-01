@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Alkalmazás verziója</string>
+    <string name="issue_title">Problémák</string>
+    <string name="issue_summary">Probléma bejelentése vagy új szolgáltatás kérése.</string>
 
 </resources>

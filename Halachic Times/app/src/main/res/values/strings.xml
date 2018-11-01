@@ -4,10 +4,6 @@
     <string name="app_name">Halachic Prayer Times</string>
     <string name="title_activity_zmanim">Halachic Times</string>
 
-    <string name="design_title" translatable="false">@string/dawn</string>
-    <string name="design_time" translatable="false">06:01</string>
-    <string name="design_summary" translatable="false">@string/dawn_120</string>
-
     <!-- Recurring opinions -->
     <string name="opinion_120">Day is 120 minutes before sunrise / after sunset</string>
     <string name="opinion_120_zmanis">Day is 120 זמניות minutes before sunrise / after sunset</string>
@@ -15,7 +11,8 @@
     <string name="opinion_16_sunset">Day is from dawn 16.1° to sea level sunset</string>
     <string name="opinion_16_night">Day is from dawn 16.1° to nightfall</string>
     <string name="opinion_26">Day is 26° below sunrise / sunset</string>
-    <string name="opinion_19">Day is 19.8° below sunrise / sunset</string>
+    <string name="opinion_19">Day is 19° below sunrise / sunset</string>
+    <string name="opinion_19_8">Day is 19.8° below sunrise / sunset</string>
     <string name="opinion_18">Day is 18° below sunrise / sunset</string>
     <string name="opinion_60">Day is 60 minutes before sunrise / after sunset</string>
     <string name="opinion_72">Day is 72 minutes before sunrise / after sunset</string>
@@ -39,7 +36,7 @@
     <string name="hour_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
     <string name="hour_16" translatable="false">@string/opinion_16</string>
     <string name="hour_18" translatable="false">@string/opinion_18</string>
-    <string name="hour_19" translatable="false">@string/opinion_19</string>
+    <string name="hour_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="hour_26" translatable="false">@string/opinion_26</string>
     <string name="hour_60" translatable="false">@string/opinion_60</string>
     <string name="hour_72" translatable="false">@string/opinion_72</string>
@@ -56,6 +53,7 @@
     <!-- Dawn -->
     <string name="dawn">Dawn</string>
     <string name="dawn_19" translatable="false">@string/opinion_19</string>
+    <string name="dawn_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="dawn_120" translatable="false">@string/opinion_120</string>
     <string name="dawn_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
     <string name="dawn_18" translatable="false">@string/opinion_18</string>
@@ -73,14 +71,14 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Earliest <i>tallis</i> and <i>tefillin</i> (משיכיר)</string>
     <string name="tallis_only">Earliest <i>tallis</i> (משיכיר)</string>
-    <string name="tallis_summary">Sun is 11.5° below horizon</string>
+    <string name="tallis_11_5">Sun is 11.5° below horizon</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
     <string name="tallis_10">Sun is 10.2° below horizon</string>
     <string name="tallis_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Sunrise</string>
-    <string name="sunrise_summary">Adjusted for elevation</string>
+    <string name="sunrise_elevated">Adjusted for elevation</string>
     <string name="sunrise_sea">At sea level</string>
     <string name="sunrise_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
@@ -88,7 +86,7 @@
     <string name="shema">Latest <i>shema</i></string>
     <string name="shema_16_sunset" translatable="false">@string/opinion_16_sunset</string>
     <string name="shema_7">Day is from dawn 16.1° to night 7.083°</string>
-    <string name="shema_19" translatable="false">@string/opinion_19</string>
+    <string name="shema_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="shema_120" translatable="false">@string/opinion_120</string>
     <string name="shema_18" translatable="false">@string/opinion_18</string>
     <string name="shema_96" translatable="false">@string/opinion_96</string>
@@ -110,7 +108,7 @@
     <string name="prayers_120" translatable="false">@string/opinion_120</string>
     <string name="prayers_96" translatable="false">@string/opinion_96</string>
     <string name="prayers_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
-    <string name="prayers_19" translatable="false">@string/opinion_19</string>
+    <string name="prayers_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="prayers_90" translatable="false">@string/opinion_90</string>
     <string name="prayers_90_zmanis" translatable="false">@string/opinion_90_zmanis</string>
     <string name="prayers_ateret" translatable="false">@string/opinion_ateret</string>
@@ -126,13 +124,13 @@
 
     <!-- Midday -->
     <string name="midday">Midday</string>
-    <string name="midday_summary">Solar noon</string>
+    <string name="midday_solar">Solar noon</string>
     <string name="midday_fixed">Noon adjusted for the local latitude</string>
     <string name="midday_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Earliest afternoon prayers</string>
-    <string name="earliest_mincha_summary">Greater <i>mincha</i></string>
+    <string name="earliest_mincha_greater">Greater <i>mincha</i></string>
     <string name="earliest_mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="earliest_mincha_72" translatable="false">@string/opinion_72</string>
     <string name="earliest_mincha_30">30 minutes after midday</string>
@@ -141,7 +139,7 @@
 
     <!-- Mincha ketana -->
     <string name="mincha">Afternoon prayers</string>
-    <string name="mincha_summary">Lesser <i>mincha</i></string>
+    <string name="mincha_lesser">Lesser <i>mincha</i></string>
     <string name="mincha_72" translatable="false">@string/opinion_72</string>
     <string name="mincha_16" translatable="false">@string/opinion_16</string>
     <string name="mincha_ateret" translatable="false">@string/opinion_ateret</string>
@@ -155,7 +153,7 @@
     <string name="plug_hamincha_16" translatable="false">@string/opinion_16</string>
     <string name="plug_hamincha_16_alos" translatable="false">@string/opinion_16_night</string>
     <string name="plug_hamincha_18" translatable="false">@string/opinion_18</string>
-    <string name="plug_hamincha_19" translatable="false">@string/opinion_19</string>
+    <string name="plug_hamincha_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="plug_hamincha_26" translatable="false">@string/opinion_26</string>
     <string name="plug_hamincha_60" translatable="false">@string/opinion_60</string>
     <string name="plug_hamincha_72" translatable="false">@string/opinion_72</string>
@@ -204,7 +202,7 @@
 
     <!-- Sunset -->
     <string name="sunset">Sunset</string>
-    <string name="sunset_summary" translatable="false">@string/sunrise_summary</string>
+    <string name="sunset_elevated" translatable="false">@string/sunrise_elevated</string>
     <string name="sunset_sea" translatable="false">@string/sunrise_sea</string>
     <string name="sunset_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
@@ -222,7 +220,7 @@
     <string name="nightfall_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
     <string name="nightfall_16" translatable="false">@string/opinion_16</string>
     <string name="nightfall_18" translatable="false">@string/opinion_18</string>
-    <string name="nightfall_19" translatable="false">@string/opinion_19</string>
+    <string name="nightfall_19_8" translatable="false">@string/opinion_19_8</string>
     <string name="nightfall_26" translatable="false">@string/opinion_26</string>
     <string name="nightfall_60" translatable="false">@string/opinion_60</string>
     <string name="nightfall_72" translatable="false">@string/opinion_tam</string>
@@ -279,7 +277,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Midnight</string>
-    <string name="midnight_summary">Solar midnight</string>
+    <string name="midnight_solar">Solar midnight</string>
     <string name="midnight_12">12 hours after midday</string>
     <string name="midnight_6">6 hours after nightfall</string>
 
@@ -307,17 +305,13 @@
 
     <!-- Moon -->
     <string name="molad">Birth of new moon (מולד)</string>
-    <string name="molad_summary">Average new moon</string>
+    <string name="molad_average">Average new moon</string>
     <string name="levana_earliest">Earliest sanctification of the new moon (קידוש לבנה)</string>
     <string name="levana_3">3 days after the new moon</string>
     <string name="levana_7">7 days after the new moon</string>
-    <string name="levana_72">72 hours after the new moon</string>
-    <string name="levana_168">168 hours after the new moon</string>
     <string name="levana_latest">Latest sanctification of the new moon (קידוש לבנה)</string>
     <string name="levana_halfway">Halfway between new moons</string>
     <string name="levana_15">15 days after the new moon</string>
-    <string name="levana_halfway_alos">Halfway between new moons or dawn</string>
-    <string name="levana_15_alos">15 days after the new moon or dawn</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Fast begins</string>
@@ -357,8 +351,8 @@
     <string name="animations">Animations</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Copyright \u00A9 2004–2011 Eliyahu Hershfeld</string>
+    <string name="kosherjava">KosherJava calendar</string>
+    <string name="kosherjava_version">Copyright \u00A9 2004–2018 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>
 
     <!-- Widget -->

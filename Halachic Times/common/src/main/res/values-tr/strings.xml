@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Uygulama sürümü </string>
+    <string name="issue_title">Sorunlar</string>
+    <string name="issue_summary">Bir sorunu bildirin veya yeni bir özellik isteyin.</string>
 
 </resources>

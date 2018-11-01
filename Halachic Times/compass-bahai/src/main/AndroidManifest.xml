@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.github.times.compass.bahai">
+    package="com.github.compass.bahai">
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
@@ -9,7 +9,7 @@
         android:required="true"/>
 
     <application
-        android:name="com.github.times.compass.CompassApplication"
+        android:name="com.github.compass.bahai.CompassApplication"
         android:allowBackup="true"
         android:appCategory="maps"
         android:backupAgent="com.github.times.compass.backup.CompassBackupAgent"
@@ -22,7 +22,7 @@
         android:theme="@style/Theme.CompassApp.Light"
         tools:replace="android:name">
         <activity
-            android:name="com.github.times.compass.CompassActivity"
+            android:name="com.github.compass.bahai.CompassActivity"
             android:label="@string/title_activity_compass">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN"/>
@@ -38,11 +38,11 @@
             android:name="com.github.times.compass.preference.CompassPreferenceActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.times.compass.CompassActivity"/>
+            android:parentActivityName="com.github.compass.bahai.CompassActivity"/>
         <activity
-            android:name="com.github.times.location.LocationActivity"
+            android:name="com.github.compass.bahai.LocationActivity"
             android:label="@string/title_activity_location"
-            android:parentActivityName="com.github.times.compass.CompassActivity">
+            android:parentActivityName="com.github.compass.bahai.CompassActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>

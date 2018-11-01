@@ -37,7 +37,7 @@ public class BahaiCities extends JewishCities {
         String pathNames = "GeoNames/res/alternateNamesV2.zip";
         String pathNames2 = "GeoNames/res/googleNames.txt";
         BahaiCities cities = new BahaiCities();
-        Collection<GeoName> names;
+        Collection<GeoNamesToponym> names;
 
         names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter(), "cities1000.txt");
         cities.populateElevations(names);

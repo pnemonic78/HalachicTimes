@@ -37,14 +37,22 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
      */
     public static final String KEY_FORMATTED = "formatted_address";
 
-    /** ISO 639 country code for Israel. */
+    /**
+     * ISO 639 country code for Israel.
+     */
     public static final String ISO639_ISRAEL = "IL";
-    /** ISO 639 country code for Palestine. */
+    /**
+     * ISO 639 country code for Palestine.
+     */
     public static final String ISO639_PALESTINE = "PS";
 
-    /** Address field separator. */
+    /**
+     * Address field separator.
+     */
     private static final String ADDRESS_SEPARATOR = ", ";
-    /** Double subtraction error. */
+    /**
+     * Double subtraction error.
+     */
     private static final double EPSILON = 1e-6;
 
     private long id;
@@ -56,8 +64,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Constructs a new address.
      *
-     * @param locale
-     *         the locale.
+     * @param locale the locale.
      */
     public ZmanimAddress(Locale locale) {
         super(locale);
@@ -66,8 +73,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Constructs a new address.
      *
-     * @param address
-     *         the source address.
+     * @param address the source address.
      */
     public ZmanimAddress(Address address) {
         super(address.getLocale());
@@ -100,8 +106,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Constructs a new address.
      *
-     * @param address
-     *         the source address.
+     * @param address the source address.
      */
     public ZmanimAddress(ZmanimAddress address) {
         this((Address) address);
@@ -125,8 +130,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Set the id.
      *
-     * @param id
-     *         the id.
+     * @param id the id.
      */
     public void setId(long id) {
         this.id = id;
@@ -146,8 +150,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Set the formatted address.
      *
-     * @param formatted
-     *         the address.
+     * @param formatted the address.
      */
     public void setFormatted(String formatted) {
         this.formatted = formatted;
@@ -165,8 +168,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Mark the address as a favourite.
      *
-     * @param favorite
-     *         is favourite?
+     * @param favorite is favourite?
      */
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
@@ -175,8 +177,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
     /**
      * Set the elevation.
      *
-     * @param elevation
-     *         the elevation in metres.
+     * @param elevation the elevation in metres.
      */
     public void setElevation(double elevation) {
         this.elevation = elevation;
@@ -216,6 +217,7 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
 
         StringBuilder buf = new StringBuilder();
         String feature = getFeatureName();
+        String premises = getPremises();
         String thoroughfare = getThoroughfare();
         int addressLinesCount = getMaxAddressLineIndex() + 1;
         String address;
@@ -230,7 +232,15 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(feature);
         }
-        if (!isEmpty(thoroughfare) && !thoroughfare.equals(feature)) {
+        if (!isEmpty(premises)
+                && !premises.equals(feature)) {
+            if (buf.length() > 0)
+                buf.append(ADDRESS_SEPARATOR);
+            buf.append(premises);
+        }
+        if (!isEmpty(thoroughfare)
+                && !thoroughfare.equals(feature)
+                && !thoroughfare.equals(premises)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(thoroughfare);
@@ -240,11 +250,12 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
                 address = getAddressLine(i);
                 if (!isEmpty(address)
                         && ((thoroughfare == null) || !address.contains(thoroughfare))
-                        && !address.equals(subloc)
-                        && !address.equals(locality)
-                        && !address.equals(subadmin)
-                        && !address.equals(admin)
-                        && !address.equals(country)) {
+                        && ((premises == null) || !address.contains(premises))
+                        && ((subloc == null) || !address.contains(subloc))
+                        && ((locality == null) || !address.contains(locality))
+                        && ((subadmin == null) || !address.contains(subadmin))
+                        && ((admin == null) || !address.contains(admin))
+                        && ((country == null) || !address.contains(country))) {
                     if (buf.length() > 0)
                         buf.append(ADDRESS_SEPARATOR);
                     buf.append(address);

@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">إصدار التطبيق</string>
+    <string name="issue_title">مشاكل</string>
+    <string name="issue_summary">أبلغ عن مشكلة ، أو اطلب ميزة جديدة.</string>
 
 </resources>

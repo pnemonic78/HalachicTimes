@@ -18,8 +18,10 @@ package com.github.times.location;
 import android.content.Context;
 
 import com.github.times.location.impl.LocationsProviderFactoryImpl;
+import com.github.util.LogUtils;
 
 import androidx.annotation.NonNull;
+import timber.log.Timber;
 
 /**
  * Default location application.
@@ -27,6 +29,13 @@ import androidx.annotation.NonNull;
  * @author Moshe Waisberg
  */
 public class DefaultLocationApplication extends LocationApplication {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
+    }
+
     @NonNull
     @Override
     protected LocationsProviderFactory createProviderFactory(Context context) {

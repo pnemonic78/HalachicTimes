@@ -9,5 +9,7 @@
 
     <!-- About -->
     <string name="version_title">Applen versionen</string>
+    <string name="issue_title">Frågor</string>
+    <string name="issue_summary">Rapportera ett problem eller begär en ny funktion.</string>
 
 </resources>

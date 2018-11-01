@@ -41,6 +41,9 @@ public interface LocationPreferences {
     /** Preference name for the co-ordinates with elevation/altitude. */
     String KEY_COORDS_ELEVATION = "coords.elevation";
 
+    /** Name for the locale in an intent. */
+    String EXTRA_LOCALE = "locale";
+
     class Values {
         /** Default coordinates format. */
         static String FORMAT_DEFAULT;

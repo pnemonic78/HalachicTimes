@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8"
-        tools:text="@string/design_time" />
+        tools:text="@tools:sample/date/hhmm" />
 
     <TextView
         android:id="@android:id/title"
@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/design_title" />
+        tools:text="@tools:sample/lorem" />
 
     <ImageView
         android:id="@+id/reminder_dismiss"

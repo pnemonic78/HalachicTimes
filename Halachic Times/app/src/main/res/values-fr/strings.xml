@@ -11,7 +11,8 @@
     <string name="opinion_16_sunset">Jour est de l\'aube 16,1° à niveau de la mer coucher de soleil</string>
     <string name="opinion_16_night">Jour est de l\'aube 16,1° à tombée de la nuit</string>
     <string name="opinion_26">Jour est 26° sous de lever / coucher du soleil</string>
-    <string name="opinion_19">Jour est 19,8° sous de lever / coucher du soleil</string>
+    <string name="opinion_19">Jour est 19° sous de lever / coucher du soleil</string>
+    <string name="opinion_19_8">Jour est 19,8° sous de lever / coucher du soleil</string>
     <string name="opinion_18">Jour est 18° sous de lever / coucher du soleil</string>
     <string name="opinion_60">Jour est 60 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_72">Jour est 72 minutes avant le lever / après le coucher du soleil</string>
@@ -35,13 +36,13 @@
     <!-- Tallis and Tefillin -->
     <string name="tallis">Mise du <i>talit</i> et <i>téfilines</i> au plus tôt (משיכיר)</string>
     <string name="tallis_only">Mise du <i>talit</i> au plus tôt (משיכיר)</string>
-    <string name="tallis_summary">Soleil est 11,5° sous l\'horizon</string>
+    <string name="tallis_11_5">Soleil est 11,5° sous l\'horizon</string>
     <string name="tallis_11">Soleil est 11° sous l\'horizon</string>
     <string name="tallis_10">Soleil est 10,2° sous l\'horizon</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Lever du soleil</string>
-    <string name="sunrise_summary">Ajusté pour l\'élévation</string>
+    <string name="sunrise_elevated">Ajusté pour l\'élévation</string>
     <string name="sunrise_sea">Niveau de la mer</string>
 
     <!-- Latest shema -->
@@ -57,17 +58,17 @@
 
     <!-- Midday -->
     <string name="midday">Midi</string>
-    <string name="midday_summary">Apres midi</string>
+    <string name="midday_solar">Apres midi</string>
     <string name="midday_fixed">Apres midi en fonction de la latitude locale</string>
 
     <!-- Earliest mincha -->
     <string name="earliest_mincha">Min\'ha au plus tôt</string>
-    <string name="earliest_mincha_summary">Grand <i>min\'ha</i></string>
+    <string name="earliest_mincha_greater">Grand <i>min\'ha</i></string>
     <string name="earliest_mincha_30">30 minutes après midi</string>
 
     <!-- Mincha ketana -->
     <string name="mincha">Prières de l\'après-midi</string>
-    <string name="mincha_summary">Petite <i>min\'ha</i></string>
+    <string name="mincha_lesser">Petite <i>min\'ha</i></string>
 
     <!-- Plug hamincha -->
     <string name="plug_hamincha"><i>Plag hamin\'ha</i></string>
@@ -132,7 +133,7 @@
 
     <!-- Midnight -->
     <string name="midnight">Minuit</string>
-    <string name="midnight_summary">Minuit solaire</string>
+    <string name="midnight_solar">Minuit solaire</string>
     <string name="midnight_12">12 heures après midi</string>
     <string name="midnight_6">6 heures après tombée de la nuit</string>
 
@@ -150,17 +151,13 @@
 
     <!-- Moon -->
     <string name="molad">Naissance de la nouvelle lune (מולד)</string>
-    <string name="molad_summary">Moyenne des nouvelle lune</string>
+    <string name="molad_average">Moyenne des nouvelle lune</string>
     <string name="levana_earliest">Sanctification de la nouvelle lune au plus tôt (קידוש לבנה)</string>
     <string name="levana_3">3 jours après le nouvelle lune</string>
     <string name="levana_7">7 jours après le nouvelle lune</string>
-    <string name="levana_72">72 heures après le nouvelle lune</string>
-    <string name="levana_168">168 heures après le nouvelle lune</string>
     <string name="levana_latest">Sanctification de la nouvelle lune au plus tard (קידוש לבנה)</string>
     <string name="levana_halfway">A mi-chemin entre nouvelles lunes</string>
     <string name="levana_15">15 jours après le nouvelle lune</string>
-    <string name="levana_halfway_alos">A mi-chemin entre nouvelles lunes ou aube</string>
-    <string name="levana_15_alos">15 jours après le nouvelle lune ou aube</string>
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Le jeûne commence</string>
@@ -197,8 +194,8 @@
     <string name="animations">Animations</string>
 
     <!-- About -->
-    <string name="kosherjava">KosherJava</string>
-    <string name="kosherjava_version">Droits d\'auteur \u00A9 2004–2011 Élie Hershfeld</string>
+    <string name="kosherjava">Calendrier KosherJava</string>
+    <string name="kosherjava_version">Droits d\'auteur \u00A9 2004–2018 Élie Hershfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Horaires Halakhiques Horloge</string>

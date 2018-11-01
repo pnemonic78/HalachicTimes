@@ -42,6 +42,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/misc.xml
+.idea/caches
 
 # Keystore files
 *.jks
@@ -56,4 +57,3 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
-
