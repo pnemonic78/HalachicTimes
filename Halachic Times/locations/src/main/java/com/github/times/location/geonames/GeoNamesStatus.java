@@ -17,18 +17,16 @@ package com.github.times.location.geonames;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**
- * Root object for GeoNames address JSON response.
+ * Root object for GeoNames address JSON status.
  *
  * @author Moshe Waisberg
  */
-class GeoNamesResponse {
+class GeoNamesStatus {
 
-    @SerializedName("geonames")
-    public List<Toponym> records;
-    @SerializedName("status")
-    public GeoNamesStatus status;
+    @SerializedName("message")
+    public String message;
+    @SerializedName("value")
+    public int value;
 
 }

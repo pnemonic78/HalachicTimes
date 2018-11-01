@@ -19,7 +19,6 @@ import android.location.Location;
 
 import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.LocationException;
-import com.github.util.LogUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -69,10 +68,9 @@ class GoogleElevationResponseParser extends ElevationResponseParser {
         }
     }
 
-    private void handleResponse(ElevationResponse response, List<Location> results, int maxResults) {
+    private void handleResponse(ElevationResponse response, List<Location> results, int maxResults) throws LocationException {
         if (!response.successful()) {
-            LogUtils.e(TAG, response.errorMessage);
-            return;
+            throw new LocationException(response.errorMessage);
         }
 
         ElevationResult geocoderResult = response.getResult();

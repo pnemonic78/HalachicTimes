@@ -78,10 +78,13 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         }
     }
 
-    private void handleResponse(GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) {
+    private void handleResponse(GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
         final List<Toponym> records = response.records;
         if ((records == null) || records.isEmpty()) {
-            return;
+            if (response.status != null) {
+                throw new LocationException(response.status.message);
+            }
+            throw new LocationException();
         }
 
         Toponym toponym;

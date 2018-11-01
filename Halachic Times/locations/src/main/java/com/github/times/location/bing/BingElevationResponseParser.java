@@ -67,9 +67,9 @@ public class BingElevationResponseParser extends ElevationResponseParser {
         }
     }
 
-    private void handleResponse(BingResponse response) {
+    private void handleResponse(BingResponse response) throws LocationException {
         if (response.statusCode != BingResponse.STATUS_OK) {
-            return;
+            throw new LocationException(response.statusDescription);
         }
 
         final List<BingResponse.ResourceSet> resourceSets = response.resourceSets;

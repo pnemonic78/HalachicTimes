@@ -20,7 +20,6 @@ import android.location.Address;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimAddress;
-import com.github.util.LogUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -81,10 +80,9 @@ class GoogleAddressResponseParser extends AddressResponseParser {
         }
     }
 
-    private void handleResponse(GeocodingResponse response, List<Address> results, int maxResults, Locale locale) {
+    private void handleResponse(GeocodingResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
         if (!response.successful()) {
-            LogUtils.e(TAG, response.errorMessage);
-            return;
+            throw new LocationException(response.errorMessage);
         }
 
         final GeocodingResult[] responseResults = response.results;

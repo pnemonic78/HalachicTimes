@@ -74,9 +74,9 @@ public class BingAddressResponseParser extends AddressResponseParser {
         }
     }
 
-    private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) {
+    private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
         if (response.statusCode != BingResponse.STATUS_OK) {
-            return;
+            throw new LocationException(response.statusDescription);
         }
 
         final List<BingResponse.ResourceSet> resourceSets = response.resourceSets;

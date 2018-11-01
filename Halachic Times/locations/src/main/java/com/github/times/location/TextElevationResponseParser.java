@@ -55,10 +55,6 @@ public class TextElevationResponseParser extends ElevationResponseParser {
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
         String text = StreamUtils.toString(data);
-        char first = text.charAt(0);
-        if (!Character.isDigit(first) && (first != '-')) {
-            return;
-        }
         double elevation;
         ZmanimLocation elevated;
         try {
