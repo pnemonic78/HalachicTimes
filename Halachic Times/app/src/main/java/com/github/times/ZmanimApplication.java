@@ -25,7 +25,7 @@ import com.github.times.location.AddressProvider;
 import com.github.times.location.LocationApplication;
 import com.github.times.location.LocationsProviderFactory;
 import com.github.times.location.ZmanimLocations;
-import com.github.util.LogUtils;
+import com.github.util.LogTree;
 
 import androidx.annotation.NonNull;
 import timber.log.Timber;
@@ -50,7 +50,7 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
     public void onCreate() {
         super.onCreate();
         localeCallbacks.onCreate(this);
-        Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
+        Timber.plant(new LogTree(BuildConfig.DEBUG));
     }
 
     @NonNull

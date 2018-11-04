@@ -15,7 +15,7 @@
  */
 package com.github.compass;
 
-import com.github.util.LogUtils;
+import com.github.util.LogTree;
 
 import timber.log.Timber;
 
@@ -29,6 +29,6 @@ public class CompassApplication extends com.github.times.compass.CompassApplicat
     @Override
     public void onCreate() {
         super.onCreate();
-        Timber.plant(new LogUtils.LogTree(BuildConfig.DEBUG));
+        Timber.plant(new LogTree(BuildConfig.DEBUG));
     }
 }
