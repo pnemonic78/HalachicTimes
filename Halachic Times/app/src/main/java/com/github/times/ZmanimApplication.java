@@ -18,7 +18,6 @@ package com.github.times;
 import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
-
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
@@ -27,12 +26,11 @@ import com.github.times.location.AddressProvider;
 import com.github.times.location.LocationApplication;
 import com.github.times.location.LocationsProviderFactory;
 import com.github.times.location.ZmanimLocations;
-import com.github.util.LogTree;
+import com.github.times.util.CrashlyticsTree;
 
 import androidx.annotation.NonNull;
-import timber.log.Timber;
-
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 /**
  * Zmanim application.
@@ -54,7 +52,7 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
     public void onCreate() {
         super.onCreate();
         localeCallbacks.onCreate(this);
-        Timber.plant(new LogTree(BuildConfig.DEBUG));
+        Timber.plant(new CrashlyticsTree(BuildConfig.DEBUG));
         Fabric.with(this, new Crashlytics());
     }
 
