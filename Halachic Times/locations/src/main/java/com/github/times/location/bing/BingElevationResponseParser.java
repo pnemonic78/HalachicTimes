@@ -97,18 +97,18 @@ public class BingElevationResponseParser extends ElevationResponseParser {
     }
 
     @Nullable
-    private Location toLocation(@NonNull BingResource resource, double latitude, double longitude) {
+    private Location toLocation(@NonNull BingResource response, double latitude, double longitude) {
         Location result = new ZmanimLocation(USER_PROVIDER);
         result.setLatitude(latitude);
         result.setLongitude(longitude);
 
-        BingPoint point = resource.point;
+        BingPoint point = response.point;
         if ((point != null) && (point.coordinates != null) && (point.coordinates.length >= 2)) {
             result.setLatitude(point.coordinates[0]);
             result.setLongitude(point.coordinates[1]);
         }
 
-        Double[] elevations = resource.elevations;
+        Double[] elevations = response.elevations;
         if ((elevations == null) || (elevations.length < 1)) {
             return null;
         }

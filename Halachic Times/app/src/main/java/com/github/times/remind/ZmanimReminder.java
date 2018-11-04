@@ -48,7 +48,6 @@ import com.github.times.ZmanimPopulater;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
-import com.github.util.LogUtils;
 
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
@@ -60,6 +59,7 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import timber.log.Timber;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
@@ -93,8 +93,6 @@ import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
  * @author Moshe Waisberg
  */
 public class ZmanimReminder {
-
-    private static final String TAG = "ZmanimReminder";
 
     /**
      * Id for reminder notifications.<br>
@@ -170,7 +168,7 @@ public class ZmanimReminder {
     private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
     private static final String CHANNEL_UPCOMING = "upcoming";
 
-    private static final String WAKE_TAG = TAG + ":wake";
+    private static final String WAKE_TAG = "ZmanimReminder:wake";
 
     private final Context context;
     private SimpleDateFormat dateFormat;
@@ -237,7 +235,7 @@ public class ZmanimReminder {
      */
     private void remind(ZmanimPreferences settings, ZmanimPopulater<ZmanimAdapter> populater, ZmanimAdapter adapter) {
         final long latest = settings.getLatestReminder();
-        LogUtils.i(TAG, "remind latest [" + formatDateTime(latest) + "]");
+        Timber.i("remind latest [" + formatDateTime(latest) + "]");
 
         final Calendar gcal = Calendar.getInstance();
         final long now = gcal.getTimeInMillis();
@@ -296,7 +294,7 @@ public class ZmanimReminder {
         }
         if (itemFirst != null) {
             item = itemFirst;
-            LogUtils.i(TAG, "notify at [" + formatDateTime(whenFirst) + "] for [" + formatDateTime(item.time) + "]");
+            Timber.i("notify at [" + formatDateTime(whenFirst) + "] for [" + formatDateTime(item.time) + "]");
             notifyFuture(item, whenFirst);
         }
         if (itemUpcoming != null) {
@@ -308,7 +306,7 @@ public class ZmanimReminder {
      * Cancel all reminders.
      */
     public void cancel() {
-        LogUtils.i(TAG, "cancel");
+        Timber.i("cancel");
         PendingIntent alarmIntent = createAlarmIntent(null);
         PendingIntent upcomingIntent = createUpcomingIntent();
 
@@ -344,7 +342,7 @@ public class ZmanimReminder {
      */
     @SuppressLint("Wakelock")
     public void notifyNow(ZmanimPreferences settings, ZmanimReminderItem item) {
-        LogUtils.i(TAG, "notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+        Timber.i("notify now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
         final long now = currentTimeMillis();
 
         // Wake up the device to notify the user.
@@ -381,7 +379,7 @@ public class ZmanimReminder {
         CharSequence contentTitle = context.getText(item.titleId);
         long when = item.time;
 
-        LogUtils.i(TAG, "notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for [" + formatDateTime(when) + "]");
+        Timber.i("notify future [" + contentTitle + "] at [" + formatDateTime(triggerAt) + "] for [" + formatDateTime(when) + "]");
 
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createAlarmIntent(item);
@@ -397,7 +395,7 @@ public class ZmanimReminder {
         PackageManager pm = context.getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(context.getPackageName());
         if (intent == null) {
-            LogUtils.w(TAG, "Launch activity not found!");
+            Timber.w("Launch activity not found!");
             intent = new Intent(context, ZmanimActivity.class);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -435,7 +433,7 @@ public class ZmanimReminder {
 
     public void process(@Nullable Intent intent) {
         final Context context = getContext();
-        LogUtils.v(TAG, "process " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
+        Timber.v("process " + intent + " [" + formatDateTime(currentTimeMillis()) + "]");
         if (intent == null) {
             return;
         }
@@ -653,7 +651,7 @@ public class ZmanimReminder {
      * @param triggerAt when to stop.
      */
     private void cancelFuture(long triggerAt) {
-        LogUtils.i(TAG, "cancel future at [" + formatDateTime(triggerAt) + "]");
+        Timber.i("cancel future at [" + formatDateTime(triggerAt) + "]");
 
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createCancelIntent();
@@ -664,7 +662,7 @@ public class ZmanimReminder {
         final CharSequence contentTitle = context.getText(item.titleId);
         final CharSequence contentText = item.summary;
         final long when = item.time;
-        LogUtils.i(TAG, "notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
+        Timber.i("notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
         final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
             contentText,
@@ -715,7 +713,7 @@ public class ZmanimReminder {
      * @param triggerAt when to silence.
      */
     private void silenceFuture(ZmanimReminderItem item, long triggerAt) {
-        LogUtils.i(TAG, "silence future at [" + formatDateTime(triggerAt) + "]");
+        Timber.i("silence future at [" + formatDateTime(triggerAt) + "]");
         if (item == null) {
             cancelFuture(triggerAt);
             return;
@@ -749,7 +747,7 @@ public class ZmanimReminder {
      * @param item     the reminder item.
      */
     private void silence(ZmanimPreferences settings, ZmanimReminderItem item) {
-        LogUtils.i(TAG, "silence now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+        Timber.i("silence now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
         PendingIntent contentIntent = createActivityIntent();
 
         Notification notification = createSilenceNotification(settings, item, contentIntent);
@@ -838,7 +836,7 @@ public class ZmanimReminder {
      * @param item the reminder item.
      */
     public void alarmNow(ZmanimReminderItem item) {
-        LogUtils.i(TAG, "alarm now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+        Timber.i("alarm now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
 
         final Context context = getContext();
         Intent intent = new Intent(context, AlarmActivity.class);

@@ -41,7 +41,6 @@ import javax.xml.parsers.SAXParserFactory;
  * @author Moshe Waisberg
  */
 public abstract class GeocoderBase {
-    private static final String TAG = "GeocoderBase";
 
     /**
      * The "user pick a city" location provider.

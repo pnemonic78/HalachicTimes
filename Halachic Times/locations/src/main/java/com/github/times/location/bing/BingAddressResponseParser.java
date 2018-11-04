@@ -104,33 +104,33 @@ public class BingAddressResponseParser extends AddressResponseParser {
     }
 
     @Nullable
-    private Address toAddress(@NonNull BingResource resource, Locale locale) {
-        Address address = new ZmanimAddress(locale);
-        address.setFeatureName(resource.name);
+    private Address toAddress(@NonNull BingResource response, Locale locale) {
+        Address result = new ZmanimAddress(locale);
+        result.setFeatureName(response.name);
 
-        BingPoint point = resource.point;
+        BingPoint point = response.point;
         if ((point == null) || (point.coordinates == null) || (point.coordinates.length < 2)) {
             return null;
         }
-        address.setLatitude(point.coordinates[0]);
-        address.setLongitude(point.coordinates[1]);
+        result.setLatitude(point.coordinates[0]);
+        result.setLongitude(point.coordinates[1]);
 
-        BingAddress bingAddress = resource.address;
+        BingAddress bingAddress = response.address;
         if (bingAddress == null) {
             return null;
         }
         if (!isEmpty(bingAddress.addressLine)) {
-            address.setAddressLine(0, bingAddress.addressLine);
+            result.setAddressLine(0, bingAddress.addressLine);
         }
-        address.setAdminArea(bingAddress.adminDistrict);
-        address.setSubAdminArea(bingAddress.adminDistrict2);
-        address.setCountryName(bingAddress.countryRegion);
-        address.setLocality(bingAddress.locality);
-        address.setPostalCode(bingAddress.postalCode);
+        result.setAdminArea(bingAddress.adminDistrict);
+        result.setSubAdminArea(bingAddress.adminDistrict2);
+        result.setCountryName(bingAddress.countryRegion);
+        result.setLocality(bingAddress.locality);
+        result.setPostalCode(bingAddress.postalCode);
         String formatted = bingAddress.formattedAddress;
-        if ((formatted != null) && formatted.equals(resource.name)) {
-            address.setFeatureName(null);
+        if ((formatted != null) && formatted.equals(response.name)) {
+            result.setFeatureName(null);
         }
-        return address;
+        return result;
     }
 }

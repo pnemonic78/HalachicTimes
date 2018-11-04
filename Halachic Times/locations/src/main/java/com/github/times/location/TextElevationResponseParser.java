@@ -18,12 +18,16 @@ package com.github.times.location;
 import android.location.Location;
 
 import com.github.io.StreamUtils;
-import com.github.util.LogUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import timber.log.Timber;
+
+import static android.text.TextUtils.isEmpty;
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 /**
@@ -33,12 +37,14 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  */
 public class TextElevationResponseParser extends ElevationResponseParser {
 
-    private static final String TAG = "TextElevationResponseParser";
-
     /**
      * Lowest possible natural elevation on the surface of the earth.
      */
     private static final double ELEVATION_LOWEST_SURFACE = -500;
+    /**
+     * Highest possible natural elevation from the surface of the earth.
+     */
+    private static final double ELEVATION_SPACE = 100_000;
 
     /**
      * Construct a new elevation parser.
@@ -55,22 +61,39 @@ public class TextElevationResponseParser extends ElevationResponseParser {
     @Override
     public void parse(InputStream data) throws LocationException, IOException {
         String text = StreamUtils.toString(data);
+        if (isEmpty(text)) {
+            throw new LocationException("empty elevation");
+        }
+
+        Location location = toLocation(text);
+        if (location != null) {
+            results.add(location);
+        }
+    }
+
+    @Nullable
+    private Location toLocation(@NonNull String response) throws LocationException {
         double elevation;
-        ZmanimLocation elevated;
+
         try {
-            elevation = Double.parseDouble(text);
+            elevation = Double.parseDouble(response);
             if (elevation <= ELEVATION_LOWEST_SURFACE) {
-                return;
+                Timber.w("elevation too low: %s", response);
+                return null;
             }
-            elevated = new ZmanimLocation(USER_PROVIDER);
-            elevated.setTime(System.currentTimeMillis());
-            elevated.setLatitude(latitude);
-            elevated.setLongitude(longitude);
-            elevated.setAltitude(elevation);
-            results.add(elevated);
-        } catch (NumberFormatException nfe) {
-            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
-            throw new LocationException(nfe);
+            if (elevation >= ELEVATION_SPACE) {
+                Timber.w("elevation too high: %s", response);
+                return null;
+            }
+            Location result = new Location(USER_PROVIDER);
+            result.setTime(System.currentTimeMillis());
+            result.setLatitude(latitude);
+            result.setLongitude(longitude);
+            result.setAltitude(elevation);
+            return result;
+        } catch (NumberFormatException e) {
+            Timber.e(e, "Bad elevation: [" + response + "] at " + latitude + "," + longitude);
+            throw new LocationException(e);
         }
     }
 }

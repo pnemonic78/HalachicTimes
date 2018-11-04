@@ -15,22 +15,22 @@
  */
 package com.github.times;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.Pair;
+
+import com.github.times.preference.ZmanimPreferences;
+
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.util.Pair;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.github.times.preference.ZmanimPreferences;
-import com.github.util.LogUtils;
-
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -63,8 +63,6 @@ import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
  * @author Moshe Waisberg
  */
 public class ZmanimPopulater<A extends ZmanimAdapter> {
-
-    private static final String TAG = "ZmanimPopulater";
 
     /** 12 hours (half of a full day). */
     protected static final long TWELVE_HOURS = DAY_IN_MILLIS >> 1;
@@ -216,12 +214,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     public void populate(A adapter, boolean remote) {
         if (adapter == null) {
-            LogUtils.e(TAG, "adapter required to populate");
+            Timber.e("adapter required to populate");
             return;
         }
         final Context context = getContext();
         if (context == null) {
-            LogUtils.e(TAG, "context required to populate");
+            Timber.e("context required to populate");
             return;
         }
         ZmanimPreferences settings = getSettings();
