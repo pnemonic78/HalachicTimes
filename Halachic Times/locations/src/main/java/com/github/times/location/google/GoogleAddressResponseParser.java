@@ -102,19 +102,20 @@ class GoogleAddressResponseParser extends AddressResponseParser {
     }
 
     @Nullable
-    private Address toAddress(@NonNull GeocodingResult result, Locale locale) {
-        ZmanimAddress address = new ZmanimAddress(locale);
-        //address.setFormatted(result.getFormattedAddress());
+    private Address toAddress(@NonNull GeocodingResult response, Locale locale) {
+        ZmanimAddress result = new ZmanimAddress(locale);
+        //result.setFormatted(result.getFormattedAddress());
 
-        LatLng location = result.geometry.location;
-        address.setLatitude(location.lat);
-        address.setLongitude(location.lng);
+        LatLng location = response.geometry.location;
+        result.setLatitude(location.lat);
+        result.setLongitude(location.lng);
 
         String longName;
         String shortName;
         AddressComponentType addressComponentType;
+        boolean hasResult = false;
 
-        AddressComponent[] components = result.addressComponents;
+        AddressComponent[] components = response.addressComponents;
         for (AddressComponent component : components) {
             longName = component.longName;
             shortName = component.shortName;
@@ -125,41 +126,52 @@ class GoogleAddressResponseParser extends AddressResponseParser {
 
             switch (addressComponentType) {
                 case ADMINISTRATIVE_AREA_LEVEL_1:
-                    address.setAdminArea(isEmpty(shortName) ? longName : shortName);
+                    result.setAdminArea(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case ADMINISTRATIVE_AREA_LEVEL_2:
-                    address.setSubAdminArea(isEmpty(shortName) ? longName : shortName);
+                    result.setSubAdminArea(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case COUNTRY:
-                    address.setCountryCode(shortName);
-                    address.setCountryName(longName);
+                    result.setCountryCode(shortName);
+                    result.setCountryName(longName);
+                    hasResult = true;
                     break;
                 case LOCALITY:
-                    address.setLocality(isEmpty(shortName) ? longName : shortName);
+                    result.setLocality(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case NATURAL_FEATURE:
-                    address.setFeatureName(isEmpty(shortName) ? longName : shortName);
+                    result.setFeatureName(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case POSTAL_CODE:
-                    address.setPostalCode(isEmpty(shortName) ? longName : shortName);
+                    result.setPostalCode(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case PREMISE:
-                    address.setPremises(isEmpty(shortName) ? longName : shortName);
+                    result.setPremises(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case ROUTE:
-                    address.setAddressLine(2, isEmpty(shortName) ? longName : shortName);
+                    result.setAddressLine(2, isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case STREET_ADDRESS:
-                    address.setAddressLine(1, isEmpty(shortName) ? longName : shortName);
+                    result.setAddressLine(1, isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case STREET_NUMBER:
-                    address.setAddressLine(0, isEmpty(shortName) ? longName : shortName);
+                    result.setAddressLine(0, isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
                 case SUBLOCALITY:
-                    address.setSubLocality(isEmpty(shortName) ? longName : shortName);
+                    result.setSubLocality(isEmpty(shortName) ? longName : shortName);
+                    hasResult = true;
                     break;
             }
         }
-        return address;
+        return hasResult ? result : null;
     }
 }

@@ -101,21 +101,21 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
     }
 
     @Nullable
-    private Address toAddress(@NonNull Toponym toponym, Locale locale) {
-        ZmanimAddress address = new ZmanimAddress(locale);
-        address.setFeatureName(toponym.name);
+    private Address toAddress(@NonNull Toponym response, Locale locale) {
+        ZmanimAddress result = new ZmanimAddress(locale);
+        result.setFeatureName(response.name);
 
-        address.setLatitude(toponym.latitude);
-        address.setLongitude(toponym.longitude);
+        result.setLatitude(response.latitude);
+        result.setLongitude(response.longitude);
 
-        address.setAdminArea(toponym.adminName1);
-        address.setCountryCode(toponym.countryCode);
-        address.setCountryName(toponym.countryName);
-        Integer elevation = toponym.elevation;
+        result.setAdminArea(response.adminName1);
+        result.setCountryCode(response.countryCode);
+        result.setCountryName(response.countryName);
+        Integer elevation = response.elevation;
         if (elevation != null) {
-            address.setElevation(elevation);
+            result.setElevation(elevation);
         }
-        address.setSubAdminArea(toponym.adminName2);
-        return address;
+        result.setSubAdminArea(response.adminName2);
+        return result;
     }
 }

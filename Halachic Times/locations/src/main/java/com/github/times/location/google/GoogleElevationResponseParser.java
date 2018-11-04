@@ -79,15 +79,15 @@ class GoogleElevationResponseParser extends ElevationResponseParser {
     }
 
     @Nullable
-    private Location toLocation(@NonNull ElevationResult result) {
-        Location elevated = new Location(USER_PROVIDER);
+    private Location toLocation(@NonNull ElevationResult response) {
+        Location result = new Location(USER_PROVIDER);
 
-        LatLng location = result.location;
-        elevated.setLatitude(location.lat);
-        elevated.setLongitude(location.lng);
-        elevated.setAltitude(result.elevation);
-        elevated.setAccuracy((float) result.resolution);
+        LatLng location = response.location;
+        result.setLatitude(location.lat);
+        result.setLongitude(location.lng);
+        result.setAltitude(response.elevation);
+        result.setAccuracy((float) response.resolution);
 
-        return elevated;
+        return result;
     }
 }
