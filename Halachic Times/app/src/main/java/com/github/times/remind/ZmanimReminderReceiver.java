@@ -19,7 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.github.util.LogUtils;
+import timber.log.Timber;
 
 /**
  * Receive alarm events, or date-time events, to update reminders.
@@ -28,12 +28,10 @@ import com.github.util.LogUtils;
  */
 public class ZmanimReminderReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "ZmanimReminderReceiver";
-
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
-        LogUtils.v(TAG, "onReceive " + intent);
+        Timber.v("onReceive %s", intent);
 
         // Delegate actions to the service.
         ZmanimReminderService.enqueueWork(context, intent);

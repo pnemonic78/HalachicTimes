@@ -34,22 +34,22 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationAdapter.LocationItem;
 import com.github.times.location.impl.FavoritesLocationAdapter;
 import com.github.times.location.impl.HistoryLocationAdapter;
-import com.github.util.LogUtils;
+
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import timber.log.Timber;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.JELLY_BEAN;
@@ -61,13 +61,11 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  * @author Moshe Waisberg
  */
 public abstract class LocationTabActivity<P extends ThemePreferences> extends Activity implements
-        ThemeCallbacks<P>,
-        LocationAdapter.LocationItemListener,
-        SearchView.OnQueryTextListener,
-        ZmanimLocationListener,
-        LocationAdapter.FilterListener {
-
-    private static final String TAG = "LocationTabActivity";
+    ThemeCallbacks<P>,
+    LocationAdapter.LocationItemListener,
+    SearchView.OnQueryTextListener,
+    ZmanimLocationListener,
+    LocationAdapter.FilterListener {
 
     private static final String TAG_ALL = "all";
     private static final String TAG_FAVORITES = "favorites";
@@ -101,7 +99,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     private LocationAdapter adapterFavorites;
     private LocationAdapter adapterHistory;
     private final Handler handler;
-    /** Provider for locations. */
+    /**
+     * Provider for locations.
+     */
     private LocationsProvider locations;
     private Location locationForAddress;
     private TabHost tabHost;
@@ -428,7 +428,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
      */
     private void addLocation(Location location) {
         if (location == null) {
-            LogUtils.w(TAG, "location empty");
+            Timber.w("add empty location");
             return;
         }
 

@@ -21,10 +21,10 @@ import android.content.Intent;
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
-import com.github.util.LogUtils;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
+import timber.log.Timber;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -32,8 +32,6 @@ import androidx.core.app.JobIntentService;
  * @author Moshe Waisberg
  */
 public class ZmanimReminderService extends JobIntentService {
-
-    private static final String TAG = "ZmanimReminderService";
 
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
 
@@ -52,7 +50,7 @@ public class ZmanimReminderService extends JobIntentService {
 
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
-        LogUtils.v(TAG, "onHandleWork " + intent);
+        Timber.v("onHandleWork %s", intent);
         final Context context = this;
         ZmanimReminder reminder = new ZmanimReminder(context);
         reminder.process(intent);

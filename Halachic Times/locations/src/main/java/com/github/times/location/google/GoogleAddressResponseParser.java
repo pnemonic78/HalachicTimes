@@ -49,8 +49,6 @@ import static android.text.TextUtils.isEmpty;
  */
 class GoogleAddressResponseParser extends AddressResponseParser {
 
-    private static final String TAG = "GoogleAddressResponseParser";
-
     private final Gson gson = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .registerTypeAdapter(AddressComponentType.class, new AddressComponentTypeAdapter())

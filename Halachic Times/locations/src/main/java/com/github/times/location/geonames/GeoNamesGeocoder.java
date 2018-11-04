@@ -45,8 +45,6 @@ import static android.text.TextUtils.isEmpty;
  */
 public class GeoNamesGeocoder extends GeocoderBase {
 
-    private static final String TAG = "GeoNamesGeocoder";
-
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */

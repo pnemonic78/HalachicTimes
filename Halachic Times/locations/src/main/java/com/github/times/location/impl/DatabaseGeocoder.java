@@ -39,7 +39,6 @@ import com.github.times.location.provider.LocationContract.AddressColumns;
 import com.github.times.location.provider.LocationContract.CityColumns;
 import com.github.times.location.provider.LocationContract.ElevationColumns;
 import com.github.util.LocaleUtils;
-import com.github.util.LogUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +47,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import static com.github.times.location.provider.LocationContract.Addresses;
 import static com.github.times.location.provider.LocationContract.Cities;
@@ -61,22 +61,20 @@ import static com.github.times.location.provider.LocationContract.Elevations;
  */
 public class DatabaseGeocoder extends GeocoderBase {
 
-    private static final String TAG = "DatabaseGeocoder";
-
     /**
      * Database
      */
     private static final String DB_PROVIDER = "db";
 
     private static final String[] PROJECTION_ADDRESS = {
-            BaseColumns._ID,
-            AddressColumns.LOCATION_LATITUDE,
-            AddressColumns.LOCATION_LONGITUDE,
-            AddressColumns.LATITUDE,
-            AddressColumns.LONGITUDE,
-            AddressColumns.ADDRESS,
-            AddressColumns.LANGUAGE,
-            AddressColumns.FAVORITE
+        BaseColumns._ID,
+        AddressColumns.LOCATION_LATITUDE,
+        AddressColumns.LOCATION_LONGITUDE,
+        AddressColumns.LATITUDE,
+        AddressColumns.LONGITUDE,
+        AddressColumns.ADDRESS,
+        AddressColumns.LANGUAGE,
+        AddressColumns.FAVORITE
     };
     private static final int INDEX_ADDRESS_ID = 0;
     private static final int INDEX_ADDRESS_LOCATION_LATITUDE = 1;
@@ -88,11 +86,11 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final int INDEX_ADDRESS_FAVORITE = 7;
 
     private static final String[] PROJECTION_ELEVATION = {
-            BaseColumns._ID,
-            ElevationColumns.LATITUDE,
-            ElevationColumns.LONGITUDE,
-            ElevationColumns.ELEVATION,
-            ElevationColumns.TIMESTAMP
+        BaseColumns._ID,
+        ElevationColumns.LATITUDE,
+        ElevationColumns.LONGITUDE,
+        ElevationColumns.ELEVATION,
+        ElevationColumns.TIMESTAMP
     };
     private static final int INDEX_ELEVATION_ID = 0;
     private static final int INDEX_ELEVATION_LATITUDE = 1;
@@ -101,9 +99,9 @@ public class DatabaseGeocoder extends GeocoderBase {
     private static final int INDEX_ELEVATION_TIMESTAMP = 4;
 
     private static final String[] PROJECTION_CITY = {
-            BaseColumns._ID,
-            CityColumns.TIMESTAMP,
-            CityColumns.FAVORITE};
+        BaseColumns._ID,
+        CityColumns.TIMESTAMP,
+        CityColumns.FAVORITE};
     private static final int INDEX_CITY_ID = 0;
     private static final int INDEX_CITY_TIMESTAMP = 1;
     private static final int INDEX_CITY_FAVORITE = 2;
@@ -296,8 +294,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                     addresses.add(address);
                 } while (cursor.moveToNext());
             }
-        } catch (SQLiteException se) {
-            LogUtils.e(TAG, "Query addresses: " + se.getLocalizedMessage(), se);
+        } catch (SQLiteException e) {
+            Timber.e(e, "Query addresses: %s", e.getLocalizedMessage());
         } finally {
             cursor.close();
         }
@@ -367,7 +365,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            LogUtils.e(TAG, "Error inserting address at " + latitude + "," + longitude + ": " + e.getLocalizedMessage(), e);
+            Timber.e(e, "Error inserting address at " + latitude + "," + longitude + ": " + e.getLocalizedMessage());
         }
     }
 
@@ -407,8 +405,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                     locations.add(location);
                 } while (cursor.moveToNext());
             }
-        } catch (SQLiteException se) {
-            LogUtils.e(TAG, "Query elevations: " + se.getLocalizedMessage(), se);
+        } catch (SQLiteException e) {
+            Timber.e(e, "Query elevations: %s", e.getLocalizedMessage());
         } finally {
             cursor.close();
         }
@@ -452,7 +450,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/elevation
-            LogUtils.e(TAG, "Error inserting elevation at " + location.getLatitude() + "," + location.getLongitude() + ": " + e.getLocalizedMessage(), e);
+            Timber.e(e, "Error inserting elevation at " + location.getLatitude() + "," + location.getLongitude() + ": " + e.getLocalizedMessage());
         }
     }
 
@@ -489,8 +487,8 @@ public class DatabaseGeocoder extends GeocoderBase {
                     cities.add(city);
                 } while (cursor.moveToNext());
             }
-        } catch (SQLiteException se) {
-            LogUtils.e(TAG, "Query cities: " + se.getLocalizedMessage(), se);
+        } catch (SQLiteException e) {
+            Timber.e(e, "Query cities: %s", e.getLocalizedMessage());
         } finally {
             cursor.close();
         }
@@ -530,7 +528,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             }
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
-            LogUtils.e(TAG, "Error inserting city for " + city.getFormatted() + ": " + e.getLocalizedMessage(), e);
+            Timber.e(e, "Error inserting city for " + city.getFormatted() + ": " + e.getLocalizedMessage());
         }
     }
 
@@ -568,7 +566,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             return resolver.delete(uri, null, null) > 0;
         } catch (Exception e) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            LogUtils.e(TAG, "Error deleting address " + address.getId() + " at " + address.getLatitude() + "," + address.getLongitude() + ": " + e.getLocalizedMessage(), e);
+            Timber.e(e, "Error deleting address " + address.getId() + " at " + address.getLatitude() + "," + address.getLongitude() + ": " + e.getLocalizedMessage());
         }
         return false;
     }

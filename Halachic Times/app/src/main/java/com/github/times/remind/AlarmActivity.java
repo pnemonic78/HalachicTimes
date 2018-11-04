@@ -24,12 +24,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -40,7 +34,14 @@ import com.github.times.R;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
-import com.github.util.LogUtils;
+
+import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import timber.log.Timber;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -54,10 +55,8 @@ import static java.lang.System.currentTimeMillis;
  * @author Moshe Waisberg
  */
 public class AlarmActivity<P extends ZmanimPreferences> extends Activity implements
-        ThemeCallbacks<P>,
-        View.OnClickListener {
-
-    private static final String TAG = "AlarmActivity";
+    ThemeCallbacks<P>,
+    View.OnClickListener {
 
     /**
      * Extras name for the reminder.
@@ -115,9 +114,9 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         final Window win = getWindow();
         // Turn on the screen.
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+            | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+            | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         setContentView(R.layout.alarm_activity);
 
@@ -218,11 +217,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Notify now.
      *
-     * @param item
-     *         the reminder item.
+     * @param item the reminder item.
      */
     public void notifyNow(ZmanimReminderItem item) {
-        LogUtils.i(TAG, "remind now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
+        Timber.i("remind now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
         if (item.isEmpty()) {
             close();
             return;
@@ -251,8 +249,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * Format the date and time with seconds.<br>
      * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
      *
-     * @param time
-     *         the time to format.
+     * @param time the time to format.
      * @return the formatted time.
      */
     private String formatDateTime(Date time) {
@@ -265,8 +262,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Format the date and time with seconds.
      *
-     * @param time
-     *         the time to format.
+     * @param time the time to format.
      * @return the formatted time.
      * @see #formatDateTime(Date)
      */
@@ -312,14 +308,14 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     private void startNoise() {
-        LogUtils.v(TAG, "start noise");
+        Timber.v("start noise");
         Context context = this;
         playSound(context);
         vibrate(context, true);
     }
 
     private void stopNoise() {
-        LogUtils.v(TAG, "stop noise");
+        Timber.v("stop noise");
         Context context = this;
         stopSound();
         vibrate(context, false);
@@ -331,20 +327,20 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     private void playSound(Context context) {
         MediaPlayer ringtone = getRingtone(context);
-        LogUtils.v(TAG, "play sound");
+        Timber.v("play sound");
         if ((ringtone != null) && !ringtone.isPlaying()) {
             ringtone.start();
         }
     }
 
     private void stopSound() {
-        LogUtils.v(TAG, "stop sound");
+        Timber.v("stop sound");
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
             try {
                 ringtone.stop();
             } catch (IllegalStateException e) {
-                LogUtils.e(TAG, "error stopping sound: " + e.getLocalizedMessage(), e);
+                Timber.e(e, "error stopping sound: %s", e.getLocalizedMessage());
             }
         }
     }
@@ -365,10 +361,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     int audioStreamType = prefs.getReminderStream();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .setLegacyStreamType(audioStreamType)
-                                .setUsage(AudioAttributes.USAGE_ALARM)
-                                .build();
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .setLegacyStreamType(audioStreamType)
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .build();
                         ringtone.setAudioAttributes(audioAttributes);
                     } else {
                         ringtone.setAudioStreamType(audioStreamType);
@@ -377,7 +373,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
                     ringtone.prepare();
                 } catch (IOException e) {
-                    LogUtils.e(TAG, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone + " ~ " + uri, e);
+                    Timber.e(e, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone + " ~ " + uri);
                     ringtone = null;
                 }
                 this.ringtone = ringtone;
@@ -389,10 +385,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Vibrate the device.
      *
-     * @param context
-     *         the context.
-     * @param vibrate
-     *         {@code true} to start vibrating - {@code false} to stop.
+     * @param context the context.
+     * @param vibrate {@code true} to start vibrating - {@code false} to stop.
      */
     private void vibrate(Context context, boolean vibrate) {
         Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
@@ -409,11 +403,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     /**
      * Set timer to silence the alert.
      *
-     * @param triggerAt
-     *         when to silence.
+     * @param triggerAt when to silence.
      */
     private void silenceFuture(long triggerAt) {
-        LogUtils.i(TAG, "silence future at [" + formatDateTime(triggerAt) + "]");
+        Timber.i("silence future at [" + formatDateTime(triggerAt) + "]");
 
         if (silenceRunnable == null) {
             silenceRunnable = new Runnable() {

@@ -18,11 +18,12 @@ package com.github.times.location;
 import android.location.Location;
 
 import com.github.io.StreamUtils;
-import com.github.util.LogUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import timber.log.Timber;
 
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
@@ -32,8 +33,6 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  * @author Moshe Waisberg
  */
 public class TextElevationResponseParser extends ElevationResponseParser {
-
-    private static final String TAG = "TextElevationResponseParser";
 
     /**
      * Lowest possible natural elevation on the surface of the earth.
@@ -68,9 +67,9 @@ public class TextElevationResponseParser extends ElevationResponseParser {
             elevated.setLongitude(longitude);
             elevated.setAltitude(elevation);
             results.add(elevated);
-        } catch (NumberFormatException nfe) {
-            LogUtils.e(TAG, "Bad elevation: [" + text + "] at " + latitude + "," + longitude, nfe);
-            throw new LocationException(nfe);
+        } catch (NumberFormatException e) {
+            Timber.e(e, "Bad elevation: [" + text + "] at " + latitude + "," + longitude);
+            throw new LocationException(e);
         }
     }
 }

@@ -23,6 +23,13 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
+import com.github.database.CursorFilter;
+import com.github.times.location.bing.BingGeocoder;
+import com.github.times.location.geonames.GeoNamesGeocoder;
+import com.github.times.location.google.GoogleGeocoder;
+import com.github.times.location.impl.DatabaseGeocoder;
+import com.github.util.LocaleUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,16 +37,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import com.github.database.CursorFilter;
-import com.github.times.location.bing.BingGeocoder;
-import com.github.times.location.geonames.GeoNamesGeocoder;
-import com.github.times.location.google.GoogleGeocoder;
-import com.github.times.location.impl.DatabaseGeocoder;
-import com.github.util.LocaleUtils;
-import com.github.util.LogUtils;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import timber.log.Timber;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLANET;
@@ -52,7 +52,6 @@ import static com.github.times.location.GeocoderBase.SAME_PLATEAU;
  * @author Moshe Waisberg
  */
 public class AddressProvider {
-    private static final String TAG = "AddressProvider";
 
     public interface OnFindAddressListener {
 
@@ -203,7 +202,7 @@ public class AddressProvider {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 10);
                 } catch (Exception e) {
-                    LogUtils.e(TAG, "Address geocoder: " + geocoder + " at " + latitude + "," + longitude + "; error: " + e.getLocalizedMessage(), e);
+                    Timber.e(e, "Address geocoder: " + geocoder + " at " + latitude + "," + longitude + "; error: " + e.getLocalizedMessage());
                     continue;
                 }
                 bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
@@ -385,7 +384,7 @@ public class AddressProvider {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
         } catch (Exception e) {
-            LogUtils.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            Timber.e(e, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude);
         }
         return addresses;
     }
@@ -443,7 +442,7 @@ public class AddressProvider {
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 10);
         } catch (Exception e) {
-            LogUtils.e(TAG, "City: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            Timber.e(e, "City: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude);
         }
         return addresses;
     }
@@ -520,7 +519,7 @@ public class AddressProvider {
                 try {
                     elevated = geocoder.getElevation(latitude, longitude);
                 } catch (Exception e) {
-                    LogUtils.e(TAG, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " for " + longitude + ";" + latitude, e);
+                    Timber.e(e, "Elevation geocoder: " + geocoder + ", error: " + e.getLocalizedMessage() + " for " + longitude + ";" + latitude);
                     continue;
                 }
                 if ((elevated != null) && elevated.hasAltitude()) {
@@ -549,7 +548,7 @@ public class AddressProvider {
         try {
             return countriesGeocoder.getElevation(latitude, longitude);
         } catch (Exception e) {
-            LogUtils.e(TAG, "Countries geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            Timber.e(e, "Countries geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude);
         }
         return null;
     }
@@ -596,7 +595,7 @@ public class AddressProvider {
         try {
             return geocoder.getElevation(latitude, longitude);
         } catch (Exception e) {
-            LogUtils.e(TAG, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude, e);
+            Timber.e(e, "Database geocoder: " + e.getLocalizedMessage() + " at " + longitude + ";" + latitude);
         }
         return null;
     }

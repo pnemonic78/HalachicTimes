@@ -45,8 +45,6 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  */
 class GoogleElevationResponseParser extends ElevationResponseParser {
 
-    private static final String TAG = "GoogleElevationResponseParser";
-
     private final Gson gson = new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
