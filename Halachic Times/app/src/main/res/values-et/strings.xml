@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Päike on 11,5° alla horisonti</string>
     <string name="tallis_11">Päike on 11° alla horisonti</string>
     <string name="tallis_10">Päike on 10,2° alla horisonti</string>
+    <string name="tallis_9_5">Päike on 9,5° alla horisonti</string>
+    <string name="tallis_7_65">Päike on 7,65° alla horisonti</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Päikesetõus</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Videvik</string>
-    <string name="nightfall_3_65">Päike on 3,65° allpool merepinda</string>
-    <string name="nightfall_3_676">Päike on 3,676° allpool merepinda</string>
-    <string name="nightfall_3_7">Päike on 3,7° allpool merepinda</string>
-    <string name="nightfall_3_8">Päike on 3,8° allpool merepinda</string>
-    <string name="nightfall_4_37">Päike on 4,37° allpool merepinda</string>
-    <string name="nightfall_4_61">Päike on 4,61° allpool merepinda</string>
-    <string name="nightfall_4_8">Päike on 4,8° allpool merepinda</string>
-    <string name="nightfall_5_88">Päike on 5,88° allpool merepinda</string>
-    <string name="nightfall_5_95">Päike on 5,95° allpool merepinda</string>
-    <string name="nightfall_7">Päike on 7,083° allpool merepinda</string>
-    <string name="nightfall_8">Päike on 8,5° allpool merepinda</string>
+    <string name="nightfall_3_65">Päike on 3,65° alla horisonti</string>
+    <string name="nightfall_3_676">Päike on 3,676° alla horisonti</string>
+    <string name="nightfall_3_7">Päike on 3,7° alla horisonti</string>
+    <string name="nightfall_3_8">Päike on 3,8° alla horisonti</string>
+    <string name="nightfall_4_37">Päike on 4,37° alla horisonti</string>
+    <string name="nightfall_4_61">Päike on 4,61° alla horisonti</string>
+    <string name="nightfall_4_8">Päike on 4,8° alla horisonti</string>
+    <string name="nightfall_5_88">Päike on 5,88° alla horisonti</string>
+    <string name="nightfall_5_95">Päike on 5,95° alla horisonti</string>
+    <string name="nightfall_6_45">Päike on 6,45° alla horisonti</string>
+    <string name="nightfall_7">Päike on 7,083° alla horisonti</string>
+    <string name="nightfall_7_67">Päike on 7,67° alla horisonti</string>
+    <string name="nightfall_8">Päike on 8,5° alla horisonti</string>
+    <string name="nightfall_9_3">Päike on 9,3° alla horisonti</string>
+    <string name="nightfall_9_75">Päike on 9,75° alla horisonti</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabbat otsad</string>

@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Aurinko on 11,5° horisontin alapuolella</string>
     <string name="tallis_11">Aurinko on 11° horisontin alapuolella</string>
     <string name="tallis_10">Aurinko on 10,2° horisontin alapuolella</string>
+    <string name="tallis_9_5">Aurinko on 9,5° horisontin alapuolella</string>
+    <string name="tallis_7_65">Aurinko on 7,65° horisontin alapuolella</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Auringonnousu</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Pimetessä</string>
-    <string name="nightfall_3_65">Aurinko on 3,65° meren pinnan alapuolella</string>
-    <string name="nightfall_3_676">Aurinko on 3,676° meren pinnan alapuolella</string>
-    <string name="nightfall_3_7">Aurinko on 3,7° meren pinnan alapuolella</string>
-    <string name="nightfall_3_8">Aurinko on 3,8° meren pinnan alapuolella</string>
-    <string name="nightfall_4_37">Aurinko on 4,37° meren pinnan alapuolella</string>
-    <string name="nightfall_4_61">Aurinko on 4,61° meren pinnan alapuolella</string>
-    <string name="nightfall_4_8">Aurinko on 4,8° meren pinnan alapuolella</string>
-    <string name="nightfall_5_88">Aurinko on 5,88° meren pinnan alapuolella</string>
-    <string name="nightfall_5_95">Aurinko on 5,95° meren pinnan alapuolella</string>
-    <string name="nightfall_7">Aurinko on 7,083° meren pinnan alapuolella</string>
-    <string name="nightfall_8">Aurinko on 8,5° meren pinnan alapuolella</string>
+    <string name="nightfall_3_65">Aurinko on 3,65° horisontin alapuolella</string>
+    <string name="nightfall_3_676">Aurinko on 3,676° horisontin alapuolella</string>
+    <string name="nightfall_3_7">Aurinko on 3,7° horisontin alapuolella</string>
+    <string name="nightfall_3_8">Aurinko on 3,8° horisontin alapuolella</string>
+    <string name="nightfall_4_37">Aurinko on 4,37° horisontin alapuolella</string>
+    <string name="nightfall_4_61">Aurinko on 4,61° horisontin alapuolella</string>
+    <string name="nightfall_4_8">Aurinko on 4,8° horisontin alapuolella</string>
+    <string name="nightfall_5_88">Aurinko on 5,88° horisontin alapuolella</string>
+    <string name="nightfall_5_95">Aurinko on 5,95° horisontin alapuolella</string>
+    <string name="nightfall_6_45">Aurinko on 6,45° horisontin alapuolella</string>
+    <string name="nightfall_7">Aurinko on 7,083° horisontin alapuolella</string>
+    <string name="nightfall_7_67">Aurinko on 7,67° horisontin alapuolella</string>
+    <string name="nightfall_8">Aurinko on 8,5° horisontin alapuolella</string>
+    <string name="nightfall_9_3">Aurinko on 9,3° horisontin alapuolella</string>
+    <string name="nightfall_9_75">Aurinko on 9,75° horisontin alapuolella</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šapatti päät</string>

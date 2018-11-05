@@ -24,51 +24,57 @@
     <string name="opinion_name_omer" translatable="false">omer</string>
     <string name="opinion_name_candles" translatable="false">candles</string>
 
+    <string name="opinion_value_2_stars" translatable="false">2_stars</string>
+    <string name="opinion_value_2" translatable="false">2</string>
+    <string name="opinion_value_3_7" translatable="false">3.7</string>
+    <string name="opinion_value_3_8" translatable="false">3.8</string>
+    <string name="opinion_value_3_65" translatable="false">3.65</string>
+    <string name="opinion_value_3_676" translatable="false">3.676</string>
+    <string name="opinion_value_3_days" translatable="false">@string/opinion_value_default</string>
+    <string name="opinion_value_3" translatable="false">3</string>
+    <string name="opinion_value_4_8" translatable="false">4.8</string>
+    <string name="opinion_value_4_37" translatable="false">4.37</string>
+    <string name="opinion_value_4_61" translatable="false">4.61</string>
+    <string name="opinion_value_4" translatable="false">4</string>
+    <string name="opinion_value_5_88" translatable="false">5.88</string>
+    <string name="opinion_value_5_95" translatable="false">5.95</string>
+    <string name="opinion_value_6_45" translatable="false">6.45</string>
+    <string name="opinion_value_6" translatable="false">6</string>
+    <string name="opinion_value_7_65" translatable="false">7.65</string>
+    <string name="opinion_value_7_67" translatable="false">7.67</string>
+    <string name="opinion_value_7_083_zmanis" translatable="false">7.083_zmanis</string>
+    <string name="opinion_value_7_083" translatable="false">7.083</string>
+    <string name="opinion_value_7" translatable="false">7</string>
+    <string name="opinion_value_8" translatable="false">8.5</string>
+    <string name="opinion_value_9_3" translatable="false">9.3</string>
+    <string name="opinion_value_9_5" translatable="false">9.5</string>
+    <string name="opinion_value_9_75" translatable="false">9.75</string>
     <string name="opinion_value_10" translatable="false">10.2</string>
     <string name="opinion_value_11_5" translatable="false">11.5</string>
     <string name="opinion_value_11" translatable="false">11</string>
     <string name="opinion_value_12" translatable="false">12</string>
-    <string name="opinion_value_120_zmanis" translatable="false">120_zmanis</string>
-    <string name="opinion_value_120" translatable="false">120</string>
     <string name="opinion_value_13" translatable="false">13.24</string>
     <string name="opinion_value_15_alos" translatable="false">15_alos</string>
     <string name="opinion_value_15" translatable="false">15</string>
     <string name="opinion_value_16_alos" translatable="false">16.1_alos</string>
     <string name="opinion_value_16_sunset" translatable="false">16.1_sunset</string>
     <string name="opinion_value_16" translatable="false">16.1</string>
-    <string name="opinion_value_168" translatable="false">168</string>
     <string name="opinion_value_18" translatable="false">18</string>
-    <string name="opinion_value_19" translatable="false">19</string>
     <string name="opinion_value_19_8" translatable="false">19.8</string>
-    <string name="opinion_value_2_stars" translatable="false">2_stars</string>
-    <string name="opinion_value_2" translatable="false">2</string>
+    <string name="opinion_value_19" translatable="false">19</string>
     <string name="opinion_value_26" translatable="false">26</string>
-    <string name="opinion_value_3_65" translatable="false">3.65</string>
-    <string name="opinion_value_3_676" translatable="false">3.676</string>
-    <string name="opinion_value_3_7" translatable="false">3.7</string>
-    <string name="opinion_value_3_8" translatable="false">3.8</string>
-    <string name="opinion_value_3_days" translatable="false">@string/opinion_value_default</string>
-    <string name="opinion_value_3" translatable="false">3</string>
     <string name="opinion_value_30" translatable="false">30</string>
-    <string name="opinion_value_4_37" translatable="false">4.37</string>
-    <string name="opinion_value_4_61" translatable="false">4.61</string>
-    <string name="opinion_value_4_8" translatable="false">4.8</string>
-    <string name="opinion_value_4" translatable="false">4</string>
-    <string name="opinion_value_5_88" translatable="false">5.88</string>
-    <string name="opinion_value_5_95" translatable="false">5.95</string>
     <string name="opinion_value_58" translatable="false">58.5</string>
-    <string name="opinion_value_6" translatable="false">6</string>
     <string name="opinion_value_60" translatable="false">60</string>
-    <string name="opinion_value_7_083_zmanis" translatable="false">7.083_zmanis</string>
-    <string name="opinion_value_7_083" translatable="false">7.083</string>
-    <string name="opinion_value_7" translatable="false">7</string>
     <string name="opinion_value_72_zmanis" translatable="false">72_zmanis</string>
     <string name="opinion_value_72" translatable="false">72</string>
-    <string name="opinion_value_8" translatable="false">8.5</string>
     <string name="opinion_value_90_zmanis" translatable="false">90_zmanis</string>
     <string name="opinion_value_90" translatable="false">90</string>
     <string name="opinion_value_96_zmanis" translatable="false">96_zmanis</string>
     <string name="opinion_value_96" translatable="false">96</string>
+    <string name="opinion_value_120_zmanis" translatable="false">120_zmanis</string>
+    <string name="opinion_value_120" translatable="false">120</string>
+    <string name="opinion_value_168" translatable="false">168</string>
     <string name="opinion_value_ateret" translatable="false">AT</string>
     <string name="opinion_value_baal_hatanya" translatable="false">baal_hatanya</string>
     <string name="opinion_value_default" translatable="false"/>

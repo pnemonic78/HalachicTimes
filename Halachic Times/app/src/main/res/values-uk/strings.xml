@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Сонце 11,5° нижче обрію</string>
     <string name="tallis_11">Сонце 11° нижче обрію</string>
     <string name="tallis_10">Сонце 10,2° нижче обрію</string>
+    <string name="tallis_9_5">Сонце 9,5° нижче обрію</string>
+    <string name="tallis_7_65">Сонце 7,65° нижче обрію</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Схід сонця</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Настання ночі</string>
-    <string name="nightfall_3_65">Сонце 3,65° нижче рівня моря</string>
-    <string name="nightfall_3_676">Сонце 3,676° нижче рівня моря</string>
-    <string name="nightfall_3_7">Сонце 3,7° нижче рівня моря</string>
-    <string name="nightfall_3_8">Сонце 3,8° нижче рівня моря</string>
-    <string name="nightfall_4_37">Сонце 4,37° нижче рівня моря</string>
-    <string name="nightfall_4_61">Сонце 4,61° нижче рівня моря</string>
-    <string name="nightfall_4_8">Сонце 4,8° нижче рівня моря</string>
-    <string name="nightfall_5_88">Сонце 5,88° нижче рівня моря</string>
-    <string name="nightfall_5_95">Сонце 5,95° нижче рівня моря</string>
-    <string name="nightfall_7">Сонце 7,083° нижче рівня моря</string>
-    <string name="nightfall_8">Сонце 8,5° нижче рівня моря</string>
+    <string name="nightfall_3_65">Сонце 3,65° нижче обрію</string>
+    <string name="nightfall_3_676">Сонце 3,676° нижче обрію</string>
+    <string name="nightfall_3_7">Сонце 3,7° нижче обрію</string>
+    <string name="nightfall_3_8">Сонце 3,8° нижче обрію</string>
+    <string name="nightfall_4_37">Сонце 4,37° нижче обрію</string>
+    <string name="nightfall_4_61">Сонце 4,61° нижче обрію</string>
+    <string name="nightfall_4_8">Сонце 4,8° нижче обрію</string>
+    <string name="nightfall_5_88">Сонце 5,88° нижче обрію</string>
+    <string name="nightfall_5_95">Сонце 5,95° нижче обрію</string>
+    <string name="nightfall_6_45">Сонце 6.45° нижче обрію</string>
+    <string name="nightfall_7">Сонце 7,083° нижче обрію</string>
+    <string name="nightfall_7_67">Сонце 7.67° нижче обрію</string>
+    <string name="nightfall_8">Сонце 8,5° нижче обрію</string>
+    <string name="nightfall_9_3">Сонце 9,3° нижче обрію</string>
+    <string name="nightfall_9_75">Сонце 9,75° нижче обрію</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Суботні закінчується</string>

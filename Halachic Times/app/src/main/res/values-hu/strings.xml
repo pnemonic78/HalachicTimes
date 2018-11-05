@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Nap 11,5° alatt horizont</string>
     <string name="tallis_11">Nap 11° alatt horizont</string>
     <string name="tallis_10">Nap 10,2° alatt horizont</string>
+    <string name="tallis_9_5">Nap 9,5° alatt horizont</string>
+    <string name="tallis_7_65">Nap 7,65° alatt horizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Napkelte</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Alkony</string>
-    <string name="nightfall_3_65">A nap 3,65° tengerszint alatt</string>
-    <string name="nightfall_3_676">A nap 3,676° tengerszint alatt</string>
-    <string name="nightfall_3_7">A nap 3,7° tengerszint alatt</string>
-    <string name="nightfall_3_8">A nap 3,8° tengerszint alatt</string>
-    <string name="nightfall_4_37">A nap 4,37° tengerszint alatt</string>
-    <string name="nightfall_4_61">A nap 4,61° tengerszint alatt</string>
-    <string name="nightfall_4_8">A nap 4,8° tengerszint alatt</string>
-    <string name="nightfall_5_88">A nap 5,88° tengerszint alatt</string>
-    <string name="nightfall_5_95">A nap 5,95° tengerszint alatt</string>
-    <string name="nightfall_7">A nap 7,083° tengerszint alatt</string>
-    <string name="nightfall_8">A nap 8,5° tengerszint alatt</string>
+    <string name="nightfall_3_65">A nap 3,65° alatt horizont</string>
+    <string name="nightfall_3_676">A nap 3,676° alatt horizont</string>
+    <string name="nightfall_3_7">A nap 3,7° alatt horizont</string>
+    <string name="nightfall_3_8">A nap 3,8° alatt horizont</string>
+    <string name="nightfall_4_37">A nap 4,37° alatt horizont</string>
+    <string name="nightfall_4_61">A nap 4,61° alatt horizont</string>
+    <string name="nightfall_4_8">A nap 4,8° alatt horizont</string>
+    <string name="nightfall_5_88">A nap 5,88° alatt horizont</string>
+    <string name="nightfall_5_95">A nap 5,95° alatt horizont</string>
+    <string name="nightfall_6_45">A nap 6,45° alatt horizont</string>
+    <string name="nightfall_7">A nap 7,083° alatt horizont</string>
+    <string name="nightfall_7_67">A nap 7,67° alatt horizont</string>
+    <string name="nightfall_8">A nap 8,5° alatt horizont</string>
+    <string name="nightfall_9_3">A nap 9,3° alatt horizont</string>
+    <string name="nightfall_9_75">A nap 9,75° alatt horizont</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Szombat véget ér</string>

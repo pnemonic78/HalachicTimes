@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Sol er 11,5° nedenfor horisonten</string>
     <string name="tallis_11">Sol er 11° nedenfor horisonten</string>
     <string name="tallis_10">Sol er 10,2° nedenfor horisonten</string>
+    <string name="tallis_9_5">Sol er 9,5° nedenfor horisonten</string>
+    <string name="tallis_7_65">Sol er 7,65° nedenfor horisonten</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Solopgang</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Mørkets frembrud</string>
-    <string name="nightfall_3_65">Sol er 3,65° nedenfor havoverfladen</string>
-    <string name="nightfall_3_676">Sol er 3,676° nedenfor havoverfladen</string>
-    <string name="nightfall_3_7">Sol er 3,7° nedenfor havoverfladen</string>
-    <string name="nightfall_3_8">Sol er 3,8° nedenfor havoverfladen</string>
-    <string name="nightfall_4_37">Sol er 4,37° nedenfor havoverfladen</string>
-    <string name="nightfall_4_61">Sol er 4,61° nedenfor havoverfladen</string>
-    <string name="nightfall_4_8">Sol er 4,8° nedenfor havoverfladen</string>
-    <string name="nightfall_5_88">Sol er 5,88° nedenfor havoverfladen</string>
-    <string name="nightfall_5_95">Sol er 5,95° nedenfor havoverfladen</string>
-    <string name="nightfall_7">Sol er 7,083° nedenfor havoverfladen</string>
-    <string name="nightfall_8">Sol er 8,5° nedenfor havoverfladen</string>
+    <string name="nightfall_3_65">Sol er 3,65° nedenfor horisonten</string>
+    <string name="nightfall_3_676">Sol er 3,676° nedenfor horisonten</string>
+    <string name="nightfall_3_7">Sol er 3,7° nedenfor horisonten</string>
+    <string name="nightfall_3_8">Sol er 3,8° nedenfor horisonten</string>
+    <string name="nightfall_4_37">Sol er 4,37° nedenfor horisonten</string>
+    <string name="nightfall_4_61">Sol er 4,61° nedenfor horisonten</string>
+    <string name="nightfall_4_8">Sol er 4,8° nedenfor horisonten</string>
+    <string name="nightfall_5_88">Sol er 5,88° nedenfor horisonten</string>
+    <string name="nightfall_5_95">Sol er 5,95° nedenfor horisonten</string>
+    <string name="nightfall_6_45">Sol er 6,45° nedenfor horisonten</string>
+    <string name="nightfall_7">Sol er 7,083° nedenfor horisonten</string>
+    <string name="nightfall_7_67">Sol er 7,67° nedenfor horisonten</string>
+    <string name="nightfall_8">Sol er 8,5° nedenfor horisonten</string>
+    <string name="nightfall_9_3">Sol er 9,3° nedenfor horisonten</string>
+    <string name="nightfall_9_75">Sol er 9,75° nedenfor horisonten</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Shabbat ender</string>

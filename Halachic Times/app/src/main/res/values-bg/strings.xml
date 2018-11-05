@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Слънцето е 11,5° под хоризонта</string>
     <string name="tallis_11">Слънцето е 11° под хоризонта</string>
     <string name="tallis_10">Слънцето е 10,2° под хоризонта</string>
+    <string name="tallis_9_5">Слънцето е 9,5° под хоризонта</string>
+    <string name="tallis_7_65">Слънцето е 7,65° под хоризонта</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Изгрев</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Свечеряване</string>
-    <string name="nightfall_3_65">Слънцето е 3,65° под морското ниво</string>
-    <string name="nightfall_3_676">Слънцето е 3,676° под морското ниво</string>
-    <string name="nightfall_3_7">Слънцето е 3,7° под морското ниво</string>
-    <string name="nightfall_3_8">Слънцето е 3,8° под морското ниво</string>
-    <string name="nightfall_4_37">Слънцето е 4,37° под морското ниво</string>
-    <string name="nightfall_4_61">Слънцето е 4,61° под морското ниво</string>
-    <string name="nightfall_4_8">Слънцето е 4,8° под морското ниво</string>
-    <string name="nightfall_5_88">Слънцето е 5,88° под морското ниво</string>
-    <string name="nightfall_5_95">Слънцето е 5,95° под морското ниво</string>
-    <string name="nightfall_7">Слънцето е 7,083° под морското ниво</string>
-    <string name="nightfall_8">Слънцето е 8,5° под морското ниво</string>
+    <string name="nightfall_3_65">Слънцето е 3,65° под хоризонта</string>
+    <string name="nightfall_3_676">Слънцето е 3,676° под хоризонта</string>
+    <string name="nightfall_3_7">Слънцето е 3,7° под хоризонта</string>
+    <string name="nightfall_3_8">Слънцето е 3,8° под хоризонта</string>
+    <string name="nightfall_4_37">Слънцето е 4,37° под хоризонта</string>
+    <string name="nightfall_4_61">Слънцето е 4,61° под хоризонта</string>
+    <string name="nightfall_4_8">Слънцето е 4,8° под хоризонта</string>
+    <string name="nightfall_5_88">Слънцето е 5,88° под хоризонта</string>
+    <string name="nightfall_5_95">Слънцето е 5,95° под хоризонта</string>
+    <string name="nightfall_6_45">Слънцето е 6,45° под хоризонта</string>
+    <string name="nightfall_7">Слънцето е 7,083° под хоризонта</string>
+    <string name="nightfall_7_67">Слънцето е 7,67° под хоризонта</string>
+    <string name="nightfall_8">Слънцето е 8,5° под хоризонта</string>
+    <string name="nightfall_9_3">Слънцето е 9,3° под хоризонта</string>
+    <string name="nightfall_9_75">Слънцето е 9,75° под хоризонта</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Шабат завършва</string>

@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Sonne ist 11,5° unter dem Horizont</string>
     <string name="tallis_11">Sonne ist 11° unter dem Horizont</string>
     <string name="tallis_10">Sonne ist 10,2° unter dem Horizont</string>
+    <string name="tallis_9_5">Sonne ist 9,5° unter dem Horizont</string>
+    <string name="tallis_7_65">Sonne ist 7,65° unter dem Horizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Sonnenaufgang</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Einbruch der Nacht</string>
-    <string name="nightfall_3_65">Sonne ist 3,65° unter dem Meeresspiegel</string>
-    <string name="nightfall_3_676">Sonne ist 3,676° unter dem Meeresspiegel</string>
-    <string name="nightfall_3_7">Sonne ist 3,7° unter dem Meeresspiegel</string>
-    <string name="nightfall_3_8">Sonne ist 3,8° unter dem Meeresspiegel</string>
-    <string name="nightfall_4_37">Sonne ist 4,37° unter dem Meeresspiegel</string>
-    <string name="nightfall_4_61">Sonne ist 4,61° unter dem Meeresspiegel</string>
-    <string name="nightfall_4_8">Sonne ist 4,8° unter dem Meeresspiegel</string>
-    <string name="nightfall_5_88">Sonne ist 5,88° unter dem Meeresspiegel</string>
-    <string name="nightfall_5_95">Sonne ist 5,95° unter dem Meeresspiegel</string>
-    <string name="nightfall_7">Sonne ist 7,083° unter dem Meeresspiegel</string>
-    <string name="nightfall_8">Sonne ist 8,5° unter dem Meeresspiegel</string>
+    <string name="nightfall_3_65">Sonne ist 3,65° unter dem Horizont</string>
+    <string name="nightfall_3_676">Sonne ist 3,676° unter dem Horizont</string>
+    <string name="nightfall_3_7">Sonne ist 3,7° unter dem Horizont</string>
+    <string name="nightfall_3_8">Sonne ist 3,8° unter dem Horizont</string>
+    <string name="nightfall_4_37">Sonne ist 4,37° unter dem Horizont</string>
+    <string name="nightfall_4_61">Sonne ist 4,61° unter dem Horizont</string>
+    <string name="nightfall_4_8">Sonne ist 4,8° unter dem Horizont</string>
+    <string name="nightfall_5_88">Sonne ist 5,88° unter dem Horizont</string>
+    <string name="nightfall_5_95">Sonne ist 5,95° unter dem Horizont</string>
+    <string name="nightfall_6_45">Sonne ist 6,45° unter dem Horizont</string>
+    <string name="nightfall_7">Sonne ist 7,083° unter dem Horizont</string>
+    <string name="nightfall_7_67">Sonne ist 7,67° unter dem Horizont</string>
+    <string name="nightfall_8">Sonne ist 8,5° unter dem Horizont</string>
+    <string name="nightfall_9_3">Sonne ist 9,3° unter dem Horizont</string>
+    <string name="nightfall_9_75">Sonne ist 9,75° unter dem Horizont</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Schabbat endet</string>

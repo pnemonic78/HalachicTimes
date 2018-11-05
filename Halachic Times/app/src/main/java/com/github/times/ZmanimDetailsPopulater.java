@@ -281,6 +281,14 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         title = R.string.tallis_baal_hatanya;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
+        date = cal.getMisheyakir7Point65Degrees();
+        title = R.string.tallis_7_65;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+        date = cal.getMisheyakir9Point5Degrees();
+        title = R.string.tallis_9_5;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getMisheyakir10Point2Degrees();
         title = R.string.tallis_10;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
@@ -825,15 +833,39 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
 
+        date = cal.getTzaisGeonim6Point45Degrees();
+        if (date != null) {
+            title = R.string.nightfall_6_45;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
         date = cal.getTzaisGeonim7Point083Degrees();
         if (date != null) {
             title = R.string.nightfall_7;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
 
+        date = cal.getTzaisGeonim7Point67Degrees();
+        if (date != null) {
+            title = R.string.nightfall_7_67;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
         date = cal.getTzaisGeonim8Point5Degrees();
         if (date != null) {
             title = R.string.nightfall_8;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim9Point3Degrees();
+        if (date != null) {
+            title = R.string.nightfall_9_3;
+            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
+        }
+
+        date = cal.getTzaisGeonim9Point75Degrees();
+        if (date != null) {
+            title = R.string.nightfall_9_75;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
     }

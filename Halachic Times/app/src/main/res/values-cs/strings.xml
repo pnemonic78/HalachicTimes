@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Slunce je 11,5° pod obzorem</string>
     <string name="tallis_11">Slunce je 11° pod obzorem</string>
     <string name="tallis_10">Slunce je 10.2° pod obzorem</string>
+    <string name="tallis_9_5">Slunce je 9.5° pod obzorem</string>
+    <string name="tallis_7_65">Slunce je 7.65° pod obzorem</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Východ slunce</string>
@@ -103,17 +105,21 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Setmění</string>
-    <string name="nightfall_3_65">Slunce je 3,65° pod úrovní moře</string>
-    <string name="nightfall_3_676">Slunce je 3,676° pod úrovní moře</string>
-    <string name="nightfall_3_7">Slunce je 3,7° pod úrovní moře</string>
-    <string name="nightfall_3_8">Slunce je 3,8° pod úrovní moře</string>
-    <string name="nightfall_4_37">Slunce je 4,37° pod úrovní moře</string>
-    <string name="nightfall_4_61">Slunce je 4,61° pod úrovní moře</string>
-    <string name="nightfall_4_8">Slunce je 4,8° pod úrovní moře</string>
-    <string name="nightfall_5_88">Slunce je 5,88° pod úrovní moře</string>
-    <string name="nightfall_5_95">Slunce je 5,95° pod úrovní moře</string>
-    <string name="nightfall_7">Slunce je 7,083° pod úrovní moře</string>
-    <string name="nightfall_8">Slunce je 8,5° pod úrovní moře</string>
+    <string name="nightfall_3_65">Slunce je 3,65° pod obzorem</string>
+    <string name="nightfall_3_676">Slunce je 3,676° pod obzorem</string>
+    <string name="nightfall_3_7">Slunce je 3,7° pod obzorem</string>
+    <string name="nightfall_3_8">Slunce je 3,8° pod obzorem</string>
+    <string name="nightfall_4_37">Slunce je 4,37° pod obzorem</string>
+    <string name="nightfall_4_61">Slunce je 4,61° pod obzorem</string>
+    <string name="nightfall_4_8">Slunce je 4,8° pod obzorem</string>
+    <string name="nightfall_5_88">Slunce je 5,88° pod obzorem</string>
+    <string name="nightfall_5_95">Slunce je 5,95° pod obzorem</string>
+    <string name="nightfall_6_45">Slunce je 6,45° pod obzorem</string>
+    <string name="nightfall_7">Slunce je 7,083° pod obzorem</string>
+    <string name="nightfall_7_67">Slunce je 7,67° pod obzorem</string>
+    <string name="nightfall_8">Slunce je 8,5° pod obzorem</string>
+    <string name="nightfall_9_3">Slunce je 9,3° pod obzorem</string>
+    <string name="nightfall_9_75">Slunce je 9,75° pod obzorem</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabat konce</string>
