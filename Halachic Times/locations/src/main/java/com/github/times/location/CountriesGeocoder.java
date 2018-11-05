@@ -594,7 +594,7 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+    protected AddressResponseParser createAddressResponseParser() {
         return null;
     }
 

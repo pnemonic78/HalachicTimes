@@ -98,8 +98,8 @@ public class GeoNamesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException {
-        return new GeoNamesAddressResponseParser(locale, results, maxResults);
+    protected AddressResponseParser createAddressResponseParser() throws LocationException {
+        return new GeoNamesAddressResponseParser();
     }
 
     @Override

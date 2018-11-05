@@ -63,14 +63,15 @@ public class GeocoderTestCase {
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GoogleGeocoder(locale);
         int maxResults = 10;
+        List<Address> results;
 
         // Holon
-        List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.google_holon);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(9, results.size());
 
@@ -82,12 +83,12 @@ public class GeocoderTestCase {
         assertEquals("1, Kalischer St, Holon, Center District, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
-        results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.google_near_elad);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(6, results.size());
 
@@ -99,12 +100,12 @@ public class GeocoderTestCase {
         assertEquals("Unnamed Road, Rosh Haayin, Petach Tikva, Center District, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Bar Yochai
-        results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.google_bar_yohai);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(9, results.size());
 
@@ -175,14 +176,15 @@ public class GeocoderTestCase {
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GeoNamesGeocoder(locale);
         int maxResults = 10;
+        List<Address> results;
 
         // Near Elad
-        List<Address> results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.geonames_near_elad);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
 
@@ -194,12 +196,12 @@ public class GeocoderTestCase {
         assertEquals("El‘ad", address.getFeatureName());
 
         // Tel-Aviv
-        results.clear();
         in = context.getResources().openRawResource(R.raw.geonames_telaviv);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(6, results.size());
 
@@ -255,12 +257,12 @@ public class GeocoderTestCase {
         List<Address> results;
 
         // Holon
-        results = new ArrayList<>(maxResults);
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        AddressResponseParser parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(5, results.size());
 
@@ -272,12 +274,12 @@ public class GeocoderTestCase {
         assertEquals("Shenkar Arye, Holon, Tel-Aviv, Tel Aviv, Israel", ((ZmanimAddress) address).getFormatted());
 
         // Near Elad
-        results = new ArrayList<>(maxResults);
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser(locale, results, maxResults);
+        parser = geocoder.createAddressResponseParser();
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
         assertTrue(maxResults >= results.size());
         assertEquals(1, results.size());
 

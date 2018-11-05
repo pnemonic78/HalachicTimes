@@ -29,29 +29,15 @@ import java.util.Locale;
  */
 public abstract class AddressResponseParser {
 
-    protected final Locale locale;
-    protected final List<Address> results;
-    protected final int maxResults;
-
-    /**
-     * Construct a new elevation parser.
-     *
-     * @param locale     the addresses' locale.
-     * @param results    the list of results to populate.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    protected AddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        this.locale = locale;
-        this.results = results;
-        this.maxResults = maxResults;
-    }
-
     /**
      * Parse the data to extract addresses.
      *
-     * @param data the JSON data.
+     * @param data       the JSON data.
+     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
+     * @param locale     the addresses' locale.
+     * @return the list of results to populate.
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
-    public abstract void parse(InputStream data) throws LocationException, IOException;
+    public abstract List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException;
 }

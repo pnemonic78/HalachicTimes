@@ -35,6 +35,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import androidx.annotation.Nullable;
+
 /**
  * A class for handling geocoding and reverse geocoding.
  *
@@ -250,16 +252,15 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if an I/O error occurs.
      */
+    @Nullable
     protected List<Address> parseAddresses(InputStream data, Locale locale, int maxResults) throws IOException {
         // Minimum length for either "<>" or "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
-        List<Address> results = new ArrayList<>(maxResults);
-        AddressResponseParser parser = createAddressResponseParser(locale, results, maxResults);
-        parser.parse(data);
-        return results;
+        AddressResponseParser parser = createAddressResponseParser();
+        return parser.parse(data, maxResults, locale);
     }
 
     /**
@@ -268,7 +269,7 @@ public abstract class GeocoderBase {
      * @return the parser.
      * @throws LocationException if a location error occurs.
      */
-    protected abstract AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException;
+    protected abstract AddressResponseParser createAddressResponseParser() throws LocationException;
 
     /**
      * Get the ISO 639 language code.
@@ -379,7 +380,7 @@ public abstract class GeocoderBase {
      * @param longitude the longitude.
      * @param queryUrl  the URL.
      * @return the location - {@code null} otherwise.
-     * @throws IOException       if an I/O error occurs.
+     * @throws IOException if an I/O error occurs.
      */
     protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);

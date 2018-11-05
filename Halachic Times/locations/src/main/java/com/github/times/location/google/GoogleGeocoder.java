@@ -120,8 +120,8 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException {
-        return new GoogleAddressResponseParser(locale, results, maxResults);
+    protected AddressResponseParser createAddressResponseParser() throws LocationException {
+        return new GoogleAddressResponseParser();
     }
 
     @Override

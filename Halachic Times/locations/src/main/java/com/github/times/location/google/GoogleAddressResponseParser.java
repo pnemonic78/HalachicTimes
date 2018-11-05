@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,23 +55,14 @@ class GoogleAddressResponseParser extends AddressResponseParser {
         .registerTypeAdapter(AddressComponentType.class, new AddressComponentTypeAdapter())
         .create();
 
-    /**
-     * Construct a new address parser.
-     *
-     * @param locale     the addresses' locale.
-     * @param results    the list of results to populate.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    GoogleAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        super(locale, results, maxResults);
-    }
-
     @Override
-    public void parse(InputStream data) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             GeocodingResponse response = gson.fromJson(reader, GeocodingResponse.class);
+            List<Address> results = new ArrayList<>(maxResults);
             handleResponse(response, results, maxResults, locale);
+            return results;
         } catch (JsonIOException e) {
             throw new IOException(e);
         } catch (JsonSyntaxException e) {

@@ -88,8 +88,8 @@ public class BingGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        return new BingAddressResponseParser(locale, results, maxResults);
+    protected AddressResponseParser createAddressResponseParser() {
+        return new BingAddressResponseParser();
     }
 
     @Override
