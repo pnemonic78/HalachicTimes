@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Căderea nopții</string>
-    <string name="nightfall_3_65">Soarele este de 3,65° sub nivelul mării</string>
-    <string name="nightfall_3_676">Soarele este de 3,676° sub nivelul mării</string>
-    <string name="nightfall_3_7">Soarele este de 3,7° sub nivelul mării</string>
-    <string name="nightfall_3_8">Soarele este de 3,8° sub nivelul mării</string>
-    <string name="nightfall_4_37">Soarele este de 4,37° sub nivelul mării</string>
-    <string name="nightfall_4_61">Soarele este de 4,61° sub nivelul mării</string>
-    <string name="nightfall_4_8">Soarele este de 4,8° sub nivelul mării</string>
-    <string name="nightfall_5_88">Soarele este de 5,88° sub nivelul mării</string>
-    <string name="nightfall_5_95">Soarele este de 5,95° sub nivelul mării</string>
-    <string name="nightfall_7">Soarele este de 7,083° sub nivelul mării</string>
-    <string name="nightfall_8">Soarele este de 8,5° sub nivelul mării</string>
+    <string name="nightfall_3_65">Soarele este de 3,65° sub orizont</string>
+    <string name="nightfall_3_676">Soarele este de 3,676° sub orizont</string>
+    <string name="nightfall_3_7">Soarele este de 3,7° sub orizont</string>
+    <string name="nightfall_3_8">Soarele este de 3,8° sub orizont</string>
+    <string name="nightfall_4_37">Soarele este de 4,37° sub orizont</string>
+    <string name="nightfall_4_61">Soarele este de 4,61° sub orizont</string>
+    <string name="nightfall_4_8">Soarele este de 4,8° sub orizont</string>
+    <string name="nightfall_5_88">Soarele este de 5,88° sub orizont</string>
+    <string name="nightfall_5_95">Soarele este de 5,95° sub orizont</string>
+    <string name="nightfall_7">Soarele este de 7,083° sub orizont</string>
+    <string name="nightfall_8">Soarele este de 8,5° sub orizont</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Șabat finisaje</string>

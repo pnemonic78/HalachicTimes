@@ -389,10 +389,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final long dawn = toDate(date);
 
         opinion = settings.getTallis();
-        if (OPINION_BAAL_HATANYA.equals(opinion)) {
-            date = cal.getMisheyakir10Point2Degrees();
-            summary = R.string.tallis_baal_hatanya;
-        } else if (OPINION_10_2.equals(opinion)) {
+        if (OPINION_10_2.equals(opinion)) {
             date = cal.getMisheyakir10Point2Degrees();
             summary = R.string.tallis_10;
         } else if (OPINION_11.equals(opinion)) {
@@ -404,6 +401,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_9_5.equals(opinion)) {
             date = cal.getMisheyakir9Point5Degrees();
             summary = R.string.tallis_9_5;
+        } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+            date = cal.getMisheyakir10Point2Degrees();
+            summary = R.string.tallis_baal_hatanya;
         } else {
             date = cal.getMisheyakir11Point5Degrees();
             summary = R.string.tallis_11_5;

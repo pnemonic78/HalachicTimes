@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Nacht</string>
-    <string name="nightfall_3_65">Zon is 3,65° beneden zeeniveau</string>
-    <string name="nightfall_3_676">Zon is 3,676° beneden zeeniveau</string>
-    <string name="nightfall_3_7">Zon is 3,7° beneden zeeniveau</string>
-    <string name="nightfall_3_8">Zon is 3,8° beneden zeeniveau</string>
-    <string name="nightfall_4_37">Zon is 4,37° beneden zeeniveau</string>
-    <string name="nightfall_4_61">Zon is 4,61° beneden zeeniveau</string>
-    <string name="nightfall_4_8">Zon is 4,8° beneden zeeniveau</string>
-    <string name="nightfall_5_88">Zon is 5,88° beneden zeeniveau</string>
-    <string name="nightfall_5_95">Zon is 5,95° beneden zeeniveau</string>
-    <string name="nightfall_7">Zon is 7,083° beneden zeeniveau</string>
-    <string name="nightfall_8">Zon is 8,5° beneden zeeniveau</string>
+    <string name="nightfall_3_65">Zon is 3,65° onder de horizon</string>
+    <string name="nightfall_3_676">Zon is 3,676° onder de horizon</string>
+    <string name="nightfall_3_7">Zon is 3,7° onder de horizon</string>
+    <string name="nightfall_3_8">Zon is 3,8° onder de horizon</string>
+    <string name="nightfall_4_37">Zon is 4,37° onder de horizon</string>
+    <string name="nightfall_4_61">Zon is 4,61° onder de horizon</string>
+    <string name="nightfall_4_8">Zon is 4,8° onder de horizon</string>
+    <string name="nightfall_5_88">Zon is 5,88° onder de horizon</string>
+    <string name="nightfall_5_95">Zon is 5,95° onder de horizon</string>
+    <string name="nightfall_7">Zon is 7,083° onder de horizon</string>
+    <string name="nightfall_8">Zon is 8,5° onder de horizon</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Sjabbat eindigt</string>

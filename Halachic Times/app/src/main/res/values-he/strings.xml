@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">לילה</string>
-    <string name="nightfall_3_65">שמש 3.65° מתחת לגובה פני הים</string>
-    <string name="nightfall_3_676">שמש 3.676° מתחת לגובה פני הים</string>
-    <string name="nightfall_3_7">שמש 3.7° מתחת לגובה פני הים</string>
-    <string name="nightfall_3_8">שמש 3.8° מתחת לגובה פני הים</string>
-    <string name="nightfall_4_37">שמש 4.37° מתחת לגובה פני הים</string>
-    <string name="nightfall_4_61">שמש 4.61° מתחת לגובה פני הים</string>
-    <string name="nightfall_4_8">שמש 4.8° מתחת לגובה פני הים</string>
-    <string name="nightfall_5_88">שמש 5.88° מתחת לגובה פני הים</string>
-    <string name="nightfall_5_95">שמש 5.95° מתחת לגובה פני הים</string>
-    <string name="nightfall_7">שמש 7.083° מתחת לגובה פני הים</string>
-    <string name="nightfall_8">שמש 8.5° מתחת לגובה פני הים</string>
+    <string name="nightfall_3_65">שמש 3.65° מתחת לאופק</string>
+    <string name="nightfall_3_676">שמש 3.676° מתחת לאופק</string>
+    <string name="nightfall_3_7">שמש 3.7° מתחת לאופק</string>
+    <string name="nightfall_3_8">שמש 3.8° מתחת לאופק</string>
+    <string name="nightfall_4_37">שמש 4.37° מתחת לאופק</string>
+    <string name="nightfall_4_61">שמש 4.61° מתחת לאופק</string>
+    <string name="nightfall_4_8">שמש 4.8° מתחת לאופק</string>
+    <string name="nightfall_5_88">שמש 5.88° מתחת לאופק</string>
+    <string name="nightfall_5_95">שמש 5.95° מתחת לאופק</string>
+    <string name="nightfall_7">שמש 7.083° מתחת לאופק</string>
+    <string name="nightfall_8">שמש 8.5° מתחת לאופק</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">צאת השבת</string>

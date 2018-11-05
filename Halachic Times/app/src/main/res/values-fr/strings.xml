@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Tombée de la nuit</string>
-    <string name="nightfall_3_65">Le soleil se trouve à 3,65° sous le niveau de la mer</string>
-    <string name="nightfall_3_676">Le soleil se trouve à 3,676° sous le niveau de la mer</string>
-    <string name="nightfall_3_7">Le soleil se trouve à 3,7° sous le niveau de la mer</string>
-    <string name="nightfall_3_8">Le soleil se trouve à 3,8° sous le niveau de la mer</string>
-    <string name="nightfall_4_37">Le soleil se trouve à 4,37° sous le niveau de la mer</string>
-    <string name="nightfall_4_61">Le soleil se trouve à 4,61° sous le niveau de la mer</string>
-    <string name="nightfall_4_8">Le soleil se trouve à 4,8° sous le niveau de la mer</string>
-    <string name="nightfall_5_88">Le soleil se trouve à 5,88° sous le niveau de la mer</string>
-    <string name="nightfall_5_95">Le soleil se trouve à 5,95° sous le niveau de la mer</string>
-    <string name="nightfall_7">Le soleil se trouve à 7,083° sous le niveau de la mer</string>
-    <string name="nightfall_8">Le soleil se trouve à 8,5° sous le niveau de la mer</string>
+    <string name="nightfall_3_65">Le soleil se trouve à 3,65° sous l\'horizon</string>
+    <string name="nightfall_3_676">Le soleil se trouve à 3,676° sous l\'horizon</string>
+    <string name="nightfall_3_7">Le soleil se trouve à 3,7° sous l\'horizon</string>
+    <string name="nightfall_3_8">Le soleil se trouve à 3,8° sous l\'horizon</string>
+    <string name="nightfall_4_37">Le soleil se trouve à 4,37° sous l\'horizon</string>
+    <string name="nightfall_4_61">Le soleil se trouve à 4,61° sous l\'horizon</string>
+    <string name="nightfall_4_8">Le soleil se trouve à 4,8° sous l\'horizon</string>
+    <string name="nightfall_5_88">Le soleil se trouve à 5,88° sous l\'horizon</string>
+    <string name="nightfall_5_95">Le soleil se trouve à 5,95° sous l\'horizon</string>
+    <string name="nightfall_7">Le soleil se trouve à 7,083° sous l\'horizon</string>
+    <string name="nightfall_8">Le soleil se trouve à 8,5° sous l\'horizon</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Chabbat finitions</string>

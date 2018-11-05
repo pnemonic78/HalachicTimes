@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Imbrunire</string>
-    <string name="nightfall_3_65">Sole è 3,65° sotto livello del mare</string>
-    <string name="nightfall_3_676">Sole è 3,676° sotto livello del mare</string>
-    <string name="nightfall_3_7">Sole è 3,7° sotto livello del mare</string>
-    <string name="nightfall_3_8">Sole è 3,8° sotto livello del mare</string>
-    <string name="nightfall_4_37">Sole è 4,37° sotto livello del mare</string>
-    <string name="nightfall_4_61">Sole è 4,61° sotto livello del mare</string>
-    <string name="nightfall_4_8">Sole è 4,8° sotto livello del mare</string>
-    <string name="nightfall_5_88">Sole è 5,88° sotto livello del mare</string>
-    <string name="nightfall_5_95">Sole è 5,95° sotto livello del mare</string>
-    <string name="nightfall_7">Sole è 7,083° sotto livello del mare</string>
-    <string name="nightfall_8">Sole è 8,5° sotto livello del mare</string>
+    <string name="nightfall_3_65">Sole è 3,65° sotto l\'orizzonte</string>
+    <string name="nightfall_3_676">Sole è 3,676° sotto l\'orizzonte</string>
+    <string name="nightfall_3_7">Sole è 3,7° sotto l\'orizzonte</string>
+    <string name="nightfall_3_8">Sole è 3,8° sotto l\'orizzonte</string>
+    <string name="nightfall_4_37">Sole è 4,37° sotto l\'orizzonte</string>
+    <string name="nightfall_4_61">Sole è 4,61° sotto l\'orizzonte</string>
+    <string name="nightfall_4_8">Sole è 4,8° sotto l\'orizzonte</string>
+    <string name="nightfall_5_88">Sole è 5,88° sotto l\'orizzonte</string>
+    <string name="nightfall_5_95">Sole è 5,95° sotto l\'orizzonte</string>
+    <string name="nightfall_7">Sole è 7,083° sotto l\'orizzonte</string>
+    <string name="nightfall_8">Sole è 8,5° sotto l\'orizzonte</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Shabato finiture</string>

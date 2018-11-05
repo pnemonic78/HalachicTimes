@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Наступление темноты</string>
-    <string name="nightfall_3_65">Солнце 3,65° ниже уровне моря</string>
-    <string name="nightfall_3_676">Солнце 3,676° ниже уровне моря</string>
-    <string name="nightfall_3_7">Солнце 3,7° ниже уровне моря</string>
-    <string name="nightfall_3_8">Солнце 3,8° ниже уровне моря</string>
-    <string name="nightfall_4_37">Солнце 4,37° ниже уровне моря</string>
-    <string name="nightfall_4_61">Солнце 4,61° ниже уровне моря</string>
-    <string name="nightfall_4_8">Солнце 4,8° ниже уровне моря</string>
-    <string name="nightfall_5_88">Солнце 5,88° ниже уровне моря</string>
-    <string name="nightfall_5_95">Солнце 5,95° ниже уровне моря</string>
-    <string name="nightfall_7">Солнце 7,083° ниже уровне моря</string>
-    <string name="nightfall_8">Солнце 8,5° ниже уровне моря</string>
+    <string name="nightfall_3_65">Солнце 3,65° ниже горизонта</string>
+    <string name="nightfall_3_676">Солнце 3,676° ниже горизонта</string>
+    <string name="nightfall_3_7">Солнце 3,7° ниже горизонта</string>
+    <string name="nightfall_3_8">Солнце 3,8° ниже горизонта</string>
+    <string name="nightfall_4_37">Солнце 4,37° ниже горизонта</string>
+    <string name="nightfall_4_61">Солнце 4,61° ниже горизонта</string>
+    <string name="nightfall_4_8">Солнце 4,8° ниже горизонта</string>
+    <string name="nightfall_5_88">Солнце 5,88° ниже горизонта</string>
+    <string name="nightfall_5_95">Солнце 5,95° ниже горизонта</string>
+    <string name="nightfall_7">Солнце 7,083° ниже горизонта</string>
+    <string name="nightfall_8">Солнце 8,5° ниже горизонта</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Шаббат заканчивается</string>

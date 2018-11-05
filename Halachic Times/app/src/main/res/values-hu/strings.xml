@@ -105,17 +105,17 @@
 
     <!-- Nightfall -->
     <string name="nightfall">Alkony</string>
-    <string name="nightfall_3_65">A nap 3,65° tengerszint alatt</string>
-    <string name="nightfall_3_676">A nap 3,676° tengerszint alatt</string>
-    <string name="nightfall_3_7">A nap 3,7° tengerszint alatt</string>
-    <string name="nightfall_3_8">A nap 3,8° tengerszint alatt</string>
-    <string name="nightfall_4_37">A nap 4,37° tengerszint alatt</string>
-    <string name="nightfall_4_61">A nap 4,61° tengerszint alatt</string>
-    <string name="nightfall_4_8">A nap 4,8° tengerszint alatt</string>
-    <string name="nightfall_5_88">A nap 5,88° tengerszint alatt</string>
-    <string name="nightfall_5_95">A nap 5,95° tengerszint alatt</string>
-    <string name="nightfall_7">A nap 7,083° tengerszint alatt</string>
-    <string name="nightfall_8">A nap 8,5° tengerszint alatt</string>
+    <string name="nightfall_3_65">A nap 3,65° alatt horizont</string>
+    <string name="nightfall_3_676">A nap 3,676° alatt horizont</string>
+    <string name="nightfall_3_7">A nap 3,7° alatt horizont</string>
+    <string name="nightfall_3_8">A nap 3,8° alatt horizont</string>
+    <string name="nightfall_4_37">A nap 4,37° alatt horizont</string>
+    <string name="nightfall_4_61">A nap 4,61° alatt horizont</string>
+    <string name="nightfall_4_8">A nap 4,8° alatt horizont</string>
+    <string name="nightfall_5_88">A nap 5,88° alatt horizont</string>
+    <string name="nightfall_5_95">A nap 5,95° alatt horizont</string>
+    <string name="nightfall_7">A nap 7,083° alatt horizont</string>
+    <string name="nightfall_8">A nap 8,5° alatt horizont</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Szombat véget ér</string>
