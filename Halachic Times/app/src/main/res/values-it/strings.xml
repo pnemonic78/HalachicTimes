@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Sole è 11,5° sotto l\'orizzonte</string>
     <string name="tallis_11">Sole è 11° sotto l\'orizzonte</string>
     <string name="tallis_10">Sole è 10,2° sotto l\'orizzonte</string>
+    <string name="tallis_9_5">Sole è 9,5° sotto l\'orizzonte</string>
+    <string name="tallis_7_65">Sole è 7,65° sotto l\'orizzonte</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Levata del sole</string>

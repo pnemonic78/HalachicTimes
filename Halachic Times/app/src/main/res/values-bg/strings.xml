@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Слънцето е 11,5° под хоризонта</string>
     <string name="tallis_11">Слънцето е 11° под хоризонта</string>
     <string name="tallis_10">Слънцето е 10,2° под хоризонта</string>
+    <string name="tallis_9_5">Слънцето е 9,5° под хоризонта</string>
+    <string name="tallis_7_65">Слънцето е 7,65° под хоризонта</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Изгрев</string>

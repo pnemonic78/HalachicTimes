@@ -74,6 +74,8 @@
     <string name="tallis_11_5">Sun is 11.5° below horizon</string>
     <string name="tallis_11">Sun is 11° below horizon</string>
     <string name="tallis_10">Sun is 10.2° below horizon</string>
+    <string name="tallis_9_5">Sun is 9.5° below horizon</string>
+    <string name="tallis_7_65">Sun is 7.65° below horizon</string>
     <string name="tallis_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
     <!-- Sunrise -->

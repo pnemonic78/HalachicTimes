@@ -39,6 +39,8 @@
     <string name="tallis_11_5">שמש 11.5° מתחת לאופק</string>
     <string name="tallis_11">שמש 11° מתחת לאופק</string>
     <string name="tallis_10">שמש 10.2° מתחת לאופק</string>
+    <string name="tallis_9_5">שמש 9.5° מתחת לאופק</string>
+    <string name="tallis_7_65">שמש 7.65° מתחת לאופק</string>
 
     <!-- Sunrise -->
     <string name="sunrise">הנץ החמה</string>

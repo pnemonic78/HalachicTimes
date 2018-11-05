@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Сонце 11,5° нижче обрію</string>
     <string name="tallis_11">Сонце 11° нижче обрію</string>
     <string name="tallis_10">Сонце 10,2° нижче обрію</string>
+    <string name="tallis_9_5">Сонце 9,5° нижче обрію</string>
+    <string name="tallis_7_65">Сонце 7,65° нижче обрію</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Схід сонця</string>

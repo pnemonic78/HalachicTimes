@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Sol é 11,5° abaixo do horizonte</string>
     <string name="tallis_11">Sol é 11° abaixo do horizonte</string>
     <string name="tallis_10">Sol é 10,2° abaixo do horizonte</string>
+    <string name="tallis_9_5">Sol é 9,5° abaixo do horizonte</string>
+    <string name="tallis_7_65">Sol é 7,65° abaixo do horizonte</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Nascer do sol</string>

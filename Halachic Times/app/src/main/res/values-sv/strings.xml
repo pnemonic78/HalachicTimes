@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Solen är 11,5° under horisonten</string>
     <string name="tallis_11">Solen är 11° under horisonten</string>
     <string name="tallis_10">Solen är 10,2° under horisonten</string>
+    <string name="tallis_9_5">Solen är 9,5° under horisonten</string>
+    <string name="tallis_7_65">Solen är 7,65° under horisonten</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Soluppgången</string>

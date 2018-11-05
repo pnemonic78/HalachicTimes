@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Słońce jest 11,5° poniżej horyzontu</string>
     <string name="tallis_11">Słońce jest 11° poniżej horyzontu</string>
     <string name="tallis_10">Słońce jest 10,2° poniżej horyzontu</string>
+    <string name="tallis_9_5">Słońce jest 9,5° poniżej horyzontu</string>
+    <string name="tallis_7_65">Słońce jest 7,65° poniżej horyzontu</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Wschód słońca</string>

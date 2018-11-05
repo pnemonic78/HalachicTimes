@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Nap 11,5° alatt horizont</string>
     <string name="tallis_11">Nap 11° alatt horizont</string>
     <string name="tallis_10">Nap 10,2° alatt horizont</string>
+    <string name="tallis_9_5">Nap 9,5° alatt horizont</string>
+    <string name="tallis_7_65">Nap 7,65° alatt horizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Napkelte</string>

@@ -38,7 +38,9 @@
     <string name="tallis_only">Vroegste <i>tallis</i> (משיכיר)</string>
     <string name="tallis_11_5">Zon is 11,5° onder de horizon</string>
     <string name="tallis_11">Zon is 11° onder de horizon</string>
-    <string name="tallis_10">Zon is onder de horizon</string>
+    <string name="tallis_10">Zon is 10,2° onder de horizon</string>
+    <string name="tallis_9_5">Zon is 9,5° onder de horizon</string>
+    <string name="tallis_7_65">Zon is 7,65° onder de horizon</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Zonsopgang</string>

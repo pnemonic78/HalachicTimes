@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Aurinko on 11,5° horisontin alapuolella</string>
     <string name="tallis_11">Aurinko on 11° horisontin alapuolella</string>
     <string name="tallis_10">Aurinko on 10,2° horisontin alapuolella</string>
+    <string name="tallis_9_5">Aurinko on 9,5° horisontin alapuolella</string>
+    <string name="tallis_7_65">Aurinko on 7,65° horisontin alapuolella</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Auringonnousu</string>

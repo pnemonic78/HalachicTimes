@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Saulė yra 11,5° žemiau horizonto</string>
     <string name="tallis_11">Saulė yra 11° žemiau horizonto</string>
     <string name="tallis_10">Saulė yra 10,2° žemiau horizonto</string>
+    <string name="tallis_9_5">Saulė yra 9,5° žemiau horizonto</string>
+    <string name="tallis_7_65">Saulė yra 7,65° žemiau horizonto</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Saulėtekis</string>

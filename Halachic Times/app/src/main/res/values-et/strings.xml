@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Päike on 11,5° alla horisonti</string>
     <string name="tallis_11">Päike on 11° alla horisonti</string>
     <string name="tallis_10">Päike on 10,2° alla horisonti</string>
+    <string name="tallis_9_5">Päike on 9,5° alla horisonti</string>
+    <string name="tallis_7_65">Päike on 7,65° alla horisonti</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Päikesetõus</string>

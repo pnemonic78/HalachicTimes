@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Soarele este de 11,5° sub orizont</string>
     <string name="tallis_11">Soarele este de 11° sub orizont</string>
     <string name="tallis_10">Soarele este de 10,2° sub orizont</string>
+    <string name="tallis_9_5">Soarele este de 9,5° sub orizont</string>
+    <string name="tallis_7_65">Soarele este de 7,65 sub orizont</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Răsărit</string>

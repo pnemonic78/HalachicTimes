@@ -281,6 +281,14 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         title = R.string.tallis_baal_hatanya;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
+        date = cal.getMisheyakir7Point65Degrees();
+        title = R.string.tallis_7_65;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
+        date = cal.getMisheyakir9Point5Degrees();
+        title = R.string.tallis_9_5;
+        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+
         date = cal.getMisheyakir10Point2Degrees();
         title = R.string.tallis_10;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);

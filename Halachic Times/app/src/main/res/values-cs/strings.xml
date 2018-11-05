@@ -39,6 +39,8 @@
     <string name="tallis_11_5">Slunce je 11,5° pod obzorem</string>
     <string name="tallis_11">Slunce je 11° pod obzorem</string>
     <string name="tallis_10">Slunce je 10.2° pod obzorem</string>
+    <string name="tallis_9_5">Slunce je 9.5° pod obzorem</string>
+    <string name="tallis_7_65">Slunce je 7.65° pod obzorem</string>
 
     <!-- Sunrise -->
     <string name="sunrise">Východ slunce</string>
