@@ -62,7 +62,7 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GoogleGeocoder(locale);
-        final AddressResponseParser parser = geocoder.createAddressResponseParser();
+        final AddressResponseParser parser = geocoder.getAddressResponseParser();
         assertNotNull(parser);
         int maxResults = 10;
         List<Address> results;
@@ -170,7 +170,7 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GeoNamesGeocoder(locale);
-        final AddressResponseParser parser = geocoder.createAddressResponseParser();
+        final AddressResponseParser parser = geocoder.getAddressResponseParser();
         assertNotNull(parser);
         int maxResults = 10;
         List<Address> results;
@@ -247,7 +247,7 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         final GeocoderBase geocoder = new BingGeocoder(locale);
-        final AddressResponseParser parser = geocoder.createAddressResponseParser();
+        final AddressResponseParser parser = geocoder.getAddressResponseParser();
         assertNotNull(parser);
         int maxResults = 10;
         List<Address> results;

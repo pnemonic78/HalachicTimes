@@ -80,6 +80,7 @@ public abstract class GeocoderBase {
     protected final Locale locale;
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
+    private AddressResponseParser addressResponseParser;
 
     /**
      * Creates a new geocoder.
@@ -87,7 +88,6 @@ public abstract class GeocoderBase {
      * @param locale the locale.
      */
     public GeocoderBase(Locale locale) {
-//        this.context = context;
         this.locale = locale;
     }
 
@@ -258,7 +258,7 @@ public abstract class GeocoderBase {
             return null;
         }
 
-        AddressResponseParser parser = createAddressResponseParser();
+        AddressResponseParser parser = getAddressResponseParser();
         return parser.parse(data, maxResults, locale);
     }
 
@@ -269,6 +269,19 @@ public abstract class GeocoderBase {
      * @throws LocationException if a location error occurs.
      */
     protected abstract AddressResponseParser createAddressResponseParser() throws LocationException;
+
+    /**
+     * Get a parser for addresses.
+     *
+     * @return the parser.
+     * @throws LocationException if a location error occurs.
+     */
+    protected AddressResponseParser getAddressResponseParser() throws LocationException {
+        if (addressResponseParser == null) {
+            addressResponseParser = createAddressResponseParser();
+        }
+        return addressResponseParser;
+    }
 
     /**
      * Get the ISO 639 language code.
