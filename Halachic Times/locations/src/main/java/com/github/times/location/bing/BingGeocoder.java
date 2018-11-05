@@ -105,7 +105,7 @@ public class BingGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
-        return new BingElevationResponseParser(latitude, longitude, results, maxResults);
+    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, int maxResults) throws LocationException {
+        return new BingElevationResponseParser(latitude, longitude, maxResults);
     }
 }

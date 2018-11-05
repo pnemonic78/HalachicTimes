@@ -144,17 +144,17 @@ public class GeocoderTestCase {
         GeocoderBase geocoder = new GoogleGeocoder(locale);
 
         // Access Denied
-        List<Location> results = new ArrayList<>(1);
+        List<Location> results;
         InputStream in;
         ElevationResponseParser parser;
 
         // Near Elad
-        results.clear();
         in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
         assertNotNull(in);
-        parser = geocoder.createElevationResponseHandler(0.0, 0.0, results, 1);
+        parser = geocoder.createElevationResponseHandler(0.0, 0.0, 1);
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in);
+        assertNotNull(results);
         assertEquals(1, results.size());
         Location location = results.get(0);
         assertNotNull(location);
@@ -225,14 +225,15 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GeoNamesGeocoder(locale);
-        List<Location> results = new ArrayList<>(1);
+        List<Location> results;
 
         // Near Elad
         InputStream in = context.getResources().openRawResource(R.raw.geonames_elevation_near_elad);
         assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.04984, 34.95382, results, 1);
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.04984, 34.95382, 1);
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in);
+        assertNotNull(results);
         assertEquals(1, results.size());
         Location location = results.get(0);
         assertNotNull(location);
@@ -303,14 +304,15 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new BingGeocoder(locale);
-        List<Location> results = new ArrayList<>(1);
+        List<Location> results;
 
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_elevation_holon);
         assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.0236, 34.776698, results, 1);
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.0236, 34.776698, 1);
         assertNotNull(parser);
-        parser.parse(in);
+        results = parser.parse(in);
+        assertNotNull(results);
         assertEquals(1, results.size());
         Location location = results.get(0);
         assertNotNull(location);

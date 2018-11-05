@@ -339,7 +339,7 @@ public abstract class GeocoderBase {
         }
 
         List<Location> results = new ArrayList<>(1);
-        ElevationResponseParser handler = createElevationResponseHandler(latitude, longitude, results, 1);
+        ElevationResponseParser handler = createElevationResponseHandler(latitude, longitude, 1);
         handler.parse(data);
 
         if (results.isEmpty()) {
@@ -403,10 +403,9 @@ public abstract class GeocoderBase {
      *
      * @param latitude   the latitude.
      * @param longitude  the longitude.
-     * @param results    the list of results to populate.
      * @param maxResults the maximum number of results.
      * @return the handler.
      * @throws LocationException if a location error occurs.
      */
-    protected abstract ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException;
+    protected abstract ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, int maxResults) throws LocationException;
 }

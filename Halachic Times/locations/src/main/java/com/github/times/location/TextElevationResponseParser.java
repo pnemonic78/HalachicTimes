@@ -21,6 +21,7 @@ import com.github.io.StreamUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -51,24 +52,25 @@ public class TextElevationResponseParser extends ElevationResponseParser {
      *
      * @param latitude   the latitude.
      * @param longitude  the longitude.
-     * @param results    the list of results to populate.
      * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
      */
-    public TextElevationResponseParser(double latitude, double longitude, List<Location> results, int maxResults) {
-        super(latitude, longitude, results, maxResults);
+    public TextElevationResponseParser(double latitude, double longitude,  int maxResults) {
+        super(latitude, longitude, maxResults);
     }
 
     @Override
-    public void parse(InputStream data) throws LocationException, IOException {
+    public List<Location> parse(InputStream data) throws LocationException, IOException {
         String text = StreamUtils.toString(data);
         if (isEmpty(text)) {
             throw new LocationException("empty elevation");
         }
 
+        List<Location> results = new ArrayList<>(maxResults);
         Location location = toLocation(text);
         if (location != null) {
             results.add(location);
         }
+        return results;
     }
 
     @Nullable
