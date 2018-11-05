@@ -62,14 +62,14 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GoogleGeocoder(locale);
+        final AddressResponseParser parser = geocoder.createAddressResponseParser();
+        assertNotNull(parser);
         int maxResults = 10;
         List<Address> results;
 
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.google_holon);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -85,8 +85,6 @@ public class GeocoderTestCase {
         // Near Elad
         in = context.getResources().openRawResource(R.raw.google_near_elad);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -102,8 +100,6 @@ public class GeocoderTestCase {
         // Bar Yochai
         in = context.getResources().openRawResource(R.raw.google_bar_yohai);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -142,17 +138,16 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GoogleGeocoder(locale);
+        final ElevationResponseParser parser = geocoder.createElevationResponseHandler();
+        assertNotNull(parser);
 
         // Access Denied
         List<Location> results;
         InputStream in;
-        ElevationResponseParser parser;
 
         // Near Elad
         in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
         assertNotNull(in);
-        parser = geocoder.createElevationResponseHandler();
-        assertNotNull(parser);
         results = parser.parse(in, 0.0, 0.0, 1);
         assertNotNull(results);
         assertEquals(1, results.size());
@@ -175,14 +170,14 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GeoNamesGeocoder(locale);
+        final AddressResponseParser parser = geocoder.createAddressResponseParser();
+        assertNotNull(parser);
         int maxResults = 10;
         List<Address> results;
 
         // Near Elad
         InputStream in = context.getResources().openRawResource(R.raw.geonames_near_elad);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -198,8 +193,6 @@ public class GeocoderTestCase {
         // Tel-Aviv
         in = context.getResources().openRawResource(R.raw.geonames_telaviv);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -225,13 +218,13 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GeoNamesGeocoder(locale);
+        final ElevationResponseParser parser = geocoder.createElevationResponseHandler();
+        assertNotNull(parser);
         List<Location> results;
 
         // Near Elad
         InputStream in = context.getResources().openRawResource(R.raw.geonames_elevation_near_elad);
         assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler();
-        assertNotNull(parser);
         results = parser.parse(in, 32.04984, 34.95382, 1);
         assertNotNull(results);
         assertEquals(1, results.size());
@@ -253,15 +246,15 @@ public class GeocoderTestCase {
         assertNotNull(context);
 
         Locale locale = Locale.US;
-        GeocoderBase geocoder = new BingGeocoder(locale);
+        final GeocoderBase geocoder = new BingGeocoder(locale);
+        final AddressResponseParser parser = geocoder.createAddressResponseParser();
+        assertNotNull(parser);
         int maxResults = 10;
         List<Address> results;
 
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_holon);
         assertNotNull(in);
-        AddressResponseParser parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -277,8 +270,6 @@ public class GeocoderTestCase {
         // Near Elad
         in = context.getResources().openRawResource(R.raw.bing_near_elad);
         assertNotNull(in);
-        parser = geocoder.createAddressResponseParser();
-        assertNotNull(parser);
         results = parser.parse(in, maxResults, locale);
         assertNotNull(results);
         assertTrue(maxResults >= results.size());
@@ -304,13 +295,13 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new BingGeocoder(locale);
+        final ElevationResponseParser parser = geocoder.createElevationResponseHandler();
+        assertNotNull(parser);
         List<Location> results;
 
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_elevation_holon);
         assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler();
-        assertNotNull(parser);
         results = parser.parse(in, 32.0236, 34.776698, 1);
         assertNotNull(results);
         assertEquals(1, results.size());
