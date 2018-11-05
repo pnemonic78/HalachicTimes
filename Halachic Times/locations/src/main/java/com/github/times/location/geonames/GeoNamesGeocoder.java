@@ -115,7 +115,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, int maxResults) throws LocationException {
-        return new TextElevationResponseParser(latitude, longitude, maxResults);
+    protected ElevationResponseParser createElevationResponseHandler() throws LocationException {
+        return new TextElevationResponseParser();
     }
 }

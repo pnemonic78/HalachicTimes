@@ -51,17 +51,13 @@ public class BingElevationResponseParser extends ElevationResponseParser {
         .registerTypeAdapter(Uri.class, new UriAdapter())
         .create();
 
-    public BingElevationResponseParser(double latitude, double longitude, int maxResults) {
-        super(latitude, longitude, maxResults);
-    }
-
     @Override
-    public List<Location> parse(InputStream data) throws LocationException, IOException {
+    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data, StandardCharsets.UTF_8);
             BingResponse response = gson.fromJson(reader, BingResponse.class);
             List<Location> results = new ArrayList<>(maxResults);
-            handleResponse(response, results);
+            handleResponse(response, results, latitude, longitude, maxResults);
             return results;
         } catch (JsonIOException e) {
             throw new IOException(e);
@@ -70,7 +66,7 @@ public class BingElevationResponseParser extends ElevationResponseParser {
         }
     }
 
-    private void handleResponse(BingResponse response, List<Location> results) throws LocationException {
+    private void handleResponse(BingResponse response, List<Location> results, double latitude, double longitude, int maxResults) throws LocationException {
         if (response.statusCode != BingResponse.STATUS_OK) {
             throw new LocationException(response.statusDescription);
         }

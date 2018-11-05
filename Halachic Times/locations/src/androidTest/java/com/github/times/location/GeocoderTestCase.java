@@ -151,9 +151,9 @@ public class GeocoderTestCase {
         // Near Elad
         in = context.getResources().openRawResource(R.raw.google_elevation_near_elad);
         assertNotNull(in);
-        parser = geocoder.createElevationResponseHandler(0.0, 0.0, 1);
+        parser = geocoder.createElevationResponseHandler();
         assertNotNull(parser);
-        results = parser.parse(in);
+        results = parser.parse(in, 0.0, 0.0, 1);
         assertNotNull(results);
         assertEquals(1, results.size());
         Location location = results.get(0);
@@ -230,9 +230,9 @@ public class GeocoderTestCase {
         // Near Elad
         InputStream in = context.getResources().openRawResource(R.raw.geonames_elevation_near_elad);
         assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.04984, 34.95382, 1);
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler();
         assertNotNull(parser);
-        results = parser.parse(in);
+        results = parser.parse(in, 32.04984, 34.95382, 1);
         assertNotNull(results);
         assertEquals(1, results.size());
         Location location = results.get(0);
@@ -309,9 +309,9 @@ public class GeocoderTestCase {
         // Holon
         InputStream in = context.getResources().openRawResource(R.raw.bing_elevation_holon);
         assertNotNull(in);
-        ElevationResponseParser parser = geocoder.createElevationResponseHandler(32.0236, 34.776698, 1);
+        ElevationResponseParser parser = geocoder.createElevationResponseHandler();
         assertNotNull(parser);
-        results = parser.parse(in);
+        results = parser.parse(in, 32.0236, 34.776698, 1);
         assertNotNull(results);
         assertEquals(1, results.size());
         Location location = results.get(0);

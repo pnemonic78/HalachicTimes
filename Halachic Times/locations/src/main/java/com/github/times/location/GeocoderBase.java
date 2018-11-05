@@ -27,7 +27,6 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -338,14 +337,10 @@ public abstract class GeocoderBase {
             return null;
         }
 
-        List<Location> results = new ArrayList<>(1);
-        ElevationResponseParser handler = createElevationResponseHandler(latitude, longitude, 1);
-        handler.parse(data);
+        ElevationResponseParser handler = createElevationResponseHandler();
+        List<Location> results = handler.parse(data, latitude, longitude, 1);
 
-        if (results.isEmpty()) {
-            return null;
-        }
-        return results.get(0);
+        return results.isEmpty() ? null : results.get(0);
     }
 
     /**
@@ -401,11 +396,8 @@ public abstract class GeocoderBase {
     /**
      * Create a handler to parse elevations.
      *
-     * @param latitude   the latitude.
-     * @param longitude  the longitude.
-     * @param maxResults the maximum number of results.
      * @return the handler.
      * @throws LocationException if a location error occurs.
      */
-    protected abstract ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, int maxResults) throws LocationException;
+    protected abstract ElevationResponseParser createElevationResponseHandler() throws LocationException;
 }

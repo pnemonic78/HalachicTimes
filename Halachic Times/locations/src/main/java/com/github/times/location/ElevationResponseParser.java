@@ -28,30 +28,16 @@ import java.util.List;
  */
 public abstract class ElevationResponseParser {
 
-    protected final double latitude;
-    protected final double longitude;
-    protected final int maxResults;
-
-    /**
-     * Construct a new elevation parser.
-     *
-     * @param latitude   the latitude.
-     * @param longitude  the longitude.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    protected ElevationResponseParser(double latitude, double longitude, int maxResults) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.maxResults = maxResults;
-    }
-
     /**
      * Parse the data to extract elevations.
      *
-     * @param data the JSON data.
-     * @return the list of results to populate.
+     * @param data       the JSON data.
+     * @param latitude   the latitude.
+     * @param longitude  the longitude.
+     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
+     * @return the list of results.
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
-    public abstract List<Location> parse(InputStream data) throws LocationException, IOException;
+    public abstract List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException;
 }

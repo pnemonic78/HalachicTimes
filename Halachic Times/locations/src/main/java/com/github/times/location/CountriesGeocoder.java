@@ -665,7 +665,7 @@ public class CountriesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, int maxResults) throws LocationException {
+    protected ElevationResponseParser createElevationResponseHandler() throws LocationException {
         return null;
     }
 }

@@ -35,7 +35,7 @@ public abstract class AddressResponseParser {
      * @param data       the JSON data.
      * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
      * @param locale     the addresses' locale.
-     * @return the list of results to populate.
+     * @return the list of results.
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */

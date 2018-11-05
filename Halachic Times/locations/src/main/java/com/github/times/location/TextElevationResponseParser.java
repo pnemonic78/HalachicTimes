@@ -47,26 +47,15 @@ public class TextElevationResponseParser extends ElevationResponseParser {
      */
     private static final double ELEVATION_SPACE = 100_000;
 
-    /**
-     * Construct a new elevation parser.
-     *
-     * @param latitude   the latitude.
-     * @param longitude  the longitude.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    public TextElevationResponseParser(double latitude, double longitude,  int maxResults) {
-        super(latitude, longitude, maxResults);
-    }
-
     @Override
-    public List<Location> parse(InputStream data) throws LocationException, IOException {
+    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
         String text = StreamUtils.toString(data);
         if (isEmpty(text)) {
             throw new LocationException("empty elevation");
         }
 
         List<Location> results = new ArrayList<>(maxResults);
-        Location location = toLocation(text);
+        Location location = toLocation(text, latitude, longitude);
         if (location != null) {
             results.add(location);
         }
@@ -74,11 +63,9 @@ public class TextElevationResponseParser extends ElevationResponseParser {
     }
 
     @Nullable
-    private Location toLocation(@NonNull String response) throws LocationException {
-        double elevation;
-
+    private Location toLocation(@NonNull String response, double latitude, double longitude) throws LocationException {
         try {
-            elevation = Double.parseDouble(response);
+            double elevation = Double.parseDouble(response);
             if (elevation <= ELEVATION_LOWEST_SURFACE) {
                 Timber.w("elevation too low: %s", response);
                 return null;

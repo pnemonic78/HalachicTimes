@@ -50,12 +50,8 @@ class GoogleElevationResponseParser extends ElevationResponseParser {
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
 
-    public GoogleElevationResponseParser(double latitude, double longitude, int maxResults) {
-        super(latitude, longitude, maxResults);
-    }
-
     @Override
-    public List<Location> parse(InputStream data) throws LocationException, IOException {
+    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             ElevationResponse response = gson.fromJson(reader, ElevationResponse.class);
