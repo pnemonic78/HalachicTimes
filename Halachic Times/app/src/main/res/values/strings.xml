@@ -232,6 +232,7 @@
     <string name="nightfall_96" translatable="false">@string/opinion_96</string>
     <string name="nightfall_96_zmanis" translatable="false">@string/opinion_96_zmanis</string>
     <string name="nightfall_ateret" translatable="false">@string/opinion_ateret</string>
+    <string name="nightfall_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
     <string name="nightfall_3_65">Sun is 3.65° below horizon</string>
     <string name="nightfall_3_676">Sun is 3.676° below horizon</string>
     <string name="nightfall_3_7">Sun is 3.7° below horizon</string>
@@ -241,9 +242,12 @@
     <string name="nightfall_4_8">Sun is 4.8° below horizon</string>
     <string name="nightfall_5_88">Sun is 5.88° below horizon</string>
     <string name="nightfall_5_95">Sun is 5.95° below horizon</string>
+    <string name="nightfall_6_45">Sun is 6.45° below horizon</string>
     <string name="nightfall_7">Sun is 7.083° below horizon</string>
+    <string name="nightfall_7_67">Sun is 7.67° below horizon</string>
     <string name="nightfall_8">Sun is 8.5° below horizon</string>
-    <string name="nightfall_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
+    <string name="nightfall_9_3">Sun is 9.3° below horizon</string>
+    <string name="nightfall_9_75">Sun is 9.75° below horizon</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Shabbath ends</string>

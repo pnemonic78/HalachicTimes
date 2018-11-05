@@ -109,23 +109,27 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_2 = ZmanimPreferences.Values.OPINION_2;
     protected static final String OPINION_2_STARS = ZmanimPreferences.Values.OPINION_2_STARS;
     protected static final String OPINION_3 = ZmanimPreferences.Values.OPINION_3;
-    protected static final String OPINION_3_7 = ZmanimPreferences.Values.OPINION_3_7;
-    protected static final String OPINION_3_8 = ZmanimPreferences.Values.OPINION_3_8;
     protected static final String OPINION_3_65 = ZmanimPreferences.Values.OPINION_3_65;
     protected static final String OPINION_3_676 = ZmanimPreferences.Values.OPINION_3_676;
+    protected static final String OPINION_3_7 = ZmanimPreferences.Values.OPINION_3_7;
+    protected static final String OPINION_3_8 = ZmanimPreferences.Values.OPINION_3_8;
     protected static final String OPINION_4 = ZmanimPreferences.Values.OPINION_4;
-    protected static final String OPINION_4_8 = ZmanimPreferences.Values.OPINION_4_8;
     protected static final String OPINION_4_37 = ZmanimPreferences.Values.OPINION_4_37;
     protected static final String OPINION_4_61 = ZmanimPreferences.Values.OPINION_4_61;
+    protected static final String OPINION_4_8 = ZmanimPreferences.Values.OPINION_4_8;
     protected static final String OPINION_5_88 = ZmanimPreferences.Values.OPINION_5_88;
     protected static final String OPINION_5_95 = ZmanimPreferences.Values.OPINION_5_95;
     protected static final String OPINION_6 = ZmanimPreferences.Values.OPINION_6;
+    protected static final String OPINION_6_45 = ZmanimPreferences.Values.OPINION_6_45;
     protected static final String OPINION_7 = ZmanimPreferences.Values.OPINION_7;
-    protected static final String OPINION_7_65 = ZmanimPreferences.Values.OPINION_7_65;
     protected static final String OPINION_7_083 = ZmanimPreferences.Values.OPINION_7_083;
     protected static final String OPINION_7_083_ZMANIS = ZmanimPreferences.Values.OPINION_7_083_ZMANIS;
+    protected static final String OPINION_7_65 = ZmanimPreferences.Values.OPINION_7_65;
+    protected static final String OPINION_7_67 = ZmanimPreferences.Values.OPINION_7_67;
     protected static final String OPINION_8_5 = ZmanimPreferences.Values.OPINION_8_5;
+    protected static final String OPINION_9_3 = ZmanimPreferences.Values.OPINION_9_3;
     protected static final String OPINION_9_5 = ZmanimPreferences.Values.OPINION_9_5;
+    protected static final String OPINION_9_75 = ZmanimPreferences.Values.OPINION_9_75;
     protected static final String OPINION_10_2 = ZmanimPreferences.Values.OPINION_10_2;
     protected static final String OPINION_11 = ZmanimPreferences.Values.OPINION_11;
     protected static final String OPINION_12 = ZmanimPreferences.Values.OPINION_12;
@@ -1355,12 +1359,24 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else if (OPINION_5_95.equals(opinion)) {
             date = cal.getTzaisGeonim5Point95Degrees();
             summary = R.string.nightfall_5_95;
+        } else if (OPINION_6_45.equals(opinion)) {
+            date = cal.getTzaisGeonim6Point45Degrees();
+            summary = R.string.nightfall_6_45;
         } else if (OPINION_7_083.equals(opinion)) {
             date = cal.getTzaisGeonim7Point083Degrees();
             summary = R.string.nightfall_7;
+        } else if (OPINION_7_67.equals(opinion)) {
+            date = cal.getTzaisGeonim7Point67Degrees();
+            summary = R.string.nightfall_7_67;
         } else if (OPINION_8_5.equals(opinion)) {
             date = cal.getTzaisGeonim8Point5Degrees();
             summary = R.string.nightfall_8;
+        } else if (OPINION_9_3.equals(opinion)) {
+            date = cal.getTzaisGeonim9Point3Degrees();
+            summary = R.string.nightfall_9_3;
+        } else if (OPINION_9_75.equals(opinion)) {
+            date = cal.getTzaisGeonim9Point75Degrees();
+            summary = R.string.nightfall_9_75;
         } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
             date = cal.getTzaisBaalHatanya();
             summary = R.string.nightfall_baal_hatanya;

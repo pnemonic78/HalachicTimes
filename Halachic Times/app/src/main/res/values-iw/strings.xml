@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">שמש 4.8° מתחת לאופק</string>
     <string name="nightfall_5_88">שמש 5.88° מתחת לאופק</string>
     <string name="nightfall_5_95">שמש 5.95° מתחת לאופק</string>
+    <string name="nightfall_6_45">שמש 6.45° מתחת לאופק</string>
     <string name="nightfall_7">שמש 7.083° מתחת לאופק</string>
+    <string name="nightfall_7_67">שמש 7.67° מתחת לאופק</string>
     <string name="nightfall_8">שמש 8.5° מתחת לאופק</string>
+    <string name="nightfall_9_3">שמש 9.3° מתחת לאופק</string>
+    <string name="nightfall_9_75">שמש 9.75° מתחת לאופק</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">צאת השבת</string>

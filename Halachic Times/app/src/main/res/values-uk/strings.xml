@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Сонце 4,8° нижче обрію</string>
     <string name="nightfall_5_88">Сонце 5,88° нижче обрію</string>
     <string name="nightfall_5_95">Сонце 5,95° нижче обрію</string>
+    <string name="nightfall_6_45">Сонце 6.45° нижче обрію</string>
     <string name="nightfall_7">Сонце 7,083° нижче обрію</string>
+    <string name="nightfall_7_67">Сонце 7.67° нижче обрію</string>
     <string name="nightfall_8">Сонце 8,5° нижче обрію</string>
+    <string name="nightfall_9_3">Сонце 9,3° нижче обрію</string>
+    <string name="nightfall_9_75">Сонце 9,75° нижче обрію</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Суботні закінчується</string>

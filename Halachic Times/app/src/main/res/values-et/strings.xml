@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Päike on 4,8° alla horisonti</string>
     <string name="nightfall_5_88">Päike on 5,88° alla horisonti</string>
     <string name="nightfall_5_95">Päike on 5,95° alla horisonti</string>
+    <string name="nightfall_6_45">Päike on 6,45° alla horisonti</string>
     <string name="nightfall_7">Päike on 7,083° alla horisonti</string>
+    <string name="nightfall_7_67">Päike on 7,67° alla horisonti</string>
     <string name="nightfall_8">Päike on 8,5° alla horisonti</string>
+    <string name="nightfall_9_3">Päike on 9,3° alla horisonti</string>
+    <string name="nightfall_9_75">Päike on 9,75° alla horisonti</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabbat otsad</string>

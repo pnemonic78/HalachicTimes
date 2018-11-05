@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Слънцето е 4,8° под хоризонта</string>
     <string name="nightfall_5_88">Слънцето е 5,88° под хоризонта</string>
     <string name="nightfall_5_95">Слънцето е 5,95° под хоризонта</string>
+    <string name="nightfall_6_45">Слънцето е 6,45° под хоризонта</string>
     <string name="nightfall_7">Слънцето е 7,083° под хоризонта</string>
+    <string name="nightfall_7_67">Слънцето е 7,67° под хоризонта</string>
     <string name="nightfall_8">Слънцето е 8,5° под хоризонта</string>
+    <string name="nightfall_9_3">Слънцето е 9,3° под хоризонта</string>
+    <string name="nightfall_9_75">Слънцето е 9,75° под хоризонта</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Шабат завършва</string>

@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Solen är 4,8° under horisonten</string>
     <string name="nightfall_5_88">Solen är 5,88° under horisonten</string>
     <string name="nightfall_5_95">Solen är 5,95° under horisonten</string>
+    <string name="nightfall_6_45">Solen är 6,45° under horisonten</string>
     <string name="nightfall_7">Solen är 7,083° under horisonten</string>
+    <string name="nightfall_7_67">Solen är 7,67° under horisonten</string>
     <string name="nightfall_8">Solen är 8,5° under horisonten</string>
+    <string name="nightfall_9_3">Solen är 9,3° under horisonten</string>
+    <string name="nightfall_9_75">Solen är 9,75° under horisonten</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabbat ändar</string>

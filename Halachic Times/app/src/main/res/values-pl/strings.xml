@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Słońce jest 4,8° poniżej horyzontu</string>
     <string name="nightfall_5_88">Słońce jest 5,88° poniżej horyzontu</string>
     <string name="nightfall_5_95">Słońce jest 5,95° poniżej horyzontu</string>
+    <string name="nightfall_6_45">Słońce jest 6,45° poniżej horyzontu</string>
     <string name="nightfall_7">Słońce jest 7,083° poniżej horyzontu</string>
+    <string name="nightfall_7_67">Słońce jest 7,67° poniżej horyzontu</string>
     <string name="nightfall_8">Słońce jest 8,5° poniżej horyzontu</string>
+    <string name="nightfall_9_3">Słońce jest 9,3° poniżej horyzontu</string>
+    <string name="nightfall_9_75">Słońce jest 9,75° poniżej horyzontu</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Szabat kończy</string>

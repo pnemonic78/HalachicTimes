@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Slunce je 4,8° pod obzorem</string>
     <string name="nightfall_5_88">Slunce je 5,88° pod obzorem</string>
     <string name="nightfall_5_95">Slunce je 5,95° pod obzorem</string>
+    <string name="nightfall_6_45">Slunce je 6,45° pod obzorem</string>
     <string name="nightfall_7">Slunce je 7,083° pod obzorem</string>
+    <string name="nightfall_7_67">Slunce je 7,67° pod obzorem</string>
     <string name="nightfall_8">Slunce je 8,5° pod obzorem</string>
+    <string name="nightfall_9_3">Slunce je 9,3° pod obzorem</string>
+    <string name="nightfall_9_75">Slunce je 9,75° pod obzorem</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabat konce</string>

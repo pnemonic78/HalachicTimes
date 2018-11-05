@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Zon is 4,8° onder de horizon</string>
     <string name="nightfall_5_88">Zon is 5,88° onder de horizon</string>
     <string name="nightfall_5_95">Zon is 5,95° onder de horizon</string>
+    <string name="nightfall_6_45">Zon is 6,45° onder de horizon</string>
     <string name="nightfall_7">Zon is 7,083° onder de horizon</string>
+    <string name="nightfall_7_67">Zon is 7,67° onder de horizon</string>
     <string name="nightfall_8">Zon is 8,5° onder de horizon</string>
+    <string name="nightfall_9_3">Zon is 9,3° onder de horizon</string>
+    <string name="nightfall_9_75">Zon is 9,75° onder de horizon</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Sjabbat eindigt</string>

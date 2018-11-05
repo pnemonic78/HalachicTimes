@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Saulė yra 4,8° žemiau horizonto</string>
     <string name="nightfall_5_88">Saulė yra 5,88° žemiau horizonto</string>
     <string name="nightfall_5_95">Saulė yra 5,95° žemiau horizonto</string>
+    <string name="nightfall_6_45">Saulė yra 6,45° žemiau horizonto</string>
     <string name="nightfall_7">Saulė yra 7,083° žemiau horizonto</string>
+    <string name="nightfall_7_67">Saulė yra 7,67° žemiau horizonto</string>
     <string name="nightfall_8">Saulė yra 8,5° žemiau horizonto</string>
+    <string name="nightfall_9_3">Saulė yra 9,3° žemiau horizonto</string>
+    <string name="nightfall_9_75">Saulė yra 9,75° žemiau horizonto</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Šabo galai</string>

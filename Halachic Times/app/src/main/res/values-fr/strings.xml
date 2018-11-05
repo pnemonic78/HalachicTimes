@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Le soleil se trouve à 4,8° sous l\'horizon</string>
     <string name="nightfall_5_88">Le soleil se trouve à 5,88° sous l\'horizon</string>
     <string name="nightfall_5_95">Le soleil se trouve à 5,95° sous l\'horizon</string>
+    <string name="nightfall_6_45">Le soleil se trouve à 6,45° sous l\'horizon</string>
     <string name="nightfall_7">Le soleil se trouve à 7,083° sous l\'horizon</string>
+    <string name="nightfall_7_67">Le soleil se trouve à 7,67° sous l\'horizon</string>
     <string name="nightfall_8">Le soleil se trouve à 8,5° sous l\'horizon</string>
+    <string name="nightfall_9_3">Le soleil se trouve à 9,3° sous l\'horizon</string>
+    <string name="nightfall_9_75">Le soleil se trouve à 9,75° sous l\'horizon</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Chabbat finitions</string>

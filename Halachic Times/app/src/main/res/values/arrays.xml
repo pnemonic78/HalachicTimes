@@ -325,8 +325,12 @@
         <item>@string/opinion_value_4_8</item>
         <item>@string/opinion_value_5_88</item>
         <item>@string/opinion_value_5_95</item>
+        <item>@string/opinion_value_6_45</item>
         <item>@string/opinion_value_7_083</item>
+        <item>@string/opinion_value_7_67</item>
         <item>@string/opinion_value_8</item>
+        <item>@string/opinion_value_9_3</item>
+        <item>@string/opinion_value_9_75</item>
         <item>@string/opinion_value_16</item>
         <item>@string/opinion_value_18</item>
         <item>@string/opinion_value_19_8</item>
@@ -353,8 +357,12 @@
         <item>@string/nightfall_4_8</item>
         <item>@string/nightfall_5_88</item>
         <item>@string/nightfall_5_95</item>
+        <item>@string/nightfall_6_45</item>
         <item>@string/nightfall_7</item>
+        <item>@string/nightfall_7_67</item>
         <item>@string/nightfall_8</item>
+        <item>@string/nightfall_9_3</item>
+        <item>@string/nightfall_9_75</item>
         <item>@string/nightfall_16</item>
         <item>@string/nightfall_18</item>
         <item>@string/nightfall_19_8</item>

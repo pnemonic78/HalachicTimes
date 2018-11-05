@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Sol é 4,8° abaixo do horizonte</string>
     <string name="nightfall_5_88">Sol é 5,88° abaixo do horizonte</string>
     <string name="nightfall_5_95">Sol é 5,95° abaixo do horizonte</string>
+    <string name="nightfall_6_45">Sol é 6,45° abaixo do horizonte</string>
     <string name="nightfall_7">Sol é 7,083° abaixo do horizonte</string>
+    <string name="nightfall_7_67">Sol é 7,67° abaixo do horizonte</string>
     <string name="nightfall_8">Sol é 8,5° abaixo do horizonte</string>
+    <string name="nightfall_9_3">Sol é 9,3° abaixo do horizonte</string>
+    <string name="nightfall_9_75">Sol é 9,75° abaixo do horizonte</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Termina o Chabat</string>

@@ -114,8 +114,12 @@
     <string name="nightfall_4_8">Sonne ist 4,8° unter dem Horizont</string>
     <string name="nightfall_5_88">Sonne ist 5,88° unter dem Horizont</string>
     <string name="nightfall_5_95">Sonne ist 5,95° unter dem Horizont</string>
+    <string name="nightfall_6_45">Sonne ist 6,45° unter dem Horizont</string>
     <string name="nightfall_7">Sonne ist 7,083° unter dem Horizont</string>
+    <string name="nightfall_7_67">Sonne ist 7,67° unter dem Horizont</string>
     <string name="nightfall_8">Sonne ist 8,5° unter dem Horizont</string>
+    <string name="nightfall_9_3">Sonne ist 9,3° unter dem Horizont</string>
+    <string name="nightfall_9_75">Sonne ist 9,75° unter dem Horizont</string>
 
     <!-- Shabbath. -->
     <string name="shabbath_ends">Schabbat endet</string>
