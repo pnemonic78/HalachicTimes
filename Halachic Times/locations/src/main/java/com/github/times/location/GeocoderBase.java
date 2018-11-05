@@ -81,6 +81,7 @@ public abstract class GeocoderBase {
     private static SAXParserFactory parserFactory;
     private static SAXParser parser;
     private AddressResponseParser addressResponseParser;
+    private ElevationResponseParser elevationResponseParser;
 
     /**
      * Creates a new geocoder.
@@ -344,14 +345,15 @@ public abstract class GeocoderBase {
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
+    @Nullable
     protected Location parseElevation(double latitude, double longitude, InputStream data) throws LocationException, IOException {
         // Minimum length for either "<>" or "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
-        ElevationResponseParser handler = createElevationResponseHandler();
-        List<Location> results = handler.parse(data, latitude, longitude, 1);
+        ElevationResponseParser parser = getElevationResponseParser();
+        List<Location> results = parser.parse(data, latitude, longitude, 1);
 
         return results.isEmpty() ? null : results.get(0);
     }
@@ -412,5 +414,18 @@ public abstract class GeocoderBase {
      * @return the handler.
      * @throws LocationException if a location error occurs.
      */
-    protected abstract ElevationResponseParser createElevationResponseHandler() throws LocationException;
+    protected abstract ElevationResponseParser createElevationResponseParser() throws LocationException;
+
+    /**
+     * Get a parser for elevations.
+     *
+     * @return the parser.
+     * @throws LocationException if a location error occurs.
+     */
+    protected ElevationResponseParser getElevationResponseParser() throws LocationException {
+        if (elevationResponseParser == null) {
+            elevationResponseParser = createElevationResponseParser();
+        }
+        return elevationResponseParser;
+    }
 }

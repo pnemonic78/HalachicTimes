@@ -138,7 +138,7 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GoogleGeocoder(locale);
-        final ElevationResponseParser parser = geocoder.createElevationResponseHandler();
+        final ElevationResponseParser parser = geocoder.getElevationResponseParser();
         assertNotNull(parser);
 
         // Access Denied
@@ -218,7 +218,7 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new GeoNamesGeocoder(locale);
-        final ElevationResponseParser parser = geocoder.createElevationResponseHandler();
+        final ElevationResponseParser parser = geocoder.getElevationResponseParser();
         assertNotNull(parser);
         List<Location> results;
 
@@ -295,7 +295,7 @@ public class GeocoderTestCase {
 
         Locale locale = Locale.US;
         GeocoderBase geocoder = new BingGeocoder(locale);
-        final ElevationResponseParser parser = geocoder.createElevationResponseHandler();
+        final ElevationResponseParser parser = geocoder.getElevationResponseParser();
         assertNotNull(parser);
         List<Location> results;
 

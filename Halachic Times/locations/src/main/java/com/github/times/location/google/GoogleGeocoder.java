@@ -135,7 +135,7 @@ public class GoogleGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler() throws LocationException {
+    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
         return new GoogleElevationResponseParser();
     }
 }

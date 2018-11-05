@@ -236,7 +236,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler() throws LocationException {
+    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
         return null;
     }
 
