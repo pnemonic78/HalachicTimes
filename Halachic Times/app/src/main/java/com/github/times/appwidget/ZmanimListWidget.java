@@ -51,7 +51,8 @@ public class ZmanimListWidget extends ZmanimWidget {
 
     @Override
     protected void notifyAppWidgetViewDataChanged(Context context) {
-        notifyAppWidgetViewDataChanged11(context);
+        populateTimes(context);// Force container layout refresh.
+        super.notifyAppWidgetViewDataChanged(context);
     }
 
     @Override
