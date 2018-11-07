@@ -61,8 +61,10 @@ import static android.content.Intent.ACTION_DATE_CHANGED;
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.content.Intent.ACTION_TIME_CHANGED;
 import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
+import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -117,12 +119,12 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     public void onReceive(Context context, Intent intent) {
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
-        super.onReceive(context, intent);
         this.context = context;
+        super.onReceive(context, intent);
         this.directionRTL = LocaleUtils.isLocaleRTL(context);
 
         final String action = intent.getAction();
-        if (action == null) {
+        if (isEmpty(action)) {
             return;
         }
         switch (action) {
@@ -130,7 +132,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
             case ACTION_TIME_CHANGED:
             case ACTION_TIMEZONE_CHANGED:
             case ACTION_WALLPAPER_CHANGED:
-                notifyAppWidgetViewDataChanged(context);
+                notifyAppWidgetsUpdate(context, getClass());
                 break;
         }
     }
@@ -139,8 +141,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
         this.context = context;
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
         this.directionRTL = LocaleUtils.isLocaleRTL(context);
 
         startListenLocations(context, appWidgetIds);
@@ -231,8 +233,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
 
     @Override
     public void onLocationChanged(Location location) {
-        final Context app = getContext().getApplicationContext();
-        notifyAppWidgetViewDataChanged(app);
+        final Context context = getContext();
+        populateTimes(context);
+        notifyAppWidgetViewDataChanged(context);
     }
 
     @Override
@@ -370,7 +373,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
-        ZmanimLocations locations = startListenLocations(context, appWidgetId);
+        ZmanimLocations locations = getLocations(context);
         GeoLocation gloc = locations.getGeoLocation();
         if (gloc == null) {
             return null;
@@ -404,6 +407,16 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         return getPreferences().getAppWidgetTheme();
     }
 
+    private ZmanimLocations getLocations(Context context) {
+        ZmanimLocations locations = this.locations;
+        if (locations == null) {
+            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+            locations = app.getLocations();
+            this.locations = locations;
+        }
+        return locations;
+    }
+
     private ZmanimLocations startListenLocations(Context context, int[] appWidgetIds) {
         if ((appWidgetIds == null) || (appWidgetIds.length == 0)) {
             return startListenLocations(context, 0);
@@ -416,15 +429,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     }
 
     private ZmanimLocations startListenLocations(Context context, int appWidgetId) {
-        ZmanimLocations locations = this.locations;
-        if (locations == null) {
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-            this.locations = locations;
-        }
-
+        ZmanimLocations locations = getLocations(context);
         locations.start(this);
-
         return locations;
     }
 

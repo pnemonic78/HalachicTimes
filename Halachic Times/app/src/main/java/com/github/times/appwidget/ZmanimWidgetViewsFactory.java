@@ -18,8 +18,6 @@ package com.github.times.appwidget;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -30,8 +28,6 @@ import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
 import com.github.times.ZmanimItem;
 import com.github.times.ZmanimPopulater;
-import com.github.times.location.ZmanimAddress;
-import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
@@ -59,7 +55,7 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
+public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
     /**
      * The context.
@@ -187,9 +183,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onCreate() {
-        if (locations != null) {
-            locations.start(this);
-        }
     }
 
     @Override
@@ -200,41 +193,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onDestroy() {
-        if (locations != null) {
-            locations.stop(this);
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        onDataSetChanged();
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
-        onDataSetChanged();
-    }
-
-    @Override
-    public void onElevationChanged(Location location) {
-        onDataSetChanged();
-    }
-
-    @Override
-    public boolean isPassive() {
-        return true;
     }
 
     protected ZmanimPreferences getPreferences() {
@@ -247,13 +205,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private void populateAdapter() {
         final Context context = this.context;
 
-        ZmanimLocations locations = this.locations;
-        if (locations == null) {
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-            locations.start(this);
-            this.locations = locations;
-        }
+        ZmanimLocations locations = getLocations(context);
         GeoLocation gloc = locations.getGeoLocation();
         if (gloc == null) {
             return;
@@ -386,5 +338,15 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
                 this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
             }
         }
+    }
+
+    private ZmanimLocations getLocations(Context context) {
+        ZmanimLocations locations = this.locations;
+        if (locations == null) {
+            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+            locations = app.getLocations();
+            this.locations = locations;
+        }
+        return locations;
     }
 }
