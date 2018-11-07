@@ -15,11 +15,6 @@
  */
 package com.github.times.appwidget;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,12 +37,18 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
+
 import java.util.Calendar;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.StyleRes;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
@@ -88,8 +89,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private int colorDisabled = Color.DKGRAY;
     @ColorInt
     private int colorEnabled = Color.WHITE;
+    @StyleRes
+    private int themeId = R.style.Theme;
     private final LocaleHelper localeCallbacks;
-    protected boolean directionRTL = false;
+    private boolean directionRTL;
     @LayoutRes
     private int layoutItemId = R.layout.widget_item;
 
@@ -256,25 +259,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             return;
         }
 
-        boolean light;
-        switch (getTheme()) {
-            case R.style.Theme_AppWidget_Dark:
-                light = false;
-                break;
-            case R.style.Theme_AppWidget_Light:
-                light = true;
-                break;
-            default:
-                light = !isBrightWallpaper(context);
-                break;
-        }
-        if (light) {
-            this.colorEnabled = ContextCompat.getColor(context, R.color.widget_text_light);
-            this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
-        } else {
-            this.colorEnabled = ContextCompat.getColor(context, R.color.widget_text);
-            this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
-        }
+        populateResources(context);
 
         ZmanimPreferences preferences = getPreferences();
 
@@ -359,5 +344,47 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     @StyleRes
     protected int getTheme() {
         return getPreferences().getAppWidgetTheme();
+    }
+
+    private void populateResources(Context context) {
+        final int themeId = getTheme();
+        if (themeId != this.themeId) {
+            this.themeId = themeId;
+
+            boolean light;
+            switch (themeId) {
+                case R.style.Theme_AppWidget_Dark:
+                    light = false;
+                    break;
+                case R.style.Theme_AppWidget_Light:
+                    light = true;
+                    break;
+                default:
+                    light = !isBrightWallpaper(context);
+                    break;
+            }
+
+            int colorEnabledDark = Color.WHITE;
+            int colorEnabledLight = Color.BLACK;
+            int colorDisabledDark = Color.DKGRAY;
+            int colorDisabledLight = Color.DKGRAY;
+            try {
+                colorEnabledDark = ContextCompat.getColor(context, R.color.widget_text);
+                colorEnabledLight = ContextCompat.getColor(context, R.color.widget_text_light);
+                colorDisabledDark = ContextCompat.getColor(context, R.color.widget_text_disabled);
+                colorDisabledLight = ContextCompat.getColor(context, R.color.widget_text_disabled_light);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            if (light) {
+                this.colorEnabled = colorEnabledLight;
+                this.colorDisabled = colorDisabledLight;
+                this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
+            } else {
+                this.colorEnabled = colorEnabledDark;
+                this.colorDisabled = colorDisabledDark;
+                this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
+            }
+        }
     }
 }

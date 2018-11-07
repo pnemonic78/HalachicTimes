@@ -53,32 +53,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
     protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         list.removeAllViews(android.R.id.list);
 
-        final int themeId = getTheme();
-        if (themeId != this.themeId) {
-            this.themeId = themeId;
-
-            boolean light;
-            switch (themeId) {
-                case R.style.Theme_AppWidget_Dark:
-                    light = false;
-                    break;
-                case R.style.Theme_AppWidget_Light:
-                    light = true;
-                    break;
-                default:
-                    light = !isBrightWallpaper(context);
-                    break;
-            }
-            int colorEnabledDark = Color.WHITE;
-            int colorEnabledLight = Color.BLACK;
-            try {
-                colorEnabledDark = ContextCompat.getColor(context, R.color.widget_text);
-                colorEnabledLight = ContextCompat.getColor(context, R.color.widget_text_light);
-            } catch (UnsupportedOperationException e) {
-                Timber.e(e);
-            }
-            this.colorEnabled = light ? colorEnabledLight : colorEnabledDark;
-        }
+        populateResources(context);
 
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
@@ -260,6 +235,36 @@ public class ZmanimWidget extends ZmanimAppWidget {
     protected void bindViewRowSpecial(Context context, RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
             row.setInt(R.id.widget_item, "setBackgroundColor", ContextCompat.getColor(context, R.color.widget_candles_bg));
+        }
+    }
+
+    private void populateResources(Context context) {
+        final int themeId = getTheme();
+        if (themeId != this.themeId) {
+            this.themeId = themeId;
+
+            boolean light;
+            switch (themeId) {
+                case R.style.Theme_AppWidget_Dark:
+                    light = false;
+                    break;
+                case R.style.Theme_AppWidget_Light:
+                    light = true;
+                    break;
+                default:
+                    light = !isBrightWallpaper(context);
+                    break;
+            }
+
+            int colorEnabledDark = Color.WHITE;
+            int colorEnabledLight = Color.BLACK;
+            try {
+                colorEnabledDark = ContextCompat.getColor(context, R.color.widget_text);
+                colorEnabledLight = ContextCompat.getColor(context, R.color.widget_text_light);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            this.colorEnabled = light ? colorEnabledLight : colorEnabledDark;
         }
     }
 }
