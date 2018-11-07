@@ -44,6 +44,10 @@ public class HTTPReader {
      * Content type that is XML text.
      */
     public static final String[] CONTENT_XML = {CONTENT_APP_XML, CONTENT_TEXT_XML};
+    /**
+     * Content type that is JSON text.
+     */
+    public static final String CONTENT_JSON = "application/json";
 
     /**
      * Creates a new reader.
@@ -84,15 +88,23 @@ public class HTTPReader {
      */
     public static InputStream read(URL url, String[] contentTypesExpected) throws IOException {
         URLConnection conn = url.openConnection();
-        HttpURLConnection hconn = null;
+        if (conn == null) {
+            throw new IOException(url.toString());
+        }
+        HttpURLConnection http = null;
         if (conn instanceof HttpURLConnection) {
-            hconn = (HttpURLConnection) conn;
-            int code = hconn.getResponseCode();
-            if (code != HttpURLConnection.HTTP_OK)
+            http = (HttpURLConnection) conn;
+            int code = http.getResponseCode();
+            if (code != HttpURLConnection.HTTP_OK) {
+                http.disconnect();
                 return null;
+            }
         }
         String contentType = conn.getContentType();
         if (isEmpty(contentType)) {
+            if (http != null) {
+                http.disconnect();
+            }
             return null;
         }
         if (contentTypesExpected != null) {
@@ -108,6 +120,9 @@ public class HTTPReader {
                 }
             }
             if (!hasType) {
+                if (http != null) {
+                    http.disconnect();
+                }
                 return null;
             }
         }
@@ -127,8 +142,8 @@ public class HTTPReader {
                 } catch (Exception ignore) {
                 }
             }
-            if (hconn != null) {
-                hconn.disconnect();
+            if (http != null) {
+                http.disconnect();
             }
         }
         return data;
