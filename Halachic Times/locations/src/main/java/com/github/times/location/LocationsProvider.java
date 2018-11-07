@@ -260,8 +260,12 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     private void onLocationChanged(Location location, boolean findAddress, boolean findElevation) {
-        if (!isValid(location))
+        if (!isValid(location)) {
             return;
+        }
+        if (ZmanimLocation.compareAll(this.location, location) == 0) {
+            return;
+        }
 
         boolean keepLocation = true;
         if ((this.location != null) && (ZmanimLocation.compareTo(this.location, location) != 0)) {
@@ -281,14 +285,18 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             preferences.putLocation(location);
         }
 
-        for (ZmanimLocationListener listener : locationListeners) {
-            listener.onLocationChanged(location);
-        }
+        notifyLocationChanged(location);
 
         if (findElevation && !location.hasAltitude()) {
             findElevation(location);
         } else if (findAddress) {
             findAddress(location);
+        }
+    }
+
+    private void notifyLocationChanged(Location location) {
+        for (ZmanimLocationListener listener : locationListeners) {
+            listener.onLocationChanged(location);
         }
     }
 
@@ -496,7 +504,11 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         // Give the listener our latest known location, and address.
         Location location = getLocation();
-        handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+        if (this.location == null) {
+            handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+        } else if (location != null) {
+            listener.onLocationChanged(location);
+        }
 
         if (!listener.isPassive()) {
             startTaskDelay = UPDATE_INTERVAL_START;
