@@ -56,7 +56,7 @@ class GoogleAddressResponseParser extends AddressResponseParser {
         .create();
 
     @Override
-    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             GeocodingResponse response = gson.fromJson(reader, GeocodingResponse.class);

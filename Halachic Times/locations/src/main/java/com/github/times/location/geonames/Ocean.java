@@ -17,20 +17,14 @@ package com.github.times.location.geonames;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 /**
- * Root object for GeoNames address JSON response.
+ * GeoNames ocean.
  *
  * @author Moshe Waisberg
  */
-class GeoNamesResponse {
-
-    @SerializedName("geonames")
-    public List<Toponym> records;
-    @SerializedName("status")
-    public GeoNamesStatus status;
-    @SerializedName("ocean")
-    public Ocean ocean;
-
+public class Ocean {
+    @SerializedName("distance")
+    public double distance;
+    @SerializedName("name")
+    public String name;
 }

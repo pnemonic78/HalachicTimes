@@ -90,7 +90,7 @@ public class GoogleGeocoder extends GeocoderBase {
         if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("longitude == " + longitude);
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class GoogleGeocoder extends GeocoderBase {
         if (locationName == null)
             throw new IllegalArgumentException("locationName == null");
         String queryUrl = String.format(Locale.US, URL_ADDRESS, URLEncoder.encode(locationName), getLanguage(), API_KEY);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(0.0, 0.0, queryUrl, maxResults);
     }
 
     @Override
@@ -116,7 +116,9 @@ public class GoogleGeocoder extends GeocoderBase {
         if (upperRightLongitude < LONGITUDE_MIN || upperRightLongitude > LONGITUDE_MAX)
             throw new IllegalArgumentException("upperRightLongitude == " + upperRightLongitude);
         String queryUrl = String.format(Locale.US, URL_ADDRESS_BOUNDED, URLEncoder.encode(locationName), lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude, getLanguage(), API_KEY);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        double latitude = (lowerLeftLatitude + upperRightLatitude) / 2;
+        double longitude = (lowerLeftLongitude + upperRightLongitude) / 2;
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
     }
 
     @Override

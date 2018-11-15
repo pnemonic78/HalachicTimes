@@ -44,6 +44,15 @@ public class ZmanimLocation extends Location {
     public static final double LONGITUDE_MAX = 180;
 
     /**
+     * Lowest possible natural elevation on the surface of the earth.
+     */
+    public static final double ELEVATION_MIN = -500;
+    /**
+     * Highest possible natural elevation from the surface of the earth.
+     */
+    public static final double ELEVATION_MAX = 100_000;
+
+    /**
      * Double subtraction error.
      */
     private static final double EPSILON = 1e-6;

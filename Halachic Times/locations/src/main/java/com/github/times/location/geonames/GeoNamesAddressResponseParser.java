@@ -56,12 +56,12 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         .create();
 
     @Override
-    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             GeoNamesResponse response = gson.fromJson(reader, GeoNamesResponse.class);
             List<Address> results = new ArrayList<>(maxResults);
-            handleResponse(response, results, maxResults, locale);
+            handleResponse(latitude, longitude, response, results, maxResults, locale);
             return results;
         } catch (JsonIOException e) {
             throw new IOException(e);
@@ -70,9 +70,21 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         }
     }
 
-    private void handleResponse(GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
+    private void handleResponse(double latitude, double longitude, GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
         final List<Toponym> records = response.records;
+        Address address;
+
         if ((records == null) || records.isEmpty()) {
+
+            Ocean ocean = response.ocean;
+            if (ocean != null) {
+                address = toAddress(ocean, locale, latitude, longitude);
+                if (address != null) {
+                    results.add(address);
+                }
+                return;
+            }
+
             if (response.status != null) {
                 throw new LocationException(response.status.message);
             }
@@ -80,7 +92,6 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         }
 
         Toponym toponym;
-        Address address;
 
         final int size = Math.min(records.size(), maxResults);
         for (int i = 0; i < size; i++) {
@@ -108,6 +119,19 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
             result.setElevation(elevation);
         }
         result.setSubAdminArea(response.adminName2);
+        return result;
+    }
+
+    @Nullable
+    private Address toAddress(@NonNull Ocean response, Locale locale, double latitude, double longitude) {
+        ZmanimAddress result = new ZmanimAddress(locale);
+        result.setFeatureName(response.name);
+        result.setFormatted(response.name);
+
+        result.setLatitude(latitude);
+        result.setLongitude(longitude);
+        result.setElevation(0);
+
         return result;
     }
 }

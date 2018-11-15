@@ -41,11 +41,11 @@ public class TextElevationResponseParser extends ElevationResponseParser {
     /**
      * Lowest possible natural elevation on the surface of the earth.
      */
-    private static final double ELEVATION_LOWEST_SURFACE = -500;
+    private static final double ELEVATION_LOWEST_SURFACE = ZmanimLocation.ELEVATION_MIN;
     /**
      * Highest possible natural elevation from the surface of the earth.
      */
-    private static final double ELEVATION_SPACE = 100_000;
+    private static final double ELEVATION_SPACE = ZmanimLocation.ELEVATION_MAX;
 
     @Override
     public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {

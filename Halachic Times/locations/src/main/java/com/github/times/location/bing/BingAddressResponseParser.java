@@ -52,7 +52,7 @@ public class BingAddressResponseParser extends AddressResponseParser {
         .create();
 
     @Override
-    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             BingResponse response = gson.fromJson(reader, BingResponse.class);

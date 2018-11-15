@@ -84,7 +84,7 @@ public class BingGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(API_KEY))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
     }
 
     @Override

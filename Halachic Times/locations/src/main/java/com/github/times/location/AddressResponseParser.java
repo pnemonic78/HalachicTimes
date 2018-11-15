@@ -39,5 +39,21 @@ public abstract class AddressResponseParser {
      * @throws LocationException if a location error occurs.
      * @throws IOException       if an I/O error occurs.
      */
-    public abstract List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException;
+    public List<Address> parse(InputStream data, int maxResults, Locale locale) throws LocationException, IOException {
+        return parse(data, 0.0, 0.0, maxResults, locale);
+    }
+
+    /**
+     * Parse the data to extract addresses.
+     *
+     * @param data       the JSON data.
+     * @param latitude   the requested latitude.
+     * @param longitude  the requested longitude.
+     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
+     * @param locale     the addresses' locale.
+     * @return the list of results.
+     * @throws LocationException if a location error occurs.
+     * @throws IOException       if an I/O error occurs.
+     */
+    public abstract List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException;
 }

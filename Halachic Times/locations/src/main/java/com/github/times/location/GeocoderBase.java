@@ -22,17 +22,11 @@ import android.location.Location;
 import com.github.net.HTTPReader;
 import com.github.util.LocaleUtils;
 
-import org.xml.sax.SAXException;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import androidx.annotation.Nullable;
 
@@ -78,8 +72,6 @@ public abstract class GeocoderBase {
     protected static final double LONGITUDE_MAX = ZmanimLocation.LONGITUDE_MAX;
 
     protected final Locale locale;
-    private static SAXParserFactory parserFactory;
-    private static SAXParser parser;
     private AddressResponseParser addressResponseParser;
     private ElevationResponseParser elevationResponseParser;
 
@@ -99,18 +91,6 @@ public abstract class GeocoderBase {
      */
     public GeocoderBase(Context context) {
         this(LocaleUtils.getDefaultLocale(context));
-    }
-
-    protected SAXParserFactory getXmlParserFactory() {
-        if (parserFactory == null)
-            parserFactory = SAXParserFactory.newInstance();
-        return parserFactory;
-    }
-
-    protected SAXParser getXmlParser() throws ParserConfigurationException, SAXException {
-        if (parser == null)
-            parser = getXmlParserFactory().newSAXParser();
-        return parser;
     }
 
     /**
@@ -195,43 +175,20 @@ public abstract class GeocoderBase {
     /**
      * Get the address by parsing the XML results.
      *
+     * @param latitude   the requested latitude.
+     * @param longitude  the requested longitude.
      * @param queryUrl   the URL.
      * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
-    protected List<Address> getXmlAddressesFromURL(String queryUrl, int maxResults) throws IOException {
-        URL url = new URL(queryUrl);
-        InputStream data = null;
-        try {
-            data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-            return parseAddresses(data, locale, maxResults);
-        } finally {
-            if (data != null) {
-                try {
-                    data.close();
-                } catch (Exception ignore) {
-                }
-            }
-        }
-    }
-
-    /**
-     * Get the address by parsing the XML results.
-     *
-     * @param queryUrl   the URL.
-     * @param maxResults the maximum number of results.
-     * @return a list of addresses. Returns {@code null} or empty list if no
-     * matches were found or there is no backend service available.
-     * @throws IOException if the network is unavailable or any other I/O problem occurs.
-     */
-    protected List<Address> getJsonAddressesFromURL(String queryUrl, int maxResults) throws IOException {
+    protected List<Address> getJsonAddressesFromURL(double latitude, double longitude, String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
         try {
             data = HTTPReader.read(url, HTTPReader.CONTENT_JSON);
-            return parseAddresses(data, locale, maxResults);
+            return parseAddresses(data, latitude, longitude, locale, maxResults);
         } finally {
             if (data != null) {
                 try {
@@ -246,6 +203,8 @@ public abstract class GeocoderBase {
      * Parse the JSON response for addresses.
      *
      * @param data       the JSON data.
+     * @param latitude   the requested latitude.
+     * @param longitude  the requested longitude.
      * @param locale     the locale.
      * @param maxResults the maximum number of results.
      * @return a list of addresses. Returns {@code null} or empty list if no
@@ -253,14 +212,14 @@ public abstract class GeocoderBase {
      * @throws IOException if an I/O error occurs.
      */
     @Nullable
-    protected List<Address> parseAddresses(InputStream data, Locale locale, int maxResults) throws IOException {
+    protected List<Address> parseAddresses(InputStream data, double latitude, double longitude, Locale locale, int maxResults) throws IOException {
         // Minimum length for either "<>" or "{}"
         if ((data == null) || (data.available() <= 2)) {
             return null;
         }
 
         AddressResponseParser parser = getAddressResponseParser();
-        return parser.parse(data, maxResults, locale);
+        return parser.parse(data, latitude, longitude, maxResults, locale);
     }
 
     /**
@@ -309,31 +268,6 @@ public abstract class GeocoderBase {
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
     public abstract Location getElevation(double latitude, double longitude) throws IOException;
-
-    /**
-     * Get the elevation by parsing the XML results.
-     *
-     * @param latitude  the latitude.
-     * @param longitude the longitude.
-     * @param queryUrl  the URL.
-     * @return the location - {@code null} otherwise.
-     * @throws IOException if the network is unavailable or any other I/O problem occurs.
-     */
-    protected Location getXmlElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
-        URL url = new URL(queryUrl);
-        InputStream data = null;
-        try {
-            data = HTTPReader.read(url, HTTPReader.CONTENT_XML);
-            return parseElevation(latitude, longitude, data);
-        } finally {
-            if (data != null) {
-                try {
-                    data.close();
-                } catch (Exception ignore) {
-                }
-            }
-        }
-    }
 
     /**
      * Parse the XML response for an elevation.

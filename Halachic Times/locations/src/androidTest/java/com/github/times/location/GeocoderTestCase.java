@@ -204,6 +204,20 @@ public class GeocoderTestCase {
         assertEquals(34.7689, address.getLongitude(), DELTA);
         assertEquals("Israel", address.getCountryName());
         assertEquals("Kerem HaTemanim", address.getFeatureName());
+
+        // Arctic Ocean
+        in = context.getResources().openRawResource(R.raw.geonames_arctic);
+        assertNotNull(in);
+        results = parser.parse(in, 89.89511, -36.3637, maxResults, locale);
+        assertNotNull(results);
+        assertTrue(maxResults >= results.size());
+        assertEquals(1, results.size());
+
+        address = results.get(0);
+        assertNotNull(address);
+        assertEquals(89.89511, address.getLatitude(), DELTA);
+        assertEquals(-36.3637, address.getLongitude(), DELTA);
+        assertEquals("Arctic Ocean", address.getFeatureName());
     }
 
     /**

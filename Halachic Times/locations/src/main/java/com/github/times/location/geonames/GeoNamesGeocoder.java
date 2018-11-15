@@ -94,7 +94,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
         if (isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
     }
 
     @Override
