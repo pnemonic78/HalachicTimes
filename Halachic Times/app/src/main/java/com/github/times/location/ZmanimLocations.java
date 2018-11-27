@@ -22,14 +22,14 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.TimeZone;
 
-import static com.github.times.location.ZmanimLocation.ELEVATION_MIN;
-
 /**
  * Locations provider.
  *
  * @author Moshe Waisberg
  */
 public class ZmanimLocations extends LocationsProvider {
+
+    private static final double GEOLOCATION_ELEVATION_MIN = 0;//FIXME GEOLOCATION_ELEVATION_MIN = ELEVATION_MIN;
 
     /**
      * Constructs a new provider.
@@ -53,7 +53,7 @@ public class ZmanimLocations extends LocationsProvider {
         final String locationName = loc.getProvider();
         final double latitude = loc.getLatitude();
         final double longitude = loc.getLongitude();
-        final double elevation = loc.hasAltitude() ? Math.max(ELEVATION_MIN, loc.getAltitude()) : 0;
+        final double elevation = loc.hasAltitude() ? Math.max(GEOLOCATION_ELEVATION_MIN, loc.getAltitude()) : 0;
 
         return new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
     }
