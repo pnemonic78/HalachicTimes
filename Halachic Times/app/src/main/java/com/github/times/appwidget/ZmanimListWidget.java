@@ -16,6 +16,7 @@
 package com.github.times.appwidget;
 
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -50,8 +51,9 @@ public class ZmanimListWidget extends ZmanimWidget {
     }
 
     @Override
-    protected void notifyAppWidgetViewDataChanged(Context context) {
-        notifyAppWidgetViewDataChanged11(context);
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+        notifyAppWidgetViewDataChanged(context);
     }
 
     @Override

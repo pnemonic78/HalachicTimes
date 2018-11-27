@@ -15,44 +15,35 @@
  */
 package com.github.times.appwidget;
 
-import net.sourceforge.zmanim.util.GeoLocation;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.database.ContentObserver;
 import android.location.Location;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.provider.Settings;
 import android.widget.RemoteViews;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
+import com.github.appwidget.AppWidgetUtils;
 import com.github.preference.LocalePreferences;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
 import com.github.times.ZmanimItem;
 import com.github.times.ZmanimPopulater;
-import com.github.times.location.ZmanimAddress;
 import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 
+import net.sourceforge.zmanim.util.GeoLocation;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_DELETED;
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
@@ -61,8 +52,11 @@ import static android.content.Intent.ACTION_DATE_CHANGED;
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.content.Intent.ACTION_TIME_CHANGED;
 import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
+import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
+import static com.github.times.location.ZmanimLocationListener.ACTION_LOCATION_CHANGED;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -70,7 +64,7 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author Moshe Waisberg
  */
-public abstract class ZmanimAppWidget extends AppWidgetProvider implements ZmanimLocationListener {
+public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
     /**
      * Reminder id for alarms.
@@ -82,27 +76,11 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
      */
     protected Context context;
     /**
-     * Provider for locations.
-     */
-    private ZmanimLocations locations;
-    /**
      * The preferences.
      */
     private ZmanimPreferences preferences;
-    /**
-     * The provider name.
-     */
-    private ComponentName provider;
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
     protected boolean directionRTL = false;
-
-    private final ContentObserver formatChangeObserver = new ContentObserver(new Handler()) {
-        @Override
-        public void onChange(boolean selfChange) {
-            final Context context = getContext();
-            notifyAppWidgetViewDataChanged(context);
-        }
-    };
 
     /**
      * Get the context.
@@ -117,35 +95,28 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     public void onReceive(Context context, Intent intent) {
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
-        super.onReceive(context, intent);
         this.context = context;
+        super.onReceive(context, intent);
         this.directionRTL = LocaleUtils.isLocaleRTL(context);
 
         final String action = intent.getAction();
-        if (action == null) {
+        if (isEmpty(action)) {
             return;
         }
-        ContentResolver resolver = context.getContentResolver();
         switch (action) {
-            case ACTION_APPWIDGET_UPDATE:
-                resolver.registerContentObserver(Uri.withAppendedPath(Settings.System.CONTENT_URI, Settings.System.TIME_12_24), true, formatChangeObserver);
-
-                IntentFilter intentFilter = new IntentFilter();
-                intentFilter.addAction(ACTION_DATE_CHANGED);
-                intentFilter.addAction(ACTION_TIME_CHANGED);
-                intentFilter.addAction(ACTION_TIMEZONE_CHANGED);
-                intentFilter.addAction(ACTION_WALLPAPER_CHANGED);
-                context.getApplicationContext().registerReceiver(this, intentFilter);
-                break;
-            case ACTION_APPWIDGET_DELETED:
-                resolver.unregisterContentObserver(formatChangeObserver);
-                break;
             case ACTION_DATE_CHANGED:
             case ACTION_TIME_CHANGED:
             case ACTION_TIMEZONE_CHANGED:
             case ACTION_WALLPAPER_CHANGED:
-                notifyAppWidgetViewDataChanged(context);
+                notifyAppWidgets(context);
                 break;
+            case ACTION_LOCATION_CHANGED: {
+                Location location = intent.getParcelableExtra(ZmanimLocationListener.EXTRA_LOCATION);
+                if (location != null) {
+                    onLocationChanged(location);
+                }
+                break;
+            }
         }
     }
 
@@ -153,15 +124,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
         this.context = context;
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
         this.directionRTL = LocaleUtils.isLocaleRTL(context);
-
-        if (locations == null) {
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-        }
-        locations.start(this);
 
         populateTimes(context, appWidgetManager, appWidgetIds);
     }
@@ -214,63 +179,11 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
      */
     protected void populateTimes(Context context) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        populateTimes(context, appWidgetManager, appWidgetManager.getAppWidgetIds(getProvider()));
+        populateTimes(context, appWidgetManager, getAppWidgetIds(context));
     }
 
-    @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        super.onDeleted(context, appWidgetIds);
-        if (locations != null) {
-            locations.stop(this);
-        }
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
-        if (locations != null) {
-            locations.stop(this);
-        }
-    }
-
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-        if (locations != null) {
-            locations.start(this);
-        }
-    }
-
-    @Override
     public void onLocationChanged(Location location) {
-        final Context context = getContext().getApplicationContext();
-        notifyAppWidgetViewDataChanged(context);
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
-    }
-
-    @Override
-    public void onElevationChanged(Location location) {
-        onLocationChanged(location);
-    }
-
-    @Override
-    public boolean isPassive() {
-        return true;
+        notifyAppWidgets(context);
     }
 
     /**
@@ -361,19 +274,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     protected abstract int getIntentViewId();
 
     protected void notifyAppWidgetViewDataChanged(Context context) {
-        populateTimes(context);
-    }
-
-    protected void notifyAppWidgetViewDataChanged11(Context context) {
-        populateTimes(context);// Force container layout refresh.
-
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        final Class<? extends ZmanimAppWidget> clazz = getClass();
-        ComponentName provider = new ComponentName(context, clazz);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(provider);
-        if ((appWidgetIds != null) && (appWidgetIds.length > 0)) {
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, android.R.id.list);
-        }
+        AppWidgetUtils.notifyAppWidgetViewDataChanged(context, getClass(), android.R.id.list);
     }
 
     protected ZmanimPreferences getPreferences() {
@@ -390,13 +291,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
     protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
-        ZmanimLocations locations = this.locations;
-        if (locations == null) {
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-            locations.start(this);
-            this.locations = locations;
-        }
+        ZmanimLocations locations = getLocations(context);
         GeoLocation gloc = locations.getGeoLocation();
         if (gloc == null) {
             return null;
@@ -421,16 +316,21 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider implements Zmani
         return adapter;
     }
 
-    protected ComponentName getProvider() {
-        if (provider == null) {
-            final Class<?> clazz = getClass();
-            provider = new ComponentName(context, clazz);
-        }
-        return provider;
+    protected int[] getAppWidgetIds(Context context) {
+        return AppWidgetUtils.getAppWidgetIds(context, getClass());
     }
 
     @StyleRes
     protected int getTheme() {
         return getPreferences().getAppWidgetTheme();
+    }
+
+    private ZmanimLocations getLocations(Context context) {
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        return app.getLocations();
+    }
+
+    protected void notifyAppWidgets(Context context) {
+        notifyAppWidgetsUpdate(context, getClass());
     }
 }

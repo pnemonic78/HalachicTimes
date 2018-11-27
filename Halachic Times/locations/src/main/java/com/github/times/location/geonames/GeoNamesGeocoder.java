@@ -94,12 +94,12 @@ public class GeoNamesGeocoder extends GeocoderBase {
         if (isEmpty(USERNAME))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), USERNAME);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) throws LocationException {
-        return new GeoNamesAddressResponseParser(locale, results, maxResults);
+    protected AddressResponseParser createAddressResponseParser() throws LocationException {
+        return new GeoNamesAddressResponseParser();
     }
 
     @Override
@@ -115,7 +115,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
-        return new TextElevationResponseParser(latitude, longitude, results, maxResults);
+    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
+        return new TextElevationResponseParser();
     }
 }

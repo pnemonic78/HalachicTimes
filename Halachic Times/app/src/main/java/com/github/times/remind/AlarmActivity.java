@@ -1,5 +1,7 @@
 package com.github.times.remind;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +26,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.github.app.ActivityUtils;
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -41,6 +44,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.PermissionChecker;
 import timber.log.Timber;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -78,6 +83,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * Extras name to silence to alarm.
      */
     public static final String EXTRA_SILENCE_TIME = "silence_time";
+
+    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
     private LocaleCallbacks<P> localeCallbacks;
     private ThemeCallbacks<P> themeCallbacks;
@@ -286,6 +293,19 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         setResult(RESULT_CANCELED);
     }
 
+    @Override
+    @TargetApi(Build.VERSION_CODES.M)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_PERMISSIONS) {
+            if (ActivityUtils.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
+                final Context context = this;
+                playSound(context);
+            }
+        }
+    }
+
     /**
      * Dismiss the reminder.
      */
@@ -309,14 +329,24 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     private void startNoise() {
         Timber.v("start noise");
-        Context context = this;
-        playSound(context);
+        final Context context = this;
+
+        boolean allowSound = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (PermissionChecker.checkCallingOrSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
+                allowSound = false;
+            }
+        }
+        if (allowSound) {
+            playSound(context);
+        }
         vibrate(context, true);
     }
 
     private void stopNoise() {
         Timber.v("stop noise");
-        Context context = this;
+        final Context context = this;
         stopSound();
         vibrate(context, false);
 

@@ -67,8 +67,6 @@ public interface LocationPreferences {
 
     /**
      * Set the location.
-     *
-     * @return the location.
      */
     void putLocation(@Nullable Location location);
 

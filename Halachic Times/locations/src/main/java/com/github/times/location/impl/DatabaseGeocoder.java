@@ -167,7 +167,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
+    protected AddressResponseParser createAddressResponseParser() {
         return null;
     }
 
@@ -236,7 +236,7 @@ public class DatabaseGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
+    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
         return null;
     }
 

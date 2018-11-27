@@ -15,16 +15,9 @@
  */
 package com.github.times.appwidget;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.Location;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
@@ -35,12 +28,15 @@ import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
 import com.github.times.ZmanimItem;
 import com.github.times.ZmanimPopulater;
-import com.github.times.location.ZmanimAddress;
-import com.github.times.location.ZmanimLocationListener;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
+
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 
@@ -48,6 +44,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.StyleRes;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import static android.widget.AdapterView.INVALID_POSITION;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
@@ -58,16 +55,12 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocationListener {
+public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
     /**
      * The context.
      */
     private Context context;
-    /**
-     * Provider for locations.
-     */
-    private ZmanimLocations locations;
     /**
      * The preferences.
      */
@@ -88,8 +81,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private int colorDisabled = Color.DKGRAY;
     @ColorInt
     private int colorEnabled = Color.WHITE;
+    @StyleRes
+    private int themeId = R.style.Theme;
     private final LocaleHelper localeCallbacks;
-    protected boolean directionRTL = false;
+    private boolean directionRTL;
     @LayoutRes
     private int layoutItemId = R.layout.widget_item;
 
@@ -135,8 +130,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
             if (position == positionTomorrow) {
                 jcal.forward(Calendar.DATE, 1);
             }
-            CharSequence dateHebrew = adapter.formatDate(context, jcal);
-            CharSequence groupingText = dateHebrew;
+            CharSequence groupingText = adapter.formatDate(context, jcal);
 
             // Sefirat HaOmer?
             if (position == positionTomorrow) {
@@ -184,9 +178,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onCreate() {
-        if (locations != null) {
-            locations.start(this);
-        }
     }
 
     @Override
@@ -197,41 +188,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
 
     @Override
     public void onDestroy() {
-        if (locations != null) {
-            locations.stop(this);
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        onDataSetChanged();
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
-        onDataSetChanged();
-    }
-
-    @Override
-    public void onElevationChanged(Location location) {
-        onDataSetChanged();
-    }
-
-    @Override
-    public boolean isPassive() {
-        return true;
     }
 
     protected ZmanimPreferences getPreferences() {
@@ -244,37 +200,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     private void populateAdapter() {
         final Context context = this.context;
 
-        ZmanimLocations locations = this.locations;
-        if (locations == null) {
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-            locations.start(this);
-            this.locations = locations;
-        }
+        ZmanimLocations locations = getLocations(context);
         GeoLocation gloc = locations.getGeoLocation();
         if (gloc == null) {
             return;
         }
 
-        boolean light;
-        switch (getTheme()) {
-            case R.style.Theme_AppWidget_Dark:
-                light = false;
-                break;
-            case R.style.Theme_AppWidget_Light:
-                light = true;
-                break;
-            default:
-                light = !isBrightWallpaper(context);
-                break;
-        }
-        if (light) {
-            this.colorEnabled = ContextCompat.getColor(context, R.color.widget_text_light);
-            this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
-        } else {
-            this.colorEnabled = ContextCompat.getColor(context, R.color.widget_text);
-            this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
-        }
+        populateResources(context);
 
         ZmanimPreferences preferences = getPreferences();
 
@@ -359,5 +291,52 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory, ZmanimLocat
     @StyleRes
     protected int getTheme() {
         return getPreferences().getAppWidgetTheme();
+    }
+
+    private void populateResources(Context context) {
+        final int themeId = getTheme();
+        if (themeId != this.themeId) {
+            this.themeId = themeId;
+
+            boolean light;
+            switch (themeId) {
+                case R.style.Theme_AppWidget_Dark:
+                    light = false;
+                    break;
+                case R.style.Theme_AppWidget_Light:
+                    light = true;
+                    break;
+                default:
+                    light = !isBrightWallpaper(context);
+                    break;
+            }
+
+            int colorEnabledDark = Color.WHITE;
+            int colorEnabledLight = Color.BLACK;
+            int colorDisabledDark = Color.DKGRAY;
+            int colorDisabledLight = Color.DKGRAY;
+            try {
+                colorEnabledDark = ContextCompat.getColor(context, R.color.widget_text);
+                colorEnabledLight = ContextCompat.getColor(context, R.color.widget_text_light);
+                colorDisabledDark = ContextCompat.getColor(context, R.color.widget_text_disabled);
+                colorDisabledLight = ContextCompat.getColor(context, R.color.widget_text_disabled_light);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            if (light) {
+                this.colorEnabled = colorEnabledLight;
+                this.colorDisabled = colorDisabledLight;
+                this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
+            } else {
+                this.colorEnabled = colorEnabledDark;
+                this.colorDisabled = colorDisabledDark;
+                this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
+            }
+        }
+    }
+
+    private ZmanimLocations getLocations(Context context) {
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        return app.getLocations();
     }
 }

@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -54,23 +55,14 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         .setDateFormat("yyyy-MM-dd HH:mm")
         .create();
 
-    /**
-     * Construct a new address parser.
-     *
-     * @param locale     the addresses' locale.
-     * @param results    the list of results to populate.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    GeoNamesAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        super(locale, results, maxResults);
-    }
-
     @Override
-    public void parse(InputStream data) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             GeoNamesResponse response = gson.fromJson(reader, GeoNamesResponse.class);
-            handleResponse(response, results, maxResults, locale);
+            List<Address> results = new ArrayList<>(maxResults);
+            handleResponse(latitude, longitude, response, results, maxResults, locale);
+            return results;
         } catch (JsonIOException e) {
             throw new IOException(e);
         } catch (JsonSyntaxException e) {
@@ -78,9 +70,21 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         }
     }
 
-    private void handleResponse(GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
+    private void handleResponse(double latitude, double longitude, GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
         final List<Toponym> records = response.records;
+        Address address;
+
         if ((records == null) || records.isEmpty()) {
+
+            Ocean ocean = response.ocean;
+            if (ocean != null) {
+                address = toAddress(ocean, locale, latitude, longitude);
+                if (address != null) {
+                    results.add(address);
+                }
+                return;
+            }
+
             if (response.status != null) {
                 throw new LocationException(response.status.message);
             }
@@ -88,7 +92,6 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         }
 
         Toponym toponym;
-        Address address;
 
         final int size = Math.min(records.size(), maxResults);
         for (int i = 0; i < size; i++) {
@@ -116,6 +119,19 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
             result.setElevation(elevation);
         }
         result.setSubAdminArea(response.adminName2);
+        return result;
+    }
+
+    @Nullable
+    private Address toAddress(@NonNull Ocean response, Locale locale, double latitude, double longitude) {
+        ZmanimAddress result = new ZmanimAddress(locale);
+        result.setFeatureName(response.name);
+        result.setFormatted(response.name);
+
+        result.setLatitude(latitude);
+        result.setLongitude(longitude);
+        result.setElevation(0);
+
         return result;
     }
 }

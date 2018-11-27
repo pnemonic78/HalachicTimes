@@ -84,12 +84,12 @@ public class BingGeocoder extends GeocoderBase {
         if (TextUtils.isEmpty(API_KEY))
             return null;
         String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getJsonAddressesFromURL(queryUrl, maxResults);
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
     }
 
     @Override
-    protected AddressResponseParser createAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        return new BingAddressResponseParser(locale, results, maxResults);
+    protected AddressResponseParser createAddressResponseParser() {
+        return new BingAddressResponseParser();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class BingGeocoder extends GeocoderBase {
     }
 
     @Override
-    protected ElevationResponseParser createElevationResponseHandler(double latitude, double longitude, List<Location> results, int maxResults) throws LocationException {
-        return new BingElevationResponseParser(latitude, longitude, results, maxResults);
+    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
+        return new BingElevationResponseParser();
     }
 }

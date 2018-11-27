@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,23 +51,14 @@ public class BingAddressResponseParser extends AddressResponseParser {
         .registerTypeAdapter(Uri.class, new UriAdapter())
         .create();
 
-    /**
-     * Construct a new address parser.
-     *
-     * @param locale     the addresses' locale.
-     * @param results    the list of results to populate.
-     * @param maxResults max number of addresses to return. Smaller numbers (1 to 5) are recommended.
-     */
-    BingAddressResponseParser(Locale locale, List<Address> results, int maxResults) {
-        super(locale, results, maxResults);
-    }
-
     @Override
-    public void parse(InputStream data) throws LocationException, IOException {
+    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             BingResponse response = gson.fromJson(reader, BingResponse.class);
+            List<Address> results = new ArrayList<>(maxResults);
             handleResponse(response, results, maxResults, locale);
+            return results;
         } catch (JsonIOException e) {
             throw new IOException(e);
         } catch (JsonSyntaxException e) {

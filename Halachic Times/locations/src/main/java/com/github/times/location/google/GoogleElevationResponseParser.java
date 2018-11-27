@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -49,16 +50,14 @@ class GoogleElevationResponseParser extends ElevationResponseParser {
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create();
 
-    public GoogleElevationResponseParser(double latitude, double longitude, List<Location> results, int maxResults) {
-        super(latitude, longitude, results, maxResults);
-    }
-
     @Override
-    public void parse(InputStream data) throws LocationException, IOException {
+    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
         try {
             Reader reader = new InputStreamReader(data);
             ElevationResponse response = gson.fromJson(reader, ElevationResponse.class);
+            List<Location> results = new ArrayList<>(maxResults);
             handleResponse(response, results, maxResults);
+            return results;
         } catch (JsonIOException e) {
             throw new IOException(e);
         } catch (JsonSyntaxException e) {

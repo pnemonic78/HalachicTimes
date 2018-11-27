@@ -21,12 +21,8 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 
-import com.github.appwidget.AppWidgetUtils;
 import com.github.times.BuildConfig;
 import com.github.times.R;
-import com.github.times.appwidget.ClockWidget;
-import com.github.times.appwidget.ZmanimListWidget;
-import com.github.times.appwidget.ZmanimWidget;
 import com.github.util.LocaleUtils;
 
 import java.util.Locale;
@@ -74,8 +70,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         String key = preference.getKey();
         if (KEY_LOCALE.equals(key) && (localePreference != null)) {
             notifyConfigurationChanged(localePreference.getValue());
-        } else if (KEY_EMPHASIS_SCALE.equals(key)) {
-            notifyAppWidgetViewDataChanged(getActivity());
+        } else if (KEY_THEME_WIDGET.equals(key)) {
+            notifyAppWidgets();
         }
         return result;
     }
@@ -118,12 +114,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         }
 
         return initList(key);
-    }
-
-    private void notifyAppWidgetViewDataChanged(Context context) {
-        AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimWidget.class);
-        AppWidgetUtils.notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
-        AppWidgetUtils.notifyAppWidgetsUpdate(context, ClockWidget.class);
     }
 
     private void notifyConfigurationChanged(String newLocale) {

@@ -172,11 +172,6 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     }
 
     @Override
-    public boolean isPassive() {
-        return false;
-    }
-
-    @Override
     public void onLocationChanged(Location location) {
         if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
             address = null;

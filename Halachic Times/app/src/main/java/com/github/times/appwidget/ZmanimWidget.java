@@ -15,9 +15,6 @@
  */
 package com.github.times.appwidget;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
@@ -27,11 +24,16 @@ import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
 
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
 import java.util.Calendar;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
 import androidx.core.content.ContextCompat;
+import timber.log.Timber;
 
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 
@@ -44,24 +46,14 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
     @ColorInt
     private int colorEnabled = Color.WHITE;
+    @StyleRes
+    private int themeId = R.style.Theme;
 
     @Override
     protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
         list.removeAllViews(android.R.id.list);
 
-        boolean light;
-        switch (getTheme()) {
-            case R.style.Theme_AppWidget_Dark:
-                light = false;
-                break;
-            case R.style.Theme_AppWidget_Light:
-                light = true;
-                break;
-            default:
-                light = !isBrightWallpaper(context);
-                break;
-        }
-        this.colorEnabled = light ? ContextCompat.getColor(context, R.color.widget_text_light) : ContextCompat.getColor(context, R.color.widget_text);
+        populateResources(context);
 
         ZmanimAdapter adapter = adapterToday;
         int count = adapter.getCount();
@@ -243,6 +235,36 @@ public class ZmanimWidget extends ZmanimAppWidget {
     protected void bindViewRowSpecial(Context context, RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
             row.setInt(R.id.widget_item, "setBackgroundColor", ContextCompat.getColor(context, R.color.widget_candles_bg));
+        }
+    }
+
+    private void populateResources(Context context) {
+        final int themeId = getTheme();
+        if (themeId != this.themeId) {
+            this.themeId = themeId;
+
+            boolean light;
+            switch (themeId) {
+                case R.style.Theme_AppWidget_Dark:
+                    light = false;
+                    break;
+                case R.style.Theme_AppWidget_Light:
+                    light = true;
+                    break;
+                default:
+                    light = !isBrightWallpaper(context);
+                    break;
+            }
+
+            int colorEnabledDark = Color.WHITE;
+            int colorEnabledLight = Color.BLACK;
+            try {
+                colorEnabledDark = ContextCompat.getColor(context, R.color.widget_text);
+                colorEnabledLight = ContextCompat.getColor(context, R.color.widget_text_light);
+            } catch (Exception e) {
+                Timber.e(e);
+            }
+            this.colorEnabled = light ? colorEnabledLight : colorEnabledDark;
         }
     }
 }
