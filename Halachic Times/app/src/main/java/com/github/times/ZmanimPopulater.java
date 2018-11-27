@@ -87,24 +87,24 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     static final int HOLIDAY_MASK_OFFSET = CANDLES_MASK_OFFSET + CANDLES_MASK_BITS;
     private static final int HOLIDAY_MASK_BITS = 8;
     static final int HOLIDAY_MASK = (1 << HOLIDAY_MASK_BITS) - 1;
-    private static final int HOLIDAY_TOMORROW_MASK_OFFSET = HOLIDAY_MASK_OFFSET + HOLIDAY_MASK_BITS;
-    private static final int MOTZE_MASK_OFFSET = HOLIDAY_TOMORROW_MASK_OFFSET + HOLIDAY_MASK_BITS;
+    static final int HOLIDAY_TOMORROW_MASK_OFFSET = HOLIDAY_MASK_OFFSET + HOLIDAY_MASK_BITS;
+    static final int MOTZE_MASK_OFFSET = HOLIDAY_TOMORROW_MASK_OFFSET + HOLIDAY_MASK_BITS;
     private static final int MOTZE_MASK_BITS = 4;
-    private static final int MOTZE_MASK = (1 << MOTZE_MASK_BITS) - 1;
+    static final int MOTZE_MASK = (1 << MOTZE_MASK_BITS) - 1;
     private static final int OFFSET_MASK_OFFSET = MOTZE_MASK_OFFSET + MOTZE_MASK_BITS;
     private static final int OFFSET_MASK_BITS = 12;
     private static final int OFFSET_MASK = (1 << OFFSET_MASK_BITS) - 1;
 
     /** Flag indicating lighting times before sunset. */
-    private static final int BEFORE_SUNSET = 0;
+    static final int BEFORE_SUNSET = 0;
     /** Flag indicating lighting times at sunset. */
-    private static final int AT_SUNSET = 1;
+    static final int AT_SUNSET = 1;
     /** Flag indicating lighting times at twilight. */
-    private static final int AT_TWILIGHT = 2;
+    static final int AT_TWILIGHT = 2;
     /** Flag indicating lighting times after nightfall. */
-    private static final int AT_NIGHT = 3;
+    static final int AT_NIGHT = 3;
     /** Flag indicating lighting times after Shabbath. */
-    private static final int MOTZE_SHABBATH = 4;
+    static final int MOTZE_SHABBATH = 4;
 
     protected static final String OPINION_2 = ZmanimPreferences.Values.OPINION_2;
     protected static final String OPINION_2_STARS = ZmanimPreferences.Values.OPINION_2_STARS;
