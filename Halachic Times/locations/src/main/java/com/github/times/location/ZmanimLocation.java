@@ -267,4 +267,40 @@ public class ZmanimLocation extends Location {
     public static double toDecimal(int degrees, int minutes, double seconds) {
         return degrees + (minutes / 60.0) + (seconds / 3600.0);
     }
+
+    /**
+     * Is the location valid?
+     *
+     * @param location the location to check.
+     * @return {@code false} if location is invalid.
+     */
+    public static boolean isValid(Location location) {
+        if (location == null)
+            return false;
+
+        final double latitude = location.getLatitude();
+        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
+            return false;
+
+        final double longitude = location.getLongitude();
+        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
+            return false;
+
+        final double elevation = location.getAltitude();
+        if ((elevation < ELEVATION_MIN) || (elevation > ELEVATION_MAX))
+            return false;
+
+        return true;
+    }
+
+    public static double distanceBetween(Location startLocation, Location endLocation) {
+        float[] distances = new float[1];
+        distanceBetween(startLocation, endLocation, distances);
+        return distances[0];
+    }
+
+    public static void distanceBetween(Location startLocation, Location endLocation, float[] distances) {
+        distanceBetween(startLocation.getLatitude(), startLocation.getLongitude(),
+            endLocation.getLatitude(), endLocation.getLongitude(), distances);
+    }
 }

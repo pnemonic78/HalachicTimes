@@ -463,11 +463,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     }
 
     @Override
-    public boolean isPassive() {
-        return true;
-    }
-
-    @Override
     public void onLocationChanged(Location location) {
     }
 

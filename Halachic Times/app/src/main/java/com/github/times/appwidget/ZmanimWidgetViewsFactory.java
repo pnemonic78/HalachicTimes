@@ -62,10 +62,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
      */
     private Context context;
     /**
-     * Provider for locations.
-     */
-    private ZmanimLocations locations;
-    /**
      * The preferences.
      */
     private ZmanimPreferences preferences;
@@ -134,8 +130,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
             if (position == positionTomorrow) {
                 jcal.forward(Calendar.DATE, 1);
             }
-            CharSequence dateHebrew = adapter.formatDate(context, jcal);
-            CharSequence groupingText = dateHebrew;
+            CharSequence groupingText = adapter.formatDate(context, jcal);
 
             // Sefirat HaOmer?
             if (position == positionTomorrow) {
@@ -341,12 +336,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     }
 
     private ZmanimLocations getLocations(Context context) {
-        ZmanimLocations locations = this.locations;
-        if (locations == null) {
-            ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
-            locations = app.getLocations();
-            this.locations = locations;
-        }
-        return locations;
+        ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
+        return app.getLocations();
     }
 }

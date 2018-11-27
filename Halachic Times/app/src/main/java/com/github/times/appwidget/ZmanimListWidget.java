@@ -50,6 +50,13 @@ public class ZmanimListWidget extends ZmanimWidget {
     }
 
     @Override
+    protected void notifyAppWidgets(Context context) {
+        super.notifyAppWidgets(context);
+        populateTimes(context);
+        notifyAppWidgetViewDataChanged(context);
+    }
+
+    @Override
     protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
         populateScrollableTimes(context, appWidgetId, views, activityPendingIntent);
         return null;

@@ -96,10 +96,11 @@
             android:label="@string/title_widget_zmanim">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="com.github.times.location.LOCATION_CHANGED" />
             </intent-filter>
 
             <meta-data
@@ -116,6 +117,7 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="com.github.times.location.LOCATION_CHANGED" />
             </intent-filter>
 
             <meta-data
@@ -132,6 +134,7 @@
                 <action android:name="android.intent.action.DATE_CHANGED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.WALLPAPER_CHANGED" />
+                <action android:name="com.github.times.location.LOCATION_CHANGED" />
             </intent-filter>
 
             <meta-data
@@ -147,6 +150,7 @@
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="com.github.times.action.REMIND" />
+                <action android:name="com.github.times.location.LOCATION_CHANGED" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

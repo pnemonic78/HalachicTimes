@@ -213,8 +213,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     public LocationsProvider(Context context) {
         Context app = context.getApplicationContext();
-        if (app != null)
+        if (app != null) {
             context = app;
+        }
         this.context = context;
         preferences = new SimpleLocationPreferences(context);
         countriesGeocoder = new CountriesGeocoder(context);
@@ -263,20 +264,27 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (!isValid(location)) {
             return;
         }
-        if (ZmanimLocation.compareAll(this.location, location) == 0) {
+        final Location locationOld = this.location;
+        if (ZmanimLocation.compareAll(location, locationOld) == 0) {
             return;
         }
 
         boolean keepLocation = true;
-        if ((this.location != null) && (ZmanimLocation.compareTo(this.location, location) != 0)) {
+        if ((locationOld != null) && (ZmanimLocation.compareTo(locationOld, location) != 0)) {
             // Ignore old locations.
-            if (this.location.getTime() + LOCATION_EXPIRATION > location.getTime()) {
+            if (locationOld.getTime() + LOCATION_EXPIRATION > location.getTime()) {
                 keepLocation = false;
             }
             // Ignore manual locations.
             if (manualLocation) {
-                location = this.location;
-                keepLocation = false;
+                // But does the new location have an elevation?
+                if (location.hasAltitude() && !locationOld.hasAltitude()) {
+                    double distance = ZmanimLocation.distanceBetween(locationOld, location);
+                    if (distance <= GeocoderBase.SAME_CITY) {
+                        locationOld.setAltitude(location.getAltitude());
+                    }
+                }
+                location = locationOld;
             }
         }
 
@@ -298,6 +306,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         for (ZmanimLocationListener listener : locationListeners) {
             listener.onLocationChanged(location);
         }
+        broadcastLocationChanged(location);
+    }
+
+    private void broadcastLocationChanged(Location location) {
+        Intent intent = new Intent(ACTION_LOCATION_CHANGED);
+        intent.setPackage(context.getPackageName());
+        intent.putExtra(EXTRA_LOCATION, location);
+        context.sendBroadcast(intent);
     }
 
     @Override
@@ -331,11 +347,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     @Override
     public void onElevationChanged(Location location) {
         onLocationChanged(location, true, false);
-    }
-
-    @Override
-    public boolean isPassive() {
-        return false;
     }
 
     private boolean hasLocationPermission(Context context) {
@@ -435,23 +446,23 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the location - {@code null} otherwise.
      */
     public Location getLocation() {
-        Location loc = location;
-        if (isValid(loc))
-            return loc;
-        loc = getLocationGPS();
-        if (isValid(loc))
-            return loc;
-        loc = getLocationNetwork();
-        if (isValid(loc))
-            return loc;
-        loc = getLocationPassive();
-        if (isValid(loc))
-            return loc;
-        loc = getLocationSaved();
-        if (isValid(loc))
-            return loc;
-        loc = getLocationTZ();
-        return loc;
+        Location location = this.location;
+        if (isValid(location))
+            return location;
+        location = getLocationGPS();
+        if (isValid(location))
+            return location;
+        location = getLocationNetwork();
+        if (isValid(location))
+            return location;
+        location = getLocationPassive();
+        if (isValid(location))
+            return location;
+        location = getLocationSaved();
+        if (isValid(location))
+            return location;
+        location = getLocationTZ();
+        return location;
     }
 
     /**
@@ -461,15 +472,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return {@code false} if location is invalid.
      */
     public boolean isValid(Location location) {
-        if (location == null)
-            return false;
-        final double latitude = location.getLatitude();
-        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
-            return false;
-        final double longitude = location.getLongitude();
-        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
-            return false;
-        return true;
+        return ZmanimLocation.isValid(location);
     }
 
     /**
@@ -510,10 +513,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             listener.onLocationChanged(location);
         }
 
-        if (!listener.isPassive()) {
-            startTaskDelay = UPDATE_INTERVAL_START;
-            sendEmptyMessage(WHAT_START);
-        }
+        startTaskDelay = UPDATE_INTERVAL_START;
+        sendEmptyMessage(WHAT_START);
     }
 
     /**
@@ -791,12 +792,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (locationListeners.isEmpty()) {
             return false;
         }
-        for (ZmanimLocationListener listener : locationListeners) {
-            if (!listener.isPassive()) {
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 
     /**

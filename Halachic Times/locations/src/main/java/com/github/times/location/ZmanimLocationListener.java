@@ -25,6 +25,8 @@ public interface ZmanimLocationListener extends LocationListener {
     String ACTION_ADDRESS = "com.github.times.location.ADDRESS";
     /** The intent action for a location with elevation that was found. */
     String ACTION_ELEVATION = "com.github.times.location.ELEVATION";
+    /** The intent action for when a location changed. */
+    String ACTION_LOCATION_CHANGED = "com.github.times.location.LOCATION_CHANGED";
 
     /** The location parameter. */
     String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
@@ -50,11 +52,4 @@ public interface ZmanimLocationListener extends LocationListener {
      *         the location with elevation.
      */
     void onElevationChanged(Location location);
-
-    /**
-     * Is the listener passive and does not need expensive GPS/WiFi?
-     *
-     * @return {@code true} if passive.
-     */
-    boolean isPassive();
 }

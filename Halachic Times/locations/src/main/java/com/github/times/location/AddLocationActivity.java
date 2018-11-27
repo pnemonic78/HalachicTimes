@@ -399,11 +399,6 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     }
 
     @Override
-    public boolean isPassive() {
-        return true;
-    }
-
-    @Override
     public void onLocationChanged(Location location) {
     }
 
