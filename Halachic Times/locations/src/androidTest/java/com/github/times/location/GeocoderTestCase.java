@@ -124,6 +124,14 @@ public class GeocoderTestCase {
         assertNotNull(address);
         assertTrue(address instanceof ZmanimAddress);
         assertEquals(results.get(0), address);
+
+        // Near Jerusalem
+        in = context.getResources().openRawResource(R.raw.google_jerusalem);
+        assertNotNull(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
+        assertTrue(maxResults >= results.size());
+        assertEquals(0, results.size());
     }
 
     /**

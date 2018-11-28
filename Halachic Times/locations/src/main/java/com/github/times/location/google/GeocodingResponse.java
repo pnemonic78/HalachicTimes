@@ -32,7 +32,7 @@ public class GeocodingResponse implements ApiResponse<GeocodingResult[]> {
 
     @Override
     public boolean successful() {
-        return "OK".equals(status);
+        return "OK".equals(status) || "ZERO_RESULTS".equals(status);
     }
 
     @Override
