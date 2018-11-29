@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/list"
     style="@style/AppWidget.List.Light"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:layout_margin="@dimen/widget_margin"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/widget_margin"
+    tools:listitem="@layout/widget_item_light" />

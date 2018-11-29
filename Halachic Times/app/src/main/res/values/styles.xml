@@ -13,13 +13,17 @@
     </style>
 
     <style name="AppWidget.Clock">
-        <item name="android:gravity">top|center_horizontal</item>
+        <item name="android:gravity">center</item>
     </style>
 
     <style name="Base.AppWidget.Clock.Time" parent="Widget.TextView.Large">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textSize">@dimen/widget_big_font_size</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:textSize">@dimen/clock_widget_time_textSize</item>
     </style>
 
     <style name="AppWidget.Clock.Time" parent="Base.AppWidget.Clock.Time" />
@@ -27,6 +31,7 @@
     <style name="AppWidget.Clock.Title" parent="Widget.TextView.Medium">
         <item name="android:ellipsize">marquee</item>
         <item name="android:fadingEdge">horizontal</item>
+        <item name="android:includeFontPadding">false</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>

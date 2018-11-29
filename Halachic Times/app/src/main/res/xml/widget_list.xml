@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<appwidget-provider
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/widget_list"
-    android:minHeight="40dp"
-    android:minWidth="180dp"
+    android:minWidth="@dimen/widget_minWidth"
+    android:minHeight="@dimen/widget_minHeight"
+    android:minResizeWidth="@dimen/widget_minResizeWidth"
+    android:minResizeHeight="@dimen/widget_minResizeHeight"
     android:previewImage="@drawable/widget_list"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="1800000"/>
+    android:updatePeriodMillis="1800000" />
