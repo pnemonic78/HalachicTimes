@@ -33,6 +33,7 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.media.RingtoneManager;
 import com.github.text.style.TypefaceSpan;
+import com.github.times.BuildConfig;
 import com.github.times.R;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
@@ -64,25 +65,21 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     View.OnClickListener {
 
     /**
-     * Extras name for the reminder.
-     */
-    public static final String EXTRA_REMINDER = "reminder";
-    /**
      * Extras name for the reminder id.
      */
-    public static final String EXTRA_REMINDER_ID = "reminder_id";
+    public static final String EXTRA_REMINDER_ID = ZmanimReminderItem.EXTRA_ID;
     /**
      * Extras name for the reminder title.
      */
-    public static final String EXTRA_REMINDER_TITLE = "reminder_title";
+    public static final String EXTRA_REMINDER_TITLE = ZmanimReminderItem.EXTRA_TITLE;
     /**
      * Extras name for the reminder time.
      */
-    public static final String EXTRA_REMINDER_TIME = "reminder_time";
+    public static final String EXTRA_REMINDER_TIME = ZmanimReminderItem.EXTRA_TIME;
     /**
      * Extras name to silence to alarm.
      */
-    public static final String EXTRA_SILENCE_TIME = "silence_time";
+    public static final String EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME";
 
     private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
@@ -193,25 +190,12 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     protected void handleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        if (extras != null) {
-            ZmanimReminderItem item;
-
-            if (extras.containsKey(EXTRA_REMINDER)) {
-                item = extras.getParcelable(EXTRA_REMINDER);
-            } else {
-                int id = extras.getInt(EXTRA_REMINDER_ID);
-                CharSequence contentTitle = extras.getCharSequence(EXTRA_REMINDER_TITLE);
-                if ((id != 0) && (contentTitle == null)) {
-                    contentTitle = getString(id);
-                }
-                long when = extras.getLong(EXTRA_REMINDER_TIME, NEVER);
-                item = new ZmanimReminderItem(id, contentTitle, null, when);
-            }
-
-            if ((item != null) && (item.time > 0L)) {
-                notifyNow(item);
-            } else {
+        ZmanimReminderItem item = ZmanimReminderItem.from(extras);
+        if (item != null) {
+            if (item.isEmpty()) {
                 close();
+            } else {
+                notifyNow(item);
             }
 
             if (extras.containsKey(EXTRA_SILENCE_TIME)) {

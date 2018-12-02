@@ -75,7 +75,6 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         Address address;
 
         if ((records == null) || records.isEmpty()) {
-
             Ocean ocean = response.ocean;
             if (ocean != null) {
                 address = toAddress(ocean, locale, latitude, longitude);
@@ -88,7 +87,8 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
             if (response.status != null) {
                 throw new LocationException(response.status.message);
             }
-            throw new LocationException();
+            // No result found!
+            return;
         }
 
         Toponym toponym;

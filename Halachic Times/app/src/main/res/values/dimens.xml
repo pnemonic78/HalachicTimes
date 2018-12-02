@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- https://developer.android.com/guide/practices/ui_guidelines/widget_design#anatomy_determining_size -->
+    <dimen name="widget_cell_1">40dp</dimen>
+    <dimen name="widget_cell_2">110dp</dimen>
+    <dimen name="widget_cell_3">180dp</dimen>
+
     <dimen name="widget_margin">0dp</dimen>
     <dimen name="widget_padding">8dp</dimen>
-    <!-- dimen name="widget_big_font_size">80dp</dimen -->
-    <dimen name="widget_big_font_size">80dp</dimen>
+    <dimen name="widget_minWidth">@dimen/widget_cell_3</dimen>
+    <dimen name="widget_minHeight">@dimen/widget_cell_1</dimen>
+    <dimen name="widget_minResizeWidth">@dimen/widget_minWidth</dimen>
+    <dimen name="widget_minResizeHeight">@dimen/widget_minHeight</dimen>
 
-    <!-- width/height of layout/digital_widget_time -->
-    <dimen name="min_digital_widget_width">206dp</dimen>
-    <!-- height is sum of widget_big_font_size + label_font_size + margins -->
-    <dimen name="min_digital_widget_height">90dp</dimen>
-    <!-- same as min_digital_widget_{width,height} -->
-    <dimen name="min_digital_widget_resize_width">@dimen/min_digital_widget_width</dimen>
-    <dimen name="min_digital_widget_resize_height">@dimen/min_digital_widget_height</dimen>
+    <dimen name="clock_widget_minWidth">@dimen/widget_cell_3</dimen>
+    <dimen name="clock_widget_minHeight">@dimen/widget_cell_1</dimen>
+    <dimen name="clock_widget_minResizeWidth">@dimen/clock_widget_minWidth</dimen>
+    <dimen name="clock_widget_minResizeHeight">@dimen/clock_widget_minHeight</dimen>
+    <dimen name="clock_widget_time_textSize">80dp</dimen>
+    <dimen name="clock_widget_time_marginTop">-15dp</dimen>
+    <dimen name="clock_widget_title_marginTop">-15dp</dimen>
 
     <dimen name="reminder_time">90sp</dimen>
     <dimen name="reminder_title">20sp</dimen>
