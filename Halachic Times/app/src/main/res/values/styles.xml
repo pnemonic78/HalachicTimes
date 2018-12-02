@@ -154,6 +154,7 @@
     </style>
 
     <style name="Base.Widget.Reminder.Time" parent="Widget.TextView.Large">
+        <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/reminder_time</item>
     </style>
 
