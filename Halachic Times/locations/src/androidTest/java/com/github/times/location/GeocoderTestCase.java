@@ -226,6 +226,14 @@ public class GeocoderTestCase {
         assertEquals(89.89511, address.getLatitude(), DELTA);
         assertEquals(-36.3637, address.getLongitude(), DELTA);
         assertEquals("Arctic Ocean", address.getFeatureName());
+
+        // Empty
+        in = context.getResources().openRawResource(R.raw.geonames_empty);
+        assertNotNull(in);
+        results = parser.parse(in, maxResults, locale);
+        assertNotNull(results);
+        assertTrue(maxResults >= results.size());
+        assertEquals(0, results.size());
     }
 
     /**
