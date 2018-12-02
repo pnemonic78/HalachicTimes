@@ -15,11 +15,15 @@
  */
 package com.github.times.remind;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.text.TextUtils;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.github.times.BuildConfig;
+import com.github.times.ZmanimItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import static com.github.times.ZmanimItem.NEVER;
 
@@ -28,7 +32,24 @@ import static com.github.times.ZmanimItem.NEVER;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminderItem implements Parcelable {
+public class ZmanimReminderItem {
+
+    /**
+     * Extras' name for the reminder id.
+     */
+    public static final String EXTRA_ID = BuildConfig.APPLICATION_ID + ".REMINDER_ID";
+    /**
+     * Extras' name for the reminder title.
+     */
+    public static final String EXTRA_TITLE = BuildConfig.APPLICATION_ID + ".REMINDER_TITLE";
+    /**
+     * Extras' name for the reminder text.
+     */
+    public static final String EXTRA_TEXT = BuildConfig.APPLICATION_ID + ".REMINDER_TEXT";
+    /**
+     * Extras' name for the reminder time.
+     */
+    public static final String EXTRA_TIME = BuildConfig.APPLICATION_ID + ".REMINDER_TIME";
 
     public final int id;
     public final CharSequence title;
@@ -42,39 +63,63 @@ public class ZmanimReminderItem implements Parcelable {
         this.time = time;
     }
 
-    protected ZmanimReminderItem(Parcel in) {
-        id = in.readInt();
-        title = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-        text = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
-        time = in.readLong();
-    }
-
     public boolean isEmpty() {
         return (id == 0) || (time == NEVER) || (title == null);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    @Nullable
+    public static ZmanimReminderItem from(@NonNull Context context, @Nullable ZmanimItem item) {
+        if (item != null) {
+            return new ZmanimReminderItem(item.titleId, context.getText(item.titleId), item.summary, item.time);
+        }
+        return null;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(id);
-        TextUtils.writeToParcel(title, parcel, flags);
-        TextUtils.writeToParcel(text, parcel, flags);
-        parcel.writeLong(time);
+    @Nullable
+    public static ZmanimReminderItem from(@Nullable Bundle extras) {
+        if (extras == null) {
+            return null;
+        }
+        if (extras.containsKey(EXTRA_ID)) {
+            int id = extras.getInt(EXTRA_ID);
+            if (id == 0) {
+                return null;
+            }
+            CharSequence contentTitle = extras.getCharSequence(EXTRA_TITLE);
+            CharSequence contentText = extras.getCharSequence(EXTRA_TEXT);
+            long when = extras.getLong(EXTRA_TIME, 0L);
+            if ((contentTitle != null) && (when > 0L)) {
+                return new ZmanimReminderItem(id, contentTitle, contentText, when);
+            }
+        }
+        return null;
     }
 
-    public static final Creator<ZmanimReminderItem> CREATOR = new Creator<ZmanimReminderItem>() {
-        @Override
-        public ZmanimReminderItem createFromParcel(Parcel in) {
-            return new ZmanimReminderItem(in);
+    @Nullable
+    public static ZmanimReminderItem from(@Nullable Intent intent) {
+        if (intent == null) {
+            return null;
         }
+        return from(intent.getExtras());
+    }
 
-        @Override
-        public ZmanimReminderItem[] newArray(int size) {
-            return new ZmanimReminderItem[size];
+    public void put(@Nullable Bundle extras) {
+        if (extras == null) {
+            return;
         }
-    };
+        extras.putInt(EXTRA_ID, id);
+        extras.putCharSequence(EXTRA_TITLE, title);
+        extras.putCharSequence(EXTRA_TEXT, text);
+        extras.putLong(EXTRA_TIME, time);
+    }
+
+    public void put(@Nullable Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        intent.putExtra(EXTRA_ID, id);
+        intent.putExtra(EXTRA_TITLE, title);
+        intent.putExtra(EXTRA_TEXT, text);
+        intent.putExtra(EXTRA_TIME, time);
+    }
 }
