@@ -55,8 +55,10 @@ public class ZmanimAddLocationActivity extends AddLocationActivity<ZmanimPrefere
     }
 
     public ZmanimPreferences getZmanimPreferences() {
+        ZmanimPreferences preferences = this.preferences;
         if (preferences == null) {
             preferences = new SimpleZmanimPreferences(this);
+            this.preferences = preferences;
         }
         return preferences;
     }

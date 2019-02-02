@@ -61,8 +61,10 @@ public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
     }
 
     public ZmanimPreferences getZmanimPreferences() {
+        ZmanimPreferences preferences = this.preferences;
         if (preferences == null) {
             preferences = new SimpleZmanimPreferences(this);
+            this.preferences = preferences;
         }
         return preferences;
     }

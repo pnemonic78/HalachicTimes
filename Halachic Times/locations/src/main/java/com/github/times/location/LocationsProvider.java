@@ -364,6 +364,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the location - {@code null} otherwise.
      */
     public Location getLocationGPS() {
+        LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || !hasLocationPermission(context)) {
             return null;
         }
@@ -382,6 +383,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the location - {@code null} otherwise.
      */
     public Location getLocationNetwork() {
+        LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || !hasLocationPermission(context)) {
             return null;
         }
@@ -400,6 +402,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return the location - {@code null} otherwise.
      */
     public Location getLocationPassive() {
+        LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || !hasLocationPermission(context)) {
             return null;
         }
@@ -654,6 +657,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     private void requestUpdates() {
+        LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || !hasLocationPermission(context)) {
             return;
         }

@@ -73,8 +73,10 @@ public class CandleAnimation implements Runnable {
         this.random = random;
 
         // Cache the images to avoid "bitmap size exceeds VM budget".
+        Drawable[] sprites = CandleAnimation.sprites;
         if (sprites == null) {
             sprites = new Drawable[LEVELS];
+            CandleAnimation.sprites = sprites;
 
             Resources res = view.getResources();
             Options opts = new Options();

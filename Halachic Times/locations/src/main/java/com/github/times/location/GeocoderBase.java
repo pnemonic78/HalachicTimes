@@ -357,8 +357,10 @@ public abstract class GeocoderBase {
      * @throws LocationException if a location error occurs.
      */
     protected ElevationResponseParser getElevationResponseParser() throws LocationException {
+        ElevationResponseParser elevationResponseParser = this.elevationResponseParser;
         if (elevationResponseParser == null) {
             elevationResponseParser = createElevationResponseParser();
+            this.elevationResponseParser = elevationResponseParser;
         }
         return elevationResponseParser;
     }
