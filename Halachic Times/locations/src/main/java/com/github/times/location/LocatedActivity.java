@@ -31,6 +31,8 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 
+import timber.log.Timber;
+
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.M;
 
@@ -177,6 +179,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onLocationChanged(Location location) {
+        Timber.v("onLocationChanged %s", location);
         if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
             address = null;
         }

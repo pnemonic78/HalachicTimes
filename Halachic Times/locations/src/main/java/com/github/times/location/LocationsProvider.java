@@ -257,6 +257,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     @Override
     public void onLocationChanged(Location location) {
+        Timber.v("onLocationChanged %s", location);
         onLocationChanged(location, true, true);
     }
 
