@@ -151,8 +151,6 @@
                 <action android:name="android.intent.action.TIME_SET" />
                 <action android:name="com.github.times.action.REMIND" />
                 <action android:name="com.github.times.location.LOCATION_CHANGED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
