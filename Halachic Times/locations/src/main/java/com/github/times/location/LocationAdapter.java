@@ -120,8 +120,10 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
 
     @NonNull
     protected LocationComparator getComparator() {
+        LocationComparator comparator = this.comparator;
         if (comparator == null) {
             comparator = new LocationComparator();
+            this.comparator = comparator;
         }
         return comparator;
     }

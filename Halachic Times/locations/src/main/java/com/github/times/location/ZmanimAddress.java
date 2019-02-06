@@ -142,8 +142,11 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
      * @return the address
      */
     public String getFormatted() {
-        if (formatted == null)
+        String formatted = this.formatted;
+        if (formatted == null) {
             formatted = format();
+            this.formatted = formatted;
+        }
         return formatted;
     }
 

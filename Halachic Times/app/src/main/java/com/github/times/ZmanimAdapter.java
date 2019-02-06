@@ -329,8 +329,10 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * Sort the times from oldest to newest.
      */
     protected void sort() {
+        Comparator<ZmanimItem> comparator = this.comparator;
         if (comparator == null) {
             comparator = new ZmanimComparator();
+            this.comparator = comparator;
         }
         sort(comparator);
     }

@@ -163,8 +163,10 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
 
     @Override
     public void onCreate() {
+        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
         if (themeCallbacks == null) {
             themeCallbacks = createThemeCallbacks();
+            this.themeCallbacks = themeCallbacks;
         }
         themeCallbacks.onCreate();
     }
@@ -452,6 +454,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         if ((location == null) || (address == null)) {
             return;
         }
+        Location locationForAddress = this.locationForAddress;
         if ((locationForAddress == null) || (location.getLatitude() != locationForAddress.getLatitude()) || (location.getLongitude() != locationForAddress.getLongitude())) {
             return;
         }
@@ -487,8 +490,10 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     }
 
     protected AddressProvider getAddressProvider() {
+        AddressProvider addressProvider = this.addressProvider;
         if (addressProvider == null) {
             addressProvider = new AddressProvider(this);
+            this.addressProvider = addressProvider;
         }
         return addressProvider;
     }
