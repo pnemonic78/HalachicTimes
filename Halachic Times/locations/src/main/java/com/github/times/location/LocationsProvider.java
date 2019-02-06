@@ -453,6 +453,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         Location location = this.location;
         if (isValid(location))
             return location;
+        location = getLocationSaved();
+        if (isValid(location))
+            return location;
         location = getLocationGPS();
         if (isValid(location))
             return location;
@@ -460,9 +463,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (isValid(location))
             return location;
         location = getLocationPassive();
-        if (isValid(location))
-            return location;
-        location = getLocationSaved();
         if (isValid(location))
             return location;
         location = getLocationTZ();
