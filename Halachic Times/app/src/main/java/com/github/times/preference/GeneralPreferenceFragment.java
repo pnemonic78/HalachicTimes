@@ -58,6 +58,7 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
             Preference pref = findPreference(KEY_REMINDER_SETTINGS);
             if (pref != null) {
+                pref.setEnabled(true);
                 pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
