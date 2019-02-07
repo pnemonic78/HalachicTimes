@@ -28,17 +28,19 @@ import android.widget.ImageView;
 
 import java.util.Random;
 
+import androidx.annotation.NonNull;
+
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
  * Flicker animation for 1 candle.
  *
- * @author Moshe W
+ * @author Moshe Waisberg
  */
 public class CandleAnimation implements Runnable {
 
     private static final int LEVELS = 14;
-    private static final long PERIOD = SECOND_IN_MILLIS >> 1;
+    private static final long PERIOD = SECOND_IN_MILLIS / 2L;
     private static final int PERIOD_INT = (int) PERIOD;
 
     private final Handler handler;
@@ -54,7 +56,7 @@ public class CandleAnimation implements Runnable {
      * @param handler the timer.
      * @param view    the image view.
      */
-    public CandleAnimation(Handler handler, ImageView view) {
+    public CandleAnimation(@NonNull Handler handler, @NonNull ImageView view) {
         this(handler, view, null);
     }
 
@@ -65,10 +67,8 @@ public class CandleAnimation implements Runnable {
      * @param view    the image view.
      * @param random  the delay randomizer.
      */
-    public CandleAnimation(Handler handler, ImageView view, Random random) {
+    public CandleAnimation(@NonNull Handler handler, @NonNull ImageView view, Random random) {
         this.handler = handler;
-        if (view == null)
-            throw new IllegalArgumentException("view required");
         this.view = view;
         this.random = random;
 

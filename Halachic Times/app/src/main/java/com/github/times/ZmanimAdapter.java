@@ -340,7 +340,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     /**
      * View holder for zman row item.
      *
-     * @author Moshe W
+     * @author Moshe Waisberg
      */
     protected static class ViewHolder {
 

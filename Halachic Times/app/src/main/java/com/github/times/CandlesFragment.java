@@ -17,11 +17,9 @@ package com.github.times;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -46,16 +44,14 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     private ViewGroup candlesChannuka;
     /** The candles view for Yom Kippurim. */
     private ViewGroup candlesKippurim;
-    /** The animation scheduler. */
-    private final Handler handler = new Handler();
     /** The flaming candle animations. */
-    private CandleAnimation[] animations;
+    private CandleView[] animations;
     /** The flaming candle animations. */
-    private CandleAnimation[] animationsShabbat;
+    private CandleView[] animationsShabbat;
     /** The flaming candle animations. */
-    private CandleAnimation[] animationsChannuka;
+    private CandleView[] animationsChannuka;
     /** The flaming candle animations. */
-    private CandleAnimation[] animationsKippurim;
+    private CandleView[] animationsKippurim;
     /** Randomizer. */
     private final Random random = new Random();
 
@@ -112,7 +108,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         int holiday = adapter.getCandlesHoliday();
         int candlesCount = adapter.getCandlesCount();
         boolean animate = preferences.isCandlesAnimated();
-        ImageView view;
+        CandleView view;
         ViewGroup group = null;
 
         switch (holiday) {
@@ -122,10 +118,10 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     candlesKippurim = group;
 
                     // assert candlesCount == YOM_KIPPURIM_CANDLES.length;
-                    animationsKippurim = new CandleAnimation[candlesCount];
+                    animationsKippurim = new CandleView[candlesCount];
                     for (int i = 0; i < candlesCount; i++) {
                         view = group.findViewById(YOM_KIPPURIM_CANDLES[i]);
-                        animationsKippurim[i] = new CandleAnimation(handler, view, random);
+                        animationsKippurim[i] = view.init(random);
                     }
                 }
                 list.addView(group);
@@ -139,22 +135,22 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     // create all candles in case user navigates to future day.
                     final int allCandlesCount = CHANNUKA_CANDLES.length;
                     // assert candlesCount <= allCandlesCount;
-                    animationsChannuka = new CandleAnimation[allCandlesCount + 1];
+                    animationsChannuka = new CandleView[allCandlesCount + 1];
                     for (int i = 0; i < allCandlesCount; i++) {
                         view = group.findViewById(CHANNUKA_CANDLES[i]);
-                        animationsChannuka[i] = new CandleAnimation(handler, view, random);
+                        animationsChannuka[i] = view.init(random);
                     }
                     view = group.findViewById(R.id.candle_shamash);
-                    animationsChannuka[allCandlesCount] = new CandleAnimation(handler, view, random);
+                    animationsChannuka[allCandlesCount] = view.init(random);
                 }
                 list.addView(group);
                 animations = animationsChannuka;
                 // Only show relevant candles.
                 for (int i = 0; i < candlesCount; i++) {
-                    animations[i].getView().setVisibility(View.VISIBLE);
+                    animations[i].setVisibility(View.VISIBLE);
                 }
                 for (int i = candlesCount; i < CHANNUKA_CANDLES.length; i++) {
-                    animations[i].getView().setVisibility(View.INVISIBLE);
+                    animations[i].setVisibility(View.INVISIBLE);
                 }
                 break;
             default:
@@ -164,10 +160,10 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                         candlesShabbat = group;
 
                         // assert candlesCount == SHABBAT_CANDLES.length;
-                        animationsShabbat = new CandleAnimation[candlesCount];
+                        animationsShabbat = new CandleView[candlesCount];
                         for (int i = 0; i < candlesCount; i++) {
                             view = group.findViewById(SHABBAT_CANDLES[i]);
-                            animationsShabbat[i] = new CandleAnimation(handler, view, random);
+                            animationsShabbat[i] = view.init(random);
                         }
                     }
                     list.addView(group);
@@ -190,24 +186,24 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     }
 
     private void stopAnimation() {
-        final CandleAnimation[] anims = animations;
+        final CandleView[] anims = animations;
         if (anims == null)
             return;
-        for (Runnable anim : anims) {
+        for (CandleView anim : anims) {
             if (anim == null)
                 continue;
-            handler.removeCallbacks(anim);
+            anim.stopFlicker();
         }
     }
 
     private void startAnimation() {
-        final CandleAnimation[] anims = animations;
+        final CandleView[] anims = animations;
         if (anims == null)
             return;
-        for (Runnable anim : anims) {
+        for (CandleView anim : anims) {
             if (anim == null)
                 continue;
-            handler.post(anim);
+            anim.startFlicker();
         }
     }
 
