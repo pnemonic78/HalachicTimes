@@ -19,12 +19,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-
-import java.util.Calendar;
-import java.util.Random;
 
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
@@ -32,47 +29,46 @@ import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
  *
  * @author Moshe Waisberg
  */
-public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopulater> implements ViewTreeObserver.OnGlobalLayoutListener {
+public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopulater> {
 
     private static final int[] SHABBAT_CANDLES = {R.id.candle_1, R.id.candle_2};
     private static final int[] YOM_KIPPURIM_CANDLES = {R.id.candle_1};
     private static final int[] CHANNUKA_CANDLES = {R.id.candle_1, R.id.candle_2, R.id.candle_3, R.id.candle_4, R.id.candle_5, R.id.candle_6, R.id.candle_7, R.id.candle_8};
 
-    /** The candles view for Shabbat. */
+    /**
+     * The candles view for Shabbat.
+     */
     private ViewGroup candlesShabbat;
-    /** The candles view for Channuka. */
+    /**
+     * The candles view for Channuka.
+     */
     private ViewGroup candlesChannuka;
-    /** The candles view for Yom Kippurim. */
+    /**
+     * The candles view for Yom Kippurim.
+     */
     private ViewGroup candlesKippurim;
-    /** The flaming candle animations. */
+    /**
+     * The flaming candle animations.
+     */
     private CandleView[] animations;
-    /** The flaming candle animations. */
+    /**
+     * The flaming candle animations.
+     */
     private CandleView[] animationsShabbat;
-    /** The flaming candle animations. */
+    /**
+     * The flaming candle animations.
+     */
     private CandleView[] animationsChannuka;
-    /** The flaming candle animations. */
+    /**
+     * The flaming candle animations.
+     */
     private CandleView[] animationsKippurim;
-    /** Randomizer. */
-    private final Random random = new Random();
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.getViewTreeObserver().addOnGlobalLayoutListener(this);
         // Ignore the list inside of the scroller.
         this.list = (ViewGroup) view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        stopAnimation();
     }
 
     @Override
@@ -92,12 +88,6 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     }
 
     @Override
-    public CandlesAdapter populateTimes(Calendar date) {
-        stopAnimation();
-        return super.populateTimes(date);
-    }
-
-    @Override
     protected void bindViews(ViewGroup list, CandlesAdapter adapter) {
         if (list == null)
             return;
@@ -105,13 +95,14 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
         if (adapter == null)
             return;
 
-        int holiday = adapter.getCandlesHoliday();
-        int candlesCount = adapter.getCandlesCount();
-        boolean animate = preferences.isCandlesAnimated();
+        final int holiday = adapter.getCandlesHoliday();
+        final int candlesCount = adapter.getCandlesCount();
+        final boolean animate = preferences.isCandlesAnimated();
         CandleView view;
         ViewGroup group = null;
 
         switch (holiday) {
+            case EREV_YOM_KIPPUR:
             case YOM_KIPPUR:
                 group = (ViewGroup) adapter.getView(holiday, candlesKippurim, list);
                 if (candlesKippurim == null) {
@@ -121,7 +112,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     animationsKippurim = new CandleView[candlesCount];
                     for (int i = 0; i < candlesCount; i++) {
                         view = group.findViewById(YOM_KIPPURIM_CANDLES[i]);
-                        animationsKippurim[i] = view.init(random);
+                        animationsKippurim[i] = view;
                     }
                 }
                 list.addView(group);
@@ -138,10 +129,10 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                     animationsChannuka = new CandleView[allCandlesCount + 1];
                     for (int i = 0; i < allCandlesCount; i++) {
                         view = group.findViewById(CHANNUKA_CANDLES[i]);
-                        animationsChannuka[i] = view.init(random);
+                        animationsChannuka[i] = view;
                     }
                     view = group.findViewById(R.id.candle_shamash);
-                    animationsChannuka[allCandlesCount] = view.init(random);
+                    animationsChannuka[allCandlesCount] = view;
                 }
                 list.addView(group);
                 animations = animationsChannuka;
@@ -163,7 +154,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
                         animationsShabbat = new CandleView[candlesCount];
                         for (int i = 0; i < candlesCount; i++) {
                             view = group.findViewById(SHABBAT_CANDLES[i]);
-                            animationsShabbat[i] = view.init(random);
+                            animationsShabbat[i] = view;
                         }
                     }
                     list.addView(group);
@@ -176,56 +167,21 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
             group.setVisibility(View.VISIBLE);
         }
 
-        if (animate && isVisible())
-            startAnimation();
+        setFlickers(animations, animate);
+    }
+
+    private void setFlickers(CandleView[] candles, boolean enabled) {
+        if (candles == null)
+            return;
+        for (CandleView candle : candles) {
+            if (candle == null)
+                continue;
+            candle.flicker(enabled);
+        }
     }
 
     @Override
     protected void setOnClickListener(View view, ZmanimItem item) {
         // No clicking allowed.
-    }
-
-    private void stopAnimation() {
-        final CandleView[] anims = animations;
-        if (anims == null)
-            return;
-        for (CandleView anim : anims) {
-            if (anim == null)
-                continue;
-            anim.stopFlicker();
-        }
-    }
-
-    private void startAnimation() {
-        final CandleView[] anims = animations;
-        if (anims == null)
-            return;
-        for (CandleView anim : anims) {
-            if (anim == null)
-                continue;
-            anim.startFlicker();
-        }
-    }
-
-    protected void onVisibilityChanged(View changedView, int visibility) {
-        if (changedView == list) {
-            if (visibility == View.VISIBLE) {
-                startAnimation();
-            } else {
-                stopAnimation();
-            }
-        }
-    }
-
-    @Override
-    public void onGlobalLayout() {
-        View view = getView();
-        onVisibilityChanged(view, view.getVisibility());
-    }
-
-    @Override
-    public void setVisibility(int visibility) {
-        super.setVisibility(visibility);
-        stopAnimation();
     }
 }

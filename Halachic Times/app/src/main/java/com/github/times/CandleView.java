@@ -18,9 +18,8 @@ package com.github.times;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
-
-import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,34 +32,44 @@ import androidx.annotation.Nullable;
 public class CandleView extends ImageView {
 
     private Handler handler;
-    private Random random;
     private CandleAnimation animation;
 
     public CandleView(Context context) {
         super(context);
-        setScaleType(ScaleType.FIT_CENTER);
+        init();
     }
 
     public CandleView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setScaleType(ScaleType.FIT_CENTER);
+        init();
     }
 
     public CandleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setScaleType(ScaleType.FIT_CENTER);
+        init();
     }
 
-    public CandleView init(@NonNull Random random) {
-        this.random = random;
-        return this;
+    private void init() {
+        setScaleType(ScaleType.FIT_CENTER);
+        setImageResource(R.drawable.candle);
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         handler = getHandler();
-        animation = new CandleAnimation(getHandler(), this, random);
+        animation = new CandleAnimation(getHandler(), this);
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+
+        if (visibility == View.VISIBLE) {
+            startFlicker();
+        } else {
+            stopFlicker();
+        }
     }
 
     /**
@@ -78,6 +87,19 @@ public class CandleView extends ImageView {
     public void stopFlicker() {
         if (handler != null) {
             handler.removeCallbacks(animation);
+        }
+    }
+
+    /**
+     * Either start or stop the flicker animation.
+     *
+     * @param enabled {@code true} to start - else stop.
+     */
+    public void flicker(boolean enabled) {
+        if (enabled) {
+            startFlicker();
+        } else {
+            stopFlicker();
         }
     }
 }

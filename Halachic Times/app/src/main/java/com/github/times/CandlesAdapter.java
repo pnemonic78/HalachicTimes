@@ -30,6 +30,7 @@ import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_MASK_OFFSET;
 import static com.github.times.ZmanimPopulater.MOTZE_MASK;
 import static com.github.times.ZmanimPopulater.MOTZE_MASK_OFFSET;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
@@ -51,6 +52,7 @@ public class CandlesAdapter extends ZmanimAdapter {
         int candlesCount = getCandlesCount();
 
         switch (holiday) {
+            case EREV_YOM_KIPPUR:
             case YOM_KIPPUR:
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.candles_kippurim, parent, false);
