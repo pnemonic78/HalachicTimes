@@ -261,7 +261,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         onLocationChanged(location, true, true);
     }
 
-    private void onLocationChanged(Location location, boolean findAddress, boolean findElevation) {
+    private void onLocationChanged(final Location location, boolean findAddress, boolean findElevation) {
         if (!isValid(location)) {
             return;
         }
@@ -270,6 +270,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             return;
         }
 
+        Location locationNew = location;
         boolean keepLocation = true;
         if ((locationOld != null) && (ZmanimLocation.compareTo(locationOld, location) != 0)) {
             // Ignore old locations.
@@ -285,21 +286,21 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                         locationOld.setAltitude(location.getAltitude());
                     }
                 }
-                location = locationOld;
+                locationNew = locationOld;
             }
         }
 
         if (keepLocation) {
-            this.location = location;
-            preferences.putLocation(location);
+            this.location = locationNew;
+            preferences.putLocation(locationNew);
         }
 
-        notifyLocationChanged(location);
+        notifyLocationChanged(locationNew);
 
-        if (findElevation && !location.hasAltitude()) {
-            findElevation(location);
+        if (findElevation && !locationNew.hasAltitude()) {
+            findElevation(locationNew);
         } else if (findAddress) {
-            findAddress(location);
+            findAddress(locationNew);
         }
     }
 
