@@ -115,6 +115,7 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     }
 
     private void updateMinutesSummary(final int shabbathAfterId, final String specificOpinionValue) {
+        NumberPickerPreference minutesPreference = this.minutesPreference;
         if (minutesPreference == null) {
             return;
         }

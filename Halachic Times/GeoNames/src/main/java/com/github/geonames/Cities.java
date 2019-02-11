@@ -230,6 +230,7 @@ public class Cities {
      * @return the rank.
      */
     private int getFeatureCodeRank(String code) {
+        Map<String, Integer> ranks = this.ranks;
         if (ranks == null) {
             ranks = new TreeMap<>();
             int rank = -2;
@@ -249,6 +250,7 @@ public class Cities {
             ranks.put(FEATURE_PPLA, rank++);
             ranks.put(FEATURE_PPLG, rank++);
             ranks.put(FEATURE_PPLC, rank++);
+            this.ranks = ranks;
         }
         return ranks.get(code);
     }

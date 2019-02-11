@@ -556,10 +556,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      */
     protected void toggleDetails(View view) {
         ZmanimItem item = (ZmanimItem) view.getTag(R.id.time);
-        if (item == null)
+        if (item == null) {
             item = (ZmanimItem) view.getTag();
-        if (item == null)
-            return;
+            if (item == null)
+                return;
+        }
         toggleDetails(item.titleId);
     }
 
@@ -937,8 +938,10 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     public ZmanimPreferences getZmanimPreferences() {
+        ZmanimPreferences preferences = this.preferences;
         if (preferences == null) {
             preferences = new SimpleZmanimPreferences(this);
+            this.preferences = preferences;
         }
         return preferences;
     }

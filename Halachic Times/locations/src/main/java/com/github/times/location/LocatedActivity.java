@@ -31,6 +31,8 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 
+import timber.log.Timber;
+
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.M;
 
@@ -128,8 +130,10 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     }
 
     protected ThemeCallbacks<P> getThemeCallbacks() {
+        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
         if (themeCallbacks == null) {
             themeCallbacks = createThemeCallbacks(this);
+            this.themeCallbacks = themeCallbacks;
         }
         return themeCallbacks;
     }
@@ -158,8 +162,10 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     public void onAddressChanged(Location location, ZmanimAddress address) {
         addressLocation = location;
         this.address = address;
+        Runnable populateHeader = this.populateHeader;
         if (populateHeader == null) {
             populateHeader = createPopulateHeaderRunnable();
+            this.populateHeader = populateHeader;
         }
         runOnUiThread(populateHeader);
     }
@@ -173,12 +179,15 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onLocationChanged(Location location) {
+        Timber.v("onLocationChanged %s", location);
         if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
             address = null;
         }
         addressLocation = location;
+        Runnable updateLocation = this.updateLocation;
         if (updateLocation == null) {
             updateLocation = createUpdateLocationRunnable();
+            this.updateLocation = updateLocation;
         }
         runOnUiThread(updateLocation);
     }

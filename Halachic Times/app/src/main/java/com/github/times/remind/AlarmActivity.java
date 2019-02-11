@@ -171,8 +171,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     protected ThemeCallbacks<P> getThemeCallbacks() {
+        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
         if (themeCallbacks == null) {
             themeCallbacks = createThemeCallbacks(this);
+            this.themeCallbacks = themeCallbacks;
         }
         return themeCallbacks;
     }
@@ -182,8 +184,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     public P getZmanimPreferences() {
+        P preferences = this.preferences;
         if (preferences == null) {
             preferences = (P) new SimpleZmanimPreferences(this);
+            this.preferences = preferences;
         }
         return preferences;
     }
@@ -244,8 +248,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * @return the formatted time.
      */
     private String formatDateTime(Date time) {
+        SimpleDateFormat dateFormat = this.dateFormat;
         if (dateFormat == null) {
             dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+            this.dateFormat = dateFormat;
         }
         return dateFormat.format(time);
     }
@@ -360,6 +366,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     private MediaPlayer getRingtone(Context context) {
+        MediaPlayer ringtone = this.ringtone;
         if (ringtone == null) {
             final P prefs = getZmanimPreferences();
             Uri prefRingtone = prefs.getReminderRingtone();
@@ -368,7 +375,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                 if (uri == null) {
                     uri = Settings.System.DEFAULT_ALARM_ALERT_URI;
                 }
-                MediaPlayer ringtone = new MediaPlayer();
+                ringtone = new MediaPlayer();
                 try {
                     ringtone.setDataSource(context, uri);
 
@@ -422,6 +429,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     private void silenceFuture(long triggerAt) {
         Timber.i("silence future at [" + formatDateTime(triggerAt) + "]");
 
+        Runnable silenceRunnable = this.silenceRunnable;
         if (silenceRunnable == null) {
             silenceRunnable = new Runnable() {
                 @Override
@@ -429,6 +437,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                     stopNoise();
                 }
             };
+            this.silenceRunnable = silenceRunnable;
         }
         final long now = currentTimeMillis();
         long delayMillis = triggerAt - now;

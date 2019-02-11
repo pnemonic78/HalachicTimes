@@ -47,5 +47,6 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_clear_history">Clear history</string>
+    <string name="pref_privacy_clear_data">Clear data</string>
 
 </resources>

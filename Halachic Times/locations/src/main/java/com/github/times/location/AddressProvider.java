@@ -266,18 +266,24 @@ public class AddressProvider {
     private List<GeocoderBase> getRemoteAddressProviders() {
         final List<GeocoderBase> providers = new ArrayList<>();
 
+        GoogleGeocoder googleGeocoder = this.googleGeocoder;
         if (googleGeocoder == null) {
             googleGeocoder = new GoogleGeocoder(locale);
+            this.googleGeocoder = googleGeocoder;
         }
         providers.add(googleGeocoder);
 
+        BingGeocoder bingGeocoder = this.bingGeocoder;
         if (bingGeocoder == null) {
             bingGeocoder = new BingGeocoder(locale);
+            this.bingGeocoder = bingGeocoder;
         }
         providers.add(bingGeocoder);
 
+        GeoNamesGeocoder geonamesGeocoder = this.geonamesGeocoder;
         if (geonamesGeocoder == null) {
             geonamesGeocoder = new GeoNamesGeocoder(locale);
+            this.geonamesGeocoder = geonamesGeocoder;
         }
         providers.add(geonamesGeocoder);
 
@@ -561,18 +567,24 @@ public class AddressProvider {
     private List<GeocoderBase> getRemoteElevationProviders() {
         final List<GeocoderBase> providers = new ArrayList<>();
 
+        GoogleGeocoder googleGeocoder = this.googleGeocoder;
         if (googleGeocoder == null) {
             googleGeocoder = new GoogleGeocoder(locale);
+            this.googleGeocoder = googleGeocoder;
         }
         providers.add(googleGeocoder);
 
+        BingGeocoder bingGeocoder = this.bingGeocoder;
         if (bingGeocoder == null) {
             bingGeocoder = new BingGeocoder(locale);
+            this.bingGeocoder = bingGeocoder;
         }
         providers.add(bingGeocoder);
 
+        GeoNamesGeocoder geonamesGeocoder = this.geonamesGeocoder;
         if (geonamesGeocoder == null) {
             geonamesGeocoder = new GeoNamesGeocoder(locale);
+            this.geonamesGeocoder = geonamesGeocoder;
         }
         providers.add(geonamesGeocoder);
 

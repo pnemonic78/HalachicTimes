@@ -53,8 +53,10 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
      * @return the provider.
      */
     public AP getAddresses() {
+        AP addressProvider = this.addressProvider;
         if (addressProvider == null) {
             addressProvider = factory.createAddressProvider();
+            this.addressProvider = addressProvider;
         }
         return addressProvider;
     }
@@ -65,8 +67,10 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
      * @return the provider.
      */
     public LP getLocations() {
+        LP locationsProvider = this.locationsProvider;
         if (locationsProvider == null) {
             locationsProvider = factory.createLocationsProvider();
+            this.locationsProvider = locationsProvider;
         }
         return locationsProvider;
     }
