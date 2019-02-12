@@ -422,6 +422,7 @@ public class ZmanimReminder {
             case Intent.ACTION_DATE_CHANGED:
             case Intent.ACTION_TIMEZONE_CHANGED:
             case Intent.ACTION_TIME_CHANGED:
+            case Intent.ACTION_MY_PACKAGE_REPLACED:
             case ACTION_UPDATE:
                 update = true;
                 break;
