@@ -6,6 +6,7 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">الخصوصية والأمن</string>
+    <string name="clear_user_data_text" msgid="355574089263023363">"مسح سعة تخزين"</string>
 
     <!-- About -->
     <string name="version_title">إصدار التطبيق</string>
