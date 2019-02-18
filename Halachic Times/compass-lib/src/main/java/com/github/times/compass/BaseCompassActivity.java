@@ -28,7 +28,6 @@ import com.github.times.compass.lib.R;
 import com.github.times.compass.preference.CompassPreferences;
 import com.github.times.compass.preference.SimpleCompassPreferences;
 import com.github.times.location.LocatedActivity;
-import com.github.times.location.LocationsProvider;
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -42,10 +41,6 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
     private CompassFragment fragment;
     /** The preferences. */
     private CompassPreferences preferences;
-    /** The location header location. */
-    private TextView headerLocation;
-    /** The location header for formatted address. */
-    private TextView headerAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,45 +87,12 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
                 if (loc == null)
                     return;
 
-                populateHeader();
+                populateHeader(loc);
 
                 CompassFragment c = fragment;
                 if (c == null)
                     return;
                 c.setLocation(loc);
-            }
-        };
-    }
-
-    /** Populate the header item. */
-    private void populateHeader() {
-        TextView locationLabel = headerLocation;
-        TextView addressLabel = headerAddress;
-        // Have we been destroyed?
-        if ((locationLabel == null) || (addressLabel == null))
-            return;
-        // Have we been destroyed?
-        LocationsProvider locations = getLocations();
-        Location addressLocation = getAddressLocation();
-        Location loc = (addressLocation == null) ? locations.getLocation() : addressLocation;
-        if (loc == null)
-            return;
-
-        final CharSequence locationText = locations.formatCoordinates(loc);
-        final CharSequence locationName = formatAddress(getAddress());
-
-        // Update the location.
-        locationLabel.setText(locationText);
-        locationLabel.setVisibility(getLocationPreferences().isCoordinatesVisible() ? View.VISIBLE : View.GONE);
-        addressLabel.setText(locationName);
-    }
-
-    @Override
-    protected Runnable createPopulateHeaderRunnable() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                populateHeader();
             }
         };
     }

@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -52,7 +51,6 @@ import com.github.times.compass.CompassActivity;
 import com.github.times.content.res.ZmanimResources;
 import com.github.times.location.LocatedActivity;
 import com.github.times.location.LocationActivity;
-import com.github.times.location.LocationsProvider;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferenceActivity;
 import com.github.times.preference.ZmanimPreferences;
@@ -124,14 +122,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      * The location header Gregorian date.
      */
     private TextView headerGregorianDate;
-    /**
-     * The location header location.
-     */
-    private TextView headerLocation;
-    /**
-     * The location header for formatted address.
-     */
-    private TextView headerAddress;
     /**
      * The navigation bar.
      */
@@ -473,31 +463,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                 populateFragments(calendar);
             }
         };
-    }
-
-    /**
-     * Populate the header item.
-     */
-    private void populateHeader() {
-        TextView locationLabel = headerLocation;
-        TextView addressLabel = headerAddress;
-        // Have we been destroyed?
-        if ((locationLabel == null) || (addressLabel == null))
-            return;
-        LocationsProvider locations = getLocations();
-        Location addressLocation = getAddressLocation();
-        Location loc = (addressLocation != null) ? addressLocation : locations.getLocation();
-        // Have we been destroyed?
-        if (loc == null)
-            return;
-
-        final CharSequence locationText = locations.formatCoordinates(loc);
-        final CharSequence locationName = formatAddress(getAddress());
-
-        // Update the location.
-        locationLabel.setText(locationText);
-        locationLabel.setVisibility(getLocationPreferences().isCoordinatesVisible() ? View.VISIBLE : View.GONE);
-        addressLabel.setText(locationName);
     }
 
     @Override

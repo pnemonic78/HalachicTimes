@@ -17,6 +17,7 @@
 
     <style name="Widget.TextView.Small">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="Widget.Light.TextView.Large">
@@ -29,6 +30,7 @@
 
     <style name="Widget.Light.TextView.Small">
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
 </resources>

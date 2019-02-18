@@ -15,7 +15,6 @@
 
     <style name="Widget.Location.Coordinates" parent="Widget.TextView.Small">
         <item name="android:maxLines">1</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="Widget.Location.Address" parent="Widget.TextView.Small">
