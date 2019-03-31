@@ -166,6 +166,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onAddressChanged(Location location, ZmanimAddress address) {
+        Timber.v("onAddressChanged %s %s", location, address);
         addressLocation = location;
         this.address = address;
         Runnable populateHeader = this.populateHeader;
@@ -192,7 +193,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onLocationChanged(Location location) {
-        Timber.v("onLocationChanged %s", location);
+        Timber.v("onLocationChanged %s <= %s", location, addressLocation);
         if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
             address = null;
         }
@@ -245,6 +246,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
                     loc = locations.getLocation();
                 }
                 locations.setLocation(loc);
+                getLocations().findAddress(loc);
             }
         }
     }

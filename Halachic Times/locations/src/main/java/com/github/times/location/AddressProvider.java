@@ -138,6 +138,7 @@ public class AddressProvider {
      */
     @Nullable
     public Address findNearestAddress(@NonNull Location location, @Nullable OnFindAddressListener listener) {
+        Timber.v("findNearestAddress %s", location);
         if (location == null) {
             return null;
         }
