@@ -6,6 +6,7 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Gizlilik ve güvenlik</string>
+    <string name="clear_user_data_text" msgid="355574089263023363">"Depolama alanını temizle"</string>
 
     <!-- About -->
     <string name="version_title">Uygulama sürümü </string>

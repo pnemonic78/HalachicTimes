@@ -6,6 +6,7 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privatumas ir sauga</string>
+    <string name="clear_user_data_text" msgid="355574089263023363">"Cancella spazio di archiviazione"</string>
 
     <!-- About -->
     <string name="version_title">Versione di applicazione</string>

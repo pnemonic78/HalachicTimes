@@ -9,6 +9,7 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy &amp; security</string>
+    <string name="clear_user_data_text">Clear storage</string>
 
     <!-- About -->
     <string name="version_title">Application version</string>

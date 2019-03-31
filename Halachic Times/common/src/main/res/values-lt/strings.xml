@@ -5,7 +5,8 @@
     <string name="summaries_title">Santraukas</string>
 
     <!-- Settings screen - Privacy -->
-    <string name="pref_privacy_security_title">Privacy &amp; security</string>
+    <string name="pref_privacy_security_title">Privatumas ir saugumas</string>
+    <string name="clear_user_data_text" msgid="355574089263023363">"Išvalyti saugyklą"</string>
 
     <!-- About -->
     <string name="version_title">Programos versija </string>
