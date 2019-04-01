@@ -6,6 +6,7 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privaatsus ja turvalisus</string>
+    <string name="clear_user_data_text" msgid="355574089263023363">"Tühjenda salvestusruum"</string>
 
     <!-- About -->
     <string name="version_title">Rakenduse versioon</string>

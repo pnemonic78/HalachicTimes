@@ -191,8 +191,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     }
 
     protected ZmanimPreferences getPreferences() {
+        ZmanimPreferences preferences = this.preferences;
         if (preferences == null) {
             preferences = new SimpleZmanimPreferences(context);
+            this.preferences = preferences;
         }
         return preferences;
     }

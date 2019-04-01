@@ -148,6 +148,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
 
         if (savedInstanceState == null) {
             Bundle args = getIntent().getExtras();
+            Location location = this.location;
             if (args != null) {
                 if (args.containsKey(EXTRA_LOCATION)) {
                     location = args.getParcelable(EXTRA_LOCATION);
@@ -165,6 +166,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
             } else {
                 location = new Location(USER_PROVIDER);
             }
+            this.location = location;
 
             setDecimalTexts(location.getLatitude(), latitudeDegreesEdit, latitudeDecimalEdit, latitudeDirection);
             setDecimalTexts(location.getLongitude(), longitudeDegreesEdit, longitudeDecimalEdit, longitudeDirection);
@@ -182,8 +184,10 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     }
 
     protected ThemeCallbacks<P> getThemeCallbacks() {
+        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
         if (themeCallbacks == null) {
             themeCallbacks = createThemeCallbacks(this);
+            this.themeCallbacks = themeCallbacks;
         }
         return themeCallbacks;
     }
@@ -382,6 +386,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
         this.address = address;
 
         if (addressView != null) {
+            Runnable addressFormatRunnable = this.addressFormatRunnable;
             if (addressFormatRunnable == null) {
                 addressFormatRunnable = new Runnable() {
                     @Override
@@ -389,6 +394,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
                         addressView.setText(AddLocationActivity.this.address.getFormatted());
                     }
                 };
+                this.addressFormatRunnable = addressFormatRunnable;
             }
             runOnUiThread(addressFormatRunnable);
         }
@@ -429,8 +435,10 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     }
 
     private void convertFromDecimal() {
+        Location locationForConvert = this.locationForConvert;
         if (locationForConvert == null) {
             locationForConvert = new Location(location);
+            this.locationForConvert = locationForConvert;
         }
         if (saveLocation(locationForConvert, FORMAT_DECIMAL)) {
             setSexagesimalTexts(locationForConvert.getLatitude(), latitudeDegreesEdit, latitudeMinutesEdit, latitudeSecondsEdit, latitudeMillisecondsEdit, latitudeDirection);
@@ -460,8 +468,10 @@ public class AddLocationActivity<P extends ThemePreferences> extends Activity im
     }
 
     private void convertToDecimal() {
+        Location locationForConvert = this.locationForConvert;
         if (locationForConvert == null) {
             locationForConvert = new Location(location);
+            this.locationForConvert = locationForConvert;
         }
         if (saveLocation(locationForConvert, FORMAT_SEXAGESIMAL)) {
             setDecimalTexts(locationForConvert.getLatitude(), latitudeDegreesEdit, latitudeDecimalEdit, latitudeDirection);

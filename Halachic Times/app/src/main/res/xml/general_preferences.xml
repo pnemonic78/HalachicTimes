@@ -35,6 +35,10 @@
             android:showDefault="true"
             android:showSilent="true"
             android:title="@string/reminder_tone"/>
+        <Preference
+            android:enabled="false"
+            android:key="reminder.settings"
+            android:title="@string/reminder_settings"/>
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -15,6 +15,10 @@
  */
 package com.github.times.preference;
 
+import android.annotation.TargetApi;
+import android.app.ActivityManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 
@@ -28,6 +32,7 @@ import com.github.times.location.LocationApplication;
 public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
 
     private Preference clearHistory;
+    private Preference clearAppData;
 
     @Override
     protected int getPreferencesXml() {
@@ -40,6 +45,12 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
 
         clearHistory = findPreference("clear_history");
         clearHistory.setOnPreferenceClickListener(this);
+
+        clearAppData = findPreference("clear_data");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            clearAppData.setEnabled(true);
+            clearAppData.setOnPreferenceClickListener(this);
+        }
     }
 
     @Override
@@ -47,6 +58,12 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
         if (preference == clearHistory) {
             preference.setEnabled(false);
             deleteHistory();
+            preference.setEnabled(true);
+            return true;
+        }
+        if (preference == clearAppData) {
+            preference.setEnabled(false);
+            deleteAppData();
             preference.setEnabled(true);
             return true;
         }
@@ -62,5 +79,15 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
         provider.deleteAddresses();
         provider.deleteElevations();
         provider.deleteCities();
+    }
+
+    /**
+     * Clear the application data.
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void deleteAppData() {
+        final Context context = getActivity();
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        am.clearApplicationUserData();
     }
 }

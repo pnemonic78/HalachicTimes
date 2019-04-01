@@ -48,19 +48,19 @@ public class GeoNamesGeocoder extends GeocoderBase {
     /**
      * URL that accepts latitude and longitude coordinates as parameters.
      */
-    private static final String URL_LATLNG = "http://api.geonames.org/findNearbyJSON?lat=%f&lng=%f&lang=%s&username=%s";
+    private static final String URL_LATLNG = "https://secure.geonames.org/findNearbyJSON?lat=%f&lng=%f&lang=%s&username=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.<br>
      * Uses Shuttle Radar Topography Mission (SRTM) elevation data.
      */
-    private static final String URL_ELEVATION_SRTM3 = "http://api.geonames.org/srtm3?lat=%f&lng=%f&username=%s";
+    private static final String URL_ELEVATION_SRTM3 = "https://secure.geonames.org/srtm3?lat=%f&lng=%f&username=%s";
     /**
      * URL that accepts latitude and longitude coordinates as parameters for an
      * elevation.<br>
      * Uses Aster Global Digital Elevation Model data.
      */
-    private static final String URL_ELEVATION_AGDEM = "http://api.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
+    private static final String URL_ELEVATION_AGDEM = "https://secure.geonames.org/astergdem?lat=%f&lng=%f&username=%s";
 
     /**
      * GeoNames user name.

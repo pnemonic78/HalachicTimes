@@ -6,6 +6,7 @@
 
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Личные данные</string>
+    <string name="clear_user_data_text" msgid="355574089263023363">"Очистить хранилище"</string>
 
     <!-- About -->
     <string name="version_title">Версия приложения</string>

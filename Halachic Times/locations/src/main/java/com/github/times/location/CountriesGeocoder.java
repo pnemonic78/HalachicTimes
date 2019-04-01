@@ -110,10 +110,11 @@ public class CountriesGeocoder extends GeocoderBase {
 
             // Populate arrays from "cities.xml"
             final Resources res = context.getResources();
-            if (countryBorders == null) {
+            CountryPolygon[] borders = this.countryBorders;
+            if (borders == null) {
                 final String[] countryCodes = res.getStringArray(R.array.countries);
                 int countriesCount = countryCodes.length;
-                final CountryPolygon[] borders = new CountryPolygon[countriesCount];
+                borders = new CountryPolygon[countriesCount];
                 final int[] verticesCounts = res.getIntArray(R.array.vertices_count);
                 final int[] latitudes = res.getIntArray(R.array.latitudes);
                 final int[] longitudes = res.getIntArray(R.array.longitudes);
@@ -130,11 +131,13 @@ public class CountriesGeocoder extends GeocoderBase {
                     borders[c] = country;
                 }
 
-                countryBorders = borders;
+                this.countryBorders = borders;
                 immutableCountryBorders = borders;
             }
+            String[] citiesCountries = this.citiesCountries;
             if (citiesCountries == null) {
                 citiesCountries = res.getStringArray(R.array.cities_countries);
+                this.citiesCountries = citiesCountries;
                 citiesTimeZones = res.getStringArray(R.array.cities_time_zones);
 
                 final int citiesCount = citiesCountries.length;

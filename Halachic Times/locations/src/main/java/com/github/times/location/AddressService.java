@@ -25,6 +25,7 @@ import com.github.times.location.AddressProvider.OnFindAddressListener;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
+import timber.log.Timber;
 
 import static com.github.times.location.ZmanimLocationListener.ACTION_ADDRESS;
 import static com.github.times.location.ZmanimLocationListener.ACTION_ELEVATION;
@@ -104,6 +105,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
             }
         }
 
+        Timber.i("find address: %s %s", location, addr);
         Intent result = new Intent(ACTION_ADDRESS);
         result.setPackage(getPackageName());
         result.putExtra(PARAMETER_LOCATION, location);
@@ -116,6 +118,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
         if (elevated instanceof ZmanimLocation) {
             provider.insertOrUpdateElevation((ZmanimLocation) elevated);
 
+            Timber.i("find elevation: %s %s", location, elevated);
             Intent result = new Intent(ACTION_ELEVATION);
             result.setPackage(getPackageName());
             result.putExtra(PARAMETER_LOCATION, elevated);

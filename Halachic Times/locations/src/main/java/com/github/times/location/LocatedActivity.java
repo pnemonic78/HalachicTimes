@@ -24,12 +24,16 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.TimeZone;
 
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
+
+import timber.log.Timber;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES.M;
@@ -64,6 +68,10 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     private Runnable populateHeader;
     /** Update the location in UI thread. */
     private Runnable updateLocation;
+    /** The location header location. */
+    protected TextView headerLocation;
+    /** The location header for formatted address. */
+    protected TextView headerAddress;
 
     /**
      * Get the locations provider.
@@ -128,8 +136,10 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     }
 
     protected ThemeCallbacks<P> getThemeCallbacks() {
+        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
         if (themeCallbacks == null) {
             themeCallbacks = createThemeCallbacks(this);
+            this.themeCallbacks = themeCallbacks;
         }
         return themeCallbacks;
     }
@@ -156,15 +166,25 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onAddressChanged(Location location, ZmanimAddress address) {
+        Timber.v("onAddressChanged %s %s", location, address);
         addressLocation = location;
         this.address = address;
+        Runnable populateHeader = this.populateHeader;
         if (populateHeader == null) {
             populateHeader = createPopulateHeaderRunnable();
+            this.populateHeader = populateHeader;
         }
         runOnUiThread(populateHeader);
     }
 
-    protected abstract Runnable createPopulateHeaderRunnable();
+    protected Runnable createPopulateHeaderRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                populateHeader();
+            }
+        };
+    }
 
     @Override
     public void onElevationChanged(Location location) {
@@ -173,14 +193,18 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @Override
     public void onLocationChanged(Location location) {
+        Timber.v("onLocationChanged %s <= %s", location, addressLocation);
         if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
             address = null;
         }
         addressLocation = location;
+        Runnable updateLocation = this.updateLocation;
         if (updateLocation == null) {
             updateLocation = createUpdateLocationRunnable();
+            this.updateLocation = updateLocation;
         }
         runOnUiThread(updateLocation);
+        getLocations().findAddress(location);
     }
 
     protected abstract Runnable createUpdateLocationRunnable();
@@ -223,6 +247,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
                     loc = locations.getLocation();
                 }
                 locations.setLocation(loc);
+                getLocations().findAddress(loc);
             }
         }
     }
@@ -265,5 +290,40 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
                 && (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
         }
+    }
+
+    /** Populate the header item. */
+    protected void populateHeader() {
+        // Have we been destroyed?
+        LocationsProvider locations = getLocations();
+        Location addressLocation = getAddressLocation();
+        Location location = (addressLocation == null) ? locations.getLocation() : addressLocation;
+        if (location == null)
+            return;
+        populateHeader(location);
+    }
+
+    /**
+     * Populate the header item.
+     * @param location the location to format.
+     */
+    protected void populateHeader(Location location) {
+        if (location == null)
+            return;
+        TextView locationLabel = headerLocation;
+        TextView addressLabel = headerAddress;
+        // Have we been destroyed?
+        if ((locationLabel == null) || (addressLabel == null))
+            return;
+
+        LocationFormatter formatter = getLocations();
+        final CharSequence locationText = formatter.formatCoordinates(location);
+        final CharSequence locationName = formatAddress(getAddress());
+        Timber.d("header [" + locationText +"] => [" + locationName + "]");
+
+        // Update the location.
+        locationLabel.setText(locationText);
+        locationLabel.setVisibility(getLocationPreferences().isCoordinatesVisible() ? View.VISIBLE : View.GONE);
+        addressLabel.setText(locationName);
     }
 }

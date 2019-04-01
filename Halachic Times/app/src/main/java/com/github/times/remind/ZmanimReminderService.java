@@ -36,6 +36,7 @@ public class ZmanimReminderService extends JobIntentService {
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
+    private ZmanimReminder reminder;
 
     public static void enqueueWork(Context context, Intent intent) {
         enqueueWork(context, ZmanimReminderService.class, JOB_REMIND, intent);
@@ -51,8 +52,12 @@ public class ZmanimReminderService extends JobIntentService {
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
         Timber.v("onHandleWork %s", intent);
-        final Context context = this;
-        ZmanimReminder reminder = new ZmanimReminder(context);
+        ZmanimReminder reminder = this.reminder;
+        if (reminder == null) {
+            final Context context = this;
+            reminder = new ZmanimReminder(context);
+            this.reminder = reminder;
+        }
         reminder.process(intent);
     }
 }

@@ -18,6 +18,9 @@ package com.github.times.remind;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.github.times.BuildConfig;
 import com.github.times.ZmanimItem;
@@ -25,14 +28,12 @@ import com.github.times.ZmanimItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.github.times.ZmanimItem.NEVER;
-
 /**
  * Reminder item for a notification.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminderItem {
+public class ZmanimReminderItem implements Parcelable {
 
     /**
      * Extras' name for the reminder id.
@@ -63,9 +64,42 @@ public class ZmanimReminderItem {
         this.time = time;
     }
 
-    public boolean isEmpty() {
-        return (id == 0) || (time == NEVER) || (title == null);
+    protected ZmanimReminderItem(Parcel in) {
+        id = in.readInt();
+        title = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        text = TextUtils.CHAR_SEQUENCE_CREATOR.createFromParcel(in);
+        time = in.readLong();
     }
+
+    public boolean isEmpty() {
+        return (id == 0) || (time <= 0L) || (title == null);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(id);
+        TextUtils.writeToParcel(title, parcel, flags);
+        TextUtils.writeToParcel(text, parcel, flags);
+        parcel.writeLong(time);
+    }
+
+    @Deprecated
+    public static final Creator<ZmanimReminderItem> CREATOR = new Creator<ZmanimReminderItem>() {
+        @Override
+        public ZmanimReminderItem createFromParcel(Parcel in) {
+            return new ZmanimReminderItem(in);
+        }
+
+        @Override
+        public ZmanimReminderItem[] newArray(int size) {
+            return new ZmanimReminderItem[size];
+        }
+    };
 
     @Nullable
     public static ZmanimReminderItem from(@NonNull Context context, @Nullable ZmanimItem item) {

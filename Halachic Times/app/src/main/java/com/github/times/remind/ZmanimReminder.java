@@ -422,6 +422,7 @@ public class ZmanimReminder {
             case Intent.ACTION_DATE_CHANGED:
             case Intent.ACTION_TIMEZONE_CHANGED:
             case Intent.ACTION_TIME_CHANGED:
+            case Intent.ACTION_MY_PACKAGE_REPLACED:
             case ACTION_UPDATE:
                 update = true;
                 break;
@@ -464,8 +465,10 @@ public class ZmanimReminder {
      * @return the formatted time.
      */
     private String formatDateTime(Date time) {
+        SimpleDateFormat dateFormat = this.dateFormat;
         if (dateFormat == null) {
             dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+            this.dateFormat = dateFormat;
         }
         return dateFormat.format(time);
     }
@@ -490,8 +493,10 @@ public class ZmanimReminder {
                                                                  long when,
                                                                  PendingIntent contentIntent,
                                                                  String channelId) {
+        Bitmap largeIconSolar = this.largeIconSolar;
         if (largeIconSolar == null) {
             largeIconSolar = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar);
+            this.largeIconSolar = largeIconSolar;
         }
 
         return new NotificationCompat.Builder(context, channelId)
@@ -527,21 +532,24 @@ public class ZmanimReminder {
         }
 
         // Dynamically generate the large icon.
+        Bitmap largeIconReminder = this.largeIconReminder;
         if (largeIconReminder == null) {
             final Resources res = context.getResources();
             int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
             int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
             Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
             Bitmap layerBottom = BitmapFactory.decodeResource(res, (VERSION.SDK_INT >= LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
-            if (largeIconSolar == null) {
-                largeIconSolar = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
-            }
             Bitmap layerTop = largeIconSolar;
+            if (layerTop == null) {
+                layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
+                this.largeIconSolar = layerTop;
+            }
             Canvas canvas = new Canvas(largeIcon);
             Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
             canvas.drawBitmap(layerBottom, null, largeIconRect, null);
             canvas.drawBitmap(layerTop, null, largeIconRect, null);
             largeIconReminder = largeIcon;
+            this.largeIconReminder = largeIconReminder;
         }
         builder.setLargeIcon(largeIconReminder);
 

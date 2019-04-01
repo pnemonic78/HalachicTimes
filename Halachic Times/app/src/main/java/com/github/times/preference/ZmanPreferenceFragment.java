@@ -85,9 +85,11 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
                 opinionKeys.add(opinionKey);
             }
         }
-        if ((this.preferenceReminder = initList(reminderKey)) == null) {
-            this.preferenceReminder = initTime(reminderKey);
+        Preference preferenceReminder = this.preferenceReminder;
+        if ((preferenceReminder = initList(reminderKey)) == null) {
+            preferenceReminder = initTime(reminderKey);
         }
+        this.preferenceReminder = preferenceReminder;
         if (preferenceReminder != null) {
             initReminderDays(preferenceReminder);
         }
@@ -99,9 +101,11 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     }
 
     protected ZmanimPreferences getPreferences() {
+        ZmanimPreferences preferences = this.preferences;
         if (preferences == null) {
             final Context context = getActivity();
             preferences = new SimpleZmanimPreferences(context);
+            this.preferences = preferences;
         }
         return preferences;
     }

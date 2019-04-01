@@ -92,9 +92,11 @@ class LocationSwipeHandler extends ItemTouchHelper.SimpleCallback {
         int top = itemView.getTop();
         int left = (int) (right + dX);
         int bottom = itemView.getBottom();
+        Drawable deleteBg = this.deleteBg;
         if (deleteBg == null) {
             final Context context = recyclerView.getContext();
             deleteBg = ContextCompat.getDrawable(context, R.drawable.bg_swipe_delete);
+            this.deleteBg = deleteBg;
         }
         deleteBg.setBounds(left, top, right, bottom);
         deleteBg.draw(c);

@@ -4,27 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/black"
+    android:background="@color/black"
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="4dp">
 
-    <ImageView
+    <com.github.times.CandleView
         android:id="@+id/candle_1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        android:scaleType="fitCenter"
         tools:src="@drawable/candle_0"/>
 
-    <ImageView
+    <com.github.times.CandleView
         android:id="@+id/candle_2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        android:scaleType="fitCenter"
         tools:src="@drawable/candle_3"/>
 
 </LinearLayout>
