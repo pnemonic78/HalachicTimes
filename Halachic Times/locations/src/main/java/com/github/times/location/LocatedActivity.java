@@ -241,13 +241,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
         if (requestCode == ACTIVITY_LOCATIONS) {
             if (resultCode == RESULT_OK) {
-                Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-                if (loc == null) {
-                    locations.setLocation(null);
-                    loc = locations.getLocation();
-                }
-                locations.setLocation(loc);
-                getLocations().findAddress(loc);
+                Location location = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+                getLocations().setLocation(location);
             }
         }
     }

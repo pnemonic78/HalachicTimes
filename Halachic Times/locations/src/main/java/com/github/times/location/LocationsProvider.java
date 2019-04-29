@@ -650,12 +650,15 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * Set the location.
      *
-     * @param location the location.
+     * @param location the location - {@code null} to request the current location.
      */
     public void setLocation(Location location) {
         this.location = null;
         manualLocation = location != null;
         onLocationChanged(location);
+        if (location == null) {
+            sendEmptyMessage(WHAT_START);
+        }
     }
 
     private void requestUpdates() {
