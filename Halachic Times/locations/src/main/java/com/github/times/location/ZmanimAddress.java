@@ -236,14 +236,14 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             buf.append(feature);
         }
         if (!isEmpty(premises)
-                && !premises.equals(feature)) {
+            && !premises.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(premises);
         }
         if (!isEmpty(thoroughfare)
-                && !thoroughfare.equals(feature)
-                && !thoroughfare.equals(premises)) {
+            && !thoroughfare.equals(feature)
+            && !thoroughfare.equals(premises)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(thoroughfare);
@@ -252,13 +252,13 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             for (int i = 0; i < addressLinesCount; i++) {
                 address = getAddressLine(i);
                 if (!isEmpty(address)
-                        && ((thoroughfare == null) || !address.contains(thoroughfare))
-                        && ((premises == null) || !address.contains(premises))
-                        && ((subloc == null) || !address.contains(subloc))
-                        && ((locality == null) || !address.contains(locality))
-                        && ((subadmin == null) || !address.contains(subadmin))
-                        && ((admin == null) || !address.contains(admin))
-                        && ((country == null) || !address.contains(country))) {
+                    && ((thoroughfare == null) || !address.contains(thoroughfare))
+                    && ((premises == null) || !address.contains(premises))
+                    && ((subloc == null) || !address.contains(subloc))
+                    && ((locality == null) || !address.contains(locality))
+                    && ((subadmin == null) || !address.contains(subadmin))
+                    && ((admin == null) || !address.contains(admin))
+                    && ((country == null) || !address.contains(country))) {
                     if (buf.length() > 0)
                         buf.append(ADDRESS_SEPARATOR);
                     buf.append(address);
@@ -266,32 +266,32 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             }
         }
         if (!isEmpty(subloc)
-                && !subloc.equals(thoroughfare)
-                && !subloc.equals(feature)) {
+            && !subloc.equals(thoroughfare)
+            && !subloc.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subloc);
         }
         if (!isEmpty(locality)
-                && !locality.equals(subloc)
-                && !locality.equals(feature)) {
+            && !locality.equals(subloc)
+            && !locality.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(locality);
         }
         if (!isEmpty(subadmin)
-                && !subadmin.equals(locality)
-                && !subadmin.equals(subloc)
-                && !subadmin.equals(feature)) {
+            && !subadmin.equals(locality)
+            && !subadmin.equals(subloc)
+            && !subadmin.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(subadmin);
         }
         if (!isEmpty(admin)
-                && !admin.equals(subadmin)
-                && !admin.equals(locality)
-                && !admin.equals(subloc)
-                && !admin.equals(feature)) {
+            && !admin.equals(subadmin)
+            && !admin.equals(locality)
+            && !admin.equals(subloc)
+            && !admin.equals(feature)) {
             if (buf.length() > 0)
                 buf.append(ADDRESS_SEPARATOR);
             buf.append(admin);
@@ -310,24 +310,34 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         return buf.toString();
     }
 
-    @Override
-    public int compareTo(ZmanimAddress that) {
-        long id1 = this.getId();
-        long id2 = that.getId();
-        if ((id1 != 0L) && (id1 == id2)) {
+    /**
+     * Compare two addresses by latitude and longitude only.
+     *
+     * @param a1 the first address.
+     * @param a2 the second address.
+     * @return the comparison as per {@link Comparable}.
+     */
+    public static int compare(Address a1, Address a2) {
+        if (a1 == a2) {
             return 0;
         }
+        if (a1 == null) {
+            return -1;
+        }
+        if (a2 == null) {
+            return 1;
+        }
 
-        double lat1 = this.getLatitude();
-        double lat2 = that.getLatitude();
+        double lat1 = a1.getLatitude();
+        double lat2 = a2.getLatitude();
         double latD = lat1 - lat2;
         if (latD >= EPSILON)
             return 1;
         if (latD <= -EPSILON)
             return -1;
 
-        double lng1 = this.getLongitude();
-        double lng2 = that.getLongitude();
+        double lng1 = a1.getLongitude();
+        double lng2 = a2.getLongitude();
         double lngD = lng1 - lng2;
         if (lngD >= EPSILON)
             return 1;
@@ -335,13 +345,24 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
             return -1;
 
         // Don't need to compare elevation.
+        return 0;
+    }
 
-        String format1 = this.getFormatted();
-        String format2 = that.getFormatted();
-        int c = format1.compareToIgnoreCase(format2);
+    @Override
+    public int compareTo(ZmanimAddress that) {
+        int c = compare(this, that);
         if (c != 0)
             return c;
 
+        String format1 = this.getFormatted();
+        String format2 = that.getFormatted();
+        c = format1.compareToIgnoreCase(format2);
+        if (c != 0)
+            return c;
+
+        // Long.compare since API 19+.
+        long id1 = this.getId();
+        long id2 = that.getId();
         return (id1 < id2) ? -1 : (id1 == id2 ? 0 : 1);
     }
 

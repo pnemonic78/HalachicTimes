@@ -194,7 +194,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     @Override
     public void onLocationChanged(Location location) {
         Timber.v("onLocationChanged %s <= %s", location, addressLocation);
-        if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
+        if (ZmanimLocation.compare(addressLocation, location) != 0) {
             address = null;
         }
         addressLocation = location;
@@ -241,13 +241,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
         if (requestCode == ACTIVITY_LOCATIONS) {
             if (resultCode == RESULT_OK) {
-                Location loc = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
-                if (loc == null) {
-                    locations.setLocation(null);
-                    loc = locations.getLocation();
-                }
-                locations.setLocation(loc);
-                getLocations().findAddress(loc);
+                Location location = data.getParcelableExtra(LocationManager.KEY_LOCATION_CHANGED);
+                getLocations().setLocation(location);
             }
         }
     }

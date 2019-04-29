@@ -361,14 +361,9 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
      * @param location the location.
      */
     protected void setAddress(Location location) {
-        LocationApplication app = (LocationApplication) getApplication();
-        LocationsProvider locations = app.getLocations();
-        locations.setLocation(location);
-
         Intent intent = getIntent();
         intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
         setResult(RESULT_OK, intent);
-
         finish();
     }
 

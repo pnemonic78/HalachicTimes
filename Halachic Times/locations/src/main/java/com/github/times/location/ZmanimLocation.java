@@ -202,7 +202,7 @@ public class ZmanimLocation extends Location {
      * @param l2 the second location.
      * @return the comparison as per {@link Comparable}.
      */
-    public static int compareTo(Location l1, Location l2) {
+    public static int compare(Location l1, Location l2) {
         if (l1 == l2) {
             return 0;
         }
@@ -244,7 +244,7 @@ public class ZmanimLocation extends Location {
      * @return the comparison as per {@link Comparable}.
      */
     public static int compareAll(Location l1, Location l2) {
-        int c = compareTo(l1, l2);
+        int c = compare(l1, l2);
         if (c != 0) {
             return c;
         }
