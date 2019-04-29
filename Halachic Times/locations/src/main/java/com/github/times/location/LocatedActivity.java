@@ -204,6 +204,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
             this.updateLocation = updateLocation;
         }
         runOnUiThread(updateLocation);
+        getLocations().findAddress(location);
     }
 
     protected abstract Runnable createUpdateLocationRunnable();
