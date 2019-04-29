@@ -272,7 +272,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         Location locationNew = location;
         boolean keepLocation = true;
-        if ((locationOld != null) && (ZmanimLocation.compareTo(locationOld, location) != 0)) {
+        if ((locationOld != null) && (ZmanimLocation.compare(locationOld, location) != 0)) {
             // Ignore old locations.
             if (locationOld.getTime() + LOCATION_EXPIRATION > location.getTime()) {
                 keepLocation = false;

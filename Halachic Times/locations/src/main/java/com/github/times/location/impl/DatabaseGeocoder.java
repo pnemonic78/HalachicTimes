@@ -310,7 +310,7 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param location the location.
      * @param address  the address.
      */
-    public void insertOrUpdateAddress(@Nullable Location location, @NonNull ZmanimAddress address) {
+    public void insertOrUpdateAddress(@Nullable Location location, @Nullable ZmanimAddress address) {
         if (address == null)
             return;
         long id = address.getId();

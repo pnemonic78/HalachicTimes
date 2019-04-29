@@ -23,6 +23,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.database.CursorFilter;
 import com.github.times.location.bing.BingGeocoder;
 import com.github.times.location.geonames.GeoNamesGeocoder;
@@ -37,8 +40,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.github.times.location.GeocoderBase.SAME_CITY;
@@ -156,6 +157,7 @@ public class AddressProvider {
         Address bestCountry;
         Address bestPlateau = null;
         Address bestCity;
+        Address bestCached = null;
 
         if (listener != null) {
             listener.onFindAddress(this, location, best);
@@ -177,22 +179,36 @@ public class AddressProvider {
         }
         bestCity = best;
 
-        // Find the best cached city.
+        // Find the best cached location.
         addresses = findNearestAddressDatabase(location);
-        best = findBestAddress(location, addresses);
-        if ((best != null) && (listener != null)) {
-            listener.onFindAddress(this, location, best);
+        best = findBestAddress(location, addresses, SAME_PLATEAU);
+        if (best != null) {
+            bestPlateau = best;
+            bestCached = best;
+            if (listener != null) {
+                listener.onFindAddress(this, location, best);
+            }
+        }
+        best = findBestAddress(location, addresses, SAME_CITY);
+        if ((best != null) && (best != bestPlateau)) {
+            bestCached = best;
+            if (listener != null) {
+                listener.onFindAddress(this, location, best);
+            }
         }
 
         // Find the best city from some Geocoder provider.
         if ((best == null) && online) {
             addresses = findNearestAddressGeocoder(location);
-            bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
-            if ((bestPlateau != null) && (listener != null)) {
-                listener.onFindAddress(this, location, bestPlateau);
+            best = findBestAddress(location, addresses, SAME_PLATEAU);
+            if ((best != null) && (ZmanimAddress.compare(best, bestCached) != 0)) {
+                bestPlateau = best;
+                if (listener != null) {
+                    listener.onFindAddress(this, location, best);
+                }
             }
             best = findBestAddress(location, addresses, SAME_CITY);
-            if ((best != null) && (best != bestPlateau) && (listener != null)) {
+            if ((best != null) && (best != bestPlateau) && (ZmanimAddress.compare(best, bestCached) != 0) && (listener != null)) {
                 listener.onFindAddress(this, location, best);
             }
         }
@@ -206,13 +222,16 @@ public class AddressProvider {
                     Timber.e(e, "Address geocoder: " + geocoder + " at " + latitude + "," + longitude + "; error: " + e.getLocalizedMessage());
                     continue;
                 }
-                bestPlateau = findBestAddress(location, addresses, SAME_PLATEAU);
-                if ((bestPlateau != null) && (listener != null)) {
-                    listener.onFindAddress(this, location, bestPlateau);
+                best = findBestAddress(location, addresses, SAME_PLATEAU);
+                if ((best != null) && (ZmanimAddress.compare(best, bestCached) != 0)) {
+                    bestPlateau = best;
+                    if (listener != null) {
+                        listener.onFindAddress(this, location, best);
+                    }
                 }
                 best = findBestAddress(location, addresses, SAME_CITY);
                 if (best != null) {
-                    if ((best != bestPlateau) && (listener != null)) {
+                    if ((best != bestPlateau) && (ZmanimAddress.compare(best, bestCached) != 0) && (listener != null)) {
                         listener.onFindAddress(this, location, best);
                     }
                     break;
@@ -493,10 +512,10 @@ public class AddressProvider {
                 elevated = findElevationCities(location);
                 if (elevated == null) {
                     elevated = new ZmanimLocation(location);
-                } else if (ZmanimLocation.compareTo(location, elevated) == 0) {
+                } else if (ZmanimLocation.compare(location, elevated) == 0) {
                     elevated.setAltitude(location.getAltitude());
                 }
-            } else if (ZmanimLocation.compareTo(location, elevated) == 0) {
+            } else if (ZmanimLocation.compare(location, elevated) == 0) {
                 elevated.setAltitude(location.getAltitude());
             }
             if (listener != null) {

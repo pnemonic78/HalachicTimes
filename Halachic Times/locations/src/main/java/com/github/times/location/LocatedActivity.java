@@ -194,7 +194,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     @Override
     public void onLocationChanged(Location location) {
         Timber.v("onLocationChanged %s <= %s", location, addressLocation);
-        if (ZmanimLocation.compareTo(addressLocation, location) != 0) {
+        if (ZmanimLocation.compare(addressLocation, location) != 0) {
             address = null;
         }
         addressLocation = location;
