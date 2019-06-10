@@ -107,6 +107,20 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         if (THEME_WHITE.equals(value)) {
             return R.style.Theme_Zmanim_White;
         }
+        if (THEME_DEFAULT.equals(value)) {
+            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    return R.style.Theme_Zmanim_Light;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    return R.style.Theme_Zmanim_Dark;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Material
+                return R.style.Theme_Zmanim_Light;
+            }
+        }
         return R.style.Theme_Zmanim_Dark;
     }
 
@@ -121,17 +135,15 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
             return false;
         }
         if (THEME_DEFAULT.equals(value)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (BuildCompat.isAtLeastQ()) {
-                    final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                    switch (nightMode) {
-                        case Configuration.UI_MODE_NIGHT_NO:
-                            return false;
-                        case Configuration.UI_MODE_NIGHT_YES:
-                            return true;
-                    }
-                }
+            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    return false;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    return true;
+            }
 
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 // Material
                 return false;
             }
