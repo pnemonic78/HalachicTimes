@@ -2,10 +2,12 @@
 <resources>
 
     <string-array name="list_theme_values" translatable="false">
+        <item>@string/theme_value_default</item>
         <item>@string/theme_value_dark</item>
         <item>@string/theme_value_light</item>
     </string-array>
     <string-array name="list_theme_entries" translatable="false">
+        <item>@string/theme_default</item>
         <item>@string/theme_dark</item>
         <item>@string/theme_light</item>
     </string-array>

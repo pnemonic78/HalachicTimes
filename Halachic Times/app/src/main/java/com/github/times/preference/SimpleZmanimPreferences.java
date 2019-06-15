@@ -19,9 +19,11 @@ import net.sourceforge.zmanim.ShaahZmanis;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 
 import java.io.File;
@@ -38,9 +40,11 @@ import com.github.preference.TimePreference;
 import com.github.times.R;
 
 import androidx.annotation.NonNull;
+import androidx.core.os.BuildCompat;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;
 import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.times.preference.ZmanimPreferences.Values.*;
@@ -103,6 +107,20 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         if (THEME_WHITE.equals(value)) {
             return R.style.Theme_Zmanim_White;
         }
+        if (THEME_DEFAULT.equals(value)) {
+            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    return R.style.Theme_Zmanim_Light;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    return R.style.Theme_Zmanim_Dark;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Material
+                return R.style.Theme_Zmanim_Light;
+            }
+        }
         return R.style.Theme_Zmanim_Dark;
     }
 
@@ -115,6 +133,20 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     public boolean isDarkTheme(String value) {
         if (THEME_LIGHT.equals(value) || THEME_WHITE.equals(value)) {
             return false;
+        }
+        if (THEME_DEFAULT.equals(value)) {
+            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    return false;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    return true;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Material
+                return false;
+            }
         }
         return true;
     }

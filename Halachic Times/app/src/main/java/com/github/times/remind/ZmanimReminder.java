@@ -335,7 +335,7 @@ public class ZmanimReminder {
 
         switch (settings.getReminderType()) {
             case RingtoneManager.TYPE_ALARM:
-                alarmNow(item);
+                alarmNow(item, now + STOP_NOTIFICATION_AFTER);
                 break;
             case RingtoneManager.TYPE_NOTIFICATION:
             default:
@@ -810,14 +810,15 @@ public class ZmanimReminder {
      * Alarm screen now.
      *
      * @param item the reminder item.
+     * @param silenceWhen when to silence the alarm, in milliseconds.
      */
-    public void alarmNow(ZmanimReminderItem item) {
+    public void alarmNow(ZmanimReminderItem item, long silenceWhen) {
         Timber.i("alarm now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
 
         final Context context = getContext();
         Intent intent = new Intent(context, AlarmActivity.class);
         item.put(intent);
-        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, item.time + STOP_NOTIFICATION_AFTER);
+        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

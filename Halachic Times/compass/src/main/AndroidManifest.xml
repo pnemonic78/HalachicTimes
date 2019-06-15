@@ -14,10 +14,10 @@
         android:appCategory="maps"
         android:backupAgent="com.github.times.compass.backup.CompassBackupAgent"
         android:fullBackupContent="@xml/full_backup"
-        android:icon="@mipmap/ic_compass"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:resizeableActivity="true"
-        android:roundIcon="@mipmap/ic_compass"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
         android:theme="@style/Theme.CompassApp.Light"
         tools:replace="android:name">
