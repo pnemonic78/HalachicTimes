@@ -50,6 +50,8 @@ public interface CompassPreferences {
         public static String THEME_SILVER;
         /** Classic theme. */
         public static String THEME_CLASSIC;
+        /** Default theme. */
+        public static String THEME_COMPASS_DEFAULT;
     }
 
     /**
