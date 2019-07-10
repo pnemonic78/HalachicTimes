@@ -15,6 +15,7 @@
  */
 package com.github.times.remind;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
@@ -24,7 +25,10 @@ import com.github.preference.LocalePreferences;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
+
 import timber.log.Timber;
+
+import static com.github.times.remind.ZmanimReminder.ACTION_REMIND;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -36,9 +40,24 @@ public class ZmanimReminderService extends JobIntentService {
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
-    private ZmanimReminder reminder;
+    @SuppressLint("StaticFieldLeak")
+    private static ZmanimReminder reminder;
 
     public static void enqueueWork(Context context, Intent intent) {
+        if (intent == null) {
+            return;
+        }
+        String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
+
+        // Handler high priority actions immediately.
+        if (ACTION_REMIND.equals(action)) {
+            processReminder(context, intent);
+            return;
+        }
+
         enqueueWork(context, ZmanimReminderService.class, JOB_REMIND, intent);
     }
 
@@ -52,11 +71,14 @@ public class ZmanimReminderService extends JobIntentService {
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
         Timber.v("onHandleWork %s", intent);
-        ZmanimReminder reminder = this.reminder;
+        processReminder(this, intent);
+    }
+
+    private static void processReminder(Context context, @NonNull Intent intent) {
+        ZmanimReminder reminder = ZmanimReminderService.reminder;
         if (reminder == null) {
-            final Context context = this;
             reminder = new ZmanimReminder(context);
-            this.reminder = reminder;
+            ZmanimReminderService.reminder = reminder;
         }
         reminder.process(intent);
     }
