@@ -21,6 +21,8 @@ import android.content.Intent;
 
 import timber.log.Timber;
 
+import static com.github.times.remind.ZmanimReminder.ACTION_REMIND;
+
 /**
  * Receive alarm events, or date-time events, to update reminders.
  *
@@ -28,11 +30,30 @@ import timber.log.Timber;
  */
 public class ZmanimReminderReceiver extends BroadcastReceiver {
 
+    private ZmanimReminder reminder;
+
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
         Timber.v("onReceive %s", intent);
+        if (intent == null) {
+            return;
+        }
+        String action = intent.getAction();
+        if (action == null) {
+            return;
+        }
 
+        // Handler high priority actions immediately.
+        if (ACTION_REMIND.equals(action)) {
+            ZmanimReminder reminder = this.reminder;
+            if (reminder == null) {
+                reminder = new ZmanimReminder(context);
+                this.reminder = reminder;
+            }
+            reminder.process(intent);
+            return;
+        }
         // Delegate actions to the service.
         ZmanimReminderService.enqueueWork(context, intent);
     }
