@@ -69,6 +69,12 @@ public class ZmanimReminderService extends JobIntentService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        localeCallbacks.onCreate(this);
+    }
+
+    @Override
     protected void onHandleWork(@NonNull Intent intent) {
         Timber.v("onHandleWork %s", intent);
         processReminder(this, intent);
