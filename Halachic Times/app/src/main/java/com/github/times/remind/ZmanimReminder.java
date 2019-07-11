@@ -61,6 +61,11 @@ import androidx.core.app.NotificationCompat;
 import timber.log.Timber;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.content.Intent.ACTION_BOOT_COMPLETED;
+import static android.content.Intent.ACTION_DATE_CHANGED;
+import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.content.Intent.ACTION_TIME_CHANGED;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION;
@@ -335,7 +340,7 @@ public class ZmanimReminder {
 
         switch (settings.getReminderType()) {
             case RingtoneManager.TYPE_ALARM:
-                alarmNow(item);
+                alarmNow(item, now + STOP_NOTIFICATION_AFTER);
                 break;
             case RingtoneManager.TYPE_NOTIFICATION:
             default:
@@ -418,11 +423,11 @@ public class ZmanimReminder {
         Bundle extras;
 
         switch (action) {
-            case Intent.ACTION_BOOT_COMPLETED:
-            case Intent.ACTION_DATE_CHANGED:
-            case Intent.ACTION_TIMEZONE_CHANGED:
-            case Intent.ACTION_TIME_CHANGED:
-            case Intent.ACTION_MY_PACKAGE_REPLACED:
+            case ACTION_BOOT_COMPLETED:
+            case ACTION_DATE_CHANGED:
+            case ACTION_TIMEZONE_CHANGED:
+            case ACTION_TIME_CHANGED:
+            case ACTION_MY_PACKAGE_REPLACED:
             case ACTION_UPDATE:
                 update = true;
                 break;
@@ -810,14 +815,15 @@ public class ZmanimReminder {
      * Alarm screen now.
      *
      * @param item the reminder item.
+     * @param silenceWhen when to silence the alarm, in milliseconds.
      */
-    public void alarmNow(ZmanimReminderItem item) {
+    public void alarmNow(ZmanimReminderItem item, long silenceWhen) {
         Timber.i("alarm now [" + item.title + "] for [" + formatDateTime(item.time) + "]");
 
         final Context context = getContext();
         Intent intent = new Intent(context, AlarmActivity.class);
         item.put(intent);
-        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, item.time + STOP_NOTIFICATION_AFTER);
+        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

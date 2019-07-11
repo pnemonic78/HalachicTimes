@@ -41,6 +41,12 @@ public class ZmanimWidgetService extends RemoteViewsService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        localeCallbacks.onCreate(this);
+    }
+
+    @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         final Context context = this;
         return new ZmanimWidgetViewsFactory(context, intent);

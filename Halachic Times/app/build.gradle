@@ -93,4 +93,9 @@ dependencies {
     implementation project(':locations')
     implementation project(':compass-lib')
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+
+    // Testing
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation "androidx.test:runner:$supportTestVersion"
+    androidTestImplementation "androidx.test:rules:$supportTestVersion"
 }

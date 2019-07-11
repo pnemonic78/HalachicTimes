@@ -21,12 +21,12 @@ import android.content.res.Resources;
 import com.github.preference.SimpleThemePreferences;
 import com.github.times.compass.lib.R;
 
-import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_RHUMB_LINE;
 import static com.github.times.compass.preference.CompassPreferences.Values.SUMMARIES_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.THEME_CLASSIC;
+import static com.github.times.compass.preference.CompassPreferences.Values.THEME_COMPASS_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.THEME_GOLD;
 import static com.github.times.compass.preference.CompassPreferences.Values.THEME_ORIGINAL;
 import static com.github.times.compass.preference.CompassPreferences.Values.THEME_SILVER;
@@ -50,7 +50,7 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
 
     @Override
     public String getCompassThemeValue() {
-        return preferences.getString(KEY_THEME_COMPASS, THEME_DEFAULT);
+        return preferences.getString(KEY_THEME_COMPASS, THEME_COMPASS_DEFAULT);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
         BEARING_GREAT_CIRCLE = res.getString(R.string.compass_bearing_value_circle);
         BEARING_RHUMB_LINE = res.getString(R.string.compass_bearing_value_rhumb);
 
-        THEME_DEFAULT = res.getString(R.string.compass_theme_defaultValue);
+        THEME_COMPASS_DEFAULT = res.getString(R.string.compass_theme_defaultValue);;
         THEME_CLASSIC = res.getString(R.string.compass_theme_value_classic);
         THEME_GOLD = res.getString(R.string.compass_theme_value_gold);
         THEME_ORIGINAL = res.getString(R.string.compass_theme_value_original);
