@@ -773,8 +773,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             ZmanimItem item;
             for (int i = 0; i < count; i++) {
                 item = masterAdapter.getItem(i);
-                if (item.titleId == masterId)
+                if ((item != null) && (item.titleId == masterId)) {
                     return true;
+                }
             }
             return false;
         }

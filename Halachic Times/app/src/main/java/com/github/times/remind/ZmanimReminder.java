@@ -159,10 +159,6 @@ public class ZmanimReminder {
 
     private final Context context;
     private SimpleDateFormat dateFormat;
-    /**
-     * The adapter.
-     */
-    private ZmanimAdapter adapter;
     private Bitmap largeIconSolar;
     private Bitmap largeIconReminder;
 
@@ -205,12 +201,7 @@ public class ZmanimReminder {
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
-        ZmanimAdapter adapter = this.adapter;
-        if (adapter == null) {
-            adapter = new ZmanimAdapter(context, settings);
-            this.adapter = adapter;
-        }
-
+        ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
         remind(settings, populater, adapter);
     }
 
@@ -255,6 +246,9 @@ public class ZmanimReminder {
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
+                if ((item == null) || item.isEmpty()) {
+                    continue;
+                }
 
                 // Is the zman to be reminded?
                 when = settings.getReminder(item.titleId, item.time);
