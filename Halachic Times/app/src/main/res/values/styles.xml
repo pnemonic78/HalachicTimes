@@ -4,7 +4,8 @@
     <style name="Widget.ListView" parent="android:Widget.DeviceDefault.ListView" />
 
     <style name="Widget.ListItem">
-        <item name="android:background">?android:attr/listChoiceBackgroundIndicator</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="Widget.ListDivider">

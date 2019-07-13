@@ -61,6 +61,11 @@ import androidx.core.app.NotificationCompat;
 import timber.log.Timber;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.content.Intent.ACTION_BOOT_COMPLETED;
+import static android.content.Intent.ACTION_DATE_CHANGED;
+import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.content.Intent.ACTION_TIME_CHANGED;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.os.Build.VERSION;
@@ -418,11 +423,11 @@ public class ZmanimReminder {
         Bundle extras;
 
         switch (action) {
-            case Intent.ACTION_BOOT_COMPLETED:
-            case Intent.ACTION_DATE_CHANGED:
-            case Intent.ACTION_TIMEZONE_CHANGED:
-            case Intent.ACTION_TIME_CHANGED:
-            case Intent.ACTION_MY_PACKAGE_REPLACED:
+            case ACTION_BOOT_COMPLETED:
+            case ACTION_DATE_CHANGED:
+            case ACTION_TIMEZONE_CHANGED:
+            case ACTION_TIME_CHANGED:
+            case ACTION_MY_PACKAGE_REPLACED:
             case ACTION_UPDATE:
                 update = true;
                 break;
