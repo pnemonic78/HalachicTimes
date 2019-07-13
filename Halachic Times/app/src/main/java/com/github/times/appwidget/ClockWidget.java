@@ -85,8 +85,9 @@ public class ClockWidget extends ZmanimAppWidget {
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            if (item.isEmpty())
+            if ((item == null) || item.isEmpty()) {
                 continue;
+            }
             bindView(context, list, position, positionTotal, item);
             found = true;
             break;
@@ -97,8 +98,9 @@ public class ClockWidget extends ZmanimAppWidget {
             count = adapter.getCount();
             for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
-                if (item.isEmpty())
+                if ((item == null) || item.isEmpty()) {
                     continue;
+                }
                 bindView(context, list, position, positionTotal, item);
                 break;
             }
