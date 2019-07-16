@@ -85,8 +85,8 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
                 opinionKeys.add(opinionKey);
             }
         }
-        Preference preferenceReminder = this.preferenceReminder;
-        if ((preferenceReminder = initList(reminderKey)) == null) {
+        Preference preferenceReminder = initList(reminderKey);
+        if (preferenceReminder == null) {
             preferenceReminder = initTime(reminderKey);
         }
         this.preferenceReminder = preferenceReminder;
