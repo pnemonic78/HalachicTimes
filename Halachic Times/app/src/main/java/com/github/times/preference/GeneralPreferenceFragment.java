@@ -20,13 +20,13 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.provider.Settings;
 
-import com.github.times.R;
-
 import androidx.annotation.NonNull;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+
+import com.github.times.R;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES;
@@ -52,8 +52,8 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
             Preference pref = findPreference(KEY_REMINDER_SETTINGS);

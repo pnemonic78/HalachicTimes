@@ -20,7 +20,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.Preference;
+
+import androidx.preference.Preference;
 
 import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
@@ -41,8 +42,8 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         clearHistory = findPreference("clear_history");
         clearHistory.setOnPreferenceClickListener(this);

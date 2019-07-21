@@ -16,14 +16,23 @@
 package com.github.times.preference;
 
 import android.content.Context;
-import android.preference.ListPreference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+
+import androidx.preference.ListPreference;
 
 /**
  * Zman reminder preference.
  */
 public class ZmanReminderPreference extends ListPreference {
+
+    public ZmanReminderPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public ZmanReminderPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
     public ZmanReminderPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
