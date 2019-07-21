@@ -34,6 +34,7 @@ import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -58,6 +59,7 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
 import timber.log.Timber;
 
 import static android.app.Notification.DEFAULT_VIBRATE;
@@ -68,9 +70,6 @@ import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.content.Intent.ACTION_TIME_CHANGED;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static android.os.Build.VERSION_CODES.O;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.ZmanimItem.NEVER;
@@ -159,10 +158,6 @@ public class ZmanimReminder {
 
     private final Context context;
     private SimpleDateFormat dateFormat;
-    /**
-     * The adapter.
-     */
-    private ZmanimAdapter adapter;
     private Bitmap largeIconSolar;
     private Bitmap largeIconReminder;
 
@@ -205,12 +200,7 @@ public class ZmanimReminder {
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
-        ZmanimAdapter adapter = this.adapter;
-        if (adapter == null) {
-            adapter = new ZmanimAdapter(context, settings);
-            this.adapter = adapter;
-        }
-
+        ZmanimAdapter adapter = new ZmanimAdapter(context, settings);
         remind(settings, populater, adapter);
     }
 
@@ -255,6 +245,9 @@ public class ZmanimReminder {
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
                 item = adapter.getItem(i);
+                if ((item == null) || item.isEmpty()) {
+                    continue;
+                }
 
                 // Is the zman to be reminded?
                 when = settings.getReminder(item.titleId, item.time);
@@ -369,7 +362,13 @@ public class ZmanimReminder {
 
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createAlarmIntent(item);
-        manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        } else {
+            manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        }
     }
 
     /**
@@ -543,7 +542,7 @@ public class ZmanimReminder {
             int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
             int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
             Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
-            Bitmap layerBottom = BitmapFactory.decodeResource(res, (VERSION.SDK_INT >= LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+            Bitmap layerBottom = BitmapFactory.decodeResource(res, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
             Bitmap layerTop = largeIconSolar;
             if (layerTop == null) {
                 layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
@@ -563,7 +562,7 @@ public class ZmanimReminder {
 
     private void postReminderNotification(ZmanimPreferences settings, Notification notification) {
         NotificationManager nm = getNotificationManager();
-        if (VERSION.SDK_INT >= O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initChannels(nm);
         }
         nm.notify(ID_NOTIFY, notification);
@@ -648,11 +647,7 @@ public class ZmanimReminder {
         final long when = item.time;
         Timber.i("notify upcoming [" + contentTitle + "] for [" + formatDateTime(when) + "]");
 
-        final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle,
-            contentText,
-            when,
-            contentIntent,
-            CHANNEL_UPCOMING)
+        final NotificationCompat.Builder builder = createNotificationBuilder(contentTitle, contentText, when, contentIntent, CHANNEL_UPCOMING)
             .setOngoing(true);
 
         return builder.build();
@@ -660,7 +655,7 @@ public class ZmanimReminder {
 
     private void postUpcomingNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
-        if (VERSION.SDK_INT >= O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initChannels(nm);
         }
         nm.notify(ID_NOTIFY_UPCOMING, notification);
@@ -680,7 +675,13 @@ public class ZmanimReminder {
         long triggerAt = item.time + MINUTE_IN_MILLIS;
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createUpcomingIntent();
-        manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        } else {
+            manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        }
     }
 
     private PendingIntent createUpcomingIntent() {
@@ -741,7 +742,7 @@ public class ZmanimReminder {
 
     private void postSilenceNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
-        if (VERSION.SDK_INT >= O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initChannels(nm);
         }
         nm.cancel(ID_NOTIFY); // Kill the notification so that the sound stops playing.
@@ -766,7 +767,7 @@ public class ZmanimReminder {
         return (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
     }
 
-    @TargetApi(O)
+    @TargetApi(Build.VERSION_CODES.O)
     private void initChannels(NotificationManager nm) {
         android.app.NotificationChannel channel;
 
@@ -814,7 +815,7 @@ public class ZmanimReminder {
     /**
      * Alarm screen now.
      *
-     * @param item the reminder item.
+     * @param item        the reminder item.
      * @param silenceWhen when to silence the alarm, in milliseconds.
      */
     public void alarmNow(ZmanimReminderItem item, long silenceWhen) {

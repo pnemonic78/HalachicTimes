@@ -20,17 +20,18 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
-import android.preference.Preference;
 import android.util.AttributeSet;
-
-import com.github.app.ActivityUtils;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
+import androidx.preference.Preference;
+
+import com.github.app.ActivityUtils;
 
 /**
  * A {@link Preference} that allows the user to choose a ringtone from those on the device.
  * The chosen ringtone's URI will be persisted as a string.
+ * Requests a user's permissions to read external media.
  *
  * @author Moshe Waisberg
  */
@@ -50,6 +51,10 @@ public class RingtonePreference extends com.github.preference.RingtonePreference
 
     public RingtonePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public RingtonePreference(Context context) {
+        super(context);
     }
 
     @Override

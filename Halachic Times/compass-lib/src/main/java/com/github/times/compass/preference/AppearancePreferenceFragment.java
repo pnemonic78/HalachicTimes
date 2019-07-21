@@ -35,8 +35,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         initList(KEY_COORDS_FORMAT);
         initList(KEY_THEME);

@@ -16,7 +16,8 @@
 package com.github.times.preference;
 
 import android.os.Bundle;
-import android.preference.Preference;
+
+import androidx.preference.Preference;
 
 import com.github.preference.NumberPickerPreference;
 import com.github.times.R;
@@ -29,8 +30,8 @@ import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
 public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         NumberPickerPreference candles = (NumberPickerPreference) findPreference(KEY_OPINION_CANDLES);
         candles.setOnPreferenceChangeListener(this);

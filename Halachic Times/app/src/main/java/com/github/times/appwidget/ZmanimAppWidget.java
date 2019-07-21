@@ -210,6 +210,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
         for (int i = 0; i < count; i++) {
             item = adapter.getItem(i);
+            if ((item == null) || item.isEmpty()) {
+                continue;
+            }
             time = item.time;
             if ((now < time) && (time < when)) {
                 when = time;
