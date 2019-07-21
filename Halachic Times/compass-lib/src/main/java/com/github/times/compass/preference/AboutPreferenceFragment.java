@@ -18,7 +18,8 @@ package com.github.times.compass.preference;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.Preference;
+
+import androidx.preference.Preference;
 
 import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
@@ -34,8 +35,8 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         final Context context = getActivity();
         Preference version = findPreference("about.version");

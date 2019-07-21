@@ -19,11 +19,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.SwitchPreference;
 import android.text.TextUtils;
+
+import androidx.preference.CheckBoxPreference;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
+import androidx.preference.SwitchPreference;
 
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
@@ -53,7 +54,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     private ZmanimPreferences preferences;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         Bundle args = getArguments();
         String xmlName = args.getString(EXTRA_XML);
         int indexSlash = xmlName.lastIndexOf('/');
@@ -69,7 +70,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         String opinionKey = args.getString(EXTRA_OPINION);
         String reminderKey = args.getString(EXTRA_REMINDER);
 
-        super.onCreate(savedInstanceState);
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         opinionKeys.clear();
         if (!TextUtils.isEmpty(opinionKey)) {

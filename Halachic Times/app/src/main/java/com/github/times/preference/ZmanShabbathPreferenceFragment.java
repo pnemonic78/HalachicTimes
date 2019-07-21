@@ -17,8 +17,9 @@ package com.github.times.preference;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
+
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 
 import com.github.preference.NumberPickerPreference;
 import com.github.times.R;
@@ -43,8 +44,8 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     private NumberPickerPreference minutesPreference;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         // Must be in reverse order for non-null dependencies.
         minutesPreference = (NumberPickerPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);

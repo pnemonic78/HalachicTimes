@@ -18,16 +18,16 @@ package com.github.times.preference;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 
 import com.github.times.BuildConfig;
 import com.github.times.R;
 import com.github.util.LocaleUtils;
 
 import java.util.Locale;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import static android.content.Intent.ACTION_LOCALE_CHANGED;
 import static android.text.TextUtils.isEmpty;
@@ -53,8 +53,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        super.onCreatePreferences(savedInstanceState, rootKey);
 
         initList(KEY_THEME);
         initList(KEY_THEME_COMPASS);
