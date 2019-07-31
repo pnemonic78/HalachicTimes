@@ -531,4 +531,17 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         ZmanimItem item = getItem(position);
         return (item != null) ? item.titleId : position;
     }
+
+    @Nullable
+    public ZmanimItem getItemById(int id) {
+        final int count = getCount();
+        ZmanimItem item;
+        for (int i = 0; i < count; i++) {
+            item = getItem(i);
+            if ((item != null) && (item.titleId == id)) {
+                return item;
+            }
+        }
+        return null;
+    }
 }
