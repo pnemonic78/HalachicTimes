@@ -878,16 +878,23 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             int d = gcal.get(Calendar.DAY_OF_MONTH);
 
             // Molad is always of the previous month.
-            int jLastDatOfMonth = jcal.getDaysInJewishMonth();
-            if ((jewishDayOfMonth > 1) && (jewishDayOfMonth < jLastDatOfMonth)) {
-                jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDatOfMonth);
+            int jLastDayOfMonth = jcal.getDaysInJewishMonth();
+            if ((jewishDayOfMonth > 1) && (jewishDayOfMonth < jLastDayOfMonth)) {
+                jcal.setJewishDate(jcal.getJewishYear(), jcal.getJewishMonth(), jLastDayOfMonth);
             }
-            jcal.forward(Calendar.DATE, 1);
-
             JewishDate molad = jcal.getMolad();
             int moladYear = molad.getGregorianYear();
             int moladMonth = molad.getGregorianMonth();
             int moladDay = molad.getGregorianDayOfMonth();
+            if ((moladYear != y) || (moladMonth != m) || (moladDay != d)) {
+                jcal.forward(Calendar.DATE, 1);
+
+                molad = jcal.getMolad();
+                moladYear = molad.getGregorianYear();
+                moladMonth = molad.getGregorianMonth();
+                moladDay = molad.getGregorianDayOfMonth();
+            }
+
             if ((moladYear == y) && (moladMonth == m) && (moladDay == d)) {
                 double moladSeconds = (molad.getMoladChalakim() * 10.0) / 3.0;
                 double moladSecondsFloor = Math.floor(moladSeconds);
