@@ -60,7 +60,7 @@ public abstract class GeocoderBase {
     /**
      * Maximum radius to consider a location near the same plateau with similar terrain.
      */
-    protected static final float SAME_PLATEAU = 250000f;// 250 kilometres.
+    protected static final float SAME_PLATEAU = 150000f;// 150 kilometres.
     /**
      * Maximum radius to consider a location near the same planet.
      */
