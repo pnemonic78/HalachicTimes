@@ -215,7 +215,7 @@ public class CountriesGeocoder extends GeocoderBase {
         final int fixedPointLatitude = (int) Math.rint(latitude * RATIO);
         final int fixedPointLongitude = (int) Math.rint(longitude * RATIO);
         final CountryPolygon[] borders = countryBorders;
-        if (borders == null) {
+        if ((borders == null) || (borders.length == 0)) {
             return -1;
         }
         double distanceToBorder;
