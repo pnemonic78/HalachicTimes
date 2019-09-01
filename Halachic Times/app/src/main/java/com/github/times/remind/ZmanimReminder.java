@@ -463,7 +463,7 @@ public class ZmanimReminder {
 
     /**
      * Format the date and time with seconds.<br>
-     * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS}"
+     * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS zzz}"
      *
      * @param time the time to format.
      * @return the formatted time.
@@ -471,7 +471,7 @@ public class ZmanimReminder {
     private String formatDateTime(Date time) {
         SimpleDateFormat dateFormat = this.dateFormat;
         if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zzz", Locale.US);
             this.dateFormat = dateFormat;
         }
         return dateFormat.format(time);

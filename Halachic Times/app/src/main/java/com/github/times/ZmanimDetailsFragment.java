@@ -25,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -71,7 +73,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
      * @param date the date.
      * @param id   the time id.
      */
-    public A populateTimes(Calendar date, int id) {
+    public A populateTimes(@NonNull Calendar date, int id) {
         masterId = id;
         if (!isAdded()) {
             return null;

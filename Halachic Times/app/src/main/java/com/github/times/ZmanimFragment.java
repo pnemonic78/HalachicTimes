@@ -31,6 +31,8 @@ import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
@@ -177,7 +179,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      *
      * @param date the date.
      */
-    public A populateTimes(Calendar date) {
+    public A populateTimes(@NonNull Calendar date) {
         // Called before attached to activity?
         if (!isAdded()) {
             return null;

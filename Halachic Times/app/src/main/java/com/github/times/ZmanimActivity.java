@@ -41,6 +41,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.NonNull;
+
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -738,7 +740,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         view.startAnimation(slideLeftToRight);
     }
 
-    private void populateFragments(Calendar date) {
+    private void populateFragments(@NonNull Calendar date) {
         masterFragment.populateTimes(date);
         detailsListFragment.populateTimes(date);
         candlesFragment.populateTimes(date);
