@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Поверителност и сигурност</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Изчистване на данните"</string>
+    <string name="location_source_title">Източник на местоположението</string>
 
     <!-- About -->
     <string name="version_title">Версия на приложението</string>

@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Tietosuoja ja turvallisuus</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Tyhjennä tallennustila"</string>
+    <string name="location_source_title">Paikan lähde</string>
 
     <!-- About -->
     <string name="version_title">Sovellusversio </string>

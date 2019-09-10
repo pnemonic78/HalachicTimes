@@ -13,7 +13,7 @@
     <Preference
         android:icon="@drawable/ic_settings_location"
         android:key="location_permission"
-        android:title="@string/pref_location_permission_title">
+        android:title="@string/location_source_title">
         <intent android:action="android.settings.LOCATION_SOURCE_SETTINGS" />
     </Preference>
 
