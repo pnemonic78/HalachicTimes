@@ -52,6 +52,8 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
             clearAppData.setEnabled(true);
             clearAppData.setOnPreferenceClickListener(this);
         }
+
+        validateIntent("location_permission");
     }
 
     @Override
