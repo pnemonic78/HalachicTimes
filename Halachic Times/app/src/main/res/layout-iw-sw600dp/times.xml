@@ -22,7 +22,8 @@
             android:id="@+id/details_fragment"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="0">
+            android:layout_weight="2"
+            tools:background="@color/red_x40">
 
             <fragment
                 android:id="@+id/details_list_fragment"
