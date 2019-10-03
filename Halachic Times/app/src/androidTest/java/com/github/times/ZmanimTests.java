@@ -7,6 +7,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,7 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
 public class ZmanimTests {
 
     @Test
@@ -71,5 +72,23 @@ public class ZmanimTests {
         assertEquals(day, molad.get(Calendar.DAY_OF_MONTH));
         assertEquals(hour, molad.get(Calendar.HOUR_OF_DAY));
         assertEquals(minute, molad.get(Calendar.MINUTE));
+    }
+
+    @Test
+    public void kosherCalendar() {
+        final Context context = getApplicationContext();
+        assertNotNull(context);
+
+        ZmanimPreferences preferences = new SimpleZmanimPreferences(context);
+        assertNotNull(preferences);
+
+        ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
+        assertNotNull(populater);
+        ComplexZmanimCalendar complexZmanimCalendar = populater.getCalendar();
+        assertNotNull(complexZmanimCalendar);
+        assertNotNull(complexZmanimCalendar.getGeoLocation());
+        assertNotNull(complexZmanimCalendar.getCalendar());
+        assertNotNull(complexZmanimCalendar.getSeaLevelSunrise());
+        assertNotNull(complexZmanimCalendar.getSeaLevelSunset());
     }
 }

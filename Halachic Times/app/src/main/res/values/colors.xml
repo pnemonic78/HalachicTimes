@@ -48,6 +48,6 @@
     <color name="btn_navigation_selected">#a6808000</color>
     <color name="btn_navigation_default">@color/black_x80</color>
 
-    <color name="bg_launcher">@color/midday_light</color>
+    <color name="bg_launcher">#88FFFF</color>
 
 </resources>

@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacy en beveiliging</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Opslag wissen"</string>
+    <string name="location_source_title">Locatie bron</string>
 
     <!-- About -->
     <string name="version_title">App versie</string>

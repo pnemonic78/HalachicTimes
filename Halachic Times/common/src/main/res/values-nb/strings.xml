@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Personvern og sikkerhet</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Tøm lager"</string>
+    <string name="location_source_title">Plasseringskilde</string>
 
     <!-- About -->
     <string name="version_title">Apper versjon</string>

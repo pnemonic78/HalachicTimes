@@ -41,6 +41,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.NonNull;
+
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
@@ -368,11 +370,17 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         viewSwitcher = view.findViewById(R.id.frame_fragments);
         if (viewSwitcher != null) {
             Animation inAnim = AnimationUtils.makeInAnimation(context, false);
-            inAnim.setDuration(400L);
             viewSwitcher.setInAnimation(inAnim);
             Animation outAnim = AnimationUtils.makeOutAnimation(context, true);
-            outAnim.setDuration(400L);
             viewSwitcher.setOutAnimation(outAnim);
+        } else {
+            LinearLayout.LayoutParams detailsFragmentSwitcherLayoutParams = (LinearLayout.LayoutParams) detailsFragmentSwitcher.getLayoutParams();
+            float detailsWeight = detailsFragmentSwitcherLayoutParams.weight;
+            long detailsAnimTime = context.getResources().getInteger(android.R.integer.config_mediumAnimTime);
+            detailsGrow = new LayoutWeightAnimation(detailsFragmentSwitcher, 0f, detailsWeight);
+            detailsGrow.setDuration(detailsAnimTime);
+            detailsShrink = new LayoutWeightAnimation(detailsFragmentSwitcher, detailsWeight, 0f);
+            detailsShrink.setDuration(detailsAnimTime);
         }
 
         View header = view.findViewById(R.id.header);
@@ -389,10 +397,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
         slideRightToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
         slideLeftToRight = AnimationUtils.loadAnimation(context, R.anim.slide_left_to_right);
-        detailsGrow = new LayoutWeightAnimation(detailsFragmentSwitcher, 0f, 2f);
-        detailsGrow.setDuration(500L);
-        detailsShrink = new LayoutWeightAnimation(detailsFragmentSwitcher, 2f, 0f);
-        detailsShrink.setDuration(500L);
+
         hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
         hideNavigation.setAnimationListener(this);
         showNavigation = AnimationUtils.loadAnimation(context, R.anim.show_nav);
@@ -738,7 +743,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         view.startAnimation(slideLeftToRight);
     }
 
-    private void populateFragments(Calendar date) {
+    private void populateFragments(@NonNull Calendar date) {
         masterFragment.populateTimes(date);
         detailsListFragment.populateTimes(date);
         candlesFragment.populateTimes(date);
