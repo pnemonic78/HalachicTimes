@@ -15,7 +15,6 @@
  */
 package com.github.times.compass;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,9 +28,6 @@ import com.github.preference.LocalePreferences;
 import com.github.times.R;
 import com.github.times.location.LocationActivity;
 import com.github.times.preference.CompassPreferenceActivity;
-
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 
 /**
  * Show the direction in which to pray.
@@ -54,12 +50,6 @@ public class CompassActivity extends BaseCompassActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         localeCallbacks.onCreate(this);
-        if (VERSION.SDK_INT < JELLY_BEAN) {
-            ActionBar actionBar = getActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
-        }
     }
 
     @Override
@@ -71,12 +61,6 @@ public class CompassActivity extends BaseCompassActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                if (VERSION.SDK_INT < JELLY_BEAN) {
-                    finish();
-                    return true;
-                }
-                break;
             case R.id.menu_location:
                 startLocations();
                 return true;

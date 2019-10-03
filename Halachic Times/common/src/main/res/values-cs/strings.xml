@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Ochrana soukromí a zabezpečení</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Vymazat úložiště"</string>
+    <string name="location_source_title">Zdroj polohy</string>
 
     <!-- About -->
     <string name="version_title">Verze aplikace</string>

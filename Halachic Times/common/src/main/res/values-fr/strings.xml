@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Confidentialité et sécurité</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Effacer le stockage"</string>
+    <string name="location_source_title">Source d\'emplacement</string>
 
     <!-- About -->
     <string name="version_title">Version de l\'application</string>

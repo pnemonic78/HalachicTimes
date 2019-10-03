@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Privacidade e segurança</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Limpar armazenamento"</string>
+    <string name="location_source_title">Origem da localização</string>
 
     <!-- About -->
     <string name="version_title">Versão do aplicativo</string>

@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">गोपनीयता का और सुरक्षा की</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"मेमोरी खाली करें"</string>
+    <string name="location_source_title">स्थान स्रोत</string>
 
     <!-- About -->
     <string name="version_title">एप्लिकेशन वर्जन</string>

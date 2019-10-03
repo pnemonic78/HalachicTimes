@@ -7,6 +7,7 @@
     <!-- Settings screen - Privacy -->
     <string name="pref_privacy_security_title">Datenschutz und Sicherheit</string>
     <string name="clear_user_data_text" msgid="355574089263023363">"Speicherinhalt löschen"</string>
+    <string name="location_source_title">Standortquelle</string>
 
     <!-- About -->
     <string name="version_title">Anwendungsversion</string>

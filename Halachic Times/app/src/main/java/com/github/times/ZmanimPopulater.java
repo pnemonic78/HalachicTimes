@@ -29,6 +29,7 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -202,6 +203,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      *
      * @return the calendar.
      */
+    @NonNull
     public ComplexZmanimCalendar getCalendar() {
         return calendar;
     }
@@ -1098,7 +1100,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      *
      * @param calendar the calendar.
      */
-    public void setCalendar(Calendar calendar) {
+    public void setCalendar(@NonNull Calendar calendar) {
         this.calendar.setCalendar(calendar);
     }
 

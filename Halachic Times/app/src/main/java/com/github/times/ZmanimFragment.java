@@ -31,6 +31,8 @@ import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
@@ -41,8 +43,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static com.github.view.ViewUtils.applyMaxWidth;
 
 /**
@@ -177,7 +177,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      *
      * @param date the date.
      */
-    public A populateTimes(Calendar date) {
+    public A populateTimes(@NonNull Calendar date) {
         // Called before attached to activity?
         if (!isAdded()) {
             return null;
@@ -389,11 +389,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         // Workaround for Samsung ICS bug where the highlight lingers.
         if (bg instanceof StateListDrawable)
             bg = bg.getConstantState().newDrawable();
-        if (VERSION.SDK_INT < JELLY_BEAN) {
-            view.setBackgroundDrawable(bg);
-        } else {
-            view.setBackground(bg);
-        }
+        view.setBackground(bg);
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         unhighlightBackground = null;
     }
@@ -437,11 +433,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         paddingTop = view.getPaddingTop();
         paddingRight = view.getPaddingRight();
         paddingBottom = view.getPaddingBottom();
-        if (VERSION.SDK_INT < JELLY_BEAN) {
-            view.setBackgroundDrawable(getSelectedBackground());
-        } else {
-            view.setBackground(getSelectedBackground());
-        }
+        view.setBackground(getSelectedBackground());
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         highlightRow = view;
         // Scroll to the row

@@ -16,7 +16,6 @@
 package com.github.times.location;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -34,6 +33,10 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
@@ -46,13 +49,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
 import timber.log.Timber;
 
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.JELLY_BEAN;
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 /**
@@ -123,12 +121,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
         final LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        if (VERSION.SDK_INT < JELLY_BEAN) {
-            ActionBar actionBar = getActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
-        }
         setContentView(R.layout.locations);
 
         SearchView searchText = findViewById(R.id.search_location);
@@ -203,12 +195,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ac
     public boolean onOptionsItemSelected(MenuItem item) {
         final int id = item.getItemId();
 
-        if (id == android.R.id.home) {
-            if (VERSION.SDK_INT < JELLY_BEAN) {
-                finish();
-                return true;
-            }
-        }
         // Cannot use 'switch' here because library ids are not final.
         if (id == R.id.menu_location_add) {
             addLocation();
