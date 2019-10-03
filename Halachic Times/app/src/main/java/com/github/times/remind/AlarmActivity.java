@@ -35,6 +35,7 @@ import com.github.media.RingtoneManager;
 import com.github.text.style.TypefaceSpan;
 import com.github.times.BuildConfig;
 import com.github.times.R;
+import com.github.times.ZmanimHelper;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
@@ -89,7 +90,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      * The preferences.
      */
     private P preferences;
-    private SimpleDateFormat dateFormat;
     private Format timeFormat;
     private long timeFormatGranularity;
     private MediaPlayer ringtone;
@@ -241,33 +241,16 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     }
 
     /**
-     * Format the date and time with seconds.<br>
-     * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS zzz}"
-     *
-     * @param time the time to format.
-     * @return the formatted time.
-     */
-    private String formatDateTime(Date time) {
-        SimpleDateFormat dateFormat = this.dateFormat;
-        if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zzz", Locale.US);
-            this.dateFormat = dateFormat;
-        }
-        return dateFormat.format(time);
-    }
-
-    /**
      * Format the date and time with seconds.
      *
      * @param time the time to format.
      * @return the formatted time.
-     * @see #formatDateTime(Date)
      */
     private String formatDateTime(long time) {
         if (time == NEVER) {
             return "NEVER";
         }
-        return formatDateTime(new Date(time));
+        return ZmanimHelper.formatDateTime(new Date(time));
     }
 
     @Override

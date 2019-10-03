@@ -24,6 +24,9 @@ import android.content.Intent;
 import android.location.Location;
 import android.widget.RemoteViews;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
+
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.appwidget.AppWidgetUtils;
@@ -31,6 +34,7 @@ import com.github.preference.LocalePreferences;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
+import com.github.times.ZmanimHelper;
 import com.github.times.ZmanimItem;
 import com.github.times.ZmanimPopulater;
 import com.github.times.location.ZmanimLocationListener;
@@ -41,8 +45,7 @@ import com.github.util.LocaleUtils;
 
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
+import timber.log.Timber;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
 import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
@@ -232,6 +235,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param time         the time to update.
      */
     private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
+        Timber.i("scheduleUpdate %s", ZmanimHelper.formatDateTime(time));
         Intent alarmIntent = new Intent(context, ZmanimAppWidget.class);
         alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
         alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);

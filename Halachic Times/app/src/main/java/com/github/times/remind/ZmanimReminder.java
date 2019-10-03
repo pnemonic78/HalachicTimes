@@ -39,10 +39,14 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+
 import com.github.times.R;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
+import com.github.times.ZmanimHelper;
 import com.github.times.ZmanimItem;
 import com.github.times.ZmanimPopulater;
 import com.github.times.location.ZmanimLocations;
@@ -54,11 +58,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
 
 import timber.log.Timber;
 
@@ -462,30 +461,13 @@ public class ZmanimReminder {
     }
 
     /**
-     * Format the date and time with seconds.<br>
-     * The pattern is "{@code yyyy-MM-dd HH:mm:ss.SSS zzz}"
-     *
-     * @param time the time to format.
-     * @return the formatted time.
-     */
-    private String formatDateTime(Date time) {
-        SimpleDateFormat dateFormat = this.dateFormat;
-        if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS zzz", Locale.US);
-            this.dateFormat = dateFormat;
-        }
-        return dateFormat.format(time);
-    }
-
-    /**
      * Format the date and time with seconds.
      *
      * @param time the time to format.
      * @return the formatted time.
-     * @see #formatDateTime(Date)
      */
     private String formatDateTime(long time) {
-        return formatDateTime(new Date(time));
+        return ZmanimHelper.formatDateTime(time);
     }
 
     private Notification createReminderNotification(ZmanimPreferences settings, ZmanimReminderItem item, PendingIntent contentIntent) {
