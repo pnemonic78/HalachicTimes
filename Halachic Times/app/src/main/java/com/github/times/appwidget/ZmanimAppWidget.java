@@ -96,6 +96,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Timber.v("onReceive %s %s", this, intent);
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         this.context = context;
@@ -125,6 +126,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        Timber.v("onUpdate %s", this);
         this.localeCallbacks = new LocaleHelper<>(context);
         context = localeCallbacks.attachBaseContext(context);
         this.context = context;
@@ -235,8 +237,8 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param time         the time to update.
      */
     private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
-        Timber.i("scheduleUpdate %s", ZmanimHelper.formatDateTime(time));
-        Intent alarmIntent = new Intent(context, ZmanimAppWidget.class);
+        Timber.i("scheduleUpdate [%s]", ZmanimHelper.formatDateTime(time));
+        Intent alarmIntent = new Intent(context, getClass());
         alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
         alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
         PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_WIDGET, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
