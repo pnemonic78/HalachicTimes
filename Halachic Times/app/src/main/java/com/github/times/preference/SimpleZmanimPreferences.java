@@ -40,7 +40,6 @@ import com.github.preference.TimePreference;
 import com.github.times.R;
 
 import androidx.annotation.NonNull;
-import androidx.core.os.BuildCompat;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -758,5 +757,10 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
     @Override
     public boolean isUseElevation() {
         return !OPINION_SEA.equals(getSunrise());
+    }
+
+    @Override
+    public boolean isYearFinalForm() {
+        return preferences.getBoolean(KEY_YEAR_FINAL, context.getResources().getBoolean(R.bool.year_final_defaultValue));
     }
 }
