@@ -521,6 +521,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (formatter == null) {
             formatter = new HebrewDateFormatter();
             formatter.setHebrewFormat(true);
+            formatter.setUseFinalFormLetters(settings.isYearFinalForm());
             hebrewDateFormatter = formatter;
         }
         return formatter;

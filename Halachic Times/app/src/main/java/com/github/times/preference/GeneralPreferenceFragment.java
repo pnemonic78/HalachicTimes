@@ -36,6 +36,8 @@ import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_SETTINGS;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
+import static com.github.times.preference.ZmanimPreferences.KEY_YEAR_FINAL;
+import static com.github.util.LocaleUtils.isLocaleRTL;
 
 /**
  * This fragment shows the preferences for the General header.
@@ -54,6 +56,12 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
+
+        Preference yearFinal = findPreference(KEY_YEAR_FINAL);
+        if (yearFinal != null) {
+            final Context context = yearFinal.getContext();
+            yearFinal.setVisible(isLocaleRTL(context));
+        }
 
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
             Preference pref = findPreference(KEY_REMINDER_SETTINGS);

@@ -58,6 +58,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_EMPHASIS_SCALE = "emphasis_scale";
     /** Preference name for the app widget theme. */
     String KEY_THEME_WIDGET = "theme.appwidget";
+    /** Preference name for formatting Hebrew year with final form letters. */
+    String KEY_YEAR_FINAL = "year.final";
 
     /** Preference name for temporal hour type. */
     String KEY_OPINION_HOUR = "hour";
@@ -581,4 +583,11 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * @return {@code true} if sunrise/sunset should be adjusted for elevation.
      */
     boolean isUseElevation();
+
+    /**
+     * Format Hebrew with final form letters?
+     *
+     * @return {@code true} to use final form letters.
+     */
+    boolean isYearFinalForm();
 }
