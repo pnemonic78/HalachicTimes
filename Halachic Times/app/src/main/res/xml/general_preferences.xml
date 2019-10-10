@@ -10,6 +10,12 @@
         android:key="seconds.visible"
         android:title="@string/seconds_title"/>
     <SwitchPreference
+        android:defaultValue="@bool/year_final_defaultValue"
+        android:key="year.final"
+        android:summaryOff="@string/year_final_summary_off"
+        android:summaryOn="@string/year_final_summary_on"
+        android:title="@string/year_final_title"/>
+    <SwitchPreference
         android:defaultValue="@bool/summaries_visible_defaultValue"
         android:key="summaries.visible"
         android:title="@string/summaries_title"/>
