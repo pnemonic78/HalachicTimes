@@ -28,7 +28,7 @@
     <string name="opinion_baal_hatanya">Vastavalt Baal Tanja</string>
 
     <!-- Temporal hour -->
-    <string name="hour">Hooajaline tund</string>
+    <string name="hour">Hooajatund</string>
 
     <!-- Dawn -->
     <string name="dawn">Koit</string>
@@ -144,7 +144,7 @@
     <string name="midnight_6">6 tundi pärast videvik</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Lähis valvur</string>
+    <string name="midnight_guard">Kesköö valvur</string>
     <string name="morning_guard">Hommik valvur</string>
     <string name="guard_first">Esimene nihe</string>
     <string name="guard_second">Teine nihe</string>

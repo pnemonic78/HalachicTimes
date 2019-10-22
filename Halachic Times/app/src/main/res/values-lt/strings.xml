@@ -122,7 +122,7 @@
     <string name="nightfall_9_75">Saulė yra 9,75° žemiau horizonto</string>
 
     <!-- Shabbath. -->
-    <string name="shabbath_ends">Šabo galai</string>
+    <string name="shabbath_ends">Šabato baigiasi</string>
     <string name="minutes_after_zero">@string/minutes_after_other</string>
     <string name="minutes_after_one">%1$d minutės po %2$s</string>
     <string name="minutes_after_two">@string/minutes_after_other</string>
@@ -135,7 +135,7 @@
     <string name="minutes_after_specific_few">%1$d minučių po %2$s (%3$s)</string>
     <string name="minutes_after_specific_many">@string/minutes_after_specific_other</string>
     <string name="minutes_after_specific_other">%1$d minučių po %2$s (%3$s)</string>
-    <string name="festival_ends">Šventė galai</string>
+    <string name="festival_ends">Šventė baigiasi</string>
 
     <!-- Midnight -->
     <string name="midnight">Vidurnakčio</string>
@@ -167,7 +167,7 @@
 
     <!-- Fast / Taanis -->
     <string name="fast_begins">Pasninkas prasideda</string>
-    <string name="fast_ends">Pasninkas galai</string>
+    <string name="fast_ends">Pasninkas baigiasi</string>
 
     <!-- Omer -->
     <string name="omer"><i>Omer</i></string>

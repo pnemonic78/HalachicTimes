@@ -28,7 +28,7 @@
     <string name="opinion_baal_hatanya">Nach Baal Tanya</string>
 
     <!-- Temporal hour -->
-    <string name="hour">Saison Stunde</string>
+    <string name="hour">Saisonstunde</string>
 
     <!-- Dawn -->
     <string name="dawn">Morgendämmerung</string>
@@ -54,7 +54,7 @@
     <string name="shema_fixed">3 Stunden vor festen lokalen Mittag</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Letzte Morgengebet</string>
+    <string name="prayers">Letzte Morgengebete</string>
     <string name="prayers_fixed">2 Stunden vor festen lokalen Mittag</string>
     <string name="prayers_2">2 Stunden vor Mittag</string>
 
@@ -64,12 +64,12 @@
     <string name="midday_fixed">Mittag für die lokale Breitengrad eingestellt</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Frühestenachmittagsgebet</string>
+    <string name="earliest_mincha">Früheste Nachmittagsgebete</string>
     <string name="earliest_mincha_greater">Größer <i>mincha</i></string>
     <string name="earliest_mincha_30">30 Minuten nach der Mittag</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Nachmittagsgebet</string>
+    <string name="mincha">Nachmittagsgebete</string>
     <string name="mincha_lesser">Weniger <i>mincha</i></string>
 
     <!-- Plug hamincha -->

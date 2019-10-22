@@ -73,7 +73,7 @@
     <string name="mincha_lesser"><i>Minchá</i> menor</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plàg <i>minchá</i></string>
+    <string name="plug_hamincha"><i>Plàg minchá</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Acendimento das velas</string>

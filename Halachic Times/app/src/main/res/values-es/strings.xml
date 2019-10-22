@@ -144,7 +144,7 @@
     <string name="midnight_6">6 horas después de anochecer</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Guardia Medio</string>
+    <string name="midnight_guard">Guardia de medianoche</string>
     <string name="morning_guard">Guardia de mañana</string>
     <string name="guard_first">Primer turno</string>
     <string name="guard_second">Segundo turno</string>

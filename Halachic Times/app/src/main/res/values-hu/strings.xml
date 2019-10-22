@@ -144,8 +144,8 @@
     <string name="midnight_6">6 órával azután alkony</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Középső őrség</string>
-    <string name="morning_guard">Reggel őrség</string>
+    <string name="midnight_guard">Éjféli őrség</string>
+    <string name="morning_guard">Reggeli őrség</string>
     <string name="guard_first">Első műszak</string>
     <string name="guard_second">Második műszak</string>
     <string name="guard_third">Harmadik műszak</string>
