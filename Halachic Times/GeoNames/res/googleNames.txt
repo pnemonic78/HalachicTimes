@@ -1402,3 +1402,6 @@
 0	295740	pt	Afula	
 0	295740	ro	Afula	
 0	295740	sv	Afula	
+0	5475433	bg	Лас Вегас
+0	5475433	he	לאס וגאס
+0	5475433	lt	Las Vegasas
