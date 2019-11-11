@@ -16,6 +16,7 @@
 package com.github.geonames;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Collection;
 
 /**
@@ -33,16 +34,23 @@ public class BahaiCities extends JewishCities {
     }
 
     public static void main(String[] args) throws Exception {
-        String pathCities = "GeoNames/res/cities1000.zip";
-        String pathNames = "GeoNames/res/alternateNamesV2.zip";
-        String pathNames2 = "GeoNames/res/googleNames.txt";
+        String pathCities = "GeoNames/dump/cities1000.zip";
+        if (args.length > 0) {
+            pathCities = args[0];
+        }
+        String pathNames = "GeoNames/dump/alternateNamesV2.zip";
+        if (args.length > 1) {
+            pathNames = args[1];
+        }
         BahaiCities cities = new BahaiCities();
-        Collection<GeoNamesToponym> names;
+        Collection<GeoNamesToponym> names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter(), "cities1000.txt");
 
-        names = cities.loadNames(new File(pathCities), new BahaiCitiesFilter(), "cities1000.txt");
         cities.populateElevations(names);
         cities.populateAlternateNames(new File(pathNames), names, "alternateNamesV2.txt");
-        cities.populateAlternateNames(new File(pathNames2), names);
+
+        InputStream googleNames = cities.getClass().getResourceAsStream("/googleNames.txt");
+        cities.populateAlternateNames(googleNames, names);
+
         for (String lang : LANGUAGES) {
             cities.writeAndroidXML(names, lang);
         }

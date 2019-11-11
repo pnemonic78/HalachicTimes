@@ -576,29 +576,38 @@ public class GeoNames {
      * @throws IOException if an I/O error occurs.
      */
     public void populateAlternateNames(File file, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
-        Reader reader = null;
         InputStream in = null;
         try {
             in = new FileInputStream(file);
-            if (zippedName != null) {
-                ZipInputStream zin = new ZipInputStream(in);
-                if (!zippedName.isEmpty()) {
-                    ZipEntry entry;
-                    do {
-                        entry = zin.getNextEntry();
-                    } while (!zippedName.equals(entry.getName()));
-                }
-                in = zin;
-            }
-            reader = new InputStreamReader(in, StandardCharsets.UTF_8);
-            in = null;
-            populateAlternateNames(reader, records);
+            populateAlternateNames(in, records, zippedName);
         } finally {
             if (in != null)
                 in.close();
-            if (reader != null)
-                reader.close();
         }
+    }
+
+    /**
+     * Parse the file with GeoName alternate names.
+     *
+     * @param input      the input to parse.
+     * @param records    the list of names.
+     * @param zippedName the zipped file name.
+     * @throws IOException if an I/O error occurs.
+     */
+    public void populateAlternateNames(InputStream input, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
+        InputStream in = input;
+        if (zippedName != null) {
+            ZipInputStream zin = new ZipInputStream(in);
+            if (!zippedName.isEmpty()) {
+                ZipEntry entry;
+                do {
+                    entry = zin.getNextEntry();
+                } while (!zippedName.equals(entry.getName()));
+            }
+            in = zin;
+        }
+        Reader reader = new InputStreamReader(in, StandardCharsets.UTF_8);
+        populateAlternateNames(reader, records);
     }
 
     /**
@@ -661,17 +670,17 @@ public class GeoNames {
             }
             language = fields[FIELD_ALTERNATE_NAMES_LANGUAGE];
             if (language.isEmpty()
-                || ALTERNATE_NAMES_ABBR.equals(language)
-                || ALTERNATE_NAMES_FAAC.equals(language)
-                || ALTERNATE_NAMES_FR_1793.equals(language)
-                || ALTERNATE_NAMES_IATA.equals(language)
-                || ALTERNATE_NAMES_ICAO.equals(language)
-                || ALTERNATE_NAMES_PHON.equals(language)
-                || ALTERNATE_NAMES_PINY.equals(language)
-                || ALTERNATE_NAMES_POST.equals(language)
-                || ALTERNATE_NAMES_TCID.equals(language)
-                || ALTERNATE_NAMES_WKDT.equals(language)
-                ) {
+                    || ALTERNATE_NAMES_ABBR.equals(language)
+                    || ALTERNATE_NAMES_FAAC.equals(language)
+                    || ALTERNATE_NAMES_FR_1793.equals(language)
+                    || ALTERNATE_NAMES_IATA.equals(language)
+                    || ALTERNATE_NAMES_ICAO.equals(language)
+                    || ALTERNATE_NAMES_PHON.equals(language)
+                    || ALTERNATE_NAMES_PINY.equals(language)
+                    || ALTERNATE_NAMES_POST.equals(language)
+                    || ALTERNATE_NAMES_TCID.equals(language)
+                    || ALTERNATE_NAMES_WKDT.equals(language)
+            ) {
                 continue;
             }
             // "unlc" is almost always the last record in the group, so anything following is probably a mistake.

@@ -23,6 +23,7 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -378,6 +379,20 @@ public class Cities {
     /**
      * Populate the list of names with alternate names.
      *
+     * @param input
+     *         the alternate names input.
+     * @param records
+     *         the list of records to populate.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(InputStream input, Collection<GeoNamesToponym> records) throws IOException {
+        populateAlternateNames(input, records, null);
+    }
+
+    /**
+     * Populate the list of names with alternate names.
+     *
      * @param file
      *         the alternate names file.
      * @param records
@@ -389,5 +404,21 @@ public class Cities {
      */
     public void populateAlternateNames(File file, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
         geoNames.populateAlternateNames(file, records, zippedName);
+    }
+
+    /**
+     * Populate the list of names with alternate names.
+     *
+     * @param input
+     *         the alternate names input.
+     * @param records
+     *         the list of records to populate.
+     * @param zippedName
+     *         the zipped file name.
+     * @throws IOException
+     *         if an I/O error occurs.
+     */
+    public void populateAlternateNames(InputStream input, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
+        geoNames.populateAlternateNames(input, records, zippedName);
     }
 }

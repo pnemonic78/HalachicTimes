@@ -58,8 +58,14 @@ public class Countries extends Cities {
     }
 
     public static void main(String[] args) throws Exception {
-        File countryInfoFile = new File("GeoNames/res/countryInfo.txt");
-        File shapesFile = new File("GeoNames/res/shapes_simplified_low.txt");
+        File countryInfoFile = new File("GeoNames/dump/countryInfo.txt");
+        if (args.length > 0) {
+            countryInfoFile = new File(args[0]);
+        }
+        File shapesFile = new File("GeoNames/dump/shapes_simplified_low.txt");
+        if (args.length > 1) {
+            shapesFile = new File(args[1]);
+        }
 
         Countries countries = new Countries();
         Collection<CountryInfo> names = countries.loadInfo(countryInfoFile);
