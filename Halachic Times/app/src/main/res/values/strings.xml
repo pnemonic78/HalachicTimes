@@ -348,6 +348,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Extra large</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Huge</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Enormous</h1>]]></string>
+    <string name="date_and_time_settings">Date and time</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>
