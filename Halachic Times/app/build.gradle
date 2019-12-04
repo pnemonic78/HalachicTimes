@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+static def joinStringArray(array) {
+    return "{\"" + array.join("\", \"") + "\"}"
+}
+
 def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 

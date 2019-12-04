@@ -64,8 +64,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     private Location addressLocation;
     /** The address. */
     private ZmanimAddress address;
-    /** Populate the header in UI thread. */
-    private Runnable populateHeader;
+    /** Bind the header in UI thread. */
+    private Runnable bindHeader;
     /** Update the location in UI thread. */
     private Runnable updateLocation;
     /** The location header location. */
@@ -169,19 +169,19 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         Timber.v("onAddressChanged %s %s", location, address);
         addressLocation = location;
         this.address = address;
-        Runnable populateHeader = this.populateHeader;
+        Runnable populateHeader = this.bindHeader;
         if (populateHeader == null) {
-            populateHeader = createPopulateHeaderRunnable();
-            this.populateHeader = populateHeader;
+            populateHeader = createBindHeaderRunnable();
+            this.bindHeader = populateHeader;
         }
         runOnUiThread(populateHeader);
     }
 
-    protected Runnable createPopulateHeaderRunnable() {
+    protected Runnable createBindHeaderRunnable() {
         return new Runnable() {
             @Override
             public void run() {
-                populateHeader();
+                bindHeader();
             }
         };
     }
@@ -287,22 +287,22 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
         }
     }
 
-    /** Populate the header item. */
-    protected void populateHeader() {
+    /** Bind the header. */
+    protected void bindHeader() {
         // Have we been destroyed?
         LocationsProvider locations = getLocations();
         Location addressLocation = getAddressLocation();
         Location location = (addressLocation == null) ? locations.getLocation() : addressLocation;
         if (location == null)
             return;
-        populateHeader(location);
+        bindHeader(location);
     }
 
     /**
-     * Populate the header item.
+     * Bind the header.
      * @param location the location to format.
      */
-    protected void populateHeader(Location location) {
+    protected void bindHeader(Location location) {
         if (location == null)
             return;
         TextView locationLabel = headerLocation;

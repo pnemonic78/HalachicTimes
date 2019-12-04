@@ -166,7 +166,7 @@
     <string name="levana_15">15 dage efter nymåne</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">Faste begynder </string>
+    <string name="fast_begins">Faste begynder</string>
     <string name="fast_ends">Faste ender</string>
 
     <!-- Omer -->
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Ekstra stor</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Meget stor</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Enorm</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Dato og klokkeslæt"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dato</string>

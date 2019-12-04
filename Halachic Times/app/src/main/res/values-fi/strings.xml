@@ -54,7 +54,7 @@
     <string name="shema_fixed">3 tuntia ennen kiinteä paikallisia keskipäivä</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Uusin aamurukouksiin</string>
+    <string name="prayers">Uusin aamurukoukset</string>
     <string name="prayers_fixed">2 tuntia ennen kiinteä paikallisia keskipäivä</string>
     <string name="prayers_2">2 tuntia ennen keskipäivä</string>
 
@@ -76,7 +76,7 @@
     <string name="plug_hamincha"><i>Plag hamincha</i></string>
 
     <!-- Candle lighting -->
-    <string name="candles">Kynttilävalaistus</string>
+    <string name="candles">Kynttilän valaistus</string>
     <string name="candles_summary_zero">@string/candles_summary_other</string>
     <string name="candles_summary_one">%1$d minuutti ennen auringonlasku</string>
     <string name="candles_summary_two">@string/candles_summary_other</string>
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Erittäin suuri</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Valtava</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Jättiläismäinen</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Päivämäärä ja aika"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Päivämäärä</string>

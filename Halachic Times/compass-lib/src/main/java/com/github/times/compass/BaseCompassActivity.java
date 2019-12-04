@@ -87,7 +87,7 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
                 if (loc == null)
                     return;
 
-                populateHeader(loc);
+                bindHeader(loc);
 
                 CompassFragment c = fragment;
                 if (c == null)

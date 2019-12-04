@@ -28,7 +28,7 @@
     <string name="opinion_baal_hatanya">Vastavalt Baal Tanja</string>
 
     <!-- Temporal hour -->
-    <string name="hour">Hooajaline tund</string>
+    <string name="hour">Hooajatund</string>
 
     <!-- Dawn -->
     <string name="dawn">Koit</string>
@@ -144,7 +144,7 @@
     <string name="midnight_6">6 tundi pärast videvik</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Lähis valvur</string>
+    <string name="midnight_guard">Kesköö valvur</string>
     <string name="morning_guard">Hommik valvur</string>
     <string name="guard_first">Esimene nihe</string>
     <string name="guard_second">Teine nihe</string>
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Väga suur</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Tohutu</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Hiiglaslik</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Kuupäev ja kellaaeg"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Kuupäev</string>

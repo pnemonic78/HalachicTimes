@@ -10,6 +10,7 @@
         <item>Los Angeles</item>
         <item>San Diego</item>
         <item>Phoenix</item>
+        <item>Las Vegas</item>
         <item>Denver</item>
         <item>Mexico City</item>
         <item>Dallas</item>
@@ -144,6 +145,7 @@
     <string-array name="cities_countries" translatable="false">
         <item>US</item>
         <item>CA</item>
+        <item>US</item>
         <item>US</item>
         <item>US</item>
         <item>US</item>
@@ -290,6 +292,7 @@
         <item>3405223</item>
         <item>3271571</item>
         <item>3344838</item>
+        <item>3559393</item>
         <item>3973915</item>
         <item>1942847</item>
         <item>3278306</item>
@@ -335,7 +338,7 @@
         <item>5933258</item>
         <item>4384864</item>
         <item>-3392584</item>
-        <item>4749801</item>
+        <item>4749835</item>
         <item>5222977</item>
         <item>6016952</item>
         <item>-2620227</item>
@@ -405,7 +408,7 @@
         <item>3176904</item>
         <item>3267597</item>
         <item>3260907</item>
-        <item>3269925</item>
+        <item>3270056</item>
         <item>3291708</item>
         <item>3296465</item>
         <item>3249728</item>
@@ -430,6 +433,7 @@
         <item>-11824368</item>
         <item>-11716472</item>
         <item>-11207404</item>
+        <item>-10522390</item>
         <item>-10498470</item>
         <item>-9912766</item>
         <item>-9680667</item>
@@ -475,7 +479,7 @@
         <item>1806490</item>
         <item>1835644</item>
         <item>1842322</item>
-        <item>1903991</item>
+        <item>1904045</item>
         <item>2101178</item>
         <item>2493545</item>
         <item>2804363</item>
@@ -545,7 +549,7 @@
         <item>3521633</item>
         <item>3523986</item>
         <item>3528920</item>
-        <item>3530483</item>
+        <item>3529722</item>
         <item>3530501</item>
         <item>3549600</item>
         <item>3549631</item>
@@ -570,6 +574,7 @@
         <item>89</item>
         <item>20</item>
         <item>331</item>
+        <item>1958</item>
         <item>1609</item>
         <item>2240</item>
         <item>128</item>
@@ -615,7 +620,7 @@
         <item>28</item>
         <item>509</item>
         <item>25</item>
-        <item>111</item>
+        <item>75</item>
         <item>113</item>
         <item>26</item>
         <item>1767</item>
@@ -710,6 +715,7 @@
         <item>America/Los_Angeles</item>
         <item>America/Los_Angeles</item>
         <item>America/Phoenix</item>
+        <item>America/Denver</item>
         <item>America/Denver</item>
         <item>America/Mexico_City</item>
         <item>America/Chicago</item>
@@ -808,7 +814,7 @@
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
-        <item>Asia/Hebron</item>
+        <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>
         <item>Asia/Jerusalem</item>

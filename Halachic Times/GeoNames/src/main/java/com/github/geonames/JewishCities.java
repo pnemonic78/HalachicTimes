@@ -20,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,16 +49,23 @@ public class JewishCities extends Cities {
     protected static final String[] LANGUAGES = {null, "bg", "cs", "da", "de", "es", "et", "fi", "fr", "he", "hu", "it", "iw", "lt", "nb", "no", "nl", "pl", "pt", "ro", "ru", "sv", "uk"};
 
     public static void main(String[] args) throws Exception {
-        String pathCities = "GeoNames/res/cities15000.zip";
-        String pathNames = "GeoNames/res/alternateNamesV2.zip";
-        String pathNames2 = "GeoNames/res/googleNames.txt";
+        String pathCities = "GeoNames/dump/cities1000.zip";
+        if (args.length > 0) {
+            pathCities = args[0];
+        }
+        String pathNames = "GeoNames/dump/alternateNamesV2.zip";
+        if (args.length > 1) {
+            pathNames = args[1];
+        }
         JewishCities cities = new JewishCities();
-        Collection<GeoNamesToponym> names;
+        Collection<GeoNamesToponym> names = cities.loadNames(new File(pathCities), new JewishCitiesFilter(), "cities1000.txt");
 
-        names = cities.loadNames(new File(pathCities), new JewishCitiesFilter(), "cities15000.txt");
         cities.populateElevations(names);
         cities.populateAlternateNames(new File(pathNames), names, "alternateNamesV2.txt");
-        cities.populateAlternateNames(new File(pathNames2), names);
+
+        InputStream googleNames = cities.getClass().getResourceAsStream("/googleNames.txt");
+        cities.populateAlternateNames(googleNames, names);
+
         for (String lang : LANGUAGES) {
             cities.writeAndroidXML(names, lang);
         }

@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath 'com.android.tools.build:gradle:3.5.2'
     }
 }
 
@@ -14,10 +14,6 @@ allprojects {
         google()
         jcenter()
     }
-}
-
-def joinStringArray(array) {
-    return "{\"" + array.join("\", \"") + "\"}"
 }
 
 ext {

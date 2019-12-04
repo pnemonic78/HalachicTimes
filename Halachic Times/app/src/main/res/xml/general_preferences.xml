@@ -19,6 +19,11 @@
         android:defaultValue="@bool/summaries_visible_defaultValue"
         android:key="summaries.visible"
         android:title="@string/summaries_title"/>
+    <Preference
+        android:key="date_time_settings"
+        android:title="@string/date_and_time">
+        <intent android:action="android.settings.DATE_SETTINGS" />
+    </Preference>
 
     <PreferenceCategory
         android:title="@string/notifications_title">

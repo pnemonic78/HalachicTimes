@@ -191,6 +191,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>גדול מאוד</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>ענק</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>עצום</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"תאריך ושעה"</string>
 
     <!-- Go to date -->
     <string name="menu_date">תאריך</string>
