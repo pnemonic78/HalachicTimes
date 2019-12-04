@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Очень большой</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Огромный</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Гигантский</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Дата и время"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>
