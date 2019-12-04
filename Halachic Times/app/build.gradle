@@ -15,6 +15,10 @@ repositories {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
+static def joinStringArray(array) {
+    return "{\"" + array.join("\", \"") + "\"}"
+}
+
 def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 

@@ -85,6 +85,7 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
         initList(KEY_COORDS_FORMAT);
         initList(KEY_COMPASS_BEARING);
+        validateIntent("date_time_settings");
     }
 
     @Override

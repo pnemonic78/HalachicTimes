@@ -28,7 +28,7 @@
     <string name="opinion_baal_hatanya">Volgens Baal Tanja</string>
 
     <!-- Temporal hour -->
-    <string name="hour">Seizoensgebonden uur</string>
+    <string name="hour">Seizoensuur</string>
 
     <!-- Dawn -->
     <string name="dawn">Dageraad</string>
@@ -64,12 +64,12 @@
     <string name="midday_fixed">Middag aangepast vóór de lokale breedtegraad</string>
 
     <!-- Earliest mincha -->
-    <string name="earliest_mincha">Vroegste middag gebeden</string>
+    <string name="earliest_mincha">Vroegste middaggebeden</string>
     <string name="earliest_mincha_greater">Groter <i>mincha</i></string>
     <string name="earliest_mincha_30">30 minuten na de middag</string>
 
     <!-- Mincha ketana -->
-    <string name="mincha">Middag gebeden</string>
+    <string name="mincha">Middaggebeden</string>
     <string name="mincha_lesser">Kleiner <i>mincha</i></string>
 
     <!-- Plug hamincha -->
@@ -144,7 +144,7 @@
     <string name="midnight_6">6 uur na de nacht</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Midden dienst</string>
+    <string name="midnight_guard">Middendienst</string>
     <string name="morning_guard">Ochtenddienst</string>
     <string name="guard_first">Eerste dienst</string>
     <string name="guard_second">Tweede dienst</string>
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Extra groot</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Reusachtig</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Enorm</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Datum en tijd"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Datum</string>

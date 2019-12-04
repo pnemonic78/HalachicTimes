@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Horaires Halakhiques de Prière</string>
-    <string name="title_activity_zmanim">Horaires Halakhiques</string>
+    <string name="app_name">Horaires Hala\'hiques de Prière</string>
+    <string name="title_activity_zmanim">Horaires Hala\'hiques</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">Jour est 120 minutes avant le lever / après le coucher du soleil</string>
@@ -34,8 +34,8 @@
     <string name="dawn">Aube</string>
 
     <!-- Tallis and Tefillin -->
-    <string name="tallis">Mise du <i>talit</i> et <i>téfilines</i> au plus tôt (משיכיר)</string>
-    <string name="tallis_only">Mise du <i>talit</i> au plus tôt (משיכיר)</string>
+    <string name="tallis">Plus tôt <i>talit</i> et <i>téfilines</i> (משיכיר)</string>
+    <string name="tallis_only">Plus tôt <i>talit</i> (משיכיר)</string>
     <string name="tallis_11_5">Soleil est 11,5° sous l\'horizon</string>
     <string name="tallis_11">Soleil est 11° sous l\'horizon</string>
     <string name="tallis_10">Soleil est 10,2° sous l\'horizon</string>
@@ -54,7 +54,7 @@
     <string name="shema_fixed">3 heures avant l\'apres midi local</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Heure limite de שחרית</string>
+    <string name="prayers">Heure limite de prières du matin</string>
     <string name="prayers_fixed">2 heures avant l\'apres midi local</string>
     <string name="prayers_2">2 heures avant l\'apres midi</string>
 
@@ -144,7 +144,7 @@
     <string name="midnight_6">6 heures après tombée de la nuit</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Garde du Milieu</string>
+    <string name="midnight_guard">Garde de minuit</string>
     <string name="morning_guard">Garde du matin</string>
     <string name="guard_first">Premier quart de travail</string>
     <string name="guard_second">Deuxième quart de travail</string>
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Très grande</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Énorme</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Gigantesque</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Date et heure"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Date</string>

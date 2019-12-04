@@ -464,7 +464,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         return new Runnable() {
             @Override
             public void run() {
-                populateHeader();
+                bindHeader();
                 populateFragments(calendar);
             }
         };
@@ -510,11 +510,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    protected Runnable createPopulateHeaderRunnable() {
+    protected Runnable createBindHeaderRunnable() {
         return new Runnable() {
             @Override
             public void run() {
-                populateHeader();
+                bindHeader();
             }
         };
     }

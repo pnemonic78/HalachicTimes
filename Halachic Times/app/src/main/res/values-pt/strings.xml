@@ -73,7 +73,7 @@
     <string name="mincha_lesser"><i>Minchá</i> menor</string>
 
     <!-- Plug hamincha -->
-    <string name="plug_hamincha">Plàg <i>minchá</i></string>
+    <string name="plug_hamincha"><i>Plàg minchá</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Acendimento das velas</string>
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Muito grande</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Enorme</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Gigantesco</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Data e hora"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Data</string>

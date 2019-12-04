@@ -144,8 +144,8 @@
     <string name="midnight_6">6 órával azután alkony</string>
 
     <!-- Night Guards -->
-    <string name="midnight_guard">Középső őrség</string>
-    <string name="morning_guard">Reggel őrség</string>
+    <string name="midnight_guard">Éjféli őrség</string>
+    <string name="morning_guard">Reggeli őrség</string>
     <string name="guard_first">Első műszak</string>
     <string name="guard_second">Második műszak</string>
     <string name="guard_third">Harmadik műszak</string>
@@ -166,7 +166,7 @@
     <string name="levana_15">15 nap után a újhold</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">Böjtölés kezdődik </string>
+    <string name="fast_begins">Böjtölés kezdődik</string>
     <string name="fast_ends">Böjtölés véget ér</string>
 
     <!-- Omer -->
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Extra nagy</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Hatalmas</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Gigantikus</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Dátum és idő"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Dátum</string>

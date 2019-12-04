@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Галахических Разів Молитву</string>
-    <string name="title_activity_zmanim">Галахических Разів</string>
+    <string name="app_name">Галахічні Разів Молитві</string>
+    <string name="title_activity_zmanim">Галахічні Разів</string>
 
     <!-- Recurring opinions -->
     <string name="opinion_120">День 120 мінут перед сходом сонця / після заходу сонця</string>
@@ -48,13 +48,13 @@
     <string name="sunrise_sea">На рівні моря</string>
 
     <!-- Latest shema -->
-    <string name="shema">Останній <i>шма</i></string>
+    <string name="shema">Останні <i>шма</i></string>
     <string name="shema_7">День від світанку 16,1° до ночі 7,083°</string>
     <string name="shema_3">3 годин до полудня</string>
     <string name="shema_fixed">3 годин до фіксованого місцевого полудень</string>
 
     <!-- Latest shacharis -->
-    <string name="prayers">Останній ранкові молитви</string>
+    <string name="prayers">Останні ранкові молитви</string>
     <string name="prayers_fixed">2 годин до фіксованого місцевого полудень</string>
     <string name="prayers_2">2 годин до полудня</string>
 
@@ -135,7 +135,7 @@
     <string name="minutes_after_specific_few">%1$d хвилини після %2$s (%3$s)</string>
     <string name="minutes_after_specific_many">%1$d хвилин після %2$s (%3$s)</string>
     <string name="minutes_after_specific_other">%1$d хвилин після %2$s (%3$s)</string>
-    <string name="festival_ends">Свято закінчується</string>
+    <string name="festival_ends">Фестиваль закінчується</string>
 
     <!-- Midnight -->
     <string name="midnight">Опівночі</string>
@@ -152,8 +152,8 @@
     <string name="guard_fourth">Четверта зміна</string>
 
     <!-- Pesach -->
-    <string name="eat_chametz">Останній час їсти <i>хамец</i></string>
-    <string name="burn_chametz">Останній час спалити <i>хамец</i></string>
+    <string name="eat_chametz">Останні час їсти <i>хамец</i></string>
+    <string name="burn_chametz">Останні час спалити <i>хамец</i></string>
 
     <!-- Moon -->
     <string name="molad">Народження нового місяця (מולד)</string>
@@ -188,6 +188,7 @@
     <string name="emphasis_scale_130"><![CDATA[<h3>Дуже великий</h3>]]></string>
     <string name="emphasis_scale_140"><![CDATA[<h2>Величезний</h2>]]></string>
     <string name="emphasis_scale_150"><![CDATA[<h1>Гігантський</h1>]]></string>
+    <string name="date_and_time" msgid="9062980487860757694">"Дата й час"</string>
 
     <!-- Go to date -->
     <string name="menu_date">Дата</string>
