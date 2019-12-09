@@ -356,7 +356,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             if (prefRingtone != null) {
                 Uri uri = RingtoneManager.resolveUri(context, prefRingtone);
                 if (uri == null) {
-                    uri = Settings.System.DEFAULT_ALARM_ALERT_URI;
+                    return null;
                 }
                 ringtone = new MediaPlayer();
                 try {
