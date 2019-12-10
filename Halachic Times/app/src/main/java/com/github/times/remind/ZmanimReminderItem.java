@@ -110,7 +110,7 @@ public class ZmanimReminderItem implements Parcelable {
     }
 
     @Nullable
-    public static ZmanimReminderItem from(@Nullable Bundle extras) {
+    public static ZmanimReminderItem from(@Nullable Context context, @Nullable Bundle extras) {
         if (extras == null) {
             return null;
         }
@@ -120,8 +120,11 @@ public class ZmanimReminderItem implements Parcelable {
                 return null;
             }
             CharSequence contentTitle = extras.getCharSequence(EXTRA_TITLE);
+            if ((context != null) && TextUtils.isEmpty(contentTitle)) {
+                contentTitle = context.getText(id);
+            }
             CharSequence contentText = extras.getCharSequence(EXTRA_TEXT);
-            long when = extras.getLong(EXTRA_TIME, 0L);
+            long when = extras.getLong(EXTRA_TIME, System.currentTimeMillis());
             if ((contentTitle != null) && (when > 0L)) {
                 return new ZmanimReminderItem(id, contentTitle, contentText, when);
             }
@@ -130,11 +133,11 @@ public class ZmanimReminderItem implements Parcelable {
     }
 
     @Nullable
-    public static ZmanimReminderItem from(@Nullable Intent intent) {
+    public static ZmanimReminderItem from(@Nullable Context context, @Nullable Intent intent) {
         if (intent == null) {
             return null;
         }
-        return from(intent.getExtras());
+        return from(context, intent.getExtras());
     }
 
     public void put(@Nullable Bundle extras) {
