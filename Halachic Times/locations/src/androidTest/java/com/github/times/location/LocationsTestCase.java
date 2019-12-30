@@ -22,7 +22,6 @@ import org.junit.Test;
 
 import java.util.TimeZone;
 
-import static androidx.test.InstrumentationRegistry.getTargetContext;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -33,9 +32,7 @@ import static org.junit.Assert.fail;
 public class LocationsTestCase {
 
     protected LocationApplication getApplication() {
-        final Context context = getTargetContext();
-        assertNotNull(context);
-        Context applicationContext = context.getApplicationContext();
+        Context applicationContext = getApplicationContext();
         assertNotNull(applicationContext);
         assertTrue(applicationContext instanceof LocationApplication);
         return (LocationApplication) applicationContext;
