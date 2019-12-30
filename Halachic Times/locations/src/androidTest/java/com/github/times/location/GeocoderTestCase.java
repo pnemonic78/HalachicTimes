@@ -25,17 +25,13 @@ import com.github.times.location.google.GoogleGeocoder;
 import com.github.times.location.test.R;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
-
-import static androidx.test.InstrumentationRegistry.getContext;
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static com.github.times.location.GeocoderBase.SAME_CITY;
 import static com.github.times.location.GeocoderBase.SAME_PLATEAU;
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
@@ -44,8 +40,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
-@SmallTest
 public class GeocoderTestCase {
 
     private static final double DELTA = 1e-3;
@@ -57,7 +51,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testGoogleAddress() throws Exception {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         Locale locale = Locale.US;
@@ -141,7 +135,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testGoogleElevation() throws Exception {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         Locale locale = Locale.US;
@@ -173,7 +167,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testGeoNamesAddress() throws Exception {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         Locale locale = Locale.US;
@@ -243,7 +237,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testGeoNamesElevation() throws Exception {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         Locale locale = Locale.US;
@@ -272,7 +266,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testBingAddress() throws Exception {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         Locale locale = Locale.US;
@@ -320,7 +314,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testBingElevation() throws Exception {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         Locale locale = Locale.US;
@@ -347,7 +341,7 @@ public class GeocoderTestCase {
      */
     @Test
     public void testInternalGeocoderAddress() {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
 
         int maxResults = 5;

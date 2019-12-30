@@ -18,10 +18,6 @@ package com.github.times.compass;
 import android.hardware.SensorManager;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -31,8 +27,6 @@ import static junit.framework.Assert.assertTrue;
  *
  * @author Moshe Waisberg
  */
-@RunWith(AndroidJUnit4.class)
-@SmallTest
 public class CompassTest {
 
     @Test
