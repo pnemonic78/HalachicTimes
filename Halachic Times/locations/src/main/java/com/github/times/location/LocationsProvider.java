@@ -681,7 +681,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         try {
             locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
-            Timber.e(e, "request updates: %s", e.getLocalizedMessage());
+            Timber.e(e, "request updates: %s", e.getMessage());
         }
 
         // Let the updates run for only a small while to save battery.
@@ -693,8 +693,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (locationManager != null) {
             try {
                 locationManager.removeUpdates(this);
-            } catch (SecurityException e) {
-                Timber.e(e, "remove updates: %s", e.getLocalizedMessage());
+            } catch (Exception e) {
+                Timber.e(e, "remove updates: %s", e.getMessage());
             }
         }
 
