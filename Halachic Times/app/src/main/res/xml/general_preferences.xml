@@ -3,6 +3,7 @@
 
     <SwitchPreference
         android:defaultValue="@bool/past_defaultValue"
+        android:icon="@drawable/ic_settings_history"
         android:key="past"
         android:title="@string/past_title"/>
     <SwitchPreference
