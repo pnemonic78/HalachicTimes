@@ -7,18 +7,21 @@
             android:defaultValue="@string/theme_defaultValue"
             android:entries="@array/list_theme_entries"
             android:entryValues="@array/list_theme_values"
+            android:icon="@drawable/ic_settings_theme"
             android:key="theme"
             android:title="@string/theme_title"/>
         <ListPreference
             android:defaultValue="@string/compass_theme_defaultValue"
             android:entries="@array/compass_theme_entries"
             android:entryValues="@array/compass_theme_values"
+            android:icon="@drawable/ic_settings_theme"
             android:key="theme.compass"
             android:title="@string/compass_theme_title"/>
         <ListPreference
             android:defaultValue="@string/appwidget_theme_defaultValue"
             android:entries="@array/appwidget_theme_entries"
             android:entryValues="@array/appwidget_theme_values"
+            android:icon="@drawable/ic_settings_theme"
             android:key="theme.appwidget"
             android:title="@string/appwidget_theme_title"/>
         <com.github.preference.HtmlListPreference
