@@ -15,9 +15,11 @@
  */
 package com.github.times.content.res;
 
+import android.annotation.TargetApi;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.util.DisplayMetrics;
 
 /**
@@ -41,6 +43,7 @@ public class ZmanimResources extends Resources {
     }
 
     @Override
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public String getString(int id) throws NotFoundException {
         String s = super.getString(id);
 

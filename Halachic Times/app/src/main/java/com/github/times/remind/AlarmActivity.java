@@ -186,15 +186,17 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     public P getZmanimPreferences() {
         P preferences = this.preferences;
         if (preferences == null) {
-            preferences = (P) new SimpleZmanimPreferences(this);
+            final Context context = this;
+            preferences = (P) new SimpleZmanimPreferences(context);
             this.preferences = preferences;
         }
         return preferences;
     }
 
     protected void handleIntent(Intent intent) {
+        final Context context = this;
         Bundle extras = intent.getExtras();
-        ZmanimReminderItem item = ZmanimReminderItem.from(extras);
+        ZmanimReminderItem item = ZmanimReminderItem.from(context, extras);
         if (item != null) {
             if (item.isEmpty()) {
                 close();
@@ -206,6 +208,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
                 long triggerAt = extras.getLong(EXTRA_SILENCE_TIME);
                 silenceFuture(triggerAt);
             }
+        } else {
+            close();
         }
     }
 
@@ -356,7 +360,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
             if (prefRingtone != null) {
                 Uri uri = RingtoneManager.resolveUri(context, prefRingtone);
                 if (uri == null) {
-                    uri = Settings.System.DEFAULT_ALARM_ALERT_URI;
+                    return null;
                 }
                 ringtone = new MediaPlayer();
                 try {

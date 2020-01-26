@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="app_name">@string/title_activity_compass</string>
-    <string name="title_activity_compass">\@string/menu_compass</string>
-
-</resources>

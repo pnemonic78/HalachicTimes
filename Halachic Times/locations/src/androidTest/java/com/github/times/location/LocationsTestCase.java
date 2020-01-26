@@ -19,28 +19,20 @@ import android.content.Context;
 import android.location.Location;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.TimeZone;
 
-import androidx.test.filters.SmallTest;
-import androidx.test.runner.AndroidJUnit4;
-
-import static androidx.test.InstrumentationRegistry.getContext;
-import static androidx.test.InstrumentationRegistry.getTargetContext;
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-@RunWith(AndroidJUnit4.class)
-@SmallTest
 public class LocationsTestCase {
 
     protected LocationApplication getApplication() {
-        final Context context = getTargetContext();
-        assertNotNull(context);
-        Context applicationContext = context.getApplicationContext();
+        Context applicationContext = getApplicationContext();
         assertNotNull(applicationContext);
         assertTrue(applicationContext instanceof LocationApplication);
         return (LocationApplication) applicationContext;
@@ -51,7 +43,7 @@ public class LocationsTestCase {
      */
     @Test
     public void testApp() {
-        final Context context = getContext();
+        final Context context = getApplicationContext();
         assertNotNull(context);
         assertEquals("com.github.times.location.test", context.getPackageName());
 
@@ -76,6 +68,7 @@ public class LocationsTestCase {
 
         String[] ids = TimeZone.getAvailableIDs();
         assertNotNull(ids);
+        assertNotEquals(0, ids.length);
 
         TimeZone tz;
         Location loc;

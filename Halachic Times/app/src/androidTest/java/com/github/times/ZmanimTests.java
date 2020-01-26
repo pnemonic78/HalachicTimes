@@ -2,15 +2,12 @@ package com.github.times;
 
 import android.content.Context;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.Calendar;
 import java.util.TimeZone;

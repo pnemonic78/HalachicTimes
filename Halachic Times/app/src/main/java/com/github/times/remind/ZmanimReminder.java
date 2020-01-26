@@ -435,7 +435,7 @@ public class ZmanimReminder {
             case ACTION_REMIND:
                 extras = intent.getExtras();
                 if (extras != null) {
-                    ZmanimReminderItem reminderItem = ZmanimReminderItem.from(extras);
+                    ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
                     if (reminderItem != null) {
                         notifyNow(settings, reminderItem);
                     }
@@ -445,7 +445,7 @@ public class ZmanimReminder {
             case ACTION_SILENCE:
                 extras = intent.getExtras();
                 if (extras != null) {
-                    ZmanimReminderItem reminderItem = ZmanimReminderItem.from(extras);
+                    ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
                     if (reminderItem != null) {
                         silence(settings, reminderItem);
                     }
