@@ -83,7 +83,7 @@ dependencies {
     implementation project(':compass-lib')
 
     // Testing
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation "androidx.test:core:$supportTestVersion"
     androidTestImplementation "androidx.test:rules:$supportTestVersion"
     androidTestImplementation "androidx.test:runner:$supportTestVersion"
