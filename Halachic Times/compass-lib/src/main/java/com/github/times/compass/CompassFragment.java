@@ -72,7 +72,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     /**
      * The magnetic field sensor.
      */
-    private Sensor magnetic;
+    private Sensor magnetometer;
     /**
      * Location of the Holy of Holies.
      */
@@ -143,7 +143,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager != null) {
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            magnetic = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+            magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         }
     }
 
@@ -157,7 +157,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void onResume() {
         super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-        sensorManager.registerListener(this, magnetic, SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
