@@ -13,7 +13,8 @@
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
         android:name="android.hardware.sensor.compass"
-        android:required="false" />
+        android:required="false"
+        tools:replace="required" />
 
     <application
         android:name="com.github.times.ZmanimApplication"
