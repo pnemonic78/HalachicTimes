@@ -20,6 +20,11 @@ import android.graphics.Color;
 import android.text.TextUtils;
 import android.widget.RemoteViews;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
+import androidx.annotation.StyleRes;
+import androidx.core.content.ContextCompat;
+
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimItem;
@@ -29,10 +34,6 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
-import androidx.annotation.StyleRes;
-import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
@@ -91,13 +92,12 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
         int positionTomorrow = -1;
         int positionTotal = 0;
-        CharSequence dateHebrew, groupingText;
+        CharSequence dateHebrew;
 
         // If we have a sunset, then show today's header.
         if (positionSunset >= positionFirst) {
             dateHebrew = adapter.formatDate(context, jewishDate);
-            groupingText = dateHebrew;
-            bindViewGrouping(list, 0, groupingText);
+            bindViewGrouping(list, 0, dateHebrew);
         }
 
         for (int position = 0; position < count; position++, positionTotal++) {
@@ -110,15 +110,15 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 jewishDate.forward(Calendar.DATE, 1);
                 jcal.forward(Calendar.DATE, 1);
                 dateHebrew = adapter.formatDate(context, jewishDate);
-                groupingText = dateHebrew;
+                bindViewGrouping(list, position, dateHebrew);
+
                 int omer = jcal.getDayOfOmer();
                 if (omer >= 1) {
                     CharSequence omerLabel = adapter.formatOmer(context, omer);
                     if (!TextUtils.isEmpty(omerLabel)) {
-                        groupingText = TextUtils.concat(groupingText, "\n", omerLabel);
+                        bindViewGrouping(list, position, omerLabel);
                     }
                 }
-                bindViewGrouping(list, position, groupingText);
             }
         }
 
@@ -150,15 +150,15 @@ public class ZmanimWidget extends ZmanimAppWidget {
                     jewishDate.forward(Calendar.DATE, 1);
                     jcal.forward(Calendar.DATE, 1);
                     dateHebrew = adapter.formatDate(context, jewishDate);
-                    groupingText = dateHebrew;
+                    bindViewGrouping(list, position, dateHebrew);
+
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
-                            groupingText = TextUtils.concat(groupingText, "\n", omerLabel);
+                            bindViewGrouping(list, position, omerLabel);
                         }
                     }
-                    bindViewGrouping(list, position, groupingText);
                 }
             }
         }

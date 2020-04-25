@@ -239,7 +239,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         int position = 0;
         ZmanimItem item;
         View row;
-        CharSequence groupingText;
         final View[] timeViews = new View[count];
         JewishDate jewishDatePrevious = null;
 
@@ -271,18 +270,16 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     jcal.setJewishDate(jewishDate.getJewishYear(), jewishDate.getJewishMonth(), jewishDate.getJewishDayOfMonth());
 
                     dateHebrew = adapter.formatDate(context, jewishDate);
-                    groupingText = dateHebrew;
+                    bindViewGrouping(list, position, dateHebrew);
 
                     // Sefirat HaOmer?
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
-                            groupingText = TextUtils.concat(groupingText, "\n", omerLabel);
+                            bindViewGrouping(list, position, omerLabel);
                         }
                     }
-
-                    bindViewGrouping(list, position, groupingText);
                 }
 
                 row = adapter.getView(position, null, list);
