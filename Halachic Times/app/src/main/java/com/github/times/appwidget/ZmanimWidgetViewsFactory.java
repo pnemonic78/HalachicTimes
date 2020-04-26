@@ -22,10 +22,17 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService.RemoteViewsFactory;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
+import androidx.core.content.ContextCompat;
+
 import com.github.app.LocaleHelper;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimApplication;
+import com.github.times.ZmanimDays;
 import com.github.times.ZmanimItem;
 import com.github.times.ZmanimPopulater;
 import com.github.times.location.ZmanimLocations;
@@ -40,10 +47,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 
-import androidx.annotation.ColorInt;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.StyleRes;
-import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 
 import static android.widget.AdapterView.INVALID_POSITION;
@@ -87,6 +90,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     private boolean directionRTL;
     @LayoutRes
     private int layoutItemId = R.layout.widget_item;
+    @StringRes
+    int holidayTodayId = 0;
+    @StringRes
+    int holidayTomorrowId = 0;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
         this.localeCallbacks = new LocaleHelper<>(context);
@@ -96,7 +103,14 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        return (positionToday >= 0 ? 1 : 0) + (positionTomorrow > positionToday ? 1 : 0) + ((adapter != null) ? adapter.getCount() : 0);
+        int count = (positionToday >= 0 ? 1 : 0);
+        count += (positionTomorrow > positionToday ? 1 : 0);
+        if (adapter != null) {
+            count += adapter.getCount();
+//            count += (holidayTodayId != 0) ? 1 : 0;
+//            count += (holidayTomorrowId != 0) ? 1 : 0;
+        }
+        return count;
     }
 
     @Override
@@ -132,8 +146,18 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
             }
             CharSequence groupingText = adapter.formatDate(context, jcal);
 
-            // Sefirat HaOmer?
-            if (position == positionTomorrow) {
+            if (position == positionToday) {
+                if (holidayTodayId != 0) {
+                    CharSequence holidayName = context.getText(holidayTodayId);
+                    groupingText = TextUtils.concat(groupingText, "\n", holidayName);
+                }
+            } else if (position == positionTomorrow) {
+                if (holidayTomorrowId != 0) {
+                    CharSequence holidayName = context.getText(holidayTomorrowId);
+                    groupingText = TextUtils.concat(groupingText, "\n", holidayName);
+                }
+
+                // Sefirat HaOmer?
                 int omer = jcal.getDayOfOmer();
                 if (omer >= 1) {
                     CharSequence omerLabel = adapter.formatOmer(context, omer);
@@ -211,9 +235,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         populateResources(context);
 
         ZmanimPreferences preferences = getPreferences();
+        long day = getDay();
 
         ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
-        populater.setCalendar(currentTimeMillis());
+        populater.setCalendar(day);
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
@@ -221,6 +246,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         ZmanimAdapter adapter = new ZmanimAdapter(context, preferences);
         populater.populate(adapter, false);
         this.adapter = adapter;
+
+        int holidayToday = adapter.getHolidayToday();
+        holidayTodayId = ZmanimDays.getNameId(holidayToday);
+        holidayTomorrowId = 0;
 
         int positionToday = 0;
         int positionTomorrow = -1;
@@ -239,6 +268,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                 }
                 if (!item.jewishDate.equals(jewishDate)) {
                     positionTomorrow = i + 1;
+
+                    int holidayTomorrow = adapter.getHolidayTomorrow();
+                    holidayTomorrowId = ZmanimDays.getNameId(holidayTomorrow);
                     break;
                 }
             }
@@ -340,5 +372,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     private ZmanimLocations getLocations(Context context) {
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         return app.getLocations();
+    }
+
+    protected long getDay() {
+        return currentTimeMillis();
     }
 }

@@ -100,7 +100,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected final ZmanimPreferences settings;
     protected ComplexZmanimCalendar calendar;
     protected boolean inIsrael;
-    protected long now = currentTimeMillis();
     protected boolean summaries;
     protected boolean showElapsed;
     private Format timeFormat;
@@ -306,6 +305,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (time == NEVER) {
             return;
         }
+        long now = getCalendar().getCalendar().getTimeInMillis();
 
         ZmanimItem item = new ZmanimItem(titleId, time);
         item.summary = summary;

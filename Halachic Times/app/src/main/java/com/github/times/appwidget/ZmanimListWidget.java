@@ -57,7 +57,7 @@ public class ZmanimListWidget extends ZmanimWidget {
     }
 
     @Override
-    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long day) {
         populateScrollableTimes(context, appWidgetId, views, activityPendingIntent);
         return null;
     }

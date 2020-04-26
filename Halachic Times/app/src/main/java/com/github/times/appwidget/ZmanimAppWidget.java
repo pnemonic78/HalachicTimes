@@ -45,6 +45,8 @@ import com.github.util.LocaleUtils;
 
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import java.util.Calendar;
+
 import timber.log.Timber;
 
 import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
@@ -155,7 +157,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         String packageName = context.getPackageName();
         RemoteViews views;
         int layoutId = getLayoutId();
-        long now = currentTimeMillis();
+        long day = getDay();
         ZmanimAdapter adapter = null;
 
         for (int appWidgetId : appWidgetIds) {
@@ -165,7 +167,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
             views = new RemoteViews(packageName, layoutId);
 
-            adapter = populateWidgetTimes(context, appWidgetId, views, activityPendingIntent, viewId, now);
+            adapter = populateWidgetTimes(context, appWidgetId, views, activityPendingIntent, viewId, day);
 
             try {
                 appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -295,11 +297,11 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         return preferences;
     }
 
-    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
-        return populateStaticTimes(context, appWidgetId, views, activityPendingIntent, viewId, now);
+    protected ZmanimAdapter populateWidgetTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long day) {
+        return populateStaticTimes(context, appWidgetId, views, activityPendingIntent, viewId, day);
     }
 
-    protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long now) {
+    protected ZmanimAdapter populateStaticTimes(Context context, int appWidgetId, RemoteViews views, PendingIntent activityPendingIntent, int viewId, long day) {
         views.setOnClickPendingIntent(viewId, activityPendingIntent);
 
         ZmanimLocations locations = getLocations(context);
@@ -311,7 +313,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         ZmanimPreferences preferences = getPreferences();
 
         ZmanimPopulater populater = new ZmanimPopulater(context, preferences);
-        populater.setCalendar(now);
+        populater.setCalendar(day);
         populater.setGeoLocation(gloc);
         populater.setInIsrael(locations.isInIsrael());
 
@@ -319,7 +321,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         populater.populate(adapter, true);
 
         ZmanimAdapter adapterTomorrow = new ZmanimAdapter(context, preferences);
-        populater.setCalendar(now + DAY_IN_MILLIS);
+        populater.setCalendar(day + DAY_IN_MILLIS);
         populater.populate(adapterTomorrow, true);
 
         bindViews(context, views, adapter, adapterTomorrow);
@@ -343,5 +345,9 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
     protected void notifyAppWidgets(Context context) {
         notifyAppWidgetsUpdate(context, getClass());
+    }
+
+    protected long getDay() {
+        return currentTimeMillis();
     }
 }

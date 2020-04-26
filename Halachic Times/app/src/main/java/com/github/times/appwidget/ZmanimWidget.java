@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
+import com.github.times.ZmanimDays;
 import com.github.times.ZmanimItem;
 
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
@@ -98,6 +99,12 @@ public class ZmanimWidget extends ZmanimAppWidget {
         if (positionSunset >= positionFirst) {
             dateHebrew = adapter.formatDate(context, jewishDate);
             bindViewGrouping(list, 0, dateHebrew);
+
+            int holidayToday = adapter.getHolidayToday();
+            CharSequence holidayName = ZmanimDays.getName(context, holidayToday);
+            if (holidayName != null) {
+                bindViewGrouping(list, 0, holidayName);
+            }
         }
 
         for (int position = 0; position < count; position++, positionTotal++) {
@@ -111,6 +118,12 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 jcal.forward(Calendar.DATE, 1);
                 dateHebrew = adapter.formatDate(context, jewishDate);
                 bindViewGrouping(list, position, dateHebrew);
+
+                int holidayTomorrow = adapter.getHolidayTomorrow();
+                CharSequence holidayName = ZmanimDays.getName(context, holidayTomorrow);
+                if (holidayName != null) {
+                    bindViewGrouping(list, 0, holidayName);
+                }
 
                 int omer = jcal.getDayOfOmer();
                 if (omer >= 1) {
@@ -151,6 +164,12 @@ public class ZmanimWidget extends ZmanimAppWidget {
                     jcal.forward(Calendar.DATE, 1);
                     dateHebrew = adapter.formatDate(context, jewishDate);
                     bindViewGrouping(list, position, dateHebrew);
+
+                    int holidayTomorrow = adapter.getHolidayTomorrow();
+                    CharSequence holidayName = ZmanimDays.getName(context, holidayTomorrow);
+                    if (holidayName != null) {
+                        bindViewGrouping(list, 0, holidayName);
+                    }
 
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
