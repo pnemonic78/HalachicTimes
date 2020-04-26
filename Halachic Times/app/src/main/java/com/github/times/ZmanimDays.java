@@ -42,6 +42,9 @@ public class ZmanimDays {
      */
     public static final int SHABBATH = 100;
 
+    @StringRes
+    public static final int ID_NONE = 0;
+
     private static final Map<Integer, Integer> NAMES = new HashMap();
 
     static {
@@ -77,13 +80,13 @@ public class ZmanimDays {
 
     @StringRes
     public static int getNameId(int day) {
-        if (day < 0) return 0;
+        if (day < 0) return ID_NONE;
         Integer nameId = NAMES.get(day);
-        return (nameId == null) ? 0 : nameId;
+        return (nameId == null) ? ID_NONE : nameId;
     }
 
     public static CharSequence getName(Context context, int day) {
         int nameId = getNameId(day);
-        return (nameId == 0) ? null : context.getText(nameId);
+        return (nameId == ID_NONE) ? null : context.getText(nameId);
     }
 }
