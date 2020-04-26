@@ -40,8 +40,6 @@ import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
  */
 public class CandlesAdapter extends ZmanimAdapter {
 
-    private int candles;
-
     public CandlesAdapter(Context context, ZmanimPreferences settings) {
         super(context, settings);
     }
@@ -75,21 +73,12 @@ public class CandlesAdapter extends ZmanimAdapter {
     }
 
     /**
-     * Set the candles data.
-     *
-     * @param candles the candles data.
-     */
-    public void setCandles(int candles) {
-        this.candles = candles;
-    }
-
-    /**
      * Get the candles count.
      *
      * @return the number of candles.
      */
     public int getCandlesCount() {
-        return (candles >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
+        return (getCandles() >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
     }
 
     /**
@@ -98,6 +87,7 @@ public class CandlesAdapter extends ZmanimAdapter {
      * @return the candles holiday.
      */
     public int getCandlesHoliday() {
+        final int candles = getCandles();
         final int when = (candles >> MOTZE_MASK_OFFSET) & MOTZE_MASK;
         final int holidayToday = (byte) ((candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK);
         final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);

@@ -36,6 +36,7 @@ import timber.log.Timber;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.times.ZmanimDays.SHABBATH;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.TimeUtils.isSameDay;
 import static java.util.Calendar.FRIDAY;
@@ -69,9 +70,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final long TWELVE_HOURS = DAY_IN_MILLIS >> 1;
     /** 6 hours (quarter of a full day). */
     protected static final long SIX_HOURS = DAY_IN_MILLIS >> 2;
-
-    /** Holiday id for Shabbath. */
-    public static final int SHABBATH = 100;
 
     /** No candles to light. */
     private static final int CANDLES_NONE = 0;
@@ -269,6 +267,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);
         final int candlesOffset = (candles >> OFFSET_MASK_OFFSET) & OFFSET_MASK;
         final int candlesWhen = (candles >> MOTZE_MASK_OFFSET) & MOTZE_MASK;
+
+        adapter.setCandles(candles);
 
         Long date;
         int summary;

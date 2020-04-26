@@ -15,11 +15,6 @@
  */
 package com.github.times;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -31,6 +26,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
+import com.github.times.preference.ZmanimPreferences;
+import com.github.util.LocaleUtils;
+
+import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
+import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
+import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,15 +43,13 @@ import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import com.github.times.preference.ZmanimPreferences;
-import com.github.util.LocaleUtils;
-
-import androidx.annotation.Nullable;
-
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.ZmanimItem.NEVER;
+import static com.github.times.ZmanimPopulater.HOLIDAY_MASK;
+import static com.github.times.ZmanimPopulater.HOLIDAY_MASK_OFFSET;
+import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_MASK_OFFSET;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
 import static com.github.util.LocaleUtils.isLocaleRTL;
@@ -63,16 +66,26 @@ import static java.lang.System.currentTimeMillis;
  */
 public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
-    /** No summary. */
+    /**
+     * No summary.
+     */
     protected static final int SUMMARY_NONE = 0;
 
-    /** The day of the month as a decimal number (range 01 to 31). */
+    /**
+     * The day of the month as a decimal number (range 01 to 31).
+     */
     private static final String DAY_PAD_VAR = "%d";
-    /** The day of the month as a decimal number (range 1 to 31). */
+    /**
+     * The day of the month as a decimal number (range 1 to 31).
+     */
     private static final String DAY_VAR = "%-e";
-    /** The full month name according to the current locale. */
+    /**
+     * The full month name according to the current locale.
+     */
     private static final String MONTH_VAR = "%B";
-    /** The year as a decimal number including the century. */
+    /**
+     * The year as a decimal number including the century.
+     */
     private static final String YEAR_VAR = "%Y";
 
     /**
@@ -99,6 +112,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     private String monthDayYear;
     private String omerFormat;
     private float emphasisScale;
+    private int candles;
 
     /**
      * Compare two time items.
@@ -544,5 +558,41 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             }
         }
         return null;
+    }
+
+    /**
+     * Set the candles data.
+     *
+     * @param candles the candles data.
+     */
+    public void setCandles(int candles) {
+        this.candles = candles;
+    }
+
+    /**
+     * Get the candles data.
+     *
+     * @return the candles data.
+     */
+    public int getCandles() {
+        return candles;
+    }
+
+    /**
+     * Get the special day.
+     *
+     * @return the holiday.
+     */
+    public int getHolidayToday() {
+        return (byte) ((candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK);
+    }
+
+    /**
+     * Get tomorrow's special day.
+     *
+     * @return the holiday.
+     */
+    public int getHolidayTomorrow() {
+        return (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);
     }
 }

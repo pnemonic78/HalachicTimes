@@ -72,8 +72,8 @@
     <string name="mincha">Odpolední modlitby</string>
     <string name="mincha_lesser">Malá <i>mincha</i></string>
 
-    <!-- Plug hamincha -->
-    <string name="plug_hamincha"><i>Plag hamincha</i></string>
+    <!-- Plug haMincha -->
+    <string name="plug_hamincha"><i>Plag haMincha</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Svíčka osvětlení</string>

@@ -72,8 +72,8 @@
     <string name="mincha">Iltapäivän rukoukset</string>
     <string name="mincha_lesser">Vähemmän <i>mincha</i></string>
 
-    <!-- Plug hamincha -->
-    <string name="plug_hamincha"><i>Plag hamincha</i></string>
+    <!-- Plug haMincha -->
+    <string name="plug_hamincha"><i>Plag haMincha</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Kynttilän valaistus</string>

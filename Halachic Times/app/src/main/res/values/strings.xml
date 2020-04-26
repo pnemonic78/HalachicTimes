@@ -22,7 +22,7 @@
     <string name="opinion_96">Day is 96 minutes before sunrise / after sunset</string>
     <string name="opinion_96_zmanis">Day is 96 זמניות minutes before sunrise / after sunset</string>
     <string name="opinion_ateret">According to Yeshivat Ateret Torah</string>
-    <string name="opinion_baal_hatanya">According to Baal Hatanya</string>
+    <string name="opinion_baal_hatanya">According to Baal haTanya</string>
     <string name="opinion_gra">According to GRA</string>
     <string name="opinion_mga">According to Magen Avraham</string>
     <string name="opinion_tam">According to Rabbeinu Tam</string>
@@ -147,8 +147,8 @@
     <string name="mincha_ateret" translatable="false">@string/opinion_ateret</string>
     <string name="mincha_baal_hatanya" translatable="false">@string/opinion_baal_hatanya</string>
 
-    <!-- Plug hamincha -->
-    <string name="plug_hamincha"><i>Plag hamincha</i></string>
+    <!-- Plug haMincha -->
+    <string name="plug_hamincha"><i>Plag haMincha</i></string>
     <string name="plug_hamincha_gra" translatable="false">@string/opinion_gra</string>
     <string name="plug_hamincha_120" translatable="false">@string/opinion_120</string>
     <string name="plug_hamincha_120_zmanis" translatable="false">@string/opinion_120_zmanis</string>
@@ -398,4 +398,33 @@
     <string name="reminder_settings" translatable="false">@string/reminder</string>
     <string name="dismiss" translatable="false">@string/cancel</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Pesach</string>
+    <string name="day_chol_hamoed_pesach">Chol haMoed Pesach</string>
+    <string name="day_pesach_sheni">Pesach Sheni</string>
+    <string name="day_shavuos">Shavuos</string>
+    <string name="day_seventeen_of_tammuz">Seventeen of Tammuz</string>
+    <string name="day_tisha_beav">Tisha b\'Av</string>
+    <string name="day_tu_beav">Tu b\'Av</string>
+    <string name="day_rosh_hashana">Rosh haShana</string>
+    <string name="day_fast_of_gedalyah">Fast of Gedalyah</string>
+    <string name="day_yom_kippur">Yom Kippur</string>
+    <string name="day_succos">Succos</string>
+    <string name="day_chol_hamoed_succos">Chol haMoed Succos</string>
+    <string name="day_hoshana_rabba">Hoshana Rabba</string>
+    <string name="day_shemini_atzeres">Shemini Atzeres</string>
+    <string name="day_simchas_torah">Simchas Torah</string>
+    <string name="day_chanukah" translatable="false">@string/chanukka</string>
+    <string name="day_tenth_of_teves">Tenth of Teves</string>
+    <string name="day_tu_beshvat">Tu b\'Shvat</string>
+    <string name="day_fast_of_esther">Fast of Esther</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Shushan Purim</string>
+    <string name="day_purim_katan">Purim Katan</string>
+    <string name="day_rosh_chodesh">Rosh Chodesh</string>
+    <string name="day_yom_hashoah">Holocaust Day</string>
+    <string name="day_yom_hazikaron">Remembrance Day</string>
+    <string name="day_yom_haatzmaut">Independence Day</string>
+    <string name="day_yom_yerushalayim">Jerusalem Day</string>
+    <string name="day_shabbath">Shabbath</string>
 </resources>

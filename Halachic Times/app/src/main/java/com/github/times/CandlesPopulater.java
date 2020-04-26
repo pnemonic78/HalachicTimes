@@ -19,8 +19,6 @@ import android.content.Context;
 
 import com.github.times.preference.ZmanimPreferences;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-
 /**
  * Populater for candles.
  *
@@ -35,16 +33,5 @@ public class CandlesPopulater extends ZmanimPopulater<CandlesAdapter> {
      */
     public CandlesPopulater(Context context, ZmanimPreferences settings) {
         super(context, settings);
-    }
-
-    @Override
-    protected void populateImpl(CandlesAdapter adapter, boolean remote, Context context, ZmanimPreferences settings) {
-        populateCandles(adapter, settings);
-    }
-
-    protected void populateCandles(CandlesAdapter adapter, ZmanimPreferences settings) {
-        JewishCalendar jcal = getJewishCalendar();
-        int candles = calculateCandles(jcal, settings);
-        adapter.setCandles(candles);
     }
 }
