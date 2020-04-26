@@ -33,7 +33,9 @@ import com.github.times.ZmanimItem;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -62,6 +64,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         ZmanimItem item;
         JewishCalendar jcal = adapter.getJewishCalendar();
         JewishDate jewishDate = jcal;
+        final List<ZmanimItem> items = new ArrayList<>();
 
         int positionFirst = -1;
         int positionSunset = -1;
@@ -91,54 +94,65 @@ public class ZmanimWidget extends ZmanimAppWidget {
             }
         }
 
-        int positionTomorrow = -1;
+        ZmanimItem itemTomorrow = null;
         int positionTotal = 0;
-        CharSequence dateHebrew;
 
         // If we have a sunset, then show today's header.
         if (positionSunset >= positionFirst) {
-            dateHebrew = adapter.formatDate(context, jewishDate);
-            bindViewGrouping(list, 0, dateHebrew);
+            final ZmanimItem itemToday = new ZmanimItem(adapter.formatDate(context, jewishDate));
+            itemToday.jewishDate = jewishDate;
+            items.add(itemToday);
 
             int holidayToday = adapter.getHolidayToday();
-            CharSequence holidayName = ZmanimDays.getName(context, holidayToday);
-            if (holidayName != null) {
-                bindViewGrouping(list, 0, holidayName);
+            CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday);
+            if (holidayTodayName != null) {
+                final ZmanimItem itemHoliday = new ZmanimItem(holidayTodayName);
+                itemHoliday.jewishDate = jewishDate;
+                items.add(itemHoliday);
             }
         }
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            bindView(context, list, position, positionTotal, item);
+            if ((item == null) || item.isEmpty()) {
+                continue;
+            }
 
             // Start of the next Hebrew day.
-            if ((position >= positionSunset) && (positionTomorrow < 0)) {
-                positionTomorrow = position;
+            if ((position >= positionSunset) && (itemTomorrow == null)) {
                 jewishDate.forward(Calendar.DATE, 1);
                 jcal.forward(Calendar.DATE, 1);
-                dateHebrew = adapter.formatDate(context, jewishDate);
-                bindViewGrouping(list, position, dateHebrew);
+
+                itemTomorrow = new ZmanimItem(adapter.formatDate(context, jewishDate));
+                itemTomorrow.jewishDate = jcal;
+                items.add(itemTomorrow);
 
                 int holidayTomorrow = adapter.getHolidayTomorrow();
-                CharSequence holidayName = ZmanimDays.getName(context, holidayTomorrow);
-                if (holidayName != null) {
-                    bindViewGrouping(list, 0, holidayName);
+                CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                if (holidayTomorrowName != null) {
+                    final ZmanimItem labelHoliday = new ZmanimItem(holidayTomorrowName);
+                    labelHoliday.jewishDate = jcal;
+                    items.add(labelHoliday);
                 }
 
                 int omer = jcal.getDayOfOmer();
                 if (omer >= 1) {
                     CharSequence omerLabel = adapter.formatOmer(context, omer);
                     if (!TextUtils.isEmpty(omerLabel)) {
-                        bindViewGrouping(list, position, omerLabel);
+                        final ZmanimItem itemOmer = new ZmanimItem(omerLabel);
+                        itemOmer.jewishDate = jcal;
+                        items.add(itemOmer);
                     }
                 }
             }
+
+            items.add(item);
         }
 
         if ((adapterTomorrow != null) && (positionFirst >= 0)) {
             adapter = adapterTomorrow;
             count = Math.min(adapter.getCount(), positionFirst);
-            positionTomorrow = -1;
+            itemTomorrow = null;
 
             if (positionSunset < positionFirst) {
                 for (int position = 0; position < count; position++) {
@@ -155,30 +169,55 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
             for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
-                bindView(context, list, position, positionTotal, item);
+                if ((item == null) || item.isEmpty()) {
+                    continue;
+                }
 
                 // Start of the next Hebrew day.
-                if ((position >= positionSunset) && (positionTomorrow < 0)) {
-                    positionTomorrow = position;
+                if ((position >= positionSunset) && (itemTomorrow == null)) {
                     jewishDate.forward(Calendar.DATE, 1);
                     jcal.forward(Calendar.DATE, 1);
-                    dateHebrew = adapter.formatDate(context, jewishDate);
-                    bindViewGrouping(list, position, dateHebrew);
+
+                    itemTomorrow = new ZmanimItem(adapter.formatDate(context, jewishDate));
+                    itemTomorrow.jewishDate = jcal;
+                    items.add(itemTomorrow);
 
                     int holidayTomorrow = adapter.getHolidayTomorrow();
-                    CharSequence holidayName = ZmanimDays.getName(context, holidayTomorrow);
-                    if (holidayName != null) {
-                        bindViewGrouping(list, 0, holidayName);
+                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                    if (holidayTomorrowName != null) {
+                        final ZmanimItem labelHoliday = new ZmanimItem(holidayTomorrowName);
+                        labelHoliday.jewishDate = jcal;
+                        items.add(labelHoliday);
                     }
 
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
-                            bindViewGrouping(list, position, omerLabel);
+                            final ZmanimItem itemOmer = new ZmanimItem(omerLabel);
+                            itemOmer.jewishDate = jcal;
+                            items.add(itemOmer);
                         }
                     }
                 }
+
+                items.add(item);
+            }
+        }
+
+        bindViews(context, list, items);
+    }
+
+    @Override
+    protected void bindViews(Context context, RemoteViews list, List<ZmanimItem> items) {
+        final int count = items.size();
+        ZmanimItem item;
+        for (int i = 0; i < count; i++) {
+            item = items.get(i);
+            if (item.isCategory()) {
+                bindViewGrouping(list, i, item.timeLabel);
+            } else {
+                bindView(context, list, i, count, item);
             }
         }
     }

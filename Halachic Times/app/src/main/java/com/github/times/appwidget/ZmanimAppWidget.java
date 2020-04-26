@@ -45,7 +45,7 @@ import com.github.util.LocaleUtils;
 
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import java.util.Calendar;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -257,6 +257,15 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param adapterTomorrow the list adapter for tomorrow.
      */
     protected abstract void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow);
+
+    /**
+     * Bind the times to remote views.
+     *
+     * @param context the context.
+     * @param list    the remote views.
+     * @param items   the list of items.
+     */
+    protected abstract void bindViews(Context context, RemoteViews list, List<ZmanimItem> items);
 
     /**
      * Bind the item to remote views.

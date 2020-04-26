@@ -31,6 +31,8 @@ import com.github.util.LocaleUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
@@ -82,13 +84,14 @@ public class ClockWidget extends ZmanimAppWidget {
         ZmanimItem item;
         boolean found = false;
         int positionTotal = 0;
+        List<ZmanimItem> items = new ArrayList<>(1);
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
             if ((item == null) || item.isEmpty()) {
                 continue;
             }
-            bindView(context, list, position, positionTotal, item);
+            items.add(item);
             found = true;
             break;
         }
@@ -101,10 +104,18 @@ public class ClockWidget extends ZmanimAppWidget {
                 if ((item == null) || item.isEmpty()) {
                     continue;
                 }
-                bindView(context, list, position, positionTotal, item);
+                items.add(item);
                 break;
             }
         }
+
+        bindViews(context, list, items);
+    }
+
+    @Override
+    protected void bindViews(Context context, RemoteViews list, List<ZmanimItem> items) {
+        ZmanimItem item = items.get(0);
+        bindView(context, list, 0, 0, item);
     }
 
     @Override

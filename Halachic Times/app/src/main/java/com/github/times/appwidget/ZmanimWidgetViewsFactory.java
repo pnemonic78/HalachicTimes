@@ -195,9 +195,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         items.add(itemToday);
 
         int holidayToday = adapter.getHolidayToday();
-        int holidayTodayId = ZmanimDays.getNameId(holidayToday);
-        if (holidayTodayId != ZmanimDays.ID_NONE) {
-            final ZmanimItem itemHoliday = new ZmanimItem(context.getText(holidayTodayId));
+        CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday);
+        if (holidayTodayName != null) {
+            final ZmanimItem itemHoliday = new ZmanimItem(holidayTodayName);
             itemHoliday.jewishDate = jcal;
             items.add(itemHoliday);
         }
@@ -227,9 +227,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                     items.add(itemTomorrow);
 
                     int holidayTomorrow = adapter.getHolidayTomorrow();
-                    int holidayTomorrowId = ZmanimDays.getNameId(holidayTomorrow);
-                    if (holidayTomorrowId != ZmanimDays.ID_NONE) {
-                        final ZmanimItem labelHoliday = new ZmanimItem(context.getText(holidayTomorrowId));
+                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                    if (holidayTomorrowName != null) {
+                        final ZmanimItem labelHoliday = new ZmanimItem(holidayTomorrowName);
                         labelHoliday.jewishDate = jcal;
                         items.add(labelHoliday);
                     }
