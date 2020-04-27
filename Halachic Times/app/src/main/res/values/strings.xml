@@ -403,9 +403,6 @@
     <string name="day_chol_hamoed_pesach">Intermediate day of Passover</string>
     <string name="day_pesach_sheni">Second Passover</string>
     <string name="day_shavuos">Pentecost</string>
-    <string name="day_seventeen_of_tammuz">17th of Tammuz</string>
-    <string name="day_tisha_beav">9th of Av</string>
-    <string name="day_tu_beav">15th of Av</string>
     <string name="day_rosh_hashana">New Year</string>
     <string name="day_fast_of_gedalyah">Fast of Gedalyah</string>
     <string name="day_yom_kippur">Day of Atonement</string>
@@ -414,9 +411,7 @@
     <string name="day_hoshana_rabba">Hoshana Rabba</string>
     <string name="day_shemini_atzeres">Shemini Atzeres</string>
     <string name="day_simchas_torah">Simchas Torah</string>
-    <string name="day_chanukah" translatable="false">@string/chanukka</string>
-    <string name="day_tenth_of_teves">10th of Teves</string>
-    <string name="day_tu_beshvat">15th of Shvat</string>
+    <string name="day_chanukka" translatable="false">@string/chanukka</string>
     <string name="day_fast_of_esther">Fast of Esther</string>
     <string name="day_purim">Purim</string>
     <string name="day_shushan_purim">Shushan Purim</string>

@@ -231,20 +231,15 @@
     <string name="day_chol_hamoed_pesach">חול המועד פסח</string>
     <string name="day_pesach_sheni">פסח שני</string>
     <string name="day_shavuos">שבועות</string>
-    <string name="day_seventeen_of_tammuz">י\"ז בתמוז</string>
-    <string name="day_tisha_beav">ט\' באב</string>
-    <string name="day_tu_beav">ט\"ו באב</string>
     <string name="day_rosh_hashana">ראש השנה</string>
     <string name="day_fast_of_gedalyah">צום גדליה</string>
-    <string name="day_yom_kippur">יום הכיפורים</string>
+    <string name="day_yom_kippur">יום כיפור</string>
     <string name="day_succos">סוכות</string>
     <string name="day_chol_hamoed_succos">חול המועד סוכות</string>
     <string name="day_hoshana_rabba">הושענא רבה</string>
     <string name="day_shemini_atzeres">שמיני עצרת</string>
     <string name="day_simchas_torah">שמחת תורה</string>
-    <string name="day_chanukah" translatable="false">@string/chanukka</string>
-    <string name="day_tenth_of_teves">י\' בטבת</string>
-    <string name="day_tu_beshvat">ט\"ו בשבט</string>
+    <string name="day_chanukka" translatable="false">@string/chanukka</string>
     <string name="day_fast_of_esther">תענית אסתר</string>
     <string name="day_purim">פורים</string>
     <string name="day_shushan_purim">שושן פורים</string>
