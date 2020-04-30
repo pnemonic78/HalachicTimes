@@ -15,16 +15,17 @@
  */
 package com.github.times.remind;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.JobIntentService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import timber.log.Timber;
 
@@ -40,8 +41,7 @@ public class ZmanimReminderService extends JobIntentService {
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
-    @SuppressLint("StaticFieldLeak")
-    private static ZmanimReminder reminder;
+    private static final AtomicBoolean reminderBusy = new AtomicBoolean(false);
 
     public static void enqueueWork(Context context, Intent intent) {
         if (intent == null) {
@@ -81,11 +81,14 @@ public class ZmanimReminderService extends JobIntentService {
     }
 
     private static void processReminder(Context context, @NonNull Intent intent) {
-        ZmanimReminder reminder = ZmanimReminderService.reminder;
-        if (reminder == null) {
-            reminder = new ZmanimReminder(context);
-            ZmanimReminderService.reminder = reminder;
+        if (reminderBusy.compareAndSet(false, true)) {
+            return;
         }
-        reminder.process(intent);
+        try {
+            ZmanimReminder reminder = new ZmanimReminder(context);
+            reminder.process(intent);
+        } finally {
+            reminderBusy.set(false);
+        }
     }
 }
