@@ -1119,7 +1119,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      *
      * @param geoLocation the location.
      */
-    public void setGeoLocation(GeoLocation geoLocation) {
+    public void setGeoLocation(@NonNull GeoLocation geoLocation) {
         this.calendar.setGeoLocation(geoLocation);
     }
 
