@@ -65,14 +65,12 @@ public class CompassFragment extends Fragment implements SensorEventListener {
 
     private static final float ALPHA = 0.35f; // if ALPHA = 1 OR 0, no filter applies.
 
-    private float bearing;
-
-    private static final float EPSILON_BEARING = 1f;
-    private static final long VIBRATE_DELAY_MS = 1 * DateUtils.SECOND_IN_MILLIS;
+    /** Accuracy of the device's bearing relative to the holiest bearing, in degrees. */
+    private static final float EPSILON_BEARING = 2f;
+    /** Duration to consider the bearing match accurate and stable. */
+    private static final long VIBRATE_DELAY_MS = DateUtils.SECOND_IN_MILLIS;
+    /** Duration of a vibration. */
     private static final long VIBRATE_LENGTH_MS = 50;
-
-    private Vibrator vibrator;
-    private long vibrationTime = 0L;
 
     /**
      * The sensor manager.
@@ -126,6 +124,11 @@ public class CompassFragment extends Fragment implements SensorEventListener {
      * The display orientation.
      */
     private int displayRotation = Surface.ROTATION_0;
+
+    private float bearing;
+
+    private Vibrator vibrator;
+    private long vibrationTime = 0L;
 
     public CompassFragment() {
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
@@ -272,12 +275,15 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     private void maybeVibrate(float azimuth) {
+        long now = SystemClock.elapsedRealtime();
         if (abs(azimuth - bearing) < EPSILON_BEARING) {
-            long now = SystemClock.elapsedRealtime();
             if ((now - vibrationTime) >= VIBRATE_DELAY_MS) {
-                vibrationTime = now;
                 vibrate();
+                // Disable the vibration until accurate again.
+                vibrationTime = Long.MAX_VALUE;
             }
+        } else {
+            vibrationTime = now;
         }
     }
 
