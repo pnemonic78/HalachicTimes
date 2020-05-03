@@ -257,11 +257,6 @@ public class CompassView extends View {
 
         setAzimuth(0f);
         setHoliest(0f);
-        if (BuildConfig.DEBUG) {
-            Random rnd = new Random();
-            setAzimuth((float) (Math.PI * 2 * rnd.nextDouble()));
-            setHoliest(rnd.nextInt(360));
-        }
     }
 
     @Override

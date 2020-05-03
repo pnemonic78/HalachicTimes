@@ -25,6 +25,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.os.Vibrator;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
@@ -37,6 +40,7 @@ import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimLocation;
 
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
+import static java.lang.Math.abs;
 
 /**
  * Show the direction in which to pray.
@@ -61,6 +65,15 @@ public class CompassFragment extends Fragment implements SensorEventListener {
 
     private static final float ALPHA = 0.35f; // if ALPHA = 1 OR 0, no filter applies.
 
+    private float bearing;
+
+    private static final float EPSILON_BEARING = 1f;
+    private static final long VIBRATE_DELAY_MS = 1 * DateUtils.SECOND_IN_MILLIS;
+    private static final long VIBRATE_LENGTH_MS = 50;
+
+    private Vibrator vibrator;
+    private long vibrationTime = 0L;
+
     /**
      * The sensor manager.
      */
@@ -82,13 +95,13 @@ public class CompassFragment extends Fragment implements SensorEventListener {
      */
     protected CompassView compassView;
     /**
-     * The gravity values.
+     * The accelerometer values.
      */
-    private final float[] gravity = new float[3];
+    private final float[] accelerometerValues = new float[3];
     /**
-     * The geomagnetic field.
+     * The magnetometer field.
      */
-    private final float[] geomagnetic = new float[3];
+    private final float[] magnetometerValues = new float[3];
     /**
      * Rotation matrix.
      */
@@ -175,15 +188,15 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         switch (event.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
-                lowPass(event.values, gravity);
+                lowPass(event.values, accelerometerValues);
                 break;
             case Sensor.TYPE_MAGNETIC_FIELD:
-                lowPass(event.values, geomagnetic);
+                lowPass(event.values, magnetometerValues);
                 break;
             default:
                 return;
         }
-        if (SensorManager.getRotationMatrix(matrixR, null, gravity, geomagnetic)) {
+        if (SensorManager.getRotationMatrix(matrixR, null, accelerometerValues, magnetometerValues)) {
             switch (displayRotation) {
                 case Surface.ROTATION_90:
                     SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, mapR);
@@ -209,6 +222,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
 
     protected void setAzimuth(float azimuth) {
         compassView.setAzimuth(-azimuth);
+        maybeVibrate(azimuth);
     }
 
     /**
@@ -227,7 +241,6 @@ public class CompassFragment extends Fragment implements SensorEventListener {
                 (float) location.getAltitude(),
                 location.getTime());
 
-        float bearing;
         String bearingType = preferences.getBearing();
         if (BEARING_GREAT_CIRCLE.equals(bearingType)) {
             bearing = location.bearingTo(holiest);
@@ -256,5 +269,28 @@ public class CompassFragment extends Fragment implements SensorEventListener {
             output[i] += ALPHA * (input[i] - output[i]);
         }
         return output;
+    }
+
+    private void maybeVibrate(float azimuth) {
+        if (abs(azimuth - bearing) < EPSILON_BEARING) {
+            long now = SystemClock.elapsedRealtime();
+            if ((now - vibrationTime) >= VIBRATE_DELAY_MS) {
+                vibrationTime = now;
+                vibrate();
+            }
+        }
+    }
+
+    private void vibrate() {
+        Vibrator vibrator = this.vibrator;
+        if (vibrator == null) {
+            final Context context = getActivity();
+            vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            this.vibrator = vibrator;
+        }
+        if ((vibrator == null) || !vibrator.hasVibrator()) {
+            return;
+        }
+        vibrator.vibrate(VIBRATE_LENGTH_MS);
     }
 }
