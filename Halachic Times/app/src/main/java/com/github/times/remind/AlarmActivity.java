@@ -14,7 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.provider.Settings;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -25,6 +24,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.PermissionChecker;
 
 import com.github.app.ActivityUtils;
 import com.github.app.LocaleCallbacks;
@@ -46,8 +48,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.PermissionChecker;
 import timber.log.Timber;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
@@ -65,18 +65,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     ThemeCallbacks<P>,
     View.OnClickListener {
 
-    /**
-     * Extras name for the reminder id.
-     */
-    public static final String EXTRA_REMINDER_ID = ZmanimReminderItem.EXTRA_ID;
-    /**
-     * Extras name for the reminder title.
-     */
-    public static final String EXTRA_REMINDER_TITLE = ZmanimReminderItem.EXTRA_TITLE;
-    /**
-     * Extras name for the reminder time.
-     */
-    public static final String EXTRA_REMINDER_TIME = ZmanimReminderItem.EXTRA_TIME;
     /**
      * Extras name to silence to alarm.
      */
