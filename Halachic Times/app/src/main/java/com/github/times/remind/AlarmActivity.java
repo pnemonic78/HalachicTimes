@@ -150,7 +150,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dismiss();
+        dismiss(isFinishing());
     }
 
     @Override
@@ -248,7 +248,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
     @Override
     public void onClick(View view) {
         if (view == dismissView) {
-            dismiss();
+            dismiss(true);
         }
     }
 
@@ -273,8 +273,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     /**
      * Dismiss the reminder.
+     *
+     * @param finish is the activity finishing?
      */
-    public void dismiss() {
+    public void dismiss(boolean finish) {
         stopNoise();
         MediaPlayer ringtone = this.ringtone;
         if (ringtone != null) {
@@ -284,8 +286,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         if (silenceRunnable != null) {
             handler.removeCallbacks(silenceRunnable);
         }
-        setResult(RESULT_OK);
-        close();
+        if (finish) {
+            setResult(RESULT_OK);
+            close();
+        }
     }
 
     private void close() {
