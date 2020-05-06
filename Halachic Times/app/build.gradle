@@ -52,7 +52,7 @@ android {
 
     flavorDimensions "internet"
     productFlavors {
-        regular {
+        normal {
             dimension "internet"
         }
 
