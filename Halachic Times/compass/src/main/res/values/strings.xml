@@ -4,4 +4,7 @@
     <string name="app_name">@string/title_activity_compass</string>
     <string name="title_activity_compass">@string/menu_compass</string>
 
+    <!-- About -->
+    <string name="issue_url" translatable="false">mailto:pnemonic@gmail.com?subject=Compass</string>
+
 </resources>

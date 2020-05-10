@@ -3,4 +3,7 @@
 
     <string name="app_name">Prayer Direction</string>
 
+    <!-- About -->
+    <string name="issue_url" translatable="false">mailto:pnemonic@gmail.com?subject=Prayer Direction</string>
+
 </resources>

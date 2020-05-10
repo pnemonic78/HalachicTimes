@@ -6,4 +6,7 @@
     <!-- Compass -->
     <string name="compass_summary">Direction of prayer to the tomb of Bahá\'u\'lláh in Bahjí</string>
 
+    <!-- About -->
+    <string name="issue_url" translatable="false">mailto:pnemonic@gmail.com?subject=Prayer Direction</string>
+
 </resources>
