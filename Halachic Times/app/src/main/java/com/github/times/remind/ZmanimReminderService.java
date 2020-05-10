@@ -25,8 +25,6 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import timber.log.Timber;
 
 import static com.github.times.remind.ZmanimReminder.ACTION_REMIND;
@@ -41,7 +39,7 @@ public class ZmanimReminderService extends JobIntentService {
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
-    private static final AtomicBoolean reminderBusy = new AtomicBoolean(false);
+    private static String reminderBusy = "";
 
     public static void enqueueWork(Context context, Intent intent) {
         if (intent == null) {
@@ -81,14 +79,13 @@ public class ZmanimReminderService extends JobIntentService {
     }
 
     private static void processReminder(Context context, @NonNull Intent intent) {
-        if (reminderBusy.compareAndSet(false, true)) {
+        final String action = intent.getAction();
+        if (reminderBusy.equals(action)) {
             return;
         }
-        try {
-            ZmanimReminder reminder = new ZmanimReminder(context);
-            reminder.process(intent);
-        } finally {
-            reminderBusy.set(false);
-        }
+        reminderBusy = action;
+
+        ZmanimReminder reminder = new ZmanimReminder(context);
+        reminder.process(intent);
     }
 }
