@@ -1,4 +1,11 @@
-<manifest
-    package="com.github.times.compass.lib"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.times.compass.lib">
+
+    <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
 </manifest>

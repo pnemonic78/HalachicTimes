@@ -22,30 +22,60 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
  */
 public class ZmanimItem implements Comparable<ZmanimItem> {
 
-    /** Unknown date. */
+    /**
+     * Unknown date.
+     */
     public static final long NEVER = Long.MIN_VALUE;
-    /** Start date of the Julian calendar. */
+    /**
+     * Start date of the Julian calendar.
+     */
     public static final long YEAR_1 = -62135863199554L;
 
-    /** The title id. */
+    /**
+     * The title id.
+     */
     public final int titleId;
-    /** The summary. */
+    /**
+     * The summary.
+     */
     public CharSequence summary;
-    /** The time. */
+    /**
+     * The time.
+     */
     public final long time;
-    /** The time label. */
+    /**
+     * The time label.
+     */
     public CharSequence timeLabel;
-    /** Has the time elapsed? */
+    /**
+     * Has the time elapsed?
+     */
     public boolean elapsed;
-    /** Emphasize? */
+    /**
+     * Emphasize?
+     */
     public boolean emphasis;
-    /** Jewish date. */
+    /**
+     * Jewish date.
+     */
     public JewishDate jewishDate;
+    private boolean category = false;
 
-    /** Creates a new row item. */
+    /**
+     * Creates a new row item.
+     */
     public ZmanimItem(int titleId, long time) {
         this.titleId = titleId;
         this.time = time;
+    }
+
+    /**
+     * Creates a new category item.
+     */
+    public ZmanimItem(CharSequence label) {
+        this(0, NEVER);
+        timeLabel = label;
+        category = true;
     }
 
     @Override
@@ -71,5 +101,9 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      */
     public boolean isEmpty() {
         return elapsed || (time == NEVER) || (time < YEAR_1) || (timeLabel == null);
+    }
+
+    public boolean isCategory() {
+        return category;
     }
 }

@@ -72,8 +72,8 @@
     <string name="mincha">Modły popołudniowe</string>
     <string name="mincha_lesser">Mniejszy <i>mincha</i></string>
 
-    <!-- Plug hamincha -->
-    <string name="plug_hamincha"><i>Plag hamincha</i></string>
+    <!-- Plug haMincha -->
+    <string name="plug_hamincha"><i>Plag haMincha</i></string>
 
     <!-- Candle lighting -->
     <string name="candles">Oświetlenie świecę</string>

@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.google.maps:google-maps-services:0.9.0'
 
     // Testing
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation "androidx.test:core:$supportTestVersion"
     androidTestImplementation "androidx.test:rules:$supportTestVersion"
     androidTestImplementation "androidx.test:runner:$supportTestVersion"

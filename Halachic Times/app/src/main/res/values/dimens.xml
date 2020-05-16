@@ -17,7 +17,7 @@
     <dimen name="clock_widget_minHeight">@dimen/widget_cell_1</dimen>
     <dimen name="clock_widget_minResizeWidth">@dimen/clock_widget_minWidth</dimen>
     <dimen name="clock_widget_minResizeHeight">@dimen/clock_widget_minHeight</dimen>
-    <dimen name="clock_widget_time_textSize">80dp</dimen>
+    <dimen name="clock_widget_time_textSize">75dp</dimen>
     <dimen name="clock_widget_time_marginTop">-15dp</dimen>
     <dimen name="clock_widget_title_marginTop">-15dp</dimen>
 

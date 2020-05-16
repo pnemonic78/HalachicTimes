@@ -28,6 +28,8 @@ import com.github.times.ZmanimItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
  * Reminder item for a notification.
  *
@@ -124,7 +126,7 @@ public class ZmanimReminderItem implements Parcelable {
                 contentTitle = context.getText(id);
             }
             CharSequence contentText = extras.getCharSequence(EXTRA_TEXT);
-            long when = extras.getLong(EXTRA_TIME, System.currentTimeMillis());
+            long when = extras.getLong(EXTRA_TIME, currentTimeMillis());
             if ((contentTitle != null) && (when > 0L)) {
                 return new ZmanimReminderItem(id, contentTitle, contentText, when);
             }

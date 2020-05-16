@@ -15,16 +15,15 @@
  */
 package com.github.times.remind;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.JobIntentService;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.JobIntentService;
 
 import timber.log.Timber;
 
@@ -40,8 +39,7 @@ public class ZmanimReminderService extends JobIntentService {
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
-    @SuppressLint("StaticFieldLeak")
-    private static ZmanimReminder reminder;
+    private static String reminderBusy = "";
 
     public static void enqueueWork(Context context, Intent intent) {
         if (intent == null) {
@@ -81,11 +79,13 @@ public class ZmanimReminderService extends JobIntentService {
     }
 
     private static void processReminder(Context context, @NonNull Intent intent) {
-        ZmanimReminder reminder = ZmanimReminderService.reminder;
-        if (reminder == null) {
-            reminder = new ZmanimReminder(context);
-            ZmanimReminderService.reminder = reminder;
+        final String action = intent.getAction();
+        if (reminderBusy.equals(action)) {
+            return;
         }
+        reminderBusy = action;
+
+        ZmanimReminder reminder = new ZmanimReminder(context);
         reminder.process(intent);
     }
 }

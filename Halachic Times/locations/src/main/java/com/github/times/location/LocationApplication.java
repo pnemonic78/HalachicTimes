@@ -112,7 +112,7 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         stopLocationHolder();
     }

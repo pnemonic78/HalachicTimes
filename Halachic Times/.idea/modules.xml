@@ -2,19 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GeoNames/GeoNames.iml" filepath="$PROJECT_DIR$/GeoNames/GeoNames.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Halachic Times.iml" filepath="$PROJECT_DIR$/Halachic Times.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android-lib/android-lib.iml" filepath="$PROJECT_DIR$/android-lib/android-lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compass/compass.iml" filepath="$PROJECT_DIR$/compass/compass.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compass-bahai/compass-bahai.iml" filepath="$PROJECT_DIR$/compass-bahai/compass-bahai.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compass-jewish/compass-jewish.iml" filepath="$PROJECT_DIR$/compass-jewish/compass-jewish.iml" />
-      <module fileurl="file://$PROJECT_DIR$/compass-lib/compass-lib.iml" filepath="$PROJECT_DIR$/compass-lib/compass-lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android-lib/lib/lib.iml" filepath="$PROJECT_DIR$/android-lib/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" filepath="$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/locations/locations.iml" filepath="$PROJECT_DIR$/locations/locations.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zmanim/zmanim.iml" filepath="$PROJECT_DIR$/zmanim/zmanim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GeoNames/GeoNames.iml" filepath="$PROJECT_DIR$/GeoNames/GeoNames.iml" group="Halachic Times/GeoNames" />
+      <module fileurl="file://$PROJECT_DIR$/Halachic Times.iml" filepath="$PROJECT_DIR$/Halachic Times.iml" group="Halachic Times" />
+      <module fileurl="file://$PROJECT_DIR$/android-lib/android-lib.iml" filepath="$PROJECT_DIR$/android-lib/android-lib.iml" group="Halachic Times/android-lib" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Halachic Times/app" />
+      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" group="Halachic Times/common" />
+      <module fileurl="file://$PROJECT_DIR$/compass/compass.iml" filepath="$PROJECT_DIR$/compass/compass.iml" group="Halachic Times/compass" />
+      <module fileurl="file://$PROJECT_DIR$/compass-bahai/compass-bahai.iml" filepath="$PROJECT_DIR$/compass-bahai/compass-bahai.iml" group="Halachic Times/compass-bahai" />
+      <module fileurl="file://$PROJECT_DIR$/compass-jewish/compass-jewish.iml" filepath="$PROJECT_DIR$/compass-jewish/compass-jewish.iml" group="Halachic Times/compass-jewish" />
+      <module fileurl="file://$PROJECT_DIR$/compass-lib/compass-lib.iml" filepath="$PROJECT_DIR$/compass-lib/compass-lib.iml" group="Halachic Times/compass-lib" />
+      <module fileurl="file://$PROJECT_DIR$/android-lib/lib/lib.iml" filepath="$PROJECT_DIR$/android-lib/lib/lib.iml" group="Halachic Times/android-lib/lib" />
+      <module fileurl="file://$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" filepath="$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" group="Halachic Times/zmanim/lib-android" />
+      <module fileurl="file://$PROJECT_DIR$/locations/locations.iml" filepath="$PROJECT_DIR$/locations/locations.iml" group="Halachic Times/locations" />
+      <module fileurl="file://$PROJECT_DIR$/zmanim/zmanim.iml" filepath="$PROJECT_DIR$/zmanim/zmanim.iml" group="Halachic Times/zmanim" />
     </modules>
   </component>
 </project>

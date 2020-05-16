@@ -55,29 +55,49 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     private Context context;
     protected LayoutInflater inflater;
     private OnClickListener onClickListener;
-    /** The scroller. */
+    /**
+     * The scroller.
+     */
     private ScrollView scrollView;
-    /** The list. */
+    /**
+     * The list.
+     */
     protected ViewGroup list;
-    /** Provider for locations. */
+    /**
+     * Provider for locations.
+     */
     protected ZmanimLocations locations;
-    /** The preferences. */
+    /**
+     * The preferences.
+     */
     protected ZmanimPreferences preferences;
-    /** The master item selected id. */
+    /**
+     * The master item selected id.
+     */
     private int highlightItemId;
-    /** The master item selected row. */
+    /**
+     * The master item selected row.
+     */
     private View highlightRow;
-    /** The master item background that is selected. */
+    /**
+     * The master item background that is selected.
+     */
     private Drawable highlightBackground;
-    /** The master item background that is not selected. */
+    /**
+     * The master item background that is not selected.
+     */
     private Drawable unhighlightBackground;
     private int paddingLeft;
     private int paddingTop;
     private int paddingRight;
     private int paddingBottom;
-    /** The adapter populater. */
+    /**
+     * The adapter populater.
+     */
     private P populater;
-    /** The adapter. */
+    /**
+     * The adapter.
+     */
     private A adapter;
 
     protected Context getContextImpl() {
@@ -239,7 +259,6 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         int position = 0;
         ZmanimItem item;
         View row;
-        CharSequence groupingText;
         final View[] timeViews = new View[count];
         JewishDate jewishDatePrevious = null;
 
@@ -258,6 +277,12 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
 
             bindViewGrouping(list, position, dateHebrew);
 
+            int holidayToday = adapter.getHolidayToday();
+            CharSequence holidayName = ZmanimDays.getName(context, holidayToday);
+            if (holidayName != null) {
+                bindViewGrouping(list, position, holidayName);
+            }
+
             for (; position < count; position++) {
                 item = adapter.getItem(position);
                 if (item == null) {
@@ -271,18 +296,22 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     jcal.setJewishDate(jewishDate.getJewishYear(), jewishDate.getJewishMonth(), jewishDate.getJewishDayOfMonth());
 
                     dateHebrew = adapter.formatDate(context, jewishDate);
-                    groupingText = dateHebrew;
+                    bindViewGrouping(list, position, dateHebrew);
+
+                    int holidayTomorrow = adapter.getHolidayTomorrow();
+                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                    if (holidayTomorrowName != null) {
+                        bindViewGrouping(list, position, holidayTomorrowName);
+                    }
 
                     // Sefirat HaOmer?
                     int omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
-                            groupingText = TextUtils.concat(groupingText, "\n", omerLabel);
+                            bindViewGrouping(list, position, omerLabel);
                         }
                     }
-
-                    bindViewGrouping(list, position, groupingText);
                 }
 
                 row = adapter.getView(position, null, list);

@@ -13,7 +13,8 @@
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature
         android:name="android.hardware.sensor.compass"
-        android:required="false" />
+        android:required="false"
+        tools:replace="required" />
 
     <application
         android:name="com.github.times.ZmanimApplication"
@@ -31,7 +32,7 @@
         <activity
             android:name="com.github.times.ZmanimActivity"
             android:label="@string/title_activity_zmanim">
-            <intent-filter android:label="@string/app_name">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
