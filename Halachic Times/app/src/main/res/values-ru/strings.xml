@@ -223,4 +223,27 @@
     <string name="reminder_wednesday">Напомнить среду</string>
     <string name="notification_upcoming_title">Предстоящий время как уведомление</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Песах</string>
+    <string name="day_chol_hamoed_pesach">Средний день Пасхи</string>
+    <string name="day_pesach_sheni">Вторая Пасха</string>
+    <string name="day_shavuos">Шавуот</string>
+    <string name="day_rosh_hashana">Новый Год</string>
+    <string name="day_fast_of_gedalyah">Пост Гедалия</string>
+    <string name="day_yom_kippur">Йом Кипур</string>
+    <string name="day_succos">Суккот</string>
+    <string name="day_chol_hamoed_succos">Средний день Суккот</string>
+    <string name="day_hoshana_rabba">Хошана Рабба</string>
+    <string name="day_shemini_atzeres">Восьмое ралли</string>
+    <string name="day_simchas_torah">Симхат Тора</string>
+    <string name="day_fast_of_esther">Пост Эстер</string>
+    <string name="day_purim">Пурим</string>
+    <string name="day_shushan_purim">Шушан Пурим</string>
+    <string name="day_purim_katan">Малый Пурим</string>
+    <string name="day_rosh_chodesh">Новолуние</string>
+    <string name="day_yom_hashoah">День Холокоста</string>
+    <string name="day_yom_hazikaron">День Памяти</string>
+    <string name="day_yom_haatzmaut">День Независимости</string>
+    <string name="day_yom_yerushalayim">День Иерусалима</string>
+    <string name="day_shabbath">Шаббат</string>
 </resources>
