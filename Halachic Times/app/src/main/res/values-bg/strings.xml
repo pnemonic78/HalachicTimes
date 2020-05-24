@@ -223,4 +223,28 @@
     <string name="reminder_wednesday">Напомни в сряда</string>
     <string name="notification_upcoming_title">Предстоящите време като нотификация</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Песах</string>
+    <string name="day_chol_hamoed_pesach">Междинен ден Песах</string>
+    <string name="day_pesach_sheni">Втори Песах</string>
+    <string name="day_shavuos">Шавуот</string>
+    <string name="day_rosh_hashana">Нова Година</string>
+    <string name="day_fast_of_gedalyah">Пости от Гедаля</string>
+    <string name="day_yom_kippur">Ден на Изкуплението</string>
+    <string name="day_succos">Сокхот</string>
+    <string name="day_chol_hamoed_succos">Междинно ден Сокхот</string>
+    <string name="day_hoshana_rabba">Хошана Раба</string>
+    <string name="day_shemini_atzeres">Шмини Ацерес</string>
+    <string name="day_simchas_torah">Симхат Тора</string>
+    <string name="day_fast_of_esther">Пости от Естер</string>
+    <string name="day_purim">Пурим</string>
+    <string name="day_shushan_purim">Шушан Пурим</string>
+    <string name="day_purim_katan">Малък Пурим</string>
+    <string name="day_rosh_chodesh">Нова Месец</string>
+    <string name="day_yom_hashoah">Ден на Холокоста</string>
+    <string name="day_yom_hazikaron">Ден на Възпоменанието</string>
+    <string name="day_yom_haatzmaut">Ден на Независимостта</string>
+    <string name="day_yom_yerushalayim">Ден на Йерусалим</string>
+    <string name="day_shabbath">Шабат</string>
+
 </resources>
