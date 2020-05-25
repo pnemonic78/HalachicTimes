@@ -223,4 +223,28 @@
     <string name="reminder_wednesday">Amintește miercuri</string>
     <string name="notification_upcoming_title">Apropiata timp ca o notificare</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Pesach</string>
+    <string name="day_chol_hamoed_pesach">Ziua intermediară a Pesach</string>
+    <string name="day_pesach_sheni">Doilea Pesach</string>
+    <string name="day_shavuos">Șavuoth</string>
+    <string name="day_rosh_hashana">An Nou</string>
+    <string name="day_fast_of_gedalyah">Postul Gedalyah</string>
+    <string name="day_yom_kippur">Ziua Ispășirii</string>
+    <string name="day_succos">Sucot</string>
+    <string name="day_chol_hamoed_succos">Ziua intermediară a Sucotului</string>
+    <string name="day_hoshana_rabba">Hoșana Rabba</string>
+    <string name="day_shemini_atzeres">Șemini Atzeres</string>
+    <string name="day_simchas_torah">Simchath Tora</string>
+    <string name="day_fast_of_esther">Postul Esterei</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Șușan Purim</string>
+    <string name="day_purim_katan">Purim mai mică</string>
+    <string name="day_rosh_chodesh">Lună Nouă</string>
+    <string name="day_yom_hashoah">Ziua Holocaustului</string>
+    <string name="day_yom_hazikaron">Ziua Amintirii</string>
+    <string name="day_yom_haatzmaut">Ziua Independentei</string>
+    <string name="day_yom_yerushalayim">Ziua Ierusalimului</string>
+    <string name="day_shabbath">Șabat</string>
+
 </resources>
