@@ -166,8 +166,8 @@
     <string name="levana_15">15 päivää jälkeen uusikuu</string>
 
     <!-- Fast / Taanis -->
-    <string name="fast_begins">Paastota alkaa</string>
-    <string name="fast_ends">Paastota päät</string>
+    <string name="fast_begins">Paasto alkaa</string>
+    <string name="fast_ends">Paasto päät</string>
 
     <!-- Omer -->
     <string name="omer"><i>Omer</i></string>
@@ -222,5 +222,29 @@
     <string name="reminder_tuesday">Muistuta tiistaina</string>
     <string name="reminder_wednesday">Muistuta keskiviikkona</string>
     <string name="notification_upcoming_title">Tuleva aika kuin ilmoitus</string>
+
+    <!-- Special days -->
+    <string name="day_pesach">Pääsiäisateria</string>
+    <string name="day_chol_hamoed_pesach">Pääsiäisateria keskipäivä</string>
+    <string name="day_pesach_sheni">Toinen Pääsiäisateria</string>
+    <string name="day_shavuos">Šavuot</string>
+    <string name="day_rosh_hashana">Uusivuosi</string>
+    <string name="day_fast_of_gedalyah">Paasto Gedalyasta</string>
+    <string name="day_yom_kippur">Sovituksen päivä</string>
+    <string name="day_succos">Succot</string>
+    <string name="day_chol_hamoed_succos">Succothin keskipäivä</string>
+    <string name="day_hoshana_rabba">Hošana Rabba</string>
+    <string name="day_shemini_atzeres">Šmini Atzeres</string>
+    <string name="day_simchas_torah">Simchath Torah</string>
+    <string name="day_fast_of_esther">Paasto Estherin</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Šušan Purim</string>
+    <string name="day_purim_katan">Vähemmän Purim</string>
+    <string name="day_rosh_chodesh">Uusi Kuukausi</string>
+    <string name="day_yom_hashoah">Holokaustin päivä</string>
+    <string name="day_yom_hazikaron">Kaatuneitten muistopäivä</string>
+    <string name="day_yom_haatzmaut">Itsenäisyyspäivä</string>
+    <string name="day_yom_yerushalayim">Jerusalemin päivä</string>
+    <string name="day_shabbath">Šapatti</string>
 
 </resources>
