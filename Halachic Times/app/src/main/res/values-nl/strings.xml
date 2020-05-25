@@ -223,4 +223,28 @@
     <string name="reminder_wednesday">Herinner op woensdag</string>
     <string name="notification_upcoming_title">De komende tijd als een kennisgeving</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Pascha</string>
+    <string name="day_chol_hamoed_pesach">Tussenliggende dag van Pascha</string>
+    <string name="day_pesach_sheni">Tweede Pascha</string>
+    <string name="day_shavuos">Sjavoeot</string>
+    <string name="day_rosh_hashana">Nieuwjaar</string>
+    <string name="day_fast_of_gedalyah">Vasten van Gedalyah</string>
+    <string name="day_yom_kippur">Dag van de Verzoening</string>
+    <string name="day_succos">Sukkot</string>
+    <string name="day_chol_hamoed_succos">Tussenliggende dag van Sukkot</string>
+    <string name="day_hoshana_rabba">Hosjana Rabba</string>
+    <string name="day_shemini_atzeres">Sjmini Atzeres</string>
+    <string name="day_simchas_torah">Simchat Tora</string>
+    <string name="day_fast_of_esther">Vasten van Esther</string>
+    <string name="day_purim">Poerim</string>
+    <string name="day_shushan_purim">Sjusjan Poerim</string>
+    <string name="day_purim_katan">Kleiner Poerim</string>
+    <string name="day_rosh_chodesh">Nieuwe Maand</string>
+    <string name="day_yom_hashoah">Holocaust-dag</string>
+    <string name="day_yom_hazikaron">Dodenherdenking</string>
+    <string name="day_yom_haatzmaut">Onafhankelijkheidsdag</string>
+    <string name="day_yom_yerushalayim">Jeruzalem-dag</string>
+    <string name="day_shabbath">Sjabbat</string>
+
 </resources>
