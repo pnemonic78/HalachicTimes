@@ -223,4 +223,28 @@
     <string name="reminder_wednesday">Przypomnij w środę</string>
     <string name="notification_upcoming_title">Nadchodzący czas jako powiadomienie</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Pascha</string>
+    <string name="day_chol_hamoed_pesach">Pośredni dzień Pascha</string>
+    <string name="day_pesach_sheni">Druga Pascha</string>
+    <string name="day_shavuos">Szawuot</string>
+    <string name="day_rosh_hashana">Nowy Rok</string>
+    <string name="day_fast_of_gedalyah">Post Gedalyah</string>
+    <string name="day_yom_kippur">Dzień Pojednania</string>
+    <string name="day_succos">Succot</string>
+    <string name="day_chol_hamoed_succos">Pośredni dzień Succot</string>
+    <string name="day_hoshana_rabba">Hoszana Raba</string>
+    <string name="day_shemini_atzeres">Szmini Atzeres</string>
+    <string name="day_simchas_torah">Simchath Tora</string>
+    <string name="day_fast_of_esther">Post Esthery</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Szuszan Purim</string>
+    <string name="day_purim_katan">Mniejszy Purim</string>
+    <string name="day_rosh_chodesh">Nowy Miesiąc</string>
+    <string name="day_yom_hashoah">Dzień Holokaustu</string>
+    <string name="day_yom_hazikaron">Dzień Pamięci</string>
+    <string name="day_yom_haatzmaut">Dzień Niepodległości</string>
+    <string name="day_yom_yerushalayim">Dzień Jerozolimy</string>
+    <string name="day_shabbath">Szabat</string>
+
 </resources>
