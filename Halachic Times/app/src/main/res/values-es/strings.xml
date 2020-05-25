@@ -84,13 +84,13 @@
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d minutos antes de la puesta del sol</string>
 
-    <string name="chanukka"><i>Jánuca</i></string>
+    <string name="chanukka"><i>Jánucá</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
-    <string name="candles_chanukka_one">%1$d vela de Jánuca</string>
+    <string name="candles_chanukka_one">%1$d vela de Jánucá</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_few">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_many">@string/candles_chanukka_other</string>
-    <string name="candles_chanukka_other">%1$d velas de Jánuca</string>
+    <string name="candles_chanukka_other">%1$d velas de Jánucá</string>
 
     <!-- Sunset -->
     <string name="sunset">Puesta del sol</string>
@@ -222,5 +222,29 @@
     <string name="reminder_tuesday">Recuerde el martes</string>
     <string name="reminder_wednesday">Recuerde el miércoles</string>
     <string name="notification_upcoming_title">La próxima vez como notificación</string>
+
+    <!-- Special days -->
+    <string name="day_pesach">Pesaj</string>
+    <string name="day_chol_hamoed_pesach">Día intermedio de Pesaj</string>
+    <string name="day_pesach_sheni">Segundo Pesaj</string>
+    <string name="day_shavuos">Shavuot</string>
+    <string name="day_rosh_hashana">Año Nuevo</string>
+    <string name="day_fast_of_gedalyah">Ayuno de Gedalyá</string>
+    <string name="day_yom_kippur">Día del Expiación</string>
+    <string name="day_succos">Sucot</string>
+    <string name="day_chol_hamoed_succos">Día intermedio de Sucot</string>
+    <string name="day_hoshana_rabba">Hoshana Rabá</string>
+    <string name="day_shemini_atzeres">Sheminí Atzeret</string>
+    <string name="day_simchas_torah">Simchath Torá</string>
+    <string name="day_fast_of_esther">Ayuno de Ester</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Shushan Purim</string>
+    <string name="day_purim_katan">Purim menor</string>
+    <string name="day_rosh_chodesh">Nuevo Mes</string>
+    <string name="day_yom_hashoah">Día del Holocausto</string>
+    <string name="day_yom_hazikaron">Día de conmemoración</string>
+    <string name="day_yom_haatzmaut">Día de Independencia</string>
+    <string name="day_yom_yerushalayim">Día de Jerusalén</string>
+    <string name="day_shabbath">Shabat</string>
 
 </resources>

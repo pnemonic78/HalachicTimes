@@ -122,7 +122,7 @@
     <string name="nightfall_9_75">Sole è 9,75° sotto l\'orizzonte</string>
 
     <!-- Shabbath. -->
-    <string name="shabbath_ends">Shabato finiture</string>
+    <string name="shabbath_ends">Sabato finiture</string>
     <string name="minutes_after_zero">@string/minutes_after_other</string>
     <string name="minutes_after_one">%1$d minuto dopo %2$s</string>
     <string name="minutes_after_two">@string/minutes_after_other</string>
@@ -222,5 +222,29 @@
     <string name="reminder_tuesday">Ricordare il Martedì</string>
     <string name="reminder_wednesday">Ricordare il Mercoledì</string>
     <string name="notification_upcoming_title">Il tempo di imminente come notifica</string>
+
+    <!-- Special days -->
+    <string name="day_pesach">Pesach</string>
+    <string name="day_chol_hamoed_pesach">Giorno intermedio di Pesach</string>
+    <string name="day_pesach_sheni">Secondo Pesach</string>
+    <string name="day_shavuos">Shavuot</string>
+    <string name="day_rosh_hashana">Nuovo Anno</string>
+    <string name="day_fast_of_gedalyah">Quaresima di Gedalyah</string>
+    <string name="day_yom_kippur">Giorno dell\'Espiazione</string>
+    <string name="day_succos">Succot</string>
+    <string name="day_chol_hamoed_succos">Giorno intermedio di Succot</string>
+    <string name="day_hoshana_rabba">Hoshana Rabba</string>
+    <string name="day_shemini_atzeres">Shemini Atzeres</string>
+    <string name="day_simchas_torah">Simchath Torah</string>
+    <string name="day_fast_of_esther">Quaresima di Ester</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Shushan Purim</string>
+    <string name="day_purim_katan">Purim Minore</string>
+    <string name="day_rosh_chodesh">Nuovo Mese</string>
+    <string name="day_yom_hashoah">Giornata dell\'Olocausto</string>
+    <string name="day_yom_hazikaron">Giornata della Memoria</string>
+    <string name="day_yom_haatzmaut">Giorno dell\'Indipendenza</string>
+    <string name="day_yom_yerushalayim">Giornata di Gerusalemme</string>
+    <string name="day_shabbath">Sabato</string>
 
 </resources>

@@ -15,6 +15,10 @@
         android:name="android.hardware.sensor.compass"
         android:required="false"
         tools:replace="required" />
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="false"
+        tools:replace="required" />
 
     <application
         android:name="com.github.times.ZmanimApplication"

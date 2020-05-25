@@ -223,4 +223,28 @@
     <string name="reminder_wednesday">Emlékeztesse szerdán</string>
     <string name="notification_upcoming_title">A közelgő időben értesítést</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Pészah</string>
+    <string name="day_chol_hamoed_pesach">Pészah köztes napja</string>
+    <string name="day_pesach_sheni">Második Pészah</string>
+    <string name="day_shavuos">Sávuot</string>
+    <string name="day_rosh_hashana">Újév</string>
+    <string name="day_fast_of_gedalyah">Gedalyah böjtje</string>
+    <string name="day_yom_kippur">Engesztelés napja</string>
+    <string name="day_succos">Szukkotot</string>
+    <string name="day_chol_hamoed_succos">Szukkotot köztes napja</string>
+    <string name="day_hoshana_rabba">Hósáná Rábá</string>
+    <string name="day_shemini_atzeres">Smíni Atzeres</string>
+    <string name="day_simchas_torah">Szimchat Tóra</string>
+    <string name="day_fast_of_esther">Eszter böjtje</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Susán Purim</string>
+    <string name="day_purim_katan">Kisebb Purim</string>
+    <string name="day_rosh_chodesh">Új Hónap</string>
+    <string name="day_yom_hashoah">Holokauszt napja</string>
+    <string name="day_yom_hazikaron">Az emlékezés napja</string>
+    <string name="day_yom_haatzmaut">Függetlenség napja</string>
+    <string name="day_yom_yerushalayim">Jeruzsálem napja</string>
+    <string name="day_shabbath">Szombat</string>
+
 </resources>

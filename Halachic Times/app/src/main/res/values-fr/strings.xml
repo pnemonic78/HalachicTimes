@@ -223,4 +223,27 @@
     <string name="reminder_wednesday">Rappeler aux mercredi</string>
     <string name="notification_upcoming_title">L\'heure à venir en tant que notification</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Pessa\'h</string>
+    <string name="day_chol_hamoed_pesach">Jour intermédiaire de la Pessa\'h</string>
+    <string name="day_pesach_sheni">Deuxième Pessa\'h</string>
+    <string name="day_shavuos">Chavouot</string>
+    <string name="day_rosh_hashana">Nouvel An</string>
+    <string name="day_fast_of_gedalyah">Jeûne de Gedalia</string>
+    <string name="day_yom_kippur">Jour des Expiations</string>
+    <string name="day_succos">Souccot</string>
+    <string name="day_chol_hamoed_succos">Jour intermédiaire de la Souccot</string>
+    <string name="day_hoshana_rabba">Hochana Rabba</string>
+    <string name="day_shemini_atzeres">Chemini Atzeres</string>
+    <string name="day_simchas_torah">Sim\'hat Torah</string>
+    <string name="day_fast_of_esther">Jeûne de Esther</string>
+    <string name="day_purim">Pourim</string>
+    <string name="day_shushan_purim">Chuchan Pourim</string>
+    <string name="day_purim_katan">Petit Pourim</string>
+    <string name="day_rosh_chodesh">Nouveau Mois</string>
+    <string name="day_yom_hashoah">Jour de l\'Holocauste</string>
+    <string name="day_yom_hazikaron">Jour du Souvenir</string>
+    <string name="day_yom_haatzmaut">Jour de l\'Indépendance</string>
+    <string name="day_yom_yerushalayim">Jour de Jérusalem</string>
+    <string name="day_shabbath">Chabbat</string>
 </resources>

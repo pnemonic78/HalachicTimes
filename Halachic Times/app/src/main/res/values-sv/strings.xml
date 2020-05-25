@@ -223,4 +223,28 @@
     <string name="reminder_wednesday">Påminn på onsdag</string>
     <string name="notification_upcoming_title">Den kommande tiden som en anmälan</string>
 
+    <!-- Special days -->
+    <string name="day_pesach">Påskalammet</string>
+    <string name="day_chol_hamoed_pesach">Mellan dag Påskalammet</string>
+    <string name="day_pesach_sheni">Andra Påskalammet</string>
+    <string name="day_shavuos">Šavuoth</string>
+    <string name="day_rosh_hashana">Nyår</string>
+    <string name="day_fast_of_gedalyah">Fasta av Gedalya</string>
+    <string name="day_yom_kippur">Försoningsdagen</string>
+    <string name="day_succos">Lövhyddofesten</string>
+    <string name="day_chol_hamoed_succos">Mellan dag Lövhyddofesten</string>
+    <string name="day_hoshana_rabba">Hošana Rabba</string>
+    <string name="day_shemini_atzeres">Šemini Atzeres</string>
+    <string name="day_simchas_torah">Simchath Tora</string>
+    <string name="day_fast_of_esther">Fasta av Ester</string>
+    <string name="day_purim">Purim</string>
+    <string name="day_shushan_purim">Šušan Purim</string>
+    <string name="day_purim_katan">Mindre Purim</string>
+    <string name="day_rosh_chodesh">Ny Månad</string>
+    <string name="day_yom_hashoah">Förintelsedagen</string>
+    <string name="day_yom_hazikaron">Minnesdagen</string>
+    <string name="day_yom_haatzmaut">Självständighetsdag</string>
+    <string name="day_yom_yerushalayim">Jerusalems dag</string>
+    <string name="day_shabbath">Šabbat</string>
+
 </resources>

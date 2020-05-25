@@ -402,15 +402,15 @@
     <string name="day_pesach">Passover</string>
     <string name="day_chol_hamoed_pesach">Intermediate day of Passover</string>
     <string name="day_pesach_sheni">Second Passover</string>
-    <string name="day_shavuos">Pentecost</string>
+    <string name="day_shavuos">Shavuoth</string>
     <string name="day_rosh_hashana">New Year</string>
     <string name="day_fast_of_gedalyah">Fast of Gedalyah</string>
     <string name="day_yom_kippur">Day of Atonement</string>
-    <string name="day_succos">Succos</string>
-    <string name="day_chol_hamoed_succos">Intermediate day of Succos</string>
+    <string name="day_succos">Succoth</string>
+    <string name="day_chol_hamoed_succos">Intermediate day of Succoth</string>
     <string name="day_hoshana_rabba">Hoshana Rabba</string>
     <string name="day_shemini_atzeres">Shemini Atzeres</string>
-    <string name="day_simchas_torah">Simchas Torah</string>
+    <string name="day_simchas_torah">Simchath Torah</string>
     <string name="day_chanukka" translatable="false">@string/chanukka</string>
     <string name="day_fast_of_esther">Fast of Esther</string>
     <string name="day_purim">Purim</string>

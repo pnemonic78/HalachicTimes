@@ -239,12 +239,11 @@
     <string name="day_hoshana_rabba">הושענא רבה</string>
     <string name="day_shemini_atzeres">שמיני עצרת</string>
     <string name="day_simchas_torah">שמחת תורה</string>
-    <string name="day_chanukka" translatable="false">@string/chanukka</string>
     <string name="day_fast_of_esther">תענית אסתר</string>
     <string name="day_purim">פורים</string>
     <string name="day_shushan_purim">שושן פורים</string>
     <string name="day_purim_katan">פורים קטן</string>
-    <string name="day_rosh_chodesh">ראש חדש</string>
+    <string name="day_rosh_chodesh">ראש חודש</string>
     <string name="day_yom_hashoah">יום השואה</string>
     <string name="day_yom_hazikaron">יום הזיכרון</string>
     <string name="day_yom_haatzmaut">יום העצמאות</string>
