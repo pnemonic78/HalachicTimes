@@ -225,8 +225,8 @@
 
     <!-- Special days -->
     <string name="day_pesach">Песах</string>
-    <string name="day_chol_hamoed_pesach">Проміжний день Пасхи</string>
-    <string name="day_pesach_sheni">Друга Пасха</string>
+    <string name="day_chol_hamoed_pesach">Проміжний день Песах</string>
+    <string name="day_pesach_sheni">Другий Песах</string>
     <string name="day_shavuos">Шавуот</string>
     <string name="day_rosh_hashana">Новий рік</string>
     <string name="day_fast_of_gedalyah">Піст Гедалія</string>
