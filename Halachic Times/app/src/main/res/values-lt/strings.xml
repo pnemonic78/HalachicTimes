@@ -202,7 +202,7 @@
 
     <!-- About -->
     <string name="kosherjava">KosherJava kalendorius</string>
-    <string name="kosherjava_version">Autorių teisės \u00A9 2004–2018 Elijas Hershfeld</string>
+    <string name="kosherjava_version">Autorių teisės \u00A9 2004–2018 Elijas Heršfeld</string>
 
     <!-- Widget -->
     <string name="title_widget_clock">Halachinis Kartų Laikrodis</string>
@@ -222,5 +222,29 @@
     <string name="reminder_tuesday">Priminti antradien</string>
     <string name="reminder_wednesday">Priminti trečiadienį</string>
     <string name="notification_upcoming_title">Artėjantis laikas kaip pranešimo apie</string>
+
+    <!-- Special days -->
+    <string name="day_pesach">Pascha</string>
+    <string name="day_chol_hamoed_pesach">Tarpinė Paschos diena</string>
+    <string name="day_pesach_sheni">Antroji Pascha</string>
+    <string name="day_shavuos">Šavuotas</string>
+    <string name="day_rosh_hashana">Naujieji Metai</string>
+    <string name="day_fast_of_gedalyah">Gedalijs Pasninkas</string>
+    <string name="day_yom_kippur">Day of Atonement</string>
+    <string name="day_succos">Sukotas</string>
+    <string name="day_chol_hamoed_succos">Tarpinė Sukoto diena</string>
+    <string name="day_hoshana_rabba">Hošana Rabba</string>
+    <string name="day_shemini_atzeres">Šmini Atzeres</string>
+    <string name="day_simchas_torah">Simchath Tora</string>
+    <string name="day_fast_of_esther">Esteros Pasninkas</string>
+    <string name="day_purim">Purimas</string>
+    <string name="day_shushan_purim">Šušanas Purimas</string>
+    <string name="day_purim_katan">Mažasis Purimas</string>
+    <string name="day_rosh_chodesh">Naujas Mėnuo</string>
+    <string name="day_yom_hashoah">Holokausto diena</string>
+    <string name="day_yom_hazikaron">Atminimo diena</string>
+    <string name="day_yom_haatzmaut">Nepriklausomybės diena</string>
+    <string name="day_yom_yerushalayim">Jeruzalės diena</string>
+    <string name="day_shabbath">Šabatas</string>
 
 </resources>
