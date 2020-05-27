@@ -10,7 +10,7 @@
     <string name="location_source_title">Paikan lähde</string>
 
     <!-- About -->
-    <string name="version_title">Sovellusversio </string>
+    <string name="version_title">Sovellusversio</string>
     <string name="issue_title">Kysymykset</string>
     <string name="issue_summary">Ilmoita ongelmasta tai pyydä uutta ominaisuutta.</string>
 
