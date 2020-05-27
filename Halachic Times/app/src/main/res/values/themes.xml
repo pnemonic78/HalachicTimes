@@ -3,7 +3,7 @@
 
     <style name="Theme.Zmanim" parent="Theme.Base"/>
 
-    <style name="Theme.Zmanim.Dark">
+    <style name="Theme.Zmanim.Dark" parent="Theme.Base.Dark">
         <item name="android:textColor">@android:color/primary_text_dark</item>
         <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
 
@@ -24,6 +24,8 @@
     <style name="Theme.Zmanim.White" parent="Theme.Zmanim.Light">
         <item name="listZmanim">@style/Widget.ListView.White</item>
     </style>
+
+    <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Light"/>
 
     <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>
 

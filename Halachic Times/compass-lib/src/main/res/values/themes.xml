@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CompassApp.Dark" parent="Theme.Base">
+    <style name="Theme.CompassApp.Dark" parent="Theme.Base.Dark">
         <item name="compassColorTarget">@color/compass_target_original</item>
     </style>
 
@@ -9,11 +9,11 @@
         <item name="compassColorTarget">@color/compass_target_original</item>
     </style>
 
-    <style name="Theme.CompassApp.Settings" parent="Theme.Base.Settings"/>
+    <style name="Theme.CompassApp.DayNight" parent="Theme.CompassApp.Light" />
 
-    <style name="Theme"/>
+    <style name="Theme.CompassApp.Settings" parent="Theme.Base.Settings" />
 
-    <style name="Theme.Compass"/>
+    <style name="Theme.Compass" />
 
     <style name="Theme.Compass.Original">
         <item name="compassColorFace">@color/compass_face_original</item>

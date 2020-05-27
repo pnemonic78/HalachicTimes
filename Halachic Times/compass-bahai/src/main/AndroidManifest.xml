@@ -14,7 +14,7 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
-        android:theme="@style/Theme.CompassApp.Light"
+        android:theme="@style/Theme.CompassApp.DayNight"
         tools:replace="android:name">
         <activity
             android:name="com.github.compass.bahai.CompassActivity"
@@ -33,7 +33,8 @@
             android:name="com.github.times.compass.preference.CompassPreferenceActivity"
             android:exported="false"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="com.github.compass.bahai.CompassActivity" />
+            android:parentActivityName="com.github.compass.bahai.CompassActivity"
+            android:theme="@style/Theme.CompassApp.Settings" />
         <activity
             android:name="com.github.compass.bahai.LocationActivity"
             android:label="@string/title_activity_location"

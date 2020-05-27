@@ -31,7 +31,7 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="false"
-        android:theme="@style/Theme.Zmanim.Light"
+        android:theme="@style/Theme.Zmanim.DayNight"
         tools:replace="android:name">
         <activity
             android:name="com.github.times.ZmanimActivity"
@@ -55,7 +55,8 @@
         <activity
             android:name="com.github.times.compass.CompassActivity"
             android:label="@string/title_activity_compass"
-            android:parentActivityName="com.github.times.ZmanimActivity">
+            android:parentActivityName="com.github.times.ZmanimActivity"
+            android:theme="@style/Theme.CompassApp.DayNight">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.github.times.location.LocationActivity" />
