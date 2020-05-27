@@ -362,6 +362,8 @@
     <string name="animations">Animations</string>
 
     <!-- About -->
+    <string name="support_url" translatable="false">http://pnemonic78.github.io/HalachicTimes</string>
+    <string name="issue_url" translatable="false">mailto:pnemonic@gmail.com?subject=Halachic Times</string>
     <string name="kosherjava">KosherJava calendar</string>
     <string name="kosherjava_version">Copyright \u00A9 2004–2018 Eliyahu Hershfeld</string>
     <string name="kosherjava_url" translatable="false">http://www.kosherjava.com/</string>

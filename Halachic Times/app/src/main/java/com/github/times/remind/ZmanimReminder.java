@@ -31,6 +31,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -515,7 +516,7 @@ public class ZmanimReminder {
             int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
             int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
             Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
-            Bitmap layerBottom = BitmapFactory.decodeResource(res, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+            Drawable layerBottom = res.getDrawable((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
             Bitmap layerTop = largeIconSolar;
             if (layerTop == null) {
                 layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
@@ -523,7 +524,8 @@ public class ZmanimReminder {
             }
             Canvas canvas = new Canvas(largeIcon);
             Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
-            canvas.drawBitmap(layerBottom, null, largeIconRect, null);
+            layerBottom.setBounds(largeIconRect);
+            layerBottom.draw(canvas);
             canvas.drawBitmap(layerTop, null, largeIconRect, null);
             largeIconReminder = largeIcon;
             this.largeIconReminder = largeIconReminder;
