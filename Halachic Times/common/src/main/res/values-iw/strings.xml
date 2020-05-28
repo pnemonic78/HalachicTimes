@@ -11,7 +11,7 @@
 
     <!-- About -->
     <string name="version_title">גרסת יישום</string>
-    <string name="issue_title">בעיות</string>
+    <string name="issue_title">נושאים</string>
     <string name="issue_summary">דווח על בעיה או בקש תכונה חדשה.</string>
 
 </resources>

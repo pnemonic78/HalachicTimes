@@ -17,6 +17,8 @@ package com.github.times.remind;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
+import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
@@ -37,9 +39,11 @@ import static com.github.times.remind.ZmanimReminder.ACTION_REMIND;
 public class ZmanimReminderService extends JobIntentService {
 
     private static final int JOB_REMIND = 0x7e312D; // "rEminD"
+    private static final long BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS;
 
     private LocaleCallbacks<LocalePreferences> localeCallbacks;
     private static String reminderBusy = "";
+    private static long reminderBusyTime = 0;
 
     public static void enqueueWork(Context context, Intent intent) {
         if (intent == null) {
@@ -80,10 +84,12 @@ public class ZmanimReminderService extends JobIntentService {
 
     private static void processReminder(Context context, @NonNull Intent intent) {
         final String action = intent.getAction();
-        if (reminderBusy.equals(action)) {
+        final long now = SystemClock.elapsedRealtime();
+        if (reminderBusy.equals(action) && (now - reminderBusyTime < BUSY_TIMEOUT)) {
             return;
         }
         reminderBusy = action;
+        reminderBusyTime = now;
 
         ZmanimReminder reminder = new ZmanimReminder(context);
         reminder.process(intent);
