@@ -651,7 +651,8 @@ public class ZmanimReminder {
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createUpcomingIntent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            manager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+            PendingIntent displayIntent = createActivityIntent();
+            manager.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerAt, displayIntent), alarmIntent);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
         } else {
