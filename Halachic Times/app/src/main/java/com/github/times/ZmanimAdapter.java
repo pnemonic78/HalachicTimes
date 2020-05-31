@@ -98,10 +98,11 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
     protected final LayoutInflater inflater;
     protected final ZmanimPreferences settings;
-    protected ComplexZmanimCalendar calendar;
-    protected boolean inIsrael;
-    protected boolean summaries;
-    protected boolean showElapsed;
+    private ComplexZmanimCalendar calendar;
+    private final Calendar now = Calendar.getInstance();
+    private boolean inIsrael;
+    private boolean summaries;
+    private boolean showElapsed;
     private Format timeFormat;
     private Format timeFormatSeasonalHour;
     private long timeFormatGranularity;
@@ -305,7 +306,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (time == NEVER) {
             return;
         }
-        long now = getCalendar().getCalendar().getTimeInMillis();
+        long now = this.now.getTimeInMillis();
 
         ZmanimItem item = new ZmanimItem(titleId, time);
         item.summary = summary;
@@ -457,6 +458,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      */
     public void setCalendar(ComplexZmanimCalendar calendar) {
         this.calendar = calendar;
+        this.now.setTimeInMillis(currentTimeMillis());
     }
 
     /**
