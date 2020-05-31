@@ -247,7 +247,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             if ((jewishDatePrevious == null) || ((item.jewishDate != null) && !jewishDatePrevious.equals(item.jewishDate))) {
                 if (item.jewishDate != null) {
                     jewishDate = item.jewishDate;
-                } else if (item.isEmpty()) {
+                } else if (item.isEmptyOrElapsed()) {
                     continue;
                 } else {
                     gcal.setTimeInMillis(item.time);

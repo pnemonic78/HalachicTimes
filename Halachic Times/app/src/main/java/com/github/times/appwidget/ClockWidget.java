@@ -88,7 +88,7 @@ public class ClockWidget extends ZmanimAppWidget {
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            if ((item == null) || item.isEmpty()) {
+            if ((item == null) || item.isEmptyOrElapsed()) {
                 continue;
             }
             items.add(item);
@@ -101,7 +101,7 @@ public class ClockWidget extends ZmanimAppWidget {
             count = adapter.getCount();
             for (int position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
-                if ((item == null) || item.isEmpty()) {
+                if ((item == null) || item.isEmptyOrElapsed()) {
                     continue;
                 }
                 items.add(item);
