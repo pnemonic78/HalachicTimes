@@ -19,6 +19,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.times.preference.ZmanimPreferences;
 
 import net.sourceforge.zmanim.ComplexZmanimCalendar;
@@ -29,8 +32,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
@@ -66,18 +67,30 @@ import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
  */
 public class ZmanimPopulater<A extends ZmanimAdapter> {
 
-    /** 12 hours (half of a full day). */
+    /**
+     * 12 hours (half of a full day).
+     */
     protected static final long TWELVE_HOURS = DAY_IN_MILLIS >> 1;
-    /** 6 hours (quarter of a full day). */
+    /**
+     * 6 hours (quarter of a full day).
+     */
     protected static final long SIX_HOURS = DAY_IN_MILLIS >> 2;
 
-    /** No candles to light. */
+    /**
+     * No candles to light.
+     */
     private static final int CANDLES_NONE = 0;
-    /** Number of candles to light for Shabbath. */
+    /**
+     * Number of candles to light for Shabbath.
+     */
     private static final int CANDLES_SHABBATH = 2;
-    /** Number of candles to light for a festival. */
+    /**
+     * Number of candles to light for a festival.
+     */
     private static final int CANDLES_FESTIVAL = 2;
-    /** Number of candles to light for Yom Kippurim. */
+    /**
+     * Number of candles to light for Yom Kippurim.
+     */
     private static final int CANDLES_YOM_KIPPUR = 1;
 
     static final int CANDLES_MASK_OFFSET = 0;
@@ -94,15 +107,25 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     private static final int OFFSET_MASK_BITS = 12;
     private static final int OFFSET_MASK = (1 << OFFSET_MASK_BITS) - 1;
 
-    /** Flag indicating lighting times before sunset. */
+    /**
+     * Flag indicating lighting times before sunset.
+     */
     static final int BEFORE_SUNSET = 0;
-    /** Flag indicating lighting times at sunset. */
+    /**
+     * Flag indicating lighting times at sunset.
+     */
     static final int AT_SUNSET = 1;
-    /** Flag indicating lighting times at twilight. */
+    /**
+     * Flag indicating lighting times at twilight.
+     */
     static final int AT_TWILIGHT = 2;
-    /** Flag indicating lighting times after nightfall. */
+    /**
+     * Flag indicating lighting times after nightfall.
+     */
     static final int AT_NIGHT = 3;
-    /** Flag indicating lighting times after Shabbath. */
+    /**
+     * Flag indicating lighting times after Shabbath.
+     */
     static final int MOTZE_SHABBATH = 4;
 
     protected static final String OPINION_2 = ZmanimPreferences.Values.OPINION_2;
@@ -166,7 +189,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     protected static final String OPINION_SEA = ZmanimPreferences.Values.OPINION_SEA;
     protected static final String OPINION_TWILIGHT = ZmanimPreferences.Values.OPINION_TWILIGHT;
 
-    /** No summary. */
+    /**
+     * No summary.
+     */
     protected static final int SUMMARY_NONE = ZmanimAdapter.SUMMARY_NONE;
 
     private final Context context;
@@ -208,7 +233,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
     protected void prePopulate(A adapter) {
         adapter.clear();
-        adapter.setCalendar((ComplexZmanimCalendar) calendar.clone());
+        ComplexZmanimCalendar cal = (ComplexZmanimCalendar) calendar.clone();
+        adapter.setCalendar(cal);
         adapter.setInIsrael(inIsrael);
     }
 
@@ -254,14 +280,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             // Ignore potential "IllegalArgumentException".
             return;
         }
-        final JewishDate jewishDate = (JewishDate) jcal.clone();
+        final JewishCalendar jewishDate = (JewishCalendar) jcal.clone();
         final int jewishDayOfMonth = jewishDate.getJewishDayOfMonth();
-        final JewishDate jewishDateTomorrow = (JewishDate) jewishDate.clone();
-        jewishDateTomorrow.forward(Calendar.DATE, 1);
-        final int dayOfWeek = jcal.getDayOfWeek();
+        final int dayOfWeek = jewishDate.getDayOfWeek();
+        final JewishCalendar jewishDateTomorrow = cloneTomorrow(jewishDate);
         final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
-        final int candles = calculateCandles(jcal, settings);
+        final int candles = calculateCandles(jewishDate, jewishDateTomorrow, settings);
         final int candlesCount = (candles >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
         final int holidayToday = (byte) ((candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK);
         final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);
@@ -1008,19 +1033,23 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * </table>
      * </p>
      *
-     * @param jcal the Jewish calendar.
+     * @param jewishDateToday    the Jewish calendar for today.
+     * @param jewishDateTomorrow the Jewish calendar for tomorrow.
      * @return the number of candles to light, the holiday, and when to light.
      */
-    protected int calculateCandles(JewishCalendar jcal, ZmanimPreferences settings) {
-        if (jcal == null) {
+    protected int calculateCandles(@Nullable JewishCalendar jewishDateToday, @Nullable JewishCalendar jewishDateTomorrow, ZmanimPreferences settings) {
+        if (jewishDateToday == null) {
             return 0;
         }
-        final int dayOfWeek = jcal.getDayOfWeek();
+        final int dayOfWeek = jewishDateToday.getDayOfWeek();
 
         // Check if the following day is special, because we can't check EREV_CHANUKAH.
-        int holidayToday = jcal.getYomTovIndex();
-        jcal.forward(Calendar.DATE, 1);
-        int holidayTomorrow = jcal.getYomTovIndex();
+        int holidayToday = jewishDateToday.getYomTovIndex();
+        JewishCalendar jcalTomorrow = jewishDateTomorrow;
+        if (jcalTomorrow == null) {
+            jcalTomorrow = cloneTomorrow(jewishDateToday);
+        }
+        int holidayTomorrow = jcalTomorrow.getYomTovIndex();
         int count = CANDLES_NONE;
         int when = BEFORE_SUNSET;
 
@@ -1037,7 +1066,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 count = CANDLES_YOM_KIPPUR;
                 break;
             case CHANUKAH:
-                count = jcal.getDayOfChanukah();
+                count = jcalTomorrow.getDayOfChanukah();
                 if ((dayOfWeek != FRIDAY) && (dayOfWeek != SATURDAY)) {
                     String opinion = settings.getChanukkaCandles();
                     if (OPINION_TWILIGHT.equals(opinion)) {
@@ -1505,5 +1534,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
     protected long toDate(Long date) {
         return (date != null) ? date : NEVER;
+    }
+
+    private JewishCalendar cloneTomorrow(JewishCalendar jcal) {
+        JewishCalendar jcalTomorrow = (JewishCalendar) jcal.clone();
+        jcalTomorrow.forward(Calendar.DATE, 1);
+        return jcalTomorrow;
     }
 }

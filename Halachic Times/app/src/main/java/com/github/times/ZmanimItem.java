@@ -100,7 +100,16 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      * @return {@code true} if empty.
      */
     public boolean isEmpty() {
-        return elapsed || (time == NEVER) || (time < YEAR_1) || (timeLabel == null);
+        return (time == NEVER) || (time < YEAR_1) || (timeLabel == null);
+    }
+
+    /**
+     * Is the item empty or elapsed?
+     *
+     * @return {@code true} if either elapsed or empty.
+     */
+    public boolean isEmptyOrElapsed() {
+        return elapsed || isEmpty();
     }
 
     public boolean isCategory() {

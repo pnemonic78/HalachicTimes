@@ -72,7 +72,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         if (count > 0) {
             item = adapter.getItem(0);
             if (item != null) {
-                if (!item.isEmpty()) {
+                if (!item.isEmptyOrElapsed()) {
                     positionFirst = 0;
                 }
                 if (item.jewishDate != null) {
@@ -82,7 +82,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         }
         for (int position = 1; position < count; position++) {
             item = adapter.getItem(position);
-            if ((item == null) || item.isEmpty()) {
+            if ((item == null) || item.isEmptyOrElapsed()) {
                 continue;
             }
             if (positionFirst < 0) {
@@ -114,7 +114,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
         for (int position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
-            if ((item == null) || item.isEmpty()) {
+            if ((item == null) || item.isEmptyOrElapsed()) {
                 continue;
             }
 
