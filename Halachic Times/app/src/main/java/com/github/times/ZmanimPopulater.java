@@ -1551,19 +1551,23 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return (date != null) ? date : NEVER;
     }
 
-    private JewishCalendar cloneJewishTomorrow(JewishCalendar jcal) {
+    protected boolean isDate(Long date) {
+        return (date != null) && (date != NEVER);
+    }
+
+    protected JewishCalendar cloneJewishTomorrow(JewishCalendar jcal) {
         JewishCalendar jcalTomorrow = (JewishCalendar) jcal.clone();
         jcalTomorrow.forward(Calendar.DATE, 1);
         return jcalTomorrow;
     }
 
-    private ComplexZmanimCalendar cloneZmanimTomorrow(ComplexZmanimCalendar cal) {
+    protected ComplexZmanimCalendar cloneZmanimTomorrow(ComplexZmanimCalendar cal) {
         ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
         calTomorrow.getCalendar().add(Calendar.DAY_OF_MONTH, 1);
         return calTomorrow;
     }
 
-    private ComplexZmanimCalendar cloneZmanimYesterday(ComplexZmanimCalendar cal) {
+    protected ComplexZmanimCalendar cloneZmanimYesterday(ComplexZmanimCalendar cal) {
         ComplexZmanimCalendar calYesterday = (ComplexZmanimCalendar) cal.clone();
         calYesterday.getCalendar().add(Calendar.DAY_OF_MONTH, -1);
         return calYesterday;
