@@ -825,16 +825,22 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         opinion = settings.getMidnight();
         dateAndSummary = getMidnight(cal, opinion, midday, nightfall);
         date = dateAndSummary.first;
+        summary = dateAndSummary.second;
         final long midnightTomorrow = date;
         dateAndSummary = getMidnight(calYesterday, opinion, middayYesterday, nightfallYesterday);
         date = dateAndSummary.first;
-        calDate.setTimeInMillis(date);
-        summary = dateAndSummary.second;
-        if (!isSameDay(gcal, calDate)) {
+        if (date < sunset) {
+            calDate.setTimeInMillis(date);
+            if (isSameDay(gcal, calDate)) {
+                adapter.add(R.string.midnight, summary, date, jewishDate, remote);
+            } else {
+                date = midnightTomorrow;
+                adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+            }
+        } else {
             date = midnightTomorrow;
-            summary = dateAndSummary.second;
+            adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
         }
-        adapter.add(R.string.midnight, summary, date, jewishDate, remote);
         final long midnight = date;
 
         opinion = settings.getGuardsCount();
