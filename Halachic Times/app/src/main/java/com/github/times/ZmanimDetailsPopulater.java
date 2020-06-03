@@ -26,6 +26,7 @@ import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 import java.util.Calendar;
 
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.util.TimeUtils.isSameDay;
 
 /**
  * Populater for all opinions of a zman.
@@ -61,6 +62,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
     protected void populateImpl(A adapter, boolean remote, Context context, ZmanimPreferences settings, int itemId) {
         final ComplexZmanimCalendar calendar = this.calendar;
+        final ComplexZmanimCalendar calendarYesterday = cloneZmanimYesterday(calendar);
 
         switch (itemId) {
             case R.string.hour:
@@ -108,7 +110,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
                 populateShabbathEnds(adapter, calendar, settings);
                 break;
             case R.string.midnight:
-                populateMidnight(adapter, calendar, settings);
+                populateMidnight(adapter, calendar, calendarYesterday, settings);
                 break;
             case R.string.midnight_guard:
             case R.string.morning_guard:
@@ -870,23 +872,52 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         }
     }
 
-    private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {
+    private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ComplexZmanimCalendar calYesterday, ZmanimPreferences settings) {
+        final Calendar gcal = cal.getCalendar();
+        Calendar gcal2 = Calendar.getInstance(gcal.getTimeZone());
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        jewishDate.forward(Calendar.DATE, 1);
 
         date = getMidday(cal, settings);
-        title = R.string.midnight_12;
-        adapter.add(title, SUMMARY_NONE, date + TWELVE_HOURS, jewishDate);
+        if (isDate(date)) {
+            gcal2.setTimeInMillis(date + TWELVE_HOURS);
+            title = R.string.midnight_12;
+            if (isSameDay(gcal, gcal2)) {
+                date = gcal2.getTimeInMillis();
+                adapter.add(title, SUMMARY_NONE, date, jewishDate);
+            } else {
+                date = getMidday(calYesterday, settings);
+                if (isDate(date)) {
+                    adapter.add(title, SUMMARY_NONE, date + TWELVE_HOURS, jewishDate);
+                }
+            }
+        }
 
         date = getNightfall(cal, settings);
-        title = R.string.midnight_6;
-        adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
+        if (isDate(date)) {
+            gcal2.setTimeInMillis(date + SIX_HOURS);
+            title = R.string.midnight_6;
+            if (isSameDay(gcal, gcal2)) {
+                date = gcal2.getTimeInMillis();
+                adapter.add(title, SUMMARY_NONE, date, jewishDate);
+            } else {
+                date = getNightfall(calYesterday, settings);
+                if (isDate(date)) {
+                    adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
+                }
+            }
+        }
 
         date = cal.getSolarMidnight();
-        title = R.string.midnight_solar;
-        adapter.add(title, SUMMARY_NONE, date, jewishDate);
+        if (isDate(date)) {
+            gcal2.setTimeInMillis(date);
+            title = R.string.midnight_solar;
+            if (!isSameDay(gcal, gcal2)) {
+                date = calYesterday.getSolarMidnight();
+            }
+            adapter.add(title, SUMMARY_NONE, date, jewishDate);
+        }
     }
 
     private void populateGuards(A adapter, ComplexZmanimCalendar cal, ZmanimPreferences settings) {

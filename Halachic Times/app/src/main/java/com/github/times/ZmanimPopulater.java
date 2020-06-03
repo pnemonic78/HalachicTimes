@@ -197,6 +197,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
     private final Context context;
     private final ZmanimPreferences settings;
     protected final ComplexZmanimCalendar calendar;
+    private final Calendar calendarTemp = Calendar.getInstance();
     private boolean inIsrael;
 
     /**
@@ -275,6 +276,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             // Ignore potential "IllegalArgumentException".
             return;
         }
+        ComplexZmanimCalendar calYesterday = cloneZmanimYesterday(cal);
+        ComplexZmanimCalendar calTomorrow = cloneZmanimTomorrow(cal);
+
         JewishCalendar jcal = getJewishCalendar();
         if ((jcal == null) || (jcal.getJewishYear() < 0)) {
             // Ignore potential "IllegalArgumentException".
@@ -283,7 +287,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final JewishCalendar jewishDate = (JewishCalendar) jcal.clone();
         final int jewishDayOfMonth = jewishDate.getJewishDayOfMonth();
         final int dayOfWeek = jewishDate.getDayOfWeek();
-        final JewishCalendar jewishDateTomorrow = cloneTomorrow(jewishDate);
+        final JewishCalendar jewishDateTomorrow = cloneJewishTomorrow(jewishDate);
         final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
         final int candles = calculateCandles(jewishDate, jewishDateTomorrow, settings);
@@ -302,6 +306,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         CharSequence summaryText;
         final Resources res = context.getResources();
         final String shabbathAfterName = res.getString(shabbathAfter);
+        Calendar calDate = Calendar.getInstance(gcal.getTimeZone());
 
         if (!remote && settings.isHour()) {
             long time;
@@ -463,6 +468,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         date = dateAndSummary.first;
         summary = dateAndSummary.second;
         adapter.add(R.string.sunrise, summary, date, jewishDate, remote);
+        final long sunrise = date;
+        final long sunriseTomorrow = getSunrise(calTomorrow, settings);
 
         opinion = settings.getLastShema();
         if (OPINION_16_1_SUNSET.equals(opinion)) {
@@ -580,6 +587,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         summary = dateAndSummary.second;
         adapter.add(R.string.midday, summary, date, jewishDate, remote);
         final long midday = date;
+        final long middayYesterday = getMidday(calYesterday, opinion).first;
 
         opinion = settings.getEarliestMincha();
         if (OPINION_16_1.equals(opinion)) {
@@ -703,6 +711,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.nightfall, summary, date, jewishDateTomorrow, remote);
         final long nightfall = date;
         final int summaryNightfall = summary;
+        final long nightfallYesterday = getNightfall(calYesterday, opinion).first;
 
         switch (shabbathAfter) {
             case R.string.sunset:
@@ -817,13 +826,26 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         dateAndSummary = getMidnight(cal, opinion, midday, nightfall);
         date = dateAndSummary.first;
         summary = dateAndSummary.second;
-        adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+        final long midnightTomorrow = date;
+        dateAndSummary = getMidnight(calYesterday, opinion, middayYesterday, nightfallYesterday);
+        date = dateAndSummary.first;
         final long midnight = date;
+        if (date < sunset) {
+            calDate.setTimeInMillis(date);
+            if (isSameDay(gcal, calDate)) {
+                adapter.add(R.string.midnight, summary, date, jewishDate, remote);
+            } else {
+                date = midnightTomorrow;
+                adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+            }
+        } else {
+            date = midnightTomorrow;
+            adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
+        }
 
-        final long sunriseTomorrow = getSunriseTomorrow(cal, settings);
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            date = getMidnightGuard4(sunset, midnight);
+            date = getMidnightGuard4(sunset, midnightTomorrow);
             summary = R.string.guard_second;
         } else {
             date = getMidnightGuard3(sunset, sunriseTomorrow);
@@ -833,13 +855,19 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            date = getMorningGuard4(midnight, sunriseTomorrow);
             summary = R.string.guard_fourth;
+            if (midnight < sunrise) {
+                date = getMorningGuard4(midnight, sunrise);
+                adapter.add(R.string.morning_guard, summary, date, jewishDate, remote);
+            } else {
+                date = getMorningGuard4(midnightTomorrow, sunriseTomorrow);
+                adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
+            }
         } else {
-            date = getMorningGuard3(sunset, sunriseTomorrow);
             summary = R.string.guard_third;
+            date = getMorningGuard3(sunset, sunriseTomorrow);
+            adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
         }
-        adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
 
         switch (holidayToday) {
             case EREV_PESACH:
@@ -1047,7 +1075,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         int holidayToday = jewishDateToday.getYomTovIndex();
         JewishCalendar jcalTomorrow = jewishDateTomorrow;
         if (jcalTomorrow == null) {
-            jcalTomorrow = cloneTomorrow(jewishDateToday);
+            jcalTomorrow = cloneJewishTomorrow(jewishDateToday);
         }
         int holidayTomorrow = jcalTomorrow.getYomTovIndex();
         int count = CANDLES_NONE;
@@ -1437,13 +1465,15 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         if (OPINION_12.equals(opinion)) {
             date = midday;
-            if (midday != NEVER)
+            if (midday != NEVER) {
                 date += TWELVE_HOURS;
+            }
             summary = R.string.midnight_12;
         } else if (OPINION_6.equals(opinion)) {
             date = nightfall;
-            if (nightfall != NEVER)
+            if (nightfall != NEVER) {
                 date += SIX_HOURS;
+            }
             summary = R.string.midnight_6;
         } else {
             date = cal.getSolarMidnight();
@@ -1536,9 +1566,25 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return (date != null) ? date : NEVER;
     }
 
-    private JewishCalendar cloneTomorrow(JewishCalendar jcal) {
+    protected boolean isDate(Long date) {
+        return (date != null) && (date != NEVER);
+    }
+
+    protected JewishCalendar cloneJewishTomorrow(JewishCalendar jcal) {
         JewishCalendar jcalTomorrow = (JewishCalendar) jcal.clone();
         jcalTomorrow.forward(Calendar.DATE, 1);
         return jcalTomorrow;
+    }
+
+    protected ComplexZmanimCalendar cloneZmanimTomorrow(ComplexZmanimCalendar cal) {
+        ComplexZmanimCalendar calTomorrow = (ComplexZmanimCalendar) cal.clone();
+        calTomorrow.getCalendar().add(Calendar.DAY_OF_MONTH, 1);
+        return calTomorrow;
+    }
+
+    protected ComplexZmanimCalendar cloneZmanimYesterday(ComplexZmanimCalendar cal) {
+        ComplexZmanimCalendar calYesterday = (ComplexZmanimCalendar) cal.clone();
+        calYesterday.getCalendar().add(Calendar.DAY_OF_MONTH, -1);
+        return calYesterday;
     }
 }

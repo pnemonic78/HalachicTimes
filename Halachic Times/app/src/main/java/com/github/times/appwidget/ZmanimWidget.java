@@ -68,19 +68,20 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
         int positionFirst = -1;
         int positionSunset = -1;
+        int position = 0;
 
         if (count > 0) {
-            item = adapter.getItem(0);
+            item = adapter.getItem(position);
             if (item != null) {
                 if (!item.isEmptyOrElapsed()) {
-                    positionFirst = 0;
+                    positionFirst = position;
                 }
                 if (item.jewishDate != null) {
                     jewishDate = item.jewishDate;
                 }
             }
         }
-        for (int position = 1; position < count; position++) {
+        for (position = 1; position < count; position++) {
             item = adapter.getItem(position);
             if ((item == null) || item.isEmptyOrElapsed()) {
                 continue;
@@ -112,7 +113,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
             }
         }
 
-        for (int position = 0; position < count; position++, positionTotal++) {
+        for (position = 0; position < count; position++, positionTotal++) {
             item = adapter.getItem(position);
             if ((item == null) || item.isEmptyOrElapsed()) {
                 continue;
@@ -155,9 +156,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
             itemTomorrow = null;
 
             if (positionSunset < positionFirst) {
-                for (int position = 0; position < count; position++) {
+                for (position = 0; position < count; position++) {
                     item = adapter.getItem(position);
-                    if ((item == null) || item.isEmpty()) {
+                    if ((item == null) || item.isEmptyOrElapsed()) {
                         continue;
                     }
                     if ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate)) {
@@ -167,9 +168,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 }
             }
 
-            for (int position = 0; position < count; position++, positionTotal++) {
+            for (position = 0; position < count; position++, positionTotal++) {
                 item = adapter.getItem(position);
-                if ((item == null) || item.isEmpty()) {
+                if ((item == null) || item.isEmptyOrElapsed()) {
                     continue;
                 }
 
