@@ -829,6 +829,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final long midnightTomorrow = date;
         dateAndSummary = getMidnight(calYesterday, opinion, middayYesterday, nightfallYesterday);
         date = dateAndSummary.first;
+        final long midnight = date;
         if (date < sunset) {
             calDate.setTimeInMillis(date);
             if (isSameDay(gcal, calDate)) {
@@ -841,7 +842,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = midnightTomorrow;
             adapter.add(R.string.midnight, summary, date, jewishDateTomorrow, remote);
         }
-        final long midnight = date;
 
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
@@ -864,8 +864,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
             }
         } else {
-            date = getMorningGuard3(sunset, sunriseTomorrow);
             summary = R.string.guard_third;
+            date = getMorningGuard3(sunset, sunriseTomorrow);
             adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
         }
 
