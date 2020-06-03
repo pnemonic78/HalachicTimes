@@ -276,7 +276,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             // Ignore potential "IllegalArgumentException".
             return;
         }
-        final long today = gcal.getTimeInMillis();
         ComplexZmanimCalendar calYesterday = cloneZmanimYesterday(cal);
         ComplexZmanimCalendar calTomorrow = cloneZmanimTomorrow(cal);
 
@@ -307,6 +306,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         CharSequence summaryText;
         final Resources res = context.getResources();
         final String shabbathAfterName = res.getString(shabbathAfter);
+        Calendar calDate = Calendar.getInstance(gcal.getTimeZone());
 
         if (!remote && settings.isHour()) {
             long time;
@@ -825,8 +825,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         opinion = settings.getMidnight();
         dateAndSummary = getMidnight(calYesterday, opinion, middayYesterday, nightfallYesterday);
         date = dateAndSummary.first;
+        calDate.setTimeInMillis(date);
         summary = dateAndSummary.second;
-        if (!isSameDay(today, date)) {
+        if (!isSameDay(gcal, calDate)) {
             dateAndSummary = getMidnight(cal, opinion, midday, nightfall);
             date = dateAndSummary.first;
             summary = dateAndSummary.second;

@@ -874,45 +874,46 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
     private void populateMidnight(A adapter, ComplexZmanimCalendar cal, ComplexZmanimCalendar calYesterday, ZmanimPreferences settings) {
         final Calendar gcal = cal.getCalendar();
+        Calendar gcal2 = Calendar.getInstance(gcal.getTimeZone());
         Long date;
         int title;
         JewishDate jewishDate = getJewishCalendar();
-        long date2;
 
         date = getMidday(cal, settings);
         if (isDate(date)) {
-            date2 = date + TWELVE_HOURS;
+            gcal2.setTimeInMillis(date + TWELVE_HOURS);
             title = R.string.midnight_12;
-            if (isSameDay(gcal, date2)) {
-                adapter.add(title, SUMMARY_NONE, date2, jewishDate);
+            if (isSameDay(gcal, gcal2)) {
+                date = gcal2.getTimeInMillis();
+                adapter.add(title, SUMMARY_NONE, date, jewishDate);
             } else {
                 date = getMidday(calYesterday, settings);
                 if (isDate(date)) {
-                    date2 = date + TWELVE_HOURS;
-                    adapter.add(title, SUMMARY_NONE, date2, jewishDate);
+                    adapter.add(title, SUMMARY_NONE, date + TWELVE_HOURS, jewishDate);
                 }
             }
         }
 
         date = getNightfall(cal, settings);
         if (isDate(date)) {
-            date2 = date + SIX_HOURS;
+            gcal2.setTimeInMillis(date + SIX_HOURS);
             title = R.string.midnight_6;
-            if (isSameDay(gcal, date2)) {
-                adapter.add(title, SUMMARY_NONE, date2, jewishDate);
+            if (isSameDay(gcal, gcal2)) {
+                date = gcal2.getTimeInMillis();
+                adapter.add(title, SUMMARY_NONE, date, jewishDate);
             } else {
                 date = getNightfall(calYesterday, settings);
                 if (isDate(date)) {
-                    date2 = date + SIX_HOURS;
-                    adapter.add(title, SUMMARY_NONE, date2, jewishDate);
+                    adapter.add(title, SUMMARY_NONE, date + SIX_HOURS, jewishDate);
                 }
             }
         }
 
         date = cal.getSolarMidnight();
         if (isDate(date)) {
+            gcal2.setTimeInMillis(date);
             title = R.string.midnight_solar;
-            if (!isSameDay(gcal, date)) {
+            if (!isSameDay(gcal, gcal2)) {
                 date = calYesterday.getSolarMidnight();
             }
             adapter.add(title, SUMMARY_NONE, date, jewishDate);
