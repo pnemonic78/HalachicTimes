@@ -849,13 +849,19 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         opinion = settings.getGuardsCount();
         if (OPINION_4.equals(opinion)) {
-            date = getMorningGuard4(midnight, sunrise);
             summary = R.string.guard_fourth;
+            if (midnight < sunrise) {
+                date = getMorningGuard4(midnight, sunrise);
+                adapter.add(R.string.morning_guard, summary, date, jewishDate, remote);
+            } else {
+                date = getMorningGuard4(midnightTomorrow, sunriseTomorrow);
+                adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
+            }
         } else {
             date = getMorningGuard3(sunset, sunriseTomorrow);
             summary = R.string.guard_third;
+            adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
         }
-        adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
 
         switch (holidayToday) {
             case EREV_PESACH:
