@@ -1,19 +1,7 @@
-buildscript {
-    repositories {
-        maven { url 'https://maven.fabric.io/public' }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.30.0'
-    }
-}
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
-
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 static def joinStringArray(array) {
     return "{\"" + array.join("\", \"") + "\"}"
@@ -55,6 +43,9 @@ android {
         debug {
             debuggable true
             applicationIdSuffix ".debug"
+            firebaseCrashlytics {
+                mappingFileUploadEnabled false
+            }
         }
 
         release {
@@ -103,5 +94,5 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$supportTestVersion"
     androidTestImplementation "androidx.test:runner:$supportTestVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
 }

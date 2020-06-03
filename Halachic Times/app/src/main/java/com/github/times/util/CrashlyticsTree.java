@@ -15,11 +15,16 @@
  */
 package com.github.times.util;
 
-import com.crashlytics.android.Crashlytics;
+import android.util.Log;
+
 import com.github.util.LogTree;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Crashlytics logger tree for Timber.
@@ -27,6 +32,20 @@ import org.jetbrains.annotations.Nullable;
  * @author Moshe Waisberg
  */
 public class CrashlyticsTree extends LogTree {
+
+    private static final Map<Integer, String> priorityChar = new HashMap<>();
+
+    static {
+        priorityChar.put(Log.ASSERT, "A");
+        priorityChar.put(Log.ERROR, "E");
+        priorityChar.put(Log.DEBUG, "D");
+        priorityChar.put(Log.INFO, "I");
+        priorityChar.put(Log.VERBOSE, "V");
+        priorityChar.put(Log.WARN, "W");
+    }
+
+    private final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+
     public CrashlyticsTree(boolean debug) {
         super(debug);
     }
@@ -35,9 +54,10 @@ public class CrashlyticsTree extends LogTree {
     protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t) {
         super.log(priority, tag, message, t);
 
-        Crashlytics.log(priority, tag, message);
+        String logMessage = priorityChar.get(priority) + "/" + tag + ": " + message;
+        crashlytics.log(logMessage);
         if (t != null) {
-            Crashlytics.logException(t);
+            crashlytics.recordException(t);
         }
     }
 }
