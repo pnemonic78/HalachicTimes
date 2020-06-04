@@ -99,7 +99,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         int positionTotal = 0;
 
         // If we have a sunset, then show today's header.
-        if (positionSunset >= positionFirst) {
+        if (positionFirst < positionSunset) {
             final ZmanimItem itemToday = new ZmanimItem(adapter.formatDate(context, jewishDate));
             itemToday.jewishDate = jewishDate;
             items.add(itemToday);
