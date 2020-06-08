@@ -49,5 +49,3 @@ Set repeating notifications to remind you of an upcoming time.
 Calendar library by [KosherJava](https://github.com/KosherJava/zmanim).
 
 Please report spelling and grammatical errors.
-
-[![paypal](https://www.paypalobjects.com/en_US/IL/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=24JBSD22JQ8ZY&source=url)
