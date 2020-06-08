@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:focusable="true">
+
+    <requestFocus />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -12,11 +13,11 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp">
 
-        <include layout="@layout/times_date"/>
+        <include layout="@layout/times_date" />
 
-        <include layout="@layout/times_location"/>
+        <include layout="@layout/times_location" />
 
     </LinearLayout>
 
-    <include layout="@layout/navigation"/>
+    <include layout="@layout/navigation" />
 </FrameLayout>
