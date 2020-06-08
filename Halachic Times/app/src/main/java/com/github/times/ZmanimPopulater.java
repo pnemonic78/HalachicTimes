@@ -695,6 +695,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         adapter.add(R.string.sunset, summary, date, jewishDate, remote);
         final long sunset = date;
         final int summarySunset = summary;
+        final String opinionSunset = opinion;
 
         opinion = settings.getTwilight();
         dateAndSummary = getTwilight(cal, opinion);
@@ -866,7 +867,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         } else {
             summary = R.string.guard_third;
             date = getMorningGuard3(sunset, sunriseTomorrow);
-            adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
+            calDate.setTimeInMillis(date);
+            if (isSameDay(gcal, calDate)) {
+                adapter.add(R.string.morning_guard, summary, date, jewishDateTomorrow, remote);
+            } else {
+                long sunsetYesterday = getSunset(calYesterday, opinionSunset).first;
+                date = getMorningGuard3(sunsetYesterday, sunrise);
+                adapter.add(R.string.morning_guard, summary, date, jewishDate, remote);
+            }
         }
 
         switch (holidayToday) {
