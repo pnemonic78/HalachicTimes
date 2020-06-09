@@ -22,7 +22,6 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.preference.Preference;
 
@@ -68,11 +67,8 @@ public class RingtonePreference extends com.github.preference.RingtonePreference
                     final Fragment owner = requestPermissionsFragment;
                     final int requestCode = requestPermissionsCode;
                     if (owner != null) {
-                        Activity activity = owner.getActivity();
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_RINGTONE)) {
-                            owner.requestPermissions(new String[]{PERMISSION_RINGTONE}, requestCode);
-                            return;
-                        }
+                        owner.requestPermissions(new String[]{PERMISSION_RINGTONE}, requestCode);
+                        return;
                     }
                 }
             }

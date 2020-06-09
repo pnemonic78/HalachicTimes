@@ -16,11 +16,15 @@
 package com.github.times.preference;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.ListPreference;
@@ -153,7 +157,23 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     private boolean checkWallpaperPermission(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_WALLPAPER) != PermissionChecker.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
+                final Activity activity = getActivity();
+                if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_WALLPAPER)) {
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.title_widget_zmanim)
+                            .setMessage(R.string.appwidget_theme_permission_rationale)
+                            .setCancelable(true)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
+                                }
+                            })
+                            .show();
+                } else {
+                    requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
+                }
                 return true;
             }
         }
