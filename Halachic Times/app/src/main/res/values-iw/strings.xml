@@ -210,6 +210,7 @@
     <!-- Widget -->
     <string name="title_widget_clock">שעון זמנים הלכתיים</string>
     <string name="appwidget_theme_title">עיצוב יישומון</string>
+    <string name="appwidget_theme_permission_rationale">רקע ברירת מחדל של יישומון מנסה להנגיד את עצמו לטפט.</string>
 
     <!-- Reminder -->
     <string name="reminder">תזכורת</string>
