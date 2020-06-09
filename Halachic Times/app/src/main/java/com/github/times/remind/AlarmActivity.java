@@ -70,6 +70,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
      */
     public static final String EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME";
 
+    private static final String PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
     private LocaleCallbacks<P> localeCallbacks;
@@ -264,7 +265,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == REQUEST_PERMISSIONS) {
-            if (ActivityUtils.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
+            if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
                 final Context context = this;
                 playSound(context);
             }
@@ -302,8 +303,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
         boolean allowSound = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PERMISSIONS);
+            if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{PERMISSION_RINGTONE}, REQUEST_PERMISSIONS);
                 allowSound = false;
             }
         }

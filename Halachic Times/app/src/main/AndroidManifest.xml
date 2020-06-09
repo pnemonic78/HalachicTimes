@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- For external tones. -->
+    <!-- For external tones and wallpaper. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->

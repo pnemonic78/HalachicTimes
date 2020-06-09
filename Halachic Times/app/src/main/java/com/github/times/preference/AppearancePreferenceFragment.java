@@ -15,10 +15,13 @@
  */
 package com.github.times.preference;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.content.PermissionChecker;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -45,6 +48,10 @@ import static com.github.util.LocaleUtils.sortByDisplay;
  */
 public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
+    private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
+    private static final int REQUEST_WALLPAPER = 0x3A11;
+
+    private ListPreference widgetPreference;
     private ListPreference localePreference;
 
     @Override
@@ -58,7 +65,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
         initList(KEY_THEME);
         initList(KEY_THEME_COMPASS);
-        initList(KEY_THEME_WIDGET);
+        widgetPreference = initList(KEY_THEME_WIDGET);
+        widgetPreference.setOnPreferenceClickListener(this);
         initList(KEY_EMPHASIS_SCALE);
         localePreference = initLocaleList(KEY_LOCALE);
     }
@@ -129,5 +137,26 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
         // Restart the activity to refresh views.
         restartActivity(getActivity());
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference preference) {
+        if (preference == widgetPreference) {
+            final Context context = preference.getContext();
+            if (checkWallpaperPermission(context)) {
+                return true;
+            }
+        }
+        return super.onPreferenceClick(preference);
+    }
+
+    private boolean checkWallpaperPermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_WALLPAPER) != PermissionChecker.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
+                return true;
+            }
+        }
+        return false;
     }
 }
