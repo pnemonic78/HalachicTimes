@@ -207,6 +207,7 @@
     <!-- Widget -->
     <string name="title_widget_clock">Halachische Zeiten Uhr</string>
     <string name="appwidget_theme_title">Widget Thema</string>
+    <string name="appwidget_theme_permission_rationale">Der Standard-Widget-Hintergrund versucht, sich selbst mit dem Hintergrundbild zu kontrastieren.</string>
 
     <!-- Reminder -->
     <string name="reminder">Erinnerung</string>

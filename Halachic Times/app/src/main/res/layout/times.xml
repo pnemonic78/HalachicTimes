@@ -18,7 +18,7 @@
 
         <fragment
             android:id="@+id/list_fragment"
-            class="com.github.times.ZmanimFragment"
+            android:name="com.github.times.ZmanimFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             tools:layout="@layout/times_list"/>

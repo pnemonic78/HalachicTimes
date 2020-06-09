@@ -207,6 +207,7 @@
     <!-- Widget -->
     <string name="title_widget_clock">Halachisk Tider Ur</string>
     <string name="appwidget_theme_title">Widget tema</string>
+    <string name="appwidget_theme_permission_rationale">Standard widgetbaggrund forsøger at kontrastere sig selv med tapetet.</string>
 
     <!-- Reminder -->
     <string name="reminder">Påmindelse</string>

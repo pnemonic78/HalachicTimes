@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.github.times.appwidget.ZmanimWidgetConfigure"
     android:initialLayout="@layout/widget_static"
     android:minWidth="@dimen/widget_minWidth"
     android:minHeight="@dimen/widget_minHeight"
@@ -7,4 +8,4 @@
     android:minResizeHeight="@dimen/widget_minResizeHeight"
     android:previewImage="@drawable/widget_info"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="0" />
+    android:updatePeriodMillis="600000" />

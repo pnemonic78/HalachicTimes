@@ -542,7 +542,7 @@
     </string-array>
 
     <string-array name="appwidget_theme_values" translatable="false">
-        <item>@string/appwidget_theme_value_none</item>
+        <item>@string/appwidget_theme_value_default</item>
         <item>@string/appwidget_theme_value_dark</item>
         <item>@string/appwidget_theme_value_light</item>
     </string-array>

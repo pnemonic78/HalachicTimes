@@ -15,8 +15,6 @@
  */
 package com.github.times.compass.preference;
 
-import android.os.Bundle;
-
 import com.github.preference.PreferenceActivity;
 import com.github.times.compass.lib.R;
 
@@ -31,18 +29,6 @@ import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_C
  * @author Moshe Waisberg
  */
 public class CompassPreferenceActivity extends PreferenceActivity {
-
-    /**
-     * Constructs a new preferences.
-     */
-    public CompassPreferenceActivity() {
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_CompassApp_Settings);
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onBuildHeaders(List<Header> target) {

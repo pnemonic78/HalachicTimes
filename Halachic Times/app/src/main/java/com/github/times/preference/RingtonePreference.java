@@ -22,7 +22,6 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.preference.Preference;
 
@@ -36,6 +35,8 @@ import com.github.app.ActivityUtils;
  * @author Moshe Waisberg
  */
 public class RingtonePreference extends com.github.preference.RingtonePreference {
+
+    private static final String PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE;
 
     private Fragment requestPermissionsFragment;
     private int requestPermissionsCode;
@@ -62,15 +63,12 @@ public class RingtonePreference extends com.github.preference.RingtonePreference
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             final Context context = getContext();
             if (requestPermissions) {
-                if (PermissionChecker.checkCallingOrSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_GRANTED) {
+                if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
                     final Fragment owner = requestPermissionsFragment;
                     final int requestCode = requestPermissionsCode;
                     if (owner != null) {
-                        Activity activity = owner.getActivity();
-                        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            owner.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, requestCode);
-                            return;
-                        }
+                        owner.requestPermissions(new String[]{PERMISSION_RINGTONE}, requestCode);
+                        return;
                     }
                 }
             }
@@ -86,7 +84,7 @@ public class RingtonePreference extends com.github.preference.RingtonePreference
 
     public void onRequestPermissionsResult(String[] permissions, int[] grantResults) {
         // Rebuild the list to include allowed tones.
-        if (ActivityUtils.isPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE, permissions, grantResults)) {
+        if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
             setRingtoneType(getRingtoneType(), true);
         }
         // Show the list anyway.

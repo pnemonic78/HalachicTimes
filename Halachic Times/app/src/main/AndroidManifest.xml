@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- For external tones. -->
+    <!-- For external tones and wallpaper. -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
@@ -95,6 +95,14 @@
             android:label="@string/title_activity_alarm"
             android:launchMode="singleInstance"
             android:parentActivityName="com.github.times.ZmanimActivity" />
+        <activity
+            android:name="com.github.times.appwidget.ZmanimWidgetConfigure"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.Zmanim.Settings">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name="com.github.times.appwidget.ZmanimWidget"

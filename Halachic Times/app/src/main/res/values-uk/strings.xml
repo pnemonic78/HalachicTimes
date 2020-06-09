@@ -207,6 +207,7 @@
     <!-- Widget -->
     <string name="title_widget_clock">Галахических Разів Годинник</string>
     <string name="appwidget_theme_title">Тема віджету</string>
+    <string name="appwidget_theme_permission_rationale">Фон віджетів за замовчуванням намагається контрастувати себе з шпалерами.</string>
 
     <!-- Reminder -->
     <string name="reminder">Нагадування</string>

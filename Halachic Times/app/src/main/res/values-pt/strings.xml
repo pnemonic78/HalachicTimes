@@ -207,6 +207,7 @@
     <!-- Widget -->
     <string name="title_widget_clock">Horários Haláchicos Relógio</string>
     <string name="appwidget_theme_title">Tema do widget</string>
+    <string name="appwidget_theme_permission_rationale">O plano de fundo padrão do widget tenta se contrastar com o papel de parede.</string>
 
     <!-- Reminder -->
     <string name="reminder">Lembrete</string>

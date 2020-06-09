@@ -207,6 +207,7 @@
     <!-- Widget -->
     <string name="title_widget_clock">Tempi Halachiche Orologio</string>
     <string name="appwidget_theme_title">Tema widget</string>
+    <string name="appwidget_theme_permission_rationale">Lo sfondo del widget predefinito tenta di contrastare se stesso con lo sfondo.</string>
 
     <!-- Reminder -->
     <string name="reminder">Promemoria</string>
