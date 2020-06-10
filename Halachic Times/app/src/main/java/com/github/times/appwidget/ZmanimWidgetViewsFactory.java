@@ -313,7 +313,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                     light = true;
                     break;
                 default:
-                    light = !isBrightWallpaper(context);
+                    light = isBrightWallpaper(context);
                     break;
             }
 

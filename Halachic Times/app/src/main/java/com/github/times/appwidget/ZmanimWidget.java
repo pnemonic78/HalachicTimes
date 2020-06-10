@@ -248,9 +248,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 return R.layout.widget_static_light;
             default:
                 if (isBrightWallpaper(getContext())) {
-                    return R.layout.widget_static;
+                    return R.layout.widget_static_light;
                 }
-                return R.layout.widget_static_light;
+                return R.layout.widget_static;
         }
     }
 
@@ -311,7 +311,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
                     light = true;
                     break;
                 default:
-                    light = !isBrightWallpaper(context);
+                    light = isBrightWallpaper(context);
                     break;
             }
 

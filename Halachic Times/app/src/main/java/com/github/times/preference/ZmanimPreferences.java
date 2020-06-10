@@ -58,6 +58,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_EMPHASIS_SCALE = "emphasis_scale";
     /** Preference name for the app widget theme. */
     String KEY_THEME_WIDGET = "theme.appwidget";
+    /** Preference name for the app widget theme permissions rationale. */
+    String KEY_THEME_WIDGET_RATIONALE = "theme.appwidget.rationale";
     /** Preference name for formatting Hebrew year with final form letters. */
     String KEY_YEAR_FINAL = "year.final";
 

@@ -45,6 +45,7 @@ import static com.github.times.location.LocationPreferences.EXTRA_LOCALE;
 import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME;
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
+import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE;
 import static com.github.util.LocaleUtils.sortByDisplay;
 
 /**
@@ -73,6 +74,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         widgetPreference.setOnPreferenceClickListener(this);
         initList(KEY_EMPHASIS_SCALE);
         localePreference = initLocaleList(KEY_LOCALE);
+        findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -145,8 +147,13 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
+        final String key = preference.getKey();
+        final Context context = preference.getContext();
         if (preference == widgetPreference) {
-            final Context context = preference.getContext();
+            if (checkWallpaperPermission(context)) {
+                return true;
+            }
+        } else if (KEY_THEME_WIDGET_RATIONALE.equals(key)) {
             if (checkWallpaperPermission(context)) {
                 return true;
             }
@@ -160,7 +167,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
                 final Activity activity = getActivity();
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_WALLPAPER)) {
                     new AlertDialog.Builder(context)
-                            .setTitle(R.string.title_widget_zmanim)
+                            .setTitle(R.string.appwidget_theme_title)
                             .setMessage(R.string.appwidget_theme_permission_rationale)
                             .setCancelable(true)
                             .setNegativeButton(android.R.string.cancel, null)

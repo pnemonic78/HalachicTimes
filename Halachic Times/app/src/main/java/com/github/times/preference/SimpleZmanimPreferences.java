@@ -644,7 +644,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
 
     @Override
     public int getAppWidgetTheme(String value) {
-        if (isEmpty(value) || THEME_NONE.equals(value)) {
+        if (isEmpty(value) || THEME_DEFAULT.equals(value) || THEME_NONE.equals(value)) {
             return 0;
         }
         if (THEME_LIGHT.equals(value)) {
