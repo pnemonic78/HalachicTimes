@@ -44,9 +44,9 @@ public class ZmanimListWidget extends ZmanimWidget {
                 return R.layout.widget_list_light;
             default:
                 if (isBrightWallpaper(getContext())) {
-                    return R.layout.widget_list;
+                    return R.layout.widget_list_light;
                 }
-                return R.layout.widget_list_light;
+                return R.layout.widget_list;
         }
     }
 
