@@ -28,6 +28,7 @@ import com.github.times.R;
 import com.github.times.preference.AbstractPreferenceFragment;
 
 import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
+import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE;
 
 /**
  * This fragment shows the preferences for the widgets.
@@ -50,6 +51,7 @@ public class ZmanimWidgetPreferenceFragment extends AbstractPreferenceFragment {
 
         widgetPreference = initList(KEY_THEME_WIDGET);
         widgetPreference.setOnPreferenceClickListener(this);
+        findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -65,8 +67,13 @@ public class ZmanimWidgetPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
+        final String key = preference.getKey();
+        final Context context = preference.getContext();
         if (preference == widgetPreference) {
-            final Context context = preference.getContext();
+            if (checkWallpaperPermission(context)) {
+                return true;
+            }
+        } else if (KEY_THEME_WIDGET_RATIONALE.equals(key)) {
             if (checkWallpaperPermission(context)) {
                 return true;
             }

@@ -9,7 +9,9 @@
             android:icon="@drawable/ic_settings_theme"
             android:key="theme.appwidget"
             android:title="@string/appwidget_theme_title" />
-        <Preference android:summary="@string/appwidget_theme_permission_rationale" />
+        <Preference
+            android:key="theme.appwidget.rationale"
+            android:summary="@string/appwidget_theme_permission_rationale" />
     </PreferenceCategory>
 
 </PreferenceScreen>
