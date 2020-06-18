@@ -150,6 +150,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
             items.add(item);
         }
 
+
+        if (positionFirst < 0) {
+            positionFirst = positionTotal;
+        }
         if ((adapterTomorrow != null) && (positionFirst >= 0)) {
             adapter = adapterTomorrow;
             count = Math.min(adapter.getCount(), positionFirst);
@@ -207,6 +211,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         }
 
         bindViews(context, list, items);
+
     }
 
     @Override
