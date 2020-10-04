@@ -70,6 +70,14 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
     }
 
     /**
+     * Creates a new row item.
+     */
+    public ZmanimItem(int titleId, long time, CharSequence summary) {
+        this(titleId, time);
+        this.summary = summary;
+    }
+
+    /**
      * Creates a new category item.
      */
     public ZmanimItem(CharSequence label) {
