@@ -115,6 +115,14 @@ public class ZmanimReminder {
      * Id for alarms for upcoming time notification.
      */
     private static final int ID_ALARM_UPCOMING = 4;
+    /**
+     * Id for cancelling alarms.
+     */
+    private static final int ID_ALARM_CANCEL = 5;
+    /**
+     * Id for silent alarms.
+     */
+    private static final int ID_ALARM_SILENT = 6;
 
     private static final long WAS_DELTA = 30 * SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * SECOND_IN_MILLIS;
@@ -395,7 +403,7 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_REMIND);
         putReminderItem(item, intent);
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     /**
@@ -407,7 +415,7 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_CANCEL);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     public void process(@Nullable Intent intent) {
@@ -698,7 +706,7 @@ public class ZmanimReminder {
         intent.setAction(ACTION_SILENCE);
         item.put(intent);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT);
     }
 
     /**
