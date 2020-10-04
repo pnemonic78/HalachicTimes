@@ -94,5 +94,5 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidTestVersion"
     androidTestImplementation "androidx.test:runner:$androidTestVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 }
