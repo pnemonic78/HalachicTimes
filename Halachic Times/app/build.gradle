@@ -90,9 +90,9 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation "androidx.test:core:$supportTestVersion"
-    androidTestImplementation "androidx.test:rules:$supportTestVersion"
-    androidTestImplementation "androidx.test:runner:$supportTestVersion"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "androidx.test:core:$androidTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidTestVersion"
+    androidTestImplementation "androidx.test:runner:$androidTestVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 }
