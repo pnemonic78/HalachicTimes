@@ -15,10 +15,7 @@
  */
 package com.github.times.preference;
 
-import net.sourceforge.zmanim.ShaahZmanis;
-
 import android.content.Context;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.media.AudioManager;
@@ -26,9 +23,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
 
-import java.io.File;
-import java.util.Calendar;
-import java.util.Locale;
+import androidx.annotation.NonNull;
 
 import com.github.media.RingtoneManager;
 import com.github.preference.LocalePreferences;
@@ -39,14 +34,82 @@ import com.github.preference.ThemePreferences;
 import com.github.preference.TimePreference;
 import com.github.times.R;
 
-import androidx.annotation.NonNull;
+import net.sourceforge.zmanim.ShaahZmanis;
+
+import java.io.File;
+import java.util.Calendar;
+import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;
 import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 import static com.github.times.ZmanimItem.NEVER;
-import static com.github.times.preference.ZmanimPreferences.Values.*;
+import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
+import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
+import static com.github.times.preference.ZmanimPreferences.Values.OMER_NONE;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_10_2;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_11;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_12;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_120;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_120_ZMANIS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_13;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_15;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_15_ALOS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_168;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_16_1;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_16_1_ALOS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_16_1_SUNSET;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_18;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_19;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_19_8;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_26;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_2_STARS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_30;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_65;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_676;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_7;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_3_8;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4_37;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4_61;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_4_8;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_58;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_5_88;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_5_95;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_6;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_60;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_6_45;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_72;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_72_ZMANIS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7_083;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7_083_ZMANIS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7_65;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_7_67;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_8_5;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_90;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_90_ZMANIS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_96;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_96_ZMANIS;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_9_3;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_9_5;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_9_75;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_ATERET;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_FIXED;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_GRA;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_HALF;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_LEVEL;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_MGA;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NIGHT;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_SEA;
+import static com.github.times.preference.ZmanimPreferences.Values.OPINION_TWILIGHT;
+import static com.github.times.preference.ZmanimPreferences.Values.THEME_NONE;
+import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
 
 /**
  * Simple application preferences implementation.
@@ -391,9 +454,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
 
     @Override
     public void setLatestReminder(long time) {
-        Editor editor = preferences.edit();
-        editor.putLong(KEY_REMINDER_LATEST, time);
-        editor.apply();
+        preferences.edit().putLong(KEY_REMINDER_LATEST, time).apply();
     }
 
     @Override
