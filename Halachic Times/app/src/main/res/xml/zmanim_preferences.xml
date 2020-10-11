@@ -249,6 +249,17 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
+        android:key="molad_screen"
+        android:title="@string/molad">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_molad_preferences"/>
+        <extra
+            android:name="reminder"
+            android:value="molad.reminder"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="levana_earliest_screen"
         android:title="@string/levana_earliest">
         <extra
