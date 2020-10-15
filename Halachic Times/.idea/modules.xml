@@ -2,19 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GeoNames/GeoNames.iml" filepath="$PROJECT_DIR$/GeoNames/GeoNames.iml" group="Halachic Times/GeoNames" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Halachic_Times.iml" filepath="$PROJECT_DIR$/.idea/modules/Halachic_Times.iml" group="Halachic_Times" />
-      <module fileurl="file://$PROJECT_DIR$/android-lib/android-lib.iml" filepath="$PROJECT_DIR$/android-lib/android-lib.iml" group="Halachic Times/android-lib" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Halachic Times/app" />
-      <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" group="Halachic Times/common" />
-      <module fileurl="file://$PROJECT_DIR$/compass/compass.iml" filepath="$PROJECT_DIR$/compass/compass.iml" group="Halachic Times/compass" />
-      <module fileurl="file://$PROJECT_DIR$/compass-bahai/compass-bahai.iml" filepath="$PROJECT_DIR$/compass-bahai/compass-bahai.iml" group="Halachic Times/compass-bahai" />
-      <module fileurl="file://$PROJECT_DIR$/compass-jewish/compass-jewish.iml" filepath="$PROJECT_DIR$/compass-jewish/compass-jewish.iml" group="Halachic Times/compass-jewish" />
-      <module fileurl="file://$PROJECT_DIR$/compass-lib/compass-lib.iml" filepath="$PROJECT_DIR$/compass-lib/compass-lib.iml" group="Halachic Times/compass-lib" />
-      <module fileurl="file://$PROJECT_DIR$/android-lib/lib/lib.iml" filepath="$PROJECT_DIR$/android-lib/lib/lib.iml" group="Halachic Times/android-lib/lib" />
-      <module fileurl="file://$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" filepath="$PROJECT_DIR$/zmanim/lib-android/lib-android.iml" group="Halachic Times/zmanim/lib-android" />
-      <module fileurl="file://$PROJECT_DIR$/locations/locations.iml" filepath="$PROJECT_DIR$/locations/locations.iml" group="Halachic Times/locations" />
-      <module fileurl="file://$PROJECT_DIR$/zmanim/zmanim.iml" filepath="$PROJECT_DIR$/zmanim/zmanim.iml" group="Halachic Times/zmanim" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Halachic_Times.iml" filepath="$PROJECT_DIR$/.idea/modules/Halachic_Times.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GeoNames/Halachic_Times.GeoNames.iml" filepath="$PROJECT_DIR$/.idea/modules/GeoNames/Halachic_Times.GeoNames.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-lib/Halachic_Times.android-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/android-lib/Halachic_Times.android-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/android-lib/lib/Halachic_Times.android-lib.lib.iml" filepath="$PROJECT_DIR$/.idea/modules/android-lib/lib/Halachic_Times.android-lib.lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Halachic_Times.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Halachic_Times.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/Halachic_Times.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/Halachic_Times.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/compass/Halachic_Times.compass.iml" filepath="$PROJECT_DIR$/.idea/modules/compass/Halachic_Times.compass.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/compass-bahai/Halachic_Times.compass-bahai.iml" filepath="$PROJECT_DIR$/.idea/modules/compass-bahai/Halachic_Times.compass-bahai.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/compass-jewish/Halachic_Times.compass-jewish.iml" filepath="$PROJECT_DIR$/.idea/modules/compass-jewish/Halachic_Times.compass-jewish.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/compass-lib/Halachic_Times.compass-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/compass-lib/Halachic_Times.compass-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/locations/Halachic_Times.locations.iml" filepath="$PROJECT_DIR$/.idea/modules/locations/Halachic_Times.locations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zmanim/Halachic_Times.zmanim.iml" filepath="$PROJECT_DIR$/.idea/modules/zmanim/Halachic_Times.zmanim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/zmanim/lib-android/Halachic_Times.zmanim.lib-android.iml" filepath="$PROJECT_DIR$/.idea/modules/zmanim/lib-android/Halachic_Times.zmanim.lib-android.iml" />
     </modules>
   </component>
 </project>
