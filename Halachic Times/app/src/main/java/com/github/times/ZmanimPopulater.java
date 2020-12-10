@@ -93,10 +93,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     private static final int CANDLES_YOM_KIPPUR = 1;
 
-    static final int CANDLES_MASK_OFFSET = 0;
+    static final int CANDLES_TODAY_MASK_OFFSET = 0;
     private static final int CANDLES_MASK_BITS = 4;
+    static final int CANDLES_TOMORROW_MASK_OFFSET = CANDLES_MASK_BITS;
     static final int CANDLES_MASK = (1 << CANDLES_MASK_BITS) - 1;
-    static final int HOLIDAY_MASK_OFFSET = CANDLES_MASK_OFFSET + CANDLES_MASK_BITS;
+    static final int HOLIDAY_MASK_OFFSET = CANDLES_TOMORROW_MASK_OFFSET + CANDLES_MASK_BITS;
     private static final int HOLIDAY_MASK_BITS = 8;
     static final int HOLIDAY_MASK = (1 << HOLIDAY_MASK_BITS) - 1;
     static final int HOLIDAY_TOMORROW_MASK_OFFSET = HOLIDAY_MASK_OFFSET + HOLIDAY_MASK_BITS;
@@ -291,7 +292,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
         final int candles = calculateCandles(jewishDate, jewishDateTomorrow, settings);
-        final int candlesCount = (candles >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
+        final int candlesToday = (candles >> CANDLES_TODAY_MASK_OFFSET) & CANDLES_MASK;
+        final int candlesTomorrow = (candles >> CANDLES_TOMORROW_MASK_OFFSET) & CANDLES_MASK;
         final int holidayToday = (byte) ((candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK);
         final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);
         final int candlesOffset = (candles >> OFFSET_MASK_OFFSET) & OFFSET_MASK;
@@ -767,13 +769,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             }
         }
 
-        if (candlesCount > 0) {
+        if (candlesTomorrow > 0) {
             switch (candlesWhen) {
                 case BEFORE_SUNSET:
                     if (sunset != NEVER) {
                         date = sunset - (candlesOffset * MINUTE_IN_MILLIS);
                         if (holidayTomorrow == CHANUKAH) {
-                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesTomorrow, candlesTomorrow);
                         } else {
                             summaryText = res.getQuantityString(R.plurals.candles_summary, candlesOffset, candlesOffset);
                         }
@@ -783,7 +785,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 case AT_SUNSET:
                     if (sunset != NEVER) {
                         if (holidayTomorrow == CHANUKAH) {
-                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesTomorrow, candlesTomorrow);
                             adapter.add(R.string.candles, summaryText, sunset, jewishDate, remote);
                         } else {
                             adapter.add(R.string.candles, summarySunset, sunset, jewishDate, remote);
@@ -793,7 +795,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 case AT_TWILIGHT:
                     if (twilight != NEVER) {
                         if (holidayTomorrow == CHANUKAH) {
-                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesTomorrow, candlesTomorrow);
                             adapter.add(R.string.candles, summaryText, twilight, jewishDateTomorrow, remote);
                         } else {
                             adapter.add(R.string.candles, summaryTwilight, twilight, jewishDateTomorrow, remote);
@@ -803,7 +805,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 case AT_NIGHT:
                     if (nightfall != NEVER) {
                         if (holidayTomorrow == CHANUKAH) {
-                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesTomorrow, candlesTomorrow);
                             adapter.add(R.string.candles, summaryText, nightfall, jewishDateTomorrow, remote);
                         } else {
                             adapter.add(R.string.candles, summaryNightfall, nightfall, jewishDateTomorrow, remote);
@@ -813,7 +815,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 case MOTZE_SHABBATH:
                     if (shabbatEnds != NEVER) {
                         if (holidayTomorrow == CHANUKAH) {
-                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesCount, candlesCount);
+                            summaryText = res.getQuantityString(R.plurals.candles_chanukka, candlesTomorrow, candlesTomorrow);
                             adapter.add(R.string.candles, summaryText, shabbatEnds, jewishDateTomorrow, remote);
                         } else {
                             adapter.add(R.string.candles, summaryShabbatEnds, shabbatEnds, jewishDateTomorrow, remote);
@@ -1085,9 +1087,32 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (jcalTomorrow == null) {
             jcalTomorrow = cloneJewishTomorrow(jewishDateToday);
         }
+        int countToday = CANDLES_NONE;
         int holidayTomorrow = jcalTomorrow.getYomTovIndex();
-        int count = CANDLES_NONE;
+        int countTomorrow = CANDLES_NONE;
         int when = BEFORE_SUNSET;
+
+        switch (holidayToday) {
+            case PESACH:
+            case SHAVUOS:
+            case ROSH_HASHANA:
+            case SUCCOS:
+            case SHEMINI_ATZERES:
+            case SIMCHAS_TORAH:
+                countToday = CANDLES_FESTIVAL;
+                break;
+            case YOM_KIPPUR:
+                countToday = CANDLES_YOM_KIPPUR;
+                break;
+            case CHANUKAH:
+                countToday = jewishDateToday.getDayOfChanukah();
+                break;
+            default:
+                if (dayOfWeek == SATURDAY) {
+                    countToday = CANDLES_SHABBATH;
+                }
+                break;
+        }
 
         switch (holidayTomorrow) {
             case PESACH:
@@ -1096,13 +1121,13 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             case SUCCOS:
             case SHEMINI_ATZERES:
             case SIMCHAS_TORAH:
-                count = CANDLES_FESTIVAL;
+                countTomorrow = CANDLES_FESTIVAL;
                 break;
             case YOM_KIPPUR:
-                count = CANDLES_YOM_KIPPUR;
+                countTomorrow = CANDLES_YOM_KIPPUR;
                 break;
             case CHANUKAH:
-                count = jcalTomorrow.getDayOfChanukah();
+                countTomorrow = jcalTomorrow.getDayOfChanukah();
                 if ((dayOfWeek != FRIDAY) && (dayOfWeek != SATURDAY)) {
                     String opinion = settings.getChanukkaCandles();
                     if (OPINION_TWILIGHT.equals(opinion)) {
@@ -1117,7 +1142,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             default:
                 if (dayOfWeek == FRIDAY) {
                     holidayTomorrow = SHABBATH;
-                    count = CANDLES_SHABBATH;
+                    countTomorrow = CANDLES_SHABBATH;
                 }
                 break;
         }
@@ -1157,7 +1182,8 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 | ((candlesOffset & OFFSET_MASK) << OFFSET_MASK_OFFSET)
                 | ((holidayTomorrow & HOLIDAY_MASK) << HOLIDAY_TOMORROW_MASK_OFFSET)
                 | ((holidayToday & HOLIDAY_MASK) << HOLIDAY_MASK_OFFSET)
-                | ((count & CANDLES_MASK) << CANDLES_MASK_OFFSET);
+                | ((countTomorrow & CANDLES_MASK) << CANDLES_TOMORROW_MASK_OFFSET)
+                | ((countToday & CANDLES_MASK) << CANDLES_TODAY_MASK_OFFSET);
     }
 
     /**

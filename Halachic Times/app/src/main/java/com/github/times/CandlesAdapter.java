@@ -22,8 +22,6 @@ import android.view.ViewGroup;
 import com.github.times.preference.ZmanimPreferences;
 
 import static com.github.times.ZmanimPopulater.BEFORE_SUNSET;
-import static com.github.times.ZmanimPopulater.CANDLES_MASK;
-import static com.github.times.ZmanimPopulater.CANDLES_MASK_OFFSET;
 import static com.github.times.ZmanimPopulater.HOLIDAY_MASK;
 import static com.github.times.ZmanimPopulater.HOLIDAY_MASK_OFFSET;
 import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_MASK_OFFSET;
@@ -70,15 +68,6 @@ public class CandlesAdapter extends ZmanimAdapter {
                 break;
         }
         return convertView;
-    }
-
-    /**
-     * Get the candles count.
-     *
-     * @return the number of candles.
-     */
-    public int getCandlesCount() {
-        return (getCandles() >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
     }
 
     /**
