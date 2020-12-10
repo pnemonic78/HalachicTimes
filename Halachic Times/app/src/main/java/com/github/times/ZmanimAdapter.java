@@ -48,7 +48,8 @@ import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.times.ZmanimPopulater.CANDLES_MASK;
-import static com.github.times.ZmanimPopulater.CANDLES_MASK_OFFSET;
+import static com.github.times.ZmanimPopulater.CANDLES_TODAY_MASK_OFFSET;
+import static com.github.times.ZmanimPopulater.CANDLES_TOMORROW_MASK_OFFSET;
 import static com.github.times.ZmanimPopulater.HOLIDAY_MASK;
 import static com.github.times.ZmanimPopulater.HOLIDAY_MASK_OFFSET;
 import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_MASK_OFFSET;
@@ -583,12 +584,21 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     }
 
     /**
-     * Get the number of candles.
+     * Get the number of candles for tonight.
      *
      * @return the candles count.
      */
     public int getCandlesCount() {
-        return (candles >> CANDLES_MASK_OFFSET) & CANDLES_MASK;
+        return (candles >> CANDLES_TOMORROW_MASK_OFFSET) & CANDLES_MASK;
+    }
+
+    /**
+     * Get the number of candles for last night.
+     *
+     * @return the candles count.
+     */
+    public int getCandlesTodayCount() {
+        return (candles >> CANDLES_TODAY_MASK_OFFSET) & CANDLES_MASK;
     }
 
     /**

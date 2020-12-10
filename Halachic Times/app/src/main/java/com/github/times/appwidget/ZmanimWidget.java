@@ -105,8 +105,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
             items.add(itemToday);
 
             int holidayToday = adapter.getHolidayToday();
-            int candleCount = adapter.getCandlesCount();
-            CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday, candleCount - 1);
+            int candlesToday = adapter.getCandlesTodayCount();
+            CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday, candlesToday);
             if (holidayTodayName != null) {
                 final ZmanimItem itemHoliday = new ZmanimItem(holidayTodayName);
                 itemHoliday.jewishDate = jewishDate;
