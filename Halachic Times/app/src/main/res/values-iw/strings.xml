@@ -84,7 +84,7 @@
     <string name="candles_summary_many">%1$d דקות לפני השקיעה</string>
     <string name="candles_summary_other">%1$d דקות לפני השקיעה</string>
 
-    <string name="chanukka">חנוכה</string>
+    <string name="chanukka">חנוכה %1$d</string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">נר חנוכה %1$d</string>
     <string name="candles_chanukka_two">%1$d נרות חנוכה</string>

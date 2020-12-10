@@ -84,7 +84,7 @@
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d minutter før solnedgang</string>
 
-    <string name="chanukka"><i>Chanukka</i></string>
+    <string name="chanukka"><i>Chanukka %1$d</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka lys</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>

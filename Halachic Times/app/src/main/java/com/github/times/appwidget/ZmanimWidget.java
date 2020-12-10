@@ -105,7 +105,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
             items.add(itemToday);
 
             int holidayToday = adapter.getHolidayToday();
-            CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday);
+            int candleCount = adapter.getCandlesCount();
+            CharSequence holidayTodayName = ZmanimDays.getName(context, holidayToday, candleCount - 1);
             if (holidayTodayName != null) {
                 final ZmanimItem itemHoliday = new ZmanimItem(holidayTodayName);
                 itemHoliday.jewishDate = jewishDate;
@@ -129,7 +130,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 items.add(itemTomorrow);
 
                 int holidayTomorrow = adapter.getHolidayTomorrow();
-                CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                int candleCount = adapter.getCandlesCount();
+                CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow, candleCount);
                 if (holidayTomorrowName != null) {
                     final ZmanimItem labelHoliday = new ZmanimItem(holidayTomorrowName);
                     labelHoliday.jewishDate = jcal;
@@ -149,7 +151,6 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
             items.add(item);
         }
-
 
         if (positionFirst < 0) {
             positionFirst = positionTotal;
@@ -188,7 +189,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
                     items.add(itemTomorrow);
 
                     int holidayTomorrow = adapter.getHolidayTomorrow();
-                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                    int candleCount = adapter.getCandlesCount();
+                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow, candleCount);
                     if (holidayTomorrowName != null) {
                         final ZmanimItem labelHoliday = new ZmanimItem(holidayTomorrowName);
                         labelHoliday.jewishDate = jcal;

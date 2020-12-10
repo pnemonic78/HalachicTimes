@@ -110,6 +110,8 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_OPINION_MIDNIGHT_GUARD = "midnight_guard";
     /** Preference name for morning guard type. */
     String KEY_OPINION_MORNING_GUARD = "morning_guard";
+    /** Preference name for molad type. */
+    String KEY_OPINION_MOLAD = "molad";
     /** Preference name for earliest kiddush levana type. */
     String KEY_OPINION_EARLIEST_LEVANA = "levana_earliest";
     /** Preference name for latest kiddush levana type. */

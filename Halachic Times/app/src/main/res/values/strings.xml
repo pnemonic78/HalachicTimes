@@ -185,7 +185,7 @@
         <item quantity="other">@string/candles_summary_other</item>
     </plurals>
 
-    <string name="chanukka"><i>Chanukka</i></string>
+    <string name="chanukka"><i>Chanukka %1$d</i></string>
     <string name="candles_chanukka_opinion" translatable="false">@string/chanukka</string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka candle</string>
