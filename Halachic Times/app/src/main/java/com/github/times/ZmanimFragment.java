@@ -278,7 +278,8 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             bindViewGrouping(list, position, dateHebrew);
 
             int holidayToday = adapter.getHolidayToday();
-            CharSequence holidayName = ZmanimDays.getName(context, holidayToday);
+            int candleCount = adapter.getCandlesCount();
+            CharSequence holidayName = ZmanimDays.getName(context, holidayToday, candleCount - 1);
             if (holidayName != null) {
                 bindViewGrouping(list, position, holidayName);
             }
@@ -299,7 +300,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     bindViewGrouping(list, position, dateHebrew);
 
                     int holidayTomorrow = adapter.getHolidayTomorrow();
-                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow);
+                    CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow, candleCount);
                     if (holidayTomorrowName != null) {
                         bindViewGrouping(list, position, holidayTomorrowName);
                     }

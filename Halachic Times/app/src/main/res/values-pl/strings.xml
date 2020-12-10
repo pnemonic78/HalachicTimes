@@ -84,7 +84,7 @@
     <string name="candles_summary_many">%1$d minut przed zachodem słońca</string>
     <string name="candles_summary_other">%1$d minut przed zachodem słońca</string>
 
-    <string name="chanukka"><i>Hanukka</i></string>
+    <string name="chanukka"><i>Hanukka %1$d</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d świeca Hanukkowy</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>

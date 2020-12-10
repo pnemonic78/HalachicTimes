@@ -76,7 +76,11 @@ public class ZmanimDays {
     }
 
     public static CharSequence getName(Context context, int day) {
+        return getName(context, day, 0);
+    }
+
+    public static CharSequence getName(Context context, int day, int count) {
         int nameId = getNameId(day);
-        return (nameId == ID_NONE) ? null : context.getText(nameId);
+        return (nameId == ID_NONE) ? null : ((count <= 0) ? context.getText(nameId) : context.getString(nameId, count));
     }
 }
