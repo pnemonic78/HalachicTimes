@@ -519,6 +519,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
             case R.string.candles:
                 return KEY_OPINION_CANDLES;
             case R.string.chanukka:
+            case R.string.chanukka_count:
                 return KEY_OPINION_CANDLES_CHANUKKA;
             case R.string.sunset:
                 return KEY_OPINION_SUNSET;

@@ -84,7 +84,8 @@
     <string name="candles_summary_many">@string/candles_summary_other</string>
     <string name="candles_summary_other">%1$d minutos antes da pôr do sol</string>
 
-    <string name="chanukka"><i>Hanucá %1$d</i></string>
+    <string name="chanukka"><i>Hanucá</i></string>
+    <string name="chanukka_count"><i>Hanucá %1$d</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d vela de Hanucá</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>

@@ -48,11 +48,11 @@ import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.ZmanimItem.NEVER;
 import static com.github.times.ZmanimPopulater.CANDLES_MASK;
-import static com.github.times.ZmanimPopulater.CANDLES_TODAY_MASK_OFFSET;
-import static com.github.times.ZmanimPopulater.CANDLES_TOMORROW_MASK_OFFSET;
+import static com.github.times.ZmanimPopulater.CANDLES_TODAY_INDEX;
+import static com.github.times.ZmanimPopulater.CANDLES_TOMORROW_INDEX;
 import static com.github.times.ZmanimPopulater.HOLIDAY_MASK;
-import static com.github.times.ZmanimPopulater.HOLIDAY_MASK_OFFSET;
-import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_MASK_OFFSET;
+import static com.github.times.ZmanimPopulater.HOLIDAY_TODAY_INDEX;
+import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_INDEX;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
 import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
 import static com.github.util.LocaleUtils.isLocaleRTL;
@@ -115,7 +115,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     private String monthDayYear;
     private String omerFormat;
     private float emphasisScale;
-    private int candles;
+    private long candles;
 
     /**
      * Compare two time items.
@@ -570,7 +570,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *
      * @param candles the candles data.
      */
-    public void setCandles(int candles) {
+    public void setCandles(long candles) {
         this.candles = candles;
     }
 
@@ -579,7 +579,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      *
      * @return the candles data.
      */
-    public int getCandles() {
+    public long getCandles() {
         return candles;
     }
 
@@ -589,7 +589,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @return the candles count.
      */
     public int getCandlesCount() {
-        return (candles >> CANDLES_TOMORROW_MASK_OFFSET) & CANDLES_MASK;
+        return (int) ((candles >> CANDLES_TOMORROW_INDEX) & CANDLES_MASK);
     }
 
     /**
@@ -598,7 +598,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @return the candles count.
      */
     public int getCandlesTodayCount() {
-        return (candles >> CANDLES_TODAY_MASK_OFFSET) & CANDLES_MASK;
+        return (int) ((candles >> CANDLES_TODAY_INDEX) & CANDLES_MASK);
     }
 
     /**
@@ -607,7 +607,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @return the holiday.
      */
     public int getHolidayToday() {
-        return (byte) ((candles >> HOLIDAY_MASK_OFFSET) & HOLIDAY_MASK);
+        return (byte) ((candles >> HOLIDAY_TODAY_INDEX) & HOLIDAY_MASK);
     }
 
     /**
@@ -616,6 +616,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      * @return the holiday.
      */
     public int getHolidayTomorrow() {
-        return (byte) ((candles >> HOLIDAY_TOMORROW_MASK_OFFSET) & HOLIDAY_MASK);
+        return (byte) ((candles >> HOLIDAY_TOMORROW_INDEX) & HOLIDAY_MASK);
     }
 }

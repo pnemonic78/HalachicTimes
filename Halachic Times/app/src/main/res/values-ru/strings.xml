@@ -84,7 +84,8 @@
     <string name="candles_summary_many">%1$d минут до захода солнца</string>
     <string name="candles_summary_other">%1$d минут до захода солнца</string>
 
-    <string name="chanukka"><i>Ханука %1$d</i></string>
+    <string name="chanukka"><i>Ханука</i></string>
+    <string name="chanukka_count"><i>Ханука %1$d</i></string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Ханукальная свеча</string>
     <string name="candles_chanukka_two">@string/candles_chanukka_other</string>

@@ -185,7 +185,8 @@
         <item quantity="other">@string/candles_summary_other</item>
     </plurals>
 
-    <string name="chanukka"><i>Chanukka %1$d</i></string>
+    <string name="chanukka"><i>Chanukka</i></string>
+    <string name="chanukka_count"><i>Chanukka %1$d</i></string>
     <string name="candles_chanukka_opinion" translatable="false">@string/chanukka</string>
     <string name="candles_chanukka_zero">@string/candles_chanukka_other</string>
     <string name="candles_chanukka_one">%1$d Chanukka candle</string>
@@ -414,7 +415,7 @@
     <string name="day_hoshana_rabba">Hoshana Rabba</string>
     <string name="day_shemini_atzeres">Shemini Atzeres</string>
     <string name="day_simchas_torah">Simchath Torah</string>
-    <string name="day_chanukka" translatable="false">@string/chanukka</string>
+    <string name="day_chanukka" translatable="false">@string/chanukka_count</string>
     <string name="day_fast_of_esther">Fast of Esther</string>
     <string name="day_purim">Purim</string>
     <string name="day_shushan_purim">Shushan Purim</string>
