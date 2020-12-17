@@ -93,23 +93,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      */
     private static final int CANDLES_YOM_KIPPUR = 1;
 
-    private static final int CANDLES_MASK_BITS = 4;
-    private static final int HOLIDAY_MASK_BITS = 8;
-    private static final int MOTZE_MASK_BITS = 3;
-    private static final int OFFSET_MASK_BITS = 12;
-
-    static final long CANDLES_MASK = (1 << CANDLES_MASK_BITS) - 1;
-    static final long HOLIDAY_MASK = (1 << HOLIDAY_MASK_BITS) - 1;
-    static final long MOTZE_MASK = (1 << MOTZE_MASK_BITS) - 1;
-    static final long OFFSET_MASK = (1 << OFFSET_MASK_BITS) - 1;
-
-    static final int CANDLES_TODAY_INDEX = 0;
-    static final int CANDLES_TOMORROW_INDEX = CANDLES_TODAY_INDEX + CANDLES_MASK_BITS;
-    static final int HOLIDAY_TODAY_INDEX = CANDLES_TOMORROW_INDEX + CANDLES_MASK_BITS;
-    static final int HOLIDAY_TOMORROW_INDEX = HOLIDAY_TODAY_INDEX + HOLIDAY_MASK_BITS;
-    static final int MOTZE_INDEX = HOLIDAY_TOMORROW_INDEX + HOLIDAY_MASK_BITS;
-    static final int OFFSET_INDEX = MOTZE_INDEX + MOTZE_MASK_BITS;
-
     /**
      * Flag indicating lighting times before sunset.
      */
@@ -293,13 +276,12 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final JewishCalendar jewishDateTomorrow = cloneJewishTomorrow(jewishDate);
         final int shabbathAfter = settings.getShabbathEndsAfter();
         final int shabbathOffset = settings.getShabbathEnds();
-        final long candles = calculateCandles(jewishDate, jewishDateTomorrow, settings);
-        final int candlesToday = (int) ((candles >> CANDLES_TODAY_INDEX) & CANDLES_MASK);
-        final int candlesTomorrow = (int) ((candles >> CANDLES_TOMORROW_INDEX) & CANDLES_MASK);
-        final int holidayToday = (byte) ((candles >> HOLIDAY_TODAY_INDEX) & HOLIDAY_MASK);
-        final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_INDEX) & HOLIDAY_MASK);
-        final int candlesOffset = (int) ((candles >> OFFSET_INDEX) & OFFSET_MASK);
-        final int candlesWhen = (int) ((candles >> MOTZE_INDEX) & MOTZE_MASK);
+        final CandleData candles = calculateCandles(jewishDate, jewishDateTomorrow, settings);
+        final int candlesTomorrow = candles.countTomorrow;
+        final int holidayToday = candles.holidayToday;
+        final int holidayTomorrow = candles.holidayTomorrow;
+        final int candlesOffset = candles.candlesOffset;
+        final int candlesWhen = candles.when;
 
         adapter.setCandles(candles);
 
@@ -1075,11 +1057,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      *
      * @param jewishDateToday    the Jewish calendar for today.
      * @param jewishDateTomorrow the Jewish calendar for tomorrow.
-     * @return the number of candles to light, the holiday, and when to light.
+     * @return the candle data.
      */
-    protected long calculateCandles(@Nullable JewishCalendar jewishDateToday, @Nullable JewishCalendar jewishDateTomorrow, ZmanimPreferences settings) {
+    protected CandleData calculateCandles(@Nullable JewishCalendar jewishDateToday, @Nullable JewishCalendar jewishDateTomorrow, ZmanimPreferences settings) {
         if (jewishDateToday == null) {
-            return 0;
+            return new CandleData();
         }
         final int dayOfWeek = jewishDateToday.getDayOfWeek();
 
@@ -1180,12 +1162,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         final int candlesOffset = settings.getCandleLightingOffset();
 
-        return ((when & MOTZE_MASK) << MOTZE_INDEX)
-                | ((candlesOffset & OFFSET_MASK) << OFFSET_INDEX)
-                | ((holidayTomorrow & HOLIDAY_MASK) << HOLIDAY_TOMORROW_INDEX)
-                | ((holidayToday & HOLIDAY_MASK) << HOLIDAY_TODAY_INDEX)
-                | ((countTomorrow & CANDLES_MASK) << CANDLES_TOMORROW_INDEX)
-                | ((countToday & CANDLES_MASK) << CANDLES_TODAY_INDEX);
+        return new CandleData(holidayToday, countToday, holidayTomorrow, countTomorrow, when, candlesOffset);
     }
 
     /**
