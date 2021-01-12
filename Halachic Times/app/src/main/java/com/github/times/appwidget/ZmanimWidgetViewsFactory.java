@@ -216,9 +216,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                 }
                 if (jewishDate == null) {
                     jewishDate = item.jewishDate;
-                    continue;
-                }
-                if ((itemTomorrow == null) && !item.jewishDate.equals(jewishDate)) {
+                } else if ((itemTomorrow == null) && !item.jewishDate.equals(jewishDate)) {
                     ComplexZmanimCalendar zmanCal = adapter.getCalendar();
                     jcal = new JewishCalendar(zmanCal.getCalendar());
                     jcal.forward(Calendar.DATE, 1);

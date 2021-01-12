@@ -15,6 +15,8 @@
  */
 package com.github.times;
 
+import android.content.Context;
+
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 /**
@@ -122,5 +124,21 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
 
     public boolean isCategory() {
         return category;
+    }
+
+    @Override
+    public String toString() {
+        return "ZmanimItem{" +
+                "summary=" + summary +
+                ", time=" + timeLabel +
+                '}';
+    }
+
+    public String toString(Context context) {
+        return "ZmanimItem{" +
+                "title=" + context.getString(titleId) +
+                ", summary=" + summary +
+                ", time=" + timeLabel +
+                '}';
     }
 }
