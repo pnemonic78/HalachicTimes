@@ -83,15 +83,17 @@ public class ZmanimWidget extends ZmanimAppWidget {
         }
         for (position = 1; position < count; position++) {
             item = adapter.getItem(position);
-            if ((item == null) || item.isEmptyOrElapsed()) {
+            if ((item == null) || item.isEmpty()) {
+                continue;
+            }
+            if ((positionSunset < 0) && isSunset(item, jewishDate)) {
+                positionSunset = position;
+            }
+            if (item.isEmptyOrElapsed()) {
                 continue;
             }
             if (positionFirst < 0) {
                 positionFirst = position;
-            }
-            if ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate)) {
-                positionSunset = position - 1;
-                break;
             }
         }
 
@@ -119,6 +121,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
             if ((item == null) || item.isEmptyOrElapsed()) {
                 continue;
             }
+
+            items.add(item);
 
             // Start of the next Hebrew day.
             if ((position >= positionSunset) && (itemTomorrow == null)) {
@@ -148,8 +152,6 @@ public class ZmanimWidget extends ZmanimAppWidget {
                     }
                 }
             }
-
-            items.add(item);
         }
 
         if (positionFirst < 0) {
@@ -166,8 +168,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
                     if ((item == null) || item.isEmptyOrElapsed()) {
                         continue;
                     }
-                    if ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate)) {
-                        positionSunset = position - 1;
+                    if (isSunset(item, jewishDate)) {
+                        positionSunset = position;
                         break;
                     }
                 }
@@ -178,6 +180,8 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 if ((item == null) || item.isEmptyOrElapsed()) {
                     continue;
                 }
+
+                items.add(item);
 
                 // Start of the next Hebrew day.
                 if ((position >= positionSunset) && (itemTomorrow == null)) {
@@ -207,8 +211,6 @@ public class ZmanimWidget extends ZmanimAppWidget {
                         }
                     }
                 }
-
-                items.add(item);
             }
         }
 
@@ -332,5 +334,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
             }
             this.colorEnabled = light ? colorEnabledLight : colorEnabledDark;
         }
+    }
+
+    private boolean isSunset(ZmanimItem item, JewishDate jewishDate) {
+        return (item.titleId == R.string.sunset) || ((item.jewishDate != null) && !item.jewishDate.equals(jewishDate));
     }
 }
