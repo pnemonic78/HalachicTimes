@@ -15,23 +15,21 @@
  */
 package com.github.times.location;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.TimeZone;
-
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
+
+import java.util.TimeZone;
 
 import timber.log.Timber;
 
@@ -51,11 +49,9 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
     public static final String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
 
     /** Activity id for searching locations. */
-    protected static final int ACTIVITY_LOCATIONS = 1;
+    protected static final int ACTIVITY_LOCATIONS = 0x10C;
     /** Activity id for requesting location permissions. */
-    protected static final int ACTIVITY_PERMISSIONS = 2;
-
-    protected static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    protected static final int ACTIVITY_PERMISSIONS = 0xA110;
 
     private ThemeCallbacks<P> themeCallbacks;
     /** Provider for locations. */
@@ -281,9 +277,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends Activi
 
     @TargetApi(M)
     private void initLocationPermissions() {
-        if ((checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-                && (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
+        if (LocationsProvider.hasNoLocationPermission(this)) {
+            requestPermissions(LocationsProvider.PERMISSIONS, ACTIVITY_PERMISSIONS);
         }
     }
 

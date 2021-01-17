@@ -32,6 +32,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.Collection;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -39,8 +41,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import timber.log.Timber;
 
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -53,6 +53,8 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 public class LocationsProvider implements ZmanimLocationListener, LocationFormatter {
 
     private static final String TAG = "LocationProvider";
+
+    public static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
 
     /**
      * The maximum time interval between location updates, in milliseconds.
@@ -351,13 +353,9 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         onLocationChanged(location, true, false);
     }
 
-    private boolean hasLocationPermission(Context context) {
-        if (VERSION.SDK_INT < VERSION_CODES.M) {
-            return (context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-                || (context.checkCallingOrSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
-        }
-        return (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            || (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+    public static boolean hasNoLocationPermission(Context context) {
+        return (ContextCompat.checkSelfPermission(context, PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED)
+            && (ContextCompat.checkSelfPermission(context, PERMISSIONS[1]) != PackageManager.PERMISSION_GRANTED);
     }
 
     /**
@@ -367,7 +365,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     public Location getLocationGPS() {
         LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || !hasLocationPermission(context)) {
+        if ((locationManager == null) || hasNoLocationPermission(context)) {
             return null;
         }
 
@@ -386,7 +384,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     public Location getLocationNetwork() {
         LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || !hasLocationPermission(context)) {
+        if ((locationManager == null) || hasNoLocationPermission(context)) {
             return null;
         }
 
@@ -405,7 +403,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     public Location getLocationPassive() {
         LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || !hasLocationPermission(context)) {
+        if ((locationManager == null) || hasNoLocationPermission(context)) {
             return null;
         }
 
@@ -663,7 +661,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     private void requestUpdates() {
         LocationManager locationManager = this.locationManager;
-        if ((locationManager == null) || !hasLocationPermission(context)) {
+        if ((locationManager == null) || hasNoLocationPermission(context)) {
             return;
         }
 
