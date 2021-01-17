@@ -15,8 +15,6 @@
  */
 package com.github.times;
 
-import android.content.Context;
-
 import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
 
 /**
@@ -37,6 +35,10 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      * The title id.
      */
     public final int titleId;
+    /**
+     * The title.
+     */
+    public final CharSequence title;
     /**
      * The summary.
      */
@@ -67,7 +69,15 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      * Creates a new row item.
      */
     public ZmanimItem(int titleId, long time) {
+        this(titleId, null, time);
+    }
+
+    /**
+     * Creates a new row item.
+     */
+    public ZmanimItem(int titleId, CharSequence title, long time) {
         this.titleId = titleId;
+        this.title = title;
         this.time = time;
     }
 
@@ -75,7 +85,14 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
      * Creates a new row item.
      */
     public ZmanimItem(int titleId, long time, CharSequence summary) {
-        this(titleId, time);
+        this(titleId, null, time, summary);
+    }
+
+    /**
+     * Creates a new row item.
+     */
+    public ZmanimItem(int titleId, CharSequence title, long time, CharSequence summary) {
+        this(titleId, title, time);
         this.summary = summary;
     }
 
@@ -129,14 +146,7 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
     @Override
     public String toString() {
         return "ZmanimItem{" +
-                "summary=" + summary +
-                ", time=" + timeLabel +
-                '}';
-    }
-
-    public String toString(Context context) {
-        return "ZmanimItem{" +
-                "title=" + context.getString(titleId) +
+                "title=" + title +
                 ", summary=" + summary +
                 ", time=" + timeLabel +
                 '}';

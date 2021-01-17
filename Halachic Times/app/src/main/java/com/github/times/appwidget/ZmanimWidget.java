@@ -48,6 +48,11 @@ import static com.github.graphics.BitmapUtils.isBrightWallpaper;
  */
 public class ZmanimWidget extends ZmanimAppWidget {
 
+    @StyleRes
+    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
+    @StyleRes
+    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
+
     @ColorInt
     private int colorEnabled = Color.WHITE;
     @StyleRes
@@ -239,7 +244,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         }
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(positionTotal));
-        row.setTextViewText(android.R.id.title, context.getText(item.titleId));
+        row.setTextViewText(android.R.id.title, item.title);
         row.setTextViewText(R.id.time, item.timeLabel);
         row.setTextColor(android.R.id.title, colorEnabled);
         row.setTextColor(R.id.time, colorEnabled);
@@ -251,9 +256,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
     @Override
     protected int getLayoutId() {
         switch (getTheme()) {
-            case R.style.Theme_AppWidget_Dark:
+            case THEME_APPWIDGET_DARK:
                 return R.layout.widget_static;
-            case R.style.Theme_AppWidget_Light:
+            case THEME_APPWIDGET_LIGHT:
                 return R.layout.widget_static_light;
             default:
                 if (isBrightWallpaper(getContext())) {
@@ -313,10 +318,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
             boolean light;
             switch (themeId) {
-                case R.style.Theme_AppWidget_Dark:
+                case THEME_APPWIDGET_DARK:
                     light = false;
                     break;
-                case R.style.Theme_AppWidget_Light:
+                case THEME_APPWIDGET_LIGHT:
                     light = true;
                     break;
                 default:

@@ -304,8 +304,9 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             return;
         }
         long now = this.now.getTimeInMillis();
+        CharSequence title = getContext().getString(titleId);
 
-        ZmanimItem item = new ZmanimItem(titleId, time);
+        ZmanimItem item = new ZmanimItem(titleId, title, time);
         item.summary = summary;
         item.jewishDate = jewishDate;
         item.emphasis = settings.isEmphasis(titleId);
@@ -374,7 +375,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
             itemView.setEnabled(enabled);
             itemView.setTag(R.id.time, item);
 
-            title.setText(item.titleId);
+            title.setText(item.title);
             title.setEnabled(enabled);
             if (item.emphasis) {
                 title.setTypeface(title.getTypeface(), Typeface.BOLD);

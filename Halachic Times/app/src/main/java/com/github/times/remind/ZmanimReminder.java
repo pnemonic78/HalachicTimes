@@ -56,7 +56,6 @@ import com.github.times.preference.ZmanimPreferences;
 import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
 import net.sourceforge.zmanim.util.GeoLocation;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import timber.log.Timber;
@@ -317,7 +316,7 @@ public class ZmanimReminder {
      */
     public void notifyNow(ZmanimPreferences settings, ZmanimItem item) {
         final Context context = getContext();
-        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentTitle = item.title;
         CharSequence contentText = context.getText(R.string.reminder);
         ZmanimReminderItem reminderItem = new ZmanimReminderItem(item.titleId, contentTitle, contentText, item.time);
 
@@ -368,7 +367,7 @@ public class ZmanimReminder {
      */
     public void notifyFuture(ZmanimItem item, long triggerAt) {
         final Context context = getContext();
-        CharSequence contentTitle = context.getText(item.titleId);
+        CharSequence contentTitle = item.title;
         long when = item.time;
 
         Timber.i("notify future [%s] at [%s] for [%s]", contentTitle, formatDateTime(triggerAt), formatDateTime(when));
@@ -650,7 +649,7 @@ public class ZmanimReminder {
     }
 
     private Notification createUpcomingNotification(Context context, ZmanimItem item, PendingIntent contentIntent) {
-        final CharSequence contentTitle = context.getText(item.titleId);
+        final CharSequence contentTitle = item.title;
         final CharSequence contentText = item.summary;
         final long when = item.time;
         Timber.i("notify upcoming [%s] for [%s]", contentTitle, formatDateTime(when));

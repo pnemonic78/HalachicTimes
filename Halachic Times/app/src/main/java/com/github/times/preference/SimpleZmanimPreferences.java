@@ -24,6 +24,7 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 
 import com.github.media.RingtoneManager;
 import com.github.preference.LocalePreferences;
@@ -117,6 +118,11 @@ import static com.github.times.preference.ZmanimPreferences.Values.THEME_WHITE;
  * @author Moshe Waisberg
  */
 public class SimpleZmanimPreferences extends SimplePreferences implements ZmanimPreferences {
+
+    @StyleRes
+    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
+    @StyleRes
+    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
 
     private final ThemePreferences themePreferences;
     private final LocalePreferences localePreferences;
@@ -714,9 +720,9 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
             return 0;
         }
         if (THEME_LIGHT.equals(value)) {
-            return R.style.Theme_AppWidget_Light;
+            return THEME_APPWIDGET_LIGHT;
         }
-        return R.style.Theme_AppWidget_Dark;
+        return THEME_APPWIDGET_DARK;
     }
 
     @Override

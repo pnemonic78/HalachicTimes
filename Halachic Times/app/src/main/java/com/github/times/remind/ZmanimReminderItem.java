@@ -106,7 +106,7 @@ public class ZmanimReminderItem implements Parcelable {
     @Nullable
     public static ZmanimReminderItem from(@NonNull Context context, @Nullable ZmanimItem item) {
         if (item != null) {
-            return new ZmanimReminderItem(item.titleId, context.getText(item.titleId), item.summary, item.time);
+            return new ZmanimReminderItem(item.titleId, item.title, item.summary, item.time);
         }
         return null;
     }
