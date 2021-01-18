@@ -61,6 +61,11 @@ import static java.lang.System.currentTimeMillis;
  */
 public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
+    @StyleRes
+    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
+    @StyleRes
+    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
+
     /**
      * The context.
      */
@@ -216,9 +221,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                 }
                 if (jewishDate == null) {
                     jewishDate = item.jewishDate;
-                    continue;
-                }
-                if ((itemTomorrow == null) && !item.jewishDate.equals(jewishDate)) {
+                } else if ((itemTomorrow == null) && !item.jewishDate.equals(jewishDate)) {
                     ComplexZmanimCalendar zmanCal = adapter.getCalendar();
                     jcal = new JewishCalendar(zmanCal.getCalendar());
                     jcal.forward(Calendar.DATE, 1);
@@ -261,7 +264,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
      * @param item     the zman item.
      */
     private void bindView(RemoteViews row, int position, ZmanimItem item) {
-        row.setTextViewText(android.R.id.title, context.getText(item.titleId));
+        row.setTextViewText(android.R.id.title, item.title);
         row.setTextViewText(R.id.time, item.timeLabel);
         if (item.elapsed) {
             // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws error.
@@ -308,10 +311,10 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
             boolean light;
             switch (themeId) {
-                case R.style.Theme_AppWidget_Dark:
+                case THEME_APPWIDGET_DARK:
                     light = false;
                     break;
-                case R.style.Theme_AppWidget_Light:
+                case THEME_APPWIDGET_LIGHT:
                     light = true;
                     break;
                 default:

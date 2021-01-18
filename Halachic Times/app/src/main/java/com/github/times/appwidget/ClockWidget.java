@@ -23,6 +23,8 @@ import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.widget.RemoteViews;
 
+import androidx.annotation.StyleRes;
+
 import com.github.text.style.TypefaceSpan;
 import com.github.times.R;
 import com.github.times.ZmanimAdapter;
@@ -47,6 +49,11 @@ import static com.github.util.TimeUtils.roundUp;
  */
 public class ClockWidget extends ZmanimAppWidget {
 
+    @StyleRes
+    private static final int THEME_APPWIDGET_DARK = R.style.Theme_AppWidget_Dark;
+    @StyleRes
+    private static final int THEME_APPWIDGET_LIGHT = R.style.Theme_AppWidget_Light;
+
     private final ThreadLocal<DateFormat> formatter = new ThreadLocal<DateFormat>() {
         @Override
         protected DateFormat initialValue() {
@@ -60,9 +67,9 @@ public class ClockWidget extends ZmanimAppWidget {
     @Override
     protected int getLayoutId() {
         switch (getTheme()) {
-            case R.style.Theme_AppWidget_Dark:
+            case THEME_APPWIDGET_DARK:
                 return R.layout.clock_widget;
-            case R.style.Theme_AppWidget_Light:
+            case THEME_APPWIDGET_LIGHT:
                 return R.layout.clock_widget_light;
             default:
                 if (isBrightWallpaper(getContext())) {
@@ -130,7 +137,7 @@ public class ClockWidget extends ZmanimAppWidget {
             spans.setSpan(new StyleSpan(Typeface.BOLD), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
         list.setTextViewText(R.id.time, spans);
-        list.setTextViewText(android.R.id.title, context.getText(item.titleId));
+        list.setTextViewText(android.R.id.title, item.title);
         return true;
     }
 

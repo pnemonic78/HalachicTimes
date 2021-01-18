@@ -22,11 +22,6 @@ import android.view.ViewGroup;
 import com.github.times.preference.ZmanimPreferences;
 
 import static com.github.times.ZmanimPopulater.BEFORE_SUNSET;
-import static com.github.times.ZmanimPopulater.HOLIDAY_MASK;
-import static com.github.times.ZmanimPopulater.HOLIDAY_TODAY_INDEX;
-import static com.github.times.ZmanimPopulater.HOLIDAY_TOMORROW_INDEX;
-import static com.github.times.ZmanimPopulater.MOTZE_MASK;
-import static com.github.times.ZmanimPopulater.MOTZE_INDEX;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
@@ -76,10 +71,10 @@ public class CandlesAdapter extends ZmanimAdapter {
      * @return the candles holiday.
      */
     public int getCandlesHoliday() {
-        final long candles = getCandles();
-        final int when = (int) ((candles >> MOTZE_INDEX) & MOTZE_MASK);
-        final int holidayToday = (byte) ((candles >> HOLIDAY_TODAY_INDEX) & HOLIDAY_MASK);
-        final int holidayTomorrow = (byte) ((candles >> HOLIDAY_TOMORROW_INDEX) & HOLIDAY_MASK);
+        final CandleData candles = getCandles();
+        final int when = candles.when;
+        final int holidayToday = candles.holidayToday;
+        final int holidayTomorrow = candles.holidayTomorrow;
         return (when == BEFORE_SUNSET) ? holidayToday : holidayTomorrow;
     }
 }
