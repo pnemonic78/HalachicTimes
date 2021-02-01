@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 static def joinStringArray(array) {
     return "{\"" + array.join("\", \"") + "\"}"
