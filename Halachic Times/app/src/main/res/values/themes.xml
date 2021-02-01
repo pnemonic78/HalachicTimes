@@ -29,7 +29,7 @@
 
     <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Light"/>
 
-    <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>
+    <style name="Theme.Zmanim.Settings" parent="Theme.AppCompat.Settings"/>
 
     <style name="Theme.AppWidget.Dark" parent="Theme.Zmanim.Dark"/>
 

@@ -16,13 +16,12 @@
 package com.github.times.preference;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.core.content.PermissionChecker;
+import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 
 import com.github.app.ActivityUtils;

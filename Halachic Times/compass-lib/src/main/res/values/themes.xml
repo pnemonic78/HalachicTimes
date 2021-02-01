@@ -11,7 +11,7 @@
 
     <style name="Theme.CompassApp.DayNight" parent="Theme.CompassApp.Light" />
 
-    <style name="Theme.CompassApp.Settings" parent="Theme.Base.Settings" />
+    <style name="Theme.CompassApp.Settings" parent="Theme.AppCompat.Settings" />
 
     <style name="Theme.Compass" />
 

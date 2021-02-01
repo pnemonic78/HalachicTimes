@@ -15,6 +15,8 @@
  */
 package com.github.times.compass.preference;
 
+import androidx.preference.PreferenceFragmentCompat;
+
 import com.github.preference.PreferenceActivity;
 import com.github.times.compass.lib.R;
 
@@ -31,8 +33,8 @@ import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_C
 public class CompassPreferenceActivity extends PreferenceActivity {
 
     @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
+    protected PreferenceFragmentCompat createMainFragment() {
+        return new MainPreferencesFragment();
     }
 
     @Override
