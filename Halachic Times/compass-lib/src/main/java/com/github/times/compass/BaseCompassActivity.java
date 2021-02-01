@@ -23,10 +23,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.app.SimpleThemeCallbacks;
+import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 import com.github.times.compass.lib.R;
 import com.github.times.compass.preference.CompassPreferences;
 import com.github.times.compass.preference.SimpleCompassPreferences;
+import com.github.times.compass.preference.ThemeCompassPreferences;
 import com.github.times.location.LocatedActivity;
 
 /**
@@ -40,13 +43,14 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
     /** The main fragment. */
     private CompassFragment fragment;
     /** The preferences. */
-    private CompassPreferences preferences;
+    private ThemeCompassPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         final Context context = this;
-        preferences = new SimpleCompassPreferences(context);
+        preferences = createCompassPreferences(context);
+
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.compass);
         headerLocation = findViewById(R.id.coordinates);
@@ -99,5 +103,14 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.compass, menu);
         return true;
+    }
+
+    protected ThemeCompassPreferences createCompassPreferences(Context context) {
+        return new SimpleCompassPreferences(context);
+    }
+
+    @Override
+    protected ThemeCallbacks<ThemePreferences> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<ThemePreferences>(context, preferences);
     }
 }

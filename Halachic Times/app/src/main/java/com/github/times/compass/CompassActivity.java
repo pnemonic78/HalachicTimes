@@ -26,8 +26,10 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 import com.github.times.R;
+import com.github.times.compass.preference.ThemeCompassPreferences;
 import com.github.times.location.LocationActivity;
 import com.github.times.preference.CompassPreferenceActivity;
+import com.github.times.preference.ZmanimCompassPreferences;
 
 /**
  * Show the direction in which to pray.
@@ -83,5 +85,10 @@ public class CompassActivity extends BaseCompassActivity {
     private void startSettings() {
         final Context context = this;
         startActivity(new Intent(context, CompassPreferenceActivity.class));
+    }
+
+    @Override
+    protected ThemeCompassPreferences createCompassPreferences(Context context) {
+        return new ZmanimCompassPreferences(context);
     }
 }

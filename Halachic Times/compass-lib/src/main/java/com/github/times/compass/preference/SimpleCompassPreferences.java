@@ -21,6 +21,8 @@ import android.content.res.Resources;
 import com.github.preference.SimpleThemePreferences;
 import com.github.times.compass.lib.R;
 
+import static com.github.preference.ThemePreferences.Values.THEME_DARK;
+import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_DEFAULT;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_RHUMB_LINE;
@@ -36,7 +38,7 @@ import static com.github.times.compass.preference.CompassPreferences.Values.THEM
  *
  * @author Moshe Waisberg
  */
-public class SimpleCompassPreferences extends SimpleThemePreferences implements CompassPreferences {
+public class SimpleCompassPreferences extends SimpleThemePreferences implements ThemeCompassPreferences {
 
     /**
      * Constructs a new settings.
@@ -80,6 +82,17 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     @Override
     public boolean isSummariesVisible() {
         return preferences.getBoolean(KEY_SUMMARIES, SUMMARIES_DEFAULT);
+    }
+
+    @Override
+    public int getTheme(String value) {
+        if (THEME_DARK.equals(value)) {
+            return R.style.Theme_CompassApp_Dark;
+        }
+        if (THEME_LIGHT.equals(value)) {
+            return R.style.Theme_CompassApp_Light;
+        }
+        return R.style.Theme_CompassApp_DayNight;
     }
 
     /**

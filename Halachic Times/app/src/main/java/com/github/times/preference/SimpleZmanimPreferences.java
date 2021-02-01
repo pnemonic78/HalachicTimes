@@ -43,6 +43,7 @@ import java.util.Locale;
 
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.preference.ThemePreferences.Values.THEME_DARK;
 import static com.github.preference.ThemePreferences.Values.THEME_DEFAULT;
 import static com.github.preference.ThemePreferences.Values.THEME_LIGHT;
 import static com.github.times.ZmanimItem.NEVER;
@@ -169,27 +170,16 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         if (isEmpty(value) || THEME_NONE.equals(value)) {
             return R.style.Theme_Zmanim_NoGradient;
         }
+        if (THEME_DARK.equals(value)) {
+            return R.style.Theme_Zmanim_Dark;
+        }
         if (THEME_LIGHT.equals(value)) {
             return R.style.Theme_Zmanim_Light;
         }
         if (THEME_WHITE.equals(value)) {
             return R.style.Theme_Zmanim_White;
         }
-        if (THEME_DEFAULT.equals(value)) {
-            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            switch (nightMode) {
-                case Configuration.UI_MODE_NIGHT_NO:
-                    return R.style.Theme_Zmanim_Light;
-                case Configuration.UI_MODE_NIGHT_YES:
-                    return R.style.Theme_Zmanim_Dark;
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // Material
-                return R.style.Theme_Zmanim_Light;
-            }
-        }
-        return R.style.Theme_Zmanim_Dark;
+       return R.style.Theme_Zmanim_DayNight;
     }
 
     @Override
