@@ -51,15 +51,13 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
         setContentView(R.layout.compass);
         headerLocation = findViewById(R.id.coordinates);
         headerAddress = findViewById(R.id.address);
-        fragment = (CompassFragment) getFragmentManager().findFragmentById(R.id.compass);
+        fragment = (CompassFragment) getSupportFragmentManager().findFragmentById(R.id.compass);
 
         TextView summary = findViewById(android.R.id.summary);
         if (summary != null) {
             TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassView);
-            if (a != null) {
-                summary.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorTarget));
-                a.recycle();
-            }
+            summary.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorTarget));
+            a.recycle();
         }
     }
 

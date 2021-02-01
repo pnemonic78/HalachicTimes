@@ -32,12 +32,6 @@ import com.github.times.compass.preference.CompassPreferenceActivity;
  */
 public class CompassActivity extends BaseCompassActivity {
 
-    /**
-     * Constructs a new compass.
-     */
-    public CompassActivity() {
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.compass, menu);

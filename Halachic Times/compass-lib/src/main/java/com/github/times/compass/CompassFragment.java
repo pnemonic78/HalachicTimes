@@ -16,7 +16,6 @@
 package com.github.times.compass;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
@@ -32,6 +31,8 @@ import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.github.times.compass.lib.R;
 import com.github.times.compass.preference.CompassPreferences;

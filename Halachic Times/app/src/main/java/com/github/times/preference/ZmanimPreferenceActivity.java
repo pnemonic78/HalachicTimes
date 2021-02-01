@@ -16,6 +16,7 @@
 package com.github.times.preference;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.preference.PreferenceFragmentCompat;
@@ -44,6 +45,10 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            applyOverrideConfiguration(context.getResources().getConfiguration());
+        }
     }
 
     @Override

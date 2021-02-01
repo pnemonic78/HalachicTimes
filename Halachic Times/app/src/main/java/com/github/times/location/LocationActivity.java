@@ -17,6 +17,7 @@ package com.github.times.location;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
@@ -42,6 +43,10 @@ public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            applyOverrideConfiguration(context.getResources().getConfiguration());
+        }
     }
 
     @Override

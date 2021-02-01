@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CompassApp.Dark" parent="Theme.Base.Dark">
+    <style name="Theme.CompassApp.Dark" parent="Theme.AppCompat">
         <item name="compassColorTarget">@color/compass_target_original</item>
     </style>
 
-    <style name="Theme.CompassApp.Light" parent="Theme.Base.Light">
+    <style name="Theme.CompassApp.Light" parent="Theme.AppCompat.Light">
         <item name="compassColorTarget">@color/compass_target_original</item>
     </style>
 

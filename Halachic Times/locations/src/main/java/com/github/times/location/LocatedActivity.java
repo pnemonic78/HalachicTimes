@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
@@ -41,7 +43,7 @@ import static android.os.Build.VERSION_CODES.M;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocatedActivity<P extends ThemePreferences> extends Activity implements
+public abstract class LocatedActivity<P extends ThemePreferences> extends AppCompatActivity implements
         ThemeCallbacks<P>,
         ZmanimLocationListener {
 
