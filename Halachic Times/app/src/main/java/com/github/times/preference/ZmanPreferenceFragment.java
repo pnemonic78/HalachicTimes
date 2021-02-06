@@ -21,6 +21,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import androidx.annotation.Keep;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -35,6 +36,7 @@ import java.util.Set;
 /**
  * This fragment shows the preferences for a zman screen.
  */
+@Keep
 public class ZmanPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     public static final String EXTRA_XML = "xml";

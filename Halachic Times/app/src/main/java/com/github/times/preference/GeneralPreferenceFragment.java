@@ -22,6 +22,7 @@ import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.provider.Settings;
 
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -42,6 +43,7 @@ import static com.github.util.LocaleUtils.isLocaleRTL;
 /**
  * This fragment shows the preferences for the General header.
  */
+@Keep
 public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     private static final int REQUEST_PERMISSIONS = 0x702E; // TONE

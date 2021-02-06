@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.Preference;
 
 import com.github.times.R;
@@ -30,6 +31,7 @@ import com.github.times.location.LocationApplication;
 /**
  * This fragment shows the preferences for the Privacy and Security header.
  */
+@Keep
 public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
 
     private Preference clearHistory;

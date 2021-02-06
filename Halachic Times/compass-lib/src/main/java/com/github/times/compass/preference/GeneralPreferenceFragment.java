@@ -17,6 +17,8 @@ package com.github.times.compass.preference;
 
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
+
 import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
 
@@ -25,6 +27,7 @@ import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS
 /**
  * This fragment shows the preferences for the General header.
  */
+@Keep
 public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override

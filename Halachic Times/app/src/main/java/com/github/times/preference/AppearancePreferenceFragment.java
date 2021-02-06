@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -51,6 +52,7 @@ import static com.github.util.LocaleUtils.sortByDisplay;
 /**
  * This fragment shows the preferences for the Appearance header.
  */
+@Keep
 public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;

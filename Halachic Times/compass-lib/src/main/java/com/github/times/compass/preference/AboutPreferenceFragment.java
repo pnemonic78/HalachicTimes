@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.Preference;
 
 import com.github.preference.AbstractPreferenceFragment;
@@ -27,6 +28,7 @@ import com.github.times.compass.lib.R;
 /**
  * This fragment shows the preferences for the About header.
  */
+@Keep
 public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override

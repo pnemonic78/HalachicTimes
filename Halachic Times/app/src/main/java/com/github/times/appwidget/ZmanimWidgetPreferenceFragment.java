@@ -20,6 +20,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.core.content.PermissionChecker;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -33,6 +34,7 @@ import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RAT
 /**
  * This fragment shows the preferences for the widgets.
  */
+@Keep
 public class ZmanimWidgetPreferenceFragment extends AbstractPreferenceFragment {
 
     private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
