@@ -22,10 +22,11 @@
     <string name="opinion_96">Dieną yra 96 minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_96_zmanis">Dieną yra 96 זמניות minučių prieš saulėtekį / po saulėlydžio</string>
     <string name="opinion_ateret">Pasak Yešivat Ateret Tora</string>
+    <string name="opinion_baal_hatanya">Pasak Bąl haTanya</string>
+    <string name="opinion_baal_hatanya_all">Keisti visus laikus pagal Bąl haTanya?</string>
     <string name="opinion_gra">Pasak GRA</string>
     <string name="opinion_mga">Pasak Magen Abraomas</string>
     <string name="opinion_tam">Pasak Rabbeinu Tam</string>
-    <string name="opinion_baal_hatanya">Pasak Bąl Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Sezoninis valandą</string>

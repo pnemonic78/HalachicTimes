@@ -22,10 +22,11 @@
     <string name="opinion_96">Den je 96 minut před východem slunce / po západu slunce</string>
     <string name="opinion_96_zmanis">Den je 96 זמניות minut před východem slunce / po západu slunce</string>
     <string name="opinion_ateret">Souladu s Yešivat Ateret Tora</string>
+    <string name="opinion_baal_hatanya">Souladu s Baal haTanya</string>
+    <string name="opinion_baal_hatanya_all">Změnit vždy podle Baala haTanya?</string>
     <string name="opinion_gra">Souladu s GRA</string>
     <string name="opinion_mga">Souladu s Magen Avraham</string>
     <string name="opinion_tam">Souladu s Rabbeinu Tam</string>
-    <string name="opinion_baal_hatanya">Souladu s Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Sezónní hodina</string>
