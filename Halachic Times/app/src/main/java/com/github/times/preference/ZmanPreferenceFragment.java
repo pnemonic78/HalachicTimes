@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import androidx.annotation.Keep;
+import androidx.annotation.Nullable;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -84,10 +85,9 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         if (!TextUtils.isEmpty(opinionKey)) {
             if (opinionKey.indexOf(';') > 0) {
                 String[] tokens = opinionKey.split(";");
-                int length = tokens.length;
-                for (int i = 0; i < length; i++) {
-                    initPreference(tokens[i]);
-                    opinionKeys.add(tokens[i]);
+                for (String token : tokens) {
+                    initPreference(token);
+                    opinionKeys.add(token);
                 }
             } else {
                 initPreference(opinionKey);
@@ -112,7 +112,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     protected ZmanimPreferences getPreferences() {
         ZmanimPreferences preferences = this.preferences;
         if (preferences == null) {
-            final Context context = getActivity();
+            final Context context = getContext();
             preferences = new SimpleZmanimPreferences(context);
             this.preferences = preferences;
         }
@@ -147,6 +147,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         this.preferenceReminderSaturday = initReminderDay(namePrefix + ZmanimPreferences.REMINDER_SATURDAY_SUFFIX);
     }
 
+    @Nullable
     protected CheckBoxPreference initReminderDay(String key) {
         if (TextUtils.isEmpty(key)) {
             return null;
@@ -181,7 +182,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
      * Tries to postpone the reminder until after any preferences have changed.
      */
     private void remind() {
-        final Context context = getActivity();
+        final Context context = getContext();
         Intent intent = new Intent(ZmanimReminder.ACTION_UPDATE);
         ZmanimReminderService.enqueueWork(context, intent);
     }
@@ -201,7 +202,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     }
 
     private void maybeChooseOpinionsBaalHatanya() {
-        final Context context = getActivity();
+        final Context context = getContext();
         new AlertDialog.Builder(context)
             .setTitle(R.string.opinion_baal_hatanya)
             .setMessage(R.string.opinion_baal_hatanya_all)
@@ -220,7 +221,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
      * Select all relevant preferences to use Baal HaTanya's opinion.
      */
     private void chooseBaalHatanyaOpinions() {
-        final Context context = getActivity();
+        final Context context = getContext();
         final String opinion = ZmanimPreferences.Values.OPINION_BAAL_HATANYA;
         SharedPreferences preferences = getSharedPreferences(context);
         preferences.edit()
