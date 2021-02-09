@@ -120,6 +120,10 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
     String KEY_OPINION_OMER = "omer";
     /** Preference name for guard count. */
     String KEY_OPINION_GUARDS = "guards";
+    /** Preference name for beginning of fast type. */
+    String KEY_OPINION_FAST_BEGINS = "fast_begins";
+    /** Preference name for ending of fast type. */
+    String KEY_OPINION_FAST_ENDS = "fast_ends";
 
     String REMINDER_SUFFIX = ".reminder";
     String REMINDER_SUNDAY_SUFFIX = ".day." + Calendar.SUNDAY;

@@ -540,6 +540,10 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return KEY_OPINION_LATEST_LEVANA;
             case R.string.omer:
                 return KEY_OPINION_OMER;
+            case R.string.fast_begins:
+                return KEY_OPINION_FAST_BEGINS;
+            case R.string.fast_ends:
+                return KEY_OPINION_FAST_ENDS;
             default:
                 return null;
         }
@@ -606,6 +610,10 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                 return R.string.levana_latest;
             case KEY_OPINION_OMER:
                 return R.string.omer;
+            case KEY_OPINION_FAST_BEGINS:
+                return R.string.fast_begins;
+            case KEY_OPINION_FAST_ENDS:
+                return R.string.fast_ends;
             default:
                 return 0;
         }
