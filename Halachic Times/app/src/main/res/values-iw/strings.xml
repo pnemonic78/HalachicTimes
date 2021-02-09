@@ -22,10 +22,11 @@
     <string name="opinion_96">יום הוא 96 דקות קודם הנץ / אחרי השקיעה</string>
     <string name="opinion_96_zmanis">יום הוא 96 דקות זמניות קודם הנץ / אחרי השקיעה</string>
     <string name="opinion_ateret">על דעת ישיבת עטרת תורה</string>
+    <string name="opinion_baal_hatanya">על דעת הבעל התניא</string>
+    <string name="opinion_baal_hatanya_all">לשנות את כל הזמנים לפי בעל התניא?</string>
     <string name="opinion_gra">על דעת הגר\"א</string>
     <string name="opinion_mga">על דעת מגן אברהם</string>
     <string name="opinion_tam">על דעת רבנו תם</string>
-    <string name="opinion_baal_hatanya">על דעת הבעל התניא</string>
 
     <!-- Temporal hour -->
     <string name="hour">שעה זמנית</string>

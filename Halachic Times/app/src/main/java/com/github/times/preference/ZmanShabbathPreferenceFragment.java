@@ -18,6 +18,7 @@ package com.github.times.preference;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
@@ -35,6 +36,7 @@ import static com.github.times.preference.ZmanimPreferences.Values.OPINION_NONE;
 /**
  * This fragment shows the preferences for the Shabbath Ends screen.
  */
+@Keep
 public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
 
     private ListPreference afterPreference;

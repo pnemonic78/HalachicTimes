@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim" parent="Theme.Base"/>
+    <style name="Theme.Zmanim" parent="Theme.AppCompat"/>
 
-    <style name="Theme.Zmanim.Dark" parent="Theme.Base.Dark">
+    <style name="Theme.Zmanim.Dark" parent="Theme.Zmanim">
         <item name="android:textColor">@android:color/primary_text_dark</item>
         <item name="android:textColorPrimary">@android:color/primary_text_dark</item>
         <item name="android:textColorSecondary">@android:color/secondary_text_dark</item>
@@ -11,7 +11,7 @@
         <item name="listZmanim">@style/Widget.ListView.Dark</item>
     </style>
 
-    <style name="Theme.Zmanim.Light" parent="Theme.Base.Light">
+    <style name="Theme.Zmanim.Light" parent="Theme.AppCompat.Light">
         <item name="android:textColor">@android:color/primary_text_light</item>
         <item name="android:textColorPrimary">@android:color/primary_text_light</item>
         <item name="android:textColorSecondary">@android:color/secondary_text_light</item>
@@ -29,7 +29,7 @@
 
     <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Light"/>
 
-    <style name="Theme.Zmanim.Settings" parent="Theme.Base.Settings"/>
+    <style name="Theme.Zmanim.Settings" parent="Theme.AppCompat.Settings"/>
 
     <style name="Theme.AppWidget.Dark" parent="Theme.Zmanim.Dark"/>
 

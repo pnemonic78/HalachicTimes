@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)

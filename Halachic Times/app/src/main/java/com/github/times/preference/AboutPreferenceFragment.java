@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.Preference;
 
 import com.github.times.R;
@@ -26,6 +27,7 @@ import com.github.times.R;
 /**
  * This fragment shows the preferences for the About header.
  */
+@Keep
 public class AboutPreferenceFragment extends AbstractPreferenceFragment {
 
     @Override
@@ -37,7 +39,7 @@ public class AboutPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
-        final Context context = getActivity();
+        final Context context = getContext();
         Preference version = findPreference("about.version");
         try {
             version.setSummary(context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName);

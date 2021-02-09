@@ -22,10 +22,11 @@
     <string name="opinion_96">Ziua este 96 minute înainte de răsărit / după apus</string>
     <string name="opinion_96_zmanis">Ziua este 96 minute זמניות înainte de răsărit / după apus</string>
     <string name="opinion_ateret">În conformitate cu Yeşivat Ateret Tora</string>
+    <string name="opinion_baal_hatanya">În conformitate cu Baal haTanya</string>
+    <string name="opinion_baal_hatanya_all">Schimbați tot timpul în funcție de Baal haTanya?</string>
     <string name="opinion_gra">În conformitate cu GRA</string>
     <string name="opinion_mga">În conformitate cu Magen Avraham</string>
     <string name="opinion_tam">În conformitate cu Rabbeinu Tam</string>
-    <string name="opinion_baal_hatanya">În conformitate cu Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Oră de sezon</string>

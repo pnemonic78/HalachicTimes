@@ -17,6 +17,7 @@ package com.github.times.preference;
 
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.Preference;
 
 import com.github.preference.NumberPickerPreference;
@@ -27,6 +28,7 @@ import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
 /**
  * This fragment shows the preferences for the Candles zman screen.
  */
+@Keep
 public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
 
     @Override

@@ -17,6 +17,8 @@ package com.github.times.preference;
 
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
+
 import com.github.times.R;
 
 import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_OMER;
@@ -24,6 +26,7 @@ import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_OMER;
 /**
  * This fragment shows the preferences for the Zmanim header.
  */
+@Keep
 public class ZmanimPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     @Override

@@ -18,7 +18,7 @@ package com.github.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -26,8 +26,10 @@ import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 import com.github.times.R;
+import com.github.times.compass.preference.ThemeCompassPreferences;
 import com.github.times.location.LocationActivity;
 import com.github.times.preference.CompassPreferenceActivity;
+import com.github.times.preference.ZmanimCompassPreferences;
 
 /**
  * Show the direction in which to pray.
@@ -44,11 +46,15 @@ public class CompassActivity extends BaseCompassActivity {
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            applyOverrideConfiguration(context.getResources().getConfiguration());
+        }
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate() {
+        super.onCreate();
         localeCallbacks.onCreate(this);
     }
 
@@ -79,5 +85,10 @@ public class CompassActivity extends BaseCompassActivity {
     private void startSettings() {
         final Context context = this;
         startActivity(new Intent(context, CompassPreferenceActivity.class));
+    }
+
+    @Override
+    protected ThemeCompassPreferences createCompassPreferences(Context context) {
+        return new ZmanimCompassPreferences(context);
     }
 }

@@ -22,10 +22,11 @@
     <string name="opinion_96">Día es 96 minutos antes salida / después de la puesta</string>
     <string name="opinion_96_zmanis">Día es 96 זמניות minutos antes salida / después de la puesta</string>
     <string name="opinion_ateret">Acuerdo a Yeshivat Ateret Torá</string>
+    <string name="opinion_baal_hatanya">Acuerdo a Baal haTanya</string>
+    <string name="opinion_baal_hatanya_all">¿Cambiar todos los tiempos de acuerdo con Baal haTanya?</string>
     <string name="opinion_gra">Acuerdo a GRA</string>
     <string name="opinion_mga">Acuerdo a Magen Avraham</string>
     <string name="opinion_tam">Acuerdo a Rabeinu Tam</string>
-    <string name="opinion_baal_hatanya">Acuerdo a Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Horas estacional</string>

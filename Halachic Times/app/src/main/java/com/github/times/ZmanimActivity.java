@@ -18,12 +18,12 @@ package com.github.times;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
@@ -59,6 +60,8 @@ import com.github.times.preference.ZmanimPreferences;
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
 import com.github.view.animation.LayoutWeightAnimation;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -147,7 +150,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     /**
      * The details fragment.
      */
-    private ZmanimDetailsFragment detailsListFragment;
+    private ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>> detailsListFragment;
     /**
      * The candles fragment.
      */
@@ -207,7 +210,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NotNull Message msg) {
             final ZmanimActivity activity = activityWeakReference.get();
             if (activity == null) {
                 return;
@@ -263,15 +266,24 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+
+        if (VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            applyOverrideConfiguration(context.getResources().getConfiguration());
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        localeCallbacks.onCreate(this);
         init();
         initLocation();
         handleIntent(getIntent());
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        localeCallbacks.onCreate(this);
     }
 
     @Override
@@ -360,11 +372,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         gestureDetector = new GestureDetector(context, this, handler);
         gestureDetector.setIsLongpressEnabled(false);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         masterFragment = (ZmanimFragment<ZmanimAdapter, ZmanimPopulater<ZmanimAdapter>>) fragmentManager.findFragmentById(R.id.list_fragment);
         masterFragment.setOnClickListener(this);
         detailsFragmentSwitcher = view.findViewById(R.id.details_fragment);
-        detailsListFragment = (ZmanimDetailsFragment) fragmentManager.findFragmentById(R.id.details_list_fragment);
+        detailsListFragment = (ZmanimDetailsFragment<ZmanimDetailsAdapter, ZmanimDetailsPopulater<ZmanimDetailsAdapter>>) fragmentManager.findFragmentById(R.id.details_list_fragment);
         candlesFragment = (CandlesFragment) fragmentManager.findFragmentById(R.id.candles_fragment);
 
         viewSwitcher = view.findViewById(R.id.frame_fragments);

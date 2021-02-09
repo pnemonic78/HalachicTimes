@@ -24,6 +24,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -51,6 +53,7 @@ import static com.github.util.LocaleUtils.sortByDisplay;
 /**
  * This fragment shows the preferences for the Appearance header.
  */
+@Keep
 public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -90,14 +93,15 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         return result;
     }
 
+    @Nullable
     private ListPreference initLocaleList(String key) {
         if (isEmpty(key)) {
             return null;
         }
 
         Preference pref = findPreference(key);
-        if ((pref != null) && (pref instanceof ListPreference)) {
-            final Context context = getActivity();
+        if (pref instanceof ListPreference) {
+            final Context context = getContext();
             final String[] localeNames = BuildConfig.LOCALES;
             final Locale[] unique = LocaleUtils.unique(localeNames);
 
@@ -131,7 +135,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     }
 
     private void notifyConfigurationChanged(String newLocale) {
-        final Context context = getActivity();
+        final Context context = getContext();
 
         Locale locale = LocaleUtils.parseLocale(newLocale);
         LocaleUtils.applyLocale(context.getApplicationContext(), locale);

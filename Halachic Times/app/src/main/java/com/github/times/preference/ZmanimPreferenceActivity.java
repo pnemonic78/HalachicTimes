@@ -16,15 +16,16 @@
 package com.github.times.preference;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.preference.PreferenceFragmentCompat;
 
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 import com.github.preference.PreferenceActivity;
-import com.github.times.R;
-
-import java.util.List;
+import com.github.times.compass.preference.MainPreferencesFragment;
 
 import static com.github.preference.LocalePreferences.KEY_LOCALE;
 import static com.github.preference.ThemePreferences.KEY_THEME;
@@ -44,6 +45,10 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            applyOverrideConfiguration(context.getResources().getConfiguration());
+        }
     }
 
     @Override
@@ -53,8 +58,8 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
     }
 
     @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.preference_headers, target);
+    protected PreferenceFragmentCompat createMainFragment() {
+        return new MainPreferencesFragment();
     }
 
     @Override

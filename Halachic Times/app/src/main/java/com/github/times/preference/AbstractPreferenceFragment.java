@@ -35,7 +35,7 @@ public abstract class AbstractPreferenceFragment extends com.github.preference.A
     }
 
     protected void notifyAppWidgets() {
-        final Context context = getActivity();
+        final Context context = getContext();
         notifyAppWidgetsUpdate(context, ZmanimWidget.class);
         notifyAppWidgetsUpdate(context, ZmanimListWidget.class);
         notifyAppWidgetsUpdate(context, ClockWidget.class);

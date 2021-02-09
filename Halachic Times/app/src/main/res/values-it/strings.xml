@@ -22,10 +22,11 @@
     <string name="opinion_96">Giorno è 96 minuti prima dell\'alba / dopo tramonto</string>
     <string name="opinion_96_zmanis">Giorno è 96 minuti זמניות prima dell\'alba / dopo tramonto</string>
     <string name="opinion_ateret">Secondo la Yeshivat Ateret Torah</string>
+    <string name="opinion_baal_hatanya">Secondo la Baal haTanya</string>
+    <string name="opinion_baal_hatanya_all">Cambiare tutti gli orari secondo Baal haTanya?</string>
     <string name="opinion_gra">Secondo la GRA</string>
     <string name="opinion_mga">Secondo la Magen Avraham</string>
     <string name="opinion_tam">Secondo la Rabbenu Tam</string>
-    <string name="opinion_baal_hatanya">Secondo la Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Ora stagionale</string>

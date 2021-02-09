@@ -22,10 +22,11 @@
     <string name="opinion_96">Jour est 96 minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_96_zmanis">Jour est 96 זמניות minutes avant le lever / après le coucher du soleil</string>
     <string name="opinion_ateret">Selon le Yechivat Ateret Torah</string>
+    <string name="opinion_baal_hatanya">Selon le Baal haTanya</string>
+    <string name="opinion_baal_hatanya_all">Changer tous les temps selon Baal haTanya?</string>
     <string name="opinion_gra">Selon le GRA</string>
     <string name="opinion_mga">Selon le Magen Avraham</string>
     <string name="opinion_tam">Selon le Rabbenou Tam</string>
-    <string name="opinion_baal_hatanya">Selon le Baal haTanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Heure saisonnière</string>

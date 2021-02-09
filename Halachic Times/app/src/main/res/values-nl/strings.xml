@@ -22,10 +22,11 @@
     <string name="opinion_96">Dag is 96 minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_96_zmanis">Dag is 96 זמניות minuten vóór zonsopgang / na zonsondergang</string>
     <string name="opinion_ateret">Volgens Jeshiwat Ateret Tora</string>
+    <string name="opinion_baal_hatanya">Volgens Baal haTanja</string>
+    <string name="opinion_baal_hatanya_all">Alle tijden veranderen volgens Baal haTanja?</string>
     <string name="opinion_gra">Volgens GRA</string>
     <string name="opinion_mga">Volgens Magen Awraham</string>
     <string name="opinion_tam">Volgens Rabbeinoe Tam</string>
-    <string name="opinion_baal_hatanya">Volgens Baal Tanja</string>
 
     <!-- Temporal hour -->
     <string name="hour">Seizoensuur</string>

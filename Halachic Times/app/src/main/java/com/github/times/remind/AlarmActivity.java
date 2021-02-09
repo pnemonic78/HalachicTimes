@@ -17,7 +17,6 @@ package com.github.times.remind;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -41,6 +40,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.PermissionChecker;
 
 import com.github.app.ActivityUtils;
@@ -76,7 +76,7 @@ import static java.lang.System.currentTimeMillis;
  *
  * @author Moshe Waisberg
  */
-public class AlarmActivity<P extends ZmanimPreferences> extends Activity implements
+public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivity implements
     ThemeCallbacks<P>,
     View.OnClickListener {
 
@@ -110,6 +110,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            applyOverrideConfiguration(context.getResources().getConfiguration());
+        }
     }
 
     @Override
@@ -152,8 +156,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends Activity impleme
 
     @Override
     public void onCreate() {
-        localeCallbacks.onCreate(this);
         getThemeCallbacks().onCreate();
+        localeCallbacks.onCreate(this);
     }
 
     @Override

@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
 import androidx.preference.Preference;
 
 import com.github.preference.AbstractPreferenceFragment;
@@ -31,6 +32,7 @@ import com.github.times.location.LocationApplication;
 /**
  * This fragment shows the preferences for the Privacy and Security header.
  */
+@Keep
 public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
 
     private Preference clearHistory;
@@ -90,7 +92,7 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void deleteAppData() {
-        final Context context = getActivity();
+        final Context context = getContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         am.clearApplicationUserData();
     }

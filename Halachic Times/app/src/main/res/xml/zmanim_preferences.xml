@@ -288,6 +288,28 @@
     </PreferenceScreen>
     <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanPreferenceFragment"
+        android:key="fast_begins_screen"
+        android:title="@string/fast_begins">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_fast_begins_preferences"/>
+        <extra
+            android:name="reminder"
+            android:value="fast_begins.reminder"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
+        android:key="fast_ends"
+        android:title="@string/fast_ends">
+        <extra
+            android:name="xml"
+            android:value="@xml/zman_fast_ends_preferences"/>
+        <extra
+            android:name="reminder"
+            android:value="fast_ends.reminder"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:fragment="com.github.times.preference.ZmanPreferenceFragment"
         android:key="eat_chametz_screen"
         android:title="@string/eat_chametz">
         <extra

@@ -45,6 +45,7 @@ import com.github.util.LocaleUtils;
 
 import net.sourceforge.zmanim.util.GeoLocation;
 
+import java.util.Calendar;
 import java.util.List;
 
 import timber.log.Timber;
@@ -72,9 +73,13 @@ import static java.lang.System.currentTimeMillis;
 public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
     /**
-     * Reminder id for alarms.
+     * Id to update the widgets.
      */
-    private static final int ID_ALARM_WIDGET = 10;
+    private static final int ID_WIDGET_UPDATE = 10;
+    /**
+     * Id to update the widgets at midnight.
+     */
+    private static final int ID_WIDGET_MIDNIGHT = 11;
 
     /**
      * The context.
@@ -229,6 +234,25 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
             // Let the first visible item linger for another minute.
             scheduleUpdate(context, appWidgetIds, when + MINUTE_IN_MILLIS);
         }
+        scheduleNextDay(context, appWidgetIds);
+    }
+
+    /**
+     * Schedule an update to populate the day's list.
+     *
+     * @param context      the context.
+     * @param appWidgetIds the widget ids for which an update is needed.
+     * @param time         the time to update.
+     * @param id           the pending intent's id.
+     */
+    private void schedulePending(Context context, int[] appWidgetIds, long time, int id) {
+        Timber.i("schedulePending [%s]", ZmanimHelper.formatDateTime(time));
+        Intent alarmIntent = new Intent(context, getClass());
+        alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
+        alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        alarm.set(AlarmManager.RTC, time, alarmPendingIntent);
     }
 
     /**
@@ -239,13 +263,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
      * @param time         the time to update.
      */
     private void scheduleUpdate(Context context, int[] appWidgetIds, long time) {
-        Timber.i("scheduleUpdate [%s]", ZmanimHelper.formatDateTime(time));
-        Intent alarmIntent = new Intent(context, getClass());
-        alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
-        alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, ID_ALARM_WIDGET, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarm.set(AlarmManager.RTC, time, alarmPendingIntent);
+        schedulePending(context, appWidgetIds, time, ID_WIDGET_UPDATE);
     }
 
     /**
@@ -358,5 +376,22 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
 
     protected long getDay() {
         return currentTimeMillis();
+    }
+
+    /**
+     * Schedule the times to update at midnight, i.e. the next civil day.
+     *
+     * @param context      the context.
+     * @param appWidgetIds the widget ids for which an update is needed.
+     */
+    private void scheduleNextDay(Context context, int[] appWidgetIds) {
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.DAY_OF_MONTH, 1);
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 1);
+        long time = today.getTimeInMillis();
+        schedulePending(context, appWidgetIds, time, ID_WIDGET_MIDNIGHT);
     }
 }

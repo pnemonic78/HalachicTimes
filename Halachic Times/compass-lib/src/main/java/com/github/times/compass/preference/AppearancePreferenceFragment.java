@@ -17,6 +17,8 @@ package com.github.times.compass.preference;
 
 import android.os.Bundle;
 
+import androidx.annotation.Keep;
+
 import com.github.preference.AbstractPreferenceFragment;
 import com.github.times.compass.lib.R;
 
@@ -27,6 +29,7 @@ import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
 /**
  * This fragment shows the preferences for the Appearance header.
  */
+@Keep
 public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     @Override

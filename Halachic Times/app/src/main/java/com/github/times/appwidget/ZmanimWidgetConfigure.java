@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.PermissionChecker;
 
@@ -19,7 +20,7 @@ import com.github.times.R;
  *
  * @author Moshe Waisberg
  */
-public class ZmanimWidgetConfigure extends Activity {
+public class ZmanimWidgetConfigure extends AppCompatActivity {
 
     private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int REQUEST_WALLPAPER = 0x3A11;

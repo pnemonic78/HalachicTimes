@@ -16,7 +16,6 @@
 package com.github.times.compass;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
@@ -33,11 +32,15 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.github.times.compass.lib.R;
 import com.github.times.compass.preference.CompassPreferences;
 import com.github.times.compass.preference.SimpleCompassPreferences;
 import com.github.times.location.GeocoderBase;
 import com.github.times.location.ZmanimLocation;
+
+import org.jetbrains.annotations.NotNull;
 
 import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
 import static java.lang.Math.abs;
@@ -140,7 +143,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         compassView = view.findViewById(R.id.compass);
         displayRotation = getActivity().getWindowManager().getDefaultDisplay().getRotation();
@@ -150,7 +153,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final Context context = getActivity();
+        final Context context = getContext();
         if (context instanceof BaseCompassActivity) {
             preferences = ((BaseCompassActivity) context).getCompassPreferences();
         } else {
@@ -177,7 +180,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     }
 
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(@NotNull Activity activity) {
         super.onAttach(activity);
         displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
     }
@@ -290,7 +293,7 @@ public class CompassFragment extends Fragment implements SensorEventListener {
     private void vibrate() {
         Vibrator vibrator = this.vibrator;
         if (vibrator == null) {
-            final Context context = getActivity();
+            final Context context = getContext();
             vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             this.vibrator = vibrator;
         }

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <header
+    <PreferenceScreen
         android:fragment="com.github.times.preference.GeneralPreferenceFragment"
         android:title="@string/pref_general_title"/>
-    <header
+    <PreferenceScreen
         android:fragment="com.github.times.preference.AppearancePreferenceFragment"
         android:title="@string/pref_appearance_title"/>
-    <header
+    <PreferenceScreen
         android:fragment="com.github.times.preference.ZmanimPreferenceFragment"
         android:title="@string/pref_zmanim_title"/>
-    <header
+    <PreferenceScreen
         android:fragment="com.github.times.preference.PrivacyPreferenceFragment"
         android:title="@string/pref_privacy_security_title"/>
-    <header
+    <PreferenceScreen
         android:fragment="com.github.times.preference.AboutPreferenceFragment"
         android:title="@string/pref_about_title"/>
 
-</preference-headers>
+</PreferenceScreen>

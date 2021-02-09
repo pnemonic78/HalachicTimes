@@ -33,6 +33,7 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,7 +59,7 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  *
  * @author Moshe Waisberg
  */
-public abstract class LocationTabActivity<P extends ThemePreferences> extends Activity implements
+public abstract class LocationTabActivity<P extends ThemePreferences> extends AppCompatActivity implements
     ThemeCallbacks<P>,
     LocationAdapter.LocationItemListener,
     SearchView.OnQueryTextListener,

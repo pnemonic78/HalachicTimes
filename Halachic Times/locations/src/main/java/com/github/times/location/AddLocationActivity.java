@@ -34,6 +34,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -51,7 +53,7 @@ import static com.github.times.location.GeocoderBase.USER_PROVIDER;
  *
  * @author Moshe Waisberg
  */
-public class AddLocationActivity<P extends ThemePreferences> extends Activity implements
+public class AddLocationActivity<P extends ThemePreferences> extends AppCompatActivity implements
         ThemeCallbacks<P>,
         AdapterView.OnItemSelectedListener,
         ZmanimLocationListener {

@@ -22,10 +22,11 @@
     <string name="opinion_96">Dzień jest 96 minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_96_zmanis">Dzień jest 96 זמניות minut przed wschodem słońca / po zachodzie słońca</string>
     <string name="opinion_ateret">Zgodnie z Jesziwy Ateret Torą</string>
+    <string name="opinion_baal_hatanya">Zgodnie z Baal haTanya</string>
+    <string name="opinion_baal_hatanya_all">Zmieniać cały czas według Baal haTanya?</string>
     <string name="opinion_gra">Zgodnie z GRA</string>
     <string name="opinion_mga">Zgodnie z Magen Abrahama</string>
     <string name="opinion_tam">Zgodnie z Rabbeinu Tam</string>
-    <string name="opinion_baal_hatanya">Zgodnie z Baal Tanya</string>
 
     <!-- Temporal hour -->
     <string name="hour">Sezonowy godzin</string>
