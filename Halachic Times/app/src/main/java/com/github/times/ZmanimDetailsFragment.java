@@ -256,7 +256,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
                 }
                 jewishDatePrevious = jewishDate;
                 dateHebrew = adapter.formatDate(context, jewishDate);
-                bindViewGrouping(list, position, dateHebrew);
+                bindViewGrouping(list, dateHebrew);
             }
 
             row = adapter.getView(position, null, list);

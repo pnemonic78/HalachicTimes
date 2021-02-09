@@ -275,13 +275,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                 jewishDatePrevious = item.jewishDate;
             }
 
-            bindViewGrouping(list, position, dateHebrew);
+            bindViewGrouping(list, dateHebrew);
 
             int holidayToday = adapter.getHolidayToday();
             int candlesToday = adapter.getCandlesTodayCount();
             CharSequence holidayName = ZmanimDays.getName(context, holidayToday, candlesToday);
             if (holidayName != null) {
-                bindViewGrouping(list, position, holidayName);
+                bindViewGrouping(list, holidayName);
             }
 
             for (; position < count; position++) {
@@ -297,13 +297,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     jcal.setJewishDate(jewishDate.getJewishYear(), jewishDate.getJewishMonth(), jewishDate.getJewishDayOfMonth());
 
                     dateHebrew = adapter.formatDate(context, jewishDate);
-                    bindViewGrouping(list, position, dateHebrew);
+                    bindViewGrouping(list, dateHebrew);
 
                     int holidayTomorrow = adapter.getHolidayTomorrow();
                     int candlesTomorrow = adapter.getCandlesCount();
                     CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow, candlesTomorrow);
                     if (holidayTomorrowName != null) {
-                        bindViewGrouping(list, position, holidayTomorrowName);
+                        bindViewGrouping(list, holidayTomorrowName);
                     }
 
                     // Sefirat HaOmer?
@@ -311,7 +311,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
-                            bindViewGrouping(list, position, omerLabel);
+                            bindViewGrouping(list, omerLabel);
                         }
                     }
                 }
@@ -358,14 +358,14 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Bind the date group header to a list.
      *
-     * @param list     the list.
-     * @param position the position index.
-     * @param label    the formatted Hebrew date label.
+     * @param list           the list.
+     * @param label          the formatted Hebrew date label.
      */
     @SuppressLint("InflateParams")
-    protected void bindViewGrouping(ViewGroup list, int position, CharSequence label) {
-        if (position > 0)
+    protected void bindViewGrouping(ViewGroup list, CharSequence label) {
+        if (list.getChildCount() > 0) {
             inflater.inflate(R.layout.divider, list);
+        }
         View row = inflater.inflate(preferences.isDarkTheme() ? R.layout.date_group : R.layout.date_group_light, list, false);
         TextView text = row.findViewById(android.R.id.title);
         text.setText(label);
