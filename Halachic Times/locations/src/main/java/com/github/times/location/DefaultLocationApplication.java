@@ -17,6 +17,7 @@ package com.github.times.location;
 
 import android.content.Context;
 
+import com.github.preference.ThemePreferences;
 import com.github.times.location.impl.LocationsProviderFactoryImpl;
 
 import androidx.annotation.NonNull;
@@ -26,11 +27,11 @@ import androidx.annotation.NonNull;
  *
  * @author Moshe Waisberg
  */
-public class DefaultLocationApplication extends LocationApplication {
+public class DefaultLocationApplication extends LocationApplication<ThemePreferences, AddressProvider, LocationsProvider> {
 
     @NonNull
     @Override
-    protected LocationsProviderFactory createProviderFactory(Context context) {
+    protected LocationsProviderFactory<AddressProvider, LocationsProvider> createProviderFactory(Context context) {
         return new LocationsProviderFactoryImpl(context);
     }
 }
