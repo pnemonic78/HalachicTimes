@@ -12,6 +12,6 @@
         android:title="@string/pref_privacy_security_title"/>
     <Preference
         android:fragment="com.github.times.compass.preference.AboutPreferenceFragment"
-        android:title="@string/pref_about_title"/>
+        android:title="@string/preferences_about_title"/>
 
 </PreferenceScreen>

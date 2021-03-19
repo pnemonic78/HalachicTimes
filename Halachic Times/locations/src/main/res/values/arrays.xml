@@ -21,11 +21,11 @@
         <item>@string/coords_format_sexagesimal</item>
     </string-array>
 
-    <string-array name="latitude_entries">
+    <string-array name="latitude_entries" translatable="false">
         <item>@string/north</item>
         <item>@string/south</item>
     </string-array>
-    <string-array name="longitude_entries">
+    <string-array name="longitude_entries" translatable="false">
         <item>@string/east</item>
         <item>@string/west</item>
     </string-array>

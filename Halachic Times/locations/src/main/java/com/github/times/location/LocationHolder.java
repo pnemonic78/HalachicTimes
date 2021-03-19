@@ -37,10 +37,6 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
     /** Provider for locations. */
     private LP locationsProvider;
 
-    public LocationHolder(Context context) {
-        this((LocationsProviderFactory<AP, LP>) new LocationsProviderFactoryImpl(context));
-    }
-
     public LocationHolder(@NonNull LocationsProviderFactory<AP, LP> factory) {
         this.factory = factory;
         this.addressProvider = null;

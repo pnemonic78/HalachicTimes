@@ -38,6 +38,16 @@ public class ZmanimCompassPreferences extends SimpleCompassPreferences {
      */
     public ZmanimCompassPreferences(Context context) {
         super(context);
+        init(context);
+    }
+
+    /**
+     * Initialize. Should be called only once when application created.
+     *
+     * @param context the context.
+     */
+    public static void init(Context context) {
+        SimpleZmanimPreferences.init(context);
     }
 
     @Override
