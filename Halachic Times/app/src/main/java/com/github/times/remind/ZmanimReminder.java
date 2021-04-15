@@ -42,6 +42,7 @@ import android.os.PowerManager.WakeLock;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.github.times.R;
 import com.github.times.ZmanimActivity;
@@ -350,7 +351,7 @@ public class ZmanimReminder {
             default:
                 PendingIntent contentIntent = createActivityIntent(context);
                 Notification notification = createReminderNotification(context, settings, item, contentIntent);
-                showReminderNotification(settings, notification);
+                showReminderNotification(notification);
                 silenceFuture(context, item, now + STOP_NOTIFICATION_AFTER);
                 break;
         }
@@ -488,12 +489,14 @@ public class ZmanimReminder {
         return createReminderNotification(context, settings, item, contentIntent, false);
     }
 
-    private NotificationCompat.Builder createNotificationBuilder(Context context,
-                                                                 CharSequence contentTitle,
-                                                                 CharSequence contentText,
-                                                                 long when,
-                                                                 PendingIntent contentIntent,
-                                                                 String channelId) {
+    private NotificationCompat.Builder createNotificationBuilder(
+        Context context,
+        CharSequence contentTitle,
+        CharSequence contentText,
+        long when,
+        PendingIntent contentIntent,
+        String channelId
+    ) {
         Bitmap largeIconSolar = this.largeIconSolar;
         if (largeIconSolar == null) {
             largeIconSolar = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_solar);
@@ -501,21 +504,23 @@ public class ZmanimReminder {
         }
 
         return new NotificationCompat.Builder(context, channelId)
-                .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .setContentIntent(contentIntent)
-                .setContentText(contentText)
-                .setContentTitle(contentTitle)
-                .setLargeIcon(largeIconSolar)
-                .setShowWhen(true)
-                .setSmallIcon(R.drawable.stat_notify_time)
-                .setWhen(when);
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setContentIntent(contentIntent)
+            .setContentText(contentText)
+            .setContentTitle(contentTitle)
+            .setLargeIcon(largeIconSolar)
+            .setShowWhen(true)
+            .setSmallIcon(R.drawable.stat_notify_time)
+            .setWhen(when);
     }
 
-    private Notification createReminderNotification(Context context,
-                                                    ZmanimPreferences settings,
-                                                    ZmanimReminderItem item,
-                                                    PendingIntent contentIntent,
-                                                    boolean silent) {
+    private Notification createReminderNotification(
+        Context context,
+        ZmanimPreferences settings,
+        ZmanimReminderItem item,
+        PendingIntent contentIntent,
+        boolean silent
+    ) {
         final CharSequence contentTitle = item.title;
         final CharSequence contentText = item.text;
         final long when = item.time;
@@ -523,19 +528,21 @@ public class ZmanimReminder {
         final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
         final Uri sound = silent ? null : settings.getReminderRingtone();
 
-        final NotificationCompat.Builder builder = createNotificationBuilder(context,
-                contentTitle,
-                contentText,
-                when,
-                contentIntent,
-                CHANNEL_REMINDER)
-                .setAutoCancel(true)
-                .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSound(sound, audioStreamType);
+        final NotificationCompat.Builder builder = createNotificationBuilder(
+            context,
+            contentTitle,
+            contentText,
+            when,
+            contentIntent,
+            CHANNEL_REMINDER
+        )
+            .setAutoCancel(true)
+            .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSound(sound, audioStreamType);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE)
-                    .setLights(LED_COLOR, LED_ON, LED_OFF);
+                .setLights(LED_COLOR, LED_ON, LED_OFF);
         }
         if (alarm) {
             builder.setFullScreenIntent(contentIntent, true);
@@ -547,17 +554,19 @@ public class ZmanimReminder {
             final Resources res = context.getResources();
             int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
             int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
+            Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
             Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
-            Drawable layerBottom = res.getDrawable((Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+            Canvas canvas = new Canvas(largeIcon);
+            Drawable layerBottom = ContextCompat.getDrawable(context, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+            if (layerBottom != null) {
+                layerBottom.setBounds(largeIconRect);
+                layerBottom.draw(canvas);
+            }
             Bitmap layerTop = largeIconSolar;
             if (layerTop == null) {
                 layerTop = BitmapFactory.decodeResource(res, R.mipmap.ic_solar);
                 this.largeIconSolar = layerTop;
             }
-            Canvas canvas = new Canvas(largeIcon);
-            Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
-            layerBottom.setBounds(largeIconRect);
-            layerBottom.draw(canvas);
             canvas.drawBitmap(layerTop, null, largeIconRect, null);
             largeIconReminder = largeIcon;
             this.largeIconReminder = largeIconReminder;
@@ -567,7 +576,7 @@ public class ZmanimReminder {
         return builder.build();
     }
 
-    private void showReminderNotification(ZmanimPreferences settings, Notification notification) {
+    private void showReminderNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             initChannels(nm);
@@ -652,11 +661,10 @@ public class ZmanimReminder {
         final CharSequence contentTitle = item.title;
         final CharSequence contentText = item.summary;
         final long when = item.time;
-        Timber.i("notify upcoming [%s] for [%s]", contentTitle, formatDateTime(when));
 
         return createNotificationBuilder(context, contentTitle, contentText, when, contentIntent, CHANNEL_UPCOMING)
-                .setOngoing(true)
-                .build();
+            .setOngoing(true)
+            .build();
     }
 
     private void showUpcomingNotification(Notification notification) {
@@ -673,18 +681,27 @@ public class ZmanimReminder {
      * @param item the next item.
      */
     public void notifyUpcoming(ZmanimItem item) {
+        CharSequence contentTitle = item.title;
+        long when = item.time;
+        long triggerAt = item.time;
+
+        Timber.i("notify upcoming [%s] at [%s] for [%s]", contentTitle, formatDateTime(triggerAt), formatDateTime(when));
+
         final Context context = getContext();
         PendingIntent contentIntent = createActivityIntent(context);
 
         Notification notification = createUpcomingNotification(context, item, contentIntent);
         showUpcomingNotification(notification);
 
-        long triggerAt = item.time + MINUTE_IN_MILLIS;
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createUpcomingIntent(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             PendingIntent displayIntent = createActivityIntent(context);
             manager.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerAt, displayIntent), alarmIntent);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+            }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
         } else {
@@ -744,10 +761,12 @@ public class ZmanimReminder {
         postSilenceNotification(notification);
     }
 
-    private Notification createSilenceNotification(Context context,
-                                                   ZmanimPreferences settings,
-                                                   ZmanimReminderItem item,
-                                                   PendingIntent contentIntent) {
+    private Notification createSilenceNotification(
+        Context context,
+        ZmanimPreferences settings,
+        ZmanimReminderItem item,
+        PendingIntent contentIntent
+    ) {
         return createReminderNotification(context, settings, item, contentIntent, true);
     }
 
@@ -794,9 +813,9 @@ public class ZmanimReminder {
 
             Uri sound = RingtoneManager.getDefaultUri(TYPE_NOTIFICATION);
             android.media.AudioAttributes audioAttributes = new android.media.AudioAttributes.Builder()
-                    .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
-                    .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
-                    .build();
+                .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                .setUsage(android.media.AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                .build();
             channel.setSound(sound, audioAttributes);
 
             nm.createNotificationChannel(channel);
@@ -835,7 +854,7 @@ public class ZmanimReminder {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             PendingIntent contentIntent = createAlarmIntent(context, item);
             Notification notification = createReminderNotification(context, settings, item, contentIntent);
-            showReminderNotification(settings, notification);
+            showReminderNotification(notification);
             silenceFuture(context, item, silenceWhen);
         } else {
             Intent intent = createAlarmActivity(context, item, silenceWhen);
