@@ -50,7 +50,6 @@ import java.util.List;
 
 import timber.log.Timber;
 
-import static android.widget.AdapterView.INVALID_POSITION;
 import static com.github.graphics.BitmapUtils.isBrightWallpaper;
 import static java.lang.System.currentTimeMillis;
 
@@ -78,17 +77,15 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
      * The adapter.
      */
     private ZmanimAdapter adapter;
-    private List<ZmanimItem> items = new ArrayList<>();
+    private final List<ZmanimItem> items = new ArrayList<>();
     @ColorInt
     private int colorDisabled = Color.DKGRAY;
     @ColorInt
     private int colorEnabled = Color.WHITE;
     @StyleRes
     private int themeId = R.style.Theme;
-    private final LocaleHelper localeCallbacks;
-    private boolean directionRTL;
-    @LayoutRes
-    private int layoutItemId = R.layout.widget_item;
+    private final LocaleHelper<?> localeCallbacks;
+    private final boolean directionRTL;
 
     public ZmanimWidgetViewsFactory(Context context, Intent intent) {
         this.localeCallbacks = new LocaleHelper<>(context);
@@ -113,9 +110,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
     @Override
     public RemoteViews getViewAt(int position) {
-        if (position == INVALID_POSITION) {
-            return null;
-        }
         if ((position < 0) || (position >= items.size())) {
             return null;
         }
@@ -129,7 +123,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
             view = new RemoteViews(pkg, R.layout.widget_date);
             bindViewGrouping(view, position, item.timeLabel);
         } else {
-            view = new RemoteViews(pkg, layoutItemId);
+            view = new RemoteViews(pkg, getLayoutItemId(position));
             bindView(view, position, item);
         }
         return view;
@@ -137,7 +131,8 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
     @Override
     public int getViewTypeCount() {
-        return 1 + ((adapter != null) ? adapter.getViewTypeCount() : 1);
+        // Has category rows and odd rows.
+        return 3;
     }
 
     @Override
@@ -208,6 +203,17 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
             items.add(itemHoliday);
         }
 
+        // Sefirat HaOmer?
+        int omer = jcal.getDayOfOmer();
+        if (omer >= 1) {
+            CharSequence omerLabel = adapter.formatOmer(context, omer);
+            if (!TextUtils.isEmpty(omerLabel)) {
+                final ZmanimItem itemOmer = new ZmanimItem(omerLabel);
+                itemOmer.jewishDate = jcal;
+                items.add(itemOmer);
+            }
+        }
+
         ZmanimItem itemTomorrow = null;
 
         final int count = adapter.getCount();
@@ -240,7 +246,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                     }
 
                     // Sefirat HaOmer?
-                    int omer = jcal.getDayOfOmer();
+                    omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
@@ -294,8 +300,6 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     protected void bindViewRowSpecial(RemoteViews row, int position, ZmanimItem item) {
         if (item.titleId == R.string.candles) {
             row.setInt(R.id.widget_item, "setBackgroundColor", ContextCompat.getColor(context, R.color.widget_candles_bg));
-        } else {
-            row.setInt(R.id.widget_item, "setBackgroundColor", Color.TRANSPARENT);
         }
     }
 
@@ -337,11 +341,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
             if (light) {
                 this.colorEnabled = colorEnabledLight;
                 this.colorDisabled = colorDisabledLight;
-                this.layoutItemId = directionRTL ? R.layout.widget_item_light_rtl : R.layout.widget_item_light;
             } else {
                 this.colorEnabled = colorEnabledDark;
                 this.colorDisabled = colorDisabledDark;
-                this.layoutItemId = directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
             }
         }
     }
@@ -353,5 +355,19 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
     private long getDay() {
         return currentTimeMillis();
+    }
+
+    /**
+     * Get the layout for the row item.
+     *
+     * @param position the position index.
+     * @return the layout id.
+     */
+    @LayoutRes
+    protected int getLayoutItemId(int position) {
+        if ((position & 1) == 1) {
+            return directionRTL ? R.layout.widget_item_odd_rtl : R.layout.widget_item_odd;
+        }
+        return directionRTL ? R.layout.widget_item_rtl : R.layout.widget_item;
     }
 }

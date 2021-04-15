@@ -70,22 +70,11 @@
 
     <style name="AppWidget.Title.Odd" />
 
-    <style name="AppWidget.Title.Light" parent="Widget.Light.TextView.Small">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:textColor">@color/widget_text_light</item>
-    </style>
-
     <style name="AppWidget.Time" parent="Widget.TextView.Small">
         <item name="android:textColor">@color/widget_text</item>
     </style>
 
     <style name="AppWidget.Time.Odd" />
-
-    <style name="AppWidget.Time.Light" parent="Widget.Light.TextView.Small">
-        <item name="android:textColor">@color/widget_text_light</item>
-    </style>
 
     <style name="Widget.Summary" parent="Widget.TextView.Small">
         <item name="android:maxLines">3</item>
@@ -114,10 +103,8 @@
     <style name="AppWidget.Item" />
 
     <style name="AppWidget.Item.Odd">
-        <item name="android:background">@color/bright</item>
+        <item name="android:background">@color/widget_odd</item>
     </style>
-
-    <style name="AppWidget.Item.Light" />
 
     <style name="AppWidget.List" parent="AppWidget.Static" />
 
