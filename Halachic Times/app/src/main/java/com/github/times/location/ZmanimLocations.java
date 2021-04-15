@@ -47,13 +47,13 @@ public class ZmanimLocations extends LocationsProvider {
      * @return the location - {@code null} otherwise.
      */
     public GeoLocation getGeoLocation(TimeZone timeZone) {
-        Location loc = getLocation();
-        if (loc == null)
+        Location location = getLocation();
+        if (location == null)
             return null;
-        final String locationName = loc.getProvider();
-        final double latitude = loc.getLatitude();
-        final double longitude = loc.getLongitude();
-        final double elevation = loc.hasAltitude() ? Math.max(GEOLOCATION_ELEVATION_MIN, loc.getAltitude()) : 0;
+        final String locationName = location.getProvider();
+        final double latitude = location.getLatitude();
+        final double longitude = location.getLongitude();
+        final double elevation = location.hasAltitude() ? Math.max(GEOLOCATION_ELEVATION_MIN, location.getAltitude()) : 0;
 
         return new GeoLocation(locationName, latitude, longitude, elevation, timeZone);
     }

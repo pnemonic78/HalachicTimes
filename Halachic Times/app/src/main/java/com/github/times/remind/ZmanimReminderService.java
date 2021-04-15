@@ -18,6 +18,7 @@ package com.github.times.remind;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
@@ -45,12 +46,9 @@ public class ZmanimReminderService extends JobIntentService {
     private static String reminderBusy = "";
     private static long reminderBusyTime = 0;
 
-    public static void enqueueWork(Context context, Intent intent) {
-        if (intent == null) {
-            return;
-        }
+    public static void enqueueWork(@NonNull Context context, @NonNull Intent intent) {
         String action = intent.getAction();
-        if (action == null) {
+        if (TextUtils.isEmpty(action)) {
             return;
         }
 

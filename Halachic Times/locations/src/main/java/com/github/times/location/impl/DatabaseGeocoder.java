@@ -26,6 +26,9 @@ import android.location.Location;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.database.CursorFilter;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.City;
@@ -42,11 +45,11 @@ import com.github.util.LocaleUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import timber.log.Timber;
 
 import static com.github.times.location.provider.LocationContract.Addresses;
@@ -150,20 +153,21 @@ public class DatabaseGeocoder extends GeocoderBase {
                 double locationLatitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE);
                 double locationLongitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
-                if (distance[0] <= SAME_LOCATION) {
+                if (distance[0] <= SAME_PLATEAU) {
                     return true;
                 }
 
                 double addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE);
                 double addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, distance);
-                return (distance[0] <= SAME_LOCATION);
+                return (distance[0] <= SAME_PLATEAU);
             }
         };
         List<ZmanimAddress> q = queryAddresses(filter);
-        List<Address> addresses = new ArrayList<Address>(q);
+        Collections.sort(q, new DistanceComparator(latitude, longitude));
+        List<ZmanimAddress> addresses = q.subList(0, Math.min(maxResults, q.size()));
 
-        return addresses;
+        return new ArrayList<Address>(addresses);
     }
 
     @Override
@@ -204,10 +208,10 @@ public class DatabaseGeocoder extends GeocoderBase {
         double[] distances = new double[locationsCount];
         double[] elevations = new double[locationsCount];
 
-        for (ZmanimLocation loc : locations) {
-            Location.distanceBetween(latitude, longitude, loc.getLatitude(), loc.getLongitude(), distanceLoc);
+        for (ZmanimLocation location : locations) {
+            Location.distanceBetween(latitude, longitude, location.getLatitude(), location.getLongitude(), distanceLoc);
             distance = distanceLoc[0];
-            elevations[n] = loc.getAltitude();
+            elevations[n] = location.getAltitude();
             d = distance * distance;
             distances[n] = d;
             distancesSum += d;
@@ -569,5 +573,27 @@ public class DatabaseGeocoder extends GeocoderBase {
             Timber.e(e, "Error deleting address " + address.getId() + " at " + address.getLatitude() + "," + address.getLongitude() + ": " + e.getLocalizedMessage());
         }
         return false;
+    }
+
+    private class DistanceComparator implements Comparator<ZmanimAddress> {
+
+        private final double latitude;
+        private final double longitude;
+        private final float[] distance = new float[1];
+
+        public DistanceComparator(final double latitude, final double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        @Override
+        public int compare(ZmanimAddress a1, ZmanimAddress a2) {
+            Location.distanceBetween(latitude, longitude, a1.getLatitude(), a1.getLongitude(), distance);
+            double d1 = distance[0];
+            Location.distanceBetween(latitude, longitude, a2.getLatitude(), a2.getLongitude(), distance);
+            double d2 = distance[0];
+            // Closer distance at top of the list.
+            return Double.compare(d1, d2);
+        }
     }
 }
