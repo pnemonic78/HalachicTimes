@@ -85,16 +85,16 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
             @Override
             public void run() {
                 // Have we been destroyed?
-                Location loc = getAddressLocation();
-                if (loc == null)
+                Location location = getAddressLocation();
+                if (location == null)
                     return;
 
-                bindHeader(loc);
+                bindHeader(location);
 
                 CompassFragment c = fragment;
                 if (c == null)
                     return;
-                c.setLocation(loc);
+                c.setLocation(location);
             }
         };
     }

@@ -24,6 +24,10 @@ import com.github.times.location.impl.LocationsProviderFactoryImpl;
 
 import androidx.annotation.NonNull;
 
+import org.jetbrains.annotations.NotNull;
+
+import timber.log.Timber;
+
 /**
  * Holder for locations.
  *
@@ -73,17 +77,18 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
 
     @Override
     public void onLowMemory() {
-        onTrimMemory(TRIM_MEMORY_UI_HIDDEN);
+        onTrimMemory(TRIM_MEMORY_COMPLETE);
     }
 
     @Override
     public void onTrimMemory(int level) {
+        Timber.w("Trim memory: %d", level);
         dispose();
-        SQLiteDatabase.releaseMemory();
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NotNull Configuration newConfig) {
+        Timber.w("Configuration Changed: %s", newConfig);
         dispose();
     }
 
@@ -100,5 +105,6 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
             locationsProvider.quit();
             locationsProvider = null;
         }
+        SQLiteDatabase.releaseMemory();
     }
 }

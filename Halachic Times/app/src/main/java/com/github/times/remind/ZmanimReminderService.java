@@ -18,39 +18,33 @@ package com.github.times.remind;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.JobIntentService;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.preference.LocalePreferences;
-
-import timber.log.Timber;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import static com.github.times.remind.ZmanimReminder.ACTION_REMIND;
+import static com.github.times.remind.ZmanimReminderWorker.toWorkData;
 
 /**
  * Check for reminders, and manage the notifications.
  *
  * @author Moshe Waisberg
  */
-public class ZmanimReminderService extends JobIntentService {
+public class ZmanimReminderService {
 
-    private static final int JOB_REMIND = 0x7e312D; // "rEminD"
     private static final long BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS;
 
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
     private static String reminderBusy = "";
     private static long reminderBusyTime = 0;
 
-    public static void enqueueWork(Context context, Intent intent) {
-        if (intent == null) {
-            return;
-        }
+    public static void enqueueWork(@NonNull Context context, @NonNull Intent intent) {
         String action = intent.getAction();
-        if (action == null) {
+        if (TextUtils.isEmpty(action)) {
             return;
         }
 
@@ -60,26 +54,14 @@ public class ZmanimReminderService extends JobIntentService {
             return;
         }
 
-        enqueueWork(context, ZmanimReminderService.class, JOB_REMIND, intent);
-    }
+        Data requestData = toWorkData(intent);
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
-    }
+        WorkRequest workRequest = new OneTimeWorkRequest.Builder(ZmanimReminderWorker.class)
+            .setInputData(requestData)
+            .build();
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        localeCallbacks.onCreate(this);
-    }
-
-    @Override
-    protected void onHandleWork(@NonNull Intent intent) {
-        Timber.v("onHandleWork %s", intent);
-        processReminder(this, intent);
+        WorkManager.getInstance(context)
+            .enqueue(workRequest);
     }
 
     private static void processReminder(Context context, @NonNull Intent intent) {

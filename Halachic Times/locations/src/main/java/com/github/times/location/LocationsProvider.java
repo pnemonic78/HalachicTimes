@@ -225,11 +225,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         timeZone = TimeZone.getDefault();
         formatterHelper = createLocationFormatter(context);
 
-        IntentFilter filter = new IntentFilter(ACTION_ADDRESS);
-        context.registerReceiver(broadcastReceiver, filter);
-        filter = new IntentFilter(ACTION_ELEVATION);
-        context.registerReceiver(broadcastReceiver, filter);
-        filter = new IntentFilter(ACTION_TIMEZONE_CHANGED);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ACTION_ADDRESS);
+        filter.addAction(ACTION_ELEVATION);
+        filter.addAction(ACTION_TIMEZONE_CHANGED);
         context.registerReceiver(broadcastReceiver, filter);
 
         handlerThread = new HandlerThread(TAG);
@@ -741,7 +740,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     removeUpdates();
                     break;
                 case WHAT_CHANGED:
-                    location = getLocation();
+                    location = (Location) msg.obj;
                     onLocationChanged(location);
                     break;
                 case WHAT_ADDRESS:
@@ -838,10 +837,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     if (address != null) {
                         Bundle extras = address.getExtras();
                         if (extras == null) {
-                            address.setExtras(new Bundle());
-                            extras = address.getExtras();
+                            extras = new Bundle();
                         }
                         extras.putParcelable(EXTRA_LOCATION, location);
+                        address.setExtras(extras);
                         if (handler != null) {//In case we receive broadcast before provider is constructed.
                             handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
                         }

@@ -22,12 +22,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 
+import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import timber.log.Timber;
 
 import static android.content.Intent.ACTION_LOCALE_CHANGED;
 
@@ -102,33 +104,15 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     @Override
     public void onTerminate() {
         super.onTerminate();
-        stopLocationHolder(true);
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-        stopLocationHolder();
-    }
-
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
         stopLocationHolder();
     }
 
     private void stopLocationHolder() {
-        stopLocationHolder(false);
-    }
-
-    private void stopLocationHolder(boolean terminate) {
-        final LocationHolder locationHolder = this.locationHolder;
+        final LocationHolder<AP, LP> locationHolder = this.locationHolder;
         if (locationHolder != null) {
-            if (terminate) {
-                locationHolder.onTerminate();
-            }
-            unregisterComponentCallbacks(locationHolder);
             this.locationHolder = null;
+            locationHolder.onTerminate();
+            unregisterComponentCallbacks(locationHolder);
         }
     }
 }

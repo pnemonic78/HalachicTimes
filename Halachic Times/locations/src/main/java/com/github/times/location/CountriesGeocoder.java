@@ -302,9 +302,9 @@ public class CountriesGeocoder extends GeocoderBase {
      * @return the location - {@code null} otherwise.
      */
     public Location findLocation(TimeZone tz) {
-        Location loc = new Location(TIMEZONE_PROVIDER);
+        Location location = new Location(TIMEZONE_PROVIDER);
         if (tz == null) {
-            return loc;
+            return location;
         }
 
         String tzId = tz.getID();
@@ -315,7 +315,7 @@ public class CountriesGeocoder extends GeocoderBase {
         } else if (longitudeTZ < ZmanimLocation.LONGITUDE_MIN) {
             longitudeTZ += LONGITUDE_GLOBE;
         }
-        loc.setLongitude(longitudeTZ);
+        location.setLongitude(longitudeTZ);
 
         // Find a close city in the timezone.
         final String[] names = citiesNames;
@@ -340,11 +340,11 @@ public class CountriesGeocoder extends GeocoderBase {
         }
         if (matchesCount == 1) {
             nearestCityIndex = matches[0];
-            loc.setLatitude(latitudes[nearestCityIndex]);
-            loc.setLongitude(longitudes[nearestCityIndex]);
-            loc.setAltitude(elevations[nearestCityIndex]);
-            loc.setAccuracy(distanceMin);
-            return loc;
+            location.setLatitude(latitudes[nearestCityIndex]);
+            location.setLongitude(longitudes[nearestCityIndex]);
+            location.setAltitude(elevations[nearestCityIndex]);
+            location.setAccuracy(distanceMin);
+            return location;
         }
 
         if (matchesCount == 0) {
@@ -377,11 +377,11 @@ public class CountriesGeocoder extends GeocoderBase {
 
             if (matchesCount == 1) {
                 nearestCityIndex = matches[0];
-                loc.setLatitude(latitudes[nearestCityIndex]);
-                loc.setLongitude(longitudes[nearestCityIndex]);
-                loc.setAltitude(elevations[nearestCityIndex]);
-                loc.setAccuracy(distanceMin);
-                return loc;
+                location.setLatitude(latitudes[nearestCityIndex]);
+                location.setLongitude(longitudes[nearestCityIndex]);
+                location.setAltitude(elevations[nearestCityIndex]);
+                location.setAccuracy(distanceMin);
+                return location;
             }
 
             if (matchesCount == 0) {
@@ -414,11 +414,11 @@ public class CountriesGeocoder extends GeocoderBase {
 
                 if (matchesCount == 1) {
                     nearestCityIndex = matches[0];
-                    loc.setLatitude(latitudes[nearestCityIndex]);
-                    loc.setLongitude(longitudes[nearestCityIndex]);
-                    loc.setAltitude(elevations[nearestCityIndex]);
-                    loc.setAccuracy(distanceMin);
-                    return loc;
+                    location.setLatitude(latitudes[nearestCityIndex]);
+                    location.setLongitude(longitudes[nearestCityIndex]);
+                    location.setAltitude(elevations[nearestCityIndex]);
+                    location.setAccuracy(distanceMin);
+                    return location;
                 }
             }
         }
@@ -449,14 +449,14 @@ public class CountriesGeocoder extends GeocoderBase {
             }
 
             if (nearestCityIndex >= 0) {
-                loc.setLatitude(latitudes[nearestCityIndex]);
-                loc.setLongitude(longitudes[nearestCityIndex]);
-                loc.setAltitude(elevations[nearestCityIndex]);
-                loc.setAccuracy(distanceMin);
+                location.setLatitude(latitudes[nearestCityIndex]);
+                location.setLongitude(longitudes[nearestCityIndex]);
+                location.setAltitude(elevations[nearestCityIndex]);
+                location.setAccuracy(distanceMin);
             }
         }
 
-        return loc;
+        return location;
     }
 
     /**

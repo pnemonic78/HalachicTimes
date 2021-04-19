@@ -276,14 +276,14 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     @Override
     public void onItemClick(LocationItem item) {
         ZmanimAddress address = item.getAddress();
-        Location loc = new Location(USER_PROVIDER);
-        loc.setTime(System.currentTimeMillis());
-        loc.setLatitude(address.getLatitude());
-        loc.setLongitude(address.getLongitude());
+        Location location = new Location(USER_PROVIDER);
+        location.setTime(System.currentTimeMillis());
+        location.setLatitude(address.getLatitude());
+        location.setLongitude(address.getLongitude());
         if (address.hasElevation()) {
-            loc.setAltitude(address.getElevation());
+            location.setAltitude(address.getElevation());
         }
-        setAddress(loc);
+        setAddress(location);
     }
 
     @Override
@@ -325,12 +325,12 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
                         double latitude = Location.convert(token0);
                         double longitude = Location.convert(token1);
 
-                        Location loc = new Location(USER_PROVIDER);
-                        loc.setLatitude(latitude);
-                        loc.setLongitude(longitude);
-                        loc.setTime(System.currentTimeMillis());
+                        Location location = new Location(USER_PROVIDER);
+                        location.setLatitude(latitude);
+                        location.setLongitude(longitude);
+                        location.setTime(System.currentTimeMillis());
 
-                        setAddress(loc);
+                        setAddress(location);
                         return true;
                     } catch (Exception ignore) {
                         // Not a valid coordinate.

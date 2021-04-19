@@ -191,6 +191,7 @@ public class AddressProvider {
         }
         best = findBestAddress(location, addresses, SAME_CITY);
         if ((best != null) && (best != bestPlateau)) {
+            bestCity = best;
             bestCached = best;
             if (listener != null) {
                 listener.onFindAddress(this, location, best);

@@ -47,7 +47,7 @@ public class AddressService extends JobIntentService implements OnFindAddressLis
 
     private AddressProvider addressProvider;
 
-    public static void enqueueWork(Context context, Intent intent) {
+    public static void enqueueWork(@NonNull Context context, @NonNull Intent intent) {
         enqueueWork(context, AddressService.class, JOB_ADDRESS, intent);
     }
 

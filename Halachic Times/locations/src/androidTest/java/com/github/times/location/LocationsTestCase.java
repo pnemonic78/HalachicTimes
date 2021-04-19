@@ -71,7 +71,7 @@ public class LocationsTestCase {
         assertNotEquals(0, ids.length);
 
         TimeZone tz;
-        Location loc;
+        Location location;
         double latitude;
         double longitude;
 
@@ -80,12 +80,12 @@ public class LocationsTestCase {
             tz = TimeZone.getTimeZone(id);
             assertNotNull(tz);
 
-            loc = locations.getLocationTZ(tz);
-            assertNotNull(loc);
-            latitude = loc.getLatitude();
+            location = locations.getLocationTZ(tz);
+            assertNotNull(location);
+            latitude = location.getLatitude();
             assertTrue(id + " " + latitude, latitude >= ZmanimLocation.LATITUDE_MIN);
             assertTrue(id + " " + latitude, latitude <= ZmanimLocation.LATITUDE_MAX);
-            longitude = loc.getLongitude();
+            longitude = location.getLongitude();
             assertTrue(id + " " + longitude, longitude >= ZmanimLocation.LONGITUDE_MIN);
             assertTrue(id + " " + longitude, longitude <= ZmanimLocation.LONGITUDE_MAX);
         }
@@ -102,134 +102,134 @@ public class LocationsTestCase {
         assertLocation(temple);
         assertEquals(31.77777777f, temple.getLatitude(), 0.000001);
 
-        ZmanimLocation loc = new ZmanimLocation("city");
+        ZmanimLocation location = new ZmanimLocation("city");
         final float delta = 1f;
 
         // Anchorage
-        loc.setLatitude(toDegrees(61, 01, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(150, 00, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(256, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(61, 01, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(150, 00, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(256, location.angleTo(temple), delta);
 
         // San Francisco
-        loc.setLatitude(toDegrees(37, 45, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(122, 27, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(93, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(37, 45, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(122, 27, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(93, location.angleTo(temple), delta);
 
         // Los Angeles
-        loc.setLatitude(toDegrees(34, 03, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(118, 15, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(91, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(34, 03, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(118, 15, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(91, location.angleTo(temple), delta);
 
         // Chicago
-        loc.setLatitude(toDegrees(41, 50, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(87, 37, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(96, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(41, 50, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(87, 37, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(96, location.angleTo(temple), delta);
 
         // Miami
-        loc.setLatitude(toDegrees(25, 45, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(80, 15, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(87, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(25, 45, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(80, 15, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(87, location.angleTo(temple), delta);
 
         // Toronto
-        loc.setLatitude(toDegrees(43, 42, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(79, 25, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(97, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(43, 42, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(79, 25, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(97, location.angleTo(temple), delta);
 
         // Washington
-        loc.setLatitude(toDegrees(38, 55, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(77, 00, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(94, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(38, 55, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(77, 00, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(94, location.angleTo(temple), delta);
 
         // Philadelphia
-        loc.setLatitude(toDegrees(40, 00, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(75, 10, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(95, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(40, 00, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(75, 10, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(95, location.angleTo(temple), delta);
 
         // New York
-        loc.setLatitude(toDegrees(40, 43, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(74, 00, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(96, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(40, 43, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(74, 00, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(96, location.angleTo(temple), delta);
 
         // Boston
-        loc.setLatitude(toDegrees(42, 21, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(71, 04, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(97, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(42, 21, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(71, 04, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(97, location.angleTo(temple), delta);
 
         // Bueons Aires
-        loc.setLatitude(toDegrees(34, 40, Hemisphere.SOUTH));
-        loc.setLongitude(toDegrees(58, 30, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(53, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(34, 40, Hemisphere.SOUTH));
+        location.setLongitude(toDegrees(58, 30, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(53, location.angleTo(temple), delta);
 
         // London
-        loc.setLatitude(toDegrees(51, 30, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(0, 10, Hemisphere.WEST));
-        assertLocation(loc);
-        assertEquals(127, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(51, 30, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(0, 10, Hemisphere.WEST));
+        assertLocation(location);
+        assertEquals(127, location.angleTo(temple), delta);
 
         // Paris
-        loc.setLatitude(toDegrees(48, 52, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(2, 20, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(125, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(48, 52, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(2, 20, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(125, location.angleTo(temple), delta);
 
         // Budapest
-        loc.setLatitude(toDegrees(47, 30, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(19, 03, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(142, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(47, 30, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(19, 03, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(142, location.angleTo(temple), delta);
 
         // Johannesburg
-        loc.setLatitude(toDegrees(26, 10, Hemisphere.SOUTH));
-        loc.setLongitude(toDegrees(28, 02, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(7, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(26, 10, Hemisphere.SOUTH));
+        location.setLongitude(toDegrees(28, 02, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(7, location.angleTo(temple), delta);
 
         // Kiev
-        loc.setLatitude(toDegrees(50, 25, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(30, 30, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(169, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(50, 25, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(30, 30, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(169, location.angleTo(temple), delta);
 
         // Tel Aviv
-        loc.setLatitude(toDegrees(32, 05, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(34, 46, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(128, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(32, 05, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(34, 46, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(128, location.angleTo(temple), delta);
 
         // Haifa
-        loc.setLatitude(toDegrees(32, 49, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(34, 59, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(168, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(32, 49, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(34, 59, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(168, location.angleTo(temple), delta);
 
         // Moscow
-        loc.setLatitude(toDegrees(55, 45, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(37, 37, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(184, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(55, 45, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(37, 37, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(184, location.angleTo(temple), delta);
 
         // Tokyo
-        loc.setLatitude(toDegrees(35, 40, Hemisphere.NORTH));
-        loc.setLongitude(toDegrees(139, 45, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(267, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(35, 40, Hemisphere.NORTH));
+        location.setLongitude(toDegrees(139, 45, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(267, location.angleTo(temple), delta);
 
         // Melbourne
-        loc.setLatitude(toDegrees(37, 50, Hemisphere.SOUTH));
-        loc.setLongitude(toDegrees(144, 59, Hemisphere.EAST));
-        assertLocation(loc);
-        assertEquals(304, loc.angleTo(temple), delta);
+        location.setLatitude(toDegrees(37, 50, Hemisphere.SOUTH));
+        location.setLongitude(toDegrees(144, 59, Hemisphere.EAST));
+        assertLocation(location);
+        assertEquals(304, location.angleTo(temple), delta);
     }
 
     private void assertLocation(Location location) {

@@ -56,8 +56,6 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     protected static final int ACTIVITY_PERMISSIONS = 0xA110;
 
     private ThemeCallbacks<P> themeCallbacks;
-    /** Provider for locations. */
-    private LocationsProvider locations;
     /** The address location. */
     private Location addressLocation;
     /** The address. */
@@ -77,7 +75,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
      * @return hte provider.
      */
     public LocationsProvider getLocations() {
-        return locations;
+        LocationApplication<?, ?, ?> app = (LocationApplication<?, ?, ?>) getApplication();
+        return app.getLocations();
     }
 
     /**
@@ -111,13 +110,10 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         super.onCreate(savedInstanceState);
         onCreate();
 
-        LocationApplication app = (LocationApplication) getApplication();
-        locations = app.getLocations();
-
         Intent intent = getIntent();
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
         if (location != null) {
-            locations.setLocation(location);
+            getLocations().setLocation(location);
         } else if (VERSION.SDK_INT >= M) {
             initLocationPermissions();
         }
@@ -147,19 +143,19 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     }
 
     protected LocationPreferences getLocationPreferences() {
-        return locations.getLocationPreferences();
+        return getLocations().getLocationPreferences();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        locations.start(this);
+        getLocations().start(this);
     }
 
     @Override
     protected void onStop() {
-        locations.stop(this);
         super.onStop();
+        getLocations().stop(this);
     }
 
     @Override
@@ -220,14 +216,14 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     }
 
     protected void startLocations() {
-        Location loc = locations.getLocation();
+        Location location = getLocations().getLocation();
         // Have we been destroyed?
-        if (loc == null)
+        if (location == null)
             return;
 
         final Activity activity = this;
         Intent intent = new Intent(activity, getLocationActivityClass());
-        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, loc);
+        intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, location);
         activity.startActivityForResult(intent, ACTIVITY_LOCATIONS);
     }
 
@@ -250,16 +246,16 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
      */
     @Override
     public boolean onSearchRequested() {
-        Location loc = getLocation();
+        Location location = getLocation();
         // Have we been destroyed?
-        if (loc == null)
+        if (location == null)
             return super.onSearchRequested();
 
         ZmanimAddress address = this.address;
         String query = (address != null) ? address.getFormatted() : null;
 
         Bundle appData = new Bundle();
-        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, loc);
+        appData.putParcelable(LocationManager.KEY_LOCATION_CHANGED, location);
         startSearch(query, false, appData, false);
         return true;
     }
@@ -307,10 +303,11 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         // Have we been destroyed?
         if ((locationLabel == null) || (addressLabel == null))
             return;
+        final ZmanimAddress address = getAddress();
 
         LocationFormatter formatter = getLocations();
         final CharSequence locationText = formatter.formatCoordinates(location);
-        final CharSequence locationName = formatAddress(getAddress());
+        final CharSequence locationName = formatAddress(address);
         Timber.d("header [" + locationText +"] => [" + locationName + "]");
 
         // Update the location.
