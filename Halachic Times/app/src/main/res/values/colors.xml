@@ -31,7 +31,7 @@
     <color name="midnight_light">#80000000</color>
 
     <!-- Widget applet. -->
-    <color name="bright">@color/white_x10</color>
+    <color name="widget_odd">@color/white_x10</color>
     <color name="widget_box">@color/black_x80</color>
     <color name="widget_border">@color/white_x10</color>
     <color name="widget_candles_bg">#60ffff00</color>

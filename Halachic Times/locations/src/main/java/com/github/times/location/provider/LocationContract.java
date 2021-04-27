@@ -215,9 +215,6 @@ public class LocationContract {
          * The MIME-type of a {@link #CONTENT_URI} item.
          */
         public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.city";
-
-        /** Database table for addresses. */
-        public static final String TABLE_ADDRESSES = "addresses";
     }
 
 }

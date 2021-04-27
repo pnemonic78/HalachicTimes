@@ -880,22 +880,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     summary = R.string.eat_chametz_gra;
                 }
                 adapter.add(R.string.eat_chametz, summary, date, jewishDate, remote);
-
-                opinion = settings.getBurnChametz();
-                if (OPINION_16_1.equals(opinion)) {
-                    date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
-                    summary = R.string.burn_chametz_16;
-                } else if (OPINION_72.equals(opinion)) {
-                    date = cal.getSofZmanBiurChametzMGA72Minutes();
-                    summary = R.string.burn_chametz_72;
-                } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
-                    date = cal.getSofZmanBiurChametzBaalHatanya();
-                    summary = R.string.burn_chametz_baal_hatanya;
-                } else {
-                    date = cal.getSofZmanBiurChametzGRA();
-                    summary = R.string.burn_chametz_gra;
-                }
-                adapter.add(R.string.burn_chametz, summary, date, jewishDate, remote);
                 break;
             case SEVENTEEN_OF_TAMMUZ:
             case FAST_OF_GEDALYAH:
@@ -918,6 +902,26 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             case YOM_KIPPUR:
                 adapter.add(R.string.fast_begins, SUMMARY_NONE, cal.getTimeOffset(sunset, -candlesOffset * MINUTE_IN_MILLIS), jewishDate, remote);
                 break;
+        }
+
+        // Not allowed to burn chametz on Shabbat.
+        if (((holidayToday == EREV_PESACH) && (dayOfWeek != SATURDAY))
+            || ((holidayTomorrow == EREV_PESACH) && (dayOfWeek == FRIDAY))) {
+            opinion = settings.getBurnChametz();
+            if (OPINION_16_1.equals(opinion)) {
+                date = cal.getSofZmanBiurChametzMGA16Point1Degrees();
+                summary = R.string.burn_chametz_16;
+            } else if (OPINION_72.equals(opinion)) {
+                date = cal.getSofZmanBiurChametzMGA72Minutes();
+                summary = R.string.burn_chametz_72;
+            } else if (OPINION_BAAL_HATANYA.equals(opinion)) {
+                date = cal.getSofZmanBiurChametzBaalHatanya();
+                summary = R.string.burn_chametz_baal_hatanya;
+            } else {
+                date = cal.getSofZmanBiurChametzGRA();
+                summary = R.string.burn_chametz_gra;
+            }
+            adapter.add(R.string.burn_chametz, summary, date, jewishDate, remote);
         }
 
         // Molad.
@@ -1125,7 +1129,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 break;
             default:
                 if (dayOfWeek == FRIDAY) {
-                    holidayTomorrow = SHABBATH;
+                    if (holidayTomorrow < 0) holidayTomorrow = SHABBATH;
                     countTomorrow = CANDLES_SHABBATH;
                 }
                 break;

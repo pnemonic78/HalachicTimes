@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.core.content.ContextCompat;
@@ -118,6 +119,16 @@ public class ZmanimWidget extends ZmanimAppWidget {
                 final ZmanimItem itemHoliday = new ZmanimItem(holidayTodayName);
                 itemHoliday.jewishDate = jewishDate;
                 items.add(itemHoliday);
+            }
+
+            int omer = jcal.getDayOfOmer();
+            if (omer >= 1) {
+                CharSequence omerLabel = adapter.formatOmer(context, omer);
+                if (!TextUtils.isEmpty(omerLabel)) {
+                    final ZmanimItem itemOmer = new ZmanimItem(omerLabel);
+                    itemOmer.jewishDate = jcal;
+                    items.add(itemOmer);
+                }
             }
         }
 
@@ -243,7 +254,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
             return false;
         }
         String pkg = context.getPackageName();
-        RemoteViews row = new RemoteViews(pkg, getLayoutItemId(positionTotal));
+        RemoteViews row = new RemoteViews(pkg, getLayoutItemId(position));
         row.setTextViewText(android.R.id.title, item.title);
         row.setTextViewText(R.id.time, item.timeLabel);
         row.setTextColor(android.R.id.title, colorEnabled);
@@ -298,6 +309,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
      * @param position the position index.
      * @return the layout id.
      */
+    @LayoutRes
     protected int getLayoutItemId(int position) {
         if ((position & 1) == 1) {
             return directionRTL ? R.layout.widget_item_odd_rtl : R.layout.widget_item_odd;

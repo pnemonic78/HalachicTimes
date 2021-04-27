@@ -280,8 +280,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             int holidayToday = adapter.getHolidayToday();
             int candlesToday = adapter.getCandlesTodayCount();
             CharSequence holidayName = ZmanimDays.getName(context, holidayToday, candlesToday);
-            if (holidayName != null) {
-                bindViewGrouping(list, holidayName);
+            bindViewGrouping(list, holidayName);
+
+            // Sefirat HaOmer?
+            int omer = jcal.getDayOfOmer();
+            if (omer >= 1) {
+                CharSequence omerLabel = adapter.formatOmer(context, omer);
+                bindViewGrouping(list, omerLabel);
             }
 
             for (; position < count; position++) {
@@ -302,17 +307,13 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     int holidayTomorrow = adapter.getHolidayTomorrow();
                     int candlesTomorrow = adapter.getCandlesCount();
                     CharSequence holidayTomorrowName = ZmanimDays.getName(context, holidayTomorrow, candlesTomorrow);
-                    if (holidayTomorrowName != null) {
-                        bindViewGrouping(list, holidayTomorrowName);
-                    }
+                    bindViewGrouping(list, holidayTomorrowName);
 
                     // Sefirat HaOmer?
-                    int omer = jcal.getDayOfOmer();
+                    omer = jcal.getDayOfOmer();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
-                        if (!TextUtils.isEmpty(omerLabel)) {
-                            bindViewGrouping(list, omerLabel);
-                        }
+                        bindViewGrouping(list, omerLabel);
                     }
                 }
 
@@ -358,11 +359,12 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     /**
      * Bind the date group header to a list.
      *
-     * @param list           the list.
-     * @param label          the formatted Hebrew date label.
+     * @param list  the list.
+     * @param label the formatted Hebrew date label.
      */
     @SuppressLint("InflateParams")
     protected void bindViewGrouping(ViewGroup list, CharSequence label) {
+        if (TextUtils.isEmpty(label)) return;
         if (list.getChildCount() > 0) {
             inflater.inflate(R.layout.divider, list);
         }
