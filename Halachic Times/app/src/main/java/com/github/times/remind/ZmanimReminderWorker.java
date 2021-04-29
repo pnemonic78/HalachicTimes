@@ -77,6 +77,10 @@ public class ZmanimReminderWorker extends Worker {
             for (String key : extras.keySet()) {
                 Object value = extras.get(key);
                 if (value == null) continue;
+                if (value instanceof CharSequence) {
+                    data.putString(key, value.toString());
+                    continue;
+                }
                 if (value instanceof Parcelable) {
                     putParcelable(data, key, (Parcelable) value);
                     continue;
