@@ -116,9 +116,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
         final Context context = this.context;
         final String pkg = context.getPackageName();
-        RemoteViews view;
 
         ZmanimItem item = items.get(position);
+        if (item == null) {
+            return null;
+        }
+
+        RemoteViews view;
         if (item.isCategory()) {
             view = new RemoteViews(pkg, R.layout.widget_date);
             bindViewGrouping(view, position, item.timeLabel);
@@ -187,7 +191,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         populater.populate(adapter, false);
         this.adapter = adapter;
 
-        items.clear();
+        List<ZmanimItem> items = new ArrayList<>();
 
         JewishCalendar jcal = adapter.getJewishCalendar();
         final ZmanimItem itemToday = new ZmanimItem(adapter.formatDate(context, jcal));
@@ -260,6 +264,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                 items.add(item);
             }
         }
+
+        this.items.clear();
+        this.items.addAll(items);
     }
 
     /**
