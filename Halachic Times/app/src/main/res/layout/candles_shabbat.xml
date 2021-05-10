@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -15,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_0"/>
+        tools:src="@drawable/candle_0" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_2"
@@ -23,6 +22,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_3"/>
+        tools:src="@drawable/candle_3" />
 
 </LinearLayout>

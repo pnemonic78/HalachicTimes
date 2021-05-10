@@ -6,6 +6,6 @@
         android:centerColor="@color/midday"
         android:endColor="@color/midnight"
         android:startColor="@color/sunrise"
-        android:type="linear"/>
+        android:type="linear" />
 
 </shape>

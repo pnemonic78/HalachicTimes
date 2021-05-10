@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Dark"/>
+    <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Dark" />
 
 </resources>

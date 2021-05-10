@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Zmanim" parent="Theme.AppCompat"/>
+    <style name="Theme.Zmanim" parent="Theme.AppCompat" />
 
     <style name="Theme.Zmanim.Dark" parent="Theme.Zmanim">
         <item name="android:textColor">@android:color/primary_text_dark</item>
@@ -27,12 +27,12 @@
         <item name="listZmanim">@style/Widget.ListView.White</item>
     </style>
 
-    <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Light"/>
+    <style name="Theme.Zmanim.DayNight" parent="Theme.Zmanim.Light" />
 
-    <style name="Theme.Zmanim.Settings" parent="Theme.AppCompat.Settings"/>
+    <style name="Theme.Zmanim.Settings" parent="Theme.AppCompat.Settings" />
 
-    <style name="Theme.AppWidget.Dark" parent="Theme.Zmanim.Dark"/>
+    <style name="Theme.AppWidget.Dark" parent="Theme.Zmanim.Dark" />
 
-    <style name="Theme.AppWidget.Light" parent="Theme.Zmanim.Light"/>
+    <style name="Theme.AppWidget.Light" parent="Theme.Zmanim.Light" />
 
 </resources>

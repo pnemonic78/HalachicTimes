@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    style="@style/Widget.ListItem"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.ListItem"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:gravity="right"
     android:layoutDirection="ltr"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
     android:paddingLeft="8dp"
+    android:paddingTop="8dp"
     android:paddingRight="?android:attr/scrollbarSize"
-    android:paddingTop="8dp">
+    android:paddingBottom="8dp">
 
     <TextView
         android:id="@+id/time"
@@ -19,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="4dp"
-        tools:text="@tools:sample/date/hhmm"/>
+        tools:text="@tools:sample/date/hhmm" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -32,7 +31,7 @@
             style="@style/Widget.Detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@tools:sample/lorem"/>
+            tools:text="@tools:sample/lorem" />
     </LinearLayout>
 
 </LinearLayout>

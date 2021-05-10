@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_item"
     style="@style/AppWidget.Item.Odd"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="ltr"
@@ -15,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="4dp"
-        tools:text="@tools:sample/date/hhmm"/>
+        tools:text="@tools:sample/date/hhmm" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -28,7 +27,7 @@
             style="@style/AppWidget.Title.Odd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="@tools:sample/lorem"/>
+            tools:text="@tools:sample/lorem" />
     </LinearLayout>
 
 </LinearLayout>

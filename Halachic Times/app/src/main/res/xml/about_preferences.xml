@@ -6,7 +6,7 @@
         android:title="@string/version_title">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/support_url"/>
+            android:data="@string/support_url" />
     </Preference>
     <Preference
         android:icon="@android:drawable/ic_menu_send"
@@ -15,7 +15,7 @@
         android:title="@string/issue_title">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/issue_url"/>
+            android:data="@string/issue_url" />
     </Preference>
     <Preference
         android:key="about.kosherjava"
@@ -23,7 +23,7 @@
         android:title="@string/kosherjava">
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="@string/kosherjava_url"/>
+            android:data="@string/kosherjava_url" />
     </Preference>
 
 </PreferenceScreen>
