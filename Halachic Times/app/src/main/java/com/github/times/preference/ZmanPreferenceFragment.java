@@ -99,9 +99,6 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    String key = preference.getKey();
-                    // Explicitly disable dependencies?
-                    //TODO preference.notifyDependencyChange(preference.shouldDisableDependents());
                     remind();
                     return true;
                 }
