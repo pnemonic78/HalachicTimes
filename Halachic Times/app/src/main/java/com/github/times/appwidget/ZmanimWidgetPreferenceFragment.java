@@ -51,20 +51,20 @@ public class ZmanimWidgetPreferenceFragment extends AbstractPreferenceFragment {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
-        widgetPreference = initList(KEY_THEME_WIDGET);
-        widgetPreference.setOnPreferenceClickListener(this);
-        findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
-    }
-
-    @Override
-    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
-        boolean result = super.onListPreferenceChange(preference, newValue);
-
-        String key = preference.getKey();
-        if (KEY_THEME_WIDGET.equals(key)) {
-            notifyAppWidgets();
+        ListPreference widgetThemePreference = initList(KEY_THEME_WIDGET);
+        if (widgetThemePreference != null) {
+            widgetThemePreference.setOnPreferenceClickListener(this);
+            widgetThemePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    notifyAppWidgets();
+                    return true;
+                }
+            });
         }
-        return result;
+        this.widgetPreference = widgetThemePreference;
+
+        findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
     }
 
     @Override
