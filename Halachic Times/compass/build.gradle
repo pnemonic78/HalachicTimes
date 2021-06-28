@@ -5,12 +5,12 @@ def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 
 android {
-    compileSdkVersion androidBuildSdkVersion
+    compileSdkVersion BuildVersions.compileSdkVersion
 
     defaultConfig {
         applicationId "net.sf.compass"
-        minSdkVersion androidBuildMinSdkVersion
-        targetSdkVersion androidBuildTargetSdkVersion
+        minSdkVersion BuildVersions.minSdkVersion
+        targetSdkVersion BuildVersions.targetSdkVersion
         versionCode versionMajor * 100 + versionMinor
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
 

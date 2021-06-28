@@ -9,12 +9,12 @@ def versionMajor = Integer.parseInt(project.APP_VERSION_MAJOR)
 def versionMinor = Integer.parseInt(project.APP_VERSION_MINOR)
 
 android {
-    compileSdkVersion androidBuildSdkVersion
+    compileSdkVersion BuildVersions.compileSdkVersion
 
     defaultConfig {
         applicationId "net.sf.times"
-        minSdkVersion androidBuildMinSdkVersion
-        targetSdkVersion androidBuildTargetSdkVersion
+        minSdkVersion BuildVersions.minSdkVersion
+        targetSdkVersion BuildVersions.targetSdkVersion
         versionCode versionMajor * 100 + versionMinor
         versionName versionMajor + '.' + versionMinor.toString().padLeft(2, '0')
 
@@ -88,8 +88,8 @@ dependencies {
 
     // Testing
     testImplementation 'junit:junit:4.13'
-    androidTestImplementation "androidx.test:core:$androidTestVersion"
-    androidTestImplementation "androidx.test:rules:$androidTestVersion"
-    androidTestImplementation "androidx.test:runner:$androidTestVersion"
+    androidTestImplementation "androidx.test:core:${BuildVersions.androidTestVersion}"
+    androidTestImplementation "androidx.test:rules:${BuildVersions.androidTestVersion}"
+    androidTestImplementation "androidx.test:runner:${BuildVersions.androidTestVersion}"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 }
