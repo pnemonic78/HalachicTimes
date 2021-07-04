@@ -275,11 +275,11 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
      * @param finish is the activity finishing?
      */
     public void dismiss(boolean finish) {
-        stopService();
         if (silenceRunnable != null) {
             handler.removeCallbacks(silenceRunnable);
         }
         if (finish) {
+            stopService();
             setResult(RESULT_OK);
             close();
         }
