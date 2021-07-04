@@ -1,6 +1,5 @@
 package com.github.times.remind
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.content.Context
 import android.media.AudioAttributes
@@ -10,9 +9,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Vibrator
 import android.text.format.DateUtils
-import androidx.core.content.PermissionChecker
 import com.github.app.ActivityUtils
 import com.github.media.RingtoneManager
+import com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import timber.log.Timber
@@ -39,20 +38,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
 
     private fun startNoise() {
         Timber.v("start noise")
-        var allowSound = true
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(
-                    context,
-                    PERMISSION_RINGTONE
-                ) != PermissionChecker.PERMISSION_GRANTED
-            ) {
-                allowSound = false
-                //TODO activity.requestPermissions(arrayOf(PERMISSION_RINGTONE), REQUEST_PERMISSIONS)
-            }
-        }
-        if (allowSound) {
-            playSound(context)
-        }
+        playSound(context)
         vibrate(context, true)
     }
 
@@ -150,7 +136,6 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     }
 
     companion object {
-        private const val PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE
         const val REQUEST_PERMISSIONS = 0x702E // TONE
     }
 }

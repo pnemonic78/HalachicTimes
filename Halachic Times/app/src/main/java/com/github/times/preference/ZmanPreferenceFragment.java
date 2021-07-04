@@ -26,6 +26,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
+import androidx.core.content.PermissionChecker;
 import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
@@ -39,6 +40,8 @@ import com.github.times.remind.ZmanimReminderService;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE;
+
 /**
  * This fragment shows the preferences for a zman screen.
  */
@@ -48,6 +51,8 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     public static final String EXTRA_XML = "xml";
     public static final String EXTRA_OPINION = "opinion";
     public static final String EXTRA_REMINDER = "reminder";
+
+    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
     private int xmlId;
     private final Set<String> opinionKeys = new HashSet<>(1);
@@ -99,6 +104,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    requestReminderPermissions();
                     remind();
                     return true;
                 }
@@ -262,5 +268,12 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             .putInt(ZmanimPreferences.KEY_OPINION_CANDLES, 30)
             .putInt(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
             .apply();
+    }
+
+    private void requestReminderPermissions() {
+        final Context context = requireContext();
+        if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{PERMISSION_RINGTONE}, REQUEST_PERMISSIONS);
+        }
     }
 }

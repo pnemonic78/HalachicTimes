@@ -35,7 +35,7 @@ import com.github.app.ActivityUtils;
  */
 public class RingtonePreference extends com.github.preference.RingtonePreference {
 
-    private static final String PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE;
+    public static final String PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE;
 
     private Fragment requestPermissionsFragment;
     private int requestPermissionsCode;
