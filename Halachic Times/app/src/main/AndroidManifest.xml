@@ -170,6 +170,9 @@
         </receiver>
 
         <service
+            android:name="com.github.times.remind.ZmanimReminderService"
+            android:exported="false" />
+        <service
             android:name="com.github.times.appwidget.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 

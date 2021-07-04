@@ -866,6 +866,7 @@ public class ZmanimReminder {
             PendingIntent contentIntent = createAlarmIntent(context, item);
             Notification notification = createReminderNotification(context, settings, item, contentIntent);
             showReminderNotification(notification);
+//            startAlarmService(context, settings, item, silenceWhen);
             silenceFuture(context, item, silenceWhen);
         } else {
             Intent intent = createAlarmActivity(context, item, silenceWhen);
@@ -894,5 +895,19 @@ public class ZmanimReminder {
         if (reminderItem != null) {
             reminderItem.put(intent);
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.Q)
+    private void startAlarmService(Context context, ZmanimPreferences settings, ZmanimReminderItem item, long silenceWhen) {
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        putReminderItem(item, intent);
+        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen);
+        context.startForegroundService(intent);
+    }
+
+    public Notification createAlarmServiceNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
+        PendingIntent contentIntent = createAlarmIntent(context, item);
+        Notification notification = createReminderNotification(context, settings, item, contentIntent);
+        return notification;
     }
 }
