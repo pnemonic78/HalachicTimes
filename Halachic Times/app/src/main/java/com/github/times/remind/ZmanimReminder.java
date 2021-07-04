@@ -69,7 +69,9 @@ import static android.content.Intent.ACTION_LOCALE_CHANGED;
 import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.content.Intent.ACTION_TIME_CHANGED;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -403,15 +405,16 @@ public class ZmanimReminder {
             Timber.w("Launch activity not found!");
             intent = new Intent(context, ZmanimActivity.class);
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         return PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_REMIND);
+        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         putReminderItem(item, intent);
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimReminderItem item) {
@@ -514,6 +517,7 @@ public class ZmanimReminder {
             .setLargeIcon(largeIconSolar)
             .setShowWhen(true)
             .setSmallIcon(R.drawable.stat_notify_time)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setWhen(when);
     }
 
@@ -541,7 +545,8 @@ public class ZmanimReminder {
         )
             .setAutoCancel(true)
             .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLocalOnly(true)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSound(sound, audioStreamType);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE)
@@ -873,6 +878,7 @@ public class ZmanimReminder {
         putReminderItem(item, intent);
         intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(FLAG_ACTIVITY_NO_USER_ACTION);
         return intent;
     }
 
