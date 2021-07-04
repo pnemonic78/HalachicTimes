@@ -15,7 +15,6 @@
  */
 package com.github.times.remind;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -32,7 +31,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.app.LocaleCallbacks;
@@ -82,7 +80,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     private P preferences;
     private Format timeFormat;
     private long timeFormatGranularity;
-    private AlarmKlaxon klaxon;
 
     private TextView timeView;
     private TextView titleView;
@@ -136,8 +133,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             this.timeFormat = DateFormat.getTimeFormat(context);
             this.timeFormatGranularity = MINUTE_IN_MILLIS;
         }
-
-        klaxon = new AlarmKlaxon(this, prefs);
 
         handleIntent(getIntent());
     }
@@ -236,8 +231,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
 
         timeView.setText(spans);
         titleView.setText(item.title);
-
-        klaxon.start();
     }
 
     /**
@@ -266,15 +259,15 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         setResult(RESULT_CANCELED);
     }
 
-    @Override
-    @TargetApi(Build.VERSION_CODES.M)
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == AlarmKlaxon.REQUEST_PERMISSIONS) {
-            klaxon.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
+//    @Override
+//    @TargetApi(Build.VERSION_CODES.M)
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if (requestCode == AlarmKlaxon.REQUEST_PERMISSIONS) {
+//            service.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
 
     /**
      * Dismiss the reminder.
@@ -282,7 +275,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
      * @param finish is the activity finishing?
      */
     public void dismiss(boolean finish) {
-        klaxon.stop();
+        stopService();
         if (silenceRunnable != null) {
             handler.removeCallbacks(silenceRunnable);
         }
@@ -309,7 +302,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             silenceRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    klaxon.stop();
+                    stopService();
+                    stopLock();
                 }
             };
             this.silenceRunnable = silenceRunnable;
@@ -317,5 +311,17 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         final long now = currentTimeMillis();
         long delayMillis = triggerAt - now;
         handler.postDelayed(silenceRunnable, delayMillis);
+    }
+
+    private void stopLock() {
+        final Window win = this.getWindow();
+        // Allow the screen to sleep.
+        win.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    private boolean stopService() {
+        final Context context = this;
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        return stopService(intent);
     }
 }

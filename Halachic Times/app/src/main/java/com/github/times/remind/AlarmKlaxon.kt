@@ -2,7 +2,6 @@ package com.github.times.remind
 
 import android.Manifest
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioManager
@@ -11,16 +10,17 @@ import android.net.Uri
 import android.os.Build
 import android.os.Vibrator
 import android.text.format.DateUtils
-import android.view.Window
-import android.view.WindowManager
 import androidx.core.content.PermissionChecker
 import com.github.app.ActivityUtils
 import com.github.media.RingtoneManager
+import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import timber.log.Timber
 import java.io.IOException
 
-class AlarmKlaxon(val activity: Activity, val preferences: ZmanimPreferences) {
+class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
+
+    constructor(context: Context) : this(context, SimpleZmanimPreferences(context))
 
     private var ringtone: MediaPlayer? = null
 
@@ -32,7 +32,6 @@ class AlarmKlaxon(val activity: Activity, val preferences: ZmanimPreferences) {
     ) {
         if (requestCode == REQUEST_PERMISSIONS) {
             if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
-                val context: Context = activity
                 playSound(context)
             }
         }
@@ -40,7 +39,6 @@ class AlarmKlaxon(val activity: Activity, val preferences: ZmanimPreferences) {
 
     private fun startNoise() {
         Timber.v("start noise")
-        val context: Context = activity
         var allowSound = true
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (PermissionChecker.checkCallingOrSelfPermission(
@@ -49,7 +47,7 @@ class AlarmKlaxon(val activity: Activity, val preferences: ZmanimPreferences) {
                 ) != PermissionChecker.PERMISSION_GRANTED
             ) {
                 allowSound = false
-                activity.requestPermissions(arrayOf(PERMISSION_RINGTONE), REQUEST_PERMISSIONS)
+                //TODO activity.requestPermissions(arrayOf(PERMISSION_RINGTONE), REQUEST_PERMISSIONS)
             }
         }
         if (allowSound) {
@@ -60,12 +58,8 @@ class AlarmKlaxon(val activity: Activity, val preferences: ZmanimPreferences) {
 
     private fun stopNoise() {
         Timber.v("stop noise")
-        val context: Context = activity
         stopSound()
         vibrate(context, false)
-        val win: Window = activity.window
-        // Allow the screen to sleep.
-        win.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     private fun playSound(context: Context) {

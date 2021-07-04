@@ -25,6 +25,8 @@ import android.text.format.DateUtils
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
+import com.github.times.preference.SimpleZmanimPreferences
+import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder.ACTION_REMIND
 
 /**
@@ -33,8 +35,19 @@ import com.github.times.remind.ZmanimReminder.ACTION_REMIND
  * @author Moshe Waisberg
  */
 class ZmanimReminderService : Service() {
+
+    private lateinit var settings: ZmanimPreferences
+    private lateinit var klaxon: AlarmKlaxon
+
     override fun onBind(intent: Intent): IBinder? {
         return null
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        val context: Context = this
+        settings = SimpleZmanimPreferences(context)
+        klaxon = AlarmKlaxon(context)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -46,6 +59,7 @@ class ZmanimReminderService : Service() {
             val item = ZmanimReminderItem.from(this, intent)
             if (item != null) {
                 showNotification(item)
+                startAlarm()
             }
         }
         return START_NOT_STICKY
@@ -56,16 +70,27 @@ class ZmanimReminderService : Service() {
         super.onDestroy()
     }
 
-    private fun startAlarm() {}
+    private fun startAlarm() {
+        klaxon.start()
+    }
 
-    private fun stopAlarm() {}
+    private fun stopAlarm() {
+        klaxon.stop()
+    }
 
     private fun showNotification(item: ZmanimReminderItem) {
-//        val notification =
+        val context: Context = this
+        val settings = SimpleZmanimPreferences(context)
+        val reminder = ZmanimReminder(context)
+        reminder.initNotifications()
+        val notification = reminder.createAlarmServiceNotification(context, settings, item)
+        startForeground(ID_NOTIFY, notification)
     }
 
     companion object {
+        private const val ID_NOTIFY = 0x1111
         private const val BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS
+
         private var reminderBusy: String? = ""
         private var reminderBusyTime: Long = 0
 
