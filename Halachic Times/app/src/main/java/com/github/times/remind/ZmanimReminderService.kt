@@ -18,16 +18,23 @@ package com.github.times.remind
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.os.SystemClock
 import android.text.TextUtils
 import android.text.format.DateUtils
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
+import com.github.times.BuildConfig
+import com.github.times.ZmanimHelper
+import com.github.times.ZmanimItem
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder.ACTION_REMIND
+import timber.log.Timber
+import java.util.*
 
 /**
  * Check for reminders, and manage the notifications.
@@ -38,6 +45,8 @@ class ZmanimReminderService : Service() {
 
     private lateinit var settings: ZmanimPreferences
     private lateinit var klaxon: AlarmKlaxon
+    private var silenceRunnable: Runnable? = null
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -60,6 +69,11 @@ class ZmanimReminderService : Service() {
             if (item != null) {
                 showNotification(item)
                 startAlarm()
+                val extras = intent.extras
+                if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
+                    val triggerAt = extras.getLong(EXTRA_SILENCE_TIME)
+                    silenceFuture(triggerAt)
+                }
             }
         }
         return START_NOT_STICKY
@@ -67,6 +81,10 @@ class ZmanimReminderService : Service() {
 
     override fun onDestroy() {
         stopAlarm()
+        val silenceRunnable = this.silenceRunnable
+        if (silenceRunnable != null) {
+            handler.removeCallbacks(silenceRunnable)
+        }
         super.onDestroy()
     }
 
@@ -87,7 +105,43 @@ class ZmanimReminderService : Service() {
         startForeground(ID_NOTIFY, notification)
     }
 
+    /**
+     * Set timer to silence the alert.
+     *
+     * @param triggerAt when to silence.
+     */
+    private fun silenceFuture(triggerAt: Long) {
+        Timber.i("silence future at [%s]", formatDateTime(triggerAt))
+        var silenceRunnable: Runnable? = this.silenceRunnable
+        if (silenceRunnable == null) {
+            silenceRunnable = Runnable {
+                stopSelf()
+            }
+            this.silenceRunnable = silenceRunnable
+        }
+        val now = System.currentTimeMillis()
+        val delayMillis = triggerAt - now
+        handler.postDelayed(silenceRunnable, delayMillis)
+    }
+
+    /**
+     * Format the date and time with seconds.
+     *
+     * @param time the time to format.
+     * @return the formatted time.
+     */
+    private fun formatDateTime(time: Long): String? {
+        return if (time == ZmanimItem.NEVER) {
+            "NEVER"
+        } else ZmanimHelper.formatDateTime(Date(time))
+    }
+
     companion object {
+        /**
+         * Extras name to silence to alarm.
+         */
+        const val EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME"
+
         private const val ID_NOTIFY = 0x1111
         private const val BUSY_TIMEOUT = 10 * DateUtils.SECOND_IN_MILLIS
 

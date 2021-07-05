@@ -429,7 +429,7 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, ZmanimReminderService.class);
         intent.setAction(ACTION_REMIND);
         putReminderItem(item, intent);
-        intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen);
+        intent.putExtra(ZmanimReminderService.EXTRA_SILENCE_TIME, silenceWhen);
         return intent;
     }
 

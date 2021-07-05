@@ -21,6 +21,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -85,7 +86,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     private TextView titleView;
     private View dismissView;
 
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable silenceRunnable;
 
     @Override
@@ -275,6 +276,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
      * @param finish is the activity finishing?
      */
     public void dismiss(boolean finish) {
+        final Runnable silenceRunnable = this.silenceRunnable;
         if (silenceRunnable != null) {
             handler.removeCallbacks(silenceRunnable);
         }
@@ -302,7 +304,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             silenceRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    stopService();
                     stopLock();
                 }
             };
