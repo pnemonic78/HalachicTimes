@@ -364,8 +364,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
 
         public ViewHolder(View view) {
             this.itemView = view;
-            this.title = view.findViewById(android.R.id.title);
-            this.summary = view.findViewById(android.R.id.summary);
+            this.title = view.findViewById(R.id.title);
+            this.summary = view.findViewById(R.id.summary);
             this.time = view.findViewById(R.id.time);
         }
 

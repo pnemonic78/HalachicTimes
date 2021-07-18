@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    style="@style/Widget.ListItem"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
+    style="@style/Widget.ListItem"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="?android:attr/scrollbarSize"
-    android:paddingTop="8dp">
+    android:paddingStart="8dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="?android:attr/scrollbarSize"
+    android:paddingBottom="8dp">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/title"
+        style="@style/Widget.Location.Title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/title_activity_location" />
 
-        <TextView
-            android:id="@android:id/title"
-            style="@style/Widget.Location.Title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/title_activity_location"/>
-
-        <TextView
-            android:id="@+id/coordinates"
-            style="@style/Widget.Location.Coordinates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="@string/coords_title"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/coordinates"
+        style="@style/Widget.Location.Coordinates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@id/checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="@string/coords_title" />
 
     <CheckBox
-        android:id="@android:id/checkbox"
+        android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@android:drawable/btn_star"/>
+        android:button="@android:drawable/btn_star"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

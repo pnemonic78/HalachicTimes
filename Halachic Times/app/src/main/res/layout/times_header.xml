@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:focusable="true">
+    android:focusable="false"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp">
+
+    <TextView
+        android:id="@+id/date_gregorian"
+        style="@style/Widget.Header.Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/date/ddmmyy" />
+
+    <include
+        android:id="@+id/header_location"
+        layout="@layout/times_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_gregorian" />
+
+    <ImageButton
+        android:id="@+id/nav_yesterday"
+        android:layout_width="@dimen/btn_navigate_day"
+        android:layout_height="@dimen/btn_navigate_day"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/btn_navigation"
+        android:contentDescription="@string/yesterday"
+        android:src="@drawable/ic_yesterday"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/nav_tomorrow"
+        android:layout_width="@dimen/btn_navigate_day"
+        android:layout_height="@dimen/btn_navigate_day"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/btn_navigation"
+        android:contentDescription="@string/tomorrow"
+        android:src="@drawable/ic_tomorrow"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <requestFocus />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp">
-
-        <include layout="@layout/times_date" />
-
-        <include layout="@layout/times_location" />
-
-    </LinearLayout>
-
-    <include layout="@layout/navigation" />
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

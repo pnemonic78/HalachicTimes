@@ -15,40 +15,29 @@
  */
 package com.github.times.remind;
 
-import android.Manifest;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
+import android.os.Looper;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.text.style.RelativeSizeSpan;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.PermissionChecker;
 
-import com.github.app.ActivityUtils;
 import com.github.app.LocaleCallbacks;
 import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
-import com.github.media.RingtoneManager;
 import com.github.text.style.TypefaceSpan;
 import com.github.times.BuildConfig;
 import com.github.times.R;
@@ -57,7 +46,6 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 
-import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,9 +73,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
      */
     public static final String EXTRA_SILENCE_TIME = BuildConfig.APPLICATION_ID + ".SILENCE_TIME";
 
-    private static final String PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE;
-    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
-
     private LocaleCallbacks<P> localeCallbacks;
     private ThemeCallbacks<P> themeCallbacks;
     /**
@@ -96,13 +81,12 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     private P preferences;
     private Format timeFormat;
     private long timeFormatGranularity;
-    private MediaPlayer ringtone;
 
     private TextView timeView;
     private TextView titleView;
     private View dismissView;
 
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable silenceRunnable;
 
     @Override
@@ -133,7 +117,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         setContentView(R.layout.alarm_activity);
 
         timeView = findViewById(R.id.time);
-        titleView = findViewById(android.R.id.title);
+        titleView = findViewById(R.id.title);
         dismissView = findViewById(R.id.reminder_dismiss);
         dismissView.setOnClickListener(this);
 
@@ -248,8 +232,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
 
         timeView.setText(spans);
         titleView.setText(item.title);
-
-        startNoise();
     }
 
     /**
@@ -278,18 +260,15 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         setResult(RESULT_CANCELED);
     }
 
-    @Override
-    @TargetApi(Build.VERSION_CODES.M)
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_PERMISSIONS) {
-            if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
-                final Context context = this;
-                playSound(context);
-            }
-        }
-    }
+//    @Override
+//    @TargetApi(Build.VERSION_CODES.M)
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//
+//        if (requestCode == AlarmKlaxon.REQUEST_PERMISSIONS) {
+//            service.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
 
     /**
      * Dismiss the reminder.
@@ -297,16 +276,12 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
      * @param finish is the activity finishing?
      */
     public void dismiss(boolean finish) {
-        stopNoise();
-        MediaPlayer ringtone = this.ringtone;
-        if (ringtone != null) {
-            ringtone.release();
-            this.ringtone = null;
-        }
+        final Runnable silenceRunnable = this.silenceRunnable;
         if (silenceRunnable != null) {
             handler.removeCallbacks(silenceRunnable);
         }
         if (finish) {
+            stopService();
             setResult(RESULT_OK);
             close();
         }
@@ -314,110 +289,6 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
 
     private void close() {
         finish();
-    }
-
-    private void startNoise() {
-        Timber.v("start noise");
-        final Context context = this;
-
-        boolean allowSound = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{PERMISSION_RINGTONE}, REQUEST_PERMISSIONS);
-                allowSound = false;
-            }
-        }
-        if (allowSound) {
-            playSound(context);
-        }
-        vibrate(context, true);
-    }
-
-    private void stopNoise() {
-        Timber.v("stop noise");
-        final Context context = this;
-        stopSound();
-        vibrate(context, false);
-
-        final Window win = getWindow();
-        // Allow the screen to sleep.
-        win.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    }
-
-    private void playSound(Context context) {
-        MediaPlayer ringtone = getRingtone(context);
-        Timber.v("play sound");
-        if ((ringtone != null) && !ringtone.isPlaying()) {
-            ringtone.start();
-        }
-    }
-
-    private void stopSound() {
-        Timber.v("stop sound");
-        MediaPlayer ringtone = this.ringtone;
-        if (ringtone != null) {
-            try {
-                ringtone.stop();
-            } catch (IllegalStateException e) {
-                Timber.e(e, "error stopping sound: %s", e.getLocalizedMessage());
-            }
-        }
-    }
-
-    private MediaPlayer getRingtone(Context context) {
-        MediaPlayer ringtone = this.ringtone;
-        if (ringtone == null) {
-            final P prefs = getZmanimPreferences();
-            Uri prefRingtone = prefs.getReminderRingtone();
-            if (prefRingtone != null) {
-                Uri uri = RingtoneManager.resolveUri(context, prefRingtone);
-                if (uri == null) {
-                    return null;
-                }
-                ringtone = new MediaPlayer();
-                try {
-                    ringtone.setDataSource(context, uri);
-
-                    int audioStreamType = prefs.getReminderStream();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .setLegacyStreamType(audioStreamType)
-                            .setUsage(AudioAttributes.USAGE_ALARM)
-                            .build();
-                        ringtone.setAudioAttributes(audioAttributes);
-                    } else {
-                        ringtone.setAudioStreamType(audioStreamType);
-                    }
-
-                    ringtone.setLooping(audioStreamType == AudioManager.STREAM_ALARM);
-                    ringtone.prepare();
-                } catch (IOException e) {
-                    Timber.e(e, "error preparing ringtone: " + e.getLocalizedMessage() + " for " + prefRingtone + " ~ " + uri);
-                    ringtone = null;
-                }
-                this.ringtone = ringtone;
-            }
-        }
-        return ringtone;
-    }
-
-    /**
-     * Vibrate the device.
-     *
-     * @param context the context.
-     * @param vibrate {@code true} to start vibrating - {@code false} to stop.
-     */
-    private void vibrate(Context context, boolean vibrate) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
-        if ((vibrator == null) || !vibrator.hasVibrator()) {
-            return;
-        }
-        if (vibrate) {
-            vibrator.vibrate(DateUtils.SECOND_IN_MILLIS);
-        } else {
-            vibrator.cancel();
-        }
     }
 
     /**
@@ -433,7 +304,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
             silenceRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    stopNoise();
+                    stopLock();
                 }
             };
             this.silenceRunnable = silenceRunnable;
@@ -441,5 +312,17 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         final long now = currentTimeMillis();
         long delayMillis = triggerAt - now;
         handler.postDelayed(silenceRunnable, delayMillis);
+    }
+
+    private void stopLock() {
+        final Window win = this.getWindow();
+        // Allow the screen to sleep.
+        win.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    private boolean stopService() {
+        final Context context = this;
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        return stopService(intent);
     }
 }

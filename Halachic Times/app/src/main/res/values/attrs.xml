@@ -2,7 +2,7 @@
 <resources>
 
     <declare-styleable name="Zmanim">
-        <attr name="listZmanim" format="reference"/>
+        <attr name="listZmanim" format="reference" />
     </declare-styleable>
 
 </resources>

@@ -69,7 +69,9 @@ import static android.content.Intent.ACTION_LOCALE_CHANGED;
 import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
 import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.content.Intent.ACTION_TIME_CHANGED;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
@@ -160,8 +162,10 @@ public class ZmanimReminder {
      */
     private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 2;
 
-    private static final String CHANNEL_REMINDER = "reminder";
+    private static final String CHANNEL_ALARM = "channel_alarm";
+    private static final String CHANNEL_REMINDER = "channel_reminder";
     private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
+    private static final String CHANNEL_REMINDER_OLD = "reminder";
     private static final String CHANNEL_UPCOMING = "upcoming";
 
     private static final String WAKE_TAG = "ZmanimReminder:wake";
@@ -403,21 +407,30 @@ public class ZmanimReminder {
             Timber.w("Launch activity not found!");
             intent = new Intent(context, ZmanimActivity.class);
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         return PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_REMIND);
+        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         putReminderItem(item, intent);
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimReminderItem item) {
         Intent intent = createAlarmActivity(context, item, item.time + STOP_NOTIFICATION_AFTER);
         putReminderItem(item, intent);
         return PendingIntent.getActivity(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    private Intent createAlarmServiceIntent(Context context, ZmanimReminderItem item, long silenceWhen) {
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        intent.setAction(ACTION_REMIND);
+        putReminderItem(item, intent);
+        intent.putExtra(ZmanimReminderService.EXTRA_SILENCE_TIME, silenceWhen);
+        return intent;
     }
 
     /**
@@ -514,6 +527,7 @@ public class ZmanimReminder {
             .setLargeIcon(largeIconSolar)
             .setShowWhen(true)
             .setSmallIcon(R.drawable.stat_notify_time)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setWhen(when);
     }
 
@@ -530,6 +544,7 @@ public class ZmanimReminder {
         final int audioStreamType = settings.getReminderStream();
         final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
         final Uri sound = silent ? null : settings.getReminderRingtone();
+        final String channel = silent ? CHANNEL_ALARM : CHANNEL_REMINDER;
 
         final NotificationCompat.Builder builder = createNotificationBuilder(
             context,
@@ -537,11 +552,12 @@ public class ZmanimReminder {
             contentText,
             when,
             contentIntent,
-            CHANNEL_REMINDER
+            channel
         )
             .setAutoCancel(true)
             .setCategory(alarm ? NotificationCompat.CATEGORY_ALARM : NotificationCompat.CATEGORY_REMINDER)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setLocalOnly(true)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSound(sound, audioStreamType);
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE)
@@ -581,9 +597,7 @@ public class ZmanimReminder {
 
     private void showReminderNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            initChannels(nm);
-        }
+        initNotifications(nm);
         nm.notify(ID_NOTIFY, notification);
     }
 
@@ -673,9 +687,7 @@ public class ZmanimReminder {
 
     private void showUpcomingNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            initChannels(nm);
-        }
+        initNotifications(nm);
         nm.notify(ID_NOTIFY_UPCOMING, notification);
     }
 
@@ -776,9 +788,7 @@ public class ZmanimReminder {
 
     private void postSilenceNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            initChannels(nm);
-        }
+        initNotifications(nm);
         nm.cancel(ID_NOTIFY); // Kill the notification so that the sound stops playing.
         nm.notify(ID_NOTIFY, notification);
     }
@@ -807,10 +817,29 @@ public class ZmanimReminder {
     private void initChannels(NotificationManager nm) {
         final Context context = getContext();
         android.app.NotificationChannel channel;
+        String channelName;
 
-        channel = nm.getNotificationChannel(CHANNEL_REMINDER);
+        nm.deleteNotificationChannel(CHANNEL_REMINDER_ALARM);
+        nm.deleteNotificationChannel(CHANNEL_REMINDER_OLD);
+
+        channelName = CHANNEL_ALARM;
+        channel = nm.getNotificationChannel(channelName);
         if (channel == null) {
-            channel = new android.app.NotificationChannel(CHANNEL_REMINDER, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
+            channel = new android.app.NotificationChannel(channelName, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(context.getString(R.string.notification_volume_title));
+            channel.enableLights(true);
+            channel.setLightColor(LED_COLOR);
+            channel.enableVibration(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            channel.setSound(null, null);// Silent
+
+            nm.createNotificationChannel(channel);
+        }
+
+        channelName = CHANNEL_REMINDER;
+        channel = nm.getNotificationChannel(channelName);
+        if (channel == null) {
+            channel = new android.app.NotificationChannel(channelName, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription(context.getString(R.string.notification_volume_title));
             channel.enableLights(true);
             channel.setLightColor(LED_COLOR);
@@ -827,11 +856,10 @@ public class ZmanimReminder {
             nm.createNotificationChannel(channel);
         }
 
-        nm.deleteNotificationChannel(CHANNEL_REMINDER_ALARM);
-
-        channel = nm.getNotificationChannel(CHANNEL_UPCOMING);
+        channelName = CHANNEL_UPCOMING;
+        channel = nm.getNotificationChannel(channelName);
         if (channel == null) {
-            channel = new android.app.NotificationChannel(CHANNEL_UPCOMING, context.getString(R.string.notification_upcoming_title), NotificationManager.IMPORTANCE_DEFAULT);
+            channel = new android.app.NotificationChannel(channelName, context.getString(R.string.notification_upcoming_title), NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(context.getString(R.string.notification_upcoming_title));
             channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             channel.setSound(null, null);// Silent
@@ -858,13 +886,10 @@ public class ZmanimReminder {
     public void alarmNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item, long silenceWhen) {
         Timber.i("alarm now [%s] for [%s]", item.title, formatDateTime(item.time));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            PendingIntent contentIntent = createAlarmIntent(context, item);
-            Notification notification = createReminderNotification(context, settings, item, contentIntent);
-            showReminderNotification(notification);
+            startAlarmService(context, item, silenceWhen);
             silenceFuture(context, item, silenceWhen);
         } else {
-            Intent intent = createAlarmActivity(context, item, silenceWhen);
-            context.startActivity(intent);
+            startAlarmActivity(context, item, silenceWhen);
         }
     }
 
@@ -873,6 +898,7 @@ public class ZmanimReminder {
         putReminderItem(item, intent);
         intent.putExtra(AlarmActivity.EXTRA_SILENCE_TIME, silenceWhen);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(FLAG_ACTIVITY_NO_USER_ACTION);
         return intent;
     }
 
@@ -888,5 +914,33 @@ public class ZmanimReminder {
         if (reminderItem != null) {
             reminderItem.put(intent);
         }
+    }
+
+    private void startAlarmActivity(Context context, ZmanimReminderItem item, long silenceWhen) {
+        Intent intent = createAlarmActivity(context, item, silenceWhen);
+        context.startActivity(intent);
+
+    }
+
+    @TargetApi(Build.VERSION_CODES.Q)
+    private void startAlarmService(Context context, ZmanimReminderItem item, long silenceWhen) {
+        Intent intent = createAlarmServiceIntent(context, item, silenceWhen);
+        context.startForegroundService(intent);
+    }
+
+    public Notification createAlarmServiceNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
+        PendingIntent contentIntent = createAlarmIntent(context, item);
+        return createReminderNotification(context, settings, item, contentIntent, true);
+    }
+
+    private void initNotifications(NotificationManager nm) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            initChannels(nm);
+        }
+    }
+
+    public void initNotifications() {
+        NotificationManager nm = getNotificationManager();
+        initNotifications(nm);
     }
 }

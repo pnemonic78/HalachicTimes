@@ -255,9 +255,9 @@ public class ZmanimWidget extends ZmanimAppWidget {
         }
         String pkg = context.getPackageName();
         RemoteViews row = new RemoteViews(pkg, getLayoutItemId(position));
-        row.setTextViewText(android.R.id.title, item.title);
+        row.setTextViewText(R.id.title, item.title);
         row.setTextViewText(R.id.time, item.timeLabel);
-        row.setTextColor(android.R.id.title, colorEnabled);
+        row.setTextColor(R.id.title, colorEnabled);
         row.setTextColor(R.id.time, colorEnabled);
         bindViewRowSpecial(context, row, position, item);
         list.addView(android.R.id.list, row);

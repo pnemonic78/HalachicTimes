@@ -80,17 +80,16 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
     }
 
+    @Nullable
     @Override
-    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
-        boolean result = super.onListPreferenceChange(preference, newValue);
+    protected ListPreference initList(String key) {
+        final ListPreference listPreference = super.initList(key);
+        if (listPreference != null) {
+            if (KEY_THEME_WIDGET.equals(key)) {
 
-        String key = preference.getKey();
-        if (KEY_LOCALE.equals(key) && (localePreference != null)) {
-            notifyConfigurationChanged(localePreference.getValue());
-        } else if (KEY_THEME_WIDGET.equals(key)) {
-            notifyAppWidgets();
+            }
         }
-        return result;
+        return listPreference;
     }
 
     @Nullable
@@ -126,9 +125,17 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
                 entries[0] = context.getString(R.string.locale_default);
             }
 
-            ListPreference list = (ListPreference) pref;
+            final ListPreference list = (ListPreference) pref;
             list.setEntryValues(values);
             list.setEntries(entries);
+
+            list.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    notifyConfigurationChanged(list.getValue());
+                    return true;
+                }
+            });
         }
 
         return initList(key);
@@ -171,17 +178,17 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
                 final Activity activity = getActivity();
                 if (ActivityCompat.shouldShowRequestPermissionRationale(activity, PERMISSION_WALLPAPER)) {
                     new AlertDialog.Builder(context)
-                            .setTitle(R.string.appwidget_theme_title)
-                            .setMessage(R.string.appwidget_theme_permission_rationale)
-                            .setCancelable(true)
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
-                                }
-                            })
-                            .show();
+                        .setTitle(R.string.appwidget_theme_title)
+                        .setMessage(R.string.appwidget_theme_permission_rationale)
+                        .setCancelable(true)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
+                            }
+                        })
+                        .show();
                 } else {
                     requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
                 }

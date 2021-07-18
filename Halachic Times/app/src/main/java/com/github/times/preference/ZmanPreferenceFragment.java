@@ -26,8 +26,8 @@ import android.text.TextUtils;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
+import androidx.core.content.PermissionChecker;
 import androidx.preference.CheckBoxPreference;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
@@ -40,6 +40,8 @@ import com.github.times.remind.ZmanimReminderService;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE;
+
 /**
  * This fragment shows the preferences for a zman screen.
  */
@@ -50,9 +52,10 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     public static final String EXTRA_OPINION = "opinion";
     public static final String EXTRA_REMINDER = "reminder";
 
+    private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
+
     private int xmlId;
     private final Set<String> opinionKeys = new HashSet<>(1);
-    private Preference preferenceReminder;
     private Preference preferenceReminderSunday;
     private Preference preferenceReminderMonday;
     private Preference preferenceReminderTuesday;
@@ -86,19 +89,29 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             if (opinionKey.indexOf(';') > 0) {
                 String[] tokens = opinionKey.split(";");
                 for (String token : tokens) {
-                    initPreference(token);
-                    opinionKeys.add(token);
+                    if (initOpinionPreference(token) != null) {
+                        opinionKeys.add(token);
+                    }
                 }
             } else {
-                initPreference(opinionKey);
-                opinionKeys.add(opinionKey);
+                if (initOpinionPreference(opinionKey) != null) {
+                    opinionKeys.add(opinionKey);
+                }
             }
         }
         Preference preferenceReminder = initList(reminderKey);
-        if (preferenceReminder == null) {
+        if (preferenceReminder != null) {
+            preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    requestReminderPermissions();
+                    remind();
+                    return true;
+                }
+            });
+        } else {
             preferenceReminder = initTime(reminderKey);
         }
-        this.preferenceReminder = preferenceReminder;
         if (preferenceReminder != null) {
             initReminderDays(preferenceReminder);
         }
@@ -119,21 +132,31 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         return preferences;
     }
 
-    @Override
-    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
-        String oldValue = preference.getValue();
+    @Nullable
+    private Preference initOpinionPreference(String key) {
+        Preference preference;
 
-        boolean result = super.onListPreferenceChange(preference, newValue);
-
-        if (!oldValue.equals(newValue) && ((preference == preferenceReminder) || opinionKeys.contains(preference.getKey()))) {
-            // Explicitly disable dependencies?
-            preference.notifyDependencyChange(preference.shouldDisableDependents());
-            if (opinionKeys.contains(preference.getKey())) {
-                maybeChooseMultipleOpinions(newValue);
-            }
-            remind();
+        preference = initList(key);
+        if (preference != null) {
+            preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    maybeChooseMultipleOpinions(newValue);
+                    return true;
+                }
+            });
+            return preference;
         }
-        return result;
+        preference = initRingtone(key);
+        if (preference != null) {
+            return preference;
+        }
+        preference = initTime(key);
+        if (preference != null) {
+            return preference;
+        }
+
+        return null;
     }
 
     protected void initReminderDays(Preference reminderTime) {
@@ -245,5 +268,12 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             .putInt(ZmanimPreferences.KEY_OPINION_CANDLES, 30)
             .putInt(ZmanimPreferences.KEY_OPINION_SHABBATH_ENDS_MINUTES, 0)
             .apply();
+    }
+
+    private void requestReminderPermissions() {
+        final Context context = requireContext();
+        if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{PERMISSION_RINGTONE}, REQUEST_PERMISSIONS);
+        }
     }
 }

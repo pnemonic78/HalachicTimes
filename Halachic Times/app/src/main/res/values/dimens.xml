@@ -24,4 +24,5 @@
     <dimen name="reminder_time">90sp</dimen>
     <dimen name="reminder_title">20sp</dimen>
 
+    <dimen name="btn_navigate_day">32dp</dimen>
 </resources>

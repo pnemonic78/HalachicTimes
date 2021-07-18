@@ -83,30 +83,30 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         }
         reminderRingtonePreference = (RingtonePreference) initRingtone(KEY_REMINDER_RINGTONE);
         reminderRingtonePreference.setRequestPermissionsCode(this, REQUEST_PERMISSIONS);
-        initList(KEY_REMINDER_STREAM);
+        ListPreference reminderPreference = initList(KEY_REMINDER_STREAM);
+        if (reminderPreference != null) {
+            reminderPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    RingtonePreference ringtonePreference = reminderRingtonePreference;
+                    if (ringtonePreference == null) return false;
+                    String value = newValue.toString();
+                    int audioStreamType = isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
+                    int ringType;
+                    if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+                        ringType = RingtoneManager.TYPE_NOTIFICATION;
+                    } else {
+                        ringType = RingtoneManager.TYPE_ALARM;
+                    }
+                    ringtonePreference.setRingtoneType(ringType);
+                    return true;
+                }
+            });
+        }
 
         initList(KEY_COORDS_FORMAT);
         initList(KEY_COMPASS_BEARING);
         validateIntent("date_time_settings");
-    }
-
-    @Override
-    protected boolean onListPreferenceChange(ListPreference preference, Object newValue) {
-        boolean result = super.onListPreferenceChange(preference, newValue);
-
-        String key = preference.getKey();
-        if (KEY_REMINDER_STREAM.equals(key) && (reminderRingtonePreference != null)) {
-            String value = newValue.toString();
-            int audioStreamType = isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
-            int ringType;
-            if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-                ringType = RingtoneManager.TYPE_NOTIFICATION;
-            } else {
-                ringType = RingtoneManager.TYPE_ALARM;
-            }
-            reminderRingtonePreference.setRingtoneType(ringType);
-        }
-        return result;
     }
 
     @Override

@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher"
-        android:supportsRtl="false"
+        android:supportsRtl="true"
         android:theme="@style/Theme.Zmanim.DayNight"
         tools:replace="android:name">
         <activity
@@ -169,6 +169,9 @@
             </intent-filter>
         </receiver>
 
+        <service
+            android:name="com.github.times.remind.ZmanimReminderService"
+            android:exported="false" />
         <service
             android:name="com.github.times.appwidget.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />

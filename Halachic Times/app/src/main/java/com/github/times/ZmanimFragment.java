@@ -369,7 +369,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             inflater.inflate(R.layout.divider, list);
         }
         View row = inflater.inflate(preferences.isDarkTheme() ? R.layout.date_group : R.layout.date_group_light, list, false);
-        TextView text = row.findViewById(android.R.id.title);
+        TextView text = row.findViewById(R.id.title);
         text.setText(label);
         list.addView(row);
     }

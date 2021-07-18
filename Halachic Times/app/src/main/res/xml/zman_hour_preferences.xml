@@ -9,17 +9,17 @@
             android:entryValues="@array/hour_values"
             android:icon="@drawable/ic_settings_opinion"
             android:key="@string/opinion_name_hour"
-            android:title="@string/opinion"/>
+            android:title="@string/opinion" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_appearance_title">
         <CheckBoxPreference
             android:defaultValue="@bool/hour_visible_defaultValue"
             android:key="hour.visible"
-            android:title="@string/hour_title"/>
+            android:title="@string/hour_title" />
         <CheckBoxPreference
             android:defaultValue="@bool/emphasis_defaultValue"
             android:key="hour.emphasis"
-            android:title="@string/emphasis_title"/>
+            android:title="@string/emphasis_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

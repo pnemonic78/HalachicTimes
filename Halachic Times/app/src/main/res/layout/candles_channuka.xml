@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/black"
     android:gravity="center"
     android:orientation="horizontal"
@@ -15,7 +14,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_0"/>
+        tools:src="@drawable/candle_0" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_7"
@@ -23,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_1"/>
+        tools:src="@drawable/candle_1" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_6"
@@ -31,7 +30,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_2"/>
+        tools:src="@drawable/candle_2" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_5"
@@ -39,7 +38,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_3"/>
+        tools:src="@drawable/candle_3" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_shamash"
@@ -48,7 +47,7 @@
         android:layout_weight="1"
         android:contentDescription="@string/candles"
         android:paddingBottom="48dp"
-        tools:src="@drawable/candle_4"/>
+        tools:src="@drawable/candle_4" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_4"
@@ -56,7 +55,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_5"/>
+        tools:src="@drawable/candle_5" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_3"
@@ -64,7 +63,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_6"/>
+        tools:src="@drawable/candle_6" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_2"
@@ -72,7 +71,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_7"/>
+        tools:src="@drawable/candle_7" />
 
     <com.github.times.CandleView
         android:id="@+id/candle_1"
@@ -80,6 +79,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:contentDescription="@string/candles"
-        tools:src="@drawable/candle_0"/>
+        tools:src="@drawable/candle_0" />
 
 </LinearLayout>

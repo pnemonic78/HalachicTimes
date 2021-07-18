@@ -116,9 +116,13 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
 
         final Context context = this.context;
         final String pkg = context.getPackageName();
-        RemoteViews view;
 
         ZmanimItem item = items.get(position);
+        if (item == null) {
+            return null;
+        }
+
+        RemoteViews view;
         if (item.isCategory()) {
             view = new RemoteViews(pkg, R.layout.widget_date);
             bindViewGrouping(view, position, item.timeLabel);
@@ -187,7 +191,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         populater.populate(adapter, false);
         this.adapter = adapter;
 
-        items.clear();
+        List<ZmanimItem> items = new ArrayList<>();
 
         JewishCalendar jcal = adapter.getJewishCalendar();
         final ZmanimItem itemToday = new ZmanimItem(adapter.formatDate(context, jcal));
@@ -260,6 +264,9 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                 items.add(item);
             }
         }
+
+        this.items.clear();
+        this.items.addAll(items);
     }
 
     /**
@@ -270,14 +277,14 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
      * @param item     the zman item.
      */
     private void bindView(RemoteViews row, int position, ZmanimItem item) {
-        row.setTextViewText(android.R.id.title, item.title);
+        row.setTextViewText(R.id.title, item.title);
         row.setTextViewText(R.id.time, item.timeLabel);
         if (item.elapsed) {
             // Using {@code row.setBoolean(id, "setEnabled", enabled)} throws error.
-            row.setTextColor(android.R.id.title, colorDisabled);
+            row.setTextColor(R.id.title, colorDisabled);
             row.setTextColor(R.id.time, colorDisabled);
         } else {
-            row.setTextColor(android.R.id.title, colorEnabled);
+            row.setTextColor(R.id.title, colorEnabled);
             row.setTextColor(R.id.time, colorEnabled);
         }
         // Enable clicking to open the main activity.

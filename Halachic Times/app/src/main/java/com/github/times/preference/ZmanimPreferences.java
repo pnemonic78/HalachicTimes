@@ -27,6 +27,7 @@ import com.github.preference.LocalePreferences;
 import com.github.preference.ThemePreferences;
 import com.github.times.location.LocationPreferences;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 
 /**
@@ -507,6 +508,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * @param id the time id.
      * @return the key - {@code null} otherwise.
      */
+    @Nullable
     String toKey(int id);
 
     /**
@@ -523,6 +525,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * @return the ringtone.
      * @see RingtoneManager#getDefaultUri(int)
      */
+    @Nullable
     Uri getReminderRingtone();
 
     boolean isReminderSunday(int id);
