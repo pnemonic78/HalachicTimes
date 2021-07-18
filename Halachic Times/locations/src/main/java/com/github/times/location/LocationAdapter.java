@@ -99,7 +99,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      * @param listener the item listener.
      */
     public LocationAdapter(Context context, List<LocationItem> items, LocationItemListener listener) {
-        super(R.layout.location, android.R.id.title, items);
+        super(R.layout.location, R.id.title, items);
         setHasStableIds(false);
         collator = Collator.getInstance();
         collator.setStrength(Collator.PRIMARY);

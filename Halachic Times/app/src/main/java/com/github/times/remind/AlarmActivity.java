@@ -117,7 +117,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         setContentView(R.layout.alarm_activity);
 
         timeView = findViewById(R.id.time);
-        titleView = findViewById(android.R.id.title);
+        titleView = findViewById(R.id.title);
         dismissView = findViewById(R.id.reminder_dismiss);
         dismissView.setOnClickListener(this);
 

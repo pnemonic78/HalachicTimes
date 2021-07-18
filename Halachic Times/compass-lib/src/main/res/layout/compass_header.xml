@@ -11,7 +11,7 @@
     <include layout="@layout/times_location"/>
 
     <TextView
-        android:id="@android:id/summary"
+        android:id="@+id/summary"
         style="@style/Widget.Compass.Holiest.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

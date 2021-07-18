@@ -23,7 +23,7 @@
         android:gravity="right">
 
         <TextView
-            android:id="@android:id/title"
+            android:id="@+id/title"
             style="@style/AppWidget.Title.Odd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

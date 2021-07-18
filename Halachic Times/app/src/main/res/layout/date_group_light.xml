@@ -11,7 +11,7 @@
     android:paddingBottom="2dp">
 
     <TextView
-        android:id="@android:id/title"
+        android:id="@+id/title"
         style="@style/Widget.Date.Text.Light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

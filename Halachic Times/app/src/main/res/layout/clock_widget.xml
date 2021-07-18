@@ -18,7 +18,7 @@
         tools:text="@tools:sample/date/hhmm" />
 
     <TextView
-        android:id="@android:id/title"
+        android:id="@+id/title"
         style="@style/AppWidget.Clock.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

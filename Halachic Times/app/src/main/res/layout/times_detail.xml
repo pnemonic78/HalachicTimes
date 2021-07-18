@@ -11,12 +11,12 @@
     android:paddingBottom="8dp">
 
     <TextView
-        android:id="@android:id/title"
+        android:id="@id/title"
         style="@style/Widget.Detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        tools:text="@tools:sample/lorem" />
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/time"

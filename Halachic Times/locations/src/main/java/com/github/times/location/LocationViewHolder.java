@@ -41,7 +41,7 @@ class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.Lo
 
         this.cityName = textView;
         this.coordinates = itemView.findViewById(R.id.coordinates);
-        this.favorite = itemView.findViewById(android.R.id.checkbox);
+        this.favorite = itemView.findViewById(R.id.checkbox);
 
         this.itemListener = itemListener;
         itemView.setOnClickListener(this);

@@ -137,7 +137,7 @@ public class ClockWidget extends ZmanimAppWidget {
             spans.setSpan(new StyleSpan(Typeface.BOLD), spanStart, spanEnd, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         }
         list.setTextViewText(R.id.time, spans);
-        list.setTextViewText(android.R.id.title, item.title);
+        list.setTextViewText(R.id.title, item.title);
         return true;
     }
 
