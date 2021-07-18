@@ -40,7 +40,7 @@ object BuildVersions {
 
     // App dependencies
     const val androidTestVersion = "1.3.0"
-    const val junitVersion = "4.13"
+    const val junitVersion = "4.13.2"
     const val okhttpVersion = "4.8.0"
     const val retrofit2Version = "2.9.0"
     const val roomVersion = "2.3.0"

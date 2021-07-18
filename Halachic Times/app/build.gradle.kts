@@ -117,12 +117,12 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.5.0")
+    implementation("androidx.work:work-runtime:2.6.0-beta01")
 
     // Testing
-    testImplementation("junit:junit:4.13")
+    testImplementation("junit:junit:${BuildVersions.junitVersion}")
     androidTestImplementation("androidx.test:core:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
 }
