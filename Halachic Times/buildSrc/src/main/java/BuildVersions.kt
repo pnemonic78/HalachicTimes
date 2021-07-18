@@ -34,7 +34,7 @@ object BuildVersions {
     const val kotlin_version = "1.4.32"
     const val nav_version = "2.3.5"
 
-    const val minSdkVersion = 16
+    const val minSdkVersion = 17
     const val compileSdkVersion = 30
     const val targetSdkVersion = 29
 

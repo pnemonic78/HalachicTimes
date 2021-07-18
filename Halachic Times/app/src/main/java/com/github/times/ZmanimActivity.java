@@ -36,12 +36,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.github.app.LocaleCallbacks;
@@ -59,7 +58,7 @@ import com.github.times.preference.ZmanimPreferenceActivity;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
-import com.github.view.animation.LayoutWeightAnimation;
+import com.github.view.animation.ConstraintLayoutWeightAnimation;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -128,9 +127,13 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
      */
     private TextView headerGregorianDate;
     /**
-     * The navigation bar.
+     * The button to navigate to yesterday.
      */
-    private View navigationBar;
+    private View buttonYesterday;
+    /**
+     * The button to navigate to tomorrow.
+     */
+    private View buttonTomorrow;
     /**
      * The preferences.
      */
@@ -386,12 +389,12 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             Animation outAnim = AnimationUtils.makeOutAnimation(context, true);
             viewSwitcher.setOutAnimation(outAnim);
         } else {
-            LinearLayout.LayoutParams detailsFragmentSwitcherLayoutParams = (LinearLayout.LayoutParams) detailsFragmentSwitcher.getLayoutParams();
-            float detailsWeight = detailsFragmentSwitcherLayoutParams.weight;
+            ConstraintLayout.LayoutParams detailsFragmentSwitcherLayoutParams = (ConstraintLayout.LayoutParams) detailsFragmentSwitcher.getLayoutParams();
+            float detailsWeight = detailsFragmentSwitcherLayoutParams.horizontalWeight;
             long detailsAnimTime = context.getResources().getInteger(android.R.integer.config_mediumAnimTime);
-            detailsGrow = new LayoutWeightAnimation(detailsFragmentSwitcher, 0f, detailsWeight);
+            detailsGrow = new ConstraintLayoutWeightAnimation(detailsFragmentSwitcher, 0f, detailsWeight);
             detailsGrow.setDuration(detailsAnimTime);
-            detailsShrink = new LayoutWeightAnimation(detailsFragmentSwitcher, detailsWeight, 0f);
+            detailsShrink = new ConstraintLayoutWeightAnimation(detailsFragmentSwitcher, detailsWeight, 0f);
             detailsShrink.setDuration(detailsAnimTime);
         }
 
@@ -400,12 +403,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         headerGregorianDate = header.findViewById(R.id.date_gregorian);
         headerLocation = header.findViewById(R.id.coordinates);
         headerAddress = header.findViewById(R.id.address);
-        navigationBar = header.findViewById(R.id.navigation_bar);
 
-        View iconBack = navigationBar.findViewById(R.id.nav_yesterday);
-        iconBack.setOnClickListener(this);
-        View iconForward = navigationBar.findViewById(R.id.nav_tomorrow);
-        iconForward.setOnClickListener(this);
+        buttonYesterday = header.findViewById(R.id.nav_yesterday);
+        buttonYesterday.setOnClickListener(this);
+        buttonTomorrow = header.findViewById(R.id.nav_tomorrow);
+        buttonTomorrow.setOnClickListener(this);
 
         slideRightToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
         slideLeftToRight = AnimationUtils.loadAnimation(context, R.anim.slide_left_to_right);
@@ -610,15 +612,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.header:
-            case R.id.navigation_bar:
-                Animation anim = navigationBar.getAnimation();
-                if ((anim == null) || anim.hasEnded()) {
-                    if (navigationBar.getVisibility() == View.VISIBLE) {
-                        navigationBar.startAnimation(hideNavigation);
-                    } else {
-                        navigationBar.startAnimation(showNavigation);
-                    }
-                }
+                toggleNavigationView();
                 break;
             case R.id.nav_yesterday:
                 navigateYesterday();
@@ -632,6 +626,25 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         }
     }
 
+    private void toggleNavigationView() {
+        Animation anim = buttonYesterday.getAnimation();
+        if ((anim == null) || anim.hasEnded()) {
+            if (buttonYesterday.getVisibility() == View.VISIBLE) {
+                buttonYesterday.startAnimation(hideNavigation);
+            } else {
+                buttonYesterday.startAnimation(showNavigation);
+            }
+        }
+        anim = buttonTomorrow.getAnimation();
+        if ((anim == null) || anim.hasEnded()) {
+            if (buttonTomorrow.getVisibility() == View.VISIBLE) {
+                buttonTomorrow.startAnimation(hideNavigation);
+            } else {
+                buttonTomorrow.startAnimation(showNavigation);
+            }
+        }
+    }
+
     protected void hideDetails() {
         if (viewSwitcher != null) {
             viewSwitcher.setDisplayedChild(CHILD_MAIN);
@@ -642,7 +655,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                 detailsListFragment.setVisibility(View.INVISIBLE);
             if (candlesFragment != null)
                 candlesFragment.setVisibility(View.INVISIBLE);
-        } else {
+        } else if (detailsShrink != null) {
             detailsFragmentSwitcher.startAnimation(detailsShrink);
         }
         selectedId = 0;
@@ -651,7 +664,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     protected void showDetails() {
         if (viewSwitcher != null) {
             viewSwitcher.setDisplayedChild(CHILD_DETAILS);
-        } else {
+        } else if (detailsGrow != null) {
             detailsFragmentSwitcher.startAnimation(detailsGrow);
         }
     }
@@ -660,8 +673,8 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         if ((detailsFragmentSwitcher == null) || (detailsFragmentSwitcher.getVisibility() != View.VISIBLE))
             return false;
         if (viewSwitcher == null) {
-            LinearLayout.LayoutParams lp = (LayoutParams) detailsFragmentSwitcher.getLayoutParams();
-            return (lp.weight > 0);
+            ConstraintLayout.LayoutParams lp = (ConstraintLayout.LayoutParams) detailsFragmentSwitcher.getLayoutParams();
+            return (lp.horizontalWeight > 0);
         }
         return (viewSwitcher.getDisplayedChild() == CHILD_DETAILS);
     }
@@ -838,13 +851,24 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        if (navigationBar != null) {
+        final View buttonYesterday = this.buttonYesterday;
+        if (buttonYesterday != null) {
             if (animation == hideNavigation) {
-                navigationBar.setVisibility(View.INVISIBLE);
-                navigationBar.setEnabled(false);
+                buttonYesterday.setVisibility(View.INVISIBLE);
+                buttonYesterday.setEnabled(false);
             } else if (animation == showNavigation) {
-                navigationBar.setVisibility(View.VISIBLE);
-                navigationBar.setEnabled(true);
+                buttonYesterday.setVisibility(View.VISIBLE);
+                buttonYesterday.setEnabled(true);
+            }
+        }
+        final View buttonTomorrow = this.buttonTomorrow;
+        if (buttonTomorrow != null) {
+            if (animation == hideNavigation) {
+                buttonTomorrow.setVisibility(View.INVISIBLE);
+                buttonTomorrow.setEnabled(false);
+            } else if (animation == showNavigation) {
+                buttonTomorrow.setVisibility(View.VISIBLE);
+                buttonTomorrow.setEnabled(true);
             }
         }
     }

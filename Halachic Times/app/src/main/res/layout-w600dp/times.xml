@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:baselineAligned="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include
         android:id="@+id/header"
         layout="@layout/times_header" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:baselineAligned="false"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <fragment
             android:id="@+id/list_fragment"
             android:name="com.github.times.ZmanimFragment"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/details_divider"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout="@layout/times_list" />
 
         <View
+            android:id="@+id/details_divider"
             android:layout_width="2dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/fragment_divider" />
+            android:layout_height="0dp"
+            android:background="@drawable/fragment_divider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/details_fragment"
+            app:layout_constraintStart_toEndOf="@id/list_fragment"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ViewSwitcher
             android:id="@+id/details_fragment"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="2"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="2"
+            app:layout_constraintStart_toEndOf="@id/details_divider"
+            app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/red_x40">
 
             <fragment
                 android:id="@+id/details_list_fragment"
                 android:name="com.github.times.ZmanimDetailsFragment"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 tools:layout="@layout/times_list" />
 
             <fragment
                 android:id="@+id/candles_fragment"
                 android:name="com.github.times.CandlesFragment"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 tools:layout="@layout/times_list" />
         </ViewSwitcher>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

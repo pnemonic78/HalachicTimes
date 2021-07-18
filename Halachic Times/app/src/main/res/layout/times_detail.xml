@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Widget.ListItem"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="8dp"
+    android:paddingStart="8dp"
     android:paddingTop="8dp"
-    android:paddingRight="?android:attr/scrollbarSize"
+    android:paddingEnd="?android:attr/scrollbarSize"
     android:paddingBottom="8dp">
 
     <TextView
-        android:id="@id/title"
+        android:id="@+id/title"
         style="@style/Widget.Detail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@id/time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/lorem/random" />
 
     <TextView
@@ -23,7 +26,8 @@
         style="@style/Widget.Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/date/hhmm" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

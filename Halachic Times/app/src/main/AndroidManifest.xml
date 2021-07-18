@@ -30,7 +30,7 @@
         android:label="@string/app_name"
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher"
-        android:supportsRtl="false"
+        android:supportsRtl="true"
         android:theme="@style/Theme.Zmanim.DayNight"
         tools:replace="android:name">
         <activity

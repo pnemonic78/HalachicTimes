@@ -155,4 +155,8 @@
         <item name="android:textSize">@dimen/reminder_title</item>
     </style>
 
+    <style name="Widget.Header.Date" parent="Widget.TextView.Small">
+        <item name="android:maxLines">1</item>
+    </style>
+
 </resources>
