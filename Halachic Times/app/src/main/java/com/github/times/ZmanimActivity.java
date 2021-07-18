@@ -60,8 +60,6 @@ import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
 import com.github.view.animation.ConstraintLayoutWeightAnimation;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
 
@@ -213,7 +211,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         }
 
         @Override
-        public void handleMessage(@NotNull Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             final ZmanimActivity activity = activityWeakReference.get();
             if (activity == null) {
                 return;

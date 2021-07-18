@@ -16,15 +16,10 @@
 package com.github.times.location;
 
 import android.content.ComponentCallbacks2;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.github.times.location.impl.LocationsProviderFactoryImpl;
-
 import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
@@ -87,7 +82,7 @@ public class LocationHolder<AP extends AddressProvider, LP extends LocationsProv
     }
 
     @Override
-    public void onConfigurationChanged(@NotNull Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         Timber.w("Configuration Changed: %s", newConfig);
         dispose();
     }
