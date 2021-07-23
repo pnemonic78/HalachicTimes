@@ -83,8 +83,9 @@ android {
         }
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"))
-            proguardFiles("proguard-rules.pro")
+            isShrinkResources = true
+            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile("proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
@@ -130,5 +131,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation ("com.google.firebase:firebase-crashlytics:18.1.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.1.0")
 }

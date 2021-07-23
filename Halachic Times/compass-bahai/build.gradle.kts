@@ -41,8 +41,8 @@ android {
         }
         getByName("release") {
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"))
-            proguardFiles("proguard-rules.pro")
+            proguardFile(getDefaultProguardFile("proguard-android.txt"))
+            proguardFile("proguard-rules.pro")
             signingConfig = signingConfigs.getByName("release")
         }
     }
