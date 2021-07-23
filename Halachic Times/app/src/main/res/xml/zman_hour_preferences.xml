@@ -12,11 +12,11 @@
             android:title="@string/opinion" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_appearance_title">
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="@bool/hour_visible_defaultValue"
             android:key="hour.visible"
             android:title="@string/hour_title" />
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="@bool/emphasis_defaultValue"
             android:key="hour.emphasis"
             android:title="@string/emphasis_title" />
