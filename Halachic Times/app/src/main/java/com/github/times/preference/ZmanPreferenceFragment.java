@@ -26,19 +26,17 @@ import android.text.TextUtils;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
+import androidx.annotation.XmlRes;
 import androidx.core.content.PermissionChecker;
-import androidx.preference.CheckBoxPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
+import androidx.preference.TwoStatePreference;
 
 import com.github.preference.SimplePreferences;
 import com.github.times.R;
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE;
 
@@ -49,13 +47,12 @@ import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE
 public class ZmanPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     public static final String EXTRA_XML = "xml";
-    public static final String EXTRA_OPINION = "opinion";
     public static final String EXTRA_REMINDER = "reminder";
 
     private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
 
-    private int xmlId;
-    private final Set<String> opinionKeys = new HashSet<>(1);
+    @XmlRes
+    private int xmlId = 0;
     private Preference preferenceReminderSunday;
     private Preference preferenceReminderMonday;
     private Preference preferenceReminderTuesday;
@@ -67,38 +64,11 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        Bundle args = getArguments();
-        String xmlName = args.getString(EXTRA_XML);
-        int indexSlash = xmlName.lastIndexOf('/');
-        if (indexSlash >= 0) {
-            xmlName = xmlName.substring(indexSlash + 1);
-        }
-        int indexDot = xmlName.indexOf('.');
-        if (indexDot >= 0) {
-            xmlName = xmlName.substring(0, indexDot);
-        }
-        Resources res = getResources();
-        this.xmlId = res.getIdentifier(xmlName, "xml", getActivity().getPackageName());
-        String opinionKey = args.getString(EXTRA_OPINION);
-        String reminderKey = args.getString(EXTRA_REMINDER);
-
         super.onCreatePreferences(savedInstanceState, rootKey);
 
-        opinionKeys.clear();
-        if (!TextUtils.isEmpty(opinionKey)) {
-            if (opinionKey.indexOf(';') > 0) {
-                String[] tokens = opinionKey.split(";");
-                for (String token : tokens) {
-                    if (initOpinionPreference(token) != null) {
-                        opinionKeys.add(token);
-                    }
-                }
-            } else {
-                if (initOpinionPreference(opinionKey) != null) {
-                    opinionKeys.add(opinionKey);
-                }
-            }
-        }
+        Bundle args = requireArguments();
+        String reminderKey = args.getString(EXTRA_REMINDER);
+
         Preference preferenceReminder = initList(reminderKey);
         if (preferenceReminder != null) {
             preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -119,6 +89,15 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
 
     @Override
     protected int getPreferencesXml() {
+        if (xmlId == 0) {
+            Bundle args = requireArguments();
+            String xmlName = args.getString(EXTRA_XML);
+
+            final Context context = requireContext();
+            String pkgName = context.getPackageName();
+            Resources res = context.getResources();
+            this.xmlId = res.getIdentifier(xmlName, "xml", pkgName);
+        }
         return xmlId;
     }
 
@@ -171,14 +150,14 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     }
 
     @Nullable
-    protected CheckBoxPreference initReminderDay(String key) {
+    protected TwoStatePreference initReminderDay(String key) {
         if (TextUtils.isEmpty(key)) {
             return null;
         }
 
         Preference pref = findPreference(key);
         if (pref != null) {
-            CheckBoxPreference checkBox = (CheckBoxPreference) pref;
+            TwoStatePreference checkBox = (TwoStatePreference) pref;
             checkBox.setOnPreferenceChangeListener(this);
             return checkBox;
         }
