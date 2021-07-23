@@ -47,6 +47,7 @@ import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE
 public class ZmanPreferenceFragment extends com.github.preference.AbstractPreferenceFragment {
 
     public static final String EXTRA_XML = "xml";
+    public static final String EXTRA_OPINION = "opinion";
     public static final String EXTRA_REMINDER = "reminder";
 
     private static final int REQUEST_PERMISSIONS = 0x702E; // TONE
@@ -67,24 +68,11 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         super.onCreatePreferences(savedInstanceState, rootKey);
 
         Bundle args = requireArguments();
+        String opinionKey = args.getString(EXTRA_OPINION);
         String reminderKey = args.getString(EXTRA_REMINDER);
 
-        Preference preferenceReminder = initList(reminderKey);
-        if (preferenceReminder != null) {
-            preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    requestReminderPermissions();
-                    remind();
-                    return true;
-                }
-            });
-        } else {
-            preferenceReminder = initTime(reminderKey);
-        }
-        if (preferenceReminder != null) {
-            initReminderDays(preferenceReminder);
-        }
+        initOpinion(opinionKey);
+        initReminder(reminderKey);
     }
 
     @Override
@@ -111,6 +99,38 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
         return preferences;
     }
 
+    private void initOpinion(String opinionKey) {
+        if (!TextUtils.isEmpty(opinionKey)) {
+            if (opinionKey.indexOf(';') > 0) {
+                String[] tokens = opinionKey.split(";");
+                for (String token : tokens) {
+                    initOpinionPreference(token);
+                }
+            } else {
+                initOpinionPreference(opinionKey);
+            }
+        }
+    }
+
+    private void initReminder(String reminderKey) {
+        Preference preferenceReminder = initList(reminderKey);
+        if (preferenceReminder != null) {
+            preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    requestReminderPermissions();
+                    remind();
+                    return true;
+                }
+            });
+        } else {
+            preferenceReminder = initTime(reminderKey);
+        }
+        if (preferenceReminder != null) {
+            initReminderDays(preferenceReminder);
+        }
+    }
+
     @Nullable
     private Preference initOpinionPreference(String key) {
         Preference preference;
@@ -126,10 +146,12 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             });
             return preference;
         }
+
         preference = initRingtone(key);
         if (preference != null) {
             return preference;
         }
+
         preference = initTime(key);
         if (preference != null) {
             return preference;
