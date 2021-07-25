@@ -2,7 +2,7 @@ package com.github.times;
 
 import org.junit.Test;
 
-public class CandleTests {
+public class CandleUnitTests {
 
     @Test
     public void lightNothing() {
