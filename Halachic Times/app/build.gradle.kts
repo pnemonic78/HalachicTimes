@@ -15,12 +15,12 @@ val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
 val versionMinor = (project.properties["APP_VERSION_MINOR"] as String).toInt()
 
 android {
-    compileSdkVersion(BuildVersions.compileSdkVersion)
+    compileSdk = BuildVersions.compileSdkVersion
 
     defaultConfig {
-        applicationId("net.sf.times")
-        minSdkVersion(BuildVersions.minSdkVersion)
-        targetSdkVersion(BuildVersions.targetSdkVersion)
+        applicationId = "net.sf.times"
+        minSdk = BuildVersions.minSdkVersion
+        targetSdk = BuildVersions.targetSdkVersion
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
 
@@ -50,13 +50,12 @@ android {
             "sv",
             "uk"
         )
-        resConfigs(locales)
+        resourceConfigurations += locales
         buildConfigField("String[]", "LOCALES", joinStrings(locales))
 
         manifestPlaceholders["offline"] = false
 
-        testApplicationId("net.sf.times.test")
-        testInstrumentationRunner("androidx.test.runner.AndroidJUnitRunner")
+        testApplicationId = "net.sf.times.test"
     }
 
     compileOptions {
@@ -90,7 +89,7 @@ android {
         }
     }
 
-    flavorDimensions("internet")
+    flavorDimensions += "internet"
     productFlavors {
         create("normal") {
             dimension = "internet"
@@ -122,7 +121,7 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.6.0-beta01")
+    implementation("androidx.work:work-runtime:2.6.0-beta02")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
@@ -131,5 +130,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.1.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.2.0")
 }

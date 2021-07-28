@@ -7,15 +7,15 @@ val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
 val versionMinor = (project.properties["APP_VERSION_MINOR"] as String).toInt()
 
 android {
-    compileSdkVersion(BuildVersions.compileSdkVersion)
+    compileSdk = BuildVersions.compileSdkVersion
 
     defaultConfig {
-        applicationId("net.sf.times.compass")
-        minSdkVersion(BuildVersions.minSdkVersion)
-        targetSdkVersion(BuildVersions.targetSdkVersion)
+        applicationId = "net.sf.times.compass"
+        minSdk = BuildVersions.minSdkVersion
+        targetSdk = BuildVersions.targetSdkVersion
         versionCode = versionMajor * 100 + versionMinor
         versionName = "${versionMajor}." + versionMinor.toString().padStart(2, '0')
-        resConfigs(
+        val locales = listOf(
             "bg",
             "cs",
             "da",
@@ -44,6 +44,7 @@ android {
             "tr",
             "uk"
         )
+        resourceConfigurations += locales
     }
 
     compileOptions {
