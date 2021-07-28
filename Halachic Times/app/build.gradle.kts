@@ -101,7 +101,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         disable("GoogleAppIndexingWarning")
         //disable("IconLauncherFormat") // v26 has XML (non-PNG) adaptive icons.
         disable("InconsistentLayout")

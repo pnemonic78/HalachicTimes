@@ -36,7 +36,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         disable("LocaleFolder")
         disable("RtlHardcoded")
         disable("UnusedAttribute")

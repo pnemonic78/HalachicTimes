@@ -77,7 +77,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         disable("GoogleAppIndexingWarning")
         disable("InconsistentLayout")
         disable("LocaleFolder")
