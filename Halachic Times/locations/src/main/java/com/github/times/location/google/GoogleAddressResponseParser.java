@@ -71,6 +71,7 @@ class GoogleAddressResponseParser extends AddressResponseParser {
     }
 
     private void handleResponse(GeocodingResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
+        if (response == null) return;
         if (!response.successful()) {
             throw new LocationException(response.errorMessage);
         }

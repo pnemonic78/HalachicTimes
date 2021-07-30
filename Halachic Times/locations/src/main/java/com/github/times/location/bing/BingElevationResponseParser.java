@@ -67,6 +67,7 @@ public class BingElevationResponseParser extends ElevationResponseParser {
     }
 
     private void handleResponse(BingResponse response, List<Location> results, double latitude, double longitude, int maxResults) throws LocationException {
+        if (response == null) return;
         if (response.statusCode != BingResponse.STATUS_OK) {
             throw new LocationException(response.statusDescription);
         }
@@ -85,6 +86,7 @@ public class BingElevationResponseParser extends ElevationResponseParser {
         Location location;
         final int size = Math.min(maxResults, resources.size());
         for (BingResource resource : resources) {
+            if (resource == null) continue;
             location = toLocation(resource, latitude, longitude);
             if (location != null) {
                 results.add(location);

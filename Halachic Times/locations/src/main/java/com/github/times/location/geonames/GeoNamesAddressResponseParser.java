@@ -18,6 +18,9 @@ package com.github.times.location.geonames;
 import android.location.Address;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.json.UriAdapter;
 import com.github.times.location.AddressResponseParser;
 import com.github.times.location.LocationException;
@@ -37,9 +40,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 /**
  * Handler for parsing the GeoNames response for addresses.
@@ -71,6 +71,7 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
     }
 
     private void handleResponse(double latitude, double longitude, GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
+        if (response == null) return;
         final List<Toponym> records = response.records;
         Address address;
 
@@ -96,6 +97,7 @@ public class GeoNamesAddressResponseParser extends AddressResponseParser {
         final int size = Math.min(records.size(), maxResults);
         for (int i = 0; i < size; i++) {
             toponym = records.get(i);
+            if (toponym == null) continue;
             address = toAddress(toponym, locale);
             if (address != null) {
                 results.add(address);

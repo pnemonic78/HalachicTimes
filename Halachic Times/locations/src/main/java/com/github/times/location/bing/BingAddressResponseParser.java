@@ -88,6 +88,7 @@ public class BingAddressResponseParser extends AddressResponseParser {
         final int size = Math.min(resources.size(), maxResults);
         for (int i = 0; i < size; i++) {
             resource = resources.get(i);
+            if (resource == null) continue;
             address = toAddress(resource, locale);
             if (address != null) {
                 results.add(address);

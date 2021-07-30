@@ -66,6 +66,7 @@ class GoogleElevationResponseParser extends ElevationResponseParser {
     }
 
     private void handleResponse(ElevationResponse response, List<Location> results, int maxResults) throws LocationException {
+        if (response == null) return;
         if (!response.successful()) {
             throw new LocationException(response.errorMessage);
         }
