@@ -15,8 +15,11 @@
  */
 package com.github.times.preference;
 
+import static com.github.preference.LocalePreferences.KEY_LOCALE;
+import static com.github.preference.ThemePreferences.KEY_THEME;
+import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
+
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.preference.PreferenceFragmentCompat;
@@ -26,10 +29,6 @@ import com.github.app.LocaleHelper;
 import com.github.preference.LocalePreferences;
 import com.github.preference.PreferenceActivity;
 import com.github.times.compass.preference.MainPreferencesFragment;
-
-import static com.github.preference.LocalePreferences.KEY_LOCALE;
-import static com.github.preference.ThemePreferences.KEY_THEME;
-import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
 
 /**
  * Application preferences that populate the settings.
@@ -46,9 +45,7 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            applyOverrideConfiguration(context.getResources().getConfiguration());
-        }
+        applyOverrideConfiguration(context.getResources().getConfiguration());
     }
 
     @Override

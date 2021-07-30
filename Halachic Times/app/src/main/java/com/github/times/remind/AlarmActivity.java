@@ -15,10 +15,15 @@
  */
 package com.github.times.remind;
 
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.times.ZmanimItem.NEVER;
+import static com.github.util.TimeUtils.roundUp;
+import static java.lang.System.currentTimeMillis;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -52,12 +57,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import timber.log.Timber;
-
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static com.github.times.ZmanimItem.NEVER;
-import static com.github.util.TimeUtils.roundUp;
-import static java.lang.System.currentTimeMillis;
 
 /**
  * Shows a reminder alarm for a (<em>zman</em>).
@@ -95,9 +94,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            applyOverrideConfiguration(context.getResources().getConfiguration());
-        }
+        applyOverrideConfiguration(context.getResources().getConfiguration());
     }
 
     @Override

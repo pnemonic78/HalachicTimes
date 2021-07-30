@@ -18,7 +18,6 @@ package com.github.times.compass;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,9 +46,7 @@ public class CompassActivity extends BaseCompassActivity {
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            applyOverrideConfiguration(context.getResources().getConfiguration());
-        }
+        applyOverrideConfiguration(context.getResources().getConfiguration());
     }
 
     @Override

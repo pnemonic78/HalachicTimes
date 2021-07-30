@@ -34,9 +34,7 @@ public class LocationData {
 
         data.putString(key + DATA_PROVIDER, location.getProvider());
         data.putLong(key + DATA_TIME, location.getTime());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            data.putLong(key + DATA_ELAPSED_REALTIME_NANOS, location.getElapsedRealtimeNanos());
-        }
+        data.putLong(key + DATA_ELAPSED_REALTIME_NANOS, location.getElapsedRealtimeNanos());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             data.putDouble(key + DATA_ELAPSED_REALTIME_UNCERTAINTY_NANOS, location.getElapsedRealtimeUncertaintyNanos());
         }
@@ -66,9 +64,7 @@ public class LocationData {
         Location location = new Location(provider);
         location.setTime(data.getLong(key + DATA_TIME, 0L));
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            location.setElapsedRealtimeNanos(data.getLong(key + DATA_ELAPSED_REALTIME_NANOS, 0L));
-        }
+        location.setElapsedRealtimeNanos(data.getLong(key + DATA_ELAPSED_REALTIME_NANOS, 0L));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             location.setElapsedRealtimeUncertaintyNanos(data.getDouble(key + DATA_ELAPSED_REALTIME_UNCERTAINTY_NANOS, Double.NaN));
         }

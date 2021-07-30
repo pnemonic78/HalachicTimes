@@ -15,6 +15,17 @@
  */
 package com.github.times;
 
+import static android.os.Build.VERSION;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
+import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
+import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static android.text.format.DateUtils.formatDateTime;
+import static com.github.times.ZmanimItem.NEVER;
+import static com.github.util.LocaleUtils.isLocaleRTL;
+import static java.lang.System.currentTimeMillis;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -23,7 +34,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -64,17 +74,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
-
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
-import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
-import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static android.text.format.DateUtils.formatDateTime;
-import static com.github.times.ZmanimItem.NEVER;
-import static com.github.util.LocaleUtils.isLocaleRTL;
-import static java.lang.System.currentTimeMillis;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -270,9 +269,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
 
-        if (VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            applyOverrideConfiguration(context.getResources().getConfiguration());
-        }
+        applyOverrideConfiguration(context.getResources().getConfiguration());
     }
 
     @Override

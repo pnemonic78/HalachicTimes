@@ -69,13 +69,13 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     private fun getRingtone(context: Context): MediaPlayer? {
         var ringtone: MediaPlayer? = this.ringtone
         if (ringtone == null) {
-            val prefRingtone: Uri? = preferences.getReminderRingtone()
+            val prefRingtone: Uri? = preferences.reminderRingtone
             if (prefRingtone != null) {
                 val uri = RingtoneManager.resolveUri(context, prefRingtone) ?: return null
                 ringtone = MediaPlayer()
                 try {
                     ringtone.setDataSource(context, uri)
-                    val audioStreamType: Int = preferences.getReminderStream()
+                    val audioStreamType: Int = preferences.reminderStream
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         val audioAttributes = AudioAttributes.Builder()
                             .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
