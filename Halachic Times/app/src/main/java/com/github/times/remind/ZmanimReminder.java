@@ -414,7 +414,6 @@ public class ZmanimReminder {
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_REMIND);
-        intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
         putReminderItem(item, intent);
         return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
