@@ -93,8 +93,7 @@
             android:name="com.github.times.remind.AlarmActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|navigation"
             android:label="@string/title_activity_alarm"
-            android:launchMode="singleInstance"
-            android:parentActivityName="com.github.times.ZmanimActivity" />
+            android:launchMode="singleInstance" />
         <activity
             android:name="com.github.times.appwidget.ZmanimWidgetConfigure"
             android:label="@string/title_activity_settings"
