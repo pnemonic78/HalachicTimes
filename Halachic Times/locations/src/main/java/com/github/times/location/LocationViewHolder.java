@@ -55,7 +55,6 @@ class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.Lo
         cityName.setText(item.getLabel());
         coordinates.setText(item.getCoordinates());
         favorite.setChecked(item.isFavorite());
-        favorite.setTag(item.getAddress());
     }
 
     public LocationAdapter.LocationItem getItem() {
