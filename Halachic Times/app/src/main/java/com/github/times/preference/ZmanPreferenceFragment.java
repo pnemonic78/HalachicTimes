@@ -64,6 +64,12 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     private ZmanimPreferences preferences;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SimpleZmanimPreferences.init(requireContext());
+    }
+
+    @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
