@@ -72,6 +72,9 @@ class GoogleElevationResponseParser extends ElevationResponseParser {
         }
 
         ElevationResult geocoderResult = response.getResult();
+        if (geocoderResult == null) {
+            return;
+        }
         Location location = toLocation(geocoderResult);
         if (location != null) {
             results.add(location);

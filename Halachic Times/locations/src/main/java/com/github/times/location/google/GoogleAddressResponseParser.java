@@ -87,6 +87,7 @@ class GoogleAddressResponseParser extends AddressResponseParser {
         final int size = Math.min(responseResults.length, maxResults);
         for (int i = 0; i < size; i++) {
             geocoderResult = responseResults[i];
+            if (geocoderResult == null) continue;
             address = toAddress(geocoderResult, locale);
             if (address != null) {
                 results.add(address);
