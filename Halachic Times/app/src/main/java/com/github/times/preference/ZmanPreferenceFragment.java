@@ -121,13 +121,10 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     private void initReminder(String reminderKey) {
         Preference preferenceReminder = initList(reminderKey);
         if (preferenceReminder != null) {
-            preferenceReminder.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    requestReminderPermissions();
-                    remind();
-                    return true;
-                }
+            preferenceReminder.setOnPreferenceChangeListener((preference, newValue) -> {
+                requestReminderPermissions();
+                remind();
+                return true;
             });
         } else {
             preferenceReminder = initTime(reminderKey);

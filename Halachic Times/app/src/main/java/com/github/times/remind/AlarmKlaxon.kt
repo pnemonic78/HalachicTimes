@@ -31,7 +31,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     ) {
         if (requestCode == REQUEST_PERMISSIONS) {
             if (ActivityUtils.isPermissionGranted(PERMISSION_RINGTONE, permissions, grantResults)) {
-                playSound(context)
+                startNoise()
             }
         }
     }
@@ -108,15 +108,43 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
      * Vibrate the device.
      *
      * @param context the context.
-     * @param vibrate `true` to start vibrating - `false` to stop.
+     * @param isVibrate `true` to start vibrating - `false` to stop.
      */
-    private fun vibrate(context: Context, vibrate: Boolean) {
+    private fun vibrate(context: Context, isVibrate: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            vibrate31(context, isVibrate)
+        } else {
+            vibrateLegacy(context, isVibrate)
+        }
+    }
+
+    private fun vibrateLegacy(context: Context, isVibrate: Boolean) {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator ?: return
         if (!vibrator.hasVibrator()) {
             return
         }
-        if (vibrate) {
+        if (isVibrate) {
             vibrator.vibrate(DateUtils.SECOND_IN_MILLIS)
+        } else {
+            vibrator.cancel()
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.S)
+    private fun vibrate31(context: Context, isVibrate: Boolean) {
+        val vibratorManager =
+            context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+        val vibrator = vibratorManager.defaultVibrator
+        if (!vibrator.hasVibrator()) {
+            return
+        }
+        if (isVibrate) {
+            // This ignores all exceptions to stay compatible with pre-O implementations.
+            val vibe = android.os.VibrationEffect.createOneShot(
+                DateUtils.SECOND_IN_MILLIS,
+                android.os.VibrationEffect.DEFAULT_AMPLITUDE
+            )
+            vibrator.vibrate(vibe, null)
         } else {
             vibrator.cancel()
         }
