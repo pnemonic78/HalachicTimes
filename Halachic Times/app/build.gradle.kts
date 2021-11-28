@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
 
     // Add the Firebase Crashlytics plugin.
     id("com.google.gms.google-services")
@@ -121,7 +121,7 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.6.0")
+    implementation("androidx.work:work-runtime:2.7.1")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
@@ -130,5 +130,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.2.3")
+    implementation("com.google.firebase:firebase-crashlytics:18.2.4")
 }

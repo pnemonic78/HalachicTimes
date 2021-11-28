@@ -1,6 +1,6 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
 }
 
 val versionMajor = (project.properties["APP_VERSION_MAJOR"] as String).toInt()
