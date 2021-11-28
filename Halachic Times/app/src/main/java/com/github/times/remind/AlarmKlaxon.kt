@@ -118,6 +118,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun vibrateLegacy(context: Context, isVibrate: Boolean) {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator ?: return
         if (!vibrator.hasVibrator()) {
