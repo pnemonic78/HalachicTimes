@@ -80,15 +80,10 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
     }
 
     @Override
-    protected Runnable createUpdateLocationRunnable() {
+    protected Runnable createUpdateLocationRunnable(Location location) {
         return new Runnable() {
             @Override
             public void run() {
-                // Have we been destroyed?
-                Location location = getAddressLocation();
-                if (location == null)
-                    return;
-
                 bindHeader(location);
 
                 CompassFragment c = fragment;

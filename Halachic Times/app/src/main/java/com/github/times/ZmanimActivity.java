@@ -34,6 +34,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -471,11 +472,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    protected Runnable createUpdateLocationRunnable() {
+    protected Runnable createUpdateLocationRunnable(Location location) {
         return new Runnable() {
             @Override
             public void run() {
-                bindHeader();
+                bindHeader(location);
                 populateFragments(calendar);
             }
         };

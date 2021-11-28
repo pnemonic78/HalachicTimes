@@ -62,8 +62,6 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     private ZmanimAddress address;
     /** Bind the header in UI thread. */
     private Runnable bindHeader;
-    /** Update the location in UI thread. */
-    private Runnable updateLocation;
     /** The location header location. */
     protected TextView headerLocation;
     /** The location header for formatted address. */
@@ -192,16 +190,12 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
             address = null;
         }
         addressLocation = location;
-        Runnable updateLocation = this.updateLocation;
-        if (updateLocation == null) {
-            updateLocation = createUpdateLocationRunnable();
-            this.updateLocation = updateLocation;
-        }
+        Runnable updateLocation = createUpdateLocationRunnable(location);
         runOnUiThread(updateLocation);
         getLocations().findAddress(location);
     }
 
-    protected abstract Runnable createUpdateLocationRunnable();
+    protected abstract Runnable createUpdateLocationRunnable(Location location);
 
     @Override
     public void onProviderDisabled(String provider) {
@@ -286,8 +280,6 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         LocationsProvider locations = getLocations();
         Location addressLocation = getAddressLocation();
         Location location = (addressLocation == null) ? locations.getLocation() : addressLocation;
-        if (location == null)
-            return;
         bindHeader(location);
     }
 
