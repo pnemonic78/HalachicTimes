@@ -60,7 +60,6 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     private static final int REQUEST_WALLPAPER = 0x3A11;
 
     private ListPreference widgetPreference;
-    private ListPreference localePreference;
 
     @Override
     protected int getPreferencesXml() {
@@ -76,20 +75,8 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
         widgetPreference = initList(KEY_THEME_WIDGET);
         widgetPreference.setOnPreferenceClickListener(this);
         initList(KEY_EMPHASIS_SCALE);
-        localePreference = initLocaleList(KEY_LOCALE);
+        initLocaleList(KEY_LOCALE);
         findPreference(KEY_THEME_WIDGET_RATIONALE).setOnPreferenceClickListener(this);
-    }
-
-    @Nullable
-    @Override
-    protected ListPreference initList(String key) {
-        final ListPreference listPreference = super.initList(key);
-        if (listPreference != null) {
-            if (KEY_THEME_WIDGET.equals(key)) {
-
-            }
-        }
-        return listPreference;
     }
 
     @Nullable
@@ -129,12 +116,10 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
             list.setEntryValues(values);
             list.setEntries(entries);
 
-            list.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    notifyConfigurationChanged(list.getValue());
-                    return true;
-                }
+            list.setOnPreferenceChangeListener((preference, newValue) -> {
+                String newLocale = (newValue != null) ? newValue.toString() : "";
+                notifyConfigurationChanged(newLocale);
+                return true;
             });
         }
 
