@@ -140,12 +140,9 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
 
         preference = initList(key);
         if (preference != null) {
-            preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    maybeChooseMultipleOpinions(newValue);
-                    return true;
-                }
+            preference.setOnPreferenceChangeListener((pref, newValue) -> {
+                maybeChooseMultipleOpinions(newValue);
+                return true;
             });
             return preference;
         }

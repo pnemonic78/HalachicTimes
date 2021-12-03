@@ -54,12 +54,9 @@ public class ZmanimWidgetPreferenceFragment extends AbstractPreferenceFragment {
         ListPreference widgetThemePreference = initList(KEY_THEME_WIDGET);
         if (widgetThemePreference != null) {
             widgetThemePreference.setOnPreferenceClickListener(this);
-            widgetThemePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    notifyAppWidgets();
-                    return true;
-                }
+            widgetThemePreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                notifyAppWidgets();
+                return true;
             });
         }
         this.widgetPreference = widgetThemePreference;

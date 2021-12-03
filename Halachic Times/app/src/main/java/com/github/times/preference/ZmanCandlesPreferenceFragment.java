@@ -35,14 +35,10 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
-        NumberPickerPreference candles = (NumberPickerPreference) findPreference(KEY_OPINION_CANDLES);
-        candles.setSummaryProvider(new Preference.SummaryProvider<NumberPickerPreference>() {
-
-            @Override
-            public CharSequence provideSummary(NumberPickerPreference preference) {
-                int newValue = preference.getValue();
-                return getResources().getQuantityString(R.plurals.candles_summary, newValue, newValue);
-            }
+        NumberPickerPreference candles = findPreference(KEY_OPINION_CANDLES);
+        candles.setSummaryProvider((Preference.SummaryProvider<NumberPickerPreference>) preference -> {
+            int newValue = preference.getValue();
+            return getResources().getQuantityString(R.plurals.candles_summary, newValue, newValue);
         });
         onPreferenceChange(candles, candles.getValue());
     }

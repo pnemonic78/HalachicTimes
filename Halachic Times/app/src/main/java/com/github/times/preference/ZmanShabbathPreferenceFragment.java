@@ -20,7 +20,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Keep;
 import androidx.preference.ListPreference;
-import androidx.preference.Preference;
 
 import com.github.preference.NumberPickerPreference;
 import com.github.times.R;
@@ -50,48 +49,33 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
         // Must be in reverse order for non-null dependencies.
-        minutesPreference = (NumberPickerPreference) findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
-        minutesPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
-                int minutes = (int) newValue;
-                updateMinutesSummary(shabbathAfterId, null, minutes);
-                return true;
-            }
+        minutesPreference = findPreference(KEY_OPINION_SHABBATH_ENDS_MINUTES);
+        minutesPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
+            int minutes = (int) newValue;
+            updateMinutesSummary(shabbathAfterId, null, minutes);
+            return true;
         });
         sunsetPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_SUNSET);
-        sunsetPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                updateMinutesSummary(R.string.sunset, newValue.toString());
-                return true;
-            }
+        sunsetPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            updateMinutesSummary(R.string.sunset, newValue.toString());
+            return true;
         });
         twilightPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_TWILIGHT);
-        twilightPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                updateMinutesSummary(R.string.twilight, newValue.toString());
-                return true;
-            }
+        twilightPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            updateMinutesSummary(R.string.twilight, newValue.toString());
+            return true;
         });
         nightfallPreference = addDefaultOption(KEY_OPINION_SHABBATH_ENDS_NIGHTFALL);
-        nightfallPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                updateMinutesSummary(R.string.nightfall, newValue.toString());
-                return true;
-            }
+        nightfallPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            updateMinutesSummary(R.string.nightfall, newValue.toString());
+            return true;
         });
         afterPreference = initList(KEY_OPINION_SHABBATH_ENDS_AFTER);
-        afterPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                int shabbathAfterId = getPreferences().toId(newValue.toString());
-                updateMinutesSummary(shabbathAfterId, null);
-                return true;
-            }
+        afterPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+            int shabbathAfterId = getPreferences().toId(newValue.toString());
+            updateMinutesSummary(shabbathAfterId, null);
+            return true;
         });
 
         int shabbathAfterId = getPreferences().toId(afterPreference.getValue());
@@ -99,7 +83,7 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
     }
 
     private ListPreference addDefaultOption(String key) {
-        ListPreference preference = (ListPreference) findPreference(key);
+        ListPreference preference = findPreference(key);
         return addDefaultOption(preference);
     }
 

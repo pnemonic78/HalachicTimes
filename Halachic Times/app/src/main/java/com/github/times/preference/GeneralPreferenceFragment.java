@@ -66,18 +66,15 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         }
 
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
-            Preference pref = findPreference(KEY_REMINDER_SETTINGS);
-            if (pref != null) {
-                pref.setEnabled(true);
-                pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        final Context context = preference.getContext();
-                        Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-                        startActivity(intent);
-                        return true;
-                    }
+            Preference preference = findPreference(KEY_REMINDER_SETTINGS);
+            if (preference != null) {
+                preference.setEnabled(true);
+                preference.setOnPreferenceClickListener(pref -> {
+                    final Context context = pref.getContext();
+                    Intent intent = new Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    startActivity(intent);
+                    return true;
                 });
             }
         }
@@ -85,22 +82,19 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
         reminderRingtonePreference.setRequestPermissionsCode(this, REQUEST_PERMISSIONS);
         ListPreference reminderPreference = initList(KEY_REMINDER_STREAM);
         if (reminderPreference != null) {
-            reminderPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    RingtonePreference ringtonePreference = reminderRingtonePreference;
-                    if (ringtonePreference == null) return false;
-                    String value = newValue.toString();
-                    int audioStreamType = isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
-                    int ringType;
-                    if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
-                        ringType = RingtoneManager.TYPE_NOTIFICATION;
-                    } else {
-                        ringType = RingtoneManager.TYPE_ALARM;
-                    }
-                    ringtonePreference.setRingtoneType(ringType);
-                    return true;
+            reminderPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                RingtonePreference ringtonePreference = reminderRingtonePreference;
+                if (ringtonePreference == null) return false;
+                String value = newValue.toString();
+                int audioStreamType = isEmpty(value) ? AudioManager.STREAM_ALARM : Integer.parseInt(value);
+                int ringType;
+                if (audioStreamType == AudioManager.STREAM_NOTIFICATION) {
+                    ringType = RingtoneManager.TYPE_NOTIFICATION;
+                } else {
+                    ringType = RingtoneManager.TYPE_ALARM;
                 }
+                ringtonePreference.setRingtoneType(ringType);
+                return true;
             });
         }
 
