@@ -15,6 +15,11 @@
  */
 package com.github.times.location;
 
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.text.format.DateUtils.HOUR_IN_MILLIS;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -39,11 +44,6 @@ import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import timber.log.Timber;
-
-import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.text.format.DateUtils.HOUR_IN_MILLIS;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 
 /**
  * Locations provider.
@@ -319,6 +319,10 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         context.sendBroadcast(intent);
     }
 
+    private void handleLocationChanged(Location location) {
+        handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
+    }
+
     @Override
     public void onProviderDisabled(String provider) {
         for (ZmanimLocationListener listener : locationListeners) {
@@ -468,6 +472,37 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     /**
+     * Load available locations.
+     */
+    public void findLocations() {
+        Location location = this.location;
+        if (isValid(location)) {
+            handleLocationChanged(location);
+            return;
+        }
+        location = getLocationTZ();
+        if (isValid(location)) {
+            handleLocationChanged(location);
+        }
+        location = getLocationSaved();
+        if (isValid(location)) {
+            handleLocationChanged(location);
+        }
+        location = getLocationPassive();
+        if (isValid(location)) {
+            handleLocationChanged(location);
+        }
+        location = getLocationNetwork();
+        if (isValid(location)) {
+            handleLocationChanged(location);
+        }
+        location = getLocationGPS();
+        if (isValid(location)) {
+            handleLocationChanged(location);
+        }
+    }
+
+    /**
      * Is the location valid?
      *
      * @param location the location to check.
@@ -508,11 +543,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         addLocationListener(listener);
 
         // Give the listener our latest known location, and address.
-        Location location = getLocation();
         if (this.location == null) {
-            handler.obtainMessage(WHAT_CHANGED, location).sendToTarget();
-        } else if (location != null) {
-            listener.onLocationChanged(location);
+            findLocations();
+        } else {
+            Location location = getLocation();
+            if (location != null) {
+                listener.onLocationChanged(location);
+            }
         }
 
         startTaskDelay = UPDATE_INTERVAL_START;
