@@ -176,7 +176,8 @@
 
         <service
             android:name="com.github.times.remind.ZmanimReminderService"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
         <service
             android:name="com.github.times.appwidget.ZmanimWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />

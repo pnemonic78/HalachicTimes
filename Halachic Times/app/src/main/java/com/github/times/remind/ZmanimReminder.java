@@ -15,6 +15,39 @@
  */
 package com.github.times.remind;
 
+import static android.app.Notification.DEFAULT_VIBRATE;
+import static android.content.Intent.ACTION_BOOT_COMPLETED;
+import static android.content.Intent.ACTION_DATE_CHANGED;
+import static android.content.Intent.ACTION_LOCALE_CHANGED;
+import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.content.Intent.ACTION_TIME_CHANGED;
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
+import static android.media.RingtoneManager.TYPE_NOTIFICATION;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
+import static com.github.times.ZmanimHelper.formatDateTime;
+import static com.github.times.ZmanimItem.NEVER;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
+import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+import static java.lang.System.currentTimeMillis;
+import static java.util.Calendar.FRIDAY;
+import static java.util.Calendar.MONDAY;
+import static java.util.Calendar.SATURDAY;
+import static java.util.Calendar.SUNDAY;
+import static java.util.Calendar.THURSDAY;
+import static java.util.Calendar.TUESDAY;
+import static java.util.Calendar.WEDNESDAY;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -42,6 +75,7 @@ import android.os.PowerManager.WakeLock;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.AlarmManagerCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
@@ -61,39 +95,6 @@ import net.sourceforge.zmanim.util.GeoLocation;
 import java.util.Calendar;
 
 import timber.log.Timber;
-
-import static android.app.Notification.DEFAULT_VIBRATE;
-import static android.content.Intent.ACTION_BOOT_COMPLETED;
-import static android.content.Intent.ACTION_DATE_CHANGED;
-import static android.content.Intent.ACTION_LOCALE_CHANGED;
-import static android.content.Intent.ACTION_MY_PACKAGE_REPLACED;
-import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.content.Intent.ACTION_TIME_CHANGED;
-import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
-import static android.media.RingtoneManager.TYPE_NOTIFICATION;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
-import static com.github.times.ZmanimHelper.formatDateTime;
-import static com.github.times.ZmanimItem.NEVER;
-import static java.lang.System.currentTimeMillis;
-import static java.util.Calendar.FRIDAY;
-import static java.util.Calendar.MONDAY;
-import static java.util.Calendar.SATURDAY;
-import static java.util.Calendar.SUNDAY;
-import static java.util.Calendar.THURSDAY;
-import static java.util.Calendar.TUESDAY;
-import static java.util.Calendar.WEDNESDAY;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Check for reminders, and manage the notifications.
@@ -382,18 +383,13 @@ public class ZmanimReminder {
 
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createAlarmIntent(context, item);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            PendingIntent displayIntent = createActivityIntent(context);
-            manager.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerAt, displayIntent), alarmIntent);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!manager.canScheduleExactAlarms()) {
+                AlarmManagerCompat.setAndAllowWhileIdle(manager, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+                return;
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
-        } else {
-            manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
         }
+        AlarmManagerCompat.setExactAndAllowWhileIdle(manager, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
     /**
