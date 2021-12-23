@@ -75,6 +75,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
 import static com.github.times.ZmanimHelper.formatDateTime;
 import static com.github.times.ZmanimItem.NEVER;
 import static java.lang.System.currentTimeMillis;
@@ -408,20 +409,20 @@ public class ZmanimReminder {
             intent = new Intent(context, ZmanimActivity.class);
         }
         intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP);
-        return PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, ID_NOTIFY, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_REMIND);
         putReminderItem(item, intent);
-        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimReminderItem item) {
         Intent intent = createAlarmActivity(context, item, item.time + STOP_NOTIFICATION_AFTER);
         putReminderItem(item, intent);
-        return PendingIntent.getActivity(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getActivity(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
     private Intent createAlarmServiceIntent(Context context, ZmanimReminderItem item, long silenceWhen) {
@@ -441,7 +442,7 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_CANCEL);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
     public void process(@Nullable Intent intent) {
@@ -727,7 +728,7 @@ public class ZmanimReminder {
     private PendingIntent createUpcomingIntent(Context context) {
         Intent intent = new Intent(context, getReceiverClass());
         intent.setAction(ACTION_UPDATE);
-        return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_UPCOMING, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
     /**
@@ -758,7 +759,7 @@ public class ZmanimReminder {
         intent.setAction(ACTION_SILENCE);
         item.put(intent);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
     /**

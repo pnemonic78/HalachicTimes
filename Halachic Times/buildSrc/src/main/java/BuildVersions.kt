@@ -36,7 +36,7 @@ object BuildVersions {
 
     const val minSdkVersion = 17
     const val compileSdkVersion = 31
-    const val targetSdkVersion = 30
+    const val targetSdkVersion = 31
 
     // App dependencies
     const val androidTestVersion = "1.3.0"

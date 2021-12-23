@@ -15,6 +15,23 @@
  */
 package com.github.times.appwidget;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
+import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
+import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
+import static android.content.Context.ALARM_SERVICE;
+import static android.content.Intent.ACTION_DATE_CHANGED;
+import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
+import static android.content.Intent.ACTION_TIME_CHANGED;
+import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
+import static android.text.TextUtils.isEmpty;
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
+import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
+import static com.github.times.location.ZmanimLocationListener.ACTION_LOCATION_CHANGED;
+import static java.lang.System.currentTimeMillis;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -49,21 +66,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import timber.log.Timber;
-
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_ID;
-import static android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS;
-import static android.content.Context.ALARM_SERVICE;
-import static android.content.Intent.ACTION_DATE_CHANGED;
-import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
-import static android.content.Intent.ACTION_TIME_CHANGED;
-import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
-import static android.text.TextUtils.isEmpty;
-import static android.text.format.DateUtils.DAY_IN_MILLIS;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
-import static com.github.times.location.ZmanimLocationListener.ACTION_LOCATION_CHANGED;
-import static java.lang.System.currentTimeMillis;
 
 /**
  * Halachic times (<em>zmanim</em>) widget.
@@ -168,7 +170,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             activityIntent = new Intent(context, ZmanimActivity.class);
             activityIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
-            activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE);
 
             views = new RemoteViews(packageName, layoutId);
 
@@ -250,7 +252,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         Intent alarmIntent = new Intent(context, getClass());
         alarmIntent.setAction(ACTION_APPWIDGET_UPDATE);
         alarmIntent.putExtra(EXTRA_APPWIDGET_IDS, appWidgetIds);
-        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent alarmPendingIntent = PendingIntent.getBroadcast(context, id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT | FLAG_IMMUTABLE);
         AlarmManager alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         alarm.set(AlarmManager.RTC, time, alarmPendingIntent);
     }

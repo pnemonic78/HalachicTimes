@@ -5,6 +5,8 @@
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- Exact alarms for Android 12+ -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- For external tones and wallpaper. -->
@@ -35,6 +37,7 @@
         tools:replace="android:name">
         <activity
             android:name="com.github.times.ZmanimActivity"
+            android:exported="true"
             android:label="@string/title_activity_zmanim">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -69,6 +72,7 @@
             android:theme="@style/Theme.Zmanim.Settings" />
         <activity
             android:name="com.github.times.location.LocationActivity"
+            android:exported="false"
             android:label="@string/title_activity_location"
             android:parentActivityName="com.github.times.ZmanimActivity">
             <intent-filter>
@@ -81,6 +85,7 @@
         </activity>
         <activity
             android:name="com.github.times.location.ZmanimAddLocationActivity"
+            android:exported="false"
             android:label="@string/title_activity_add_location">
             <intent-filter android:label="@string/title_activity_add_location">
                 <action android:name="android.intent.action.INSERT" />
@@ -96,6 +101,7 @@
             android:launchMode="singleInstance" />
         <activity
             android:name="com.github.times.appwidget.ZmanimWidgetConfigure"
+            android:exported="false"
             android:label="@string/title_activity_settings"
             android:theme="@style/Theme.Zmanim.Settings">
             <intent-filter>
