@@ -663,7 +663,7 @@ public class CountriesGeocoder extends GeocoderBase {
         elevated.setLatitude(latitude);
         elevated.setLongitude(longitude);
         elevated.setAltitude(weightSum / (n - 1));
-        elevated.setId(-1L);
+        elevated.setId(-City.generateCityId(latitude, longitude));
         return elevated;
     }
 

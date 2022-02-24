@@ -58,8 +58,12 @@ public class City extends ZmanimAddress {
     };
 
     public static long generateCityId(City city) {
-        final long fixedPointLatitude = (long) Math.rint(city.getLatitude() * RATIO) & 0x7FFFFFFFL;
-        final long fixedPointLongitude = (long) Math.rint(city.getLongitude() * RATIO) & 0xFFFFFFFFL;
+        return generateCityId(city.getLatitude(),city.getLongitude());
+    }
+
+    public static long generateCityId(double latitude, double longitude) {
+        final long fixedPointLatitude = (long) Math.rint(latitude * RATIO) & 0x7FFFFFFFL;
+        final long fixedPointLongitude = (long) Math.rint(longitude * RATIO) & 0xFFFFFFFFL;
         return (fixedPointLatitude << 31) | fixedPointLongitude;
     }
 }
