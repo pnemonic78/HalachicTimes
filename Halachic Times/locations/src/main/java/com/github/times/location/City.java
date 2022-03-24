@@ -28,7 +28,9 @@ import java.util.Locale;
  */
 public class City extends ZmanimAddress {
 
-    /** Factor to convert a fixed-point integer to double. */
+    /**
+     * Factor to convert a fixed-point integer to double.
+     */
     private static final double RATIO = CountryPolygon.RATIO;
 
     public City(Locale locale) {
@@ -58,7 +60,7 @@ public class City extends ZmanimAddress {
     };
 
     public static long generateCityId(City city) {
-        return generateCityId(city.getLatitude(),city.getLongitude());
+        return generateCityId(city.getLatitude(), city.getLongitude());
     }
 
     public static long generateCityId(double latitude, double longitude) {
