@@ -18,6 +18,7 @@
         tools:replace="android:name">
         <activity
             android:name="com.github.compass.bahai.CompassActivity"
+            android:exported="true"
             android:label="@string/title_activity_compass">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +38,7 @@
             android:theme="@style/Theme.CompassApp.Settings" />
         <activity
             android:name="com.github.compass.bahai.LocationActivity"
+            android:exported="true"
             android:label="@string/title_activity_location"
             android:parentActivityName="com.github.compass.bahai.CompassActivity">
             <intent-filter>

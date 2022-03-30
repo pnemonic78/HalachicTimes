@@ -72,7 +72,7 @@
             android:theme="@style/Theme.Zmanim.Settings" />
         <activity
             android:name="com.github.times.location.LocationActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_location"
             android:parentActivityName="com.github.times.ZmanimActivity">
             <intent-filter>
