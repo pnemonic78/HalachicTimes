@@ -129,6 +129,10 @@ public class ZmanimReminder {
      * Id for silent alarms.
      */
     private static final int ID_ALARM_SILENT = 6;
+    /**
+     * Id for dismissing alarms.
+     */
+    private static final int ID_ALARM_DISMISS = 7;
 
     private static final long WAS_DELTA = 30 * SECOND_IN_MILLIS;
     private static final long SOON_DELTA = 30 * SECOND_IN_MILLIS;
@@ -158,6 +162,10 @@ public class ZmanimReminder {
      * Action to silence reminders.
      */
     public static final String ACTION_SILENCE = "com.github.times.action.SILENCE";
+    /**
+     * Action to dismiss alarms.
+     */
+    public static final String ACTION_DISMISS = "com.github.times.action.DISMISS";
 
     /**
      * How much time to wait for the notification sound once entered into a day not allowed to disturb.
@@ -441,6 +449,18 @@ public class ZmanimReminder {
         return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
     }
 
+    /**
+     * Create the intent to dismiss alarm.
+     *
+     * @return the pending intent.
+     */
+    private PendingIntent createDismissIntent(Context context) {
+        Intent intent = new Intent(context, ZmanimReminderService.class);
+        intent.setAction(ACTION_DISMISS);
+
+        return PendingIntent.getService(context, ID_ALARM_DISMISS, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE);
+    }
+
     public void process(@Nullable Intent intent) {
         final Context context = getContext();
         Timber.v("process %s [%s]", intent, formatDateTime(currentTimeMillis()));
@@ -534,6 +554,7 @@ public class ZmanimReminder {
         PendingIntent contentIntent,
         boolean silent
     ) {
+        final Resources res = context.getResources();
         final CharSequence contentTitle = item.title;
         final CharSequence contentText = item.text;
         final long when = item.time;
@@ -560,13 +581,20 @@ public class ZmanimReminder {
                 .setLights(LED_COLOR, LED_ON, LED_OFF);
         }
         if (alarm) {
-            builder.setFullScreenIntent(contentIntent, true);
+            PendingIntent dismissActionIntent = createDismissIntent(context);
+            NotificationCompat.Action dismissAction = new NotificationCompat.Action(
+                R.drawable.ic_dismiss,
+                res.getText(R.string.dismiss),
+                dismissActionIntent
+            );
+
+            builder.setFullScreenIntent(contentIntent, true)
+                .addAction(dismissAction);
         }
 
         // Dynamically generate the large icon.
         Bitmap largeIconReminder = this.largeIconReminder;
         if (largeIconReminder == null) {
-            final Resources res = context.getResources();
             int largeIconWidth = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
             int largeIconHeight = res.getDimensionPixelSize(android.R.dimen.notification_large_icon_height);
             Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);

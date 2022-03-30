@@ -32,9 +32,10 @@ import com.github.times.ZmanimHelper
 import com.github.times.ZmanimItem
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
+import com.github.times.remind.ZmanimReminder.ACTION_DISMISS
 import com.github.times.remind.ZmanimReminder.ACTION_REMIND
 import timber.log.Timber
-import java.util.*
+import java.util.Date
 
 /**
  * Check for reminders, and manage the notifications.
@@ -63,18 +64,9 @@ class ZmanimReminderService : Service() {
         if (intent == null) {
             return START_NOT_STICKY
         }
-        val action = intent.action
-        if (ACTION_REMIND == action) {
-            val item = ZmanimReminderItem.from(this, intent)
-            if (item != null) {
-                showNotification(item)
-                startAlarm()
-                val extras = intent.extras
-                if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
-                    val triggerAt = extras.getLong(EXTRA_SILENCE_TIME)
-                    silenceFuture(triggerAt)
-                }
-            }
+        when (intent.action) {
+            ACTION_REMIND -> handleRemind(intent)
+            ACTION_DISMISS -> handleDismiss()
         }
         return START_NOT_STICKY
     }
@@ -182,5 +174,22 @@ class ZmanimReminderService : Service() {
             val reminder = ZmanimReminder(context)
             reminder.process(intent)
         }
+    }
+
+    private fun handleRemind(intent: Intent) {
+        val item = ZmanimReminderItem.from(this, intent)
+        if (item != null) {
+            showNotification(item)
+            startAlarm()
+            val extras = intent.extras
+            if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
+                val triggerAt = extras.getLong(EXTRA_SILENCE_TIME)
+                silenceFuture(triggerAt)
+            }
+        }
+    }
+
+    private fun handleDismiss() {
+        stopSelf()
     }
 }
