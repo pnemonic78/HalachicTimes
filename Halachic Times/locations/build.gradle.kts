@@ -1,6 +1,16 @@
+import com.android.build.api.dsl.LibraryDefaultConfig
+import java.util.Base64
+
 plugins {
     id("com.android.library")
     kotlin("android")
+}
+
+fun LibraryDefaultConfig.encodeApiKey(name: String) {
+    val value = project.properties[name].toString()
+    val bytes = value.encodeToByteArray()
+    val encoded = Base64.getEncoder().encodeToString(bytes)
+    buildConfigField("String", name, "\"" + encoded + "\"")
 }
 
 android {
@@ -10,21 +20,9 @@ android {
         minSdk = BuildVersions.minSdkVersion
         targetSdk = BuildVersions.targetSdkVersion
 
-        buildConfigField(
-            "String",
-            "BING_API_KEY",
-            "\"" + project.properties["BING_API_KEY"] + "\""
-        )
-        buildConfigField(
-            "String",
-            "GEONAMES_USERNAME",
-            "\"" + project.properties["GEONAMES_USERNAME"] + "\""
-        )
-        buildConfigField(
-            "String",
-            "GOOGLE_API_KEY",
-            "\"" + project.properties["GOOGLE_API_KEY"] + "\""
-        )
+        encodeApiKey("BING_API_KEY",)
+        encodeApiKey("GEONAMES_USERNAME",)
+        encodeApiKey("GOOGLE_API_KEY",)
     }
 
     buildTypes {

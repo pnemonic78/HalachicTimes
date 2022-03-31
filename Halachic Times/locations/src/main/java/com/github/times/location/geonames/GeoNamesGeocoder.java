@@ -65,7 +65,7 @@ public class GeoNamesGeocoder extends GeocoderBase {
     /**
      * GeoNames user name.
      */
-    private static final String USERNAME = BuildConfig.GEONAMES_USERNAME;
+    private static final String USERNAME = decodeApiKey(BuildConfig.GEONAMES_USERNAME);
 
     /**
      * Creates a new GeoNames geocoder.

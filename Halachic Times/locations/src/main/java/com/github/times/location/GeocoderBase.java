@@ -18,8 +18,12 @@ package com.github.times.location;
 import android.content.Context;
 import android.location.Address;
 import android.location.Location;
+import android.util.Base64;
+
+import androidx.annotation.Nullable;
 
 import com.github.net.HTTPReader;
+import com.github.nio.charset.StandardCharsets;
 import com.github.util.LocaleUtils;
 
 import java.io.IOException;
@@ -27,8 +31,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.Nullable;
 
 /**
  * A class for handling geocoding and reverse geocoding.
@@ -363,5 +365,10 @@ public abstract class GeocoderBase {
             this.elevationResponseParser = elevationResponseParser;
         }
         return elevationResponseParser;
+    }
+
+    protected static String decodeApiKey(String encoded) {
+        byte[] bytes = Base64.decode(encoded, Base64.DEFAULT);
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 }

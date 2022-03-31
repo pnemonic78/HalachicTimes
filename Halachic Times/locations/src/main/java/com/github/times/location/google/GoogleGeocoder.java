@@ -63,7 +63,7 @@ public class GoogleGeocoder extends GeocoderBase {
     /**
      * Google API key.
      */
-    private static final String API_KEY = BuildConfig.GOOGLE_API_KEY;
+    private static final String API_KEY = decodeApiKey(BuildConfig.GOOGLE_API_KEY);
 
     /**
      * Creates a new Google geocoder.

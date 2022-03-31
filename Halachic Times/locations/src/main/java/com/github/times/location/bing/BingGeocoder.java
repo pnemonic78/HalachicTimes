@@ -55,7 +55,7 @@ public class BingGeocoder extends GeocoderBase {
     /**
      * Bing API key.
      */
-    private static final String API_KEY = BuildConfig.BING_API_KEY;
+    private static final String API_KEY = decodeApiKey(BuildConfig.BING_API_KEY);
 
     /**
      * Creates a new Bing geocoder.
