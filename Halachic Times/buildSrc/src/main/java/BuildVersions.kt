@@ -48,3 +48,11 @@ object BuildVersions {
     const val rxKotlinVersion = "3.0.1"
     const val timberVersion = "4.7.1"
 }
+
+object Flavors {
+    object Internet {
+        const val dimension = "internet"
+        const val online = "online"
+        const val offline = "offline"
+    }
+}

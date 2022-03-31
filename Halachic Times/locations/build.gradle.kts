@@ -36,6 +36,28 @@ android {
         }
     }
 
+    flavorDimensions += Flavors.Internet.dimension
+    productFlavors {
+        create(Flavors.Internet.online) {
+            dimension = Flavors.Internet.dimension
+            buildConfigField(
+                "Boolean",
+                "INTERNET",
+                "true"
+            )
+            isDefault = true
+        }
+
+        create(Flavors.Internet.offline) {
+            dimension = Flavors.Internet.dimension
+            buildConfigField(
+                "Boolean",
+                "INTERNET",
+                "false"
+            )
+        }
+    }
+
     lint {
         disable("LocaleFolder")
         disable("RtlHardcoded")

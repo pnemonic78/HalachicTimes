@@ -53,8 +53,6 @@ android {
         resourceConfigurations += locales
         buildConfigField("String[]", "LOCALES", joinStrings(locales))
 
-        manifestPlaceholders["offline"] = false
-
         testApplicationId = "net.sf.times.test"
     }
 
@@ -89,15 +87,15 @@ android {
         }
     }
 
-    flavorDimensions += "internet"
+    flavorDimensions += Flavors.Internet.dimension
     productFlavors {
-        create("normal") {
-            dimension = "internet"
+        create(Flavors.Internet.online) {
+            dimension = Flavors.Internet.dimension
+            isDefault = true
         }
 
-        create("offline") {
-            dimension = "internet"
-            manifestPlaceholders["offline"] = true
+        create(Flavors.Internet.offline) {
+            dimension = Flavors.Internet.dimension
         }
     }
 
@@ -130,5 +128,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.2.4")
+    implementation("com.google.firebase:firebase-crashlytics:18.2.9")
 }

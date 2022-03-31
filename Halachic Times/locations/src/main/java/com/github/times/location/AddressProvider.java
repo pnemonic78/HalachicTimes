@@ -15,13 +15,14 @@
  */
 package com.github.times.location;
 
+import static com.github.times.location.GeocoderBase.SAME_CITY;
+import static com.github.times.location.GeocoderBase.SAME_PLANET;
+import static com.github.times.location.GeocoderBase.SAME_PLATEAU;
+
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,10 +42,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
-
-import static com.github.times.location.GeocoderBase.SAME_CITY;
-import static com.github.times.location.GeocoderBase.SAME_PLANET;
-import static com.github.times.location.GeocoderBase.SAME_PLATEAU;
 
 /**
  * Address provider.<br>
@@ -92,7 +89,7 @@ public class AddressProvider {
     private BingGeocoder bingGeocoder;
     private GeoNamesGeocoder geonamesGeocoder;
     private DatabaseGeocoder databaseGeocoder;
-    private boolean online = true;
+    private final boolean isOnline = BuildConfig.INTERNET;
 
     /**
      * Constructs a new provider.
@@ -114,20 +111,6 @@ public class AddressProvider {
         this.locale = locale;
         this.countriesGeocoder = new CountriesGeocoder(context, locale);
         this.databaseGeocoder = new DatabaseGeocoder(context, locale);
-
-        ApplicationInfo applicationInfo = context.getApplicationInfo();
-        Bundle metaData = applicationInfo.metaData;
-        if (metaData == null) {
-            try {
-                applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
-                metaData = applicationInfo.metaData;
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        if (metaData != null) {
-            online = !metaData.getBoolean("com.github.times.offline", false);
-        }
     }
 
     /**
@@ -199,7 +182,7 @@ public class AddressProvider {
         }
 
         // Find the best city from some Geocoder provider.
-        if ((best == null) && online) {
+        if ((best == null) && isOnline) {
             addresses = findNearestAddressGeocoder(location);
             best = findBestAddress(location, addresses, SAME_PLATEAU);
             if ((best != null) && (ZmanimAddress.compare(best, bestCached) != 0)) {
@@ -215,7 +198,7 @@ public class AddressProvider {
         }
 
         // Find the best city remotely.
-        if ((best == null) && online) {
+        if ((best == null) && isOnline) {
             for (GeocoderBase geocoder : getRemoteAddressProviders()) {
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 10);
@@ -541,7 +524,7 @@ public class AddressProvider {
             return elevated;
         }
 
-        if (online) {
+        if (isOnline) {
             for (GeocoderBase geocoder : getRemoteElevationProviders()) {
                 try {
                     elevated = geocoder.getElevation(latitude, longitude);
