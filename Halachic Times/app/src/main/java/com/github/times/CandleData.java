@@ -1,12 +1,12 @@
 package com.github.times;
 
 public class CandleData {
-    final int holidayToday;
-    final int countToday;
-    final int holidayTomorrow;
-    final int countTomorrow;
-    final int when;
-    final int candlesOffset;
+    public final int holidayToday;
+    public final int countToday;
+    public final int holidayTomorrow;
+    public final int countTomorrow;
+    public final int when;
+    public final int candlesOffset;
 
     public CandleData(int holidayToday, int countToday, int holidayTomorrow, int countTomorrow, int when, int candlesOffset) {
         this.holidayToday = holidayToday;

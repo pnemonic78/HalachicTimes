@@ -1063,7 +1063,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
      * @param jewishDateTomorrow the Jewish calendar for tomorrow.
      * @return the candle data.
      */
-    protected CandleData calculateCandles(@Nullable JewishCalendar jewishDateToday, @Nullable JewishCalendar jewishDateTomorrow, ZmanimPreferences settings) {
+    public static CandleData calculateCandles(@Nullable JewishCalendar jewishDateToday, @Nullable JewishCalendar jewishDateTomorrow, ZmanimPreferences settings) {
         if (jewishDateToday == null) {
             return new CandleData();
         }
@@ -1587,7 +1587,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         return (date != null) && (date != NEVER);
     }
 
-    protected JewishCalendar cloneJewishTomorrow(JewishCalendar jcal) {
+    protected static JewishCalendar cloneJewishTomorrow(JewishCalendar jcal) {
         JewishCalendar jcalTomorrow = (JewishCalendar) jcal.clone();
         jcalTomorrow.forward(Calendar.DATE, 1);
         return jcalTomorrow;

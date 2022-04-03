@@ -29,9 +29,9 @@ import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
+import static com.github.times.ZmanimDays.SHABBATH;
 import static com.github.times.ZmanimHelper.formatDateTime;
 import static com.github.times.ZmanimItem.NEVER;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
 import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
@@ -79,6 +79,7 @@ import androidx.core.app.AlarmManagerCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
+import com.github.times.CandleData;
 import com.github.times.R;
 import com.github.times.ZmanimActivity;
 import com.github.times.ZmanimAdapter;
@@ -256,6 +257,7 @@ public class ZmanimReminder {
         JewishCalendar jcal = new JewishCalendar(gcal);
         jcal.setInIsrael(populater.isInIsrael());
         Calendar cal = populater.getCalendar().getCalendar();
+        CandleData candles;
 
         // Find the first reminder in the upcoming week.
         for (int day = 1; nextDay && (day <= DAYS_FORWARD); day++) {
@@ -266,6 +268,7 @@ public class ZmanimReminder {
                 populater.setCalendar(cal);
             }
             populater.populate(adapter, false);
+            candles = adapter.getCandles();
 
             count = adapter.getCount();
             for (int i = 0; i < count; i++) {
@@ -276,7 +279,7 @@ public class ZmanimReminder {
 
                 // Is the zman to be reminded?
                 when = settings.getReminder(item.titleId, item.time);
-                if ((when != NEVER) && allowReminder(settings, item, jcal)) {
+                if ((when != NEVER) && allowReminder(settings, item, jcal, candles)) {
                     if (nextDay && (latest < when) && (was <= when) && (when <= soon)) {
                         notifyNow(settings, item);
                         nextDay = false;
@@ -632,8 +635,8 @@ public class ZmanimReminder {
      * @param jcal the Jewish calendar as of now.
      * @return can the reminder be activated?
      */
-    private boolean allowReminder(ZmanimPreferences settings, ZmanimItem item, JewishCalendar jcal) {
-        return allowReminder(settings, item.titleId, jcal);
+    private boolean allowReminder(ZmanimPreferences settings, ZmanimItem item, JewishCalendar jcal, CandleData candles) {
+        return allowReminder(settings, item.titleId, jcal, candles);
     }
 
     /**
@@ -644,9 +647,9 @@ public class ZmanimReminder {
      * @param jcal     the Jewish calendar as of now.
      * @return can the reminder be activated?
      */
-    private boolean allowReminder(ZmanimPreferences settings, int itemId, JewishCalendar jcal) {
+    private boolean allowReminder(ZmanimPreferences settings, int itemId, JewishCalendar jcal, CandleData candles) {
         int dayOfWeek = jcal.getDayOfWeek();
-        int holidayIndex = jcal.getYomTovIndex();
+        int holidayIndex = candles.holidayToday;
 
         switch (holidayIndex) {
             case PESACH:
@@ -656,12 +659,8 @@ public class ZmanimReminder {
             case SUCCOS:
             case SHEMINI_ATZERES:
             case SIMCHAS_TORAH:
+            case SHABBATH:
                 dayOfWeek = SATURDAY;
-                break;
-            case CHANUKAH:
-                if (dayOfWeek == SATURDAY) {
-                    return settings.isReminderSunday(itemId);
-                }
                 break;
         }
 
