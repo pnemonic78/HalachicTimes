@@ -649,20 +649,6 @@ public class ZmanimReminder {
      */
     private boolean allowReminder(ZmanimPreferences settings, int itemId, JewishCalendar jcal, CandleData candles) {
         int dayOfWeek = jcal.getDayOfWeek();
-        int holidayIndex = candles.holidayToday;
-
-        switch (holidayIndex) {
-            case PESACH:
-            case SHAVUOS:
-            case ROSH_HASHANA:
-            case YOM_KIPPUR:
-            case SUCCOS:
-            case SHEMINI_ATZERES:
-            case SIMCHAS_TORAH:
-            case SHABBATH:
-                dayOfWeek = SATURDAY;
-                break;
-        }
 
         switch (dayOfWeek) {
             case SUNDAY:
@@ -677,7 +663,19 @@ public class ZmanimReminder {
                 return settings.isReminderThursday(itemId);
             case FRIDAY:
                 return settings.isReminderFriday(itemId);
-            case SATURDAY:
+        }
+
+        int holidayIndex = candles.holidayToday;
+
+        switch (holidayIndex) {
+            case PESACH:
+            case SHAVUOS:
+            case ROSH_HASHANA:
+            case YOM_KIPPUR:
+            case SUCCOS:
+            case SHEMINI_ATZERES:
+            case SIMCHAS_TORAH:
+            case SHABBATH:
                 return settings.isReminderSaturday(itemId);
         }
 
