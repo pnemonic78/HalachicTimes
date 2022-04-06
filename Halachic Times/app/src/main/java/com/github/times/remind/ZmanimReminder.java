@@ -135,8 +135,8 @@ public class ZmanimReminder {
      */
     private static final int ID_ALARM_DISMISS = 7;
 
-    private static final long WAS_DELTA = 30 * SECOND_IN_MILLIS;
-    private static final long SOON_DELTA = 30 * SECOND_IN_MILLIS;
+    private static final long WAS_DELTA = SECOND_IN_MILLIS;
+    private static final long SOON_DELTA = 10 * SECOND_IN_MILLIS;
     /**
      * The number of days to check forwards for a reminder.
      */
