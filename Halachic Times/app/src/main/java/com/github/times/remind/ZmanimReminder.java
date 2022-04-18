@@ -171,7 +171,8 @@ public class ZmanimReminder {
     /**
      * How much time to wait for the notification sound once entered into a day not allowed to disturb.
      */
-    private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS * 2;
+    // TODO put as user settings.
+    private static final long STOP_NOTIFICATION_AFTER = MINUTE_IN_MILLIS;
 
     private static final String CHANNEL_ALARM = "channel_alarm";
     private static final String CHANNEL_REMINDER = "channel_reminder";
@@ -316,15 +317,29 @@ public class ZmanimReminder {
     public void cancel() {
         Timber.i("cancel");
         final Context context = getContext();
+        cancelNotification(context);
+        cancelUpcoming(context);
+    }
+
+    private void cancelNotification(Context context) {
+        Timber.i("cancelNotification");
         PendingIntent alarmIntent = createAlarmIntent(context, (ZmanimItem) null);
-        PendingIntent upcomingIntent = createUpcomingIntent(context);
 
         AlarmManager alarms = getAlarmManager();
         alarms.cancel(alarmIntent);
-        alarms.cancel(upcomingIntent);
 
         NotificationManager nm = getNotificationManager();
         nm.cancel(ID_NOTIFY);
+    }
+
+    private void cancelUpcoming(Context context) {
+        Timber.i("cancelUpcoming");
+        PendingIntent upcomingIntent = createUpcomingIntent(context);
+
+        AlarmManager alarms = getAlarmManager();
+        alarms.cancel(upcomingIntent);
+
+        NotificationManager nm = getNotificationManager();
         nm.cancel(ID_NOTIFY_UPCOMING);
     }
 
@@ -364,7 +379,7 @@ public class ZmanimReminder {
 
         switch (settings.getReminderType()) {
             case RingtoneManager.TYPE_ALARM:
-                alarmNow(context, settings, item, now + STOP_NOTIFICATION_AFTER);
+                alarmNow(context, item, now + STOP_NOTIFICATION_AFTER);
                 break;
             case RingtoneManager.TYPE_NOTIFICATION:
             default:
@@ -508,10 +523,12 @@ public class ZmanimReminder {
                     ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
                     if (reminderItem != null) {
                         silence(settings, reminderItem);
+                    } else {
+                        cancelNotification(context);
                     }
                     update = true;
                 } else {
-                    cancel();
+                    cancelNotification(context);
                 }
                 break;
         }
@@ -563,8 +580,8 @@ public class ZmanimReminder {
         final long when = item.time;
         final int audioStreamType = settings.getReminderStream();
         final boolean alarm = audioStreamType == AudioManager.STREAM_ALARM;
-        final Uri sound = silent ? null : settings.getReminderRingtone();
-        final String channel = silent ? CHANNEL_ALARM : CHANNEL_REMINDER;
+        final Uri sound = (silent || isAlarmService()) ? null : settings.getReminderRingtone();
+        final String channel = alarm ? CHANNEL_ALARM : CHANNEL_REMINDER;
 
         final NotificationCompat.Builder builder = createNotificationBuilder(
             context,
@@ -582,17 +599,18 @@ public class ZmanimReminder {
         if (!silent) {
             builder.setDefaults(DEFAULT_VIBRATE)
                 .setLights(LED_COLOR, LED_ON, LED_OFF);
-        }
-        if (alarm) {
-            PendingIntent dismissActionIntent = createDismissIntent(context);
-            NotificationCompat.Action dismissAction = new NotificationCompat.Action(
-                R.drawable.ic_dismiss,
-                res.getText(R.string.dismiss),
-                dismissActionIntent
-            );
 
-            builder.setFullScreenIntent(contentIntent, true)
-                .addAction(dismissAction);
+            if (alarm) {
+                PendingIntent dismissActionIntent = createDismissIntent(context);
+                NotificationCompat.Action dismissAction = new NotificationCompat.Action(
+                    R.drawable.ic_dismiss,
+                    res.getText(R.string.dismiss),
+                    dismissActionIntent
+                );
+
+                builder.setFullScreenIntent(contentIntent, true)
+                    .addAction(dismissAction);
+            }
         }
 
         // Dynamically generate the large icon.
@@ -812,7 +830,8 @@ public class ZmanimReminder {
     private void postSilenceNotification(Notification notification) {
         NotificationManager nm = getNotificationManager();
         initNotifications(nm);
-        nm.cancel(ID_NOTIFY); // Kill the notification so that the sound stops playing.
+        // Kill the notification so that its sound stops playing.
+        nm.cancel(ID_NOTIFY);
         nm.notify(ID_NOTIFY, notification);
     }
 
@@ -906,14 +925,17 @@ public class ZmanimReminder {
      * @param item        the reminder item.
      * @param silenceWhen when to silence the alarm, in milliseconds.
      */
-    public void alarmNow(Context context, ZmanimPreferences settings, ZmanimReminderItem item, long silenceWhen) {
+    public void alarmNow(Context context, ZmanimReminderItem item, long silenceWhen) {
         Timber.i("alarm now [%s] for [%s]", item.title, formatDateTime(item.time));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (isAlarmService()) {
             startAlarmService(context, item, silenceWhen);
-            silenceFuture(context, item, silenceWhen);
         } else {
             startAlarmActivity(context, item, silenceWhen);
         }
+    }
+
+    private boolean isAlarmService() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q;
     }
 
     private Intent createAlarmActivity(Context context, ZmanimReminderItem item, long silenceWhen) {
@@ -953,7 +975,7 @@ public class ZmanimReminder {
 
     public Notification createAlarmServiceNotification(Context context, ZmanimPreferences settings, ZmanimReminderItem item) {
         PendingIntent contentIntent = createAlarmIntent(context, item);
-        return createReminderNotification(context, settings, item, contentIntent, true);
+        return createReminderNotification(context, settings, item, contentIntent, false);
     }
 
     private void initNotifications(NotificationManager nm) {
