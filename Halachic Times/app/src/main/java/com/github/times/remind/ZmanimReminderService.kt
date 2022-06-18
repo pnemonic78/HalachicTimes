@@ -190,6 +190,7 @@ class ZmanimReminderService : Service() {
     }
 
     private fun handleDismiss() {
-        stopSelf()
+        val now = System.currentTimeMillis()
+        silenceFuture(now)
     }
 }

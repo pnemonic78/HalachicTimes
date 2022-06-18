@@ -270,7 +270,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     timeViews[position] = row.findViewById(R.id.time);
                     bindView(list, position, row, item);
                     position++;
-                    item = adapter.getItem(position);
+                    if (position < count) {
+                        item = adapter.getItem(position);
+                    }
                 }
                 jewishDatePrevious = item.jewishDate;
             }
