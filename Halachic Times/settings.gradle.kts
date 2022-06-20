@@ -1,6 +1,6 @@
 rootProject.name = "Halachic Times"
 include("GeoNames")
-include("zmanim:lib-android")
+include("zmanim")
 include("android-lib:lib")
 include("common")
 include("locations")

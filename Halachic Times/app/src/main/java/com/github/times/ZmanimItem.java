@@ -15,7 +15,7 @@
  */
 package com.github.times;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 
 /**
  * Time row item.

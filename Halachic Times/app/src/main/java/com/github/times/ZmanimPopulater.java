@@ -24,10 +24,10 @@ import androidx.annotation.Nullable;
 
 import com.github.times.preference.ZmanimPreferences;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
+import com.kosherjava.zmanim.ComplexZmanimCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -42,23 +42,23 @@ import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.TimeUtils.isSameDay;
 import static java.util.Calendar.FRIDAY;
 import static java.util.Calendar.SATURDAY;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_PESACH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_SUCCOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_PESACH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_ESTHER;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_GEDALYAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.HOSHANA_RABBA;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SEVENTEEN_OF_TAMMUZ;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.TENTH_OF_TEVES;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.TISHA_BEAV;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_PESACH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHOL_HAMOED_SUCCOS;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.EREV_PESACH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_ESTHER;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.FAST_OF_GEDALYAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.HOSHANA_RABBA;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PESACH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SEVENTEEN_OF_TAMMUZ;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.TENTH_OF_TEVES;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.TISHA_BEAV;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Populate a list of zmanim.
@@ -1352,9 +1352,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_7_083.equals(opinion)) {
             date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
             summary = R.string.twilight_7_083;
-        } else if (OPINION_7_083_ZMANIS.equals(opinion)) {
-            date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
-            summary = R.string.twilight_7_083_zmanis;
         } else if (OPINION_58.equals(opinion)) {
             date = cal.getBainHasmashosRT58Point5Minutes();
             summary = R.string.twilight_58;

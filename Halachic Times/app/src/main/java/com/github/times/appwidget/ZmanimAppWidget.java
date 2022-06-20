@@ -60,7 +60,7 @@ import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 
-import net.sourceforge.zmanim.util.GeoLocation;
+import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 import java.util.List;

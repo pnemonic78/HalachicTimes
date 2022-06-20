@@ -31,10 +31,10 @@ import androidx.annotation.Nullable;
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.HebrewDateFormatter;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.ComplexZmanimCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;

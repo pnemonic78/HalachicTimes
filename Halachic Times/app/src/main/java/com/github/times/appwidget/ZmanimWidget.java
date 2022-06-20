@@ -31,8 +31,8 @@ import com.github.times.ZmanimAdapter;
 import com.github.times.ZmanimDays;
 import com.github.times.ZmanimItem;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.ArrayList;
 import java.util.Calendar;

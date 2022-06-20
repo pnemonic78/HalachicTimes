@@ -18,7 +18,7 @@ package com.github.times.location;
 import android.content.Context;
 import android.location.Location;
 
-import net.sourceforge.zmanim.util.GeoLocation;
+import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.TimeZone;
 

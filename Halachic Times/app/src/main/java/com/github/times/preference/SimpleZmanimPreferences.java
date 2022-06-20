@@ -35,7 +35,7 @@ import com.github.preference.ThemePreferences;
 import com.github.preference.TimePreference;
 import com.github.times.R;
 
-import net.sourceforge.zmanim.ShaahZmanis;
+import com.kosherjava.zmanim.ShaahZmanis;
 
 import java.io.File;
 import java.util.Calendar;
@@ -281,6 +281,9 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         }
         if (OPINION_BAAL_HATANYA.equals(opinion)) {
             return ShaahZmanis.BAAL_HATANYA;
+        }
+        if (OPINION_ATERET.equals(opinion)) {
+            return ShaahZmanis.ATERET;
         }
         return ShaahZmanis.GRA;
     }

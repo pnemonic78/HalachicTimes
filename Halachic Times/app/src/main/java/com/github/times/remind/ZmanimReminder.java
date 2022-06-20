@@ -32,13 +32,13 @@ import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
 import static com.github.times.ZmanimDays.SHABBATH;
 import static com.github.times.ZmanimHelper.formatDateTime;
 import static com.github.times.ZmanimItem.NEVER;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.PESACH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.PESACH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.ROSH_HASHANA;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHAVUOS;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SHEMINI_ATZERES;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SIMCHAS_TORAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.SUCCOS;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 import static java.lang.System.currentTimeMillis;
 import static java.util.Calendar.FRIDAY;
 import static java.util.Calendar.MONDAY;
@@ -90,8 +90,8 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.util.GeoLocation;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 

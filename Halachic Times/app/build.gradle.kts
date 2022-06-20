@@ -112,7 +112,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":zmanim:lib-android"))
+    implementation(project(":zmanim"))
     implementation(project(":android-lib:lib"))
     implementation(project(":common"))
     implementation(project(":locations"))

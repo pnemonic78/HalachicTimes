@@ -15,7 +15,7 @@
  */
 package com.github.times.preference;
 
-import net.sourceforge.zmanim.ShaahZmanis;
+import com.kosherjava.zmanim.ShaahZmanis;
 
 import android.media.AudioManager;
 import android.net.Uri;

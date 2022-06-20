@@ -20,9 +20,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Shows candle images.
