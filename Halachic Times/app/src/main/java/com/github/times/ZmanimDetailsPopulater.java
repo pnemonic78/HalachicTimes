@@ -139,8 +139,20 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         // Offset is added back when formatted.
         long offset = cal.getCalendar().getTimeZone().getRawOffset();
 
+        time = cal.getShaahZmanisAteretTorah();
+        title = R.string.hour_ateret;
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
+
         time = cal.getShaahZmanisBaalHatanya();
         title = R.string.hour_baal_hatanya;
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
+
+        time = cal.getShaahZmanisGra();
+        title = R.string.hour_gra;
+        adapter.addHour(title, SUMMARY_NONE, time - offset);
+
+        time = cal.getShaahZmanisMGA();
+        title = R.string.hour_mga;
         adapter.addHour(title, SUMMARY_NONE, time - offset);
 
         time = cal.getShaahZmanis120Minutes();
@@ -193,18 +205,6 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
 
         time = cal.getShaahZmanis96MinutesZmanis();
         title = R.string.hour_96_zmanis;
-        adapter.addHour(title, SUMMARY_NONE, time - offset);
-
-        time = cal.getShaahZmanisAteretTorah();
-        title = R.string.hour_ateret;
-        adapter.addHour(title, SUMMARY_NONE, time - offset);
-
-        time = cal.getShaahZmanisGra();
-        title = R.string.hour_gra;
-        adapter.addHour(title, SUMMARY_NONE, time - offset);
-
-        time = cal.getShaahZmanisMGA();
-        title = R.string.hour_mga;
         adapter.addHour(title, SUMMARY_NONE, time - offset);
     }
 
@@ -653,12 +653,6 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
         if (date != null) {
             title = R.string.twilight_7_083;
-            adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
-        }
-
-        date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
-        if (date != null) {
-            title = R.string.twilight_7_083_zmanis;
             adapter.add(title, SUMMARY_NONE, date + offset, jewishDate);
         }
 

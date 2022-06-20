@@ -282,6 +282,9 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
         if (OPINION_BAAL_HATANYA.equals(opinion)) {
             return ShaahZmanis.BAAL_HATANYA;
         }
+        if (OPINION_ATERET.equals(opinion)) {
+            return ShaahZmanis.ATERET;
+        }
         return ShaahZmanis.GRA;
     }
 

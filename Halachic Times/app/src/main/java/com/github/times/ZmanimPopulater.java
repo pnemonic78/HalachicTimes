@@ -1352,9 +1352,6 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         if (OPINION_7_083.equals(opinion)) {
             date = cal.getBainHasmashosRT13Point5MinutesBefore7Point083Degrees();
             summary = R.string.twilight_7_083;
-        } else if (OPINION_7_083_ZMANIS.equals(opinion)) {
-            date = cal.getBainHasmashosRT13Point5MinutesZmanisBefore7Point083Degrees();
-            summary = R.string.twilight_7_083_zmanis;
         } else if (OPINION_58.equals(opinion)) {
             date = cal.getBainHasmashosRT58Point5Minutes();
             summary = R.string.twilight_58;
