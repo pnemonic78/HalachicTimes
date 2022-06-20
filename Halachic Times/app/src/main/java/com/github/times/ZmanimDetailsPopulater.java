@@ -19,9 +19,9 @@ import android.content.Context;
 
 import com.github.times.preference.ZmanimPreferences;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.ComplexZmanimCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 
 import java.util.Calendar;
 

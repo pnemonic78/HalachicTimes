@@ -22,9 +22,9 @@ import android.view.ViewGroup;
 import com.github.times.preference.ZmanimPreferences;
 
 import static com.github.times.ZmanimPopulater.BEFORE_SUNSET;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
-import static net.sourceforge.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
+import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
 
 /**
  * Adapter for candles.

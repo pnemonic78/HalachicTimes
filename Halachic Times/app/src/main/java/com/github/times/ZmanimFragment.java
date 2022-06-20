@@ -37,9 +37,9 @@ import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 
-import net.sourceforge.zmanim.hebrewcalendar.JewishCalendar;
-import net.sourceforge.zmanim.hebrewcalendar.JewishDate;
-import net.sourceforge.zmanim.util.GeoLocation;
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
 

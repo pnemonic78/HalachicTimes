@@ -5,7 +5,7 @@ import android.content.Context;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
 
-import net.sourceforge.zmanim.ComplexZmanimCalendar;
+import com.kosherjava.zmanim.ComplexZmanimCalendar;
 
 import org.junit.Test;
 
