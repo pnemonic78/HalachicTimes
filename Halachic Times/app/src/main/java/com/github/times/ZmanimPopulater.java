@@ -379,7 +379,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             date = cal.getAlos96();
             summary = R.string.dawn_96;
         } else if (OPINION_96_ZMANIS.equals(opinion)) {
-            date = cal.getAlos90Zmanis();
+            date = cal.getAlos96Zmanis();
             summary = R.string.dawn_96_zmanis;
         } else if (OPINION_90.equals(opinion)) {
             date = cal.getAlos90();

@@ -249,7 +249,7 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         title = R.string.dawn_96;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
-        date = cal.getAlos90Zmanis();
+        date = cal.getAlos96Zmanis();
         title = R.string.dawn_96_zmanis;
         adapter.add(title, SUMMARY_NONE, date, jewishDate);
 
