@@ -51,10 +51,8 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
         clearHistory.setOnPreferenceClickListener(this);
 
         clearAppData = findPreference("clear_data");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            clearAppData.setEnabled(true);
-            clearAppData.setOnPreferenceClickListener(this);
-        }
+        clearAppData.setEnabled(true);
+        clearAppData.setOnPreferenceClickListener(this);
 
         validateIntent("location_permission");
     }

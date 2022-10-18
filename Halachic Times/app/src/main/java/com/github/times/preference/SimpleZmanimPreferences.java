@@ -201,10 +201,8 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
                     return true;
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                // Material
-                return false;
-            }
+            // Material
+            return false;
         }
         return true;
     }

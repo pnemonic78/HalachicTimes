@@ -76,16 +76,12 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
                 try {
                     ringtone.setDataSource(context, uri)
                     val audioStreamType: Int = preferences.reminderStream
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        val audioAttributes = AudioAttributes.Builder()
-                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                            .setLegacyStreamType(audioStreamType)
-                            .setUsage(AudioAttributes.USAGE_ALARM)
-                            .build()
-                        ringtone.setAudioAttributes(audioAttributes)
-                    } else {
-                        ringtone.setAudioStreamType(audioStreamType)
-                    }
+                    val audioAttributes = AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setLegacyStreamType(audioStreamType)
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .build()
+                    ringtone.setAudioAttributes(audioAttributes)
                     ringtone.isLooping = audioStreamType == AudioManager.STREAM_ALARM
                     ringtone.prepare()
                 } catch (e: IOException) {

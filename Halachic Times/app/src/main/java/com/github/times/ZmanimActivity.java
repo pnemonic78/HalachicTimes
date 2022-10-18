@@ -233,11 +233,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     final int month = calendar.get(Calendar.MONTH);
                     final int day = calendar.get(Calendar.DAY_OF_MONTH);
                     if (activity.datePicker == null) {
-                        if (VERSION.SDK_INT >= LOLLIPOP) {
-                            Resources res = context.getResources();
-                            res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
-                            context = new ContextResourcesWrapper(context, res);
-                        }
+                        Resources res = context.getResources();
+                        res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
+                        context = new ContextResourcesWrapper(context, res);
                         activity.datePicker = new TodayDatePickerDialog(context, activity, year, month, day);
                     } else {
                         activity.datePicker.updateDate(year, month, day);
@@ -599,11 +597,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
             }
         }
 
-        if (VERSION.SDK_INT >= LOLLIPOP) {
-            finishAfterTransition();
-        } else {
-            finish();
-        }
+        finishAfterTransition();
     }
 
     @Override

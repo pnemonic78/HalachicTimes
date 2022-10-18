@@ -26,7 +26,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFile(getDefaultProguardFile("proguard-android.txt"))
             proguardFile("proguard-rules.pro")
@@ -56,11 +56,20 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     lint {
-        disable("LocaleFolder")
-        disable("RtlHardcoded")
-        disable("UnusedAttribute")
-        disable("UnusedResources")
+        disable += "LocaleFolder"
+        disable += "RtlHardcoded"
+        disable += "UnusedAttribute"
+        disable += "UnusedResources"
     }
 }
 
@@ -69,7 +78,7 @@ dependencies {
     implementation(project(":common"))
 
     // Maps
-    implementation("com.google.maps:google-maps-services:0.9.0")
+    implementation("com.google.maps:google-maps-services:2.1.0")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")

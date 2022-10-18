@@ -75,15 +75,15 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
+        debug {
             applicationIdSuffix = ".debug"
         }
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFile(getDefaultProguardFile("proguard-android.txt"))
             proguardFile("proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs["release"]
         }
     }
 
@@ -100,14 +100,14 @@ android {
     }
 
     lint {
-        disable("GoogleAppIndexingWarning")
-        //disable("IconLauncherFormat") // v26 has XML (non-PNG) adaptive icons.
-        disable("InconsistentLayout")
-        disable("LocaleFolder")
-        disable("MergeRootFrame")
-        disable("Overdraw")
-        disable("PluralsCandidate")
-        disable("UnusedAttribute")
+        disable += "GoogleAppIndexingWarning"
+        //disable += "IconLauncherFormat" // v26 has XML (non-PNG) adaptive icons.
+        disable += "InconsistentLayout"
+        disable += "LocaleFolder"
+        disable += "MergeRootFrame"
+        disable += "Overdraw"
+        disable += "PluralsCandidate"
+        disable += "UnusedAttribute"
     }
 }
 
@@ -128,5 +128,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.2.11")
+    implementation("com.google.firebase:firebase-crashlytics:18.3.0")
 }

@@ -78,24 +78,24 @@ android {
     }
 
     buildTypes {
-        getByName("debug") {
+        debug {
             applicationIdSuffix = ".debug"
         }
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             proguardFile(getDefaultProguardFile("proguard-android.txt"))
             proguardFile("proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
+            signingConfig = signingConfigs["release"]
         }
     }
 
     lint {
-        disable("GoogleAppIndexingWarning")
-        disable("InconsistentLayout")
-        disable("LocaleFolder")
-        disable("Overdraw")
-        disable("PluralsCandidate")
-        disable("UnusedAttribute")
+        disable += "GoogleAppIndexingWarning"
+        disable += "InconsistentLayout"
+        disable += "LocaleFolder"
+        disable += "Overdraw"
+        disable += "PluralsCandidate"
+        disable += "UnusedAttribute"
     }
 }
 

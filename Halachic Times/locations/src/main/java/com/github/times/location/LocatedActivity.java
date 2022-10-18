@@ -15,12 +15,16 @@
  */
 package com.github.times.location;
 
+import static android.os.Build.VERSION;
+import static android.os.Build.VERSION_CODES.M;
+
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -34,9 +38,6 @@ import com.github.preference.ThemePreferences;
 import java.util.TimeZone;
 
 import timber.log.Timber;
-
-import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Activity that needs locations.
@@ -112,7 +113,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
         if (location != null) {
             getLocations().setLocation(location);
-        } else if (VERSION.SDK_INT >= M) {
+        } else if (VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             initLocationPermissions();
         }
     }

@@ -621,7 +621,7 @@ public class ZmanimReminder {
             Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
             Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(largeIcon);
-            Drawable layerBottom = ContextCompat.getDrawable(context, (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) ? R.drawable.ic_alarm_black : R.drawable.ic_alarm_white);
+            Drawable layerBottom = ContextCompat.getDrawable(context, R.drawable.ic_alarm_black);
             if (layerBottom != null) {
                 layerBottom.setBounds(largeIconRect);
                 layerBottom.draw(canvas);
@@ -752,17 +752,11 @@ public class ZmanimReminder {
 
         AlarmManager manager = getAlarmManager();
         PendingIntent alarmIntent = createUpcomingIntent(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            PendingIntent displayIntent = createActivityIntent(context);
-            manager.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerAt, displayIntent), alarmIntent);
+        PendingIntent displayIntent = createActivityIntent(context);
+        manager.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerAt, displayIntent), alarmIntent);
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
-        } else {
-            manager.set(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
         }
     }
 
