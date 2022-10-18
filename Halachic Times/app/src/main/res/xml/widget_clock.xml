@@ -9,4 +9,5 @@
     android:previewImage="@drawable/widget_clock"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="600000"
-    android:widgetCategory="keyguard|home_screen" />
+    android:widgetCategory="keyguard|home_screen"
+    android:widgetFeatures="reconfigurable" />

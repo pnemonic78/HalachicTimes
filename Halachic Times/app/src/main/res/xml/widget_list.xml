@@ -7,4 +7,5 @@
     android:minResizeWidth="@dimen/widget_minResizeWidth"
     android:minResizeHeight="@dimen/widget_minResizeHeight"
     android:previewImage="@drawable/widget_list"
-    android:resizeMode="horizontal|vertical" />
+    android:resizeMode="horizontal|vertical"
+    android:widgetFeatures="reconfigurable" />

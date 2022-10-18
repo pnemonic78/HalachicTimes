@@ -8,4 +8,5 @@
     android:minResizeHeight="@dimen/widget_minResizeHeight"
     android:previewImage="@drawable/widget_info"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="600000" />
+    android:updatePeriodMillis="600000"
+    android:widgetFeatures="reconfigurable" />
