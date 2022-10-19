@@ -500,11 +500,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_compass:
-                //±!@ handler.sendEmptyMessage(WHAT_COMPASS);
-                ZmanimItem z = new ZmanimItem(R.string.sunrise, System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS, getText(R.string.tallis));
-                ZmanimReminder reminder = new ZmanimReminder(this);
-                reminder.notifyFuture(z, System.currentTimeMillis() + (5 * SECOND_IN_MILLIS));
-                finish();
+                handler.sendEmptyMessage(WHAT_COMPASS);
                 return true;
             case R.id.menu_date:
                 handler.sendEmptyMessage(WHAT_DATE);
