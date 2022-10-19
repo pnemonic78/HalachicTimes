@@ -99,10 +99,10 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         super.onCreate(savedInstanceState);
         onCreate();
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         final Window win = getWindow();
         // Turn on the screen.

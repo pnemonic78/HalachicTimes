@@ -62,6 +62,7 @@ public class ZmanimReminderWorker extends Worker {
     public Result doWork() {
         final Data data = getInputData();
         Intent intent = toIntent(data);
+        if (intent == null) return Result.failure();
         ZmanimReminder reminder = new ZmanimReminder(getApplicationContext());
         reminder.process(intent);
         return Result.success();

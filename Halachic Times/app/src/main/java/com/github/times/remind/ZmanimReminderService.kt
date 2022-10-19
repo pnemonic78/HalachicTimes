@@ -32,6 +32,7 @@ import com.github.times.ZmanimHelper
 import com.github.times.ZmanimItem
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
+import com.github.times.remind.ZmanimReminder.ACTION_CANCEL
 import com.github.times.remind.ZmanimReminder.ACTION_DISMISS
 import com.github.times.remind.ZmanimReminder.ACTION_REMIND
 import timber.log.Timber
@@ -148,18 +149,23 @@ class ZmanimReminderService : Service() {
             }
 
             // Handler high priority actions immediately.
+            if (ACTION_CANCEL == action) {
+                WorkManager.getInstance(context).cancelAllWork()
+                processReminder(context, intent)
+                return
+            }
             if (ACTION_REMIND == action) {
                 processReminder(context, intent)
                 return
             }
+
             val requestData = ZmanimReminderWorker.toWorkData(intent)
             val workRequest: WorkRequest =
                 OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
                     .setInputData(requestData)
                     .build()
 
-            WorkManager.getInstance(context)
-                .enqueue(workRequest)
+            WorkManager.getInstance(context).enqueue(workRequest)
         }
 
         private fun processReminder(context: Context, intent: Intent) {
@@ -177,14 +183,16 @@ class ZmanimReminderService : Service() {
     }
 
     private fun handleRemind(intent: Intent) {
-        val item = ZmanimReminderItem.from(this, intent)
+        val context: Context = this
+        val item = ZmanimReminderItem.from(context, intent)
         if (item != null) {
             showNotification(item)
             startAlarm()
+
             val extras = intent.extras
             if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
-                val triggerAt = extras.getLong(EXTRA_SILENCE_TIME)
-                silenceFuture(triggerAt)
+                val silenceWhen = extras.getLong(EXTRA_SILENCE_TIME)
+                silenceFuture(silenceWhen)
             }
         }
     }

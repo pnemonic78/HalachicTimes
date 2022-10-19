@@ -48,6 +48,7 @@ import static java.util.Calendar.THURSDAY;
 import static java.util.Calendar.TUESDAY;
 import static java.util.Calendar.WEDNESDAY;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -75,6 +76,7 @@ import android.os.PowerManager.WakeLock;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.AlarmManagerCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
@@ -89,7 +91,6 @@ import com.github.times.ZmanimPopulater;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
-
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.util.GeoLocation;
 
@@ -181,6 +182,13 @@ public class ZmanimReminder {
     private static final String CHANNEL_UPCOMING = "upcoming";
 
     private static final String WAKE_TAG = "ZmanimReminder:wake";
+
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    private static final String[] PERMISSIONS = {Manifest.permission.POST_NOTIFICATIONS};
+    /**
+     * Activity id for requesting notification permissions.
+     */
+    protected static final int ACTIVITY_PERMISSIONS = 0x6057; // "POST"
 
     private final Context context;
     private Bitmap largeIconSolar;
@@ -317,8 +325,14 @@ public class ZmanimReminder {
     public void cancel() {
         Timber.i("cancel");
         final Context context = getContext();
+        cancelAlarm(context);
         cancelNotification(context);
         cancelUpcoming(context);
+    }
+
+    private void cancelAlarm(Context context) {
+        Intent service = createAlarmServiceIntent(context, null, NEVER);
+        context.stopService(service);
     }
 
     private void cancelNotification(Context context) {
@@ -958,7 +972,6 @@ public class ZmanimReminder {
     private void startAlarmActivity(Context context, ZmanimReminderItem item, long silenceWhen) {
         Intent intent = createAlarmActivity(context, item, silenceWhen);
         context.startActivity(intent);
-
     }
 
     @TargetApi(Build.VERSION_CODES.Q)
@@ -981,5 +994,13 @@ public class ZmanimReminder {
     public void initNotifications() {
         NotificationManager nm = getNotificationManager();
         initNotifications(nm);
+    }
+
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    public static void checkNotificationPermissions(AppCompatActivity activity) {
+        ZmanimReminder reminder = new ZmanimReminder(activity);
+        NotificationManager nm = reminder.getNotificationManager();
+        if (nm.areNotificationsEnabled()) return;
+        activity.requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
     }
 }

@@ -16,7 +16,6 @@
 package com.github.times.location;
 
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.M;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -268,7 +267,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         return getString(R.string.location_unknown);
     }
 
-    @TargetApi(M)
+    @TargetApi(Build.VERSION_CODES.M)
     private void initLocationPermissions() {
         if (LocationsProvider.hasNoLocationPermission(this)) {
             requestPermissions(LocationsProvider.PERMISSIONS, ACTIVITY_PERMISSIONS);

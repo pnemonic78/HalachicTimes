@@ -16,7 +16,6 @@
 package com.github.times;
 
 import static android.os.Build.VERSION;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
@@ -26,6 +25,7 @@ import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.LocaleUtils.isLocaleRTL;
 import static java.lang.System.currentTimeMillis;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -35,9 +35,11 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
@@ -276,6 +278,9 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         super.onCreate(savedInstanceState);
         init();
         initLocation();
+        if (VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            initNotificationPermissions();
+        }
         handleIntent(getIntent());
     }
 
@@ -495,7 +500,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_compass:
-                handler.sendEmptyMessage(WHAT_COMPASS);
+                //±!@ handler.sendEmptyMessage(WHAT_COMPASS);
+                ZmanimItem z = new ZmanimItem(R.string.sunrise, System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS, getText(R.string.tallis));
+                ZmanimReminder reminder = new ZmanimReminder(this);
+                reminder.notifyFuture(z, System.currentTimeMillis() + (5 * SECOND_IN_MILLIS));
+                finish();
                 return true;
             case R.id.menu_date:
                 handler.sendEmptyMessage(WHAT_DATE);
@@ -948,5 +957,10 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
+    }
+
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    private void initNotificationPermissions() {
+        ZmanimReminder.checkNotificationPermissions(this);
     }
 }
