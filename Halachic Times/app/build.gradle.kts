@@ -128,5 +128,5 @@ dependencies {
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.3.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.3.1")
 }
