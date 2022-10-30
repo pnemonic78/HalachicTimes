@@ -38,8 +38,8 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.text.format.DateUtils;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
@@ -211,6 +211,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         private final WeakReference<ZmanimActivity> activityWeakReference;
 
         public ActivityHandler(ZmanimActivity activity) {
+            super(Looper.getMainLooper());
             this.activityWeakReference = new WeakReference<>(activity);
         }
 
@@ -230,19 +231,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     activity.startActivity(new Intent(context, CompassActivity.class));
                     break;
                 case WHAT_DATE:
-                    final Calendar calendar = activity.calendar;
-                    final int year = calendar.get(Calendar.YEAR);
-                    final int month = calendar.get(Calendar.MONTH);
-                    final int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    if (activity.datePicker == null) {
-                        Resources res = context.getResources();
-                        res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
-                        context = new ContextResourcesWrapper(context, res);
-                        activity.datePicker = new TodayDatePickerDialog(context, activity, year, month, day);
-                    } else {
-                        activity.datePicker.updateDate(year, month, day);
-                    }
-                    activity.datePicker.show();
+                    activity.chooseDate();
                     break;
                 case WHAT_LOCATION:
                     activity.startLocations();
@@ -252,7 +241,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
                     break;
                 case WHAT_TODAY:
                     activity.setDate(currentTimeMillis());
-                    activity.populateFragments(activity.calendar);
                     break;
                 case WHAT_CANCEL_REMINDERS:
                     activity.cancelReminders();
@@ -441,6 +429,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
         showDate();
         scheduleNextDay();
+        populateFragments(calendar);
     }
 
     /**
@@ -463,6 +452,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
         showDate();
         scheduleNextDay();
+        populateFragments(calendar);
     }
 
     private void showDate() {
@@ -518,10 +508,26 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         return super.onOptionsItemSelected(item);
     }
 
+    private void chooseDate() {
+        Context context = this;
+        final Calendar calendar = this.calendar;
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        if (this.datePicker == null) {
+            Resources res = context.getResources();
+            res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
+            context = new ContextResourcesWrapper(context, res);
+            this.datePicker = new TodayDatePickerDialog(context, this, year, month, day);
+        } else {
+            this.datePicker.updateDate(year, month, day);
+        }
+        this.datePicker.show();
+    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         setDate(year, monthOfYear, dayOfMonth);
-        populateFragments(calendar);
     }
 
     @Override
@@ -823,7 +829,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         }
 
         setDate(calendar.getTimeInMillis());
-        populateFragments(calendar);
     }
 
     private void navigateTomorrow() {
@@ -839,7 +844,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         }
 
         setDate(calendar.getTimeInMillis());
-        populateFragments(calendar);
     }
 
     @Override
