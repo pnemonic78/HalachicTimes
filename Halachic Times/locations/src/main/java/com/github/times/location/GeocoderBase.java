@@ -23,12 +23,12 @@ import android.util.Base64;
 import androidx.annotation.Nullable;
 
 import com.github.net.HTTPReader;
-import com.github.nio.charset.StandardCharsets;
 import com.github.util.LocaleUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 

@@ -15,11 +15,15 @@
  */
 package com.github.times.location.bing;
 
+import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+
 import android.location.Location;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.json.UriAdapter;
-import com.github.nio.charset.StandardCharsets;
 import com.github.times.location.ElevationResponseParser;
 import com.github.times.location.LocationException;
 import com.github.times.location.ZmanimLocation;
@@ -32,13 +36,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 /**
  * Handler for parsing the Bing response for elevations.
