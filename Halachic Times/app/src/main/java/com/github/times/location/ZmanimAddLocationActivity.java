@@ -46,8 +46,8 @@ public class ZmanimAddLocationActivity extends AddLocationActivity<ZmanimPrefere
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onPreCreate() {
+        super.onPreCreate();
         localeCallbacks.onCreate(this);
     }
 

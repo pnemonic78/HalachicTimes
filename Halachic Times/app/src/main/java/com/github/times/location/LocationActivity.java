@@ -47,8 +47,8 @@ public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onPreCreate() {
+        super.onPreCreate();
         localeCallbacks.onCreate(this);
     }
 
@@ -58,8 +58,8 @@ public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
     }
 
     @Override
-    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks() {
-        return new SimpleThemeCallbacks<>(this, getZmanimPreferences());
+    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
     }
 
     public ZmanimPreferences getZmanimPreferences() {

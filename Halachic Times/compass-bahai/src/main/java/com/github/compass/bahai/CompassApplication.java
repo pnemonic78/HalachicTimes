@@ -27,8 +27,8 @@ import timber.log.Timber;
 public class CompassApplication extends com.github.times.compass.CompassApplication {
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onPreCreate() {
+        super.onPreCreate();
         Timber.plant(new LogTree(BuildConfig.DEBUG));
     }
 }

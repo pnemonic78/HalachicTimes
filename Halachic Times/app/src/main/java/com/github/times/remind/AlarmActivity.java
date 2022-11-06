@@ -101,8 +101,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        onPreCreate();
         super.onCreate(savedInstanceState);
-        onCreate();
 
         final Window win = getWindow();
         // Turn on the screen.
@@ -136,8 +136,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     }
 
     @Override
-    public void onCreate() {
-        getThemeCallbacks().onCreate();
+    public void onPreCreate() {
+        getThemeCallbacks().onPreCreate();
         localeCallbacks.onCreate(this);
     }
 

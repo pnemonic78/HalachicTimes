@@ -29,8 +29,6 @@ import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.preference.ThemePreferences;
 
-import timber.log.Timber;
-
 import static android.content.Intent.ACTION_LOCALE_CHANGED;
 
 /**
@@ -55,9 +53,9 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     };
 
     @Override
-    public void onCreate() {
+    public void onPreCreate() {
         super.onCreate();
-        themeCallbacks.onCreate();
+        themeCallbacks.onPreCreate();
     }
 
     @Override

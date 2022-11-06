@@ -34,6 +34,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -115,8 +116,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        onPreCreate();
         super.onCreate(savedInstanceState);
-        onCreate();
         final Resources res = getResources();
 
         final LocationApplication app = (LocationApplication) getApplication();
@@ -133,17 +134,17 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         this.tabHost = tabs;
 
         TabSpec tabFavorites = tabs.newTabSpec(TAG_FAVORITES);
-        tabFavorites.setIndicator(null, res.getDrawable(ic_menu_star));
+        tabFavorites.setIndicator(null, ResourcesCompat.getDrawable(res, ic_menu_star, null));
         tabFavorites.setContent(R.id.list_favorites);
         tabs.addTab(tabFavorites);
 
         TabSpec tabAll = tabs.newTabSpec(TAG_ALL);
-        tabAll.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_mapmode));
+        tabAll.setIndicator(null, ResourcesCompat.getDrawable(res, android.R.drawable.ic_menu_mapmode, null));
         tabAll.setContent(android.R.id.list);
         tabs.addTab(tabAll);
 
         TabSpec tabHistory = tabs.newTabSpec(TAG_HISTORY);
-        tabHistory.setIndicator(null, res.getDrawable(android.R.drawable.ic_menu_recent_history));
+        tabHistory.setIndicator(null, ResourcesCompat.getDrawable(res, android.R.drawable.ic_menu_recent_history, null));
         tabHistory.setContent(R.id.list_history);
         tabs.addTab(tabHistory);
 
@@ -155,13 +156,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     }
 
     @Override
-    public void onCreate() {
-        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
-        if (themeCallbacks == null) {
-            themeCallbacks = createThemeCallbacks();
-            this.themeCallbacks = themeCallbacks;
-        }
-        themeCallbacks.onCreate();
+    public void onPreCreate() {
+        getThemeCallbacks().onPreCreate();
     }
 
     @Override
@@ -169,8 +165,17 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         return themeCallbacks.getThemePreferences();
     }
 
-    protected ThemeCallbacks<P> createThemeCallbacks() {
-        return new SimpleThemeCallbacks<>(this);
+    protected ThemeCallbacks<P> getThemeCallbacks() {
+        ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
+        if (themeCallbacks == null) {
+            themeCallbacks = createThemeCallbacks(this);
+            this.themeCallbacks = themeCallbacks;
+        }
+        return themeCallbacks;
+    }
+
+    protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
+        return new SimpleThemeCallbacks<>(context);
     }
 
     @Override

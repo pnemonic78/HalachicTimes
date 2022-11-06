@@ -16,7 +16,6 @@
 package com.github.times.location;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -135,8 +134,8 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        onPreCreate();
         super.onCreate(savedInstanceState);
-        onCreate();
 
         LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
@@ -176,8 +175,8 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
     }
 
     @Override
-    public void onCreate() {
-        getThemeCallbacks().onCreate();
+    public void onPreCreate() {
+        getThemeCallbacks().onPreCreate();
     }
 
     @Override

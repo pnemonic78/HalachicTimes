@@ -105,8 +105,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        onPreCreate();
         super.onCreate(savedInstanceState);
-        onCreate();
 
         Intent intent = getIntent();
         Location location = intent.getParcelableExtra(EXTRA_LOCATION);
@@ -118,8 +118,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     }
 
     @Override
-    public void onCreate() {
-        getThemeCallbacks().onCreate();
+    public void onPreCreate() {
+        getThemeCallbacks().onPreCreate();
     }
 
     @Override

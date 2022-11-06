@@ -50,8 +50,8 @@ public class CompassActivity extends BaseCompassActivity {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onPreCreate() {
+        super.onPreCreate();
         localeCallbacks.onCreate(this);
     }
 
