@@ -14,7 +14,7 @@
         android:summary="@string/issue_summary"
         android:title="@string/issue_title">
         <intent
-            android:action="android.intent.action.VIEW"
+            android:action="android.intent.action.SENDTO"
             android:data="@string/issue_url" />
     </Preference>
     <Preference
