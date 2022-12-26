@@ -149,7 +149,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             private final float[] distance = new float[1];
 
             @Override
-            public boolean accept(Cursor cursor) {
+            public boolean accept(@NonNull Cursor cursor) {
                 double locationLatitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE);
                 double locationLongitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
@@ -187,7 +187,7 @@ public class DatabaseGeocoder extends GeocoderBase {
             private final float[] distance = new float[1];
 
             @Override
-            public boolean accept(Cursor cursor) {
+            public boolean accept(@NonNull Cursor cursor) {
                 double locationLatitude = cursor.getDouble(INDEX_ELEVATION_LATITUDE);
                 double locationLongitude = cursor.getDouble(INDEX_ELEVATION_LONGITUDE);
                 Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
