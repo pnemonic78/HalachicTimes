@@ -119,14 +119,14 @@ dependencies {
     implementation(project(":compass-lib"))
 
     // Background tasks
-    implementation("androidx.work:work-runtime:2.7.1")
+    implementation("androidx.work:work-runtime:2.8.0")
 
     // Testing
     testImplementation("junit:junit:${BuildVersions.junitVersion}")
     androidTestImplementation("androidx.test:core:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test:rules:${BuildVersions.androidTestVersion}")
     androidTestImplementation("androidx.test:runner:${BuildVersions.androidTestVersion}")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.ext:junit:${BuildVersions.junitExt}")
     /// Declare the dependencies for the Crashlytics and Analytics libraries
-    implementation("com.google.firebase:firebase-crashlytics:18.3.1")
+    implementation("com.google.firebase:firebase-crashlytics:18.3.5")
 }
