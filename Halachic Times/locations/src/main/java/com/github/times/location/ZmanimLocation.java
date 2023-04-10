@@ -261,7 +261,7 @@ public class ZmanimLocation extends Location {
 
         long t1 = l1.getTime();
         long t2 = l2.getTime();
-        return (t1 > t2) ? 1 : (t1 < t2 ? -1 : 0);
+        return Long.compare(t1, t2);
     }
 
     public static double toDecimal(int degrees, int minutes, double seconds) {
@@ -287,10 +287,7 @@ public class ZmanimLocation extends Location {
             return false;
 
         final double elevation = location.getAltitude();
-        if ((elevation < ELEVATION_MIN) || (elevation > ELEVATION_MAX))
-            return false;
-
-        return true;
+        return (elevation >= ELEVATION_MIN) && (elevation <= ELEVATION_MAX);
     }
 
     public static double distanceBetween(Location startLocation, Location endLocation) {

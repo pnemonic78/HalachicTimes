@@ -19,6 +19,7 @@ import static android.content.Intent.ACTION_TIMEZONE_CHANGED;
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
@@ -30,6 +31,7 @@ import android.location.Address;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -37,6 +39,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
 import java.util.Collection;
@@ -72,7 +76,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * The minimum time interval between location updates, in milliseconds.
      */
-    private static final long UPDATE_TIME = SECOND_IN_MILLIS;
+    private static final long UPDATE_TIME = 10 * SECOND_IN_MILLIS;
     /**
      * The minimum distance between location updates, in metres.
      */
@@ -178,7 +182,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     /**
      * The list of countries.
      */
-    private CountriesGeocoder countriesGeocoder;
+    private final CountriesGeocoder countriesGeocoder;
     /**
      * The time zone.
      */
@@ -195,10 +199,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * The next time to start update locations.
      */
     private long startTaskDelay = UPDATE_INTERVAL_START;
-    /**
-     * The next time to stop update locations.
-     */
-    private final long stopTaskDelay = UPDATE_DURATION;
     /**
      * The location is externally set?
      */
@@ -267,24 +267,30 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             return;
         }
         final Location locationOld = this.location;
-        if (ZmanimLocation.compareAll(location, locationOld) == 0) {
+        Location locationNew = location;
+        if (ZmanimLocation.compareAll(locationNew, locationOld) == 0) {
             return;
         }
+        // Ignore non-user locations after user selected from locations list.
+        if ((locationOld != null) && USER_PROVIDER.equals(locationOld.getProvider())) {
+            if (!USER_PROVIDER.equals(locationNew.getProvider())) {
+                return;
+            }
+        }
 
-        Location locationNew = location;
         boolean keepLocation = true;
-        if ((locationOld != null) && (ZmanimLocation.compare(locationOld, location) != 0)) {
+        if ((locationOld != null) && (ZmanimLocation.compare(locationOld, locationNew) != 0)) {
             // Ignore old locations.
-            if (locationOld.getTime() + LOCATION_EXPIRATION > location.getTime()) {
+            if (locationOld.getTime() + LOCATION_EXPIRATION > locationNew.getTime()) {
                 keepLocation = false;
             }
             // Ignore manual locations.
             if (manualLocation) {
                 // But does the new location have an elevation?
-                if (location.hasAltitude() && !locationOld.hasAltitude()) {
+                if (locationNew.hasAltitude() && !locationOld.hasAltitude()) {
                     double distance = ZmanimLocation.distanceBetween(locationOld, location);
                     if (distance <= GeocoderBase.SAME_CITY) {
-                        locationOld.setAltitude(location.getAltitude());
+                        locationOld.setAltitude(locationNew.getAltitude());
                     }
                 }
                 locationNew = locationOld;
@@ -346,6 +352,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     @Override
     public void onAddressChanged(Location location, ZmanimAddress address) {
+        if (!isValid(location)) {
+            return;
+        }
+        if (!isValid(address)) {
+            return;
+        }
+
         for (ZmanimLocationListener listener : locationListeners) {
             listener.onAddressChanged(location, address);
         }
@@ -362,10 +375,32 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     /**
+     * Get a fused location from several providers.
+     *
+     * @return the location - {@code null} otherwise.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.S)
+    @Nullable
+    public Location getLocationFused() {
+        LocationManager locationManager = this.locationManager;
+        if ((locationManager == null) || hasNoLocationPermission(context)) {
+            return null;
+        }
+
+        try {
+            return locationManager.getLastKnownLocation(LocationManager.FUSED_PROVIDER);
+        } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
+            Timber.e(e, "Fused: %s", e.getLocalizedMessage());
+        }
+        return null;
+    }
+
+    /**
      * Get a location from GPS.
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocationGPS() {
         LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || hasNoLocationPermission(context)) {
@@ -385,6 +420,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocationNetwork() {
         LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || hasNoLocationPermission(context)) {
@@ -404,6 +440,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocationPassive() {
         LocationManager locationManager = this.locationManager;
         if ((locationManager == null) || hasNoLocationPermission(context)) {
@@ -423,6 +460,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocationTZ() {
         return getLocationTZ(timeZone);
     }
@@ -433,6 +471,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @param timeZone the time zone.
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocationTZ(TimeZone timeZone) {
         return countriesGeocoder.findLocation(timeZone);
     }
@@ -442,6 +481,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocationSaved() {
         return preferences.getLocation();
     }
@@ -451,8 +491,12 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location getLocation() {
         Location location = this.location;
+        if (isValid(location))
+            return location;
+        location = getLocationSaved();
         if (isValid(location))
             return location;
         location = getLocationGPS();
@@ -462,9 +506,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         if (isValid(location))
             return location;
         location = getLocationPassive();
-        if (isValid(location))
-            return location;
-        location = getLocationSaved();
         if (isValid(location))
             return location;
         location = getLocationTZ();
@@ -480,23 +521,34 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             handleLocationChanged(location);
             return;
         }
-        location = getLocationTZ();
-        if (isValid(location)) {
-            handleLocationChanged(location);
-        }
         location = getLocationSaved();
         if (isValid(location)) {
             handleLocationChanged(location);
+            return;
         }
-        location = getLocationPassive();
+        location = getLocationGPS();
         if (isValid(location)) {
             handleLocationChanged(location);
+            return;
         }
         location = getLocationNetwork();
         if (isValid(location)) {
             handleLocationChanged(location);
+            return;
         }
-        location = getLocationGPS();
+        location = getLocationPassive();
+        if (isValid(location)) {
+            handleLocationChanged(location);
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            location = getLocationFused();
+            if (isValid(location)) {
+                handleLocationChanged(location);
+                return;
+            }
+        }
+        location = getLocationTZ();
         if (isValid(location)) {
             handleLocationChanged(location);
         }
@@ -510,6 +562,16 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      */
     public boolean isValid(Location location) {
         return ZmanimLocation.isValid(location);
+    }
+
+    /**
+     * Is the location valid?
+     *
+     * @param address the address to check.
+     * @return {@code false} if address is invalid.
+     */
+    public boolean isValid(ZmanimAddress address) {
+        return ZmanimAddress.isValid(address);
     }
 
     /**
@@ -542,7 +604,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
         addLocationListener(listener);
 
-        // Give the listener our latest known location, and address.
+        // Give the listener our latest known location and address.
         if (this.location == null) {
             findLocations();
         } else {
@@ -575,8 +637,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
             // "Japan ST".
             int offset = timeZone.getRawOffset() + timeZone.getDSTSavings();
             if ((offset >= TZ_OFFSET_ISRAEL) && (offset <= TZ_OFFSET_DST_ISRAEL)) {
-                if (TZ_IDT.equals(id) || TZ_IST.equals(id) || TZ_JST.equals(id))
-                    return true;
+                return TZ_IDT.equals(id) || TZ_IST.equals(id) || TZ_JST.equals(id);
             }
             return false;
         }
@@ -699,6 +760,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     public void setLocation(Location location) {
         this.location = null;
         manualLocation = location != null;
+        preferences.putLocation(null);
         onLocationChanged(location);
         if (location == null) {
             sendEmptyMessage(WHAT_START);
@@ -713,7 +775,6 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-        criteria.setAltitudeRequired(true);
         criteria.setCostAllowed(true);
 
         String provider = locationManager.getBestProvider(criteria, true);
@@ -723,13 +784,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         }
 
         try {
-            locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this);
+            locationManager.removeUpdates(this);
+            locationManager.requestLocationUpdates(provider, UPDATE_TIME, UPDATE_DISTANCE, this, handlerThread.getLooper());
         } catch (IllegalArgumentException | SecurityException | NullPointerException e) {
             Timber.e(e, "request updates: %s", e.getMessage());
         }
 
         // Let the updates run for only a small while to save battery.
-        sendEmptyMessageDelayed(WHAT_STOP, stopTaskDelay);
+        sendEmptyMessageDelayed(WHAT_STOP, UPDATE_DURATION);
         startTaskDelay = Math.min(UPDATE_INTERVAL_MAX, startTaskDelay << 1);
     }
 
@@ -842,10 +904,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      * @return {@code true} if no listeners are passive.
      */
     private boolean hasActiveListeners() {
-        if (locationListeners.isEmpty()) {
-            return false;
-        }
-        return true;
+        return !locationListeners.isEmpty();
     }
 
     /**
@@ -888,10 +947,12 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                         }
                         extras.putParcelable(EXTRA_LOCATION, location);
                         address.setExtras(extras);
-                        if (handler != null) {//In case we receive broadcast before provider is constructed.
+                        if (handler != null) {
+                            //In case we receive broadcast before provider is constructed.
                             handler.obtainMessage(WHAT_ADDRESS, address).sendToTarget();
                         }
-                    } else if (handler != null) {//In case we receive broadcast before provider is constructed.
+                    } else if (handler != null) {
+                        //In case we receive broadcast before provider is constructed.
                         handler.obtainMessage(WHAT_ADDRESS, location).sendToTarget();
                     }
                     break;
@@ -902,7 +963,8 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
                     if (intentExtras != null) {
                         location = intentExtras.getParcelable(EXTRA_LOCATION);
                     }
-                    if (handler != null) {//In case we receive broadcast before provider is constructed.
+                    if (handler != null) {
+                        //In case we receive broadcast before provider is constructed.
                         handler.obtainMessage(WHAT_ELEVATION, location).sendToTarget();
                     }
                     break;

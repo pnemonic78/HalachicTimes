@@ -515,7 +515,7 @@ public interface ZmanimPreferences extends ThemePreferences, LocalePreferences {
      * Get the preference title id.
      *
      * @param key the time name.
-     * @return the id - {@code null} otherwise.
+     * @return the id - {@code 0} otherwise.
      */
     int toId(String key);
 

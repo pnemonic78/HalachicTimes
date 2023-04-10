@@ -30,6 +30,8 @@ import java.util.TimeZone;
 
 import static android.text.format.DateUtils.HOUR_IN_MILLIS;
 
+import androidx.annotation.Nullable;
+
 /**
  * Maintains the lists of countries.
  *
@@ -171,6 +173,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the location.
      * @return the country - {@code null} otherwise.
      */
+    @Nullable
     public Country findCountry(Location location) {
         return findCountry(location.getLatitude(), location.getLongitude());
     }
@@ -184,6 +187,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the longitude.
      * @return the country - {@code null} otherwise.
      */
+    @Nullable
     public Country findCountry(double latitude, double longitude) {
         int countryIndex = findCountryIndex(latitude, longitude);
         if (countryIndex < 0) {
@@ -301,6 +305,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the time zone.
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public Location findLocation(TimeZone tz) {
         Location location = new Location(TIMEZONE_PROVIDER);
         if (tz == null) {
@@ -466,6 +471,7 @@ public class CountriesGeocoder extends GeocoderBase {
      *         the location.
      * @return the city - {@code null} otherwise.
      */
+    @Nullable
     public City findCity(Location location) {
         City city = null;
         final String[] names = citiesNames;

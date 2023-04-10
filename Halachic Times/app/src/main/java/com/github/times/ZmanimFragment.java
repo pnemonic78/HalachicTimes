@@ -31,6 +31,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.times.location.ZmanimLocations;
@@ -161,6 +162,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      *
      * @return the populated adapter - {@code null} otherwise.
      */
+    @Nullable
     protected A getAdapter() {
         return this.adapter;
     }

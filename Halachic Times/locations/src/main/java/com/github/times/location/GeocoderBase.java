@@ -269,6 +269,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
+    @Nullable
     public abstract Location getElevation(double latitude, double longitude) throws IOException;
 
     /**
@@ -303,6 +304,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
+    @Nullable
     protected Location getTextElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;
@@ -328,6 +330,7 @@ public abstract class GeocoderBase {
      * @return the location - {@code null} otherwise.
      * @throws IOException if an I/O error occurs.
      */
+    @Nullable
     protected Location getJsonElevationFromURL(double latitude, double longitude, String queryUrl) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;

@@ -121,7 +121,7 @@ public class AddressProvider {
      * @return the address - {@code null} otherwise.
      */
     @Nullable
-    public Address findNearestAddress(@NonNull Location location, @Nullable OnFindAddressListener listener) {
+    public Address findNearestAddress(@Nullable Location location, @Nullable OnFindAddressListener listener) {
         Timber.v("findNearestAddress %s", location);
         if (location == null) {
             return null;
@@ -475,7 +475,7 @@ public class AddressProvider {
      * @return the elevated location - {@code null} otherwise.
      */
     @Nullable
-    public Location findElevation(@NonNull Location location, @Nullable OnFindAddressListener listener) {
+    public Location findElevation(@Nullable Location location, @Nullable OnFindAddressListener listener) {
         if (location == null) {
             return null;
         }

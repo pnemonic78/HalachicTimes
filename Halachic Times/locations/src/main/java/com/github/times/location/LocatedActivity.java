@@ -145,8 +145,8 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         getLocations().start(this);
     }
 

@@ -18,6 +18,8 @@ package com.github.times.location;
 import android.content.Context;
 import android.location.Location;
 
+import androidx.annotation.Nullable;
+
 import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.TimeZone;
@@ -46,6 +48,7 @@ public class ZmanimLocations extends LocationsProvider {
      * @param timeZone the time zone.
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public GeoLocation getGeoLocation(TimeZone timeZone) {
         Location location = getLocation();
         if (location == null)
@@ -63,6 +66,7 @@ public class ZmanimLocations extends LocationsProvider {
      *
      * @return the location - {@code null} otherwise.
      */
+    @Nullable
     public GeoLocation getGeoLocation() {
         return getGeoLocation(getTimeZone());
     }

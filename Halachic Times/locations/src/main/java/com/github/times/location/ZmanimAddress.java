@@ -15,6 +15,15 @@
  */
 package com.github.times.location;
 
+import static android.text.TextUtils.isEmpty;
+
+import static com.github.times.location.ZmanimLocation.ELEVATION_MAX;
+import static com.github.times.location.ZmanimLocation.ELEVATION_MIN;
+import static com.github.times.location.ZmanimLocation.LATITUDE_MAX;
+import static com.github.times.location.ZmanimLocation.LATITUDE_MIN;
+import static com.github.times.location.ZmanimLocation.LONGITUDE_MAX;
+import static com.github.times.location.ZmanimLocation.LONGITUDE_MIN;
+
 import android.location.Address;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -418,5 +427,35 @@ public class ZmanimAddress extends Address implements Comparable<ZmanimAddress> 
         if (getCountryName() != null)
             return;
         super.setCountryName(countryName);
+    }
+
+    @Override
+    public String toString() {
+        String formatted = this.formatted;
+        if (isEmpty(formatted))
+            return super.toString();
+        return super.toString() + "[" + formatted + "]";
+    }
+
+    public static boolean isValid(ZmanimAddress address) {
+        if (address == null)
+            return false;
+
+        if (!address.hasLatitude()) return false;
+        final double latitude = address.getLatitude();
+        if ((latitude < LATITUDE_MIN) || (latitude > LATITUDE_MAX))
+            return false;
+
+        if (!address.hasLongitude()) return false;
+        final double longitude = address.getLongitude();
+        if ((longitude < LONGITUDE_MIN) || (longitude > LONGITUDE_MAX))
+            return false;
+
+        if (address.hasElevation()) {
+            final double elevation = address.getElevation();
+            return (elevation >= ELEVATION_MIN) && (elevation <= ELEVATION_MAX);
+        }
+
+        return true;
     }
 }
