@@ -19,6 +19,11 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
+import com.github.util.LocaleUtils;
+import com.github.widget.ArrayAdapter;
+
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -26,11 +31,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
-
-import com.github.util.LocaleUtils;
-import com.github.widget.ArrayAdapter;
-
-import androidx.annotation.NonNull;
 
 /**
  * Location adapter.
@@ -280,10 +280,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             CharSequence latitude = value.getFormatLatitude();
             CharSequence longitude = value.getFormatLongitude();
 
-            if (contains(valueText, constraint) || (TextUtils.indexOf(latitude, constraint) >= 0) || (TextUtils.indexOf(longitude, constraint) >= 0)) {
-                return true;
-            }
-            return false;
+            return contains(valueText, constraint)
+                || (TextUtils.indexOf(latitude, constraint) >= 0)
+                || (TextUtils.indexOf(longitude, constraint) >= 0);
         }
 
         /**
@@ -452,7 +451,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      */
     protected class LocationComparator implements Comparator<LocationItem> {
 
-        /** Double subtraction error. */
+        /**
+         * Double subtraction error.
+         */
         private static final double EPSILON = 1e-6;
 
         private Collator collator;

@@ -576,13 +576,8 @@ public class GeoNames {
      * @throws IOException if an I/O error occurs.
      */
     public void populateAlternateNames(File file, Collection<GeoNamesToponym> records, String zippedName) throws IOException {
-        InputStream in = null;
-        try {
-            in = new FileInputStream(file);
+        try (InputStream in = new FileInputStream(file)) {
             populateAlternateNames(in, records, zippedName);
-        } finally {
-            if (in != null)
-                in.close();
         }
     }
 

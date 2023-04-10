@@ -19,10 +19,11 @@ android {
     defaultConfig {
         minSdk = BuildVersions.minSdkVersion
         targetSdk = BuildVersions.targetSdkVersion
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        encodeApiKey("BING_API_KEY",)
-        encodeApiKey("GEONAMES_USERNAME",)
-        encodeApiKey("GOOGLE_API_KEY",)
+        encodeApiKey("BING_API_KEY")
+        encodeApiKey("GEONAMES_USERNAME")
+        encodeApiKey("GOOGLE_API_KEY")
     }
 
     buildTypes {

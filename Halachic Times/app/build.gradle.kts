@@ -54,6 +54,7 @@ android {
         buildConfigField("String[]", "LOCALES", joinStrings(locales))
 
         testApplicationId = "net.sf.times.test"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {

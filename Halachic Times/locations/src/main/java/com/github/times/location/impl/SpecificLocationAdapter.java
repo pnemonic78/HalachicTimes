@@ -31,8 +31,6 @@ import java.util.List;
  */
 public abstract class SpecificLocationAdapter extends LocationAdapter {
 
-    private SpecificFilter filter;
-
     public SpecificLocationAdapter(Context context, List<LocationItem> items) {
         this(context, items, (LocationItemListener) null);
     }
@@ -47,12 +45,9 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
 
     public SpecificLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener, final FilterListener filterListener) {
         super(context, items, itemListener);
-        getFilter().filter(null, (filterListener == null) ? null : new Filter.FilterListener() {
-            @Override
-            public void onFilterComplete(int count) {
-                filterListener.onFilterComplete(SpecificLocationAdapter.this, count);
-            }
-        });
+
+        final Filter.FilterListener listener = (filterListener == null) ? null : count -> filterListener.onFilterComplete(SpecificLocationAdapter.this, count);
+        getFilter().filter(null, listener);
     }
 
     @Override
@@ -84,7 +79,7 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
             int position = -1;
             for (int i = 0; i < count; i++) {
                 item = getItem(i);
-                if (item.getAddress().equals(address)) {
+                if (address.equals(item.getAddress())) {
                     position = i;
                     break;
                 }
@@ -105,7 +100,7 @@ public abstract class SpecificLocationAdapter extends LocationAdapter {
                 final int size = originalValues.size();
                 for (int i = 0; i < size; i++) {
                     item = originalValues.get(i);
-                    if (item.getAddress().equals(address)) {
+                    if (address.equals(item.getAddress())) {
                         position = i;
                         break;
                     }

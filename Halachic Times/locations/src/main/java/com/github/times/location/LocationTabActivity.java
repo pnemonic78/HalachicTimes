@@ -15,6 +15,8 @@
  */
 package com.github.times.location;
 
+import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -52,8 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import timber.log.Timber;
-
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 /**
  * Pick a city from the list.
@@ -321,14 +321,17 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     @Override
     public boolean onQueryTextSubmit(String query) {
         if (!TextUtils.isEmpty(query)) {
-            String[] tokens = query.split("[,;]");
+            String[] tokens = query.split("[ ,;]");
             if (tokens.length >= 2) {
                 final String token0 = tokens[0].trim();
                 final String token1 = tokens[1].trim();
                 if (!TextUtils.isEmpty(token0) && !TextUtils.isEmpty(token1)) {
+                    LocationFormatter formatter = getLocations();
                     try {
-                        double latitude = Location.convert(token0);
-                        double longitude = Location.convert(token1);
+                        double latitude = formatter.parseLatitude(token0);
+                        if (Double.isNaN(latitude)) return false;
+                        double longitude = formatter.parseLongitude(token1);
+                        if (Double.isNaN(longitude)) return false;
 
                         Location location = new Location(USER_PROVIDER);
                         location.setLatitude(latitude);
@@ -420,14 +423,11 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
             Timber.w("add empty location");
             return;
         }
-
-        String query = location.getLatitude() + ", " + location.getLongitude();
-        SearchView searchText = this.searchText;
-        searchText.setIconified(false);
-        searchText.requestFocus();
-        searchText.setQuery(query, false);
-
         fetchAddress(location);
+
+        LocationFormatter formatter = getLocations();
+        CharSequence query = formatter.formatCoordinates(location);
+        search(query);
     }
 
     private void fetchAddress(Location location) {
@@ -518,10 +518,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
                     activity.populateLists();
 
                     String query = address.getFormatted();
-                    SearchView searchText = activity.searchText;
-                    searchText.setIconified(false);
-                    searchText.requestFocus();
-                    searchText.setQuery(query, false);
+                    activity.search(query);
                     break;
                 case WHAT_DELETE:
                     address = (ZmanimAddress) msg.obj;

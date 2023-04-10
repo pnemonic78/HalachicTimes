@@ -32,7 +32,7 @@ public interface LocationFormatter {
      *         the location.
      * @return the coordinates text.
      */
-    CharSequence formatCoordinates(Location location);
+    String formatCoordinates(Location location);
 
     /**
      * Format the coordinates.
@@ -41,7 +41,7 @@ public interface LocationFormatter {
      *         the address.
      * @return the coordinates text.
      */
-    CharSequence formatCoordinates(Address address);
+    String formatCoordinates(Address address);
 
     /**
      * Format the coordinates.
@@ -54,7 +54,7 @@ public interface LocationFormatter {
      *         the elevation or altitude.
      * @return the coordinates text.
      */
-    CharSequence formatCoordinates(double latitude, double longitude, double elevation);
+    String formatCoordinates(double latitude, double longitude, double elevation);
 
     /**
      * Format a latitude coordinate.
@@ -63,7 +63,7 @@ public interface LocationFormatter {
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLatitude(double latitude);
+    String formatLatitude(double latitude);
 
     /**
      * Format a latitude coordinate using the decimal notation.
@@ -72,7 +72,7 @@ public interface LocationFormatter {
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLatitudeDecimal(double latitude);
+    String formatLatitudeDecimal(double latitude);
 
     /**
      * Format a latitude coordinate using the sexagesimal notation.
@@ -81,7 +81,7 @@ public interface LocationFormatter {
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLatitudeSexagesimal(double latitude);
+    String formatLatitudeSexagesimal(double latitude);
 
     /**
      * Format a longitude coordinate.
@@ -90,7 +90,7 @@ public interface LocationFormatter {
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLongitude(double longitude);
+    String formatLongitude(double longitude);
 
     /**
      * Format a longitude coordinate using the decimal notation.
@@ -99,7 +99,7 @@ public interface LocationFormatter {
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLongitudeDecimal(double longitude);
+    String formatLongitudeDecimal(double longitude);
 
     /**
      * Format a longitude coordinate using the sexagesimal notation.
@@ -108,7 +108,7 @@ public interface LocationFormatter {
      *         the coordinate.
      * @return the coordinate text.
      */
-    CharSequence formatLongitudeSexagesimal(double longitude);
+    String formatLongitudeSexagesimal(double longitude);
 
     /**
      * Format an elevation.
@@ -117,7 +117,7 @@ public interface LocationFormatter {
      *         the elevation.
      * @return the elevation text.
      */
-    CharSequence formatElevation(double elevation);
+    String formatElevation(double elevation);
 
     /**
      * Format a azimuth (bearing or yaw or compass angle).
@@ -126,7 +126,7 @@ public interface LocationFormatter {
      *         the azimuth, in degrees.
      * @return the azimuth text.
      */
-    CharSequence formatBearing(double azimuth);
+    String formatBearing(double azimuth);
 
     /**
      * Format a azimuth (bearing or yaw or compass angle) using the decimal notation.
@@ -135,7 +135,7 @@ public interface LocationFormatter {
      *         the azimuth, in degrees.
      * @return the azimuth text.
      */
-    CharSequence formatBearingDecimal(double azimuth);
+    String formatBearingDecimal(double azimuth);
 
     /**
      * Format a azimuth (bearing or yaw or compass angle) using the sexagesimal notation.
@@ -144,6 +144,9 @@ public interface LocationFormatter {
      *         the azimuth, in degrees.
      * @return the azimuth text.
      */
-    CharSequence formatBearingSexagesimal(double azimuth);
+    String formatBearingSexagesimal(double azimuth);
 
+    double parseLatitude(String coordinate);
+
+    double parseLongitude(String coordinate);
 }

@@ -608,68 +608,78 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public CharSequence formatCoordinates(Location location) {
+    public String formatCoordinates(Location location) {
         return formatterHelper.formatCoordinates(location);
     }
 
     @Override
-    public CharSequence formatCoordinates(Address address) {
+    public String formatCoordinates(Address address) {
         return formatterHelper.formatCoordinates(address);
     }
 
     @Override
-    public CharSequence formatCoordinates(double latitude, double longitude, double elevation) {
+    public String formatCoordinates(double latitude, double longitude, double elevation) {
         return formatterHelper.formatCoordinates(latitude, longitude, elevation);
     }
 
     @Override
-    public CharSequence formatLatitude(double latitude) {
+    public String formatLatitude(double latitude) {
         return formatterHelper.formatLatitude(latitude);
     }
 
     @Override
-    public CharSequence formatLatitudeDecimal(double latitude) {
+    public String formatLatitudeDecimal(double latitude) {
         return formatterHelper.formatLatitudeDecimal(latitude);
     }
 
     @Override
-    public CharSequence formatLatitudeSexagesimal(double latitude) {
+    public String formatLatitudeSexagesimal(double latitude) {
         return formatterHelper.formatLatitudeSexagesimal(latitude);
     }
 
     @Override
-    public CharSequence formatLongitude(double longitude) {
+    public String formatLongitude(double longitude) {
         return formatterHelper.formatLongitude(longitude);
     }
 
     @Override
-    public CharSequence formatLongitudeDecimal(double longitude) {
+    public String formatLongitudeDecimal(double longitude) {
         return formatterHelper.formatLongitudeDecimal(longitude);
     }
 
     @Override
-    public CharSequence formatLongitudeSexagesimal(double longitude) {
+    public String formatLongitudeSexagesimal(double longitude) {
         return formatterHelper.formatLongitudeSexagesimal(longitude);
     }
 
     @Override
-    public CharSequence formatElevation(double elevation) {
+    public String formatElevation(double elevation) {
         return formatterHelper.formatElevation(elevation);
     }
 
     @Override
-    public CharSequence formatBearing(double azimuth) {
+    public String formatBearing(double azimuth) {
         return formatterHelper.formatBearing(azimuth);
     }
 
     @Override
-    public CharSequence formatBearingDecimal(double azimuth) {
+    public String formatBearingDecimal(double azimuth) {
         return formatterHelper.formatBearingDecimal(azimuth);
     }
 
     @Override
-    public CharSequence formatBearingSexagesimal(double azimuth) {
+    public String formatBearingSexagesimal(double azimuth) {
         return formatterHelper.formatBearingSexagesimal(azimuth);
+    }
+
+    @Override
+    public double parseLatitude(String coordinate) {
+        return formatterHelper.parseLatitude(coordinate);
+    }
+
+    @Override
+    public double parseLongitude(String coordinate) {
+        return formatterHelper.parseLongitude(coordinate);
     }
 
     /**

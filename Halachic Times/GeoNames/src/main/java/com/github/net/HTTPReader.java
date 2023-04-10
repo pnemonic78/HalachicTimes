@@ -128,20 +128,12 @@ public class HTTPReader {
         }
 
         InputStream data;
-        InputStream in = null;
-        try {
-            in = conn.getInputStream();
+        try (InputStream in = conn.getInputStream()) {
             // Do NOT use Content-Length header for an exact buffer size!
             // It is not always reliable / accurate.
             final int dataSize = Math.max(in.available(), conn.getContentLength());
             data = StreamUtils.readFully(in, dataSize);
         } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception ignore) {
-                }
-            }
             if (http != null) {
                 http.disconnect();
             }

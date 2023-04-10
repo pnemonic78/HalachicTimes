@@ -15,19 +15,21 @@
  */
 package com.github.times.location;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
+import static com.github.times.location.LocationPreferences.Values.FORMAT_DECIMAL;
+import static com.github.times.location.LocationPreferences.Values.FORMAT_SEXAGESIMAL;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import android.content.Context;
 import android.location.Location;
 
 import org.junit.Test;
 
 import java.util.TimeZone;
-
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class LocationsTestCase {
 
@@ -270,5 +272,113 @@ public class LocationsTestCase {
         assertTrue(s >= 0);
         assertTrue(s < 60);
         return hemisphere.sign() * (d + ((m + (s / 60.0)) / 60.0));
+    }
+
+    @Test
+    public void testParseLatitudeDecimal() {
+        Context context = getApplicationContext();
+        SimpleLocationPreferences.init(context);
+
+        LocationFormatter formatter = new SimpleLocationFormatter(context, FORMAT_DECIMAL, true);
+        assertTrue(Double.isNaN(formatter.parseLatitude("")));
+        assertTrue(Double.isNaN(formatter.parseLatitude("a")));
+        assertTrue(Double.isNaN(formatter.parseLatitude(",")));
+        assertTrue(Double.isNaN(formatter.parseLatitude(".")));
+
+        double delta = 1e-6;
+        assertEquals(12.0, formatter.parseLatitude("12"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12."), delta);
+        assertEquals(12.0, formatter.parseLatitude("12.0"), delta);
+        assertEquals(12.3456, formatter.parseLatitude("12.3456000"), delta);
+        assertEquals(-12, formatter.parseLatitude("-12"), delta);
+        assertEquals(-12.3456, formatter.parseLatitude("-12.3456"), delta);
+
+        assertEquals(-90, formatter.parseLatitude("-90"), delta);
+        assertEquals(90, formatter.parseLatitude("90"), delta);
+        assertTrue(Double.isNaN(formatter.parseLatitude("-91")));
+        assertTrue(Double.isNaN(formatter.parseLatitude("91")));
+    }
+
+    @Test
+    public void testParseLongitudeDecimal() {
+        Context context = getApplicationContext();
+        SimpleLocationPreferences.init(context);
+
+        LocationFormatter formatter = new SimpleLocationFormatter(context, FORMAT_DECIMAL, true);
+        assertTrue(Double.isNaN(formatter.parseLongitude("")));
+        assertTrue(Double.isNaN(formatter.parseLongitude("a")));
+        assertTrue(Double.isNaN(formatter.parseLongitude(",")));
+        assertTrue(Double.isNaN(formatter.parseLongitude(".")));
+
+        double delta = 1e-6;
+        assertEquals(12.0, formatter.parseLongitude("12"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12."), delta);
+        assertEquals(12.0, formatter.parseLongitude("12.0"), delta);
+        assertEquals(12.3456, formatter.parseLongitude("12.3456000"), delta);
+        assertEquals(-12, formatter.parseLongitude("-12"), delta);
+        assertEquals(-12.3456, formatter.parseLongitude("-12.3456"), delta);
+
+        assertEquals(-180, formatter.parseLongitude("-180"), delta);
+        assertEquals(180, formatter.parseLongitude("180"), delta);
+        assertTrue(Double.isNaN(formatter.parseLongitude("-181")));
+        assertTrue(Double.isNaN(formatter.parseLongitude("181")));
+    }
+
+    @Test
+    public void testParseLatitudeSexagecimal() {
+        Context context = getApplicationContext();
+        SimpleLocationPreferences.init(context);
+
+        LocationFormatter formatter = new SimpleLocationFormatter(context, FORMAT_SEXAGESIMAL, true);
+        assertTrue(Double.isNaN(formatter.parseLatitude("")));
+        assertTrue(Double.isNaN(formatter.parseLatitude("a")));
+        assertTrue(Double.isNaN(formatter.parseLatitude("\u00B0")));
+
+        double delta = 1e-6;
+        assertEquals(12.0, formatter.parseLatitude("12"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12\u00B0"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12\u00B00"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12\u00B000"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12\u00B000'"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12\u00B000'00"), delta);
+        assertEquals(12.0, formatter.parseLatitude("12\u00B000'00\""), delta);
+        assertEquals(12.0, formatter.parseLatitude(formatter.formatLatitudeSexagesimal(12.0)), delta);
+
+        assertEquals(12.345, formatter.parseLatitude(formatter.formatLatitudeSexagesimal(12.345)), delta);
+        assertEquals(-12.345, formatter.parseLatitude(formatter.formatLatitudeSexagesimal(-12.345)), delta);
+
+        assertEquals(-90, formatter.parseLatitude("-90"), delta);
+        assertEquals(90, formatter.parseLatitude("90"), delta);
+        assertTrue(Double.isNaN(formatter.parseLatitude("-91")));
+        assertTrue(Double.isNaN(formatter.parseLatitude("91")));
+    }
+
+    @Test
+    public void testParseLongitudeSexagecimal() {
+        Context context = getApplicationContext();
+        SimpleLocationPreferences.init(context);
+
+        LocationFormatter formatter = new SimpleLocationFormatter(context, FORMAT_SEXAGESIMAL, true);
+        assertTrue(Double.isNaN(formatter.parseLongitude("")));
+        assertTrue(Double.isNaN(formatter.parseLongitude("a")));
+        assertTrue(Double.isNaN(formatter.parseLongitude("\u00B0")));
+
+        double delta = 1e-6;
+        assertEquals(12.0, formatter.parseLongitude("12"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12\u00B0"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12\u00B00"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12\u00B000"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12\u00B000'"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12\u00B000'00"), delta);
+        assertEquals(12.0, formatter.parseLongitude("12\u00B000'00\""), delta);
+        assertEquals(12.0, formatter.parseLongitude(formatter.formatLongitudeSexagesimal(12.0)), delta);
+
+        assertEquals(12.345, formatter.parseLongitude(formatter.formatLongitudeSexagesimal(12.345)), delta);
+        assertEquals(-12.345, formatter.parseLongitude(formatter.formatLongitudeSexagesimal(-12.345)), delta);
+
+        assertEquals(-180, formatter.parseLongitude("-180\u00B0"), delta);
+        assertEquals(180, formatter.parseLongitude("180\u00B0"), delta);
+        assertTrue(Double.isNaN(formatter.parseLongitude("-181\u00B0")));
+        assertTrue(Double.isNaN(formatter.parseLongitude("181\u00B0")));
     }
 }
