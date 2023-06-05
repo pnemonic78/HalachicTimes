@@ -287,9 +287,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
             bindViewGrouping(list, holidayName);
 
             // Sefirat HaOmer?
-            int omer = jcal.getDayOfOmer();
-            if (omer >= 1) {
-                CharSequence omerLabel = adapter.formatOmer(context, omer);
+            final int omerToday = adapter.getDayOfOmerToday();
+            if (omerToday >= 1) {
+                CharSequence omerLabel = adapter.formatOmer(context, omerToday);
                 bindViewGrouping(list, omerLabel);
             }
 
@@ -314,9 +314,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
                     bindViewGrouping(list, holidayTomorrowName);
 
                     // Sefirat HaOmer?
-                    omer = jcal.getDayOfOmer();
-                    if (omer >= 1) {
-                        CharSequence omerLabel = adapter.formatOmer(context, omer);
+                    final int omerTomorrow = adapter.getDayOfOmerTomorrow();
+                    if (omerTomorrow >= 1) {
+                        CharSequence omerLabel = adapter.formatOmer(context, omerTomorrow);
                         bindViewGrouping(list, omerLabel);
                     }
                 }

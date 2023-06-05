@@ -281,7 +281,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final int holidayToday = candles.holidayToday;
         final int holidayTomorrow = candles.holidayTomorrow;
         final int candlesOffset = candles.candlesOffset;
-        final int candlesWhen = candles.when;
+        final int candlesWhen = candles.whenCandles;
 
         adapter.setCandles(candles);
 
@@ -1078,7 +1078,9 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         int countToday = CANDLES_NONE;
         int holidayTomorrow = jcalTomorrow.getYomTovIndex();
         int countTomorrow = CANDLES_NONE;
-        int when = BEFORE_SUNSET;
+        int whenCandles = BEFORE_SUNSET;
+        int omerToday = jewishDateToday.getDayOfOmer();
+        int omerTomorrow = jcalTomorrow.getDayOfOmer();
 
         switch (holidayToday) {
             case PESACH:
@@ -1119,11 +1121,11 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                 if ((dayOfWeek != FRIDAY) && (dayOfWeek != SATURDAY)) {
                     String opinion = settings.getChanukkaCandles();
                     if (OPINION_TWILIGHT.equals(opinion)) {
-                        when = AT_TWILIGHT;
+                        whenCandles = AT_TWILIGHT;
                     } else if (OPINION_NIGHT.equals(opinion)) {
-                        when = AT_NIGHT;
+                        whenCandles = AT_NIGHT;
                     } else {
-                        when = AT_SUNSET;
+                        whenCandles = AT_SUNSET;
                     }
                 }
                 break;
@@ -1139,14 +1141,14 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
             // Forbidden to light candles during Shabbath.
             // Never happens that Yom Kippurim falls on a Friday.
             case FRIDAY:
-                when = BEFORE_SUNSET;
+                whenCandles = BEFORE_SUNSET;
                 break;
             // Forbidden to light candles during Shabbath.
             case SATURDAY:
                 if (holidayToday == -1) {
                     holidayToday = SHABBATH;
                 }
-                when = MOTZE_SHABBATH;
+                whenCandles = MOTZE_SHABBATH;
                 break;
             default:
                 // During a holiday, we can light for the next day from an existing flame,
@@ -1158,7 +1160,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
                     case SUCCOS:
                     case SHEMINI_ATZERES:
                     case SIMCHAS_TORAH:
-                        when = MOTZE_SHABBATH;
+                        whenCandles = MOTZE_SHABBATH;
                         break;
                 }
                 break;
@@ -1166,7 +1168,7 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
 
         final int candlesOffset = settings.getCandleLightingOffset();
 
-        return new CandleData(holidayToday, countToday, holidayTomorrow, countTomorrow, when, candlesOffset);
+        return new CandleData(holidayToday, countToday, holidayTomorrow, countTomorrow, whenCandles, candlesOffset, omerToday, omerTomorrow);
     }
 
     /**

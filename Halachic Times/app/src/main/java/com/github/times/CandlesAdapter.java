@@ -72,7 +72,7 @@ public class CandlesAdapter extends ZmanimAdapter {
      */
     public int getCandlesHoliday() {
         final CandleData candles = getCandles();
-        final int when = candles.when;
+        final int when = candles.whenCandles;
         final int holidayToday = candles.holidayToday;
         final int holidayTomorrow = candles.holidayTomorrow;
         return (when == BEFORE_SUNSET) ? holidayToday : holidayTomorrow;

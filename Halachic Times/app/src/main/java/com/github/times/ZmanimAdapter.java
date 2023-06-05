@@ -15,6 +15,15 @@
  */
 package com.github.times;
 
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
+import static android.text.format.DateUtils.SECOND_IN_MILLIS;
+import static com.github.times.ZmanimItem.NEVER;
+import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
+import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
+import static com.github.util.LocaleUtils.isLocaleRTL;
+import static com.github.util.TimeUtils.roundUp;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -30,11 +39,12 @@ import androidx.annotation.Nullable;
 
 import com.github.times.preference.ZmanimPreferences;
 import com.github.util.LocaleUtils;
-
 import com.kosherjava.zmanim.ComplexZmanimCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+
+import org.jetbrains.annotations.TestOnly;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -42,16 +52,6 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
-import static android.text.format.DateUtils.DAY_IN_MILLIS;
-import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static com.github.times.ZmanimItem.NEVER;
-import static com.github.times.preference.ZmanimPreferences.Values.OMER_B;
-import static com.github.times.preference.ZmanimPreferences.Values.OMER_L;
-import static com.github.util.LocaleUtils.isLocaleRTL;
-import static com.github.util.TimeUtils.roundUp;
-import static java.lang.System.currentTimeMillis;
 
 /**
  * Adapter for halachic times list.
@@ -96,7 +96,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
     protected final LayoutInflater inflater;
     protected final ZmanimPreferences settings;
     private ComplexZmanimCalendar calendar;
-    private final Calendar now = Calendar.getInstance();
+    private long now = System.currentTimeMillis();
     private boolean inIsrael;
     private boolean summaries;
     private boolean showElapsed;
@@ -303,7 +303,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         if (time == NEVER) {
             return;
         }
-        long now = this.now.getTimeInMillis();
+        final long now = this.now;
         CharSequence title = getContext().getString(titleId);
 
         ZmanimItem item = new ZmanimItem(titleId, title, time);
@@ -456,7 +456,6 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      */
     public void setCalendar(ComplexZmanimCalendar calendar) {
         this.calendar = calendar;
-        this.now.setTimeInMillis(currentTimeMillis());
     }
 
     /**
@@ -612,5 +611,23 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
      */
     public int getHolidayTomorrow() {
         return candles.holidayTomorrow;
+    }
+
+    /**
+     * Get the omer.
+     *
+     * @return the omer.
+     */
+    public int getDayOfOmerToday() {
+        return candles.omerToday;
+    }
+
+    /**
+     * Get tomorrow's omer.
+     *
+     * @return the omer.
+     */
+    public int getDayOfOmerTomorrow() {
+        return candles.omerTomorrow;
     }
 }

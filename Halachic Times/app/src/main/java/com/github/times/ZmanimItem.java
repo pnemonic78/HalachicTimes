@@ -149,6 +149,7 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
                 "title=" + title +
                 ", summary=" + summary +
                 ", time=" + timeLabel +
+                ", empty=" + isEmptyOrElapsed() +
                 '}';
     }
 }

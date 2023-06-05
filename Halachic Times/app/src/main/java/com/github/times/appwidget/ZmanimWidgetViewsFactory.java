@@ -208,7 +208,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
         }
 
         // Sefirat HaOmer?
-        int omer = jcal.getDayOfOmer();
+        int omer = adapter.getDayOfOmerToday();
         if (omer >= 1) {
             CharSequence omerLabel = adapter.formatOmer(context, omer);
             if (!TextUtils.isEmpty(omerLabel)) {
@@ -250,7 +250,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
                     }
 
                     // Sefirat HaOmer?
-                    omer = jcal.getDayOfOmer();
+                    omer = adapter.getDayOfOmerTomorrow();
                     if (omer >= 1) {
                         CharSequence omerLabel = adapter.formatOmer(context, omer);
                         if (!TextUtils.isEmpty(omerLabel)) {
