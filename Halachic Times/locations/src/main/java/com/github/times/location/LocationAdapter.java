@@ -15,6 +15,7 @@
  */
 package com.github.times.location;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -171,8 +172,9 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
         notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void sort(Comparator<? super LocationItem> comparator) {
+    public void sort(@NonNull Comparator<? super LocationItem> comparator) {
         sortNoNotify(comparator);
         notifyDataSetChanged();
     }

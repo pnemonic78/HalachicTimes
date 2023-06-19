@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.jewish;
+package com.github.compass.jewish
 
-import com.github.util.LogTree;
-
-import timber.log.Timber;
+import com.github.preference.ThemePreferences
+import com.github.times.location.LocationTabActivity
 
 /**
- * Compass application.
+ * Pick a city from the list.
  *
  * @author Moshe Waisberg
  */
-public class CompassApplication extends com.github.times.compass.CompassApplication {
-
-    @Override
-    public void onPreCreate() {
-        super.onPreCreate();
-        Timber.plant(new LogTree(BuildConfig.DEBUG));
-    }
-}
+class LocationActivity : LocationTabActivity<ThemePreferences>()

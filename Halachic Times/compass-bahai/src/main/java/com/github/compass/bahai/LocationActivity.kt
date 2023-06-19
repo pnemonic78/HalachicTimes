@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.bahai;
+package com.github.compass.bahai
 
-import com.github.times.location.LocationTabActivity;
+import com.github.preference.ThemePreferences
+import com.github.times.location.LocationTabActivity
 
 /**
  * Pick a city from the list.
  *
  * @author Moshe Waisberg
  */
-public class LocationActivity extends LocationTabActivity {
-}
+class LocationActivity : LocationTabActivity<ThemePreferences>()

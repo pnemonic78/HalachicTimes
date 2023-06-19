@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.jewish;
+package com.github.compass.bahai
 
-import com.github.times.location.LocationTabActivity;
+import com.github.util.LogTree
+import timber.log.Timber
 
 /**
- * Pick a city from the list.
+ * Compass application.
  *
  * @author Moshe Waisberg
  */
-public class LocationActivity extends LocationTabActivity {
+class CompassApplication : com.github.times.compass.CompassApplication() {
+    override fun onPreCreate() {
+        super.onPreCreate()
+        Timber.plant(LogTree(BuildConfig.DEBUG))
+    }
 }

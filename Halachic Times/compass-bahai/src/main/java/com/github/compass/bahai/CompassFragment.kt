@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.bahai;
+package com.github.compass.bahai
 
 /**
  * Show the direction in which to pray.
@@ -21,16 +21,19 @@ package com.github.compass.bahai;
  *
  * @author Moshe Waisberg
  */
-public class CompassFragment extends com.github.times.compass.CompassFragment {
+class CompassFragment : com.github.times.compass.CompassFragment() {
+    init {
+        setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION)
+    }
 
-    /** Latitude of the Bahaullah's tomb, according to wikipedia. */
-    private static final double HOLIEST_LATITUDE = 32.943333;
-    /** Longitude of the Bahaullah's tomb, according to wikipedia. */
-    private static final double HOLIEST_LONGITUDE = 35.092222;
-    /** Elevation of the Bahaullah's tomb, according to Google. */
-    private static final double HOLIEST_ELEVATION = 22;
+    companion object {
+        /** Latitude of the Bahaullah's tomb, according to wikipedia.  */
+        private const val HOLIEST_LATITUDE = 32.943333
 
-    public CompassFragment() {
-        setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION);
+        /** Longitude of the Bahaullah's tomb, according to wikipedia.  */
+        private const val HOLIEST_LONGITUDE = 35.092222
+
+        /** Elevation of the Bahaullah's tomb, according to Google.  */
+        private const val HOLIEST_ELEVATION = 22.0
     }
 }
