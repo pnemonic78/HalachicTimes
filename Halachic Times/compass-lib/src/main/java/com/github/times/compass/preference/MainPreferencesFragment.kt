@@ -19,5 +19,5 @@ import com.github.preference.AbstractPreferenceFragment
 import com.github.times.compass.lib.R
 
 class MainPreferencesFragment : AbstractPreferenceFragment() {
-    override fun getPreferencesXml() = R.xml.preference_headers
+    override val preferencesXml = R.xml.preference_headers
 }
