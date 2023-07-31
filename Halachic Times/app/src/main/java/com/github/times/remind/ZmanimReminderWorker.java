@@ -80,13 +80,11 @@ public class ZmanimReminderWorker extends Worker {
                 if (value == null) continue;
                 if (value instanceof CharSequence) {
                     data.putString(key, value.toString());
-                    continue;
-                }
-                if (value instanceof Parcelable) {
+                } else if (value instanceof Parcelable) {
                     putParcelable(data, key, (Parcelable) value);
-                    continue;
+                } else {
+                    all.put(key, value);
                 }
-                all.put(key, value);
             }
             data.putAll(all);
         }
@@ -107,7 +105,6 @@ public class ZmanimReminderWorker extends Worker {
     @Nullable
     public static Intent toIntent(@Nullable Data data) {
         if (data == null) return null;
-        Intent intent = new Intent();
         Bundle extras = new Bundle();
 
         final String action = data.getString(DATA_ACTION);
@@ -196,9 +193,10 @@ public class ZmanimReminderWorker extends Worker {
         }
         extras.remove(DATA_ACTION);
         extras.remove(DATA_DATA);
-        intent.putExtras(extras);
 
-        intent.setAction(action);
+        Intent intent = new Intent()
+                .putExtras(extras)
+                .setAction(action);
         if (!TextUtils.isEmpty(dataString)) {
             intent.setData(Uri.parse(dataString));
         }

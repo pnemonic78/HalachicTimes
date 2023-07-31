@@ -22,13 +22,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
-import com.github.times.BuildConfig;
-import com.github.times.ZmanimItem;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static java.lang.System.currentTimeMillis;
+import com.github.times.BuildConfig;
+import com.github.times.ZmanimItem;
 
 /**
  * Reminder item for a notification.
@@ -126,7 +124,7 @@ public class ZmanimReminderItem implements Parcelable {
                 contentTitle = context.getText(id);
             }
             CharSequence contentText = extras.getCharSequence(EXTRA_TEXT);
-            long when = extras.getLong(EXTRA_TIME, currentTimeMillis());
+            long when = extras.getLong(EXTRA_TIME, System.currentTimeMillis());
             if ((contentTitle != null) && (when > 0L)) {
                 return new ZmanimReminderItem(id, contentTitle, contentText, when);
             }
@@ -156,9 +154,9 @@ public class ZmanimReminderItem implements Parcelable {
         if (intent == null) {
             return;
         }
-        intent.putExtra(EXTRA_ID, id);
-        intent.putExtra(EXTRA_TITLE, title);
-        intent.putExtra(EXTRA_TEXT, text);
-        intent.putExtra(EXTRA_TIME, time);
+        intent.putExtra(EXTRA_ID, id)
+                .putExtra(EXTRA_TITLE, title)
+                .putExtra(EXTRA_TEXT, text)
+                .putExtra(EXTRA_TIME, time);
     }
 }

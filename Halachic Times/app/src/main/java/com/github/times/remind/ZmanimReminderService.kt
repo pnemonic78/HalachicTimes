@@ -22,7 +22,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.SystemClock
-import android.text.TextUtils
 import android.text.format.DateUtils
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -144,9 +143,7 @@ class ZmanimReminderService : Service() {
         @JvmStatic
         fun enqueueWork(context: Context, intent: Intent) {
             val action = intent.action
-            if (TextUtils.isEmpty(action)) {
-                return
-            }
+            if (action.isNullOrEmpty()) return
 
             // Handler high priority actions immediately.
             if (ACTION_CANCEL == action) {
@@ -160,10 +157,9 @@ class ZmanimReminderService : Service() {
             }
 
             val requestData = ZmanimReminderWorker.toWorkData(intent)
-            val workRequest: WorkRequest =
-                OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
-                    .setInputData(requestData)
-                    .build()
+            val workRequest: WorkRequest = OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
+                .setInputData(requestData)
+                .build()
 
             WorkManager.getInstance(context).enqueue(workRequest)
         }
