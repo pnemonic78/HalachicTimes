@@ -213,7 +213,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
 
     private SharedPreferences getSharedPreferences(Context context) {
         if (this.preferences instanceof SimplePreferences) {
-            return ((SimplePreferences) this.preferences).getPreferences();
+            return ((SimplePreferences) this.preferences).preferences;
         }
         return PreferenceManager.getDefaultSharedPreferences(context);
     }

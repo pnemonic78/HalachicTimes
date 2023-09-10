@@ -146,7 +146,7 @@ public class ZmanimItem implements Comparable<ZmanimItem> {
     @Override
     public String toString() {
         return "ZmanimItem{" +
-                "title=" + title +
+                "title=" + (title != null ? title : "(0x" + Integer.toHexString(titleId) + ")") +
                 ", summary=" + summary +
                 ", time=" + timeLabel +
                 ", empty=" + isEmptyOrElapsed() +

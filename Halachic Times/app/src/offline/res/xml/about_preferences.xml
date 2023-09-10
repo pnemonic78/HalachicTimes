@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
+        android:icon="@android:drawable/ic_menu_info_details"
         android:key="about.version"
         android:title="@string/version_title"/>
     <Preference

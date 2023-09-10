@@ -26,7 +26,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     @TargetApi(Build.VERSION_CODES.M)
     fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<String?>,
+        permissions: Array<String>,
         grantResults: IntArray
     ) {
         if (requestCode == REQUEST_PERMISSIONS) {

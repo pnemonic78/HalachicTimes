@@ -15,15 +15,13 @@
  */
 package com.github.times.preference;
 
+import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
+
 import android.os.Bundle;
 
 import androidx.annotation.Keep;
-import androidx.preference.Preference;
 
 import com.github.preference.NumberPickerPreference;
-import com.github.times.R;
-
-import static com.github.times.preference.ZmanimPreferences.KEY_OPINION_CANDLES;
 
 /**
  * This fragment shows the preferences for the Candles zman screen.
@@ -36,10 +34,7 @@ public class ZmanCandlesPreferenceFragment extends ZmanPreferenceFragment {
         super.onCreatePreferences(savedInstanceState, rootKey);
 
         NumberPickerPreference candles = findPreference(KEY_OPINION_CANDLES);
-        candles.setSummaryProvider((Preference.SummaryProvider<NumberPickerPreference>) preference -> {
-            int newValue = preference.getValue();
-            return getResources().getQuantityString(R.plurals.candles_summary, newValue, newValue);
-        });
+        candles.setSummaryProvider(ZmanCandlesSummaryProvider.getInstance());
         onPreferenceChange(candles, candles.getValue());
     }
 }
