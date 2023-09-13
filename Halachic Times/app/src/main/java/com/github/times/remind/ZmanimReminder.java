@@ -775,12 +775,13 @@ public class ZmanimReminder {
 
         AlarmManager alarms = getAlarmManager();
         PendingIntent alarmIntent = createUpcomingIntent(context);
-        PendingIntent displayIntent = createActivityIntent(context);
-        alarms.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerAt, displayIntent), alarmIntent);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarms.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarms.canScheduleExactAlarms()) {
+                AlarmManagerCompat.setAndAllowWhileIdle(alarms, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
+                return;
+            }
         }
+        AlarmManagerCompat.setExactAndAllowWhileIdle(alarms, AlarmManager.RTC_WAKEUP, triggerAt, alarmIntent);
     }
 
     private PendingIntent createUpcomingIntent(Context context) {
