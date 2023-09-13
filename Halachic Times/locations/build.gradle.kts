@@ -15,6 +15,7 @@ fun LibraryDefaultConfig.encodeApiKey(name: String) {
 
 android {
     compileSdk = BuildVersions.compileSdkVersion
+    namespace = "com.github.times.location"
 
     defaultConfig {
         minSdk = BuildVersions.minSdkVersion
@@ -24,6 +25,10 @@ android {
         encodeApiKey("BING_API_KEY")
         encodeApiKey("GEONAMES_USERNAME")
         encodeApiKey("GOOGLE_API_KEY")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

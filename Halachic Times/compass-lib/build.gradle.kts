@@ -5,6 +5,7 @@ plugins {
 
 android {
     compileSdk = BuildVersions.compileSdkVersion
+    namespace = "com.github.times.compass.lib"
 
     defaultConfig {
         minSdk = BuildVersions.minSdkVersion

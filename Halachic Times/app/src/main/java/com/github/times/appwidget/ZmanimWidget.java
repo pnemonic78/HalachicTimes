@@ -57,7 +57,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
     @ColorInt
     private int colorEnabled = Color.WHITE;
     @StyleRes
-    private int themeId = R.style.Theme;
+    private int themeId = com.github.lib.R.style.Theme;
 
     @Override
     protected void bindViews(Context context, RemoteViews list, ZmanimAdapter adapterToday, ZmanimAdapter adapterTomorrow) {
@@ -208,17 +208,16 @@ public class ZmanimWidget extends ZmanimAppWidget {
 
     @Override
     protected int getLayoutId() {
-        switch (getTheme()) {
-            case THEME_APPWIDGET_DARK:
-                return R.layout.widget_static;
-            case THEME_APPWIDGET_LIGHT:
-                return R.layout.widget_static_light;
-            default:
-                if (isBrightWallpaper(getContext())) {
-                    return R.layout.widget_static_light;
-                }
-                return R.layout.widget_static;
+        int theme = getTheme();
+        if (theme == THEME_APPWIDGET_DARK) {
+            return R.layout.widget_static;
+        } else if (theme == THEME_APPWIDGET_LIGHT) {
+            return R.layout.widget_static_light;
         }
+        if (isBrightWallpaper(getContext())) {
+            return R.layout.widget_static_light;
+        }
+        return R.layout.widget_static;
     }
 
     @Override
@@ -271,16 +270,12 @@ public class ZmanimWidget extends ZmanimAppWidget {
             this.themeId = themeId;
 
             boolean light;
-            switch (themeId) {
-                case THEME_APPWIDGET_DARK:
-                    light = false;
-                    break;
-                case THEME_APPWIDGET_LIGHT:
-                    light = true;
-                    break;
-                default:
-                    light = isBrightWallpaper(context);
-                    break;
+            if (themeId == THEME_APPWIDGET_DARK) {
+                light = false;
+            } else if (themeId == THEME_APPWIDGET_LIGHT) {
+                light = true;
+            } else {
+                light = isBrightWallpaper(context);
             }
 
             int colorEnabledDark = Color.WHITE;

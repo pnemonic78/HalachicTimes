@@ -124,7 +124,8 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
         boolean time24 = DateFormat.is24HourFormat(context);
 
         if (prefs.isSeconds()) {
-            String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
+            String pattern = time24 ? context.getString(com.github.lib.R.string.twenty_four_hour_time_format)
+                : context.getString(com.github.lib.R.string.twelve_hour_time_format);
             this.timeFormat = new SimpleDateFormat(pattern, locale);
             this.timeFormatGranularity = SECOND_IN_MILLIS;
         } else {

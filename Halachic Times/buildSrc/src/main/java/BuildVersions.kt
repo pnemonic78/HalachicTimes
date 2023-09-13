@@ -1,8 +1,9 @@
 object BuildVersions {
-    const val kotlin_version = "1.7.20"
+    const val androidGradle = "8.1.1"
+    const val kotlin_version = "1.8.20"
 
     const val minSdkVersion = 21
-    const val compileSdkVersion = 33
+    const val compileSdkVersion = 34
     const val targetSdkVersion = 33
 
     // App dependencies

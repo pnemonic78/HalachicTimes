@@ -147,7 +147,7 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
 
     @Override
     public boolean isSummaries() {
-        return preferences.getBoolean(KEY_SUMMARIES, context.getResources().getBoolean(R.bool.summaries_visible_defaultValue));
+        return preferences.getBoolean(KEY_SUMMARIES, context.getResources().getBoolean(com.github.times.common.R.bool.summaries_visible_defaultValue));
     }
 
     @Override
@@ -487,67 +487,62 @@ public class SimpleZmanimPreferences extends SimplePreferences implements Zmanim
 
     @Override
     public String toKey(int id) {
-        switch (id) {
-            case R.string.hour:
-                return KEY_OPINION_HOUR;
-            case R.string.dawn:
-                return KEY_OPINION_DAWN;
-            case R.string.tallis:
-            case R.string.tallis_only:
-                return KEY_OPINION_TALLIS;
-            case R.string.sunrise:
-                return KEY_OPINION_SUNRISE;
-            case R.string.shema:
-                return KEY_OPINION_SHEMA;
-            case R.string.prayers:
-                return KEY_OPINION_TFILA;
-            case R.string.eat_chametz:
-                return KEY_OPINION_EAT;
-            case R.string.burn_chametz:
-                return KEY_OPINION_BURN;
-            case R.string.midday:
-                return KEY_OPINION_NOON;
-            case R.string.earliest_mincha:
-                return KEY_OPINION_EARLIEST_MINCHA;
-            case R.string.mincha:
-                return KEY_OPINION_MINCHA;
-            case R.string.plug_hamincha:
-                return KEY_OPINION_PLUG_MINCHA;
-            case R.string.candles:
-                return KEY_OPINION_CANDLES;
-            case R.string.chanukka:
-            case R.string.chanukka_count:
-                return KEY_OPINION_CANDLES_CHANUKKA;
-            case R.string.sunset:
-                return KEY_OPINION_SUNSET;
-            case R.string.twilight:
-                return KEY_OPINION_TWILIGHT;
-            case R.string.nightfall:
-                return KEY_OPINION_NIGHTFALL;
-            case R.string.shabbath_ends:
-            case R.string.festival_ends:
-                return KEY_OPINION_SHABBATH_ENDS;
-            case R.string.midnight:
-                return KEY_OPINION_MIDNIGHT;
-            case R.string.midnight_guard:
-                return KEY_OPINION_MIDNIGHT_GUARD;
-            case R.string.morning_guard:
-                return KEY_OPINION_MORNING_GUARD;
-            case R.string.molad:
-                return KEY_OPINION_MOLAD;
-            case R.string.levana_earliest:
-                return KEY_OPINION_EARLIEST_LEVANA;
-            case R.string.levana_latest:
-                return KEY_OPINION_LATEST_LEVANA;
-            case R.string.omer:
-                return KEY_OPINION_OMER;
-            case R.string.fast_begins:
-                return KEY_OPINION_FAST_BEGINS;
-            case R.string.fast_ends:
-                return KEY_OPINION_FAST_ENDS;
-            default:
-                return null;
+        if (id == R.string.hour) {
+            return KEY_OPINION_HOUR;
+        } else if (id == R.string.dawn) {
+            return KEY_OPINION_DAWN;
+        } else if (id == R.string.tallis || id == R.string.tallis_only) {
+            return KEY_OPINION_TALLIS;
+        } else if (id == R.string.sunrise) {
+            return KEY_OPINION_SUNRISE;
+        } else if (id == R.string.shema) {
+            return KEY_OPINION_SHEMA;
+        } else if (id == R.string.prayers) {
+            return KEY_OPINION_TFILA;
+        } else if (id == R.string.eat_chametz) {
+            return KEY_OPINION_EAT;
+        } else if (id == R.string.burn_chametz) {
+            return KEY_OPINION_BURN;
+        } else if (id == R.string.midday) {
+            return KEY_OPINION_NOON;
+        } else if (id == R.string.earliest_mincha) {
+            return KEY_OPINION_EARLIEST_MINCHA;
+        } else if (id == R.string.mincha) {
+            return KEY_OPINION_MINCHA;
+        } else if (id == R.string.plug_hamincha) {
+            return KEY_OPINION_PLUG_MINCHA;
+        } else if (id == R.string.candles) {
+            return KEY_OPINION_CANDLES;
+        } else if (id == R.string.chanukka || id == R.string.chanukka_count) {
+            return KEY_OPINION_CANDLES_CHANUKKA;
+        } else if (id == R.string.sunset) {
+            return KEY_OPINION_SUNSET;
+        } else if (id == R.string.twilight) {
+            return KEY_OPINION_TWILIGHT;
+        } else if (id == R.string.nightfall) {
+            return KEY_OPINION_NIGHTFALL;
+        } else if (id == R.string.shabbath_ends || id == R.string.festival_ends) {
+            return KEY_OPINION_SHABBATH_ENDS;
+        } else if (id == R.string.midnight) {
+            return KEY_OPINION_MIDNIGHT;
+        } else if (id == R.string.midnight_guard) {
+            return KEY_OPINION_MIDNIGHT_GUARD;
+        } else if (id == R.string.morning_guard) {
+            return KEY_OPINION_MORNING_GUARD;
+        } else if (id == R.string.molad) {
+            return KEY_OPINION_MOLAD;
+        } else if (id == R.string.levana_earliest) {
+            return KEY_OPINION_EARLIEST_LEVANA;
+        } else if (id == R.string.levana_latest) {
+            return KEY_OPINION_LATEST_LEVANA;
+        } else if (id == R.string.omer) {
+            return KEY_OPINION_OMER;
+        } else if (id == R.string.fast_begins) {
+            return KEY_OPINION_FAST_BEGINS;
+        } else if (id == R.string.fast_ends) {
+            return KEY_OPINION_FAST_ENDS;
         }
+        return null;
     }
 
     @Override

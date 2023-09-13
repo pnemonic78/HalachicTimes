@@ -8,6 +8,7 @@ val versionMinor = (project.properties["APP_VERSION_MINOR"] as String).toInt()
 
 android {
     compileSdk = BuildVersions.compileSdkVersion
+    namespace = "com.github.compass.bahai"
 
     defaultConfig {
         applicationId = "net.sf.times.compass.bahai"
@@ -33,6 +34,10 @@ android {
             keyAlias = "release"
             keyPassword = project.properties["KEY_PASSWORD_RELEASE"] as String
         }
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {

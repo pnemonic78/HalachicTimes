@@ -700,32 +700,27 @@ public class ZmanimPopulater<A extends ZmanimAdapter> {
         final int summaryNightfall = summary;
         final long nightfallYesterday = getNightfall(calYesterday, opinion).first;
 
-        switch (shabbathAfter) {
-            case R.string.sunset:
-                opinion = settings.getShabbathEndsSunset();
-                if (OPINION_NONE.equals(opinion)) {
-                    date = sunset;
-                } else {
-                    date = getSunset(cal, opinion).first;
-                }
-                break;
-            case R.string.twilight:
-                opinion = settings.getShabbathEndsTwilight();
-                if (OPINION_NONE.equals(opinion)) {
-                    date = twilight;
-                } else {
-                    date = getTwilight(cal, opinion).first;
-                }
-                break;
-            case R.string.nightfall:
-            default:
-                opinion = settings.getShabbathEndsNightfall();
-                if (OPINION_NONE.equals(opinion)) {
-                    date = nightfall;
-                } else {
-                    date = getNightfall(cal, opinion).first;
-                }
-                break;
+        if (shabbathAfter == R.string.sunset) {
+            opinion = settings.getShabbathEndsSunset();
+            if (OPINION_NONE.equals(opinion)) {
+                date = sunset;
+            } else {
+                date = getSunset(cal, opinion).first;
+            }
+        } else if (shabbathAfter == R.string.twilight) {
+            opinion = settings.getShabbathEndsTwilight();
+            if (OPINION_NONE.equals(opinion)) {
+                date = twilight;
+            } else {
+                date = getTwilight(cal, opinion).first;
+            }
+        } else {
+            opinion = settings.getShabbathEndsNightfall();
+            if (OPINION_NONE.equals(opinion)) {
+                date = nightfall;
+            } else {
+                date = getNightfall(cal, opinion).first;
+            }
         }
         long shabbatEnds = NEVER;
         CharSequence summaryShabbatEnds = null;

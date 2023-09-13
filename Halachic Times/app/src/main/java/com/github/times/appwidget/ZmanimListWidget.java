@@ -44,17 +44,16 @@ public class ZmanimListWidget extends ZmanimWidget {
 
     @Override
     protected int getLayoutId() {
-        switch (getTheme()) {
-            case THEME_APPWIDGET_DARK:
-                return R.layout.widget_list;
-            case THEME_APPWIDGET_LIGHT:
-                return R.layout.widget_list_light;
-            default:
-                if (isBrightWallpaper(getContext())) {
-                    return R.layout.widget_list_light;
-                }
-                return R.layout.widget_list;
+        int theme = getTheme();
+        if (theme == THEME_APPWIDGET_DARK) {
+            return R.layout.widget_list;
+        } else if (theme == THEME_APPWIDGET_LIGHT) {
+            return R.layout.widget_list_light;
         }
+        if (isBrightWallpaper(getContext())) {
+            return R.layout.widget_list_light;
+        }
+        return R.layout.widget_list;
     }
 
     @Override

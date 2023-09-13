@@ -53,8 +53,8 @@ public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferenc
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.compass);
-        headerLocation = findViewById(R.id.coordinates);
-        headerAddress = findViewById(R.id.address);
+        headerLocation = findViewById(com.github.times.location.R.id.coordinates);
+        headerAddress = findViewById(com.github.times.location.R.id.address);
         fragment = (CompassFragment) getSupportFragmentManager().findFragmentById(R.id.compass);
 
         TextView summary = findViewById(R.id.summary);

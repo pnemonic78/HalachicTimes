@@ -44,8 +44,6 @@ import com.kosherjava.zmanim.hebrewcalendar.HebrewDateFormatter;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 
-import org.jetbrains.annotations.TestOnly;
-
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -143,7 +141,8 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         final Locale locale = LocaleUtils.getDefaultLocale(context);
 
         if (settings.isSeconds()) {
-            String pattern = context.getString(time24 ? R.string.twenty_four_hour_time_format : R.string.twelve_hour_time_format);
+            String pattern = time24 ? context.getString(com.github.lib.R.string.twenty_four_hour_time_format)
+                : context.getString(com.github.lib.R.string.twelve_hour_time_format);
             this.timeFormat = new SimpleDateFormat(pattern, locale);
             this.timeFormatGranularity = SECOND_IN_MILLIS;
 
@@ -420,7 +419,7 @@ public class ZmanimAdapter extends ArrayAdapter<ZmanimItem> {
         }
         String format = monthDayYear;
         if (format == null) {
-            format = context.getString(R.string.month_day_year);
+            format = context.getString(com.github.lib.R.string.month_day_year);
             monthDayYear = format;
         }
 

@@ -39,10 +39,10 @@ public class CompassActivity extends BaseCompassActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_settings:
-                startSettings();
-                return true;
+        final int itemId = item.getItemId();
+        if (itemId == R.id.menu_settings) {
+            startSettings();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

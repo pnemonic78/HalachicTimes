@@ -103,7 +103,7 @@ public class SimpleCompassPreferences extends SimpleThemePreferences implements 
     public static void init(Context context) {
         final Resources res = context.getResources();
 
-        SUMMARIES_DEFAULT = res.getBoolean(R.bool.summaries_visible_defaultValue);
+        SUMMARIES_DEFAULT = res.getBoolean(com.github.times.common.R.bool.summaries_visible_defaultValue);
 
         BEARING_DEFAULT = res.getString(R.string.compass_bearing_defaultValue);
         BEARING_GREAT_CIRCLE = res.getString(R.string.compass_bearing_value_circle);

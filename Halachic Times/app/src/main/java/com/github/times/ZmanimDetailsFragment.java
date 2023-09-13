@@ -15,8 +15,7 @@
  */
 package com.github.times;
 
-import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
-import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+import static com.github.view.ViewUtils.applyMaxWidth;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -27,11 +26,12 @@ import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 
+import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
+import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static com.github.view.ViewUtils.applyMaxWidth;
 
 /**
  * Shows a list of all opinions for a halachic time (<em>zman</em>).
@@ -40,7 +40,9 @@ import static com.github.view.ViewUtils.applyMaxWidth;
  */
 public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends ZmanimDetailsPopulater<A>> extends ZmanimFragment<A, P> {
 
-    /** The master id. */
+    /**
+     * The master id.
+     */
     private int masterId;
 
     /**
@@ -87,123 +89,88 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             adapter = super.populateTimes(date);
         }
 
-        final Context context = getContextImpl();
-        Resources res = context.getResources();
-
-        switch (preferences.getTheme()) {
-            case R.style.Theme_Zmanim_Dark:
-                switch (id) {
-                    case R.string.dawn:
-                        list.setBackgroundColor(res.getColor(R.color.dawn));
-                        break;
-                    case R.string.tallis:
-                    case R.string.tallis_only:
-                        list.setBackgroundColor(res.getColor(R.color.tallis));
-                        break;
-                    case R.string.sunrise:
-                        list.setBackgroundColor(res.getColor(R.color.sunrise));
-                        break;
-                    case R.string.shema:
-                        list.setBackgroundColor(res.getColor(R.color.shema));
-                        break;
-                    case R.string.prayers:
-                    case R.string.eat_chametz:
-                    case R.string.burn_chametz:
-                        list.setBackgroundColor(res.getColor(R.color.prayers));
-                        break;
-                    case R.string.midday:
-                        list.setBackgroundColor(res.getColor(R.color.midday));
-                        break;
-                    case R.string.earliest_mincha:
-                        list.setBackgroundColor(res.getColor(R.color.earliest_mincha));
-                        break;
-                    case R.string.mincha:
-                        list.setBackgroundColor(res.getColor(R.color.mincha));
-                        break;
-                    case R.string.plug_hamincha:
-                        list.setBackgroundColor(res.getColor(R.color.plug_hamincha));
-                        break;
-                    case R.string.sunset:
-                        list.setBackgroundColor(res.getColor(R.color.sunset));
-                        break;
-                    case R.string.twilight:
-                        list.setBackgroundColor(res.getColor(R.color.twilight));
-                        break;
-                    case R.string.nightfall:
-                    case R.string.shabbath_ends:
-                    case R.string.festival_ends:
-                        list.setBackgroundColor(res.getColor(R.color.nightfall));
-                        break;
-                    case R.string.midnight_guard:
-                    case R.string.midnight:
-                    case R.string.morning_guard:
-                        list.setBackgroundColor(res.getColor(R.color.midnight));
-                    default:
-                        list.setBackgroundColor(Color.TRANSPARENT);
-                        break;
-                }
-                break;
-            case R.style.Theme_Zmanim_Light:
-                switch (id) {
-                    case R.string.dawn:
-                        list.setBackgroundColor(res.getColor(R.color.dawn_light));
-                        break;
-                    case R.string.tallis:
-                    case R.string.tallis_only:
-                        list.setBackgroundColor(res.getColor(R.color.tallis_light));
-                        break;
-                    case R.string.sunrise:
-                        list.setBackgroundColor(res.getColor(R.color.sunrise_light));
-                        break;
-                    case R.string.shema:
-                        list.setBackgroundColor(res.getColor(R.color.shema_light));
-                        break;
-                    case R.string.prayers:
-                    case R.string.eat_chametz:
-                    case R.string.burn_chametz:
-                        list.setBackgroundColor(res.getColor(R.color.prayers_light));
-                        break;
-                    case R.string.midday:
-                        list.setBackgroundColor(res.getColor(R.color.midday_light));
-                        break;
-                    case R.string.earliest_mincha:
-                        list.setBackgroundColor(res.getColor(R.color.earliest_mincha_light));
-                        break;
-                    case R.string.mincha:
-                        list.setBackgroundColor(res.getColor(R.color.mincha_light));
-                        break;
-                    case R.string.plug_hamincha:
-                        list.setBackgroundColor(res.getColor(R.color.plug_hamincha_light));
-                        break;
-                    case R.string.sunset:
-                        list.setBackgroundColor(res.getColor(R.color.sunset_light));
-                        break;
-                    case R.string.twilight:
-                        list.setBackgroundColor(res.getColor(R.color.twilight_light));
-                        break;
-                    case R.string.nightfall:
-                    case R.string.shabbath_ends:
-                    case R.string.festival_ends:
-                        list.setBackgroundColor(res.getColor(R.color.nightfall_light));
-                        break;
-                    case R.string.midnight_guard:
-                    case R.string.midnight:
-                    case R.string.morning_guard:
-                        list.setBackgroundColor(res.getColor(R.color.midnight_light));
-                        break;
-                    default:
-                        list.setBackgroundColor(Color.TRANSPARENT);
-                        break;
-                }
-                break;
-            case R.style.Theme_Zmanim_NoGradient:
-            case R.style.Theme_Zmanim_White:
-            default:
-                list.setBackgroundColor(Color.TRANSPARENT);
-                break;
+        final int theme = preferences.getTheme();
+        if (theme == R.style.Theme_Zmanim_Dark) {
+            setBackgroundColorDark(id, list);
+        } else if (theme == R.style.Theme_Zmanim_Light) {
+            setBackgroundColorLight(id, list);
+        } else {
+            list.setBackgroundColor(Color.TRANSPARENT);
         }
 
         return adapter;
+    }
+
+    private void setBackgroundColorDark(int id, ViewGroup list) {
+        final Context context = getContextImpl();
+        Resources res = context.getResources();
+
+        if (id == R.string.dawn) {
+            list.setBackgroundColor(res.getColor(R.color.dawn));
+        } else if (id == R.string.tallis || id == R.string.tallis_only) {
+            list.setBackgroundColor(res.getColor(R.color.tallis));
+        } else if (id == R.string.sunrise) {
+            list.setBackgroundColor(res.getColor(R.color.sunrise));
+        } else if (id == R.string.shema) {
+            list.setBackgroundColor(res.getColor(R.color.shema));
+        } else if (id == R.string.prayers || id == R.string.eat_chametz || id == R.string.burn_chametz) {
+            list.setBackgroundColor(res.getColor(R.color.prayers));
+        } else if (id == R.string.midday) {
+            list.setBackgroundColor(res.getColor(R.color.midday));
+        } else if (id == R.string.earliest_mincha) {
+            list.setBackgroundColor(res.getColor(R.color.earliest_mincha));
+        } else if (id == R.string.mincha) {
+            list.setBackgroundColor(res.getColor(R.color.mincha));
+        } else if (id == R.string.plug_hamincha) {
+            list.setBackgroundColor(res.getColor(R.color.plug_hamincha));
+        } else if (id == R.string.sunset) {
+            list.setBackgroundColor(res.getColor(R.color.sunset));
+        } else if (id == R.string.twilight) {
+            list.setBackgroundColor(res.getColor(R.color.twilight));
+        } else if (id == R.string.nightfall || id == R.string.shabbath_ends || id == R.string.festival_ends) {
+            list.setBackgroundColor(res.getColor(R.color.nightfall));
+        } else if (id == R.string.midnight_guard || id == R.string.midnight || id == R.string.morning_guard) {
+            list.setBackgroundColor(res.getColor(R.color.midnight));
+
+            list.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            list.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    private void setBackgroundColorLight(int id, ViewGroup list) {
+        final Context context = getContextImpl();
+        Resources res = context.getResources();
+
+        if (id == R.string.dawn) {
+            list.setBackgroundColor(res.getColor(R.color.dawn_light));
+        } else if (id == R.string.tallis || id == R.string.tallis_only) {
+            list.setBackgroundColor(res.getColor(R.color.tallis_light));
+        } else if (id == R.string.sunrise) {
+            list.setBackgroundColor(res.getColor(R.color.sunrise_light));
+        } else if (id == R.string.shema) {
+            list.setBackgroundColor(res.getColor(R.color.shema_light));
+        } else if (id == R.string.prayers || id == R.string.eat_chametz || id == R.string.burn_chametz) {
+            list.setBackgroundColor(res.getColor(R.color.prayers_light));
+        } else if (id == R.string.midday) {
+            list.setBackgroundColor(res.getColor(R.color.midday_light));
+        } else if (id == R.string.earliest_mincha) {
+            list.setBackgroundColor(res.getColor(R.color.earliest_mincha_light));
+        } else if (id == R.string.mincha) {
+            list.setBackgroundColor(res.getColor(R.color.mincha_light));
+        } else if (id == R.string.plug_hamincha) {
+            list.setBackgroundColor(res.getColor(R.color.plug_hamincha_light));
+        } else if (id == R.string.sunset) {
+            list.setBackgroundColor(res.getColor(R.color.sunset_light));
+        } else if (id == R.string.twilight) {
+            list.setBackgroundColor(res.getColor(R.color.twilight_light));
+        } else if (id == R.string.nightfall || id == R.string.shabbath_ends || id == R.string.festival_ends) {
+            list.setBackgroundColor(res.getColor(R.color.nightfall_light));
+        } else if (id == R.string.midnight_guard || id == R.string.midnight || id == R.string.morning_guard) {
+            list.setBackgroundColor(res.getColor(R.color.midnight_light));
+        } else {
+            list.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override

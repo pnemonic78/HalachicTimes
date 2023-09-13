@@ -109,7 +109,7 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
                 entries[j] = locale.getDisplayName(locale);
             }
             if (isEmpty(entries[0])) {
-                entries[0] = context.getString(R.string.locale_default);
+                entries[0] = context.getString(com.github.lib.R.string.locale_default);
             }
 
             final ListPreference list = (ListPreference) pref;

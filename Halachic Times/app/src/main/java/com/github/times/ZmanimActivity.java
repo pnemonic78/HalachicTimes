@@ -390,16 +390,16 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         View header = view.findViewById(R.id.header);
         header.setOnClickListener(this);
         headerGregorianDate = header.findViewById(R.id.date_gregorian);
-        headerLocation = header.findViewById(R.id.coordinates);
-        headerAddress = header.findViewById(R.id.address);
+        headerLocation = header.findViewById(com.github.times.location.R.id.coordinates);
+        headerAddress = header.findViewById(com.github.times.location.R.id.address);
 
         buttonYesterday = header.findViewById(R.id.nav_yesterday);
         buttonYesterday.setOnClickListener(this);
         buttonTomorrow = header.findViewById(R.id.nav_tomorrow);
         buttonTomorrow.setOnClickListener(this);
 
-        slideRightToLeft = AnimationUtils.loadAnimation(context, R.anim.slide_right_to_left);
-        slideLeftToRight = AnimationUtils.loadAnimation(context, R.anim.slide_left_to_right);
+        slideRightToLeft = AnimationUtils.loadAnimation(context, com.github.times.common.R.anim.slide_right_to_left);
+        slideLeftToRight = AnimationUtils.loadAnimation(context, com.github.times.common.R.anim.slide_left_to_right);
 
         hideNavigation = AnimationUtils.loadAnimation(context, R.anim.hide_nav);
         hideNavigation.setAnimationListener(this);
@@ -488,22 +488,22 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_compass:
-                handler.sendEmptyMessage(WHAT_COMPASS);
-                return true;
-            case R.id.menu_date:
-                handler.sendEmptyMessage(WHAT_DATE);
-                return true;
-            case R.id.menu_location:
-                handler.sendEmptyMessage(WHAT_LOCATION);
-                return true;
-            case R.id.menu_settings:
-                handler.sendEmptyMessage(WHAT_SETTINGS);
-                return true;
-            case R.id.menu_today:
-                handler.sendEmptyMessage(WHAT_TODAY);
-                return true;
+        final int itemId = item.getItemId();
+        if (itemId == R.id.menu_compass) {
+            handler.sendEmptyMessage(WHAT_COMPASS);
+            return true;
+        } else if (itemId == R.id.menu_date) {
+            handler.sendEmptyMessage(WHAT_DATE);
+            return true;
+        } else if (itemId == R.id.menu_location) {
+            handler.sendEmptyMessage(WHAT_LOCATION);
+            return true;
+        } else if (itemId == R.id.menu_settings) {
+            handler.sendEmptyMessage(WHAT_SETTINGS);
+            return true;
+        } else if (itemId == R.id.menu_today) {
+            handler.sendEmptyMessage(WHAT_TODAY);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -613,19 +613,15 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.header:
-                toggleNavigationView();
-                break;
-            case R.id.nav_yesterday:
-                navigateYesterday();
-                break;
-            case R.id.nav_tomorrow:
-                navigateTomorrow();
-                break;
-            default:
-                toggleDetails(view);
-                break;
+        final int id = view.getId();
+        if (id == R.id.header) {
+            toggleNavigationView();
+        } else if (id == R.id.nav_yesterday) {
+            navigateYesterday();
+        } else if (id == R.id.nav_tomorrow) {
+            navigateTomorrow();
+        } else {
+            toggleDetails(view);
         }
     }
 

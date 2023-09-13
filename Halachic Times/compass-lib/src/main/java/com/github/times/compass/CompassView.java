@@ -32,7 +32,6 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.github.times.compass.lib.BuildConfig;
 import com.github.times.compass.lib.R;
 import com.github.times.compass.preference.CompassPreferences;
 import com.github.times.compass.preference.SimpleCompassPreferences;
@@ -177,10 +176,10 @@ public class CompassView extends View {
 
         a.recycle();
 
-        labelNorth = context.getString(R.string.north);
-        labelEast = context.getString(R.string.east);
-        labelSouth = context.getString(R.string.south);
-        labelWest = context.getString(R.string.west);
+        labelNorth = context.getString(com.github.times.location.R.string.north);
+        labelEast = context.getString(com.github.times.location.R.string.east);
+        labelSouth = context.getString(com.github.times.location.R.string.south);
+        labelWest = context.getString(com.github.times.location.R.string.west);
 
         paintCircle = new Paint(Paint.DITHER_FLAG);
         paintCircle.setStyle(Paint.Style.FILL);

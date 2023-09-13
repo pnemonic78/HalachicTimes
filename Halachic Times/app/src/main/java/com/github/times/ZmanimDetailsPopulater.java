@@ -64,70 +64,46 @@ public class ZmanimDetailsPopulater<A extends ZmanimAdapter> extends ZmanimPopul
         final ComplexZmanimCalendar calendar = this.calendar;
         final ComplexZmanimCalendar calendarYesterday = cloneZmanimYesterday(calendar);
 
-        switch (itemId) {
-            case R.string.hour:
-                populateHour(adapter, calendar, settings);
-                break;
-            case R.string.dawn:
-                populateDawn(adapter, calendar, settings);
-                break;
-            case R.string.tallis:
-            case R.string.tallis_only:
-                populateTallis(adapter, calendar, settings);
-                break;
-            case R.string.sunrise:
-                populateSunrise(adapter, calendar, settings);
-                break;
-            case R.string.shema:
-                populateShema(adapter, calendar, settings);
-                break;
-            case R.string.prayers:
-                populatePrayers(adapter, calendar, settings);
-                break;
-            case R.string.midday:
-                populateMidday(adapter, calendar, settings);
-                break;
-            case R.string.earliest_mincha:
-                populateEarliestMincha(adapter, calendar, settings);
-                break;
-            case R.string.mincha:
-                populateMincha(adapter, calendar, settings);
-                break;
-            case R.string.plug_hamincha:
-                populatePlugHamincha(adapter, calendar, settings);
-                break;
-            case R.string.sunset:
-                populateSunset(adapter, calendar, settings);
-                break;
-            case R.string.twilight:
-                populateTwilight(adapter, calendar, settings);
-                break;
-            case R.string.nightfall:
-                populateNightfall(adapter, calendar, settings);
-                break;
-            case R.string.shabbath_ends:
-            case R.string.festival_ends:
-                populateShabbathEnds(adapter, calendar, settings);
-                break;
-            case R.string.midnight:
-                populateMidnight(adapter, calendar, calendarYesterday, settings);
-                break;
-            case R.string.midnight_guard:
-            case R.string.morning_guard:
-                populateGuards(adapter, calendar, settings);
-                break;
-            case R.string.levana_earliest:
-                populateEarliestKiddushLevana(adapter, calendar, settings);
-                break;
-            case R.string.levana_latest:
-                populateLatestKiddushLevana(adapter, calendar, settings);
-                break;
-            case R.string.eat_chametz:
-                populateEatChametz(adapter, calendar, settings);
-                break;
-            case R.string.burn_chametz:
-                populateBurnChametz(adapter, calendar, settings);
-                break;
+        if (itemId == R.string.hour) {
+            populateHour(adapter, calendar, settings);
+        } else if (itemId == R.string.dawn) {
+            populateDawn(adapter, calendar, settings);
+        } else if (itemId == R.string.tallis || itemId == R.string.tallis_only) {
+            populateTallis(adapter, calendar, settings);
+        } else if (itemId == R.string.sunrise) {
+            populateSunrise(adapter, calendar, settings);
+        } else if (itemId == R.string.shema) {
+            populateShema(adapter, calendar, settings);
+        } else if (itemId == R.string.prayers) {
+            populatePrayers(adapter, calendar, settings);
+        } else if (itemId == R.string.midday) {
+            populateMidday(adapter, calendar, settings);
+        } else if (itemId == R.string.earliest_mincha) {
+            populateEarliestMincha(adapter, calendar, settings);
+        } else if (itemId == R.string.mincha) {
+            populateMincha(adapter, calendar, settings);
+        } else if (itemId == R.string.plug_hamincha) {
+            populatePlugHamincha(adapter, calendar, settings);
+        } else if (itemId == R.string.sunset) {
+            populateSunset(adapter, calendar, settings);
+        } else if (itemId == R.string.twilight) {
+            populateTwilight(adapter, calendar, settings);
+        } else if (itemId == R.string.nightfall) {
+            populateNightfall(adapter, calendar, settings);
+        } else if (itemId == R.string.shabbath_ends || itemId == R.string.festival_ends) {
+            populateShabbathEnds(adapter, calendar, settings);
+        } else if (itemId == R.string.midnight) {
+            populateMidnight(adapter, calendar, calendarYesterday, settings);
+        } else if (itemId == R.string.midnight_guard || itemId == R.string.morning_guard) {
+            populateGuards(adapter, calendar, settings);
+        } else if (itemId == R.string.levana_earliest) {
+            populateEarliestKiddushLevana(adapter, calendar, settings);
+        } else if (itemId == R.string.levana_latest) {
+            populateLatestKiddushLevana(adapter, calendar, settings);
+        } else if (itemId == R.string.eat_chametz) {
+            populateEatChametz(adapter, calendar, settings);
+        } else if (itemId == R.string.burn_chametz) {
+            populateBurnChametz(adapter, calendar, settings);
         }
 
         adapter.sort();

@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.times.compass.lib">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- The application uses directional readings from a magnetometer (compass) on the device. -->
     <uses-feature

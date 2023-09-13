@@ -122,45 +122,40 @@ public class ZmanShabbathPreferenceFragment extends ZmanPreferenceFragment {
         String shabbathAfterName = getString(shabbathAfterId);
         CharSequence specificOpinionLabel = null;
 
-        switch (shabbathAfterId) {
-            case R.string.sunset:
-                sunsetPreference.setEnabled(true);
-                twilightPreference.setEnabled(false);
-                nightfallPreference.setEnabled(false);
-                if (specificOpinionValue == null) {
-                    specificOpinionValue = sunsetPreference.getValue();
-                    specificOpinionLabel = sunsetPreference.getEntry();
-                } else {
-                    specificOpinionLabel = findEntry(sunsetPreference, specificOpinionValue);
-                }
-                break;
-            case R.string.twilight:
-                sunsetPreference.setEnabled(false);
-                twilightPreference.setEnabled(true);
-                nightfallPreference.setEnabled(false);
-                if (specificOpinionValue == null) {
-                    specificOpinionValue = twilightPreference.getValue();
-                    specificOpinionLabel = twilightPreference.getEntry();
-                } else {
-                    specificOpinionLabel = findEntry(twilightPreference, specificOpinionValue);
-                }
-                break;
-            case R.string.nightfall:
-                sunsetPreference.setEnabled(false);
-                twilightPreference.setEnabled(false);
-                nightfallPreference.setEnabled(true);
-                if (specificOpinionValue == null) {
-                    specificOpinionValue = nightfallPreference.getValue();
-                    specificOpinionLabel = nightfallPreference.getEntry();
-                } else {
-                    specificOpinionLabel = findEntry(nightfallPreference, specificOpinionValue);
-                }
-                break;
-            default:
-                sunsetPreference.setEnabled(false);
-                twilightPreference.setEnabled(false);
-                nightfallPreference.setEnabled(false);
-                break;
+        if (shabbathAfterId == R.string.sunset) {
+            sunsetPreference.setEnabled(true);
+            twilightPreference.setEnabled(false);
+            nightfallPreference.setEnabled(false);
+            if (specificOpinionValue == null) {
+                specificOpinionValue = sunsetPreference.getValue();
+                specificOpinionLabel = sunsetPreference.getEntry();
+            } else {
+                specificOpinionLabel = findEntry(sunsetPreference, specificOpinionValue);
+            }
+        } else if (shabbathAfterId == R.string.twilight) {
+            sunsetPreference.setEnabled(false);
+            twilightPreference.setEnabled(true);
+            nightfallPreference.setEnabled(false);
+            if (specificOpinionValue == null) {
+                specificOpinionValue = twilightPreference.getValue();
+                specificOpinionLabel = twilightPreference.getEntry();
+            } else {
+                specificOpinionLabel = findEntry(twilightPreference, specificOpinionValue);
+            }
+        } else if (shabbathAfterId == R.string.nightfall) {
+            sunsetPreference.setEnabled(false);
+            twilightPreference.setEnabled(false);
+            nightfallPreference.setEnabled(true);
+            if (specificOpinionValue == null) {
+                specificOpinionValue = nightfallPreference.getValue();
+                specificOpinionLabel = nightfallPreference.getEntry();
+            } else {
+                specificOpinionLabel = findEntry(nightfallPreference, specificOpinionValue);
+            }
+        } else {
+            sunsetPreference.setEnabled(false);
+            twilightPreference.setEnabled(false);
+            nightfallPreference.setEnabled(false);
         }
 
         if (isEmpty(specificOpinionLabel) || OPINION_NONE.equals(specificOpinionValue)) {

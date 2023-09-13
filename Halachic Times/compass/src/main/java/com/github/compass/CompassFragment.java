@@ -54,8 +54,8 @@ public class CompassFragment extends com.github.times.compass.CompassFragment {
         compassView.setTicks(true);
 
         Context context = view.getContext();
-        TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassView);
-        bearingView.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorLabel2));
+        TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), com.github.times.compass.lib.R.styleable.CompassView);
+        bearingView.setTextColor(a.getColorStateList(com.github.times.compass.lib.R.styleable.CompassView_compassColorLabel2));
         a.recycle();
     }
 

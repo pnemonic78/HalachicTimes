@@ -83,7 +83,7 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
     @ColorInt
     private int colorEnabled = Color.WHITE;
     @StyleRes
-    private int themeId = R.style.Theme;
+    private int themeId = com.github.lib.R.style.Theme;
     private final LocaleHelper<?> localeCallbacks;
     private final boolean directionRTL;
 
@@ -321,16 +321,12 @@ public class ZmanimWidgetViewsFactory implements RemoteViewsFactory {
             this.themeId = themeId;
 
             boolean light;
-            switch (themeId) {
-                case THEME_APPWIDGET_DARK:
-                    light = false;
-                    break;
-                case THEME_APPWIDGET_LIGHT:
-                    light = true;
-                    break;
-                default:
-                    light = isBrightWallpaper(context);
-                    break;
+            if (themeId == THEME_APPWIDGET_DARK) {
+                light = false;
+            } else if (themeId == THEME_APPWIDGET_LIGHT) {
+                light = true;
+            } else {
+                light = isBrightWallpaper(context);
             }
 
             int colorEnabledDark = Color.WHITE;

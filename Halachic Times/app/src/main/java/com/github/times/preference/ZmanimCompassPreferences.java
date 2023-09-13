@@ -53,14 +53,14 @@ public class ZmanimCompassPreferences extends SimpleCompassPreferences {
     @Override
     public int getTheme(String value) {
         if (THEME_DARK.equals(value)) {
-            return R.style.Theme_CompassApp_Dark;
+            return com.github.times.compass.lib.R.style.Theme_CompassApp_Dark;
         }
         if (THEME_LIGHT.equals(value)) {
-            return R.style.Theme_CompassApp_Light;
+            return com.github.times.compass.lib.R.style.Theme_CompassApp_Light;
         }
         if (THEME_WHITE.equals(value)) {
-            return R.style.Theme_CompassApp_Light;
+            return com.github.times.compass.lib.R.style.Theme_CompassApp_Light;
         }
-        return R.style.Theme_CompassApp_DayNight;
+        return com.github.times.compass.lib.R.style.Theme_CompassApp_DayNight;
     }
 }

@@ -644,7 +644,7 @@ public class ZmanimReminder {
             Rect largeIconRect = new Rect(0, 0, largeIconWidth, largeIconHeight);
             Bitmap largeIcon = Bitmap.createBitmap(largeIconWidth, largeIconHeight, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(largeIcon);
-            Drawable layerBottom = ContextCompat.getDrawable(context, R.drawable.ic_alarm_black);
+            Drawable layerBottom = ContextCompat.getDrawable(context, com.github.times.common.R.drawable.ic_alarm_black);
             if (layerBottom != null) {
                 layerBottom.setBounds(largeIconRect);
                 layerBottom.draw(canvas);
