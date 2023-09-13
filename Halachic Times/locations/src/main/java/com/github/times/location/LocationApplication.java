@@ -53,8 +53,13 @@ public abstract class LocationApplication<TP extends ThemePreferences, AP extend
     };
 
     @Override
-    public void onPreCreate() {
+    public void onCreate() {
+        onPreCreate();
         super.onCreate();
+    }
+
+    @Override
+    public void onPreCreate() {
         themeCallbacks.onPreCreate();
     }
 

@@ -49,7 +49,7 @@ public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
     @Override
     public void onPreCreate() {
         super.onPreCreate();
-        localeCallbacks.onCreate(this);
+        localeCallbacks.onPreCreate(this);
     }
 
     @Override

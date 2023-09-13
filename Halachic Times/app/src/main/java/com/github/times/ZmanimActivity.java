@@ -275,7 +275,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     public void onPreCreate() {
         super.onPreCreate();
-        localeCallbacks.onCreate(this);
+        localeCallbacks.onPreCreate(this);
     }
 
     @Override

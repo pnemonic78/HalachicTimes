@@ -43,7 +43,7 @@ public class ZmanimWidgetService extends RemoteViewsService {
     @Override
     public void onCreate() {
         super.onCreate();
-        localeCallbacks.onCreate(this);
+        localeCallbacks.onPreCreate(this);
     }
 
     @Override

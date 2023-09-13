@@ -451,14 +451,12 @@ public class ZmanimReminder {
     }
 
     private PendingIntent createAlarmIntent(Context context, ZmanimItem item) {
-        System.out.println("±!@ createAlarmIntent " + item);
-//        if (isAlarmService()) {
-//            ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, item);
-//            long now = currentTimeMillis();
-//            Intent intent = createAlarmServiceIntent(context, reminderItem, now + STOP_NOTIFICATION_AFTER);
-//            System.out.println("±!@ getForegroundService " + intent);
-//            return PendingIntent.getForegroundService(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE);
-//        }
+        if (isAlarmService()) {
+            ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, item);
+            long now = currentTimeMillis();
+            Intent intent = createAlarmServiceIntent(context, reminderItem, now + STOP_NOTIFICATION_AFTER);
+            return PendingIntent.getForegroundService(context, ID_ALARM_REMINDER, intent, FLAGS_UPDATE);
+        }
         Intent intent = new Intent(context, getReceiverClass())
             .setAction(ACTION_REMIND);
         putReminderItem(item, intent);

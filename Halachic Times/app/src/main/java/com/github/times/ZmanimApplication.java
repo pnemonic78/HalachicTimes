@@ -50,7 +50,7 @@ public class ZmanimApplication extends LocationApplication<ThemePreferences, Add
     @Override
     public void onPreCreate() {
         super.onPreCreate();
-        localeCallbacks.onCreate(this);
+        localeCallbacks.onPreCreate(this);
         Timber.plant(new CrashlyticsTree(BuildConfig.DEBUG));
     }
 

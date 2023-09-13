@@ -138,7 +138,7 @@ public class AlarmActivity<P extends ZmanimPreferences> extends AppCompatActivit
     @Override
     public void onPreCreate() {
         getThemeCallbacks().onPreCreate();
-        localeCallbacks.onCreate(this);
+        localeCallbacks.onPreCreate(this);
     }
 
     @Override

@@ -50,8 +50,8 @@ public class ZmanimPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        localeCallbacks.onPreCreate(this);
         super.onCreate(savedInstanceState);
-        localeCallbacks.onCreate(this);
     }
 
     @Override
