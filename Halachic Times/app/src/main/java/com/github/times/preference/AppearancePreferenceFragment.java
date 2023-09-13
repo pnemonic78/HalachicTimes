@@ -15,15 +15,28 @@
  */
 package com.github.times.preference;
 
+import static android.content.Intent.ACTION_LOCALE_CHANGED;
+import static android.text.TextUtils.isEmpty;
+import static com.github.app.ActivityUtils.restartActivity;
+import static com.github.preference.LocalePreferences.KEY_LOCALE;
+import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
+import static com.github.times.location.LocationPreferences.EXTRA_LOCALE;
+import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
+import static com.github.times.preference.ZmanimPreferences.KEY_THEME;
+import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
+import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE;
+import static com.github.util.LocaleUtils.sortByDisplay;
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -38,17 +51,7 @@ import com.github.util.LocaleUtils;
 
 import java.util.Locale;
 
-import static android.content.Intent.ACTION_LOCALE_CHANGED;
-import static android.text.TextUtils.isEmpty;
-import static com.github.app.ActivityUtils.restartActivity;
-import static com.github.preference.LocalePreferences.KEY_LOCALE;
-import static com.github.times.compass.preference.CompassPreferences.KEY_THEME_COMPASS;
-import static com.github.times.location.LocationPreferences.EXTRA_LOCALE;
-import static com.github.times.preference.ZmanimPreferences.KEY_EMPHASIS_SCALE;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET;
-import static com.github.times.preference.ZmanimPreferences.KEY_THEME_WIDGET_RATIONALE;
-import static com.github.util.LocaleUtils.sortByDisplay;
+import timber.log.Timber;
 
 /**
  * This fragment shows the preferences for the Appearance header.
@@ -57,9 +60,12 @@ import static com.github.util.LocaleUtils.sortByDisplay;
 public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
 
     private static final String PERMISSION_WALLPAPER = Manifest.permission.READ_EXTERNAL_STORAGE;
-    private static final int REQUEST_WALLPAPER = 0x3A11;
 
     private ListPreference widgetPreference;
+
+    private final ActivityResultLauncher<String> requestPermission = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+        Timber.i("Permission to read wallpaper: %s", isGranted);
+    });
 
     @Override
     protected int getPreferencesXml() {
@@ -158,6 +164,10 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
     }
 
     private boolean checkWallpaperPermission(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            // Wallpaper colors don't need permissions.
+            return true;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_WALLPAPER) != PermissionChecker.PERMISSION_GRANTED) {
                 final Activity activity = getActivity();
@@ -167,15 +177,10 @@ public class AppearancePreferenceFragment extends AbstractPreferenceFragment {
                         .setMessage(R.string.appwidget_theme_permission_rationale)
                         .setCancelable(true)
                         .setNegativeButton(android.R.string.cancel, null)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
-                            }
-                        })
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> requestPermission.launch(PERMISSION_WALLPAPER))
                         .show();
                 } else {
-                    requestPermissions(new String[]{PERMISSION_WALLPAPER}, REQUEST_WALLPAPER);
+                    requestPermission.launch(PERMISSION_WALLPAPER);
                 }
                 return true;
             }
