@@ -4,8 +4,8 @@ plugins {
 
 application {
     java {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = BuildVersions.jvm
+        targetCompatibility = BuildVersions.jvm
     }
 
     sourceSets {

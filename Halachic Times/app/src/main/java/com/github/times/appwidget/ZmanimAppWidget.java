@@ -27,7 +27,6 @@ import static android.content.Intent.ACTION_WALLPAPER_CHANGED;
 import static android.text.TextUtils.isEmpty;
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
-import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
 import static com.github.appwidget.AppWidgetUtils.notifyAppWidgetsUpdate;
 import static com.github.times.location.ZmanimLocationListener.ACTION_LOCATION_CHANGED;
 import static java.lang.System.currentTimeMillis;
@@ -170,7 +169,7 @@ public abstract class ZmanimAppWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             activityIntent = new Intent(context, ZmanimActivity.class);
             activityIntent.putExtra(EXTRA_APPWIDGET_ID, appWidgetId);
-            activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE);
+            activityPendingIntent = PendingIntent.getActivity(context, appWidgetId, activityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             views = new RemoteViews(packageName, layoutId);
 

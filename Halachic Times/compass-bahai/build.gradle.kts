@@ -19,12 +19,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = BuildVersions.jvm
+        targetCompatibility = BuildVersions.jvm
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = BuildVersions.jvm.toString()
     }
 
     signingConfigs {

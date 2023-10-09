@@ -28,7 +28,6 @@ import static android.content.Intent.FLAG_ACTIVITY_NO_USER_ACTION;
 import static android.media.RingtoneManager.TYPE_NOTIFICATION;
 import static android.text.format.DateUtils.MINUTE_IN_MILLIS;
 import static android.text.format.DateUtils.SECOND_IN_MILLIS;
-import static com.github.app.AppExtensionsKt.PendingIntent_FLAG_IMMUTABLE;
 import static com.github.times.ZmanimDays.SHABBATH;
 import static com.github.times.ZmanimHelper.formatDateTime;
 import static com.github.times.ZmanimItem.NEVER;
@@ -190,7 +189,7 @@ public class ZmanimReminder {
      */
     protected static final int ACTIVITY_PERMISSIONS = 0x6057; // "POST"
 
-    private static final int FLAGS_UPDATE = PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent_FLAG_IMMUTABLE;
+    private static final int FLAGS_UPDATE = PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE;
 
     private final Context context;
     private Bitmap largeIconSolar;
@@ -466,7 +465,7 @@ public class ZmanimReminder {
     private PendingIntent createAlarmIntent(Context context, ZmanimReminderItem item) {
         Intent intent = createAlarmActivity(context, item, item.time + STOP_NOTIFICATION_AFTER);
         putReminderItem(item, intent);
-        return PendingIntent.getActivity(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
+        return PendingIntent.getActivity(context, ID_ALARM_REMINDER, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     private Intent createAlarmServiceIntent(Context context, ZmanimReminderItem item, long silenceWhen) {
@@ -486,7 +485,7 @@ public class ZmanimReminder {
         Intent intent = new Intent(context, getReceiverClass())
             .setAction(ACTION_CANCEL);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
+        return PendingIntent.getBroadcast(context, ID_ALARM_CANCEL, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     /**
@@ -818,7 +817,7 @@ public class ZmanimReminder {
             .setAction(ACTION_SILENCE);
         item.put(intent);
 
-        return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent_FLAG_IMMUTABLE);
+        return PendingIntent.getBroadcast(context, ID_ALARM_SILENT, intent, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
     }
 
     /**
