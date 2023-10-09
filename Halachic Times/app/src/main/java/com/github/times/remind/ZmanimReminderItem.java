@@ -159,4 +159,13 @@ public class ZmanimReminderItem implements Parcelable {
                 .putExtra(EXTRA_TEXT, text)
                 .putExtra(EXTRA_TIME, time);
     }
+
+    @Override
+    public String toString() {
+        return "ZmanimReminderItem{" +
+            "title=" + title +
+            ", text=" + text +
+            ", time=" + time +
+            '}';
+    }
 }

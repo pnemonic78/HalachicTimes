@@ -31,7 +31,7 @@ public class ZmanimReminderReceiver extends BroadcastReceiver {
     @Override
     @SuppressWarnings("UnsafeProtectedBroadcastReceiver")
     public void onReceive(Context context, Intent intent) {
-        Timber.v("onReceive %s", intent);
+        Timber.i("onReceive %s", intent);
         if (intent == null) return;
         // Delegate actions to the service.
         ZmanimReminderService.enqueueWork(context, intent);

@@ -18,6 +18,8 @@ package com.github.times.remind
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ServiceInfo
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
@@ -34,8 +36,8 @@ import com.github.times.preference.ZmanimPreferences
 import com.github.times.remind.ZmanimReminder.ACTION_CANCEL
 import com.github.times.remind.ZmanimReminder.ACTION_DISMISS
 import com.github.times.remind.ZmanimReminder.ACTION_REMIND
-import timber.log.Timber
 import java.util.Date
+import timber.log.Timber
 
 /**
  * Check for reminders, and manage the notifications.
@@ -61,6 +63,7 @@ class ZmanimReminderService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Timber.i("onStartCommand %s", intent)
         if (intent == null) {
             return START_NOT_STICKY
         }
@@ -88,13 +91,20 @@ class ZmanimReminderService : Service() {
         klaxon.stop()
     }
 
-    private fun showNotification(item: ZmanimReminderItem) {
-        val context: Context = this
-        val settings = SimpleZmanimPreferences(context)
+    private fun showNotification(context: Context, item: ZmanimReminderItem) {
+        val settings = this.settings
         val reminder = ZmanimReminder(context)
         reminder.initNotifications()
         val notification = reminder.createAlarmServiceNotification(context, settings, item)
-        startForeground(ID_NOTIFY, notification)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(
+                ID_NOTIFY,
+                notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+            )
+        } else {
+            startForeground(ID_NOTIFY, notification)
+        }
     }
 
     /**
@@ -157,9 +167,10 @@ class ZmanimReminderService : Service() {
             }
 
             val requestData = ZmanimReminderWorker.toWorkData(intent)
-            val workRequest: WorkRequest = OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
-                .setInputData(requestData)
-                .build()
+            val workRequest: WorkRequest =
+                OneTimeWorkRequest.Builder(ZmanimReminderWorker::class.java)
+                    .setInputData(requestData)
+                    .build()
 
             WorkManager.getInstance(context).enqueue(workRequest)
         }
@@ -181,15 +192,18 @@ class ZmanimReminderService : Service() {
     private fun handleRemind(intent: Intent) {
         val context: Context = this
         val item = ZmanimReminderItem.from(context, intent)
-        if (item != null) {
-            showNotification(item)
-            startAlarm()
+        if (item == null) {
+            Timber.w("no item to remind!")
+            stopSelf()
+            return
+        }
+        showNotification(context, item)
+        startAlarm()
 
-            val extras = intent.extras
-            if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
-                val silenceWhen = extras.getLong(EXTRA_SILENCE_TIME)
-                silenceFuture(silenceWhen)
-            }
+        val extras = intent.extras
+        if ((extras != null) && extras.containsKey(EXTRA_SILENCE_TIME)) {
+            val silenceWhen = extras.getLong(EXTRA_SILENCE_TIME)
+            silenceFuture(silenceWhen)
         }
     }
 

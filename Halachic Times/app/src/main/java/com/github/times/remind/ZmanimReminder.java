@@ -176,7 +176,7 @@ public class ZmanimReminder {
 
     private static final String CHANNEL_ALARM = "channel_alarm";
     private static final String CHANNEL_REMINDER = "channel_reminder";
-    private static final String CHANNEL_REMINDER_ALARM = "reminder_alarm";
+    private static final String CHANNEL_ALARM_OLD = "reminder_alarm";
     private static final String CHANNEL_REMINDER_OLD = "reminder";
     private static final String CHANNEL_UPCOMING = "upcoming";
 
@@ -213,8 +213,8 @@ public class ZmanimReminder {
      */
     public void remind() {
         final Context context = getContext();
-        ZmanimPreferences settings = new SimpleZmanimPreferences(context);
-        remind(settings);
+        ZmanimPreferences settings = createPreferences(context);
+        remind(context, settings);
     }
 
     /**
@@ -224,6 +224,16 @@ public class ZmanimReminder {
      */
     public void remind(ZmanimPreferences settings) {
         final Context context = getContext();
+        remind(context, settings);
+    }
+
+    /**
+     * Setup the first reminder for today.
+     *
+     * @param context The context.
+     * @param settings the preferences.
+     */
+    private void remind(Context context, ZmanimPreferences settings) {
         ZmanimApplication app = (ZmanimApplication) context.getApplicationContext();
         ZmanimLocations locations = app.getLocations();
         GeoLocation gloc = locations.getGeoLocation();
@@ -502,7 +512,7 @@ public class ZmanimReminder {
 
     public void process(@Nullable Intent intent) {
         final Context context = getContext();
-        Timber.v("process %s [%s]", intent, formatDateTime(currentTimeMillis()));
+        Timber.i("process %s [%s]", intent, formatDateTime(currentTimeMillis()));
         if (intent == null) {
             return;
         }
@@ -532,7 +542,7 @@ public class ZmanimReminder {
                 if (extras != null) {
                     ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
                     if (reminderItem != null) {
-                        ZmanimPreferences settings = new SimpleZmanimPreferences(context);
+                        ZmanimPreferences settings = createPreferences(context);
                         notifyNow(settings, reminderItem);
                     }
                     update = true;
@@ -543,7 +553,7 @@ public class ZmanimReminder {
                 if (extras != null) {
                     ZmanimReminderItem reminderItem = ZmanimReminderItem.from(context, extras);
                     if (reminderItem != null) {
-                        ZmanimPreferences settings = new SimpleZmanimPreferences(context);
+                        ZmanimPreferences settings = createPreferences(context);
                         silence(settings, reminderItem);
                     } else {
                         cancelNotification(context);
@@ -875,14 +885,17 @@ public class ZmanimReminder {
     @TargetApi(Build.VERSION_CODES.O)
     private void initChannels(NotificationManager nm) {
         final Context context = getContext();
-        android.app.NotificationChannel channel;
-        String channelName;
+        initChannelAlarm(context, nm);
+        initChannelReminder(context, nm);
+        initChannelUpcoming(context, nm);
+    }
 
-        nm.deleteNotificationChannel(CHANNEL_REMINDER_ALARM);
-        nm.deleteNotificationChannel(CHANNEL_REMINDER_OLD);
+    @TargetApi(Build.VERSION_CODES.O)
+    private void initChannelAlarm(Context context, NotificationManager nm) {
+        nm.deleteNotificationChannel(CHANNEL_ALARM_OLD);
 
-        channelName = CHANNEL_ALARM;
-        channel = nm.getNotificationChannel(channelName);
+        String channelName = CHANNEL_ALARM;
+        android.app.NotificationChannel channel = nm.getNotificationChannel(channelName);
         if (channel == null) {
             channel = new android.app.NotificationChannel(channelName, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription(context.getString(R.string.notification_volume_title));
@@ -894,9 +907,14 @@ public class ZmanimReminder {
 
             nm.createNotificationChannel(channel);
         }
+    }
 
-        channelName = CHANNEL_REMINDER;
-        channel = nm.getNotificationChannel(channelName);
+    @TargetApi(Build.VERSION_CODES.O)
+    private void initChannelReminder(Context context, NotificationManager nm) {
+        nm.deleteNotificationChannel(CHANNEL_REMINDER_OLD);
+
+        String channelName = CHANNEL_REMINDER;
+        android.app.NotificationChannel channel = nm.getNotificationChannel(channelName);
         if (channel == null) {
             channel = new android.app.NotificationChannel(channelName, context.getString(R.string.reminder), NotificationManager.IMPORTANCE_HIGH);
             channel.setDescription(context.getString(R.string.notification_volume_title));
@@ -914,9 +932,12 @@ public class ZmanimReminder {
 
             nm.createNotificationChannel(channel);
         }
+    }
 
-        channelName = CHANNEL_UPCOMING;
-        channel = nm.getNotificationChannel(channelName);
+    @TargetApi(Build.VERSION_CODES.O)
+    private void initChannelUpcoming(Context context, NotificationManager nm) {
+        String channelName = CHANNEL_UPCOMING;
+        android.app.NotificationChannel channel = nm.getNotificationChannel(channelName);
         if (channel == null) {
             channel = new android.app.NotificationChannel(channelName, context.getString(R.string.notification_upcoming_title), NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(context.getString(R.string.notification_upcoming_title));
@@ -1011,5 +1032,9 @@ public class ZmanimReminder {
         NotificationManager nm = reminder.getNotificationManager();
         if (nm.areNotificationsEnabled()) return;
         activity.requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
+    }
+
+    private ZmanimPreferences createPreferences(Context context) {
+        return new SimpleZmanimPreferences(context);
     }
 }
