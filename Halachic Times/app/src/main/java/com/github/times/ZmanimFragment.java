@@ -15,6 +15,8 @@
  */
 package com.github.times;
 
+import static com.github.view.ViewUtils.applyMaxWidth;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -38,14 +40,11 @@ import androidx.fragment.app.Fragment;
 import com.github.times.location.ZmanimLocations;
 import com.github.times.preference.SimpleZmanimPreferences;
 import com.github.times.preference.ZmanimPreferences;
-
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.hebrewcalendar.JewishDate;
 import com.kosherjava.zmanim.util.GeoLocation;
 
 import java.util.Calendar;
-
-import static com.github.view.ViewUtils.applyMaxWidth;
 
 /**
  * Shows a list of halachic times (<em>zmanim</em>) for prayers.
@@ -102,7 +101,11 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      */
     private A adapter;
 
+    @NonNull
     protected Context getContextImpl() {
+        if (context == null) {
+            context = requireContext();
+        }
         return context;
     }
 
@@ -175,9 +178,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
      * @return the populater.
      */
     @SuppressWarnings("unchecked")
-    protected P createPopulater(Context context) {
-        if (context == null)
-            return null;
+    protected P createPopulater(@NonNull Context context) {
         return (P) new ZmanimPopulater<A>(context, preferences);
     }
 
@@ -475,7 +476,9 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
         view.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         highlightRow = view;
         // Scroll to the row
-        scrollView.requestChildFocus(list, view);
+        if (scrollView != null) {
+            scrollView.requestChildFocus(list, view);
+        }
     }
 
     /**

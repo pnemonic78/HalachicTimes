@@ -17,12 +17,15 @@ package com.github.times;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.CHANUKAH;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.EREV_YOM_KIPPUR;
 import static com.kosherjava.zmanim.hebrewcalendar.JewishCalendar.YOM_KIPPUR;
+
+import androidx.annotation.NonNull;
 
 /**
  * Shows candle images.
@@ -65,9 +68,13 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     private CandleView[] animationsKippurim;
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.inflater = inflater;
+        return inflater.inflate(R.layout.candles_fragment, container, false);
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        // Ignore the list inside of the scroller.
         this.list = (ViewGroup) view;
     }
 
@@ -80,10 +87,7 @@ public class CandlesFragment extends ZmanimFragment<CandlesAdapter, CandlesPopul
     }
 
     @Override
-    protected CandlesPopulater createPopulater(Context context) {
-        if (context == null) {
-            return null;
-        }
+    protected CandlesPopulater createPopulater(@NonNull Context context) {
         return new CandlesPopulater(context, preferences);
     }
 

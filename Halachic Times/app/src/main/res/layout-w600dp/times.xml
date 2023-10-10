@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/list_fragment"
             android:name="com.github.times.ZmanimFragment"
             android:layout_width="0dp"
@@ -48,14 +48,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/red_x40">
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/details_list_fragment"
                 android:name="com.github.times.ZmanimDetailsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout="@layout/times_list" />
 
-            <fragment
+            <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/candles_fragment"
                 android:name="com.github.times.CandlesFragment"
                 android:layout_width="match_parent"

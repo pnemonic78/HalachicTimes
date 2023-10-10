@@ -268,7 +268,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         if (VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             initNotificationPermissions();
         }
-        handleIntent(getIntent());
     }
 
     @Override
@@ -332,9 +331,14 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        handleIntent(getIntent());
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
-
         handler.sendEmptyMessage(WHAT_UPDATE_REMINDERS);
     }
 
