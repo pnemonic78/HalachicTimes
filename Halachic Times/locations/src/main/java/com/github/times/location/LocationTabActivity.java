@@ -27,6 +27,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -35,6 +36,7 @@ import android.widget.SearchView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -73,7 +75,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
     private static final int REQUEST_ADD = 0xADD;
 
-    private static int ic_menu_star;
+    private static int ic_menu_star = 0;
 
     static {
         try {
@@ -320,33 +322,6 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        if (!TextUtils.isEmpty(query)) {
-            String[] tokens = query.split("[ ,;]");
-            if (tokens.length >= 2) {
-                final String token0 = tokens[0].trim();
-                final String token1 = tokens[1].trim();
-                if (!TextUtils.isEmpty(token0) && !TextUtils.isEmpty(token1)) {
-                    LocationFormatter formatter = getLocations();
-                    try {
-                        double latitude = formatter.parseLatitude(token0);
-                        if (Double.isNaN(latitude)) return false;
-                        double longitude = formatter.parseLongitude(token1);
-                        if (Double.isNaN(longitude)) return false;
-
-                        Location location = new Location(USER_PROVIDER);
-                        location.setLatitude(latitude);
-                        location.setLongitude(longitude);
-                        location.setTime(System.currentTimeMillis());
-
-                        setAddress(location);
-                        return true;
-                    } catch (Exception ignore) {
-                        // Not a valid coordinate.
-                    }
-                }
-            }
-        }
-
         return false;
     }
 
@@ -490,11 +465,12 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         private final WeakReference<LocationTabActivity> activityWeakReference;
 
         ActivityHandler(LocationTabActivity activity) {
+            super(Looper.getMainLooper());
             this.activityWeakReference = new WeakReference<>(activity);
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             final LocationTabActivity activity = activityWeakReference.get();
             if (activity == null) {
                 return;

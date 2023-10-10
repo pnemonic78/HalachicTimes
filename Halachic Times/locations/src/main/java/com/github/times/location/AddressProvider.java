@@ -406,7 +406,7 @@ public class AddressProvider {
      * @param location the location.
      * @param address  the address.
      */
-    public void insertOrUpdateAddress(@NonNull Location location, @NonNull ZmanimAddress address) {
+    public void insertOrUpdateAddress(@Nullable Location location, @NonNull ZmanimAddress address) {
         databaseGeocoder.insertOrUpdateAddress(location, address);
     }
 
