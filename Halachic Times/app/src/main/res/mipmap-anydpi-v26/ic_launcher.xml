@@ -2,4 +2,5 @@
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@color/bg_launcher" />
     <foreground android:drawable="@drawable/ic_solar_fg" />
+    <monochrome android:drawable="@drawable/ic_launcher_mono" />
 </adaptive-icon>
