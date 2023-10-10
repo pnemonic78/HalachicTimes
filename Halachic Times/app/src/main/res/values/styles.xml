@@ -18,6 +18,7 @@
     </style>
 
     <style name="Base.AppWidget.Clock.Time" parent="Widget.TextView.Large">
+        <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:maxLines">1</item>
         <item name="android:shadowDx">1</item>
@@ -142,6 +143,7 @@
     </style>
 
     <style name="Base.Widget.Reminder.Time" parent="Widget.TextView.Large">
+        <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/reminder_time</item>
     </style>

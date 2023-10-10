@@ -29,7 +29,7 @@ import androidx.annotation.Nullable;
  *
  * @author Moshe Waisberg
  */
-public class CandleView extends ImageView {
+public class CandleView extends androidx.appcompat.widget.AppCompatImageView {
 
     private Handler handler;
     private CandleAnimation animation;

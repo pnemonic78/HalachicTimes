@@ -88,7 +88,6 @@ public class PrivacyPreferenceFragment extends AbstractPreferenceFragment {
     /**
      * Clear the application data.
      */
-    @TargetApi(Build.VERSION_CODES.KITKAT)
     private void deleteAppData() {
         final Context context = getContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

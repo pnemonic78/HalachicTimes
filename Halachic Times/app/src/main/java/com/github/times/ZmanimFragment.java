@@ -32,6 +32,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.github.times.location.ZmanimLocations;
@@ -397,7 +398,7 @@ public class ZmanimFragment<A extends ZmanimAdapter, P extends ZmanimPopulater<A
     private Drawable getSelectedBackground() {
         Drawable highlightBackground = this.highlightBackground;
         if (highlightBackground == null) {
-            highlightBackground = getContextImpl().getResources().getDrawable(R.drawable.list_selected);
+            highlightBackground = ResourcesCompat.getDrawable(getContextImpl().getResources(), R.drawable.list_selected, null);
             this.highlightBackground = highlightBackground;
         }
         return highlightBackground;

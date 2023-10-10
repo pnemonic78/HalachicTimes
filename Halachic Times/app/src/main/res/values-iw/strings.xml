@@ -182,7 +182,7 @@
     <!-- Preferences -->
     <string name="past_title">זמנים שחלפו</string>
     <string name="seconds_title">שניות</string>
-    <string name="year_final_title" translatable="false">שנה עברית עם אותיות סופיות</string>
+    <string name="year_final_title">שנה עברית עם אותיות סופיות</string>
     <string name="year_final_summary_off" translatable="false">תש\"פ</string>
     <string name="year_final_summary_on" translatable="false">תש\"ף</string>
     <string name="none">ללא</string>
