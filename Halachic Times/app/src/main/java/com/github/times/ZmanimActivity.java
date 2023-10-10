@@ -63,7 +63,6 @@ import com.github.app.ThemeCallbacks;
 import com.github.app.TodayDatePickerDialog;
 import com.github.content.ContextResourcesWrapper;
 import com.github.times.compass.CompassActivity;
-import com.github.times.content.res.ZmanimResources;
 import com.github.times.location.LocatedActivity;
 import com.github.times.location.LocationActivity;
 import com.github.times.preference.SimpleZmanimPreferences;
@@ -515,9 +514,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
         if (this.datePicker == null) {
-            Resources res = context.getResources();
-            res = new ZmanimResources(res.getAssets(), res.getDisplayMetrics(), res.getConfiguration());
-            context = new ContextResourcesWrapper(context, res);
             this.datePicker = new TodayDatePickerDialog(context, this, year, month, day);
         } else {
             this.datePicker.updateDate(year, month, day);
