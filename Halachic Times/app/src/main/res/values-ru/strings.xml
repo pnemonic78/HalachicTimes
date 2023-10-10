@@ -182,6 +182,7 @@
     <!-- Preferences -->
     <string name="past_title">Прошедшие времена</string>
     <string name="seconds_title">Секунды</string>
+    <string name="year_final_title">Год на иврите с буквами окончательной формы</string>
     <string name="none">Ни одной</string>
     <string name="theme_white">Белый</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Нормальный</h6>]]></string>

@@ -182,6 +182,7 @@
     <!-- Preferences -->
     <string name="past_title">Ajad mis on möödunud</string>
     <string name="seconds_title">Sekundit</string>
+    <string name="year_final_title">Heebrea aasta lõppvormi tähtedega</string>
     <string name="none">Mitte ükski</string>
     <string name="theme_white">Valge</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Tavaline</h6>]]></string>

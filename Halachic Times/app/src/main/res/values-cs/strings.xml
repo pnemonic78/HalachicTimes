@@ -182,6 +182,7 @@
     <!-- Preferences -->
     <string name="past_title">Časy, které uplynuly</string>
     <string name="seconds_title">Sekundy</string>
+    <string name="year_final_title">Hebrejský rok s písmeny konečné podoby</string>
     <string name="none">Žádný</string>
     <string name="theme_white">Bílý</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normální</h6>]]></string>

@@ -182,6 +182,7 @@
     <!-- Preferences -->
     <string name="past_title">Tijden dat verstreken is</string>
     <string name="seconds_title">Seconden</string>
+    <string name="year_final_title">Hebreeuws jaar met definitieve standaardbrieven</string>
     <string name="none">Geen</string>
     <string name="theme_white">Wit</string>
     <string name="emphasis_scale_100"><![CDATA[<h6>Normaal</h6>]]></string>
