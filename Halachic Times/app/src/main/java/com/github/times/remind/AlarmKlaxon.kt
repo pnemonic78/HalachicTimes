@@ -1,5 +1,6 @@
 package com.github.times.remind
 
+import android.Manifest
 import android.annotation.TargetApi
 import android.content.Context
 import android.media.AudioAttributes
@@ -7,15 +8,19 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
+import android.os.VibrationAttributes
+import android.os.VibrationEffect
 import android.os.Vibrator
+import android.os.VibratorManager
 import android.text.format.DateUtils
+import androidx.annotation.RequiresPermission
 import com.github.app.ActivityUtils
 import com.github.media.RingtoneManager
 import com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
-import timber.log.Timber
 import java.io.IOException
+import timber.log.Timber
 
 class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
 
@@ -107,8 +112,10 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
      * @param isVibrate `true` to start vibrating - `false` to stop.
      */
     private fun vibrate(context: Context, isVibrate: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            vibrate31(context, isVibrate)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            vibrate33(context, isVibrate)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrate26(context, isVibrate)
         } else {
             vibrateLegacy(context, isVibrate)
         }
@@ -121,27 +128,45 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
             return
         }
         if (isVibrate) {
-            vibrator.vibrate(DateUtils.SECOND_IN_MILLIS)
+            vibrator.vibrate(VIBRATE_DURATION)
         } else {
             vibrator.cancel()
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.S)
-    private fun vibrate31(context: Context, isVibrate: Boolean) {
-        val vibratorManager =
-            context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as android.os.VibratorManager
+    @TargetApi(Build.VERSION_CODES.O)
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    private fun vibrate26(context: Context, isVibrate: Boolean) {
+        val vibrator = context.getSystemService(Vibrator::class.java) ?: return
+        if (!vibrator.hasVibrator()) {
+            return
+        }
+        if (isVibrate) {
+            val vibe = VibrationEffect.createOneShot(
+                VIBRATE_DURATION,
+                VibrationEffect.DEFAULT_AMPLITUDE
+            )
+            vibrator.vibrate(vibe)
+        } else {
+            vibrator.cancel()
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    private fun vibrate33(context: Context, isVibrate: Boolean) {
+        val vibratorManager = context.getSystemService(VibratorManager::class.java) ?: return
         val vibrator = vibratorManager.defaultVibrator
         if (!vibrator.hasVibrator()) {
             return
         }
         if (isVibrate) {
-            // This ignores all exceptions to stay compatible with pre-O implementations.
-            val vibe = android.os.VibrationEffect.createOneShot(
-                DateUtils.SECOND_IN_MILLIS,
-                android.os.VibrationEffect.DEFAULT_AMPLITUDE
+            val vibe = VibrationEffect.createOneShot(
+                VIBRATE_DURATION,
+                VibrationEffect.DEFAULT_AMPLITUDE
             )
-            vibrator.vibrate(vibe, null)
+            val attributes = VibrationAttributes.createForUsage(VibrationAttributes.USAGE_ALARM)
+            vibrator.vibrate(vibe, attributes)
         } else {
             vibrator.cancel()
         }
@@ -162,5 +187,6 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
 
     companion object {
         const val REQUEST_PERMISSIONS = 0x702E // TONE
+        private const val VIBRATE_DURATION = DateUtils.SECOND_IN_MILLIS
     }
 }
