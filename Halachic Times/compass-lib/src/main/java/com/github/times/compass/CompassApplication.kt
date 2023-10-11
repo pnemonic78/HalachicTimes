@@ -13,28 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.times.compass
 
-import android.content.Context;
-
-import com.github.preference.ThemePreferences;
-import com.github.times.location.AddressProvider;
-import com.github.times.location.CompassLocations;
-import com.github.times.location.LocationApplication;
-import com.github.times.location.LocationsProviderFactory;
-
-import androidx.annotation.NonNull;
+import android.content.Context
+import com.github.preference.ThemePreferences
+import com.github.times.location.AddressProvider
+import com.github.times.location.CompassLocations
+import com.github.times.location.LocationApplication
+import com.github.times.location.LocationsProviderFactory
 
 /**
  * Compass application.
  *
  * @author Moshe Waisberg
  */
-public class CompassApplication extends LocationApplication<ThemePreferences, AddressProvider, CompassLocations> {
-
-    @NonNull
-    @Override
-    protected LocationsProviderFactory<AddressProvider, CompassLocations> createProviderFactory(Context context) {
-        return new CompassProviderFactoryImpl(context);
+open class CompassApplication :
+    LocationApplication<ThemePreferences, AddressProvider, CompassLocations>() {
+    override fun createProviderFactory(context: Context): LocationsProviderFactory<AddressProvider, CompassLocations> {
+        return CompassProviderFactoryImpl(context)
     }
 }

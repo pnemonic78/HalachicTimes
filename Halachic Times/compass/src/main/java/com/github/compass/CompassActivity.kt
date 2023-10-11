@@ -13,47 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass;
+package com.github.compass
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.github.times.compass.BaseCompassActivity;
-import com.github.times.compass.preference.CompassPreferenceActivity;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
+import com.github.times.compass.BaseCompassActivity
+import com.github.times.compass.preference.CompassPreferenceActivity
 
 /**
  * Compass activity.
  *
  * @author Moshe Waisberg
  */
-public class CompassActivity extends BaseCompassActivity {
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.compass, menu);
-        return true;
+class CompassActivity : BaseCompassActivity() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.compass, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int itemId = item.getItemId();
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
         if (itemId == R.id.menu_settings) {
-            startSettings();
-            return true;
+            startSettings()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
-    @Override
-    protected Class<? extends Activity> getLocationActivityClass() {
-        return null;
+    override fun getLocationActivityClass(): Class<out Activity>? {
+        return null
     }
 
-    protected void startSettings() {
-        final Context context = this;
-        startActivity(new Intent(context, CompassPreferenceActivity.class));
+    protected fun startSettings() {
+        val context: Context = this
+        startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }
 }

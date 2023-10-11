@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.bahai;
+package com.github.compass.jewish
 
-import com.github.util.LogTree;
-
-import timber.log.Timber;
+import com.github.util.LogTree
+import timber.log.Timber
 
 /**
  * Compass application.
  *
  * @author Moshe Waisberg
  */
-public class CompassApplication extends com.github.times.compass.CompassApplication {
-
-    @Override
-    public void onPreCreate() {
-        super.onPreCreate();
-        Timber.plant(new LogTree(BuildConfig.DEBUG));
+class CompassApplication : com.github.times.compass.CompassApplication() {
+    override fun onPreCreate() {
+        super.onPreCreate()
+        Timber.plant(LogTree(BuildConfig.DEBUG))
     }
 }

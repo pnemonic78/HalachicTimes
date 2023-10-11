@@ -34,10 +34,6 @@ public class CompassFragment extends com.github.times.compass.CompassFragment {
     private TextView bearingView;
     private LocationFormatter formatter;
 
-    public CompassFragment() {
-        setHoliest(Double.NaN, Double.NaN, 0);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +46,6 @@ public class CompassFragment extends com.github.times.compass.CompassFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         bearingView = view.findViewById(R.id.bearing);
-        compassView.setHoliest(Float.NaN);
-        compassView.setTicks(true);
 
         Context context = view.getContext();
         TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), com.github.times.compass.lib.R.styleable.CompassView);

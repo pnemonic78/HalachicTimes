@@ -35,7 +35,7 @@
             android:parentActivityName="com.github.compass.jewish.CompassActivity"
             android:theme="@style/Theme.CompassApp.Settings" />
         <activity
-            android:name="com.github.compass.jewish.LocationActivity"
+            android:name="com.github.compass.bahai.LocationActivity"
             android:exported="true"
             android:label="@string/title_activity_location"
             android:parentActivityName="com.github.compass.jewish.CompassActivity">

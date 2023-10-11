@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.jewish;
+package com.github.compass.jewish
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.github.times.compass.BaseCompassActivity;
-import com.github.times.compass.preference.CompassPreferenceActivity;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
+import com.github.times.compass.BaseCompassActivity
+import com.github.times.compass.preference.CompassPreferenceActivity
 
 /**
  * Show the direction in which to pray.
@@ -30,34 +29,34 @@ import com.github.times.compass.preference.CompassPreferenceActivity;
  *
  * @author Moshe Waisberg
  */
-public class CompassActivity extends BaseCompassActivity {
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.compass, menu);
-        return true;
+class CompassActivity : BaseCompassActivity() {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.compass, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int itemId = item.getItemId();
-        if (itemId == R.id.menu_location) {
-            startLocations();
-            return true;
-        } else if (itemId == R.id.menu_settings) {
-            startSettings();
-            return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_location -> {
+                startLocations()
+                true
+            }
+
+            R.id.menu_settings -> {
+                startSettings()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected Class<? extends Activity> getLocationActivityClass() {
-        return LocationActivity.class;
+    override fun getLocationActivityClass(): Class<out Activity> {
+        return LocationActivity::class.java
     }
 
-    protected void startSettings() {
-        final Context context = this;
-        startActivity(new Intent(context, CompassPreferenceActivity.class));
+    private fun startSettings() {
+        val context: Context = this
+        startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }
 }

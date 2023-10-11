@@ -48,7 +48,7 @@ public class CompassView extends View {
     private static final int SHADOWS = 3;
 
     private float north;
-    private float holiest;
+    private float holiest = Float.NaN;
     private float northToHoliest;
 
     private int compassColorFace;
@@ -101,7 +101,7 @@ public class CompassView extends View {
     private final Path pathShadowHoliest = new Path();
     private final RectF rectFrameOuter = new RectF();
     private final RectF rectFrameInner = new RectF();
-    private boolean ticks;
+    private boolean ticks = true;
 
     private String labelNorth;
     private String labelEast;
