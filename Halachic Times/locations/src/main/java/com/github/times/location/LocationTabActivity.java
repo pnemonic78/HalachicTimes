@@ -150,11 +150,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         tabHistory.setContent(R.id.list_history);
         tabs.addTab(tabHistory);
 
-        Intent intent = getIntent();
-        String query = intent.getStringExtra(SearchManager.QUERY);
-
         populateLists();
-        search(query);
     }
 
     @Override
@@ -184,12 +180,21 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     protected void onStart() {
         super.onStart();
         locations.start(this);
+
+        onNewIntent(getIntent());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         locations.stop(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String query = intent.getStringExtra(SearchManager.QUERY);
+        search(query);
     }
 
     @Override
@@ -401,7 +406,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         fetchAddress(location);
 
         LocationFormatter formatter = getLocations();
-        CharSequence query = formatter.formatCoordinates(location);
+        CharSequence query = formatter.formatLatitude(location.getLatitude());
         search(query);
     }
 
@@ -493,7 +498,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
                     address = (ZmanimAddress) msg.obj;
                     activity.populateLists();
 
-                    String query = address.getFormatted();
+                    LocationFormatter formatter = activity.getLocations();
+                    CharSequence query = formatter.formatLatitude(address.getLatitude());
                     activity.search(query);
                     break;
                 case WHAT_DELETE:

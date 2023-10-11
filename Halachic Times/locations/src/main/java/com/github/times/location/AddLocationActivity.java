@@ -15,7 +15,6 @@
  */
 package com.github.times.location;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -33,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.NumberFormat;
@@ -140,7 +140,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
         LocationApplication app = (LocationApplication) getApplication();
         locations = app.getLocations();
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

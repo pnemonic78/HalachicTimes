@@ -97,7 +97,8 @@
         <activity
             android:name="com.github.times.location.ZmanimAddLocationActivity"
             android:exported="false"
-            android:label="@string/title_activity_add_location">
+            android:label="@string/title_activity_add_location"
+            android:parentActivityName="com.github.times.location.LocationActivity">
             <intent-filter android:label="@string/title_activity_add_location">
                 <action android:name="android.intent.action.INSERT" />
             </intent-filter>

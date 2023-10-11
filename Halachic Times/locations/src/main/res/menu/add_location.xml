@@ -5,19 +5,19 @@
     <item
         android:id="@+id/menu_location_cancel"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
-        android:orderInCategory="1"
+        android:orderInCategory="3"
         android:title="@string/menu_location_cancel"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_location_add"
         android:icon="@android:drawable/ic_menu_save"
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         android:title="@string/menu_location_save"
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_location_show"
         android:icon="@android:drawable/ic_menu_view"
-        android:orderInCategory="3"
+        android:orderInCategory="2"
         android:title="@string/menu_location_fetch"
         app:showAsAction="always" />
 
