@@ -1,6 +1,5 @@
 package com.github.times.remind
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.content.Context
 import android.media.AudioAttributes
@@ -8,14 +7,10 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
-import android.os.VibrationAttributes
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.text.format.DateUtils
-import androidx.annotation.RequiresPermission
 import com.github.app.ActivityUtils
 import com.github.media.RingtoneManager
+import com.github.os.VibratorCompat
 import com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE
 import com.github.times.preference.SimpleZmanimPreferences
 import com.github.times.preference.ZmanimPreferences
@@ -27,6 +22,7 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     constructor(context: Context) : this(context, SimpleZmanimPreferences(context))
 
     private var ringtone: MediaPlayer? = null
+    private val vibrator = VibratorCompat(context)
 
     @TargetApi(Build.VERSION_CODES.M)
     fun onRequestPermissionsResult(
@@ -44,13 +40,13 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     private fun startNoise() {
         Timber.v("start noise")
         playSound(context)
-        vibrate(context, true)
+        vibrate(true)
     }
 
     private fun stopNoise() {
         Timber.v("stop noise")
         stopSound()
-        vibrate(context, false)
+        vibrate(false)
     }
 
     private fun playSound(context: Context) {
@@ -108,65 +104,11 @@ class AlarmKlaxon(val context: Context, val preferences: ZmanimPreferences) {
     /**
      * Vibrate the device.
      *
-     * @param context the context.
      * @param isVibrate `true` to start vibrating - `false` to stop.
      */
-    private fun vibrate(context: Context, isVibrate: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            vibrate33(context, isVibrate)
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrate26(context, isVibrate)
-        } else {
-            vibrateLegacy(context, isVibrate)
-        }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun vibrateLegacy(context: Context, isVibrate: Boolean) {
-        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator ?: return
-        if (!vibrator.hasVibrator()) {
-            return
-        }
+    private fun vibrate(isVibrate: Boolean) {
         if (isVibrate) {
-            vibrator.vibrate(VIBRATE_DURATION)
-        } else {
-            vibrator.cancel()
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    @RequiresPermission(Manifest.permission.VIBRATE)
-    private fun vibrate26(context: Context, isVibrate: Boolean) {
-        val vibrator = context.getSystemService(Vibrator::class.java) ?: return
-        if (!vibrator.hasVibrator()) {
-            return
-        }
-        if (isVibrate) {
-            val vibe = VibrationEffect.createOneShot(
-                VIBRATE_DURATION,
-                VibrationEffect.DEFAULT_AMPLITUDE
-            )
-            vibrator.vibrate(vibe)
-        } else {
-            vibrator.cancel()
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    @RequiresPermission(Manifest.permission.VIBRATE)
-    private fun vibrate33(context: Context, isVibrate: Boolean) {
-        val vibratorManager = context.getSystemService(VibratorManager::class.java) ?: return
-        val vibrator = vibratorManager.defaultVibrator
-        if (!vibrator.hasVibrator()) {
-            return
-        }
-        if (isVibrate) {
-            val vibe = VibrationEffect.createOneShot(
-                VIBRATE_DURATION,
-                VibrationEffect.DEFAULT_AMPLITUDE
-            )
-            val attributes = VibrationAttributes.createForUsage(VibrationAttributes.USAGE_ALARM)
-            vibrator.vibrate(vibe, attributes)
+            vibrator.vibrate(VIBRATE_DURATION, VibratorCompat.USAGE_ALARM)
         } else {
             vibrator.cancel()
         }
