@@ -15,10 +15,10 @@
  */
 package com.github.times.compass.backup;
 
-import com.github.times.backup.DefaultBackupAgent;
+import com.github.backup.SharedPreferencesBackupAgent;
 
 /**
  * Backup agent helper for the application.
  */
-public class CompassBackupAgent extends DefaultBackupAgent {
+public class CompassBackupAgent extends SharedPreferencesBackupAgent {
 }

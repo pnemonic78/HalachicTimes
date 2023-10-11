@@ -15,8 +15,10 @@
  */
 package com.github.times.backup;
 
+import com.github.backup.SharedPreferencesBackupAgent;
+
 /**
  * Backup agent helper for the application.
  */
-public class ZmanimBackupAgent extends DefaultBackupAgent {
+public class ZmanimBackupAgent extends SharedPreferencesBackupAgent {
 }
