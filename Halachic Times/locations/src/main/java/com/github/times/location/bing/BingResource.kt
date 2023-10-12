@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import com.google.gson.annotations.SerializedName
 
 /**
  * Resource object for Bing address JSON response.
@@ -25,28 +23,36 @@ import java.util.List;
  * @author Moshe Waisberg
  */
 class BingResource {
-
     @SerializedName("__type")
-    public String type;
-    @SerializedName("bbox")
-    public Double[] boundingBox;
-    @SerializedName("name")
-    public String name;
-    @SerializedName("point")
-    public BingPoint point;
-    @SerializedName("address")
-    public BingAddress address;
-    @SerializedName("confidence")
-    public String confidence;
-    @SerializedName("elevations")
-    public Double[] elevations;
-    @SerializedName("entityType")
-    public String entityType;
-    @SerializedName("geocodePoints")
-    public List<Object> geocodePoints;
-    @SerializedName("matchCodes")
-    public List<Object> matchCodes;
-    @SerializedName("zoomLevel")
-    public Double zoomLevel;
+    var type: String? = null
 
+    @SerializedName("bbox")
+    var boundingBox: Array<Double>? = null
+
+    @SerializedName("name")
+    var name: String? = null
+
+    @SerializedName("point")
+    var point: BingPoint? = null
+
+    @SerializedName("address")
+    var address: BingAddress? = null
+
+    @SerializedName("confidence")
+    var confidence: String? = null
+
+    @SerializedName("elevations")
+    var elevations: Array<Double>? = null
+
+    @SerializedName("entityType")
+    var entityType: String? = null
+
+    @SerializedName("geocodePoints")
+    var geocodePoints: List<Any>? = null
+
+    @SerializedName("matchCodes")
+    var matchCodes: List<Any>? = null
+
+    @SerializedName("zoomLevel")
+    var zoomLevel: Double? = null
 }

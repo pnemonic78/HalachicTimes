@@ -13,70 +13,94 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName;
-
-import org.geonames.BoundingBox;
-import org.geonames.FeatureClass;
-import org.geonames.Timezone;
+import com.google.gson.annotations.SerializedName
+import org.geonames.BoundingBox
+import org.geonames.FeatureClass
+import org.geonames.Timezone
 
 /**
  * GeoNames toponym.
  *
  * @author Moshe Waisberg
  */
-public class Toponym {
+class Toponym {
     @SerializedName("geonameId")
-    public int geoNameId;
+    var geoNameId: Long = 0
+
     @SerializedName("name")
-    public String name;
+    var name: String? = null
+
     @SerializedName("alternateNames")
-    public String alternateNames;
+    var alternateNames: String? = null
+
     @SerializedName("continentCode")
-    public String continentCode;
+    var continentCode: String? = null
+
     @SerializedName("countryCode")
-    public String countryCode;
+    var countryCode: String? = null
+
     @SerializedName("countryName")
-    public String countryName;
+    var countryName: String? = null
+
     @SerializedName("population")
-    public Long population;
+    var population: Long? = null
+
     @SerializedName("elevation")
-    public Integer elevation;
+    var elevation: Int? = null
+
     @SerializedName("fcl")
-    public FeatureClass featureClass;
+    var featureClass: FeatureClass? = null
+
     @SerializedName("fclName")
-    public String featureClassName;
+    var featureClassName: String? = null
+
     @SerializedName("fcode")
-    public String featureCode;
+    var featureCode: String? = null
+
     @SerializedName("fCodeName")
-    public String featureCodeName;
+    var featureCodeName: String? = null
+
     @SerializedName("lat")
-    public double latitude;
+    var latitude: Double = 0.0
+
     @SerializedName("lng")
-    public double longitude;
+    var longitude: Double = 0.0
+
     @SerializedName("adminCode1")
-    public String adminCode1;
+    var adminCode1: String? = null
+
     @SerializedName("adminName1")
-    public String adminName1;
+    var adminName1: String? = null
+
     @SerializedName("adminCode2")
-    public String adminCode2;
+    var adminCode2: String? = null
+
     @SerializedName("adminName2")
-    public String adminName2;
+    var adminName2: String? = null
+
     @SerializedName("adminCode3")
-    public String adminCode3;
+    var adminCode3: String? = null
+
     @SerializedName("adminName3")
-    public String adminName3;
+    var adminName3: String? = null
+
     @SerializedName("adminCode4")
-    public String adminCode4;
+    var adminCode4: String? = null
+
     @SerializedName("adminName4")
-    public String adminName4;
+    var adminName4: String? = null
+
     @SerializedName("adminCode5")
-    public String adminCode5;
+    var adminCode5: String? = null
+
     @SerializedName("adminName5")
-    public String adminName5;
+    var adminName5: String? = null
+
     @SerializedName("timezone")
-    public Timezone timezone;
+    var timezone: Timezone? = null
+
     @SerializedName("bbox")
-    public BoundingBox boundingBox;
+    var boundingBox: BoundingBox? = null
 }

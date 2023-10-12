@@ -13,37 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.impl;
+package com.github.times.location.impl
 
-import android.content.Context;
-
-import java.util.List;
+import android.content.Context
 
 /**
  * Location adapter for "favorite" locations.
  *
  * @author Moshe Waisberg
  */
-public class FavoritesLocationAdapter extends SpecificLocationAdapter {
+class FavoritesLocationAdapter : SpecificLocationAdapter {
+    constructor(context: Context, items: List<LocationItem?>) : super(context, items)
 
-    public FavoritesLocationAdapter(Context context, List<LocationItem> items) {
-        super(context, items);
-    }
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        itemListener: LocationItemListener?
+    ) : super(context, items, itemListener)
 
-    public FavoritesLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener) {
-        super(context, items, itemListener);
-    }
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        filterListener: FilterListener?
+    ) : super(context, items, filterListener)
 
-    public FavoritesLocationAdapter(Context context, List<LocationItem> items, FilterListener filterListener) {
-        super(context, items, filterListener);
-    }
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        itemListener: LocationItemListener?,
+        filterListener: FilterListener?
+    ) : super(context, items, itemListener, filterListener)
 
-    public FavoritesLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener, FilterListener filterListener) {
-        super(context, items, itemListener, filterListener);
-    }
-
-    @Override
-    protected boolean isSpecific(LocationItem item) {
-        return item.isFavorite();
+    override fun isSpecific(item: LocationItem): Boolean {
+        return item.isFavorite
     }
 }

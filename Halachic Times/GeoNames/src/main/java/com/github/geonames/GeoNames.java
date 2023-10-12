@@ -475,7 +475,7 @@ public class GeoNames {
         String queryUrl = String.format(Locale.US, URL_ELEVATION_AGDEM, latitude, longitude, USERNAME);
         URL url = new URL(queryUrl);
         InputStream data = HTTPReader.read(url);
-        String elevationValue = new BufferedReader(new InputStreamReader(data)).readLine().trim();
+        String elevationValue = new BufferedReader(new InputStreamReader(data, StandardCharsets.UTF_8)).readLine().trim();
         double elevation = Double.parseDouble(elevationValue);
         geoName.setElevation((int) elevation);
     }

@@ -20,6 +20,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.github.util.LocaleUtils;
 import com.github.widget.ArrayAdapter;
@@ -271,7 +272,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
             return results;
         }
 
-        protected boolean accept(LocationItem value, String constraint) {
+        protected boolean accept(@NonNull LocationItem value, @Nullable String constraint) {
             if (TextUtils.isEmpty(constraint)) {
                 return true;
             }
@@ -292,7 +293,8 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
          * @param search the character sequence to search for.
          * @return {@code true} if {@code s} contains {@code search}.
          */
-        private boolean contains(String s, String search) {
+        private boolean contains(@NonNull String s, @Nullable String search) {
+            if (search == null) return true;
             final int len1 = s.length();
             final int len2 = search.length();
 
@@ -332,7 +334,7 @@ public class LocationAdapter extends ArrayAdapter<LocationAdapter.LocationItem, 
      *
      * @author Moshe Waisberg
      */
-    protected static class LocationItem {
+    /*FIXME protected*/public static class LocationItem {
 
         private final ZmanimAddress address;
         private final CharSequence label;

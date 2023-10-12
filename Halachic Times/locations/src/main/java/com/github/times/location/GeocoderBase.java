@@ -15,7 +15,6 @@
  */
 package com.github.times.location;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Location;
 import android.util.Base64;
@@ -23,7 +22,6 @@ import android.util.Base64;
 import androidx.annotation.Nullable;
 
 import com.github.net.HTTPReader;
-import com.github.util.LocaleUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -87,15 +85,6 @@ public abstract class GeocoderBase {
     }
 
     /**
-     * Creates a new geocoder.
-     *
-     * @param context the context.
-     */
-    public GeocoderBase(Context context) {
-        this(LocaleUtils.getDefaultLocale(context));
-    }
-
-    /**
      * Returns an array of Addresses that are known to describe the area
      * immediately surrounding the given latitude and longitude.
      *
@@ -107,6 +96,7 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
+    @Nullable
     public abstract List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException;
 
     /**
@@ -128,6 +118,7 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
+    @Nullable
     public List<Address> getFromLocationName(String locationName, int maxResults) throws IOException {
         return null;
     }
@@ -159,6 +150,7 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
+    @Nullable
     public List<Address> getFromLocationName(String locationName, int maxResults, double lowerLeftLatitude, double lowerLeftLongitude, double upperRightLatitude,
                                              double upperRightLongitude) throws IOException {
         if (locationName == null)
@@ -185,6 +177,7 @@ public abstract class GeocoderBase {
      * matches were found or there is no backend service available.
      * @throws IOException if the network is unavailable or any other I/O problem occurs.
      */
+    @Nullable
     protected List<Address> getJsonAddressesFromURL(double latitude, double longitude, String queryUrl, int maxResults) throws IOException {
         URL url = new URL(queryUrl);
         InputStream data = null;

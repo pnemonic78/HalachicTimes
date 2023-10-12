@@ -13,159 +13,166 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.google;
+package com.github.times.location.google
 
-import android.location.Address;
-
-import com.github.times.location.AddressResponseParser;
-import com.github.times.location.LocationException;
-import com.github.times.location.ZmanimAddress;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.google.maps.model.AddressComponent;
-import com.google.maps.model.AddressComponentType;
-import com.google.maps.model.GeocodingResult;
-import com.google.maps.model.LatLng;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import static android.text.TextUtils.isEmpty;
+import android.location.Address
+import com.github.times.location.AddressResponseParser
+import com.github.times.location.LocationException
+import com.github.times.location.ZmanimAddress
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
+import com.google.maps.model.AddressComponentType
+import com.google.maps.model.GeocodingResult
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.nio.charset.StandardCharsets
+import java.util.Locale
 
 /**
  * Handler for parsing the JSON response for addresses.
  *
  * @author Moshe Waisberg
  */
-class GoogleAddressResponseParser extends AddressResponseParser {
-
-    private final Gson gson = new GsonBuilder()
+internal class GoogleAddressResponseParser : AddressResponseParser() {
+    private val gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .registerTypeAdapter(AddressComponentType.class, new AddressComponentTypeAdapter())
-        .create();
+        .registerTypeAdapter(AddressComponentType::class.java, AddressComponentTypeAdapter())
+        .create()
 
-    @Override
-    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
-        try {
-            Reader reader = new InputStreamReader(data);
-            GeocodingResponse response = gson.fromJson(reader, GeocodingResponse.class);
-            List<Address> results = new ArrayList<>(maxResults);
-            handleResponse(response, results, maxResults, locale);
-            return results;
-        } catch (JsonIOException e) {
-            throw new IOException(e);
-        } catch (JsonSyntaxException e) {
-            throw new LocationException(e);
+    @Throws(LocationException::class, IOException::class)
+    override fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int,
+        locale: Locale
+    ): List<Address> {
+        return try {
+            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
+            val response = gson.fromJson(reader, GeocodingResponse::class.java)
+            val results: MutableList<Address> = ArrayList(maxResults)
+            handleResponse(response, results, maxResults, locale)
+            results
+        } catch (e: JsonIOException) {
+            throw IOException(e)
+        } catch (e: JsonSyntaxException) {
+            throw LocationException(e)
         }
     }
 
-    private void handleResponse(GeocodingResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
-        if (response == null) return;
+    @Throws(LocationException::class)
+    private fun handleResponse(
+        response: GeocodingResponse?,
+        results: MutableList<Address>,
+        maxResults: Int,
+        locale: Locale
+    ) {
+        if (response == null) return
         if (!response.successful()) {
-            throw new LocationException(response.errorMessage);
+            throw LocationException(response.errorMessage)
         }
-
-        final GeocodingResult[] responseResults = response.results;
-        if ((responseResults == null) || (responseResults.length == 0)) {
-            return;
+        val responseResults = response.results
+        if (responseResults.isNullOrEmpty()) {
+            return
         }
-
-        GeocodingResult geocoderResult;
-        Address address;
-
-        final int size = Math.min(responseResults.length, maxResults);
-        for (int i = 0; i < size; i++) {
-            geocoderResult = responseResults[i];
-            if (geocoderResult == null) continue;
-            address = toAddress(geocoderResult, locale);
+        var geocoderResult: GeocodingResult
+        var address: Address?
+        val size = responseResults.size.coerceAtMost(maxResults)
+        for (i in 0 until size) {
+            geocoderResult = responseResults[i]
+            address = toAddress(geocoderResult, locale)
             if (address != null) {
-                results.add(address);
+                results.add(address)
             }
         }
     }
 
-    @Nullable
-    private Address toAddress(@NonNull GeocodingResult response, Locale locale) {
-        ZmanimAddress result = new ZmanimAddress(locale);
-        //result.setFormatted(result.getFormattedAddress());
-
-        LatLng location = response.geometry.location;
-        result.setLatitude(location.lat);
-        result.setLongitude(location.lng);
-
-        String longName;
-        String shortName;
-        AddressComponentType addressComponentType;
-        boolean hasResult = false;
-
-        AddressComponent[] components = response.addressComponents;
-        for (AddressComponent component : components) {
-            longName = component.longName;
-            shortName = component.shortName;
-            addressComponentType = component.types[0];
-            if (addressComponentType == null) {
-                continue;
+    private fun toAddress(response: GeocodingResult, locale: Locale): Address? {
+        val location = response.geometry.location
+        val result = ZmanimAddress(locale).apply {
+            latitude = location.lat
+            longitude = location.lng
+        }
+        var longName: String
+        var shortName: String
+        var addressComponentType: AddressComponentType
+        var hasResult = false
+        val components = response.addressComponents
+        for (component in components) {
+            longName = component.longName
+            shortName = component.shortName
+            if (component.types.isNullOrEmpty()) {
+                continue
             }
+            addressComponentType = component.types[0]
 
-            switch (addressComponentType) {
-                case ADMINISTRATIVE_AREA_LEVEL_1:
-                    result.setAdminArea(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case ADMINISTRATIVE_AREA_LEVEL_2:
-                    result.setSubAdminArea(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case COUNTRY:
-                    result.setCountryCode(shortName);
-                    result.setCountryName(longName);
-                    hasResult = true;
-                    break;
-                case LOCALITY:
-                    result.setLocality(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case NATURAL_FEATURE:
-                    result.setFeatureName(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case POSTAL_CODE:
-                    result.setPostalCode(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case PREMISE:
-                    result.setPremises(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case ROUTE:
-                    result.setAddressLine(2, isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case STREET_ADDRESS:
-                    result.setAddressLine(1, isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case STREET_NUMBER:
-                    result.setAddressLine(0, isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
-                case SUBLOCALITY:
-                    result.setSubLocality(isEmpty(shortName) ? longName : shortName);
-                    hasResult = true;
-                    break;
+            when (addressComponentType) {
+                AddressComponentType.ADMINISTRATIVE_AREA_LEVEL_1 -> {
+                    result.adminArea = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                AddressComponentType.ADMINISTRATIVE_AREA_LEVEL_2 -> {
+                    result.subAdminArea = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                AddressComponentType.COUNTRY -> {
+                    result.countryCode = shortName
+                    result.countryName = longName
+                    hasResult = true
+                }
+
+                AddressComponentType.LOCALITY -> {
+                    result.locality = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                AddressComponentType.NATURAL_FEATURE -> {
+                    result.featureName = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                AddressComponentType.POSTAL_CODE -> {
+                    result.postalCode = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                AddressComponentType.PREMISE -> {
+                    result.premises = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                AddressComponentType.ROUTE -> {
+                    result.setAddressLine(
+                        2,
+                        if (shortName.isNullOrEmpty()) longName else shortName
+                    )
+                    hasResult = true
+                }
+
+                AddressComponentType.STREET_ADDRESS -> {
+                    result.setAddressLine(1, if (shortName.isNullOrEmpty()) longName else shortName)
+                    hasResult = true
+                }
+
+                AddressComponentType.STREET_NUMBER -> {
+                    result.setAddressLine(0, if (shortName.isNullOrEmpty()) longName else shortName)
+                    hasResult = true
+                }
+
+                AddressComponentType.SUBLOCALITY -> {
+                    result.subLocality = if (shortName.isNullOrEmpty()) longName else shortName
+                    hasResult = true
+                }
+
+                else -> Unit
             }
         }
-        return hasResult ? result : null;
+        return if (hasResult) result else null
     }
 }

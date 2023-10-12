@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.times.compass
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.preference.LocalePreferences;
-import com.github.times.R;
-import com.github.times.compass.preference.ThemeCompassPreferences;
-import com.github.times.location.LocationActivity;
-import com.github.times.preference.CompassPreferenceActivity;
-import com.github.times.preference.ZmanimCompassPreferences;
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.preference.LocalePreferences
+import com.github.times.R
+import com.github.times.compass.preference.ThemeCompassPreferences
+import com.github.times.location.LocationActivity
+import com.github.times.preference.CompassPreferenceActivity
+import com.github.times.preference.ZmanimCompassPreferences
 
 /**
  * Show the direction in which to pray.
@@ -36,56 +35,55 @@ import com.github.times.preference.ZmanimCompassPreferences;
  *
  * @author Moshe Waisberg
  */
-public class CompassActivity extends BaseCompassActivity {
+class CompassActivity : BaseCompassActivity() {
+    private var localeCallbacks: LocaleCallbacks<LocalePreferences>? = null
 
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
-
-        applyOverrideConfiguration(context.getResources().getConfiguration());
+    override fun attachBaseContext(newBase: Context) {
+        val localeCallbacks: LocaleCallbacks<LocalePreferences> = LocaleHelper(newBase)
+        this.localeCallbacks = localeCallbacks
+        val context = localeCallbacks.attachBaseContext(newBase)
+        super.attachBaseContext(context)
+        applyOverrideConfiguration(context.resources.configuration)
     }
 
-    @Override
-    public void onPreCreate() {
-        super.onPreCreate();
-        localeCallbacks.onPreCreate(this);
+    override fun onPreCreate() {
+        super.onPreCreate()
+        localeCallbacks?.onPreCreate(this)
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.compass, menu);
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.compass, menu)
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int itemId = item.getItemId();
-        if (itemId == R.id.menu_location) {
-            startLocations();
-            return true;
-        } else if (itemId == R.id.menu_settings) {
-            startSettings();
-            return true;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_location -> {
+                startLocations()
+                true
+            }
+
+            R.id.menu_settings -> {
+                startSettings()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected Class<? extends Activity> getLocationActivityClass() {
-        return LocationActivity.class;
+    override fun getLocationActivityClass(): Class<out Activity> {
+        return LocationActivity::class.java
     }
 
-    private void startSettings() {
-        final Context context = this;
-        startActivity(new Intent(context, CompassPreferenceActivity.class));
+    private fun startSettings() {
+        val context: Context = this
+        startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }
 
-    @Override
-    protected ThemeCompassPreferences createCompassPreferences(Context context) {
-        return new ZmanimCompassPreferences(context);
+    override fun createCompassPreferences(context: Context?): ThemeCompassPreferences {
+        return ZmanimCompassPreferences(context)
     }
+
+    override fun getCompassFragment(): CompassFragment = JewishCompassFragment()
 }

@@ -13,21 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.text;
+package com.github.times.location.text
 
-import com.github.text.method.RangeInputFilter;
+import com.github.text.method.RangeInputFilter
 
 /**
  * Seconds input filter.
  *
  * @author Moshe Waisberg
  */
-public class SecondsInputFilter extends RangeInputFilter {
-
-    public static final double SECONDS_MIN = 0;
-    public static final double SECONDS_MAX = 59;
-
-    public SecondsInputFilter() {
-        super(false, true, SECONDS_MIN, SECONDS_MAX);
+class SecondsInputFilter : RangeInputFilter(false, true, SECONDS_MIN, SECONDS_MAX) {
+    companion object {
+        const val SECONDS_MIN = 0.0
+        const val SECONDS_MAX = 59.0
     }
 }

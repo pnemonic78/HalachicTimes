@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import com.google.gson.annotations.SerializedName
 
 /**
  * Root object for GeoNames address JSON response.
@@ -25,12 +23,12 @@ import java.util.List;
  * @author Moshe Waisberg
  */
 class GeoNamesResponse {
-
     @SerializedName("geonames")
-    public List<Toponym> records;
-    @SerializedName("status")
-    public GeoNamesStatus status;
-    @SerializedName("ocean")
-    public Ocean ocean;
+    var records: List<Toponym>? = null
 
+    @SerializedName("status")
+    var status: GeoNamesStatus? = null
+
+    @SerializedName("ocean")
+    var ocean: Ocean? = null
 }

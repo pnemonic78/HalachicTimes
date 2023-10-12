@@ -13,38 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.times.compass
 
-import static com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE;
-import static java.lang.Math.abs;
-
-import android.app.Activity;
-import android.content.Context;
-import android.hardware.GeomagneticField;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.Location;
-import android.os.Bundle;
-import android.os.SystemClock;
-import android.os.Vibrator;
-import android.text.format.DateUtils;
-import android.view.LayoutInflater;
-import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
-
-import com.github.os.VibratorCompat;
-import com.github.times.compass.lib.R;
-import com.github.times.compass.preference.CompassPreferences;
-import com.github.times.compass.preference.SimpleCompassPreferences;
-import com.github.times.location.GeocoderBase;
-import com.github.times.location.ZmanimLocation;
-
-import org.jetbrains.annotations.NotNull;
+import android.location.Location
+import android.os.SystemClock
+import android.text.format.DateUtils
+import com.github.os.VibratorCompat
+import com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE
+import com.github.times.location.GeocoderBase
+import com.github.times.location.ZmanimLocation
+import kotlin.math.abs
 
 /**
  * Show the direction in which to pray.
@@ -52,35 +30,22 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Moshe Waisberg
  */
-public class HolyCompassFragment extends CompassFragment {
-
+open class HolyCompassFragment : CompassFragment() {
     /**
-     * Accuracy of the device's bearing relative to the holiest bearing, in degrees.
+     * Location of the holy place.
      */
-    private static final float EPSILON_BEARING = 2f;
+    private val holiest = Location(GeocoderBase.USER_PROVIDER)
+    private var bearing = 0f
+    private var vibrator: VibratorCompat? = null
+    private var vibrationTime = 0L
 
-    /** Duration to consider the bearing match accurate and stable. */
-    private static final long VIBRATE_DELAY_MS = DateUtils.SECOND_IN_MILLIS;
-    /** Duration of a vibration. */
-    private static final long VIBRATE_LENGTH_MS = 50;
-
-    /**
-     * Location of the Holy of Holies.
-     */
-    private final Location holiest = new Location(GeocoderBase.USER_PROVIDER);
-
-    private float bearing;
-
-    private VibratorCompat vibrator;
-    private long vibrationTime = 0L;
-
-    public HolyCompassFragment() {
-        setHoliest(Double.NaN, Double.NaN, Double.NaN);
+    init {
+        setHoliest(Double.NaN, Double.NaN, Double.NaN)
     }
 
-    protected void setAzimuth(float azimuth) {
-        super.setAzimuth(-azimuth);
-        maybeVibrate(azimuth);
+    override fun setAzimuth(azimuth: Float) {
+        super.setAzimuth(-azimuth)
+        maybeVibrate(azimuth)
     }
 
     /**
@@ -88,48 +53,60 @@ public class HolyCompassFragment extends CompassFragment {
      *
      * @param location the location.
      */
-    public void setLocation(Location location) {
-        super.setLocation(location);
-
-        String bearingType = preferences.getBearing();
-        if (BEARING_GREAT_CIRCLE.equals(bearingType)) {
-            bearing = location.bearingTo(holiest);
+    override fun setLocation(location: Location) {
+        super.setLocation(location)
+        val bearingType = preferences.bearing
+        bearing = if (BEARING_GREAT_CIRCLE == bearingType) {
+            location.bearingTo(holiest)
         } else {
-            bearing = ZmanimLocation.angleTo(location, holiest);
+            ZmanimLocation.angleTo(location, holiest)
         }
-        compassView.setHoliest(bearing);
+        compassView?.setHoliest(bearing)
     }
 
-    public void setHoliest(Location location) {
-        holiest.set(location);
+    fun setHoliest(location: Location) {
+        holiest.set(location)
     }
 
-    public void setHoliest(double latitude, double longitude, double elevation) {
-        holiest.setLatitude(latitude);
-        holiest.setLongitude(longitude);
-        holiest.setAltitude(elevation);
+    fun setHoliest(latitude: Double, longitude: Double, elevation: Double) {
+        holiest.latitude = latitude
+        holiest.longitude = longitude
+        holiest.altitude = elevation
     }
 
-    private void maybeVibrate(float azimuth) {
-        long now = SystemClock.elapsedRealtime();
+    private fun maybeVibrate(azimuth: Float) {
+        val now = SystemClock.elapsedRealtime()
         if (abs(azimuth - bearing) < EPSILON_BEARING) {
-            if ((now - vibrationTime) >= VIBRATE_DELAY_MS) {
-                vibrate();
+            if (now - vibrationTime >= VIBRATE_DELAY_MS) {
+                vibrate()
                 // Disable the vibration until accurate again.
-                vibrationTime = Long.MAX_VALUE;
+                vibrationTime = Long.MAX_VALUE
             }
         } else {
-            vibrationTime = now;
+            vibrationTime = now
         }
     }
 
-    private void vibrate() {
-        VibratorCompat vibrator = this.vibrator;
+    private fun vibrate() {
+        var vibrator = vibrator
         if (vibrator == null) {
-            final Context context = requireContext();
-            vibrator = new VibratorCompat(context);
-            this.vibrator = vibrator;
+            val context = this.context ?: return
+            vibrator = VibratorCompat(context)
+            this.vibrator = vibrator
         }
-        vibrator.vibrate(VIBRATE_LENGTH_MS, VibratorCompat.USAGE_TOUCH);
+        vibrator.vibrate(VIBRATE_LENGTH_MS, VibratorCompat.USAGE_TOUCH)
+    }
+
+    companion object {
+        /**
+         * Accuracy of the device's bearing relative to the holiest bearing, in degrees.
+         */
+        private const val EPSILON_BEARING = 2f
+
+        /** Duration to consider the bearing match accurate and stable.  */
+        private const val VIBRATE_DELAY_MS = DateUtils.SECOND_IN_MILLIS
+
+        /** Duration of a vibration.  */
+        private const val VIBRATE_LENGTH_MS: Long = 50
     }
 }

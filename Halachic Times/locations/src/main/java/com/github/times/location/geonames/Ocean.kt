@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
 /**
  * GeoNames ocean.
  *
  * @author Moshe Waisberg
  */
-public class Ocean {
+class Ocean {
     @SerializedName("distance")
-    public double distance;
+    var distance: Double = 0.0
+
     @SerializedName("name")
-    public String name;
+    var name: String? = null
 }

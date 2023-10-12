@@ -1,5 +1,5 @@
 /*
- * Copyright 2012, Moshe Waisberg
+ * Copyright 2023, Moshe Waisberg
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass.bahai
+package com.github.times.compass
 
 import com.github.times.compass.HolyCompassFragment
 
 /**
  * Show the direction in which to pray.
- * Points to the tomb of Bahá'u'lláh in Bahjí, Israel.
+ * Points to the Holy of Holies in Jerusalem in Israel.
  *
  * @author Moshe Waisberg
  */
-class CompassFragment : HolyCompassFragment() {
+class JewishCompassFragment : HolyCompassFragment() {
     init {
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION)
     }
 
     companion object {
-        /** Latitude of the Bahaullah's tomb, according to wikipedia.  */
-        private const val HOLIEST_LATITUDE = 32.943333
+        /**
+         * Latitude of the Holy of Holies.
+         */
+        private const val HOLIEST_LATITUDE = 31.778
 
-        /** Longitude of the Bahaullah's tomb, according to wikipedia.  */
-        private const val HOLIEST_LONGITUDE = 35.092222
+        /**
+         * Longitude of the Holy of Holies.
+         */
+        private const val HOLIEST_LONGITUDE = 35.2353
 
-        /** Elevation of the Bahaullah's tomb, according to Google.  */
-        private const val HOLIEST_ELEVATION = 22.0
+        /**
+         * Elevation of the Holy of Holies, according to Google.
+         */
+        private const val HOLIEST_ELEVATION = 744.5184937
     }
 }

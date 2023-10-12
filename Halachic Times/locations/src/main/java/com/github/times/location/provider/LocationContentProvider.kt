@@ -13,248 +13,282 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.provider;
+package com.github.times.location.provider
 
-import android.content.ContentProvider;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.UriMatcher;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.provider.BaseColumns;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import static com.github.times.location.provider.LocationContract.AUTHORITY;
-import static com.github.times.location.provider.LocationContract.Addresses;
-import static com.github.times.location.provider.LocationContract.Cities;
-import static com.github.times.location.provider.LocationContract.Elevations;
-import static com.github.times.location.provider.LocationOpenHelper.TABLE_ADDRESSES;
-import static com.github.times.location.provider.LocationOpenHelper.TABLE_CITIES;
-import static com.github.times.location.provider.LocationOpenHelper.TABLE_ELEVATIONS;
+import android.content.ContentProvider
+import android.content.ContentUris
+import android.content.ContentValues
+import android.content.UriMatcher
+import android.database.Cursor
+import android.database.DatabaseUtils
+import android.net.Uri
+import android.provider.BaseColumns
+import com.github.times.location.provider.LocationContract.Elevations
 
 /**
- * Location content provider.<br>
+ * Location content provider.<br></br>
  * Fetches addresses, cities, and elevations from the database.
  *
  * @author Moshe Waisberg
  */
-public class LocationContentProvider extends ContentProvider {
+class LocationContentProvider : ContentProvider() {
+    private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
+    private var openHelper: LocationOpenHelper? = null
 
-    private static final int CODE_ADDRESSES = 100;
-    private static final int CODE_ADDRESS_ID = 101;
-    private static final int CODE_CITIES = 200;
-    private static final int CODE_CITY_ID = 201;
-    private static final int CODE_ELEVATIONS = 300;
-    private static final int CODE_ELEVATION_ID = 301;
-
-    private final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    private LocationOpenHelper openHelper;
-
-    @Override
-    public boolean onCreate() {
-        final Context context = getContext();
-
-        final String authority = AUTHORITY(context);
-        uriMatcher.addURI(authority, Addresses.ADDRESS, CODE_ADDRESSES);
-        uriMatcher.addURI(authority, Addresses.ADDRESS + "/#", CODE_ADDRESS_ID);
-        uriMatcher.addURI(authority, Cities.CITY, CODE_CITIES);
-        uriMatcher.addURI(authority, Cities.CITY + "/#", CODE_CITY_ID);
-        uriMatcher.addURI(authority, Elevations.ELEVATION, CODE_ELEVATIONS);
-        uriMatcher.addURI(authority, Elevations.ELEVATION + "/#", CODE_ELEVATION_ID);
-
-        openHelper = new LocationOpenHelper(context);
-
-        return true;
+    override fun onCreate(): Boolean {
+        val context = context
+        val authority = LocationContract.AUTHORITY(context!!)
+        uriMatcher.addURI(authority, LocationContract.Addresses.ADDRESS, CODE_ADDRESSES)
+        uriMatcher.addURI(authority, LocationContract.Addresses.ADDRESS + "/#", CODE_ADDRESS_ID)
+        uriMatcher.addURI(authority, LocationContract.Cities.CITY, CODE_CITIES)
+        uriMatcher.addURI(authority, LocationContract.Cities.CITY + "/#", CODE_CITY_ID)
+        uriMatcher.addURI(authority, Elevations.ELEVATION, CODE_ELEVATIONS)
+        uriMatcher.addURI(authority, Elevations.ELEVATION + "/#", CODE_ELEVATION_ID)
+        openHelper = LocationOpenHelper(context)
+        return true
     }
 
-    @Nullable
-    @Override
-    public String getType(@NonNull Uri uri) {
-        switch (uriMatcher.match(uri)) {
-            case CODE_ADDRESSES:
-                return Addresses.CONTENT_TYPE;
-            case CODE_ADDRESS_ID:
-                return Addresses.CONTENT_ITEM_TYPE;
-            case CODE_CITIES:
-                return Cities.CONTENT_TYPE;
-            case CODE_CITY_ID:
-                return Cities.CONTENT_ITEM_TYPE;
-            case CODE_ELEVATIONS:
-                return Elevations.CONTENT_TYPE;
-            case CODE_ELEVATION_ID:
-                return Elevations.CONTENT_ITEM_TYPE;
-            default:
-                return null;
+    override fun getType(uri: Uri): String? {
+        return when (uriMatcher.match(uri)) {
+            CODE_ADDRESSES -> LocationContract.Addresses.CONTENT_TYPE
+            CODE_ADDRESS_ID -> LocationContract.Addresses.CONTENT_ITEM_TYPE
+            CODE_CITIES -> LocationContract.Cities.CONTENT_TYPE
+            CODE_CITY_ID -> LocationContract.Cities.CONTENT_ITEM_TYPE
+            CODE_ELEVATIONS -> Elevations.CONTENT_TYPE
+            CODE_ELEVATION_ID -> Elevations.CONTENT_ITEM_TYPE
+            else -> null
         }
     }
 
-    @Nullable
-    @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        SQLiteDatabase db = openHelper.getReadableDatabase();
-        Cursor cursor;
-        String id;
+    override fun query(
+        uri: Uri,
+        projection: Array<String>?,
+        selection: String?,
+        selectionArgs: Array<String>?,
+        sortOrder: String?
+    ): Cursor? {
+        var selectionCriteria = selection
+        val context = context ?: return null
+        val db = openHelper?.readableDatabase ?: return null
+        val cursor: Cursor
+        val id: String?
+        when (uriMatcher.match(uri)) {
+            CODE_ADDRESSES -> cursor = db.query(
+                LocationOpenHelper.TABLE_ADDRESSES,
+                projection,
+                selectionCriteria,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+            )
 
-        switch (uriMatcher.match(uri)) {
-            case CODE_ADDRESSES:
-                cursor = db.query(TABLE_ADDRESSES, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            case CODE_ADDRESS_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                cursor = db.query(TABLE_ADDRESSES, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            case CODE_CITIES:
-                cursor = db.query(TABLE_CITIES, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            case CODE_CITY_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                cursor = db.query(TABLE_CITIES, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            case CODE_ELEVATIONS:
-                cursor = db.query(TABLE_ELEVATIONS, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            case CODE_ELEVATION_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                cursor = db.query(TABLE_ELEVATIONS, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            CODE_ADDRESS_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                cursor = db.query(
+                    LocationOpenHelper.TABLE_ADDRESSES,
+                    projection,
+                    selectionCriteria,
+                    selectionArgs,
+                    null,
+                    null,
+                    sortOrder
+                )
+            }
+
+            CODE_CITIES -> cursor = db.query(
+                LocationOpenHelper.TABLE_CITIES,
+                projection,
+                selectionCriteria,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+            )
+
+            CODE_CITY_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                cursor = db.query(
+                    LocationOpenHelper.TABLE_CITIES,
+                    projection,
+                    selectionCriteria,
+                    selectionArgs,
+                    null,
+                    null,
+                    sortOrder
+                )
+            }
+
+            CODE_ELEVATIONS -> cursor = db.query(
+                LocationOpenHelper.TABLE_ELEVATIONS,
+                projection,
+                selectionCriteria,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+            )
+
+            CODE_ELEVATION_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                cursor = db.query(
+                    LocationOpenHelper.TABLE_ELEVATIONS,
+                    projection,
+                    selectionCriteria,
+                    selectionArgs,
+                    null,
+                    null,
+                    sortOrder
+                )
+            }
+
+            else -> throw UnsupportedOperationException("Unknown uri: $uri")
         }
-
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
-
-        return cursor;
+        cursor.setNotificationUri(context.contentResolver, uri)
+        return cursor
     }
 
-    @Nullable
-    @Override
-    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-        Uri result = null;
-        long id = 0L;
+    override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        val context = context ?: return null
+        val db = openHelper?.writableDatabase ?: return null
+        val result: Uri?
+        val id: Long
 
-        switch (uriMatcher.match(uri)) {
-            case CODE_ADDRESSES:
-            case CODE_ADDRESS_ID:
-                id = db.insert(TABLE_ADDRESSES, null, values);
-                result = ContentUris.withAppendedId(Addresses.CONTENT_URI(getContext()), id);
-                break;
-            case CODE_CITIES:
-            case CODE_CITY_ID:
-                id = db.insert(TABLE_CITIES, null, values);
-                result = ContentUris.withAppendedId(Cities.CONTENT_URI(getContext()), id);
-                break;
-            case CODE_ELEVATIONS:
-            case CODE_ELEVATION_ID:
-                id = db.insert(TABLE_ELEVATIONS, null, values);
-                result = ContentUris.withAppendedId(Elevations.CONTENT_URI(getContext()), id);
-                break;
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        when (uriMatcher.match(uri)) {
+            CODE_ADDRESSES,
+            CODE_ADDRESS_ID -> {
+                id = db.insert(LocationOpenHelper.TABLE_ADDRESSES, null, values)
+                result =
+                    ContentUris.withAppendedId(LocationContract.Addresses.CONTENT_URI(context), id)
+            }
+
+            CODE_CITIES,
+            CODE_CITY_ID -> {
+                id = db.insert(LocationOpenHelper.TABLE_CITIES, null, values)
+                result =
+                    ContentUris.withAppendedId(LocationContract.Cities.CONTENT_URI(context), id)
+            }
+
+            CODE_ELEVATIONS,
+            CODE_ELEVATION_ID -> {
+                id = db.insert(LocationOpenHelper.TABLE_ELEVATIONS, null, values)
+                result = ContentUris.withAppendedId(Elevations.CONTENT_URI(context), id)
+            }
+
+            else -> throw UnsupportedOperationException("Unknown uri: $uri")
         }
-
-        if (result != null) {
-            getContext().getContentResolver().notifyChange(uri, null);
-        }
-
-        return result;
+        context.contentResolver.notifyChange(uri, null)
+        return result
     }
 
-    @Override
-    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-        int result = 0;
-        String id;
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+        var selectionCriteria = selection
+        val context = context ?: return 0
+        val db = openHelper?.writableDatabase ?: return 0
+        val result: Int
+        val id: String?
 
-        switch (uriMatcher.match(uri)) {
-            case CODE_ADDRESSES:
-                result = db.delete(TABLE_ADDRESSES, selection, selectionArgs);
-                break;
-            case CODE_ADDRESS_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                result = db.delete(TABLE_ADDRESSES, selection, selectionArgs);
-                break;
-            case CODE_CITIES:
-                result = db.delete(TABLE_CITIES, selection, selectionArgs);
-                break;
-            case CODE_CITY_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                result = db.delete(TABLE_CITIES, selection, selectionArgs);
-                break;
-            case CODE_ELEVATIONS:
-                result = db.delete(TABLE_ELEVATIONS, selection, selectionArgs);
-                break;
-            case CODE_ELEVATION_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                result = db.delete(TABLE_ELEVATIONS, selection, selectionArgs);
-                break;
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        when (uriMatcher.match(uri)) {
+            CODE_ADDRESSES -> result =
+                db.delete(LocationOpenHelper.TABLE_ADDRESSES, selectionCriteria, selectionArgs)
+
+            CODE_ADDRESS_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                result = db.delete(LocationOpenHelper.TABLE_ADDRESSES, selectionCriteria, selectionArgs)
+            }
+
+            CODE_CITIES -> result =
+                db.delete(LocationOpenHelper.TABLE_CITIES, selectionCriteria, selectionArgs)
+
+            CODE_CITY_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                result = db.delete(LocationOpenHelper.TABLE_CITIES, selectionCriteria, selectionArgs)
+            }
+
+            CODE_ELEVATIONS -> result =
+                db.delete(LocationOpenHelper.TABLE_ELEVATIONS, selectionCriteria, selectionArgs)
+
+            CODE_ELEVATION_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                result = db.delete(LocationOpenHelper.TABLE_ELEVATIONS, selectionCriteria, selectionArgs)
+            }
+
+            else -> throw UnsupportedOperationException("Unknown uri: $uri")
         }
-
         if (result > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.contentResolver.notifyChange(uri, null)
         }
-
-        return result;
+        return result
     }
 
-    @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        SQLiteDatabase db = openHelper.getWritableDatabase();
-        int result = 0;
-        String id;
+    override fun update(
+        uri: Uri,
+        values: ContentValues?,
+        selection: String?,
+        selectionArgs: Array<String>?
+    ): Int {
+        var selectionCriteria = selection
+        val context = context ?: return 0
+        val db = openHelper?.writableDatabase ?: return 0
+        val result: Int
+        val id: String?
 
-        switch (uriMatcher.match(uri)) {
-            case CODE_ADDRESSES:
-                result = db.update(TABLE_ADDRESSES, values, selection, selectionArgs);
-                break;
-            case CODE_ADDRESS_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                result = db.update(TABLE_ADDRESSES, values, selection, selectionArgs);
-                break;
-            case CODE_CITIES:
-                result = db.update(TABLE_CITIES, values, selection, selectionArgs);
-                break;
-            case CODE_CITY_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                result = db.update(TABLE_CITIES, values, selection, selectionArgs);
-                break;
-            case CODE_ELEVATIONS:
-                result = db.update(TABLE_ELEVATIONS, values, selection, selectionArgs);
-                break;
-            case CODE_ELEVATION_ID:
-                id = uri.getLastPathSegment();
-                selection = DatabaseUtils.concatenateWhere(selection, BaseColumns._ID + "=" + id);
-                result = db.update(TABLE_ELEVATIONS, values, selection, selectionArgs);
-                break;
-            default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        when (uriMatcher.match(uri)) {
+            CODE_ADDRESSES -> result =
+                db.update(LocationOpenHelper.TABLE_ADDRESSES, values, selectionCriteria, selectionArgs)
+
+            CODE_ADDRESS_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                result =
+                    db.update(LocationOpenHelper.TABLE_ADDRESSES, values, selectionCriteria, selectionArgs)
+            }
+
+            CODE_CITIES -> result =
+                db.update(LocationOpenHelper.TABLE_CITIES, values, selectionCriteria, selectionArgs)
+
+            CODE_CITY_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                result =
+                    db.update(LocationOpenHelper.TABLE_CITIES, values, selectionCriteria, selectionArgs)
+            }
+
+            CODE_ELEVATIONS -> result =
+                db.update(LocationOpenHelper.TABLE_ELEVATIONS, values, selectionCriteria, selectionArgs)
+
+            CODE_ELEVATION_ID -> {
+                id = uri.lastPathSegment
+                selectionCriteria = DatabaseUtils.concatenateWhere(selectionCriteria, BaseColumns._ID + "=" + id)
+                result =
+                    db.update(LocationOpenHelper.TABLE_ELEVATIONS, values, selectionCriteria, selectionArgs)
+            }
+
+            else -> throw UnsupportedOperationException("Unknown uri: $uri")
         }
-
         if (result > 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            context.contentResolver.notifyChange(uri, null)
         }
-
-        return result;
+        return result
     }
 
-    @Override
-    public void shutdown() {
-        openHelper.close();
-        super.shutdown();
+    override fun shutdown() {
+        openHelper!!.close()
+        super.shutdown()
+    }
+
+    companion object {
+        private const val CODE_ADDRESSES = 100
+        private const val CODE_ADDRESS_ID = 101
+        private const val CODE_CITIES = 200
+        private const val CODE_CITY_ID = 201
+        private const val CODE_ELEVATIONS = 300
+        private const val CODE_ELEVATION_ID = 301
     }
 }

@@ -10,7 +10,6 @@
     <dimen name="south_thickness">2dp</dimen>
     <dimen name="label_thickness">1dp</dimen>
     <dimen name="label2_thickness">1dp</dimen>
-    <dimen name="label_size">10dp</dimen>
     <dimen name="shadow_thickness">1.5dp</dimen>
 
 </resources>

@@ -23,7 +23,7 @@ import com.github.times.compass.HolyCompassFragment
  *
  * @author Moshe Waisberg
  */
-class CompassFragment : HolyCompassFragment() {
+class JewishCompassFragment : HolyCompassFragment() {
     init {
         setHoliest(HOLIEST_LATITUDE, HOLIEST_LONGITUDE, HOLIEST_ELEVATION)
     }

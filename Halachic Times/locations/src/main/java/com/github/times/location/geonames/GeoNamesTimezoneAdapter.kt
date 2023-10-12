@@ -13,99 +13,80 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-
-import org.geonames.Timezone;
-
-import java.io.IOException;
-import java.util.Date;
+import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
+import com.google.gson.stream.JsonWriter
+import java.io.IOException
+import java.util.Date
+import org.geonames.Timezone
 
 /**
  * JSON type adapter for GeoNames timezones.
  *
  * @author Moshe Waisberg
  */
-public class GeoNamesTimezoneAdapter extends TypeAdapter<Timezone> {
-
+class GeoNamesTimezoneAdapter : TypeAdapter<Timezone?>() {
     // TODO inject via constructor that created via factory
-    private final Gson gson = new GsonBuilder()
+    private val gson = GsonBuilder()
         .setDateFormat("yyyy-MM-dd HH:mm")
-        .create();
+        .create()
 
-    @Override
-    public Timezone read(JsonReader in) throws IOException {
-        if (in.peek() == JsonToken.NULL) {
-            in.nextNull();
-            return null;
+    @Throws(IOException::class)
+    override fun read(`in`: JsonReader): Timezone? {
+        if (`in`.peek() == JsonToken.NULL) {
+            `in`.nextNull()
+            return null
         }
-        return readTimezone(in);
+        return readTimezone(`in`)
     }
 
-    @Override
-    public void write(JsonWriter out, Timezone value) throws IOException {
+    @Throws(IOException::class)
+    override fun write(out: JsonWriter, value: Timezone?) {
         if (value == null) {
-            out.nullValue();
-            return;
+            out.nullValue()
+            return
         }
-        out.beginObject();
-        out.name("timezoneId").value(value.getTimezoneId());
-        out.name("dstOffset").value(value.getDstOffset());
-        out.name("gmtOffset").value(value.getGmtOffset());
-        out.name("countryCode").value(value.getCountryCode());
-        out.name("sunrise").value(writeDate(value.getSunrise()));
-        out.name("sunset").value(writeDate(value.getSunset()));
-        out.name("time").value(writeDate(value.getTime()));
-        out.endObject();
+        out.beginObject()
+        out.name("timezoneId").value(value.timezoneId)
+        out.name("dstOffset").value(value.dstOffset)
+        out.name("gmtOffset").value(value.gmtOffset)
+        out.name("countryCode").value(value.countryCode)
+        out.name("sunrise").value(writeDate(value.sunrise))
+        out.name("sunset").value(writeDate(value.sunset))
+        out.name("time").value(writeDate(value.time))
+        out.endObject()
     }
 
-    private Timezone readTimezone(JsonReader in) throws IOException {
-        Timezone timezone = new Timezone();
-        in.beginObject();
-        while (in.hasNext()) {
-            switch (in.nextName()) {
-                case "timezoneId":
-                    timezone.setTimezoneId(in.nextString());
-                    break;
-                case "dstOffset":
-                    timezone.setDstOffset(in.nextDouble());
-                    break;
-                case "gmtOffset":
-                    timezone.setGmtOffset(in.nextDouble());
-                    break;
-                case "countryCode":
-                    timezone.setCountryCode(in.nextString());
-                    break;
-                case "sunrise":
-                    timezone.setSunrise(readDate(in));
-                    break;
-                case "sunset":
-                    timezone.setSunset(readDate(in));
-                    break;
-                case "time":
-                    timezone.setTime(readDate(in));
-                    break;
-                default:
-                    in.skipValue();
-                    break;
+    @Throws(IOException::class)
+    private fun readTimezone(reader: JsonReader): Timezone {
+        val timezone = Timezone()
+        reader.beginObject()
+        while (reader.hasNext()) {
+            when (reader.nextName()) {
+                "timezoneId" -> timezone.timezoneId = reader.nextString()
+                "dstOffset" -> timezone.dstOffset = reader.nextDouble()
+                "gmtOffset" -> timezone.gmtOffset = reader.nextDouble()
+                "countryCode" -> timezone.countryCode = reader.nextString()
+                "sunrise" -> timezone.sunrise = readDate(reader)
+                "sunset" -> timezone.sunset = readDate(reader)
+                "time" -> timezone.time = readDate(reader)
+                else -> reader.skipValue()
             }
         }
-        in.endObject();
-
-        return timezone;
+        reader.endObject()
+        return timezone
     }
 
-    private Date readDate(JsonReader in) throws IOException {
-        return gson.getAdapter(Date.class).read(in);
+    @Throws(IOException::class)
+    private fun readDate(reader: JsonReader): Date {
+        return gson.getAdapter(Date::class.java).read(reader)
     }
 
-    private String writeDate(Date value) {
-        return gson.getAdapter(Date.class).toJson(value);
+    private fun writeDate(value: Date): String {
+        return gson.getAdapter(Date::class.java).toJson(value)
     }
 }

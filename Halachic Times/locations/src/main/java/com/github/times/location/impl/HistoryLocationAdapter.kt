@@ -13,39 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.impl;
+package com.github.times.location.impl
 
-import android.content.Context;
-
-import java.util.List;
+import android.content.Context
 
 /**
  * Location adapter for locations the user has "previously visited".
  *
  * @author Moshe Waisberg
  */
-public class HistoryLocationAdapter extends SpecificLocationAdapter {
+class HistoryLocationAdapter : SpecificLocationAdapter {
+    constructor(context: Context, items: List<LocationItem?>) : super(context, items)
 
-    public HistoryLocationAdapter(Context context, List<LocationItem> items) {
-        super(context, items);
-    }
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        itemListener: LocationItemListener?
+    ) : super(context, items, itemListener)
 
-    public HistoryLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener) {
-        super(context, items, itemListener);
-    }
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        filterListener: FilterListener?
+    ) : super(context, items, filterListener)
 
-    public HistoryLocationAdapter(Context context, List<LocationItem> items, FilterListener filterListener) {
-        super(context, items, filterListener);
-    }
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        itemListener: LocationItemListener?,
+        filterListener: FilterListener?
+    ) : super(context, items, itemListener, filterListener)
 
-    public HistoryLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener, FilterListener filterListener) {
-        super(context, items, itemListener, filterListener);
-    }
-
-    @Override
-    protected boolean isSpecific(LocationItem item) {
+    override fun isSpecific(item: LocationItem): Boolean {
         //FIXME should only filter on items that user ever clicked (e.g. user only ever clicked the favorite star).
-        return item.getId() > 0L;
+        return item.id > 0L
     }
-
 }

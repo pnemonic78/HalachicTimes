@@ -13,32 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.times.compass
 
-import android.content.Context;
-
-import com.github.times.location.AddressProvider;
-import com.github.times.location.CompassLocations;
-import com.github.times.location.LocationsProviderFactory;
+import android.content.Context
+import com.github.times.location.AddressProvider
+import com.github.times.location.CompassLocations
+import com.github.times.location.LocationsProviderFactory
 
 /**
  * Factory that creates location providers.
  */
-public class CompassProviderFactoryImpl implements LocationsProviderFactory<AddressProvider, CompassLocations> {
+class CompassProviderFactoryImpl(context: Context) :
+    LocationsProviderFactory<AddressProvider, CompassLocations> {
 
-    private final Context context;
+    private val context: Context = context.applicationContext
 
-    public CompassProviderFactoryImpl(Context context) {
-        this.context = context.getApplicationContext();
+    override fun createAddressProvider(): AddressProvider {
+        return AddressProvider(context)
     }
 
-    @Override
-    public AddressProvider createAddressProvider() {
-        return new AddressProvider(context);
-    }
-
-    @Override
-    public CompassLocations createLocationsProvider() {
-        return new CompassLocations(context);
+    override fun createLocationsProvider(): CompassLocations {
+        return CompassLocations(context)
     }
 }

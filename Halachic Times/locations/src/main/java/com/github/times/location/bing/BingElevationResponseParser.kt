@@ -13,107 +13,103 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
-
-import android.location.Location;
-import android.net.Uri;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.github.json.UriAdapter;
-import com.github.times.location.ElevationResponseParser;
-import com.github.times.location.LocationException;
-import com.github.times.location.ZmanimLocation;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import android.location.Location
+import android.net.Uri
+import com.github.json.UriAdapter
+import com.github.times.location.ElevationResponseParser
+import com.github.times.location.GeocoderBase
+import com.github.times.location.LocationException
+import com.github.times.location.ZmanimLocation
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.nio.charset.StandardCharsets
 
 /**
  * Handler for parsing the Bing response for elevations.
  *
  * @author Moshe Waisberg
  */
-public class BingElevationResponseParser extends ElevationResponseParser {
+class BingElevationResponseParser : ElevationResponseParser() {
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(Uri::class.java, UriAdapter())
+        .create()
 
-    private final Gson gson = new GsonBuilder()
-        .registerTypeAdapter(Uri.class, new UriAdapter())
-        .create();
-
-    @Override
-    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
-        try {
-            Reader reader = new InputStreamReader(data, StandardCharsets.UTF_8);
-            BingResponse response = gson.fromJson(reader, BingResponse.class);
-            List<Location> results = new ArrayList<>(maxResults);
-            handleResponse(response, results, latitude, longitude, maxResults);
-            return results;
-        } catch (JsonIOException e) {
-            throw new IOException(e);
-        } catch (JsonSyntaxException e) {
-            throw new LocationException(e);
+    @Throws(LocationException::class, IOException::class)
+    override fun parse(
+        data: InputStream, latitude: Double, longitude: Double, maxResults: Int
+    ): List<Location> {
+        return try {
+            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
+            val response = gson.fromJson(reader, BingResponse::class.java)
+            val results: MutableList<Location> = ArrayList(maxResults)
+            handleResponse(response, results, latitude, longitude, maxResults)
+            results
+        } catch (e: JsonIOException) {
+            throw IOException(e)
+        } catch (e: JsonSyntaxException) {
+            throw LocationException(e)
         }
     }
 
-    private void handleResponse(BingResponse response, List<Location> results, double latitude, double longitude, int maxResults) throws LocationException {
-        if (response == null) return;
+    @Throws(LocationException::class)
+    private fun handleResponse(
+        response: BingResponse?,
+        results: MutableList<Location>,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int
+    ) {
+        if (response == null) return
         if (response.statusCode != BingResponse.STATUS_OK) {
-            throw new LocationException(response.statusDescription);
+            throw LocationException(response.statusDescription)
         }
-
-        final List<BingResponse.ResourceSet> resourceSets = response.resourceSets;
-        if ((resourceSets == null) || resourceSets.isEmpty()) {
-            return;
+        val resourceSets = response.resourceSets
+        if (resourceSets.isNullOrEmpty()) {
+            return
         }
-
-        BingResponse.ResourceSet resourceSet = resourceSets.get(0);
-        List<BingResource> resources = resourceSet.resources;
-        if ((resources == null) || resources.isEmpty()) {
-            return;
+        val resourceSet = resourceSets[0]
+        val resources = resourceSet.resources
+        if (resources.isNullOrEmpty()) {
+            return
         }
-
-        Location location;
-        final int size = Math.min(maxResults, resources.size());
-        for (BingResource resource : resources) {
-            if (resource == null) continue;
-            location = toLocation(resource, latitude, longitude);
+        var location: Location?
+        val size = maxResults.coerceAtMost(resources.size)
+        for (resource in resources) {
+            location = toLocation(resource, latitude, longitude)
             if (location != null) {
-                results.add(location);
-                if (results.size() >= size) {
-                    return;
+                results.add(location)
+                if (results.size >= size) {
+                    return
                 }
             }
         }
     }
 
-    @Nullable
-    private Location toLocation(@NonNull BingResource response, double latitude, double longitude) {
-        Location result = new ZmanimLocation(USER_PROVIDER);
-        result.setLatitude(latitude);
-        result.setLongitude(longitude);
-
-        BingPoint point = response.point;
-        if ((point != null) && (point.coordinates != null) && (point.coordinates.length >= 2)) {
-            result.setLatitude(point.coordinates[0]);
-            result.setLongitude(point.coordinates[1]);
+    private fun toLocation(response: BingResource, latitude: Double, longitude: Double): Location? {
+        val result: Location = ZmanimLocation(GeocoderBase.USER_PROVIDER).apply {
+            this.latitude = latitude
+            this.longitude = longitude
         }
-
-        Double[] elevations = response.elevations;
-        if ((elevations == null) || (elevations.length < 1)) {
-            return null;
+        val point = response.point
+        if (point != null) {
+            val coordinates = point.coordinates
+            if ((coordinates != null) && coordinates.size >= 2) {
+                result.latitude = coordinates[0]
+                result.longitude = coordinates[1]
+            }
         }
-        result.setAltitude(elevations[0]);
-        return result;
+        val elevations = response.elevations
+        if (elevations.isNullOrEmpty()) {
+            return null
+        }
+        result.altitude = elevations[0]
+        return result
     }
 }

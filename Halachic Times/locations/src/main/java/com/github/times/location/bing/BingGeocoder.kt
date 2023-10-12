@@ -13,99 +13,80 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import android.content.Context;
-import android.location.Address;
-import android.location.Location;
-import android.text.TextUtils;
-
-import com.github.times.location.AddressResponseParser;
-import com.github.times.location.BuildConfig;
-import com.github.times.location.ElevationResponseParser;
-import com.github.times.location.GeocoderBase;
-import com.github.times.location.LocationException;
-import com.github.util.LocaleUtils;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
+import android.content.Context
+import android.location.Address
+import android.location.Location
+import com.github.times.location.AddressResponseParser
+import com.github.times.location.BuildConfig
+import com.github.times.location.ElevationResponseParser
+import com.github.times.location.GeocoderBase
+import com.github.times.location.LocationException
+import com.github.util.LocaleUtils.getDefaultLocale
+import java.io.IOException
+import java.util.Locale
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
  * Microsoft Bing API.
- * <p/>
- * <a href="http://msdn.microsoft.com/en-us/library/ff701710.aspx">http://msdn.
- * microsoft.com/en-us/library/ff701710.aspx</a>
+ *
+ *
+ * [http://msdn.
+ * microsoft.com/en-us/library/ff701710.aspx](http://msdn.microsoft.com/en-us/library/ff701710.aspx)
  *
  * @author Moshe Waisberg
  */
-public class BingGeocoder extends GeocoderBase {
+class BingGeocoder(locale: Locale) : GeocoderBase(locale) {
 
-    /**
-     * URL that accepts latitude and longitude coordinates as parameters.
-     */
-    private static final String URL_LATLNG = "https://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=json&c=%s&key=%s";
-    /**
-     * URL that accepts latitude and longitude coordinates as parameters for an
-     * elevation.
-     */
-    private static final String URL_ELEVATION = "https://dev.virtualearth.net/REST/v1/Elevation/List?o=json&points=%f,%f&key=%s";
-
-    /**
-     * Bing API key.
-     */
-    private static final String API_KEY = decodeApiKey(BuildConfig.BING_API_KEY);
-
-    /**
-     * Creates a new Bing geocoder.
-     *
-     * @param context the context.
-     */
-    public BingGeocoder(Context context) {
-        this(LocaleUtils.getDefaultLocale(context));
+    @Throws(IOException::class)
+    override fun getFromLocation(
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int
+    ): List<Address>? {
+        require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
+        require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
+        if (API_KEY.isNullOrEmpty()) return null
+        val queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, language, API_KEY)
+        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults)
     }
 
-    /**
-     * Creates a new Bing geocoder.
-     *
-     * @param locale the locale.
-     */
-    public BingGeocoder(Locale locale) {
-        super(locale);
+    override fun createAddressResponseParser(): AddressResponseParser {
+        return BingAddressResponseParser()
     }
 
-    @Override
-    public List<Address> getFromLocation(double latitude, double longitude, int maxResults) throws IOException {
-        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
-            throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
-            throw new IllegalArgumentException("longitude == " + longitude);
-        if (TextUtils.isEmpty(API_KEY))
-            return null;
-        String queryUrl = String.format(Locale.US, URL_LATLNG, latitude, longitude, getLanguage(), API_KEY);
-        return getJsonAddressesFromURL(latitude, longitude, queryUrl, maxResults);
+    @Throws(IOException::class)
+    override fun getElevation(latitude: Double, longitude: Double): Location? {
+        require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
+        require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
+        if (API_KEY.isNullOrEmpty()) return null
+        val queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY)
+        return getJsonElevationFromURL(latitude, longitude, queryUrl)
     }
 
-    @Override
-    protected AddressResponseParser createAddressResponseParser() {
-        return new BingAddressResponseParser();
+    @Throws(LocationException::class)
+    override fun createElevationResponseParser(): ElevationResponseParser {
+        return BingElevationResponseParser()
     }
 
-    @Override
-    public Location getElevation(double latitude, double longitude) throws IOException {
-        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
-            throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
-            throw new IllegalArgumentException("longitude == " + longitude);
-        if (TextUtils.isEmpty(API_KEY))
-            return null;
-        String queryUrl = String.format(Locale.US, URL_ELEVATION, latitude, longitude, API_KEY);
-        return getJsonElevationFromURL(latitude, longitude, queryUrl);
-    }
+    companion object {
+        /**
+         * URL that accepts latitude and longitude coordinates as parameters.
+         */
+        private const val URL_LATLNG =
+            "https://dev.virtualearth.net/REST/v1/Locations/%f,%f?o=json&c=%s&key=%s"
 
-    @Override
-    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
-        return new BingElevationResponseParser();
+        /**
+         * URL that accepts latitude and longitude coordinates as parameters for an
+         * elevation.
+         */
+        private const val URL_ELEVATION =
+            "https://dev.virtualearth.net/REST/v1/Elevation/List?o=json&points=%f,%f&key=%s"
+
+        /**
+         * Bing API key.
+         */
+        private val API_KEY = decodeApiKey(BuildConfig.BING_API_KEY)
     }
 }

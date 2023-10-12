@@ -13,75 +13,61 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonToken;
-import com.google.gson.stream.JsonWriter;
-
-import org.geonames.BoundingBox;
-
-import java.io.IOException;
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
+import com.google.gson.stream.JsonWriter
+import java.io.IOException
+import org.geonames.BoundingBox
 
 /**
  * JSON type adapter for GeoNames bounding boxes.
  *
  * @author Moshe Waisberg
  */
-public class GeoNamesBoxTypeAdapter extends TypeAdapter<BoundingBox> {
-
-    @Override
-    public BoundingBox read(JsonReader in) throws IOException {
-        if (in.peek() == JsonToken.NULL) {
-            in.nextNull();
-            return null;
+class GeoNamesBoxTypeAdapter : TypeAdapter<BoundingBox?>() {
+    @Throws(IOException::class)
+    override fun read(`in`: JsonReader): BoundingBox? {
+        if (`in`.peek() == JsonToken.NULL) {
+            `in`.nextNull()
+            return null
         }
-        return readBoundingBox(in);
+        return readBoundingBox(`in`)
     }
 
-    @Override
-    public void write(JsonWriter out, BoundingBox value) throws IOException {
+    @Throws(IOException::class)
+    override fun write(out: JsonWriter, value: BoundingBox?) {
         if (value == null) {
-            out.nullValue();
-            return;
+            out.nullValue()
+            return
         }
-        out.beginObject();
-        out.name("west").value(value.getWest());
-        out.name("east").value(value.getEast());
-        out.name("south").value(value.getSouth());
-        out.name("north").value(value.getNorth());
-        out.endObject();
+        out.beginObject()
+        out.name("west").value(value.west)
+        out.name("east").value(value.east)
+        out.name("south").value(value.south)
+        out.name("north").value(value.north)
+        out.endObject()
     }
 
-    private static BoundingBox readBoundingBox(JsonReader in) throws IOException {
-        double west = Double.NaN;
-        double east = Double.NaN;
-        double south = Double.NaN;
-        double north = Double.NaN;
-
-        in.beginObject();
-        while (in.hasNext()) {
-            switch (in.nextName()) {
-                case "west":
-                    west = in.nextDouble();
-                    break;
-                case "east":
-                    east = in.nextDouble();
-                    break;
-                case "south":
-                    south = in.nextDouble();
-                    break;
-                case "north":
-                    north = in.nextDouble();
-                    break;
-                default:
-                    in.skipValue();
-                    break;
+    @Throws(IOException::class)
+    private fun readBoundingBox(reader: JsonReader): BoundingBox {
+        var west = Double.NaN
+        var east = Double.NaN
+        var south = Double.NaN
+        var north = Double.NaN
+        reader.beginObject()
+        while (reader.hasNext()) {
+            when (reader.nextName()) {
+                "west" -> west = reader.nextDouble()
+                "east" -> east = reader.nextDouble()
+                "south" -> south = reader.nextDouble()
+                "north" -> north = reader.nextDouble()
+                else -> reader.skipValue()
             }
         }
-        in.endObject();
-
-        return new BoundingBox(west, east, south, north);
+        reader.endObject()
+        return BoundingBox(west, east, south, north)
     }
 }

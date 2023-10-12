@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.times.compass
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.location.Location;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
-import android.widget.TextView;
-
-import com.github.app.SimpleThemeCallbacks;
-import com.github.app.ThemeCallbacks;
-import com.github.preference.ThemePreferences;
-import com.github.times.compass.lib.R;
-import com.github.times.compass.preference.CompassPreferences;
-import com.github.times.compass.preference.SimpleCompassPreferences;
-import com.github.times.compass.preference.ThemeCompassPreferences;
-import com.github.times.location.LocatedActivity;
+import android.content.Context
+import android.location.Location
+import android.os.Bundle
+import android.view.Menu
+import android.widget.TextView
+import androidx.core.view.isVisible
+import com.github.app.SimpleThemeCallbacks
+import com.github.app.ThemeCallbacks
+import com.github.preference.ThemePreferences
+import com.github.times.compass.lib.R
+import com.github.times.compass.preference.CompassPreferences
+import com.github.times.compass.preference.SimpleCompassPreferences
+import com.github.times.compass.preference.ThemeCompassPreferences
+import com.github.times.location.LocatedActivity
 
 /**
  * Show the direction in which to pray. Points to the Holy of Holies in
@@ -38,74 +36,69 @@ import com.github.times.location.LocatedActivity;
  *
  * @author Moshe Waisberg
  */
-public abstract class BaseCompassActivity extends LocatedActivity<ThemePreferences> {
+abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
 
-    /** The main fragment. */
-    private CompassFragment fragment;
-    /** The preferences. */
-    private ThemeCompassPreferences preferences;
+    /** The main fragment.  */
+    private var fragment: CompassFragment? = null
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        final Context context = this;
-        preferences = createCompassPreferences(context);
+    /** The preferences.  */
+    private lateinit var preferences: ThemeCompassPreferences
 
-        super.onCreate(savedInstanceState);
+    val compassPreferences: CompassPreferences
+        get() = preferences
 
-        setContentView(R.layout.compass);
-        headerLocation = findViewById(com.github.times.location.R.id.coordinates);
-        headerAddress = findViewById(com.github.times.location.R.id.address);
-        fragment = (CompassFragment) getSupportFragmentManager().findFragmentById(R.id.compass);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val context: Context = this
+        preferences = createCompassPreferences(context)
 
-        TextView summary = findViewById(R.id.summary);
+        super.onCreate(savedInstanceState)
+
+        setContentView(R.layout.compass_activity)
+        headerLocation = findViewById(com.github.times.location.R.id.coordinates)
+        headerAddress = findViewById(com.github.times.location.R.id.address)
+        fragment = supportFragmentManager.findFragmentById(R.id.compass) as? CompassFragment
+        getCompassFragment()?.let {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.compass, it)
+                .commitAllowingStateLoss()
+            fragment = it
+        }
+
+        val summary = findViewById<TextView>(R.id.summary)
         if (summary != null) {
-            TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), R.styleable.CompassView);
-            summary.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorTarget));
-            a.recycle();
+            val a =
+                context.obtainStyledAttributes(preferences.compassTheme, R.styleable.CompassView)
+            summary.setTextColor(a.getColorStateList(R.styleable.CompassView_compassColorTarget))
+            a.recycle()
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    override fun onResume() {
+        super.onResume()
+        val summary = findViewById<TextView>(R.id.summary)
+        summary?.isVisible = preferences.isSummariesVisible
+    }
 
-        TextView summary = findViewById(R.id.summary);
-        if (summary != null) {
-            summary.setVisibility(preferences.isSummariesVisible() ? View.VISIBLE : View.GONE);
+    override fun createUpdateLocationRunnable(location: Location): Runnable {
+        return Runnable {
+            bindHeader(location)
+            val c = fragment ?: return@Runnable
+            c.setLocation(location)
         }
     }
 
-    public CompassPreferences getCompassPreferences() {
-        return preferences;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.compass, menu)
+        return true
     }
 
-    @Override
-    protected Runnable createUpdateLocationRunnable(Location location) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                bindHeader(location);
-
-                CompassFragment c = fragment;
-                if (c == null)
-                    return;
-                c.setLocation(location);
-            }
-        };
+    protected open fun createCompassPreferences(context: Context?): ThemeCompassPreferences {
+        return SimpleCompassPreferences(context)
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.compass, menu);
-        return true;
+    override fun createThemeCallbacks(context: Context): ThemeCallbacks<ThemePreferences?> {
+        return SimpleThemeCallbacks(context, preferences)
     }
 
-    protected ThemeCompassPreferences createCompassPreferences(Context context) {
-        return new SimpleCompassPreferences(context);
-    }
-
-    @Override
-    protected ThemeCallbacks<ThemePreferences> createThemeCallbacks(Context context) {
-        return new SimpleThemeCallbacks<ThemePreferences>(context, preferences);
-    }
+    open protected fun getCompassFragment(): CompassFragment? = null
 }

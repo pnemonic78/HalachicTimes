@@ -13,111 +13,104 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.impl;
+package com.github.times.location.impl
 
-import android.content.Context;
-import android.widget.Filter;
-
-import com.github.times.location.LocationAdapter;
-import com.github.times.location.ZmanimAddress;
-
-import java.util.Comparator;
-import java.util.List;
+import android.content.Context
+import android.widget.Filter
+import com.github.times.location.LocationAdapter
+import com.github.times.location.ZmanimAddress
 
 /**
  * Location adapter for a specific type of locations.
  *
  * @author Moshe Waisberg
  */
-public abstract class SpecificLocationAdapter extends LocationAdapter {
+abstract class SpecificLocationAdapter @JvmOverloads constructor(
+    context: Context,
+    items: List<LocationItem?>,
+    itemListener: LocationItemListener? = null,
+    filterListener: FilterListener? = null
+) : LocationAdapter(context, items, itemListener) {
+    constructor(
+        context: Context,
+        items: List<LocationItem?>,
+        filterListener: FilterListener?
+    ) : this(context, items, null, filterListener)
 
-    public SpecificLocationAdapter(Context context, List<LocationItem> items) {
-        this(context, items, (LocationItemListener) null);
+    init {
+        val listener = if (filterListener == null) null else Filter.FilterListener { count: Int ->
+            filterListener.onFilterComplete(
+                this@SpecificLocationAdapter,
+                count
+            )
+        }
+        filter.filter(null, listener)
     }
 
-    public SpecificLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener) {
-        this(context, items, itemListener, null);
-    }
-
-    public SpecificLocationAdapter(Context context, List<LocationItem> items, final FilterListener filterListener) {
-        this(context, items, null, filterListener);
-    }
-
-    public SpecificLocationAdapter(Context context, List<LocationItem> items, LocationItemListener itemListener, final FilterListener filterListener) {
-        super(context, items, itemListener);
-
-        final Filter.FilterListener listener = (filterListener == null) ? null : count -> filterListener.onFilterComplete(SpecificLocationAdapter.this, count);
-        getFilter().filter(null, listener);
-    }
-
-    @Override
-    protected ArrayFilter createFilter() {
-        return new SpecificFilter();
+    override fun createFilter(): ArrayFilter {
+        return SpecificFilter()
     }
 
     /**
      * Is the address specific to this adapter?
      *
      * @param item
-     *         the location item.
-     * @return {@code true} to include the location.
+     * the location item.
+     * @return `true` to include the location.
      */
-    protected abstract boolean isSpecific(LocationItem item);
+    protected abstract fun isSpecific(item: LocationItem): Boolean
 
-    protected class SpecificFilter extends LocationsFilter {
-        @Override
-        protected boolean accept(LocationItem value, String constraint) {
-            return isSpecific(value) && super.accept(value, constraint);
+    protected inner class SpecificFilter : LocationsFilter() {
+        override fun accept(value: LocationItem, constraint: String?): Boolean {
+            return isSpecific(value) && super.accept(value, constraint)
         }
     }
 
-    @Override
-    public void notifyItemChanged(ZmanimAddress address) {
-        synchronized (lock) {
-            final int count = getItemCount();
-            LocationItem item;
-            int position = -1;
-            for (int i = 0; i < count; i++) {
-                item = getItem(i);
-                if (address.equals(item.getAddress())) {
-                    position = i;
-                    break;
+    override fun notifyItemChanged(address: ZmanimAddress) {
+        synchronized(lock) {
+            val count = itemCount
+            var item: LocationItem
+            var position = -1
+            for (i in 0 until count) {
+                item = getItem(i) ?: continue
+                if (address == item.address) {
+                    position = i
+                    break
                 }
             }
-
             if (position >= 0) {
-                item = getItem(position);
+                item = getItem(position) ?: return
                 if (isSpecific(item)) {
-                    notifyItemChanged(position);
+                    notifyItemChanged(position)
                 } else {
                     // Hide the item.
                     if (objectsFiltered) {
-                        objects.remove(position);
-                        notifyItemRemoved(position);
+                        objects.removeAt(position)
+                        notifyItemRemoved(position)
                     }
                 }
             } else if (objectsFiltered) {
-                final int size = originalValues.size();
-                for (int i = 0; i < size; i++) {
-                    item = originalValues.get(i);
-                    if (address.equals(item.getAddress())) {
-                        position = i;
-                        break;
+                val size = originalValues.size
+                for (i in 0 until size) {
+                    item = originalValues[i] ?: continue
+                    if (address == item.address) {
+                        position = i
+                        break
                     }
                 }
                 if (position >= 0) {
-                    item = originalValues.get(position);
+                    item = originalValues[position] ?: return
                     // Find the sorted position.
-                    int positionInsert = count;
-                    Comparator<LocationItem> comparator = getComparator();
-                    for (int i = 0; i < count; i++) {
+                    var positionInsert = count
+                    val comparator: Comparator<LocationItem> = comparator
+                    for (i in 0 until count) {
                         if (comparator.compare(item, getItem(i)) < 0) {
-                            positionInsert = i;
-                            break;
+                            positionInsert = i
+                            break
                         }
                     }
-                    objects.add(positionInsert, item);
-                    notifyItemInserted(positionInsert);
+                    objects.add(positionInsert, item)
+                    notifyItemInserted(positionInsert)
                 } else {
                     // Throw error: item not found!
                 }

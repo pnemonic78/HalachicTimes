@@ -13,127 +13,120 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import android.location.Address;
-import android.net.Uri;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.github.json.UriAdapter;
-import com.github.times.location.AddressResponseParser;
-import com.github.times.location.LocationException;
-import com.github.times.location.ZmanimAddress;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
-import org.geonames.BoundingBox;
-import org.geonames.Timezone;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import android.location.Address
+import android.net.Uri
+import com.github.json.UriAdapter
+import com.github.times.location.AddressResponseParser
+import com.github.times.location.LocationException
+import com.github.times.location.ZmanimAddress
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.nio.charset.StandardCharsets
+import java.util.Locale
+import org.geonames.BoundingBox
+import org.geonames.Timezone
 
 /**
  * Handler for parsing the GeoNames response for addresses.
  *
  * @author Moshe Waisberg
  */
-public class GeoNamesAddressResponseParser extends AddressResponseParser {
-
-    private final Gson gson = new GsonBuilder()
-        .registerTypeAdapter(Uri.class, new UriAdapter())
-        .registerTypeAdapter(BoundingBox.class, new GeoNamesBoxTypeAdapter())
-        .registerTypeAdapter(Timezone.class, new GeoNamesTimezoneAdapter())
+class GeoNamesAddressResponseParser : AddressResponseParser() {
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(Uri::class.java, UriAdapter())
+        .registerTypeAdapter(BoundingBox::class.java, GeoNamesBoxTypeAdapter())
+        .registerTypeAdapter(Timezone::class.java, GeoNamesTimezoneAdapter())
         .setDateFormat("yyyy-MM-dd HH:mm")
-        .create();
+        .create()
 
-    @Override
-    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
-        try {
-            Reader reader = new InputStreamReader(data);
-            GeoNamesResponse response = gson.fromJson(reader, GeoNamesResponse.class);
-            List<Address> results = new ArrayList<>(maxResults);
-            handleResponse(latitude, longitude, response, results, maxResults, locale);
-            return results;
-        } catch (JsonIOException e) {
-            throw new IOException(e);
-        } catch (JsonSyntaxException e) {
-            throw new LocationException(e);
+    @Throws(LocationException::class, IOException::class)
+    override fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int,
+        locale: Locale
+    ): List<Address> {
+        return try {
+            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
+            val response = gson.fromJson(reader, GeoNamesResponse::class.java)
+            val results: MutableList<Address> = ArrayList(maxResults)
+            handleResponse(latitude, longitude, response, results, maxResults, locale)
+            results
+        } catch (e: JsonIOException) {
+            throw IOException(e)
+        } catch (e: JsonSyntaxException) {
+            throw LocationException(e)
         }
     }
 
-    private void handleResponse(double latitude, double longitude, GeoNamesResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
-        if (response == null) return;
-        final List<Toponym> records = response.records;
-        Address address;
-
-        if ((records == null) || records.isEmpty()) {
-            Ocean ocean = response.ocean;
+    @Throws(LocationException::class)
+    private fun handleResponse(
+        latitude: Double,
+        longitude: Double,
+        response: GeoNamesResponse?,
+        results: MutableList<Address>,
+        maxResults: Int,
+        locale: Locale
+    ) {
+        if (response == null) return
+        val records = response.records
+        var address: Address?
+        if (records.isNullOrEmpty()) {
+            val ocean = response.ocean
             if (ocean != null) {
-                address = toAddress(ocean, locale, latitude, longitude);
-                if (address != null) {
-                    results.add(address);
-                }
-                return;
-            }
-
-            if (response.status != null) {
-                throw new LocationException(response.status.message);
+                address = toAddress(ocean, locale, latitude, longitude)
+                results.add(address)
+                return
             }
             // No result found!
-            return;
-        }
-
-        Toponym toponym;
-
-        final int size = Math.min(records.size(), maxResults);
-        for (int i = 0; i < size; i++) {
-            toponym = records.get(i);
-            if (toponym == null) continue;
-            address = toAddress(toponym, locale);
-            if (address != null) {
-                results.add(address);
+            val status = response.status
+            if (status != null) {
+                throw LocationException(status.message)
             }
+            return
+        }
+        var toponym: Toponym?
+        val size = records.size.coerceAtMost(maxResults)
+        for (i in 0 until size) {
+            toponym = records[i]
+            address = toAddress(toponym, locale)
+            results.add(address)
         }
     }
 
-    @Nullable
-    private Address toAddress(@NonNull Toponym response, Locale locale) {
-        ZmanimAddress result = new ZmanimAddress(locale);
-        result.setFeatureName(response.name);
-
-        result.setLatitude(response.latitude);
-        result.setLongitude(response.longitude);
-
-        result.setAdminArea(response.adminName1);
-        result.setCountryCode(response.countryCode);
-        result.setCountryName(response.countryName);
-        Integer elevation = response.elevation;
-        if (elevation != null) {
-            result.setElevation(elevation);
+    private fun toAddress(response: Toponym, locale: Locale): Address {
+        return ZmanimAddress(locale).apply {
+            latitude = response.latitude
+            longitude = response.longitude
+            elevation = response.elevation?.toDouble() ?: 0.0
+            featureName = response.name
+            adminArea = response.adminName1
+            countryCode = response.countryCode
+            countryName = response.countryName
+            subAdminArea = response.adminName2
         }
-        result.setSubAdminArea(response.adminName2);
-        return result;
     }
 
-    @Nullable
-    private Address toAddress(@NonNull Ocean response, Locale locale, double latitude, double longitude) {
-        ZmanimAddress result = new ZmanimAddress(locale);
-        result.setFeatureName(response.name);
-        result.setFormatted(response.name);
-
-        result.setLatitude(latitude);
-        result.setLongitude(longitude);
-        result.setElevation(0);
-
-        return result;
+    private fun toAddress(
+        response: Ocean,
+        locale: Locale,
+        latitude: Double,
+        longitude: Double
+    ): Address {
+        return ZmanimAddress(locale).apply {
+            this.latitude = latitude
+            this.longitude = longitude
+            elevation = 0.0
+            featureName = response.name
+            formatted = response.name
+        }
     }
 }

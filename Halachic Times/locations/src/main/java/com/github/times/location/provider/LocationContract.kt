@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.provider;
+package com.github.times.location.provider
 
-import android.content.Context;
-import android.net.Uri;
-import android.provider.BaseColumns;
-
-import static android.content.ContentResolver.CURSOR_DIR_BASE_TYPE;
-import static android.content.ContentResolver.CURSOR_ITEM_BASE_TYPE;
+import android.content.ContentResolver.CURSOR_DIR_BASE_TYPE
+import android.content.ContentResolver.CURSOR_ITEM_BASE_TYPE
+import android.content.Context
+import android.net.Uri
+import android.provider.BaseColumns
 
 /**
  * Location provider contract.
  *
  * @author Moshe Waisberg
  */
-public class LocationContract {
-
-    /** The authority for the addresses provider */
-    public static String AUTHORITY(Context context) {
-        return context.getPackageName() + ".locations";
+object LocationContract {
+    /** The authority for the addresses provider  */
+    @JvmStatic
+    fun AUTHORITY(context: Context): String {
+        return context.packageName + ".locations"
     }
 
-    /** A content:// style uri to the authority for the addresses provider */
-    public static Uri AUTHORITY_URI(Context context) {
-        return Uri.parse("content://" + AUTHORITY(context));
+    /** A content:// style uri to the authority for the addresses provider  */
+    @JvmStatic
+    fun AUTHORITY_URI(context: Context): Uri {
+        return Uri.parse("content://" + AUTHORITY(context))
     }
 
     /**
@@ -44,75 +44,92 @@ public class LocationContract {
      *
      * @author Moshe Waisberg
      */
-    public interface AddressColumns extends BaseColumns {
+    interface AddressColumns : BaseColumns {
+        companion object {
+            const val _ID = BaseColumns._ID
 
-        /**
-         * The location's latitude column.
-         * <p>Type: DOUBLE</p>
-         */
-        String LOCATION_LATITUDE = "loc_latitude";
-        /**
-         * The location's longitude column.
-         * <p>Type: DOUBLE</p>
-         */
-        String LOCATION_LONGITUDE = "loc_longitude";
-        /**
-         * The latitude column.
-         * <p>Type: DOUBLE</p>
-         */
-        String LATITUDE = "latitude";
-        /**
-         * The longitude column.
-         * <p>Type: DOUBLE</p>
-         */
-        String LONGITUDE = "longitude";
-        /**
-         * The formatted name column.
-         * <p>Type: TEXT</p>
-         */
-        String ADDRESS = "address";
-        /**
-         * The language column.
-         * <p>Type: TEXT</p>
-         */
-        String LANGUAGE = "language";
-        /**
-         * The timestamp column.
-         * <p>Type: LONG</p>
-         */
-        String TIMESTAMP = "timestamp";
-        /**
-         * Is favourite address?
-         * <P>Type: INTEGER (boolean)</P>
-         */
-        String FAVORITE = "favorite";
+            /**
+             * The location's latitude column.
+             *
+             * Type: DOUBLE
+             */
+            const val LOCATION_LATITUDE = "loc_latitude"
 
+            /**
+             * The location's longitude column.
+             *
+             * Type: DOUBLE
+             */
+            const val LOCATION_LONGITUDE = "loc_longitude"
+
+            /**
+             * The latitude column.
+             *
+             * Type: DOUBLE
+             */
+            const val LATITUDE = "latitude"
+
+            /**
+             * The longitude column.
+             *
+             * Type: DOUBLE
+             */
+            const val LONGITUDE = "longitude"
+
+            /**
+             * The formatted name column.
+             *
+             * Type: TEXT
+             */
+            const val ADDRESS = "address"
+
+            /**
+             * The language column.
+             *
+             * Type: TEXT
+             */
+            const val LANGUAGE = "language"
+
+            /**
+             * The timestamp column.
+             *
+             * Type: LONG
+             */
+            const val TIMESTAMP = "timestamp"
+
+            /**
+             * Is favourite address?
+             * <P>Type: INTEGER (boolean)</P>
+             */
+            const val FAVORITE = "favorite"
+        }
     }
 
     /**
      * Contains the addresses.
      */
-    public static final class Addresses implements AddressColumns {
-        /** Table name for addresses. */
-        public static final String ADDRESS = "address";
+    object Addresses : AddressColumns {
+        /** Table name for addresses.  */
+        const val ADDRESS = "address"
 
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI(Context context) {
-            return Uri.withAppendedPath(AUTHORITY_URI(context), ADDRESS);
+        @JvmStatic
+        fun CONTENT_URI(context: Context): Uri {
+            return Uri.withAppendedPath(AUTHORITY_URI(context), ADDRESS)
         }
 
         /**
-         * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
+         * The MIME-type of [.CONTENT_URI] providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/com.github.times.location.address";
+        const val CONTENT_TYPE = "$CURSOR_DIR_BASE_TYPE/com.github.times.location.address"
 
         /**
-         * The MIME-type of a {@link #CONTENT_URI} item.
+         * The MIME-type of a [.CONTENT_URI] item.
          */
-        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.address";
+        const val CONTENT_ITEM_TYPE = "$CURSOR_ITEM_BASE_TYPE/com.github.times.location.address"
     }
 
     /**
@@ -120,55 +137,65 @@ public class LocationContract {
      *
      * @author Moshe Waisberg
      */
-    public interface ElevationColumns extends BaseColumns {
+    interface ElevationColumns : BaseColumns {
+        companion object {
+            const val _ID = BaseColumns._ID
 
-        /**
-         * The latitude.
-         * <p>Type: DOUBLE</p>
-         */
-        String LATITUDE = "latitude";
-        /**
-         * The longitude.
-         * <p>Type: DOUBLE</p>
-         */
-        String LONGITUDE = "longitude";
-        /**
-         * The elevation / altitude.
-         * <p>Type: DOUBLE</p>
-         */
-        String ELEVATION = "elevation";
-        /**
-         * The timestamp.
-         * <p>Type: LONG</p>
-         */
-        String TIMESTAMP = "timestamp";
+            /**
+             * The latitude.
+             *
+             * Type: DOUBLE
+             */
+            const val LATITUDE = "latitude"
 
+            /**
+             * The longitude.
+             *
+             * Type: DOUBLE
+             */
+            const val LONGITUDE = "longitude"
+
+            /**
+             * The elevation / altitude.
+             *
+             * Type: DOUBLE
+             */
+            const val ELEVATION = "elevation"
+
+            /**
+             * The timestamp.
+             *
+             * Type: LONG
+             */
+            const val TIMESTAMP = "timestamp"
+        }
     }
 
     /**
      * Contains the elevations.
      */
-    public static final class Elevations implements ElevationColumns {
-        /** Table name for elevations. */
-        public static final String ELEVATION = "elevation";
+    object Elevations : ElevationColumns {
+        /** Table name for elevations.  */
+        const val ELEVATION = "elevation"
 
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI(Context context) {
-            return Uri.withAppendedPath(AUTHORITY_URI(context), ELEVATION);
+        @JvmStatic
+        fun CONTENT_URI(context: Context): Uri {
+            return Uri.withAppendedPath(AUTHORITY_URI(context), ELEVATION)
         }
 
         /**
-         * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
+         * The MIME-type of [.CONTENT_URI] providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/com.github.times.location.elevation";
+        const val CONTENT_TYPE = "$CURSOR_DIR_BASE_TYPE/com.github.times.location.elevation"
 
         /**
-         * The MIME-type of a {@link #CONTENT_URI} item.
+         * The MIME-type of a [.CONTENT_URI] item.
          */
-        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.elevation";
+        const val CONTENT_ITEM_TYPE = "$CURSOR_ITEM_BASE_TYPE/com.github.times.location.elevation"
     }
 
     /**
@@ -176,45 +203,49 @@ public class LocationContract {
      *
      * @author Moshe Waisberg
      */
-    public interface CityColumns extends BaseColumns {
+    interface CityColumns : BaseColumns {
+        companion object {
+            const val _ID = BaseColumns._ID
 
-        /**
-         * The timestamp.
-         * <p>Type: LONG</p>
-         */
-        String TIMESTAMP = "timestamp";
-        /**
-         * Is favourite city?
-         * <P>Type: INTEGER (boolean)</P>
-         */
-        String FAVORITE = "favorite";
+            /**
+             * The timestamp.
+             *
+             * Type: LONG
+             */
+            const val TIMESTAMP = "timestamp"
 
+            /**
+             * Is favourite city?
+             * <P>Type: INTEGER (boolean)</P>
+             */
+            const val FAVORITE = "favorite"
+        }
     }
 
     /**
      * Contains the cities.
      */
-    public static final class Cities implements CityColumns {
-        /** Table name for cities. */
-        public static final String CITY = "city";
+    object Cities : CityColumns {
+        /** Table name for cities.  */
+        const val CITY = "city"
 
         /**
          * The content:// style URI for this table.  Requests to this URI can be
          * performed on the UI thread because they are always unblocking.
          */
-        public static final Uri CONTENT_URI(Context context) {
-            return Uri.withAppendedPath(AUTHORITY_URI(context), CITY);
+        @JvmStatic
+        fun CONTENT_URI(context: Context): Uri {
+            return Uri.withAppendedPath(AUTHORITY_URI(context), CITY)
         }
 
         /**
-         * The MIME-type of {@link #CONTENT_URI} providing a directory of contact directories.
+         * The MIME-type of [.CONTENT_URI] providing a directory of contact directories.
          */
-        public static final String CONTENT_TYPE = CURSOR_DIR_BASE_TYPE + "/com.github.times.location.city";
+        const val CONTENT_TYPE = "$CURSOR_DIR_BASE_TYPE/com.github.times.location.city"
 
         /**
-         * The MIME-type of a {@link #CONTENT_URI} item.
+         * The MIME-type of a [.CONTENT_URI] item.
          */
-        public static final String CONTENT_ITEM_TYPE = CURSOR_ITEM_BASE_TYPE + "/com.github.times.location.city";
+        const val CONTENT_ITEM_TYPE = "$CURSOR_ITEM_BASE_TYPE/com.github.times.location.city"
     }
-
 }

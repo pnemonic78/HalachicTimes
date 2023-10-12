@@ -26,7 +26,7 @@ import com.github.widget.ArrayAdapter;
  *
  * @author Moshe Waisberg
  */
-class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.LocationItem> implements View.OnClickListener {
+public class LocationViewHolder extends ArrayAdapter.ArrayViewHolder<LocationAdapter.LocationItem> implements View.OnClickListener {
 
     protected final TextView cityName;
     protected final TextView coordinates;

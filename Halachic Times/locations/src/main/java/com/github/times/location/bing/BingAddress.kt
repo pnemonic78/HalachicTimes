@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
 /**
  * Address object for Bing address JSON response.
@@ -23,20 +23,24 @@ import com.google.gson.annotations.SerializedName;
  * @author Moshe Waisberg
  */
 class BingAddress {
-
     @SerializedName("addressLine")
-    public String addressLine;
-    @SerializedName("adminDistrict")
-    public String adminDistrict;
-    @SerializedName("adminDistrict2")
-    public String adminDistrict2;
-    @SerializedName("countryRegion")
-    public String countryRegion;
-    @SerializedName("formattedAddress")
-    public String formattedAddress;
-    @SerializedName("locality")
-    public String locality;
-    @SerializedName("postalCode")
-    public String postalCode;
+    var addressLine: String? = null
 
+    @SerializedName("adminDistrict")
+    var adminDistrict: String? = null
+
+    @SerializedName("adminDistrict2")
+    var adminDistrict2: String? = null
+
+    @SerializedName("countryRegion")
+    var countryRegion: String? = null
+
+    @SerializedName("formattedAddress")
+    var formattedAddress: String? = null
+
+    @SerializedName("locality")
+    var locality: String? = null
+
+    @SerializedName("postalCode")
+    var postalCode: String? = null
 }

@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.text;
+package com.github.times.location.text
 
-import com.github.text.method.RangeInputFilter;
-import com.github.times.location.ZmanimLocation;
+import com.github.text.method.RangeInputFilter
+import com.github.times.location.ZmanimLocation
 
 /**
  * Latitude input filter.
  *
  * @author Moshe Waisberg
  */
-public class LatitudeInputFilter extends RangeInputFilter {
-
-    public static final double LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN;
-    public static final double LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX;
-
-    public LatitudeInputFilter() {
-        this(false);
-    }
-
-    public LatitudeInputFilter(boolean sign) {
-        super(sign, true, LATITUDE_MIN, LATITUDE_MAX);
+class LatitudeInputFilter(sign: Boolean = false) :
+    RangeInputFilter(sign, true, LATITUDE_MIN, LATITUDE_MAX) {
+    companion object {
+        const val LATITUDE_MIN = ZmanimLocation.LATITUDE_MIN
+        const val LATITUDE_MAX = ZmanimLocation.LATITUDE_MAX
     }
 }

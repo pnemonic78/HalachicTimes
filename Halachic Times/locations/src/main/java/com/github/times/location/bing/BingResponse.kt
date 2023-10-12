@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import android.net.Uri;
-
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import android.net.Uri
+import com.google.gson.annotations.SerializedName
 
 /**
  * Root object for Bing address JSON response.
@@ -27,30 +24,36 @@ import java.util.List;
  * @author Moshe Waisberg
  */
 class BingResponse {
-
-    public static final int STATUS_OK = 200;
-
     @SerializedName("authenticationResultCode")
-    public String authenticationResultCode;
+    var authenticationResultCode: String? = null
+
     @SerializedName("brandLogoUri")
-    public Uri brandLogoUri;
+    var brandLogoUri: Uri? = null
+
     @SerializedName("copyright")
-    public String copyright;
+    var copyright: String? = null
+
     @SerializedName("resourceSets")
-    public List<ResourceSet> resourceSets;
+    var resourceSets: List<ResourceSet>? = null
+
     @SerializedName("statusCode")
-    public int statusCode;
+    var statusCode = 0
+
     @SerializedName("statusDescription")
-    public String statusDescription;
+    var statusDescription: String? = null
+
     @SerializedName("traceId")
-    public String traceId;
+    var traceId: String? = null
 
-    public static class ResourceSet {
-
+    class ResourceSet {
         @SerializedName("estimatedTotal")
-        public int estimatedTotal;
-        @SerializedName("resources")
-        public List<BingResource> resources;
+        var estimatedTotal = 0
 
+        @SerializedName("resources")
+        var resources: List<BingResource>? = null
+    }
+
+    companion object {
+        const val STATUS_OK = 200
     }
 }

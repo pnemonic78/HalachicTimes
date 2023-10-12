@@ -13,61 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location;
+package com.github.times.location
 
-import android.app.Activity;
-import android.content.Context;
-
-import com.github.app.LocaleCallbacks;
-import com.github.app.LocaleHelper;
-import com.github.app.SimpleThemeCallbacks;
-import com.github.app.ThemeCallbacks;
-import com.github.preference.LocalePreferences;
-import com.github.times.preference.SimpleZmanimPreferences;
-import com.github.times.preference.ZmanimPreferences;
+import android.app.Activity
+import android.content.Context
+import com.github.app.LocaleCallbacks
+import com.github.app.LocaleHelper
+import com.github.app.SimpleThemeCallbacks
+import com.github.app.ThemeCallbacks
+import com.github.preference.LocalePreferences
+import com.github.times.preference.SimpleZmanimPreferences
+import com.github.times.preference.ZmanimPreferences
 
 /**
  * Pick a city from the list.
  *
  * @author Moshe Waisberg
  */
-public class LocationActivity extends LocationTabActivity<ZmanimPreferences> {
+class LocationActivity : LocationTabActivity<ZmanimPreferences>() {
+    private var localeCallbacks: LocaleCallbacks<LocalePreferences>? = null
 
-    private LocaleCallbacks<LocalePreferences> localeCallbacks;
-    /** The preferences. */
-    private ZmanimPreferences preferences;
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        this.localeCallbacks = new LocaleHelper<>(newBase);
-        Context context = localeCallbacks.attachBaseContext(newBase);
-        super.attachBaseContext(context);
-
-        applyOverrideConfiguration(context.getResources().getConfiguration());
-    }
-
-    @Override
-    public void onPreCreate() {
-        super.onPreCreate();
-        localeCallbacks.onPreCreate(this);
-    }
-
-    @Override
-    protected Class<? extends Activity> getAddLocationActivityClass() {
-        return ZmanimAddLocationActivity.class;
-    }
-
-    @Override
-    protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
-        return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
-    }
-
-    public ZmanimPreferences getZmanimPreferences() {
-        ZmanimPreferences preferences = this.preferences;
-        if (preferences == null) {
-            preferences = new SimpleZmanimPreferences(this);
-            this.preferences = preferences;
+    /** The preferences.  */
+    private var _preferences: ZmanimPreferences? = null
+    val preferences: ZmanimPreferences
+        get() {
+            var preferences = _preferences
+            if (preferences == null) {
+                preferences = SimpleZmanimPreferences(this)
+                this._preferences = preferences
+            }
+            return preferences
         }
-        return preferences;
+
+    override fun attachBaseContext(newBase: Context) {
+        val localeCallbacks: LocaleCallbacks<LocalePreferences> = LocaleHelper(newBase)
+        this.localeCallbacks = localeCallbacks
+        val context = localeCallbacks.attachBaseContext(newBase)
+        super.attachBaseContext(context)
+        applyOverrideConfiguration(context.resources.configuration)
+    }
+
+    override fun onPreCreate() {
+        super.onPreCreate()
+        localeCallbacks?.onPreCreate(this)
+    }
+
+    override fun getAddLocationActivityClass(): Class<out Activity> {
+        return ZmanimAddLocationActivity::class.java
+    }
+
+    override fun createThemeCallbacks(context: Context): ThemeCallbacks<ZmanimPreferences> {
+        return SimpleThemeCallbacks(context, preferences)
     }
 }

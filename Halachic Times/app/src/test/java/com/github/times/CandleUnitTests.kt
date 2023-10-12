@@ -1,46 +1,45 @@
-package com.github.times;
+package com.github.times
 
-import org.junit.Test;
+import org.junit.Test
 
-public class CandleUnitTests {
-
+class CandleUnitTests {
     @Test
-    public void lightNothing() {
+    fun lightNothing() {
         //TODO implement me!
     }
 
     @Test
-    public void lightFridayRegular() {
+    fun lightFridayRegular() {
         //TODO implement me!
     }
 
     @Test
-    public void lightFridayErevYomTov() {
+    fun lightFridayErevYomTov() {
         //TODO implement me!
     }
 
     @Test
-    public void lightFridayChannuka() {
+    fun lightFridayChannuka() {
         //TODO implement me!
     }
 
     @Test
-    public void lightSaturdayChannuka() {
+    fun lightSaturdayChannuka() {
         //TODO implement me!
     }
 
     @Test
-    public void lightSaturdayErevYomTov() {
+    fun lightSaturdayErevYomTov() {
         //TODO implement me!
     }
 
     @Test
-    public void lightMondayErevYomTov() {
+    fun lightMondayErevYomTov() {
         //TODO implement me!
     }
 
     @Test
-    public void lightMondayChannuka() {
+    fun lightMondayChannuka() {
         //TODO implement me!
     }
 }

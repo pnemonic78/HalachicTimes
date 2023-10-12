@@ -13,32 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.impl;
+package com.github.times.location.impl
 
-import android.content.Context;
-
-import com.github.times.location.AddressProvider;
-import com.github.times.location.LocationsProvider;
-import com.github.times.location.LocationsProviderFactory;
+import android.content.Context
+import com.github.times.location.AddressProvider
+import com.github.times.location.LocationsProvider
+import com.github.times.location.LocationsProviderFactory
 
 /**
  * Factory that creates location providers.
  */
-public class LocationsProviderFactoryImpl implements LocationsProviderFactory<AddressProvider, LocationsProvider> {
+class LocationsProviderFactoryImpl(context: Context) :
+    LocationsProviderFactory<AddressProvider, LocationsProvider> {
 
-    private final Context context;
+    private val context: Context = context.applicationContext
 
-    public LocationsProviderFactoryImpl(Context context) {
-        this.context = context.getApplicationContext();
+
+    override fun createAddressProvider(): AddressProvider {
+        return AddressProvider(context)
     }
 
-    @Override
-    public AddressProvider createAddressProvider() {
-        return new AddressProvider(context);
-    }
-
-    @Override
-    public LocationsProvider createLocationsProvider() {
-        return new LocationsProvider(context);
+    override fun createLocationsProvider(): LocationsProvider {
+        return LocationsProvider(context)
     }
 }

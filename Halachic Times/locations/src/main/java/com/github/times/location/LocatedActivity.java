@@ -28,6 +28,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.app.SimpleThemeCallbacks;
@@ -127,6 +128,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         return getThemeCallbacks().getThemePreferences();
     }
 
+    @NonNull
     protected ThemeCallbacks<P> getThemeCallbacks() {
         ThemeCallbacks<P> themeCallbacks = this.themeCallbacks;
         if (themeCallbacks == null) {
@@ -136,6 +138,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         return themeCallbacks;
     }
 
+    @NonNull
     protected ThemeCallbacks<P> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context);
     }
@@ -169,6 +172,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
         runOnUiThread(populateHeader);
     }
 
+    @NonNull
     protected Runnable createBindHeaderRunnable() {
         return new Runnable() {
             @Override

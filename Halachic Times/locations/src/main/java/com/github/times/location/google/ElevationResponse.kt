@@ -13,38 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.google;
+package com.github.times.location.google
 
-import com.google.maps.errors.ApiException;
-import com.google.maps.internal.ApiResponse;
-import com.google.maps.model.ElevationResult;
+import com.google.gson.annotations.SerializedName
+import com.google.maps.errors.ApiException
+import com.google.maps.internal.ApiResponse
+import com.google.maps.model.ElevationResult
 
 /**
  * Elevation response.
  *
  * @author Moshe Waisberg
  */
-public class ElevationResponse implements ApiResponse<ElevationResult> {
+class ElevationResponse : ApiResponse<ElevationResult> {
+    @SerializedName("status")
+    var status: String? = null
+    @SerializedName("errorMessage")
+    var errorMessage: String? = null
+    @SerializedName("results")
+    var results: List<ElevationResult>? = null
 
-    public String status;
-    public String errorMessage;
-    public ElevationResult[] results;
-
-    @Override
-    public boolean successful() {
-        return "OK".equals(status);
+    override fun successful(): Boolean {
+        return "OK" == status
     }
 
-    @Override
-    public ElevationResult getResult() {
-        return results[0];
+    override fun getResult(): ElevationResult {
+        return results!![0]
     }
 
-    @Override
-    public ApiException getError() {
-        if (successful()) {
-            return null;
+    override fun getError(): ApiException? {
+        return if (successful()) {
+            null
+        } else {
+            ApiException.from(status, errorMessage)
         }
-        return ApiException.from(status, errorMessage);
     }
 }

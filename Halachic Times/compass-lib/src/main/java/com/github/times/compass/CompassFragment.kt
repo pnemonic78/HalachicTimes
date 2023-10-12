@@ -13,213 +13,228 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.compass;
+package com.github.times.compass
 
-import android.app.Activity;
-import android.content.Context;
-import android.hardware.GeomagneticField;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.Location;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Display;
-import android.view.LayoutInflater;
-import android.view.Surface;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.github.times.compass.lib.R;
-import com.github.times.compass.preference.CompassPreferences;
-import com.github.times.compass.preference.SimpleCompassPreferences;
-
-import org.jetbrains.annotations.NotNull;
+import android.app.Activity
+import android.content.Context
+import android.hardware.GeomagneticField
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.location.Location
+import android.os.Build
+import android.os.Bundle
+import android.view.Display
+import android.view.LayoutInflater
+import android.view.Surface
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.github.times.compass.lib.R
+import com.github.times.compass.preference.CompassPreferences
+import com.github.times.compass.preference.SimpleCompassPreferences
 
 /**
  * Show a compass.
  *
  * @author Moshe Waisberg
  */
-public class CompassFragment extends Fragment implements SensorEventListener {
-
-    private static final float ALPHA = 0.35f; // if ALPHA = 1 OR 0, no filter applies.
-
+open class CompassFragment : Fragment(), SensorEventListener {
     /**
      * The sensor manager.
      */
-    private SensorManager sensorManager;
+    private var sensorManager: SensorManager? = null
+
     /**
      * The accelerometer sensor.
      */
-    private Sensor accelerometer;
+    private var accelerometer: Sensor? = null
+
     /**
      * The magnetic field sensor.
      */
-    private Sensor magnetometer;
+    private var magnetometer: Sensor? = null
+
     /**
      * The main view.
      */
-    protected CompassView compassView;
+    protected var compassView: CompassView? = null
+
     /**
      * The accelerometer values.
      */
-    private final float[] accelerometerValues = new float[3];
+    private val accelerometerValues = FloatArray(3)
+
     /**
      * The magnetometer field.
      */
-    private final float[] magnetometerValues = new float[3];
+    private val magnetometerValues = FloatArray(3)
+
     /**
      * Rotation matrix.
      */
-    private final float[] matrixR = new float[9];
+    private val matrixR = FloatArray(9)
+
     /**
      * Remapped rotation matrix.
      */
-    private final float[] mapR = new float[9];
+    private val mapR = FloatArray(9)
+
     /**
      * Orientation matrix.
      */
-    private final float[] orientation = new float[3];
+    private val orientation = FloatArray(3)
+
     /**
      * The preferences.
      */
-    protected CompassPreferences preferences;
+    protected lateinit var preferences: CompassPreferences
+
     /**
      * The location's geomagnetic field.
      */
-    private GeomagneticField geomagneticField;
+    private var geomagneticField: GeomagneticField? = null
+
     /**
      * The display orientation.
      */
-    private int displayRotation = Surface.ROTATION_0;
+    private var displayRotation = Surface.ROTATION_0
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.compass_fragment, container, false);
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.compass_fragment, container, false)
     }
 
-    @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        compassView = view.findViewById(R.id.compass);
-        compassView.setHoliest(Float.NaN);
-        updateRotation(getActivity(), view);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        compassView = view.findViewById(R.id.compass)
+        compassView!!.setHoliest(Float.NaN)
+        updateRotation(activity, view)
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        final Context context = getContext();
-        preferences = getPreferences(context);
-        sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val context = requireContext()
+        preferences = getPreferences(context)
+        val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as? SensorManager
+        this.sensorManager = sensorManager
         if (sensorManager != null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            magnetometer = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
         }
     }
 
-    private CompassPreferences getPreferences(Context context) {
-        if (context instanceof BaseCompassActivity) {
-            return ((BaseCompassActivity) context).getCompassPreferences();
+    private fun getPreferences(context: Context): CompassPreferences {
+        return if (context is BaseCompassActivity) {
+            context.compassPreferences
+        } else {
+            SimpleCompassPreferences(context)
         }
-        return new SimpleCompassPreferences(context);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+    override fun onPause() {
+        super.onPause()
+        sensorManager?.unregisterListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val sensorManager = this.sensorManager
         if (sensorManager != null) {
-            sensorManager.unregisterListener(this);
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI)
+            sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI)
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (sensorManager != null) {
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
-            sensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
-        }
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        updateRotation(activity, view)
     }
 
-    @Override
-    public void onAttach(@NotNull Activity activity) {
-        super.onAttach(activity);
-        updateRotation(activity, getView());
+    override fun onStart() {
+        super.onStart()
+        updateRotation(activity, view)
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        updateRotation(getActivity(), getView());
-    }
-
-    private void updateRotation(@Nullable Activity activity, @Nullable View view) {
-        Display display = null;
+    private fun updateRotation(activity: Activity?, view: View?) {
+        var display: Display? = null
         if (view != null) {
-            display = view.getDisplay();
+            display = view.display
         }
-        if ((display == null) && (activity != null)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                display = activity.getDisplay();
+        if (display == null && activity != null) {
+            display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                activity.display
             } else {
-                display = activity.getWindowManager().getDefaultDisplay();
+                @Suppress("DEPRECATION")
+                activity.windowManager.defaultDisplay
             }
         }
         if (display != null) {
-            displayRotation = display.getRotation();
+            displayRotation = display.rotation
         }
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    }
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) = Unit
 
-    @SuppressWarnings("SuspiciousNameCombination")
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        switch (event.sensor.getType()) {
-            case Sensor.TYPE_ACCELEROMETER:
-                lowPass(event.values, accelerometerValues);
-                break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                lowPass(event.values, magnetometerValues);
-                break;
-            default:
-                return;
+    override fun onSensorChanged(event: SensorEvent) {
+        when (event.sensor.type) {
+            Sensor.TYPE_ACCELEROMETER -> lowPass(event.values, accelerometerValues)
+            Sensor.TYPE_MAGNETIC_FIELD -> lowPass(event.values, magnetometerValues)
+            else -> return
         }
-        if (SensorManager.getRotationMatrix(matrixR, null, accelerometerValues, magnetometerValues)) {
-            switch (displayRotation) {
-                case Surface.ROTATION_90:
-                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_Y, SensorManager.AXIS_MINUS_X, mapR);
-                    break;
-                case Surface.ROTATION_180:
-                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_MINUS_Y, mapR);
-                    break;
-                case Surface.ROTATION_270:
-                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_MINUS_Y, SensorManager.AXIS_MINUS_X, mapR);
-                    break;
-                default:
-                    SensorManager.remapCoordinateSystem(matrixR, SensorManager.AXIS_X, SensorManager.AXIS_Y, mapR);
-                    break;
+        if (SensorManager.getRotationMatrix(
+                matrixR,
+                null,
+                accelerometerValues,
+                magnetometerValues
+            )
+        ) {
+            when (displayRotation) {
+                Surface.ROTATION_90 -> SensorManager.remapCoordinateSystem(
+                    matrixR,
+                    SensorManager.AXIS_Y,
+                    SensorManager.AXIS_MINUS_X,
+                    mapR
+                )
+
+                Surface.ROTATION_180 -> SensorManager.remapCoordinateSystem(
+                    matrixR,
+                    SensorManager.AXIS_X,
+                    SensorManager.AXIS_MINUS_Y,
+                    mapR
+                )
+
+                Surface.ROTATION_270 -> SensorManager.remapCoordinateSystem(
+                    matrixR,
+                    SensorManager.AXIS_MINUS_Y,
+                    SensorManager.AXIS_MINUS_X,
+                    mapR
+                )
+
+                else -> SensorManager.remapCoordinateSystem(
+                    matrixR,
+                    SensorManager.AXIS_X,
+                    SensorManager.AXIS_Y,
+                    mapR
+                )
             }
-            SensorManager.getOrientation(mapR, orientation);
-            float azimuth = (float) Math.toDegrees(orientation[0]);
+            SensorManager.getOrientation(mapR, orientation)
+            var azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat()
+            val geomagneticField = this.geomagneticField
             if (geomagneticField != null) {
-                azimuth += geomagneticField.getDeclination(); // converts magnetic north to true north
+                // converts magnetic north to true north
+                azimuth += geomagneticField.declination
             }
-            setAzimuth(azimuth);
+            setAzimuth(azimuth)
         }
     }
 
-    protected void setAzimuth(float azimuth) {
-        compassView.setAzimuth(-azimuth);
+    protected open fun setAzimuth(azimuth: Float) {
+        compassView?.setAzimuth(-azimuth)
     }
 
     /**
@@ -227,22 +242,27 @@ public class CompassFragment extends Fragment implements SensorEventListener {
      *
      * @param location the location.
      */
-    public void setLocation(Location location) {
-        geomagneticField = new GeomagneticField(
-            (float) location.getLatitude(),
-            (float) location.getLongitude(),
-            (float) location.getAltitude(),
-            location.getTime());
+    open fun setLocation(location: Location) {
+        geomagneticField = GeomagneticField(
+            location.latitude.toFloat(),
+            location.longitude.toFloat(),
+            location.altitude.toFloat(),
+            location.time
+        )
     }
 
-    private float[] lowPass(float[] input, float[] output) {
+    private fun lowPass(input: FloatArray, output: FloatArray?): FloatArray {
         if (output == null) {
-            return input;
+            return input
         }
-        final int length = Math.min(input.length, output.length);
-        for (int i = 0; i < length; i++) {
-            output[i] += ALPHA * (input[i] - output[i]);
+        val length = input.size.coerceAtMost(output.size)
+        for (i in 0 until length) {
+            output[i] += ALPHA * (input[i] - output[i])
         }
-        return output;
+        return output
+    }
+
+    companion object {
+        private const val ALPHA = 0.35f // if ALPHA = 1 OR 0, no filter applies.
     }
 }

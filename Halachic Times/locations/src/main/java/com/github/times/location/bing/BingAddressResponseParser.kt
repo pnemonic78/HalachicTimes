@@ -13,117 +13,109 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import android.location.Address;
-import android.net.Uri;
-
-import com.github.json.UriAdapter;
-import com.github.times.location.AddressResponseParser;
-import com.github.times.location.LocationException;
-import com.github.times.location.ZmanimAddress;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import static android.text.TextUtils.isEmpty;
+import android.location.Address
+import android.net.Uri
+import com.github.json.UriAdapter
+import com.github.times.location.AddressResponseParser
+import com.github.times.location.LocationException
+import com.github.times.location.ZmanimAddress
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.nio.charset.StandardCharsets
+import java.util.Locale
 
 /**
  * Handler for parsing the JSON response for addresses.
  *
  * @author Moshe Waisberg
  */
-public class BingAddressResponseParser extends AddressResponseParser {
+class BingAddressResponseParser : AddressResponseParser() {
+    private val gson = GsonBuilder()
+        .registerTypeAdapter(Uri::class.java, UriAdapter())
+        .create()
 
-    private final Gson gson = new GsonBuilder()
-        .registerTypeAdapter(Uri.class, new UriAdapter())
-        .create();
-
-    @Override
-    public List<Address> parse(InputStream data, double latitude, double longitude, int maxResults, Locale locale) throws LocationException, IOException {
-        try {
-            Reader reader = new InputStreamReader(data);
-            BingResponse response = gson.fromJson(reader, BingResponse.class);
-            List<Address> results = new ArrayList<>(maxResults);
-            handleResponse(response, results, maxResults, locale);
-            return results;
-        } catch (JsonIOException e) {
-            throw new IOException(e);
-        } catch (JsonSyntaxException e) {
-            throw new LocationException(e);
+    @Throws(LocationException::class, IOException::class)
+    override fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int,
+        locale: Locale
+    ): List<Address> {
+        return try {
+            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
+            val response = gson.fromJson(reader, BingResponse::class.java)
+            val results: MutableList<Address> = ArrayList(maxResults)
+            handleResponse(response, results, maxResults, locale)
+            results
+        } catch (e: JsonIOException) {
+            throw IOException(e)
+        } catch (e: JsonSyntaxException) {
+            throw LocationException(e)
         }
     }
 
-    private void handleResponse(BingResponse response, List<Address> results, int maxResults, Locale locale) throws LocationException {
+    @Throws(LocationException::class)
+    private fun handleResponse(
+        response: BingResponse,
+        results: MutableList<Address>,
+        maxResults: Int,
+        locale: Locale
+    ) {
         if (response.statusCode != BingResponse.STATUS_OK) {
-            throw new LocationException(response.statusDescription);
+            throw LocationException(response.statusDescription)
         }
-
-        final List<BingResponse.ResourceSet> resourceSets = response.resourceSets;
-        if ((resourceSets == null) || resourceSets.isEmpty()) {
-            return;
+        val resourceSets = response.resourceSets
+        if (resourceSets.isNullOrEmpty()) {
+            return
         }
-
-        BingResponse.ResourceSet resourceSet = resourceSets.get(0);
-        List<BingResource> resources = resourceSet.resources;
-        if ((resources == null) || resources.isEmpty()) {
-            return;
+        val resourceSet = resourceSets[0]
+        val resources = resourceSet.resources
+        if (resources.isNullOrEmpty()) {
+            return
         }
-
-        BingResource resource;
-        Address address;
-
-        final int size = Math.min(resources.size(), maxResults);
-        for (int i = 0; i < size; i++) {
-            resource = resources.get(i);
-            if (resource == null) continue;
-            address = toAddress(resource, locale);
+        var resource: BingResource
+        var address: Address?
+        val size = resources.size.coerceAtMost(maxResults)
+        for (i in 0 until size) {
+            resource = resources[i]
+            address = toAddress(resource, locale)
             if (address != null) {
-                results.add(address);
+                results.add(address)
             }
         }
     }
 
-    @Nullable
-    private Address toAddress(@NonNull BingResource response, Locale locale) {
-        Address result = new ZmanimAddress(locale);
-        result.setFeatureName(response.name);
-
-        BingPoint point = response.point;
-        if ((point == null) || (point.coordinates == null) || (point.coordinates.length < 2)) {
-            return null;
+    private fun toAddress(response: BingResource, locale: Locale): Address? {
+        val result: Address = ZmanimAddress(locale)
+        result.featureName = response.name
+        val point = response.point ?: return null
+        val coordinates = point.coordinates ?: return null
+        if (coordinates.size < 2) {
+            return null
         }
-        result.setLatitude(point.coordinates[0]);
-        result.setLongitude(point.coordinates[1]);
-
-        BingAddress bingAddress = response.address;
-        if (bingAddress == null) {
-            return null;
+        result.latitude = coordinates[0]
+        result.longitude = coordinates[1]
+        val bingAddress = response.address ?: return null
+        if (!bingAddress.addressLine.isNullOrEmpty()) {
+            result.setAddressLine(0, bingAddress.addressLine)
         }
-        if (!isEmpty(bingAddress.addressLine)) {
-            result.setAddressLine(0, bingAddress.addressLine);
+        result.adminArea = bingAddress.adminDistrict
+        result.subAdminArea = bingAddress.adminDistrict2
+        result.countryName = bingAddress.countryRegion
+        result.locality = bingAddress.locality
+        result.postalCode = bingAddress.postalCode
+        val formatted = bingAddress.formattedAddress
+        if (formatted != null && formatted == response.name) {
+            result.featureName = null
         }
-        result.setAdminArea(bingAddress.adminDistrict);
-        result.setSubAdminArea(bingAddress.adminDistrict2);
-        result.setCountryName(bingAddress.countryRegion);
-        result.setLocality(bingAddress.locality);
-        result.setPostalCode(bingAddress.postalCode);
-        String formatted = bingAddress.formattedAddress;
-        if ((formatted != null) && formatted.equals(response.name)) {
-            result.setFeatureName(null);
-        }
-        return result;
+        return result
     }
 }

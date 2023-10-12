@@ -13,38 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.google;
+package com.github.times.location.google
 
-import com.google.maps.errors.ApiException;
-import com.google.maps.internal.ApiResponse;
-import com.google.maps.model.GeocodingResult;
+import com.google.gson.annotations.SerializedName
+import com.google.maps.errors.ApiException
+import com.google.maps.internal.ApiResponse
+import com.google.maps.model.GeocodingResult
 
 /**
  * Geocoder response.
  *
  * @author Moshe Waisberg
  */
-public class GeocodingResponse implements ApiResponse<GeocodingResult[]> {
+class GeocodingResponse : ApiResponse<List<GeocodingResult>> {
+    @SerializedName("status")
+    var status: String? = null
+    @SerializedName("errorMessage")
+    var errorMessage: String? = null
+    @SerializedName("results")
+    var results: List<GeocodingResult>? = null
 
-    public String status;
-    public String errorMessage;
-    public GeocodingResult[] results;
-
-    @Override
-    public boolean successful() {
-        return "OK".equals(status) || "ZERO_RESULTS".equals(status);
+    override fun successful(): Boolean {
+        return "OK" == status || "ZERO_RESULTS" == status
     }
 
-    @Override
-    public GeocodingResult[] getResult() {
-        return results;
+    override fun getResult(): List<GeocodingResult> {
+        return results!!
     }
 
-    @Override
-    public ApiException getError() {
-        if (successful()) {
-            return null;
+    override fun getError(): ApiException? {
+        return if (successful()) {
+            null
+        } else {
+            ApiException.from(status, errorMessage)
         }
-        return ApiException.from(status, errorMessage);
     }
 }

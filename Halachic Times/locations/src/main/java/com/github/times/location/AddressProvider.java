@@ -31,7 +31,7 @@ import com.github.database.CursorFilter;
 import com.github.times.location.bing.BingGeocoder;
 import com.github.times.location.geonames.GeoNamesGeocoder;
 import com.github.times.location.google.GoogleGeocoder;
-import com.github.times.location.impl.DatabaseGeocoder;
+import com.github.times.location.db.DatabaseGeocoder;
 import com.github.util.LocaleUtils;
 
 import java.util.ArrayList;

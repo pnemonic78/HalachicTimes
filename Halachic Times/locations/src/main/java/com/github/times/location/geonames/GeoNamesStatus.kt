@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.geonames;
+package com.github.times.location.geonames
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
 /**
  * Root object for GeoNames address JSON status.
@@ -23,10 +23,9 @@ import com.google.gson.annotations.SerializedName;
  * @author Moshe Waisberg
  */
 class GeoNamesStatus {
-
     @SerializedName("message")
-    public String message;
-    @SerializedName("value")
-    public int value;
+    var message: String? = null
 
+    @SerializedName("value")
+    var value = 0
 }

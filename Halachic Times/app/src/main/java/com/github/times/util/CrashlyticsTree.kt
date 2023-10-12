@@ -13,51 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.util;
+package com.github.times.util
 
-import android.util.Log;
-
-import com.github.util.LogTree;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
+import android.util.Log
+import com.github.util.LogTree
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 /**
  * Crashlytics logger tree for Timber.
  *
  * @author Moshe Waisberg
  */
-public class CrashlyticsTree extends LogTree {
+class CrashlyticsTree(debug: Boolean) : LogTree(debug) {
+    private val crashlytics = FirebaseCrashlytics.getInstance()
 
-    private static final Map<Integer, String> priorityChar = new HashMap<>();
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        super.log(priority, tag, message, t)
 
-    static {
-        priorityChar.put(Log.ASSERT, "A");
-        priorityChar.put(Log.ERROR, "E");
-        priorityChar.put(Log.DEBUG, "D");
-        priorityChar.put(Log.INFO, "I");
-        priorityChar.put(Log.VERBOSE, "V");
-        priorityChar.put(Log.WARN, "W");
-    }
-
-    private final FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
-
-    public CrashlyticsTree(boolean debug) {
-        super(debug);
-    }
-
-    @Override
-    protected void log(int priority, @Nullable String tag, @NotNull String message, @Nullable Throwable t) {
-        super.log(priority, tag, message, t);
-
-        String logMessage = priorityChar.get(priority) + "/" + tag + ": " + message;
-        crashlytics.log(logMessage);
+        val logMessage = priorityChar[priority] + "/" + tag + ": " + message
+        crashlytics.log(logMessage)
         if (t != null) {
-            crashlytics.recordException(t);
+            crashlytics.recordException(t)
         }
+    }
+
+    companion object {
+        private val priorityChar: Map<Int, String> = mapOf(
+            Log.ASSERT to "A",
+            Log.ERROR to "E",
+            Log.DEBUG to "D",
+            Log.INFO to "I",
+            Log.VERBOSE to "V",
+            Log.WARN to "W"
+        )
     }
 }

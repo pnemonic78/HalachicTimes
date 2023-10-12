@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.bing;
+package com.github.times.location.bing
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName
 
 /**
  * Point object for Bing address JSON response.
@@ -23,10 +23,9 @@ import com.google.gson.annotations.SerializedName;
  * @author Moshe Waisberg
  */
 class BingPoint {
-
     @SerializedName("type")
-    public String type;
-    @SerializedName("coordinates")
-    public Double[] coordinates;
+    var type: String? = null
 
+    @SerializedName("coordinates")
+    var coordinates: Array<Double>? = null
 }

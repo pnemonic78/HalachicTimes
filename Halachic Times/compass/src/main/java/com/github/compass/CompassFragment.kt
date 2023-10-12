@@ -13,49 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.compass;
+package com.github.compass
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import com.github.times.location.LocationApplication;
-import com.github.times.location.LocationFormatter;
+import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import com.github.times.location.LocationApplication
+import com.github.times.location.LocationFormatter
 
 /**
  * Show the compass.
  *
  * @author Moshe Waisberg
  */
-public class CompassFragment extends com.github.times.compass.CompassFragment {
+class CompassFragment : com.github.times.compass.CompassFragment() {
 
-    private TextView bearingView;
-    private LocationFormatter formatter;
+    private var bearingView: TextView? = null
+    private lateinit var formatter: LocationFormatter
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        LocationApplication app = (LocationApplication) getActivity().getApplication();
-        formatter = app.getLocations();
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val app = requireActivity().application as LocationApplication<*, *, *>
+        formatter = app.locations
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        bearingView = view.findViewById(R.id.bearing);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val context = view.context
+        val a = context.obtainStyledAttributes(
+            preferences.compassTheme, com.github.times.compass.lib.R.styleable.CompassView
+        )
+        val bearingColor = a.getColorStateList(com.github.times.compass.lib.R.styleable.CompassView_compassColorLabel2)
+        a.recycle()
 
-        Context context = view.getContext();
-        TypedArray a = context.obtainStyledAttributes(preferences.getCompassTheme(), com.github.times.compass.lib.R.styleable.CompassView);
-        bearingView.setTextColor(a.getColorStateList(com.github.times.compass.lib.R.styleable.CompassView_compassColorLabel2));
-        a.recycle();
+        bearingView = view.findViewById(R.id.bearing)
+        bearingView!!.setTextColor(bearingColor)
     }
 
-    @Override
-    protected void setAzimuth(float azimuth) {
-        super.setAzimuth(azimuth);
-        bearingView.setText(formatter.formatBearing(azimuth));
+    override fun setAzimuth(azimuth: Float) {
+        super.setAzimuth(azimuth)
+        bearingView?.text = formatter.formatBearing(azimuth.toDouble())
     }
 }

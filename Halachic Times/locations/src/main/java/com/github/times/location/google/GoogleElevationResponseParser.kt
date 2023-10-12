@@ -13,84 +13,75 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.google;
+package com.github.times.location.google
 
-import android.location.Location;
-
-import com.github.times.location.ElevationResponseParser;
-import com.github.times.location.LocationException;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-import com.google.maps.model.ElevationResult;
-import com.google.maps.model.LatLng;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import static com.github.times.location.GeocoderBase.USER_PROVIDER;
+import android.location.Location
+import com.github.times.location.ElevationResponseParser
+import com.github.times.location.GeocoderBase
+import com.github.times.location.LocationException
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonIOException
+import com.google.gson.JsonSyntaxException
+import com.google.maps.model.ElevationResult
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.Reader
+import java.nio.charset.StandardCharsets
 
 /**
  * Handler for parsing an elevation from a Google XML response.
  *
  * @author Moshe Waisberg
  */
-class GoogleElevationResponseParser extends ElevationResponseParser {
-
-    private final Gson gson = new GsonBuilder()
+internal class GoogleElevationResponseParser : ElevationResponseParser() {
+    private val gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        .create();
+        .create()
 
-    @Override
-    public List<Location> parse(InputStream data, double latitude, double longitude, int maxResults) throws LocationException, IOException {
-        try {
-            Reader reader = new InputStreamReader(data);
-            ElevationResponse response = gson.fromJson(reader, ElevationResponse.class);
-            List<Location> results = new ArrayList<>(maxResults);
-            handleResponse(response, results, maxResults);
-            return results;
-        } catch (JsonIOException e) {
-            throw new IOException(e);
-        } catch (JsonSyntaxException e) {
-            throw new LocationException(e);
+    @Throws(LocationException::class, IOException::class)
+    override fun parse(
+        data: InputStream,
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int
+    ): List<Location> {
+        return try {
+            val reader: Reader = InputStreamReader(data, StandardCharsets.UTF_8)
+            val response = gson.fromJson(reader, ElevationResponse::class.java)
+            val results: MutableList<Location> = ArrayList(maxResults)
+            handleResponse(response, results, maxResults)
+            results
+        } catch (e: JsonIOException) {
+            throw IOException(e)
+        } catch (e: JsonSyntaxException) {
+            throw LocationException(e)
         }
     }
 
-    private void handleResponse(ElevationResponse response, List<Location> results, int maxResults) throws LocationException {
-        if (response == null) return;
+    @Throws(LocationException::class)
+    private fun handleResponse(
+        response: ElevationResponse?,
+        results: MutableList<Location>,
+        maxResults: Int
+    ) {
+        if (response == null) return
         if (!response.successful()) {
-            throw new LocationException(response.errorMessage);
+            throw LocationException(response.errorMessage)
         }
-
-        ElevationResult geocoderResult = response.getResult();
-        if (geocoderResult == null) {
-            return;
-        }
-        Location location = toLocation(geocoderResult);
-        if (location != null) {
-            results.add(location);
-        }
+        val geocoderResult = response.result
+        val location = toLocation(geocoderResult)
+        results.add(location)
     }
 
-    @Nullable
-    private Location toLocation(@NonNull ElevationResult response) {
-        Location result = new Location(USER_PROVIDER);
-
-        LatLng location = response.location;
-        result.setLatitude(location.lat);
-        result.setLongitude(location.lng);
-        result.setAltitude(response.elevation);
-        result.setAccuracy((float) response.resolution);
-
-        return result;
+    private fun toLocation(response: ElevationResult): Location {
+        val location = response.location
+        return Location(GeocoderBase.USER_PROVIDER).apply {
+            latitude = location.lat
+            longitude = location.lng
+            altitude = response.elevation
+            accuracy = response.resolution.toFloat()
+        }
     }
 }

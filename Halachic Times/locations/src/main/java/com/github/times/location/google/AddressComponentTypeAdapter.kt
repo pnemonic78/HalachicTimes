@@ -13,36 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.google;
+package com.github.times.location.google
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import com.google.maps.model.AddressComponentType;
-
-import java.io.IOException;
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonWriter
+import com.google.maps.model.AddressComponentType
+import java.io.IOException
 
 /**
  * Address component type JSON type adapter.
  *
  * @author Moshe Waisberg
  */
-class AddressComponentTypeAdapter extends TypeAdapter<AddressComponentType> {
-
-    @Override
-    public AddressComponentType read(JsonReader in) throws IOException {
-        final String value = in.nextString();
-        AddressComponentType[] types = AddressComponentType.values();
-        for (AddressComponentType type : types) {
-            if (value.equals(type.toCanonicalLiteral())) {
-                return type;
+internal class AddressComponentTypeAdapter : TypeAdapter<AddressComponentType?>() {
+    @Throws(IOException::class)
+    override fun read(`in`: JsonReader): AddressComponentType? {
+        val value = `in`.nextString()
+        val types = AddressComponentType.values()
+        for (type in types) {
+            if (value == type.toCanonicalLiteral()) {
+                return type
             }
         }
-        return null;
+        return null
     }
 
-    @Override
-    public void write(JsonWriter out, AddressComponentType value) throws IOException {
-        out.value(out.toString());
+    @Throws(IOException::class)
+    override fun write(out: JsonWriter, value: AddressComponentType?) {
+        out.value(value.toString())
     }
 }

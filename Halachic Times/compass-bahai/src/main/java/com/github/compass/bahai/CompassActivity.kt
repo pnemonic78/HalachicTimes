@@ -21,6 +21,7 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import com.github.times.compass.BaseCompassActivity
+import com.github.times.compass.CompassFragment
 import com.github.times.compass.preference.CompassPreferenceActivity
 
 /**
@@ -59,4 +60,6 @@ class CompassActivity : BaseCompassActivity() {
         val context: Context = this
         startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }
+
+    override fun getCompassFragment(): CompassFragment = BahaiCompassFragment()
 }
