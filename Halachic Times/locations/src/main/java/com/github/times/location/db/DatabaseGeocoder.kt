@@ -13,48 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.times.location.db;
+package com.github.times.location.db
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
-import android.location.Address;
-import android.location.Location;
-import android.net.Uri;
-import android.provider.BaseColumns;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.github.database.CursorFilter;
-import com.github.times.location.AddressResponseParser;
-import com.github.times.location.City;
-import com.github.times.location.Country;
-import com.github.times.location.ElevationResponseParser;
-import com.github.times.location.GeocoderBase;
-import com.github.times.location.LocationException;
-import com.github.times.location.ZmanimAddress;
-import com.github.times.location.ZmanimLocation;
-import com.github.times.location.provider.LocationContract.AddressColumns;
-import com.github.times.location.provider.LocationContract.CityColumns;
-import com.github.times.location.provider.LocationContract.ElevationColumns;
-import com.github.util.LocaleUtils;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-
-import timber.log.Timber;
-
-import static com.github.times.location.provider.LocationContract.Addresses;
-import static com.github.times.location.provider.LocationContract.Cities;
-import static com.github.times.location.provider.LocationContract.Elevations;
+import android.content.ContentUris
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteException
+import android.location.Address
+import android.location.Location
+import android.provider.BaseColumns
+import com.github.database.CursorFilter
+import com.github.times.location.AddressResponseParser
+import com.github.times.location.City
+import com.github.times.location.Country
+import com.github.times.location.ElevationResponseParser
+import com.github.times.location.GeocoderBase
+import com.github.times.location.LocationException
+import com.github.times.location.ZmanimAddress
+import com.github.times.location.ZmanimLocation
+import com.github.times.location.provider.LocationContract
+import com.github.times.location.provider.LocationContract.AddressColumns
+import com.github.times.location.provider.LocationContract.CityColumns
+import com.github.times.location.provider.LocationContract.ElevationColumns
+import com.github.times.location.provider.LocationContract.Elevations
+import com.github.util.LocaleUtils.getDefaultLocale
+import java.io.Closeable
+import java.io.IOException
+import java.util.Collections
+import java.util.Locale
+import timber.log.Timber
 
 /**
  * A class for handling geocoding and reverse geocoding. This geocoder uses the
@@ -62,196 +50,129 @@ import static com.github.times.location.provider.LocationContract.Elevations;
  *
  * @author Moshe Waisberg
  */
-public class DatabaseGeocoder extends GeocoderBase {
-
-    /**
-     * Database
-     */
-    private static final String DB_PROVIDER = "db";
-
-    private static final String[] PROJECTION_ADDRESS = {
-        BaseColumns._ID,
-        AddressColumns.LOCATION_LATITUDE,
-        AddressColumns.LOCATION_LONGITUDE,
-        AddressColumns.LATITUDE,
-        AddressColumns.LONGITUDE,
-        AddressColumns.ADDRESS,
-        AddressColumns.LANGUAGE,
-        AddressColumns.FAVORITE
-    };
-    private static final int INDEX_ADDRESS_ID = 0;
-    private static final int INDEX_ADDRESS_LOCATION_LATITUDE = 1;
-    private static final int INDEX_ADDRESS_LOCATION_LONGITUDE = 2;
-    private static final int INDEX_ADDRESS_LATITUDE = 3;
-    private static final int INDEX_ADDRESS_LONGITUDE = 4;
-    private static final int INDEX_ADDRESS_ADDRESS = 5;
-    private static final int INDEX_ADDRESS_LANGUAGE = 6;
-    private static final int INDEX_ADDRESS_FAVORITE = 7;
-
-    private static final String[] PROJECTION_ELEVATION = {
-        BaseColumns._ID,
-        ElevationColumns.LATITUDE,
-        ElevationColumns.LONGITUDE,
-        ElevationColumns.ELEVATION,
-        ElevationColumns.TIMESTAMP
-    };
-    private static final int INDEX_ELEVATION_ID = 0;
-    private static final int INDEX_ELEVATION_LATITUDE = 1;
-    private static final int INDEX_ELEVATION_LONGITUDE = 2;
-    private static final int INDEX_ELEVATION_ELEVATION = 3;
-    private static final int INDEX_ELEVATION_TIMESTAMP = 4;
-
-    private static final String[] PROJECTION_CITY = {
-        BaseColumns._ID,
-        CityColumns.TIMESTAMP,
-        CityColumns.FAVORITE};
-    private static final int INDEX_CITY_ID = 0;
-    private static final int INDEX_CITY_TIMESTAMP = 1;
-    private static final int INDEX_CITY_FAVORITE = 2;
-
-    private final Context context;
-
-    /**
-     * Creates a new database geocoder.
-     *
-     * @param context the context.
-     */
-    public DatabaseGeocoder(Context context) {
-        this(context, LocaleUtils.getDefaultLocale(context));
-    }
-
-    /**
-     * Creates a new database geocoder.
-     *
-     * @param context the context.
-     * @param locale  the locale.
-     */
-    public DatabaseGeocoder(Context context, Locale locale) {
-        super(locale);
-        this.context = context;
-    }
+class DatabaseGeocoder(
+    private val context: Context,
+    locale: Locale? = getDefaultLocale(context)
+) : GeocoderBase(locale), Closeable {
 
     /**
      * Close database resources.
      */
-    public void close() {
-    }
+    override fun close() = Unit
 
-    @Override
-    public List<Address> getFromLocation(final double latitude, final double longitude, int maxResults) throws IOException {
-        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
-            throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
-            throw new IllegalArgumentException("longitude == " + longitude);
+    @Throws(IOException::class)
+    override fun getFromLocation(
+        latitude: Double,
+        longitude: Double,
+        maxResults: Int
+    ): List<Address> {
+        require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
+        require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
+        val filter: CursorFilter = object : CursorFilter {
+            private val distance = FloatArray(1)
 
-        final CursorFilter filter = new CursorFilter() {
-
-            private final float[] distance = new float[1];
-
-            @Override
-            public boolean accept(@NonNull Cursor cursor) {
-                double locationLatitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE);
-                double locationLongitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE);
-                Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
+            override fun accept(cursor: Cursor): Boolean {
+                val locationLatitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LATITUDE)
+                val locationLongitude = cursor.getDouble(INDEX_ADDRESS_LOCATION_LONGITUDE)
+                Location.distanceBetween(
+                    latitude,
+                    longitude,
+                    locationLatitude,
+                    locationLongitude,
+                    distance
+                )
                 if (distance[0] <= SAME_PLATEAU) {
-                    return true;
+                    return true
                 }
-
-                double addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE);
-                double addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE);
-                Location.distanceBetween(latitude, longitude, addressLatitude, addressLongitude, distance);
-                return (distance[0] <= SAME_PLATEAU);
+                val addressLatitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE)
+                val addressLongitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE)
+                Location.distanceBetween(
+                    latitude,
+                    longitude,
+                    addressLatitude,
+                    addressLongitude,
+                    distance
+                )
+                return distance[0] <= SAME_PLATEAU
             }
-        };
-        List<ZmanimAddress> q = queryAddresses(filter);
-        Collections.sort(q, new DistanceComparator(latitude, longitude));
-        List<ZmanimAddress> addresses = q.subList(0, Math.min(maxResults, q.size()));
-
-        return new ArrayList<Address>(addresses);
-    }
-
-    @Override
-    protected AddressResponseParser createAddressResponseParser() {
-        return null;
-    }
-
-    @Override
-    public Location getElevation(final double latitude, final double longitude) throws IOException {
-        if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX)
-            throw new IllegalArgumentException("latitude == " + latitude);
-        if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX)
-            throw new IllegalArgumentException("longitude == " + longitude);
-
-        final CursorFilter filter = new CursorFilter() {
-
-            private final float[] distance = new float[1];
-
-            @Override
-            public boolean accept(@NonNull Cursor cursor) {
-                double locationLatitude = cursor.getDouble(INDEX_ELEVATION_LATITUDE);
-                double locationLongitude = cursor.getDouble(INDEX_ELEVATION_LONGITUDE);
-                Location.distanceBetween(latitude, longitude, locationLatitude, locationLongitude, distance);
-                return (distance[0] <= SAME_PLATEAU);
-            }
-        };
-        List<ZmanimLocation> locations = queryElevations(filter);
-
-        int locationsCount = locations.size();
-        if (locationsCount == 0)
-            return null;
-
-        float distance;
-        float[] distanceLoc = new float[1];
-        double d;
-        double distancesSum = 0;
-        int n = 0;
-        double[] distances = new double[locationsCount];
-        double[] elevations = new double[locationsCount];
-
-        for (ZmanimLocation location : locations) {
-            Location.distanceBetween(latitude, longitude, location.getLatitude(), location.getLongitude(), distanceLoc);
-            distance = distanceLoc[0];
-            elevations[n] = location.getAltitude();
-            d = distance * distance;
-            distances[n] = d;
-            distancesSum += d;
-            n++;
         }
+        val q = queryAddresses(filter)
+        Collections.sort(q, DistanceComparator(latitude, longitude))
+        val addresses = q.subList(0, Math.min(maxResults, q.size))
+        return ArrayList<Address>(addresses)
+    }
 
-        if ((n == 1) && (distanceLoc[0] <= SAME_CITY)) {
-            return locations.get(0);
+    override fun createAddressResponseParser(): AddressResponseParser {
+        throw LocationException()
+    }
+
+    @Throws(IOException::class)
+    override fun getElevation(latitude: Double, longitude: Double): Location? {
+        require(latitude in LATITUDE_MIN..LATITUDE_MAX) { "latitude == $latitude" }
+        require(longitude in LONGITUDE_MIN..LONGITUDE_MAX) { "longitude == $longitude" }
+        val filter: CursorFilter = object : CursorFilter {
+            private val distance = FloatArray(1)
+
+            override fun accept(cursor: Cursor): Boolean {
+                val locationLatitude = cursor.getDouble(INDEX_ELEVATION_LATITUDE)
+                val locationLongitude = cursor.getDouble(INDEX_ELEVATION_LONGITUDE)
+                Location.distanceBetween(
+                    latitude,
+                    longitude,
+                    locationLatitude,
+                    locationLongitude,
+                    distance
+                )
+                return distance[0] <= SAME_PLATEAU
+            }
+        }
+        val locations = queryElevations(filter)
+        val locationsCount = locations.size
+        if (locationsCount == 0) return null
+        var distance: Float
+        val distanceLoc = FloatArray(1)
+        var d: Double
+        var distancesSum = 0.0
+        var n = 0
+        val distances = DoubleArray(locationsCount)
+        val elevations = DoubleArray(locationsCount)
+        for (location in locations) {
+            Location.distanceBetween(
+                latitude,
+                longitude,
+                location.latitude,
+                location.longitude,
+                distanceLoc
+            )
+            distance = distanceLoc[0]
+            elevations[n] = location.altitude
+            d = (distance * distance).toDouble()
+            distances[n] = d
+            distancesSum += d
+            n++
+        }
+        if (n == 1 && distanceLoc[0] <= SAME_CITY) {
+            return locations[0]
         }
         if (n <= 1) {
-            return null;
+            return null
         }
-
-        double weightSum = 0;
-        for (int i = 0; i < n; i++) {
-            weightSum += (1 - (distances[i] / distancesSum)) * elevations[i];
+        var weightSum = 0.0
+        for (i in 0 until n) {
+            weightSum += (1 - distances[i] / distancesSum) * elevations[i]
         }
-
-        ZmanimLocation elevated = new ZmanimLocation(DB_PROVIDER);
-        elevated.setTime(System.currentTimeMillis());
-        elevated.setLatitude(latitude);
-        elevated.setLongitude(longitude);
-        elevated.setAltitude(weightSum / (n - 1));
-        elevated.setId(-1);
-        return elevated;
+        return ZmanimLocation(DB_PROVIDER).apply {
+            this.time = System.currentTimeMillis()
+            this.latitude = latitude
+            this.longitude = longitude
+            this.altitude = weightSum / (n - 1)
+            this.id = -1
+        }
     }
 
-    @Override
-    protected ElevationResponseParser createElevationResponseParser() throws LocationException {
-        return null;
-    }
-
-    /**
-     * Format the address.
-     *
-     * @param a the address.
-     * @return the formatted address name.
-     */
-    protected static CharSequence formatAddress(@NonNull ZmanimAddress a) {
-        return a.getFormatted();
+    @Throws(LocationException::class)
+    override fun createElevationResponseParser(): ElevationResponseParser {
+        throw LocationException()
     }
 
     /**
@@ -260,51 +181,52 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param filter a cursor filter.
      * @return the list of addresses.
      */
-    public List<ZmanimAddress> queryAddresses(@Nullable CursorFilter filter) {
-        final String language = locale.getLanguage();
-        final String country = locale.getCountry();
-
-        List<ZmanimAddress> addresses = new ArrayList<>();
-        String selection = "(" + AddressColumns.LANGUAGE + " IS NULL) OR (" + AddressColumns.LANGUAGE + "=?)";
-        String[] selectionArgs = {language};
-        Cursor cursor = context.getContentResolver().query(Addresses.CONTENT_URI(context), PROJECTION_ADDRESS, selection, selectionArgs, null);
-        if ((cursor == null) || cursor.isClosed()) {
-            return addresses;
+    fun queryAddresses(filter: CursorFilter?): List<ZmanimAddress> {
+        val context: Context = context
+        val language = locale.language
+        val country = locale.country
+        val addresses: MutableList<ZmanimAddress> = ArrayList()
+        val selection = "(${AddressColumns.LANGUAGE} IS NULL) OR (${AddressColumns.LANGUAGE}=?)"
+        val selectionArgs = arrayOf(language)
+        val cursor = context.contentResolver.query(
+            LocationContract.Addresses.CONTENT_URI(context),
+            PROJECTION_ADDRESS,
+            selection,
+            selectionArgs,
+            null
+        )
+        if (cursor == null || cursor.isClosed) {
+            return addresses
         }
-
         try {
             if (cursor.moveToFirst()) {
-                String locationLanguage;
-                Locale locale;
-
+                var locationLanguage: String?
+                var locale: Locale?
                 do {
-                    if ((filter != null) && !filter.accept(cursor)) {
-                        continue;
+                    if (filter != null && !filter.accept(cursor)) {
+                        continue
                     }
-
-                    locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE);
-                    if (locationLanguage == null) {
-                        locale = this.locale;
+                    locationLanguage = cursor.getString(INDEX_ADDRESS_LANGUAGE)
+                    locale = if (locationLanguage == null) {
+                        this.locale
                     } else {
-                        locale = new Locale(locationLanguage, country);
+                        Locale(locationLanguage, country)
                     }
-
-                    ZmanimAddress address = new ZmanimAddress(locale);
-                    address.setFormatted(cursor.getString(INDEX_ADDRESS_ADDRESS));
-                    address.setId(cursor.getLong(INDEX_ADDRESS_ID));
-                    address.setLatitude(cursor.getDouble(INDEX_ADDRESS_LATITUDE));
-                    address.setLongitude(cursor.getDouble(INDEX_ADDRESS_LONGITUDE));
-                    address.setFavorite(cursor.getInt(INDEX_ADDRESS_FAVORITE) != 0);
-                    addresses.add(address);
-                } while (cursor.moveToNext());
+                    val address = ZmanimAddress(locale)
+                    address.formatted = cursor.getString(INDEX_ADDRESS_ADDRESS)
+                    address.id = cursor.getLong(INDEX_ADDRESS_ID)
+                    address.latitude = cursor.getDouble(INDEX_ADDRESS_LATITUDE)
+                    address.longitude = cursor.getDouble(INDEX_ADDRESS_LONGITUDE)
+                    address.isFavorite = cursor.getInt(INDEX_ADDRESS_FAVORITE) != 0
+                    addresses.add(address)
+                } while (cursor.moveToNext())
             }
-        } catch (SQLiteException e) {
-            Timber.e(e, "Query addresses: %s", e.getLocalizedMessage());
+        } catch (e: SQLiteException) {
+            Timber.e(e, "Query addresses: %s", e.localizedMessage)
         } finally {
-            cursor.close();
+            cursor.close()
         }
-
-        return addresses;
+        return addresses
     }
 
     /**
@@ -314,70 +236,82 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param location the location.
      * @param address  the address.
      */
-    public void insertOrUpdateAddress(@Nullable Location location, @Nullable ZmanimAddress address) {
-        if (address == null)
-            return;
-        long id = address.getId();
+    fun insertOrUpdateAddress(location: Location?, address: ZmanimAddress?) {
+        if (address == null) return
+        var id = address.id
         if (id < 0L) {
-            return;
+            return
         }
         // Cities have their own table.
-        if (address instanceof City) {
-            insertOrUpdateCity((City) address);
-            return;
+        if (address is City) {
+            insertOrUpdateCity(address)
+            return
         }
         // Nothing to save.
-        if (address instanceof Country) {
-            return;
+        if (address is Country) {
+            return
         }
-        boolean insert = id == 0L;
-
-        ContentValues values = new ContentValues();
-        double latitude;
-        double longitude;
+        val insert = id == 0L
+        val latitude: Double
+        val longitude: Double
         if (location == null) {
-            latitude = address.getLatitude();
-            longitude = address.getLongitude();
+            latitude = address.latitude
+            longitude = address.longitude
         } else {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
+            latitude = location.latitude
+            longitude = location.longitude
         }
-        if (insert) {
-            values.put(AddressColumns.LOCATION_LATITUDE, latitude);
-            values.put(AddressColumns.LOCATION_LONGITUDE, longitude);
+        val values = ContentValues().apply {
+            if (insert) {
+                put(AddressColumns.LOCATION_LATITUDE, latitude)
+                put(AddressColumns.LOCATION_LONGITUDE, longitude)
+            }
+            put(AddressColumns.ADDRESS, formatAddress(address).toString())
+            put(AddressColumns.LANGUAGE, address.locale.language)
+            put(AddressColumns.LATITUDE, address.latitude)
+            put(AddressColumns.LONGITUDE, address.longitude)
+            put(AddressColumns.TIMESTAMP, System.currentTimeMillis())
+            put(AddressColumns.FAVORITE, address.isFavorite)
         }
-        values.put(AddressColumns.ADDRESS, formatAddress(address).toString());
-        values.put(AddressColumns.LANGUAGE, address.getLocale().getLanguage());
-        values.put(AddressColumns.LATITUDE, address.getLatitude());
-        values.put(AddressColumns.LONGITUDE, address.getLongitude());
-        values.put(AddressColumns.TIMESTAMP, System.currentTimeMillis());
-        values.put(AddressColumns.FAVORITE, address.isFavorite());
 
-        final ContentResolver resolver = context.getContentResolver();
+        val context: Context = context
+        val resolver = context.contentResolver
         try {
             if (insert) {
-                Uri uri = resolver.insert(Addresses.CONTENT_URI(context), values);
+                val uri = resolver.insert(
+                    LocationContract.Addresses.CONTENT_URI(
+                        context
+                    ), values
+                )
                 if (uri != null) {
-                    id = ContentUris.parseId(uri);
+                    id = ContentUris.parseId(uri)
                     if (id > 0L) {
-                        address.setId(id);
+                        address.id = id
                     }
                 }
             } else {
-                Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
-                resolver.update(uri, values, null, null);
+                val uri = ContentUris.withAppendedId(
+                    LocationContract.Addresses.CONTENT_URI(
+                        context
+                    ), id
+                )
+                resolver.update(uri, values, null, null)
             }
-        } catch (Exception e) {
+        } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            Timber.e(e, "Error inserting address at " + latitude + "," + longitude + ": " + e.getLocalizedMessage());
+            Timber.e(
+                e,
+                "Error inserting address at " + latitude + "," + longitude + ": " + e.localizedMessage
+            )
         }
     }
 
     /**
      * Delete the list of cached addresses.
      */
-    public void deleteAddresses() {
-        context.getContentResolver().delete(Addresses.CONTENT_URI(context), null, null);
+    fun deleteAddresses() {
+        val context: Context = context
+        context.contentResolver.delete(LocationContract.Addresses.CONTENT_URI(context), null, null)
     }
 
     /**
@@ -386,36 +320,36 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param filter a cursor filter.
      * @return the list of locations with elevations.
      */
-    public List<ZmanimLocation> queryElevations(@Nullable CursorFilter filter) {
-        List<ZmanimLocation> locations = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null);
-        if ((cursor == null) || cursor.isClosed()) {
-            return locations;
+    fun queryElevations(filter: CursorFilter?): List<ZmanimLocation> {
+        val locations: MutableList<ZmanimLocation> = ArrayList()
+        val context: Context = context
+        val cursor = context.contentResolver.query(
+            Elevations.CONTENT_URI(context), PROJECTION_ELEVATION, null, null, null
+        )
+        if (cursor == null || cursor.isClosed) {
+            return locations
         }
-
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    if ((filter != null) && !filter.accept(cursor)) {
-                        continue;
+                    if (filter != null && !filter.accept(cursor)) {
+                        continue
                     }
-
-                    ZmanimLocation location = new ZmanimLocation(DB_PROVIDER);
-                    location.setId(cursor.getLong(INDEX_ELEVATION_ID));
-                    location.setLatitude(cursor.getDouble(INDEX_ELEVATION_LATITUDE));
-                    location.setLongitude(cursor.getDouble(INDEX_ELEVATION_LONGITUDE));
-                    location.setAltitude(cursor.getDouble(INDEX_ELEVATION_ELEVATION));
-                    location.setTime(cursor.getLong(INDEX_ELEVATION_TIMESTAMP));
-                    locations.add(location);
-                } while (cursor.moveToNext());
+                    val location = ZmanimLocation(DB_PROVIDER)
+                    location.id = cursor.getLong(INDEX_ELEVATION_ID)
+                    location.latitude = cursor.getDouble(INDEX_ELEVATION_LATITUDE)
+                    location.longitude = cursor.getDouble(INDEX_ELEVATION_LONGITUDE)
+                    location.altitude = cursor.getDouble(INDEX_ELEVATION_ELEVATION)
+                    location.time = cursor.getLong(INDEX_ELEVATION_TIMESTAMP)
+                    locations.add(location)
+                } while (cursor.moveToNext())
             }
-        } catch (SQLiteException e) {
-            Timber.e(e, "Query elevations: %s", e.getLocalizedMessage());
+        } catch (e: SQLiteException) {
+            Timber.e(e, "Query elevations: %s", e.localizedMessage)
         } finally {
-            cursor.close();
+            cursor.close()
         }
-
-        return locations;
+        return locations
     }
 
     /**
@@ -424,45 +358,47 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param location the location.
      */
-    public void insertOrUpdateElevation(@NonNull ZmanimLocation location) {
-        if ((location == null) || !location.hasAltitude())
-            return;
-        long id = location.getId();
-        if (id < 0L)
-            return;
-
-        ContentValues values = new ContentValues();
-        values.put(ElevationColumns.LATITUDE, location.getLatitude());
-        values.put(ElevationColumns.LONGITUDE, location.getLongitude());
-        values.put(ElevationColumns.ELEVATION, location.getAltitude());
-        values.put(ElevationColumns.TIMESTAMP, System.currentTimeMillis());
-
-        final ContentResolver resolver = context.getContentResolver();
-        final Uri contentUri = Elevations.CONTENT_URI(context);
+    fun insertOrUpdateElevation(location: ZmanimLocation?) {
+        if (location == null || !location.hasAltitude()) return
+        var id = location.id
+        if (id < 0L) return
+        val values = ContentValues().apply {
+            put(ElevationColumns.LATITUDE, location.latitude)
+            put(ElevationColumns.LONGITUDE, location.longitude)
+            put(ElevationColumns.ELEVATION, location.altitude)
+            put(ElevationColumns.TIMESTAMP, System.currentTimeMillis())
+        }
+        val context: Context = context
+        val resolver = context.contentResolver
+        val contentUri = Elevations.CONTENT_URI(context)
         try {
             if (id == 0L) {
-                Uri uri = resolver.insert(contentUri, values);
+                val uri = resolver.insert(contentUri, values)
                 if (uri != null) {
-                    id = ContentUris.parseId(uri);
+                    id = ContentUris.parseId(uri)
                     if (id > 0L) {
-                        location.setId(id);
+                        location.id = id
                     }
                 }
             } else {
-                Uri uri = ContentUris.withAppendedId(contentUri, id);
-                resolver.update(uri, values, null, null);
+                val uri = ContentUris.withAppendedId(contentUri, id)
+                resolver.update(uri, values, null, null)
             }
-        } catch (Exception e) {
+        } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/elevation
-            Timber.e(e, "Error inserting elevation at " + location.getLatitude() + "," + location.getLongitude() + ": " + e.getLocalizedMessage());
+            Timber.e(
+                e,
+                "Error inserting elevation at " + location.latitude + "," + location.longitude + ": " + e.localizedMessage
+            )
         }
     }
 
     /**
      * Delete the list of cached elevations.
      */
-    public void deleteElevations() {
-        context.getContentResolver().delete(Elevations.CONTENT_URI(context), null, null);
+    fun deleteElevations() {
+        val context: Context = context
+        context.contentResolver.delete(Elevations.CONTENT_URI(context), null, null)
     }
 
     /**
@@ -471,33 +407,33 @@ public class DatabaseGeocoder extends GeocoderBase {
      * @param filter a cursor filter.
      * @return the list of cities.
      */
-    public List<City> queryCities(@Nullable CursorFilter filter) {
-        List<City> cities = new ArrayList<>();
-        Cursor cursor = context.getContentResolver().query(Cities.CONTENT_URI(context), PROJECTION_CITY, null, null, null);
-        if ((cursor == null) || cursor.isClosed()) {
-            return cities;
+    fun queryCities(filter: CursorFilter?): List<City> {
+        val context: Context = context
+        val cities: MutableList<City> = ArrayList()
+        val cursor = context.contentResolver.query(
+            LocationContract.Cities.CONTENT_URI(context), PROJECTION_CITY, null, null, null
+        )
+        if (cursor == null || cursor.isClosed) {
+            return cities
         }
-
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    if ((filter != null) && !filter.accept(cursor)) {
-                        continue;
+                    if (filter != null && !filter.accept(cursor)) {
+                        continue
                     }
-
-                    City city = new City(locale);
-                    city.setId(cursor.getLong(INDEX_CITY_ID));
-                    city.setFavorite(cursor.getInt(INDEX_CITY_FAVORITE) != 0);
-                    cities.add(city);
-                } while (cursor.moveToNext());
+                    val city = City(locale)
+                    city.id = cursor.getLong(INDEX_CITY_ID)
+                    city.isFavorite = cursor.getInt(INDEX_CITY_FAVORITE) != 0
+                    cities.add(city)
+                } while (cursor.moveToNext())
             }
-        } catch (SQLiteException e) {
-            Timber.e(e, "Query cities: %s", e.getLocalizedMessage());
+        } catch (e: SQLiteException) {
+            Timber.e(e, "Query cities: %s", e.localizedMessage)
         } finally {
-            cursor.close();
+            cursor.close()
         }
-
-        return cities;
+        return cities
     }
 
     /**
@@ -505,42 +441,43 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param city the city.
      */
-    public void insertOrUpdateCity(@NonNull City city) {
-        if (city == null)
-            return;
-
-        ContentValues values = new ContentValues();
-        values.put(CityColumns.TIMESTAMP, System.currentTimeMillis());
-        values.put(CityColumns.FAVORITE, city.isFavorite());
-
-        final ContentResolver resolver = context.getContentResolver();
-        long id = city.getId();
+    fun insertOrUpdateCity(city: City?) {
+        if (city == null) return
+        val values = ContentValues().apply {
+            put(CityColumns.TIMESTAMP, System.currentTimeMillis())
+            put(CityColumns.FAVORITE, city.isFavorite)
+        }
+        val context: Context = context
+        val resolver = context.contentResolver
+        var id = city.id
         try {
             if (id == 0L) {
-                values.put(BaseColumns._ID, City.generateCityId(city));
-
-                Uri uri = resolver.insert(Cities.CONTENT_URI(context), values);
+                values.put(BaseColumns._ID, City.generateCityId(city))
+                val uri = resolver.insert(LocationContract.Cities.CONTENT_URI(context), values)
                 if (uri != null) {
-                    id = ContentUris.parseId(uri);
+                    id = ContentUris.parseId(uri)
                     if (id > 0L) {
-                        city.setId(id);
+                        city.id = id
                     }
                 }
             } else {
-                Uri uri = ContentUris.withAppendedId(Cities.CONTENT_URI(context), id);
-                resolver.update(uri, values, null, null);
+                val uri = ContentUris.withAppendedId(
+                    LocationContract.Cities.CONTENT_URI(context), id
+                )
+                resolver.update(uri, values, null, null)
             }
-        } catch (Exception e) {
+        } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/city
-            Timber.e(e, "Error inserting city for " + city.getFormatted() + ": " + e.getLocalizedMessage());
+            Timber.e(e, "Error inserting city for " + city.formatted + ": " + e.localizedMessage)
         }
     }
 
     /**
      * Delete the list of cached cities and re-populate.
      */
-    public void deleteCities() {
-        context.getContentResolver().delete(Cities.CONTENT_URI(context), null, null);
+    fun deleteCities() {
+        val context: Context = context
+        context.contentResolver.delete(LocationContract.Cities.CONTENT_URI(context), null, null)
     }
 
     /**
@@ -548,52 +485,108 @@ public class DatabaseGeocoder extends GeocoderBase {
      *
      * @param address the address.
      */
-    public boolean deleteAddress(@NonNull ZmanimAddress address) {
-        if (address == null)
-            return false;
-        long id = address.getId();
+    fun deleteAddress(address: ZmanimAddress?): Boolean {
+        if (address == null) return false
+        val context: Context = context
+        val id = address.id
         if (id < 0L) {
-            return false;
+            return false
         }
         // Cities have their own table.
-        if (address instanceof City) {
-            return false;
+        if (address is City) {
+            return false
         }
         // Nothing to delete.
-        if (address instanceof Country) {
-            return false;
+        if (address is Country) {
+            return false
         }
-
-        final ContentResolver resolver = context.getContentResolver();
+        val resolver = context.contentResolver
         try {
-            Uri uri = ContentUris.withAppendedId(Addresses.CONTENT_URI(context), id);
-            return resolver.delete(uri, null, null) > 0;
-        } catch (Exception e) {
+            val uri = ContentUris.withAppendedId(
+                LocationContract.Addresses.CONTENT_URI(context), id
+            )
+            return resolver.delete(uri, null, null) > 0
+        } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            Timber.e(e, "Error deleting address " + address.getId() + " at " + address.getLatitude() + "," + address.getLongitude() + ": " + e.getLocalizedMessage());
+            Timber.e(
+                e,
+                "Error deleting address " + address.id + " at " + address.latitude + "," + address.longitude + ": " + e.localizedMessage
+            )
         }
-        return false;
+        return false
     }
 
-    private class DistanceComparator implements Comparator<ZmanimAddress> {
+    private inner class DistanceComparator(
+        private val latitude: Double,
+        private val longitude: Double
+    ) : Comparator<ZmanimAddress> {
+        private val distance = FloatArray(1)
 
-        private final double latitude;
-        private final double longitude;
-        private final float[] distance = new float[1];
-
-        public DistanceComparator(final double latitude, final double longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        @Override
-        public int compare(ZmanimAddress a1, ZmanimAddress a2) {
-            Location.distanceBetween(latitude, longitude, a1.getLatitude(), a1.getLongitude(), distance);
-            double d1 = distance[0];
-            Location.distanceBetween(latitude, longitude, a2.getLatitude(), a2.getLongitude(), distance);
-            double d2 = distance[0];
+        override fun compare(a1: ZmanimAddress, a2: ZmanimAddress): Int {
+            Location.distanceBetween(latitude, longitude, a1.latitude, a1.longitude, distance)
+            val d1 = distance[0]
+            Location.distanceBetween(latitude, longitude, a2.latitude, a2.longitude, distance)
+            val d2 = distance[0]
             // Closer distance at top of the list.
-            return Double.compare(d1, d2);
+            return d1.compareTo(d2)
         }
+    }
+
+    /**
+     * Format the address.
+     *
+     * @param a the address.
+     * @return the formatted address name.
+     */
+    private fun formatAddress(a: ZmanimAddress): CharSequence {
+        return a.formatted
+    }
+
+    companion object {
+        /**
+         * Database
+         */
+        private const val DB_PROVIDER = "db"
+
+        private val PROJECTION_ADDRESS = arrayOf(
+            BaseColumns._ID,
+            AddressColumns.LOCATION_LATITUDE,
+            AddressColumns.LOCATION_LONGITUDE,
+            AddressColumns.LATITUDE,
+            AddressColumns.LONGITUDE,
+            AddressColumns.ADDRESS,
+            AddressColumns.LANGUAGE,
+            AddressColumns.FAVORITE
+        )
+        private const val INDEX_ADDRESS_ID = 0
+        private const val INDEX_ADDRESS_LOCATION_LATITUDE = 1
+        private const val INDEX_ADDRESS_LOCATION_LONGITUDE = 2
+        private const val INDEX_ADDRESS_LATITUDE = 3
+        private const val INDEX_ADDRESS_LONGITUDE = 4
+        private const val INDEX_ADDRESS_ADDRESS = 5
+        private const val INDEX_ADDRESS_LANGUAGE = 6
+        private const val INDEX_ADDRESS_FAVORITE = 7
+
+        private val PROJECTION_ELEVATION = arrayOf(
+            BaseColumns._ID,
+            ElevationColumns.LATITUDE,
+            ElevationColumns.LONGITUDE,
+            ElevationColumns.ELEVATION,
+            ElevationColumns.TIMESTAMP
+        )
+        private const val INDEX_ELEVATION_ID = 0
+        private const val INDEX_ELEVATION_LATITUDE = 1
+        private const val INDEX_ELEVATION_LONGITUDE = 2
+        private const val INDEX_ELEVATION_ELEVATION = 3
+        private const val INDEX_ELEVATION_TIMESTAMP = 4
+
+        private val PROJECTION_CITY = arrayOf(
+            BaseColumns._ID,
+            CityColumns.TIMESTAMP,
+            CityColumns.FAVORITE
+        )
+        private const val INDEX_CITY_ID = 0
+        private const val INDEX_CITY_TIMESTAMP = 1
+        private const val INDEX_CITY_FAVORITE = 2
     }
 }
