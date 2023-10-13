@@ -256,7 +256,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         this.localeCallbacks = new LocaleHelper<>(newBase);
         Context context = localeCallbacks.attachBaseContext(newBase);
         super.attachBaseContext(context);
-
         applyOverrideConfiguration(context.getResources().getConfiguration());
     }
 
@@ -585,6 +584,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         } else {
             masterFragment.unhighlight();
             if (itemId == R.string.candles) {
+                candlesFragment.populateTimes(calendar);
                 detailsFragmentSwitcher.setDisplayedChild(CHILD_DETAILS_CANDLES);
             } else {
                 detailsListFragment.populateTimes(calendar, itemId);
@@ -663,6 +663,11 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     protected void showDetails() {
         if (viewSwitcher != null) {
             viewSwitcher.setDisplayedChild(CHILD_DETAILS);
+
+            if (detailsListFragment != null)
+                detailsListFragment.setVisibility(View.VISIBLE);
+            if (candlesFragment != null)
+                candlesFragment.setVisibility(View.VISIBLE);
         } else if (detailsGrow != null) {
             detailsFragmentSwitcher.startAnimation(detailsGrow);
         }

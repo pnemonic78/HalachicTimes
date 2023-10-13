@@ -18,6 +18,7 @@ package com.github.times;
 import static com.github.view.ViewUtils.applyMaxWidth;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
@@ -94,6 +95,17 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
             setBackgroundColorDark(id, list);
         } else if (theme == R.style.Theme_Zmanim_Light) {
             setBackgroundColorLight(id, list);
+       } else if (theme == R.style.Theme_Zmanim_DayNight) {
+            final Context context = list.getContext();
+            final int nightMode = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            switch (nightMode) {
+                case Configuration.UI_MODE_NIGHT_NO:
+                    setBackgroundColorLight(id, list);
+                    break;
+                case Configuration.UI_MODE_NIGHT_YES:
+                    setBackgroundColorDark(id, list);
+                    break;
+            }
         } else {
             list.setBackgroundColor(Color.TRANSPARENT);
         }
@@ -186,7 +198,7 @@ public class ZmanimDetailsFragment<A extends ZmanimDetailsAdapter, P extends Zma
         if (adapter == null)
             return;
 
-        final Context context = getContextImpl();
+        final Context context = list.getContext();
         if (context == null)
             return;
 
