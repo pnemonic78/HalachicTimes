@@ -15,7 +15,6 @@
  */
 package com.github.times;
 
-import static android.os.Build.VERSION;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 import static android.text.format.DateUtils.FORMAT_SHOW_WEEKDAY;
 import static android.text.format.DateUtils.FORMAT_SHOW_YEAR;
@@ -25,7 +24,6 @@ import static com.github.times.ZmanimItem.NEVER;
 import static com.github.util.LocaleUtils.isLocaleRTL;
 import static java.lang.System.currentTimeMillis;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -33,9 +31,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -61,7 +57,6 @@ import com.github.app.LocaleHelper;
 import com.github.app.SimpleThemeCallbacks;
 import com.github.app.ThemeCallbacks;
 import com.github.app.TodayDatePickerDialog;
-import com.github.content.ContextResourcesWrapper;
 import com.github.times.compass.CompassActivity;
 import com.github.times.location.LocatedActivity;
 import com.github.times.location.LocationActivity;
@@ -264,9 +259,6 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         super.onCreate(savedInstanceState);
         init();
         initLocation();
-        if (VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            initNotificationPermissions();
-        }
     }
 
     @Override
@@ -958,10 +950,5 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     @Override
     protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context, getZmanimPreferences());
-    }
-
-    @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    private void initNotificationPermissions() {
-        ZmanimReminder.checkNotificationPermissions(this);
     }
 }

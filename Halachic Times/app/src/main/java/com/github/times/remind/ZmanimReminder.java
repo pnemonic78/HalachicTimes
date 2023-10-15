@@ -50,6 +50,7 @@ import static java.util.Calendar.WEDNESDAY;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -183,7 +184,9 @@ public class ZmanimReminder {
     private static final String WAKE_TAG = "ZmanimReminder:wake";
 
     @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    private static final String[] PERMISSIONS = {Manifest.permission.POST_NOTIFICATIONS};
+    public static final String PERMISSION_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS;
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    public static final String[] PERMISSIONS = {PERMISSION_NOTIFICATIONS};
     /**
      * Activity id for requesting notification permissions.
      */
@@ -1027,9 +1030,9 @@ public class ZmanimReminder {
     }
 
     @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    public static void checkNotificationPermissions(AppCompatActivity activity) {
-        ZmanimReminder reminder = new ZmanimReminder(activity);
-        NotificationManager nm = reminder.getNotificationManager();
+    public static void checkNotificationPermissions(Activity activity) {
+        final Context context = activity;
+        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (nm.areNotificationsEnabled()) return;
         activity.requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
     }

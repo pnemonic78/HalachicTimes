@@ -15,6 +15,7 @@
  */
 package com.github.times.preference;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -26,14 +27,17 @@ import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.SwitchPreference;
 
 import com.github.times.R;
+import com.github.times.remind.ZmanimReminder;
 
 import static android.os.Build.VERSION;
 import static android.os.Build.VERSION_CODES;
 import static android.text.TextUtils.isEmpty;
 import static com.github.times.compass.preference.CompassPreferences.KEY_COMPASS_BEARING;
 import static com.github.times.location.LocationPreferences.KEY_COORDS_FORMAT;
+import static com.github.times.preference.ZmanimPreferences.KEY_NOTIFICATION_UPCOMING;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_RINGTONE;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_SETTINGS;
 import static com.github.times.preference.ZmanimPreferences.KEY_REMINDER_STREAM;
@@ -75,6 +79,20 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                     intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
                     startActivity(intent);
                     return true;
+                });
+            }
+        }
+        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
+            SwitchPreference preference = findPreference(KEY_NOTIFICATION_UPCOMING);
+            if (preference != null) {
+                preference.setOnPreferenceClickListener(pref -> {
+                    if (preference.isChecked()) {
+                        final Activity activity = getActivity();
+                        if (activity == null) return false;
+                        ZmanimReminder.checkNotificationPermissions(activity);
+                        return true;
+                    }
+                    return false;
                 });
             }
         }

@@ -15,12 +15,16 @@
  */
 package com.github.times.preference;
 
+import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE;
+
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -38,7 +42,8 @@ import com.github.times.R;
 import com.github.times.remind.ZmanimReminder;
 import com.github.times.remind.ZmanimReminderService;
 
-import static com.github.times.preference.RingtonePreference.PERMISSION_RINGTONE;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This fragment shows the preferences for a zman screen.
@@ -120,16 +125,16 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
 
     private void initReminder(String reminderKey) {
         Preference preferenceReminder = initList(reminderKey);
-        if (preferenceReminder != null) {
-            preferenceReminder.setOnPreferenceChangeListener((preference, newValue) -> {
-                requestReminderPermissions();
-                remind();
-                return true;
-            });
-        } else {
+        if (preferenceReminder == null) {
             preferenceReminder = initTime(reminderKey);
         }
         if (preferenceReminder != null) {
+            preferenceReminder.setOnPreferenceChangeListener((preference, newValue) -> {
+                final Context context = preference.getContext();
+                requestReminderPermissions(context);
+                remind(context);
+                return true;
+            });
             initReminderDays(preferenceReminder);
         }
     }
@@ -195,7 +200,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             || preference.equals(preferenceReminderThursday)
             || preference.equals(preferenceReminderFriday)
             || preference.equals(preferenceReminderSaturday)) {
-            remind();
+            remind(preference.getContext());
         }
 
         return super.onCheckBoxPreferenceChange(preference, newValue);
@@ -205,8 +210,7 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
      * Run the reminder service.
      * Tries to postpone the reminder until after any preferences have changed.
      */
-    private void remind() {
-        final Context context = getContext();
+    private void remind(Context context) {
         Intent intent = new Intent(ZmanimReminder.ACTION_UPDATE);
         ZmanimReminderService.enqueueWork(context, intent);
     }
@@ -271,10 +275,18 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             .apply();
     }
 
-    private void requestReminderPermissions() {
-        final Context context = requireContext();
+    private void requestReminderPermissions(Context context) {
+        List<String> permissions = new ArrayList<>();
         if (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_RINGTONE) != PermissionChecker.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{PERMISSION_RINGTONE}, REQUEST_PERMISSIONS);
+            permissions.add(PERMISSION_RINGTONE);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (nm.areNotificationsEnabled()) return;
+            permissions.add(ZmanimReminder.PERMISSION_NOTIFICATIONS);
+        }
+        if (permissions.size() > 0) {
+            requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSIONS);
         }
     }
 }
