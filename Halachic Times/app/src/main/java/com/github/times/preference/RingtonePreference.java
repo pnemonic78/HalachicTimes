@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
 
 import com.github.app.ActivityUtils;
+import com.github.media.RingtoneManager;
 
 /**
  * A {@link Preference} that allows the user to choose a ringtone from those on the device.
@@ -35,7 +36,7 @@ import com.github.app.ActivityUtils;
  */
 public class RingtonePreference extends com.github.preference.RingtonePreference {
 
-    public static final String PERMISSION_RINGTONE = Manifest.permission.READ_EXTERNAL_STORAGE;
+    public static final String PERMISSION_RINGTONE = RingtoneManager.Companion.getPERMISSION_RINGTONE();
 
     private Fragment requestPermissionsFragment;
     private int requestPermissionsCode;
