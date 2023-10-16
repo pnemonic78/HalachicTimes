@@ -183,7 +183,7 @@ public class ZmanimWidget extends ZmanimAppWidget {
         for (int i = 0; i < count; i++) {
             item = items.get(i);
             if (item.isCategory()) {
-                bindViewGrouping(list, i, item.timeLabel);
+                bindViewGrouping(list, item.timeLabel);
             } else {
                 bindView(context, list, i, count, item);
             }
@@ -229,11 +229,10 @@ public class ZmanimWidget extends ZmanimAppWidget {
      * Bind the date group header to a list.
      *
      * @param list     the list.
-     * @param position the position index.
      * @param label    the formatted Hebrew date label.
      */
-    protected void bindViewGrouping(RemoteViews list, int position, CharSequence label) {
-        if ((position < 0) || (label == null)) {
+    protected void bindViewGrouping(RemoteViews list, CharSequence label) {
+        if (TextUtils.isEmpty(label)) {
             return;
         }
         final Context context = getContext();
