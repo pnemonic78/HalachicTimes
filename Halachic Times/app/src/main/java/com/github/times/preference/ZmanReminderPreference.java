@@ -43,6 +43,12 @@ public class ZmanReminderPreference extends ListPreference {
     }
 
     @Override
+    protected void notifyChanged() {
+        super.notifyChanged();
+        notifyDependencyChange(shouldDisableDependents());
+    }
+
+    @Override
     public boolean shouldDisableDependents() {
         return super.shouldDisableDependents() || isOff();
     }

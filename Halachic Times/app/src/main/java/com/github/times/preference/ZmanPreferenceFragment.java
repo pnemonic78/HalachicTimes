@@ -34,7 +34,6 @@ import androidx.annotation.XmlRes;
 import androidx.core.content.PermissionChecker;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreference;
 import androidx.preference.TwoStatePreference;
 
 import com.github.preference.SimplePreferences;
@@ -129,10 +128,12 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
             preferenceReminder = initTime(reminderKey);
         }
         if (preferenceReminder != null) {
+            final Preference.OnPreferenceChangeListener listener = preferenceReminder.getOnPreferenceChangeListener();
             preferenceReminder.setOnPreferenceChangeListener((preference, newValue) -> {
                 final Context context = preference.getContext();
                 requestReminderPermissions(context);
                 remind(context);
+                if (listener != null) return listener.onPreferenceChange(preference, newValue);
                 return true;
             });
             initReminderDays(preferenceReminder);
@@ -177,22 +178,21 @@ public class ZmanPreferenceFragment extends com.github.preference.AbstractPrefer
     }
 
     @Nullable
-    protected TwoStatePreference initReminderDay(String key) {
+    protected Preference initReminderDay(String key) {
         if (TextUtils.isEmpty(key)) {
             return null;
         }
 
-        Preference pref = findPreference(key);
-        if (pref != null) {
-            TwoStatePreference checkBox = (TwoStatePreference) pref;
-            checkBox.setOnPreferenceChangeListener(this);
-            return checkBox;
+        Preference preference = findPreference(key);
+        if (preference != null) {
+            preference.setOnPreferenceChangeListener(this);
+            return preference;
         }
         return null;
     }
 
     @Override
-    protected boolean onCheckBoxPreferenceChange(SwitchPreference preference, Object newValue) {
+    protected boolean onCheckBoxPreferenceChange(TwoStatePreference preference, Object newValue) {
         if (preference.equals(preferenceReminderSunday)
             || preference.equals(preferenceReminderMonday)
             || preference.equals(preferenceReminderTuesday)
