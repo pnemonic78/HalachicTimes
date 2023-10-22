@@ -82,14 +82,14 @@ public class GeneralPreferenceFragment extends AbstractPreferenceFragment {
                 });
             }
         }
-        if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU) {
+        if (VERSION.SDK_INT >= VERSION_CODES.M) {
             SwitchPreference preference = findPreference(KEY_NOTIFICATION_UPCOMING);
             if (preference != null) {
                 preference.setOnPreferenceClickListener(pref -> {
                     if (preference.isChecked()) {
                         final Activity activity = getActivity();
                         if (activity == null) return false;
-                        ZmanimReminder.checkNotificationPermissions(activity);
+                        ZmanimReminder.checkPermissions(activity);
                         return true;
                     }
                     return false;

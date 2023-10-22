@@ -73,13 +73,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.AlarmManagerCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 
 import com.github.times.CandleData;
 import com.github.times.R;
@@ -94,7 +96,9 @@ import com.github.times.preference.ZmanimPreferences;
 import com.kosherjava.zmanim.hebrewcalendar.JewishCalendar;
 import com.kosherjava.zmanim.util.GeoLocation;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import timber.log.Timber;
 
@@ -185,8 +189,6 @@ public class ZmanimReminder {
 
     @TargetApi(Build.VERSION_CODES.TIRAMISU)
     public static final String PERMISSION_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS;
-    @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    public static final String[] PERMISSIONS = {PERMISSION_NOTIFICATIONS};
     /**
      * Activity id for requesting notification permissions.
      */
@@ -233,7 +235,7 @@ public class ZmanimReminder {
     /**
      * Setup the first reminder for today.
      *
-     * @param context The context.
+     * @param context  The context.
      * @param settings the preferences.
      */
     private void remind(Context context, ZmanimPreferences settings) {
@@ -1029,12 +1031,26 @@ public class ZmanimReminder {
         initNotifications(nm);
     }
 
-    @TargetApi(Build.VERSION_CODES.TIRAMISU)
-    public static void checkNotificationPermissions(Activity activity) {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public static void checkPermissions(Activity activity) {
         final Context context = activity;
-        NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (nm.areNotificationsEnabled()) return;
-        activity.requestPermissions(PERMISSIONS, ACTIVITY_PERMISSIONS);
+        List<String> permissions = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (!nm.areNotificationsEnabled() || (PermissionChecker.checkCallingOrSelfPermission(context, PERMISSION_NOTIFICATIONS) != PermissionChecker.PERMISSION_GRANTED)) {
+                permissions.add(PERMISSION_NOTIFICATIONS);
+            }
+        }
+        if (!permissions.isEmpty()) {
+            activity.requestPermissions(permissions.toArray(new String[permissions.size()]), ACTIVITY_PERMISSIONS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarms = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            if (!alarms.canScheduleExactAlarms()) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.parse("package:" + context.getPackageName()));
+                context.startActivity(intent);
+            }
+        }
     }
 
     private ZmanimPreferences createPreferences(Context context) {
