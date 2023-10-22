@@ -190,10 +190,6 @@
             android:name="com.github.times.appwidget.ZmanimWidgetService"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <meta-data
-            android:name="com.google.android.backup.api_key"
-            android:value="@string/google_backup_api_key" />
     </application>
 
 </manifest>

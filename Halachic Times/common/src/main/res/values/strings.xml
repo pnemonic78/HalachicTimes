@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Backup -->
-    <string name="google_backup_api_key" translatable="false">GoogleKey</string>
-
     <!-- Preferences -->
     <string name="summaries_title">Summaries</string>
 
