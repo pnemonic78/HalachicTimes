@@ -19,6 +19,8 @@ import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 /**
  * Location that is partially stored in the local database.
  *
@@ -68,7 +70,7 @@ public class ZmanimLocation extends Location {
      *
      * @param provider the name of the provider that generated this location.
      */
-    public ZmanimLocation(String provider) {
+    public ZmanimLocation(@NonNull String provider) {
         super(provider);
     }
 
@@ -77,7 +79,7 @@ public class ZmanimLocation extends Location {
      *
      * @param location the source location.
      */
-    public ZmanimLocation(Location location) {
+    public ZmanimLocation(@NonNull Location location) {
         super(location);
     }
 

@@ -98,7 +98,7 @@ abstract class BaseCompassActivity : LocatedActivity<ThemePreferences>() {
         return SimpleCompassPreferences(context)
     }
 
-    override fun createThemeCallbacks(context: Context): ThemeCallbacks<ThemePreferences?> {
+    override fun createThemeCallbacks(context: Context): ThemeCallbacks<ThemePreferences> {
         return SimpleThemeCallbacks(context, preferences)
     }
 

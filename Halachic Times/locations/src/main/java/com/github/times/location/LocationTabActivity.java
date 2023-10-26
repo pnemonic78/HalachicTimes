@@ -75,14 +75,19 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
 
     private static final int REQUEST_ADD = 0xADD;
 
-    private static int ic_menu_star = 0;
+    private static int ic_menu_star;
 
     static {
+        init();
+    }
+
+    @SuppressLint({"DiscouragedApi", "PrivateApi"})
+    private static void init() {
         try {
             Resources res = Resources.getSystem();
             ic_menu_star = res.getIdentifier("ic_menu_star", "drawable", "android");
             if (ic_menu_star == 0) {
-                @SuppressLint("PrivateApi") Class<?> clazz = Class.forName("com.android.internal.R$drawable");
+                Class<?> clazz = Class.forName("com.android.internal.R$drawable");
                 Field field = clazz.getDeclaredField("ic_menu_star");
                 ic_menu_star = field.getInt(null);
             }
@@ -417,35 +422,37 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     }
 
     @Override
-    public void onAddressChanged(Location location, final ZmanimAddress address) {
+    public void onAddressChanged(@NonNull Location location, @NonNull final ZmanimAddress address) {
         if ((location == null) || (address == null)) {
             return;
         }
         Location locationForAddress = this.locationForAddress;
-        if ((locationForAddress == null) || (location.getLatitude() != locationForAddress.getLatitude()) || (location.getLongitude() != locationForAddress.getLongitude())) {
+        if ((locationForAddress == null)
+            || (location.getLatitude() != locationForAddress.getLatitude())
+            || (location.getLongitude() != locationForAddress.getLongitude())) {
             return;
         }
         handler.obtainMessage(WHAT_ADDED, address).sendToTarget();
     }
 
     @Override
-    public void onElevationChanged(Location location) {
+    public void onElevationChanged(@NonNull Location location) {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull Location location) {
     }
 
     @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+    public void onStatusChanged(String provider, int status, Bundle extras) {
     }
 
     @Override
-    public void onProviderEnabled(String s) {
+    public void onProviderEnabled(@NonNull String provider) {
     }
 
     @Override
-    public void onProviderDisabled(String s) {
+    public void onProviderDisabled(@NonNull String provider) {
     }
 
     @Override

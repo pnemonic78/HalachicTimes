@@ -176,7 +176,7 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     }
 
     @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
+    public void onAddressChanged(@NonNull Location location, @NonNull ZmanimAddress address) {
         Timber.v("onAddressChanged %s %s", location, address);
         addressLocation = location;
         this.address = address;
@@ -199,12 +199,12 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     }
 
     @Override
-    public void onElevationChanged(Location location) {
+    public void onElevationChanged(@NonNull Location location) {
         onLocationChanged(location);
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull Location location) {
         Timber.v("onLocationChanged %s <= %s", location, addressLocation);
         if (ZmanimLocation.compare(addressLocation, location) != 0) {
             address = null;
@@ -218,11 +218,11 @@ public abstract class LocatedActivity<P extends ThemePreferences> extends AppCom
     protected abstract Runnable createUpdateLocationRunnable(Location location);
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(@NonNull String provider) {
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onProviderEnabled(@NonNull String provider) {
     }
 
     @Override

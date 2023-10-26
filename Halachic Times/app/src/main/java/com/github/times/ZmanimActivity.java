@@ -287,14 +287,14 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putLong(EXTRA_DATE, calendar.getTimeInMillis());
         outState.putInt(PARAMETER_DETAILS, selectedId);
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         setDate(savedInstanceState.getLong(EXTRA_DATE));
         selectedId = savedInstanceState.getInt(PARAMETER_DETAILS, selectedId);
@@ -523,6 +523,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         setDate(year, monthOfYear, dayOfMonth);
     }
 
+    @NonNull
     @Override
     protected Runnable createBindHeaderRunnable() {
         return new Runnable() {
@@ -683,25 +684,25 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    public void onShowPress(MotionEvent event) {
+    public void onShowPress(@NonNull MotionEvent event) {
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent event) {
+    public boolean onSingleTapUp(@NonNull MotionEvent event) {
         return false;
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
         return false;
     }
 
     @Override
-    public void onLongPress(MotionEvent event) {
+    public void onLongPress(@NonNull MotionEvent event) {
     }
 
     @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent e1, @NonNull MotionEvent e2, float velocityX, float velocityY) {
         // Go to date? Also don't go to date accidentally while scrolling vertically.
         if (Math.abs(velocityX) > Math.abs(velocityY) * 2) {
             if (velocityX < 0) {
@@ -721,17 +722,17 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    public boolean onSingleTapConfirmed(MotionEvent event) {
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent event) {
         return false;
     }
 
     @Override
-    public boolean onDoubleTap(MotionEvent event) {
+    public boolean onDoubleTap(@NonNull MotionEvent event) {
         return false;
     }
 
     @Override
-    public boolean onDoubleTapEvent(MotionEvent event) {
+    public boolean onDoubleTapEvent(@NonNull MotionEvent event) {
         return false;
     }
 
@@ -743,7 +744,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         localeRTL = isLocaleRTL(newConfig);
     }
@@ -949,6 +950,7 @@ public class ZmanimActivity extends LocatedActivity<ZmanimPreferences> implement
         return preferences;
     }
 
+    @NonNull
     @Override
     protected ThemeCallbacks<ZmanimPreferences> createThemeCallbacks(Context context) {
         return new SimpleThemeCallbacks<>(context, getZmanimPreferences());

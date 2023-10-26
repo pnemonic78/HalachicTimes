@@ -19,37 +19,48 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
+import androidx.annotation.NonNull;
+
 public interface ZmanimLocationListener extends LocationListener {
 
-    /** The intent action for an address that was found. */
+    /**
+     * The intent action for an address that was found.
+     */
     String ACTION_ADDRESS = "com.github.times.location.ADDRESS";
-    /** The intent action for a location with elevation that was found. */
+    /**
+     * The intent action for a location with elevation that was found.
+     */
     String ACTION_ELEVATION = "com.github.times.location.ELEVATION";
-    /** The intent action for when a location changed. */
+    /**
+     * The intent action for when a location changed.
+     */
     String ACTION_LOCATION_CHANGED = "com.github.times.location.LOCATION_CHANGED";
 
-    /** The location parameter. */
+    /**
+     * The location parameter.
+     */
     String EXTRA_LOCATION = LocationManager.KEY_LOCATION_CHANGED;
-    /** The address parameter. */
+    /**
+     * The address parameter.
+     */
     String EXTRA_ADDRESS = "address";
-    /** Whether to persist the address? */
+    /**
+     * Whether to persist the address?
+     */
     String EXTRA_PERSIST = "persist_address";
 
     /**
      * Called when an address is found.
      *
-     * @param location
-     *         the requested location.
-     * @param address
-     *         the address for the location.
+     * @param location the requested location.
+     * @param address  the address for the location.
      */
-    void onAddressChanged(Location location, ZmanimAddress address);
+    void onAddressChanged(@NonNull Location location, @NonNull ZmanimAddress address);
 
     /**
      * Called when an address is found.
      *
-     * @param location
-     *         the location with elevation.
+     * @param location the location with elevation.
      */
-    void onElevationChanged(Location location);
+    void onElevationChanged(@NonNull Location location);
 }

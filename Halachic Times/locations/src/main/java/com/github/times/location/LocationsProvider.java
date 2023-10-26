@@ -22,6 +22,7 @@ import static android.text.format.DateUtils.SECOND_IN_MILLIS;
 import static com.github.times.location.GeocoderBase.USER_PROVIDER;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.PermissionChecker;
@@ -212,6 +214,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
      *
      * @param context the context.
      */
+    @SuppressLint({"UnspecifiedRegisterReceiverFlag", "WrongConstant"})
     public LocationsProvider(Context context) {
         Context app = context.getApplicationContext();
         if (app != null) {
@@ -228,7 +231,13 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
         filter.addAction(ACTION_ADDRESS);
         filter.addAction(ACTION_ELEVATION);
         filter.addAction(ACTION_TIMEZONE_CHANGED);
-        context.registerReceiver(broadcastReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(broadcastReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.registerReceiver(broadcastReceiver, filter, 0x4);
+        } else {
+            context.registerReceiver(broadcastReceiver, filter);
+        }
 
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();
@@ -256,7 +265,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull Location location) {
         Timber.v("onLocationChanged %s", location);
         onLocationChanged(location, true, true);
     }
@@ -329,14 +338,14 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(@NonNull String provider) {
         for (ZmanimLocationListener listener : locationListeners) {
             listener.onProviderDisabled(provider);
         }
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onProviderEnabled(@NonNull String provider) {
         for (ZmanimLocationListener listener : locationListeners) {
             listener.onProviderEnabled(provider);
         }

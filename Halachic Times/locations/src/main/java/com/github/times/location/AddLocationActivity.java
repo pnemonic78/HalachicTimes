@@ -34,6 +34,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -391,7 +392,7 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
     }
 
     @Override
-    public void onAddressChanged(Location location, ZmanimAddress address) {
+    public void onAddressChanged(@NonNull Location location, ZmanimAddress address) {
         if ((location == null) || (address == null)) {
             return;
         }
@@ -416,11 +417,11 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
     }
 
     @Override
-    public void onElevationChanged(Location location) {
+    public void onElevationChanged(@NonNull Location location) {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(@NonNull Location location) {
     }
 
     @Override
@@ -428,22 +429,22 @@ public class AddLocationActivity<P extends ThemePreferences> extends AppCompatAc
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
+    public void onProviderEnabled(@NonNull String provider) {
     }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(@NonNull String provider) {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(SAVE_STATE_LOCATION, location);
         outState.putParcelable(SAVE_STATE_ADDRESS, address);
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         location = savedInstanceState.getParcelable(SAVE_STATE_LOCATION);
         address = savedInstanceState.getParcelable(SAVE_STATE_ADDRESS);
