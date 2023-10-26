@@ -279,9 +279,8 @@ class DatabaseGeocoder(
         try {
             if (insert) {
                 val uri = resolver.insert(
-                    LocationContract.Addresses.CONTENT_URI(
-                        context
-                    ), values
+                    LocationContract.Addresses.CONTENT_URI(context),
+                    values
                 )
                 if (uri != null) {
                     id = ContentUris.parseId(uri)
@@ -291,18 +290,14 @@ class DatabaseGeocoder(
                 }
             } else {
                 val uri = ContentUris.withAppendedId(
-                    LocationContract.Addresses.CONTENT_URI(
-                        context
-                    ), id
+                    LocationContract.Addresses.CONTENT_URI(context),
+                    id
                 )
                 resolver.update(uri, values, null, null)
             }
         } catch (e: Exception) {
             // Caused by: java.lang.IllegalArgumentException: Unknown URL content://net.sf.times.debug.locations/address
-            Timber.e(
-                e,
-                "Error inserting address at " + latitude + "," + longitude + ": " + e.localizedMessage
-            )
+            Timber.e(e, "Error inserting address at $latitude,$longitude: ${e.message}")
         }
     }
 

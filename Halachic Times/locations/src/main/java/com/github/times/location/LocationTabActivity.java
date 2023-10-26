@@ -411,7 +411,7 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         fetchAddress(location);
 
         LocationFormatter formatter = getLocations();
-        CharSequence query = formatter.formatLatitude(location.getLatitude());
+        CharSequence query = formatter.formatLongitude(location.getLongitude());
         search(query);
     }
 
@@ -458,8 +458,8 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
     @Override
     public void onFilterComplete(LocationAdapter adapter, int count) {
         // Switch to the first non-empty tab.
-        if ((count == 0) && (adapter == adapterFavorites) && (tabHost.getCurrentTab() == 0)) {
-            tabHost.setCurrentTab(1);
+        if ((count == 0) && (adapter == adapterFavorites) && (tabHost.getCurrentTab() == TAB_FAVORITES)) {
+            tabHost.setCurrentTab(TAB_ALL);
         }
     }
 
@@ -484,41 +484,64 @@ public abstract class LocationTabActivity<P extends ThemePreferences> extends Ap
         @Override
         public void handleMessage(@NonNull Message msg) {
             final LocationTabActivity activity = activityWeakReference.get();
-            if (activity == null) {
-                return;
-            }
+            if (activity == null) return;
             ZmanimAddress address;
-            AddressProvider addressProvider;
 
             switch (msg.what) {
                 case WHAT_FAVORITE:
                     address = (ZmanimAddress) msg.obj;
-                    addressProvider = activity.getAddressProvider();
-                    addressProvider.insertOrUpdateAddress(null, address);
-
-                    activity.adapterAll.notifyItemChanged(address);
-                    activity.adapterFavorites.notifyItemChanged(address);
-                    activity.adapterHistory.notifyItemChanged(address);
+                    if (address == null) return;
+                    activity.markFavorite(address);
                     break;
                 case WHAT_ADDED:
-                    // Refresh the lists with the new location's address.
                     address = (ZmanimAddress) msg.obj;
-                    activity.populateLists();
-
-                    LocationFormatter formatter = activity.getLocations();
-                    CharSequence query = formatter.formatLatitude(address.getLatitude());
-                    activity.search(query);
+                    if (address == null) return;
+                    activity.addAddress(address);
                     break;
                 case WHAT_DELETE:
                     address = (ZmanimAddress) msg.obj;
-                    addressProvider = activity.getAddressProvider();
-                    if (addressProvider.deleteAddress(address)) {
-                        activity.adapterAll.delete(address);
-                        activity.adapterFavorites.delete(address);
-                        activity.adapterHistory.delete(address);
-                    }
+                    if (address == null) return;
+                    activity.deleteAddress(address);
                     break;
             }
         }
     }
+
+    private void markFavorite(@NonNull ZmanimAddress address) {
+        saveAddress(address);
+
+        adapterAll.notifyItemChanged(address);
+        adapterFavorites.notifyItemChanged(address);
+        adapterHistory.notifyItemChanged(address);
+    }
+
+    private void addAddress(@NonNull ZmanimAddress address) {
+        saveAddress(address);
+
+        // Refresh the lists with the new location's address.
+        populateLists();
+        tabHost.setCurrentTab(TAB_HISTORY);
+
+        LocationFormatter formatter = getLocations();
+        CharSequence query = formatter.formatLongitude(address.getLongitude());
+        search(query);
+    }
+
+    private void saveAddress(@NonNull ZmanimAddress address) {
+        AddressProvider addressProvider = getAddressProvider();
+        addressProvider.insertOrUpdateAddress(null, address);
+    }
+
+    private void deleteAddress(@NonNull ZmanimAddress address) {
+        AddressProvider addressProvider = getAddressProvider();
+        if (addressProvider.deleteAddress(address)) {
+            adapterAll.delete(address);
+            adapterFavorites.delete(address);
+            adapterHistory.delete(address);
+        }
+    }
+
+    private static final int TAB_FAVORITES = 0;
+    private static final int TAB_ALL = 1;
+    private static final int TAB_HISTORY = 2;
 }
