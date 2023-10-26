@@ -26,7 +26,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Location;
@@ -41,7 +40,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 
 import java.util.Collection;
 import java.util.TimeZone;
@@ -58,7 +57,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
 
     private static final String TAG = "LocationProvider";
 
-    public static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    public static final String[] PERMISSIONS = {Manifest.permission.ACCESS_FINE_LOCATION};
 
     /**
      * The maximum time interval between location updates, in milliseconds.
@@ -370,8 +369,7 @@ public class LocationsProvider implements ZmanimLocationListener, LocationFormat
     }
 
     public static boolean hasNoLocationPermission(Context context) {
-        return (ContextCompat.checkSelfPermission(context, PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED)
-            && (ContextCompat.checkSelfPermission(context, PERMISSIONS[1]) != PackageManager.PERMISSION_GRANTED);
+        return PermissionChecker.checkCallingOrSelfPermission(context, PERMISSIONS[0]) != PermissionChecker.PERMISSION_GRANTED;
     }
 
     /**
