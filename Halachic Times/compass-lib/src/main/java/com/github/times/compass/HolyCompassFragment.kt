@@ -16,9 +16,14 @@
 package com.github.times.compass
 
 import android.location.Location
+import android.os.Bundle
 import android.os.SystemClock
 import android.text.format.DateUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.github.os.VibratorCompat
+import com.github.times.compass.lib.R
 import com.github.times.compass.preference.CompassPreferences.Values.BEARING_GREAT_CIRCLE
 import com.github.times.location.GeocoderBase
 import com.github.times.location.ZmanimLocation
@@ -30,7 +35,7 @@ import kotlin.math.abs
  *
  * @author Moshe Waisberg
  */
-open class HolyCompassFragment : CompassFragment() {
+open class HolyCompassFragment : CompassFragment<HolyCompassView>() {
     /**
      * Location of the holy place.
      */
@@ -43,8 +48,16 @@ open class HolyCompassFragment : CompassFragment() {
         setHoliest(Double.NaN, Double.NaN, Double.NaN)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.holy_compass_fragment, container, false)
+    }
+
     override fun setAzimuth(azimuth: Float) {
-        super.setAzimuth(-azimuth)
+        super.setAzimuth(azimuth)
         maybeVibrate(azimuth)
     }
 
@@ -61,7 +74,7 @@ open class HolyCompassFragment : CompassFragment() {
         } else {
             ZmanimLocation.angleTo(location, holiest)
         }
-        compassView?.setHoliest(bearing)
+        compassView!!.setHoliest(bearing)
     }
 
     fun setHoliest(location: Location) {

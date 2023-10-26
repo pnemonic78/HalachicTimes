@@ -21,6 +21,7 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import com.github.times.compass.BaseCompassActivity
+import com.github.times.compass.CompassView
 import com.github.times.compass.preference.CompassPreferenceActivity
 
 /**
@@ -28,7 +29,7 @@ import com.github.times.compass.preference.CompassPreferenceActivity
  *
  * @author Moshe Waisberg
  */
-class CompassActivity : BaseCompassActivity() {
+class CompassActivity : BaseCompassActivity<CompassView>() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.compass, menu)
         return true
@@ -47,7 +48,9 @@ class CompassActivity : BaseCompassActivity() {
         return null
     }
 
-    protected fun startSettings() {
+    override fun getCompassFragment(): com.github.times.compass.CompassFragment<CompassView> = CompassFragment()
+
+    private fun startSettings() {
         val context: Context = this
         startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }

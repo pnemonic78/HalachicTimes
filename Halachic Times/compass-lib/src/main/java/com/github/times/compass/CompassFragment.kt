@@ -40,7 +40,7 @@ import com.github.times.compass.preference.SimpleCompassPreferences
  *
  * @author Moshe Waisberg
  */
-open class CompassFragment : Fragment(), SensorEventListener {
+open class CompassFragment<V : CompassView> : Fragment(), SensorEventListener {
     /**
      * The sensor manager.
      */
@@ -59,7 +59,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
     /**
      * The main view.
      */
-    protected var compassView: CompassView? = null
+    protected var compassView: V? = null
 
     /**
      * The accelerometer values.
@@ -111,8 +111,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        compassView = view.findViewById(R.id.compass)
-        compassView!!.setHoliest(Float.NaN)
+        compassView = view.findViewById(R.id.compass) as V
         updateRotation(activity, view)
     }
 
@@ -129,7 +128,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
     }
 
     private fun getPreferences(context: Context): CompassPreferences {
-        return if (context is BaseCompassActivity) {
+        return if (context is BaseCompassActivity<*>) {
             context.compassPreferences
         } else {
             SimpleCompassPreferences(context)
@@ -234,7 +233,7 @@ open class CompassFragment : Fragment(), SensorEventListener {
     }
 
     protected open fun setAzimuth(azimuth: Float) {
-        compassView?.setAzimuth(-azimuth)
+        compassView?.setAzimuth(azimuth)
     }
 
     /**

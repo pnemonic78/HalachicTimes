@@ -35,7 +35,7 @@ import com.github.times.preference.ZmanimCompassPreferences
  *
  * @author Moshe Waisberg
  */
-class CompassActivity : BaseCompassActivity() {
+class CompassActivity : BaseCompassActivity<HolyCompassView>() {
     private var localeCallbacks: LocaleCallbacks<LocalePreferences>? = null
 
     override fun attachBaseContext(newBase: Context) {
@@ -85,5 +85,5 @@ class CompassActivity : BaseCompassActivity() {
         return ZmanimCompassPreferences(context)
     }
 
-    override fun getCompassFragment(): CompassFragment = JewishCompassFragment()
+    override fun getCompassFragment(): CompassFragment<HolyCompassView> = JewishCompassFragment()
 }

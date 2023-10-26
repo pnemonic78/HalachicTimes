@@ -16,6 +16,7 @@
 package com.github.times.compass
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
@@ -33,7 +34,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.github.times.compass.lib.R
 import com.github.times.compass.preference.CompassPreferences
 import com.github.times.compass.preference.SimpleCompassPreferences
-import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -42,10 +42,9 @@ import kotlin.math.min
  *
  * @author Moshe Waisberg
  */
-class CompassView : View {
-    private var north = 0f
-    private var holiest = Float.NaN
-    private var northToHoliest = 0f
+open class CompassView : View {
+    protected var north = 0f
+        private set
     private var colorFace = Color.TRANSPARENT
     private var colorGradient = Color.TRANSPARENT
     private var colorFrame = Color.TRANSPARENT
@@ -62,7 +61,6 @@ class CompassView : View {
     private var colorEastDark = Color.TRANSPARENT
     private var colorWest = Color.TRANSPARENT
     private var colorWestDark = Color.TRANSPARENT
-    private var colorTarget = Color.TRANSPARENT
     private var colorArrowBg = Color.TRANSPARENT
     private var colorPivot = Color.TRANSPARENT
     private var colorPivotDark = Color.TRANSPARENT
@@ -86,18 +84,15 @@ class CompassView : View {
     private val paintSouth = TextPaint(paintNorth)
     private val paintWest = TextPaint(paintNorth)
     private val paintNE = Paint(paintEast)
-    private val paintHoliest = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL_AND_STROKE
-    }
-    private val paintFill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val paintFill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.BUTT
     }
-    private val paintPivot = Paint(Paint.DITHER_FLAG).apply {
+    protected val paintPivot = Paint(Paint.DITHER_FLAG).apply {
         style = Paint.Style.FILL
     }
     private var paintTick = Paint(paintNE)
-    private val paintShadowTemplate = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    protected val paintShadowTemplate = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
     }
     private val paintShadow = arrayOf(
@@ -105,18 +100,19 @@ class CompassView : View {
         Paint(paintShadowTemplate),
         Paint(paintShadowTemplate)
     )
-    private var paintShadowHoliest = Paint(paintShadowTemplate)
-    private val rectFill = RectF()
-    private var widthHalf = 0f
-    private var heightHalf = 0f
-    private var radius = 0f
-    private var radiusPivot = 0f
-    private val pathArrowHoliest = Path()
+    protected val rectFill = RectF()
+    protected var widthHalf = 0f
+        private set
+    protected var heightHalf = 0f
+        private set
+    protected var radius = 0f
+        private set
+    protected var radiusPivot = 0f
+        private set
     private val pathArrowBig = Path()
     private val pathArrowSmall = Path()
-    private val pathShadowBig = arrayOfNulls<Path>(SHADOWS_SIZE)
-    private val pathShadowSmall = arrayOfNulls<Path>(SHADOWS_SIZE)
-    private val pathShadowHoliest = Path()
+    private val pathShadowBig = Array(SHADOWS_SIZE) { Path() }
+    private val pathShadowSmall = Array(SHADOWS_SIZE) { Path() }
     private val rectFrameOuter = RectF()
     private val rectFrameInner = RectF()
     private var labelNorth: String = ""
@@ -124,6 +120,7 @@ class CompassView : View {
     private var labelSouth: String = ""
     private var labelWest: String = ""
 
+    //TODO add "ticks" to styleable attributes.
     var ticks = true
 
     /**
@@ -160,13 +157,19 @@ class CompassView : View {
 
     /** Initialise.  */
     private fun init(context: Context) {
-        val res = context.resources
-        val prefs: CompassPreferences = if (context is BaseCompassActivity) {
+        val prefs: CompassPreferences = if (context is BaseCompassActivity<*>) {
             context.compassPreferences
         } else {
             SimpleCompassPreferences(context)
         }
         val a = context.obtainStyledAttributes(prefs.compassTheme, R.styleable.CompassView)
+        init(context, a)
+        a.recycle()
+
+        setAzimuth(0f)
+    }
+
+    private fun init(context: Context, a: TypedArray) {
         colorFace = a.getColor(R.styleable.CompassView_compassColorFace, colorFace)
         colorGradient = a.getColor(R.styleable.CompassView_compassColorGradient, colorGradient)
         colorFrame = a.getColor(R.styleable.CompassView_compassColorFrame, colorFrame)
@@ -185,16 +188,16 @@ class CompassView : View {
         colorEastDark = a.getColor(R.styleable.CompassView_compassColorEastDark, colorEastDark)
         colorWest = a.getColor(R.styleable.CompassView_compassColorWest, colorWest)
         colorWestDark = a.getColor(R.styleable.CompassView_compassColorWestDark, colorWestDark)
-        colorTarget = a.getColor(R.styleable.CompassView_compassColorTarget, colorTarget)
         colorArrowBg = a.getColor(R.styleable.CompassView_compassColorArrowBg, colorArrowBg)
         colorPivot = a.getColor(R.styleable.CompassView_compassColorPivot, colorPivot)
         colorPivotDark = a.getColor(R.styleable.CompassView_compassColorPivotDark, colorPivotDark)
-        a.recycle()
 
-        labelNorth = context.getString(com.github.times.location.R.string.north)
-        labelEast = context.getString(com.github.times.location.R.string.east)
-        labelSouth = context.getString(com.github.times.location.R.string.south)
-        labelWest = context.getString(com.github.times.location.R.string.west)
+        val res = context.resources
+
+        labelNorth = res.getString(com.github.times.location.R.string.north)
+        labelEast = res.getString(com.github.times.location.R.string.east)
+        labelSouth = res.getString(com.github.times.location.R.string.south)
+        labelWest = res.getString(com.github.times.location.R.string.west)
 
         paintCircle.apply {
             color = colorFace
@@ -238,10 +241,6 @@ class CompassView : View {
             strokeWidth = res.getDimension(R.dimen.label2_thickness)
             color = colorLabel2
         }
-        paintHoliest.apply {
-            strokeWidth = res.getDimension(R.dimen.holiest_thickness)
-            color = colorTarget
-        }
         paintFill.apply {
             color = colorArrowBg
         }
@@ -257,13 +256,6 @@ class CompassView : View {
             strokeWidth = res.getDimension(R.dimen.shadow_thickness)
             color = ResourcesCompat.getColor(res, R.color.compass_shadow_3, null)
         }
-        paintShadowHoliest.apply {
-            strokeWidth = res.getDimension(R.dimen.holiest_thickness) * 2f
-            color = ResourcesCompat.getColor(res, R.color.compass_shadow_2, null)
-        }
-
-        setAzimuth(0f)
-        setHoliest(0f)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -285,44 +277,71 @@ class CompassView : View {
 
         // Shadow for North.
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowBig[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowBig[i], paintShadow[i])
         }
         // Shadow for North-East.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowSmall[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i])
         }
         // Shadow for East.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowBig[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowBig[i], paintShadow[i])
         }
         // Shadow for South-East.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowSmall[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i])
         }
         // Shadow for South.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowBig[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowBig[i], paintShadow[i])
         }
         // Shadow for South-West.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowSmall[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i])
         }
         // Shadow for West.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowBig[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowBig[i], paintShadow[i])
         }
         // Shadow for North-West.
         canvas.rotate(45f, w2, h2)
         for (i in 0 until SHADOWS_SIZE) {
-            canvas.drawPath(pathShadowSmall[i]!!, paintShadow[i])
+            canvas.drawPath(pathShadowSmall[i], paintShadow[i])
         }
         canvas.rotate(45f, w2, h2)
+
+        if (ticks) {
+            // Ticks from (N to E)
+            canvas.rotate(10f, w2, h2)
+            for (i in 10 until 90 step 10) {
+                canvas.drawLine(w2, h2r8, w2, h2r9, paintTick)
+                canvas.rotate(10f, w2, h2)
+            }
+            // Ticks from (E to S)
+            canvas.rotate(10f, w2, h2)
+            for (i in 10 until 90 step 10) {
+                canvas.drawLine(w2, h2r8, w2, h2r9, paintTick)
+                canvas.rotate(10f, w2, h2)
+            }
+            // Ticks from (S to W)
+            canvas.rotate(10f, w2, h2)
+            for (i in 10 until 90 step 10) {
+                canvas.drawLine(w2, h2r8, w2, h2r9, paintTick)
+                canvas.rotate(10f, w2, h2)
+            }
+            // Ticks from (S to N)
+            canvas.rotate(10f, w2, h2)
+            for (i in 10 until 90 step 10) {
+                canvas.drawLine(w2, h2r8, w2, h2r9, paintTick)
+                canvas.rotate(10f, w2, h2)
+            }
+        }
 
         // Arrow and label for North.
         canvas.drawPath(pathArrowBig, paintNorth)
@@ -358,34 +377,9 @@ class CompassView : View {
         // Arrow for North-West.
         canvas.rotate(45f, w2, h2)
         canvas.drawPath(pathArrowSmall, paintNE)
-        if (holiest.isNaN()) {
-            canvas.rotate(45f, w2, h2)
-        } else {
-            // Samsung has bug with tiny arcs.
-            if (abs(northToHoliest) >= 0.1) {
-                canvas.drawArc(rectFill, 315 - north, northToHoliest, false, paintFill)
-            }
-            canvas.rotate(45 + holiest, w2, h2)
-            canvas.drawLine(w2, h2, w2, h2r9, paintShadowHoliest)
-            canvas.drawPath(pathShadowHoliest, paintShadowHoliest)
-            canvas.drawLine(w2, h2, w2, h2r9, paintHoliest)
-            canvas.drawPath(pathArrowHoliest, paintHoliest)
-        }
+
+        canvas.rotate(45f, w2, h2)
         canvas.drawCircle(w2, h2, radiusPivot, paintPivot)
-        if (ticks) {
-            var i = 10
-            while (i < 360) {
-                canvas.rotate(10f, w2, h2)
-                when (i) {
-                    90, 180, 270 -> {
-                        i += 10
-                        continue
-                    }
-                }
-                canvas.drawLine(w2, h2r8, w2, h2r9, paintTick)
-                i += 10
-            }
-        }
     }
 
     /**
@@ -393,67 +387,41 @@ class CompassView : View {
      *
      * @param azimuth the azimuth in degrees.
      */
-    fun setAzimuth(azimuth: Float) {
-        north = azimuth
-        setNorthToHoliest()
-    }
-
-    /**
-     * Set the bearing to some holy place.
-     *
-     * @param bearing the bearing in degrees.
-     */
-    fun setHoliest(bearing: Float) {
-        holiest = bearing
-        setNorthToHoliest()
-    }
-
-    private fun setNorthToHoliest() {
-        northToHoliest = north + holiest
-        if (northToHoliest > 180f) {
-            northToHoliest -= 360f
-        } else if (northToHoliest < -180f) {
-            northToHoliest += 360f
-        }
+    open fun setAzimuth(azimuth: Float) {
+        north = -azimuth
         invalidate()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         val res = resources
-        val w2 = w / 2
-        val h2 = h / 2
+        val w2 = w / 2f
+        val h2 = h / 2f
         val boundary =
             res.getDimension(R.dimen.padding) + res.getDimension(R.dimen.circle_thickness)
         val r = max(0f, min(w2, h2) - boundary * 2f)
         val r75 = r * 0.075f
-        val r1 = r * 0.1f
         val r15 = r * 0.15f
         val r2 = r * 0.2f
         val r4 = r * 0.4f
         val r5 = r * 0.5f
         val r6 = r * 0.6f
-        val r85 = r * 0.85f
-        val r9 = r * 0.9f
-        val h2r6 = h2 - r6
-        val h2r85 = h2 - r85
-        val h2r9 = h2 - r9
-        widthHalf = w2.toFloat()
-        heightHalf = h2.toFloat()
+        widthHalf = w2
+        heightHalf = h2
         radius = r
         radiusPivot = r15
         if (r > 0) {
             paintCircle.shader = RadialGradient(
-                w2.toFloat(),
-                h2.toFloat(),
+                w2,
+                h2,
                 r * 3,
                 colorFace,
                 colorGradient,
                 Shader.TileMode.CLAMP
             )
             paintPivot.shader = RadialGradient(
-                w2.toFloat(),
-                h2.toFloat(),
+                w2,
+                h2,
                 radiusPivot,
                 colorPivot,
                 colorPivotDark,
@@ -461,9 +429,9 @@ class CompassView : View {
             )
         }
         paintNorth.shader = LinearGradient(
-            w2.toFloat(),
-            h2.toFloat(),
-            w2.toFloat(),
+            w2,
+            h2,
+            w2,
             0f,
             colorNorth,
             colorNorthDark,
@@ -471,9 +439,9 @@ class CompassView : View {
         )
         paintNorth.textSize = r2
         paintEast.shader = LinearGradient(
-            w2.toFloat(),
-            h2.toFloat(),
-            w2.toFloat(),
+            w2,
+            h2,
+            w2,
             0f,
             colorEast,
             colorEastDark,
@@ -481,9 +449,9 @@ class CompassView : View {
         )
         paintEast.textSize = r2
         paintSouth.shader = LinearGradient(
-            w2.toFloat(),
-            h2.toFloat(),
-            w2.toFloat(),
+            w2,
+            h2,
+            w2,
             0f,
             colorSouth,
             colorSouthDark,
@@ -491,9 +459,9 @@ class CompassView : View {
         )
         paintSouth.textSize = r2
         paintWest.shader = LinearGradient(
-            w2.toFloat(),
-            h2.toFloat(),
-            w2.toFloat(),
+            w2,
+            h2,
+            w2,
             0f,
             colorWest,
             colorWestDark,
@@ -531,8 +499,7 @@ class CompassView : View {
             colorFrame,
             colorFrameShadow
         )
-        val gradientFrameOuter =
-            SweepGradient(w2.toFloat(), h2.toFloat(), colorsFrameOuter, positionsFrameOuter)
+        val gradientFrameOuter = SweepGradient(w2, h2, colorsFrameOuter, positionsFrameOuter)
         paintFrameOuter.shader = gradientFrameOuter
         val colorsFrameInner = intArrayOf(
             colorFrameHighlight,
@@ -545,55 +512,39 @@ class CompassView : View {
             colorFrame,
             colorFrameHighlight
         )
-        val gradientFrameInner =
-            SweepGradient(w2.toFloat(), h2.toFloat(), colorsFrameInner, positionsFrameOuter)
+        val gradientFrameInner = SweepGradient(w2, h2, colorsFrameInner, positionsFrameOuter)
         paintFrameInner.shader = gradientFrameInner
         pathArrowBig.reset()
-        pathArrowBig.moveTo(w2 - r75, h2.toFloat())
-        pathArrowBig.lineTo(w2 + r75, h2.toFloat())
-        pathArrowBig.lineTo(w2.toFloat(), h2 - r6)
+        pathArrowBig.moveTo(w2 - r75, h2)
+        pathArrowBig.lineTo(w2 + r75, h2)
+        pathArrowBig.lineTo(w2, h2 - r6)
         pathArrowBig.close()
         pathArrowSmall.reset()
-        pathArrowSmall.moveTo(w2 - r75, h2.toFloat())
-        pathArrowSmall.lineTo(w2 + r75, h2.toFloat())
-        pathArrowSmall.lineTo(w2.toFloat(), h2 - r4)
+        pathArrowSmall.moveTo(w2 - r75, h2)
+        pathArrowSmall.lineTo(w2 + r75, h2)
+        pathArrowSmall.lineTo(w2, h2 - r4)
         pathArrowSmall.close()
-        pathArrowHoliest.reset()
-        pathArrowHoliest.moveTo(w2.toFloat(), h2r9)
-        pathArrowHoliest.lineTo(w2 - r1, h2r6)
-        pathArrowHoliest.quadTo(w2.toFloat(), h2r85, w2 + r1, h2r6)
-        pathArrowHoliest.close()
         val shadowThickness = res.getDimension(R.dimen.shadow_thickness)
         var pathShadow: Path?
         var shadowOffset = shadowThickness
-        var i = 0
-        while (i < SHADOWS_SIZE) {
+
+        for (i in 0 until SHADOWS_SIZE) {
             pathShadow = pathShadowBig[i]
-            if (pathShadow == null) {
-                pathShadow = Path()
-                pathShadowBig[i] = pathShadow
-            }
             pathShadow.reset()
             pathShadow.moveTo(w2 - r75 - shadowOffset, h2 + shadowOffset)
             pathShadow.lineTo(w2 + r75 + shadowOffset, h2 + shadowOffset)
-            pathShadow.lineTo(w2.toFloat(), h2 - r6 - shadowOffset - shadowOffset)
+            pathShadow.lineTo(w2, h2 - r6 - shadowOffset - shadowOffset)
             pathShadow.close()
+
             pathShadow = pathShadowSmall[i]
-            if (pathShadow == null) {
-                pathShadow = Path()
-                pathShadowSmall[i] = pathShadow
-            }
             pathShadow.reset()
             pathShadow.moveTo(w2 - r75 - shadowOffset, h2 + shadowOffset)
             pathShadow.lineTo(w2 + r75 + shadowOffset, h2 + shadowOffset)
-            pathShadow.lineTo(w2.toFloat(), h2 - r4 - shadowOffset - shadowOffset)
+            pathShadow.lineTo(w2, h2 - r4 - shadowOffset - shadowOffset)
             pathShadow.close()
-            i++
+
             shadowOffset += shadowThickness
         }
-        pathShadowHoliest.reset()
-        pathShadowHoliest.set(pathArrowHoliest)
-        pathShadowHoliest.close()
     }
 
     companion object {

@@ -22,6 +22,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.github.times.compass.BaseCompassActivity
 import com.github.times.compass.CompassFragment
+import com.github.times.compass.HolyCompassView
 import com.github.times.compass.preference.CompassPreferenceActivity
 
 /**
@@ -30,7 +31,7 @@ import com.github.times.compass.preference.CompassPreferenceActivity
  *
  * @author Moshe Waisberg
  */
-class CompassActivity : BaseCompassActivity() {
+class CompassActivity : BaseCompassActivity<HolyCompassView>() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.compass, menu)
         return true
@@ -61,5 +62,5 @@ class CompassActivity : BaseCompassActivity() {
         startActivity(Intent(context, CompassPreferenceActivity::class.java))
     }
 
-    override fun getCompassFragment(): CompassFragment = JewishCompassFragment()
+    override fun getCompassFragment(): CompassFragment<HolyCompassView> = JewishCompassFragment()
 }

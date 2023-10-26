@@ -18,6 +18,7 @@ package com.github.compass
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import com.github.times.compass.CompassView
 import com.github.times.location.LocationApplication
 import com.github.times.location.LocationFormatter
 
@@ -26,7 +27,7 @@ import com.github.times.location.LocationFormatter
  *
  * @author Moshe Waisberg
  */
-class CompassFragment : com.github.times.compass.CompassFragment() {
+class CompassFragment : com.github.times.compass.CompassFragment<CompassView>() {
 
     private var bearingView: TextView? = null
     private lateinit var formatter: LocationFormatter
